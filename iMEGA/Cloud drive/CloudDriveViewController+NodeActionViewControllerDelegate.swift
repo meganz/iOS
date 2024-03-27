@@ -139,10 +139,8 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     }
     
     func hide(nodes: [NodeEntity]) {
-        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-        Task {
-            _ = await nodeActionUseCase.hide(nodes: nodes)
-        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .hideNodes(nodes)
     }
     
     func unhide(nodes: [NodeEntity]) {

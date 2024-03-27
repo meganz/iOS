@@ -23,6 +23,9 @@
 		0E3229442AF8509800D0EC22 /* CameraUploadStatusImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3229432AF8509800D0EC22 /* CameraUploadStatusImageView.swift */; };
 		0E3229462AF850F500D0EC22 /* CameraUploadStatusImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3229452AF850F500D0EC22 /* CameraUploadStatusImageViewModel.swift */; };
 		0E32294D2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32294C2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift */; };
+		0E385A792BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E385A772BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift */; };
+		0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */; };
+		0E385A7D2BB3C66700261892 /* HideFilesAndFoldersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E385A7C2BB3C66700261892 /* HideFilesAndFoldersRouter.swift */; };
 		0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */; };
 		0E3B1A392A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A382A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift */; };
 		0E3B1A482A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A472A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift */; };
@@ -2657,6 +2660,9 @@
 		0E3229432AF8509800D0EC22 /* CameraUploadStatusImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusImageView.swift; sourceTree = "<group>"; };
 		0E3229452AF850F500D0EC22 /* CameraUploadStatusImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusImageViewModel.swift; sourceTree = "<group>"; };
 		0E32294C2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusImageViewModelTests.swift; sourceTree = "<group>"; };
+		0E385A772BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideFilesAndFoldersViewModel.swift; sourceTree = "<group>"; };
+		0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideFilesAndFoldersViewModelTests.swift; sourceTree = "<group>"; };
+		0E385A7C2BB3C66700261892 /* HideFilesAndFoldersRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideFilesAndFoldersRouter.swift; sourceTree = "<group>"; };
 		0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAlbumInfoCellViewModel.swift; sourceTree = "<group>"; };
 		0E3B1A382A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAlbumInfoCellViewModelTests.swift; sourceTree = "<group>"; };
 		0E3B1A472A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchOptionCellViewModel.swift; sourceTree = "<group>"; };
@@ -5506,6 +5512,15 @@
 			path = Transfer;
 			sourceTree = "<group>";
 		};
+		0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */ = {
+			isa = PBXGroup;
+			children = (
+				0E385A7C2BB3C66700261892 /* HideFilesAndFoldersRouter.swift */,
+				0E385A772BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift */,
+			);
+			path = HiddenFilesAndFolders;
+			sourceTree = "<group>";
+		};
 		0E3B1A362A1D917900EC5859 /* GetLink */ = {
 			isa = PBXGroup;
 			children = (
@@ -5581,6 +5596,7 @@
 		0EE5AC142B1E930C00BCDD88 /* Shared Views */ = {
 			isa = PBXGroup;
 			children = (
+				0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */,
 				0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */,
 				0EE396F72B87E4B200927E7E /* NodeActionViewModelTests.swift */,
 			);
@@ -10649,6 +10665,7 @@
 		B5CC2AA62995F8EC00A966A0 /* ViewRouters */ = {
 			isa = PBXGroup;
 			children = (
+				0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */,
 				9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */,
 				B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */,
 			);
@@ -13952,6 +13969,7 @@
 				838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */,
 				8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */,
 				8330A99728882E4A003E80DB /* CallsSettingsView.swift in Sources */,
+				0E385A792BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift in Sources */,
 				83AE36C22886D033002F1755 /* CallsSettingsViewModel.swift in Sources */,
 				8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */,
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
@@ -15045,6 +15063,7 @@
 				94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */,
 				5D7792DA2506116100378D87 /* RecentActionViewModel.swift in Sources */,
 				83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */,
+				0E385A7D2BB3C66700261892 /* HideFilesAndFoldersRouter.swift in Sources */,
 				5D08568F2505E2140030AEE3 /* RecentNodeRouter.swift in Sources */,
 				5B5C7B29264A92410087200D /* RecentsPreference.swift in Sources */,
 				A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */,
@@ -15757,6 +15776,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,
 				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
