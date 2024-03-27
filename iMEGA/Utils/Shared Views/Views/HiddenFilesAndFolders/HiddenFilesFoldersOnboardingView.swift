@@ -5,6 +5,7 @@ import SwiftUI
 
 struct HiddenFilesFoldersOnboardingView: View {
     @Environment(\.dismiss) private var dismiss
+    let primaryAction: (() -> Void)
     
     var body: some View {
         OnboardingNavigationBar {
@@ -64,8 +65,9 @@ struct HiddenFilesFoldersOnboardingView: View {
     
     private func buttons() -> some View {
         VStack(spacing: TokenSpacing._5) {
-            PrimaryActionButtonView(title: Strings.Localizable.seePlans) { }
-                .frame(minWidth: 288)
+            PrimaryActionButtonView(title: Strings.Localizable.seePlans,
+                                    action: primaryAction)
+            .frame(minWidth: 288)
             
             Button {
                 dismiss()
@@ -182,11 +184,11 @@ private struct OnboardingItemView: View {
 }
 
 #Preview {
-    HiddenFilesFoldersOnboardingView()
+    HiddenFilesFoldersOnboardingView { }
 }
 
 #Preview {
-    HiddenFilesFoldersOnboardingView()
+    HiddenFilesFoldersOnboardingView { }
         .preferredColorScheme(.dark)
 }
 
