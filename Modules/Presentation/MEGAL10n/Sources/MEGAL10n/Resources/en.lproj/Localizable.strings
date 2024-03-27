@@ -4004,3 +4004,17 @@
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Your call reached the 60 minute limit and has ended. Pro users have unlimited calls and up to 1000 participants.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgrade now";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="Hidden files and folders";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Hide important files and folders";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy. Only you can reveal them, either individually or by temporarily displaying hidden items from the settings.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Exclude from Timeline";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Hidden items are only accessible through the Cloud drive and will not appear in your Photos, Albums or Recents.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Out of sight";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="You decide when hidden files are visible. There is a new setting to show hidden items temporarily.";

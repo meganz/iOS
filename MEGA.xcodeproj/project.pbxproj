@@ -57,6 +57,7 @@
 		0E96EAD32ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF73242A6786D9008F939D /* BrowserView.swift */; };
+		0EBF70712BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */; };
 		0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */; };
 		0EC5A64F2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */; };
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
@@ -2689,6 +2690,7 @@
 		0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMediaDiscoveryBannerView.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		0EAF73242A6786D9008F939D /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
+		0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingView.swift; sourceTree = "<group>"; };
 		0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewWrapper.swift; sourceTree = "<group>"; };
 		0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryFolderLinkToolbarConfigurator.swift; sourceTree = "<group>"; };
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
@@ -5556,6 +5558,14 @@
 			path = CopyrightWarning;
 			sourceTree = "<group>";
 		};
+		0EBF706F2BAB874B009AAFB0 /* HiddenFilesAndFolders */ = {
+			isa = PBXGroup;
+			children = (
+				0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */,
+			);
+			path = HiddenFilesAndFolders;
+			sourceTree = "<group>";
+		};
 		0ECFECF42ACE0D3700CBC420 /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
@@ -7563,6 +7573,7 @@
 			children = (
 				5B1F74D02126E2B000F09A16 /* AwaitingEmailConfirmation */,
 				5BE7BEE123745F9D00BBD23F /* EmptyState */,
+				0EBF706F2BAB874B009AAFB0 /* HiddenFilesAndFolders */,
 				942FD9CC2B4832ED00F14E38 /* MyAvatarIconView */,
 				5D66F8C524E507900088E5FF /* BadgeButton.swift */,
 				942FD9C72B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift */,
@@ -14388,6 +14399,7 @@
 				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
 				9D3563D028B54EEE00CB3365 /* HelpViewRouter.swift in Sources */,
 				5D64660824890BEA006030A5 /* HexColor.swift in Sources */,
+				0EBF70712BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift in Sources */,
 				B69AF66528A1E5190022B094 /* HistoryRetentionPickerViewModel.swift in Sources */,
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
 				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
