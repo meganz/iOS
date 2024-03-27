@@ -56,7 +56,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     var shouldShowSearchBar: Bool {
-        return isSearchActive || !isChatRoomEmpty
+        return isSearchActive || searchText.isNotEmpty || !isChatRoomEmpty
     }
     
     @Published var chatViewMode: ChatViewMode
