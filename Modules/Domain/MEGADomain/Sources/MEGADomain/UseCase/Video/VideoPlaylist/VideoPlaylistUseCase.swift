@@ -6,21 +6,36 @@ public protocol VideoPlaylistUseCaseProtocol {
     /// Getting MEGA default system video playlists. For example, the favourite playlist.
     /// - Returns: returns array of system video playlists based on requirement.
     func systemVideoPlaylists() async throws -> [VideoPlaylistEntity]
+    
+    /// Getting MEGA user's video playlists, a user generated video playlist one.
+    /// - Returns: returns array of user's created video playlists, returns empty if user has not created video playlist yet. throws error if any.
+    func userVideoPlaylists() async throws -> [VideoPlaylistEntity]
+    
 }
 
 public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
+    private let userVideoPlaylistsRepository: any UserVideoPlaylistsRepositoryProtocol
     
     public init(
-        fileSearchUseCase: some FilesSearchUseCaseProtocol
+        fileSearchUseCase: some FilesSearchUseCaseProtocol,
+        userVideoPlaylistsRepository: some UserVideoPlaylistsRepositoryProtocol
     ) {
         self.fileSearchUseCase = fileSearchUseCase
+        self.userVideoPlaylistsRepository = userVideoPlaylistsRepository
     }
     
     public func systemVideoPlaylists() async throws -> [VideoPlaylistEntity] {
         let favoriteVideos = try await videos().filter(\.isFavourite)
         return [ createFavouriteSystemPlyalist(videos: favoriteVideos) ]
+    }
+    
+    public func userVideoPlaylists() async throws -> [VideoPlaylistEntity] {
+        let playlistSetEntities = try await userVideoPlaylistsRepository.videoPlaylists()
+        return playlistSetEntities
+            .filter { $0.setType == .playlist }
+            .map { $0.toVideoPlaylistEntity(type: .user) }
     }
     
     private func videos() async throws -> [NodeEntity] {
@@ -46,7 +61,6 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
         VideoPlaylistEntity(
             id: 1,
             name: "",
-            coverNode: nil,
             count: videos.count,
             type: .favourite,
             creationTime: Date(),

@@ -7,7 +7,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     // MARK: - Init
     
     func testInit_whenCalled_doesNotTriggerFilesSearchUseCase() {
-        let (_, filesSearchUseCase) = makeSUT()
+        let (_, filesSearchUseCase, _) = makeSUT()
         
         XCTAssertTrue(filesSearchUseCase.messages.isEmpty)
     }
@@ -15,7 +15,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     // MARK: - systemVideoPlaylists
     
     func testSystemVideoPlaylists_whenCalled_TriggerFilesSearchUseCase() async {
-        let (sut, filesSearchUseCase) = makeSUT()
+        let (sut, filesSearchUseCase, _) = makeSUT()
         
         _ = try? await sut.systemVideoPlaylists()
         
@@ -23,7 +23,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     }
     
     func testSystemVideoPlaylists_whenCalledTwice_TriggerFilesSearchUseCaseTwice() async {
-        let (sut, filesSearchUseCase) = makeSUT()
+        let (sut, filesSearchUseCase, _) = makeSUT()
         
         _ = try? await sut.systemVideoPlaylists()
         _ = try? await sut.systemVideoPlaylists()
@@ -32,7 +32,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     }
     
     func testSystemVideoPlaylists_whenError_returnsError() async {
-        let (sut, _) = makeSUT(filesSearchUseCase: MockFilesSearchUseCase(searchResult: .failure(.generic)))
+        let (sut, _, _) = makeSUT(filesSearchUseCase: MockFilesSearchUseCase(searchResult: .failure(.generic)))
         
         do {
             _ = try await sut.systemVideoPlaylists()
@@ -44,7 +44,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testSystemVideoPlaylists_whenSuccessfullyLoadPlaylistWithEmptyVideos_returnsEmptySystemVideoPlaylists() async throws {
         let emptyVideos = [NodeEntity]()
-        let (sut, _) = makeSUT(
+        let (sut, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(emptyVideos))
         )
         
@@ -58,7 +58,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             anyNode(id: 1, isFavorite: false),
             anyNode(id: 2, isFavorite: false)
         ]
-        let (sut, _) = makeSUT(
+        let (sut, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nonFavoriteVideos))
         )
         
@@ -72,7 +72,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             anyNode(id: 1, isFavorite: false),
             anyNode(id: 2, isFavorite: true)
         ]
-        let (sut, _) = makeSUT(
+        let (sut, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(videos))
         )
         
@@ -86,7 +86,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             anyNode(id: 1, isFavorite: true),
             anyNode(id: 2, isFavorite: true)
         ]
-        let (sut, _) = makeSUT(
+        let (sut, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(favoriteVideos))
         )
         
@@ -95,16 +95,122 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         assertThatSystemPlaylistCreatedCorrectly(resultVideoPlaylists: resultVideoPlaylists, expectedVideosCount: favoriteVideos.count)
     }
     
+    // MARK: - userVideoPlaylists
+    
+    func testUserVideoPlaylists_whenCalled_getUserVideoPlaylists() async {
+        let (sut, _, userVideoPlaylistsRepository) = makeSUT(
+            userVideoPlaylistRepositoryResult:  .failure(GenericErrorEntity())
+        )
+        
+        _ = try? await sut.userVideoPlaylists()
+        
+        let messages = await userVideoPlaylistsRepository.messages
+        XCTAssertEqual(messages, [ .userVideoPlaylists ])
+    }
+    
+    func testUserVideoPlaylists_whenCalledTwice_getUserVideoPlaylistsTwice() async {
+        let (sut, _, userVideoPlaylistsRepository) = makeSUT(
+            userVideoPlaylistRepositoryResult: .failure(GenericErrorEntity())
+        )
+        
+        _ = try? await sut.userVideoPlaylists()
+        _ = try? await sut.userVideoPlaylists()
+        
+        let messages = await userVideoPlaylistsRepository.messages
+        XCTAssertEqual(messages, [ .userVideoPlaylists, .userVideoPlaylists ])
+    }
+    
+    func testUserVideoPlaylists_whenCalled_returnsError() async {
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: .failure(GenericErrorEntity())
+        )
+        
+        do {
+            _ = try await sut.userVideoPlaylists()
+            XCTFail("Expect to fail")
+        } catch {
+            XCTAssertTrue(error is GenericErrorEntity,  "Expect to get error")
+        }
+    }
+    
+    func testUserVideoPlaylists_whenCalled_returnsEmpty() async throws {
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: .success([])
+        )
+        
+        let userVideoPlaylists = try await sut.userVideoPlaylists()
+        
+        XCTAssertTrue(userVideoPlaylists.isEmpty)
+    }
+    
+    func testUserVideoPlaylists_whenCalled_returnsSinglePlaylist() async throws {
+        let videoPlaylistSetEntities = [
+            videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist")
+        ]
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: .success(videoPlaylistSetEntities)
+        )
+        
+        let userVideoPlaylists = try await sut.userVideoPlaylists()
+        
+        XCTAssertEqual(
+            userVideoPlaylists,
+            videoPlaylistSetEntities.map { $0.toVideoPlaylistEntity(type: .user) }
+        )
+        
+    }
+    
+    func testUserVideoPlaylists_whenCalled_returnsMoreThanOnePlaylists() async throws {
+        let videoPlaylistSetEntities = [
+            videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist"),
+            videoPlaylistSetEntity(handle: 2, setType: .playlist, name: "My Video Playlist 2")
+        ]
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: .success(videoPlaylistSetEntities)
+        )
+        
+        let userVideoPlaylists = try await sut.userVideoPlaylists()
+        
+        XCTAssertEqual(
+            userVideoPlaylists,
+            videoPlaylistSetEntities.map { $0.toVideoPlaylistEntity(type: .user) }
+        )
+    }
+    
+    func testUserVideoPlaylists_whenCalled_returnsOnlyUserVideoPlaylists() async throws {
+        let videoPlaylistSetEntities = [
+            videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist"),
+            videoPlaylistSetEntity(handle: 2, setType: .album, name: "My Album")
+        ]
+        let userVideoPlaylistSetEntityCount = videoPlaylistSetEntities
+            .filter { $0.setType == .playlist }
+            .count
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: .success(videoPlaylistSetEntities)
+        )
+        
+        let userVideoPlaylists = try await sut.userVideoPlaylists()
+        
+        XCTAssertEqual(userVideoPlaylists.count, userVideoPlaylistSetEntityCount, "Should only returning Set entities with type SetType.playlist only")
+        XCTAssert(userVideoPlaylists.allSatisfy { $0.type == .user })
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
-        filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic))
+        filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic)),
+        userVideoPlaylistRepositoryResult: Result<[SetEntity], Error> = .success([])
     ) -> (
         sut: VideoPlaylistUseCase,
-        filesSearchUseCase: MockFilesSearchUseCase
+        filesSearchUseCase: MockFilesSearchUseCase,
+        userVideoPlaylistRepository: MockUserVideoPlaylistsRepository
     ) {
-        let sut = VideoPlaylistUseCase(fileSearchUseCase: filesSearchUseCase)
-        return (sut, filesSearchUseCase)
+        let userVideoPlaylistRepository = MockUserVideoPlaylistsRepository(videoPlaylistsResult: userVideoPlaylistRepositoryResult)
+        let sut = VideoPlaylistUseCase(
+            fileSearchUseCase: filesSearchUseCase,
+            userVideoPlaylistsRepository: userVideoPlaylistRepository
+        )
+        return (sut, filesSearchUseCase, userVideoPlaylistRepository)
     }
     
     private func anyNode(id: HandleEntity, isFavorite: Bool = false) -> NodeEntity {
@@ -139,5 +245,19 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         XCTAssertEqual(favoriteVideoPlaylist?.count, expectedVideosCount, file: file, line: line)
         XCTAssertEqual(favoriteVideoPlaylist?.type, .favourite, file: file, line: line)
         XCTAssertEqual(favoriteVideoPlaylist?.sharedLinkStatus, .exported(false), file: file, line: line)
+    }
+    
+    private func videoPlaylistSetEntity(handle: HandleEntity, setType: SetTypeEntity, name: String) -> SetEntity {
+        SetEntity(
+            handle: 1,
+            userId: 1,
+            coverId: .invalid,
+            creationTime: Date(),
+            modificationTime: Date(),
+            setType: .playlist,
+            name: name,
+            isExported: false,
+            changeTypes: .new
+        )
     }
 }

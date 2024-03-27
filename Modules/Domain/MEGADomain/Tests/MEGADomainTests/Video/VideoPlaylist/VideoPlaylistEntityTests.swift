@@ -51,7 +51,6 @@ final class VideoPlaylistEntityTests: XCTestCase {
         VideoPlaylistEntity(
             id: 1,
             name: "any-name",
-            coverNode: nil,
             count: 1,
             type: type,
             sharedLinkStatus: sharedLinkStatus

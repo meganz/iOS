@@ -13,7 +13,7 @@ public struct VideoPlaylistEntity: Identifiable, Hashable, Sendable {
     public init(
         id: HandleEntity,
         name: String,
-        coverNode: NodeEntity?,
+        coverNode: NodeEntity? = nil,
         count: Int,
         type: VideoPlaylistEntityType,
         creationTime: Date? = nil,
