@@ -11,9 +11,8 @@ class CookieSettingsViewModelTests: XCTestCase {
                                                Strings.Localizable.Settings.Cookies.Essential.footer,
                                                Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer]
     
-    func testConfigViewTask_featureFlagEnabled_adsFlagsEnabled_shouldEnableAds() async {
+    func testConfigViewTask_adsFlagsEnabled_shouldEnableAds() async {
         let sut = makeSUT(
-            featureFlags: [.inAppAds: true],
             abTestProvider: MockABTestProvider(
                 list: [
                     .ads: .variantA,
@@ -33,32 +32,14 @@ class CookieSettingsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsActive.numberOfSections)
     }
     
-    func testConfigViewTask_featureFlagEnabled_adsFlagsDisabled_shouldNotEnableAds() async {
+    func testConfigViewTask_adsFlagsDisabled_shouldNotEnableAds() async {
         let sut = makeSUT(
-            featureFlags: [.inAppAds: true],
             abTestProvider: MockABTestProvider(
                 list: [
                     .ads: .variantA,
                     .externalAds: .baseline
                 ]
             )
-        )
-        var commands = [CookieSettingsViewModel.Command]()
-        sut.invokeCommand = { viewCommand in
-            commands.append(viewCommand)
-        }
-        
-        sut.dispatch(.configView)
-        await sut.configViewTask?.value
-        
-        XCTAssertFalse(sut.isExternalAdsActive)
-        XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsInactive.numberOfSections)
-    }
-    
-    func testConfigViewTask_featureFlagDisabled_adsFlagsDisabled_shouldNotEnableAds() async {
-        let sut = makeSUT(
-            featureFlags: [.inAppAds: false],
-            abTestProvider: MockABTestProvider(list: [.ads: .baseline])
         )
         var commands = [CookieSettingsViewModel.Command]()
         sut.invokeCommand = { viewCommand in
@@ -81,7 +62,6 @@ class CookieSettingsViewModelTests: XCTestCase {
         let noAdsCheckCookieBit = CookiesBitmap.all
         let sut = makeSUT(
             cookieSettings: .success(noAdsCheckCookieBit.rawValue),
-            featureFlags: [.inAppAds: true],
             abTestProvider: MockABTestProvider(
                 list: [
                     .ads: .variantA,
@@ -103,7 +83,6 @@ class CookieSettingsViewModelTests: XCTestCase {
         withAdsCheckCookieBit.insert(.adsCheckCookie)
         let sut = makeSUT(
             cookieSettings: .success(withAdsCheckCookieBit.rawValue),
-            featureFlags: [.inAppAds: true],
             abTestProvider: MockABTestProvider(
                 list: [
                     .ads: .variantA,
@@ -163,7 +142,6 @@ class CookieSettingsViewModelTests: XCTestCase {
         let mockRouter = MockCookieSettingsRouter()
         let sut = makeSUT(
             sessionTransferURLResult: .success(expectedURL),
-            featureFlags: [.inAppAds: true],
             abTestProvider: MockABTestProvider(
                 list: [
                     .ads: .variantA,
@@ -184,7 +162,6 @@ class CookieSettingsViewModelTests: XCTestCase {
         let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/cookie"))
         let mockRouter = MockCookieSettingsRouter()
         let sut = makeSUT(
-            featureFlags: [.inAppAds: true],
             abTestProvider: MockABTestProvider(
                 list: [.externalAds: .baseline]
             ),
@@ -230,20 +207,16 @@ class CookieSettingsViewModelTests: XCTestCase {
         cookieBannerEnable: Bool = true,
         cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(31),
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
-        featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: true],
         abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .baseline]),
         mockRouter: CookieSettingsRouting = MockCookieSettingsRouter(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CookieSettingsViewModel {
-        let featureFlagProvider = MockFeatureFlagProvider(list: featureFlags)
         let accountUseCase = MockAccountUseCase(sessionTransferURLResult: sessionTransferURLResult)
         let cookieSettingsUseCase = MockCookieSettingsUseCase(cookieBannerEnable: cookieBannerEnable, cookieSettings: cookieSettings)
-        
         let sut = CookieSettingsViewModel(accountUseCase: accountUseCase,
                                           cookieSettingsUseCase: cookieSettingsUseCase,
                                           router: mockRouter,
-                                          featureFlagProvider: featureFlagProvider,
                                           abTestProvider: abTestProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

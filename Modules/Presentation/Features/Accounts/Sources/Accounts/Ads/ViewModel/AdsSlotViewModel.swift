@@ -7,7 +7,6 @@ import SwiftUI
 final public class AdsSlotViewModel: ObservableObject {
     private var adsUseCase: any AdsUseCaseProtocol
     private var accountUseCase: any AccountUseCaseProtocol
-    private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var abTestProvider: any ABTestProviderProtocol
     private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
     private var adsSlotConfig: AdsSlotConfig?
@@ -27,13 +26,11 @@ final public class AdsSlotViewModel: ObservableObject {
         adsUseCase: some AdsUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
     ) {
         self.adsUseCase = adsUseCase
         self.accountUseCase = accountUseCase
         self.adsSlotChangeStream = adsSlotChangeStream
-        self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
     }
     
@@ -65,10 +62,7 @@ final public class AdsSlotViewModel: ObservableObject {
             await updateAdsSlot(nil)
         }
     }
-    
-    // MARK: Feature Flag
-    var isInAppAdvertisementEnabled: Bool { true }
-    
+
     // MARK: AB Test
     func setupABTestVariant() async {
         isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
@@ -87,7 +81,7 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig?) async {
-        guard isInAppAdvertisementEnabled, isAdsEnabled else {
+        guard isAdsEnabled else {
             adsSlotConfig = nil
             await configureAds(url: nil)
             return
@@ -119,7 +113,7 @@ final public class AdsSlotViewModel: ObservableObject {
         
         loadNewAdsTask = Task { [weak self] in
             guard let self = self else { return }
-            guard isInAppAdvertisementEnabled, let adsSlotConfig, isAdsEnabled else {
+            guard let adsSlotConfig, isAdsEnabled else {
                 await configureAds(url: nil)
                 return
             }

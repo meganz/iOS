@@ -662,10 +662,9 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     
     // MARK: - Ads
     
-    func testSetupExternalAds_featureFlagEnabled_adsEnabledAndExternalAdsDisabled_shouldBeFalse() async {
+    func testSetupExternalAds_adsEnabledAndExternalAdsDisabled_shouldBeFalse() async {
         let sut = makeSUT(
             accountDetails: AccountDetailsEntity(proLevel: .free),
-            featureFlags: [.inAppAds: true],
             abTestProvider: MockABTestProvider(list: [.ads: .variantA, .externalAds: .baseline])
         )
         
@@ -674,10 +673,9 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isExternalAdsActive)
     }
     
-    func testSetupExternalAds_featureFlagEnabled_adsEnabledAndExternalAdsEnabled_shouldBeTrue() async {
+    func testSetupExternalAds_adsEnabledAndExternalAdsEnabled_shouldBeTrue() async {
         let sut = makeSUT(
             accountDetails: AccountDetailsEntity(proLevel: .free),
-            featureFlags: [.inAppAds: true],
             abTestProvider: MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA])
         )
         
@@ -691,18 +689,14 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         accountDetails: AccountDetailsEntity,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [AccountPlanEntity] = [],
-        featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: false],
         abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA])
     ) -> UpgradeAccountPlanViewModel {
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         let mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
-        let featureFlagProvider = MockFeatureFlagProvider(list: featureFlags)
-        
         let sut = UpgradeAccountPlanViewModel(
             accountDetails: accountDetails,
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
-            featureFlagProvider: featureFlagProvider,
             abTestProvider: abTestProvider
         )
         return sut

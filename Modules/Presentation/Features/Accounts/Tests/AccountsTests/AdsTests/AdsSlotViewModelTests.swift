@@ -38,13 +38,12 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     // MARK: - Ads slot
-    func testLoadAdsForAdsSlot_featureFlagEnabled_abTestAdsEnabled_shouldHaveNewUrlAndDisplayAds() async {
+    func testLoadAdsForAdsSlot_abTestAdsEnabled_shouldHaveNewUrlAndDisplayAds() async {
         let expectedAdsSlotConfig = randomAdsSlotConfig
         let expectedAdsUrl = adsList[expectedAdsSlotConfig.adsSlot.rawValue]
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [expectedAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream,
                           adsList: adsList,
-                          featureFlags: [.inAppAds: true],
                           abTestProvider: MockABTestProvider(list: [.ads: .variantA]))
         
         await sut.setupABTestVariant()
@@ -58,11 +57,10 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(sut.displayAds, expectedAdsSlotConfig.displayAds)
     }
     
-    func testLoadAdsForAdsSlot_featureFlagEnabled_abTestAdsDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
+    func testLoadAdsForAdsSlot_abTestAdsDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [randomAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream,
                           adsList: adsList,
-                          featureFlags: [.inAppAds: true],
                           abTestProvider: MockABTestProvider(list: [.ads: .baseline]))
         
         await sut.setupABTestVariant()
@@ -231,7 +229,6 @@ final class AdsSlotViewModelTests: XCTestCase {
     private func makeSUT(
         adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
         adsList: [String: String] = [:],
-        featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: true],
         abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA]),
         isNewAccount: Bool = false,
         file: StaticString = #filePath,
@@ -240,12 +237,9 @@ final class AdsSlotViewModelTests: XCTestCase {
         
         let adsUseCase = MockAdsUseCase(adsList: adsList)
         let accountUseCase = MockAccountUseCase(isNewAccount: isNewAccount)
-        let featureFlagProvider = MockFeatureFlagProvider(list: featureFlags)
-        
         let sut = AdsSlotViewModel(adsUseCase: adsUseCase, 
                                    accountUseCase: accountUseCase,
                                    adsSlotChangeStream: adsSlotChangeStream,
-                                   featureFlagProvider: featureFlagProvider,
                                    abTestProvider: abTestProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
