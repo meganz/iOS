@@ -72,7 +72,6 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private let cookieSettingsUseCase: any CookieSettingsUseCaseProtocol
     private let router: any CookieSettingsRouting
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var abTestProvider: any ABTestProviderProtocol
     
     var invokeCommand: ((Command) -> Void)?
@@ -100,13 +99,11 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         accountUseCase: some AccountUseCaseProtocol,
         cookieSettingsUseCase: some CookieSettingsUseCaseProtocol,
         router: some CookieSettingsRouting,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
     ) {
         self.accountUseCase = accountUseCase
         self.cookieSettingsUseCase = cookieSettingsUseCase
         self.router = router
-        self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
     }
     
@@ -146,14 +143,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     // MARK: - Ads Cookie Flags
-    private var isInAppAdvertisementEnabled: Bool { true }
-    
     private func setUpExternalAds() async {
-        guard isInAppAdvertisementEnabled else {
-            isExternalAdsActive = false
-            return
-        }
-        
         let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
         let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
         isExternalAdsActive = isAdsEnabled && isExternalAdsEnabled

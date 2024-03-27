@@ -103,13 +103,7 @@ extension AppDelegate {
         }
     }
     
-    private var isInAppAdvertisementEnabled: Bool { true }
-    
     private func isExternalAdsActive() async -> Bool {
-        guard isInAppAdvertisementEnabled else {
-            return false
-        }
-        
         let abTestProvider = DIContainer.abTestProvider
         let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
         let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
