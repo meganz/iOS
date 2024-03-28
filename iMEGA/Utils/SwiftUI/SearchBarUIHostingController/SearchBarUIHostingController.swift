@@ -19,6 +19,7 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
     private var browseDelegate: BrowserViewControllerDelegateHandler
     private var searchBarVisible: Bool!
     var viewModeProvider: CloudDriveViewModeProvider
+    var displayModeProvider: CloudDriveDisplayModeProvider
 
     init(
         rootView: Content,
@@ -27,7 +28,8 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         toolbarBuilder: CloudDriveBottomToolbarItemsFactory,
         backButtonTitle: String?,
         searchBarVisible: Bool,
-        viewModeProvider: CloudDriveViewModeProvider
+        viewModeProvider: CloudDriveViewModeProvider,
+        displayModeProvider: CloudDriveDisplayModeProvider
     ) {
         self.wrapper = wrapper
         self.selectionHandler = selectionHandler
@@ -36,6 +38,7 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         self.browseDelegate = BrowserViewControllerDelegateHandler()
         self.searchBarVisible = searchBarVisible
         self.viewModeProvider = viewModeProvider
+        self.displayModeProvider = displayModeProvider
         super.init(rootView: rootView)
     }
 
@@ -212,4 +215,10 @@ extension SearchControllerWrapper: UISearchBarDelegate {
 /// CloudDriveViewModeProvider is used for that purpose
 struct CloudDriveViewModeProvider {
     let viewMode: () -> ViewModePreferenceEntity?
+}
+
+/// For Ads Slot feature, we need to know the current displayMode of the CloudDriveVC in order to decide whether to show ads slot or not.
+/// CloudDriveDisplayModeProvider is used for that purpose
+struct CloudDriveDisplayModeProvider {
+    let displayMode: () -> DisplayMode?
 }

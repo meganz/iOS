@@ -12,6 +12,6 @@ extension CloudDriveViewController: CloudDriveAdsSlotDisplayable {
 
 extension SearchBarUIHostingController<NodeBrowserView>: CloudDriveAdsSlotDisplayable {
     var shouldDisplayAdsSlot: Bool {
-        rootView.viewModel.config.displayMode == .cloudDrive
+        displayModeProvider.displayMode() == .cloudDrive
     }
 }

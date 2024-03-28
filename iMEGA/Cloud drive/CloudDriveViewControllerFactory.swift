@@ -603,7 +603,8 @@ struct CloudDriveViewControllerFactory {
                 config: overriddenConfig
             ),
             searchBarVisible: initialViewMode != .mediaDiscovery, 
-            viewModeProvider: makeViewModeProvider(viewModel: nodeBrowserViewModel)
+            viewModeProvider: makeViewModeProvider(viewModel: nodeBrowserViewModel),
+            displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel)
         )
 
         let setNavItemsFactory = { [weak nodeBrowserViewModel] in
@@ -903,6 +904,13 @@ struct CloudDriveViewControllerFactory {
     private func makeViewModeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveViewModeProvider {
         CloudDriveViewModeProvider { [weak viewModel] in
             viewModel?.viewMode
+        }
+    }
+    
+    /// This is to be injected into the SearchBarUIHostingController to server the Ads slot feature.
+    private func makeDisplayModeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveDisplayModeProvider {
+        CloudDriveDisplayModeProvider { [weak viewModel] in
+            viewModel?.config.displayMode
         }
     }
 }
