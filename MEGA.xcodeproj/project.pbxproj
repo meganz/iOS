@@ -2499,6 +2499,7 @@
 		C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */; };
 		C48AED3F27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */; };
 		C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */; };
+		C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
 		C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */; };
 		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
@@ -5202,6 +5203,7 @@
 		C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileNodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderNodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Nib.swift"; sourceTree = "<group>"; };
+		C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDisplayModeProviderTests.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
 		C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModelTests.swift; sourceTree = "<group>"; };
 		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
@@ -5604,8 +5606,8 @@
 		0EE5AC142B1E930C00BCDD88 /* Shared Views */ = {
 			isa = PBXGroup;
 			children = (
-				0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */,
 				0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */,
+				0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */,
 				0EE396F72B87E4B200927E7E /* NodeActionViewModelTests.swift */,
 			);
 			path = "Shared Views";
@@ -5716,6 +5718,7 @@
 			children = (
 				C4F638762BAA9FDF00D0B6B7 /* AdsSlot */,
 				0E72E1222A27ECED00C900F9 /* CopyrightWarning */,
+				C48CADA92BB521130005519B /* DisplayModeProvider */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
 				94B09E6C2B84D0B5007D6B84 /* NewNodeBrowser */,
@@ -12626,6 +12629,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		C48CADA92BB521130005519B /* DisplayModeProvider */ = {
+			isa = PBXGroup;
+			children = (
+				C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */,
+			);
+			path = DisplayModeProvider;
+			sourceTree = "<group>";
+		};
 		C499E1DD2B7663FB00503353 /* StorageFullAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -14006,7 +14017,6 @@
 				838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */,
 				8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */,
 				8330A99728882E4A003E80DB /* CallsSettingsView.swift in Sources */,
-				0E385A792BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift in Sources */,
 				83AE36C22886D033002F1755 /* CallsSettingsViewModel.swift in Sources */,
 				8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */,
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
@@ -14462,6 +14472,8 @@
 				9D3563D028B54EEE00CB3365 /* HelpViewRouter.swift in Sources */,
 				5D64660824890BEA006030A5 /* HexColor.swift in Sources */,
 				0EBF70712BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift in Sources */,
+				0E385A7D2BB3C66700261892 /* HideFilesAndFoldersRouter.swift in Sources */,
+				0E385A792BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift in Sources */,
 				B69AF66528A1E5190022B094 /* HistoryRetentionPickerViewModel.swift in Sources */,
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
 				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
@@ -15101,7 +15113,6 @@
 				94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */,
 				5D7792DA2506116100378D87 /* RecentActionViewModel.swift in Sources */,
 				83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */,
-				0E385A7D2BB3C66700261892 /* HideFilesAndFoldersRouter.swift in Sources */,
 				5D08568F2505E2140030AEE3 /* RecentNodeRouter.swift in Sources */,
 				5B5C7B29264A92410087200D /* RecentsPreference.swift in Sources */,
 				A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */,
@@ -15814,7 +15825,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,
 				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
@@ -15886,6 +15896,7 @@
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
 				94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */,
 				9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */,
+				C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */,
 				BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */,
 				94B85CA12B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift in Sources */,
 				C4D675142BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift in Sources */,
@@ -15927,6 +15938,7 @@
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
+				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,
 				947DC5E62AC1CB07002C1D7C /* HomeChips+TrackingTests.swift in Sources */,
 				94712EF42A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift in Sources */,
 				943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */,
