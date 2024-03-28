@@ -22,7 +22,6 @@ extension DisplayMode {
 }
 
 struct NodeBrowserConfig {
-    
     var displayMode: DisplayMode?
     var isFromViewInFolder: Bool?
     var isFromUnverifiedContactSharedFolder: Bool?
@@ -603,7 +602,8 @@ struct CloudDriveViewControllerFactory {
                 nodeSource,
                 config: overriddenConfig
             ),
-            searchBarVisible: initialViewMode != .mediaDiscovery
+            searchBarVisible: initialViewMode != .mediaDiscovery, 
+            viewModeProvider: makeViewModeProvider(viewModel: nodeBrowserViewModel)
         )
 
         let setNavItemsFactory = { [weak nodeBrowserViewModel] in
@@ -897,5 +897,12 @@ struct CloudDriveViewControllerFactory {
             analyticsUseCase: mediaAnalyticsUseCase,
             mediaDiscoveryUseCase: mediaDiscoveryUseCase
         )
+    }
+    
+    /// This is to be injected into the SearchBarUIHostingController to server the Quick Upload feature.
+    private func makeViewModeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveViewModeProvider {
+        CloudDriveViewModeProvider { [weak viewModel] in
+            viewModel?.viewMode
+        }
     }
 }
