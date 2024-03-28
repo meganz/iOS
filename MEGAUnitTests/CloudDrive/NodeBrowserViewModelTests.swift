@@ -104,6 +104,10 @@ class NodeBrowserViewModelTests: XCTestCase {
                     megaAvatarUseCase: MockMEGAAvatarUseCaseProtocol(),
                     megaAvatarGeneratingUseCase: MockMEGAAvatarGeneratingUseCaseProtocol()
                 ), 
+                noInternetViewModel: NoInternetViewModel(
+                    networkMonitorUseCase: MockNetworkMonitorUseCase(),
+                    networkConnectionStateChanged: { _ in }
+                ),
                 viewModeSaver: { saver($0) },
                 storageFullAlertViewModel: .init(router: MockStorageFullAlertViewRouting()),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },

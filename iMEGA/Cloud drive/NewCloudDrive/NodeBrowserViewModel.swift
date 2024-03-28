@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 import Search
 
 class NodeBrowserViewModel: ObservableObject {
@@ -43,6 +44,7 @@ class NodeBrowserViewModel: ObservableObject {
     var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
     let avatarViewModel: MyAvatarViewModel
+    let noInternetViewModel: NoInternetViewModel
     private let storageFullAlertViewModel: StorageFullAlertViewModel
 
     private let nodeSource: NodeSource
@@ -64,6 +66,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodeSource: NodeSource,
         sortOrder: MEGADomain.SortOrderEntity,
         avatarViewModel: MyAvatarViewModel,
+        noInternetViewModel: NoInternetViewModel,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
         // - context menu can be reconstructed
@@ -86,6 +89,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.nodeSource = nodeSource
         self.sortOrder = sortOrder
         self.avatarViewModel = avatarViewModel
+        self.noInternetViewModel = noInternetViewModel
         self.storageFullAlertViewModel = storageFullAlertViewModel
         self.titleBuilder = titleBuilder
         self.onOpenUserProfile = onOpenUserProfile
@@ -161,6 +165,19 @@ class NodeBrowserViewModel: ObservableObject {
         }
 
         refresh()
+
+        noInternetViewModel.networkConnectionStateChanged = { isConnectedToNetwork in
+            Task { [weak self, weak searchResultsViewModel] in
+                guard isConnectedToNetwork, let self, let searchResultsViewModel else { return }
+
+                /// wait for 10 attempts to see if the node is loaded in the nodeSource.
+                let numberOfTries = 10
+                if await waitForNodeToLoad(with: numberOfTries) {
+                    refresh()
+                    await searchResultsViewModel.reloadResults()
+                }
+            }
+        }
     }
     
     var viewModeAwareMediaDiscoveryViewModel: MediaDiscoveryContentViewModel? {
@@ -266,6 +283,28 @@ class NodeBrowserViewModel: ObservableObject {
         refresh()
         searchResultsViewModel.bridge.editingCancelled()
     }
+
+    /// Waits for the node to be loaded from the `NodeSource`.
+    ///
+    /// This method checks if the node is not nil for every interval until the given number of tries.
+    ///
+    /// - Parameters:
+    ///   - numberOfTries: The number of attempts to check if the root node is loaded before this method returns false.
+    ///
+    /// - Returns: `true` if the root node is loaded, `false` otherwise.
+    private func waitForNodeToLoad(with numberOfTries: Int) async -> Bool {
+        guard case .node(let parentNodeProvider) = nodeSource, parentNodeProvider() != nil else {
+            if numberOfTries == 0 {
+                return false
+            }
+
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            return await waitForNodeToLoad(with: numberOfTries - 1)
+        }
+
+        return true
+    }
+    
 }
 
 extension NodeBrowserViewModel {
