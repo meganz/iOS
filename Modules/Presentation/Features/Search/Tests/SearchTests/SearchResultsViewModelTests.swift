@@ -463,6 +463,15 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
     }
 
+    func testReloadResults_whenPerformed_shouldReturnExpectedQueries() async {
+        let harness = Harness(self).withSingleResultPrepared()
+        await harness.sut.reloadResults()
+        let expectedReceivedQueries: [SearchQuery] = [
+            .initial
+        ]
+        XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
+    }
+
     private func assertChangeSortOrder(
         with sortOrder: Search.SortOrderEntity,
         expectedReceivedQueries: [SearchQuery]? = nil,

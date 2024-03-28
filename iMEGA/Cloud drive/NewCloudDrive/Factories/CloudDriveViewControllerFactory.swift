@@ -255,6 +255,7 @@ struct CloudDriveViewControllerFactory {
         sortOrder: MEGADomain.SortOrderEntity,
         nodeSource: NodeSource,
         searchResultsViewModel: SearchResultsViewModel,
+        noInternetViewModel: NoInternetViewModel,
         config: NodeBrowserConfig,
         nodeActions: NodeActions,
         navigationController: UINavigationController,
@@ -283,7 +284,8 @@ struct CloudDriveViewControllerFactory {
             config: config,
             nodeSource: nodeSource,
             sortOrder: sortOrder,
-            avatarViewModel: avatarViewModel,
+            avatarViewModel: avatarViewModel, 
+            noInternetViewModel: noInternetViewModel,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
@@ -505,12 +507,17 @@ struct CloudDriveViewControllerFactory {
 
         let initialSortOrder = sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
 
+        let noInternetViewModel = NoInternetViewModel(
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+        )
+
         let mediaContentDelegate = MediaContentDelegateHandler()
         let nodeBrowserViewModel = makeNodeBrowserViewModel(
             initialViewMode: initialViewMode, 
             sortOrder: initialSortOrder,
             nodeSource: nodeSource,
             searchResultsViewModel: searchResultsVM,
+            noInternetViewModel: noInternetViewModel,
             config: overriddenConfig,
             nodeActions: nodeActions,
             navigationController: navigationController,

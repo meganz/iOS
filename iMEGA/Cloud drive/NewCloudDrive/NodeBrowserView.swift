@@ -9,6 +9,7 @@ struct NodeBrowserView: View {
 
     var body: some View {
         content
+            .noInternetViewModifier(viewModel: viewModel.noInternetViewModel)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     leftToolbarContent

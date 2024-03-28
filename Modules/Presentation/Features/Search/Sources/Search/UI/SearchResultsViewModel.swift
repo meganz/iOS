@@ -666,4 +666,10 @@ public extension SearchResultsViewModel {
             await queryChanged(to: query)
         }
     }
+
+    @MainActor
+    func reloadResults() async {
+        await showLoadingPlaceholderIfNeeded()
+        await queryChanged(to: currentQuery)
+    }
 }
