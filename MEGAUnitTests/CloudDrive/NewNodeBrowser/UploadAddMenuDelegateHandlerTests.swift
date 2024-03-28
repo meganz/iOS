@@ -17,7 +17,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
         await assertValidNode(
             for: NodeEntity(),
             action: .chooseFromPhotos,
-            expectedAction: .choosePhotoVideo( NodeEntity())
+            expectedAction: .choosePhotoVideo(NodeEntity())
         )
     }
 

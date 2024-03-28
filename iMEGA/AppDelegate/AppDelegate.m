@@ -635,13 +635,7 @@
         
         
     } else if ([AppDelegate matchQuickAction:type with: @"upload"]) {
-        self.mainTBC.selectedIndex = TabTypeCloudDrive;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeCloudDrive];
-        CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
-        // need to check what was returned from CloudDriveViewControllerFactory
-        if ([cloudDriveVC isKindOfClass:[CloudDriveViewController class]]) {
-            [cloudDriveVC presentUploadOptions];
-        }
+        [self handleQuickUploadAction];
     } else if ([AppDelegate matchQuickAction:type with: @"offline"]) {
         [self.mainTBC showOfflineAndPresentFileWithHandle:nil];
     } else {

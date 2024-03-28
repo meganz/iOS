@@ -11,6 +11,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 };
 
 @class MainTabBarController;
+@class CloudDriveQuickUploadActionRouter;
 
 @interface AppDelegate : UIResponder 
 
@@ -22,6 +23,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @property (nonatomic) NSNumber *openChatLater;
 @property (nonatomic) BOOL showAccountUpgradeScreen;
 @property (nonatomic) BOOL loadProductsAndShowAccountUpgradeScreen;
+@property (strong, nonatomic) CloudDriveQuickUploadActionRouter* quickUploadActionRouter;
 
 - (void)showMainTabBar;
 - (void)performCall;

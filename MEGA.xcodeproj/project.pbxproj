@@ -2411,6 +2411,8 @@
 		BFFE2293293488980063CFF2 /* FutureMeetingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */; };
 		BFFE22952934A7D10063CFF2 /* FutureMeetingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */; };
 		BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */; };
+		C403FA4A2BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */; };
+		C403FA4D2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */; };
 		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
 		C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
@@ -2526,6 +2528,8 @@
 		C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */; };
 		C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */; };
 		C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */; };
+		C4D6750F2BB2CAF1000A1F79 /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D6750E2BB2CAF1000A1F79 /* MockNavigationController.swift */; };
+		C4D675142BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D675132BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift */; };
 		C4EB6DBB2B4BF68B007A94E3 /* AppExitHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */; };
 		C4EDB73826655229006A114F /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB73726655229006A114F /* RoundedView.swift */; };
 		C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */; };
@@ -5119,6 +5123,8 @@
 		BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomViewModel.swift; sourceTree = "<group>"; };
 		BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomView.swift; sourceTree = "<group>"; };
 		BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewDiffableDataSource.swift; sourceTree = "<group>"; };
+		C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+QuickUploadAction.swift"; sourceTree = "<group>"; };
+		C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveQuickUploadActionRouter.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
 		C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThumbnailViewerTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
@@ -5224,6 +5230,8 @@
 		C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCurrentStateEntity.swift; sourceTree = "<group>"; };
 		C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoUseCase.swift; sourceTree = "<group>"; };
 		C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoRepository.swift; sourceTree = "<group>"; };
+		C4D6750E2BB2CAF1000A1F79 /* MockNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
+		C4D675132BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveQuickUploadActionRouterTests.swift; sourceTree = "<group>"; };
 		C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppExitHandlerManager.m; sourceTree = "<group>"; };
 		C4EB6DBC2B4BF6B7007A94E3 /* AppExitHandlerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppExitHandlerManager.h; sourceTree = "<group>"; };
 		C4EDB73726655229006A114F /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
@@ -6661,6 +6669,7 @@
 				12647CD027D7F7AA002033AF /* MediaDiscovery */,
 				94B09E3C2B84CC86007D6B84 /* NewNodeBrowser */,
 				834EFDBC24D9AB9C004BFECA /* NodeInfo */,
+				C403FA4B2BAD8DB4007642AD /* QuickActions */,
 				0EAF73242A6786D9008F939D /* BrowserView.swift */,
 				947C6CB12A5D408C00CF929E /* BrowserViewController+Additions.swift */,
 				6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */,
@@ -7975,6 +7984,7 @@
 				5D52C748250C4F2800286A43 /* Functions */,
 				949704B52AB427A700B2CA3A /* Router */,
 				B6FD6510268D7EA500988A17 /* UseCase */,
+				C4D6750D2BB2CAE3000A1F79 /* ViewControllers */,
 				32A9DECC28D198E300ABC3F6 /* ViewModel */,
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
 				5D33D671250DBA0B00D74666 /* CGSize.swift */,
@@ -10766,6 +10776,7 @@
 				B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */,
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */,
+				C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */,
 				B611E174286165ED00F360CF /* AppDelegate+SDK.swift */,
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
@@ -11477,6 +11488,7 @@
 				B5000FC32A1E219400E06478 /* Plan */,
 				259FA4002A3A946500C038B2 /* Profile */,
 				BF6E8D1725B53F3C003A125A /* PSA */,
+				C4D675122BB2CF0F000A1F79 /* QuickActions */,
 				949704B12AB425AC00B2CA3A /* Rename */,
 				A8EE47AB27DFAEF600D37685 /* Report Issue */,
 				5B9FBDE9264925900014B7FD /* Settings */,
@@ -12386,6 +12398,14 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		C403FA4B2BAD8DB4007642AD /* QuickActions */ = {
+			isa = PBXGroup;
+			children = (
+				C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */,
+			);
+			path = QuickActions;
+			sourceTree = "<group>";
+		};
 		C44CDFA32590A08F00313719 /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -12703,6 +12723,22 @@
 				C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		C4D6750D2BB2CAE3000A1F79 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C4D6750E2BB2CAF1000A1F79 /* MockNavigationController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C4D675122BB2CF0F000A1F79 /* QuickActions */ = {
+			isa = PBXGroup;
+			children = (
+				C4D675132BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift */,
+			);
+			path = QuickActions;
 			sourceTree = "<group>";
 		};
 		C4EB6DB72B4BF5FD007A94E3 /* AppExitHandler */ = {
@@ -13858,6 +13894,7 @@
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */,
+				C403FA4A2BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift in Sources */,
 				B611E175286165ED00F360CF /* AppDelegate+SDK.swift in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				255FE6902ACBB5D40077A85C /* AppearanceListFooterView.swift in Sources */,
@@ -14127,6 +14164,7 @@
 				94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */,
 				94B09E5E2B84CC87007D6B84 /* CloudDriveNodeInsertionRouter.swift in Sources */,
 				BF2406A92BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift in Sources */,
+				C403FA4D2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift in Sources */,
 				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
 				BF5D8E1A2B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
@@ -15850,6 +15888,7 @@
 				9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */,
 				BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */,
 				94B85CA12B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift in Sources */,
+				C4D675142BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift in Sources */,
 				BFDAC17A2B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift in Sources */,
 				BFDAC17E2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift in Sources */,
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
@@ -15936,6 +15975,7 @@
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
 				949CC15D2B0FD5230047D581 /* MockMyAccountHallRouter.swift in Sources */,
+				C4D6750F2BB2CAF1000A1F79 /* MockNavigationController.swift in Sources */,
 				94712EFA2A9C9F5700B5F2C9 /* MockNodeDetailsUseCase.swift in Sources */,
 				C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */,
 				24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */,

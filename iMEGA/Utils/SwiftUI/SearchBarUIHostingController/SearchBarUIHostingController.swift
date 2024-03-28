@@ -1,3 +1,4 @@
+import MEGADomain
 import Search
 import SwiftUI
 
@@ -14,24 +15,28 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
     private var selectionHandler: SearchControllerSelectionHandler?
     private var toolbar: UIToolbar?
     private var backButtonTitle: String?
-    private var toolbarBuilder: CloudDriveBottomToolbarItemsFactory!
-    private var browseDelegate: BrowserViewControllerDelegateHandler!
+    private var toolbarBuilder: CloudDriveBottomToolbarItemsFactory
+    private var browseDelegate: BrowserViewControllerDelegateHandler
     private var searchBarVisible: Bool!
+    var viewModeProvider: CloudDriveViewModeProvider
+
     init(
         rootView: Content,
         wrapper: SearchControllerWrapper,
         selectionHandler: SearchControllerSelectionHandler,
         toolbarBuilder: CloudDriveBottomToolbarItemsFactory,
         backButtonTitle: String?,
-        searchBarVisible: Bool
+        searchBarVisible: Bool,
+        viewModeProvider: CloudDriveViewModeProvider
     ) {
-        super.init(rootView: rootView)
         self.wrapper = wrapper
         self.selectionHandler = selectionHandler
         self.toolbarBuilder = toolbarBuilder
         self.backButtonTitle = backButtonTitle
         self.browseDelegate = BrowserViewControllerDelegateHandler()
         self.searchBarVisible = searchBarVisible
+        self.viewModeProvider = viewModeProvider
+        super.init(rootView: rootView)
     }
 
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -201,4 +206,10 @@ extension SearchControllerWrapper: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         onCancel?()
     }
+}
+
+/// For Quick Quick Upload feature, we need to know the current viewMode of the CloudDriveVC in order to generate the correct upload actions
+/// CloudDriveViewModeProvider is used for that purpose
+struct CloudDriveViewModeProvider {
+    let viewMode: () -> ViewModePreferenceEntity?
 }
