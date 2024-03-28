@@ -2500,6 +2500,7 @@
 		C48AED3F27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */; };
 		C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */; };
 		C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */; };
+		C48CADB02BB54C550005519B /* NodeBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
 		C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */; };
 		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
@@ -5204,6 +5205,7 @@
 		C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderNodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Nib.swift"; sourceTree = "<group>"; };
 		C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDisplayModeProviderTests.swift; sourceTree = "<group>"; };
+		C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserConfig.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
 		C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModelTests.swift; sourceTree = "<group>"; };
 		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
@@ -6670,7 +6672,7 @@
 				0E72E11F2A27EC8D00C900F9 /* CopyrightWarning */,
 				837EE1F3253DB7E50083D927 /* GetLink */,
 				12647CD027D7F7AA002033AF /* MediaDiscovery */,
-				94B09E3C2B84CC86007D6B84 /* NewNodeBrowser */,
+				94B09E3C2B84CC86007D6B84 /* NewCloudDrive */,
 				834EFDBC24D9AB9C004BFECA /* NodeInfo */,
 				C403FA4B2BAD8DB4007642AD /* QuickActions */,
 				0EAF73242A6786D9008F939D /* BrowserView.swift */,
@@ -6705,8 +6707,6 @@
 				251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */,
 				837A88BD20B42290007B55D1 /* CloudDriveViewController.h */,
 				837A88BE20B42290007B55D1 /* CloudDriveViewController.m */,
-				94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */,
-				BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */,
 				B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */,
 				BF67D7742B9EAC6000978846 /* CreateNewFolderAlertViewModel.swift */,
 				BF67D7762B9EAC8300978846 /* CreateNewFolderAlertViewRouter.swift */,
@@ -6715,7 +6715,6 @@
 				BFCF8438246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift */,
 				2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */,
 				BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */,
-				9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */,
 				94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */,
 				94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */,
 			);
@@ -10025,25 +10024,23 @@
 			path = Rename;
 			sourceTree = "<group>";
 		};
-		94B09E3C2B84CC86007D6B84 /* NewNodeBrowser */ = {
+		94B09E3C2B84CC86007D6B84 /* NewCloudDrive */ = {
 			isa = PBXGroup;
 			children = (
 				C4F6385E2BA97F6200D0B6B7 /* AdsDisplayViewModel */,
+				C48CADAD2BB549880005519B /* Factories */,
+				C48CADAE2BB54C260005519B /* NodeBrowserConfig */,
 				94B09E4C2B84CC86007D6B84 /* StorageFullAlertViewModel */,
 				94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */,
-				94B09E432B84CC86007D6B84 /* CloudDriveBottomToolbarFactory.swift */,
-				94B09E492B84CC86007D6B84 /* CloudDriveContextMenuConfigFactory.swift */,
 				94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */,
 				94B09E462B84CC86007D6B84 /* CloudDriveNodeInsertionRouter.swift */,
 				94B09E422B84CC86007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift */,
 				94B09E442B84CC86007D6B84 /* ContextMenuManager+ActionHandlersArray.swift */,
 				94B09E402B84CC86007D6B84 /* DisplayMenuDelegateHandler.swift */,
-				94B09E4A2B84CC86007D6B84 /* InitialViewModeFactory.swift */,
 				94B09E4F2B84CC86007D6B84 /* MediaContentDelegateHandler.swift */,
 				94B09E532B84CC86007D6B84 /* NodeActions+NodeActionsDelegateHandler.swift */,
 				94B09E3F2B84CC86007D6B84 /* NodeActions.swift */,
 				94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */,
-				BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */,
 				94B09E412B84CC86007D6B84 /* NodeBrowserView.swift */,
 				94B09E542B84CC86007D6B84 /* NodeBrowserViewModel.swift */,
 				94B09E512B84CC86007D6B84 /* NodeSource.swift */,
@@ -10052,10 +10049,9 @@
 				94B09E522B84CC86007D6B84 /* RubbishBinMenuDelegateHandler.swift */,
 				BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */,
 				94B09E452B84CC86007D6B84 /* SearchResultSelection+NonEmptySiblings.swift */,
-				94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */,
 				94B09E482B84CC86007D6B84 /* UploadAddMenuDelegateHandler.swift */,
 			);
-			path = NewNodeBrowser;
+			path = NewCloudDrive;
 			sourceTree = "<group>";
 		};
 		94B09E4C2B84CC86007D6B84 /* StorageFullAlertViewModel */ = {
@@ -12637,6 +12633,29 @@
 			path = DisplayModeProvider;
 			sourceTree = "<group>";
 		};
+		C48CADAD2BB549880005519B /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				94B09E432B84CC86007D6B84 /* CloudDriveBottomToolbarFactory.swift */,
+				94B09E492B84CC86007D6B84 /* CloudDriveContextMenuConfigFactory.swift */,
+				94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */,
+				BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */,
+				94B09E4A2B84CC86007D6B84 /* InitialViewModeFactory.swift */,
+				9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */,
+				BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */,
+				94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		C48CADAE2BB54C260005519B /* NodeBrowserConfig */ = {
+			isa = PBXGroup;
+			children = (
+				C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */,
+			);
+			path = NodeBrowserConfig;
+			sourceTree = "<group>";
+		};
 		C499E1DD2B7663FB00503353 /* StorageFullAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -14811,6 +14830,7 @@
 				5D166B82252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift in Sources */,
 				12E23289286D49000099775D /* NodeActionViewModel.swift in Sources */,
 				94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */,
+				C48CADB02BB54C550005519B /* NodeBrowserConfig.swift in Sources */,
 				BF875B472B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift in Sources */,
 				94B09E592B84CC87007D6B84 /* NodeBrowserView.swift in Sources */,
 				94B09E6B2B84CC87007D6B84 /* NodeBrowserViewModel.swift in Sources */,
