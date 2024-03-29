@@ -48,17 +48,20 @@ public struct ResultProperty: Identifiable, Equatable, Comparable, Sendable {
     /// additionally, vibrancy enabled result properties, will be shown a the first positions (leading) in the requested placement [FM-1405]
     /// if there are multiple ones, they are not sorted further, and just keep ordering on the containing collection
     public let vibrancyEnabled: Bool
+    public let accessibilityLabel: String
     public let placement: @Sendable (ResultCellLayout) -> PropertyPlacement
     
     public init(
         id: Id,
         content: Content,
         vibrancyEnabled: Bool,
+        accessibilityLabel: String = "",
         placement: @Sendable @escaping (ResultCellLayout) -> PropertyPlacement
     ) {
         self.id = id
         self.content = content
         self.vibrancyEnabled = vibrancyEnabled
+        self.accessibilityLabel = accessibilityLabel
         self.placement = placement
     }
 }

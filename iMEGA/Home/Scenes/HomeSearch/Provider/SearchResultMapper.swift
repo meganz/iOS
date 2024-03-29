@@ -73,7 +73,7 @@ struct SearchResultMapper {
         // one other possible version of this code could use some kind of priority
         // so that properties could be sorted on the usage location
         if let labelImagePath = iconIndicatorPath(for: node) {
-            properties.append(.label(path: labelImagePath))
+            properties.append(.label(path: labelImagePath, accessibilityLabel: node.label.labelString))
         }
         
         if node.isFavourite {
