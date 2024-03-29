@@ -21,7 +21,7 @@ extension Array where Element == ResultProperty {
     ) -> some View {
         Group {
             ForEach(propertiesFor(mode: layout, placement: placement)) { resultProperty in
-                propertyView(for: resultProperty)
+                propertyView(for: resultProperty).accessibilityLabel(resultProperty.accessibilityLabel)
             }
         }
     }

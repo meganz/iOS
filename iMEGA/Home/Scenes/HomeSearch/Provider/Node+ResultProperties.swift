@@ -1,3 +1,4 @@
+import MEGAL10n
 import Search
 
 enum NodePropertyId: String {
@@ -88,6 +89,7 @@ extension ResultProperty {
         propertyId: .favorite,
         icon: UIImage.favouriteThumbnail,
         vibrancyEnabled: false,
+        accessibilityLabel: Strings.Localizable.favourite,
         placement: { mode in
             switch mode {
             case .list:
@@ -105,6 +107,7 @@ extension ResultProperty {
             propertyId: .linked,
             icon: UIImage.linkedThumbnail,
             vibrancyEnabled: false,
+            accessibilityLabel: Strings.Localizable.shared,
             placement: { mode in
                 switch mode {
                 case .list:
@@ -118,11 +121,12 @@ extension ResultProperty {
         )
     }
     
-    static func label(path: String) -> ResultProperty {
+    static func label(path: String, accessibilityLabel: String) -> ResultProperty {
         .init(
             id: NodePropertyId.label.rawValue,
             content: .icon(image: UIImage(named: path)!, scalable: false),
             vibrancyEnabled: false,
+            accessibilityLabel: accessibilityLabel,
             placement: { _ in
                     .prominent
             }
@@ -142,12 +146,14 @@ extension ResultProperty {
         propertyId: NodePropertyId,
         image: UIImage,
         vibrancyEnabled: Bool,
+        accessibilityLabel: String = "",
         placement: @Sendable @escaping (Search.ResultCellLayout) -> PropertyPlacement
     ) {
         self.init(
             id: propertyId.rawValue,
             content: .icon(image: image, scalable: true),
             vibrancyEnabled: vibrancyEnabled,
+            accessibilityLabel: accessibilityLabel,
             placement: placement
         )
     }
@@ -156,12 +162,14 @@ extension ResultProperty {
         propertyId: NodePropertyId,
         icon: UIImage,
         vibrancyEnabled: Bool,
+        accessibilityLabel: String = "",
         placement: @Sendable @escaping (Search.ResultCellLayout) -> PropertyPlacement
     ) {
         self.init(
             id: propertyId.rawValue,
             content: .icon(image: icon, scalable: true),
             vibrancyEnabled: vibrancyEnabled,
+            accessibilityLabel: accessibilityLabel,
             placement: placement
         )
     }
