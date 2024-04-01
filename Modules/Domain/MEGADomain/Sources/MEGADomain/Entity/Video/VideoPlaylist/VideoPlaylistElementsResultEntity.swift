@@ -1,4 +1,4 @@
-public struct VideoPlaylistElementsResultEntity {
+public struct VideoPlaylistElementsResultEntity: Equatable {
     let success: UInt
     let failure: UInt
     

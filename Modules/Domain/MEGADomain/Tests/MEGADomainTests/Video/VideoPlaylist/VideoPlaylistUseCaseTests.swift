@@ -205,7 +205,10 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         filesSearchUseCase: MockFilesSearchUseCase,
         userVideoPlaylistRepository: MockUserVideoPlaylistsRepository
     ) {
-        let userVideoPlaylistRepository = MockUserVideoPlaylistsRepository(videoPlaylistsResult: userVideoPlaylistRepositoryResult)
+        let userVideoPlaylistRepository = MockUserVideoPlaylistsRepository(
+            videoPlaylistsResult: userVideoPlaylistRepositoryResult,
+            addVideosToVideoPlaylistResult: .failure(GenericErrorEntity())
+        )
         let sut = VideoPlaylistUseCase(
             fileSearchUseCase: filesSearchUseCase,
             userVideoPlaylistsRepository: userVideoPlaylistRepository
