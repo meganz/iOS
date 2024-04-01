@@ -5,6 +5,7 @@ import SwiftUI
 
 struct NotificationItemContentView: View {
     @ObservedObject var viewModel: NotificationItemViewModel
+    @State private var iconImageHeight = CGFloat.zero
     
     @Environment(\.colorScheme) var colorScheme
     private var secondaryTextColor: Color {
@@ -23,15 +24,25 @@ struct NotificationItemContentView: View {
                     Text(viewModel.notification.description)
                         .font(.footnote)
                         .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                    
+                    if viewModel.imageBanner == nil {
+                        footerText
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(in: .local)
                 
-                if let icon = viewModel.icon {
+                if viewModel.imageBanner == nil,
+                   let icon = viewModel.icon {
                     Spacer()
-                    Image(uiImage: icon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 80)
+                    
+                    VStack {
+                        Image(uiImage: icon)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 80)
+                    }
+                    .frame(minHeight: iconImageHeight)
                 }
             }
             
@@ -39,18 +50,26 @@ struct NotificationItemContentView: View {
                 Image(uiImage: imageBanner)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: .infinity)
-            }
-            
-            if let footerText = viewModel.footerText() {
-                Text(footerText)
-                    .font(.caption)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : secondaryTextColor)
+                    .frame(maxWidth: .infinity, maxHeight: 115)
+                
+                footerText
             }
         }
         .task {
             await viewModel.preloadImages()
         }
         .fixedSize(horizontal: false, vertical: true)
+        .onPreferenceChange(FramePreferenceKey.self) {
+            iconImageHeight = $0.height
+        }
+    }
+    
+    @ViewBuilder
+    private var footerText: some View {
+        if let footerText = viewModel.footerText() {
+            Text(footerText)
+                .font(.caption)
+                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : secondaryTextColor)
+        }
     }
 }
