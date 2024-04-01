@@ -5,13 +5,6 @@ public struct NotificationItemView: View {
     private let viewModel: NotificationItemViewModel
     
     @Environment(\.colorScheme) var colorScheme
-    private var seenBackgroundColor: Color {
-        guard isDesignTokenEnabled else {
-            return colorScheme == .dark ? Color(red: 0.110, green: 0.110, blue: 0.118) : Color(red: 0.980, green: 0.980, blue: 0.980)
-        }
-        return TokenColors.Background.surface1.swiftUI
-    }
-    
     private var defaultBackgroundColor: Color {
         guard isDesignTokenEnabled else {
             return colorScheme == .dark ? Color(red: 44/255, green: 44/255, blue: 46/255) : Color.white
@@ -41,7 +34,7 @@ public struct NotificationItemView: View {
             )
         }
         .padding(12)
-        .background(viewModel.notification.isSeen ? seenBackgroundColor : defaultBackgroundColor)
+        .background(defaultBackgroundColor)
         .frame(maxWidth: .infinity)
         .separatorView(offset: 0, color: separatorColor)
     }
