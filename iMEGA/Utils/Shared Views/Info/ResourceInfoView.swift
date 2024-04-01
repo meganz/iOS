@@ -6,6 +6,10 @@ import SwiftUI
 
 struct ResourceInfoView: View {
     @ObservedObject var viewModel: ResourceInfoViewModel
+    
+    private var backgroundColor: Color {
+        isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear
+    }
 
     var body: some View {
         NavigationStackView {
@@ -20,19 +24,33 @@ struct ResourceInfoView: View {
                 }
                 .frame(height: 156)
                 .frame(maxWidth: .infinity)
-                
+                .listRowSeparator(.hidden)
+                .listRowBackground(backgroundColor)
+
                 Text(viewModel.title)
                     .font(.callout)
                     .bold()
-                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.label.swiftUI)
+                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
                     .padding(.vertical, 2)
-                    .listRowSeparator(.hidden)
+                    .listRowBackground(backgroundColor)
                 
                 Section(header: Text(Strings.Localizable.details)) {
-                    DetailRow(title: Strings.Localizable.totalSize, detail: viewModel.totalSize)
-                    DetailRow(title: Strings.Localizable.contains, detail: viewModel.contentDescription)
+                    DetailRow(
+                        title: Strings.Localizable.totalSize,
+                        detail: viewModel.totalSize,
+                        backgroundColor: backgroundColor
+                    )
+                    DetailRow(
+                        title: Strings.Localizable.contains,
+                        detail: viewModel.contentDescription,
+                        backgroundColor: backgroundColor
+                    )
                     if viewModel.formattedDate.isNotEmpty {
-                        DetailRow(title: Strings.Localizable.added, detail: viewModel.formattedDate)
+                        DetailRow(
+                            title: Strings.Localizable.added,
+                            detail: viewModel.formattedDate,
+                            backgroundColor: backgroundColor
+                        )
                     }
                 }
             }
@@ -45,10 +63,11 @@ struct ResourceInfoView: View {
                         viewModel.dismiss()
                     }, label: {
                         Text(Strings.Localizable.close)
-                            .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.label.swiftUI)
+                            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
                     })
                 }
             }
+            .designTokenBackground(isDesignTokenEnabled)
         }
     }
 }
@@ -56,22 +75,24 @@ struct ResourceInfoView: View {
 struct DetailRow: View {
     let title: String
     let detail: String
+    let backgroundColor: Color
     
     var body: some View {
         HStack {
             Text(title)
                 .font(.caption)
                 .fontWeight(.semibold)
-                .foregroundColor(
+                .foregroundStyle(
                     isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : UIColor.secondaryLabel.swiftUI
                 )
             Spacer()
             Text(detail)
                 .font(.caption)
-                .foregroundColor(
+                .foregroundStyle(
                     isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.label.swiftUI
                 )
         }
+        .listRowBackground(backgroundColor)
     }
 }
 
