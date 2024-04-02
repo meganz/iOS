@@ -1023,7 +1023,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-#pragma mark - BrowserViewControllerDelegate & ContatctsViewControllerDelegate
+#pragma mark - BrowserViewControllerDelegate & ContactsViewControllerDelegate
 
 - (void)nodeEditCompleted:(BOOL)complete {
     

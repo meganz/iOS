@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 import XCTest
 
 final class ParticipantsAddingViewFactoryTests: XCTestCase {
@@ -9,7 +10,8 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
             accountUseCase: MockAccountUseCase(),
             chatRoomUseCase: MockChatRoomUseCase(),
-            chatRoom: ChatRoomEntity(chatId: .invalid)
+            chatRoom: ChatRoomEntity(chatId: .invalid),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
         )
         
         let hasVisibleContacts = participantsAddingViewFactory.hasVisibleContacts
@@ -23,7 +25,8 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
             accountUseCase: mockAccountUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
-            chatRoom: ChatRoomEntity(chatId: .invalid)
+            chatRoom: ChatRoomEntity(chatId: .invalid),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
         )
         
         let hasNonAddedVisibleContacts = participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: [])
@@ -41,7 +44,8 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
             accountUseCase: mockAccountUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            chatRoom: ChatRoomEntity(chatId: .invalid)
+            chatRoom: ChatRoomEntity(chatId: .invalid),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
         )
         
         let shouldShowAddParticipantsScreen = participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: [])

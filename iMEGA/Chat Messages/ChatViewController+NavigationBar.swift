@@ -1,6 +1,7 @@
 import ChatRepo
 import Foundation
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
 extension ChatViewController {
@@ -142,7 +143,8 @@ extension ChatViewController {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
-            chatRoom: chatRoom.toChatRoomEntity()
+            chatRoom: chatRoom.toChatRoomEntity(),
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
     }
 }

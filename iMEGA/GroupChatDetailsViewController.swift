@@ -3,6 +3,7 @@ import Foundation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 
 extension GroupChatDetailsViewController {
@@ -68,7 +69,8 @@ extension GroupChatDetailsViewController {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
-            chatRoom: chatRoom.toChatRoomEntity()
+            chatRoom: chatRoom.toChatRoomEntity(),
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
     }
     

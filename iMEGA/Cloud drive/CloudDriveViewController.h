@@ -11,7 +11,7 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol ViewModeStoringObjC;
-@interface CloudDriveViewController : UIViewController <BrowserViewControllerDelegate, ContatctsViewControllerDelegate, UIDocumentPickerDelegate>
+@interface CloudDriveViewController : UIViewController <BrowserViewControllerDelegate, ContactsViewControllerDelegate, UIDocumentPickerDelegate>
 
 @property (nonatomic, strong, nullable) MEGANode *parentNode;
 @property (nonatomic, strong, nullable) MEGAUser *user;

@@ -3,19 +3,39 @@ import MEGAPresentation
 
 @objc final class ContactsViewModel: NSObject {
     private let sdk: MEGASdk
-
+    var bannerConfig: BannerView.Config?
+    var bannerDecider: (Int) -> Bool = { _ in false }
+    var dismissedBannerWarning = false
+    var shouldShowBannerWarning: Bool {
+        bannerConfig != nil && !dismissedBannerWarning
+    }
+    
     init(
         sdk: MEGASdk
     ) {
         self.sdk = sdk
     }
     
+    func shouldShowBannerWarning(
+        selectedUsersCount: Int
+    ) -> Bool {
+        reachedLimitOfCallParticipants(selectedUsersCount: selectedUsersCount)
+        && !dismissedBannerWarning
+    }
+    
+    private func reachedLimitOfCallParticipants(
+        selectedUsersCount: Int
+    ) -> Bool {
+        bannerDecider(selectedUsersCount)
+    }
+   
     @objc
     func shouldShowUnverifiedContactsBanner(
         contactsMode: ContactsMode,
         selectedUsersArray: NSMutableArray?,
         visibleUsersArray: NSMutableArray?
     ) -> Bool {
+        
         guard sdk.isContactVerificationWarningEnabled,
               [ContactsMode.shareFoldersWith, ContactsMode.folderSharedWith].contains(contactsMode) else {
             return false

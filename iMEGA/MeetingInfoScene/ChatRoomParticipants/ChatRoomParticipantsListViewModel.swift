@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
 final class ChatRoomParticipantsListViewModel: ObservableObject {
@@ -146,7 +147,8 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            chatRoom: chatRoom
+            chatRoom: chatRoom,
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
     }
     
