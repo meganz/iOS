@@ -369,9 +369,9 @@ struct CloudDriveViewControllerFactory {
             copy: { nodeActions.browserAction(.copy, [$0]) },
             removeLink: nodeActions.removeLink,
             removeSharing: nodeActions.removeSharing,
-            rename: {
+            rename: { [weak nodeBrowserViewModel] in
                 nodeActions.rename(
-                    $0, { [weak nodeBrowserViewModel] in
+                    $0, {
                         nodeBrowserViewModel?.refreshTitle()
                     }
                 )
@@ -519,7 +519,8 @@ struct CloudDriveViewControllerFactory {
             onSelectionModeChange: onSelectionModeChange
         )
         
-        mediaContentDelegate.selectedPhotosHandler = { selected, _ in
+        mediaContentDelegate.selectedPhotosHandler = { [weak nodeBrowserViewModel] selected, _ in
+            guard let nodeBrowserViewModel else { return }
             Task { @MainActor in
                 let accessType = await parentNodeAccessType()
                 // here we send selected items and config to refresh toolbar inside
