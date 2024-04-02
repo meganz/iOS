@@ -28,7 +28,7 @@ final class HomeSearchResultRouter: NodeRouting {
     
     private weak var navigationController: UINavigationController?
     
-    private var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate
+    private var nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate
     
     private lazy var nodeOpener = NodeOpener(navigationController: navigationController)
     
@@ -38,7 +38,7 @@ final class HomeSearchResultRouter: NodeRouting {
     
     init(
         navigationController: UINavigationController,
-        nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate,
+        nodeActionViewControllerDelegate: some NodeActionViewControllerDelegate,
         backupsUseCase: some BackupsUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol
     ) {
