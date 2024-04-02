@@ -108,15 +108,26 @@ struct CloudDriveViewControllerFactory {
         
         let navController = nc ?? MEGANavigationController(rootViewController: UIViewController())
         
-        let router = homeFactory.makeRouter(
-            navController: navController,
-            tracker: tracker
+        let nodeActions = NodeActions.makeActions(
+            sdk: sdk,
+            navigationController: navController
         )
         
         let nodeUseCase = homeFactory.makeNodeUseCase()
         let backupsUseCase = BackupsUseCase(
             backupsRepository: BackupsRepository.newRepo,
             nodeRepository: NodeRepository.newRepo
+        )
+        
+        let nodeActionViewControllerDelegate = CloudDriveNodeActionViewControllerDelegate(
+            nodeActionGenericDelegate: NodeActionViewControllerGenericDelegate(viewController: navController),
+            nodeActions: nodeActions
+        )
+        let router = HomeSearchResultRouter(
+            navigationController: navController,
+            nodeActionViewControllerDelegate: nodeActionViewControllerDelegate,
+            backupsUseCase: backupsUseCase,
+            nodeUseCase: nodeUseCase
         )
         
         let nodeAssetsManager = NodeAssetsManager.shared
@@ -163,10 +174,7 @@ struct CloudDriveViewControllerFactory {
             backupsUseCase: backupsUseCase,
             rubbishBinUseCase: DIContainer.rubbishBinUseCase,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
-            nodeActions: .makeActions(
-                sdk: sdk,
-                navigationController: navController
-            )
+            nodeActions: nodeActions
         )
     }
     
