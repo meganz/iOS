@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGASwiftUI
 import Notifications
 import XCTest
 
@@ -155,6 +156,31 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
+    func testClearImageCache_whenActionDispatched_cacheIsCleared() {
+        let imageLoader = ImageLoader()
+        let (sut, _) = makeSUT(
+            featureFlagList: [.notificationCenter: true],
+            imageLoader: imageLoader
+        )
+
+        sut.dispatch(.clearImageCache)
+        
+        XCTAssertTrue(imageLoader.isCacheClear, "Cache should be cleared when clearImageCache action is dispatched.")
+    }
+    
+    func testClearCache_whenCalled_shouldIncrementClearCacheCallCount() {
+        let imageLoader = MockImageLoader()
+        
+        let (sut, _) = makeSUT(
+            featureFlagList: [.notificationCenter: true],
+            imageLoader: imageLoader
+        )
+        
+        sut.dispatch(.clearImageCache)
+
+        XCTAssertEqual(imageLoader.clearCacheCallCount, 1, "Clear cache call count should be incremented")
+    }
+    
     private func testFetchNotificationList(
         sut: NotificationsViewModel,
         expectedPromoListCount: Int,
@@ -179,6 +205,7 @@ final class NotificationsViewModelTests: XCTestCase {
         notifications: [NotificationEntity] = [],
         enabledNotifications: [NotificationIDEntity] = [],
         unreadNotificationIds: [NotificationIDEntity] = [],
+        imageLoader: ImageLoadingProtocol = ImageLoader(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (NotificationsViewModel, MockNotificationUseCase) {
@@ -192,7 +219,8 @@ final class NotificationsViewModelTests: XCTestCase {
         
         let sut = NotificationsViewModel(
             featureFlagProvider: mockFeatureFlagProvider,
-            notificationsUseCase: mockNotificationsUseCase
+            notificationsUseCase: mockNotificationsUseCase,
+            imageLoader: imageLoader
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)

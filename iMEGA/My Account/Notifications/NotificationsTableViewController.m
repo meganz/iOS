@@ -77,6 +77,8 @@
     [super viewDidDisappear:animated];
     
     [MEGASdk.shared acknowledgeUserAlerts];
+    
+    [self clearImageLoaderCache];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

@@ -2,6 +2,7 @@ import Foundation
 import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
+import MEGASwiftUI
 import Notifications
 
 @objc enum NotificationSection: Int {
@@ -12,6 +13,7 @@ enum NotificationAction: ActionType {
     case onViewDidLoad
     case onViewDidAppear
     case didTapNotification(NotificationItem)
+    case clearImageCache
 }
 
 @objc final class NotificationsViewModel: NSObject, ViewModelType {
@@ -25,13 +27,16 @@ enum NotificationAction: ActionType {
     private(set) var promoList: [NotificationItem] = []
     private var unreadNotificationIds: [NotificationIDEntity] = []
     var invokeCommand: ((Command) -> Void)?
+    let imageLoader: any ImageLoadingProtocol
     
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
-        notificationsUseCase: some NotificationsUseCaseProtocol
+        notificationsUseCase: some NotificationsUseCaseProtocol,
+        imageLoader: some ImageLoadingProtocol
     ) {
         self.featureFlagProvider = featureFlagProvider
         self.notificationsUseCase = notificationsUseCase
+        self.imageLoader = imageLoader
         super.init()
     }
     
@@ -135,6 +140,8 @@ enum NotificationAction: ActionType {
         case .didTapNotification(let notification):
             guard isPromoEnabled, let urlLink = notification.redirectionURL else { return }
             invokeCommand?(.presentURLLink(urlLink))
+        case .clearImageCache:
+            imageLoader.clearCache()
         }
     }
 }

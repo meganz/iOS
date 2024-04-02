@@ -22,7 +22,7 @@ extension NotificationsTableViewController {
             viewModel:
                 NotificationItemViewModel(
                     notification: promo,
-                    imageLoader: ImageLoader()
+                    imageLoader: viewModel.imageLoader
                 )
         )
     
@@ -101,6 +101,10 @@ extension NotificationsTableViewController {
     
     @objc func dispatchActionsOnAppear() {
         viewModel.dispatch(.onViewDidAppear)
+    }
+    
+    @objc func clearImageLoaderCache() {
+        viewModel.dispatch(.clearImageCache)
     }
     
     @objc func didTapNotification(at indexPath: IndexPath) {
