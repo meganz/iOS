@@ -171,7 +171,7 @@ struct ChatRoomsListView: View {
                 .overlay(
                     VStack {
                         if viewModel.isChatRoomEmpty {
-                            ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
+                            ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive || viewModel.searchText.isNotEmpty ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
                         }
                     }
                     , alignment: .center
