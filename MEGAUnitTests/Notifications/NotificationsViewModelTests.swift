@@ -14,11 +14,6 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfSections, 2)
     }
     
-    func testNumberOfSections_notificationsDisabled_oneSection() {
-        let (sut, _) = makeSUT()
-        XCTAssertEqual(sut.numberOfSections, 1)
-    }
-    
     func testNotificationsSectionNumberOfRows_notificationsEnabled_matchNotificationsCount() async {
         let (sut, _) = makeSUT(
             featureFlagList: [.notificationCenter: true],

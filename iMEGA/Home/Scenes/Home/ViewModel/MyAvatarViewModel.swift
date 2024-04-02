@@ -194,9 +194,7 @@ extension MyAvatarViewModel {
     }
     
     // MARK: Feature flags
-    func isNotificationCenterEnabled() -> Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .notificationCenter)
-    }
+    func isNotificationCenterEnabled() -> Bool { true }
 }
 
 // MARK: - MyAvatarViewModelType
