@@ -418,7 +418,8 @@ final class MeetingContainerViewModelTests: XCTestCase {
         callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callDurationLimit))
 
         evaluate {
-            router.showUpgradeToProDialog_calledTimes == 0
+            router.showUpgradeToProDialog_calledTimes == 0 &&
+            router.dismiss_calledTimes == 1
         }
     }
     

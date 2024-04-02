@@ -156,9 +156,9 @@ final class MeetingContainerViewModel: ViewModelType {
         case .renameChat:
             router.renameChat()
         case .dismissCall(let completion):
-            dismissCall(completion: completion)
+            hangAndDismissCall(completion: completion)
         case .endGuestUserCall(let completion):
-            dismissCall {
+            hangAndDismissCall {
                 if self.accountUseCase.isGuest {
                     self.authUseCase.logout()
                 }
@@ -206,7 +206,7 @@ final class MeetingContainerViewModel: ViewModelType {
     // MARK: - Private
     private func hangCall(presenter: UIViewController?, sender: UIButton?) {
         if !accountUseCase.isGuest {
-            dismissCall(completion: nil)
+            hangAndDismissCall(completion: nil)
         } else {
             guard let presenter = presenter, let sender = sender else {
                 return
@@ -249,7 +249,7 @@ final class MeetingContainerViewModel: ViewModelType {
         }
     }
     
-    private func dismissCall(completion: (() -> Void)?) {
+    private func hangAndDismissCall(completion: (() -> Void)?) {
         hangCall()
         router.dismiss(animated: true, completion: completion)
     }
@@ -309,7 +309,7 @@ final class MeetingContainerViewModel: ViewModelType {
                 self.dispatch(.showJoinMegaScreen)
             })
         } else {
-            self.dismissCall(completion: nil)
+            self.hangAndDismissCall(completion: nil)
         }
     }
     
@@ -407,7 +407,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private func manageCallTerminatedErrorIfNeeded(_ call: CallEntity) {
         switch call.termCodeType {
         case .tooManyParticipants:
-            dismissCall {
+            hangAndDismissCall {
                 SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
             }
         case .protocolVersion:
@@ -420,12 +420,16 @@ final class MeetingContainerViewModel: ViewModelType {
             }
             router.showUsersLimitErrorAlert()
         case .callDurationLimit:
-            hangCall()
             if featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) {
                 if call.isOwnClientCaller { // or is chat room organiser - future implementation
+                    hangCall()
                     guard let accountDetails = accountUseCase.currentAccountDetails else { return }
                     router.showUpgradeToProDialog(accountDetails)
+                } else {
+                    hangAndDismissCall(completion: nil)
                 }
+            } else {
+                hangAndDismissCall(completion: nil)
             }
         default:
             break
