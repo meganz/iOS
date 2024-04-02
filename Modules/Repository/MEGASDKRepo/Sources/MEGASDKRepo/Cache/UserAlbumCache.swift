@@ -18,14 +18,14 @@ public protocol UserAlbumCacheProtocol: Actor {
     func removeElements(of albums: any Sequence<HandleEntity>)
 }
 
-actor UserAlbumCache: UserAlbumCacheProtocol {
-    static let shared = UserAlbumCache()
+public actor UserAlbumCache: UserAlbumCacheProtocol {
+    public static let shared = UserAlbumCache()
     
     private let albumCache = NSCache<NSNumber, SetEntityEntryProxy>()
     private let albumIdTracker = CacheIdTracker<SetEntityEntryProxy>()
     private let albumElementIdsCache = NSCache<NSNumber, AlbumPhotoIdsEntityProxy>()
     
-    var albums: [SetEntity] {
+    public var albums: [SetEntity] {
         albumIdTracker.identifiers.compactMap {
             album(forHandle: $0)
         }
@@ -35,31 +35,31 @@ actor UserAlbumCache: UserAlbumCacheProtocol {
         albumCache.delegate = albumIdTracker
     }
     
-    func setAlbums(_ albums: [SetEntity]) {
+    public func setAlbums(_ albums: [SetEntity]) {
         albums.forEach { album in
             albumCache[album.id] = album
             albumIdTracker.$identifiers.mutate { $0.insert(album.id) }
         }
     }
     
-    func album(forHandle handle: HandleEntity) -> SetEntity? {
+    public func album(forHandle handle: HandleEntity) -> SetEntity? {
         albumCache[handle]
     }
     
-    func albumElementIds(forAlbumId id: HandleEntity) -> [AlbumPhotoIdEntity]? {
+    public func albumElementIds(forAlbumId id: HandleEntity) -> [AlbumPhotoIdEntity]? {
         albumElementIdsCache[id]
     }
     
-    func setAlbumElementIds(forAlbumId id: HandleEntity, elementIds: [AlbumPhotoIdEntity]) {
+    public func setAlbumElementIds(forAlbumId id: HandleEntity, elementIds: [AlbumPhotoIdEntity]) {
         albumElementIdsCache[id] = elementIds
     }
 
-    func removeAllCachedValues() {
+    public func removeAllCachedValues() {
         albumCache.removeAllObjects()
         albumElementIdsCache.removeAllObjects()
     }
     
-    func remove(albums: [SetEntity]) {
+    public func remove(albums: [SetEntity]) {
         albums.forEach {
             let id = NSNumber(value: $0.id)
             albumCache.removeObject(forKey: id)
@@ -67,7 +67,7 @@ actor UserAlbumCache: UserAlbumCacheProtocol {
         }
     }
     
-    func removeElements(of albums: any Sequence<HandleEntity>) {
+    public func removeElements(of albums: any Sequence<HandleEntity>) {
         albums.forEach {
             albumElementIdsCache.removeObject(forKey: NSNumber(value: $0))
         }

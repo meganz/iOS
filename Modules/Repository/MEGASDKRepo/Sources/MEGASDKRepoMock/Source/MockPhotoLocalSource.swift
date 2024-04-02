@@ -1,9 +1,12 @@
+import Combine
 import MEGADomain
 import MEGASDKRepo
 
 public actor MockPhotoLocalSource: PhotoLocalSourceProtocol {
     private var _photos: [HandleEntity: NodeEntity]
-    
+
+    @Published public var removeAllCachedValuesCalledCount = 0
+
     public var photos: [NodeEntity] {
         Array(_photos.values)
     }
@@ -28,5 +31,6 @@ public actor MockPhotoLocalSource: PhotoLocalSourceProtocol {
     
     public func removeAllPhotos() {
         _photos.removeAll()
+        removeAllCachedValuesCalledCount += 1
     }
 }

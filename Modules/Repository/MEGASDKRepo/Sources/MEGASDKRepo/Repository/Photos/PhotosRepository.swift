@@ -1,14 +1,9 @@
+import Combine
 import MEGADomain
 import MEGASdk
 import MEGASwift
 
 public actor PhotosRepository: PhotosRepositoryProtocol {
-    public static let sharedRepo = {
-        let sdk = MEGASdk.sharedSdk
-        return PhotosRepository(sdk: sdk,
-                                photoLocalSource: PhotosInMemoryCache.shared,
-                                nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk))
-    }()
     
     private let sdk: MEGASdk
     private let photoLocalSource: any PhotoLocalSourceProtocol
@@ -16,20 +11,29 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
     
     private var searchAllPhotosTask: Task<[NodeEntity], Error>?
     private var monitorNodeUpdatesTask: Task<Void, Error>?
+    private var monitorCacheInvalidationTask: Task<Void, Error>?
     private let photosUpdateSequences = MulticastAsyncSequence<[NodeEntity]>()
     
     public init(sdk: MEGASdk,
                 photoLocalSource: some PhotoLocalSourceProtocol,
-                nodeUpdatesProvider: some NodeUpdatesProviderProtocol) {
+                nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
+                cacheInvalidationTrigger: CacheInvalidationTrigger) {
         self.sdk = sdk
         self.photoLocalSource = photoLocalSource
         self.nodeUpdatesProvider = nodeUpdatesProvider
-        Task { await monitorNodeUpdates() }
+        
+        Task {
+            await monitorNodeUpdates()
+            await monitorCacheInvalidationTriggers(
+                cacheInvalidationTrigger: cacheInvalidationTrigger,
+                photoLocalSource: photoLocalSource)
+        }
     }
     
     deinit {
         searchAllPhotosTask?.cancel()
         monitorNodeUpdatesTask?.cancel()
+        monitorCacheInvalidationTask?.cancel()
     }
     
     public func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]> {
@@ -154,5 +158,23 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
         
         guard photosToStore.isNotEmpty else { return }
         await photoLocalSource.setPhotos(photosToStore)
+    }
+    
+    private func monitorCacheInvalidationTriggers(
+        cacheInvalidationTrigger: CacheInvalidationTrigger,
+        photoLocalSource: some PhotoLocalSourceProtocol) {
+        
+        monitorCacheInvalidationTask = Task {
+            guard !Task.isCancelled else {
+                return
+            }
+            
+            for await _ in await cacheInvalidationTrigger.cacheInvalidationSequence() {
+                guard !Task.isCancelled else {
+                    break
+                }
+                await photoLocalSource.removeAllPhotos()
+            }
+        }
     }
 }

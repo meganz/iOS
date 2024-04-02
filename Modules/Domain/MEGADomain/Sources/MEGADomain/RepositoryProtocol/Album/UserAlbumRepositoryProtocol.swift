@@ -1,7 +1,7 @@
 import Combine
 import MEGASwift
 
-public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
+public protocol UserAlbumRepositoryProtocol {
     // MARK: - Album Updates
     
     /// Returns a publisher that emits album updates.
