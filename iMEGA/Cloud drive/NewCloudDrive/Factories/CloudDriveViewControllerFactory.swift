@@ -312,6 +312,9 @@ struct CloudDriveViewControllerFactory {
             onBack: { self.navigationController.popViewController(animated: true) },
             onEditingChanged: { enabled in
                 onSelectionModeChange(enabled)
+            },
+            updateTransferWidgetHandler: {
+                TransfersWidgetViewController.sharedTransfer().showWidgetIfNeeded()
             }
         )
     }

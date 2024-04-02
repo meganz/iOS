@@ -51,7 +51,8 @@ class NodeBrowserViewModel: ObservableObject {
     private let onUpdateSearchBarVisibility: (Bool) -> Void
     private let onBack: () -> Void
     private let onEditingChanged: (Bool) -> Void
-
+    private let updateTransferWidgetHandler: () -> Void
+    
     init(
         viewMode: ViewModePreferenceEntity,
         searchResultsViewModel: SearchResultsViewModel,
@@ -72,7 +73,8 @@ class NodeBrowserViewModel: ObservableObject {
         onOpenUserProfile: @escaping () -> Void,
         onUpdateSearchBarVisibility: @escaping (Bool) -> Void,
         onBack: @escaping () -> Void,
-        onEditingChanged: @escaping (Bool) -> Void
+        onEditingChanged: @escaping (Bool) -> Void,
+        updateTransferWidgetHandler: @escaping () -> Void
     ) {
         self.viewMode = viewMode
         self.searchResultsViewModel = searchResultsViewModel
@@ -90,6 +92,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.onUpdateSearchBarVisibility = onUpdateSearchBarVisibility
         self.onEditingChanged = onEditingChanged
         self.onBack = onBack
+        self.updateTransferWidgetHandler = updateTransferWidgetHandler
         
         $viewMode
             .removeDuplicates()
@@ -175,6 +178,7 @@ class NodeBrowserViewModel: ObservableObject {
     func onViewAppear() {
         encourageUpgradeIfNeeded()
         configureAdsVisibility()
+        configureTransferWidgetVisibility()
     }
     
     func onViewDisappear() {
@@ -187,6 +191,10 @@ class NodeBrowserViewModel: ObservableObject {
     
     private func configureAdsVisibility() {
         adsVisibilityViewModel?.configureAdsVisibility()
+    }
+    
+    private func configureTransferWidgetVisibility() {
+        updateTransferWidgetHandler()
     }
 
     private func refresh() {
