@@ -41,9 +41,7 @@ enum NotificationAction: ActionType {
     }
     
     // MARK: - Feature flag
-    @objc var isPromoEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .notificationCenter)
-    }
+    @objc var isPromoEnabled: Bool { true }
     
     // MARK: - Sections
     @objc var numberOfSections: Int {
