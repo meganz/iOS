@@ -1340,6 +1340,17 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func inviteParticipants(
         withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
+        contactPickerConfig: ContactPickerConfig,
+        selectedUsersHandler: @escaping (([MEGADomain.HandleEntity]) -> Void)
+    ) {
+        inviteParticipants_calledTimes += 1
+        if let invitedParticipantHandles = invitedParticipantHandles {
+            selectedUsersHandler(invitedParticipantHandles)
+        }
+    }
+    
+    func inviteParticipants(
+        withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
         excludeParticipantsId: Set<HandleEntity>,
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     ) {

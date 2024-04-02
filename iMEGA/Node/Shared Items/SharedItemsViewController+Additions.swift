@@ -5,7 +5,7 @@ import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
 
-extension SharedItemsViewController: ContatctsViewControllerDelegate {
+extension SharedItemsViewController: ContactsViewControllerDelegate {
     @objc func shareFolder() {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             guard let nodes = selectedNodesMutableArray as? [MEGANode] else { return }

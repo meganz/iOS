@@ -47,8 +47,13 @@
 }
 
 - (void)removeItem:(ItemListModel *)item {
+    NSIndexPath *indexPath = [self indexPathForItem:item];
+    if (!indexPath) {
+        NSAssert(NO, @"Unexpected, should have index for each item");
+        return;
+    }
     [self.collectionView performBatchUpdates:^{
-        [self.collectionView deleteItemsAtIndexPaths:@[[self indexPathForItem:item]]];
+        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
         [self deleteItemFromList:item];
     } completion:nil];
 }

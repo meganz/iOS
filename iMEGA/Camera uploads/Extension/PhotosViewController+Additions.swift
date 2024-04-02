@@ -174,8 +174,8 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
     }
 }
 
-// MARK: - BrowserViewControllerDelegate and ContatctsViewControllerDelegate
-extension PhotosViewController: BrowserViewControllerDelegate, ContatctsViewControllerDelegate {
+// MARK: - BrowserViewControllerDelegate and ContactsViewControllerDelegate
+extension PhotosViewController: BrowserViewControllerDelegate, ContactsViewControllerDelegate {
     public func nodeEditCompleted(_ complete: Bool) {
         toggleEditing()
     }

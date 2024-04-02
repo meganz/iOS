@@ -1,10 +1,12 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 
 struct ParticipantsAddingViewFactory {
     let accountUseCase: any AccountUseCaseProtocol
     let chatRoomUseCase: any ChatRoomUseCaseProtocol
     let chatRoom: ChatRoomEntity
+    var featureFlagProvider: any FeatureFlagProviderProtocol
     
     var hasVisibleContacts: Bool {
         accountUseCase.contacts().contains { $0.visibility == .visible }
@@ -48,9 +50,23 @@ struct ParticipantsAddingViewFactory {
         return inviteContactsViewController
     }
     
+    // small trampoline method to not be force to start using config parameter in the existing call sites
     func addContactsViewController(
         withContactsMode contactsMode: ContactsMode,
         additionallyExcludedParticipantsId: Set<HandleEntity>?,
+        selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
+    ) -> UINavigationController? {
+        addContactsViewController(
+            contactPickerConfig: .init(
+                mode: contactsMode,
+                excludedParticipantIds: additionallyExcludedParticipantsId
+            ),
+            selectedUsersHandler: selectedUsersHandler
+        )
+    }
+    
+    func addContactsViewController(
+        contactPickerConfig: ContactPickerConfig,
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     ) -> UINavigationController? {
         let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
@@ -61,24 +77,79 @@ struct ParticipantsAddingViewFactory {
             return nil
         }
         
-        contactController.contactsMode = contactsMode
+        contactController.contactsMode = contactPickerConfig.mode
         
         let chatRoomCurrentParticipants = chatRoom
             .peers
             .compactMap { $0.privilege.isPeerVisibleByPrivilege() ? $0.handle : nil }
         
-        let excludedParticipantsId = (additionallyExcludedParticipantsId ?? []).union(chatRoomCurrentParticipants)
+        let excludedParticipantsId = (contactPickerConfig.excludedParticipantIds ?? []).union(chatRoomCurrentParticipants)
         
         let participantsDict = excludedParticipantsId.reduce(into: [NSNumber: NSNumber]()) {
             $0[NSNumber(value: $1)] = NSNumber(value: $1)
         }
         contactController.participantsMutableDictionary = NSMutableDictionary(dictionary: participantsDict)
+        
+        let accountDetails = accountUseCase.currentAccountDetails
+        let presentUpgrade: () -> Void = {
+            guard let accountDetails else { return }
+            UpgradeAccountPlanRouter(
+                presenter: contactController,
+                accountDetails: accountDetails
+            ).start()
+        }
+        
+        // [MEET-3401] conditionally show banner about limit of participants for a meeting
+        // organized by the free-tier user
+        // for a organiser, we it will be possible to show upgrade modal sheet from it
+        // for a host-non-organiser, it can be dismissed (once per lifetime of the view controller)
+        let bannerConfig = bannerConfigFactory(
+            chatMonetisationFeatureEnabled: true, // chatMonetisationFeatureEnabled,
+            warningMode: contactPickerConfig.isHost ? .dismissible : .noWarning,
+            presentUpgrade: presentUpgrade
+        )
+        if let bannerConfig {
+            contactController.setBannerConfig(bannerConfig)
+            contactController.viewModel.bannerDecider = contactPickerConfig.participantLimitChecker
+        }
         contactController.userSelected = { selectedUsers in
             guard let users = selectedUsers else { return }
             selectedUsersHandler(users.map(\.handle))
         }
     
         return navigationController
+    }
+    
+    private var chatMonetisationFeatureEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
+    }
+    
+    private func bannerConfigFactory(
+        chatMonetisationFeatureEnabled: Bool,
+        warningMode: ParticipantLimitWarningMode,
+        presentUpgrade: @escaping () -> Void
+    ) -> BannerView.Config? {
+        guard
+            chatMonetisationFeatureEnabled
+        else { return nil }
+        
+        switch warningMode {
+        case .nonDismissibleWithUpgradeLink:
+                return .init(
+                    copy: Strings.Localizable.Meetings.ContactPicker.Warning.OverLimit.host,
+                    underline: true,
+                    theme: .dark,
+                    tapAction: presentUpgrade
+                )
+        case .dismissible:
+            return .init(
+                copy: Strings.Localizable.Meetings.ContactPicker.Warning.OverLimit.nonHost,
+                theme: .dark,
+                closeAction: {} // close action handled inside ContactsViewController
+            )
+        case .noWarning:
+            return nil
+        }
     }
     
     // MARK: - Private methods
@@ -93,4 +164,12 @@ struct ParticipantsAddingViewFactory {
         alertController.preferredAction = inviteAction
         return alertController
     }
+}
+
+struct ContactPickerConfig {
+    var mode: ContactsMode
+    var excludedParticipantIds: Set<HandleEntity>?
+    var isHost: Bool = false
+    // this will check if after selectionCount the limit of free call participants will be equalised or exceeded
+    var participantLimitChecker: (_ selectionCount: Int) -> Bool = { _ in false }
 }

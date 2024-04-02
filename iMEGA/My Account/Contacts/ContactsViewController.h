@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
     ChatOptionTypeNonMeeting = 2
 };
 
-@protocol ContatctsViewControllerDelegate <NSObject>
+@protocol ContactsViewControllerDelegate <NSObject>
 @optional
 - (void)nodeEditCompleted:(BOOL)complete;
 @end
@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (nonatomic, copy) void(^createGroupChat)(NSArray *,  NSString *, BOOL, BOOL, BOOL);
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
-@property (nonatomic, weak) id<ContatctsViewControllerDelegate> contatctsViewControllerDelegate;
+@property (nonatomic, weak) id<ContactsViewControllerDelegate> contactsViewControllerDelegate;
 
 - (void)shareNodesWithLevel:(MEGAShareType)shareType nodes:(NSArray *)nodes;
 - (void)shareNodesWithLevel:(MEGAShareType)shareType;

@@ -7,6 +7,11 @@ import MEGAPresentation
 import SwiftUI
 
 extension ContactsViewController {
+    
+    func setBannerConfig(_ config: BannerView.Config?) {
+        viewModel.bannerConfig = config
+    }
+    
     private static let throttler = Throttler(timeInterval: 0.5, dispatchQueue: .main)
     
     func selectUsers(_ users: [MEGAUser]) {
@@ -55,10 +60,28 @@ extension ContactsViewController {
     }
 
     @objc
-    func setupContactsNotVerifiedHeader() {
-        let hostingView = UIHostingController(rootView: WarningView(viewModel: .init(warningType: .contactsNotVerified)))
+    func setupWarningHeader() {
+        // reuse hostingViewUIView for warnings about
+        // participant limits and unverified users
+        var hostingViewUIView: UIView?
+        if var bannerConfig = viewModel.bannerConfig {
+            if bannerConfig.closeAction != nil {
+                let storedAction = bannerConfig.closeAction!
+                bannerConfig.closeAction = { [weak self] in
+                    storedAction()
+                    self?.dismissBanner()
+                }
+            }
+            let hostingView = UIHostingController(rootView: BannerView(config: bannerConfig).font(.footnote))
+            hostingViewUIView = hostingView.view
+            
+        }
+        
+        if hostingViewUIView == nil {
+            hostingViewUIView = UIHostingController(rootView: WarningView(viewModel: .init(warningType: .contactsNotVerified))).view
+        }
 
-        guard let hostingViewUIView = hostingView.view else { return }
+        guard let hostingViewUIView else { return }
 
         hostingViewUIView.backgroundColor = MEGAAppColor.Yellow._FED429.uiColor
 
@@ -73,14 +96,24 @@ extension ContactsViewController {
             hostingViewUIView.bottomAnchor.constraint(equalTo: contactsNotVerifiedView.bottomAnchor)
         ])
     }
+    
+    func dismissBanner() {
+        viewModel.dismissedBannerWarning = true
+        handleContactsNotVerifiedHeaderVisibility()
+    }
 
     @objc
     func handleContactsNotVerifiedHeaderVisibility() {
-        contactsNotVerifiedView.isHidden = !viewModel.shouldShowUnverifiedContactsBanner(
+        let showUnverifiedBanner = viewModel.shouldShowUnverifiedContactsBanner(
             contactsMode: contactsMode,
             selectedUsersArray: selectedUsersArray,
             visibleUsersArray: visibleUsersArray
         )
+        let showParticipantLimitBanner = viewModel.shouldShowBannerWarning(
+            selectedUsersCount: selectedUsersArray.count
+        )
+        let showTopBanner = showUnverifiedBanner || showParticipantLimitBanner
+        contactsNotVerifiedView.isHidden = !showTopBanner
     }
 
     @objc

@@ -106,7 +106,7 @@ extension CloudDriveViewController {
             return
         }
         
-        contactsVC.contatctsViewControllerDelegate = self
+        contactsVC.contactsViewControllerDelegate = self
         contactsVC.nodesArray = nodes
         contactsVC.contactsMode = .shareFoldersWith
         

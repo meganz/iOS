@@ -317,9 +317,20 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             return
         }
         
+        let limit = limitOfFreeTierUsers
+        let config = ContactPickerConfig(
+            mode: .inviteParticipants,
+            excludedParticipantIds: Set(excludedHandles),
+            isHost: isMyselfAModerator,
+            participantLimitChecker: { [weak self] selectedCount in
+                let currentCount = self?.callParticipants.count ?? 0
+                return selectedCount + currentCount >= limit
+            }
+        )
+                       
         router.inviteParticipants(
             withParticipantsAddingViewFactory: participantsAddingViewFactory,
-            excludeParticipantsId: Set(excludedHandles)
+            contactPickerConfig: config
         ) { [weak self] userHandles in
             guard let self, let call else { return }
             recentlyAddedHandles.append(contentsOf: userHandles)
@@ -337,7 +348,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         ParticipantsAddingViewFactory(
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            chatRoom: chatRoom
+            chatRoom: chatRoom,
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
     }
     

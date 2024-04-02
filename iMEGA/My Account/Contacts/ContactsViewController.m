@@ -107,10 +107,13 @@
 
 #pragma mark - Lifecycle
 
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    [self createViewModel];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self createViewModel];
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
@@ -222,6 +225,7 @@
 #pragma mark - Private
 
 - (void)setupContacts {
+    [self setupWarningHeader];
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
     switch (self.contactsMode) {
@@ -251,7 +255,7 @@
             [self.navigationController setToolbarHidden:NO];
             
             [self editTapped:self.editBarButtonItem];
-            [self setupContactsNotVerifiedHeader];
+            [self setupWarningHeader];
             break;
         }
             
@@ -263,7 +267,7 @@
             self.deleteBarButtonItem.title = LocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
             [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
-            [self setupContactsNotVerifiedHeader];
+            [self setupWarningHeader];
             break;
         }
             
@@ -587,7 +591,7 @@
 - (void)shareNodesWithLevel:(MEGAShareType)shareType nodes:(NSArray *)nodes {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
-    [self.contatctsViewControllerDelegate nodeEditCompleted:YES];
+    [self.contactsViewControllerDelegate nodeEditCompleted:YES];
     
     if (self.contactsMode == ContactsModeShareFoldersWith) {
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initWithNumberOfRequests:nodes.count completion:^{
