@@ -62,7 +62,7 @@ public extension DevicePermissionsHandler {
             contactStatusAccessor: { CNContactStore.authorizationStatus(for: .contacts) },
             notificationsAccessor: {
                 do {
-                    return try await UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound])
+                    return try await UNUserNotificationCenter.current().requestAuthorization(options: notificationOptions)
                 } catch {
                     return false
                 }
@@ -75,6 +75,10 @@ public extension DevicePermissionsHandler {
                 }
             }
         )
+    }
+    
+    static var notificationOptions: UNAuthorizationOptions {
+        [.badge, .sound, .alert]
     }
 }
 
