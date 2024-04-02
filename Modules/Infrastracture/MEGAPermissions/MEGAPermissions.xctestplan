@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "3E17B8AF-1EE6-477E-BF85-AECFA6C4DA4B",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MEGAPermissionsTests",
+        "name" : "MEGAPermissionsTests"
+      }
+    }
+  ],
+  "version" : 1
+}

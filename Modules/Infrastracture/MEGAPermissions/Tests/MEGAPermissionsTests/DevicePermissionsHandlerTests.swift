@@ -357,4 +357,8 @@ final class DevicePermissionsHandlerTests: XCTestCase {
         XCTAssertEqual(harness.mediaStatusAccessorPassedInValues, [.video])
         XCTAssertFalse(authorized)
     }
+    
+    func testNotificationOptions_HaveAlertBadgeAndSound() {
+        XCTAssertEqual(DevicePermissionsHandler.notificationOptions, [.alert, .sound, .badge])
+    }
 }
