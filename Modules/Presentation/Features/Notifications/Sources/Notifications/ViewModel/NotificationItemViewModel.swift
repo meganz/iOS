@@ -6,13 +6,24 @@ import UIKit
 
 public final class NotificationItemViewModel: ObservableObject {
     let notification: NotificationItem
-    private let imageLoader: ImageLoader
-    @Published var imageBanner: UIImage?
-    @Published var icon: UIImage?
+    private let imageLoader: ImageLoadingProtocol
+    // Assign a transparent image to `imageBanner` and `icon` to prevent layout shifts 
+    // or flickers as images load. These placeholders maintain the UI's structure for a
+    // smooth visual transition until the actual images are displayed.
+    @Published var imageBanner: UIImage = UIImage.transparent
+    @Published var icon: UIImage = UIImage.transparent
+    
+    var hasBannerImage: Bool {
+        notification.bannerImageURL != nil
+    }
+    
+    var hasIcon: Bool {
+        notification.iconURL != nil
+    }
 
     public init(
         notification: NotificationItem,
-        imageLoader: ImageLoader
+        imageLoader: ImageLoadingProtocol
     ) {
         self.notification = notification
         self.imageLoader = imageLoader
@@ -33,7 +44,8 @@ public final class NotificationItemViewModel: ObservableObject {
     }
     
     // It is not possible to show both the banner and the icon at the same time in our UI.
-    // Therefore, we prioritize showing the banner over the icon if both elements are available.
+    // Therefore, if both elements are available, the UI prioritizes displaying the banner over
+    // the icon due to design constraints.
     func preloadImages() async {
         if let bannerURL = notification.bannerImageURL {
             if let loadedImage = await imageLoader.loadImage(from: bannerURL) {

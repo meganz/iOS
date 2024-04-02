@@ -1,4 +1,3 @@
-import Combine
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -25,19 +24,19 @@ struct NotificationItemContentView: View {
                         .font(.footnote)
                         .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
                     
-                    if viewModel.imageBanner == nil {
+                    if !viewModel.hasBannerImage {
                         footerText
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(in: .local)
                 
-                if viewModel.imageBanner == nil,
-                   let icon = viewModel.icon {
+                if !viewModel.hasBannerImage,
+                   viewModel.hasIcon {
                     Spacer()
                     
                     VStack {
-                        Image(uiImage: icon)
+                        Image(uiImage: viewModel.icon)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 80)
@@ -46,11 +45,12 @@ struct NotificationItemContentView: View {
                 }
             }
             
-            if let imageBanner = viewModel.imageBanner {
-                Image(uiImage: imageBanner)
+            if viewModel.hasBannerImage {
+                Image(uiImage: viewModel.imageBanner)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: .infinity, maxHeight: 115)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 115)
                 
                 footerText
             }

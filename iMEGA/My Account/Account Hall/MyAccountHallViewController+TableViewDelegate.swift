@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASDKRepo
+import MEGASwiftUI
 
 extension MyAccountHallViewController: UITableViewDelegate {
     
@@ -54,7 +55,8 @@ extension MyAccountHallViewController: UITableViewDelegate {
             
             NotificationsViewRouter(
                 navigationController: navigationController,
-                notificationsUseCase: notificationsUseCase
+                notificationsUseCase: notificationsUseCase, 
+                imageLoader: ImageLoader()
             ).start()
             
         case MyAccountMegaSection.contacts.rawValue:
