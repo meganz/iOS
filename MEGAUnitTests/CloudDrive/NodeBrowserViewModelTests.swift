@@ -41,6 +41,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         
         let sut: NodeBrowserViewModel
         var savedViewModes: [ViewModePreferenceEntity] = []
+        var updateTransferWidgetHandler: () -> Void
         
         init(
             // this may appear strange but view mode is a "bigger" enum that has mediaDiscovery/list/thumbnail
@@ -48,7 +49,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             // controlled separately
             defaultViewMode: ViewModePreferenceEntity = .list,
             defaultLayout: PageLayout = .list,
-            node: NodeEntity
+            node: NodeEntity,
+            updateTransferWidgetHandler: @escaping () -> Void = {}
         ) {
             let nodeSource = NodeSource.node { node }
             let expectedNodes = [
@@ -62,6 +64,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             )
             
             var saver: (ViewModePreferenceEntity) -> Void = {_ in }
+            
+            self.updateTransferWidgetHandler = updateTransferWidgetHandler
             
             sut = NodeBrowserViewModel(
                 viewMode: defaultViewMode,
@@ -106,7 +110,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onOpenUserProfile: {},
                 onUpdateSearchBarVisibility: { _ in },
                 onBack: {}, 
-                onEditingChanged: { _ in }
+                onEditingChanged: { _ in },
+                updateTransferWidgetHandler: updateTransferWidgetHandler
             )
             
             saver = { self.savedViewModes.append($0) }
@@ -206,6 +211,13 @@ class NodeBrowserViewModelTests: XCTestCase {
                 expectedSortOrderEntity: sortOrderEntity
             )
         }
+    }
+    
+    func testUpdateTransferWidget() {
+        var didUpdateTransferWidget = false
+        let harness = Harness(node: .init(), updateTransferWidgetHandler: { didUpdateTransferWidget = true })
+        harness.sut.onViewAppear()
+        XCTAssertTrue(didUpdateTransferWidget)
     }
 
     private func assertChangeSortOrder(
