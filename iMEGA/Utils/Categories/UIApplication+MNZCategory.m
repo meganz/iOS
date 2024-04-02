@@ -50,6 +50,7 @@
 }
 
 + (nullable UIWindow *)mnz_keyWindow {
+    NSAssert([NSThread isMainThread], @"UIApplication+MNZCategory must be called from the main thread");
     NSSet <UIScene *> *connectedScenes = UIApplication.sharedApplication.connectedScenes;
 
     for (UIWindowScene *scene in connectedScenes) {

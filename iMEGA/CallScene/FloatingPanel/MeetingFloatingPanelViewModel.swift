@@ -52,8 +52,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case transitionToLongForm
         case updateAllowNonHostToAddParticipants(enabled: Bool)
         case reloadViewData(participantsListView: ParticipantsListView)
-        case hideCallAllIcon(Bool)
-        case disableMuteAllButton(Bool)
     }
     
     private let router: any MeetingFloatingPanelRouting
@@ -81,11 +79,24 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var callParticipantsNotInCall = [CallParticipantEntity]()
     private var callParticipantsInWaitingRoom = [CallParticipantEntity]()
     private var updateAllowNonHostToAddParticipantsTask: Task<Void, Never>?
+    private let presentUpgradeFlow: (AccountDetailsEntity) -> Void
     private var isSpeakerEnabled: Bool {
         didSet {
             containerViewModel?.dispatch(.speakerEnabled(isSpeakerEnabled))
         }
     }
+    // store state of the fact that user dismissed upsell banner
+    // shown to non-organizer host when there's more than max number of meeting participant
+    // if organiser-user is free-tier user
+    private var dismissedFreeUserLimitBanner: Bool = false
+    
+    // creates a config for the tableview's header view that contains UI controls such as:
+    // * title of the tab with the number of users in the tab
+    // * Admit all/mute all buttons
+    // * can also contain a warning banner showing upgrade information (free-tier limitations)
+    private var headerConfigFactory: any MeetingFloatingPanelHeaderConfigFactoryProtocol
+    // we show upgrade warnings only if .chatMonetisation FF is enabled
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var isVideoEnabled: Bool? {
         call?.hasLocalVideo
@@ -95,8 +106,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         chatRoom.ownPrivilege == .moderator
     }
     
+    // mobile clients dis-allow inviting new participants into 1-on-1 calls
     private var canInviteParticipants: Bool {
-        (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && !accountUseCase.isGuest
+        (isMyselfAModerator || chatRoom.isOpenInviteEnabled) &&
+        isNotOneToOne &&
+        !accountUseCase.isGuest
     }
     
     private var selectedParticipantsListTab: ParticipantsListTab {
@@ -116,9 +130,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             isWaitingRoomListVisible = panelIsLongForm && selectedParticipantsListTab == .waitingRoom
         }
     }
-
+    
     var invokeCommand: ((Command) -> Void)?
-
+    
     init(router: some MeetingFloatingPanelRouting,
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
@@ -133,7 +147,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          chatUseCase: some ChatUseCaseProtocol,
-         selectWaitingRoomList: Bool
+         selectWaitingRoomList: Bool,
+         headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol,
+         featureFlags: some FeatureFlagProviderProtocol,
+         presentUpgradeFlow: @escaping (AccountDetailsEntity) -> Void
     ) {
         self.router = router
         self.containerViewModel = containerViewModel
@@ -151,6 +168,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.chatUseCase = chatUseCase
         self.selectWaitingRoomList = selectWaitingRoomList
         self.selectedParticipantsListTab = selectWaitingRoomList ? .waitingRoom : .inCall
+        self.headerConfigFactory = headerConfigFactory
+        self.featureFlagProvider = featureFlags
+        self.presentUpgradeFlow = presentUpgradeFlow
     }
     
     deinit {
@@ -211,7 +231,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                    participant: participant,
                                    isMyselfModerator: isMyselfAModerator,
                                    meetingFloatingPanelModel: self)
-
+            
         case .muteUnmuteCall(let muted):
             guard let call = self.call else { return }
             checkForAudioPermission { granted in
@@ -291,12 +311,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         
         let excludedHandles = recentlyAddedHandles
         recentlyAddedHandles = []
-                        
+        
         guard participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: Set(excludedHandles)) else {
             router.showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory)
             return
         }
-                        
+        
         router.inviteParticipants(
             withParticipantsAddingViewFactory: participantsAddingViewFactory,
             excludeParticipantsId: Set(excludedHandles)
@@ -304,7 +324,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             guard let self, let call else { return }
             recentlyAddedHandles.append(contentsOf: userHandles)
             if chatRoom.isWaitingRoomEnabled {
-                userHandles.forEach { 
+                userHandles.forEach {
                     self.invitedUserIdsToBypassWaitingRoom.insert($0)
                 }
                 callUseCase.allowUsersJoinCall(call, users: userHandles)
@@ -389,7 +409,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
         updateSpeakerInfo()
     }
-        
+    
     private func updateSpeakerInfo() {
         let currentSelectedPort = audioSessionUseCase.currentSelectedAudioPort
         let isBluetoothAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
@@ -566,6 +586,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         guard let call else { return }
         let waitingRoomParticipantHandles = callParticipantsInWaitingRoom.compactMap { $0.participantId }
         callUseCase.allowUsersJoinCall(call, users: waitingRoomParticipantHandles)
+        reloadParticipantsIfNeeded()
     }
     
     private func allowToJoinAbsentParticipantsIfNeeded(_ participants: [CallParticipantEntity]) {
@@ -580,26 +601,24 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func callAbsentParticipants(_ participants: [CallParticipantEntity]) {
         allowToJoinAbsentParticipantsIfNeeded(participants)
-        invokeCommand?(.hideCallAllIcon(participants.count == 1))
         participants.forEach { participant in
             participant.absentParticipantState = .calling
             callUseCase.callAbsentParticipant(inChat: participant.chatId, userId: participant.participantId, timeout: 40)
         }
         reloadParticipantsIfNeeded()
         DispatchQueue.main.asyncAfter(deadline: .now() + 40.0) { [weak self] in
+            guard let self else { return }
             participants.forEach { participant in
                 participant.absentParticipantState = .noResponse
-                self?.calledUserIdsToBypassWaitingRoom.remove(participant.participantId)
+                self.calledUserIdsToBypassWaitingRoom.remove(participant.participantId)
             }
-            guard let self else { return }
-            invokeCommand?(.hideCallAllIcon(true))
             reloadParticipantsIfNeeded()
         }
     }
     
     private func muteAllParticipants() {
         muteParticipant(participant: nil)
-        invokeCommand?(.disableMuteAllButton(true))
+        reloadParticipantsIfNeeded()
     }
     
     private func muteParticipant(participant: CallParticipantEntity?) {
@@ -610,9 +629,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             } catch {
                 router.showMuteError(for: participant)
             }
+            reloadParticipantsIfNeeded()
         }
     }
-
+    
     private func admitParticipant(_ participant: CallParticipantEntity) {
         guard let call else { return }
         callUseCase.allowUsersJoinCall(call, users: [participant.participantId])
@@ -665,7 +685,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                     callParticipantsNotInCall.append(
                         CallParticipantEntity(
                             userHandle: participantId,
-                            chatRoom: chatRoom, 
+                            chatRoom: chatRoom,
                             privilege: chatRoomUseCase.peerPrivilege(forUserHandle: participantId, chatRoom: chatRoom)
                         )
                     )
@@ -675,90 +695,164 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     // MARK: - Load data
-
+    
     private func loadParticipantsInCall() {
-        let sections: [FloatingPanelTableViewSection] = [.hostControls, .invite, .participants]
-        
-        var hostControls: [HostControlsSectionRow] = []
-        if chatRoom.chatType != .oneToOne {
-            hostControls.append(.listSelector)
-        }
-        if isMyselfAModerator && chatRoom.chatType != .oneToOne {
-            hostControls.append(.allowNonHostToInvite)
-        }
-        
-        var invite: [InviteSectionRow] = []
-        if (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && chatRoom.chatType != .oneToOne && !accountUseCase.isGuest {
-            invite.append(.invite)
-        }
-        let tab = ParticipantsListTab.inCall
-        let participantsListView = ParticipantsListView(
-            sections: sections,
-            hostControlsRows: hostControls,
-            inviteSectionRow: invite,
-            tabs: tabsForParticipantList(),
-            selectedTab: tab,
-            participants: callParticipants,
-            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
-            currentUserHandle: accountUseCase.currentUserHandle,
-            isMyselfModerator: isMyselfAModerator,
-            infoHeaderData: infoHeaderData(tab)
-        )
-        
-        invokeCommand?(.reloadViewData(participantsListView: participantsListView))
+        loadDataForTab(.inCall)
     }
     
     private func loadParticipantsInWaitingRoom() {
-        let sections: [FloatingPanelTableViewSection] = [.hostControls, .invite, .participants]
-        
-        var hostControls: [HostControlsSectionRow] = []
-        if chatRoom.chatType != .oneToOne {
-            hostControls.append(.listSelector)
-        }
-        let tab = ParticipantsListTab.waitingRoom
-        let participantsListView = ParticipantsListView(
-            sections: sections,
-            hostControlsRows: hostControls,
-            inviteSectionRow: [],
-            tabs: tabsForParticipantList(),
-            selectedTab: tab,
-            participants: callParticipantsInWaitingRoom,
-            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
-            currentUserHandle: accountUseCase.currentUserHandle,
-            infoHeaderData: infoHeaderData(tab)
-        )
-        
-        invokeCommand?(.reloadViewData(participantsListView: participantsListView))
+        loadDataForTab(.waitingRoom)
     }
     
     private func loadParticipantsNotInCall() {
-        let sections: [FloatingPanelTableViewSection] = [.hostControls, .invite, .participants]
-        
-        var hostControls: [HostControlsSectionRow] = []
-        if chatRoom.chatType != .oneToOne {
-            hostControls.append(.listSelector)
-        }
-        
-        let tab = ParticipantsListTab.notInCall
-        let participantsListView = ParticipantsListView(
-            sections: sections,
-            hostControlsRows: hostControls,
-            inviteSectionRow: [],
-            tabs: tabsForParticipantList(),
-            selectedTab: tab,
-            participants: callParticipantsNotInCall,
-            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
-            currentUserHandle: accountUseCase.currentUserHandle,
-            infoHeaderData: infoHeaderData(tab)
-        )
-        
-        invokeCommand?(.reloadViewData(participantsListView: participantsListView))
+        loadDataForTab(.notInCall)
     }
     
-    private func infoHeaderData(_ tab: ParticipantsListTab) -> MeetingInfoHeaderData? {
-        // logic when to present it to be implemented in next MR for [MEET-3421]
-        nil
-//        .init(copy: Strings.Localizable.Meetings.WaitingRoom.Warning.limit100Participants)
+    private func loadDataForTab(_ tab: ParticipantsListTab) {
+        invokeCommand?(.reloadViewData(participantsListView: participantListViewData(for: tab)))
+    }
+    
+    // the limit 100 means 99 users can join plus the organiser
+    var limitOfFreeTierUsers: Int {
+        100
+    }
+    
+    var isFreeTierUser: Bool {
+        accountUseCase.currentAccountDetails?.proLevel == .free
+    }
+    
+    var chatMonetisationEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
+    }
+    
+    var hasReachedInCallFreeUserParticipantLimit: Bool {
+        guard chatMonetisationEnabled else { return false }
+        return isFreeTierUser && callParticipants.count >= limitOfFreeTierUsers
+    }
+    
+    var hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit: Bool {
+        guard chatMonetisationEnabled else { return false }
+        return isFreeTierUser && callParticipants.count + callParticipantsInWaitingRoom.count >= limitOfFreeTierUsers
+    }
+    
+    // configuration that specifies if there should be a waitingRoom tab present:
+    // * chat room configured with wait room
+    // * user is moderator
+    // and if yes, then if
+    // users in the wait list should have admit (✓) button enabled
+    func waitingRoomConfig(for tab: ParticipantsListTab) -> WaitingRoomConfig? {
+        guard
+            isMyselfAModerator,
+            chatRoom.isWaitingRoomEnabled
+        else { return nil }
+        
+        return .init(
+            allowIndividualWaitlistAdmittance: !hasReachedInCallFreeUserParticipantLimit
+        )
+    }
+    
+    // user has dismissed the upgrade banner with cross button so we save that fact for the
+    // duration of the view controller life time and reload data to hide the banner
+    func dismissFreeUserLimitBanner() {
+        dismissedFreeUserLimitBanner = true
+        reloadParticipantsIfNeeded()
+    }
+    
+    var isNotOneToOne: Bool {
+        chatRoom.chatType != .oneToOne
+    }
+    
+    private func hostControls(for tab: ParticipantsListTab) -> [HostControlsSectionRow] {
+        var hostControls: [HostControlsSectionRow] = if isNotOneToOne {
+            [.listSelector]
+        } else {
+            []
+        }
+        
+        if tab == .inCall && isMyselfAModerator && isNotOneToOne {
+            hostControls.append(.allowNonHostToInvite)
+        }
+        
+        return hostControls
+    }
+    
+    private func inviteSectionRow(for tab: ParticipantsListTab) -> [InviteSectionRow] {
+        if tab == .inCall && canInviteParticipants {
+            [.invite]
+        } else {
+            []
+        }
+    }
+    
+    private var shouldDisableMuteAllButtonInInCallTab: Bool {
+        let unmutedUsers = callParticipants.filter({ $0.audio == .on })
+        
+        // if there's nobody to mute, no need to enable mute button
+        if unmutedUsers.isEmpty {
+            return true
+        }
+        
+        return currentUserIsOnlyUser(outOf: unmutedUsers)
+    }
+    
+    private func currentUserIsOnlyUser(outOf users: [CallParticipantEntity]) -> Bool {
+        guard users.count == 1 else { return false }
+        
+        return users.first?.participantId == accountUseCase.currentUserHandle
+    }
+    
+    private var shouldHideCallAllIconInNotInCallTab: Bool {
+        
+        let someParticipantsThatAreNotCalledIn = callParticipantsNotInCall.filter({ $0.absentParticipantState != .calling }).isNotEmpty
+        let triedCallingAllButNotResponse = callParticipantsNotInCall.allSatisfy { $0.absentParticipantState == .noResponse }
+        
+        return (
+            someParticipantsThatAreNotCalledIn ||
+            triedCallingAllButNotResponse
+        )
+    }
+    
+    private func participantListViewData(for tab: ParticipantsListTab) -> ParticipantsListView {
+        let sections: [FloatingPanelTableViewSection] = [.hostControls, .invite, .participants]
+        
+        let participants = switch tab {
+        case .inCall:
+            callParticipants
+        case .notInCall:
+            callParticipantsNotInCall
+        case .waitingRoom:
+            callParticipantsInWaitingRoom
+        }
+        
+        return ParticipantsListView(
+            headerConfig: headerConfigFactory.headerConfig(
+                tab: tab,
+                freeTierInCallParticipantLimitReached: hasReachedInCallFreeUserParticipantLimit,
+                totalInCallAndWaitingRoomAboveFreeTierLimit: hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit,
+                participantsCount: participants.count,
+                isMyselfAModerator: isMyselfAModerator,
+                hasDismissedBanner: dismissedFreeUserLimitBanner,
+                shouldHideCallAllIcon: shouldHideCallAllIconInNotInCallTab,
+                shouldDisableMuteAllButton: shouldDisableMuteAllButtonInInCallTab,
+                presentUpgradeFlow: { [weak self]  in
+                    guard let self, let details = accountUseCase.currentAccountDetails else { return }
+                    presentUpgradeFlow(details)
+                },
+                dismissFreeUserLimitBanner: dismissFreeUserLimitBanner,
+                actionButtonTappedHandler: { [weak self] in
+                    self?.dispatch(.onHeaderActionTap)
+                }
+            ),
+            sections: sections,
+            hostControlsRows: hostControls(for: tab),
+            inviteSectionRow: inviteSectionRow(for: tab),
+            tabs: tabsForParticipantList(),
+            selectedTab: tab,
+            participants: participants,
+            waitingRoomConfig: waitingRoomConfig(for: tab),
+            currentUserHandle: accountUseCase.currentUserHandle,
+            isMyselfModerator: isMyselfAModerator
+        )
     }
     
     private func tabsForParticipantList() -> [ParticipantsListTab] {
@@ -778,16 +872,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .inCall:
             loadParticipantsInCall()
         case .notInCall:
-            invokeCommand?(.reloadParticipantsList(participants: callParticipantsNotInCall))
+            loadParticipantsNotInCall()
         case .waitingRoom:
-            invokeCommand?(.reloadParticipantsList(participants: callParticipantsInWaitingRoom))
+            loadParticipantsInWaitingRoom()
         }
-    }
-    
-    private func disableMuteAllButtonIfNeeded() {
-        guard selectedParticipantsListTab == .inCall else { return }
-        let unmutedUsers = callParticipants.filter({ $0.audio == .on })
-        invokeCommand?(.disableMuteAllButton(unmutedUsers.isEmpty || unmutedUsers.count == 1 && unmutedUsers.first?.participantId == accountUseCase.currentUserHandle))
     }
     
     private func prepareParticipantsTableViewData() {
@@ -829,7 +917,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         let waitingRoomNonModeratorUserHandles = waitingRoomUserHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
         
         let callParticipantsInWaitingRoomUserHandles = callParticipantsInWaitingRoom.map { $0.participantId }
-
+        
         guard waitingRoomNonModeratorUserHandles != callParticipantsInWaitingRoomUserHandles else { return }
         
         callParticipantsInWaitingRoom = waitingRoomNonModeratorUserHandles.compactMap {
@@ -874,10 +962,9 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
         if let index = callParticipants.firstIndex(of: participant) {
             callParticipants[index] = participant
             reloadParticipantsIfNeeded()
-            disableMuteAllButtonIfNeeded()
         }
     }
-        
+    
     func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
         guard let participant = callParticipants.first else { return }

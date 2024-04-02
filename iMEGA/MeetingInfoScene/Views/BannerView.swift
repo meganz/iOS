@@ -24,6 +24,30 @@ struct BannerView: View {
                 DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
             }
             
+            // Meetings Floating panel only support dark mode
+            static let darkMeetingsFloatingPanel: Self = .init(
+                background: { _ in
+                    isDesignTokenEnabled
+                    ? TokenColors.Notifications.notificationWarning.swiftUI
+                    : MEGAAppColor.Yellow._FED42926.color
+                },
+                foregroundUIColor: { _ in
+                    isDesignTokenEnabled
+                    ? TokenColors.Text.primary
+                    : MEGAAppColor.Yellow._FFD60A.uiColor
+                },
+                foreground: { _ in
+                    isDesignTokenEnabled
+                    ? TokenColors.Text.primary.swiftUI
+                    : MEGAAppColor.Yellow._FFD60A.color
+                },
+                link: { _ in
+                    isDesignTokenEnabled
+                    ? TokenColors.Text.primary
+                    : MEGAAppColor.Yellow._FFD60A.uiColor
+                }
+            )
+            
             static let dark: Self = .init(
                 background: { colorScheme in
                     isDesignTokenEnabled
@@ -138,7 +162,7 @@ struct BannerView_Previews: PreviewProvider {
             
             BannerView(
                 config: .init(
-                    copy: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.title,
+                    copy: Strings.Localizable.Meetings.WaitingRoom.Banner.Limit100Participants.nonOrganizerHost,
                     underline: false,
                     theme: .dark,
                     closeAction: {
@@ -154,6 +178,25 @@ struct BannerView_Previews: PreviewProvider {
                 )
             )
             .colorScheme(.dark)
+            
+            BannerView(
+                config: .init(
+                    copy: Strings.Localizable.Meetings.WaitingRoom.Banner.Limit100Participants.nonOrganizerHost,
+                    underline: false,
+                    theme: .darkMeetingsFloatingPanel,
+                    closeAction: {
+                    })
+            )
+            .colorScheme(.dark)
+            
+            BannerView(
+                config: .init(
+                    copy: "Some interesting long copy with a [A]LINK[/A]",
+                    underline: true,
+                    theme: .darkMeetingsFloatingPanel
+                )
+            )
+            .colorScheme(.light)
         }
         .previewLayout(.sizeThatFits)
     }

@@ -460,7 +460,7 @@ final class ChatContentViewModel: ViewModelType {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
-                Task {
+                Task { @MainActor in 
                     guard MeetingContainerRouter.isAlreadyPresented == false,
                           let call = await self.chatUseCase.chatCall(for: self.chatRoom.chatId) else { return }
                     self.showCallEndDialog(withCall: call)

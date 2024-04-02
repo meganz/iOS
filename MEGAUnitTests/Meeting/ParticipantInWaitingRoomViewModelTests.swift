@@ -42,14 +42,19 @@ final class ParticipantInWaitingRoomViewModelTests: XCTestCase {
     }
     
     private func makeSUT() -> ParticipantInWaitingRoomViewModel {
-        ParticipantInWaitingRoomViewModel(participant: participant,
-                                          userImageUseCase: userImageUseCase,
-                                          chatRoomUseCase: chatRoomUseCase,
-                                          chatRoomUserUseCase: userUseCase,
-                                          megaHandleUseCase: megaHandleUseCase) { _ in
-            self.admitParticipantHandler_calledTimes += 1
-        } denyButtonMenuTappedHandler: { _ in
-            self.denyParticipantHandler_calledTimes += 1
-        }
+        ParticipantInWaitingRoomViewModel(
+            participant: participant,
+            userImageUseCase: userImageUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
+            megaHandleUseCase: megaHandleUseCase,
+            admitButtonEnabled: false,
+            admitButtonTappedHandler: { _ in
+                self.admitParticipantHandler_calledTimes += 1
+            },
+            denyButtonMenuTappedHandler: { _ in
+                self.denyParticipantHandler_calledTimes += 1
+            }
+        )
     }
 }

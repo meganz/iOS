@@ -29,6 +29,7 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func showWaitingRoomParticipantsList(for call: CallEntity)
     func showMuteSuccess(for participant: CallParticipantEntity?)
     func showMuteError(for participant: CallParticipantEntity?)
+    func showUpgradeFlow(_ accountDetails: AccountDetailsEntity)
 }
 
 extension MeetingFloatingPanelRouting {
@@ -88,7 +89,10 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             chatRoomUseCase: chatRoomUseCase,
             megaHandleUseCase: megaHandleUseCase, 
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            selectWaitingRoomList: selectWaitingRoomList
+            selectWaitingRoomList: selectWaitingRoomList,
+            headerConfigFactory: MeetingFloatingPanelHeaderConfigFactory(infoBannerFactory: MeetingFloatingPanelBannerFactory()),
+            featureFlags: DIContainer.featureFlagProvider,
+            presentUpgradeFlow: showUpgradeFlow
         )
         
         let userImageUseCase = UserImageUseCase(
@@ -248,5 +252,13 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         } else {
             SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ParticipantsInCall.MuteAll.error)
         }
+    }
+    
+    func showUpgradeFlow(_ accountDetails: AccountDetailsEntity) {
+        guard let baseViewController else { return }
+        UpgradeAccountPlanRouter(
+            presenter: baseViewController,
+            accountDetails: accountDetails
+        ).start()
     }
 }

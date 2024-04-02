@@ -4,7 +4,13 @@ import XCTest
 
 extension XCTestCase {
     func test<T: ViewModelType>(viewModel: T, action: T.Action, expectedCommands: [T.Command], timeout: TimeInterval = 3.0, file: StaticString = #filePath, line: UInt = #line) where T.Command: Equatable {
-        test(viewModel: viewModel, actions: [action], expectedCommands: expectedCommands, file: file, line: line)
+        test(
+            viewModel: viewModel,
+            actions: [action],
+            expectedCommands: expectedCommands,
+            file: file,
+            line: line
+        )
     }
     
     func test<T: ViewModelType>(viewModel: T, actions: [T.Action], expectedCommands: [T.Command], timeout: TimeInterval = 3.0, file: StaticString = #filePath, line: UInt = #line) where T.Command: Equatable {
