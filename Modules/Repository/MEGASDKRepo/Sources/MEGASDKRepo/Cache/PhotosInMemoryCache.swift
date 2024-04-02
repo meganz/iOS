@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-final actor PhotosInMemoryCache: PhotoLocalSourceProtocol {
+public final actor PhotosInMemoryCache: PhotoLocalSourceProtocol {
     public static let shared = PhotosInMemoryCache()
     
     private let cache = NSCache<NSNumber, PhotoNodeEntityEntryProxy>()
@@ -18,22 +18,22 @@ final actor PhotosInMemoryCache: PhotoLocalSourceProtocol {
         cache.delegate = nodeHandleTracker
     }
     
-    func setPhotos(_ photos: [NodeEntity]) {
+    public func setPhotos(_ photos: [NodeEntity]) {
         photos.forEach { photo in
             cache[photo.handle] = photo
             nodeHandleTracker.$identifiers.mutate { $0.insert(photo.handle) }
         }
     }
 
-    func photo(forHandle handle: HandleEntity) -> NodeEntity? {
+    public func photo(forHandle handle: HandleEntity) -> NodeEntity? {
         cache[handle]
     }
 
-    func removePhoto(forHandle handle: HandleEntity) {
+    public func removePhoto(forHandle handle: HandleEntity) {
         cache[handle] = nil
     }
     
-    func removeAllPhotos() {
+    public func removeAllPhotos() {
         cache.removeAllObjects()
     }
 }

@@ -245,6 +245,8 @@
 		25C2F8D82AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */; };
 		25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */; };
 		25D0E0182ACA6FF4007B87B0 /* PhotoZoomControlPositionTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0E0172ACA6FF4007B87B0 /* PhotoZoomControlPositionTrackerTests.swift */; };
+		25D360B32BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D360B22BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift */; };
+		25D360B92BB5257200ACFDA4 /* PhotosRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D360B82BB5257200ACFDA4 /* PhotosRepository+Additions.swift */; };
 		25D840692A9EE0E50026D288 /* PermissionAlertViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D840682A9EE0E50026D288 /* PermissionAlertViewModifier.swift */; };
 		25D8406C2A9EE2860026D288 /* PermissionAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D8406B2A9EE2860026D288 /* PermissionAlertModel.swift */; };
 		25D840712A9EE9330026D288 /* PermissionAlertModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D840702A9EE9330026D288 /* PermissionAlertModelTests.swift */; };
@@ -2889,6 +2891,8 @@
 		25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewController.swift; sourceTree = "<group>"; };
 		25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewModelTests.swift; sourceTree = "<group>"; };
 		25D0E0172ACA6FF4007B87B0 /* PhotoZoomControlPositionTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoZoomControlPositionTrackerTests.swift; sourceTree = "<group>"; };
+		25D360B22BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserAlbumCacheRepository+Additions.swift"; sourceTree = "<group>"; };
+		25D360B82BB5257200ACFDA4 /* PhotosRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosRepository+Additions.swift"; sourceTree = "<group>"; };
 		25D840682A9EE0E50026D288 /* PermissionAlertViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertViewModifier.swift; sourceTree = "<group>"; };
 		25D8406B2A9EE2860026D288 /* PermissionAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertModel.swift; sourceTree = "<group>"; };
 		25D840702A9EE9330026D288 /* PermissionAlertModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertModelTests.swift; sourceTree = "<group>"; };
@@ -7141,6 +7145,7 @@
 				2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */,
 				77B3227D20A436D60037FA89 /* NSURL+MNZCategory.h */,
 				77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */,
+				25D360B82BB5257200ACFDA4 /* PhotosRepository+Additions.swift */,
 				BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */,
 				BF7EBD25244E8B380015255F /* SIMD2+Additions.swift */,
 				BF943E9123554021001C18E0 /* TimeInterval+Additions.swift */,
@@ -7174,6 +7179,7 @@
 				BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */,
 				BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */,
 				2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */,
+				25D360B22BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -15059,6 +15065,7 @@
 				B6F853442794C97300028D51 /* PhotoSelectionAdapter.swift in Sources */,
 				122B956E287CC7AA00860FE1 /* PhotosFilterOptions.swift in Sources */,
 				12397E2C2820C75900A30CCC /* PhotosPageViewController.swift in Sources */,
+				25D360B92BB5257200ACFDA4 /* PhotosRepository+Additions.swift in Sources */,
 				B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */,
 				B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */,
 				32303CF428657BA1005DF060 /* PhotosViewController+ContextMenu.swift in Sources */,
@@ -15459,6 +15466,7 @@
 				2407FDA62B05C73C00F26248 /* URL+MNZCategory.swift in Sources */,
 				B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
+				25D360B32BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift in Sources */,
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCase+Additions.swift in Sources */,
 				A87BDB352B8CD3BC0074EE4C /* UserAvatarHandler.swift in Sources */,
 				8313914B293519F900E20170 /* UserAvatarView.swift in Sources */,

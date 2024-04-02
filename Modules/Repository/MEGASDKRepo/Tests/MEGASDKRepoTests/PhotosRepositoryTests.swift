@@ -226,15 +226,91 @@ final class PhotosRepositoryTests: XCTestCase {
         XCTAssertTrue(cachedPhotos.isEmpty)
     }
     
+    func testMonitorCacheInvalidationTriggers_onLogoutEvent_shouldClearCaches() async throws {
+        let expectedPhotos = [NodeEntity(handle: 43),
+                              NodeEntity(handle: 99)]
+        
+        let photoLocalSource = MockPhotoLocalSource(photos: expectedPhotos)
+        let notificationCentre = NotificationCenter()
+        let sut = makeSUT(
+            photoLocalSource: photoLocalSource,
+            cacheInvalidationTrigger: CacheInvalidationTrigger(
+                notificationCentre: notificationCentre,
+                logoutNotificationName: .accountDidLogout,
+                didReceiveMemoryWarningNotificationName: { .init("TestMemoryWarningOccurred") }
+            ))
+        
+        let photos = try await sut.allPhotos()
+        XCTAssertEqual(Set(photos), Set(expectedPhotos))
+        
+        let cacheClearExpectation = expectation(description: "Expect cache to be cleared")
+        let publisher = await photoLocalSource.$removeAllCachedValuesCalledCount
+        let subscription = publisher
+            .first(where: { $0 == 1})
+            .sink { _ in cacheClearExpectation.fulfill() }
+        // Await for monitoring tasks to start
+        try await Task.sleep(nanoseconds: 1_000_000_000 / 2)
+
+        notificationCentre.post(name: .accountDidLogout, object: nil)
+        
+        await fulfillment(of: [cacheClearExpectation], timeout: 1)
+        
+        subscription.cancel()
+
+        let expectedClearedPhotos = await photoLocalSource.photos
+        XCTAssertTrue(expectedClearedPhotos.isEmpty)
+    }
+    
+    func testMonitorCacheInvalidationTriggers_onMemoryWarning_shouldClearCaches() async throws {
+        let expectedPhotos = [NodeEntity(handle: 43),
+                              NodeEntity(handle: 99)]
+        
+        let photoLocalSource = MockPhotoLocalSource(photos: expectedPhotos)
+        let notificationCentre = NotificationCenter()
+        let memoryWarningNotification = Notification.Name("TestMemoryWarningOccurred")
+        let sut = makeSUT(
+            photoLocalSource: photoLocalSource,
+            cacheInvalidationTrigger: CacheInvalidationTrigger(
+                notificationCentre: notificationCentre,
+                logoutNotificationName: .accountDidLogout,
+                didReceiveMemoryWarningNotificationName: { memoryWarningNotification }
+            ))
+        
+        let photos = try await sut.allPhotos()
+        XCTAssertEqual(Set(photos), Set(expectedPhotos))
+        
+        let cacheClearExpectation = expectation(description: "Expect cache to be cleared")
+        let publisher = await photoLocalSource.$removeAllCachedValuesCalledCount
+        let subscription = publisher
+            .first(where: { $0 == 1})
+            .sink { _ in cacheClearExpectation.fulfill() }
+
+        // Await for monitoring tasks to start
+        try await Task.sleep(nanoseconds: 1_000_000_000 / 2)
+
+        notificationCentre.post(name: memoryWarningNotification, object: nil)
+        
+        await fulfillment(of: [cacheClearExpectation], timeout: 1)
+        subscription.cancel()
+        
+        let expectedClearedPhotos = await photoLocalSource.photos
+        XCTAssertTrue(expectedClearedPhotos.isEmpty)
+    }
+
     private func makeSUT(sdk: MEGASdk = MockSdk(),
                          photoLocalSource: some PhotoLocalSourceProtocol = MockPhotoLocalSource(),
                          nodeUpdatesProvider: some NodeUpdatesProviderProtocol = MockNodeUpdatesProvider(),
+                         cacheInvalidationTrigger: CacheInvalidationTrigger = .init(
+                            notificationCentre: .default,
+                            logoutNotificationName: .accountDidLogout,
+                            didReceiveMemoryWarningNotificationName: { Notification.Name("TestMemoryWarningOccurred") }),
                          file: StaticString = #file,
                          line: UInt = #line
     ) -> PhotosRepository {
         let sut = PhotosRepository(sdk: sdk,
                                    photoLocalSource: photoLocalSource,
-                                   nodeUpdatesProvider: nodeUpdatesProvider)
+                                   nodeUpdatesProvider: nodeUpdatesProvider, 
+                                   cacheInvalidationTrigger: cacheInvalidationTrigger)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

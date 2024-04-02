@@ -4,10 +4,6 @@ import MEGADomain
 import MEGASwift
 
 final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
-    public static let newRepo: UserAlbumCacheRepository = UserAlbumCacheRepository(
-        userAlbumRepository: UserAlbumRepository.newRepo, 
-        userAlbumCache: UserAlbumCache.shared,
-        setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: .sharedSdk))
     
     public var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
         setsUpdatedSourcePublisher.eraseToAnyPublisher()
@@ -21,29 +17,35 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     private let userAlbumCache: any UserAlbumCacheProtocol
     private let setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol
     private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
-    private var monitorSDKUpdatesTask: Task<Void, Error>?
     private let setUpdateSequences = MulticastAsyncSequence<[SetEntity]>()
     private let setElementUpdateSequences = MulticastAsyncSequence<[SetElementEntity]>()
     private let setElementUpdateOnSetsSequences = MulticastAsyncSequence<[SetEntity]>()
-    
-    init(userAlbumRepository: some UserAlbumRepositoryProtocol,
-         userAlbumCache: some UserAlbumCacheProtocol,
-         setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol
+    private var monitoredTasks: [Task<Void, any Error>] = []
+
+    public init(
+        userAlbumRepository: some UserAlbumRepositoryProtocol,
+        userAlbumCache: some UserAlbumCacheProtocol,
+        setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol,
+        cacheInvalidationTrigger: CacheInvalidationTrigger
     ) {
         self.userAlbumRepository = userAlbumRepository
         self.userAlbumCache = userAlbumCache
         self.setAndElementsUpdatesProvider = setAndElementsUpdatesProvider
         
-        monitorSDKUpdatesTask = Task {
-            await withTaskGroup(of: Void.self, body: { taskGroup in
-                taskGroup.addTask { await self.monitorSetUpdates() }
-                taskGroup.addTask { await self.monitorSetElementUpdates() }
-            })
-        }
+        monitoredTasks = UserAlbumCacheRepositoryMonitors(
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider,
+            setUpdateSequences: setUpdateSequences,
+            userAlbumCache: userAlbumCache,
+            setElementUpdateSequences: setElementUpdateSequences,
+            setElementUpdateOnSetsSequences: setElementUpdateOnSetsSequences,
+            cacheInvalidationTrigger: cacheInvalidationTrigger,
+            setsUpdatedSourcePublisher: { [weak self] in self?.setsUpdatedSourcePublisher.send($0) },
+            setElementsUpdatedSourcePublisher: { [weak self] in self?.setElementsUpdatedSourcePublisher.send($0) })
+        .startMonitoring()
     }
     
     deinit {
-        monitorSDKUpdatesTask?.cancel()
+        monitoredTasks.cancelTasks()
     }
     
     public func albums() async -> [SetEntity] {
@@ -175,70 +177,5 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     
     public func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
         try await userAlbumRepository.updateAlbumCover(for: albumId, elementId: elementId)
-    }
-    
-    private func monitorSetUpdates() async {
-        for await setUpdates in setAndElementsUpdatesProvider.setUpdates(filteredBy: [.album]) {
-            guard !Task.isCancelled else {
-                await setUpdateSequences.terminateContinuations()
-                break
-            }
-            
-            let (insertions, deletions) = setUpdates
-                .reduce(into: (insertions: [SetEntity], deletions: [SetEntity])([], [])) { result, setEntity in
-                    if setEntity.changeTypes.contains(.removed) {
-                        result.deletions.append(setEntity)
-                    } else {
-                        result.insertions.append(setEntity.copyWithModified(changeTypes: []))
-                    }
-                }
-            await userAlbumCache.remove(albums: deletions)
-            await userAlbumCache.setAlbums(insertions)
-            
-            setsUpdatedSourcePublisher.send(setUpdates)
-            await setUpdateSequences.yield(element: setUpdates)
-        }
-    }
-    
-    private func monitorSetElementUpdates() async {
-        for await setElementUpdate in setAndElementsUpdatesProvider.setElementUpdates() {
-            guard !Task.isCancelled else {
-                break
-            }
-
-            let invalidateAlbumSets = Set(setElementUpdate.map(\.ownerId))
-            
-            await userAlbumCache.removeElements(of: invalidateAlbumSets)
-            
-            setElementsUpdatedSourcePublisher.send(setElementUpdate)
-            
-            let updatedAlbums = await withTaskGroup(of: SetEntity?.self, returning: [SetEntity].self) { taskGroup in
-                invalidateAlbumSets
-                    .forEach { albumHandle in
-                        taskGroup.addTask { await self.userAlbumCache.album(forHandle: albumHandle) }
-                    }
-                
-                return await taskGroup.reduce(into: [SetEntity](), { if let set = $1 { $0.append(set) } })
-            }
-            
-            await setElementUpdateSequences.yield(element: setElementUpdate)
-            await setElementUpdateOnSetsSequences.yield(element: updatedAlbums)
-        }
-    }
-}
-
-fileprivate extension SetEntity {
-    func copyWithModified(handle: HandleEntity? = nil, userId: HandleEntity? = nil, coverId: HandleEntity? = nil, creationTime: Date? = nil, modificationTime: Date? = nil, setType: SetTypeEntity? = nil, name: String? = nil, isExported: Bool? = nil, changeTypes: SetChangeTypeEntity? = nil) -> SetEntity {
-        
-        SetEntity(
-            handle: handle ?? self.handle,
-            userId: userId ?? self.userId,
-            coverId: coverId ?? self.coverId,
-            creationTime: creationTime ?? self.creationTime,
-            modificationTime: modificationTime ?? self.modificationTime,
-            setType: setType ?? self.setType,
-            name: name ?? self.name,
-            isExported: isExported ?? self.isExported,
-            changeTypes: changeTypes ?? self.changeTypes)
     }
 }

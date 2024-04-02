@@ -1,6 +1,6 @@
 import MEGASwift
 
-public protocol PhotosRepositoryProtocol: SharedRepositoryProtocol, Sendable {
+public protocol PhotosRepositoryProtocol: Sendable {
     /// The async sequence will yield the updated photos once cache is updated.
     /// - Returns: AnyAsyncSequence with the updated photo nodes including change types
     func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]>

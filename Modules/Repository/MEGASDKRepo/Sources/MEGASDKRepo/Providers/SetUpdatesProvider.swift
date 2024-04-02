@@ -2,7 +2,7 @@ import MEGADomain
 import MEGASdk
 import MEGASwift
 
-public protocol SetAndElementUpdatesProviderProtocol {
+public protocol SetAndElementUpdatesProviderProtocol: Sendable {
     
     /// Set updates from `MEGAGlobalDelegate` `onSetsUpdate` as an `AnyAsyncSequence`
     /// - Parameter filteredBy: By setting which SetTypeEntities you want to filter the yielded results. If either no filter is set or an empty filter is provided, then it will not filter yielded updates.

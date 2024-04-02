@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGASDKRepo
 
@@ -6,6 +7,8 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     public var albums: [SetEntity] {
         Array(_albums.values)
     }
+    
+    @Published public var removeAllCachedValuesCalledCount = 0
     
     private var _albums: [HandleEntity: SetEntity]
     private var albumsElementIds: [HandleEntity: [AlbumPhotoIdEntity]]
@@ -41,6 +44,7 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     public func removeAllCachedValues() {
         _albums.removeAll()
         albumsElementIds.removeAll()
+        removeAllCachedValuesCalledCount += 1
     }
     
     public func remove(albums: [SetEntity]) {

@@ -748,16 +748,137 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         await fulfillment(of: [taskFinishedExp], timeout: 0.5)
     }
     
+    func testMonitorCacheInvalidationTriggers_onLogoutEvent_shouldClearCaches() async throws {
+        
+        let albumsElements: [HandleEntity: [AlbumPhotoIdEntity]] = [
+            12: [.init(albumId: 12, albumPhotoId: 54, nodeId: 4)],
+            17: [.init(albumId: 17, albumPhotoId: 65, nodeId: 87)]
+        ]
+        let albums = albumsElements.keys.map { SetEntity(handle: $0) }
+        let userAlbumCache = MockUserAlbumCache(
+            albums: albums,
+            albumsElementIds: albumsElements)
+        let notificationCentre = NotificationCenter()
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            cacheInvalidationTrigger: CacheInvalidationTrigger(
+                notificationCentre: notificationCentre,
+                logoutNotificationName: .accountDidLogout,
+                didReceiveMemoryWarningNotificationName: { .init("TestMemoryWarningOccurred") }
+            ))
+
+        let result = await sut.albums()
+        
+        XCTAssertEqual(Set(result), Set(albums))
+        
+        let cacheClearExpectation = expectation(description: "Expect cache to be cleared")
+        let publisher = await userAlbumCache.$removeAllCachedValuesCalledCount
+        let subscription = publisher
+            .first(where: { $0 == 1})
+            .sink { _ in cacheClearExpectation.fulfill() }
+
+        // Await for monitoring tasks to start
+        try await Task.sleep(nanoseconds: 1_000_000_000 / 2)
+        
+        notificationCentre.post(name: .accountDidLogout, object: nil)
+        
+        await fulfillment(of: [cacheClearExpectation], timeout: 1)
+        subscription.cancel()
+
+        await withTaskGroup(of: Void.self) { taskGroup in
+            // Check Albums are cleared
+            taskGroup.addTask {
+                let expectedClearedAlbums = await userAlbumCache.albums
+                XCTAssertTrue(expectedClearedAlbums.isEmpty)
+            }
+            
+            // Check Elements linked to albums are cleared
+            albumsElements
+                .keys
+                .forEach { key in
+                    taskGroup.addTask {
+                        let expectedClearedElements = await userAlbumCache.albumElementIds(forAlbumId: key)
+                        XCTAssertNil(expectedClearedElements, "Expected \(key) to not contain any elements in cache")
+                    }
+                }
+        }
+    }
+    
+    func testMonitorCacheInvalidationTriggers_onMemoryWarning_shouldClearCaches() async throws {
+        let albumsElements: [HandleEntity: [AlbumPhotoIdEntity]] = [
+            12: [.init(albumId: 12, albumPhotoId: 54, nodeId: 4)],
+            17: [.init(albumId: 17, albumPhotoId: 65, nodeId: 87)]
+        ]
+        let albums = albumsElements.keys.map { SetEntity(handle: $0) }
+        let userAlbumCache = MockUserAlbumCache(
+            albums: albums,
+            albumsElementIds: albumsElements)
+        let notificationCentre = NotificationCenter()
+        let memoryWarningNotification = Notification.Name("TestMemoryWarningOccurred")
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            cacheInvalidationTrigger: CacheInvalidationTrigger(
+                notificationCentre: notificationCentre,
+                logoutNotificationName: .accountDidLogout,
+                didReceiveMemoryWarningNotificationName: { memoryWarningNotification }))
+        
+        let result = await sut.albums()
+        
+        XCTAssertEqual(Set(result), Set(albums))
+            
+        let cacheClearExpectation = expectation(description: "Expect cache to be cleared")
+        let publisher = await userAlbumCache.$removeAllCachedValuesCalledCount
+        let subscription = publisher
+            .first(where: { $0 == 1})
+            .sink { _ in cacheClearExpectation.fulfill() }
+
+        // Await for monitoring tasks to start
+        try await Task.sleep(nanoseconds: 1_000_000_000 / 2)
+        
+        notificationCentre.post(name: memoryWarningNotification, object: nil)
+        
+        await fulfillment(of: [cacheClearExpectation], timeout: 1)
+        subscription.cancel()
+        
+        await withTaskGroup(of: Void.self) { taskGroup in
+            // Check Albums are cleared
+            taskGroup.addTask {
+                let expectedClearedAlbums = await userAlbumCache.albums
+                XCTAssertTrue(expectedClearedAlbums.isEmpty)
+            }
+            
+            // Check Elements linked to albums are cleared
+            albumsElements
+                .keys
+                .forEach { key in
+                    taskGroup.addTask {
+                        let expectedClearedElements = await userAlbumCache.albumElementIds(forAlbumId: key)
+                        XCTAssertNil(expectedClearedElements, "Expected \(key) to not contain any elements in cache")
+                    }
+                }
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
         userAlbumCache: some UserAlbumCacheProtocol = MockUserAlbumCache(),
-        setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol = MockSetAndElementUpdatesProvider()
+        setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol = MockSetAndElementUpdatesProvider(),
+        cacheInvalidationTrigger: CacheInvalidationTrigger = .init(
+            notificationCentre: .default,
+            logoutNotificationName: .accountDidLogout,
+            didReceiveMemoryWarningNotificationName: { .init("TestMemoryWarningOccurred") }),
+        file: StaticString = #file,
+        line: UInt = #line
     ) -> UserAlbumCacheRepository {
-        UserAlbumCacheRepository(userAlbumRepository: userAlbumRepository,
-                                 userAlbumCache: userAlbumCache,
-                                 setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        let sut = UserAlbumCacheRepository(
+            userAlbumRepository: userAlbumRepository,
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider,
+            cacheInvalidationTrigger: cacheInvalidationTrigger)
+        trackForMemoryLeaks(on: sut, file: file, line: line)
+        return sut
     }
 }
 

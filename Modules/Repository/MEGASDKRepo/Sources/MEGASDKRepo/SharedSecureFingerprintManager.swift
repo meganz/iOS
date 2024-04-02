@@ -1,7 +1,6 @@
 import MEGADomain
 import MEGARepo
 import MEGASdk
-import UIKit
 
 public final class SharedSecureFingerprintManager: SecureFingerprintManagerProtocol {
     
