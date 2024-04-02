@@ -3,9 +3,38 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentationMock
+
+// mock for MeetingFloatingPanelHeaderConfigFactoryProtocol
+struct MockMeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderConfigFactoryProtocol {
+    func headerConfig(
+        tab: ParticipantsListTab,
+        freeTierInCallParticipantLimitReached: Bool,
+        totalInCallAndWaitingRoomAboveFreeTierLimit: Bool,
+        participantsCount: Int,
+        isMyselfAModerator: Bool,
+        hasDismissedBanner: Bool,
+        shouldHideCallAllIcon: Bool,
+        shouldDisableMuteAllButton: Bool,
+        presentUpgradeFlow: @escaping ActionHandler,
+        dismissFreeUserLimitBanner: @escaping ActionHandler,
+        actionButtonTappedHandler: @escaping ActionHandler
+    ) -> MeetingParticipantTableViewHeader.ViewConfig {
+        .init(
+            title: "title",
+            actionButtonNormalTitle: "Normal",
+            actionButtonDisabledTitle: "Disabled",
+            actionButtonHidden: false, 
+            actionButtonEnabled: true,
+            callAllButtonHidden: false,
+            actionButtonTappedHandler: actionButtonTappedHandler,
+            infoViewModel: nil
+        )
+    }
+}
 
 extension MeetingFloatingPanelViewModel {
-    convenience init(
+    static func make(
         router: some MeetingFloatingPanelRouting = MockMeetingFloatingPanelRouter(),
         containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
@@ -25,9 +54,9 @@ extension MeetingFloatingPanelViewModel {
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         selectWaitingRoomList: Bool = false,
-        isTesting: Bool = true
-    ) {
-        self.init(
+        headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol
+    ) -> MeetingFloatingPanelViewModel {
+        .init(
             router: router,
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
@@ -42,7 +71,10 @@ extension MeetingFloatingPanelViewModel {
             chatRoomUseCase: chatRoomUseCase,
             megaHandleUseCase: megaHandleUseCase,
             chatUseCase: chatUseCase,
-            selectWaitingRoomList: selectWaitingRoomList
+            selectWaitingRoomList: selectWaitingRoomList,
+            headerConfigFactory: headerConfigFactory,
+            featureFlags: MockFeatureFlagProvider(list: .init()),
+            presentUpgradeFlow: {_ in }
         )
     }
 }

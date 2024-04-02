@@ -1404,6 +1404,8 @@
 		94B09E6B2B84CC87007D6B84 /* NodeBrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E542B84CC86007D6B84 /* NodeBrowserViewModel.swift */; };
 		94B09E6F2B84D0B6007D6B84 /* UploadAddMenuDelegateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E6D2B84D0B5007D6B84 /* UploadAddMenuDelegateHandlerTests.swift */; };
 		94B09E702B84D0B6007D6B84 /* MockNodeInsertionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E6E2B84D0B5007D6B84 /* MockNodeInsertionRouter.swift */; };
+		94B0C6CC2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0C6CB2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift */; };
+		94B0C6CE2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */; };
 		94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */; };
 		94B6E8852A83F6410082D9B1 /* MEGAPickerFileProviderDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */; };
 		94B6E8882A83F8530082D9B1 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */; };
@@ -1419,6 +1421,9 @@
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		94CBB2C12A8A4DBA00C62F32 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */; };
 		94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */; };
+		94CC24B72B9F4918002BEA9C /* MeetingFloatingPanelHeaderConfigFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CC24B62B9F4918002BEA9C /* MeetingFloatingPanelHeaderConfigFactoryTests.swift */; };
+		94CC24BD2BA0434A002BEA9C /* MeetingFloatingPanelBannerFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CC24BC2BA0434A002BEA9C /* MeetingFloatingPanelBannerFactoryTests.swift */; };
+		94CD25A92ACD7A1C0079FABD /* SearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD25A82ACD7A1C0079FABD /* SearchOperation.swift */; };
 		94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */; };
 		94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */; };
 		94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */; };
@@ -4110,6 +4115,8 @@
 		94B09E542B84CC86007D6B84 /* NodeBrowserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeBrowserViewModel.swift; sourceTree = "<group>"; };
 		94B09E6D2B84D0B5007D6B84 /* UploadAddMenuDelegateHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadAddMenuDelegateHandlerTests.swift; sourceTree = "<group>"; };
 		94B09E6E2B84D0B5007D6B84 /* MockNodeInsertionRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNodeInsertionRouter.swift; sourceTree = "<group>"; };
+		94B0C6CB2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelHeaderConfigFactory.swift; sourceTree = "<group>"; };
+		94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelBannerFactory.swift; sourceTree = "<group>"; };
 		94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWithFilterOperation.swift; sourceTree = "<group>"; };
 		94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoVerifyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeVersionsViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -4121,6 +4128,9 @@
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
 		94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModelTests.swift; sourceTree = "<group>"; };
+		94CC24B62B9F4918002BEA9C /* MeetingFloatingPanelHeaderConfigFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelHeaderConfigFactoryTests.swift; sourceTree = "<group>"; };
+		94CC24BC2BA0434A002BEA9C /* MeetingFloatingPanelBannerFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelBannerFactoryTests.swift; sourceTree = "<group>"; };
+		94CD25A82ACD7A1C0079FABD /* SearchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOperation.swift; sourceTree = "<group>"; };
 		94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Permissions.swift"; sourceTree = "<group>"; };
 		94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepositoryTests.swift; sourceTree = "<group>"; };
@@ -9329,7 +9339,7 @@
 				832DEFE72AB46175004573D5 /* AllowNonHostToInvite */,
 				83784A192B1E0AF80016410D /* EmptyParticipantsListCell */,
 				839BA9DA2AB32B18001F852C /* Header */,
-				839BA9E42AB355B0001F852C /* IInviteParticipant */,
+				839BA9E42AB355B0001F852C /* InviteParticipant */,
 				83B804D72ABB006E006B356F /* ParticipantInWaitingRoom */,
 				83B804C52AB89772006B356F /* ParticipantNotInCall */,
 				8365B2A12AB855F40057489A /* ParticipantsListSelector */,
@@ -9348,13 +9358,13 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
-		839BA9E42AB355B0001F852C /* IInviteParticipant */ = {
+		839BA9E42AB355B0001F852C /* InviteParticipant */ = {
 			isa = PBXGroup;
 			children = (
 				839BA9E52AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift */,
 				839BA9E62AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib */,
 			);
-			path = IInviteParticipant;
+			path = InviteParticipant;
 			sourceTree = "<group>";
 		};
 		83A2894C27F5B7B60063CA8C /* CancellableTransfers */ = {
@@ -11933,6 +11943,8 @@
 				BFAD5148260C0BE700DFBD1B /* ParticpiantInfo */,
 				BF66DFED2613E7EE00066F35 /* QuickAction */,
 				BFC060F128A0C09900BA2AD7 /* Utils */,
+				94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */,
+				94B0C6CB2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift */,
 				BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */,
 				BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */,
 				BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */,
@@ -12368,6 +12380,8 @@
 				BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */,
 				BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */,
 				2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */,
+				94CC24BC2BA0434A002BEA9C /* MeetingFloatingPanelBannerFactoryTests.swift */,
+				94CC24B62B9F4918002BEA9C /* MeetingFloatingPanelHeaderConfigFactoryTests.swift */,
 				BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */,
 				996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */,
 				BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */,
@@ -14603,6 +14617,8 @@
 				2FFCF3CE25FB1FE700E1718D /* MeetingCreatingViewModel.swift in Sources */,
 				2FFCF3C425FB1FBE00E1718D /* MeetingCreatingViewRouter.swift in Sources */,
 				83792B882950A4080033ED3E /* MeetingDescriptionView.swift in Sources */,
+				94B0C6CE2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift in Sources */,
+				94B0C6CC2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift in Sources */,
 				BF66DFC82613E6AC00066F35 /* MeetingFloatingPanelRouter.swift in Sources */,
 				BF68244725E84D9F00A7740C /* MeetingFloatingPanelViewController.swift in Sources */,
 				BF66DFD22613E6DC00066F35 /* MeetingFloatingPanelViewModel.swift in Sources */,
@@ -15980,6 +15996,8 @@
 				BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */,
 				99F7043D2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift in Sources */,
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,
+				94CC24BD2BA0434A002BEA9C /* MeetingFloatingPanelBannerFactoryTests.swift in Sources */,
+				94CC24B72B9F4918002BEA9C /* MeetingFloatingPanelHeaderConfigFactoryTests.swift in Sources */,
 				BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */,
 				BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */,
 				996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */,

@@ -6,15 +6,19 @@ class ParticipantInWaitingRoomTableViewCell: UITableViewCell, ViewType {
 
     var viewModel: ParticipantInWaitingRoomViewModel? {
         didSet {
-            viewModel?.invokeCommand = { [weak self] in
-                self?.executeCommand($0)
+            if let viewModel {
+                self.admitButton.isEnabled = viewModel.admitButtonEnabled
+                viewModel.invokeCommand = { [weak self] in
+                    self?.executeCommand($0)
+                }
+                viewModel.dispatch(.onViewReady)
             }
-            viewModel?.dispatch(.onViewReady)
         }
     }
     
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var admitButton: UIButton!
     
     @IBAction func admitButtonTapped(_ sender: UIButton) {
         viewModel?.dispatch(.admitButtonTapped)

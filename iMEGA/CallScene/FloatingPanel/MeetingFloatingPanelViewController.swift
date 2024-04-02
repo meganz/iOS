@@ -182,12 +182,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
             callParticipantsListView = participantListView
             callParticipants = participantListView.participants
             participantsTableView.reloadData()
-        case .hideCallAllIcon(let hide):
-            guard let header = participantsTableView.headerView(forSection: 1) as? MeetingParticipantTableViewHeader else { return }
-            header.hideCallAllIcon(hide)
-        case .disableMuteAllButton(let disable):
-            guard let header = participantsTableView.headerView(forSection: 1) as? MeetingParticipantTableViewHeader else { return }
-            header.disableMuteAllButton(disable)
         }
     }
     
@@ -347,30 +341,8 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         switch callParticipantsListView.sections[section] {
         case .invite:
             guard callParticipants.isNotEmpty, let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier) as? MeetingParticipantTableViewHeader else { return UIView(frame: .zero) }
-            if callParticipantsListView.selectedTab == .notInCall {
-                header.hideCallAllIcon(
-                    callParticipants.filter({ $0.absentParticipantState != .calling }).isNotEmpty
-                )
-            }
             
-            header.configureWith(
-                config: .init(
-                    tab: callParticipantsListView.selectedTab,
-                    participantsCount: callParticipants.count,
-                    isMyselfModerator: callParticipantsListView.isMyselfModerator,
-                    actionButtonTappedHandler: { [weak self] in
-                        self?.viewModel.dispatch(.onHeaderActionTap)
-                    },
-                    infoViewModel: callParticipantsListView.infoHeaderData
-                )
-            )
-            
-            if callParticipantsListView.selectedTab == .inCall {
-                let unmutedUsers = callParticipants.filter({ $0.audio == .on })
-                header.disableMuteAllButton(
-                    unmutedUsers.isEmpty || unmutedUsers.count == 1 && unmutedUsers.first?.participantId == accountUseCase.currentUserHandle
-                )
-            }
+            header.configureWith(config: callParticipantsListView.headerConfig, parent: tableView)
             return header
         default:
             return nil
@@ -439,9 +411,15 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: ParticipantInWaitingRoomTableViewCell.reuseIdentifier, for: indexPath) as? ParticipantInWaitingRoomTableViewCell else { return ParticipantInWaitingRoomTableViewCell() }
         cell.viewModel = ParticipantInWaitingRoomViewModel(
             participant: callParticipants[indexPath.row],
-            userImageUseCase: userImageUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomUserUseCase: chatRoomUserUseCase, megaHandleUseCase: megaHandleUseCase, admitButtonTappedHandler: { [weak self] participant in
+            userImageUseCase: userImageUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            megaHandleUseCase: megaHandleUseCase,
+            admitButtonEnabled: callParticipantsListView?.waitingRoomConfig?.allowIndividualWaitlistAdmittance ?? false,
+            admitButtonTappedHandler: { [weak self] participant in
                 self?.viewModel.dispatch(.onAdmitParticipantTap(participant: participant))
-            }, denyButtonMenuTappedHandler: { [weak self] participant in
+            },
+            denyButtonMenuTappedHandler: { [weak self] participant in
                 self?.viewModel.dispatch(.onDenyParticipantTap(participant: participant))
             })
         return cell

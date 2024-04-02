@@ -1,0 +1,174 @@
+@testable import MEGA
+import MEGAL10n
+import XCTest
+
+final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
+    class Harness {
+        let sut = MeetingFloatingPanelBannerFactory()
+        
+        func result(
+            tab: ParticipantsListTab,
+            freeTierInCallParticipantLimitReached: Bool = false,
+            warningMode: ParticipantLimitWarningMode,
+            hasDismissedBanner: Bool = false
+        ) -> MeetingInfoHeaderData? {
+            sut.infoHeaderData(
+                tab: tab,
+                freeTierInCallParticipantLimitReached: freeTierInCallParticipantLimitReached,
+                warningMode: warningMode,
+                hasDismissedBanner: hasDismissedBanner,
+                presentUpgradeFlow: {},
+                dismissFreeUserLimitBanner: {}
+            )
+        }
+    }
+    
+    func testNoBanner_InNotInCallTab_regularParticipant() {
+        let harness = Harness()
+        let result = harness.result(tab: .notInCall, warningMode: .noWarning)
+        XCTAssertNil(result)
+    }
+    
+    func testNoBanner_InNotInCallTab_organizer() {
+        let harness = Harness()
+        let result = harness.result(tab: .notInCall, warningMode: .nonDismissibleWithUpgradeLink)
+        XCTAssertNil(result)
+    }
+    
+    func testNoBanner_InNotInCallTab_moderator() {
+        let harness = Harness()
+        let result = harness.result(tab: .notInCall, warningMode: .dismissible)
+        XCTAssertNil(result)
+    }
+    
+    func testNoBanner_ifDidNotReachParticipantLimit_InCallTab_regularParticipant() {
+        let harness = Harness()
+        let result = harness.result(
+            tab: .inCall,
+            freeTierInCallParticipantLimitReached: false,
+            warningMode: .noWarning
+        )
+        XCTAssertNil(result)
+    }
+    
+    func testNoBanner_ifDidNotReachParticipantLimit_InCallTab_moderator() {
+        let harness = Harness()
+        let result = harness.result(
+            tab: .inCall,
+            freeTierInCallParticipantLimitReached: false,
+            warningMode: .dismissible
+        )
+        XCTAssertNil(result)
+    }
+    
+    func testNoBanner_ifDidNotReachParticipantLimit_InCallTab_organizer() {
+        let harness = Harness()
+        let result = harness.result(
+            tab: .inCall,
+            freeTierInCallParticipantLimitReached: false,
+            warningMode: .nonDismissibleWithUpgradeLink
+        )
+        XCTAssertNil(result)
+    }
+    
+    func testNoBanner_ifDidNotReachParticipantLimit_WaitingRoomTab_moderator() {
+        let harness = Harness()
+        let result = harness.result(
+            tab: .waitingRoom,
+            freeTierInCallParticipantLimitReached: false,
+            warningMode: .dismissible
+        )
+        XCTAssertNil(result)
+    }
+    
+    func testNoBanner_ifDidNotReachParticipantLimit_WaitingRoomTab_organizer() {
+        let harness = Harness()
+        let result = harness.result(
+            tab: .waitingRoom,
+            freeTierInCallParticipantLimitReached: false,
+            warningMode: .nonDismissibleWithUpgradeLink
+        )
+        XCTAssertNil(result)
+    }
+    
+    func testNoBanner_ifDidNotReachParticipantLimit_WaitingRoomTab_regularParticipant() {
+        let harness = Harness()
+        let result = harness.result(
+            tab: .waitingRoom,
+            freeTierInCallParticipantLimitReached: false,
+            warningMode: .noWarning
+        )
+        XCTAssertNil(result)
+    }
+    
+    func testBannerTitleAndDismiss_InCall_isModerator_hasReachedLimit() throws {
+        let harness = Harness()
+        let maybeResult = harness.result(
+            tab: .inCall,
+            freeTierInCallParticipantLimitReached: true,
+            warningMode: .dismissible
+        )
+        let result = try XCTUnwrap(maybeResult)
+        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.WaitingRoom.Warning.limit100Participants)
+        XCTAssertNotNil(result.dismissTapped)
+    }
+    
+    func testBannerTitleAndDismiss_InCall_isOrganizer_hasReachedLimit() throws {
+        let harness = Harness()
+        let maybeResult = harness.result(
+            tab: .inCall,
+            freeTierInCallParticipantLimitReached: true,
+            warningMode: .nonDismissibleWithUpgradeLink
+        )
+        let result = try XCTUnwrap(maybeResult)
+        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.InCall.Banner.Limit100Participants.organizerHost)
+        XCTAssertNil(result.dismissTapped)
+    }
+    
+    func testBannerTitleAndDismiss_waitingRoom_isModerator_hasReachedLimit() throws {
+        let harness = Harness()
+        let maybeResult = harness.result(
+            tab: .waitingRoom,
+            freeTierInCallParticipantLimitReached: true,
+            warningMode: .dismissible
+        )
+        let result = try XCTUnwrap(maybeResult)
+        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.WaitingRoom.Warning.limit100Participants)
+        XCTAssertNotNil(result.dismissTapped)
+    }
+    
+    func testBannerTitleAndDismiss_waitingRoom_isOrganiser_didNotDismiss() throws {
+        let harness = Harness()
+        let maybeResult = harness.result(
+            tab: .waitingRoom,
+            freeTierInCallParticipantLimitReached: true,
+            warningMode: .nonDismissibleWithUpgradeLink,
+            hasDismissedBanner: false
+        )
+        let result = try XCTUnwrap(maybeResult)
+        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.WaitingRoom.Banner.Limit100Participants.organizerHost)
+        XCTAssertNil(result.dismissTapped)
+    }
+    
+    func testBannerNil_waitingRoom_isRegularParticipant_didNotDismiss() throws {
+        let harness = Harness()
+        let maybeResult = harness.result(
+            tab: .waitingRoom,
+            freeTierInCallParticipantLimitReached: true,
+            warningMode: .noWarning,
+            hasDismissedBanner: false
+        )
+        XCTAssertNil(maybeResult)
+    }
+    
+    func testNoBanner_waitingRoom_isNotModerator_didDismiss() throws {
+        let harness = Harness()
+        let maybeResult = harness.result(
+            tab: .waitingRoom,
+            freeTierInCallParticipantLimitReached: true,
+            warningMode: .dismissible,
+            hasDismissedBanner: true
+        )
+        XCTAssertNil(maybeResult)
+    }
+}

@@ -23,7 +23,7 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType, CommonParticipantV
     let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let admitButtonTappedHandler: (CallParticipantEntity) -> Void
     private let denyButtonTappedHandler: (CallParticipantEntity) -> Void
-
+    let admitButtonEnabled: Bool
     var subscriptions = Set<AnyCancellable>()
     var avatarRefetchTask: Task<Void, Never>?
 
@@ -35,6 +35,7 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType, CommonParticipantV
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         admitButtonEnabled: Bool,
          admitButtonTappedHandler: @escaping (CallParticipantEntity) -> Void,
          denyButtonMenuTappedHandler: @escaping (CallParticipantEntity) -> Void
     ) {
@@ -43,6 +44,7 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType, CommonParticipantV
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.admitButtonEnabled = admitButtonEnabled
         self.admitButtonTappedHandler = admitButtonTappedHandler
         self.denyButtonTappedHandler = denyButtonMenuTappedHandler
     }
