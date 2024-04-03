@@ -50,7 +50,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             defaultViewMode: ViewModePreferenceEntity = .list,
             defaultLayout: PageLayout = .list,
             node: NodeEntity,
-            updateTransferWidgetHandler: @escaping () -> Void = {}
+            updateTransferWidgetHandler: @escaping () -> Void = {},
+            sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity = { .defaultAsc }
         ) {
             let nodeSource = NodeSource.node { node }
             let expectedNodes = [
@@ -98,7 +99,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                 adsVisibilityViewModel: nil,
                 config: .default,
                 nodeSource: nodeSource, 
-                sortOrder: .defaultAsc,
                 avatarViewModel: MyAvatarViewModel(
                     megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
                     megaAvatarUseCase: MockMEGAAvatarUseCaseProtocol(),
@@ -115,7 +115,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onUpdateSearchBarVisibility: { _ in },
                 onBack: {}, 
                 onEditingChanged: { _ in },
-                updateTransferWidgetHandler: updateTransferWidgetHandler
+                updateTransferWidgetHandler: updateTransferWidgetHandler,
+                sortOrderProvider: sortOrderProvider
             )
             
             saver = { self.savedViewModes.append($0) }
@@ -216,7 +217,18 @@ class NodeBrowserViewModelTests: XCTestCase {
             )
         }
     }
-    
+
+    func testInitForSortOrder_forAllCases_shouldMatchExpectedResult() {
+        MEGADomain.SortOrderEntity.allValid.forEach { sortOrder in
+            let harness = Harness(node: .init(), sortOrderProvider: { sortOrder })
+            XCTAssertEqual(
+                harness.sut.sortOrder,
+                sortOrder,
+                "Expected \(sortOrder) but received \(harness.sut.sortOrder)"
+            )
+        }
+    }
+
     func testUpdateTransferWidget() {
         var didUpdateTransferWidget = false
         let harness = Harness(node: .init(), updateTransferWidgetHandler: { didUpdateTransferWidget = true })

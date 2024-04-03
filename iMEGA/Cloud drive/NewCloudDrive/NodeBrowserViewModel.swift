@@ -54,7 +54,8 @@ class NodeBrowserViewModel: ObservableObject {
     private let onBack: () -> Void
     private let onEditingChanged: (Bool) -> Void
     private let updateTransferWidgetHandler: () -> Void
-    
+    private let sortOrderProvider: () -> MEGADomain.SortOrderEntity
+
     init(
         viewMode: ViewModePreferenceEntity,
         searchResultsViewModel: SearchResultsViewModel,
@@ -64,7 +65,6 @@ class NodeBrowserViewModel: ObservableObject {
         adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?,
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
-        sortOrder: MEGADomain.SortOrderEntity,
         avatarViewModel: MyAvatarViewModel,
         noInternetViewModel: NoInternetViewModel,
         // we call this whenever view sate is changed so that:
@@ -77,7 +77,8 @@ class NodeBrowserViewModel: ObservableObject {
         onUpdateSearchBarVisibility: @escaping (Bool) -> Void,
         onBack: @escaping () -> Void,
         onEditingChanged: @escaping (Bool) -> Void,
-        updateTransferWidgetHandler: @escaping () -> Void
+        updateTransferWidgetHandler: @escaping () -> Void,
+        sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity
     ) {
         self.viewMode = viewMode
         self.searchResultsViewModel = searchResultsViewModel
@@ -87,7 +88,8 @@ class NodeBrowserViewModel: ObservableObject {
         self.adsVisibilityViewModel = adsVisibilityViewModel
         self.config = config
         self.nodeSource = nodeSource
-        self.sortOrder = sortOrder
+        self.sortOrderProvider = sortOrderProvider
+        self.sortOrder = sortOrderProvider()
         self.avatarViewModel = avatarViewModel
         self.noInternetViewModel = noInternetViewModel
         self.storageFullAlertViewModel = storageFullAlertViewModel
@@ -196,6 +198,7 @@ class NodeBrowserViewModel: ObservableObject {
         encourageUpgradeIfNeeded()
         configureAdsVisibility()
         configureTransferWidgetVisibility()
+        updateSortOrderIfNeeded()
     }
     
     func onViewDisappear() {
@@ -305,6 +308,14 @@ class NodeBrowserViewModel: ObservableObject {
         return true
     }
     
+    private func updateSortOrderIfNeeded() {
+        guard case let sortOrder = self.sortOrderProvider(),
+              sortOrder != self.sortOrder else {
+            return
+        }
+
+        changeSortOrder(sortOrder.toSortOrderType())
+    }
 }
 
 extension NodeBrowserViewModel {

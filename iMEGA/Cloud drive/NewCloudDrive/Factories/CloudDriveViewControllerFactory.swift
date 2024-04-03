@@ -252,7 +252,6 @@ struct CloudDriveViewControllerFactory {
     
     private func makeNodeBrowserViewModel(
         initialViewMode: ViewModePreferenceEntity,
-        sortOrder: MEGADomain.SortOrderEntity,
         nodeSource: NodeSource,
         searchResultsViewModel: SearchResultsViewModel,
         noInternetViewModel: NoInternetViewModel,
@@ -261,7 +260,8 @@ struct CloudDriveViewControllerFactory {
         navigationController: UINavigationController,
         mediaContentDelegate: MediaContentDelegateHandler,
         searchControllerWrapper: SearchControllerWrapper,
-        onSelectionModeChange: @escaping (Bool) -> Void
+        onSelectionModeChange: @escaping (Bool) -> Void,
+        sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity
     ) -> NodeBrowserViewModel {
         
         let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
@@ -283,7 +283,6 @@ struct CloudDriveViewControllerFactory {
             adsVisibilityViewModel: adsVisibilityViewModel,
             config: config,
             nodeSource: nodeSource,
-            sortOrder: sortOrder,
             avatarViewModel: avatarViewModel, 
             noInternetViewModel: noInternetViewModel,
             viewModeSaver: {
@@ -325,7 +324,8 @@ struct CloudDriveViewControllerFactory {
             },
             updateTransferWidgetHandler: {
                 TransfersWidgetViewController.sharedTransfer().showWidgetIfNeeded()
-            }
+            }, 
+            sortOrderProvider: sortOrderProvider
         )
     }
     
@@ -505,16 +505,13 @@ struct CloudDriveViewControllerFactory {
             }
         }
 
-        let initialSortOrder = sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
-
         let noInternetViewModel = NoInternetViewModel(
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
 
         let mediaContentDelegate = MediaContentDelegateHandler()
         let nodeBrowserViewModel = makeNodeBrowserViewModel(
-            initialViewMode: initialViewMode, 
-            sortOrder: initialSortOrder,
+            initialViewMode: initialViewMode,
             nodeSource: nodeSource,
             searchResultsViewModel: searchResultsVM,
             noInternetViewModel: noInternetViewModel,
@@ -523,7 +520,10 @@ struct CloudDriveViewControllerFactory {
             navigationController: navigationController,
             mediaContentDelegate: mediaContentDelegate,
             searchControllerWrapper: searchControllerWrapper,
-            onSelectionModeChange: onSelectionModeChange
+            onSelectionModeChange: onSelectionModeChange,
+            sortOrderProvider: {
+                sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
+            }
         )
         
         mediaContentDelegate.selectedPhotosHandler = { [weak nodeBrowserViewModel] selected, _ in
@@ -575,6 +575,7 @@ struct CloudDriveViewControllerFactory {
         let setNavItemsFactory = { [weak nodeBrowserViewModel] in
             let viewMode: ViewModePreferenceEntity = nodeBrowserViewModel?.viewMode ?? .list
             let isSelectionHidden = nodeBrowserViewModel?.isSelectionHidden ?? false
+            let initialSortOrder = sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
             let sortOrder = nodeBrowserViewModel?.sortOrder ?? initialSortOrder
             return CloudDriveViewControllerNavItemsFactory(
                 nodeSource: nodeSource,
