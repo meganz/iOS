@@ -109,8 +109,9 @@ extension ContactsViewController {
             selectedUsersArray: selectedUsersArray,
             visibleUsersArray: visibleUsersArray
         )
+
         let showParticipantLimitBanner = viewModel.shouldShowBannerWarning(
-            selectedUsersCount: selectedUsersArray.count
+            selectedUsersCount: selectedUsersArray?.count ?? 0
         )
         let showTopBanner = showUnverifiedBanner || showParticipantLimitBanner
         contactsNotVerifiedView.isHidden = !showTopBanner
