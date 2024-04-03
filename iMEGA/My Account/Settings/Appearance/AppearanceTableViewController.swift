@@ -7,6 +7,7 @@ import UIKit
 enum AppearanceSection: Int {
     case launch
     case layout
+    case hiddenItems
     case mediaDiscovery
     case mediaDiscoverySubfolder
     case recents
@@ -24,6 +25,9 @@ class AppearanceTableViewController: UITableViewController {
     @IBOutlet weak var sortingAndViewModeLabel: UILabel!
     @IBOutlet weak var defaultTabLabel: UILabel!
     @IBOutlet weak var defaultTabDetailLabel: UILabel!
+    
+    @IBOutlet weak var hiddenItemsViewLabel: UILabel!
+    @IBOutlet weak var hiddenItemsViewSwitch: UISwitch!
     
     @IBOutlet weak var mediaDiscoveryViewLabel: UILabel!
     @IBOutlet weak var mediaDiscoveryViewSwitch: UISwitch!
@@ -71,23 +75,15 @@ class AppearanceTableViewController: UITableViewController {
         setMenuCapableBackButtonWith(menuTitle: title)
         
         defaultTabLabel.text = Strings.Localizable.defaultTab
-        
         sortingAndViewModeLabel.text = Strings.Localizable.sortingAndViewMode
-        
+        hiddenItemsViewLabel.text = Strings.Localizable.Settings.UserInterface.HiddenItems.label
         mediaDiscoveryViewLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscovery
-        
         mediaDiscoverySubfolderLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscoverySubFolder
-        
         hideRecentActivityLabel.text = Strings.Localizable.Settings.UserInterface.hideRecentActivity
-        
-        hideRecentActivitySwitch.isOn = !RecentsPreferenceManager.showRecents()
-        
+    
         defaultIconLabel.text = Strings.Localizable.default
-
         dayIconLabel.text = Strings.Localizable.day.localizedCapitalized
-
         nightIconLabel.text = Strings.Localizable.night
-
         minimalIconLabel.text = Strings.Localizable.minimal
         
         if UIColor.isDesignTokenEnabled() {
@@ -102,9 +98,11 @@ class AppearanceTableViewController: UITableViewController {
             minimalIconLabel.textColor = UIColor.whiteFFFFFF
         }
 
+        hiddenItemsViewSwitch.isOn = true
         mediaDiscoveryViewSwitch.isOn = viewModel.autoMediaDiscoverySetting
         mediaDiscoverySubfolderSwitch.isOn = viewModel.mediaDiscoveryShouldIncludeSubfolderSetting
-        
+        hideRecentActivitySwitch.isOn = !RecentsPreferenceManager.showRecents()
+
         let alternateIconName = UIApplication.shared.alternateIconName
         selectIcon(with: alternateIconName)
         
@@ -130,13 +128,10 @@ class AppearanceTableViewController: UITableViewController {
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
 
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            defaultTabLabel.textColor = UIColor.mnz_primaryTextColor()
+        if UIColor.isDesignTokenEnabled() {
+            [defaultTabLabel, sortingAndViewModeLabel, sortingAndViewModeLabel, mediaDiscoveryViewLabel, mediaDiscoverySubfolderLabel, hideRecentActivityLabel, hiddenItemsViewLabel]
+                .forEach { $0?.textColor = UIColor.mnz_primaryTextColor() }
             defaultTabDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
-            sortingAndViewModeLabel.textColor = UIColor.mnz_primaryTextColor()
-            mediaDiscoveryViewLabel.textColor = UIColor.mnz_primaryTextColor()
-            mediaDiscoverySubfolderLabel.textColor = UIColor.mnz_primaryTextColor()
-            hideRecentActivityLabel.textColor = UIColor.mnz_primaryTextColor()
         }
 
         tableView.reloadData()
@@ -214,15 +209,20 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     // MARK: - IBActions
-    @IBAction func mediaDiscoveryViewValueChanged(_ sender: UISwitch) {
-        viewModel.autoMediaDiscoverySetting = sender.isOn
+    @IBAction func hiddenItemsViewValueChanged(_ sender: UISwitch) {
+        viewModel.saveSetting(for: .showHiddenItems(sender.isOn))
     }
+    
+    @IBAction func mediaDiscoveryViewValueChanged(_ sender: UISwitch) {
+        viewModel.saveSetting(for: .autoMediaDiscoverySetting(sender.isOn))
+    }
+    
     @IBAction func mediaDiscoverySubfolderValueChanged(_ sender: UISwitch) {
-        viewModel.mediaDiscoveryShouldIncludeSubfolderSetting = sender.isOn
+        viewModel.saveSetting(for: .mediaDiscoveryShouldIncludeSubfolderSetting(sender.isOn))
     }
     
     @IBAction func hideRecentActivityValueChanged(_ sender: UISwitch) {
-        RecentsPreferenceManager.setShowRecents(!sender.isOn)
+        viewModel.saveSetting(for: .hideRecentActivity(sender.isOn))
     }
     
     @IBAction func defaultIconTouchUpInside(_ sender: UIButton) {
@@ -243,6 +243,10 @@ class AppearanceTableViewController: UITableViewController {
     
     // MARK: - UITableViewDataSource
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        viewModel.isAppearanceSectionVisible(section: AppearanceSection(rawValue: indexPath.section)) ? UITableView.automaticDimension : .leastNonzeroMagnitude
+    }
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
     }
@@ -255,7 +259,7 @@ class AppearanceTableViewController: UITableViewController {
         guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
 
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+        if UIColor.isDesignTokenEnabled() {
             tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
         }
     }
@@ -263,7 +267,7 @@ class AppearanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         guard
             let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView,
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+            UIColor.isDesignTokenEnabled()
         else { return }
 
         tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
@@ -274,28 +278,34 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch AppearanceSection(rawValue: section) {
-        case .none, .mediaDiscoverySubfolder:
-            return .leastNonzeroMagnitude
-        case .launch, .layout, .recents, .appIcon, .mediaDiscovery:
-            return UITableView.automaticDimension
-        }
+        viewModel.isAppearanceSectionVisible(section: AppearanceSection(rawValue: section)) ? UITableView.automaticDimension : .leastNonzeroMagnitude
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.isAppearanceSectionVisible(section: AppearanceSection(rawValue: section)) ? 1 : 0
     }
     
     private func titleForHeader(in section: Int) -> String? {
-        switch AppearanceSection(rawValue: section) {
-        case .none, .mediaDiscoverySubfolder:
+        guard let appearanceSection = AppearanceSection(rawValue: section),
+              viewModel.isAppearanceSectionVisible(section: appearanceSection) else {
             return nil
+        }
+        
+        return switch appearanceSection {
+        case .mediaDiscoverySubfolder:
+            nil
         case .launch:
-            return Strings.Localizable.launch
+            Strings.Localizable.launch
         case .layout:
-            return Strings.Localizable.layout
+            Strings.Localizable.layout
+        case .hiddenItems:
+            Strings.Localizable.Settings.UserInterface.HiddenItems.header
         case .mediaDiscovery:
-            return Strings.Localizable.Settings.UserInterface.MediaDiscovery.header
+            Strings.Localizable.Settings.UserInterface.MediaDiscovery.header
         case .recents:
-            return Strings.Localizable.recents
+            Strings.Localizable.recents
         case .appIcon:
-            return Strings.Localizable.appIcon
+            Strings.Localizable.appIcon
         }
     }
     
@@ -309,7 +319,7 @@ class AppearanceTableViewController: UITableViewController {
             return Strings.Localizable.Settings.UserInterface.MediaDiscoverySubFolder.footer
         case .recents:
             return Strings.Localizable.Settings.UserInterface.HideRecentActivity.footer
-        case .appIcon, .mediaDiscovery, .none:
+        case .appIcon, .hiddenItems, .mediaDiscovery, .none:
             return nil
         }
     }
@@ -327,8 +337,17 @@ class AppearanceTableViewController: UITableViewController {
                     linkUrl: linkUrl
                 )
             }
-        case .none, .launch, .layout, .mediaDiscoverySubfolder, .recents, .appIcon:
+        case .none, .launch, .layout, .hiddenItems, .mediaDiscoverySubfolder, .recents, .appIcon:
             return nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch AppearanceSection(rawValue: section) {
+        case .hiddenItems:
+            .leastNonzeroMagnitude
+        case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .none, .mediaDiscoverySubfolder:
+            UITableView.automaticDimension
         }
     }
     
