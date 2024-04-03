@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Alătură-te întâlnirii ca invitat";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mail sau parolă nevalide. Te rugăm să încerci din nou.";
+"invalidMailOrPassword"="Invalid email address or password. Try again.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Ați încercat să vă conectați de prea multe ori. Vă rugăm să așteptați până %@ și încercați din nou.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu coincid";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Trebuie să fii de-acord cu Termenii de utilizare a serviciului pentru a înregistra un cont pe MEGA.";
+"termsCheckboxUnselected"="Trebuie să accepți Termenii de utilizare a serviciului nostru";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Trebuie să fii de acord cu faptul că înțelegi pericolul pierderii parolei";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -327,7 +327,7 @@
 /* Error message shown when enabling geolocation failed */
 "chat.map.location.enableGeolocationFailedError"="Activarea geolocalizării a eșuat. Eroare: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Clip vocal";
+"Voice Clip"="Mesaj vocal";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="Fișier text nou";
 /* Hint text shown on the new text file alert. */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Redenumește";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Introdu numele nou";
+"renameNodeMessage"="Introduceți un nume nou";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="Următoarele caractere nu sunt permise: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Introdu un alt nume.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Introdu un nume nou.";
+"cameraUploads.albums.create.alert.enterNewName"="Introduceți un nume nou";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Adaugă elemente în „%@”";
 /* Used in empty album view. */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Omite";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="Ofertă de timp limitat";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promoție";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expiră la %1$s la ora %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Expires on [date] at [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Ascunde";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Imposibil de a participa";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Maximum 100 de persoane pot participa la acest apel. Cereți organizatorului să se înregistreze pentru un cont Pro pentru a ridica această limită.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, am înțeles";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Doar 100 de participanții se pot alătura apelului. Orice participanți suplimentari vor putea trimite și citi doar chat-uri. Trebuie să adăugați mai mulți participanți? [A]Upgradați acum[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Aveți nevoie de mai mult timp? Abonamentele Pro oferă apeluri nelimitate.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Nu acum";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Acest apel gratuit se va încheia în %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și citi doar chat-uri. Solicitați organizatorului să elimine această restricție.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgradați la Pro pentru a primi apeluri nelimitate";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Apelul dvs. a atins limita de 60 de minute și s-a încheiat. Utilizatorii Pro au o durată nelimitată a apelului și pot invita până la 1000 de participanți.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgradați acum";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="Fișiere și foldere ascunse";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Ascundeți fișierele și folderele importante";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy. Only you can reveal them, either individually or by temporarily displaying hidden items from the settings.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Exclude from Timeline";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Elementele ascunse sunt accesibile numai prin Unitatea cloud și nu vor apărea în Fotografii, Albume sau Recente.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Invizibile";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="You decide when hidden files are visible. There is a new setting to show hidden items temporarily.";

@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Entrar em uma reunião como convidado";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email ou senha inválidos. Por favor, tente novamente.";
+"invalidMailOrPassword"="Email ou senha inválidos - tente novamente.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até %@ e tente novamente.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="As senhas não coincidem";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Você precisa aceitar os termos de serviço para criar uma conta no MEGA.";
+"termsCheckboxUnselected"="Você precisa aceitar os nossos Termos de serviço";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Você precisa confirmar que entende o perigo de perder a sua senha";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -311,7 +311,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Mais antigo";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Selecionar a partir de Fotos";
+"choosePhotoVideo"="Selecionar do Fotos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Renomear";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Digite o novo nome";
+"renameNodeMessage"="Digite um novo nome";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="Os seguintes caracteres não são permitidos: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Digite um nome diferente.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Digite um novo nome.";
+"cameraUploads.albums.create.alert.enterNewName"="Digite um novo nome";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Adicionar itens a “%@”";
 /* Used in empty album view. */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Pular";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="Oferta por tempo limitado";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Oferta";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expira às %2$s do dia %1$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Expira às [time] do dia [date]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Ocultar";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Não foi possível entrar";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Esta chamada permite um máximo de 100 participantes. O organizador deve fazer o upgrade a um plano Pro para remover essa restrição.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Entendi";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Precisa adicionar mais participantes? [A]Faça um upgrade[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Precisa de mais? [A]Faça um upgrade[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Precisa de mais tempo? Os planos Pro incluem chamadas ilimitadas.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Agora não";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Esta chamada gratuita vai terminar em %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Solicite ao organizador que elimine essa restrição.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Faça o upgrade a um plano Pro para ter chamadas ilimitadas";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="A sua chamada atingiu o limite de 60 minutos e foi finalizada. Os usuários Pro podem fazer chamadas com qualquer duração e convidar até 1000 participantes.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgrade";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="Arquivos e pastas ocultos";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Oculte arquivos e pastas importantes";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Você pode ocultar arquivos e pastas confidenciais para ter privacidade. Somente você poderá mostrá-los, de forma individual ou exibindo temporariamente itens ocultos nas configurações.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Exclua da Linha do tempo";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Somente é possível acessar itens ocultos por meio da Nuvem de arquivos: eles não aparecerão nas suas Fotos, nos Álbuns ou nas Atividades recentes.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Fora do alcance";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Você decide quando os arquivos ocultos ficam visíveis. Há uma nova configuração para mostrar itens ocultos temporariamente.";

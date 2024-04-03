@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Unisciti al meeting come ospite";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email o password non valide. Riprova, per favore.";
+"invalidMailOrPassword"="Indirizzo email o password non valida. Riprova.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Hai provato ad accedere troppe colte. Per favore, attendi fino alle %@ e riprova.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Le password non combaciano";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Devi accettare i termini di servizio per registrare un account su MEGA.";
+"termsCheckboxUnselected"="Per continuare devi accettare i nostri Termini di Servizio";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Devi essere d'accordo che capisci il pericolo della perdita della password";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Rinomina";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Nuovo nome del file";
+"renameNodeMessage"="Inserisci un nuovo nome";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="I seguenti caratteri non sono ammessi: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -3585,7 +3585,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Caratteristiche dei piani Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link protetti da password\n\n• Link con date di scadenza\n\n• Condivisione della banda di trasferimento\n\n• Ripristino di dati eliminati fino a 90 giorni su Pro Lite e fino a 180 giorni su Pro I, II, e III\n\n• Rimani nel privato online con la nostra VPN ad alta velocità\n\n• Programma la pulizia del Cestino da un minimo di ogni 7 giorni ad un massimo di ogni 10 anni\n\n• Supporto prioritario";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
 "upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10  years\n\n• Priority support\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Salta";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="Offerta a tempo limitato";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Scade il giorno %1$s alle ore %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Scade il giorno [date] alle ore [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Nascondi";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Impossibile unirsi";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Questa chiamata può supportare solo 100 partecipanti. Chiedi all'organizzatore di effettuare l'upgrade a Pro per rimuovere questa restrizione.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, capito";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Hai bisogno di più tempo? I piani Pro offrono chiamate illimitate.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3997,4 +4005,28 @@
 /* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Non adesso";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
-"calls.freePlanLimitWarning.durationLimitCountdown.title"="This free call will end in %@";
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="Questa chiamata gratuita terminerà tra %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Ask the organiser to remove this restriction.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Effettua l'upgrade a Pro per avere chiamate illimitate";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="La tua chiamata ha raggiunto il limite di 60 minuti ed è terminata. Gli utenti Pro hanno una durata illimitata delle chiamate e possono invitare fino a 1000 partecipanti.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Effettua l'upgrade ora";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="File e cartelle nascoste";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Nascondi file e cartelle importanti";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puoi nascondere file e cartelle sensibili per motivi di privacy. Solo tu puoi rivelarli, singolarmente o visualizzando temporaneamente gli oggetti nascosti dalle impostazioni.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Escludi dalla Cronologia";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Gli oggetti nascosti sono accessibili solo tramite il Cloud drive e non verranno visualizzati nelle tue Foto, nei tuoi Album o in Recenti.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Fuori dalla vista";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Sei tu a decidere quando i file nascosti sono visibili. C'è una nuova impostazione per mostrare temporaneamente gli oggetti nascosti.";

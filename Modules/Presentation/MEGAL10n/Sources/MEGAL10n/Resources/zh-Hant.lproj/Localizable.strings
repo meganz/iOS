@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="以訪客身份加入會議";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="無效的電子郵件地址或密碼。請重試。";
+"invalidMailOrPassword"="無效的電子郵件地址或密碼。再試一次。";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="您於短時間內嘗試登入的次數過多。請等待至%@後再重試。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密碼不符";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="您需要同意MEGA服務條款才可註冊帳號。";
+"termsCheckboxUnselected"="您必須接受服務條款";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="您需要同意您瞭解遺失密碼的風險";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="重新命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="輸入新名稱";
+"renameNodeMessage"="輸入新的名稱";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="不允許使用以下字元：%@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="輸入不同的名稱。";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="輸入新的名稱。";
+"cameraUploads.albums.create.alert.enterNewName"="輸入新的名稱";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="新增項目到「%@」";
 /* Used in empty album view. */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="略過";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="限時優惠";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="促銷";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="%1$s%2$s到期";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="[date][time]到期";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="隱藏";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="無法登入";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="此通話僅支援100個與會者。請召集人升級到Pro方案以取消此限制。";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="只有100個與會者可以加入通話。任何其他與會者將只能發送和讀取對話。需要新增更多與會者嗎？[A]立即升級[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="需要更多時間嗎？Pro方案提供不受限制的通話。";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="稍後再說";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="此免費通話將在%@結束";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="只有100個與會者可以加入通話。任何其他與會者將只能發送和讀取對話記錄。請召集人取消此限制。";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="升級到Pro方案可獲得不受限制的通話時間";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="您的通話時間已達60分鐘的限制並已結束。Pro使用者的通話時間不受限制，最多可邀請1000位與會者。";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="立即升級";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="隱藏的檔案和資料夾";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="隱藏重要的檔案和資料夾";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="您可以隱藏敏感的檔案和資料夾以保護隱私。只有您可以單獨或從設定暫時顯示隱藏的項目來顯示它們。";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="從時間軸中排除";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="隱藏的項目只能透過雲端硬碟存取，不會出現在您的照片、相簿或最近的動態記錄。";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="隱藏";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="您可以決定何時要讓隱藏的檔案顯示。有一個新的設定可以暫時顯示隱藏的項目。";

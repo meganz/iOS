@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Присоединиться к встрече как гость";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Неверный e-mail или пароль. Пожалуйста, попробуйте еще раз.";
+"invalidMailOrPassword"="Неверный адрес электронной почты или пароль. Попробуйте ещё раз.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Вы пытались зайти очень много раз. Пожалуйста, подождите до %@ и попробуйте снова.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -101,11 +101,11 @@
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Введите правильный адрес";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="Похоже, что email некорректен";
+"theEmailAddressFormatIsInvalid"="Неправильный формат адреса электронной почты";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Введите правильный пароль";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="Email";
+"emailPlaceholder"="Адрес электронной почты";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Пароль";
 /* Account, Change Password view. Error shown when you type your current password. */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Пароли не совпадают";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Вы должны принять условия использования, чтобы зарегистрировать аккаунт в MEGA.";
+"termsCheckboxUnselected"="Вам нужно согласиться с условиями предоставления услуг";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Вы должны согласиться с тем, что понимаете опасность потери пароля";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Введите другое название.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Введите новое название.";
+"cameraUploads.albums.create.alert.enterNewName"="Введите новое название";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Добавление элементов в «%@»";
 /* Used in empty album view. */
@@ -1573,7 +1573,7 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Экспорт ключа восстановления";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Выйти";
+"proceedToLogout"="Выйти из системы";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="Перед выходом из системы, пожалуйста, проверьте пароль, чтобы убедиться, что вы его помните. Без пароля вы утратите доступ ко всем своим MEGA-данным.";
 /* state previous to import a file */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Пропустить";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="Предложение ограничено по времени";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Промо";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Истекает %1$s в %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Истекает [date] в [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Скрыть";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Не удалось войти";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Этот звонок может включать до 100 участников. Попросите организатора перейти на Pro, чтобы снять это ограничение.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать писать сообщения. Организатор может перейти на план Pro, чтобы снять эти ограничения.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Понятно";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать чаты и делиться ссылками на них. Нужно добавить больше участников? [A]Улучшите аккаунт[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать писать сообщения. Организатор может перейти на план Pro, чтобы снять эти ограничения.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Нужно больше времени? Перейдите на план Pro с неограниченными звонками.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Не сейчас";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Бесплатный звонок завершится через %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать чаты и писать в них. Попросите организатора снять это ограничение.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Перейдите на Pro для безлимитных звонков";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Ваш звонок продлился 60 минут и был завершён. Пользователи Pro могут организовывать звонки без ограничений по времени и приглашать до 1000 участников.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Улучшить";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="Скрытые файлы и папки";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Скрывайте важные файлы и папки";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Вы можете скрывать важные файлы и папки в целях конфиденциальности. Отобразить их можете только вы: либо по отдельности, либо временно временно включить отображение скрытых элементов в настройках.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Исключайте из «Временной шкалы»";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Скрытые элементы доступны только через Облачный диск и не отображаются в «Фотографиях», «Альбомах» или «Недавних».";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="С глаз долой";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Вы сами решаете, когда будут видны скрытые файлы. Появилась новая настройка для временного отображения скрытых элементов.";

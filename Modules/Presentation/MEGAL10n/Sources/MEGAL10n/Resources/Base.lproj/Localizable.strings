@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Join meeting as guest";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Invalid email address or password. Please try again.";
+"invalidMailOrPassword"="Invalid email address or password. Try again.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwords do not match";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="You need to agree with the Terms of Service to register an account on MEGA.";
+"termsCheckboxUnselected"="You have to accept our Terms of Service";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Rename";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Enter the new name";
+"renameNodeMessage"="Enter a new name";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="The following characters are not allowed: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Enter a different name.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Enter a new name.";
+"cameraUploads.albums.create.alert.enterNewName"="Enter a new name";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
 /* Used in empty album view. */
@@ -3987,7 +3987,7 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to upgrade to Pro to remove this restriction.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, got it";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4007,13 +4007,13 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="This free call will end in %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host" = "Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host" = "Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Ask the organiser to remove this restriction.";
+"meetings.contact-picker.warning.over-limit.non-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Ask the organiser to remove this restriction.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgrade to Pro to get unlimited calls";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
-"calls.freePlanLimitWarning.upgradeToProDialog.message"="Your call reached the 60 minute limit and has ended. Pro users have unlimited calls and up to 1000 participants.";
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Your call reached the 60-minute limit and has ended. Pro users have unlimited call duration and can invite up to 1000 participants.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgrade now";
 /* Hidden files and folders onboarding title */

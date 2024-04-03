@@ -2594,10 +2594,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Your free call will end in %d minute</string>
         <key>other</key>
-        <string>Your free call will end in %d minutes</string>
+        <string>당신의 무료 통화는 %d분 내에 종료됩니다</string>
       </dict>
     </dict>
   </dict>

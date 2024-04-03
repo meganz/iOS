@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Gabung rapat sebagai tamu";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email atau kata sandi tidak valid. Silakan coba lagi.";
+"invalidMailOrPassword"="Alamat email atau kata sandi tidak valid. Coba lagi.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Anda berusaha masuk terlalu banyak. Harap tunggu sampai %@ dan coba kembali.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Password tidak sama";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Anda harus setuju dengan Persyaratan Layanan untuk mendaftarkan akun MEGA.";
+"termsCheckboxUnselected"="Anda harus menyetujui  Kebijakan Pelayanan";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Anda harus setuju bahwa anda memahami bahaya kehilangan kata sandi anda";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Masukkan nama yang berbeda.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Masukkan nama baru.";
+"cameraUploads.albums.create.alert.enterNewName"="Masukkan nama baru";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Tambahkan item ke “%@”";
 /* Used in empty album view. */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Lewati";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="Penawaran waktu terbatas";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Kedaluwarsa pada %1$s pukul %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Kedaluwarsa pada [date] jam [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Menyembunyikan";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Tidak dapat bergabung";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Panggilan ini hanya dapat mendukung 100 peserta. Minta penyelenggara untuk meningkatkan ke Pro untuk menghapus batasan ini.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan menerima pesan. Penyelenggara dapat meningkatkan ke Pro untuk menghapus batasan ini.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, mengerti";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan membaca obrolan. Perlu menambahkan lebih banyak peserta? [A]Tingkatkan sekarang[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan menerima pesan. Penyelenggara dapat meningkatkan ke Pro untuk menghapus batasan ini.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Butuh lebih banyak waktu? Paket Pro menawarkan panggilan tak terbatas.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Tidak Sekarang";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Panggilan gratis ini akan berakhir dalam %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan membaca obrolan. Minta penyelenggara untuk menghapus batasan ini.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Tingkatkan ke Pro untuk mendapatkan panggilan tak terbatas";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Panggilan anda mencapai batas 60 menit dan telah berakhir. Pengguna Pro memiliki durasi panggilan tak terbatas dan dapat mengundang hingga 1000 peserta.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Tingkatkan sekarang";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="File dan folder tersembunyi";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Sembunyikan file dan folder penting";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Anda dapat menyembunyikan file dan folder sensitif untuk privasi. Hanya anda yang dapat mengungkapkannya, baik secara individual atau dengan menampilkan item tersembunyi sementara dari pengaturan.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Kecualikan dari Timeline";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Item tersembunyi hanya dapat diakses melalui drive Cloud dan tidak akan muncul di Foto, Album, atau Terbaru anda.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Tidak terlihat";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Anda memutuskan kapan file tersembunyi terlihat. Ada pengaturan baru untuk menampilkan item tersembunyi sementara.";

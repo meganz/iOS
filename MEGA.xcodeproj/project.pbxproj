@@ -8010,11 +8010,11 @@
 		5D52C744250C4EED00286A43 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				949B86E12BBC202700CB8ADF /* Utils */,
 				5D33D66A250D9BC900D74666 /* Client */,
 				5D52C748250C4F2800286A43 /* Functions */,
 				949704B52AB427A700B2CA3A /* Router */,
 				B6FD6510268D7EA500988A17 /* UseCase */,
+				949B86E12BBC202700CB8ADF /* Utils */,
 				C4D6750D2BB2CAE3000A1F79 /* ViewControllers */,
 				32A9DECC28D198E300ABC3F6 /* ViewModel */,
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
@@ -15964,7 +15964,6 @@
 				83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */,
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6FB5F8429A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift in Sources */,
-				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
 				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,
 				99778D982AE74EC700537EA9 /* ChatRoomAvatarViewModelTests.swift in Sources */,
@@ -16065,6 +16064,7 @@
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
+				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
 				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
 				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
@@ -16406,7 +16406,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 14.1;
+				MARKETING_VERSION = 14.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -16466,7 +16466,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 14.1;
+				MARKETING_VERSION = 14.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
@@ -17522,7 +17522,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 14.1;
+				MARKETING_VERSION = 14.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";

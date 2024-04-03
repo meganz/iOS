@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Vergadering aansluiten als gast";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Ongeldig e-mailadres of wachtwoord. Probeer nogmaals.";
+"invalidMailOrPassword"="Ongeldig e-mailadres of wachtwoord. Probeer het nog eens.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="U hebt te vaak geprobeerd om in te loggen. Wacht alstublieft tot %@ en probeer het opnieuw.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Wachtwoorden komen niet overeen";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="U dient akkoord te gaan met de Algemene Voorwaarden om een account te registreren bij MEGA.";
+"termsCheckboxUnselected"="U moet onze Algemene Voorwaarden accepteren";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="U moet akkoord gaan met dat u het gevaar begrijpt van het verliezen van uw wachtwoord";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Hernoemen";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Vul de nieuwe naam in";
+"renameNodeMessage"="Voer een nieuwe naam in";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="De volgende tekens zijn niet toegestaan: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Voer een andere naam in.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Voer een nieuwe naam in.";
+"cameraUploads.albums.create.alert.enterNewName"="Voer een nieuwe naam in";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Items toevoegen aan “%@”";
 /* Used in empty album view. */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Overslaan";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="Tijdelijke aanbieding";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Vervalt op %1$s om %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Vervalt op [date] om [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Verbergen";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Kan niet aansluiten";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Deze oproep kan slechts 100 deelnemers ondersteunen. Vraag de organisator om te upgraden naar Pro om deze beperking op te heffen.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperkingen op te heffen.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, ik snap het";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Slechts 100 deelnemers kunnen deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen gesprekken verzenden en lezen. Wil je meer deelnemers toevoegen? [A]Nu upgraden[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperkingen op te heffen.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen gesprekken verzenden en lezen. Meer nodig? [A]Nu upgraden[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Meer tijd nodig? Pro-abonnementen bied onbeperkt bellen.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Niet Nu";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Dit gratis gesprek eindigt over %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="Slechts 100 deelnemers kunnen deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen gesprekken verzenden en lezen. Vraag de organisator om deze beperking op te heffen.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgrade naar Pro om ongelimiteerd te kunnen bellen";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Uw gesprek heeft de limiet van 60 minuten bereikt en is beëindigd. Pro-gebruikers hebben een onbeperkte gespreksduur en kunnen tot 1000 deelnemers uitnodigen.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Nu upgraden";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="Verborgen bestanden en mappen";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Belangrijke bestanden en mappen verbergen";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="U kunt gevoelige bestanden en mappen verbergen voor privacy. Alleen u kunt ze afzonderlijk of door tijdelijk verborgen items in de instellingen weer te geven.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Uitsluiten van de tijdlijn";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Verborgen items zijn alleen toegankelijk via de Cloud-schijf en verschijnen niet in uw Foto's, Albums of Recent.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Uit het zicht";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="U bepaalt zelf wanneer verborgen bestanden zichtbaar zijn. Er is een nieuwe instelling om verborgen items tijdelijk weer te geven.";

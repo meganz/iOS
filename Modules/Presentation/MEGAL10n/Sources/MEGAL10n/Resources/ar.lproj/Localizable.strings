@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="انضم إلى الاجتماع كضيف";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="البريد الإلكتروني أو كلمة المرور غير صالحين. حاول مرة أخرى.";
+"invalidMailOrPassword"="Invalid email address or password. Try again.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="لقد حاولت تسجيل الدخول مرات كثيرة. الرجاء الانتظار حتى %@ ثم المحاولة ثانية.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="كلمات المرور غير متطابقة";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="تحتاج إلى الموافقة علي شروط الخدمة لتسجيل حساب على ميغا MEGA.";
+"termsCheckboxUnselected"="يجب عليك أن تقبل شروط الخدمة";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="عليك أن توافق على أنك تفهم خطر فقدان كلمة المرور الخاصة بك";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="تغيير الاسم";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="أدخل الاسم الجديد";
+"renameNodeMessage"="أدخل اسمًا جديدًا";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="المحارف التالية غير مسموح بها: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="أدخل اسمًا مختلفًا.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="أدخل اسمًا جديدًا.";
+"cameraUploads.albums.create.alert.enterNewName"="أدخل اسمًا جديدًا";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="إضافة عناصر إلى ”%@“";
 /* Used in empty album view. */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="تخطى";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="عرض لفترة محدودة";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="ترويج";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="تنتهي الصلاحية في %1$s الساعة %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Expires on [date] at [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="إخفاء";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="لا يمكن الانضمام";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="يمكن لهذه المكالمة دعم 100 مشارك فقط. اطلب من المنظم الترقية إلى برو Pro لإزالة هذا القيد.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="حسنًا، فهمت ذلك";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="يمكن لـ 100 مشارك الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال المحادثات وقراءتها. هل تحتاج إلى إضافة المزيد من المشاركين؟ [A]قم بالترقية الآن[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="هل تحتاج إلى مزيد من الوقت؟ تحتوي باقات برو Pro على مكالمات غير محدودة المدة.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="ليس الآن";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="ستنتهي هذه المكالمة المجانية في %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال المحادثات وقراءتها. اطلب من المنظم إزالة هذا التقييد.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgrade to Pro to get unlimited calls";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="وصلت مكالمتك إلى حد 60 دقيقة وانتهت. يتمتع مستخدمو برو Pro بمدة مكالمات غير محدودة ويمكنهم دعوة ما يصل إلى 1000 مشارك.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="رق حسابك الآن";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="Hidden files and folders";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Hide important files and folders";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy. Only you can reveal them, either individually or by temporarily displaying hidden items from the settings.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Exclude from Timeline";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Hidden items are only accessible through the Cloud drive and will not appear in your Photos, Albums or Recents.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Out of sight";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="You decide when hidden files are visible. There is a new setting to show hidden items temporarily.";

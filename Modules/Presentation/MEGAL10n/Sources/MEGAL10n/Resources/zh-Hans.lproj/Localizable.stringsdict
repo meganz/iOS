@@ -2588,10 +2588,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Your free call will end in %d minute</string>
         <key>other</key>
-        <string>Your free call will end in %d minutes</string>
+        <string>您的免费通话将在%d分钟后结束</string>
       </dict>
     </dict>
   </dict>
