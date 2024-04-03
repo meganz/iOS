@@ -12,7 +12,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     func testInit_whenCalled_doesNotExecuteUseCases() {
         let (_, sortOrderPreferenceUseCase, _) = makeSUT()
         
-        XCTAssertEqual(sortOrderPreferenceUseCase.getSortOrderCallCount, 0)
+        XCTAssertTrue(sortOrderPreferenceUseCase.messages.isEmpty)
     }
     
     // MARK: - Dispatch.onViewDidLoad
@@ -22,19 +22,33 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         
         sut.dispatch(.onViewDidLoad)
         
-        XCTAssertEqual(sortOrderPreferenceUseCase.getSortOrderCallCount, 1)
-        XCTAssertEqual(sortOrderPreferenceUseCase.monitorSortOrderCallCount, 1)
+        let availablePreferenceKeys: [SortOrderPreferenceKeyEntity] = [ .homeVideos, .homeVideoPlaylists ]
+        availablePreferenceKeys.enumerated().forEach { (index, key) in
+            XCTAssertTrue(sortOrderPreferenceUseCase.messages.contains(.sortOrder(key: key)), "Fail at index: \(index) with key: \(key)")
+            XCTAssertTrue(sortOrderPreferenceUseCase.messages.contains(.monitorSortOrder(key: key)), "Fail at index: \(index) with key: \(key)")
+        }
     }
     
     // MARK: - Dispatch.navigationBarAction.didSelectSortMenuAction
     
-    func testDispatch_navigationBarActionDidSelectSortMenuAction_saveSortOrderPreference() {
+    func testDispatch_navigationBarActionDidSelectSortMenuAction_saveSortOrderPreferenceForVideos() {
         let selectedSortType = anySortOrderType()
         let (sut, sortOrderPreferenceUseCase, _) = makeSUT()
+        sut.syncModel.currentTab = .all
         
         sut.dispatch(.navigationBarAction(.didSelectSortMenuAction(sortType: selectedSortType)))
         
-        XCTAssertEqual(sortOrderPreferenceUseCase.saveSortOrderCallCount, 1)
+        XCTAssertEqual(sortOrderPreferenceUseCase.messages, [ .save(sortOrder: selectedSortType.toSortOrderEntity(), for: .homeVideos) ])
+    }
+    
+    func testDispatch_navigationBarActionDidSelectSortMenuAction_saveSortOrderPreferenceForVideoPlaylists() {
+        let selectedSortType = anySortOrderType()
+        let (sut, sortOrderPreferenceUseCase, _) = makeSUT()
+        sut.syncModel.currentTab = .playlist
+        
+        sut.dispatch(.navigationBarAction(.didSelectSortMenuAction(sortType: selectedSortType)))
+        
+        XCTAssertEqual(sortOrderPreferenceUseCase.messages, [ .save(sortOrder: selectedSortType.toSortOrderEntity(), for: .homeVideoPlaylists) ])
     }
     
     // MARK: - Dispatch.navigationBarAction.didReceivedDisplayMenuAction

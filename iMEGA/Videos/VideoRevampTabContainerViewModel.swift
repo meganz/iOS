@@ -79,7 +79,8 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
                 break
             }
         case .navigationBarAction(.didSelectSortMenuAction(let sortOrderType)):
-            sortOrderPreferenceUseCase.save(sortOrder: sortOrderType.toSortOrderEntity(), for: .homeVideos)
+            let keyEntity: SortOrderPreferenceKeyEntity = syncModel.currentTab == .all ? .homeVideos : .homeVideoPlaylists
+            sortOrderPreferenceUseCase.save(sortOrder: sortOrderType.toSortOrderEntity(), for: keyEntity)
         case .navigationBarAction(.didTapSelectAll):
             syncModel.isAllSelected = !syncModel.isAllSelected
         case .navigationBarAction(.didTapCancel):
@@ -96,6 +97,9 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     private func loadSortOrderType() {
         syncModel.videoRevampSortOrderType = sortOrderPreferenceUseCase
             .sortOrder(for: .homeVideos)
+        
+        syncModel.videoRevampSortOrderType = sortOrderPreferenceUseCase
+            .sortOrder(for: .homeVideoPlaylists)
     }
     
     private func monitorSortOrderSubscription() {
@@ -105,6 +109,16 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.syncModel.videoRevampSortOrderType = $0
+                self?.reloadContextMenu()
+            }
+            .store(in: &subscriptions)
+        
+        sortOrderPreferenceUseCase.monitorSortOrder(for: .homeVideoPlaylists)
+            .map { $0.toSortOrderType().toSortOrderEntity() }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.syncModel.videoRevampVideoPlaylistsSortOrderType = $0
                 self?.reloadContextMenu()
             }
             .store(in: &subscriptions)

@@ -1,28 +1,14 @@
 import MEGADomain
-import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-enum VideosTab: CaseIterable {
-    case all
-    case playlist
-    
-    var title: String {
-        switch self {
-        case .all:
-            return Strings.Localizable.Videos.Tab.Title.all
-        case .playlist:
-            return Strings.Localizable.Videos.Tab.Title.playlist
-        }
-    }
-}
-
 struct TabContainerView: View {
-    @State var currentTab: VideosTab = .all
+    @State private var currentTab: VideosTab = .all
     
     @StateObject var videoListViewModel: VideoListViewModel
     let videoConfig: VideoConfig
     let router: any VideoRevampRouting
+    let didChangeCurrentTab: (_ currentTab: VideosTab) -> Void
     
     private var showTabView: Bool {
         videoListViewModel.syncModel.showsTabView
@@ -53,6 +39,9 @@ struct TabContainerView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .edgesIgnoringSafeArea(.all)
             .background(videoConfig.colorAssets.pageBackgroundColor)
+        }
+        .onChange(of: currentTab) { 
+            didChangeCurrentTab($0)
         }
     }
 }
@@ -152,12 +141,14 @@ struct ContentView_Previews: PreviewProvider {
             TabContainerView(
                 videoListViewModel: makeNullViewModel(),
                 videoConfig: .preview,
-                router: Preview_VideoRevampRouter()
+                router: Preview_VideoRevampRouter(), 
+                didChangeCurrentTab: { _ in }
             )
             TabContainerView(
                 videoListViewModel: makeNullViewModel(),
                 videoConfig: .preview,
-                router: Preview_VideoRevampRouter()
+                router: Preview_VideoRevampRouter(),
+                didChangeCurrentTab: { _ in }
             )
             .preferredColorScheme(.dark)
         }

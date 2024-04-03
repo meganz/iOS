@@ -3,6 +3,7 @@ import Foundation
 public enum SortOrderPreferenceKeyEntity: String {
     case cameraUploadExplorerFeed
     case homeVideos
+    case homeVideoPlaylists
     
     public var appearancePreferenceKeyEntity: AppearancePreferenceKeyEntity {
         switch self {
@@ -10,6 +11,8 @@ public enum SortOrderPreferenceKeyEntity: String {
             return .cameraUploadExplorerFeed
         case .homeVideos:
             return .homeVideos
+        case .homeVideoPlaylists:
+            return .homeVideoPlaylists
         }
     }
 }

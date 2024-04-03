@@ -4,6 +4,7 @@ import SwiftUI
 
 public final class VideoRevampSyncModel: ObservableObject {
     @Published public var videoRevampSortOrderType: SortOrderEntity?
+    @Published public var videoRevampVideoPlaylistsSortOrderType: SortOrderEntity = .modificationAsc
     @Published public var editMode: EditMode = .inactive {
         didSet {
             showsTabView = editMode.isEditing ? false : true
@@ -12,6 +13,7 @@ public final class VideoRevampSyncModel: ObservableObject {
     @Published public var isAllSelected = false
     @Published public var searchText = ""
     @Published public private(set) var showsTabView = false
+    @Published public var currentTab: VideosTab = .all
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -41,7 +43,12 @@ public class VideoRevampFactory {
             syncModel: syncModel,
             selection: videoSelection
         )
-        let view = TabContainerView(videoListViewModel: videoListViewModel, videoConfig: videoConfig, router: router)
+        let view = TabContainerView(
+            videoListViewModel: videoListViewModel,
+            videoConfig: videoConfig,
+            router: router,
+            didChangeCurrentTab: { syncModel.currentTab = $0 }
+        )
         return UIHostingController(rootView: view)
     }
     

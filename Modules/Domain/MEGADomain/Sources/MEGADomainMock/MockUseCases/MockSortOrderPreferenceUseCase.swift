@@ -8,12 +8,15 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
     public private(set) var saveSortOrderCallCount = 0
     public private(set) var monitorSortOrderCallCount = 0
     
+    public var messages = [Message]()
+    
     public init(sortOrderEntity: SortOrderEntity) {
         self.sortOrderEntity = sortOrderEntity
     }
     
     public func sortOrder(for key: SortOrderPreferenceKeyEntity) -> SortOrderEntity {
         getSortOrderCallCount += 1
+        messages.append(.sortOrder(key: key))
         return sortOrderEntity
     }
     
@@ -24,6 +27,7 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
     public func save(sortOrder: SortOrderEntity, for key: SortOrderPreferenceKeyEntity) {
         saveSortOrderCallCount += 1
         sortOrderEntity = sortOrder
+        messages.append(.save(sortOrder: sortOrder, for: key))
     }
     
     public func save(sortOrder: SortOrderEntity, for node: NodeEntity) {
@@ -32,10 +36,22 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
     
     public func monitorSortOrder(for key: SortOrderPreferenceKeyEntity) -> AnyPublisher<SortOrderEntity, Never> {
         monitorSortOrderCallCount += 1
+        messages.append(.monitorSortOrder(key: key))
         return Just(sortOrderEntity).eraseToAnyPublisher()
     }
     
     public func monitorSortOrder(for node: NodeEntity) -> AnyPublisher<SortOrderEntity, Never> {
         Just(sortOrderEntity).eraseToAnyPublisher()
+    }
+}
+
+extension MockSortOrderPreferenceUseCase {
+    
+    // MARK: nested type
+    
+    public enum Message: Equatable {
+        case save(sortOrder: SortOrderEntity, for: SortOrderPreferenceKeyEntity)
+        case sortOrder(key: SortOrderPreferenceKeyEntity)
+        case monitorSortOrder(key: SortOrderPreferenceKeyEntity)
     }
 }

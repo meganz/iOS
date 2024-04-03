@@ -19,6 +19,7 @@ import Foundation
 ///     - isAudiosExplorer: Indicates whether or not it is the home audios explorer
 ///     - isVideosExplorer: Indicates whether or not it is the home videos explorer
 ///     - isVideosRevampExplorer: Indicates whether or not it is the home videos revamp explorer
+///     - isVideosRevampExplorerVideoPlaylists:Indicates whether or not it is the home videos revamp explorer specific on Video playlists tab
 ///     - isCameraUploadExplorer: Indicates whether or not it is the camera upload explorer
 ///     - albumType: Indicates whether or not it is the album and the type of album
 ///     - isFilterEnabled: Indicates whether or not if the filter is enabled
@@ -61,6 +62,7 @@ public struct CMConfigEntity: Sendable {
     public var isAudiosExplorer: Bool
     public var isVideosExplorer: Bool
     public var isVideosRevampExplorer: Bool
+    public var isVideosRevampExplorerVideoPlaylists: Bool
     public var isCameraUploadExplorer: Bool
     public var albumType: AlbumEntityType?
     public var isFilterEnabled: Bool
@@ -86,7 +88,7 @@ public struct CMConfigEntity: Sendable {
     public var isFilterActive: Bool = false
     public var isHidden: Bool?
 
-    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, filterType: FilterEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isVideosRevampExplorer: Bool = false, isCameraUploadExplorer: Bool = false, albumType: AlbumEntityType? = nil, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isBackupsRootNode: Bool = false, isBackupsChild: Bool = false, isSelectHidden: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false, sharedLinkStatus: SharedLinkStatusEntity? = nil, isArchivedChatsVisible: Bool = false, isMediaFile: Bool = false, isFilterActive: Bool = false, isHidden: Bool? = nil) {
+    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, filterType: FilterEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isVideosRevampExplorer: Bool = false, isVideosRevampExplorerVideoPlaylists: Bool = false, isCameraUploadExplorer: Bool = false, albumType: AlbumEntityType? = nil, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isBackupsRootNode: Bool = false, isBackupsChild: Bool = false, isSelectHidden: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false, sharedLinkStatus: SharedLinkStatusEntity? = nil, isArchivedChatsVisible: Bool = false, isMediaFile: Bool = false, isFilterActive: Bool = false, isHidden: Bool? = nil) {
         self.menuType = menuType
         self.viewMode = viewMode
         self.accessLevel = accessLevel
@@ -107,6 +109,7 @@ public struct CMConfigEntity: Sendable {
         self.isAudiosExplorer = isAudiosExplorer
         self.isVideosExplorer = isVideosExplorer
         self.isVideosRevampExplorer = isVideosRevampExplorer
+        self.isVideosRevampExplorerVideoPlaylists = isVideosRevampExplorerVideoPlaylists
         self.isCameraUploadExplorer = isCameraUploadExplorer
         self.albumType = albumType
         self.isFilterEnabled = isFilterEnabled
