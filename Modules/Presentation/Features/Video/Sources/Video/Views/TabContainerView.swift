@@ -15,7 +15,7 @@ struct TabContainerView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             TabBarView(currentTab: self.$currentTab, videoConfig: videoConfig)
                 .frame(height: showTabView ? 44 : 0)
                 .opacity(showTabView ? 1 : 0)
