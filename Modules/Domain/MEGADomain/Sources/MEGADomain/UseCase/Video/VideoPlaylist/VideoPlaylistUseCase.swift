@@ -8,8 +8,8 @@ public protocol VideoPlaylistUseCaseProtocol {
     func systemVideoPlaylists() async throws -> [VideoPlaylistEntity]
     
     /// Getting MEGA user's video playlists, a user generated video playlist one.
-    /// - Returns: returns array of user's created video playlists, returns empty if user has not created video playlist yet. throws error if any.
-    func userVideoPlaylists() async throws -> [VideoPlaylistEntity]
+    /// - Returns: returns array of user's created video playlists, returns empty if user has not created video playlist yet.
+    func userVideoPlaylists() async -> [VideoPlaylistEntity]
     
 }
 
@@ -31,8 +31,8 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
         return [ createFavouriteSystemPlyalist(videos: favoriteVideos) ]
     }
     
-    public func userVideoPlaylists() async throws -> [VideoPlaylistEntity] {
-        let playlistSetEntities = try await userVideoPlaylistsRepository.videoPlaylists()
+    public func userVideoPlaylists() async -> [VideoPlaylistEntity] {
+        let playlistSetEntities = await userVideoPlaylistsRepository.videoPlaylists()
         return playlistSetEntities
             .filter { $0.setType == .playlist }
             .map { $0.toVideoPlaylistEntity(type: .user) }

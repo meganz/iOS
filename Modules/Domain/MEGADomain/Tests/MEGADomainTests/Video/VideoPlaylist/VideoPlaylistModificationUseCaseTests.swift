@@ -70,7 +70,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(
-        videoPlaylistsResult: Result<[SetEntity], Error> = .failure(GenericErrorEntity()),
+        videoPlaylistsResult: [SetEntity] = [],
         addVideosToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error> = .failure(GenericErrorEntity())
     ) -> (
         sut: VideoPlaylistModificationUseCase,

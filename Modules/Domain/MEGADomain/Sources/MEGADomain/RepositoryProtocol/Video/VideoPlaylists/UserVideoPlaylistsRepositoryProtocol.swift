@@ -2,7 +2,7 @@ public protocol UserVideoPlaylistsRepositoryProtocol: Sendable {
     
     /// Fetch all user video playlists
     /// - Returns: array of set entitites representing user video playlists
-    func videoPlaylists() async throws -> [SetEntity]
+    func videoPlaylists() async -> [SetEntity]
     
     /// Add videos to the video playlist
     /// - Parameters:
