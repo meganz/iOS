@@ -13,8 +13,8 @@ func fetchOriginForSubmodules() throws {
     try runInShell("git submodule foreach 'git fetch origin'")
 }
 
-func updateSubmodules() throws {
-    try runInShell("git submodule update --init --recursive")
+func updateSubmodule(submodule: Submodule) throws {
+    try runInShell("git submodule update --init", cwd: URL(fileURLWithPath: submodule.path))
 }
 
 func checkoutSubmoduleToCommit(submodule: Submodule, commitHash: String) throws {

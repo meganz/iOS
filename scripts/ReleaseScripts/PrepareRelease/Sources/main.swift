@@ -31,8 +31,11 @@ do {
     log("Fetching origin for git submodules")
     try fetchOriginForSubmodules()
 
-    log("Updating git submodules")
-    try updateSubmodules()
+    log("Updating git submodule \(Submodule.sdk.description)")
+    try updateSubmodule(submodule: .sdk)
+
+    log("Updating git submodule \(Submodule.chatSDK.description)")
+    try updateSubmodule(submodule: .chatSDK)
 
     log("Checking out \(Submodule.sdk.description) to \(userInput.sdkHash)")
     try checkoutSubmoduleToCommit(submodule: .sdk, commitHash: userInput.sdkHash)
