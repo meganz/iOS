@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 import MEGAPresentation
 import MEGARepo
+import MEGASDKRepo
 
 struct AppearanceViewRouter: Routing {
     
@@ -16,8 +17,9 @@ struct AppearanceViewRouter: Routing {
             .instantiateViewController(identifier: "AppearanceTableViewControllerID", creator: { coder in
                 let viewModel = AppearanceViewModel(
                     preferenceUseCase: PreferenceUseCase(
-                        repository: PreferenceRepository.newRepo))
-                return AppearanceTableViewController(coder: coder, viewModel: viewModel)  }) as? AppearanceTableViewController else {
+                        repository: PreferenceRepository.newRepo),
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
+                return AppearanceTableViewController(coder: coder, viewModel: viewModel) }) as? AppearanceTableViewController else {
             fatalError("AppearanceViewRouter: could not create an instance of AppearanceTableViewController")
         }
         
