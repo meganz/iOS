@@ -27,6 +27,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsAudiosExplorer(config.isAudiosExplorer)
                         .setIsVideosExplorer(config.isVideosExplorer)
                         .setIsVideosRevampExplorer(config.isVideosRevampExplorer)
+                        .setIsVideosRevampExplorerVideoPlaylists(config.isVideosRevampExplorerVideoPlaylists)
                         .setIsCameraUploadExplorer(config.isCameraUploadExplorer)
                         .setAlbumType(config.albumType)
                         .setIsFilterEnabled(config.isFilterEnabled)

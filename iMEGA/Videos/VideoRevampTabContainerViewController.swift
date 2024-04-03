@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGASDKRepo
 import MEGAUIKit
@@ -6,6 +7,8 @@ import UIKit
 import Video
 
 final class VideoRevampTabContainerViewController: UIViewController {
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private let moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar, style: .plain, target: nil, action: nil)
     
@@ -46,6 +49,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.videoConfig = videoConfig
         self.router = router
         super.init(nibName: nil, bundle: nil)
+        
+        subscribeToCurrentTabChanged()
     }
     
     required init?(coder: NSCoder) {
@@ -67,7 +72,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItems = [moreBarButtonItem]
-        setupContextMenuBarButton()
+        setupContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
         
         if let navigationBar = navigationController?.navigationBar {
             AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
@@ -150,7 +155,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         case .navigationBarCommand(.toggleEditing):
             toggleEditing()
         case .navigationBarCommand(.refreshContextMenu):
-            refreshContextMenuBarButton()
+            refreshContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
         case .navigationBarCommand(.renderNavigationTitle(let title)):
             navigationItem.title = title
         case .searchBarCommand(.hideSearchBar):
@@ -200,28 +205,45 @@ final class VideoRevampTabContainerViewController: UIViewController {
         searchController.searchBar.setShowsCancelButton(false, animated: true)
         navigationItem.searchController = nil
     }
+    
+    private func subscribeToCurrentTabChanged() {
+        viewModel.syncModel.$currentTab
+            .sink { [weak self] in self?.refreshContextMenuBarButton(currentTab: $0) }
+            .store(in: &cancellables)
+    }
 }
 
 // MARK: - TabContainerViewController+ContextMenu
 
 extension VideoRevampTabContainerViewController {
     
-    func setupContextMenuBarButton() {
-        moreBarButtonItem.menu = contextMenuManager.contextMenu(with: contextMenuConfiguration())
+    func setupContextMenuBarButton(currentTab: VideosTab) {
+        moreBarButtonItem.menu = contextMenuManager.contextMenu(with: contextMenuConfiguration(currentTab: currentTab))
     }
     
-    private func refreshContextMenuBarButton() {
-        setupContextMenuBarButton()
+    private func refreshContextMenuBarButton(currentTab: VideosTab) {
+        setupContextMenuBarButton(currentTab: currentTab)
     }
     
-    func contextMenuConfiguration() -> CMConfigEntity {
-        CMConfigEntity(
-            menuType: .menu(type: .homeVideos),
-            sortType: viewModel.syncModel.videoRevampSortOrderType,
-            isVideosRevampExplorer: true,
-            isSelectHidden: viewModel.isSelectHidden,
-            isEmptyState: false
-        )
+    func contextMenuConfiguration(currentTab: VideosTab) -> CMConfigEntity {
+        switch currentTab {
+        case .all:
+            CMConfigEntity(
+                menuType: .menu(type: .homeVideos),
+                sortType: viewModel.syncModel.videoRevampSortOrderType,
+                isVideosRevampExplorer: true,
+                isSelectHidden: viewModel.isSelectHidden,
+                isEmptyState: false
+            )
+        case .playlist:
+            CMConfigEntity(
+                menuType: .menu(type: .homeVideoPlaylists),
+                sortType: viewModel.syncModel.videoRevampVideoPlaylistsSortOrderType,
+                isVideosRevampExplorerVideoPlaylists: true,
+                isFilterEnabled: false,
+                isSelectHidden: true
+            )
+        }
     }
 }
 

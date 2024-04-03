@@ -409,6 +409,22 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
+    func testCreateContextMenu_videosVideoPlaylists_shouldDeliverCorrectContextMenu() throws {
+        let configEntity = CMConfigEntity(
+            menuType: .menu(type: .homeVideoPlaylists),
+            isVideosRevampExplorerVideoPlaylists: true
+        )
+        let contextMenuActionEntity = try contextMenuActionEntity(with: configEntity)
+        
+        let menuActions = decomposeMenuIntoActions(menu: contextMenuActionEntity)
+        
+        XCTAssertEqual(menuActions, [
+            .display(actionType: .newPlaylist),
+            .sort(actionType: .modificationDesc),
+            .sort(actionType: .modificationAsc)
+        ])
+    }
+    
     func testCreateContextMenu_Meeting() throws {
         let cmMettingEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .meeting)))
         

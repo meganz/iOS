@@ -141,6 +141,8 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "filter", title: Strings.Localizable.filter, subtitle: currentFilterType, image: UIImage.filter)
         case .filterActive:
             return ContextMenuDataModel(identifier: "filterActive", title: Strings.Localizable.filter, subtitle: currentFilterType, image: UIImage.filterActive)
+        case .newPlaylist:
+            return ContextMenuDataModel(identifier: "newPlaylist", title: Strings.Localizable.Videos.Tab.Playlist.Content.newPlaylist, image: UIImage.navigationbarAdd)
         }
     }
 

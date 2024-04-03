@@ -19,6 +19,7 @@ public final class ContextMenuBuilder {
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
     private var isVideosRevampExplorer: Bool = false
+    private var isVideosRevampExplorerVideoPlaylists: Bool = false
     private var isCameraUploadExplorer: Bool = false
     private var albumType: AlbumEntityType?
     private var isFilterEnabled: Bool = false
@@ -140,6 +141,11 @@ public final class ContextMenuBuilder {
     
     public func setIsVideosRevampExplorer(_ isVideosRevampExplorer: Bool) -> ContextMenuBuilder {
         self.isVideosRevampExplorer = isVideosRevampExplorer
+        return self
+    }
+    
+    public func setIsVideosRevampExplorerVideoPlaylists(_ isVideosRevampExplorerVideoPlaylists: Bool) -> ContextMenuBuilder {
+        self.isVideosRevampExplorerVideoPlaylists = isVideosRevampExplorerVideoPlaylists
         return self
     }
     
@@ -276,6 +282,8 @@ public final class ContextMenuBuilder {
                 return homeMenu()
             case .homeVideos:
                 return homeVideosMenu()
+            case .homeVideoPlaylists:
+                return homeVideoPlaylistsMenu()
             default:
                 return nil
             }
@@ -354,15 +362,27 @@ public final class ContextMenuBuilder {
         )
     }
     
+    private func newPlaylistMenu() -> CMEntity {
+        CMEntity(
+            displayInline: true,
+            children: [ newPlaylist ]
+        )
+    }
+    
     private func sortMenu() -> CMElement {
         if isEmptyState {
             return CMActionEntity(type: .display(actionType: .sort),
                                   isEnabled: false)
         } else {
             var sortMenuActions = [sortNameAscending, sortNameDescending]
-                    
+            
             if isCameraUploadExplorer || isAlbum || viewMode == .mediaDiscovery {
                 sortMenuActions = [sortNewest, sortOldest]
+            } else if isVideosRevampExplorerVideoPlaylists {
+                sortMenuActions = [sortNewest, sortOldest]
+                return CMEntity(type: .display(actionType: .sort),
+                                currentSortType: sortType,
+                                children: sortMenuActions)
             } else if !isSharedItems {
                 sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest])
                 if !isOfflineFolder {
@@ -404,6 +424,8 @@ public final class ContextMenuBuilder {
             displayActionsMenuChildren.append(contentsOf: [sortMenu()])
         } else if isVideosRevampExplorer {
             displayActionsMenuChildren.append(contentsOf: [selectMenu(), sortMenu()])
+        } else if isVideosRevampExplorerVideoPlaylists {
+            displayActionsMenuChildren.append(contentsOf: [newPlaylistMenu(), sortMenu()])
         } else if isCameraUploadExplorer {
             displayActionsMenuChildren = [selectMenu(), sortMenu()]
             if isFilterEnabled {
@@ -626,12 +648,28 @@ public final class ContextMenuBuilder {
                         children: displayActionsMenuChildren)
     }
     
+    // MARK: - HomeVideos
+    
     private func homeVideosMenu() -> CMEntity {
         var displayActionsMenuChildren: [CMElement] = []
         if !isSelectHidden {
             displayActionsMenuChildren.append(selectMenu())
         }
         displayActionsMenuChildren.append(sortMenu())
+        return CMEntity(
+            displayInline: true,
+            children: displayActionsMenuChildren
+        )
+    }
+    
+    // MARK: - HomeVideos - VideoPlaylists
+    
+    private func homeVideoPlaylistsMenu() -> CMEntity {
+        var displayActionsMenuChildren: [CMElement] = []
+        
+        displayActionsMenuChildren.append(newPlaylistMenu())
+        displayActionsMenuChildren.append(sortMenu())
+        
         return CMEntity(
             displayInline: true,
             children: displayActionsMenuChildren

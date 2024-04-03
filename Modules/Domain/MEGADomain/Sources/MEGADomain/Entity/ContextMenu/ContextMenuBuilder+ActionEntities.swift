@@ -50,6 +50,10 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .display(actionType: .clearRubbishBin))
     }
     
+    var newPlaylist: CMActionEntity {
+        CMActionEntity(type: .display(actionType: .newPlaylist))
+    }
+    
     var mediaDiscovery: CMActionEntity {
         CMActionEntity(
             type: .display(actionType: .mediaDiscovery),
