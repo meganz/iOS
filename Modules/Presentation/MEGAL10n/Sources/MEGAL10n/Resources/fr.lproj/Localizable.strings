@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Me joindre à une réunion en tant qu’invité";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="L’adresse courriel ou le mot de passe est invalide. Veuillez réessayer.";
+"invalidMailOrPassword"="L’adresse courriel ou le mot de passe est invalide. Réessayer.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Vous avez tenté de vous connecter trop de fois. Veuillez attendre jusqu’à %@ et réessayer.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Les mots de passe ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Vous devez accepter les Conditions générales d’utilisation pour ouvrir un compte sur MEGA.";
+"termsCheckboxUnselected"="Vous devez accepter nos Conditions générales d’utilisation";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Vous devez attester que vous comprenez le danger que représente la perte de votre mot de passe";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -327,7 +327,7 @@
 /* Error message shown when enabling geolocation failed */
 "chat.map.location.enableGeolocationFailedError"="Échec d’activation de la géolocalisation. Erreur : %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Insert parlé";
+"Voice Clip"="Message vocal";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="Nouveau fichier texte";
 /* Hint text shown on the new text file alert. */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Renommer";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Saisissez le nouveau nom";
+"renameNodeMessage"="Saisissez un nouveau nom.";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="Les caractères suivants ne sont pas autorisés : %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Saisissez un nom différent.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Saisissez le nouveau nom.";
+"cameraUploads.albums.create.alert.enterNewName"="Saisissez un nouveau nom.";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Ajouter des éléments dans « %@ »";
 /* Used in empty album view. */
@@ -2617,7 +2617,7 @@
 /* Meeting ended Alert button -- View Meeting Chat history. */
 "meetings.alert.meetingchat"="Visualiser l’historique de la conversation";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end.description"="La réunion à laquelle vous tentez de vous rejoindre est déjà terminée. Vous pouvez quand même visualiser l'historique de la conversation de la réunion.";
+"meetings.alert.end.description"="La réunion à laquelle vous tentez de vous rejoindre est déjà terminée. Vous pouvez quand même visualiser l’historique de la conversation de la réunion.";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Inviter des participants";
 /* Meetings: Floating panel share link option */
@@ -3307,7 +3307,7 @@
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Désactiver le code d’accès à MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="Pour utiliser MEGA dans l’appli Fichiers, désactivez votre code d’accès à MEGA. Accédez aux Paramètres dans l'appli MEGA, touchez Sécurité > Code d'accès.";
+"picker.disable.passcode.description"="Pour utiliser MEGA dans l’appli Fichiers, désactivez votre code d’accès à MEGA. Accédez aux Paramètres dans l’appli MEGA, touchez Sécurité > Code d’accès.";
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Réunion en cours";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Caractéristiques des abonnements Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Liens protégés par mot de passe\n\n• Liens avec dates d'expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu'à 90 jours pour les données supprimées avec Pro Lite et jusqu'à 180 jours avec Pro I, II, et III\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Liens protégés par mot de passe\n\n• Liens avec dates d’expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu’à 90 jours pour les données supprimées avec Pro Lite et jusqu’à 180 jours avec Pro I, II, et III\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Liens protégés par mot de passe\n\n• Liens avec dates d'expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu'à 90 jours pour les données supprimées avec Pro Lite et jusqu'à 180 jours avec Pro I, II, et III\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire\n\n• Sans publicité";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Liens protégés par mot de passe\n\n• Liens avec dates d’expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu’à 90 jours pour les données supprimées avec Pro Lite et jusqu’à 180 jours avec Pro I, II, et III\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire\n\n• Sans publicité";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Détails de l’abonnement";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Ignorer";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="Offre à durée limitée";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expire le %1$s à %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Expire le [date] à [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Cacher";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Impossible de vous joindre";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Un maximum de 100 personnes peut participer à cet appel. Demandez à la personne qui l’a organisé de souscrire un compte Pro afin de lever cette limite.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne organise l’appel peut souscrire un abonnement Pro pour lever ces restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="D’accord, j’ai compris";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et lire les conversations. Souhaitez-vous ajouter des participants ? [A]Surclassez votre compte maintenant[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne organise l’appel peut souscrire un abonnement Pro pour lever ces restrictions.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Besoin de plus de temps ? Les abonnements Pro offrent des appels illimités.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Pas maintenant";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Cet appel gratuit se terminera dans %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et lire les conversations. Demandez à la personne qui l’organise de lever cette restriction.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Passer à la version Pro pour bénéficier d’appels illimités";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Votre appel a atteint la limite de 60 minutes et s’est terminé. Les utilisateurs Pro bénéficient d’une durée d’appel illimitée et peuvent inviter jusqu’à 1 000 participants.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Surclasser le compte maintenant";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="Fichiers et dossiers cachés";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Cacher les fichiers et dossiers importants";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="À des fins de confidentialité, vous pouvez dissimuler des fichiers et dossiers sensibles. Le choix de les faire apparaître vous appartient, soit individuellement, soit en activant temporairement dans les paramètres l’affichage des éléments cachés.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Exclure de la Vue chronologique";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Les éléments cachés ne sont accessibles que dans le Disque nuagique et n’apparaissent pas dans vos Photos, Albums ou Récents.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="À l’abri des regards";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Vous décidez si les fichiers cachés sont visibles. Un nouveau paramètre permet d’afficher temporairement les éléments cachés.";

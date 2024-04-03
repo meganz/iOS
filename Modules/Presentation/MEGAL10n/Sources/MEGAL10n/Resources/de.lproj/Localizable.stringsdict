@@ -2957,9 +2957,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Your free call will end in %d minute</string>
+        <string>Ihr kostenloser Anruf endet in %d Minute</string>
         <key>other</key>
-        <string>Your free call will end in %d minutes</string>
+        <string>Ihr kostenloser Anruf endet in %d Minuten</string>
       </dict>
     </dict>
   </dict>

@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="암호가 일치하지 않습니다";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
+"termsCheckboxUnselected"="이용 약관에 동의하여야 합니다.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="암호 분실의 위험성을 이해하였다는 데에 동의해야 합니다";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="다른 이름을 입력하세요.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="새 이름을 입력하세요.";
+"cameraUploads.albums.create.alert.enterNewName"="새 이름을 입력하세요";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="“%@”에 항목 추가";
 /* Used in empty album view. */
@@ -3585,7 +3585,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro 요금제의 기능";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• Pro Lite는 최대 90일 그리고 Pro I, II, III는 최대 180일의 삭제한 데이터 되돌리기\n\n• 고속 VPN으로 온라인에서도 비공개 유지\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
 "upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10  years\n\n• Priority support\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="건너뛰기";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="시간 제한이 있는 제안";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="행사";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="%1$s %2$s에 만료됨";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="[date] [time]에 만료";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="숨기기";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="참여할 수 없음";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="이 통화는 100명의 참여자만 지원합니다. 이 제한을 없애려면 주최자에게 Pro로 업그레이드할 것을 요청하세요.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="100명의 참여자만 통화에 참여할 수 있습니다. 모든 추가 참여자는 메시지를 보내고 받을 수만 있습니다. 주최자는 Pro로 업그레이드하여 이러한 제한을 없앨 수 있습니다.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="알겠습니다";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="100명의 참여자만 통화에 참여할 수 있습니다. 추가 참여자는 대화를 읽고 보내기만 할 수 있습니다. 더 많은 참여자를 추가해야 하나요? [A]지금 업그레이드 하세요[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="100명의 참여자만 통화에 참여할 수 있습니다. 모든 추가 참여자는 메시지를 보내고 받을 수만 있습니다. 주최자는 Pro로 업그레이드하여 이러한 제한을 없앨 수 있습니다.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="시간이 더 필요한가요? Pro 요금제는 무제한 통화를 제공합니다.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3997,4 +4005,28 @@
 /* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="나중에";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
-"calls.freePlanLimitWarning.durationLimitCountdown.title"="This free call will end in %@";
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="이 무료 통화는 %@ 내에 종료됩니다";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="100명의 참여자만 통화에 참여할 수 있습니다. 추가 참여자는 대화를 읽고 보내기만 할 수 있습니다. 주최자에게 이 제한을 없애달라고 요청하세요.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="무제한 통화를 하려면 Pro로 업그레이드 하세요";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="당신의 통화가 60분 제한에 도달하여 종료되었습니다. Pro 이용자들은 무제한 통화 시간과 최대 1000명의 참여자를 초대할 수 있습니다.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="지금 업그레이드";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="숨겨진 파일과 폴더";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="중요한 파일과 폴더 숨기기";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="개인 정보 보호를 위해 민감한 파일 및 폴더를 숨길 수 있습니다. 당신만 그것들을개별적으로 또는 일시적으로 숨겨진 항목들을 설정에서 나타나게 할 수 있습니다.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="연표에서 제외";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="숨겨진 항목은 클라우드 드라이브를 통해서만 접근 가능하며 사진, 사진첩 또는 최근 항목에 나타나지 않습니다.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="시야 범위 밖";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="숨겨진 파일이 보일 때를 정할 수 있습니다. 숨겨진 항목을 일시적으로 보이게 하는 새로운 설정이 있습니다.";

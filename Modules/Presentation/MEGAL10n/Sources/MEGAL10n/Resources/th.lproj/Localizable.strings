@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="เข้าร่วมประชุมในฐานะแขกรับเชิญ";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
+"invalidMailOrPassword"="อีเมลหรือรหัสผ่านไม่ถูกต้อง ลองใหม่อีกครั้ง";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="คุณได้พยายามเข้าสู่ระบบบ่อยเกินไป โปรดรอจนกว่า %@ และลองอีกครั้ง";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="รหัสผ่านไม่ตรงกัน";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="คุณจะต้องเห็นด้วยกับเงื่อนไขการให้บริการในการลงทะเบียนบัญชีผู้ใช้บน MEGA";
+"termsCheckboxUnselected"="คุณต้องเห็นด้วยกับเงื่อนไขการให้บริการของเราก่อน";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="คุณต้องยอมรับว่าคุณเข้าใจถึงอันตราย หากลืมรหัสผ่าน";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="ข้าม";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="ข้อเสนอสุดพิเศษ";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="โปรโมชั่น";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="หมดอายุในวันที่ %1$s เวลา %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="หมดอายุในวันที่ [date] เวลา [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="ซ่อน";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="ไม่สามารถเข้าร่วมได้";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="การโทรนี้รองรับผู้เข้าร่วมได้สูงสุด 100 คน หากต้องการเพิ่มจำนวนผู้เข้าร่วม กรุณาขอให้ผู้จัดการประชุมอัปเกรดเป็นแผน Pro";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="โอเค เข้าใจแล้ว";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมเพิ่มเติม จะสามารถส่งและอ่านข้อความในแชทได้เท่านั้น ต้องการเพิ่มผู้เข้าร่วมเพิ่มเติมหรือไม่ [A]อัปเกรดแผนของคุณตอนนี้[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="ต้องการคุยต่อนานกว่านี้หรือไม่ สมัครใช้งานแผน Pro จะสามารถโทรได้ไม่อั้น";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="ไม่ใช่ตอนนี้";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="การโทรฟรีนี้จะสิ้นสุดลงใน %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมเพิ่มเติม จะสามารถส่งและอ่านข้อความในแชทได้เท่านั้น กรุณาขอให้ผู้จัดการประชุมยกเลิกข้อจำกัดนี้ก่อน";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="อัปเกรดเป็นแผน Pro เพื่อโทรได้ไม่อั้น";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="การโทรของคุณใช้เวลาครบ 60 นาทีตามข้อจำกัดของระบบแล้ว ผู้ใช้บัญชี Pro นั้นสามารถโทรได้นานไม่จำกัด และสามารถเชิญผู้เข้าร่วมได้มากถึง 1000 คน";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="อัปเกรดตอนนี้";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="ซ่อนไฟล์และโฟลเดอร์";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="ซ่อนไฟล์และโฟลเดอร์สำคัญ";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="เก็บไฟล์และโฟลเดอร์ลับไว้ส่วนตัว เฉพาะคุณเท่านั้นที่สามารถดูได้ โดยสามารถเลือกดูทีละรายการ หรือแสดงไฟล์ที่ซ่อนไว้ชั่วคราวจากการตั้งค่า";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="ไม่แสดงในไทม์ไลน์";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="รายการที่ซ่อนจะมองเห็นได้เฉพาะในคลาวด์ไดร์ฟเท่านั้น และจะไม่ปรากฏในรูปภาพ อัลบั้ม หรือรายการล่าสุด";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="แสดงไฟล์ที่ซ่อนอยู่";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="คุณสามารถเลือกได้ว่าต้องการให้ไฟล์ที่ซ่อนอยู่ปรากฏหรือไม่ มีการตั้งค่าใหม่ที่ช่วยให้คุณแสดงไฟล์ที่ซ่อนอยู่ชั่วคราวได้";

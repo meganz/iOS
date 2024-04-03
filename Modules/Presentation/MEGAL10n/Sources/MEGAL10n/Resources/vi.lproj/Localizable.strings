@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Tham gia họp mặt với tư cách khách";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email hoặc mật khẩu không hợp lệ. Xin thử lại.";
+"invalidMailOrPassword"="Email hoặc mật khẩu không hợp lệ. Xin thử lại.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Bạn đã nhập thông tin đăng nhập sai quá nhiều lần. Xin vui lòng chờ tới %@ rồi thử lại.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Hai mật khẩu đã nhập không trùng khớp";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Bạn cần phải đồng ý với các điều khoản của dịch vụ để đăng ký tài khoản MEGA.";
+"termsCheckboxUnselected"="Bạn phải chấp thuận Điều Khoản Dịch Vụ.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Bạn cần phải đồng ý rằng là đã hiểu được rủi ro sẽ xáy ra khi mất mật khẩu";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -465,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Đổi tên";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Nhập tên mới";
+"renameNodeMessage"="Nhập một tên mới.";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="Các ký tự này không được phép sử dụng: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +553,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Đặt một cái tên khác.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Đặt một tên mới.";
+"cameraUploads.albums.create.alert.enterNewName"="Nhập một tên mới.";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Thêm mục vào “%@”";
 /* Used in empty album view. */
@@ -3974,10 +3974,12 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Bỏ qua";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: text for notification type display name */
+"notifications.notificationType.promo.title"="Ưu đãi có thời gian giới hạn";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Khuyến mãi";
-/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Hết hạn vào %1$s lúc %2$s";
+/* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
+"notifications.expiration.message"="Hết hạn vào ngày [date] lúc [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Ẩn";
 /* Title for action that allows user to unhide files or folders */
@@ -3985,11 +3987,17 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Không thể tham gia";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Cuộc gọi này chỉ hỗ trợ được 100 người tham gia. Hãy yêu cầu bên tổ chức nâng cấp lên Pro để loại bỏ hạn chế này.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Chỉ có 100 người mới có thể tham[w]gia cuộc gọi. Bất kỳ người tham[w]gia nào thêm sẽ chỉ có thể gửi và nhận tin[w]nhắn. Yêu[w]cầu ban tổ[w]chức nâng[w]cấp lên Pro để loại bỏ hạn[w]chế này.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, hiểu rồi";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Chỉ có 100 người mới có thể tham gia cuộc gọi. Bất kỳ người tham gia nào thêm sẽ chỉ có thể gửi và đọc các cuộc chat. Bạn cần thêm nhiều người tham gia? [A]Nâng cấp ngay[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Chỉ có 100 người mới có thể tham[w]gia cuộc gọi. Bất kỳ người tham[w]gia nào thêm sẽ chỉ có thể gửi và nhận tin[w]nhắn. Yêu[w]cầu ban tổ[w]chức nâng[w]cấp lên Pro để loại bỏ hạn[w]chế này.";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
+"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Cần thêm thời gian? Các gói Pro không có giới hạn lượng cuộc gọi.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -3998,3 +4006,27 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Không phải lúc này";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Cuộc gọi miễn phí này sẽ kết thúc sau %@";
+/* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
+"meetings.contact-picker.warning.over-limit.non-host"="Chỉ có 100 người mới có thể tham[w]gia cuộc gọi. Bất kỳ người tham[w]gia nào thêm sẽ chỉ có thể gửi và đọc các cuộc chat. Yêu[w]cầu ban tổ[w]chức để loại bỏ hạn[w]chế này.";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Nâng cấp lên Pro để cuộc gọi không giới hạn";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Cuộc gọi của bạn đạt đến giới hạn 60 phút và đã kết thúc. Người dùng Pro có thời lượng cuộc gọi không giới hạn và có thể mời tối đa 1000 người tham gia.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Nâng cấp ngay";
+/* Hidden files and folders onboarding title */
+"onboarding.hiddenFilesAndFolders.title"="Tệp[w]tin và thư[w]mục ẩn";
+/* Hidden files and folders onboarding content hide important title */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Ẩn đi các tệp[w]tin và thư[w]mục quan[w]trọng";
+/* Hidden files and folders onboarding content hide important message */
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Bạn có thể giấu đi các tệp[w]tin và thư[w]mục riêng[w]tư của mình. Chỉ có bạn mới có thể hiện những mục đó lại, bằng cách thực[w]hiện từng cái riêng[w]lẻ hoặc bật hiển[w]thị các mục đã ẩn đi trong phần thiết[w]đặt.";
+/* Hidden files and folders onboarding content exclude from timeline title */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Loại trừ khỏi Dòng thời[w]gian";
+/* Hidden files and folders onboarding content exclude from timeline section message */
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Các mục đã ẩn đi chỉ có thể truy[w]cập thông qua Ổ[w]Mây và sẽ không xuất[w]hiện trong Ảnh, Album hoặc Sử[w]dụng gần[w]đây của bạn.";
+/* Hidden files and folders onboarding content out of sight title */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Ra khỏi tầm nhìn";
+/* Hidden files and folders onboarding content out of sight message */
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Bạn tự quyết[w]định khi bạn muốn các tệp[w]tin ẩn đi được hiển[w]thị. Có một mục lựa[w]chọn mới trong thiết[w]đặt để hiển[w]thị các mục ẩn tạm[w]thời.";

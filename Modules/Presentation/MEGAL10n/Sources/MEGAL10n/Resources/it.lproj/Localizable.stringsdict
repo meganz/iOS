@@ -3325,9 +3325,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Your free call will end in %d minute</string>
+        <string>La tua chiamata gratuita terminerà tra %d minuto</string>
+        <key>many</key>
+        <string>La tua chiamata gratuita terminerà tra %d di minuti</string>
         <key>other</key>
-        <string>Your free call will end in %d minutes</string>
+        <string>La tua chiamata gratuita terminerà tra %d minuti</string>
       </dict>
     </dict>
   </dict>
