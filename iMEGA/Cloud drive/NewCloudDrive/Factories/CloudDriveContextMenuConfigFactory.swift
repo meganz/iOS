@@ -30,6 +30,7 @@ struct CloudDriveContextMenuConfigFactory {
                 parentNode: parentNode,
                 nodeAccessType: nodeAccessType,
                 currentViewMode: currentViewMode,
+                sortOrder: sortOrder,
                 mediaDiscoveryEnabled: showMediaDiscovery,
                 displayMode: displayMode,
                 isFromViewInFolder: isFromViewInFolder
@@ -114,6 +115,7 @@ struct CloudDriveContextMenuConfigFactory {
         parentNode: NodeEntity,
         nodeAccessType: NodeAccessTypeEntity,
         currentViewMode: ViewModePreferenceEntity,
+        sortOrder: SortOrderEntity,
         mediaDiscoveryEnabled: Bool,
         displayMode: DisplayMode,
         isFromViewInFolder: Bool
@@ -122,7 +124,7 @@ struct CloudDriveContextMenuConfigFactory {
             menuType: .menu(type: .display),
             viewMode: currentViewMode,
             accessLevel: nodeAccessType.toShareAccessLevelEntity(),
-            sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
+            sortType: sortOrder,
             isAFolder: parentNode.nodeType != .root,
             isRubbishBinFolder: displayMode == .rubbishBin,
             isViewInFolder: isFromViewInFolder,
