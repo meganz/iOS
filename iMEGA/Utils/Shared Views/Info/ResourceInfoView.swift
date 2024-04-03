@@ -5,6 +5,7 @@ import MEGASwiftUI
 import SwiftUI
 
 struct ResourceInfoView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: ResourceInfoViewModel
     
     private var backgroundColor: Color {
@@ -12,7 +13,9 @@ struct ResourceInfoView: View {
     }
 
     var body: some View {
-        NavigationStackView {
+        VStack(spacing: 0) {
+            customNavigationBar
+            
             List {
                 VStack(alignment: .center) {
                     Spacer()
@@ -55,20 +58,33 @@ struct ResourceInfoView: View {
                 }
             }
             .listStyle(.grouped)
-            .navigationTitle(Strings.Localizable.info)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        viewModel.dismiss()
-                    }, label: {
-                        Text(Strings.Localizable.close)
-                            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
-                    })
+        }
+        .designTokenBackground(isDesignTokenEnabled)
+    }
+    
+    private var customNavigationBar: some View {
+        ZStack {
+            Text(Strings.Localizable.info)
+                .font(.headline)
+                .bold()
+                .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+
+            HStack {
+                Spacer()
+                Button {
+                    viewModel.dismiss()
+                } label: {
+                    Text(Strings.Localizable.close)
+                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
                 }
             }
-            .designTokenBackground(isDesignTokenEnabled)
         }
+        .padding()
+        .background(isDesignTokenEnabled ?
+                    TokenColors.Background.surface1.swiftUI :
+                        colorScheme == .dark ? Color(UIColor(red: 0.173, green: 0.173, blue: 0.18, alpha: 1.0)) :
+                                               Color(UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1.0))
+        )
     }
 }
 
