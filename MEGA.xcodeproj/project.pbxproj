@@ -2133,6 +2133,7 @@
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
 		BF418B7E2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */; };
+		BF4296642BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4296632BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift */; };
 		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
 		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
 		BF4989602A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */; };
@@ -4888,6 +4889,7 @@
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
 		BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilderTests.swift; sourceTree = "<group>"; };
+		BF4296632BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuConfigFactoryTests.swift; sourceTree = "<group>"; };
 		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
 		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
 		BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService+ScheduleMeeting.swift"; sourceTree = "<group>"; };
@@ -5750,6 +5752,7 @@
 				245385F82A13C04800208B31 /* NodeInfo */,
 				C499E1DD2B7663FB00503353 /* StorageFullAlert */,
 				9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */,
+				BF4296632BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift */,
 				BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */,
 				94B85CA02B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift */,
 				BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */,
@@ -15973,6 +15976,7 @@
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
 				94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */,
 				9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */,
+				BF4296642BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift in Sources */,
 				C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */,
 				BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */,
 				94B85CA12B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift in Sources */,
