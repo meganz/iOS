@@ -58,6 +58,7 @@ public final class MockSdk: MEGASdk {
     public private(set) var searchQueryParameters: SearchQueryParameters?
     public private(set) var nodeListSearchCallCount = 0
     public private(set) var isNodeSensitive: Bool?
+    public private(set) var megaSetsCallCount = 0
     
     public enum Message: Equatable {
         case publicNodeForMegaFileLink(String)
@@ -289,7 +290,8 @@ public final class MockSdk: MEGASdk {
     // MARK: - Sets
     
     public override func megaSets() -> [MEGASet] {
-        sets
+        megaSetsCallCount += 1
+        return sets
     }
     
     public override func megaSetElements(bySid sid: MEGAHandle, includeElementsInRubbishBin: Bool) -> [MEGASetElement] {

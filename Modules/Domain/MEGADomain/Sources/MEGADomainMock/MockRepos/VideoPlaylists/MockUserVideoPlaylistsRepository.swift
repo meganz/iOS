@@ -9,20 +9,20 @@ public actor MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProto
     
     public private(set) var messages = [Message]()
     
-    private let videoPlaylistsResult: Result<[SetEntity], Error>
+    private let videoPlaylistsResult: [SetEntity]
     private let addVideosToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error>
     
     public init(
-        videoPlaylistsResult: Result<[SetEntity], Error>,
+        videoPlaylistsResult: [SetEntity],
         addVideosToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error>
     ) {
         self.videoPlaylistsResult = videoPlaylistsResult
         self.addVideosToVideoPlaylistResult = addVideosToVideoPlaylistResult
     }
     
-    public func videoPlaylists() async throws -> [SetEntity] {
+    public func videoPlaylists() async -> [SetEntity] {
         messages.append(.userVideoPlaylists)
-        return try videoPlaylistsResult.get()
+        return videoPlaylistsResult
     }
     
     public func addVideosToVideoPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity {

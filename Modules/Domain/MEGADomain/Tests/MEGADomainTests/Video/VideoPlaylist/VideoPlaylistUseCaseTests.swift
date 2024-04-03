@@ -99,10 +99,10 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testUserVideoPlaylists_whenCalled_getUserVideoPlaylists() async {
         let (sut, _, userVideoPlaylistsRepository) = makeSUT(
-            userVideoPlaylistRepositoryResult:  .failure(GenericErrorEntity())
+            userVideoPlaylistRepositoryResult: []
         )
         
-        _ = try? await sut.userVideoPlaylists()
+        _ = await sut.userVideoPlaylists()
         
         let messages = await userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages, [ .userVideoPlaylists ])
@@ -110,48 +110,35 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testUserVideoPlaylists_whenCalledTwice_getUserVideoPlaylistsTwice() async {
         let (sut, _, userVideoPlaylistsRepository) = makeSUT(
-            userVideoPlaylistRepositoryResult: .failure(GenericErrorEntity())
+            userVideoPlaylistRepositoryResult: []
         )
         
-        _ = try? await sut.userVideoPlaylists()
-        _ = try? await sut.userVideoPlaylists()
+        _ = await sut.userVideoPlaylists()
+        _ = await sut.userVideoPlaylists()
         
         let messages = await userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages, [ .userVideoPlaylists, .userVideoPlaylists ])
     }
     
-    func testUserVideoPlaylists_whenCalled_returnsError() async {
+    func testUserVideoPlaylists_whenCalled_returnsEmpty() async {
         let (sut, _, _) = makeSUT(
-            userVideoPlaylistRepositoryResult: .failure(GenericErrorEntity())
+            userVideoPlaylistRepositoryResult: []
         )
         
-        do {
-            _ = try await sut.userVideoPlaylists()
-            XCTFail("Expect to fail")
-        } catch {
-            XCTAssertTrue(error is GenericErrorEntity,  "Expect to get error")
-        }
-    }
-    
-    func testUserVideoPlaylists_whenCalled_returnsEmpty() async throws {
-        let (sut, _, _) = makeSUT(
-            userVideoPlaylistRepositoryResult: .success([])
-        )
-        
-        let userVideoPlaylists = try await sut.userVideoPlaylists()
+        let userVideoPlaylists = await sut.userVideoPlaylists()
         
         XCTAssertTrue(userVideoPlaylists.isEmpty)
     }
     
-    func testUserVideoPlaylists_whenCalled_returnsSinglePlaylist() async throws {
+    func testUserVideoPlaylists_whenCalled_returnsSinglePlaylist() async {
         let videoPlaylistSetEntities = [
             videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist")
         ]
         let (sut, _, _) = makeSUT(
-            userVideoPlaylistRepositoryResult: .success(videoPlaylistSetEntities)
+            userVideoPlaylistRepositoryResult: videoPlaylistSetEntities
         )
         
-        let userVideoPlaylists = try await sut.userVideoPlaylists()
+        let userVideoPlaylists = await sut.userVideoPlaylists()
         
         XCTAssertEqual(
             userVideoPlaylists,
@@ -160,16 +147,16 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         
     }
     
-    func testUserVideoPlaylists_whenCalled_returnsMoreThanOnePlaylists() async throws {
+    func testUserVideoPlaylists_whenCalled_returnsMoreThanOnePlaylists() async {
         let videoPlaylistSetEntities = [
             videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist"),
             videoPlaylistSetEntity(handle: 2, setType: .playlist, name: "My Video Playlist 2")
         ]
         let (sut, _, _) = makeSUT(
-            userVideoPlaylistRepositoryResult: .success(videoPlaylistSetEntities)
+            userVideoPlaylistRepositoryResult: videoPlaylistSetEntities
         )
         
-        let userVideoPlaylists = try await sut.userVideoPlaylists()
+        let userVideoPlaylists = await sut.userVideoPlaylists()
         
         XCTAssertEqual(
             userVideoPlaylists,
@@ -177,7 +164,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         )
     }
     
-    func testUserVideoPlaylists_whenCalled_returnsOnlyUserVideoPlaylists() async throws {
+    func testUserVideoPlaylists_whenCalled_returnsOnlyUserVideoPlaylists() async {
         let videoPlaylistSetEntities = [
             videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist"),
             videoPlaylistSetEntity(handle: 2, setType: .album, name: "My Album")
@@ -186,10 +173,10 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             .filter { $0.setType == .playlist }
             .count
         let (sut, _, _) = makeSUT(
-            userVideoPlaylistRepositoryResult: .success(videoPlaylistSetEntities)
+            userVideoPlaylistRepositoryResult: videoPlaylistSetEntities
         )
         
-        let userVideoPlaylists = try await sut.userVideoPlaylists()
+        let userVideoPlaylists = await sut.userVideoPlaylists()
         
         XCTAssertEqual(userVideoPlaylists.count, userVideoPlaylistSetEntityCount, "Should only returning Set entities with type SetType.playlist only")
         XCTAssert(userVideoPlaylists.allSatisfy { $0.type == .user })
@@ -199,7 +186,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     private func makeSUT(
         filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic)),
-        userVideoPlaylistRepositoryResult: Result<[SetEntity], Error> = .success([])
+        userVideoPlaylistRepositoryResult: [SetEntity] = []
     ) -> (
         sut: VideoPlaylistUseCase,
         filesSearchUseCase: MockFilesSearchUseCase,
