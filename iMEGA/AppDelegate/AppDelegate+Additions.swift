@@ -622,3 +622,14 @@ extension AppDelegate {
         }
     }
 }
+
+// MARK: - Legacy CallKit provider delegate and controller
+extension AppDelegate {
+    @objc func initProviderDelegate() {
+        if !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            guard megaProviderDelegate == nil else { return }
+            megaCallManager = MEGACallManager()
+            megaProviderDelegate = MEGAProviderDelegate(megaCallManager: megaCallManager)
+        }
+    }
+}

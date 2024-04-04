@@ -85,8 +85,6 @@
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
 @property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
 
-@property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
-
 @property (nonatomic) MEGAChatInit chatLastKnownInitState;
 
 @property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
@@ -907,13 +905,6 @@
                 }
             }
         }
-    }
-}
-
-- (void)initProviderDelegate {
-    if (self.megaProviderDelegate == nil) {
-        self.megaCallManager = MEGACallManager.new;
-        self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
     }
 }
 
