@@ -130,6 +130,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             isWaitingRoomListVisible = panelIsLongForm && selectedParticipantsListTab == .waitingRoom
         }
     }
+    private var callUpdateSubscription: AnyCancellable?
     
     var invokeCommand: ((Command) -> Void)?
     
@@ -171,6 +172,25 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.headerConfigFactory = headerConfigFactory
         self.featureFlagProvider = featureFlags
         self.presentUpgradeFlow = presentUpgradeFlow
+        
+        callUpdateSubscription = callUseCase.onCallUpdate()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] call in
+                self?.onCallUpdate(call)
+            }
+    }
+    
+    private func onCallUpdate(_ call: CallEntity) {
+        switch call.changeType {
+        case .callLimitsUpdated:
+            let previousLimit = limitOfFreeTierUsers
+            limitOfFreeTierUsers = call.callLimits.maxUsers
+            if previousLimit != limitOfFreeTierUsers {
+                reloadParticipantsIfNeeded()
+            }
+        default:
+            break
+        }
     }
     
     deinit {
@@ -181,39 +201,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     func dispatch(_ action: MeetingFloatingPanelAction) {
         switch action {
         case .onViewReady:
-            audioSessionUseCase.routeChanged { [weak self] routeChangedReason, previousAudioPort in
-                guard let self else { return }
-                if previousAudioPort == nil,
-                   self.chatRoom.chatType == .meeting,
-                   self.audioSessionUseCase.currentSelectedAudioPort == .builtInReceiver {
-                    self.enableLoudSpeaker()
-                } else {
-                    self.sessionRouteChanged(routeChangedReason: routeChangedReason)
-                }
-            }
-            callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
-            configView()
-            if let call = call, call.hasLocalVideo {
-                checkForVideoPermission {
-                    self.turnCamera(on: true) {
-                        if self.isBackCameraSelected() {
-                            self.invokeCommand?(.updatedCameraPosition(position: .back))
-                        }
-                    }
-                }
-            }
-            
-            dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? true)))
-            if isSpeakerEnabled {
-                enableLoudSpeaker()
-            } else {
-                updateSpeakerInfo()
-            }
-            addChatRoomParticipantsChangedListener()
-            requestPrivilegeChange(forChatRoom: chatRoom)
-            requestAllowNonHostToAddParticipantsValueChange(forChatRoom: chatRoom)
-            prepareParticipantsTableViewData()
-            subscribeToSeeWaitingRoomListNotification()
+            onViewReady()
         case .onViewAppear:
             if selectWaitingRoomList {
                 selectWaitingRoomList = false
@@ -300,6 +288,45 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
+    private func onViewReady() {
+        if let call {
+            limitOfFreeTierUsers = call.callLimits.maxUsers
+        }
+        audioSessionUseCase.routeChanged { [weak self] routeChangedReason, previousAudioPort in
+            guard let self else { return }
+            if previousAudioPort == nil,
+               self.chatRoom.chatType == .meeting,
+               self.audioSessionUseCase.currentSelectedAudioPort == .builtInReceiver {
+                self.enableLoudSpeaker()
+            } else {
+                self.sessionRouteChanged(routeChangedReason: routeChangedReason)
+            }
+        }
+        callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
+        configView()
+        if let call = call, call.hasLocalVideo {
+            checkForVideoPermission {
+                self.turnCamera(on: true) {
+                    if self.isBackCameraSelected() {
+                        self.invokeCommand?(.updatedCameraPosition(position: .back))
+                    }
+                }
+            }
+        }
+        
+        dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? true)))
+        if isSpeakerEnabled {
+            enableLoudSpeaker()
+        } else {
+            updateSpeakerInfo()
+        }
+        addChatRoomParticipantsChangedListener()
+        requestPrivilegeChange(forChatRoom: chatRoom)
+        requestAllowNonHostToAddParticipantsValueChange(forChatRoom: chatRoom)
+        prepareParticipantsTableViewData()
+        subscribeToSeeWaitingRoomListNotification()
+    }
+    
     // MARK: - Private methods
     private func inviteParticipants() {
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
@@ -317,14 +344,14 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             return
         }
         
-        let limit = limitOfFreeTierUsers
         let config = ContactPickerConfig(
             mode: .inviteParticipants,
             excludedParticipantIds: Set(excludedHandles),
             isHost: isMyselfAModerator,
-            participantLimitChecker: { [weak self] selectedCount in
-                let currentCount = self?.callParticipants.count ?? 0
-                return selectedCount + currentCount >= limit
+            participantLimitAchieved: { [weak self] selectedCount in
+                guard let self else { return false }
+                guard participantsNumberLimitationsEnabled else { return false}
+                return selectedCount + callParticipants.count >= limitOfFreeTierUsers
             }
         )
                        
@@ -725,9 +752,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     // the limit 100 means 99 users can join plus the organiser
-    var limitOfFreeTierUsers: Int {
-        100
-    }
+    // this will be fetched from SDK to get the current value
+    // we also listen to notifications when this changes
+    var limitOfFreeTierUsers: Int = 100
     
     var isFreeTierUser: Bool {
         accountUseCase.currentAccountDetails?.proLevel == .free
@@ -737,14 +764,21 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
     }
     
-    var hasReachedInCallFreeUserParticipantLimit: Bool {
+    var participantsNumberLimitationsEnabled: Bool {
         guard chatMonetisationEnabled else { return false }
-        return isFreeTierUser && callParticipants.count >= limitOfFreeTierUsers
+        guard isFreeTierUser else { return false }
+        // -1 means no limit
+        return limitOfFreeTierUsers != -1
+    }
+    
+    var hasReachedInCallFreeUserParticipantLimit: Bool {
+        guard participantsNumberLimitationsEnabled else { return false }
+        return callParticipants.count >= limitOfFreeTierUsers
     }
     
     var hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit: Bool {
-        guard chatMonetisationEnabled else { return false }
-        return isFreeTierUser && callParticipants.count + callParticipantsInWaitingRoom.count >= limitOfFreeTierUsers
+        guard participantsNumberLimitationsEnabled else { return false }
+        return callParticipants.count + callParticipantsInWaitingRoom.count >= limitOfFreeTierUsers
     }
     
     // configuration that specifies if there should be a waitingRoom tab present:

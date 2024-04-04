@@ -110,7 +110,7 @@ struct ParticipantsAddingViewFactory {
         )
         if let bannerConfig {
             contactController.setBannerConfig(bannerConfig)
-            contactController.viewModel.bannerDecider = contactPickerConfig.participantLimitChecker
+            contactController.viewModel.bannerDecider = contactPickerConfig.participantLimitAchieved
         }
         contactController.userSelected = { selectedUsers in
             guard let users = selectedUsers else { return }
@@ -171,5 +171,5 @@ struct ContactPickerConfig {
     var excludedParticipantIds: Set<HandleEntity>?
     var isHost: Bool = false
     // this will check if after selectionCount the limit of free call participants will be equalised or exceeded
-    var participantLimitChecker: (_ selectionCount: Int) -> Bool = { _ in false }
+    var participantLimitAchieved: (_ selectionCount: Int) -> Bool = { _ in false }
 }
