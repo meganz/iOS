@@ -202,10 +202,6 @@
 
 #pragma mark - Private
 
-- (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-}
-
 - (void)reloadUI {
     if (!self.parentNode) {
         self.parentNode = [MEGASdk.sharedFolderLink rootNode];
@@ -237,12 +233,15 @@
 }
 
 - (void)setNavigationBarTitleLabel {
+    self.titleViewSubtitle = nil;
+    
     if (self.flTableView.tableView.isEditing || self.flCollectionView.collectionView.allowsMultipleSelection) {
         self.navigationItem.titleView = nil;
         self.navigationItem.title = [self selectedCountTitle];
     } else {
         if (self.parentNode.name && !self.isFolderLinkNotValid) {
-            self.navigationItem.titleView = [UILabel customNavigationBarLabelWithTitle:self.parentNode.name subtitle:LocalizedString(@"folderLink", @"") traitCollection:self.traitCollection];
+            self.titleViewSubtitle = LocalizedString(@"folderLink", @"");
+            [self setNavigationTitleViewWithSubTitle:self.titleViewSubtitle];
         } else {
             self.navigationItem.title = LocalizedString(@"folderLink", @"");
         }
@@ -252,7 +251,8 @@
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     [SVProgressHUD dismiss];
     
-    self.navigationItem.titleView = [UILabel customNavigationBarLabelWithTitle:self.parentNode.name subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") traitCollection:self.traitCollection];
+    self.titleViewSubtitle = LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available");
+    [self setNavigationTitleViewWithSubTitle:self.titleViewSubtitle];
     
     [self disableUIItems];
     

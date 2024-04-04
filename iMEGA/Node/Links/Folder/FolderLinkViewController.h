@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isFolderRootNode;
 @property (nonatomic, strong, nullable) NSString *publicLinkString;
 @property (nonatomic, strong, nullable) NSString *linkEncryptedString;
+@property (nonatomic, strong, nullable) NSString *titleViewSubtitle;
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
 @property (strong, nonatomic) UISearchController *searchController;

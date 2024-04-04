@@ -154,6 +154,29 @@ extension FolderLinkViewController {
         }
         return Strings.Localizable.General.Format.itemsSelected(selectedCount)
     }
+    
+    @objc func updateAppearance() {
+        view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        
+        if let navController = navigationController {
+            AppearanceManager.forceNavigationBarUpdate(navController.navigationBar, traitCollection: traitCollection)
+            AppearanceManager.forceToolbarUpdate(navController.toolbar, traitCollection: traitCollection)
+        }
+        
+        if navigationItem.titleView != nil, let titleViewSubtitle {
+            setNavigationTitleView(subTitle: titleViewSubtitle)
+        }
+    }
+    
+    @objc func setNavigationTitleView(subTitle: String?) {
+        navigationItem.titleView = UILabel.customNavigationBarLabel(
+            title: parentNode?.name ?? "",
+            subtitle: subTitle,
+            traitCollection: traitCollection
+        )
+        
+        navigationItem.titleView?.sizeToFit()
+    }
 }
 
 // MARK: - Ads
