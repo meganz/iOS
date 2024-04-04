@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong, nullable) MEGACallManager *megaCallManager;
-@property (nonatomic, readonly, nullable) MEGAProviderDelegate *megaProviderDelegate;
+@property (nonatomic, nullable) MEGAProviderDelegate *megaProviderDelegate;
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;
 @property (nonatomic, weak, readonly) MainTabBarController *mainTBC;
 @property (nonatomic) NSNumber *openChatLater;
