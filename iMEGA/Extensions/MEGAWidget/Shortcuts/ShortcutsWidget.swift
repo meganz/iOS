@@ -87,7 +87,7 @@ struct SmallShortcutWidgetView: View {
             .padding(16)
             Spacer()
         }
-        .background(LinearGradient(gradient: Gradient(colors: [shortcut.topBackgroundColor, shortcut.bottomBackgroundColor]), startPoint: .top, endPoint: .bottom))
+        .widgetBackground(LinearGradient(gradient: Gradient(colors: [shortcut.topBackgroundColor, shortcut.bottomBackgroundColor]), startPoint: .top, endPoint: .bottom))
         .widgetURL(URL(string: shortcut.link))
     }
 }
@@ -152,7 +152,7 @@ struct MediumShortcutsWidgetView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height/2)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
-            .background(Color("SecondaryBackground"))
+            .widgetBackground(Color("SecondaryBackground"))
         }
     }
 }

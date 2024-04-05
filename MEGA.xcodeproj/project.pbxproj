@@ -1553,6 +1553,7 @@
 		A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68C286B3204004CED9E /* FirebaseCrashlytics */; };
 		A83428B32B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */; };
 		A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */; };
+		A834DD0C2BC0293B00A57058 /* View+WidgetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A834DD0B2BC0293B00A57058 /* View+WidgetBackground.swift */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F46296C40070062B6BC /* FileProviderExtension.swift */; };
@@ -4265,6 +4266,7 @@
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
 		A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableTableViewCell+Additions.swift"; sourceTree = "<group>"; };
+		A834DD0B2BC0293B00A57058 /* View+WidgetBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WidgetBackground.swift"; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A8399F42296C40060062B6BC /* MEGAPickerFileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPickerFileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8656,6 +8658,7 @@
 				830C28CC25E68FC200E9B56E /* DetailItemView.swift */,
 				830C28DF25E6900200E9B56E /* GridView.swift */,
 				830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */,
+				A834DD0B2BC0293B00A57058 /* View+WidgetBackground.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -15682,6 +15685,7 @@
 				8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */,
 				BF22BFB9268ACFB000460DB3 /* TransferRecordDTO.swift in Sources */,
 				B6990178262F920800176FFC /* UncaughtExceptionHandler.swift in Sources */,
+				A834DD0C2BC0293B00A57058 /* View+WidgetBackground.swift in Sources */,
 				8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
