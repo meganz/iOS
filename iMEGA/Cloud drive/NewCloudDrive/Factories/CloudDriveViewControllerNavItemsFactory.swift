@@ -2,6 +2,8 @@ import MEGADomain
 import SwiftUI
 import UIKit
 
+/// Factory struct to construct the navigation items of CloudDrive
+/// This factory will construct the navigation items needed for the CD page based on the latest state of the parent node.
 struct CloudDriveViewControllerNavItemsFactory {
     let nodeSource: NodeSource
     let config: NodeBrowserConfig
@@ -20,6 +22,7 @@ struct CloudDriveViewControllerNavItemsFactory {
     ///   - label: A view describing the content of the menu.
     /// - Returns: SwiftUI context menu.
     func contextMenu<Label: View>(@ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
+        // First, get the most updated value of parentNode and access type
         guard let (parentNode, accessType) = parentNodeAndAccessType() else {
             return nil
         }
@@ -69,11 +72,17 @@ struct CloudDriveViewControllerNavItemsFactory {
         return contextMenuManager.menu(with: addBarMenuConfig, label: label)
     }
 
+    /// Get the most updated value of parentNode and access type.
+    /// Because a CD node can be changed externally (e.g: User rename or change access type of the node from another platform/device),
+    /// in order to construct the navigation items correctly we need to get the most updated value of the node and its access type.
     private func parentNodeAndAccessType() -> (NodeEntity, NodeAccessTypeEntity)? {
-        guard case let .node(nodeProvider) = nodeSource, let parentNode = nodeProvider() else {
+        guard case let .node(nodeProvider) = nodeSource,
+                let handle = nodeProvider()?.handle,
+              let parentNode = nodeUseCase.nodeForHandle(handle)
+        else {
             return nil
         }
-
+        
         let accessType = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode.handle)
         return (parentNode, accessType)
     }

@@ -15,7 +15,6 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
     private func currentAdsSlotConfig() -> AdsSlotConfig? {
         switch selectedIndex {
         case TabType.cloudDrive.rawValue:
-            // mike: Refactor this part to abstract CloudDriveViewController and SearchBarUIHostingController and offer only displayMode for displaying ads
             if let adsDipslayable = mainTabBarTopViewController() as? any CloudDriveAdsSlotDisplayable {
                 return AdsSlotConfig(
                     adsSlot: .files,

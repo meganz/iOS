@@ -94,26 +94,30 @@ class NodeBrowserViewModelTests: XCTestCase {
                     analyticsUseCase: MockMediaDiscoveryAnalyticsUseCase(),
                     mediaDiscoveryUseCase: mediaDiscoveryUseCase
                 ),
-                warningViewModel: nil, 
+                warningViewModel: nil,
                 upgradeEncouragementViewModel: nil,
                 adsVisibilityViewModel: nil,
                 config: .default,
-                nodeSource: nodeSource, 
+                nodeSource: nodeSource,
                 avatarViewModel: MyAvatarViewModel(
                     megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
                     megaAvatarUseCase: MockMEGAAvatarUseCaseProtocol(),
                     megaAvatarGeneratingUseCase: MockMEGAAvatarGeneratingUseCaseProtocol()
-                ), 
+                ),
                 noInternetViewModel: NoInternetViewModel(
                     networkMonitorUseCase: MockNetworkMonitorUseCase(),
                     networkConnectionStateChanged: { _ in }
+                ),
+                nodeSourceUpdatesListener: NewCloudDriveNodeSourceUpdatesListener(
+                    originalNodeSource: .testNode,
+                    nodeUpdatesListener: MockSDKNodesUpdateListenerRepository.newRepo
                 ),
                 viewModeSaver: { saver($0) },
                 storageFullAlertViewModel: .init(router: MockStorageFullAlertViewRouting()),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
                 onOpenUserProfile: {},
                 onUpdateSearchBarVisibility: { _ in },
-                onBack: {}, 
+                onBack: {},
                 onEditingChanged: { _ in },
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider

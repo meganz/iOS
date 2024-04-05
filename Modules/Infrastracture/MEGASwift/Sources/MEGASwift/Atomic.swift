@@ -23,7 +23,7 @@ import Foundation
 public final class Atomic<T: Sendable> {
     
     /// The internal `DispatchQueue` used for synchronization.
-    private let _queue: DispatchQueue
+    private let _queue: AtomicDispatchQueueProtocol
     
     /// The actual value being wrapped.
     private var _value: T
@@ -45,7 +45,7 @@ public final class Atomic<T: Sendable> {
     /// - Parameters:
     ///   - wrappedValue: The initial value for the wrapped property.
     ///   - queue: The `DispatchQueue` to use for synchronization. If not provided, a new concurrent queue is created.
-    public init(wrappedValue value: T, queue: DispatchQueue = DispatchQueue(label: "com.mega.concurrentqueue", attributes: .concurrent)) {
+    public init(wrappedValue value: T, queue: AtomicDispatchQueueProtocol = DispatchQueue(label: "com.mega.concurrentqueue", attributes: .concurrent)) {
         _value = value
         _queue = queue
     }
@@ -57,5 +57,17 @@ public final class Atomic<T: Sendable> {
         _queue.async(flags: .barrier) {
             mutation(&self._value)
         }
+    }
+}
+
+/// Abstraction of DispatchQueue to enable testability for `Atomic`
+public protocol AtomicDispatchQueueProtocol {
+    func async(flags: DispatchWorkItemFlags, execute work: @escaping @Sendable @convention(block) () -> Void)
+    func sync<T>(execute work: () throws -> T) rethrows -> T
+}
+
+extension DispatchQueue: AtomicDispatchQueueProtocol {
+    public func async(flags: DispatchWorkItemFlags, execute work: @escaping @Sendable @convention(block) () -> Void) {
+        async(group: nil, qos: qos, flags: flags, execute: work)
     }
 }
