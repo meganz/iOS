@@ -4,8 +4,24 @@ import MEGAL10n
 import MEGAPresentation
 
 protocol MainTabBarCallsRouting: AnyObject {
-    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void)
-    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void)
+    func showOneUserWaitingRoomDialog(
+        for username: String,
+        chatName: String,
+        isCallUIVisible: Bool,
+        shouldUpdateDialog: Bool,
+        shouldBlockAddingUsersToCall: Bool,
+        admitAction: @escaping () -> Void,
+        denyAction: @escaping () -> Void
+    )
+    func showSeveralUsersWaitingRoomDialog(
+        for participantsCount: Int,
+        chatName: String,
+        isCallUIVisible: Bool,
+        shouldUpdateDialog: Bool,
+        shouldBlockAddingUsersToCall: Bool,
+        admitAction: @escaping () -> Void,
+        seeWaitingRoomAction: @escaping () -> Void
+    )
     func dismissWaitingRoomDialog(animated: Bool)
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
     func showParticipantsJoinedTheCall(message: String)
@@ -180,10 +196,18 @@ enum MainTabBarCallsAction: ActionType { }
         }
     }
     
+    private var chatMonetisationFeatureEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
+    }
+    
     /// If call UI is visible, then this event would be handled there. See MeetingParticipantsLayoutViewModel:manageCallWillEnd().
     /// If call UI is not visible, the call will end dialog will be presented just for moderators in the visible view.
     private func showCallWillEndAlertIfNeeded(_ call: CallEntity) {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization), !isCallUIVisible, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId), chatRoom.ownPrivilege == .moderator else { return }
+        guard chatMonetisationFeatureEnabled,
+              !isCallUIVisible,
+              let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              chatRoom.ownPrivilege == .moderator
+        else { return }
         
         let secondsToCallWillEnd = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
         router.showCallWillEndAlert(
@@ -220,7 +244,7 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func manageCallTerminatedErrorIfNeeded(_ call: CallEntity) {
-        guard !isCallUIVisible, featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) else { return }
+        guard !isCallUIVisible, chatMonetisationFeatureEnabled else { return }
         if call.termCodeType == .callDurationLimit {
             if call.isOwnClientCaller { // or is chat room organiser - future implementation
                 guard let accountDetails = accountUseCase.currentAccountDetails else { return }
@@ -250,19 +274,48 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func showWaitingRoomAlert(_ chatRoom: ChatRoomEntity, _ call: CallEntity) {
+        
+        // show appropriate copy and disable admit button when limit of free participants is each reached
+        let shouldBlockAddingUsersToCall = (
+            chatMonetisationFeatureEnabled && 
+            accountUseCase.isFreeTierUser &&
+            call.hasReachedMaxCallParticipants
+        )
+        
         if currentWaitingRoomUserHandles.count == 1 {
             guard let userHandle = currentWaitingRoomUserHandles.first else { return }
-            showOneUserWaitingRoomAlert(withUserHandle: userHandle, inChatRoom: chatRoom, forCall: call)
+            showOneUserWaitingRoomAlert(
+                withUserHandle: userHandle,
+                inChatRoom: chatRoom,
+                forCall: call,
+                shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall
+            )
         } else {
-            showSeveralUsersWaitingRoomAlert(userHandles: currentWaitingRoomUserHandles, inChatRoom: chatRoom, forCall: call)
+            showSeveralUsersWaitingRoomAlert(
+                userHandles: currentWaitingRoomUserHandles,
+                inChatRoom: chatRoom,
+                forCall: call,
+                shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall
+            )
         }
     }
     
-    private func showOneUserWaitingRoomAlert(withUserHandle userHandle: UInt64, inChatRoom chatRoom: ChatRoomEntity, forCall call: CallEntity) {
+    private func showOneUserWaitingRoomAlert(
+        withUserHandle userHandle: UInt64,
+        inChatRoom chatRoom: ChatRoomEntity,
+        forCall call: CallEntity,
+        shouldBlockAddingUsersToCall: Bool
+    ) {
         Task { @MainActor in
             do {
                 let username = try await chatRoomUserUseCase.userDisplayName(forPeerId: userHandle, in: chatRoom)
-                router.showOneUserWaitingRoomDialog(for: username, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible, shouldUpdateDialog: call.changeType != .waitingRoomUsersLeave) { [weak self] in
+                router.showOneUserWaitingRoomDialog(
+                    for: username,
+                    chatName: chatRoom.title ?? "",
+                    isCallUIVisible: isCallUIVisible,
+                    shouldUpdateDialog: call.changeType != .waitingRoomUsersLeave,
+                    shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall
+                ) { [weak self] in
                     guard let self else { return}
                     callUseCase.allowUsersJoinCall(call, users: [userHandle])
                     if !isCallUIVisible {
@@ -277,8 +330,19 @@ enum MainTabBarCallsAction: ActionType { }
         }
     }
     
-    private func showSeveralUsersWaitingRoomAlert(userHandles: [UInt64], inChatRoom chatRoom: ChatRoomEntity, forCall call: CallEntity) {
-        router.showSeveralUsersWaitingRoomDialog(for: userHandles.count, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible, shouldUpdateDialog: call.changeType != .waitingRoomUsersLeave) { [weak self] in
+    private func showSeveralUsersWaitingRoomAlert(
+        userHandles: [UInt64],
+        inChatRoom chatRoom: ChatRoomEntity,
+        forCall call: CallEntity,
+        shouldBlockAddingUsersToCall: Bool
+    ) {
+        router.showSeveralUsersWaitingRoomDialog(
+            for: userHandles.count,
+            chatName: chatRoom.title ?? "",
+            isCallUIVisible: isCallUIVisible,
+            shouldUpdateDialog: call.changeType != .waitingRoomUsersLeave,
+            shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall
+        ) { [weak self] in
             guard let self else { return}
             callUseCase.allowUsersJoinCall(call, users: userHandles)
             if !isCallUIVisible {

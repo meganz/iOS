@@ -19,17 +19,34 @@ final class CallWaitingRoomUsersDialog {
                              chatName: String,
                              presenterViewController: UIViewController,
                              isDialogUpdateMandatory: Bool,
+                             shouldBlockAddingUsersToCall: Bool,
                              admitUserAction: @escaping () -> Void,
                              denyAction: @escaping () -> Void) {
         presenter = presenterViewController
         guard shouldUpdateDialog(mandatory: isDialogUpdateMandatory) else { return }
         playSoundIfNeeded()
+        
+        let presentAlert: () -> Void = { [weak self] in
+            self?.prepareAlertForOneUser(
+                isCallUIVisible: isCallUIVisible,
+                named: named,
+                chatName: chatName,
+                shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall,
+                admitUserAction: admitUserAction,
+                denyUserAction: denyAction
+            )
+        }
+        
+        presentImmediatelyOrAfterDismissingPreviousOne(presentAlert)
+    }
+    
+    private func presentImmediatelyOrAfterDismissingPreviousOne(_ presentAlert: @escaping () -> Void) {
         guard callWaitingRoomDialogViewController != nil else {
-            prepareAlertForOneUser(isCallUIVisible: isCallUIVisible, named: named, chatName: chatName, admitUserAction: admitUserAction, denyUserAction: denyAction)
+            presentAlert()
             return
         }
-        dismiss(animated: false) { [weak self] in
-            self?.prepareAlertForOneUser(isCallUIVisible: isCallUIVisible, named: named, chatName: chatName, admitUserAction: admitUserAction, denyUserAction: denyAction)
+        dismiss(animated: false) {
+            presentAlert()
         }
     }
     
@@ -53,18 +70,23 @@ final class CallWaitingRoomUsersDialog {
                                   chatName: String,
                                   presenterViewController: UIViewController,
                                   isDialogUpdateMandatory: Bool,
+                                  shouldBlockAddingUsersToCall: Bool,
                                   admitAllAction: @escaping () -> Void,
                                   seeWaitingRoomAction: @escaping () -> Void) {
         presenter = presenterViewController
         guard shouldUpdateDialog(mandatory: isDialogUpdateMandatory) else { return }
         playSoundIfNeeded()
-        guard callWaitingRoomDialogViewController != nil else {
-            prepareAlertForSeveralUsers(isCallUIVisible: isCallUIVisible, count: count, chatName: chatName, admitAllAction: admitAllAction, seeWaitingRoomAction: seeWaitingRoomAction)
-            return
+        let prepareAlert: () -> Void = { [weak self] in
+            self?.prepareAlertForSeveralUsers(
+                isCallUIVisible: isCallUIVisible,
+                count: count,
+                chatName: chatName,
+                shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall,
+                admitAllAction: admitAllAction,
+                seeWaitingRoomAction: seeWaitingRoomAction
+            )
         }
-        dismiss(animated: false) { [weak self] in
-            self?.prepareAlertForSeveralUsers(isCallUIVisible: isCallUIVisible, count: count, chatName: chatName, admitAllAction: admitAllAction, seeWaitingRoomAction: seeWaitingRoomAction)
-        }
+        presentImmediatelyOrAfterDismissingPreviousOne(prepareAlert)
     }
     
     // MARK: - Private methods
@@ -72,25 +94,50 @@ final class CallWaitingRoomUsersDialog {
     private func prepareAlertForOneUser(isCallUIVisible: Bool,
                                         named: String,
                                         chatName: String,
+                                        shouldBlockAddingUsersToCall: Bool,
                                         admitUserAction: @escaping () -> Void,
                                         denyUserAction: @escaping () -> Void) {
-        var message = isCallUIVisible ?
+        
+        let copy = singleUserTitleAndMessage(
+            isCallUIVisible: isCallUIVisible,
+            named: named,
+            chatName: chatName,
+            shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall
+        )
+        
+        let alert =  UIAlertController.createAlert(
+            forceDarkMode: isCallUIVisible,
+            title: copy.title,
+            message: copy.message,
+            preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admit,
+            secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.deny,
+            preferredActionEnabled: !shouldBlockAddingUsersToCall,
+            preferredAction: admitUserAction,
+            secondaryAction: denyUserAction
+        )
+        
+        self.callWaitingRoomDialogViewController = alert
+        show(alert)
+    }
+    
+    private func singleUserTitleAndMessage(
+        isCallUIVisible: Bool,
+        named: String,
+        chatName: String,
+        shouldBlockAddingUsersToCall: Bool
+    ) -> (title: String?, message: String) {
+        var descriptionWhoWantsToJoin = isCallUIVisible ?
         Strings.Localizable.Chat.Call.WaitingRoom.Alert.message(1) :
         Strings.Localizable.Chat.Call.WaitingRoom.Alert.OutsideCallUI.message(1)
             .replacingOccurrences(of: "[MeetingName]", with: chatName)
-    
-        message = message
+        
+        descriptionWhoWantsToJoin = descriptionWhoWantsToJoin
             .replacingOccurrences(of: "[UserName]", with: named)
-        
-        let callWaitingRoomDialogViewController =  UIAlertController.createAlert(forceDarkMode: isCallUIVisible,
-                                                                                  message: message,
-                                                                                  preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admit,
-                                                                                  secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.deny,
-                                                                                  preferredAction: admitUserAction,
-                                                                                  secondaryAction: denyUserAction)
-        
-        self.callWaitingRoomDialogViewController = callWaitingRoomDialogViewController
-        show(callWaitingRoomDialogViewController)
+        if shouldBlockAddingUsersToCall {
+            return (title: descriptionWhoWantsToJoin, message: Strings.Localizable.Calls.FreePlanLimitWarning.WaitingRoom.Alert.message)
+        } else {
+            return (title: nil, message: descriptionWhoWantsToJoin)
+        }
     }
     
     private func prepareAlertForConfirmDeny(isCallUIVisible: Bool,
@@ -109,24 +156,59 @@ final class CallWaitingRoomUsersDialog {
         show(callWaitingRoomDialogViewController)
     }
     
-    private func prepareAlertForSeveralUsers(isCallUIVisible: Bool,
-                                             count: Int,
-                                             chatName: String,
-                                             admitAllAction: @escaping () -> Void,
-                                             seeWaitingRoomAction: @escaping () -> Void) {
-        let message = isCallUIVisible ?
+    private func severalUsersCopy(
+        isCallUIVisible: Bool,
+        count: Int,
+        chatName: String,
+        shouldBlockAddingUsersToCall: Bool
+    ) -> (title: String?, message: String) {
+        let descriptionWhoWantsToJoin = isCallUIVisible ?
         Strings.Localizable.Chat.Call.WaitingRoom.Alert.message(count) :
         Strings.Localizable.Chat.Call.WaitingRoom.Alert.OutsideCallUI.message(count)
             .replacingOccurrences(of: "[MeetingName]", with: chatName)
-        let callWaitingRoomDialogViewController = UIAlertController.createAlert(forceDarkMode: isCallUIVisible,
-                                                                                 message: message,
-                                                                                 preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll,
-                                                                                 secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.seeWaitingRoom,
-                                                                                 preferredAction: admitAllAction,
-                                                                                 secondaryAction: seeWaitingRoomAction)
+        if shouldBlockAddingUsersToCall {
+            return (
+                title: descriptionWhoWantsToJoin,
+                message: Strings.Localizable.Calls.FreePlanLimitWarning.WaitingRoom.Alert.message
+            )
+        } else {
+            return (
+                title: nil,
+                message: descriptionWhoWantsToJoin
+            )
+        }
+    }
+    
+    private func prepareAlertForSeveralUsers(
+        isCallUIVisible: Bool,
+        count: Int,
+        chatName: String,
+        shouldBlockAddingUsersToCall: Bool,
+        admitAllAction: @escaping () -> Void,
+        seeWaitingRoomAction: @escaping () -> Void
+    ) {
+        let copy = severalUsersCopy(
+            isCallUIVisible: isCallUIVisible,
+            count: count,
+            chatName: chatName,
+            shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall
+        )
+        let alert = UIAlertController.createAlert(
+            forceDarkMode: isCallUIVisible,
+            title: copy.title,
+            message: copy.message,
+            preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll,
+            secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.seeWaitingRoom,
+            preferredActionEnabled: !shouldBlockAddingUsersToCall,
+            preferredAction: admitAllAction,
+            secondaryAction: seeWaitingRoomAction
+        )
         
-        self.callWaitingRoomDialogViewController = callWaitingRoomDialogViewController
-        show(callWaitingRoomDialogViewController)
+        self.callWaitingRoomDialogViewController = alert
+        
+        show(
+            alert
+        )
     }
     
     private func show(_ alert: UIAlertController, animated: Bool = true) {

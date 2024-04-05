@@ -20,6 +20,15 @@ public protocol AccountUseCaseProtocol {
     func sessionTransferURL(path: String) async throws -> URL
 }
 
+
+
+extension AccountUseCaseProtocol {
+    public var isFreeTierUser: Bool {
+        currentAccountDetails?.proLevel == .free
+    }
+}
+
+
 // MARK: - Use case implementation
 public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtocol {
     private let repository: T

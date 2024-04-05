@@ -12,7 +12,15 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         self.baseViewController = baseViewController
     }
     
-    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
+    func showOneUserWaitingRoomDialog(
+        for username: String,
+        chatName: String,
+        isCallUIVisible: Bool,
+        shouldUpdateDialog: Bool,
+        shouldBlockAddingUsersToCall: Bool,
+        admitAction: @escaping () -> Void,
+        denyAction: @escaping () -> Void
+    ) {
         guard screenRecordingAlert == nil else {
             shouldCheckPendingWaitingRoomNotification = true
             return
@@ -20,14 +28,29 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         
         guard screenRecordingAlert == nil, let presenter = baseViewController.presenterViewController() else { return }
 
-        callWaitingRoomDialog.showAlertForOneUser(isCallUIVisible: isCallUIVisible, named: username, chatName: chatName, presenterViewController: presenter, isDialogUpdateMandatory: shouldUpdateDialog) {
+        callWaitingRoomDialog.showAlertForOneUser(
+            isCallUIVisible: isCallUIVisible,
+            named: username,
+            chatName: chatName,
+            presenterViewController: presenter,
+            isDialogUpdateMandatory: shouldUpdateDialog,
+            shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall
+        ) {
             admitAction()
         } denyAction: {
             denyAction()
         }
     }
     
-    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void) {
+    func showSeveralUsersWaitingRoomDialog(
+        for participantsCount: Int,
+        chatName: String,
+        isCallUIVisible: Bool,
+        shouldUpdateDialog: Bool,
+        shouldBlockAddingUsersToCall: Bool,
+        admitAction: @escaping () -> Void,
+        seeWaitingRoomAction: @escaping () -> Void
+    ) {
         guard screenRecordingAlert == nil else {
             shouldCheckPendingWaitingRoomNotification = true
             return
@@ -35,7 +58,14 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         
         guard screenRecordingAlert == nil, let presenter = baseViewController.presenterViewController() else { return }
                         
-        callWaitingRoomDialog.showAlertForSeveralUsers(isCallUIVisible: isCallUIVisible, count: participantsCount, chatName: chatName, presenterViewController: presenter, isDialogUpdateMandatory: shouldUpdateDialog) {
+        callWaitingRoomDialog.showAlertForSeveralUsers(
+            isCallUIVisible: isCallUIVisible,
+            count: participantsCount,
+            chatName: chatName,
+            presenterViewController: presenter,
+            isDialogUpdateMandatory: shouldUpdateDialog,
+            shouldBlockAddingUsersToCall: shouldBlockAddingUsersToCall
+        ) {
             admitAction()
         } seeWaitingRoomAction: {
             seeWaitingRoomAction()
