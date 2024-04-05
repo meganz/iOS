@@ -21,6 +21,8 @@ struct PhotoCellContent: View {
         .favorite(viewModel.shouldShowFavorite)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
+        /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
+        .overlay(Color.black000000.opacity(isDesignTokenEnabled && viewModel.isSelected ? 0.2 : 0.0))
         .gesture(viewModel.editMode.isEditing ? tap : nil)
         .task { await viewModel.startLoadingThumbnail() }
     }
