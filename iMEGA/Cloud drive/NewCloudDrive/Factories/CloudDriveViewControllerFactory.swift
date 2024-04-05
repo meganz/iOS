@@ -255,6 +255,7 @@ struct CloudDriveViewControllerFactory {
         nodeSource: NodeSource,
         searchResultsViewModel: SearchResultsViewModel,
         noInternetViewModel: NoInternetViewModel,
+        nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         config: NodeBrowserConfig,
         nodeActions: NodeActions,
         navigationController: UINavigationController,
@@ -285,6 +286,7 @@ struct CloudDriveViewControllerFactory {
             nodeSource: nodeSource,
             avatarViewModel: avatarViewModel, 
             noInternetViewModel: noInternetViewModel,
+            nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
@@ -473,7 +475,7 @@ struct CloudDriveViewControllerFactory {
         )
 
         let searchResultsVM = makeSearchResultsViewModel(
-            nodeSource: nodeSource, 
+            nodeSource: nodeSource,
             initialViewMode: initialViewMode,
             config: overriddenConfig
         )
@@ -508,13 +510,19 @@ struct CloudDriveViewControllerFactory {
         let noInternetViewModel = NoInternetViewModel(
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
+        
+        let nodeSourceUpdatesListener = NewCloudDriveNodeSourceUpdatesListener(
+            originalNodeSource: nodeSource,
+            nodeUpdatesListener: SDKNodesUpdateListenerRepository(sdk: sdk)
+        )
 
         let mediaContentDelegate = MediaContentDelegateHandler()
         let nodeBrowserViewModel = makeNodeBrowserViewModel(
             initialViewMode: initialViewMode,
             nodeSource: nodeSource,
             searchResultsViewModel: searchResultsVM,
-            noInternetViewModel: noInternetViewModel,
+            noInternetViewModel: noInternetViewModel, 
+            nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             config: overriddenConfig,
             nodeActions: nodeActions,
             navigationController: navigationController,
@@ -728,7 +736,6 @@ struct CloudDriveViewControllerFactory {
         bridge.updateBottomInsetTrampoline = { [weak searchBridge] inset in
             searchBridge?.updateBottomInset(inset)
         }
-
         return SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,

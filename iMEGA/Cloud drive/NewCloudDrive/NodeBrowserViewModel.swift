@@ -47,7 +47,10 @@ class NodeBrowserViewModel: ObservableObject {
     let noInternetViewModel: NoInternetViewModel
     private let storageFullAlertViewModel: StorageFullAlertViewModel
 
-    private let nodeSource: NodeSource
+    @Published var nodeSource: NodeSource
+    
+    private let nodeSourceUpdatesListener: any CloudDriveNodeSourceUpdatesListening
+    
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onOpenUserProfile: () -> Void
     private let onUpdateSearchBarVisibility: (Bool) -> Void
@@ -67,6 +70,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodeSource: NodeSource,
         avatarViewModel: MyAvatarViewModel,
         noInternetViewModel: NoInternetViewModel,
+        nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
         // - context menu can be reconstructed
@@ -99,6 +103,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.onEditingChanged = onEditingChanged
         self.onBack = onBack
         self.updateTransferWidgetHandler = updateTransferWidgetHandler
+        self.nodeSourceUpdatesListener = nodeSourceUpdatesListener
         
         $viewMode
             .removeDuplicates()
@@ -116,6 +121,13 @@ class NodeBrowserViewModel: ObservableObject {
                 onUpdateSearchBarVisibility(viewMode != .mediaDiscovery)
             }
             .store(in: &subscriptions)
+        
+        $nodeSource.sink { [weak self] _ in
+            // When $nodeSource changes, SwiftUI will update the UI of the view (including the navigation bar items) accordingly,
+            // however since we rely on `titleBuilder` to display the title of the navigation bar, we need to refresh the title manually
+            self?.refreshTitle()
+        }
+        .store(in: &subscriptions)
         
         // Some observations regarding editing (selection) state
         // in the legacy CD, so default we should implement it the same way.
@@ -192,6 +204,7 @@ class NodeBrowserViewModel: ObservableObject {
     @MainActor
     func onLoadTask() {
         storageFullAlertViewModel.showStorageAlertIfNeeded()
+        startObservingNodeSourceChanges()
     }
     
     func onViewAppear() {
@@ -199,10 +212,18 @@ class NodeBrowserViewModel: ObservableObject {
         configureAdsVisibility()
         configureTransferWidgetVisibility()
         updateSortOrderIfNeeded()
+        nodeSourceUpdatesListener.startListening()
     }
     
     func onViewDisappear() {
         configureAdsVisibility()
+        nodeSourceUpdatesListener.stopListening()
+    }
+    
+    private func startObservingNodeSourceChanges() {
+        nodeSourceUpdatesListener.nodeSourcePublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$nodeSource)
     }
     
     private func encourageUpgradeIfNeeded() {
