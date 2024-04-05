@@ -11,7 +11,7 @@ struct QuickAccessWidgetView: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color("SecondaryBackground"))
+            .widgetBackground(Color("SecondaryBackground"))
             
             Divider()
                 .background(Color.black)
@@ -145,7 +145,7 @@ struct QuickAccessWidgetView: View {
                     .frame(width: geometry.size.width, height: geometry.size.height * 0.16)
                 viewBuilder()
             }
-            .background(Color(UIColor.systemBackground))
+            .widgetBackground(Color(UIColor.systemBackground))
             .widgetURL(URL(string: entry.link))
         }
     }
