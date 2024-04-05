@@ -378,8 +378,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForRemoveParticipantWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
+    cell.avatarImageView.tintColor = [UIColor mnz_errorRedForTraitCollection:(self.traitCollection)];
     cell.nameLabel.text = LocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
-    cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+    cell.nameLabel.textColor = [UIColor mnz_errorRedForTraitCollection:(self.traitCollection)];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
