@@ -756,19 +756,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     // we also listen to notifications when this changes
     var limitOfFreeTierUsers: Int = 100
     
-    var isFreeTierUser: Bool {
-        accountUseCase.currentAccountDetails?.proLevel == .free
-    }
-    
     var chatMonetisationEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
     }
     
     var participantsNumberLimitationsEnabled: Bool {
         guard chatMonetisationEnabled else { return false }
-        guard isFreeTierUser else { return false }
+        guard accountUseCase.isFreeTierUser else { return false }
         // -1 means no limit
-        return limitOfFreeTierUsers != -1
+        return limitOfFreeTierUsers != CallLimitsEntity.noLimits
     }
     
     var hasReachedInCallFreeUserParticipantLimit: Bool {

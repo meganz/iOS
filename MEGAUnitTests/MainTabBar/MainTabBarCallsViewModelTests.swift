@@ -415,6 +415,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
 }
 
 final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
+    
     var showOneUserWaitingRoomDialog_calledTimes = 0
     var showSeveralUsersWaitingRoomDialog_calledTimes = 0
     var dismissWaitingRoomDialog_calledTimes = 0
@@ -428,11 +429,11 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var showCallWillEndAlert_calledTimes = 0
     var showUpgradeToProDialog_calledTimes = 0
 
-    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
+    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, shouldBlockAddingUsersToCall: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
         showOneUserWaitingRoomDialog_calledTimes += 1
     }
-    
-    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void) {
+
+    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, shouldBlockAddingUsersToCall: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void) {
         showSeveralUsersWaitingRoomDialog_calledTimes += 1
     }
     

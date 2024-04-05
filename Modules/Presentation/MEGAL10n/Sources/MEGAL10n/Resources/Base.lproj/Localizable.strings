@@ -4020,6 +4020,8 @@
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Your call reached the 60-minute limit and has ended. Pro users have unlimited call duration and can invite up to 1000 participants.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgrade now";
+/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Hidden files and folders";
 /* Hidden files and folders onboarding content hide important title */

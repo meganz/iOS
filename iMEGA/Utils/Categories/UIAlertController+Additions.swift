@@ -29,15 +29,19 @@ extension UIAlertController {
         return alert
     }
     
-    class func createAlert(forceDarkMode: Bool,
-                           message: String,
-                           preferredActionTitle: String,
-                           secondaryActionTitle: String,
-                           showNotNowAction: Bool = true,
-                           preferredAction: @escaping () -> Void,
-                           secondaryAction: @escaping () -> Void) -> UIAlertController {
+    class func createAlert(
+        forceDarkMode: Bool,
+        title: String? = nil,
+        message: String,
+        preferredActionTitle: String,
+        secondaryActionTitle: String,
+        showNotNowAction: Bool = true,
+        preferredActionEnabled: Bool = true,
+        preferredAction: @escaping () -> Void,
+        secondaryAction: @escaping () -> Void
+    ) -> UIAlertController {
         let alert = UIAlertController(
-            title: nil,
+            title: title,
             message: message,
             preferredStyle: .alert
         )
@@ -48,6 +52,8 @@ extension UIAlertController {
         ) { _ in
             preferredAction()
         }
+        
+        preferredAction.isEnabled = preferredActionEnabled
         
         alert.addAction(preferredAction)
         
