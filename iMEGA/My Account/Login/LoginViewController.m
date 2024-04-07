@@ -108,7 +108,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager setupAppearance:self.traitCollection];
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         
         [self updateAppearance];
     }
@@ -262,6 +261,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (void)updateAppearance {
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+
     self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
     self.emailInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
