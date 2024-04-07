@@ -129,7 +129,10 @@ extension AlbumContentViewController: AlbumToolbarProvider {
               !selectedNodes.isEmpty else {
             return
         }
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: albumToolbarConfigurator?.albumType == .favourite ? .photosFavouriteAlbum : .photosAlbum, sender: button)
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes,
+                                                                 delegate: self,
+                                                                 displayMode: viewModel.isFavouriteAlbum ? .photosFavouriteAlbum : .photosAlbum,
+                                                                 sender: button)
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     
@@ -311,9 +314,27 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
             favouriteButtonPressed(sender)
         case .saveToPhotos:
             saveToPhotosButtonPressed(sender)
+        case .hide:
+            hide(nodes: nodes.toNodeEntities())
+        case .unhide:
+            unhide(nodes: nodes.toNodeEntities())
         default:
             break
         }
+    }
+    
+    private func hide(nodes: [NodeEntity]) {
+        HideFilesAndFoldersRouter(presenter: self)
+            .hideNodes(nodes)
+        endEditingMode()
+    }
+    
+    private func unhide(nodes: [NodeEntity]) {
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+        Task { @MainActor in
+            _ = await nodeActionUseCase.unhide(nodes: nodes)
+        }
+        endEditingMode()
     }
 }
 

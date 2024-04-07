@@ -765,24 +765,27 @@ final class NodeActionBuilder {
     }
     
     private func favouriteAlbumActions() -> [NodeAction] {
-        [.downloadAction(),
-         .shareLinkAction(nodeCount: selectedNodeCount),
-         .exportFileAction(nodeCount: selectedNodeCount),
-         .sendToChatAction(),
-         .saveToPhotosAction(),
-         .favouriteAction(isFavourite: isFavourite),
-         .copyAction(),
-         .moveToRubbishBinAction()]
+        var actions: [NodeAction] = [.favouriteAction(isFavourite: isFavourite),
+                                     .downloadAction(),
+                                     .shareLinkAction(nodeCount: selectedNodeCount),
+                                     .exportFileAction(nodeCount: selectedNodeCount),
+                                     .sendToChatAction()]
+        if let hiddenStateAction = hiddenStateAction() {
+            actions.append(hiddenStateAction)
+        }
+        return actions
     }
     
     private func normalAlbumActions() -> [NodeAction] {
-        [.downloadAction(),
-         .shareLinkAction(nodeCount: selectedNodeCount),
-         .exportFileAction(nodeCount: selectedNodeCount),
-         .sendToChatAction(),
-         .saveToPhotosAction(),
-         .moveAction(),
-         .copyAction()]
+        var actions: [NodeAction] = [.downloadAction(),
+                                     .shareLinkAction(nodeCount: selectedNodeCount),
+                                     .exportFileAction(nodeCount: selectedNodeCount),
+                                     .sendToChatAction()]
+        if let hiddenStateAction = hiddenStateAction() {
+            actions.append(hiddenStateAction)
+        }
+        actions.append(.moveToRubbishBinAction())
+        return actions
     }
     
     private func takedownNodeActions() -> [NodeAction] {
@@ -816,7 +819,8 @@ final class NodeActionBuilder {
             return false
         }
         
-        return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage, .recents, .textEditor]
+        return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage, .recents,
+                .textEditor, .photosAlbum, .photosFavouriteAlbum]
             .contains(displayMode)
     }
     
@@ -824,7 +828,8 @@ final class NodeActionBuilder {
         guard isHidden == true else {
             return false
         }
-        return [.cloudDrive, .previewDocument, .previewPdfPage, .textEditor]
+        return [.cloudDrive, .previewDocument, .previewPdfPage, .textEditor,
+                .photosAlbum, .photosFavouriteAlbum]
             .contains(displayMode)
     }
 }
