@@ -1270,17 +1270,40 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectMediaFiles_PhotosAlbum() {
+    func testMultiselectMediaFiles_photosAlbum_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setAreMediaFiles(true)
             .setDisplayMode(.photosAlbum)
             .multiselectBuild()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin]))
     }
     
-    func testMultiselectMediaFiles_PhotosFavouriteAlbum() {
+    func testMultiselectMediaFiles_hiddenForPhotosAlbum_shouldReturnCorrrectActions() {
+        let expectations: [(isHidden: Bool?, nodeAction: MegaNodeActionType?)] = [
+            (isHidden: true, nodeAction: .unhide),
+            (isHidden: false, nodeAction: .hide),
+            (isHidden: nil, nodeAction: nil)
+        ]
+        expectations.forEach { isHidden, hiddenNodeActionType in
+            actions = NodeActionBuilder()
+                .setNodeSelectionType(.files, selectedNodeCount: 4)
+                .setAreMediaFiles(true)
+                .setDisplayMode(.photosAlbum)
+                .setIsHidden(isHidden)
+                .multiselectBuild()
+            
+            let expectedActionTypes = [.download, .shareLink, .exportFile,
+                                       .sendToChat, hiddenNodeActionType, .moveToRubbishBin]
+                .compactMap { $0 }
+            
+            XCTAssertTrue(isEqual(nodeActionTypes: expectedActionTypes),
+                          "NodeActions invalid for isHidden: \(String(describing: isHidden))")
+        }
+    }
+    
+    func testMultiselectMediaFiles_photosFavouriteAlbum_shouldReturnCorrrectActions() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setIsFavourite(true)
@@ -1288,7 +1311,32 @@ class NodeActionBuilderTests: XCTestCase {
             .setDisplayMode(.photosFavouriteAlbum)
             .multiselectBuild()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .favourite, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.favourite, .download, .shareLink, .exportFile, .sendToChat]))
+    }
+    
+    func testMultiselectMediaFiles_hiddenForPhotosFavouriteAlbum_shouldReturnCorrrectActions() {
+        let expectations: [(isHidden: Bool?, nodeAction: MegaNodeActionType?)] = [
+            (isHidden: true, nodeAction: .unhide),
+            (isHidden: false, nodeAction: .hide),
+            (isHidden: nil, nodeAction: nil)
+        ]
+        
+        expectations.forEach { (isHidden, hiddenNodeActionType) in
+            actions = NodeActionBuilder()
+                .setNodeSelectionType(.files, selectedNodeCount: 4)
+                .setIsFavourite(true)
+                .setAreMediaFiles(true)
+                .setDisplayMode(.photosFavouriteAlbum)
+                .setIsHidden(isHidden)
+                .multiselectBuild()
+            
+            let expectedActionTypes = [.favourite, .download, .shareLink,
+                                       .exportFile, .sendToChat, hiddenNodeActionType]
+                .compactMap { $0 }
+            
+            XCTAssertTrue(isEqual(nodeActionTypes: expectedActionTypes),
+                          "NodeActions invalid for isHidden: \(String(describing: isHidden))")
+        }
     }
     
     func testMultiselectMediaFiles_PhotosTimeline() {
@@ -1328,29 +1376,6 @@ class NodeActionBuilderTests: XCTestCase {
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
-    }
-    
-    func testMultiselectFavoriteAlbum() {
-        actions = NodeActionBuilder()
-            .setNodeSelectionType(.files, selectedNodeCount: 3)
-            .setDisplayMode(.photosFavouriteAlbum)
-            .setIsFavourite(true)
-            .setIsBackupNode(false)
-            .setAreMediaFiles(true)
-            .multiselectBuild()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .favourite, .copy, .moveToRubbishBin]))
-    }
-    
-    func testMultiselectNormalAlbum() {        
-        actions = NodeActionBuilder()
-            .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setDisplayMode(.photosAlbum)
-            .setIsBackupNode(false)
-            .setAreMediaFiles(true)
-            .multiselectBuild()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy]))
     }
     
     func testAlbumLink() {

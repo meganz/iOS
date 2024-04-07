@@ -2,14 +2,19 @@ import MEGADesignToken
 import MEGAPresentation
 
 final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
-    let favouriteAction: ButtonAction
-    let removeToRubbishBinAction: ButtonAction
-    let exportAction: ButtonAction
-    let sendToChatAction: ButtonAction
-    let albumType: AlbumType
+    private let favouriteAction: ButtonAction
+    private let removeToRubbishBinAction: ButtonAction
+    private let exportAction: ButtonAction
+    private let sendToChatAction: ButtonAction
+    private let albumType: AlbumType
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var favouriteItemImage: UIImage {
         albumType == .favourite ? UIImage.removeFavourite : UIImage.favourite
+    }
+    
+    private var isHiddenNodesEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
     }
     
     lazy var favouriteItem = UIBarButtonItem(
@@ -44,13 +49,15 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         exportAction: @escaping ButtonAction,
         sendToChatAction: @escaping ButtonAction,
         moreAction: @escaping ButtonAction,
-        albumType: AlbumType
+        albumType: AlbumType,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.favouriteAction = favouriteAction
         self.removeToRubbishBinAction = removeToRubbishBinAction
         self.exportAction = exportAction
         self.sendToChatAction = sendToChatAction
         self.albumType = albumType
+        self.featureFlagProvider = featureFlagProvider
         
         super.init(
             downloadAction: downloadAction,
@@ -96,16 +103,16 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         if albumType == .favourite {
             barButtonItems.append(contentsOf: [
                 flexibleItem,
-                favouriteItem
+                isHiddenNodesEnabled ?  moreItem : favouriteItem
             ])
         } else if albumType == .user {
             barButtonItems.append(contentsOf: [
                 flexibleItem,
-                removeToRubbishBinItem
+                isHiddenNodesEnabled ? moreItem : removeToRubbishBinItem
             ])
         }
         
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
             for barButtonItem in barButtonItems {
                 barButtonItem.tintColor = TokenColors.Icon.primary
             }
