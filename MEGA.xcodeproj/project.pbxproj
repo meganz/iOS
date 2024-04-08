@@ -940,7 +940,6 @@
 		8348A8D82901902B00B66463 /* ActiveCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348A8D72901902B00B66463 /* ActiveCallViewModel.swift */; };
 		8348A8DA2901909400B66463 /* ChatRoomActiveCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348A8D92901909400B66463 /* ChatRoomActiveCallView.swift */; };
 		834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */; };
-		834D7E3B2B0CA607005D7FCB /* MockCallSessionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D7E3A2B0CA607005D7FCB /* MockCallSessionUseCase.swift */; };
 		834D865C2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */; };
 		834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */; };
 		834D867F29197E8800CECEC0 /* ChatRoomAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D867E29197E8800CECEC0 /* ChatRoomAvatarView.swift */; };
@@ -3683,7 +3682,6 @@
 		8348A8D72901902B00B66463 /* ActiveCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModel.swift; sourceTree = "<group>"; };
 		8348A8D92901909400B66463 /* ChatRoomActiveCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomActiveCallView.swift; sourceTree = "<group>"; };
 		834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveChatButtonView.swift; sourceTree = "<group>"; };
-		834D7E3A2B0CA607005D7FCB /* MockCallSessionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallSessionUseCase.swift; sourceTree = "<group>"; };
 		834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyToAllView.swift; sourceTree = "<group>"; };
 		834D867E29197E8800CECEC0 /* ChatRoomAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarView.swift; sourceTree = "<group>"; };
 		834D868029197EEB00CECEC0 /* ChatRoomAvatarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarViewModel.swift; sourceTree = "<group>"; };
@@ -12094,7 +12092,6 @@
 				BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */,
 				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
 				BF8895E72631213C002A18CA /* MockCallKitManager.swift */,
-				834D7E3A2B0CA607005D7FCB /* MockCallSessionUseCase.swift */,
 				BF8895F126312EA1002A18CA /* MockCallUseCase.swift */,
 				BF8895B52630F3A4002A18CA /* MockChatRoomUseCase.swift */,
 				8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */,
@@ -16110,7 +16107,6 @@
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,
 				BF8895E82631213C002A18CA /* MockCallKitManager.swift in Sources */,
-				834D7E3B2B0CA607005D7FCB /* MockCallSessionUseCase.swift in Sources */,
 				BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,

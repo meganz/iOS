@@ -11,7 +11,7 @@ public struct CallSessionUseCase<T: CallSessionRepositoryProtocol>: CallSessionU
         self.repository = repository
     }
     
-    mutating public func onCallSessionUpdate() -> AnyPublisher<MEGADomain.ChatSessionEntity, Never> {
+    mutating public func onCallSessionUpdate() -> AnyPublisher<ChatSessionEntity, Never> {
         repository.onCallSessionUpdate()
     }
 }
