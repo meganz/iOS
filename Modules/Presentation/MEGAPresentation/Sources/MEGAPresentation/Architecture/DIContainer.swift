@@ -1,6 +1,7 @@
 import MEGAAnalyticsDomain
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGARepo
 import MEGASDKRepo
 
 public enum DIContainer {

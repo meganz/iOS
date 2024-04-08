@@ -1,5 +1,5 @@
 import MEGADomain
-import MEGASDKRepo
+import MEGARepo
 
 extension FeatureFlagUseCase where T == FeatureFlagRepository {
     

@@ -16530,7 +16530,6 @@
 					ENABLE_CHAT,
 					MAIN_APP_TARGET,
 					"FLEXLAYOUT_SWIFT_PACKAGE=1",
-					"QA_CONFIG=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
