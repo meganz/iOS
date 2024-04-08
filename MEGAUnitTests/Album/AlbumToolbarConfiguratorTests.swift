@@ -5,18 +5,32 @@ import XCTest
 
 class AlbumToolbarConfiguratorTest: XCTestCase {
     func testToolbarItems_forGifAndRawAlbum_shouldReturnCorrectItems() {
-        [AlbumType.gif, .raw].forEach {
-            let sut = makeSUT(albumType: $0)
-            let buttonItems = sut.toolbarItems(forNodes: nil)
-            XCTAssertEqual(buttonItems, [
-                sut.downloadItem,
-                sut.flexibleItem,
-                sut.shareLinkItem,
-                sut.flexibleItem,
-                sut.exportItem,
-                sut.flexibleItem,
-                sut.sendToChatItem
-            ])
+        [AlbumType.gif, .raw].forEach { albumType in
+            [true, false].forEach { isHiddenNodesEnabled in
+                let sut = makeSUT(albumType: albumType,
+                                  featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: isHiddenNodesEnabled]))
+                
+                let buttonItems = sut.toolbarItems(forNodes: nil)
+                
+                var expectedButtonItems = [
+                    sut.downloadItem,
+                    sut.flexibleItem,
+                    sut.shareLinkItem,
+                    sut.flexibleItem,
+                    sut.exportItem,
+                    sut.flexibleItem,
+                    sut.sendToChatItem
+                ]
+                if isHiddenNodesEnabled {
+                    expectedButtonItems.append(contentsOf: [
+                        sut.flexibleItem,
+                        sut.moreItem
+                    ])
+                }
+                
+                XCTAssertEqual(buttonItems, expectedButtonItems,
+                               "Incorrect button items for hiddenNodesEnabled: \(isHiddenNodesEnabled) album type \(albumType)")
+            }
         }
     }
     

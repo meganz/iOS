@@ -100,27 +100,39 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             flexibleItem,
             sendToChatItem
         ]
-        if albumType == .favourite {
-            barButtonItems.append(contentsOf: [
-                flexibleItem,
-                isHiddenNodesEnabled ?  moreItem : favouriteItem
-            ])
-        } else if albumType == .user {
-            barButtonItems.append(contentsOf: [
-                flexibleItem,
-                isHiddenNodesEnabled ? moreItem : removeToRubbishBinItem
-            ])
-        }
+        barButtonItems.append(contentsOf: additionalBarButtonItems(for: albumType))
         
         if featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
             for barButtonItem in barButtonItems {
                 barButtonItem.tintColor = TokenColors.Icon.primary
             }
         }
-
+        
         return enable(
             nodes?.isNotEmpty == true,
             hasDisputedNodes: nodes?.contains(where: { $0.isTakenDown() }) == true,
             barButtonItems: barButtonItems)
+    }
+    
+    private func additionalBarButtonItems(for albumType: AlbumType) -> [UIBarButtonItem] {
+        switch albumType {
+        case .favourite:
+            return [
+                flexibleItem,
+                isHiddenNodesEnabled ?  moreItem : favouriteItem
+            ]
+        case .gif, .raw:
+            guard isHiddenNodesEnabled else { return [] }
+            
+            return [
+                flexibleItem,
+                moreItem
+            ]
+        case .user:
+            return [
+                flexibleItem,
+                isHiddenNodesEnabled ? moreItem : removeToRubbishBinItem
+            ]
+        }
     }
 }
