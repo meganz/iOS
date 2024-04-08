@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASDKRepo
 
@@ -99,13 +100,35 @@ extension AchievementsDetailsViewController {
 
         if daysUntilExpiration == 0 {
             bonusExpiresIn = Strings.Localizable.expired
-            subtitleLabel?.textColor = UIColor.mnz_red(for: self.traitCollection)
-            subtitleView?.layer.borderColor = UIColor.mnz_red(for: self.traitCollection).cgColor
+            subtitleLabel?.textColor = warningTextColor
+            subtitleView?.layer.borderColor = warningBorderColor.cgColor
         } else {
             bonusExpiresIn = Strings.Localizable.Account.Achievement.Complete.ValidBonusExpiry.Detail.subtitle(daysUntilExpiration)
-            subtitleView?.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.14).cgColor
+            subtitleView?.layer.borderColor = borderColor.cgColor
         }
 
         subtitleLabel?.text = bonusExpiresIn
+    }
+
+    // MARK: - Token Colors
+
+    var warningTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.warning : UIColor.mnz_red(for: self.traitCollection)
+    }
+
+    var warningBorderColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Support.warning : UIColor.mnz_red(for: self.traitCollection)
+    }
+
+    var borderColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Border.subtle : UIColor(red: 0, green: 0, blue: 0, alpha: 0.14)
+    }
+
+    @objc var defaultBackgroundColor: UIColor {
+        TokenColors.Background.page
+    }
+
+    @objc var separatorColor: UIColor {
+        TokenColors.Border.strong
     }
 }

@@ -74,12 +74,20 @@
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
-    
-    self.subtitleView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-    
-    self.howItWorksTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.howItWorksView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    if (UIColor.isDesignTokenEnabled) {
+        self.view.backgroundColor = [self defaultBackgroundColor];
+        self.subtitleView.backgroundColor = [self defaultBackgroundColor];
+        self.howItWorksTopSeparatorView.backgroundColor = [self separatorColor];
+        self.howItWorksView.backgroundColor = [self defaultBackgroundColor];
+    } else {
+        self.view.backgroundColor = UIColor.systemBackgroundColor;
+
+        self.subtitleView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+
+        self.howItWorksTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+        self.howItWorksView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    }
+
     [self.addPhoneNumberButton mnz_setupPrimary:self.traitCollection];
 }
 
