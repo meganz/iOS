@@ -120,7 +120,7 @@ extension SettingViewRouter {
                                  router: DeleteAccountRouter(presenter: viewController))
         }
         
-#if QA_CONFIG
+#if DEBUG || QA_CONFIG
         SettingSectionViewModel {
             SettingCellViewModel(image: UIImage.iconSettings,
                                  title: "QA Settings",

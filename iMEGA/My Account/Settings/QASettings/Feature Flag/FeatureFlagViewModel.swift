@@ -1,6 +1,6 @@
 import MEGADomain
 import MEGAPresentation
-import MEGASDKRepo
+import MEGARepo
 
 final class FeatureFlagViewModel: ObservableObject {
     private var useCase: any FeatureFlagUseCaseProtocol

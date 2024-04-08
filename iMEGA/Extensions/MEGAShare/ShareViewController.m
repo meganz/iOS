@@ -83,6 +83,7 @@
     [super viewDidLoad];
     
 #if defined(DEBUG) || defined(QA_CONFIG)
+    [self toggleFeatureFlags];
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setCatchException:false];
     [self configSharedSecureFingerprintFlag];

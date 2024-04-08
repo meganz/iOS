@@ -438,9 +438,7 @@ extension AppDelegate {
     }
     
     @objc func toggleFeatureFlags() {
-        #if QA_CONFIG
-            FeatureFlagProvider.disableFeatureFlags = false
-        #endif
+        FeatureFlagProvider.disableFeatureFlags = false
     }
     
     @MainActor
