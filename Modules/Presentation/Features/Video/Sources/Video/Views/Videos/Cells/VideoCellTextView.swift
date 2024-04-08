@@ -34,6 +34,15 @@ struct VideoCellTitleText: View {
     )
 }
 
+#Preview {
+    VideoCellTitleText(
+        videoConfig: .preview,
+        title: "This is a long long long text that needs second line probabaly line probabaly",
+        labelImage: MEGAAssetsPreviewImageProvider.image(named: "RedSmall")!
+    )
+    .preferredColorScheme(.dark)
+}
+
 /// A UIViewRepresentable to display the title of a video cell.
 /// Unfortunately, `SwiftUI.Text` does not render `NSAttachment`when using `AttributedString`. So this component is needed.
 /// This view is used to display the title of a video cell.that contains specific rule :
@@ -65,6 +74,7 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
         textView.textContainer.maximumNumberOfLines = 2
         textView.textContainer.lineBreakMode = .byTruncatingTail
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        textView.backgroundColor = backgroundColor
         removeContentInset(of: textView)
         return textView
     }
