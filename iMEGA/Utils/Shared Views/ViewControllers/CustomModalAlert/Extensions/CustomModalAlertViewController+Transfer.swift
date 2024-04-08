@@ -11,46 +11,75 @@ extension CustomModalAlertViewController {
     // MARK: - Public
     func configureForTransferQuotaError(for displayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-        guard let accountDetails = accountUseCase.currentAccountDetails else { return }
         image = transferDialogImage(for: displayMode)
         viewTitle = transferDialogTitle(for: displayMode)
         
-        if accountDetails.proLevel == .free {
-            let delayDuration = Int(accountUseCase.bandwidthOverquotaDelay)
-            detailAttributedTextWithLink = freeAccountAttributedMessage(
-                delayDuration: delayDuration,
-                displayMode: displayMode
-            )
-
-            countdownTimer = CountdownTimer()
-            countdownTimer.startCountdown(seconds: delayDuration) { [weak self] newDuration in
-                guard let self else { return }
-                updateDetailAttributedTextWithLink(freeAccountAttributedMessage(
-                    delayDuration: newDuration,
-                    displayMode: displayMode
-                ))
+        if accountUseCase.isLoggedIn() {
+            guard let accountDetails = accountUseCase.currentAccountDetails else {
+                MEGALogDebug("[Transfer Quota Dialog] No user account details")
+                return
+            }
+            if accountDetails.proLevel == .free {
+                setTransferQuotaDetailWithCountdown(duration: Int(accountUseCase.bandwidthOverquotaDelay),
+                                       displayMode: displayMode)
+                
+                firstButtonTitle = Strings.Localizable.TransferQuotaError.Button.upgrade
+                dismissButtonTitle = Strings.Localizable.TransferQuotaError.Button.wait
+                dismissButtonStyle = MEGACustomButtonStyle.basic.rawValue
+            } else {
+                detail = proAccountMessage(accountDetails: accountDetails, displayMode: displayMode)
+                firstButtonTitle = Strings.Localizable.TransferQuotaError.Button.buyNewPlan
+                dismissButtonTitle = Strings.Localizable.dismiss
+                dismissButtonStyle = MEGACustomButtonStyle.none.rawValue
             }
             
-            firstButtonTitle = Strings.Localizable.TransferQuotaError.Button.upgrade
+            firstCompletion = { [weak self] in
+                guard let self else { return }
+                dismiss(animated: true) {
+                    UpgradeAccountRouter().presentUpgradeTVC()
+                }
+            }
+        } else {
+            setTransferQuotaDetailWithCountdown(duration: Int(accountUseCase.bandwidthOverquotaDelay),
+                                   displayMode: displayMode)
+            
+            firstButtonTitle = Strings.Localizable.login
             dismissButtonTitle = Strings.Localizable.TransferQuotaError.Button.wait
             dismissButtonStyle = MEGACustomButtonStyle.basic.rawValue
-        } else {
-            detail = proAccountMessage(accountDetails: accountDetails, displayMode: displayMode)
-            firstButtonTitle = Strings.Localizable.TransferQuotaError.Button.buyNewPlan
-            dismissButtonTitle = Strings.Localizable.dismiss
-            dismissButtonStyle = MEGACustomButtonStyle.none.rawValue
-        }
-        
-        firstCompletion = { [weak self] in
-            guard let self else { return }
-            dismiss(animated: true) {
-                UpgradeAccountRouter().presentUpgradeTVC()
+            
+            firstCompletion = { [weak self] in
+                guard let self else { return }
+                dismiss(animated: true) {
+                    let loginNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginNavigationControllerID")
+                    loginNC.modalPresentationStyle = .fullScreen
+                    
+                    UIApplication.mnz_presentingViewController().present(loginNC, animated: true)
+                }
             }
         }
         
         viewModel = .init(tracker: DIContainer.tracker,
                           analyticsEvents: .init(dialogDisplayedEventIdentifier: DIContainer.transferOverQuotaDialogEvent,
                                                  fistButtonPressedEventIdentifier: DIContainer.transferOverQuotaUpgradeAccountButtonEvent))
+    }
+    
+    private func setTransferQuotaDetailWithCountdown(
+        duration: Int,
+        displayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode
+    ) {
+        detailAttributedTextWithLink = freeAccountAttributedMessage(
+            delayDuration: duration,
+            displayMode: displayMode
+        )
+
+        countdownTimer = CountdownTimer()
+        countdownTimer.startCountdown(seconds: duration) { [weak self] newDuration in
+            guard let self else { return }
+            updateDetailAttributedTextWithLink(freeAccountAttributedMessage(
+                delayDuration: newDuration,
+                displayMode: displayMode
+            ))
+        }
     }
     
     // MARK: - Private

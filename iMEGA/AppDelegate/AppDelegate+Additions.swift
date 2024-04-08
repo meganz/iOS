@@ -558,10 +558,27 @@ extension AppDelegate {
         default: return
         }
         
+        // Get latest account details if user is logged in and current account details is nil
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        if accountUseCase.isLoggedIn(), accountUseCase.currentAccountDetails == nil {
+            Task {
+                do {
+                    _ = try await accountUseCase.refreshCurrentAccountDetails()
+                    showTransferQuotaModalAlert(mode: alertDisplayMode)
+                } catch {
+                    MEGALogError("[Transfer Quota Dialog] No user account details with error \(error)")
+                }
+            }
+        } else {
+            showTransferQuotaModalAlert(mode: alertDisplayMode)
+        }
+    }
+    
+    private func showTransferQuotaModalAlert(mode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
         CustomModalAlertRouter(
             .transferDownloadQuotaError,
             presenter: UIApplication.mnz_presentingViewController(),
-            transferQuotaDisplayMode: alertDisplayMode
+            transferQuotaDisplayMode: mode
         ).start()
         
         NotificationCenter.default.post(name: .MEGATransferOverQuota, object: self)
