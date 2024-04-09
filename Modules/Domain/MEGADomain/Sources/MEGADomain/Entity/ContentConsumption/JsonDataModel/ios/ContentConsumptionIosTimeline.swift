@@ -2,9 +2,9 @@ import Foundation
 import MEGASwift
 
 public struct ContentConsumptionIosTimeline: Codable, Sendable, Equatable {
-    public let mediaType: MediaType
-    public let location: MediaLocation
-    public let usePreference: Bool
+    public var mediaType: MediaType
+    public var location: MediaLocation
+    public var usePreference: Bool
     
     public enum MediaType: String, Codable, Sendable {
         case allMedia
