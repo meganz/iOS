@@ -46,6 +46,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
             tracker: DIContainer.tracker,
+            monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                     placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                     affirmativeButtonTitle: Strings.Localizable.createFolderButton,
@@ -60,6 +61,23 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     }
     
     func start() {}
+    
+    private func makeMonitorAlbumsUseCase() -> MonitorAlbumsUseCase {
+        let photoLibraryRepository = PhotoLibraryRepository(
+            sdk: MEGASdk.shared,
+            cameraUploadNodeAccess: CameraUploadNodeAccess.shared
+        )
+        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
+                                                      searchRepository: FilesSearchRepository.newRepo)
+        
+        return MonitorAlbumsUseCase(
+            monitorPhotosUseCase: MonitorPhotosUseCase(
+                photosRepository: PhotosRepository.sharedRepo,
+                photoLibraryUseCase: photoLibraryUseCase),
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
+            userAlbumRepository: userAlbumRepository(),
+            photosRepository: PhotosRepository.sharedRepo)
+    }
     
     private func userAlbumRepository() -> any UserAlbumRepositoryProtocol {
         guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else {
