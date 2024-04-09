@@ -1,4 +1,5 @@
 import MEGAAnalyticsiOS
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -56,6 +57,10 @@ extension CustomModalAlertViewController {
                     UIApplication.mnz_presentingViewController().present(loginNC, animated: true)
                 }
             }
+        }
+        
+        if UIColor.isDesignTokenEnabled() {
+            dismissButtonStyle = MEGACustomButtonStyle.none.rawValue
         }
         
         viewModel = .init(tracker: DIContainer.tracker,
@@ -124,7 +129,9 @@ extension CustomModalAlertViewController {
             return attributedString
         }
         let urlRange = NSString(string: fullMessage).range(of: tappableString)
-        attributedString.addAttributes([.foregroundColor: MEGAAppColor.View.turquoise.uiColor, .link: urlLink], range: urlRange)
+        let foregroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.turquoise
+        attributedString.addAttributes([.foregroundColor: foregroundColor, .link: urlLink], range: urlRange)
+        
         return attributedString
     }
     

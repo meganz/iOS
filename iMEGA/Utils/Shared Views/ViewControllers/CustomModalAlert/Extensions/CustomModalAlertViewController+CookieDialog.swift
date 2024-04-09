@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -116,8 +117,10 @@ extension CustomModalAlertViewController {
         guard let urlLink = URL(string: cookiePolicyURLString) else {
             return detailTextAttributedString
         }
+        
+        let foregroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.turquoise
         detailTextAttributedString.addAttributes(
-            [.foregroundColor: MEGAAppColor.View.turquoise.uiColor, .link: urlLink],
+            [.foregroundColor: foregroundColor, .link: urlLink],
             range: cookiePolicyRange
         )
         

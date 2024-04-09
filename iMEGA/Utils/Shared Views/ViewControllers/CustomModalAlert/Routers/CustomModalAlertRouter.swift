@@ -55,12 +55,9 @@ import MEGAPresentation
     func build() -> UIViewController {
         let customModalAlertVC = CustomModalAlertViewController()
         switch mode {
-        case .storageQuotaError:
+        case .storageQuotaError, .storageUploadQuotaError:
             customModalAlertVC.configureForStorageQuotaError(false)
-            
-        case .storageUploadQuotaError:
-            customModalAlertVC.configureForStorageQuotaError(true)
-            
+
         case .transferDownloadQuotaError:
             guard let transferDisplayMode = transferQuotaDisplayMode else { return customModalAlertVC }
             customModalAlertVC.configureForTransferQuotaError(for: transferDisplayMode)
