@@ -21,9 +21,8 @@ final class PhotosViewModelTests: XCTestCase {
         sut = PhotosViewModel(
             photoUpdatePublisher: publisher,
             photoLibraryUseCase: usecase,
-            userAttributeUseCase: MockUserAttributeUseCase(
-                contentConsumption: ContentConsumptionEntity(
-                    ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .images, location: .cloudDrive, usePreference: true)))),
+            contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
+                timelineUserAttributeEntity: .init(mediaType: .images, location: .cloudDrive, usePreference: true)),
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(), 
             devicePermissionHandler: MockDevicePermissionHandler(),
@@ -110,7 +109,7 @@ final class PhotosViewModelTests: XCTestCase {
         sut = PhotosViewModel(
             photoUpdatePublisher: publisher,
             photoLibraryUseCase: usecase,
-            userAttributeUseCase: MockUserAttributeUseCase(),
+            contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(),
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(),
             devicePermissionHandler: MockDevicePermissionHandler(),
@@ -219,8 +218,10 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadAllPhotosWithSavedFilters_whenTheScreenAppear_shouldLoadTheExistingFilters() async {
-        let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
-        let sut = makePhotosViewModel(userAttributeUseCase: useCase)
+        let useCase = MockContentConsumptionUserAttributeUseCase(
+            timelineUserAttributeEntity: .init(mediaType: .videos, location: .cloudDrive, usePreference: true))
+            
+        let sut = makePhotosViewModel(contentConsumptionUserAttributeUseCase: useCase)
         
         sut.loadAllPhotosWithSavedFilters()
         await sut.contentConsumptionAttributeLoadingTask?.value
@@ -355,7 +356,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     private func makePhotosViewModel(
-        userAttributeUseCase: some UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
@@ -367,7 +368,7 @@ final class PhotosViewModelTests: XCTestCase {
                                               allPhotosFromCameraUpload: [])
         return PhotosViewModel(photoUpdatePublisher: publisher,
                                photoLibraryUseCase: usecase,
-                               userAttributeUseCase: userAttributeUseCase,
+                               contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                                preferenceUseCase: preferenceUseCase,
                                monitorCameraUploadUseCase: monitorCameraUploadUseCase,

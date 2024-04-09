@@ -5,28 +5,29 @@ import MEGASDKRepoMock
 import MEGATest
 import XCTest
 
-final class UserAttributeUseCaseAdditionsTests: XCTestCase {
+final class ContentConsumptionUserAttributeUseCaseAdditionsTests: XCTestCase {
 
-    func testTimelineFilter_whenWithoutBase64Encode_shouldReturnNil() async throws {
+    func testTimelineFilter_whenWithoutBase64Encode_shouldReturnDefaultValues() async throws {
         let json = """
             {"ios":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """.trim
         let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json))]])
-        let sut = UserAttributeUseCase(repo: repo)
+        let sut = ContentConsumptionUserAttributeUseCase(repo: repo)
         
-        let timelineFilter = try await sut.timelineFilter()
+        let timelineFilter = await sut.fetchTimelineFilter()
         
-        XCTAssertNil(timelineFilter)
+        XCTAssertEqual(timelineFilter, .init(filterType: .allMedia, filterLocation: .allLocations, usePreference: false))
     }
     
-    func testTimelineFilter_whenCorruptedJSONDataLikeiOSIsMispelled_shouldThrowError() async throws {
+    func testTimelineFilter_whenCorruptedJSONDataLikeiOSIsMispelled_shouldReturnDefaultValues() async throws {
         let json = """
             {"iOS":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """.trim
         let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json?.base64Encoded))]])
-        let sut = UserAttributeUseCase(repo: repo)
-        
-        await XCTAsyncAssertThrowsError(try await sut.timelineFilter())
+        let sut = ContentConsumptionUserAttributeUseCase(repo: repo)
+        let timelineFilter = await sut.fetchTimelineFilter()
+
+        XCTAssertEqual(timelineFilter, .init(filterType: .allMedia, filterLocation: .allLocations, usePreference: false))
     }
     
     func testTimelineFilter_whenAValidJsonDataWithCorrectiOSKey_shouldGiveTheRightObject() async throws {
@@ -34,13 +35,12 @@ final class UserAttributeUseCaseAdditionsTests: XCTestCase {
             {"ios":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """.trim
         let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json?.base64Encoded))]])
-        let sut = UserAttributeUseCase(repo: repo)
+        let sut = ContentConsumptionUserAttributeUseCase(repo: repo)
         
-        let timelineFilter = try await sut.timelineFilter()
+        let timelineFilter = await sut.fetchTimelineFilter()
         
-        XCTAssertEqual(try XCTUnwrap(timelineFilter?.filterType), .images)
-        XCTAssertEqual(try XCTUnwrap(timelineFilter?.filterLocation), .cameraUploads)
-        XCTAssertEqual(try XCTUnwrap(timelineFilter?.usePreference), false)
+        XCTAssertEqual(try XCTUnwrap(timelineFilter.filterType), .images)
+        XCTAssertEqual(try XCTUnwrap(timelineFilter.filterLocation), .cameraUploads)
+        XCTAssertEqual(try XCTUnwrap(timelineFilter.usePreference), false)
     }
-
 }

@@ -90,19 +90,21 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     }
     
     func testSaveFilters_onApplyingFilters_shouldChangeTypeAndLocation() async throws {
-        let useCase = MockUserAttributeUseCase()
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase)
+        let useCase = MockContentConsumptionUserAttributeUseCase()
+        let sut = photoLibraryFilterViewModel(contentConsumptionUserAttributeUseCase: useCase)
         sut.appliedMediaTypeFilter = .images
         sut.appliedFilterLocation = .cloudDrive
         
         await sut.saveFilters()
         
-        XCTAssertEqual(useCase.userAttributeContainer[.contentConsumptionPreferences]?[ContentConsumptionKeysEntity.key], "\(ContentConsumptionMediaType.images.rawValue)-\(ContentConsumptionMediaLocation.cloudDrive.rawValue)")
+        XCTAssertEqual(useCase.timelineUserAttributeEntity, .init(mediaType: .images, location: .cloudDrive, usePreference: false))
     }
     
     func testApplySavedFilters_whenFilterScreenLoaded_shouldApplyPreviousSavedFilters() async {
-        let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase)
+        let useCase = MockContentConsumptionUserAttributeUseCase(
+            timelineUserAttributeEntity: .init(mediaType: .videos, location: .cloudDrive, usePreference: true))
+
+        let sut = photoLibraryFilterViewModel(contentConsumptionUserAttributeUseCase: useCase)
         await sut.applySavedFilters()
         XCTAssertEqual(sut.selectedMediaType, .videos)
         XCTAssertEqual(sut.selectedLocation, .cloudDrive)
@@ -123,8 +125,8 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     
     private func photoLibraryFilterViewModel(
         contentMode: PhotoLibraryContentMode = .library,
-        userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase()
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase()
     ) -> PhotoLibraryFilterViewModel {
-        PhotoLibraryFilterViewModel(contentMode: contentMode, userAttributeUseCase: userAttributeUseCase)
+        PhotoLibraryFilterViewModel(contentMode: contentMode, contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
     }
 }

@@ -188,7 +188,7 @@ private struct PhotoLibraryFilterViewHeadline: View {
 
 #Preview {
     PhotoLibraryFilterView(
-        viewModel: PhotoLibraryFilterViewModel(userAttributeUseCase: Preview_UserAttributeUseCase()),
+        viewModel: PhotoLibraryFilterViewModel(contentConsumptionUserAttributeUseCase: Preview_ContentConsumptionUserAttributeUseCase()),
         isPresented: .constant(true),
         onFilterUpdate: nil
     )

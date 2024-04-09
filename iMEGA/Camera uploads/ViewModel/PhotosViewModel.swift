@@ -42,14 +42,14 @@ final class PhotosViewModel: NSObject {
     
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
-    private let userAttributeUseCase: any UserAttributeUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let cameraUploadsSettingsViewRouter: any Routing
     private var subscriptions = Set<AnyCancellable>()
     
     init(photoUpdatePublisher: PhotoUpdatePublisher,
          photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
-         userAttributeUseCase: some UserAttributeUseCaseProtocol,
+         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
          sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
          monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
@@ -58,7 +58,7 @@ final class PhotosViewModel: NSObject {
         
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
-        self.userAttributeUseCase = userAttributeUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.timelineViewModel = CameraUploadStatusBannerViewModel(
@@ -89,16 +89,11 @@ final class PhotosViewModel: NSObject {
     @objc func loadAllPhotosWithSavedFilters() {
         contentConsumptionAttributeLoadingTask = Task { [weak self] in
             guard let self else { return }
-            
-            do {
-                if let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
-                    filterType = filterType(from: timelineFilters.filterType)
-                    filterLocation = filterLocation(from: timelineFilters.filterLocation)
-                }
-            } catch {
-                MEGALogError("[Timeline Filter] when to load saved filters \(error.localizedDescription)")
+            let timelineFilters = await contentConsumptionUserAttributeUseCase.fetchTimelineFilter()
+            if timelineFilters.usePreference {
+                filterType = filterType(from: timelineFilters.filterType)
+                filterLocation = filterLocation(from: timelineFilters.filterLocation)
             }
-
             loadAllPhotos()
         }
     }

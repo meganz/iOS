@@ -172,7 +172,8 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
                 photoLibraryUseCase: photoLibraryUseCase,
-                userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo), 
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
                 sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                     preferenceUseCase: PreferenceUseCase.default,
                     sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),

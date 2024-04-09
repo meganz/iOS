@@ -76,6 +76,7 @@ public final class MockSdk: MEGASdk {
     public var authorizeNodeCalled = 0
     public var getRecentActionsAsyncCalled = false
     public var delegateQueueType: ListenerQueueType?
+    public var contentConsumptionPreferences: [String: String]
     
     public init(nodes: [MEGANode] = [],
                 rubbishNodes: [MEGANode] = [],
@@ -111,6 +112,7 @@ public final class MockSdk: MEGASdk {
                 upgradeSecurity: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
                 accountDetails: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
                 devices: [String: String] = [:],
+                contentConsumptionPreferences: [String: String] = [:],
                 file: String? = nil,
                 copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:],
                 abTestValues: [String: Int] = [:],
@@ -153,6 +155,7 @@ public final class MockSdk: MEGASdk {
         _upgradeSecurity = upgradeSecurity
         _accountDetails = accountDetails
         self.devices = devices
+        self.contentConsumptionPreferences = contentConsumptionPreferences
         self.file = file
         self.copiedNodeHandles = copiedNodeHandles
         self.abTestValues = abTestValues
@@ -510,15 +513,25 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func getUserAttributeType(_ type: MEGAUserAttribute, delegate: any MEGARequestDelegate) {
-        var mockRequest: MockRequest?
-        
-        switch type {
-        case .deviceNames:
-            mockRequest = MockRequest(handle: 1, stringDict: devices)
-        default: break
+        let mockRequest: MockRequest? = switch type {
+        case .deviceNames: .init(handle: 1, stringDict: devices)
+        case .contentConsumptionPreferences: .init(handle: 1,
+                                                   stringDict: contentConsumptionPreferences.mapValues { $0.base64Encoded ?? "Failed to encode to base64" })
+        default: nil
         }
         
         delegate.onRequestFinish?(self, request: mockRequest ?? MockRequest(handle: 1), error: MockError(errorType: megaSetError))
+    }
+    
+    public override func setUserAttributeType(_ type: MEGAUserAttribute, key: String, value: String, delegate: any MEGARequestDelegate) {
+        switch type {
+        case .contentConsumptionPreferences: 
+            contentConsumptionPreferences[key] = value
+        default:
+            return
+        }
+        
+        delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: MockError(errorType: megaSetError))
     }
     
     public override func deviceId() -> String? {
