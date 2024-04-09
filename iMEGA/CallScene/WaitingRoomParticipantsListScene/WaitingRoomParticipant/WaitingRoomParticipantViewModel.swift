@@ -10,19 +10,21 @@ final class WaitingRoomParticipantViewModel: ObservableObject, Identifiable {
     private var waitingRoomParticipantId: HandleEntity
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity
-    
+    let admitButtonDisabled: Bool
     let userAvatarViewModel: UserAvatarViewModel
-
+    
     @Published var name: String = ""
     @Published var showConfirmDenyAlert = false
-
-    init(chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         chatUseCase: any ChatUseCaseProtocol,
-         callUseCase: some CallUseCaseProtocol,
-         waitingRoomParticipantId: MEGAHandle,
-         chatRoom: ChatRoomEntity,
-         call: CallEntity
+    
+    init(
+        chatRoomUseCase: any ChatRoomUseCaseProtocol,
+        chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
+        chatUseCase: any ChatUseCaseProtocol,
+        callUseCase: some CallUseCaseProtocol,
+        waitingRoomParticipantId: MEGAHandle,
+        chatRoom: ChatRoomEntity,
+        call: CallEntity,
+        admitButtonDisabled: Bool
     ) {
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
@@ -31,6 +33,7 @@ final class WaitingRoomParticipantViewModel: ObservableObject, Identifiable {
         self.waitingRoomParticipantId = waitingRoomParticipantId
         self.chatRoom = chatRoom
         self.call = call
+        self.admitButtonDisabled = admitButtonDisabled
         
         self.userAvatarViewModel =  UserAvatarViewModel(
             userId: waitingRoomParticipantId,
@@ -45,7 +48,7 @@ final class WaitingRoomParticipantViewModel: ObservableObject, Identifiable {
             chatUseCase: chatUseCase,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
         )
-                
+        
         loadName()
     }
     

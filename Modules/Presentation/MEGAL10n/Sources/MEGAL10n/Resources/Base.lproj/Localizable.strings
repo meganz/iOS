@@ -4022,6 +4022,8 @@
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgrade now";
 /* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
 "calls.freePlanLimitWarning.waitingRoom.alert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Hidden files and folders";
 /* Hidden files and folders onboarding content hide important title */

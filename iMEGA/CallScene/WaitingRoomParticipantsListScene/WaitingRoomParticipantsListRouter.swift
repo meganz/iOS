@@ -1,13 +1,17 @@
 import ChatRepo
 import MEGADomain
+import MEGAPresentation
+import MEGASDKRepo
 import SwiftUI
 
 final class WaitingRoomParticipantsListRouter: WaitingRoomParticipantsListRouting {
     private(set) var presenter: UIViewController
     private let call: CallEntity
-
-    init(presenter: UIViewController,
-         call: CallEntity) {
+    
+    init(
+        presenter: UIViewController,
+        call: CallEntity
+    ) {
         self.presenter = presenter
         self.call = call
     }
@@ -17,7 +21,8 @@ final class WaitingRoomParticipantsListRouter: WaitingRoomParticipantsListRoutin
             router: self,
             call: call,
             callUseCase: CallUseCase(repository: CallRepository.newRepo), 
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
         
         let waitingRoomListView = WaitingRoomParticipantsListView(viewModel: viewModel)

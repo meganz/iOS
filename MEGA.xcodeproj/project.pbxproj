@@ -1417,6 +1417,8 @@
 		94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */; };
 		94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
+		94C288462BC3F7FA008BBA3C /* CallLimitations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C288452BC3F7FA008BBA3C /* CallLimitations.swift */; };
+		94C2884E2BC4253B008BBA3C /* CallLimitationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2884D2BC4253B008BBA3C /* CallLimitationsTests.swift */; };
 		94C7A3812A796E0C0090AEFC /* ItemListViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */; };
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
@@ -4136,6 +4138,8 @@
 		94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarUIHostingController.swift; sourceTree = "<group>"; };
 		94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStore.swift; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
+		94C288452BC3F7FA008BBA3C /* CallLimitations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLimitations.swift; sourceTree = "<group>"; };
+		94C2884D2BC4253B008BBA3C /* CallLimitationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLimitationsTests.swift; sourceTree = "<group>"; };
 		94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemListViewController+Additions.swift"; sourceTree = "<group>"; };
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
 		94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
@@ -8848,6 +8852,7 @@
 				9949C3642A72424C000C299B /* ChatRoomAvatar */,
 				BFFB13312908A54500A6B2CA /* Mocks */,
 				BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */,
+				94C2884D2BC4253B008BBA3C /* CallLimitationsTests.swift */,
 				6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */,
 				99778D972AE74EC700537EA9 /* ChatRoomAvatarViewModelTests.swift */,
 				8336E3F82906B449000F1E9F /* ChatRoomsListViewModelTests.swift */,
@@ -12001,6 +12006,7 @@
 				BFAD5148260C0BE700DFBD1B /* ParticpiantInfo */,
 				BF66DFED2613E7EE00066F35 /* QuickAction */,
 				BFC060F128A0C09900BA2AD7 /* Utils */,
+				94C288452BC3F7FA008BBA3C /* CallLimitations.swift */,
 				94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */,
 				94B0C6CB2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift */,
 				BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */,
@@ -14126,6 +14132,7 @@
 				8366518726497B3600BC02F0 /* CallCollectionView.swift in Sources */,
 				BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */,
 				8338E0F32666552900D1458B /* CallKitManager.swift in Sources */,
+				94C288462BC3F7FA008BBA3C /* CallLimitations.swift in Sources */,
 				8366518A26497B3600BC02F0 /* CallNotificationView.swift in Sources */,
 				8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */,
 				838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */,
@@ -15997,6 +16004,7 @@
 				0E43E1462B2F9F860079700A /* AVViewModelTests.swift in Sources */,
 				99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */,
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
+				94C2884E2BC4253B008BBA3C /* CallLimitationsTests.swift in Sources */,
 				992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				838116242BA32565001A2937 /* CallWillEndAlertViewModelTests.swift in Sources */,

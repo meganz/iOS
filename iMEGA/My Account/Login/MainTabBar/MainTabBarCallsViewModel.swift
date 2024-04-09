@@ -276,12 +276,13 @@ enum MainTabBarCallsAction: ActionType { }
     private func showWaitingRoomAlert(_ chatRoom: ChatRoomEntity, _ call: CallEntity) {
         
         // show appropriate copy and disable admit button when limit of free participants is each reached
-        let shouldBlockAddingUsersToCall = (
-            chatMonetisationFeatureEnabled && 
-            accountUseCase.isFreeTierUser &&
-            call.hasReachedMaxCallParticipants
+        let shouldBlockAddingUsersToCall = CallLimitations.callParticipantsLimitReached(
+            featureFlagEnabled: chatMonetisationFeatureEnabled,
+            isMyselfModerator: chatRoom.ownPrivilege == .moderator,
+            currentLimit: call.callLimits.maxUsers,
+            callParticipantCount: call.numberOfParticipants
         )
-        
+        MEGALogDebug("[CallLimitations] should block adding from waiting room \(shouldBlockAddingUsersToCall)")
         if currentWaitingRoomUserHandles.count == 1 {
             guard let userHandle = currentWaitingRoomUserHandles.first else { return }
             showOneUserWaitingRoomAlert(
