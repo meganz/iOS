@@ -180,7 +180,7 @@ class NodeBrowserViewModel: ObservableObject {
 
         refresh()
 
-        noInternetViewModel.networkConnectionStateChanged = { isConnectedToNetwork in
+        noInternetViewModel.networkConnectionStateChanged = { [weak self, weak searchResultsViewModel] isConnectedToNetwork in
             Task { [weak self, weak searchResultsViewModel] in
                 guard isConnectedToNetwork, let self, let searchResultsViewModel else { return }
 
