@@ -10,11 +10,11 @@ public actor MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProto
     public private(set) var messages = [Message]()
     
     private let videoPlaylistsResult: [SetEntity]
-    private let addVideosToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error>
+    private let addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error>
     
     public init(
         videoPlaylistsResult: [SetEntity],
-        addVideosToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error>
+        addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error>
     ) {
         self.videoPlaylistsResult = videoPlaylistsResult
         self.addVideosToVideoPlaylistResult = addVideosToVideoPlaylistResult
@@ -25,7 +25,7 @@ public actor MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProto
         return videoPlaylistsResult
     }
     
-    public func addVideosToVideoPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity {
+    public func addVideosToVideoPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistCreateSetElementsResultEntity {
         messages.append(.addVideosToVideoPlaylist(id: id, nodes: nodes))
         return try addVideosToVideoPlaylistResult.get()
     }

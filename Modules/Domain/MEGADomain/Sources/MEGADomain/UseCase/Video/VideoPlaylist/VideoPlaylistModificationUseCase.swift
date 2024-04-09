@@ -11,6 +11,11 @@ public struct VideoPlaylistModificationUseCase: VideoPlaylistModificationUseCase
     }
     
     public func addVideoToPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity {
-        try await userVideoPlaylistsRepository.addVideosToVideoPlaylist(by: id, nodes: nodes)
+        let createSetElementsResultEntity = try await userVideoPlaylistsRepository.addVideosToVideoPlaylist(by: id, nodes: nodes)
+        
+        return VideoPlaylistElementsResultEntity(
+            success: createSetElementsResultEntity.successCount,
+            failure: createSetElementsResultEntity.errorCount
+        )
     }
 }
