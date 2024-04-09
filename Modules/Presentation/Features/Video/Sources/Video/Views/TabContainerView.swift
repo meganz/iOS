@@ -37,7 +37,6 @@ struct TabContainerView: View {
                 .gesture(showTabView ? nil : DragGesture())
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .edgesIgnoringSafeArea(.all)
             .background(videoConfig.colorAssets.pageBackgroundColor)
         }
         .onChange(of: currentTab) { 
