@@ -45,13 +45,6 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
         guard let products = purchase.products, products.isNotEmpty else { return }
         
         if featureFlagProvider.isFeatureFlagEnabled(for: .onboardingProPlan) {
-            let viewModel = OnboardingUpgradeAccountViewModel(
-                purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-                tracker: DIContainer.tracker,
-                viewProPlanAction: {
-                    UpgradeAccountRouter(purchase: self.purchase).presentUpgradeTVC()
-                }
-            )
             let accountsConfig = AccountsConfig(onboardingViewAssets: AccountsConfig.OnboardingViewAssets(cloudImage: .cloud, pieChartImage: .pieChart, securityLockImage: .securityLock, onboardingHeaderImage: .onboardingHeader, 
                                                                                                           primaryTextColor: MEGAAppColor.Account.upgradeAccountPrimaryText.color,
                                                                                                           primaryGrayTextColor: MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color,
@@ -64,7 +57,16 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
                                                                                                           backgroundColor: MEGAAppColor.Account.planBodyBackground.color,
                                                                                                          currentPlanTagColor: MEGAAppColor.Account.currentPlan.color,
                                                                                                          recommededPlanTagColor: MEGAAppColor.Account.planRecommended.color))
-            OnboardingUpgradeAccountRouter(viewModel: viewModel, presenter: UIApplication.mnz_presentingViewController(), accountsConfig: accountsConfig).start()
+            
+            OnboardingUpgradeAccountRouter(
+                purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+                tracker: DIContainer.tracker,
+                presenter: UIApplication.mnz_presentingViewController(),
+                accountsConfig: accountsConfig,
+                viewProPlanAction: {
+                    UpgradeAccountRouter(purchase: self.purchase).presentUpgradeTVC()
+                }
+            ).start()
         } else {
             let upgradeAccountNC = UpgradeAccountFactory().createUpgradeAccountChooseAccountType()
             UIApplication.mnz_presentingViewController().present(upgradeAccountNC, animated: true, completion: nil)
