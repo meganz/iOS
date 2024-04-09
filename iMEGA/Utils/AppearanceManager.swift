@@ -45,7 +45,9 @@ class AppearanceManager: NSObject {
         
         UITextField.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UITextView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
+        if !UIColor.isDesignTokenEnabled() {
+            UITextView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
+        }
         
         UIProgressView.appearance().backgroundColor = UIColor.clear
         UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)

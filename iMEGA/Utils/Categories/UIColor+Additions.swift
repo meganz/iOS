@@ -474,16 +474,16 @@ extension UIColor {
     class func mnz_basicButton(
         for traitCollection: UITraitCollection
     ) -> UIColor {
+        guard !UIColor.isDesignTokenEnabled() else {
+            return TokenColors.Button.secondary
+        }
+        
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             return MEGAAppColor.White._FFFFFF.uiColor
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._535356.uiColor
-            } else {
-                return MEGAAppColor.Gray._363638.uiColor
-            }
+            return MEGAAppColor.Gray._363638.uiColor
             
         @unknown default:
             return MEGAAppColor.White._FFFFFF.uiColor
@@ -1075,6 +1075,10 @@ extension UIColor {
     class func mnz_red(
         for traitCollection: UITraitCollection
     ) -> UIColor {
+        guard !UIColor.isDesignTokenEnabled() else {
+            return TokenColors.Text.error
+        }
+        
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             return MEGAAppColor.Red._F30C14.uiColor
