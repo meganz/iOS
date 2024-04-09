@@ -1,3 +1,4 @@
+import MEGADomain
 @testable import MEGASDKRepo
 import MEGASDKRepoMock
 import XCTest
@@ -65,6 +66,34 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         XCTAssertEqual(videoPlaylists.count, sets.count, "should deliver more than one playlist")
     }
     
+    // MARK: - addVideosToVideoPlaylist
+    
+    func testAddVideosToVideoPlaylist_whenNodesIsEmpty_doesNotAddVideosToVideoPlaylists() async {
+        let (sut, _) = makeSUT()
+        
+        do {
+            _ = try await sut.addVideosToVideoPlaylist(by: 1, nodes: [])
+            XCTFail("Expect to catch, but not throwing instead")
+        } catch {
+            XCTAssertEqual(error as? VideoPlaylistErrorEntity, .invalidOperation)
+        }
+    }
+    
+    func testAddVideosToVideoPlaylist_whenNodesNotEmpty_createSetElement() async throws {
+        let (sut, sdk) = makeSUT()
+        let videosToAdd = [
+            anyNode(id: 1),
+            anyNode(id: 2)
+        ]
+        
+        _ = try await sut.addVideosToVideoPlaylist(by: 1, nodes: videosToAdd)
+        
+        XCTAssertEqual(sdk.messages, [
+            .createSetElement(1, nodeId: 1, name: ""),
+            .createSetElement(1, nodeId: 2, name: "")
+        ])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -80,4 +109,24 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, sdk)
     }
+    
+    private func anyNode(id: HandleEntity) -> NodeEntity {
+        NodeEntity(
+            changeTypes: .favourite,
+            nodeType: .file,
+            name: "",
+            handle: id,
+            isFile: true,
+            hasThumbnail: true,
+            hasPreview: true,
+            isFavourite: false,
+            label: .unknown,
+            publicHandle: id,
+            size: 2,
+            duration: 2,
+            mediaType: .video
+        )
+    }
+    
 }
+

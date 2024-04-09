@@ -56,7 +56,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testAddVideoToPlaylist_whenCalledWithSuccessResult_addVideosToPlaylist() async throws {
-        let expectedResultEntity = VideoPlaylistElementsResultEntity(success: 1, failure: 0)
+        let expectedResultEntity: VideoPlaylistCreateSetElementsResultEntity = [ 1 : .success(anySetEntity(handle: 1)) ]
         let (sut, _) = makeSUT(
             addVideosToVideoPlaylistResult: .success(expectedResultEntity)
         )
@@ -64,14 +64,14 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         
         let actualResultEntity = try await sut.addVideoToPlaylist(by: 1, nodes: nodesToAdd)
         
-        XCTAssertEqual(expectedResultEntity, actualResultEntity)
+        XCTAssertEqual(VideoPlaylistElementsResultEntity(success: 1, failure: 0), actualResultEntity)
     }
     
     // MARK: - Helpers
     
     private func makeSUT(
         videoPlaylistsResult: [SetEntity] = [],
-        addVideosToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error> = .failure(GenericErrorEntity())
+        addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity())
     ) -> (
         sut: VideoPlaylistModificationUseCase,
         userVideoPlaylistsRepository: MockUserVideoPlaylistsRepository
@@ -82,6 +82,11 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         )
         let sut = VideoPlaylistModificationUseCase(userVideoPlaylistsRepository: userVideoPlaylistsRepository)
         return (sut, userVideoPlaylistsRepository)
+    }
+    
+    private func anySetEntity(handle: HandleEntity) -> SetEntity {
+        SetEntity(handle: handle, setType: .playlist)
+        
     }
     
     private func anyNode(id: HandleEntity) -> NodeEntity {
