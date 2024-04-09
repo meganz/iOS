@@ -112,13 +112,16 @@ final class MeetingFloatingPanelHeaderConfigFactoryTests: XCTestCase {
         
     }
     
-    func testActionButtonHidden_WaitingRoomTab() {
+    func test_ActionButton_Hidden_WaitingRoomTab_NoParticipants() {
         let harness = Harness(tab: .waitingRoom)
         let resultNoParticipants = harness.result(participantsCount: 0)
-        XCTAssertEqual(resultNoParticipants.actionButtonHidden, false)
-        
-        let resultSomeParticipants = harness.result(participantsCount: 1)
-        XCTAssertEqual(resultSomeParticipants.actionButtonHidden, true)
+        XCTAssertTrue(resultNoParticipants.actionButtonHidden)
+    }
+    
+    func test_ActionButton_NotHidden_WaitingRoomTab_SomeParticipants() {
+        let harness = Harness(tab: .waitingRoom)
+        let resultNoParticipants = harness.result(participantsCount: 1)
+        XCTAssertFalse(resultNoParticipants.actionButtonHidden)
     }
     
     func testCallAllButtonHidden_InCallTab() {

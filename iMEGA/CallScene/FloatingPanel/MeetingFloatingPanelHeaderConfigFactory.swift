@@ -127,7 +127,7 @@ struct MeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderConfig
             // which is "Call All" OR Call all icon, but not both
             !shouldHideCallAllIcon
         case .waitingRoom:
-            participantsCount > 0
+            participantsCount == 0
         }
     }
     
