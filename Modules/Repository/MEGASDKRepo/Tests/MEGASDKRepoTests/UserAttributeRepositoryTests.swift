@@ -9,7 +9,7 @@ final class UserAttributeRepositoryTests: XCTestCase {
     func testMergeUserAttribute_forContentConsumptionPreferences_withNoOrigianlStoredValue_shouldSaveCorrectly() async throws {
         let json = ""
         let targetJson = """
-        {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":true}}}
+        {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":true},"sensitives":{"showHiddenNodes":false}},"sensitives":{"onboarded":false}}
         """.trim
 
         let key = ContentConsumptionKeysEntity.key
@@ -17,8 +17,9 @@ final class UserAttributeRepositoryTests: XCTestCase {
             contentConsumptionPreferences: [key: try XCTUnwrap(json)])
         let objectToSave = ContentConsumptionEntity(
             ios: .init(
-                timeline: .init(mediaType: .videos, location: .cloudDrive, usePreference: true))
-        )
+                timeline: .init(mediaType: .videos, location: .cloudDrive, usePreference: true),
+                sensitives: .init(showHiddenNodes: false)),
+            sensitives: .init(onboarded: false))
         
         try await sut.mergeUserAttribute(
             .contentConsumptionPreferences,
@@ -33,15 +34,16 @@ final class UserAttributeRepositoryTests: XCTestCase {
                 {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":true}}}
             """
         let targetJson = """
-            {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":false}}}
+            {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":false},"sensitives":{"showHiddenNodes":false}},"sensitives":{"onboarded":false}}
             """.trim
         let key = ContentConsumptionKeysEntity.key
         let (sut, sdk) = sut(
             contentConsumptionPreferences: [key: try XCTUnwrap(json)])
         let objectToSave = ContentConsumptionEntity(
             ios: .init(
-                timeline: .init(mediaType: .videos, location: .cloudDrive, usePreference: false))
-        )
+                timeline: .init(mediaType: .videos, location: .cloudDrive, usePreference: false),
+                sensitives: .init(showHiddenNodes: false)),
+            sensitives: .init(onboarded: false))
         
         try await sut.mergeUserAttribute(
             .contentConsumptionPreferences,
@@ -56,15 +58,16 @@ final class UserAttributeRepositoryTests: XCTestCase {
                 {"ios":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
             """.trim
         let targetJson = """
-                {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":false}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
+                {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":false},"sensitives":{"showHiddenNodes":false}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"sensitives":{"onboarded":false}}
             """.trim
         let key = ContentConsumptionKeysEntity.key
         let (sut, sdk) = sut(
             contentConsumptionPreferences: [key: try XCTUnwrap(json)])
         let objectToSave = ContentConsumptionEntity(
             ios: .init(
-                timeline: .init(mediaType: .videos, location: .cloudDrive, usePreference: false))
-            )
+                timeline: .init(mediaType: .videos, location: .cloudDrive, usePreference: false),
+                sensitives: .init(showHiddenNodes: false)),
+            sensitives: .init(onboarded: false))
         
         try await sut.mergeUserAttribute(
             .contentConsumptionPreferences,
@@ -79,15 +82,16 @@ final class UserAttributeRepositoryTests: XCTestCase {
                 {"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
             """.trim
         let targetJson = """
-                {"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":false}}}
+                {"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":false},"sensitives":{"showHiddenNodes":false}},"sensitives":{"onboarded":false}}
             """.trim
             let key = ContentConsumptionKeysEntity.key
             let (sut, sdk) = sut(
                 contentConsumptionPreferences: [key: try XCTUnwrap(json)])
             let objectToSave = ContentConsumptionEntity(
                 ios: .init(
-                    timeline: .init(mediaType: .videos, location: .cloudDrive, usePreference: false))
-                )
+                    timeline: .init(mediaType: .videos, location: .cloudDrive, usePreference: false),
+                    sensitives: .init(showHiddenNodes: false)),
+                sensitives: .init(onboarded: false))
             
             try await sut.mergeUserAttribute(
                 .contentConsumptionPreferences,
