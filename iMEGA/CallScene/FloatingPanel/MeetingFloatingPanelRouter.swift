@@ -201,9 +201,14 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         permissionRouter.alertAudioPermission(incomingCall: false)
     }
     
-    func showWaitingRoomParticipantsList(for call: CallEntity) {
+    func showWaitingRoomParticipantsList(
+        for call: CallEntity
+    ) {
         guard let baseViewController else { return }
-        WaitingRoomParticipantsListRouter(presenter: baseViewController, call: call).start()
+        WaitingRoomParticipantsListRouter(
+            presenter: baseViewController,
+            call: call
+        ).start()
     }
     
     // MARK: - Private methods.

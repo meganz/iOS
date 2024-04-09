@@ -13,6 +13,7 @@ struct WaitingRoomParticipantsListView: View {
                 headerView
                 searchBarView()
                     .padding(.horizontal, 30)
+                bannerView
                 ScrollView {
                     ForEach(viewModel.displayWaitingRoomParticipants) { participantViewModel in
                         WaitingRoomParticipantView(viewModel: participantViewModel)
@@ -50,11 +51,21 @@ struct WaitingRoomParticipantsListView: View {
         .padding(16)
     }
     
+    @ViewBuilder
+    var bannerView: some View {
+        if let config = viewModel.bannerConfig {
+            BannerView(config: config)
+                .font(.footnote)
+        }
+    }
+    
     var admitAllView: some View {
         VStack {
             Button(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll) {
                 viewModel.admitAllTapped()
             }
+            .opacity(viewModel.admitAllButtonDisabled ? 0.5 : 1.0)
+            .disabled(viewModel.admitAllButtonDisabled)
             .font(.body.bold())
             .foregroundColor(MEGAAppColor.Green._00C29A.color)
             .frame(width: 288, height: 50, alignment: .center)

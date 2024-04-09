@@ -45,6 +45,8 @@ struct WaitingRoomParticipantView: View {
                     } label: {
                         Image(.waitingRoomAdmit)
                     }
+                    .opacity(viewModel.admitButtonDisabled ? 0.5 : 1.0)
+                    .disabled(viewModel.admitButtonDisabled)
                 }
                 .padding(.trailing, Constants.viewPadding)
                 Spacer()

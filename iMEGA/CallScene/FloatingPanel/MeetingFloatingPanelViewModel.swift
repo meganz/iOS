@@ -130,9 +130,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             isWaitingRoomListVisible = panelIsLongForm && selectedParticipantsListTab == .waitingRoom
         }
     }
-    private var callUpdateSubscription: AnyCancellable?
     
     var invokeCommand: ((Command) -> Void)?
+    private var limitsChangedSubscription: AnyCancellable?
+    private var limitations: CallLimitations?
     
     init(router: some MeetingFloatingPanelRouting,
          containerViewModel: MeetingContainerViewModel,
@@ -173,24 +174,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.featureFlagProvider = featureFlags
         self.presentUpgradeFlow = presentUpgradeFlow
         
-        callUpdateSubscription = callUseCase.onCallUpdate()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] call in
-                self?.onCallUpdate(call)
-            }
-    }
-    
-    private func onCallUpdate(_ call: CallEntity) {
-        switch call.changeType {
-        case .callLimitsUpdated:
-            let previousLimit = limitOfFreeTierUsers
-            limitOfFreeTierUsers = call.callLimits.maxUsers
-            if previousLimit != limitOfFreeTierUsers {
-                reloadParticipantsIfNeeded()
-            }
-        default:
-            break
-        }
     }
     
     deinit {
@@ -289,9 +272,23 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func onViewReady() {
-        if let call {
-            limitOfFreeTierUsers = call.callLimits.maxUsers
-        }
+        // this is some sane default as we do not have access to the actual default value
+        // call entity is optional so we can't easily create this limitations object in the initializer
+        limitations = .init(
+            initialLimit: call?.callLimits.maxUsers ?? 100,
+            chatRoom: chatRoom,
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        limitsChangedSubscription = limitations?
+            .limitsChangedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.reloadParticipantsIfNeeded()
+            }
+        
         audioSessionUseCase.routeChanged { [weak self] routeChangedReason, previousAudioPort in
             guard let self else { return }
             if previousAudioPort == nil,
@@ -348,10 +345,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             mode: .inviteParticipants,
             excludedParticipantIds: Set(excludedHandles),
             isHost: isMyselfAModerator,
-            participantLimitAchieved: { [weak self] selectedCount in
-                guard let self else { return false }
-                guard participantsNumberLimitationsEnabled else { return false}
-                return selectedCount + callParticipants.count >= limitOfFreeTierUsers
+            participantLimitAchieved: {[weak self] selectedCount in
+                guard let self, let limitations else { return false }
+                return limitations.limitChecker(
+                    callParticipantCount: callParticipants.count,
+                    selectedCount: selectedCount
+                )
             }
         )
                        
@@ -751,32 +750,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         invokeCommand?(.reloadViewData(participantsListView: participantListViewData(for: tab)))
     }
     
-    // the limit 100 means 99 users can join plus the organiser
-    // this will be fetched from SDK to get the current value
-    // we also listen to notifications when this changes
-    var limitOfFreeTierUsers: Int = 100
-    
-    var chatMonetisationEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
-    }
-    
-    var participantsNumberLimitationsEnabled: Bool {
-        guard chatMonetisationEnabled else { return false }
-        guard accountUseCase.isFreeTierUser else { return false }
-        // -1 means no limit
-        return limitOfFreeTierUsers != CallLimitsEntity.noLimits
-    }
-    
-    var hasReachedInCallFreeUserParticipantLimit: Bool {
-        guard participantsNumberLimitationsEnabled else { return false }
-        return callParticipants.count >= limitOfFreeTierUsers
-    }
-    
-    var hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit: Bool {
-        guard participantsNumberLimitationsEnabled else { return false }
-        return callParticipants.count + callParticipantsInWaitingRoom.count >= limitOfFreeTierUsers
-    }
-    
     // configuration that specifies if there should be a waitingRoom tab present:
     // * chat room configured with wait room
     // * user is moderator
@@ -790,6 +763,19 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         
         return .init(
             allowIndividualWaitlistAdmittance: !hasReachedInCallFreeUserParticipantLimit
+        )
+    }
+    
+    var hasReachedInCallFreeUserParticipantLimit: Bool {
+        guard let limitations else { return false }
+        return limitations.hasReachedInCallFreeUserParticipantLimit(callParticipantCount: callParticipants.count)
+    }
+    
+    var hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit: Bool {
+        guard let limitations else { return false }
+        return limitations.hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit(
+            callParticipantCount: callParticipants.count,
+            callParticipantsInWaitingRoom: callParticipantsInWaitingRoom.count
         )
     }
     
@@ -865,7 +851,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .waitingRoom:
             callParticipantsInWaitingRoom
         }
-        
+    
         return ParticipantsListView(
             headerConfig: headerConfigFactory.headerConfig(
                 tab: tab,

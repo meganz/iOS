@@ -1404,7 +1404,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         showMuteError_calledTimes += 1
     }
     
-    func showUpgradeFlow(_ accountDetails: MEGADomain.AccountDetailsEntity) {
+    func showUpgradeFlow(_ accountDetails: AccountDetailsEntity) {
         
     }
 }

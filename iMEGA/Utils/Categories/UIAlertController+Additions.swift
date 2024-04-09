@@ -57,7 +57,11 @@ extension UIAlertController {
         
         alert.addAction(preferredAction)
         
-        alert.preferredAction = preferredAction
+        // this is done to make the disabled primary action button look somewhat different
+        // than enabled one
+        if preferredAction.isEnabled {
+            alert.preferredAction = preferredAction
+        }
         
         alert.addAction(
             UIAlertAction(

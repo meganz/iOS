@@ -165,11 +165,3 @@ extension CallEntity: Identifiable {
 extension CallLimitsEntity {
     public static let noLimits = -1
 }
-
-extension CallEntity {
-    public var hasReachedMaxCallParticipants: Bool {
-        // -1 means unlimited number of call participants
-        guard callLimits.maxUsers != CallLimitsEntity.noLimits else { return false }
-        return numberOfParticipants >= callLimits.maxUsers
-    }
-}

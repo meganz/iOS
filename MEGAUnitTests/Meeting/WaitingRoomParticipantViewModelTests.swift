@@ -13,7 +13,9 @@ final class WaitingRoomParticipantViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             waitingRoomParticipantId: 100,
             chatRoom: ChatRoomEntity(),
-            call: CallEntity())
+            call: CallEntity(),
+            admitButtonDisabled: false
+        )
         
         viewModel.admitTapped()
         XCTAssertTrue(callUseCase.allowUsersJoinCall_CalledTimes == 1)
@@ -28,7 +30,9 @@ final class WaitingRoomParticipantViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             waitingRoomParticipantId: 100,
             chatRoom: ChatRoomEntity(),
-            call: CallEntity())
+            call: CallEntity(),
+            admitButtonDisabled: false
+        )
         
         viewModel.denyTapped()
         XCTAssertTrue(viewModel.showConfirmDenyAlert == true)
@@ -43,7 +47,9 @@ final class WaitingRoomParticipantViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             waitingRoomParticipantId: 100,
             chatRoom: ChatRoomEntity(),
-            call: CallEntity())
+            call: CallEntity(),
+            admitButtonDisabled: false
+        )
         
         viewModel.confirmDenyTapped()
         XCTAssertTrue(callUseCase.kickUsersFromCall_CalledTimes == 1)
