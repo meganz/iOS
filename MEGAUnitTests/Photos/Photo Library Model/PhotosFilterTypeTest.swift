@@ -5,9 +5,9 @@ import XCTest
 final class PhotosFilterTypeTest: XCTestCase {
 
     func testToContentConsumptionMediaType_shouldMatchRightValues() {
-        XCTAssertEqual(ContentConsumptionMediaType.images, PhotosFilterType.images.toContentConsumptionMediaType())
-        XCTAssertEqual(ContentConsumptionMediaType.videos, PhotosFilterType.videos.toContentConsumptionMediaType())
-        XCTAssertEqual(ContentConsumptionMediaType.allMedia, PhotosFilterType.allMedia.toContentConsumptionMediaType())
+        XCTAssertEqual(TimelineUserAttributeEntity.MediaType.images, PhotosFilterType.images.toContentConsumptionMediaType())
+        XCTAssertEqual(TimelineUserAttributeEntity.MediaType.videos, PhotosFilterType.videos.toContentConsumptionMediaType())
+        XCTAssertEqual(TimelineUserAttributeEntity.MediaType.allMedia, PhotosFilterType.allMedia.toContentConsumptionMediaType())
     }
     
     func testToFilterType_shouldMatchRightValues() {

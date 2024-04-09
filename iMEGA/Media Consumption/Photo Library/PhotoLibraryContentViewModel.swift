@@ -18,7 +18,7 @@ import SwiftUI
     
     lazy var filterViewModel = PhotoLibraryFilterViewModel(
         contentMode: contentMode,
-        userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+        contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
     )
     
     // MARK: - Init

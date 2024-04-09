@@ -8,8 +8,9 @@ public struct UserAttributeRepository: UserAttributeRepositoryProtocol {
     }
 
     private let sdk: MEGASdk
+    private let jsonDecoder = JSONDecoder()
 
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
 
@@ -29,7 +30,27 @@ public struct UserAttributeRepository: UserAttributeRepositoryProtocol {
             })
         }
     }
-
+    
+    public func mergeUserAttribute(_ attribute: UserAttributeEntity, key: String, object: Encodable) async throws {
+        let supportedModelDictionary = try object.convertToDictionary()
+        let currentAppsPreference = try await userAttribute(for: attribute)
+        
+        let contentToSave: [String: Any] = if let existingEncodedString = currentAppsPreference?[key],
+            existingEncodedString.isNotEmpty,
+            let jsonData = existingEncodedString.base64DecodedData,
+            let allPlatformDictionary = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? [String: Any] {
+                // Merge results from existing preference with new preferences. 
+                // So as to not overwrite other platform/unsupported properties
+                allPlatformDictionary.merging(supportedModelDictionary, uniquingKeysWith: { $1 })
+            } else {
+                supportedModelDictionary
+            }
+        
+        guard let contentToSaveJson = try? JSONSerialization.data(withJSONObject: contentToSave) else { throw JSONCodingErrorEntity.encoding }
+        
+        try await updateUserAttribute(attribute, key: key, value: String(decoding: contentToSaveJson, as: UTF8.self))
+    }
+    
     public func updateUserAttribute(_ attribute: UserAttributeEntity, key: String, value: String) async throws {
         return try await withCheckedThrowingContinuation { continuation in
             guard Task.isCancelled == false else {
@@ -58,5 +79,18 @@ public struct UserAttributeRepository: UserAttributeRepositoryProtocol {
                 }
             })
         })
+    }
+    
+    public func userAttribute<T: Decodable>(for attribute: UserAttributeEntity, key: String) async throws -> T {
+        let appsPreference = try await userAttribute(for: attribute)
+        guard
+            let encodedString = appsPreference?[key],
+            encodedString.isNotEmpty,
+            let jsonData = encodedString.base64DecodedData,
+            let decodedObject = try? jsonDecoder.decode(T.self, from: jsonData)
+        else {
+            throw JSONCodingErrorEntity.decoding
+        }
+        return decodedObject
     }
 }

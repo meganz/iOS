@@ -35,14 +35,6 @@ public final class MockUserAttributeUseCase: UserAttributeUseCaseProtocol {
         userAttributeContainer[attribute]
     }
     
-    public func saveTimelineFilter(key: String, timeline: ContentConsumptionTimeline) async throws {
-        userAttributeContainer[.contentConsumptionPreferences] = [key: "\(timeline.mediaType.rawValue)-\(timeline.location.rawValue)"]
-    }
-    
-    public func retrieveContentConsumptionAttribute() async throws -> ContentConsumptionEntity? {
-        contentConsumption
-    }
-    
     public func saveScheduledMeetingOnBoardingRecord(key: String, record: ScheduledMeetingOnboardingRecord) async throws {
         userAttributeContainer[.appsPreferences] = [key: "\(record.currentTip)"]
     }

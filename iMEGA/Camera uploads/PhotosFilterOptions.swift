@@ -19,7 +19,7 @@ enum PhotosFilterType: CaseIterable {
 }
 
 extension PhotosFilterType {
-    func toContentConsumptionMediaType() -> ContentConsumptionMediaType {
+    func toContentConsumptionMediaType() -> TimelineUserAttributeEntity.MediaType {
         switch self {
         case .allMedia: return .allMedia
         case .images: return .images
@@ -27,7 +27,7 @@ extension PhotosFilterType {
         }
     }
     
-    static func toFilterType(from contentConsumptionMediaType: ContentConsumptionMediaType) -> PhotosFilterType {
+    static func toFilterType(from contentConsumptionMediaType: TimelineUserAttributeEntity.MediaType) -> PhotosFilterType {
         switch contentConsumptionMediaType {
         case .allMedia: return .allMedia
         case .images: return .images
@@ -53,7 +53,7 @@ enum PhotosFilterLocation: CaseIterable {
 }
 
 extension PhotosFilterLocation {
-    func toContentConsumptionMediaLocation() -> ContentConsumptionMediaLocation {
+    func toContentConsumptionMediaLocation() -> TimelineUserAttributeEntity.MediaLocation {
         switch self {
         case .allLocations: return .allLocations
         case .cloudDrive: return .cloudDrive
@@ -61,7 +61,7 @@ extension PhotosFilterLocation {
         }
     }
     
-    static func toFilterLocation(from contentConsumptionMediaLocation: ContentConsumptionMediaLocation) -> PhotosFilterLocation {
+    static func toFilterLocation(from contentConsumptionMediaLocation: TimelineUserAttributeEntity.MediaLocation) -> PhotosFilterLocation {
         switch contentConsumptionMediaLocation {
         case .allLocations: return .allLocations
         case .cloudDrive: return .cloudDrive

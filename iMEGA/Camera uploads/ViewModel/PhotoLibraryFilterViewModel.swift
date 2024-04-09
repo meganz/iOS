@@ -12,16 +12,16 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     @Published var appliedSavePreferences = false
    
     private let contentMode: PhotoLibraryContentMode
-    private let userAttributeUseCase: any UserAttributeUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     
     var isRememberPreferenceActive: Bool {
         contentMode != .album
     }
     
     init(contentMode: PhotoLibraryContentMode = .library,
-         userAttributeUseCase: any UserAttributeUseCaseProtocol) {
+         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol) {
         self.contentMode = contentMode
-        self.userAttributeUseCase = userAttributeUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
     }
     
     var shouldShowMediaTypeFilter: Bool {
@@ -44,14 +44,12 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     func applySavedFilters() async {
         guard isRememberPreferenceActive else { return }
         
-        do {
-            if let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
-                selectedMediaType = timelineFilters.filterType
-                selectedLocation = timelineFilters.filterLocation
-                selectedSavePreferences = true
-            }
-        } catch {
-            MEGALogError("[Timeline Filter] when to load saved filters \(error.localizedDescription)")
+        let timelineFilters = await contentConsumptionUserAttributeUseCase.fetchTimelineFilter()
+        
+        if timelineFilters.usePreference {
+            selectedMediaType = timelineFilters.filterType
+            selectedLocation = timelineFilters.filterLocation
+            selectedSavePreferences = true
         }
         
         applyFilters()
@@ -128,16 +126,13 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
         guard isRememberPreferenceActive else { return }
         
         do {
-            let timeline = ContentConsumptionTimeline(
+            let timeline = TimelineUserAttributeEntity(
                 mediaType: appliedMediaTypeFilter.toContentConsumptionMediaType(),
                 location: appliedFilterLocation.toContentConsumptionMediaLocation(),
-                usePreference: appliedSavePreferences
-            )
+                usePreference: appliedSavePreferences)
             
-            try await userAttributeUseCase.saveTimelineFilter(
-                key: ContentConsumptionKeysEntity.key,
-                timeline: timeline
-            )
+            try await contentConsumptionUserAttributeUseCase.save(timeline: timeline)
+            
         } catch let error as JSONCodingErrorEntity {
             MEGALogError("[Timeline] Unable to save timeline filter. \(error.localizedDescription)")
         } catch {
