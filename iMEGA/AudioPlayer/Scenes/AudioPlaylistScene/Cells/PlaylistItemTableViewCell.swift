@@ -1,5 +1,8 @@
+import MEGADesignToken
 import MEGADomain
 import MEGASDKRepo
+import MEGASwiftUI
+import SwiftUI
 import UIKit
 
 final class PlaylistItemTableViewCell: UITableViewCell {
@@ -7,9 +10,9 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: MEGALabel!
     @IBOutlet weak var artistLabel: UILabel!
-
+    
     var item: AudioPlayerItem?
- 
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -18,8 +21,16 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     
     // MARK: - Private functions
     private func style(with trait: UITraitCollection) {
-        titleLabel.textColor = UIColor.label
-        artistLabel.textColor = UIColor.mnz_subtitles(for: trait)
+        if UIColor.isDesignTokenEnabled() {
+            titleLabel.textColor = TokenColors.Text.primary
+            artistLabel.textColor = TokenColors.Text.secondary
+            
+            contentView.backgroundColor = TokenColors.Background.page
+            contentView.superview?.backgroundColor = TokenColors.Background.page
+        } else {
+            titleLabel.textColor = UIColor.label
+            artistLabel.textColor = UIColor.mnz_subtitles(for: trait)
+        }
     }
     
     private func configureThumbnail(_ item: AudioPlayerItem?) {
