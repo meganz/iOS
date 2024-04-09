@@ -24,7 +24,9 @@ extension SharedItemsViewController {
                                                                                 fileCacheRepository: FileCacheRepository.newRepo,
                                                                                 nodeRepository: NodeRepository.newRepo,
                                                                                 chatNodeRepository: ChatNodeRepository.newRepo,
-                                                                                downloadChatRepository: DownloadChatRepository.newRepo))
+                                                                                downloadChatRepository: DownloadChatRepository.newRepo),
+                             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+        )
     }
     
     @objc func createNodeInfoViewModel(withNode node: MEGANode,

@@ -30,7 +30,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 viewController: vc,
                 isNodeFromFolderLink: configEntity.isFolderLink,
                 messageId: configEntity.messageId,
-                chatId: configEntity.chatId
+                chatId: configEntity.chatId,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: vc)
             )
         case .fileLink:
             fileLinkActionViewControllerDelegate = FileLinkActionViewControllerDelegate(

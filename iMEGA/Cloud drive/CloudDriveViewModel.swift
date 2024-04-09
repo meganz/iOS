@@ -7,6 +7,7 @@ enum CloudDriveAction: ActionType {
     case updateEditModeActive(Bool)
     case updateSortType(SortOrderType)
     case updateParentNode(MEGANode)
+    case moveToRubbishBin([MEGANode])
 }
 
 @objc final class CloudDriveViewModel: NSObject, ViewModelType {
@@ -33,16 +34,20 @@ enum CloudDriveAction: ActionType {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     private var parentNode: MEGANode?
+    private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     
     init(parentNode: MEGANode?,
          shareUseCase: some ShareUseCaseProtocol,
          sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
+    ) {
         self.parentNode = parentNode
         self.shareUseCase = shareUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.featureFlagProvider = featureFlagProvider
+        self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
     }
     
@@ -103,6 +108,8 @@ enum CloudDriveAction: ActionType {
         case .updateParentNode(let newParentNode):
             parentNode = newParentNode
             invokeCommand?(.reloadNavigationBarItems)
+        case .moveToRubbishBin(let nodes):
+            moveToRubbishBinViewModel.moveToRubbishBin(nodes: nodes.toNodeEntities())
         }
     }
     

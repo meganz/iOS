@@ -1518,6 +1518,8 @@
 		A5A744AE2B9FF59100605E4C /* AccountRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */; };
 		A5BED9782B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5BED9792B9AF72500C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
+		A5C0BD452BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */; };
+		A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */; };
 		A5EFB0532B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
@@ -4230,6 +4232,8 @@
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
 		A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountRepository+Additions.swift"; sourceTree = "<group>"; };
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
+		A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
+		A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
 		A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatBaseRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.m; sourceTree = SOURCE_ROOT; };
@@ -6031,6 +6035,7 @@
 			children = (
 				0E43E13B2B2F95740079700A /* PhotoBrowser */,
 				243ABB4A2AB0421200FF4A56 /* Transfers */,
+				A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -10228,6 +10233,14 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		A5C0BD432BC3E676006CF7D7 /* MoveToRubbishBin */ = {
+			isa = PBXGroup;
+			children = (
+				A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */,
+			);
+			path = MoveToRubbishBin;
+			sourceTree = "<group>";
+		};
 		A802B1F41FAB274200AC8BB0 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -11387,6 +11400,7 @@
 			children = (
 				839A1C9927CCF4B9004A387B /* ExportFileScene */,
 				E84CDAFE1A7292AA003F4C77 /* Links */,
+				A5C0BD432BC3E676006CF7D7 /* MoveToRubbishBin */,
 				83293C582806CB6000369A86 /* NameCollisionScene */,
 				77D9A5692023538600B48470 /* Photo browser */,
 				BFAB110C23CEA5C300BCE72D /* PhotosAppBrowser */,
@@ -14884,6 +14898,7 @@
 				BF22BFB1268AC51400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
 				B69AF65628A1E48B0022B094 /* MOUser+CoreDataProperties.m in Sources */,
 				417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */,
+				A5C0BD452BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift in Sources */,
 				B5FC637F29E9444B00EE4C8E /* MyAccountHallPlanView.swift in Sources */,
 				94EFD0B02B0E66C2009247FF /* MyAccountHallRouter.swift in Sources */,
 				94282D4028A3B29200F794BA /* MyAccountHallTableViewCell+Additions.swift in Sources */,
@@ -16105,6 +16120,7 @@
 				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
+				A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */,
 				949CC15D2B0FD5230047D581 /* MockMyAccountHallRouter.swift in Sources */,
 				C4D6750F2BB2CAF1000A1F79 /* MockNavigationController.swift in Sources */,
 				94712EFA2A9C9F5700B5F2C9 /* MockNodeDetailsUseCase.swift in Sources */,

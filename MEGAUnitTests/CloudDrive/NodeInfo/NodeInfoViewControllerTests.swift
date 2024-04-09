@@ -13,7 +13,10 @@ final class NodeInfoViewControllerTests: XCTestCase {
         }
         let anyMegaNode = MockNode(handle: 1)
         let anyViewController = UIViewController()
-        let nodeActionDelegate = NodeActionViewControllerGenericDelegate(viewController: anyViewController)
+        let nodeActionDelegate = NodeActionViewControllerGenericDelegate(
+            viewController: anyViewController,
+            moveToRubbishBinViewModel: MockMoveToRubbishBinViewModel()
+        )
         
         sut.display(anyMegaNode, withDelegate: nodeActionDelegate)
         

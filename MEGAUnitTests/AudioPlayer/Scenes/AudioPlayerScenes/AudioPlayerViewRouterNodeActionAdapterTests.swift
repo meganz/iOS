@@ -43,7 +43,10 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
     private func makeSUT(configEntity: AudioPlayerConfigEntity, file: StaticString = #filePath, line: UInt = #line) -> AudioPlayerViewRouterNodeActionAdapter {
         let sut = AudioPlayerViewRouterNodeActionAdapter(
             configEntity: configEntity,
-            nodeActionViewControllerDelegate: MockNodeActionViewControllerGenericDelegate(viewController: UIViewController()),
+            nodeActionViewControllerDelegate: MockNodeActionViewControllerGenericDelegate(
+                viewController: UIViewController(),
+                moveToRubbishBinViewModel: MockMoveToRubbishBinViewModel()
+            ),
             fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate(link: "any-link", viewController: UIViewController())
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
@@ -53,7 +56,10 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
     private func mockNodeActionViewController() -> NodeActionViewController {
         NodeActionViewController(
             node: MockNode(handle: 1),
-            delegate: MockNodeActionViewControllerGenericDelegate(viewController: UIViewController()),
+            delegate: MockNodeActionViewControllerGenericDelegate(
+                viewController: UIViewController(),
+                moveToRubbishBinViewModel: MockMoveToRubbishBinViewModel()
+            ),
             displayMode: .albumLink,
             isInVersionsView: false,
             isBackupNode: false,

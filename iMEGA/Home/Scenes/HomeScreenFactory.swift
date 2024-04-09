@@ -209,6 +209,7 @@ final class HomeScreenFactory: NSObject {
             navigationController: navController,
             nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
                 viewController: navController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController),
                 nodeActionListener: nodeActionListener(tracker)
             ),
             backupsUseCase: makeBackupsUseCase(),
@@ -235,6 +236,7 @@ final class HomeScreenFactory: NSObject {
             navigationController: navigationController,
             nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
                 viewController: navigationController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
                 nodeActionListener: nodeActionListener(tracker)
             ),
             backupsUseCase: makeBackupsUseCase(),

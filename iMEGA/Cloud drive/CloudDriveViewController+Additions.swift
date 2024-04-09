@@ -59,7 +59,9 @@ extension CloudDriveViewController {
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: preferenceUseCase,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
-            preferenceUseCase: preferenceUseCase)
+            preferenceUseCase: preferenceUseCase,
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+        )
     }
     
     private func updatedParentNodeIfBelongs(_ nodeList: MEGANodeList) -> MEGANode? {

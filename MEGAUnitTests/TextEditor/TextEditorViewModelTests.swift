@@ -1072,7 +1072,9 @@ final class TextEditorViewModelTests: XCTestCase {
         NodeActionViewController(
             node: MockNode(handle: 1),
             delegate: MockNodeActionViewControllerGenericDelegate(
-                viewController: UIViewController()),
+                viewController: UIViewController(),
+                moveToRubbishBinViewModel: MockMoveToRubbishBinViewModel()
+            ),
             displayMode: .albumLink,
             isInVersionsView: false,
             isBackupNode: false,

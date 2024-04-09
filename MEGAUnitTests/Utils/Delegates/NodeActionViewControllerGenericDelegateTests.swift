@@ -21,8 +21,14 @@ final class NodeActionViewControllerGenericDelegateTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(viewController: UIViewController) -> NodeActionViewControllerGenericDelegate {
-        let sut = NodeActionViewControllerGenericDelegate(viewController: viewController)
+    private func makeSUT(
+        viewController: UIViewController,
+        moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel()
+    ) -> NodeActionViewControllerGenericDelegate {
+        let sut = NodeActionViewControllerGenericDelegate(
+            viewController: viewController,
+            moveToRubbishBinViewModel: moveToRubbishBinViewModel
+        )
         return sut
     }
     

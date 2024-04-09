@@ -41,7 +41,10 @@ final class NodeOpener {
         
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
-        let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
+        let delegate = NodeActionViewControllerGenericDelegate(
+            viewController: navigationController,
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+        )
         let nodeActionVC = NodeActionViewController(node: node,
                                                     delegate: delegate,
                                                     displayMode: .cloudDrive,
