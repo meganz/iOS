@@ -1,25 +1,46 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
 import UIKit
 
-public struct OnboardingUpgradeAccountRouter {
+public final class OnboardingUpgradeAccountRouter {
+    private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
-    private weak var viewModel: OnboardingUpgradeAccountViewModel?
+    private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     private let accountsConfig: AccountsConfig
+    private let viewProPlanAction: () -> Void
     
-    public init(viewModel: OnboardingUpgradeAccountViewModel, presenter: UIViewController?, accountsConfig: AccountsConfig) {
+    public init(
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        tracker: some AnalyticsTracking,
+        presenter: UIViewController?,
+        accountsConfig: AccountsConfig,
+        viewProPlanAction: @escaping () -> Void
+    ) {
         self.presenter = presenter
-        self.viewModel = viewModel
+        self.purchaseUseCase = purchaseUseCase
+        self.tracker = tracker
         self.accountsConfig = accountsConfig
+        self.viewProPlanAction = viewProPlanAction
     }
     
     public func build() -> UIViewController {
-        guard let viewModel else {
-            fatalError("[Onboarding] No viewModel OnboardingUpgradeAccountViewModel")
-        }
-        let onboardingView = OnboardingWithViewProPlansView(viewModel: viewModel, accountsConfig: accountsConfig)
-        return UIHostingController(rootView: onboardingView)
+        let viewModel = OnboardingUpgradeAccountViewModel(
+            purchaseUseCase: purchaseUseCase,
+            tracker: tracker,
+            viewProPlanAction: viewProPlanAction
+        )
+        
+        let onboardingWithViewProPlansView = OnboardingWithViewProPlansView(
+            viewModel: viewModel,
+            accountsConfig: accountsConfig
+        )
+
+        let hostingController = UIHostingController(rootView: onboardingWithViewProPlansView)
+        baseViewController = hostingController
+        return hostingController
     }
     
     public func start() {
