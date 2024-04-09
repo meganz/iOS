@@ -60,8 +60,8 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
     /// To be called when the client no longer needs to listening to NodeSource updates
     /// Note: After stopping, self is still receiving node updates from sdk and if there is any NodeSource update that needs
     /// to be emitted, the most-updated update will be deferred until the next call of `startListening()`
-    /// This mechanism is needed because when CD screen is not not visible it should not update it's component until it appears again
-    /// (e.g: When a CD screen is not top of navigation stacks, it shouldn't update the navigation bar items, because navigation bar is common used
+    /// This mechanism is needed because when CD screen is not not visible it should not update it's UI until it appears again
+    /// (e.g: When a CD screen is not top of navigation stack, it shouldn't update the navigation bar items, because navigation bar is common used
     /// by all VC in the stacks, only the top VC in the stack should update the navigation bar)
     func stopListening() {
         runningState.mutate { $0 = .inactive(pendingNodesUpdate: nil) }
