@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -147,30 +148,34 @@ final class AudioPlaylistViewController: UIViewController {
     
     // MARK: - UI configurations
     private func updateAppearance() {
-        view.backgroundColor = .mnz_backgroundElevated(traitCollection)
+        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
         
         closeButton.setTitle(Strings.Localizable.close, for: .normal)
         
         removeButton.setTitle(Strings.Localizable.remove, for: .normal)
         
-        toolbarView.layer.addBorder(edge: .top, color: UIColor.mnz_gray3C3C43().withAlphaComponent(0.29), thickness: 0.5)
+        toolbarView.layer.addBorder(
+            edge: .top,
+            color: UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_gray3C3C43().withAlphaComponent(0.29),
+            thickness: 0.5
+        )
         
         style()
     }
     
     private func style() {
         closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
-        closeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
+        closeButton.setTitleColor(UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
         removeButton.titleLabel?.adjustsFontForContentSizeCategory = true
-        removeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
+        removeButton.setTitleColor(UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
         
-        toolbarView.backgroundColor = .clear
+        toolbarView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : UIColor.clear
         
         toolbarBlurView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
         
-        titleLabel.textColor = UIColor.label
+        titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.separatorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
