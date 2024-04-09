@@ -270,17 +270,7 @@ extension NodeActions {
                 NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
             },
             moveToRubbishBin: { nodes in
-                checkIfCameraUploadPromptIsNeeded(selectedNodes: nodes, sdk: sdk) { shouldPrompt in
-                    DispatchQueue.main.async {
-                        if shouldPrompt {
-                            promptCameraUploadFolderDeletion(parent: navigationController) {
-                                moveSelectedNodesToRubbishBin(selectedNodes: nodes, sdk: sdk)
-                            }
-                        } else {
-                            moveSelectedNodesToRubbishBin(selectedNodes: nodes, sdk: sdk)
-                        }
-                    }
-                }
+                moveNodesToRubbishBin(nodes, presenter: navigationController)
             },
             restoreFromRubbishBin: { nodes in
                 let megaNodes = megaNodes(from: nodes, using: sdk)
@@ -299,6 +289,20 @@ extension NodeActions {
                 )
             }
         )
+    }
+    
+    static func moveNodesToRubbishBin(_ nodes: [NodeEntity], presenter: UIViewController) {
+        checkIfCameraUploadPromptIsNeeded(selectedNodes: nodes, sdk: MEGASdk.shared) { shouldPrompt in
+            DispatchQueue.main.async {
+                if shouldPrompt {
+                    promptCameraUploadFolderDeletion(parent: presenter) {
+                        moveSelectedNodesToRubbishBin(selectedNodes: nodes, sdk: MEGASdk.shared)
+                    }
+                } else {
+                    moveSelectedNodesToRubbishBin(selectedNodes: nodes, sdk: MEGASdk.shared)
+                }
+            }
+        }
     }
     
     private static func confirmDeleteActionFiles(
@@ -379,15 +383,13 @@ extension NodeActions {
         sdk: MEGASdk,
         completion: @escaping (Bool) -> Void
     ) {
-        guard CameraUploadManager.isCameraUploadEnabled else {
-            completion(false)
-            return
-        }
-        
         let mageNodes = megaNodes(from: selectedNodes, using: sdk)
         
         CameraUploadNodeAccess.shared.loadNode { node, _ in
-            guard let cuNode = node else { return }
+            guard let cuNode = node else {
+                completion(false)
+                return
+            }
             
             let isSelected = mageNodes.contains {
                 cuNode.isDescendant(of: $0, in: sdk)

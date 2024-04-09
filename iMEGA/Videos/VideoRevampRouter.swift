@@ -59,7 +59,10 @@ struct VideoRevampRouter: VideoRevampRouting {
         
         let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUseCase.isBackupNode(videoNodeEntity)
-        let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
+        let delegate = NodeActionViewControllerGenericDelegate(
+            viewController: navigationController,
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+        )
         let viewController = NodeActionViewController(
             node: videoMegaNode,
             delegate: delegate,

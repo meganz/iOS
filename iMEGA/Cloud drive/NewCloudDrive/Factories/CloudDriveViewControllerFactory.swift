@@ -120,7 +120,10 @@ struct CloudDriveViewControllerFactory {
         )
         
         let nodeActionViewControllerDelegate = CloudDriveNodeActionViewControllerDelegate(
-            nodeActionGenericDelegate: NodeActionViewControllerGenericDelegate(viewController: navController),
+            nodeActionGenericDelegate: NodeActionViewControllerGenericDelegate(
+                viewController: navController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController)
+            ),
             nodeActions: nodeActions
         )
         let router = HomeSearchResultRouter(

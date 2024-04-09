@@ -46,7 +46,10 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         
-        let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
+        let delegate = NodeActionViewControllerGenericDelegate(
+            viewController: navigationController,
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+        )
         let vc = NodeActionViewController(node: node,
                                           delegate: delegate,
                                           displayMode: .cloudDrive,

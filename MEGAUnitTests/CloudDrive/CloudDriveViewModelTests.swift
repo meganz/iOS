@@ -232,12 +232,28 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertTrue(isHidden)
     }
     
+    func testAction_moveNodeToRubbishBin_handledByMoveToRubbishBinViewModel() throws {
+        // given
+        let node = MockNode(handle: 1)
+        let action: CloudDriveViewModel.Action = .moveToRubbishBin([node])
+        let moveToRubbishBinViewModel = MockMoveToRubbishBinViewModel()
+        let sut = makeSUT(moveToRubbishBinViewModel: moveToRubbishBinViewModel)
+        
+        // when
+        sut.dispatch(action)
+        
+        // then
+        let updatedNode = try XCTUnwrap(moveToRubbishBinViewModel.calledNodes.first)
+        XCTAssertEqual(updatedNode.handle, 1)
+    }
+    
     func makeSUT(
         parentNode: MEGANode = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
         file: StaticString = #file,
         line: UInt = #line
     ) -> CloudDriveViewModel {
@@ -246,7 +262,9 @@ class CloudDriveViewModelTests: XCTestCase {
             shareUseCase: shareUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             preferenceUseCase: preferenceUseCase,
-            featureFlagProvider: featureFlagProvider)
+            featureFlagProvider: featureFlagProvider,
+            moveToRubbishBinViewModel: moveToRubbishBinViewModel
+        )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

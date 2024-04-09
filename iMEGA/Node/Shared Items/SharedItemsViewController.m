@@ -1210,7 +1210,7 @@
         }
 
         case MegaNodeActionTypeMoveToRubbishBin:
-            [node mnz_askToMoveToTheRubbishBinInViewController:self];
+            [[self viewModel] moveNodeToRubbishBin:node];
             break;
             
         case MegaNodeActionTypeSendToChat:

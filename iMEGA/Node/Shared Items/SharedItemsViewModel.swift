@@ -9,13 +9,17 @@ import UIKit
     private let shareUseCase: any ShareUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
+    private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     
     init(shareUseCase: any ShareUseCaseProtocol,
          mediaUseCase: any MediaUseCaseProtocol,
-         saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol) {
+         saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol,
+         moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
+    ) {
         self.shareUseCase = shareUseCase
         self.mediaUseCase = mediaUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
+        self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
@@ -48,5 +52,9 @@ import UIKit
                 SVProgressHUD.show(UIImage.saveToPhotos, status: error.localizedDescription)
             }
         }
+    }
+    
+    @objc func moveNodeToRubbishBin(_ node: MEGANode) {
+        moveToRubbishBinViewModel.moveToRubbishBin(nodes: [node].toNodeEntities())
     }
 }

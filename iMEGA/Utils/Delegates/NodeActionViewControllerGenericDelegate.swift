@@ -8,6 +8,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     private(set) var isNodeFromFolderLink: Bool
     private(set) var messageId: HandleEntity?
     private(set) var chatId: HandleEntity?
+    private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     private let nodeActionListener: (MegaNodeActionType?) -> Void
     
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(
@@ -25,12 +26,14 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         isNodeFromFolderLink: Bool = false,
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
+        moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol,
         nodeActionListener: @escaping (MegaNodeActionType?) -> Void = { _ in }
     ) {
         self.viewController = viewController
         self.isNodeFromFolderLink = isNodeFromFolderLink
         self.messageId = messageId
         self.chatId = chatId
+        self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         self.nodeActionListener = nodeActionListener
     }
     
@@ -92,7 +95,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             router.start()
             
         case .moveToRubbishBin:
-            node.mnz_moveToTheRubbishBin { }
+            moveToRubbishBinViewModel.moveToRubbishBin(nodes: [node].toNodeEntities())
             
         case .remove:
             remove(node, in: viewController)
