@@ -1,8 +1,10 @@
+import AsyncAlgorithms
 import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASwift
 import SwiftUI
 
 @MainActor
@@ -40,6 +42,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
     private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
+    private let isAlbumPhotoCacheEnabled: Bool
     private(set) var alertViewModel: TextFieldAlertViewModel
     private var subscriptions = Set<AnyCancellable>()
     
@@ -49,12 +53,16 @@ final class AlbumListViewModel: NSObject, ObservableObject {
          albumModificationUseCase: some AlbumModificationUseCaseProtocol,
          shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
          tracker: some AnalyticsTracking,
+         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
-         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil) {
+         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
+         featureFlagProvider: any FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
         self.shareAlbumUseCase = shareAlbumUseCase
         self.tracker = tracker
+        self.monitorAlbumsUseCase = monitorAlbumsUseCase
+        self.isAlbumPhotoCacheEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache)
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         super.init()
@@ -168,7 +176,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private func systemAlbums() async -> [AlbumEntity] {
         do {
             return try await usecase.systemAlbums().map { album in
-                if let localizedAlbumName = localisedName(forAlbumType: album.type) {
+                if let localizedAlbumName = album.type.localizedAlbumName {
                     var album = album
                     album.name = localizedAlbumName
                     return album
@@ -178,19 +186,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         } catch {
             MEGALogError("Error loading system albums: \(error.localizedDescription)")
             return []
-        }
-    }
-    
-    private func localisedName(forAlbumType albumType: AlbumEntityType) -> String? {
-        switch albumType {
-        case .favourite:
-            return Strings.Localizable.CameraUploads.Albums.Favourites.title
-        case .gif:
-            return Strings.Localizable.CameraUploads.Albums.Gif.title
-        case .raw:
-            return Strings.Localizable.CameraUploads.Albums.Raw.title
-        default:
-            return nil
         }
     }
     
@@ -299,6 +294,10 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func monitorAlbums() async throws {
+        guard !isAlbumPhotoCacheEnabled else {
+            await newAlbumMonitoring()
+            return
+        }
         let albumsUpdatedStream = usecase
             .albumsUpdatedPublisher
             .prepend(())
@@ -366,5 +365,85 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private func cancelCreateAlbumTask() {
         createAlbumTask?.cancel()
         createAlbumTask = nil
+    }
+    
+    private func newAlbumMonitoring() async {
+        for try await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(),
+                                                                  await monitorUserAlbums()) {
+            updateAlbums(systemAlbums + userAlbums)
+        }
+    }
+    
+    @MainActor
+    private func updateAlbums(_ newAlbums: [AlbumEntity]) {
+        albums = newAlbums
+        
+        guard shouldLoad else { return }
+        shouldLoad.toggle()
+    }
+    
+    private func monitorSystemAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
+        do {
+            return try await monitorAlbumsUseCase.monitorLocalizedSystemAlbums()
+        } catch {
+            MEGALogError("[Album List] Failed to retrieve monitor system album async sequence: \(error.localizedDescription)")
+            return SingleItemAsyncSequence(item: [])
+                .eraseToAnyAsyncSequence()
+        }
+    }
+    
+    private func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
+        do {
+            return try await monitorAlbumsUseCase.monitorSortedUserAlbums(
+                by: { $0.creationTime ?? Date.distantPast > $1.creationTime ?? Date.distantPast })
+        } catch {
+            MEGALogError("[Album List] Failed to retrieve monitor user album async sequence: \(error.localizedDescription)")
+            return SingleItemAsyncSequence(item: [])
+                .eraseToAnyAsyncSequence()
+        }
+    }
+}
+
+private extension MonitorAlbumsUseCaseProtocol {
+    func monitorLocalizedSystemAlbums() async throws -> AnyAsyncSequence<[AlbumEntity]> {
+        try await monitorSystemAlbums()
+            .map {
+                $0.map {
+                    guard let localizedName = $0.type.localizedAlbumName else {
+                        return $0
+                    }
+                    var album = $0
+                    album.name = localizedName
+                    return album
+                }
+            }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    func monitorSortedUserAlbums(
+        by areInIncreasingOrder: @escaping @Sendable (AlbumEntity, AlbumEntity) -> Bool
+    ) async throws -> AnyAsyncSequence<[AlbumEntity]> {
+        try await monitorUserAlbums()
+            .map { userAlbums in
+                var sortedUserAlbums = userAlbums
+                sortedUserAlbums.sort(by: areInIncreasingOrder)
+                return sortedUserAlbums
+            }
+            .eraseToAnyAsyncSequence()
+    }
+}
+
+private extension AlbumEntityType {
+    var localizedAlbumName: String? {
+        switch self {
+        case .favourite:
+            Strings.Localizable.CameraUploads.Albums.Favourites.title
+        case .gif:
+            Strings.Localizable.CameraUploads.Albums.Gif.title
+        case .raw:
+            Strings.Localizable.CameraUploads.Albums.Raw.title
+        default:
+            nil
+        }
     }
 }

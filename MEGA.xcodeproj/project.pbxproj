@@ -15,6 +15,7 @@
 		0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */; };
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
 		0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */; };
+		0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 0E12F2102BBFA8950087D853 /* AsyncAlgorithms */; };
 		0E2363B52A9EDDCC0019BBBE /* AlbumEntity+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2363B42A9EDDCC0019BBBE /* AlbumEntity+Analytics.swift */; };
 		0E2A4EE829D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2A4EE729D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift */; };
 		0E2FD9DD2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */; };
@@ -5354,6 +5355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D58D552AC67C89004ECD36 /* Accounts in Frameworks */,
+				0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */,
 				A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */,
 				99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
@@ -13111,6 +13113,7 @@
 				2446DEE82B0F099D00FA3FB8 /* Video */,
 				B67D44E02B605F7600738E04 /* SearchMock */,
 				B51616482B83361900C6E842 /* Notifications */,
+				0E12F2102BBFA8950087D853 /* AsyncAlgorithms */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -13479,6 +13482,7 @@
 				943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */,
 				9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */,
 				BFCD7D852BAAC07B00D61DD1 /* XCRemoteSwiftPackageReference "swift-concurrency-extras" */,
+				0E12F20F2BBFA8950087D853 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -17979,6 +17983,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0E12F20F2BBFA8950087D853 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/MEGADesignToken";
@@ -18150,6 +18162,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0E12F2102BBFA8950087D853 /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E12F20F2BBFA8950087D853 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
+		};
 		1678D7F12A45487E00336C52 /* MEGATest */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGATest;

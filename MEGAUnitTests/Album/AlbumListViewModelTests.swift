@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGASwift
 import MEGATest
 import XCTest
 
@@ -34,7 +35,7 @@ final class AlbumListViewModelTests: XCTestCase {
         gifAlbum.name = Strings.Localizable.CameraUploads.Albums.Gif.title
         rawAlbum.name = Strings.Localizable.CameraUploads.Albums.Raw.title
         let sut = albumListViewModel(usecase: useCase)
-                    
+        
         let expectation = expectation(description: "Monitoring task has started")
         Task {
             expectation.fulfill()
@@ -42,7 +43,7 @@ final class AlbumListViewModelTests: XCTestCase {
         }
         await fulfillment(of: [expectation], timeout: 1)
         let result = await albumResult(sut: sut)
-                 
+        
         XCTAssertEqual(result, [
             favouriteAlbum,
             gifAlbum,
@@ -84,7 +85,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
                                      count: 1, type: .user)
         let mockAlbumUseCase = MockAlbumListUseCase(albums: [rawAlbum, userAlbum1])
-                                     
+        
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
         let sut = albumListViewModel(usecase: mockAlbumUseCase, photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
@@ -134,10 +135,10 @@ final class AlbumListViewModelTests: XCTestCase {
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
         let tracker = MockTracker()
         let sut = albumListViewModel(
-            usecase: useCase, 
+            usecase: useCase,
             tracker: tracker,
             photoAlbumContainerViewModel: photoAlbumContainerViewModel)
-
+        
         sut.createUserAlbum(with: newAlbumName)
         XCTAssertTrue(photoAlbumContainerViewModel.disableSelectBarButton)
         await sut.createAlbumTask?.value
@@ -198,7 +199,7 @@ final class AlbumListViewModelTests: XCTestCase {
         _ = await albumResult(sut: sut)
         
         await wait()
-
+        
         let newAlbumNameShouldBe = Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " (2)"
         
         XCTAssertEqual(sut.newAlbumName(), newAlbumNameShouldBe)
@@ -320,7 +321,7 @@ final class AlbumListViewModelTests: XCTestCase {
     func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() async {
         let tracker = MockTracker()
         let sut = albumListViewModel(tracker: tracker)
-
+        
         let sampleAlbum = AlbumEntity(id: 1, name: "hello", coverNode: nil, count: 0, type: .user)
         let nodes = [NodeEntity(handle: 1)]
         sut.onNewAlbumContentAdded(sampleAlbum, photos: nodes)
@@ -462,7 +463,7 @@ final class AlbumListViewModelTests: XCTestCase {
         task.cancel()
         
         await wait()
-
+        
         XCTAssertEqual(sut.albumNames.sorted(), ["Hey there", "", "Favourites"].sorted())
     }
     
@@ -626,16 +627,16 @@ final class AlbumListViewModelTests: XCTestCase {
     func testOnShareLinkRemoveConfirm_whenAllAlbumShareLinkRemoveSuccessfully_shouldShowMultipleAlbumLinkDeleteHudMessage() async {
         let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user),
                       AlbumEntity(id: HandleEntity(2), name: "DEF", coverNode: nil, count: 2, type: .user)]
-
+        
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
         let sut = albumListViewModel(shareAlbumUseCase: MockShareAlbumUseCase(successfullyRemoveSharedAlbumLinkIds: [HandleEntity(1), HandleEntity(2)]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
-
+        
         XCTAssertNil(sut.albumHudMessage)
         sut.onAlbumShareLinkRemoveConfirm(albums)
         await sut.albumRemoveShareLinkTask?.value
-
+        
         let targetMsg = Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
-
+        
         XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudSuccess))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
@@ -647,16 +648,16 @@ final class AlbumListViewModelTests: XCTestCase {
                       AlbumEntity(id: HandleEntity(3), name: "GHI", coverNode: nil, count: 4, type: .user)]
         
         let succesfullyDeleteAlbum = albums[0]
-
+        
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
         let sut = albumListViewModel(shareAlbumUseCase: MockShareAlbumUseCase(successfullyRemoveSharedAlbumLinkIds: [succesfullyDeleteAlbum.id]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
-
+        
         XCTAssertNil(sut.albumHudMessage)
         sut.onAlbumShareLinkRemoveConfirm(albums)
         await sut.albumRemoveShareLinkTask?.value
-
+        
         let targetMsg = Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1)
-
+        
         XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudSuccess))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
@@ -703,14 +704,140 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(photoAlbumContainerViewModel.editMode, .inactive)
         XCTAssertFalse(photoAlbumContainerViewModel.showToolbar)
     }
+    
+    // MARK: - New Album Monitoring
+    
+    @MainActor
+    func testMonitorAlbums_onCalled_shouldLoadSystemAndUserAlbumsAndSetShouldLoadToFalse() throws {
+        let favouriteAlbum = AlbumEntity(id: 1, name: Strings.Localizable.CameraUploads.Albums.Favourites.title,
+                                         coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
+        let gifAlbum = AlbumEntity(id: 2, name: Strings.Localizable.CameraUploads.Albums.Gif.title,
+                                   coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
+        let rawAlbum = AlbumEntity(id: 3, name: Strings.Localizable.CameraUploads.Albums.Raw.title,
+                                   coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
         
+        let systemAlbums = [favouriteAlbum, gifAlbum, rawAlbum]
+        let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
+                                     count: 0, type: .user, creationTime: try "2024-04-04T22:01:04Z".date)
+        let userAlbum2 = AlbumEntity(id: 5, name: "Album 2", coverNode: NodeEntity(handle: 4),
+                                     count: 0, type: .user, creationTime: try "2024-04-05T10:02:04Z".date)
+        let userAlbums = [userAlbum1, userAlbum2]
+        let systemAsyncSequence = SingleItemAsyncSequence(item: systemAlbums).eraseToAnyAsyncSequence()
+        let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums).eraseToAnyAsyncSequence()
+        
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            monitorSystemAlbumsResult: .success(systemAsyncSequence),
+            monitorUserAlbumsResult: .success(monitorUserAlbumsAsyncSequence)
+        )
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        
+        let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                     featureFlagProvider: featureFlagProvider)
+        
+        let exp = expectation(description: "Should load albums")
+        let subscription = sut.$shouldLoad
+            .dropFirst()
+            .filter { !$0 }
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        let monitoring = Task {
+            do {
+                try await sut.monitorAlbums()
+            } catch {
+                XCTFail("Unexpected error")
+            }
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
+        monitoring.cancel()
+        
+        XCTAssertEqual(sut.albums,
+                       [favouriteAlbum, gifAlbum, rawAlbum, userAlbum2, userAlbum1])
+    }
+    
+    @MainActor
+    func testMonitorAlbums_failedToRetrieveSystemAlbums_shouldStillLoadUserAlbums() {
+        let userAlbums =  [AlbumEntity(id: 4, name: "Album 1", count: 0, type: .user)]
+        let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums)
+            .eraseToAnyAsyncSequence()
+        
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            monitorSystemAlbumsResult: .failure(GenericErrorEntity()),
+            monitorUserAlbumsResult: .success(monitorUserAlbumsAsyncSequence)
+        )
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        
+        let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                     featureFlagProvider: featureFlagProvider)
+        
+        let exp = expectation(description: "Should load only user albums")
+        let subscription = sut.$albums
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, userAlbums)
+                exp.fulfill()
+            }
+        
+        let monitoring = Task {
+            do {
+                try await sut.monitorAlbums()
+            } catch {
+                XCTFail("Unexpected error")
+            }
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
+        monitoring.cancel()
+    }
+    
+    @MainActor
+    func testMonitorAlbums_failedToRetrieveUserAlbums_shouldStillLoadSystemAlbums() {
+        let systemAlbums =  [AlbumEntity(id: 1, name: Strings.Localizable.CameraUploads.Albums.Favourites.title,
+                                       count: 0, type: .favourite)]
+        let monitorSystemAlbumsAsyncSequence = SingleItemAsyncSequence(item: systemAlbums)
+            .eraseToAnyAsyncSequence()
+        
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            monitorSystemAlbumsResult: .success(monitorSystemAlbumsAsyncSequence),
+            monitorUserAlbumsResult: .failure(GenericErrorEntity())
+        )
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        
+        let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                     featureFlagProvider: featureFlagProvider)
+        
+        let exp = expectation(description: "Should load only system albums")
+        let subscription = sut.$albums
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, systemAlbums)
+                exp.fulfill()
+            }
+        
+        let monitoring = Task {
+            do {
+                try await sut.monitorAlbums()
+            } catch {
+                XCTFail("Unexpected error")
+            }
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
+        monitoring.cancel()
+    }
+    
     // MARK: - Helpers
     
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
-                                                   placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
-                                                   affirmativeButtonTitle: Strings.Localizable.createFolderButton,
-                                                   message: nil)
+                                placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
+                                affirmativeButtonTitle: Strings.Localizable.createFolderButton,
+                                message: nil)
     }
     
     @MainActor
@@ -719,6 +846,8 @@ final class AlbumListViewModelTests: XCTestCase {
         albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
         shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
+        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
     ) -> AlbumListViewModel {
         AlbumListViewModel(
@@ -726,8 +855,10 @@ final class AlbumListViewModelTests: XCTestCase {
             albumModificationUseCase: albumModificationUseCase,
             shareAlbumUseCase: shareAlbumUseCase,
             tracker: tracker,
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
             alertViewModel: alertViewModel(),
-            photoAlbumContainerViewModel: photoAlbumContainerViewModel
+            photoAlbumContainerViewModel: photoAlbumContainerViewModel,
+            featureFlagProvider: featureFlagProvider
         )
     }
 }
