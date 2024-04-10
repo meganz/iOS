@@ -16,12 +16,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     @Published private var limitBannerDismissed = false
     private var waitingRoomParticipants = [WaitingRoomParticipantViewModel]()
     
-    private var participantLimitReached: Bool {
-        guard let limitations else { return false }
-        return limitations.hasReachedInCallFreeUserParticipantLimit(
-            callParticipantCount: call.numberOfParticipants
-        )
-    }
+    @Published private var participantLimitReached: Bool = false
     private var subscriptions = Set<AnyCancellable>()
     
     private var limitations: CallLimitations?
@@ -35,7 +30,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
             }
         }
     }
-    
+    private let chatMonetisationEnabled: Bool
     private var searchTask: Task<Void, Never>?
     
     init(
@@ -51,15 +46,20 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
         self.chatRoomUseCase = chatRoomUseCase
         self.searchText = ""
         self.isSearchActive = false
-        
+        self.chatMonetisationEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
         if let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) {
-            self.limitations = .init(
+            let limitations = CallLimitations(
                 initialLimit: call.callLimits.maxUsers,
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
                 chatRoomUseCase: chatRoomUseCase,
                 featureFlagProvider: featureFlagProvider
             )
+            
+            self.participantLimitReached = limitations.hasReachedInCallFreeUserParticipantLimit(
+                callParticipantCount: call.numberOfParticipants
+            )
+            self.limitations = limitations
         }
         
         configureWaitingRoomListener(forCall: call)
@@ -142,9 +142,28 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     private func configureLimitationsObserver(for call: CallEntity) {
         limitations?.limitsChangedPublisher
             .sink { [weak self] in
-                self?.objectWillChange.send()
+                self?.checkCallLimitsAndUpdateLimitsState()
             }
             .store(in: &subscriptions)
+    }
+    
+    private func checkCallLimitsAndUpdateLimitsState() {
+        // reading call properties again since they are likely changed now
+        guard
+            let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+            let call = callUseCase.call(for: chatRoom.chatId)
+        else { return }
+        self.call = call
+        // right now we use static version of method to check limit
+        // as the CallLimitations does not know current number of call participants
+        // this should be added on next iteration
+        participantLimitReached = CallLimitations.callParticipantsLimitReached(
+            featureFlagEnabled: chatMonetisationEnabled,
+            isMyselfModerator: true,
+            currentLimit: call.callLimits.maxUsers,
+            callParticipantCount: call.numberOfParticipants,
+            additionalParticipantCount: 0
+        )
     }
     
     private func configureWaitingRoomListener(forCall call: CallEntity) {
