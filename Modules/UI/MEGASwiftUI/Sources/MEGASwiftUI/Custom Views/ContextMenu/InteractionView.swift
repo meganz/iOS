@@ -76,12 +76,12 @@ struct InteractionView<Content: View>: UIViewRepresentable {
             // custom gesture recognizer is added to properly highlight and unhighlight the list cell
             let gr = MEGATapGestureRecognizer(target: self, action: #selector(tapped))
             
-            gr.began = {
-                self.hosting?.view.backgroundColor = .systemGray4
+            gr.began = { [weak self] in
+                self?.hosting?.view.backgroundColor = .systemGray4
             }
             
-            gr.end = {
-                self.hosting?.view.backgroundColor = .clear
+            gr.end = { [weak self] in
+                self?.hosting?.view.backgroundColor = .clear
             }
             
             hosting?.view?.addGestureRecognizer(gr)
