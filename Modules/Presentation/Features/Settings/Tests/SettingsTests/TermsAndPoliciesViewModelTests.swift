@@ -55,8 +55,12 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
     ) -> TermsAndPoliciesViewModel {
         
         let accountUseCase = MockAccountUseCase(sessionTransferURLResult: sessionTransferURLResult)
-        let sut = TermsAndPoliciesViewModel(accountUseCase: accountUseCase,
-                                            abTestProvider: abTestProvider)
+        let router = TermsAndPoliciesRouter(accountUseCase: accountUseCase)
+        let sut = TermsAndPoliciesViewModel(
+            accountUseCase: accountUseCase,
+            abTestProvider: abTestProvider,
+            router: router
+        )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

@@ -3,22 +3,36 @@ import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
+import Settings
 import SwiftUI
 
-final class UpgradeAccountPlanRouter: NSObject {
+protocol UpgradeAccountPlanRouting: Routing {
+    func showTermsAndPolicies()
+}
+
+final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
     private var accountDetails: AccountDetailsEntity
-    
-    init(presenter: UIViewController, accountDetails: AccountDetailsEntity) {
+    private let accountUseCase: any AccountUseCaseProtocol
+
+    init(
+        presenter: UIViewController,
+        accountDetails: AccountDetailsEntity
+    ) {
         self.presenter = presenter
         self.accountDetails = accountDetails
+        
+        accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
     }
-    
+
     func build() -> UIViewController {
-        let viewModel = UpgradeAccountPlanViewModel(accountDetails: accountDetails,
-                                                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                                                    purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo))
+        let viewModel = UpgradeAccountPlanViewModel(
+            accountDetails: accountDetails,
+            accountUseCase: accountUseCase,
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            router: self
+        )
         
         var accountsConfigs: AccountsConfig
 
@@ -60,5 +74,12 @@ final class UpgradeAccountPlanRouter: NSObject {
         let viewController = build()
         baseViewController = viewController
         presenter?.present(viewController, animated: true)
+    }
+    
+    func showTermsAndPolicies() {
+        TermsAndPoliciesRouter(
+            accountUseCase: accountUseCase,
+            presenter: baseViewController
+        ).start()
     }
 }

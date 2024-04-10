@@ -119,9 +119,6 @@ struct UpgradeAccountPlanView: View {
                 )
             }
         }
-        .sheet(isPresented: $viewModel.isTermsAndPoliciesPresented, content: {
-            termsAndPoliciesView()
-        })
     }
     
     private func snackBarView() -> some View {
@@ -132,33 +129,6 @@ struct UpgradeAccountPlanView: View {
                 SnackBarView(viewModel: viewModel.snackBarViewModel())
             }
         }
-    }
-    
-    private func termsAndPoliciesView() -> some View {
-        @ViewBuilder
-        func contentView() -> some View {
-            TermsAndPoliciesView(
-                viewModel: TermsAndPoliciesViewModel(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
-            )
-            .interactiveDismissDisabled()
-        }
-        
-        return NavigationStackView(content: {
-            contentView()
-                .navigationTitle(Strings.Localizable.Settings.Section.termsAndPolicies)
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarColor(UIColor.navigationBg)
-                .toolbar {
-                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-                        Button {
-                            viewModel.isTermsAndPoliciesPresented = false
-                        } label: {
-                            Text(Strings.Localizable.close)
-                                .foregroundColor(MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color)
-                        }
-                    }
-                }
-        })
     }
     
     private func dismiss() {
