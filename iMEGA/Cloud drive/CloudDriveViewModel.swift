@@ -90,8 +90,9 @@ enum CloudDriveAction: ActionType {
         nodes?.containsVisualMedia() ?? false
     }
     
-    func isParentMarkedAsSensitive(forDisplayMode displayMode: DisplayMode) -> Bool? {
+    func isParentMarkedAsSensitive(forDisplayMode displayMode: DisplayMode, isFromSharedItem: Bool) -> Bool? {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+              isFromSharedItem == false,
               displayMode == .cloudDrive,
               parentNode?.isFolder() == true else {
             return nil

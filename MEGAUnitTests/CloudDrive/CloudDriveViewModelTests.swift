@@ -183,7 +183,7 @@ class CloudDriveViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive)
+        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
         XCTAssertNil(isHidden)
     }
     
@@ -193,7 +193,7 @@ class CloudDriveViewModelTests: XCTestCase {
         let sut = makeSUT(parentNode: parentNode,
                           featureFlagProvider: featureFlagProvider)
         
-        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .rubbishBin)
+        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .rubbishBin, isFromSharedItem: false)
         XCTAssertNil(isHidden)
     }
     
@@ -203,7 +203,7 @@ class CloudDriveViewModelTests: XCTestCase {
         let sut = makeSUT(parentNode: parentNode,
                           featureFlagProvider: featureFlagProvider)
         
-        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive)
+        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
         XCTAssertNil(isHidden)
     }
     
@@ -214,8 +214,19 @@ class CloudDriveViewModelTests: XCTestCase {
             let sut = makeSUT(parentNode: parentNode,
                               featureFlagProvider: featureFlagProvider)
             
-            let isHidden = try XCTUnwrap(sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive))
+            let isHidden = try XCTUnwrap(sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false))
             XCTAssertEqual(isHidden, $0)
+        }
+    }
+    
+    func testIsParentMarkedAsSensitiveForDisplayMode_whenEntryPointArrivedFromSharedItem_shouldReturnNilForDisplaySharedItems() throws {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        [true, false].forEach {
+            let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: $0)
+            let sut = makeSUT(parentNode: parentNode,
+                              featureFlagProvider: featureFlagProvider)
+            
+            XCTAssertNil(sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: true))
         }
     }
     
@@ -228,7 +239,7 @@ class CloudDriveViewModelTests: XCTestCase {
         test(viewModel: sut, action: .updateParentNode(updatedParentNode),
              expectedCommands: [.reloadNavigationBarItems])
         
-        let isHidden = try XCTUnwrap(sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive))
+        let isHidden = try XCTUnwrap(sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false))
         XCTAssertTrue(isHidden)
     }
     

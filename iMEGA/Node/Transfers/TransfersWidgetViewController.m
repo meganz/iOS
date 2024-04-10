@@ -234,7 +234,7 @@ static TransfersWidgetViewController* instance = nil;
     switch (transfer.state) {
         case MEGATransferStateComplete:
         {
-            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:transfer.publicNode ? DisplayModePublicLinkTransfers : DisplayModeTransfers isIncoming:NO isBackupNode:isBackupNode sender:sender];
+            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:transfer.publicNode ? DisplayModePublicLinkTransfers : DisplayModeTransfers isIncoming:NO isBackupNode:isBackupNode isFromSharedItem:NO sender:sender];
             actionController.transfer = transfer;
             if ([[UIDevice currentDevice] iPadDevice]) {
                 actionController.modalPresentationStyle = UIModalPresentationPopover;
@@ -250,7 +250,7 @@ static TransfersWidgetViewController* instance = nil;
             
         default:
         {
-            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeTransfersFailed isIncoming:NO isBackupNode:isBackupNode sender:sender];
+            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeTransfersFailed isIncoming:NO isBackupNode:isBackupNode isFromSharedItem:NO sender:sender];
             actionController.transfer = transfer;
             
             if ([[UIDevice currentDevice] iPadDevice]) {
