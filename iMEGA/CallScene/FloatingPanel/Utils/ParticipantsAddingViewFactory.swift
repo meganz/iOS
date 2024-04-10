@@ -104,13 +104,17 @@ struct ParticipantsAddingViewFactory {
         // for a organiser, we it will be possible to show upgrade modal sheet from it
         // for a host-non-organiser, it can be dismissed (once per lifetime of the view controller)
         let bannerConfig = bannerConfigFactory(
-            chatMonetisationFeatureEnabled: true, // chatMonetisationFeatureEnabled,
-            warningMode: contactPickerConfig.isHost ? .dismissible : .noWarning,
+            chatMonetisationFeatureEnabled: chatMonetisationFeatureEnabled,
+            warningMode: contactPickerConfig.canInviteParticipants ? .dismissible : .noWarning,
             presentUpgrade: presentUpgrade
         )
         if let bannerConfig {
             contactController.setBannerConfig(bannerConfig)
             contactController.viewModel.bannerDecider = contactPickerConfig.participantLimitAchieved
+            contactController.viewModel.callLimitations = contactPickerConfig.callLimitations
+            contactController.viewModel.bannerReloadTrigger = { [weak contactController] in
+                contactController?.handleContactsNotVerifiedHeaderVisibility()
+            }
         }
         contactController.userSelected = { selectedUsers in
             guard let users = selectedUsers else { return }
@@ -169,7 +173,10 @@ struct ParticipantsAddingViewFactory {
 struct ContactPickerConfig {
     var mode: ContactsMode
     var excludedParticipantIds: Set<HandleEntity>?
-    var isHost: Bool = false
+    var canInviteParticipants: Bool = false
+    // this is needed to that we can subscribe to the `limitsChangedPublisher`
+    // to get dynamic reload of the warning limit banner
+    var callLimitations: CallLimitations?
     // this will check if after selectionCount the limit of free call participants will be equalised or exceeded
     var participantLimitAchieved: (_ selectionCount: Int) -> Bool = { _ in false }
 }

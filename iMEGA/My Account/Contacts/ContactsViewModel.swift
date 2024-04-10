@@ -1,10 +1,27 @@
+import Combine
 import MEGADomain
 import MEGAPresentation
 
 @objc final class ContactsViewModel: NSObject {
     private let sdk: MEGASdk
     var bannerConfig: BannerView.Config?
+    var bannerReloadTrigger: (() -> Void)?
     var bannerDecider: (Int) -> Bool = { _ in false }
+    private var callLimitsSubscription: AnyCancellable?
+    var callLimitations: CallLimitations? {
+        didSet {
+            callLimitsSubscription?.cancel()
+            callLimitsSubscription = nil
+            
+            callLimitsSubscription = callLimitations?
+                .limitsChangedPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    MEGALogDebug("[CallLimitations] ContactsViewModel reloadWarning triggered")
+                    self?.reloadWarningBanner()
+                }
+        }
+    }
     var dismissedBannerWarning = false
     var shouldShowBannerWarning: Bool {
         bannerConfig != nil && !dismissedBannerWarning
@@ -21,6 +38,11 @@ import MEGAPresentation
     ) -> Bool {
         reachedLimitOfCallParticipants(selectedUsersCount: selectedUsersCount)
         && !dismissedBannerWarning
+    }
+    
+    func reloadWarningBanner() {
+        assert(bannerReloadTrigger != nil)
+        bannerReloadTrigger?()
     }
     
     private func reachedLimitOfCallParticipants(
