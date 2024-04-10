@@ -1075,10 +1075,6 @@ extension UIColor {
     class func mnz_red(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        guard !UIColor.isDesignTokenEnabled() else {
-            return TokenColors.Text.error
-        }
-        
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             return MEGAAppColor.Red._F30C14.uiColor
