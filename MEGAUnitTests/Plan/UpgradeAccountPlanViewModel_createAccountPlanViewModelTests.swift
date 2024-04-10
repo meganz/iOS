@@ -225,7 +225,8 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         let sut = UpgradeAccountPlanViewModel(
             accountDetails: accountDetails,
             accountUseCase: mockAccountUseCase,
-            purchaseUseCase: mockPurchaseUseCase
+            purchaseUseCase: mockPurchaseUseCase,
+            router: MockUpgradeAccountPlanRouter()
         )
         return sut
     }

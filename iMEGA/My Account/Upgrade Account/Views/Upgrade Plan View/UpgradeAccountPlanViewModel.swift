@@ -18,6 +18,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private var abTestProvider: any ABTestProviderProtocol
+    private let router: any UpgradeAccountPlanRouting
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
     @Published var isExternalAdsActive: Bool = false
@@ -33,7 +34,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var snackBarType: PlanSelectionSnackBarType = .none
     private var showSnackBarSubscription: AnyCancellable?
     
-    @Published var isTermsAndPoliciesPresented = false
     @Published var isDismiss = false
     @Published var isLoading = false
     @Published private(set) var currentPlan: AccountPlanEntity?
@@ -56,12 +56,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         accountDetails: AccountDetailsEntity,
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
-        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
+        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+        router: any UpgradeAccountPlanRouting
     ) {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
         self.accountDetails = accountDetails
         self.abTestProvider = abTestProvider
+        self.router = router
         registerDelegates()
         setupPlans()
     }
@@ -267,7 +269,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     func didTap(_ target: UpgradeAccountPlanTarget) {
         switch target {
         case .termsAndPolicies:
-            isTermsAndPoliciesPresented = true
+            router.showTermsAndPolicies()
         case .restorePlan:
             restorePurchase()
         case .buyPlan:

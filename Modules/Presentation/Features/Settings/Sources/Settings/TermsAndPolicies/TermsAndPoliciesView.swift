@@ -5,6 +5,39 @@ import SwiftUI
 
 public struct TermsAndPoliciesView: View {
     @StateObject var viewModel: TermsAndPoliciesViewModel
+    var isPresentedModal: Bool = false
+    
+    public init(viewModel: TermsAndPoliciesViewModel, isPresented: Bool) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        isPresentedModal = isPresented
+    }
+    
+    public var body: some View {
+        if isPresentedModal {
+            NavigationStackView {
+                TermsAndPoliciesContentView(viewModel: viewModel)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationBarColor(isDesignTokenEnabled ? TokenColors.Background.surface1 : UIColor.clear)
+                    .toolbar {
+                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                            Button {
+                                viewModel.dismiss()
+                            } label: {
+                                Text(Strings.Localizable.close)
+                                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                            }
+                        }
+                    }
+                    .interactiveDismissDisabled()
+            }
+        } else {
+            TermsAndPoliciesContentView(viewModel: viewModel)
+        }
+    }
+}
+
+private struct TermsAndPoliciesContentView: View {
+    @StateObject var viewModel: TermsAndPoliciesViewModel
     
     public init(viewModel: TermsAndPoliciesViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)

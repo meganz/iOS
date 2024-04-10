@@ -1332,6 +1332,7 @@
 		94712EFD2A9C9FAD00B5F2C9 /* MockSearchFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94712EFC2A9C9FAD00B5F2C9 /* MockSearchFileUseCase.swift */; };
 		9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9471F6A92BA069C700BA873B /* NotificationsViewModelTests.swift */; };
 		9472202C2A29E16600890CFB /* MyAccountHallViewController+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9472202B2A29E16600890CFB /* MyAccountHallViewController+TableViewDelegate.swift */; };
+		947336C22BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947336C12BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift */; };
 		947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */; };
 		9474F23F2B0F8F4700C5F63B /* ViewModeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */; };
 		947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */; };
@@ -4057,6 +4058,7 @@
 		94712EFC2A9C9FAD00B5F2C9 /* MockSearchFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchFileUseCase.swift; sourceTree = "<group>"; };
 		9471F6A92BA069C700BA873B /* NotificationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModelTests.swift; sourceTree = "<group>"; };
 		9472202B2A29E16600890CFB /* MyAccountHallViewController+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+TableViewDelegate.swift"; sourceTree = "<group>"; };
+		947336C12BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpgradeAccountPlanRouter.swift; sourceTree = "<group>"; };
 		947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsBridge.swift; sourceTree = "<group>"; };
 		9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStoreTests.swift; sourceTree = "<group>"; };
 		947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisabler.swift; sourceTree = "<group>"; };
@@ -10055,6 +10057,7 @@
 			children = (
 				949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */,
 				949704B62AB427BE00B2CA3A /* MockRenameViewRouter.swift */,
+				947336C12BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -16090,6 +16093,7 @@
 				996A48FF2A8CBD9600264298 /* MeetingInfoViewModelTests.swift in Sources */,
 				BF8895D42630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift in Sources */,
 				8394EB812643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift in Sources */,
+				947336C22BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift in Sources */,
 				BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,

@@ -6,6 +6,7 @@ import MEGAPresentation
 final public class TermsAndPoliciesViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private var abTestProvider: any ABTestProviderProtocol
+    private let router: TermsAndPoliciesRouting
     
     let privacyUrl = URL(string: "https://mega.io/privacy") ?? URL(fileURLWithPath: "")
     let termsUrl = URL(string: "https://mega.io/terms") ?? URL(fileURLWithPath: "")
@@ -13,10 +14,12 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
     
     public init(
         accountUseCase: some AccountUseCaseProtocol,
-        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
+        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+        router: TermsAndPoliciesRouting
     ) {
         self.accountUseCase = accountUseCase
         self.abTestProvider = abTestProvider
+        self.router = router
     }
     
     // MARK: - Cookie policy
@@ -37,5 +40,9 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
         } catch {
             cookieUrl = URL(fileURLWithPath: "")
         }
+    }
+    
+    func dismiss() {
+        router.dismiss()
     }
 }
