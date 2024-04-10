@@ -344,12 +344,14 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         let config = ContactPickerConfig(
             mode: .inviteParticipants,
             excludedParticipantIds: Set(excludedHandles),
-            isHost: isMyselfAModerator,
+            canInviteParticipants: canInviteParticipants,
+            callLimitations: limitations,
             participantLimitAchieved: {[weak self] selectedCount in
                 guard let self, let limitations else { return false }
-                return limitations.limitChecker(
+                return limitations.contactPickerLimitChecker(
                     callParticipantCount: callParticipants.count,
-                    selectedCount: selectedCount
+                    selectedCount: selectedCount,
+                    allowsNonHostToInvite: canInviteParticipants
                 )
             }
         )

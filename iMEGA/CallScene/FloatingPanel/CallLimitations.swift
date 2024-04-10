@@ -61,6 +61,21 @@ class CallLimitations {
         isMyselfModerator = chatRoom.ownPrivilege == .moderator
         self.chatRoom = chatRoom
         
+        // Subscription used to listen to changes
+        // of call limits, we dynamically show and hide
+        // limitations banner based on that limit:
+        // * meeting floating panel
+        // * expanded waiting room list
+        //   * button to show is only shown at the bottom of meeting floating panel,
+        //     after we reach more than 4 users in the waiting room)
+        // * contact picker when inviting participants to a call
+        // [MEET-3421] [MEET-3401]
+        
+        // Subscription also used to listen to changes
+        // of number of call participants
+        // limits banner in the contactsViewController
+        // need to be dynamically shown/hidden when we are hitting the limit
+        // [MEET-3401]
         callUseCase.onCallUpdate()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] call in
@@ -68,6 +83,11 @@ class CallLimitations {
             }
             .store(in: &subscriptions)
         
+        // Subscription is used to listen when
+        // user has been added or removed a host privilege.
+        // This is relevant as we show limitations banners when user
+        // has this privilege, so we need to react when he's striped or decorated with it
+        // [MEET-3421]
         chatRoomUseCase.ownPrivilegeChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -93,9 +113,12 @@ class CallLimitations {
             let previousLimit = limitOfFreeTierUsers
             limitOfFreeTierUsers = call.callLimits.maxUsers
             if previousLimit != limitOfFreeTierUsers {
-                MEGALogDebug("[CallLimitations] did change limits to \(limitOfFreeTierUsers)")
+                MEGALogDebug("[CallLimitations] did change limits to \(limitOfFreeTierUsers) from previous \(previousLimit)")
                 _limitsChanged.send(())
             }
+        case .callComposition:
+            MEGALogDebug("[CallLimitations] call composition changed)")
+            _limitsChanged.send(())
         default:
             break
         }
@@ -191,10 +214,26 @@ class CallLimitations {
         callLimitWillBeReached(callParticipantCount, afterAdding: callParticipantsInWaitingRoom)
     }
     
-    func limitChecker(
+    /// this function contains logic of showing the limitations banner in the contact picker
+    /// for  a user with permission to add participants, all conditions need to be satisfied:
+    /// * feature flags needs to be enabled
+    /// * max user limit must not be -1
+    /// * user has to have permission to invite (allowsNonHostToInvite)
+    /// * sum of selected users and call participants must be greater than the limit
+    func contactPickerLimitChecker(
         callParticipantCount: Int,
-        selectedCount: Int
+        selectedCount: Int,
+        allowsNonHostToInvite: Bool
     ) -> Bool {
-        callLimitWillBeReached(callParticipantCount, afterAdding: selectedCount)
+        MEGALogDebug("[CallLimitations] contact picker limit checker participants = \(callParticipantCount), selected: \(selectedCount), allowsNonHostToInvite: \(allowsNonHostToInvite)")
+        return Self.callParticipantsLimitReached(
+            featureFlagEnabled: chatMonetisationEnabled,
+            // from the logic of contact picker and showing the banner,
+            // once chat room has `allowsNonHostToInvite` his behaviour is the same as moderator
+            isMyselfModerator: allowsNonHostToInvite,
+            currentLimit: limitOfFreeTierUsers,
+            callParticipantCount: callParticipantCount,
+            additionalParticipantCount: selectedCount
+        )
     }
 }
