@@ -98,10 +98,7 @@ class AppearanceTableViewController: UITableViewController {
             minimalIconLabel.textColor = UIColor.whiteFFFFFF
         }
 
-        hiddenItemsViewSwitch.isOn = true
-        mediaDiscoveryViewSwitch.isOn = viewModel.autoMediaDiscoverySetting
-        mediaDiscoverySubfolderSwitch.isOn = viewModel.mediaDiscoveryShouldIncludeSubfolderSetting
-        hideRecentActivitySwitch.isOn = !RecentsPreferenceManager.showRecents()
+        Task { await loadSettings() }
 
         let alternateIconName = UIApplication.shared.alternateIconName
         selectIcon(with: alternateIconName)
@@ -123,6 +120,14 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     // MARK: - Private
+    private func loadSettings() async {
+        mediaDiscoveryViewSwitch.isOn = await viewModel.fetchSettingValue(for: .autoMediaDiscoverySetting)
+        mediaDiscoverySubfolderSwitch.isOn = await viewModel.fetchSettingValue(for: .mediaDiscoveryShouldIncludeSubfolderSetting)
+        hideRecentActivitySwitch.isOn = await viewModel.fetchSettingValue(for: .hideRecentActivity)
+        if viewModel.isAppearanceSectionVisible(section: .hiddenItems) {
+            hiddenItemsViewSwitch.isOn = await viewModel.fetchSettingValue(for: .showHiddenItems)
+        }
+    }
     
     private func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)

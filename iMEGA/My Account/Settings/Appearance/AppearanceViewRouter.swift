@@ -18,7 +18,9 @@ struct AppearanceViewRouter: Routing {
                 let viewModel = AppearanceViewModel(
                     preferenceUseCase: PreferenceUseCase(
                         repository: PreferenceRepository.newRepo),
-                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo), 
+                    contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                        repo: UserAttributeRepository.newRepo))
                 return AppearanceTableViewController(coder: coder, viewModel: viewModel) }) as? AppearanceTableViewController else {
             fatalError("AppearanceViewRouter: could not create an instance of AppearanceTableViewController")
         }
