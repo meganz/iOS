@@ -10,7 +10,7 @@ import SwiftUI
 // use .searchable.
 
 // Add delegate methods for BrowserViewControllerDelegate, should end editing
-final class SearchBarUIHostingController<Content>: UIHostingController<Content> where Content: View {
+final class SearchBarUIHostingController<Content>: UIHostingController<Content>, AudioPlayerPresenterProtocol where Content: View {
     private var wrapper: SearchControllerWrapper?
     private var selectionHandler: SearchControllerSelectionHandler?
     private var toolbar: UIToolbar?
@@ -18,9 +18,11 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
     private var toolbarBuilder: CloudDriveBottomToolbarItemsFactory
     private var browseDelegate: BrowserViewControllerDelegateHandler
     private var searchBarVisible: Bool!
-    var viewModeProvider: CloudDriveViewModeProvider
-    var displayModeProvider: CloudDriveDisplayModeProvider
-
+    private(set) var viewModeProvider: CloudDriveViewModeProvider
+    private(set) var displayModeProvider: CloudDriveDisplayModeProvider
+    private weak var audioPlayerManager: (any AudioPlayerHandlerProtocol)?
+    private var selectionModeEnabled = false
+    
     init(
         rootView: Content,
         wrapper: SearchControllerWrapper,
@@ -29,7 +31,8 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         backButtonTitle: String?,
         searchBarVisible: Bool,
         viewModeProvider: CloudDriveViewModeProvider,
-        displayModeProvider: CloudDriveDisplayModeProvider
+        displayModeProvider: CloudDriveDisplayModeProvider,
+        audioPlayerManager: some AudioPlayerHandlerProtocol
     ) {
         self.wrapper = wrapper
         self.selectionHandler = selectionHandler
@@ -39,6 +42,7 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         self.searchBarVisible = searchBarVisible
         self.viewModeProvider = viewModeProvider
         self.displayModeProvider = displayModeProvider
+        self.audioPlayerManager = audioPlayerManager
         super.init(rootView: rootView)
     }
 
@@ -58,6 +62,8 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         }
         self.navigationItem.searchController = searchBarVisible ? wrapper?.searchController : nil
 
+        audioPlayerManager?.addDelegate(self)
+        
         wrapper?.onUpdateSearchBarVisibility = { [weak self] isVisible in
             guard let self, let wrapper = self.wrapper else { return }
             self.searchBarVisible = isVisible
@@ -66,10 +72,16 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         
         selectionHandler?.onSelectionModeChange = { [weak self] enabled, config in
             guard let self else { return }
+            
+            selectionModeEnabled = enabled
+            
             if enabled {
                 addToolbar(for: config, animated: true)
             } else {
                 removeToolbar(animated: true)
+            }
+            if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
+                audioPlayerManager.playerHiddenIgnoringPlayerLifeCycle(enabled, presenter: self)
             }
         }
 
@@ -80,6 +92,22 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         browseDelegate.endEditingMode = { [weak self] in
             self?.removeToolbar(animated: true)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
+            audioPlayerManager.playerHiddenIgnoringPlayerLifeCycle(selectionModeEnabled, presenter: self)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        audioPlayerManager?.playerHiddenIgnoringPlayerLifeCycle(true, presenter: self)
+    }
+    
+    deinit {
+        audioPlayerManager?.removeDelegate(self)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -99,6 +127,16 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
             }
         }
     }
+    
+    // MARK: - AudioPlayerPresenterProtocol
+    
+    func updateContentView(_ height: CGFloat) {
+        var insets = additionalSafeAreaInsets
+        insets.bottom = height
+        additionalSafeAreaInsets = insets
+    }
+    
+    // MARK: - Private methods
     
     private func updateToolbar(with config: BottomToolbarConfig) {
         configureToolbar(with: config)
