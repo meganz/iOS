@@ -580,7 +580,8 @@ struct CloudDriveViewControllerFactory {
             ),
             searchBarVisible: initialViewMode != .mediaDiscovery, 
             viewModeProvider: makeViewModeProvider(viewModel: nodeBrowserViewModel),
-            displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel)
+            displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel),
+            audioPlayerManager: AudioPlayerManager.shared
         )
 
         let setNavItemsFactory = { [weak nodeBrowserViewModel] in
