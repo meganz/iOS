@@ -93,7 +93,7 @@ class NodeActionViewController: ActionSheetViewController {
             .build()
     }
     
-    init(nodes: [MEGANode], delegate: some NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, sender: Any) {
+    init(nodes: [MEGANode], delegate: some NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, isFromSharedItem: Bool = false, sender: Any) {
         self.nodes = nodes
         self.displayMode = displayMode
         self.delegate = delegate
@@ -126,12 +126,12 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsFavourite(displayMode == .photosFavouriteAlbum)
             .setIsBackupNode(containsABackupNode)
             .setAreMediaFiles(areMediaFiles)
-            .setIsHidden(viewModel.containsOnlySensitiveNodes(nodes.toNodeEntities()))
+            .setIsHidden(viewModel.containsOnlySensitiveNodes(nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem))
             .setAccountType(viewModel.accountType)
             .multiselectBuild()
     }
 
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, isFromSharedItem: Bool = false, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -143,7 +143,8 @@ class NodeActionViewController: ActionSheetViewController {
         self.setupActions(node: node,
                           displayMode: displayMode,
                           isIncoming: isIncoming,
-                          isBackupNode: isBackupNode)
+                          isBackupNode: isBackupNode,
+                          isFromSharedItem: isFromSharedItem)
     }
     
     @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare, shouldShowVerifyContact: Bool, sender: Any) {
@@ -200,7 +201,7 @@ class NodeActionViewController: ActionSheetViewController {
             .build()
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, isLink: Bool = false, displayMode: DisplayMode, isInVersionsView: Bool = false, isBackupNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, isLink: Bool = false, displayMode: DisplayMode, isInVersionsView: Bool = false, isBackupNode: Bool, isFromSharedItem: Bool = false, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -221,7 +222,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsInVersionsView(isInVersionsView)
             .setIsBackupNode(isBackupNode)
             .setIsExported(node.isExported())
-            .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()]))
+            .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
             .setAccountType(viewModel.accountType)
             .build()
     }
@@ -374,7 +375,7 @@ class NodeActionViewController: ActionSheetViewController {
         return numberOfFilesAndFoldersString
     }
     
-    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false) {
+    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false) {
         let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.fileExtensionGroup.isEditableText == true
@@ -405,7 +406,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsVerifyContact(isVerifyContact,
                                 sharedFolderReceiverEmail: sharedFolder.user ?? "",
                                 sharedFolderContact: sharedFolderContact)
-            .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()]))
+            .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
             .setAccountType(viewModel.accountType)
             .build()
     }

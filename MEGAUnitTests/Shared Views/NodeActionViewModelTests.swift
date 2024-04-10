@@ -12,7 +12,7 @@ final class NodeActionViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        XCTAssertNil(sut.containsOnlySensitiveNodes([node]))
+        XCTAssertNil(sut.containsOnlySensitiveNodes([node], isFromSharedItem: false))
     }
     
     func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnTrue() throws {
@@ -20,7 +20,7 @@ final class NodeActionViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let containsOnlySensitiveNodes = try XCTUnwrap(sut.containsOnlySensitiveNodes(nodes))
+        let containsOnlySensitiveNodes = try XCTUnwrap(sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false))
         
         XCTAssertTrue(containsOnlySensitiveNodes)
     }
@@ -31,9 +31,19 @@ final class NodeActionViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let containsOnlySensitiveNodes = try XCTUnwrap(sut.containsOnlySensitiveNodes(nodes))
+        let containsOnlySensitiveNodes = try XCTUnwrap(sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false))
         
         XCTAssertFalse(containsOnlySensitiveNodes)
+    }
+    
+    func testContainsOnlySensitiveNodes_isFromSharedItemIsTrue_shouldReturnNil() throws {
+        [true, false].forEach {
+            let node = NodeEntity(handle: 65, isMarkedSensitive: $0)
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+            let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+            
+            XCTAssertNil(sut.containsOnlySensitiveNodes([node], isFromSharedItem: true))
+        }
     }
 
     func testAccountType_shouldReturnCurrentAccountProLevel() {

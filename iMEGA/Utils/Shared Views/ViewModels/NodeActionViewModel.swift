@@ -16,8 +16,9 @@ struct NodeActionViewModel {
         self.featureFlagProvider = featureFlagProvider
     }
     
-    func containsOnlySensitiveNodes(_ nodes: [NodeEntity]) -> Bool? {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
+    func containsOnlySensitiveNodes(_ nodes: [NodeEntity], isFromSharedItem: Bool) -> Bool? {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+              isFromSharedItem == false else {
             return nil
         }
         return nodes.notContains { !$0.isMarkedSensitive }
