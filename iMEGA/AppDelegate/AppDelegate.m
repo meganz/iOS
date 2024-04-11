@@ -103,7 +103,6 @@
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
     [MEGAChatSdk setCatchException:false];
-    [self configSharedSecureFingerprintFlag];
     [self toggleFeatureFlags];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
