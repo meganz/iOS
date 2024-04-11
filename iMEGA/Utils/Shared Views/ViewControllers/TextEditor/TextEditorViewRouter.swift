@@ -12,6 +12,7 @@ final class TextEditorViewRouter: NSObject {
     
     private var textFile: TextFile
     private let textEditorMode: TextEditorMode
+    private let isFromSharedItem: Bool
     private var parentHandle: HandleEntity?
     private var nodeEntity: NodeEntity?
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
@@ -19,11 +20,13 @@ final class TextEditorViewRouter: NSObject {
     @objc convenience init(
         textFile: TextFile,
         textEditorMode: TextEditorMode,
+        isFromSharedItem: Bool = false,
         node: MEGANode? = nil,
         presenter: UIViewController? = nil
     ) {
         self.init(textFile: textFile,
                   textEditorMode: textEditorMode,
+                  isFromSharedItem: isFromSharedItem,
                   nodeEntity: node?.toNodeEntity(),
                   presenter: presenter)
     }
@@ -31,11 +34,13 @@ final class TextEditorViewRouter: NSObject {
     init(
         textFile: TextFile,
         textEditorMode: TextEditorMode,
+        isFromSharedItem: Bool = false,
         nodeEntity: NodeEntity? = nil,
         presenter: UIViewController? = nil
     ) {
         self.textFile = textFile
         self.textEditorMode = textEditorMode
+        self.isFromSharedItem = isFromSharedItem
         self.nodeEntity = nodeEntity
         self.parentHandle = nodeEntity?.parentHandle
         self.presenter = presenter
@@ -44,10 +49,11 @@ final class TextEditorViewRouter: NSObject {
     convenience init(
         textFile: TextFile,
         textEditorMode: TextEditorMode,
+        isFromSharedItem: Bool = false,
         parentHandle: HandleEntity? = nil,
         presenter: UIViewController
     ) {
-        self.init(textFile: textFile, textEditorMode: textEditorMode, nodeEntity: nil, presenter: presenter)
+        self.init(textFile: textFile, textEditorMode: textEditorMode, isFromSharedItem: isFromSharedItem, nodeEntity: nil, presenter: presenter)
         self.parentHandle = parentHandle
     }
 }
@@ -139,7 +145,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
-        let nodeActionViewController = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, sender: button)
+        let nodeActionViewController = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, isFromSharedItem: isFromSharedItem, sender: button)
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     

@@ -268,7 +268,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
         return alertController;
     } else {
-        return [node mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:nil inViewController: self];
+        return [node mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:nil isFromSharedItem:NO inViewController: self];
     }
 }
 
