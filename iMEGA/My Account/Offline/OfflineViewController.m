@@ -766,7 +766,7 @@ static NSString *kisDirectory = @"kisDirectory";
                 [self presentViewController:megaAVViewController animated:YES completion:nil];
             } else {
                 if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
-                    [AudioPlayerManager.shared initMiniPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
+                    [AudioPlayerManager.shared initMiniPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES isFromSharedItem:NO];
                 } else {
                     [self initFullScreenPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self];
                 }

@@ -111,7 +111,7 @@
                 
                 [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
-                [self mnz_openNodeInNavigationController:navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil allNodes: nil];
+                [self mnz_openNodeInNavigationController:navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil isFromSharedItem:NO allNodes: nil];
             }
             break;
         }
@@ -122,16 +122,16 @@
     }
 }
 
-- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId allNodes: (NSArray *_Nullable)allNodes {
+- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes: (NSArray *_Nullable)allNodes {
     if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && MEGAChatSdk.shared.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
         if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:self.name] && self.mnz_isPlayable) {
             UIViewController *presenterVC = [navigationController.viewControllers lastObject];
             if ([presenterVC conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)] && [AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive] && (isFolderLink || (!isFolderLink && fileLink == nil))) {
-                [AudioPlayerManager.shared initMiniPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
+                [AudioPlayerManager.shared initMiniPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC shouldReloadPlayerInfo:YES shouldResetPlayer:YES isFromSharedItem:isFromSharedItem];
             } else {
-                [self initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId allNodes: allNodes];
+                [self initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes: allNodes];
             }
         } else {
             UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:navigationController.viewControllers.lastObject];

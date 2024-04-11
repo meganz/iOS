@@ -261,11 +261,11 @@ import MEGASDKRepo
         player?.playerTracksContains(url: url) ?? false
     }
     
-    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, allNodes: [MEGANode]?) {
+    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
         CrashlyticsLogger.log(category: .audioPlayer, "Initializing Full Screen Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing: filePaths)), isFolderLink: \(isFolderLink), messageId: \(messageId), chatId: \(chatId), allNodes: \(String(describing: allNodes))")
-        let configEntity = AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, messageId: messageId, chatId: chatId, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self)
+        let configEntity = AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, messageId: messageId, chatId: chatId, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self, isFromSharedItem: isFromSharedItem)
         
-        let playlistRouter = AudioPlaylistViewRouter(configEntity: AudioPlayerConfigEntity(parentNode: configEntity.node?.parent, playerHandler: configEntity.playerHandler), presenter: presenter)
+        let playlistRouter = AudioPlaylistViewRouter(configEntity: AudioPlayerConfigEntity(parentNode: configEntity.node?.parent, playerHandler: configEntity.playerHandler, isFromSharedItem: isFromSharedItem), presenter: presenter)
         
         let audioPlayerRouter = AudioPlayerViewRouter(
             configEntity: configEntity,
@@ -314,7 +314,7 @@ import MEGASDKRepo
         return vc
     }
     
-    func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {
+    func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool, isFromSharedItem: Bool) {
         CrashlyticsLogger.log(category: .audioPlayer, "Initializing Mini Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing: filePaths)), isFolderLink: \(isFolderLink)")
         if shouldReloadPlayerInfo {
             if shouldResetPlayer { folderSDKLogoutIfNeeded() }
@@ -322,7 +322,7 @@ import MEGASDKRepo
             guard player != nil else { return }
             
             let allNodes = currentPlayer()?.tracks.compactMap(\.node)
-            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self, shouldResetPlayer: shouldResetPlayer), presenter: presenter)
+            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self, shouldResetPlayer: shouldResetPlayer, isFromSharedItem: isFromSharedItem), presenter: presenter)
             
             miniPlayerVC = nil
             

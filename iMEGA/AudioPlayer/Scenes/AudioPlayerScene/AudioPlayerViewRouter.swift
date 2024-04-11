@@ -72,11 +72,11 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     func showMiniPlayer(node: MEGANode?, shouldReload: Bool) {
-        configEntity.playerHandler.initMiniPlayer(node: node, fileLink: configEntity.fileLink, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
+        configEntity.playerHandler.initMiniPlayer(node: node, fileLink: configEntity.fileLink, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false, isFromSharedItem: configEntity.isFromSharedItem)
     }
     
     func showMiniPlayer(file: String, shouldReload: Bool) {
-        configEntity.playerHandler.initMiniPlayer(node: nil, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
+        configEntity.playerHandler.initMiniPlayer(node: nil, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false, isFromSharedItem: configEntity.isFromSharedItem)
     }
     
     func importNode(_ node: MEGANode) {
@@ -105,6 +105,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             displayMode: displayMode,
             isInVersionsView: isPlayingFromVersionView(),
             isBackupNode: isBackupNode,
+            isFromSharedItem: configEntity.isFromSharedItem,
             sender: sender)
         
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)

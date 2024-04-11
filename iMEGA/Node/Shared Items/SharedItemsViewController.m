@@ -997,7 +997,7 @@
             if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
                 [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil allNodes: nil];
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil isFromSharedItem:YES allNodes: nil];
             }
             break;
         }

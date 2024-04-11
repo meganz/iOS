@@ -261,7 +261,7 @@
         } else {
             NSNumber *messageId = [NSNumber numberWithUnsignedLongLong:self.message.messageId];
             NSNumber *chatId = [NSNumber numberWithUnsignedLongLong:self.chatId];
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:messageId chatId:chatId allNodes: nil];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:messageId chatId:chatId isFromSharedItem:NO allNodes: nil];
         }
     }
     

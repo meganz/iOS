@@ -41,7 +41,8 @@ extension RecentsViewController {
             isFolderLink: isFolderLink,
             presenter: presenter,
             messageId: .invalid,
-            chatId: .invalid,
+            chatId: .invalid, 
+            isFromSharedItem: false,
             allNodes: nil
         )
     }

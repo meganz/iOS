@@ -239,7 +239,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
         } else {
             if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] && node.mnz_isPlayable) {
                 if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
-                    [AudioPlayerManager.shared initMiniPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
+                    [AudioPlayerManager.shared initMiniPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES isFromSharedItem: NO];
                 } else {
                     [self initFullScreenPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self];
                 }
