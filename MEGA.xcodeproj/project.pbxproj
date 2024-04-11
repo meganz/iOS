@@ -344,7 +344,6 @@
 		2FDDC6242630DE100060E02A /* EncourageGuestUserToJoinMegaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDDC6232630DE100060E02A /* EncourageGuestUserToJoinMegaViewModel.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
 		2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */; };
-		2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */; };
 		2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */; };
 		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */; };
@@ -3017,7 +3016,6 @@
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
 		2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewModelTests.swift; sourceTree = "<group>"; };
-		2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMeetingCreatingUseCase.swift; sourceTree = "<group>"; };
 		2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeepLinkingTests.m; sourceTree = "<group>"; };
 		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
@@ -12132,7 +12130,6 @@
 				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
 				BF8895E72631213C002A18CA /* MockCallKitManager.swift */,
 				837D0F362BC7D3B000C629AE /* MockCallManager.swift */,
-				2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */,
 				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
 				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
 				8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */,
@@ -16160,7 +16157,6 @@
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
-				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
 				A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */,
