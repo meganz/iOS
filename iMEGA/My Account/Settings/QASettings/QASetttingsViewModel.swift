@@ -10,17 +10,14 @@ final class QASettingsViewModel {
     }
     
     private let router: any QASettingsRouting
-    private let fingerprintUseCase: any SecureFingerprintUseCaseProtocol
     private let appDistributionUseCase: any AppDistributionUseCaseProtocol
     private var checkForUpdateTask: Task<Void, Never>?
     
     init(
         router: some QASettingsRouting,
-        fingerprintUseCase: some SecureFingerprintUseCaseProtocol,
         appDistributionUseCase: some AppDistributionUseCaseProtocol
     ) {
         self.router = router
-        self.fingerprintUseCase = fingerprintUseCase
         self.appDistributionUseCase = appDistributionUseCase
     }
     
@@ -85,10 +82,5 @@ final class QASettingsViewModel {
     
     private func show(error: some Error) {
         router.showAlert(withError: error)
-    }
-    
-    // MARK: - Fingerprint flag
-    func fingerprintVerificationFlagStatus() -> String {
-        fingerprintUseCase.secureFingerprintStatus().lowercased()
     }
 }

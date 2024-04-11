@@ -334,19 +334,6 @@ extension AppDelegate {
     }
 }
 
-// MARK: - Shared Secure fingerprint
-extension AppDelegate {
-    @objc func configSharedSecureFingerprintFlag() {
-        let manager = SharedSecureFingerprintManager()
-        let fingerprintRepository = SecureFingerprintRepository(manager: manager)
-        let fingerprintUseCase = SecureFingerprintUseCase(repo: fingerprintRepository)
-        let isSecure = fingerprintUseCase.secureFingerprintVerification
-        Task {
-            await fingerprintUseCase.setSecureFingerprintFlag(isSecure)
-        }
-    }
-}
-
 // MARK: - Actionable notification for Scheduled meetings
 
 extension AppDelegate {

@@ -6,16 +6,8 @@ import XCTest
 
 final class QASettingsViewModelTests: XCTestCase {
     
-    func testFingerprintVerificationFlagStatus_doesNotAlterStatus() {
-        let (sut, _, _, _) = makeSUT()
-        
-        let status = sut.fingerprintVerificationFlagStatus()
-        
-        XCTAssertEqual(status, "enabled")
-    }
-    
     func testCheckForUpdate_whenAppDistributionError_showErrorAlert() async {
-        let (sut, router, _, _) = makeSUT(appDistributionResult: .failure(NSError()))
+        let (sut, router, _) = makeSUT(appDistributionResult: .failure(NSError()))
         
         let task = sut.checkForUpdate()
         await task?.value
@@ -24,7 +16,7 @@ final class QASettingsViewModelTests: XCTestCase {
     }
     
     func testCheckForUpdate_whenNoNewRelease_doesNotShowAlert() async {
-        let (sut, router, _, _) = makeSUT(appDistributionResult: .success(nil))
+        let (sut, router, _) = makeSUT(appDistributionResult: .success(nil))
         
         let task = sut.checkForUpdate()
         await task?.value
@@ -39,17 +31,15 @@ final class QASettingsViewModelTests: XCTestCase {
         appDistributionResult: Result<AppDistributionReleaseEntity?, Error> = .failure(NSError()),
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> (sut: QASettingsViewModel, router: MockRouter, fingerprintUseCase: MockFingerprintUseCase, appDistributionUseCase: MockAppDistributionUseCase) {
+    ) -> (sut: QASettingsViewModel, router: MockRouter, appDistributionUseCase: MockAppDistributionUseCase) {
         let appDistributionUseCase = MockAppDistributionUseCase(result: appDistributionResult)
         let router = MockRouter()
-        let fingerprintUseCase = MockFingerprintUseCase()
         let sut = QASettingsViewModel(
             router: router,
-            fingerprintUseCase: fingerprintUseCase,
             appDistributionUseCase: appDistributionUseCase
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, router, fingerprintUseCase, appDistributionUseCase)
+        return (sut, router, appDistributionUseCase)
     }
     
     private final class MockRouter: QASettingsRouting {

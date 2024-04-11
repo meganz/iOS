@@ -30,10 +30,6 @@
     
     [self updateAppearance];
     
-#if defined(DEBUG) || defined(QA_CONFIG)
-    [self setSecureFingerprintVerificationTapToToggle];
-#endif
-    
     self.primaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.secondaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     

@@ -22,16 +22,9 @@ struct QASettingsRouter: QASettingsRouting {
     }
     
     func build() -> UIViewController {
-        let manager = SharedSecureFingerprintManager()
-        manager.onToggleSecureFingerprintFlag = {
-            let adapter = ToggleSecureFingerprintFlagUIAlertAdapter(manager: manager)
-            adapter.showAlert()
-        }
-        let fingerprintRepository = SecureFingerprintRepository(manager: manager)
-        let fingerprintUseCase = SecureFingerprintUseCase(repo: fingerprintRepository)
         let appDistributionRepository = AppDistributionRepository(appUpdateChecker: FirebaseAppUpdateChecker())
         let appDistributionUseCase = AppDistributionUseCase(repo: appDistributionRepository)
-        let viewModel = QASettingsViewModel(router: self, fingerprintUseCase: fingerprintUseCase, appDistributionUseCase: appDistributionUseCase)
+        let viewModel = QASettingsViewModel(router: self, appDistributionUseCase: appDistributionUseCase)
         let view = QASettingsView(viewModel: viewModel)
         let controller = UIHostingController(rootView: view)
         controller.title = Constants.screenTitle
