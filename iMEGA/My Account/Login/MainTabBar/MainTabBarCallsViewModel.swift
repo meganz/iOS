@@ -32,11 +32,12 @@ protocol MainTabBarCallsRouting: AnyObject {
     func dismissCallUI()
     func showCallWillEndAlert(timeToEndCall: Double, isCallUIVisible: Bool)
     func showUpgradeToProDialog(_ account: AccountDetailsEntity)
+    func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool)
 }
 
 enum MainTabBarCallsAction: ActionType { }
 
-@objc class MainTabBarCallsViewModel: NSObject, ViewModelType {
+class MainTabBarCallsViewModel: ViewModelType {
     
     enum Command: CommandType, Equatable {
         case showActiveCallIcon
@@ -54,8 +55,11 @@ enum MainTabBarCallsAction: ActionType { }
     private var callSessionUseCase: any CallSessionUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let callKitManager: any CallKitManagerProtocol
+    private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
+    private var providerDelegate: CallKitProviderDelegate?
+    
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
     private(set) var callSessionUpdateSubscription: AnyCancellable?
@@ -81,6 +85,7 @@ enum MainTabBarCallsAction: ActionType { }
         callSessionUseCase: some CallSessionUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         callKitManager: some CallKitManagerProtocol,
+        callManager: some CallManagerProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.router = router
@@ -91,8 +96,12 @@ enum MainTabBarCallsAction: ActionType { }
         self.callSessionUseCase = callSessionUseCase
         self.accountUseCase = accountUseCase
         self.callKitManager = callKitManager
+        self.callManager = callManager
         self.featureFlagProvider = featureFlagProvider
-        super.init()
+        
+        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            self.providerDelegate = CallKitProviderDelegate(callCoordinator: self, callManager: callManager)
+        }
         
         onCallUpdateListener()
     }
@@ -387,5 +396,41 @@ enum MainTabBarCallsAction: ActionType { }
                 MEGALogError("Failed to get username for participant(s) in call waiting room")
             }
         }
+    }
+}
+
+extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
+    func startCall(_ callActionSync: CallActionSync) async -> Bool {
+        let isSpeakerEnabled = callActionSync.videoEnabled || callActionSync.chatRoom.isMeeting
+        do {
+            let call = try await callUseCase.startCall(for: callActionSync.chatRoom.chatId, enableVideo: callActionSync.videoEnabled, enableAudio: callActionSync.audioEnabled, notRinging: callActionSync.notRinging)
+            router.startCallUI(chatRoom: callActionSync.chatRoom, call: call, isSpeakerEnabled: isSpeakerEnabled)
+            return true
+        } catch {
+            MEGALogError("Cannot start call in chat room \(callActionSync.chatRoom.chatId)")
+            return false
+        }
+    }
+    
+    func answerCall(_ callActionSync: CallActionSync) async -> Bool {
+        do {
+            let call = try await callUseCase.answerCall(for: callActionSync.chatRoom.chatId, enableVideo: callActionSync.videoEnabled, enableAudio: callActionSync.audioEnabled)
+            router.startCallUI(chatRoom: callActionSync.chatRoom, call: call, isSpeakerEnabled: callActionSync.chatRoom.isMeeting)
+            return true
+        } catch {
+            MEGALogError("Cannot answer call in chat room \(callActionSync.chatRoom.chatId)")
+            return false
+        }
+    }
+    
+    func endCall(_ callActionSync: CallActionSync) async -> Bool {
+        guard let call = callUseCase.call(for: callActionSync.chatRoom.chatId) else { return false }
+        
+        if callActionSync.endForAll {
+            callUseCase.endCall(for: call.callId)
+        } else {
+            callUseCase.hangCall(for: call.callId)
+        }
+        return true
     }
 }
