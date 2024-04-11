@@ -1,5 +1,6 @@
 import Contacts
 import ContactsUI
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -21,7 +22,15 @@ class InviteContactViewController: UIViewController {
     @IBOutlet weak var scanQrCodeLabel: UILabel!
     @IBOutlet weak var scanQrCodeSeparatorView: UIView!
     @IBOutlet weak var moreLabel: UILabel!
-
+    
+    @IBOutlet var disclosureIndicatorImageViews: [UIImageView]!
+    @IBOutlet var separatorViews: [UIView]!
+    
+    @IBOutlet weak var addToContactImageView: UIImageView!
+    @IBOutlet weak var enterEmailImageView: UIImageView!
+    @IBOutlet weak var scanQRImageView: UIImageView!
+    @IBOutlet weak var moreImageView: UIImageView!
+    
     private let contactPickerViewController: CNContactPickerViewController = {
         let controller = CNContactPickerViewController()
         controller.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0")
@@ -44,10 +53,6 @@ class InviteContactViewController: UIViewController {
         }
 
         MEGASdk.shared.contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
-        
-        if !MFMessageComposeViewController.canSendText() {
-            addFromContactsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
-        }
         
         updateAppearance()
 
@@ -74,12 +79,38 @@ class InviteContactViewController: UIViewController {
     // MARK: - Private
     
     private func updateAppearance() {
-        mainView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_secondaryBackground(for: traitCollection)
-        
-        let separatorColor = UIColor.mnz_separator(for: self.traitCollection)
-        addFromContactsSeparatorView.backgroundColor = separatorColor
-        enterEmailSeparatorView.backgroundColor = separatorColor
-        scanQrCodeSeparatorView.backgroundColor = separatorColor
+        if UIColor.isDesignTokenEnabled() {
+            mainView.backgroundColor = TokenColors.Background.page
+            
+            disclosureIndicatorImageViews.forEach {
+                $0.image = UIImage.standardDisclosureIndicatorDesignToken
+            }
+            
+            separatorViews.forEach {
+                $0.backgroundColor = TokenColors.Border.strong
+            }
+            
+            let primaryTextColor = TokenColors.Text.primary
+            enterEmailLabel.textColor = primaryTextColor
+            scanQrCodeLabel.textColor = primaryTextColor
+            moreLabel.textColor = primaryTextColor
+            addFromContactsLabel.textColor = MFMessageComposeViewController.canSendText() ? primaryTextColor : TokenColors.Text.secondary
+            
+            addToContactImageView.image = UIImage.addFromContacts
+            enterEmailImageView.image = UIImage.enterUserEmail
+            scanQRImageView.image = UIImage.scanUserQRCode
+            moreImageView.image = UIImage.inviteContactMore
+
+        } else {
+            mainView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_secondaryBackground(for: traitCollection)
+            
+            let separatorColor = UIColor.mnz_separator(for: traitCollection)
+            addFromContactsSeparatorView.backgroundColor = separatorColor
+            enterEmailSeparatorView.backgroundColor = separatorColor
+            scanQrCodeSeparatorView.backgroundColor = separatorColor
+            
+            addFromContactsLabel.textColor = MFMessageComposeViewController.canSendText() ? .label : .mnz_secondaryGray(for: traitCollection)
+        }
     }
 
     private func presentComposeControllerForPhoneNumbers(_ phoneNumbers: [String]) {
