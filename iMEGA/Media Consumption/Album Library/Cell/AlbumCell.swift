@@ -63,6 +63,9 @@ struct AlbumCell: View {
         .task {
             await viewModel.loadAlbumThumbnail()
         }
+        .task {
+            await viewModel.monitorAlbumPhotos()
+        }
         .gesture(viewModel.editMode.isEditing ? tap : nil)
     }
     
@@ -87,6 +90,7 @@ struct AlbumCell: View {
     AlbumCell(
         viewModel: AlbumCellViewModel(
             thumbnailUseCase: Preview_ThumbnailUseCase(),
+            monitorAlbumsUseCase: Preview_MonitorAlbumsUseCase(),
             album: AlbumEntity(
                 id: 1, name: "Album name",
                 coverNode: nil,
