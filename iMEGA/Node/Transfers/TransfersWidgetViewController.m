@@ -1061,7 +1061,7 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (MEGAPhotoBrowserViewController *)photoBrowserForMediaNode:(MEGANode *)node {
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:MEGASdk.shared displayMode:DisplayModeTransfers presentingNode:node];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:MEGASdk.shared displayMode:DisplayModeTransfers isFromSharedItem:NO presentingNode:node];
     
     return photoBrowserVC;
 }

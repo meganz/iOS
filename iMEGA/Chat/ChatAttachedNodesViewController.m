@@ -255,7 +255,7 @@
         if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [self.message.nodeList mnz_mediaNodesMutableArrayFromNodeList];
             
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:DisplayModeSharedItem presentingNode:node];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:DisplayModeSharedItem isFromSharedItem:NO presentingNode:node];
             
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {

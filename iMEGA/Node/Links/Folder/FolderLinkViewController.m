@@ -409,7 +409,7 @@
     MEGANodeList *nodeList = [MEGASdk.sharedFolderLink childrenForParent:parentNode];
     NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:MEGASdk.sharedFolderLink];
     
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.sharedFolderLink displayMode:DisplayModeNodeInsideFolderLink presentingNode:node];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.sharedFolderLink displayMode:DisplayModeNodeInsideFolderLink isFromSharedItem:NO presentingNode:node];
     
     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }

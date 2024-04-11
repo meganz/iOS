@@ -235,7 +235,8 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                 
                 let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: mediaNodesArray),
                                                                                  api: MEGASdk.shared,
-                                                                                 displayMode: .chatAttachment,
+                                                                                 displayMode: .chatAttachment, 
+                                                                                 isFromSharedItem: false,
                                                                                  preferredIndex: UInt(foundIndex ?? 0))
                 photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
                 present(viewController: photoBrowserVC)

@@ -36,7 +36,8 @@ extension NodeVersionsViewController {
             let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(
                 withMediaNodes: mediaNodes,
                 api: sdk,
-                displayMode: displayMode,
+                displayMode: displayMode, 
+                isFromSharedItem: false,
                 presenting: node
             )
             self.navigationController?.present(photoBrowserVC, animated: true, completion: nil)

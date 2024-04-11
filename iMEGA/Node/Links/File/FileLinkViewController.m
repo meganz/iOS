@@ -177,7 +177,7 @@
     
     if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:self.node.name]) {
         [self dismissViewControllerAnimated:YES completion:^{
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:MEGASdk.shared displayMode:DisplayModeFileLink presentingNode:self.node];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:MEGASdk.shared displayMode:DisplayModeFileLink isFromSharedItem:NO presentingNode:self.node];
             photoBrowserVC.publicLink = self.publicLinkString;
             
             [UIApplication.mnz_presentingViewController presentViewController:photoBrowserVC animated:YES completion:nil];

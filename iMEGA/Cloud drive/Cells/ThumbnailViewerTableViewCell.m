@@ -146,7 +146,7 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.nodesArray.mutableCopy api:MEGASdk.shared displayMode:DisplayModeCloudDrive presentingNode:self.nodesArray[indexPath.row]];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.nodesArray.mutableCopy api:MEGASdk.shared displayMode:DisplayModeCloudDrive isFromSharedItem:NO presentingNode:self.nodesArray[indexPath.row]];
 
     self.showNodeAction(photoBrowserVC);
 }

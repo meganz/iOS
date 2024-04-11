@@ -421,7 +421,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                     return
                 }
                 
-                let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: nodes, api: MEGASdk.shared, displayMode: .chatSharedFiles, presenting: selectedNode)
+                let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: nodes, api: MEGASdk.shared, displayMode: .chatSharedFiles, isFromSharedItem: false, presenting: selectedNode)
                 photoBrowserVC.configureMediaAttachment(forMessageId: message.messageId, inChatId: chatRoom.chatId, messagesIds: messagesIdsArray)
                 navigationController?.present(photoBrowserVC, animated: true, completion: nil)
             } else {

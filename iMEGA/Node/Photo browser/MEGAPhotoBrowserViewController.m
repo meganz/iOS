@@ -68,25 +68,26 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 @implementation MEGAPhotoBrowserViewController
 
-+ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node {
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem presentingNode:(MEGANode *)node {
     PhotoBrowserDataProvider *provider = [[PhotoBrowserDataProvider alloc] initWithCurrentPhoto:node allPhotos:mediaNodesArray sdk:api];
     
-    MEGAPhotoBrowserViewController *photoBrowser = [self photoBrowserWithProvider:provider api:api displayMode:displayMode];
+    MEGAPhotoBrowserViewController *photoBrowser = [self photoBrowserWithProvider:provider api:api displayMode:displayMode isFromSharedItem:isFromSharedItem];
     [photoBrowser updateProviderNodeEntitiesWithNodes: mediaNodesArray];
     return photoBrowser;
 }
 
-+ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode preferredIndex:(NSUInteger)preferredIndex {
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem preferredIndex:(NSUInteger)preferredIndex {
     PhotoBrowserDataProvider *provider  = [[PhotoBrowserDataProvider alloc] initWithCurrentIndex:preferredIndex allPhotos:mediaNodesArray sdk:api];
-    return [self photoBrowserWithProvider:provider api:api displayMode:displayMode];
+    return [self photoBrowserWithProvider:provider api:api displayMode:displayMode isFromSharedItem:isFromSharedItem];
 }
 
-+ (MEGAPhotoBrowserViewController *)photoBrowserWithProvider:(PhotoBrowserDataProvider *)provider api:(MEGASdk *)api displayMode:(DisplayMode)displayMode {
++ (MEGAPhotoBrowserViewController *)photoBrowserWithProvider:(PhotoBrowserDataProvider *)provider api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]];
     MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
     photoBrowserVC.dataProvider = provider;
     photoBrowserVC.api = api;
     photoBrowserVC.displayMode = displayMode;
+    photoBrowserVC.isFromSharedItem = isFromSharedItem;
     
     return photoBrowserVC;
 }
