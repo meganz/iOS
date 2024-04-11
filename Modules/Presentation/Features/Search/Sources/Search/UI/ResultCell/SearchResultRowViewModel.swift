@@ -63,19 +63,22 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     let previewContent: PreviewContent
     let actions: UserActions
     let rowAssets: SearchConfig.RowAssets
+    let swipeActions: [SearchResultSwipeAction]
 
     init(
         result: SearchResult,
         rowAssets: SearchConfig.RowAssets,
         colorAssets: SearchConfig.ColorAssets,
         previewContent: PreviewContent,
-        actions: UserActions
+        actions: UserActions,
+        swipeActions: [SearchResultSwipeAction]
     ) {
         self.result = result
         self.colorAssets = colorAssets
         self.previewContent = previewContent
         self.actions = actions
         self.rowAssets = rowAssets
+        self.swipeActions = swipeActions
     }
 
     @MainActor

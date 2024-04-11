@@ -44,7 +44,8 @@ struct ContentView: View {
             ),
             config: .testConfig,
             layout: .list,  
-            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
+            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default), 
+            viewDisplayMode: .unknown
         )
         var body: some View {
             SearchResultsView(

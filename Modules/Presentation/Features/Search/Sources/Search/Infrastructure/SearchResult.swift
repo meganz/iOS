@@ -17,7 +17,8 @@ public struct SearchResult: Identifiable, Sendable {
         /// elements in the array define how they should be rendered (icon, text ..) and where
         /// they should be placed. Placement is encoded in a semantic way 
         properties: [ResultProperty],
-        thumbnailImageData: @escaping @Sendable () async -> Data
+        thumbnailImageData: @escaping @Sendable () async -> Data,
+        swipeActions: @escaping @Sendable (ViewDisplayMode) -> [SearchResultSwipeAction]
     ) {
         self.id = id
         self.thumbnailDisplayMode = thumbnailDisplayMode
@@ -27,6 +28,7 @@ public struct SearchResult: Identifiable, Sendable {
         self.type = type
         self.properties = properties
         self.thumbnailImageData = thumbnailImageData
+        self.swipeActions = swipeActions
     }
     
     public let id: ResultId
@@ -39,6 +41,7 @@ public struct SearchResult: Identifiable, Sendable {
     public let type: ResultType
     public let properties: [ResultProperty]
     public let thumbnailImageData: @Sendable () async -> Data
+    public let swipeActions: @Sendable (ViewDisplayMode) -> [SearchResultSwipeAction]
 }
 
 public typealias ResultId = UInt64

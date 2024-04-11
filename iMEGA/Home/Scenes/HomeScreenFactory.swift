@@ -300,7 +300,8 @@ final class HomeScreenFactory: NSObject {
         let vm = SearchResultsViewModel(
             resultsProvider: makeResultsProvider(
                 parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
-                searchBridge: searchBridge
+                searchBridge: searchBridge, 
+                navigationController: navigationController
             ),
             bridge: searchBridge,
             config: .searchConfig(
@@ -322,15 +323,16 @@ final class HomeScreenFactory: NSObject {
                 }
             ),
             layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
-            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter)
-
+            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter), 
+            viewDisplayMode: .home
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
     }
 
     func makeResultsProvider(
         parentNodeProvider: @escaping () -> NodeEntity?,
-        searchBridge: SearchBridge
+        searchBridge: SearchBridge,
+        navigationController: UINavigationController
     ) -> HomeSearchResultsProvider {
         let featureFlagProvider = makeFeatureFlagProvider()
         return HomeSearchResultsProvider(
@@ -345,6 +347,7 @@ final class HomeScreenFactory: NSObject {
             nodeIconUsecase: makeNodeIconUsecase(),
             allChips: Self.allChips(areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)),
             sdk: sdk,
+            navigationController: navigationController,
             onSearchResultUpdated: { [weak searchBridge] searchResult in
                 searchBridge?.searchResultChanged(searchResult)
             }

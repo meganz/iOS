@@ -17,7 +17,8 @@ extension SearchResult {
             description: { _ in "Desc" },
             type: .node,
             properties: properties,
-            thumbnailImageData: { UIImage(systemName: "scribble")!.pngData()! }
+            thumbnailImageData: { UIImage(systemName: "scribble")!.pngData()! }, 
+            swipeActions: { _ in [] }
         )
     }
     public static func resultWith(id: ResultId) -> Self {

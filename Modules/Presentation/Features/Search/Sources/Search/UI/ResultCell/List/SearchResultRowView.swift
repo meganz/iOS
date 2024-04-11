@@ -24,6 +24,17 @@ struct SearchResultRowView: View {
     
     var body: some View {
         content
+            .swipeActions {
+                ForEach(viewModel.swipeActions, id: \.self) { swipeAction in
+                    Button(action: swipeAction.action) {
+                        swipeAction
+                            .image
+                            .renderingMode(.template)
+                            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : .white)
+                    }
+                    .tint(swipeAction.backgroundColor)
+                }
+            }
             .listRowInsets(
                 EdgeInsets(
                     top: -2,
@@ -165,27 +176,17 @@ struct SearchResultRowView_Previews: PreviewProvider {
     static var items: [SearchResultRowViewModel] {
         Array(0...9).map {
             .init(
-                result: .previewResult(
-                    idx: $0,
-                    backgroundDisplayMode: .icon,
-                    properties: [
-                        .previewSamples[Int($0) % 3 + 1],
-                        .previewSamples[Int($0)]
-                    ]
-                ),
+                result: result(for: $0),
                 rowAssets: .example,
                 colorAssets: .example,
                 previewContent: .example,
-                actions: .init(
-                    contextAction: { _ in },
-                    selectionAction: {},
-                    previewTapAction: {}
-                )
+                actions: actions,
+                swipeActions: []
             )
         }
     }
+
     static var previews: some View {
-        
         List {
             ForEach(items) {
                 SearchResultRowView(
@@ -196,6 +197,25 @@ struct SearchResultRowView_Previews: PreviewProvider {
             }
         }
         .listStyle(.plain)
+    }
+
+    static private var actions: SearchResultRowViewModel.UserActions {
+        .init(
+            contextAction: { _ in },
+            selectionAction: {},
+            previewTapAction: {}
+        )
+    }
+
+    static private func result(for index: Int) -> SearchResult {
+        .previewResult(
+            idx: UInt64(index),
+            backgroundDisplayMode: .icon,
+            properties: [
+                .previewSamples[index % 3 + 1],
+                .previewSamples[index]
+            ]
+        )
     }
 }
 
@@ -214,7 +234,8 @@ extension SearchResult {
             description: { _ in "desc\(idx)" },
             type: .node,
             properties: properties,
-            thumbnailImageData: { UIImage(systemName: "rectangle")!.pngData()! }
+            thumbnailImageData: { UIImage(systemName: "rectangle")!.pngData()! },
+            swipeActions: { _ in [] }
         )
     }
 }

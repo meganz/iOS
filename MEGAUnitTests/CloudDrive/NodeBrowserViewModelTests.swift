@@ -83,7 +83,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     layout: defaultLayout,
                     showLoadingPlaceholderDelay: 0,
                     searchInputDebounceDelay: 0,
-                    keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
+                    keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
+                    viewDisplayMode: .unknown
                 ),
                 mediaDiscoveryViewModel: .init(
                     contentMode: .library,

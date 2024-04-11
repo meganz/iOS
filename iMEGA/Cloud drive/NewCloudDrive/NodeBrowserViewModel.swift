@@ -180,15 +180,14 @@ class NodeBrowserViewModel: ObservableObject {
 
         refresh()
 
-        noInternetViewModel.networkConnectionStateChanged = { [weak self, weak searchResultsViewModel] isConnectedToNetwork in
-            Task { [weak self, weak searchResultsViewModel] in
-                guard isConnectedToNetwork, let self, let searchResultsViewModel else { return }
+        noInternetViewModel.networkConnectionStateChanged = { [weak self] isConnectedToNetwork in
+            Task { [weak self] in
+                guard isConnectedToNetwork, let self else { return }
 
                 /// wait for 10 attempts to see if the node is loaded in the nodeSource.
                 let numberOfTries = 10
                 if await waitForNodeToLoad(with: numberOfTries) {
-                    refresh()
-                    await searchResultsViewModel.reloadResults()
+                    await refreshAndReloadResults()
                 }
             }
         }
@@ -342,6 +341,12 @@ class NodeBrowserViewModel: ObservableObject {
         }
 
         changeSortOrder(sortOrder.toSortOrderType())
+    }
+
+    @MainActor
+    private func refreshAndReloadResults() async {
+        refresh()
+        await searchResultsViewModel.reloadResults()
     }
 }
 

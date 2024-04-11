@@ -33,6 +33,10 @@ public class SearchResultsViewModel: ObservableObject {
         config.chipAssets
     }
 
+    var containsSwipeActions: Bool {
+        listItems.first?.swipeActions.isNotEmpty ?? false
+    }
+
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
 
@@ -74,6 +78,8 @@ public class SearchResultsViewModel: ObservableObject {
 
     private let keyboardVisibilityHandler: any KeyboardVisibilityHandling
 
+    private let viewDisplayMode: ViewDisplayMode
+
     @Published public var editing: Bool = false
 
     public init(
@@ -83,7 +89,8 @@ public class SearchResultsViewModel: ObservableObject {
         layout: PageLayout,
         showLoadingPlaceholderDelay: Double = 1,
         searchInputDebounceDelay: Double = 0.5,
-        keyboardVisibilityHandler: any KeyboardVisibilityHandling
+        keyboardVisibilityHandler: any KeyboardVisibilityHandling,
+        viewDisplayMode: ViewDisplayMode
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -91,6 +98,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.showLoadingPlaceholderDelay = showLoadingPlaceholderDelay
         self.searchInputDebounceDelay = searchInputDebounceDelay
         self.keyboardVisibilityHandler = keyboardVisibilityHandler
+        self.viewDisplayMode = viewDisplayMode
         self.layout = layout
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
@@ -288,6 +296,7 @@ public class SearchResultsViewModel: ObservableObject {
 
     private func mapSearchResultToViewModel(_ result: SearchResult) -> SearchResultRowViewModel {
         let content = config.contextPreviewFactory.previewContentForResult(result)
+        let swipeActions = result.swipeActions(viewDisplayMode)
         return SearchResultRowViewModel(
             result: result,
             rowAssets: config.rowAssets,
@@ -305,7 +314,8 @@ public class SearchResultsViewModel: ObservableObject {
                 }),
                 previewMode: content.previewMode
             ),
-            actions: rowActions(for: result)
+            actions: rowActions(for: result),
+            swipeActions: swipeActions
         )
     }
 

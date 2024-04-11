@@ -89,17 +89,30 @@ public struct SearchResultsView: View {
 
     @ViewBuilder
     private var content: some View {
-        contentWrapper
-            .simultaneousGesture(
-                DragGesture().onChanged({ _ in
-                    viewModel.scrolled()
-                })
-            )
-            .padding(.bottom, viewModel.bottomInset)
-            .emptyState(viewModel.emptyViewModel)
-            .task {
-                await viewModel.task()
+        Group {
+            if #available(iOS 16.0, *) {
+                contentWrapper
+                    .scrollDismissesKeyboard(.immediately)
+            } else {
+                if viewModel.layout == .list && viewModel.containsSwipeActions {
+                    // Drag gesture conflicts with the swipe left for listing.
+                    // Hence it is not enabled for iOS 15 and below devices if there is swipe.
+                    contentWrapper
+                } else {
+                    contentWrapper
+                        .simultaneousGesture(
+                            DragGesture().onChanged({ _ in
+                                viewModel.scrolled()
+                            })
+                        )
+                }
             }
+        }
+        .padding(.bottom, viewModel.bottomInset)
+        .emptyState(viewModel.emptyViewModel)
+        .task {
+            await viewModel.task()
+        }
     }
 
     @ViewBuilder
@@ -203,8 +216,8 @@ struct SearchResultsViewPreviews: PreviewProvider {
             ),
             config: .example,
             layout: .list,
-            keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
-
+            keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
+            viewDisplayMode: .unknown
         )
         var body: some View {
             SearchResultsView(

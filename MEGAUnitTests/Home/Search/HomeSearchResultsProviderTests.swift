@@ -71,6 +71,7 @@ class HomeSearchProviderTests: XCTestCase {
             }
         }
         let nodes: [NodeEntity]
+        @MainActor
         init(
             _ testCase: XCTestCase,
             rootNode: NodeEntity? = nil,
@@ -125,6 +126,7 @@ class HomeSearchProviderTests: XCTestCase {
                     calendar: .testCalendar
                 ),
                 sdk: MockSdk(),
+                navigationController: .init(),
                 onSearchResultUpdated: {_ in}
             )
             
@@ -167,7 +169,7 @@ class HomeSearchProviderTests: XCTestCase {
     }
     
     func testSearch_whenTimeChipApplied_searchUseReceivedTimeFrame_returnsValidNodes() async throws {
-        let harness = Harness(self, nodes: .anyNodes)
+        let harness = await Harness(self, nodes: .anyNodes)
         let timeFrame = SearchChipEntity.TimeFrame(
             startDate: .testDate("05/12/2023 13:55"),
             endDate: .testDate("06/12/2023 12:00")
@@ -182,7 +184,7 @@ class HomeSearchProviderTests: XCTestCase {
     }
 
     func testSearch_whenFailures_returnsNoResults() async throws {
-        let harness = Harness(self)
+        let harness = await Harness(self)
 
         let searchResults = try await harness.sut.search(
             queryRequest: .userSupplied(.query("node 1", isSearchActive: true))
@@ -195,7 +197,7 @@ class HomeSearchProviderTests: XCTestCase {
         let root = NodeEntity(handle: 1)
         let children = [NodeEntity(handle: 2), NodeEntity(handle: 3), NodeEntity(handle: 4)]
         
-        let harness = Harness(self, rootNode: root, childrenNodes: children)
+        let harness = await Harness(self, rootNode: root, childrenNodes: children)
         
         let response = try await harness.sut.search(queryRequest: .initial)
         XCTAssertEqual(response?.results.map(\.id), [2, 3, 4])
@@ -204,7 +206,7 @@ class HomeSearchProviderTests: XCTestCase {
     func testSearch_whenEmptyQuery_returnsContentsOfRoot() async throws {
         let root = NodeEntity(handle: 1)
         let children = [NodeEntity(handle: 6), NodeEntity(handle: 7), NodeEntity(handle: 8)]
-        let harness = Harness(self, rootNode: root, childrenNodes: children)
+        let harness = await Harness(self, rootNode: root, childrenNodes: children)
         
         let response = try await harness.sut.search(queryRequest: .userSupplied(.query("", isSearchActive: false)))
         XCTAssertEqual(response?.results.map(\.id), [6, 7, 8])
@@ -214,14 +216,14 @@ class HomeSearchProviderTests: XCTestCase {
         let root = NodeEntity(handle: 1)
         let children = [NodeEntity(handle: 2)]
         
-        let harness = Harness(self, rootNode: root, childrenNodes: children)
+        let harness = await Harness(self, rootNode: root, childrenNodes: children)
         
         _ = try await harness.sut.search(queryRequest: .userSupplied(.query("any search string", isSearchActive: true)))
         XCTAssertEqual(harness.searchFile.passedInSortOrders, [.defaultAsc])
     }
     
     func testSearch_resultProperty_isFavorite() async throws {
-        let harness = Harness(self, nodes: [
+        let harness = await Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isFavourite: true)
         ])
         let propertyIds = try await harness.propertyIdsForFoundNode()
@@ -231,7 +233,7 @@ class HomeSearchProviderTests: XCTestCase {
     func testSearch_resultProperty_label() async throws {
         let node = NodeEntity(name: "node 0", handle: 0, label: .red)
         
-        let harness = Harness(self, nodes: [
+        let harness = await Harness(self, nodes: [
             node
         ])
         
@@ -242,18 +244,18 @@ class HomeSearchProviderTests: XCTestCase {
     
     func testSearch_resultProperty_isLinked() async throws {
         
-        let harness = Harness(self, nodes: [
+        let harness = await Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isExported: true)
         ])
         
-        harness.nodeDataUseCase.inRubbishBinToReturn = false
+        harness.nodeDataUseCase.isNodeInRubbishBin = { _ in false }
         let propertyIds = try await harness.propertyIdsForFoundNode()
         XCTAssertEqual(propertyIds, [.linked])
     }
     
     func testSearch_resultProperty_isVersioned() async throws {
         
-        let harness = Harness(self, nodes: [
+        let harness = await Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isFile: true)
         ])
         
@@ -264,7 +266,7 @@ class HomeSearchProviderTests: XCTestCase {
     
     func testSearch_resultProperty_isDownloaded() async throws {
         
-        let harness = Harness(self, nodes: [
+        let harness = await Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isFile: true)
         ])
         
@@ -275,7 +277,7 @@ class HomeSearchProviderTests: XCTestCase {
     
     func testSearch_resultProperty_isVideo() async throws {
         
-        let harness = Harness(self, nodes: [
+        let harness = await Harness(self, nodes: [
             .init(name: "node 0", handle: 0, duration: 123)
         ])
         
@@ -286,11 +288,11 @@ class HomeSearchProviderTests: XCTestCase {
     
     func testSearch_resultProperty_multipleProperties() async throws {
         
-        let harness = Harness(self, nodes: [
+        let harness = await Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isFile: true, isExported: true)
         ])
         
-        harness.nodeDataUseCase.inRubbishBinToReturn = false
+        harness.nodeDataUseCase.isNodeInRubbishBin = { _ in false }
         harness.nodeDataUseCase.versions = true
         
         let propertyIds = try await harness.propertyIdsForFoundNode()
