@@ -57,6 +57,7 @@ extension Tracker {
     static let shared: Tracker = {
         Tracker(
             viewIdProvider: viewIdProvider,
+            appIdentifier: AppIdentifier(id: 0),
             eventSender: eventSender
         )
     }()
