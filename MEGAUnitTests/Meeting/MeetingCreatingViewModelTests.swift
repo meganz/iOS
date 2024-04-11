@@ -16,7 +16,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         let viewModel = MeetingCreatingViewModel(
             router: router,
             type: .start,
-            meetingUseCase: MockMeetingCreatingUseCase(userName: "Test Name"),
+            meetingUseCase: MockMeetingCreatingUseCase(),
             audioSessionUseCase: audioSession,
             localVideoUseCase: MockCallLocalVideoUseCase(),
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -38,7 +38,6 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let useCase = MockMeetingCreatingUseCase(
-            userName: "Test Name",
             checkChatLinkCompletion: .success(chatRoom)
         )
         let audioSession = MockAudioSessionUseCase()
@@ -69,7 +68,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     
     func testAction_updateSpeakerButton() {
         let router = MockMeetingCreateRouter()
-        let useCase = MockMeetingCreatingUseCase(userName: "Test Name")
+        let useCase = MockMeetingCreatingUseCase()
         let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(
@@ -95,7 +94,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     
     func testAction_didTapCloseButton() {
         let router = MockMeetingCreateRouter()
-        let useCase = MockMeetingCreatingUseCase(userName: "Test Name")
+        let useCase = MockMeetingCreatingUseCase()
         let viewModel = MeetingCreatingViewModel(
             router: router,
             type: .join,
@@ -119,7 +118,6 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let meetingCreatingUseCase = MockMeetingCreatingUseCase(
-            userName: "Test Name",
             createMeetingResult: .success(chatRoom)
         )
         let callUseCase = MockCallUseCase(callCompletion: .success(CallEntity()))
