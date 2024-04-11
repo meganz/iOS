@@ -45,6 +45,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let isAlbumPhotoCacheEnabled: Bool
     private(set) var alertViewModel: TextFieldAlertViewModel
+    
+    private lazy var albumsSubject = PassthroughSubject<[AlbumEntity], Never>()
     private var subscriptions = Set<AnyCancellable>()
     
     private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
@@ -74,6 +76,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         assignAlbumNameValidator()
         subscribeToEditMode()
         subscribeToShareAlbumLinks()
+        subscribeToAlbums()
     }
     
     func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
@@ -376,7 +379,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     @MainActor
     private func updateAlbums(_ newAlbums: [AlbumEntity]) {
-        albums = newAlbums
+        albumsSubject.send(newAlbums)
         
         guard shouldLoad else { return }
         shouldLoad.toggle()
@@ -401,6 +404,15 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             return SingleItemAsyncSequence(item: [])
                 .eraseToAnyAsyncSequence()
         }
+    }
+    
+    // Throttle is not available in swift-async-algorithms package and will most likely only be available for iOS 16 and above due to the use of `Clock`.
+    private func subscribeToAlbums() {
+        guard isAlbumPhotoCacheEnabled else { return }
+        
+        albumsSubject
+            .debounceImmediate(for: .seconds(0.3), scheduler: DispatchQueue.main)
+            .assign(to: &$albums)
     }
 }
 

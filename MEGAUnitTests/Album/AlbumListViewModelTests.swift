@@ -734,13 +734,24 @@ final class AlbumListViewModelTests: XCTestCase {
         let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
                                      featureFlagProvider: featureFlagProvider)
         
-        let exp = expectation(description: "Should load albums")
-        let subscription = sut.$shouldLoad
+        var subscriptions = Set<AnyCancellable>()
+        
+        let albumsExp = expectation(description: "Should update albums")
+        sut.$albums
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0,
+                               [favouriteAlbum, gifAlbum, rawAlbum, userAlbum2, userAlbum1])
+                albumsExp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let shouldLoadExp = expectation(description: "Should load albums")
+        sut.$shouldLoad
             .dropFirst()
             .filter { !$0 }
             .sink { _ in
-                exp.fulfill()
-            }
+                shouldLoadExp.fulfill()
+            }.store(in: &subscriptions)
         
         let monitoring = Task {
             do {
@@ -750,12 +761,9 @@ final class AlbumListViewModelTests: XCTestCase {
             }
         }
         
-        wait(for: [exp], timeout: 1.0)
-        subscription.cancel()
+        wait(for: [albumsExp, shouldLoadExp], timeout: 1.0)
+        subscriptions.forEach { $0.cancel() }
         monitoring.cancel()
-        
-        XCTAssertEqual(sut.albums,
-                       [favouriteAlbum, gifAlbum, rawAlbum, userAlbum2, userAlbum1])
     }
     
     @MainActor
