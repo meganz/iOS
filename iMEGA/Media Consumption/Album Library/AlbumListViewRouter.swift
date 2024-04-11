@@ -16,6 +16,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell {
         let vm = AlbumCellViewModel(
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
             album: album,
             selection: selection
         )

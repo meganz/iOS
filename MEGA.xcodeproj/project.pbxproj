@@ -51,6 +51,7 @@
 		0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */; };
 		0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */; };
 		0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */; };
+		0E81A8D52BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */; };
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
 		0E826BDF2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */; };
 		0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */; };
@@ -2712,6 +2713,7 @@
 		0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModel.swift; sourceTree = "<group>"; };
 		0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModelTests.swift; sourceTree = "<group>"; };
 		0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+Additions.swift"; sourceTree = "<group>"; };
+		0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_MonitorAlbumsUseCase.swift; sourceTree = "<group>"; };
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
 		0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALinkManager+AdditionsTests.swift"; sourceTree = "<group>"; };
@@ -6166,6 +6168,7 @@
 		24C415072B8492C000804D8D /* PreviewSupport */ = {
 			isa = PBXGroup;
 			children = (
+				0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */,
 				24C415092B8492D400804D8D /* Preview_ThumbnailUseCase.swift */,
 			);
 			path = PreviewSupport;
@@ -15189,6 +15192,7 @@
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
 				B6A0CF1A28A08D1B00D7F52E /* PreferenceUseCase+Additions.swift in Sources */,
+				0E81A8D52BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift in Sources */,
 				24C4150A2B8492D400804D8D /* Preview_ThumbnailUseCase.swift in Sources */,
 				2404468F2B7B7C24001E1027 /* Preview_UserAttributeUseCase.swift in Sources */,
 				837B179528815E4400A4D01B /* PreviewDocumentViewController+Additions.swift in Sources */,

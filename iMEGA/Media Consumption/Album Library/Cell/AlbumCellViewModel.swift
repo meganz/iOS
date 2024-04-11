@@ -29,11 +29,14 @@ final class AlbumCellViewModel: ObservableObject {
     
     let album: AlbumEntity
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     let selection: AlbumSelection
     
     private var subscriptions = Set<AnyCancellable>()
+    private var albumMetaData: AlbumMetaDataEntity?
     
     private var isEditing: Bool {
         selection.editMode.isEditing
@@ -42,15 +45,19 @@ final class AlbumCellViewModel: ObservableObject {
     let isLinkShared: Bool
     
     init(
-        thumbnailUseCase: any ThumbnailUseCaseProtocol,
+        thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.thumbnailUseCase = thumbnailUseCase
+        self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.album = album
         self.selection = selection
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
         
         title = album.name
         numberOfNodes = album.count
@@ -87,7 +94,33 @@ final class AlbumCellViewModel: ObservableObject {
             selectionType: isSelected ? .multiadd : .multiremove))
     }
     
+    @MainActor
+    func monitorAlbumPhotos() async {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache),
+              album.type == .user else { return }
+        
+        for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album) {
+            numberOfNodes = albumPhotos.count
+            
+            guard album.coverNode == nil else { continue }
+            await setDefaultAlbumCover(albumPhotos)
+        }
+    }
+    
     // MARK: Private
+    
+    @MainActor
+    private func setDefaultAlbumCover(_ photos: [AlbumPhotoEntity]) async {
+        guard let latestPhoto = photos.max(by: { lhs, rhs in
+            if lhs.photo.modificationTime == rhs.photo.modificationTime {
+                lhs.id < rhs.id
+            } else {
+                lhs.photo.modificationTime < rhs.photo.modificationTime
+            }
+        })?.photo else { return }
+        
+        await loadThumbnail(for: latestPhoto)
+    }
     
     @MainActor
     private func loadThumbnail(for node: NodeEntity) async {

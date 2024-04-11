@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGASwift
 import MEGASwiftUI
 import MEGATest
 import SwiftUI
@@ -283,21 +284,127 @@ final class AlbumCellViewModelTests: XCTestCase {
         
         XCTAssertTrue(sut.isLinkShared)
     }
+    
+    func testMonitorAlbumPhotos_onPhotosReturned_shouldUpdateNodeCount() async {
+        let albumId = HandleEntity(65)
+        let albumPhotos = (1...15).map {
+            AlbumPhotoEntity(photo: NodeEntity(handle: $0),
+                             albumPhotoId: albumId)
+        }
+        let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
+            .eraseToAnyAsyncSequence()
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        let album = AlbumEntity(id: albumId, type: .user)
         
+        let sut = makeAlbumCellViewModel(album: album,
+                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         featureFlagProvider: featureFlagProvider)
+        
+        let exp = expectation(description: "Should update count")
+        
+        let subscription = sut.$numberOfNodes
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, albumPhotos.count)
+                exp.fulfill()
+            }
+        
+        let task = Task { await sut.monitorAlbumPhotos() }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        subscription.cancel()
+    }
+    
+    func testMonitorAlbumPhotos_userAlbumCoverNil_shouldSetLatestPhotoAsCover() async throws {
+        let latestCoverHandle = HandleEntity(76)
+        let album = AlbumEntity(id: 65, name: "User",
+                                coverNode: nil, count: 0, type: .user)
+        let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
+        let thumbnailUseCase = MockThumbnailUseCase(loadThumbnailResults: [latestCoverHandle: .success(thumbnail)])
+        
+        let albumPhotos = [
+            AlbumPhotoEntity(photo: NodeEntity(handle: 1, modificationTime: try "2024-04-08T22:01:04Z".date),
+                             albumPhotoId: album.id),
+            AlbumPhotoEntity(photo: NodeEntity(handle: latestCoverHandle, modificationTime: try "2024-04-09T10:01:04Z".date),
+                             albumPhotoId: album.id),
+            AlbumPhotoEntity(photo: NodeEntity(handle: 3, modificationTime: try "2024-04-02T22:01:04Z".date),
+                             albumPhotoId: album.id)
+        ]
+        let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
+            .eraseToAnyAsyncSequence()
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+       
+        let sut = makeAlbumCellViewModel(album: album,
+                                         thumbnailUseCase: thumbnailUseCase,
+                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         featureFlagProvider: featureFlagProvider)
+        
+        let exp = expectation(description: "Should update thumbnail with latest photo")
+        
+        let subscription = sut.$thumbnailContainer
+            .dropFirst()
+            .sink {
+                XCTAssertTrue($0.isEqual(URLImageContainer(imageURL: self.imageURL, type: .thumbnail)))
+                exp.fulfill()
+            }
+        
+        let task = Task { await sut.monitorAlbumPhotos() }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        subscription.cancel()
+    }
+    
+    func testMonitorAlbumPhotos_userAlbumCoverNilNoPhotos_shouldNotUpdateAlbumCover() async throws {
+        let album = AlbumEntity(id: 65, name: "User",
+                                coverNode: nil, count: 0, type: .user)
+        
+        let monitorUserAlbumPhotos = SingleItemAsyncSequence<[AlbumPhotoEntity]>(item: [])
+            .eraseToAnyAsyncSequence()
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        
+        let sut = makeAlbumCellViewModel(album: album,
+                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         featureFlagProvider: featureFlagProvider)
+        
+        let exp = expectation(description: "Should not update thumbnail with latest photo")
+        exp.isInverted = true
+        
+        let subscription = sut.$thumbnailContainer
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        let task = Task { await sut.monitorAlbumPhotos() }
+        
+        await fulfillment(of: [exp], timeout: 0.5)
+        task.cancel()
+        subscription.cancel()
+    }
+    
     // MARK: - Helpers
     
     private func makeAlbumCellViewModel(
         album: AlbumEntity,
         thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
+        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         selection: AlbumSelection = AlbumSelection(),
         tracker: some AnalyticsTracking = MockTracker(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AlbumCellViewModel {
         let sut = AlbumCellViewModel(thumbnailUseCase: thumbnailUseCase,
+                                     monitorAlbumsUseCase: monitorAlbumsUseCase,
                                      album: album,
                                      selection: selection,
-                                     tracker: tracker)
+                                     tracker: tracker,
+                                     featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
