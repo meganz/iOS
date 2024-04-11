@@ -24,14 +24,14 @@ final class NodeOpener {
         
         switch megaNode.isFolder() {
         case true: openFolderNode(megaNode, config: config)
-        case false: openFileNode(megaNode, allNodes: allMegaNodes, displayMode: config.displayMode)
+        case false: openFileNode(megaNode, allNodes: allMegaNodes, displayMode: config.displayMode, isFromSharedItem: config.isFromSharedItem)
         }
     }
     
     func openNode(node: MEGANode, allNodes: [MEGANode]?, config: NodeBrowserConfig = .default) {
         switch node.isFolder() {
         case true: openFolderNode(node, config: config)
-        case false: openFileNode(node, allNodes: allNodes, displayMode: config.displayMode)
+        case false: openFileNode(node, allNodes: allNodes, displayMode: config.displayMode, isFromSharedItem: config.isFromSharedItem)
         }
     }
     
@@ -61,12 +61,13 @@ final class NodeOpener {
     private func openFileNode(
         _ node: MEGANode,
         allNodes: [MEGANode]?,
-        displayMode: DisplayMode?
+        displayMode: DisplayMode?,
+        isFromSharedItem: Bool?
     ) {
         // if we do not have an image or video, we will jump deeper to see
         // if we have audio or other type of file
         guard node.name?.fileExtensionGroup.isVisualMedia == true else {
-            node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, allNodes: allNodes)
+            node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: isFromSharedItem ?? false, allNodes: allNodes)
             return
         }
         

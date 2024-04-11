@@ -427,9 +427,9 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
             } else {
                 if chatRoom.isPreview {
                     guard let authNode = MEGASdk.shared.authorizeChatNode(selectedNode, cauth: chatRoom.authorizationToken) else { return }
-                    authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, allNodes: nil)
+                    authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil)
                 } else {
-                    selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, allNodes: nil)
+                    selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil)
                 }
             }
         }

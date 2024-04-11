@@ -23,6 +23,7 @@ final class AudioPlayerConfigEntity {
     // Common properties
     var playerHandler: any AudioPlayerHandlerProtocol
     var shouldResetPlayer = false
+    var isFromSharedItem: Bool
     
     init(
         node: MEGANode? = nil,
@@ -34,7 +35,8 @@ final class AudioPlayerConfigEntity {
         parentNode: MEGANode? = nil,
         allNodes: [MEGANode]? = nil,
         playerHandler: some AudioPlayerHandlerProtocol,
-        shouldResetPlayer: Bool = false
+        shouldResetPlayer: Bool = false,
+        isFromSharedItem: Bool = false
     ) {
         self.node = node
         self.isFolderLink = isFolderLink
@@ -46,6 +48,7 @@ final class AudioPlayerConfigEntity {
         self.allNodes = allNodes
         self.playerHandler = playerHandler
         self.shouldResetPlayer = shouldResetPlayer
+        self.isFromSharedItem = isFromSharedItem
     }
     
     var isFileLink: Bool {
