@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -271,9 +271,9 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="4q5-yJ-61c"/>
                                 <exclude reference="BjL-bW-Jy4"/>
                                 <exclude reference="tbQ-u4-9ho"/>
+                                <exclude reference="4q5-yJ-61c"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -291,12 +291,24 @@
                         <outlet property="addFromContactsLabel" destination="519-yd-SK8" id="ptp-sa-xzt"/>
                         <outlet property="addFromContactsSeparatorView" destination="pyI-Cj-fkg" id="ecK-1C-CvA"/>
                         <outlet property="addFromContactsView" destination="Evq-ry-Zdg" id="x5T-IV-JlH"/>
+                        <outlet property="addToContactImageView" destination="SSY-l3-0eX" id="1yH-AB-QkN"/>
+                        <outlet property="enterEmailImageView" destination="Oos-Sx-GLX" id="77B-Aa-hLM"/>
                         <outlet property="enterEmailLabel" destination="8qQ-kE-3bR" id="thN-iz-Pxo"/>
                         <outlet property="enterEmailSeparatorView" destination="BQs-Ju-56a" id="vqx-Rg-NQA"/>
                         <outlet property="mainView" destination="iJL-I3-Z6c" id="98o-4B-lJ0"/>
+                        <outlet property="moreImageView" destination="YUb-nT-BYj" id="ILe-hZ-5HR"/>
                         <outlet property="moreLabel" destination="Jha-lt-O7z" id="muU-Dk-hcc"/>
+                        <outlet property="scanQRImageView" destination="wUI-S7-nju" id="yhs-fl-5dU"/>
                         <outlet property="scanQrCodeLabel" destination="N4g-GF-xu4" id="JjG-ha-aJh"/>
                         <outlet property="scanQrCodeSeparatorView" destination="r4F-As-zRM" id="Cpj-md-kBm"/>
+                        <outletCollection property="separatorViews" destination="pyI-Cj-fkg" collectionClass="NSMutableArray" id="NkB-Fr-CXM"/>
+                        <outletCollection property="disclosureIndicatorImageViews" destination="n1l-Da-TfM" collectionClass="NSMutableArray" id="89n-D1-7iC"/>
+                        <outletCollection property="disclosureIndicatorImageViews" destination="lBb-nj-BvX" collectionClass="NSMutableArray" id="Tw8-lz-FLb"/>
+                        <outletCollection property="disclosureIndicatorImageViews" destination="rgQ-vH-lEA" collectionClass="NSMutableArray" id="Znu-FS-N88"/>
+                        <outletCollection property="disclosureIndicatorImageViews" destination="cfq-57-Omw" collectionClass="NSMutableArray" id="04R-8B-w28"/>
+                        <outletCollection property="separatorViews" destination="r4F-As-zRM" collectionClass="NSMutableArray" id="Wea-2H-swq"/>
+                        <outletCollection property="separatorViews" destination="BQs-Ju-56a" collectionClass="NSMutableArray" id="r4y-IQ-YjE"/>
+                        <outletCollection property="separatorViews" destination="pyI-Cj-fkg" collectionClass="NSMutableArray" id="sdK-IW-gfY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0wA-IE-FAq" userLabel="First Responder" sceneMemberID="firstResponder"/>
