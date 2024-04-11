@@ -1084,7 +1084,6 @@
 		838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		838F7C13243B7A5B004DEC84 /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		8394EB812643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */; };
-		8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */; };
 		8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */; };
 		8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */; };
@@ -3829,7 +3828,6 @@
 		838F63CD2836778A009B41D6 /* DuplicatedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatedItem.swift; sourceTree = "<group>"; };
 		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
 		8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModelTests.swift; sourceTree = "<group>"; };
-		8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocalVideoUseCase.swift; sourceTree = "<group>"; };
 		8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRemoteVideoUseCase.swift; sourceTree = "<group>"; };
 		8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Additions.swift"; sourceTree = "<group>"; };
 		8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportNodeRepository.swift; sourceTree = "<group>"; };
@@ -12131,7 +12129,6 @@
 				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
 				BF8895E72631213C002A18CA /* MockCallKitManager.swift */,
 				837D0F362BC7D3B000C629AE /* MockCallManager.swift */,
-				8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */,
 				2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */,
 				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
 				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
@@ -16159,7 +16156,6 @@
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
-				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
 				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
