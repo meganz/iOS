@@ -570,7 +570,7 @@
         }
     }
     
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:DisplayModeCloudDrive presentingNode:node];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:DisplayModeCloudDrive isFromSharedItem:YES presentingNode:node];
     
     return photoBrowserVC;
 }

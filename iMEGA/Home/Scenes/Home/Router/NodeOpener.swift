@@ -73,13 +73,14 @@ final class NodeOpener {
         
         // open MEGAPhotoBrowserViewController on the node and allow scrolling
         // through all visual media in the allNodes array
-        openVisualMedia(node: node, allNodes: allNodes, displayMode: displayMode)
+        openVisualMedia(node: node, allNodes: allNodes, displayMode: displayMode, isFromSharedItem: isFromSharedItem)
     }
     
     private func openVisualMedia(
         node: MEGANode,
         allNodes: [MEGANode]?,
-        displayMode: DisplayMode?
+        displayMode: DisplayMode?,
+        isFromSharedItem: Bool?
     ) {
         // filter the visual media from allNodes so that photo browser displays only images and videos
         let allVisualMediaNodes: [MEGANode] = allNodes?.filter { node in
@@ -100,6 +101,7 @@ final class NodeOpener {
             withMediaNodes: mediaNodes,
             api: MEGASdk.sharedSdk,
             displayMode: isOwner ? passedThroughDisplayMode : .sharedItem,
+            isFromSharedItem: isFromSharedItem ?? false,
             preferredIndex: UInt(truncatingIfNeeded: index)
         )
         navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)

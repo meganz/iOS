@@ -595,7 +595,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                     }
                 }
                 
-                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:MEGASdk.sharedFolderLink displayMode:DisplayModeFileLink presentingNode:node];
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:MEGASdk.sharedFolderLink displayMode:DisplayModeFileLink isFromSharedItem:NO presentingNode:node];
                 photoBrowserVC.publicLink = fileLinkURLString;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 photoBrowserVC.needsReload = YES;

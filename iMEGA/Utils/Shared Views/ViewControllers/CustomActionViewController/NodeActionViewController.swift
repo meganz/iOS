@@ -165,7 +165,7 @@ class NodeActionViewController: ActionSheetViewController {
                           shouldShowVerifyContact: shouldShowVerifyContact)
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, isFromSharedItem: Bool = false, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -178,7 +178,8 @@ class NodeActionViewController: ActionSheetViewController {
         self.setupActions(node: node,
                           displayMode: displayMode,
                           isInVersionsView: isInVersionsView,
-                          isBackupNode: isBackupNode)
+                          isBackupNode: isBackupNode,
+                          isFromSharedItem: isFromSharedItem)
     }
     
     @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreferenceEntity,

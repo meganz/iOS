@@ -107,7 +107,7 @@
                 } else {
                     displayMode = [MEGASdk.shared accessLevelForNode:self] == MEGAShareTypeAccessOwner ? DisplayModeCloudDrive : DisplayModeSharedItem;
                 }
-                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:displayMode presentingNode:self];
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:displayMode isFromSharedItem:NO presentingNode:self];
                 
                 [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {

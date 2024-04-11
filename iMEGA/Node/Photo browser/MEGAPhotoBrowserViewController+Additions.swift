@@ -306,8 +306,10 @@ extension MEGAPhotoBrowserViewController {
 }
 
 extension MEGAPhotoBrowserViewController {
-    static func photoBrowser(currentPhoto: NodeEntity, allPhotos: [NodeEntity],
-                             displayMode: DisplayMode = .cloudDrive) -> MEGAPhotoBrowserViewController {
+    static func photoBrowser(currentPhoto: NodeEntity, 
+                             allPhotos: [NodeEntity],
+                             displayMode: DisplayMode = .cloudDrive,
+                             isFromSharedItem: Bool = false) -> MEGAPhotoBrowserViewController {
         
         let sdk: MEGASdk
         let nodeProvider: any MEGANodeProviderProtocol
@@ -330,7 +332,8 @@ extension MEGAPhotoBrowserViewController {
                 sdk: sdk,
                 nodeProvider: nodeProvider),
             api: sdk,
-            displayMode: displayMode
+            displayMode: displayMode, 
+            isFromSharedItem: isFromSharedItem
         )
         browser.needsReload = true
         return browser
@@ -439,7 +442,7 @@ extension MEGAPhotoBrowserViewController {
         }
         
         let isBackUpNode = BackupsOCWrapper().isBackupNode(node)
-        let controller = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isInVersionsView: isPreviewingVersion(), isBackupNode: isBackUpNode, sender: sender)
+        let controller = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isInVersionsView: isPreviewingVersion(), isBackupNode: isBackUpNode, isFromSharedItem: self.isFromSharedItem, sender: sender)
     
         present(controller, animated: true)
     }

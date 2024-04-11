@@ -14,16 +14,17 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 
 @interface MEGAPhotoBrowserViewController : UIViewController
 
-+ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node;
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem presentingNode:(MEGANode *)node;
 
-+ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode preferredIndex:(NSUInteger)preferredIndex;
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem preferredIndex:(NSUInteger)preferredIndex;
 
-+ (MEGAPhotoBrowserViewController *)photoBrowserWithProvider:(PhotoBrowserDataProvider *)provider api:(MEGASdk *)api displayMode:(DisplayMode)displayMode;
++ (MEGAPhotoBrowserViewController *)photoBrowserWithProvider:(PhotoBrowserDataProvider *)provider api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem;
 
 @property (nonatomic, strong) PhotoBrowserViewModel *viewModel;
 @property (nonatomic) MEGASdk *api;
 @property (nonatomic) CGRect originFrame;
 @property (nonatomic) DisplayMode displayMode;
+@property (nonatomic) BOOL isFromSharedItem;
 @property (nonatomic) NSString *publicLink;
 @property (nonatomic) NSString *encryptedLink;
 @property (nonatomic) BOOL needsReload;
