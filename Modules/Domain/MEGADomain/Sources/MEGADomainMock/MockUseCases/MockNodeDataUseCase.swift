@@ -10,7 +10,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public var versions: Bool
     public var downloadedToReturn: Bool
     public var isARubbishBinRootNodeValue: Bool
-    public var inRubbishBinToReturn: Bool
+    public var isNodeInRubbishBin: (HandleEntity) -> Bool
     private var nodes: [NodeEntity]
     private var nodeEntity: NodeEntity?
     private let nodeListEntity: NodeListEntity?
@@ -26,11 +26,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 versions: Bool = false,
                 downloaded: Bool = false,
                 isARubbishBinRootNodeValue: Bool = false,
-                inRubbishBin: Bool = false,
                 nodes: [NodeEntity] = [],
                 node: NodeEntity? = nil,
                 nodeListEntity: NodeListEntity? = nil,
-                createFolderResult: Result<NodeEntity, NodeCreationErrorEntity> = .success(.init())
+                createFolderResult: Result<NodeEntity, NodeCreationErrorEntity> = .success(.init()),
+                isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false}
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
@@ -40,11 +40,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.versions = versions
         self.downloadedToReturn = downloaded
         self.isARubbishBinRootNodeValue = isARubbishBinRootNodeValue
-        self.inRubbishBinToReturn = inRubbishBin
         self.nodes = nodes
         self.nodeEntity = node
         self.nodeListEntity = nodeListEntity
         self.createFolderResult = createFolderResult
+        self.isNodeInRubbishBin = isNodeInRubbishBin
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -86,7 +86,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     }
 
     public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
-        inRubbishBinToReturn
+        isNodeInRubbishBin(nodeHandle)
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {

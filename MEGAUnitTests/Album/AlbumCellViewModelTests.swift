@@ -400,7 +400,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         ]).eraseToAnyAsyncSequence()
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
             monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let nodeUseCase = MockNodeDataUseCase(inRubbishBin: true)
+        let nodeUseCase = MockNodeDataUseCase(isNodeInRubbishBin: { _ in true })
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
         let sut = makeAlbumCellViewModel(album: album,
@@ -437,7 +437,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         ]).eraseToAnyAsyncSequence()
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
             monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let nodeUseCase = MockNodeDataUseCase(inRubbishBin: false)
+        let nodeUseCase = MockNodeDataUseCase(isNodeInRubbishBin: { _ in false })
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
         let sut = makeAlbumCellViewModel(album: album,
@@ -478,7 +478,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         ]).eraseToAnyAsyncSequence()
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
             monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let nodeUseCase = MockNodeDataUseCase(inRubbishBin: false)
+        let nodeUseCase = MockNodeDataUseCase(isNodeInRubbishBin: { _ in false })
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
         let sut = makeAlbumCellViewModel(album: album,

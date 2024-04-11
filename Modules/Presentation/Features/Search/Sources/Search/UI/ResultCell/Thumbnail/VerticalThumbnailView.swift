@@ -251,7 +251,8 @@ struct VerticalThumbnailView_Previews: PreviewProvider {
                     contextAction: { _ in },
                     selectionAction: {},
                     previewTapAction: {}
-                )
+                ), 
+                swipeActions: []
             ),
             selected: .constant([]),
             selectionEnabled: .constant(false)

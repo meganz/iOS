@@ -150,7 +150,8 @@ fileprivate extension SearchResult {
             description: { _ in "Parent folder" },
             type: .node,
             properties: [],
-            thumbnailImageData: { image }
+            thumbnailImageData: { image }, 
+            swipeActions: { _ in [] }
         )
     }
     

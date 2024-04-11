@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -5,17 +6,19 @@ import MEGASdk
 import MEGASDKRepo
 import MEGASwift
 import Search
+import SwiftUI
 
 /// the structure below is responsible for turning a node
 /// into a fully self contained SearchResults item that has all properties needed
 /// to display in the SearchResultsView
 struct SearchResultMapper {
-    var sdk: MEGASdk
-    var nodeIconUsecase: any NodeIconUsecaseProtocol
-    var nodeDetailUseCase: any NodeDetailUseCaseProtocol
-    var nodeUseCase: any NodeUseCaseProtocol
-    var mediaUseCase: any MediaUseCaseProtocol
-    
+    let sdk: MEGASdk
+    let nodeIconUsecase: any NodeIconUsecaseProtocol
+    let nodeDetailUseCase: any NodeDetailUseCaseProtocol
+    let nodeUseCase: any NodeUseCaseProtocol
+    let mediaUseCase: any MediaUseCaseProtocol
+    let nodeActions: NodeActions
+
     func map(node: NodeEntity) -> SearchResult {
         .init(
             id: node.handle,
@@ -25,7 +28,8 @@ struct SearchResultMapper {
             description: info(for: node),
             type: .node,
             properties: properties(for: node),
-            thumbnailImageData: { await self.loadThumbnail(for: node) }
+            thumbnailImageData: { await self.loadThumbnail(for: node) }, 
+            swipeActions: { swipeActions(for: node, viewDisplayMode: $0) }
         )
     }
     
@@ -146,5 +150,63 @@ struct SearchResultMapper {
         }
         
         return nodeIconUsecase.iconData(for: node)
+    }
+
+    private func swipeActions(
+        for node: NodeEntity,
+        viewDisplayMode: ViewDisplayMode
+    ) -> [SearchResultSwipeAction] {
+        guard nodeUseCase.nodeAccessLevel(nodeHandle: node.handle) == .owner, viewDisplayMode != .home else {
+            return []
+        }
+
+        let isDesignTokenEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        let turquoiseBackgroundColor = isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : Color(.turquoise)
+
+        if nodeUseCase.isInRubbishBin(nodeHandle: node.handle) {
+            if !nodeUseCase.isInRubbishBin(nodeHandle: node.restoreParentHandle) {
+                return [
+                    SearchResultSwipeAction(
+                        image: Image(.restore),
+                        backgroundColor: turquoiseBackgroundColor,
+                        action: {
+                            nodeActions.restoreFromRubbishBin([node])
+                        }
+                    )
+                ]
+            }
+        } else {
+            let shareLinkSwipeAction = SearchResultSwipeAction(
+                image: Image(.link),
+                backgroundColor: isDesignTokenEnabled ? TokenColors.Support.warning.swiftUI : Color(.systemOrange),
+                action: {
+                    nodeActions.shareOrManageLink([node])
+                }
+            )
+
+            let downloadSwipeAction = SearchResultSwipeAction(
+                image: Image(.offline),
+                backgroundColor: turquoiseBackgroundColor,
+                action: {
+                    nodeActions.nodeDownloader([node])
+                }
+            )
+
+            if viewDisplayMode != .backup {
+                let moveToRubbishBinSwipeAction = SearchResultSwipeAction(
+                    image: Image(.rubbishBin),
+                    backgroundColor: isDesignTokenEnabled ? TokenColors.Support.error.swiftUI : Color(.destructive),
+                    action: {
+                        nodeActions.moveToRubbishBin([node])
+                    }
+                )
+
+                return [moveToRubbishBinSwipeAction, shareLinkSwipeAction, downloadSwipeAction]
+            }
+
+            return [shareLinkSwipeAction, downloadSwipeAction]
+        }
+
+        return []
     }
 }

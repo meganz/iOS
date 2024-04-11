@@ -40,7 +40,8 @@ func testableSearchResultsViewModel(
             contextAction: {_ in },
             selectionAction: {},
             previewTapAction: {}
-        )
+        ),
+        swipeActions: []
     )
     viewModel.thumbnailImage = TestAsset.Image.folder
     return viewModel

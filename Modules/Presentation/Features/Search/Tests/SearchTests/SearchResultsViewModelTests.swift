@@ -73,7 +73,8 @@ final class SearchResultsViewModelTests: XCTestCase {
                 config: config,
                 layout: .list,
                 showLoadingPlaceholderDelay: 0.1,
-                keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
+                keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
+                viewDisplayMode: .unknown
             )
             selection = {
                 self.selectedResults.append($0)
@@ -241,7 +242,8 @@ final class SearchResultsViewModelTests: XCTestCase {
                     contextAction: { _ in},
                     selectionAction: {},
                     previewTapAction: {}
-                )
+                ),
+                swipeActions: []
             )
         ]
         XCTAssertEqual(harness.sut.listItems, expectedListItems)

@@ -157,7 +157,8 @@ struct CloudDriveViewControllerFactory {
                 nodeIconUsecase: NodeIconUseCase(nodeIconRepo: nodeAssetsManager),
                 nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
                 nodeUseCase: nodeUseCase,
-                mediaUseCase: homeFactory.makeMediaUseCase()
+                mediaUseCase: homeFactory.makeMediaUseCase(), 
+                nodeActions: nodeActions
             ),
             nodeUseCase: nodeUseCase,
             preferences: PreferenceUseCase.default, 
@@ -752,7 +753,8 @@ struct CloudDriveViewControllerFactory {
                 defaultEmptyViewAsset: { makeDefaultEmptyViewAsset(for: nodeSource, config: config) }
             ),
             layout: layout,
-            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
+            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
+            viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown
         )
     }
 
@@ -791,7 +793,8 @@ struct CloudDriveViewControllerFactory {
         case .node(let nodeProvider):
             homeScreenFactory.makeResultsProvider(
                 parentNodeProvider: nodeProvider,
-                searchBridge: searchBridge
+                searchBridge: searchBridge, 
+                navigationController: navigationController
             )
         case .recentActionBucket(let bucket):
             RecentActionBucketProvider(
