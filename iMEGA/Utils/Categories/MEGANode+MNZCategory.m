@@ -134,7 +134,7 @@
                 [self initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes: allNodes];
             }
         } else {
-            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:navigationController.viewControllers.lastObject];
+            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink isFromSharedItem:isFromSharedItem inViewController:navigationController.viewControllers.lastObject];
             if (viewController) {
                 [navigationController presentViewController:viewController animated:YES completion:nil];
             }
@@ -143,10 +143,10 @@
 }
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink {
-    return [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:nil];
+    return [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink isFromSharedItem:NO inViewController:nil];
 }
 
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink inViewController:(UIViewController *)viewController {
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink isFromSharedItem:(BOOL)isFromSharedItem inViewController:(UIViewController *)viewController {
     MEGASdk *api = isFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared;
     MEGASdk *apiForStreaming;
     if(MEGASdk.shared.isLoggedIn) {
@@ -185,7 +185,7 @@
             NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:&encode error:nil];
             if (textContent != nil) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name content:textContent size: self.size.unsignedIntValue encode:encode];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView node:self presenter:viewController.navigationController] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView isFromSharedItem:isFromSharedItem node:self presenter:viewController.navigationController] build];
             }
         }
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
@@ -196,6 +196,7 @@
         previewController.node = isFolderLink ? [api authorizeNode:self] : self;
         previewController.isLink = isFolderLink;
         previewController.fileLink = fileLink;
+        previewController.isFromSharedItem = isFromSharedItem;
         
         return navigationController;
         
@@ -211,7 +212,7 @@
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
             if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name]) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name size: self.size.unsignedIntValue];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad node:self presenter:viewController.navigationController] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:self presenter:viewController.navigationController] build];
             }
             
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
@@ -221,6 +222,7 @@
             previewController.api = api;
             previewController.isLink = isFolderLink;
             previewController.fileLink = fileLink;
+            previewController.isFromSharedItem = isFromSharedItem;
             
             return navigationController;
         }
@@ -242,7 +244,7 @@
 #pragma mark - Actions
 
 - (void)mnz_editTextFileInViewController:(UIViewController *)viewController {
-    MEGANavigationController *nav = (MEGANavigationController *)[self mnz_viewControllerForNodeInFolderLink:NO fileLink:nil inViewController:viewController];
+    MEGANavigationController *nav = (MEGANavigationController *)[self mnz_viewControllerForNodeInFolderLink:NO fileLink:nil isFromSharedItem:NO inViewController:viewController];
     
     if (nav == nil) {
         return;

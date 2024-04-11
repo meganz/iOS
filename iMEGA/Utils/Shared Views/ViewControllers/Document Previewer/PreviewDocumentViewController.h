@@ -8,6 +8,7 @@
 @property (nonatomic, strong) NSString *filePath;
 @property (nonatomic) BOOL isLink;
 @property (nonatomic) NSString *fileLink;
+@property (nonatomic) BOOL isFromSharedItem;
 @property (nonatomic) BOOL showUnknownEncodeHud;
 @property (nonatomic) MEGAHandle chatId;
 @property (nonatomic) MEGAHandle messageId;

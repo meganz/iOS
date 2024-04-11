@@ -318,7 +318,7 @@
                                              displayMode:displayMode
                                              isInVersionsView:[self isPreviewingVersion]
                                              isBackupNode:isBackupNode
-                                             isFromSharedItem: NO
+                                             isFromSharedItem: self.isFromSharedItem
                                              sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
