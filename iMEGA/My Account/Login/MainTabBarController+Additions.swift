@@ -180,7 +180,7 @@ extension MainTabBarController {
         }
     }
     
-    @objc func createMainTabBarViewModel() -> MainTabBarCallsViewModel {
+    func createMainTabBarViewModel() -> MainTabBarCallsViewModel {
         let router = MainTabBarCallsRouter(baseViewController: self)
         let mainTabBarCallsViewModel = MainTabBarCallsViewModel(
             router: router,
@@ -190,7 +190,8 @@ extension MainTabBarController {
             chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo),
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            callKitManager: CallKitManager()
+            callKitManager: CallKitManager(),
+            callManager: CallKitCallManager.shared
         )
         
         mainTabBarCallsViewModel.invokeCommand = { [weak self] command in

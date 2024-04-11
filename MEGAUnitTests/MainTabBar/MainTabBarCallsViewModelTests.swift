@@ -398,6 +398,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
+        callManager: some CallManagerProtocol = MockCallManager(),
         featureFlag: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> MainTabBarCallsViewModel {
         MainTabBarCallsViewModel(
@@ -408,7 +409,8 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUserUseCase: chatRoomUserUseCase,
             callSessionUseCase: callSessionUseCase, 
             accountUseCase: accountUseCase,
-            callKitManager: callKitManager,
+            callKitManager: callKitManager, 
+            callManager: callManager,
             featureFlagProvider: featureFlag
         )
     }
@@ -428,6 +430,7 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var dismissCallUI_calledTimes = 0
     var showCallWillEndAlert_calledTimes = 0
     var showUpgradeToProDialog_calledTimes = 0
+    var startCallUI_calledTimes = 0
 
     func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, shouldBlockAddingUsersToCall: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
         showOneUserWaitingRoomDialog_calledTimes += 1
@@ -475,5 +478,9 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func showUpgradeToProDialog(_ account: AccountDetailsEntity) {
         showUpgradeToProDialog_calledTimes += 1
+    }
+    
+    func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
+        startCallUI_calledTimes += 1
     }
 }

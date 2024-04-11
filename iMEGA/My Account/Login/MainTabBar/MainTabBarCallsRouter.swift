@@ -203,4 +203,13 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
             BottomSheetRouter(presenter: baseViewController, content: dialogView).start()
         }
     }
+    
+    func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
+        Task { @MainActor in
+            MeetingContainerRouter(presenter: baseViewController,
+                                   chatRoom: chatRoom,
+                                   call: call,
+                                   isSpeakerEnabled: isSpeakerEnabled).start()
+        }
+    }
 }
