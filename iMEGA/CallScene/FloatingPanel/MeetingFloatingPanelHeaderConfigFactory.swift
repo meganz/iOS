@@ -63,7 +63,8 @@ struct MeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderConfig
             actionButtonTappedHandler: actionButtonTappedHandler,
             infoViewModel: infoBannerFactory.infoHeaderData(
                 tab: tab,
-                freeTierInCallParticipantLimitReached: freeTierInCallParticipantLimitReached,
+                freeTierInCallParticipantLimitReached: freeTierInCallParticipantLimitReached, 
+                freeTierInCallParticipantPlusWaitingRoomLimitReached: totalInCallAndWaitingRoomAboveFreeTierLimit,
                 // [MEET-3663] will also make use of .organizer privilege level
                 warningMode: isMyselfAModerator ? .dismissible : .noWarning,
                 hasDismissedBanner: hasDismissedBanner,

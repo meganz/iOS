@@ -9,12 +9,14 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
         func result(
             tab: ParticipantsListTab,
             freeTierInCallParticipantLimitReached: Bool = false,
+            freeTierInCallParticipantPlusWaitingRoomLimitReached: Bool = false,
             warningMode: ParticipantLimitWarningMode,
             hasDismissedBanner: Bool = false
         ) -> MeetingInfoHeaderData? {
             sut.infoHeaderData(
                 tab: tab,
                 freeTierInCallParticipantLimitReached: freeTierInCallParticipantLimitReached,
+                freeTierInCallParticipantPlusWaitingRoomLimitReached: freeTierInCallParticipantPlusWaitingRoomLimitReached,
                 warningMode: warningMode,
                 hasDismissedBanner: hasDismissedBanner,
                 presentUpgradeFlow: {},
@@ -125,11 +127,11 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
         XCTAssertNil(result.dismissTapped)
     }
     
-    func testBannerTitleAndDismiss_waitingRoom_isModerator_hasReachedLimit() throws {
+    func testBannerTitleAndDismiss_waitingRoom_isModerator_hasPassedLimit() throws {
         let harness = Harness()
         let maybeResult = harness.result(
             tab: .waitingRoom,
-            freeTierInCallParticipantLimitReached: true,
+            freeTierInCallParticipantPlusWaitingRoomLimitReached: true,
             warningMode: .dismissible
         )
         let result = try XCTUnwrap(maybeResult)

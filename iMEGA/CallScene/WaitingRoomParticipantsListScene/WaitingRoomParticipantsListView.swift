@@ -64,7 +64,7 @@ struct WaitingRoomParticipantsListView: View {
             Button(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll) {
                 viewModel.admitAllTapped()
             }
-            .opacity(viewModel.admitAllButtonDisabled ? 0.5 : 1.0)
+            .opacity(viewModel.admitAllButtonDisabled ? 0.25 : 1.0)
             .disabled(viewModel.admitAllButtonDisabled)
             .font(.body.bold())
             .foregroundColor(MEGAAppColor.Green._00C29A.color)

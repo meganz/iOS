@@ -17,6 +17,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     private var waitingRoomParticipants = [WaitingRoomParticipantViewModel]()
     
     @Published private var participantLimitReached: Bool = false
+    @Published private var participantsPlusWaitingRoomLimitReached: Bool = false
     private var subscriptions = Set<AnyCancellable>()
     
     private var limitations: CallLimitations?
@@ -59,6 +60,10 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
             self.participantLimitReached = limitations.hasReachedInCallFreeUserParticipantLimit(
                 callParticipantCount: call.numberOfParticipants
             )
+            self.participantsPlusWaitingRoomLimitReached = limitations.hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit(
+                callParticipantCount: call.numberOfParticipants,
+                callParticipantsInWaitingRoom: waitingRoomParticipants.count
+            )
             self.limitations = limitations
         }
         
@@ -69,7 +74,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     
     var bannerConfig: BannerView.Config? {
         guard
-            participantLimitReached, !limitBannerDismissed
+            participantLimitReached || participantsPlusWaitingRoomLimitReached, !limitBannerDismissed
         else { return nil}
         
         return .init(
@@ -90,11 +95,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     }
     
     var admitAllButtonDisabled: Bool {
-        participantLimitReached
-    }
-    
-    var admitUserCellButtonDisabled: Bool {
-        participantLimitReached
+        participantsPlusWaitingRoomLimitReached
     }
     
     func admitAllTapped() {
@@ -130,9 +131,11 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
                 waitingRoomParticipantId: $0,
                 chatRoom: chatRoom,
                 call: call,
-                admitButtonDisabled: admitUserCellButtonDisabled
+                admitButtonDisabled: participantLimitReached
             )
         }
+        
+        checkParticipantsPlusWaitingRoomLimit()
         
         Task {
             await filterWaitingRoomParticipants()
@@ -161,9 +164,10 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
             featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: true,
             currentLimit: call.callLimits.maxUsers,
-            callParticipantCount: call.numberOfParticipants,
-            additionalParticipantCount: 0
+            callParticipantCount: call.numberOfParticipants
         )
+        checkParticipantsPlusWaitingRoomLimit()
+        waitingRoomParticipants.forEach { $0.admitButtonDisabled = participantLimitReached }
     }
     
     private func configureWaitingRoomListener(forCall call: CallEntity) {
@@ -178,5 +182,13 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     private func manageWaitingRoom(for call: CallEntity) {
         self.call = call
         populateWaitingRoomParticipants()
+    }
+    
+    private func checkParticipantsPlusWaitingRoomLimit() {
+        guard let limitations else { return }
+        participantsPlusWaitingRoomLimitReached =  limitations.hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit(
+            callParticipantCount: call.numberOfParticipants,
+            callParticipantsInWaitingRoom: waitingRoomParticipants.count
+        )
     }
 }

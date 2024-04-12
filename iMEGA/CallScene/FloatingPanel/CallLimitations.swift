@@ -147,11 +147,11 @@ class CallLimitations {
         )
     }
     
-    private func callLimitWillBeReached(
+    private func callLimitWillBePassed(
         _ callParticipantCount: Int,
         afterAdding additionalParticipantCount: Int
     ) -> Bool {
-        Self.callParticipantsLimitReached(
+        Self.callParticipantsPlusAdditionalUsersLimitPassed(
             featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: isMyselfModerator,
             currentLimit: limitOfFreeTierUsers,
@@ -186,8 +186,7 @@ class CallLimitations {
         featureFlagEnabled: Bool,
         isMyselfModerator: Bool,
         currentLimit: Int,
-        callParticipantCount: Int,
-        additionalParticipantCount: Int = 0
+        callParticipantCount: Int
     ) -> Bool {
         MEGALogDebug("[CallLimitations] check limits call participants \(callParticipantCount), FF: \(featureFlagEnabled), host: \(isMyselfModerator), limit: \(currentLimit)")
         
@@ -198,20 +197,39 @@ class CallLimitations {
         )
         
         guard shouldActuallyCheckLimits else { return false }
-        // We do a check with non-zero additionalParticipantCount
-        // when:
-        // * selecting participants to add to a cal from the contact picker
-        // * disabling `Admit all` button in the floating panel in the call UI
-        // For other cases `additionalParticipantCount` is 0 so we juts check if we are at,
-        // or exceeding the limit
-        return additionalParticipantCount + callParticipantCount >= currentLimit
+        
+        return callParticipantCount >= currentLimit
+    }
+    
+    /// Calculate if current call participants plus adding other participants will pass call limits
+    /// This is used to show UI or disable buttons that will add several participants at once  when the call limit is not reached
+    /// * selecting participants to add to a cal from the contact picker
+    /// * disabling `Admit all` button in the floating panel in the call UI
+    static func callParticipantsPlusAdditionalUsersLimitPassed(
+        featureFlagEnabled: Bool,
+        isMyselfModerator: Bool,
+        currentLimit: Int,
+        callParticipantCount: Int,
+        additionalParticipantCount: Int
+    ) -> Bool {
+        MEGALogDebug("[CallLimitations] check limits call participants \(callParticipantCount), FF: \(featureFlagEnabled), host: \(isMyselfModerator), limit: \(currentLimit)")
+        
+        let shouldActuallyCheckLimits = participantsNumberLimitationsEnabled(
+            featureFlagEnabled: featureFlagEnabled,
+            isMyselfModerator: isMyselfModerator,
+            currentLimit: currentLimit
+        )
+        
+        guard shouldActuallyCheckLimits else { return false }
+        
+        return additionalParticipantCount + callParticipantCount > currentLimit
     }
     
     func hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit(
         callParticipantCount: Int,
         callParticipantsInWaitingRoom: Int
     ) -> Bool {
-        callLimitWillBeReached(callParticipantCount, afterAdding: callParticipantsInWaitingRoom)
+        callLimitWillBePassed(callParticipantCount, afterAdding: callParticipantsInWaitingRoom)
     }
     
     /// this function contains logic of showing the limitations banner in the contact picker
@@ -226,7 +244,7 @@ class CallLimitations {
         allowsNonHostToInvite: Bool
     ) -> Bool {
         MEGALogDebug("[CallLimitations] contact picker limit checker participants = \(callParticipantCount), selected: \(selectedCount), allowsNonHostToInvite: \(allowsNonHostToInvite)")
-        return Self.callParticipantsLimitReached(
+        return Self.callParticipantsPlusAdditionalUsersLimitPassed(
             featureFlagEnabled: chatMonetisationEnabled,
             // from the logic of contact picker and showing the banner,
             // once chat room has `allowsNonHostToInvite` his behaviour is the same as moderator
