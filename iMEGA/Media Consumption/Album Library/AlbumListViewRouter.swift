@@ -17,6 +17,10 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let vm = AlbumCellViewModel(
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
             monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
             album: album,
             selection: selection
         )

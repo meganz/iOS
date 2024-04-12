@@ -91,6 +91,7 @@ struct AlbumCell: View {
         viewModel: AlbumCellViewModel(
             thumbnailUseCase: Preview_ThumbnailUseCase(),
             monitorAlbumsUseCase: Preview_MonitorAlbumsUseCase(),
+            nodeUseCase: Preview_NodeUseCase(),
             album: AlbumEntity(
                 id: 1, name: "Album name",
                 coverNode: nil,
