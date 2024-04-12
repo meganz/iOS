@@ -29,3 +29,28 @@ extension Helper {
         Logger.shared().removeLogsDirectory()
     }
 }
+
+// - MARK: Feature Flags
+
+extension Helper {
+    // As we're using the same MEGA group identifier for both preferences and as a
+    // mean to cache FFs (currently only used in Development and QA) in UserDefaults
+    // upon a logout, we need to re-inject them in the shared defaults again
+    private static var cachedFeatureFlags: [String: Any] = [:]
+
+    @objc static func injectCachedFeatureFlags() {
+        let userDefaults = UserDefaults(suiteName: MEGAGroupIdentifier)
+        userDefaults?.set(cachedFeatureFlags, forKey: MEGAFeatureFlagsUserDefaultsKey)
+    }
+
+    @objc static func cacheFeatureFlags() {
+        let userDefaults = UserDefaults(suiteName: MEGAGroupIdentifier)
+        let featureFlagsObject = userDefaults?.object(forKey: MEGAFeatureFlagsUserDefaultsKey)
+
+        guard let featureFlags = featureFlagsObject as? [String: Any] else {
+            return
+        }
+
+        cachedFeatureFlags = featureFlags
+    }
+}

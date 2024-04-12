@@ -556,9 +556,17 @@
     
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
     
+    #if defined(DEBUG) || defined(QA_CONFIG)
+    [self cacheFeatureFlags];
+    #endif
+
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];
-    
+
+    #if defined(DEBUG) || defined(QA_CONFIG)
+    [self injectCachedFeatureFlags];
+    #endif
+
     // This key is to check if the app has been reinstalled. Don't remove it when logging out
     [self markAppAsLaunched];
 }

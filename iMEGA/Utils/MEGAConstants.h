@@ -196,3 +196,7 @@ extern const NSInteger MEGAQuickAccessWidgetMaxDisplayItems;
 #pragma mark - Photo Browser
 
 extern NSString * const MEGAUseMobileDataForPreviewingOriginalPhoto;
+
+#pragma mark - Feature Flag
+
+extern NSString * const MEGAFeatureFlagsUserDefaultsKey;

@@ -192,3 +192,7 @@ const NSInteger MEGAQuickAccessWidgetMaxDisplayItems = 8;
 #pragma mark - Photo Browser
 
 NSString * const MEGAUseMobileDataForPreviewingOriginalPhoto = @"MEGAUseMobileDataForPreviewingOriginalPhoto";
+
+#pragma mark - Feature Flags
+
+NSString * const MEGAFeatureFlagsUserDefaultsKey = @"nz.co.mega.feature-flags";
