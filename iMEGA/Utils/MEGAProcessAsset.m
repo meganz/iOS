@@ -736,6 +736,9 @@ static const float BPS_MEDIUM = 3000000.0f;
             self.exportAssetFailed = YES;
         }
         [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self.alertController dismissViewControllerAnimated:YES completion:nil];
+        });
     }];
     
     
