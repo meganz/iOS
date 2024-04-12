@@ -189,12 +189,13 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         let currentPageStartIndex = currentPage*pageSize
         let nextPageFirstIndex = (currentPage+1)*pageSize
         
-        isLastPageReached = nextPageFirstIndex > nodesCount
+        isLastPageReached = nextPageFirstIndex >= nodesCount
         
         let firstItemIndex = currentPageStartIndex > nodesCount ? previousPageStartIndex : currentPageStartIndex
         let lastItemIndex = isLastPageReached ? nodesCount : nextPageFirstIndex
         
         var results: [SearchResult] = []
+
         for i in firstItemIndex...lastItemIndex-1 {
             if let nodeAt = nodeList.nodeAt(i) {
                 results.append(mapNodeToSearchResult(nodeAt))
