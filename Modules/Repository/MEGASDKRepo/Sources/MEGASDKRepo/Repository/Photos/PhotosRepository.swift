@@ -53,11 +53,13 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
         if let photoFromSource = await photoLocalSource.photo(forHandle: handle) {
             return photoFromSource
         }
-        guard let photo = sdk.node(forHandle: handle)?.toNodeEntity() else {
+        guard let photo = sdk.node(forHandle: handle),
+              !sdk.isNode(inRubbish: photo) else {
             return nil
         }
-        await photoLocalSource.setPhotos([photo])
-        return photo
+        let photoEntity = photo.toNodeEntity()
+        await photoLocalSource.setPhotos([photoEntity])
+        return photoEntity
     }
     
     // MARK: Private

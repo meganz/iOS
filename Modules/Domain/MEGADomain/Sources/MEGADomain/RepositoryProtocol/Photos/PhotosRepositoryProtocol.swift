@@ -11,7 +11,7 @@ public protocol PhotosRepositoryProtocol: Sendable {
     /// Load photo if local source does not contain it otherwise return local source data
     /// - Parameters:
     ///   - handle: The photo node handle entity
-    /// - Returns: Photo Nodes
+    /// - Returns: Photo Node if it can be found and is not in rubbish otherwise nil
     /// - Throws: `NodeErrorEntity` or `CancellationError`
     func photo(forHandle handle: HandleEntity) async -> NodeEntity?
 }

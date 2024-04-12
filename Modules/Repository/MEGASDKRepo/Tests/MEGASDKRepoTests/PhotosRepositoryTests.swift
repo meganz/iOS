@@ -74,6 +74,15 @@ final class PhotosRepositoryTests: XCTestCase {
         XCTAssertNil(photo)
     }
     
+    func testPhotoForHandle_nodeInRubbish_shouldReturnNil() async {
+        let sdk = MockSdk(rubbishNodes: [MockNode(handle: 6)])
+        let sut = makeSUT(sdk: sdk)
+        
+        let photo = await sut.photo(forHandle: 6)
+        
+        XCTAssertNil(photo)
+    }
+    
     func testPhotoForHandle_photoSourceContainPhoto_shouldReturnPhoto() async {
         let handle = HandleEntity(5)
         let expectedNode = NodeEntity(handle: handle)

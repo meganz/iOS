@@ -30,6 +30,7 @@ final class AlbumCellViewModel: ObservableObject {
     let album: AlbumEntity
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
@@ -47,6 +48,7 @@ final class AlbumCellViewModel: ObservableObject {
     init(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
         tracker: some AnalyticsTracking = DIContainer.tracker,
@@ -54,6 +56,7 @@ final class AlbumCellViewModel: ObservableObject {
     ) {
         self.thumbnailUseCase = thumbnailUseCase
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
+        self.nodeUseCase = nodeUseCase
         self.album = album
         self.selection = selection
         self.tracker = tracker
@@ -102,7 +105,10 @@ final class AlbumCellViewModel: ObservableObject {
         for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album) {
             numberOfNodes = albumPhotos.count
             
-            guard album.coverNode == nil else { continue }
+            guard shouldUseDefaultCover(photos: albumPhotos) else {
+                await loadAlbumCoverIfNeeded(from: albumPhotos)
+                continue
+            }
             await setDefaultAlbumCover(albumPhotos)
         }
     }
@@ -150,5 +156,23 @@ final class AlbumCellViewModel: ObservableObject {
                 self?.editMode = $0
             }
             .store(in: &subscriptions)
+    }
+    
+    private func shouldUseDefaultCover(photos: [AlbumPhotoEntity]) -> Bool {
+        guard let albumCover = album.coverNode else {
+            return true
+        }
+        return nodeUseCase.isInRubbishBin(nodeHandle: albumCover.handle) ||
+        photos.notContains(where: { $0.photo.handle == albumCover.handle })
+    }
+    
+    @MainActor
+    private func loadAlbumCoverIfNeeded(from photos: [AlbumPhotoEntity]) async {
+        guard let cover = album.coverNode,
+              let imageContainer = try? await thumbnailUseCase.loadThumbnailContainer(for: cover, type: .thumbnail),
+              !thumbnailContainer.isEqual(imageContainer) else {
+            return
+        }
+        thumbnailContainer = imageContainer
     }
 }
