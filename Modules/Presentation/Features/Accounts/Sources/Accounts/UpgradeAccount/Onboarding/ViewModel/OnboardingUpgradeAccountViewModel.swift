@@ -4,11 +4,14 @@ import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import Settings
 
 public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private var subscriptions: Set<AnyCancellable> = []
+    private let router: OnboardingUpgradeAccountRouting
     
     @Published private(set) var shouldDismiss: Bool = false
     @Published private(set) var lowestProPlan: AccountPlanEntity = AccountPlanEntity()
@@ -19,19 +22,39 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     // Variant B only
     @Published var selectedCycleTab: SubscriptionCycleEntity = .yearly
     @Published private(set) var selectedPlanType: AccountTypeEntity?
+    @Published var isTermsAndPoliciesPresented = false
     private var planList: [AccountPlanEntity] = []
     private(set) var recommendedPlanType: AccountTypeEntity?
     
+    private(set) var purchasePlanTask: Task<Void, Never>?
+    private(set) var alertType: UpgradeAccountPlanAlertType?
+    
+    @Published var isLoading = false
+    @Published var isAlertPresented = false {
+        didSet {
+            if !isAlertPresented { setAlertType(nil) }
+        }
+    }
+    
     public init(
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         tracker: some AnalyticsTracking,
-        viewProPlanAction: @escaping () -> Void
+        viewProPlanAction: @escaping () -> Void,
+        router: OnboardingUpgradeAccountRouting
     ) {
         self.purchaseUseCase = purchaseUseCase
+        self.accountUseCase = accountUseCase
         self.tracker = tracker
         self.viewProPlanAction = viewProPlanAction
+        self.router = router
         
         setupSubscriptions()
+    }
+    
+    deinit {
+        purchasePlanTask?.cancel()
+        purchasePlanTask = nil
     }
 
     private func setupSubscriptions() {
@@ -43,6 +66,55 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
                 shouldDismiss = true
             }
             .store(in: &subscriptions)
+        
+        purchaseUseCase.successfulRestorePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                setAlertType(.restore(.success))
+            }
+            .store(in: &subscriptions)
+        
+        purchaseUseCase.incompleteRestorePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                setAlertType(.restore(.incomplete))
+            }
+            .store(in: &subscriptions)
+        
+        purchaseUseCase.failedRestorePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                setAlertType(.restore(.failed))
+            }
+            .store(in: &subscriptions)
+        
+        purchaseUseCase.purchasePlanResultPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                isLoading = false
+                
+                switch result {
+                case .success:
+                    postAccountDidPurchasedPlanNotification()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                        guard let self else { return }
+                        shouldDismiss = true
+                    }
+                case .failure(let error):
+                    guard error.toPurchaseErrorStatus() != .paymentCancelled else { return }
+                    setAlertType(.purchase(.failed))
+                }
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func postAccountDidPurchasedPlanNotification() {
+        NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
     }
     
     public var storageContentMessage: String {
@@ -54,6 +126,14 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
             .replacingOccurrences(of: "[A]", with: storageComponents[0]) // Storage limit
             .replacingOccurrences(of: "[B]", with: storageComponents[1]) // Storage unit
         return message
+    }
+    
+    func setAlertType(_ type: UpgradeAccountPlanAlertType?) {
+        alertType = type
+        
+        let shouldPresentAlert = type != nil
+        guard shouldPresentAlert != isAlertPresented else { return }
+        isAlertPresented = shouldPresentAlert
     }
    
     // MARK: - Variant A with View Pro Plans
@@ -153,6 +233,31 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     
     func setSelectedPlan(_ plan: AccountPlanEntity) {
         selectedPlanType = plan.type
+    }
+    
+    // MARK: - Variant B functionalities
+    func restorePurchase() {
+        purchaseUseCase.restorePurchase()
+    }
+    
+    func showTermsAndPolicies() {
+        router.showTermsAndPolicies()
+    }
+    
+    func purchaseSelectedPlan() {
+        guard let selectedPlan = filteredPlanList.first(where: { $0.type == selectedPlanType }) else { return }
+        
+        purchasePlanTask = Task { [weak self] in
+            guard let self else { return }
+            
+            await startLoading()
+            await purchaseUseCase.purchasePlan(selectedPlan)
+        }
+    }
+    
+    @MainActor
+    private func startLoading() {
+        isLoading = true
     }
     
     // MARK: - Helper

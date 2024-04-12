@@ -2,6 +2,7 @@ import Accounts
 import Foundation
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 protocol UpgradeAccountRouting {
     func presentUpgradeTVC()
@@ -60,6 +61,7 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
             
             OnboardingUpgradeAccountRouter(
                 purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                 tracker: DIContainer.tracker,
                 presenter: UIApplication.mnz_presentingViewController(),
                 accountsConfig: accountsConfig,
