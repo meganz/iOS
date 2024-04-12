@@ -23,7 +23,8 @@ let package = Package(
         .package(path: "../../Repository/MEGASDKRepo"),
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../MEGAAssets"),
-        .package(path: "../MEGAUI")
+        .package(path: "../MEGAUI"),
+        .package(path: "../Settings")
     ],
     targets: [
         .target(
@@ -33,7 +34,8 @@ let package = Package(
                            "MEGAPresentation",
                            "MEGASwiftUI",
                            "MEGAAssets",
-                           "MEGAUI"]
+                           "MEGAUI",
+                           "Settings"]
         ),
         .target(
             name: "AccountsMock",

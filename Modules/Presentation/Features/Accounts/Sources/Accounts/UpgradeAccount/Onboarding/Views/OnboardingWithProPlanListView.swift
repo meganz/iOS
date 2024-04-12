@@ -32,7 +32,7 @@ public struct OnboardingWithProPlanListView: View {
                         }
                     } footer: {
                         PrimaryActionButtonView(title: Strings.Localizable.continue) {
-                            dismiss()
+                            viewModel.purchaseSelectedPlan()
                         }
                         .padding(.vertical)
                         .frame(maxWidth: .infinity)
@@ -43,9 +43,11 @@ public struct OnboardingWithProPlanListView: View {
                     
                     VStack(alignment: .leading, spacing: 20) {
                         PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.Restore.title) {
+                            viewModel.restorePurchase()
                         }
                         
                         PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.TermsAndPolicies.title) {
+                            viewModel.showTermsAndPolicies()
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -63,6 +65,23 @@ public struct OnboardingWithProPlanListView: View {
         }
         .task {
             await viewModel.setupPlans()
+        }
+        .alert(isPresented: $viewModel.isAlertPresented) {
+            if let alertType = viewModel.alertType,
+               let secondaryButtonTitle = alertType.secondaryButtonTitle {
+                return Alert(
+                    title: Text(alertType.title),
+                    message: Text(alertType.message),
+                    primaryButton: .default(Text(alertType.primaryButtonTitle), action: alertType.primaryButtonAction),
+                    secondaryButton: .cancel(Text(secondaryButtonTitle))
+                )
+            } else {
+                return Alert(
+                    title: Text(viewModel.alertType?.title ?? ""),
+                    message: Text(viewModel.alertType?.message ?? ""),
+                    dismissButton: .default(Text(viewModel.alertType?.primaryButtonTitle ?? ""))
+                )
+            }
         }
     }
     
