@@ -10,12 +10,12 @@ final class WaitingRoomParticipantViewModel: ObservableObject, Identifiable {
     private var waitingRoomParticipantId: HandleEntity
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity
-    let admitButtonDisabled: Bool
     let userAvatarViewModel: UserAvatarViewModel
     
     @Published var name: String = ""
     @Published var showConfirmDenyAlert = false
-    
+    @Published var admitButtonDisabled: Bool
+
     init(
         chatRoomUseCase: any ChatRoomUseCaseProtocol,
         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,

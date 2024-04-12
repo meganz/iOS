@@ -17,6 +17,7 @@ protocol MeetingFloatingPanelBannerFactoryProtocol {
     func infoHeaderData(
         tab: ParticipantsListTab,
         freeTierInCallParticipantLimitReached: Bool,
+        freeTierInCallParticipantPlusWaitingRoomLimitReached: Bool,
         warningMode: ParticipantLimitWarningMode,
         hasDismissedBanner: Bool,
         presentUpgradeFlow: @escaping ActionHandler,
@@ -33,6 +34,7 @@ struct MeetingFloatingPanelBannerFactory: MeetingFloatingPanelBannerFactoryProto
     func infoHeaderData(
         tab: ParticipantsListTab,
         freeTierInCallParticipantLimitReached: Bool,
+        freeTierInCallParticipantPlusWaitingRoomLimitReached: Bool,
         warningMode: ParticipantLimitWarningMode,
         hasDismissedBanner: Bool,
         presentUpgradeFlow: @escaping ActionHandler,
@@ -46,13 +48,13 @@ struct MeetingFloatingPanelBannerFactory: MeetingFloatingPanelBannerFactoryProto
             )
         }
         
-        if  warningMode == .dismissible &&
-                (tab == .waitingRoom || tab == .inCall) &&
-                freeTierInCallParticipantLimitReached &&
-                !hasDismissedBanner {
-            return moderatorReachedLimit(
-                dismissFreeUserLimitBanner: dismissFreeUserLimitBanner
-            )
+        if  warningMode == .dismissible && !hasDismissedBanner {
+            if tab == .inCall && freeTierInCallParticipantLimitReached ||
+                tab == .waitingRoom && freeTierInCallParticipantPlusWaitingRoomLimitReached {
+                return moderatorReachedLimit(
+                    dismissFreeUserLimitBanner: dismissFreeUserLimitBanner
+                )
+            }
         }
         
         return nil

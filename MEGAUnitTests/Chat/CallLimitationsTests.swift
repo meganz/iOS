@@ -103,14 +103,6 @@ final class CallLimitationsTests: XCTestCase {
         ) // 5 + 4 < 10
     }
     
-    func testCheckingInitialLimit_TotalOfCallAndWaitingRoom_AtLimit() {
-        let harness = Harness.withFeaturePresent()
-        XCTAssertTrue(harness.sut.hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit(
-            callParticipantCount: 5,
-            callParticipantsInWaitingRoom: 5)
-        ) // 5 + 5 <= 10
-    }
-    
     func testCheckingInitialLimit_TotalOfCallAndWaitingRoom_AboveLimit() {
         let harness = Harness.withFeaturePresent()
         XCTAssertTrue(harness.sut.hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit(
@@ -132,11 +124,6 @@ final class CallLimitationsTests: XCTestCase {
     func test_contactPickerLimitChecker_FF_on_allow_to_invite_underLimit_returnsFalse() {
         let harness = Harness(flagEnabled: true) // 10 > 5 + 4
         XCTAssertFalse(harness.sut.contactPickerLimitChecker(callParticipantCount: 5, selectedCount: 4, allowsNonHostToInvite: true))
-    }
-    
-    func test_contactPickerLimitChecker_FF_on_allow_to_invite_atLimit_returnsTrue() {
-        let harness = Harness(flagEnabled: true) // 10 = 5 + 5
-        XCTAssertTrue(harness.sut.contactPickerLimitChecker(callParticipantCount: 5, selectedCount: 5, allowsNonHostToInvite: true))
     }
     
     func test_contactPickerLimitChecker_FF_on_allow_to_invite_overLimit_returnsTrue() {

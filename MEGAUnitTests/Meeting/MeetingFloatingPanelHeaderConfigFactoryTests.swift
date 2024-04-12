@@ -15,6 +15,7 @@ final class MeetingFloatingPanelHeaderConfigFactoryTests: XCTestCase {
             func infoHeaderData(
                 tab: ParticipantsListTab,
                 freeTierInCallParticipantLimitReached: Bool,
+                freeTierInCallParticipantPlusWaitingRoomLimitReached: Bool,
                 warningMode: ParticipantLimitWarningMode,
                 hasDismissedBanner: Bool,
                 presentUpgradeFlow: @escaping ActionHandler,
