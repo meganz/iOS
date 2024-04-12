@@ -492,6 +492,7 @@
                         <outlet property="instructionsLabel" destination="BNI-oV-pBa" id="boS-DU-HeY"/>
                         <outlet property="inviteContactsButton" destination="GhC-PG-pnt" id="GSn-VF-16g"/>
                         <outlet property="inviteContactsButtonBottomConstraint" destination="n0k-u9-jQw" id="scb-dU-K7D"/>
+                        <outlet property="separatorView" destination="vWS-W2-IoN" id="2fb-U5-Dut"/>
                         <outlet property="tagsField" destination="Wii-HB-ehB" id="ul6-ob-uvn"/>
                         <outlet property="tagsFieldButton" destination="Nhk-D2-q92" id="QyU-cQ-ugv"/>
                         <outlet property="tagsFieldHeightLayoutConstraint" destination="1UB-50-DG4" id="1Pr-L8-PNV"/>

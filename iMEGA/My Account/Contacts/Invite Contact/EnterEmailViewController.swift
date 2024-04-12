@@ -1,4 +1,5 @@
 import ContactsUI
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import UIKit
@@ -15,6 +16,7 @@ class EnterEmailViewController: UIViewController {
     @IBOutlet weak var tagsFieldHeightLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagsFieldButton: UIButton!
     @IBOutlet weak var inviteContactsButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var separatorView: UIView!
 
     private let contactPickerViewController: CNContactPickerViewController = {
         let controller = CNContactPickerViewController()
@@ -104,14 +106,31 @@ class EnterEmailViewController: UIViewController {
     // MARK: Private
     
     private func updateAppearance(shouldClearExistingText: Bool = true) {
-        view.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_secondaryBackground(for: traitCollection)
-        
-        tagsFieldView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundElevated(traitCollection) : .mnz_secondaryBackgroundElevated(traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            view.backgroundColor = TokenColors.Background.page
+            descriptionLabel.textColor = TokenColors.Text.primary
+            tagsFieldView.backgroundColor = TokenColors.Background.page
+            tagsFieldButton.tintColor = TokenColors.Button.primary
+            separatorView.backgroundColor = TokenColors.Border.strong
+        } else {
+            view.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_secondaryBackground(for: traitCollection)
+            tagsFieldView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundElevated(traitCollection) : .mnz_secondaryBackgroundElevated(traitCollection)
+            tagsFieldButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        }
         
         customizeTagsField(shouldClearExistingText: shouldClearExistingText)
-        tagsFieldButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
-        inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
+        if tagsField.tags.isNotEmpty || tagsField.text?.mnz_isValidEmail() == true {
+            inviteContactsButton.mnz_setupPrimary(traitCollection)
+        } else {
+            inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
+        }
+        
+        if instructionsLabel.text == Strings.Localizable.theEmailAddressFormatIsInvalid {
+            tagsField.textField.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection)
+        } else {
+            tagsField.textField.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
+        }
     }
     
     private func updateBottomConstraint(_ newValue: CGFloat) {
@@ -139,22 +158,24 @@ class EnterEmailViewController: UIViewController {
         
         tagsField.layoutMargins = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
 
+        let tagsFieldColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : .mnz_tertiaryBackgroundGroupedElevated(traitCollection)
+        let tagsFieldTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
         tagsField.spaceBetweenLines = 12.0
         tagsField.spaceBetweenTags = 10.0
         tagsField.font = .preferredFont(forTextStyle: .body)
-        tagsField.tintColor = .mnz_tertiaryBackgroundGroupedElevated(traitCollection)
-        tagsField.textColor = .label
-        tagsField.selectedColor = .mnz_tertiaryBackgroundGroupedElevated(traitCollection)
-        tagsField.selectedTextColor = .label
+        tagsField.tintColor = tagsFieldColor
+        tagsField.textColor = tagsFieldTextColor
+        tagsField.selectedColor = tagsFieldColor
+        tagsField.selectedTextColor = tagsFieldTextColor
         
-        tagsField.textField.textColor = .label
+        tagsField.textField.textColor = tagsFieldTextColor
         tagsField.textField.keyboardType = .emailAddress
         tagsField.textField.returnKeyType = .next
         tagsField.acceptTagOption = .space
         
         tagsField.cornerRadius = 16
         
-        tagsField.placeholderColor = .label.withAlphaComponent(0.2)
+        tagsField.placeholderColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.placeholder : .label.withAlphaComponent(0.2)
         tagsField.placeholder = Strings.Localizable.insertYourFriendsEmails
         
         configureTagFieldEvents()
@@ -164,7 +185,7 @@ class EnterEmailViewController: UIViewController {
         tagsField.addTag(email)
 
         instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
-        instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
+        instructionsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: self.traitCollection)
 
         if tagsField.tags.isEmpty {
             disableInviteContactsButton()
@@ -176,9 +197,9 @@ class EnterEmailViewController: UIViewController {
     // MARK: Actions
     @IBAction func inviteContactsTapped(_ sender: UIButton) {
         if let text = tagsField.text, text.mnz_isValidEmail() {
-            tagsField.textField.textColor = .label
+            tagsField.textField.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
             instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
-            instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
+            instructionsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: self.traitCollection)
             tagsField.addTag(text)
         }
 
@@ -254,9 +275,9 @@ extension EnterEmailViewController {
 
         tagsField.onDidChangeText = { _, text in
             if text!.mnz_isValidEmail() || self.tagsField.tags.isNotEmpty {
-                self.tagsField.textField.textColor = .label
+                self.tagsField.textField.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
                 self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
-                self.instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
+                self.instructionsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: self.traitCollection)
                 self.enableInviteContactsButton()
             } else {
                 self.disableInviteContactsButton()
@@ -272,13 +293,13 @@ extension EnterEmailViewController {
                 return false
             }
             if text.mnz_isValidEmail() {
-                self.tagsField.textField.textColor = .label
+                self.tagsField.textField.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
                 self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
-                self.instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
+                self.instructionsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: self.traitCollection)
                 
                 return true
             } else {
-                self.tagsField.textField.textColor = .mnz_red(for: self.traitCollection)
+                self.tagsField.textField.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: self.traitCollection)
                 self.instructionsLabel.text = Strings.Localizable.theEmailAddressFormatIsInvalid
                 
                 return false
