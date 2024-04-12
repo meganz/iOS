@@ -65,7 +65,7 @@ struct TabBarView: View {
                     tab: tab,
                     videoConfig: videoConfig
                 )
-                .frame(width: orientation.isPortrait ? .infinity : 195)
+                .frame(maxWidth: orientation.isPortrait ? .infinity : 195)
             }
             if interfaceOrientation.isLandscape {
                 Spacer()
