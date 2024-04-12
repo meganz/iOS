@@ -71,12 +71,17 @@ extension UIButton {
     }
     
     @objc func mnz_setupPrimary_disabled(_ traitCollection: UITraitCollection) {
-        var darkMode = false
-        if traitCollection.userInterfaceStyle == .dark {
-            darkMode = true
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = TokenColors.Button.disabled
+            setTitleColor(TokenColors.Text.inverseAccent, for: UIControl.State.normal)
+        } else {
+            var darkMode = false
+            if traitCollection.userInterfaceStyle == .dark {
+                darkMode = true
+            }
+            backgroundColor = UIColor.mnz_turquoise(for: traitCollection).withAlphaComponent(darkMode ? 0.2 : 0.3)
+            setTitleColor(MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(darkMode ? 0.2 : 0.7), for: UIControl.State.normal)
         }
-        backgroundColor = UIColor.mnz_turquoise(for: traitCollection).withAlphaComponent(darkMode ? 0.2 : 0.3)
-        setTitleColor(MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(darkMode ? 0.2 : 0.7), for: UIControl.State.normal)
         
         setupLayer()
     }
