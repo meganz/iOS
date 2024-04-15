@@ -3,9 +3,16 @@ import Foundation
 public extension AsyncSequence {
     /// Prefixes a async sequence output with the specified value.
     ///
-    /// - Parameter item: item to yield prior to the async sequence
-    func prepend(_ item: Element) -> PrependAsyncSequence<Self> {
-        PrependAsyncSequence(self, item: item)
+    /// - Parameter element: element to yield prior to the async sequence
+    func prepend(_ element: Element) -> PrependAsyncSequence<Self> {
+        prepend { element }
+    }
+    
+    /// Prefixes a async sequence output with the specified value.
+    ///
+    /// - Parameter element: async closure to yield prior to the async sequence
+    func prepend(_ element: @Sendable @escaping () async -> Element) -> PrependAsyncSequence<Self> {
+        PrependAsyncSequence(self, element: element)
     }
 }
 
@@ -14,26 +21,26 @@ public struct PrependAsyncSequence<Base: AsyncSequence>: AsyncSequence {
     public typealias Element = Base.Element
     
     private let base: Base
-    private let item: Element
+    private let element: @Sendable () async -> Element
     
-    init(_ base: Base, item: Element) {
+    init(_ base: Base, element: @Sendable @escaping () async -> Element) {
         self.base = base
-        self.item = item
+        self.element = element
       }
     
     public struct Iterator: AsyncIteratorProtocol {
         var iterator: Base.AsyncIterator
-        var item: Element?
+        var element: (@Sendable () async -> Element)?
         
-        init(iterator: Base.AsyncIterator, itemToPrepend: Element) {
+        init(iterator: Base.AsyncIterator, element: @Sendable @escaping () async -> Element) {
             self.iterator = iterator
-            self.item = itemToPrepend
+            self.element = element
         }
         
         public mutating func next() async rethrows -> Base.Element? {
-            if let item {
-                self.item = nil
-                return item
+            if let element {
+                self.element = nil
+                return await element()
             }
             return try await iterator.next()
         }
@@ -41,7 +48,7 @@ public struct PrependAsyncSequence<Base: AsyncSequence>: AsyncSequence {
     
     public func makeAsyncIterator() -> Iterator {
         Iterator(iterator: base.makeAsyncIterator(),
-                             itemToPrepend: item)
+                 element: element)
     }
 }
 
