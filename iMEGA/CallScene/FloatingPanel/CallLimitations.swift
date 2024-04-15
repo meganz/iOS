@@ -244,10 +244,15 @@ class CallLimitations {
         allowsNonHostToInvite: Bool
     ) -> Bool {
         MEGALogDebug("[CallLimitations] contact picker limit checker participants = \(callParticipantCount), selected: \(selectedCount), allowsNonHostToInvite: \(allowsNonHostToInvite)")
-        return Self.callParticipantsPlusAdditionalUsersLimitPassed(
+        return Self.callParticipantsLimitReached(
             featureFlagEnabled: chatMonetisationEnabled,
-            // from the logic of contact picker and showing the banner,
-            // once chat room has `allowsNonHostToInvite` his behaviour is the same as moderator
+            isMyselfModerator: allowsNonHostToInvite,
+            currentLimit: limitOfFreeTierUsers,
+            callParticipantCount: callParticipantCount
+        )
+        ||
+        Self.callParticipantsPlusAdditionalUsersLimitPassed(
+            featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: allowsNonHostToInvite,
             currentLimit: limitOfFreeTierUsers,
             callParticipantCount: callParticipantCount,
