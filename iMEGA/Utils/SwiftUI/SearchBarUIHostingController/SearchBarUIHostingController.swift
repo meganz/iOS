@@ -103,6 +103,10 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content>,
         super.viewWillDisappear(animated)
         audioPlayerManager?.removeDelegate(self)
     }
+
+    deinit {
+        removeToolbar(animated: false)
+    }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -150,6 +154,11 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content>,
     }
     
     private func removeToolbar(animated: Bool) {
+        guard animated else {
+            self.toolbar?.removeFromSuperview()
+            return
+        }
+
         UIView.animate(
             withDuration: 0.33,
             animations: {
