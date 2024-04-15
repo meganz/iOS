@@ -32,4 +32,14 @@ extension ContactTableViewCell {
             contactNewLabelView.backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
         }
     }
+    
+    @objc func onlineStatusBackgroundColor(_ status: MEGAChatStatus) -> UIColor {
+        switch status {
+        case .online: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : MEGAAppColor.Chat.chatStatusOnline.uiColor
+        case .offline: UIColor.isDesignTokenEnabled() ? TokenColors.Icon.disabled : MEGAAppColor.Chat.chatStatusOffline.uiColor
+        case .away: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.yellow : MEGAAppColor.Chat.chatStatusAway.uiColor
+        case .busy: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : MEGAAppColor.Chat.chatStatusBusy.uiColor
+        default: .clear
+        }
+    }
 }
