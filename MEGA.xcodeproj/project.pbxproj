@@ -1308,6 +1308,7 @@
 		94485B5E29BA0E17006B919E /* SharedItemsViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */; };
 		9448661429AF55C300CE3228 /* LoginViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */; };
 		9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */; };
+		9449D42C2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */; };
 		944AD0B128EF039700AB1E59 /* BackupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B028EF039700AB1E59 /* BackupsRepository.swift */; };
 		944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */; };
 		9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */; };
@@ -4040,6 +4041,7 @@
 		944917CC2A83C044006234D9 /* MEGAPickerFileProviderDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPickerFileProviderDomain; sourceTree = "<group>"; };
 		944917CF2A83C159006234D9 /* MEGAPickerFileProviderRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPickerFileProviderRepo; sourceTree = "<group>"; };
 		9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValidationRepositoryTests.swift; sourceTree = "<group>"; };
+		9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsTableViewHeaderFooterView+Additions.swift"; sourceTree = "<group>"; };
 		944AD0B028EF039700AB1E59 /* BackupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsRepository.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
@@ -10499,6 +10501,7 @@
 			isa = PBXGroup;
 			children = (
 				A88E7FE82549FD8A001B0A66 /* Recents.storyboard */,
+				9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */,
 				A88E7FE62549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.h */,
 				A88E7FE92549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m */,
 				A88E7FE52549FD8A001B0A66 /* RecentsTableViewHeaderView.xib */,
@@ -15284,6 +15287,7 @@
 				83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */,
 				5D08568F2505E2140030AEE3 /* RecentNodeRouter.swift in Sources */,
 				5B5C7B29264A92410087200D /* RecentsPreference.swift in Sources */,
+				9449D42C2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift in Sources */,
 				A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */,
 				B52B8C68297FE9A400981F47 /* RecentsViewController+Additions.swift in Sources */,
 				A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */,

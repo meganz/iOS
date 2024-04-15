@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASDKRepo
 
 extension RecentsViewController {
@@ -57,5 +58,10 @@ extension RecentsViewController {
             )
         )
         delegate?.showSelectedNode(in: vc)
+    }
+
+    @objc func configureTokenColors() {
+        tableView?.backgroundColor = TokenColors.Background.page
+        tableView?.separatorColor = TokenColors.Border.strong
     }
 }
