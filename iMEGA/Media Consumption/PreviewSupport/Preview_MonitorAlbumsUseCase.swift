@@ -2,11 +2,11 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
-    func monitorSystemAlbums() async throws -> AnyAsyncSequence<[AlbumEntity]> {
+    func monitorSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], any Error>> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
     
-    func monitorUserAlbums() async throws -> AnyAsyncSequence<[AlbumEntity]> {
+    func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
     

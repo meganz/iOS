@@ -722,12 +722,13 @@ final class AlbumListViewModelTests: XCTestCase {
         let userAlbum2 = AlbumEntity(id: 5, name: "Album 2", coverNode: NodeEntity(handle: 4),
                                      count: 0, type: .user, creationTime: try "2024-04-05T10:02:04Z".date)
         let userAlbums = [userAlbum1, userAlbum2]
-        let systemAsyncSequence = SingleItemAsyncSequence(item: systemAlbums).eraseToAnyAsyncSequence()
+        let systemAsyncSequence = SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+            item: .success(systemAlbums)).eraseToAnyAsyncSequence()
         let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums).eraseToAnyAsyncSequence()
         
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorSystemAlbumsResult: .success(systemAsyncSequence),
-            monitorUserAlbumsResult: .success(monitorUserAlbumsAsyncSequence)
+            monitorSystemAlbumsSequence: systemAsyncSequence,
+            monitorUserAlbumsSequence: monitorUserAlbumsAsyncSequence
         )
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
@@ -768,13 +769,15 @@ final class AlbumListViewModelTests: XCTestCase {
     
     @MainActor
     func testMonitorAlbums_failedToRetrieveSystemAlbums_shouldStillLoadUserAlbums() {
+        let systemAsyncSequence = SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+            item: .failure(GenericErrorEntity())).eraseToAnyAsyncSequence()
         let userAlbums =  [AlbumEntity(id: 4, name: "Album 1", count: 0, type: .user)]
         let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums)
             .eraseToAnyAsyncSequence()
         
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorSystemAlbumsResult: .failure(GenericErrorEntity()),
-            monitorUserAlbumsResult: .success(monitorUserAlbumsAsyncSequence)
+            monitorSystemAlbumsSequence: systemAsyncSequence,
+            monitorUserAlbumsSequence: monitorUserAlbumsAsyncSequence
         )
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
@@ -786,43 +789,6 @@ final class AlbumListViewModelTests: XCTestCase {
             .dropFirst()
             .sink {
                 XCTAssertEqual($0, userAlbums)
-                exp.fulfill()
-            }
-        
-        let monitoring = Task {
-            do {
-                try await sut.monitorAlbums()
-            } catch {
-                XCTFail("Unexpected error")
-            }
-        }
-        
-        wait(for: [exp], timeout: 1.0)
-        subscription.cancel()
-        monitoring.cancel()
-    }
-    
-    @MainActor
-    func testMonitorAlbums_failedToRetrieveUserAlbums_shouldStillLoadSystemAlbums() {
-        let systemAlbums =  [AlbumEntity(id: 1, name: Strings.Localizable.CameraUploads.Albums.Favourites.title,
-                                       count: 0, type: .favourite)]
-        let monitorSystemAlbumsAsyncSequence = SingleItemAsyncSequence(item: systemAlbums)
-            .eraseToAnyAsyncSequence()
-        
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorSystemAlbumsResult: .success(monitorSystemAlbumsAsyncSequence),
-            monitorUserAlbumsResult: .failure(GenericErrorEntity())
-        )
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        
-        let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                     featureFlagProvider: featureFlagProvider)
-        
-        let exp = expectation(description: "Should load only system albums")
-        let subscription = sut.$albums
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, systemAlbums)
                 exp.fulfill()
             }
         

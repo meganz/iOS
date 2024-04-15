@@ -11,9 +11,9 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         let photosRepository = MockPhotosRepository(photos: photos)
         let sut = makeSUT(photosRepository: photosRepository)
         
-        var iterator = try await sut.monitorPhotos(filterOptions: []).makeAsyncIterator()
+        var iterator = await sut.monitorPhotos(filterOptions: []).makeAsyncIterator()
         
-        let initialPhotos = await iterator.next()
+        let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(Set(initialPhotos ?? []), Set(photos))
     }
     
@@ -25,12 +25,12 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
                                                                                .success(photos)])
         let sut = makeSUT(photosRepository: photosRepository)
         
-        var iterator = try await sut.monitorPhotos(filterOptions: []).makeAsyncIterator()
+        var iterator = await sut.monitorPhotos(filterOptions: []).makeAsyncIterator()
         
-        let initialPhotos = await iterator.next()
+        let initialPhotos = try await iterator.next()?.get()
         XCTAssertTrue(initialPhotos?.isEmpty ?? false)
         
-        let firstUpdate = await iterator.next()
+        let firstUpdate = try await iterator.next()?.get()
         XCTAssertEqual(Set(firstUpdate ?? []), Set(photos))
     }
     
@@ -41,9 +41,9 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         let photosRepository = MockPhotosRepository(photos: photos)
         let sut = makeSUT(photosRepository: photosRepository)
         
-        var iterator = try await sut.monitorPhotos(filterOptions: [.allLocations, .allMedia]).makeAsyncIterator()
+        var iterator = await sut.monitorPhotos(filterOptions: [.allLocations, .allMedia]).makeAsyncIterator()
         
-        let initialPhotos = await iterator.next()
+        let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(initialPhotos, [thumbnailPhoto])
     }
     
@@ -52,16 +52,16 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         let photosRepository = MockPhotosRepository(photosUpdated: makePhotosUpdatedSequenceWithItems(),
                                                     allPhotosCallOrderResult: [.success([]),
                                                                                .success([thumbnailPhoto])])
-                                                          
+        
         let sut = makeSUT(photosRepository: photosRepository)
         
-        var iterator = try await sut.monitorPhotos(filterOptions: [.allLocations,
-                                                                   .allMedia]).makeAsyncIterator()
+        var iterator = await sut.monitorPhotos(filterOptions: [.allLocations,
+                                                               .allMedia]).makeAsyncIterator()
         
-        let initialPhotos = await iterator.next()
+        let initialPhotos = try await iterator.next()?.get()
         XCTAssertTrue(initialPhotos?.isEmpty ?? false)
         
-        let firstUpdate = await iterator.next()
+        let firstUpdate = try await iterator.next()?.get()
         XCTAssertEqual(firstUpdate, [thumbnailPhoto])
     }
     
@@ -79,10 +79,10 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         let sut = makeSUT(photosRepository: photosRepository,
                           photoLibraryUseCase: photoLibraryUseCase)
         
-        var iterator = try await sut.monitorPhotos(filterOptions: [.cloudDrive,
-                                                                   .videos]).makeAsyncIterator()
+        var iterator = await sut.monitorPhotos(filterOptions: [.cloudDrive,
+                                                               .videos]).makeAsyncIterator()
         
-        let initialPhotos = await iterator.next()
+        let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(initialPhotos, [thumbnailVideo])
     }
     
@@ -98,13 +98,13 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         let sut = makeSUT(photosRepository: photosRepository,
                           photoLibraryUseCase: photoLibraryUseCase)
         
-        var iterator = try await sut.monitorPhotos(filterOptions: [.cloudDrive,
-                                                                   .videos]).makeAsyncIterator()
+        var iterator = await sut.monitorPhotos(filterOptions: [.cloudDrive,
+                                                               .videos]).makeAsyncIterator()
         
-        let initialPhotos = await iterator.next()
+        let initialPhotos = try await iterator.next()?.get()
         XCTAssertTrue(initialPhotos?.isEmpty ?? false)
         
-        let firstUpdate = await iterator.next()
+        let firstUpdate = try await iterator.next()?.get()
         XCTAssertEqual(firstUpdate, [thumbnailVideo])
     }
     
@@ -127,10 +127,10 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         let sut = makeSUT(photosRepository: photosRepository,
                           photoLibraryUseCase: photoLibraryUseCase)
         
-        var iterator = try await sut.monitorPhotos(filterOptions: [.cameraUploads,
-                                                                   .images]).makeAsyncIterator()
+        var iterator = await sut.monitorPhotos(filterOptions: [.cameraUploads,
+                                                               .images]).makeAsyncIterator()
         
-        let initialPhotos = await iterator.next()
+        let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(Set(initialPhotos ?? []),
                        Set([cameraUploadImage, mediaUploadImage]))
     }
@@ -151,15 +151,31 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         let sut = makeSUT(photosRepository: photosRepository,
                           photoLibraryUseCase: photoLibraryUseCase)
         
-        var iterator = try await sut.monitorPhotos(filterOptions: [.cameraUploads,
-                                                                   .images]).makeAsyncIterator()
+        var iterator = await sut.monitorPhotos(filterOptions: [.cameraUploads,
+                                                               .images]).makeAsyncIterator()
         
-        let initialPhotos = await iterator.next()
+        let initialPhotos = try await iterator.next()?.get()
         XCTAssertTrue(initialPhotos?.isEmpty ?? false)
         
-        let firstUpdate = await iterator.next()
+        let firstUpdate = try await iterator.next()?.get()
         XCTAssertEqual(Set(firstUpdate ?? []),
                        Set([cameraUploadImage, mediaUploadImage]))
+    }
+    
+    func testMonitorPhotos_onPhotoLoadFailed_shouldReturnErrorInFailedResultType() async throws {
+        let photosRepository = MockPhotosRepository(photosUpdated: makePhotosUpdatedSequenceWithItems(),
+                                                    allPhotosCallOrderResult: [.failure(GenericErrorEntity())])
+       
+        let sut = makeSUT(photosRepository: photosRepository)
+        
+        var iterator = await sut.monitorPhotos(filterOptions: [.allLocations, .allMedia]).makeAsyncIterator()
+        
+        do {
+            _ = try await iterator.next()?.get()
+            XCTFail("Expected failure")
+        } catch {
+            XCTAssertTrue(error is GenericErrorEntity)
+        }
     }
     
     // MARK: Private

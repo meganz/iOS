@@ -2,21 +2,17 @@ import AsyncAlgorithms
 import MEGASwift
 
 public protocol MonitorAlbumsUseCaseProtocol {
-    /// Infinite `AnyAsyncSequence` returning system albums (Favourite, Raw and Gif)
+    /// Infinite `AnyAsyncSequence` returning result type of system albums (Favourite, Raw and Gif) or error
     ///
     /// The async sequence will immediately return system albums then updates when photo updates occur.
     /// The async sequence is infinite and will require cancellation.
-    ///
-    /// - Throws: `CancellationError`
-    func monitorSystemAlbums() async throws -> AnyAsyncSequence<[AlbumEntity]>
+    func monitorSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], Error>>
     
     /// Infinite `AnyAsyncSequence` returning user created albums
     ///
     /// The async sequence will immediately return user albums then updates when set updates occur.
     /// The async sequence is infinite and will require cancellation.
-    ///
-    /// - Throws: `CancellationError`
-    func monitorUserAlbums() async throws -> AnyAsyncSequence<[AlbumEntity]>
+    func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]>
     
     /// Infinite `AnyAsyncSequence` returning user album photos.
     ///
@@ -44,19 +40,19 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         self.photosRepository = photosRepository
     }
     
-    public func monitorSystemAlbums() async throws -> AnyAsyncSequence<[AlbumEntity]> {
-        try await monitorPhotosUseCase.monitorPhotos(filterOptions: [.allLocations, .allMedia])
+    public func monitorSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], Error>> {
+        await monitorPhotosUseCase.monitorPhotos(filterOptions: [.allLocations, .allMedia])
             .map {
-                makeSystemAlbums($0)
+                $0.map { makeSystemAlbums($0) }
             }
             .eraseToAnyAsyncSequence()
     }
     
     public func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
-        let albums = await userAlbumRepository.albums()
-        
-        return await userAlbumRepository.albumsUpdated()
-            .prepend(albums)
+        await userAlbumRepository.albumsUpdated()
+            .prepend {
+                await userAlbumRepository.albums()
+            }
             .map {
                 await makeUserAlbums($0)
             }
@@ -67,12 +63,12 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         guard album.type == .user else {
             return EmptyAsyncSequence<[AlbumPhotoEntity]>().eraseToAnyAsyncSequence()
         }
-        let albumElementIds = await userAlbumRepository.albumElementIds(by: album.id,
-                                                                    includeElementsInRubbishBin: false)
-                
         return await merge(userAlbumContentUpdated(album: album),
                            userAlbumPhotoUpdated(album: album))
-        .prepend(albumElementIds)
+        .prepend {
+            await userAlbumRepository.albumElementIds(
+                by: album.id, includeElementsInRubbishBin: false)
+        }
         .map {
             await userAlbumPhotos(forAlbumPhotoIds: $0)
         }

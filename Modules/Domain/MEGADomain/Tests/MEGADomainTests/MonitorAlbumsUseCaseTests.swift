@@ -10,17 +10,17 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             NodeEntity(name: "\($0).jpg", handle: $0, hasThumbnail: true, isFavourite: true,
                        modificationTime: try "2024-03-10T22:0\($0):04Z".date, mediaType: .image)
         }
-        let photosSequence = SingleItemAsyncSequence<[NodeEntity]>(item: photos)
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
         
         let sut = makeSUT(monitorPhotosUseCase: monitorPhotosUseCase)
         
-        var albumsSequence = try await sut.monitorSystemAlbums()
+        var albumsSequence = await sut.monitorSystemAlbums()
             .makeAsyncIterator()
         
-        let albums = await albumsSequence.next()
+        let albums = try await albumsSequence.next()?.get()
         
         let expected = [AlbumEntity(id: AlbumIdEntity.favourite.value,
                                     coverNode: photos.last, count: photos.count, type: .favourite)]
@@ -32,7 +32,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             NodeEntity(name: "\($0).gif", handle: $0, hasThumbnail: true,
                        modificationTime: try "2024-03-10T22:0\($0):04Z".date, mediaType: .image)
         }
-        let photosSequence = SingleItemAsyncSequence<[NodeEntity]>(item: photos)
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
@@ -41,10 +41,10 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         let sut = makeSUT(monitorPhotosUseCase: monitorPhotosUseCase,
                           mediaUseCase: mediaUseCase)
         
-        var albumsSequence = try await sut.monitorSystemAlbums()
+        var albumsSequence = await sut.monitorSystemAlbums()
             .makeAsyncIterator()
         
-        let albums = await albumsSequence.next()
+        let albums = try await albumsSequence.next()?.get()
         
         let expected = [AlbumEntity(id: AlbumIdEntity.favourite.value, coverNode: nil,
                                     count: 0, type: .favourite),
@@ -66,7 +66,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
                        modificationTime: try "2024-02-01T20:01:04Z".date)
         ]
         
-        let photosSequence = SingleItemAsyncSequence<[NodeEntity]>(item: photos)
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
@@ -75,10 +75,10 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         let sut = makeSUT(monitorPhotosUseCase: monitorPhotosUseCase,
                           mediaUseCase: mediaUseCase)
         
-        var albumsSequence = try await sut.monitorSystemAlbums()
+        var albumsSequence = await sut.monitorSystemAlbums()
             .makeAsyncIterator()
         
-        let albums = await albumsSequence.next()
+        let albums = try await albumsSequence.next()?.get()
         
         let expected = [AlbumEntity(id: AlbumIdEntity.favourite.value, coverNode: nil, count: 0, type: .favourite),
                         AlbumEntity(id: AlbumIdEntity.raw.value, coverNode: rawCover, count: photos.count, type: .raw)]
@@ -98,7 +98,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             gifCover
         ]
         
-        let photosSequence = SingleItemAsyncSequence<[NodeEntity]>(item: photos)
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
@@ -107,10 +107,10 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         
         let sut = makeSUT(monitorPhotosUseCase: monitorPhotosUseCase,
                           mediaUseCase: mediaUseCase)
-        var albumsSequence = try await sut.monitorSystemAlbums()
+        var albumsSequence = await sut.monitorSystemAlbums()
             .makeAsyncIterator()
         
-        let albums = await albumsSequence.next()
+        let albums = try await albumsSequence.next()?.get()
         
         let expected = [AlbumEntity(id: AlbumIdEntity.favourite.value, coverNode: favouriteCover,
                                     count: 1, type: .favourite),
@@ -119,6 +119,25 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
                         AlbumEntity(id: AlbumIdEntity.raw.value, coverNode: rawCover,
                                     count: 1, type: .raw)]
         XCTAssertEqual(albums, expected)
+    }
+    
+    func testMonitorSystemAlbums_failedToRetriveAllPhotos_shouldReturnFailedResultType() async {
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .failure(GenericErrorEntity()))
+            .eraseToAnyAsyncSequence()
+        let monitorPhotosUseCase = MockMonitorPhotosUseCase(
+            monitorPhotosAsyncSequence: photosSequence)
+        
+        let sut = makeSUT(monitorPhotosUseCase: monitorPhotosUseCase)
+        var albumsSequence = await sut.monitorSystemAlbums()
+            .makeAsyncIterator()
+        
+        let albumsResult = await albumsSequence.next()
+        
+        switch albumsResult {
+        case .failure(let error):
+            XCTAssertTrue(error is GenericErrorEntity)
+        default: XCTFail("Expected Failure")
+        }
     }
     
     func testMonitorUserAlbums_onSetsRetrieved_shouldEmitUserAlbumsFromSetEntities() async throws {
