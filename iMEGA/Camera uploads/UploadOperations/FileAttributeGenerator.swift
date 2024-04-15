@@ -97,10 +97,10 @@ protocol FileAttributeGeneratorProtocol {
     private func sizeForThumbnail() -> CGSize {
         var w: Int
         var h: Int
-        if pixelWidth > pixelHeight {
+        if pixelWidth > pixelHeight && pixelHeight > 0 {
             h = Constants.thumbnailSize
             w = Constants.thumbnailSize * pixelWidth / pixelHeight
-        } else if pixelHeight > pixelWidth {
+        } else if pixelHeight > pixelWidth && pixelWidth > 0 {
             h = Constants.thumbnailSize * pixelHeight / pixelWidth
             w = Constants.thumbnailSize
         } else {
