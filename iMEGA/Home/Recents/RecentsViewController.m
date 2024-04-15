@@ -84,8 +84,12 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 #pragma mark - Private
 
 - (void)updateAppearanceWithTrait:(UITraitCollection *)currentTraitCollection {
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = UIColor.isDesignTokenEnabled ? [UIColor pageBackgroundForTraitCollection:self.traitCollection] : [UIColor mnz_backgroundElevated:self.traitCollection];
+    if (UIColor.isDesignTokenEnabled) {
+        [self configureTokenColors];
+    }  else {
+        self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+        self.tableView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    }
 }
 
 #pragma mark - Actions
