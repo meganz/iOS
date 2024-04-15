@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -8,9 +9,17 @@ public struct OnboardingWithViewProPlansView: View {
     public var invokeDismiss: (() -> Void)?
     let accountsConfig: AccountsConfig
     
+    @Environment(\.colorScheme) private var colorScheme
+    private var backgroundColor: Color {
+        guard isDesignTokenEnabled else {
+            return colorScheme == .dark ? Color(red: 28/255, green: 28/255, blue: 30/255) : .white
+        }
+        return TokenColors.Background.page.swiftUI
+    }
+    
     public var body: some View {
         ZStack {
-            Color("background_regular_primaryElevated").edgesIgnoringSafeArea(.all)
+            backgroundColor.edgesIgnoringSafeArea(.all)
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 30) {
@@ -53,6 +62,7 @@ public struct OnboardingWithViewProPlansView: View {
 }
 
 private struct OnboardingProPlanHeaderView: View {
+    @Environment(\.colorScheme) private var colorScheme
     let lowestPlanPrice: String
     let accountsConfig: AccountsConfig
     
@@ -63,11 +73,18 @@ private struct OnboardingProPlanHeaderView: View {
             Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.title)
                 .font(.title3)
                 .bold()
+                .foregroundStyle(
+                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(.label)
+                )
             
             Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.subTitle(lowestPlanPrice))
-                .foregroundColor(accountsConfig.onboardingViewAssets.primaryGrayTextColor)
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
+                .foregroundStyle(
+                    isDesignTokenEnabled ?
+                    TokenColors.Text.secondary.swiftUI :
+                        colorScheme == .dark ? Color(red: 181/255, green: 181/255, blue: 181/255) : Color(red: 132/255, green: 132/255, blue: 132/255)
+                )
         }
     }
 }

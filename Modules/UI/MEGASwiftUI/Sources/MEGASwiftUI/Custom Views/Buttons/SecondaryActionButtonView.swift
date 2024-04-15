@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 public struct SecondaryActionButtonView: View {
@@ -23,12 +24,12 @@ public struct SecondaryActionButtonView: View {
             Text(title)
                 .frame(maxWidth: .infinity)
                 .frame(height: 50)
-                .foregroundColor(textColor)
+                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.accent.swiftUI : textColor)
                 .font(.title3)
-                .background(background)
+                .background(isDesignTokenEnabled ? TokenColors.Button.secondary.swiftUI : background)
                 .cornerRadius(10)
                 .contentShape(Rectangle())
         }
-        .shadow(color: Color.black.opacity(0.15), radius: 4, y: 1)
+        .shadow(color: isDesignTokenEnabled ? .clear : Color.black.opacity(0.15), radius: 4, y: 1) // Shadow should be removed when design token is permanently applied as it won't be needed.
     }
 }
