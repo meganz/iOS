@@ -53,7 +53,8 @@ struct CloudDriveBottomToolbarItemsFactory {
             
             item.primaryAction = UIAction(
                 image: action.image,
-                handler: { _ in
+                handler: { [weak parent] _ in
+                    guard let parent else { return }
                     actionHandler(
                         for: action,
                         displayMode: config.displayMode,

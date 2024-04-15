@@ -62,7 +62,8 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         let sut: CloudDriveBottomToolbarItemsFactory
         let actionFactory = MockToolbarActionFactory()
         let actionHandler: NodeActionsDelegateHandler
-        
+        let parent = UIViewController()
+
         init(
             actionHandler: NodeActionsDelegateHandler = .testingInstance
         ) {
@@ -89,7 +90,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
                     isIncomingShareChildView: false,
                     onActionCompleted: { _ in }
                 ),
-                parent: UIViewController(),
+                parent: parent,
                 browseDelegate: BrowserViewControllerDelegateHandler()
             )
         }
@@ -155,7 +156,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         }
         harness.actionFactory.actionsToReturn = [.download]
         try harness.triggerFirstAction()
-        wait(for: [exp])
+        wait(for: [exp], timeout: 1)
         XCTAssertTrue(downloadCalled)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
@@ -172,7 +173,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         }
         harness.actionFactory.actionsToReturn = [.shareLink]
         try harness.triggerFirstAction()
-        wait(for: [exp])
+        wait(for: [exp], timeout: 1)
         XCTAssertTrue(shareOrManageLinkCalled)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
@@ -189,7 +190,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         }
         harness.actionFactory.actionsToReturn = [.move]
         try harness.triggerFirstAction()
-        wait(for: [exp])
+        wait(for: [exp], timeout: 1)
         XCTAssertEqual(browserAction, .move)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
@@ -206,7 +207,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         }
         harness.actionFactory.actionsToReturn = [.copy]
         try harness.triggerFirstAction()
-        wait(for: [exp])
+        wait(for: [exp], timeout: 1)
         XCTAssertEqual(browserAction, .copy)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
@@ -223,7 +224,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         }
         harness.actionFactory.actionsToReturn = [.restore]
         try harness.triggerFirstAction()
-        wait(for: [exp])
+        wait(for: [exp], timeout: 1)
         XCTAssertTrue(restoreCalled)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
@@ -247,7 +248,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         )
         let restore = try XCTUnwrap(allItems.first)
         try restore.triggerPrimaryAction()
-        wait(for: [exp])
+        wait(for: [exp], timeout: 1)
         XCTAssertTrue(removeFromRubbishBinCalled)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
@@ -271,7 +272,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         )
         let restore = try XCTUnwrap(allItems.first)
         try restore.triggerPrimaryAction()
-        wait(for: [exp])
+        wait(for: [exp], timeout: 1)
         XCTAssertTrue(moveToRubbishBinCalled)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
