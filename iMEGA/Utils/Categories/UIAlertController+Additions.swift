@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 
 extension UIAlertController {
@@ -61,6 +62,8 @@ extension UIAlertController {
         // than enabled one
         if preferredAction.isEnabled {
             alert.preferredAction = preferredAction
+        } else {
+            preferredAction.titleTextColor = TokenColors.Text.disabled
         }
         
         alert.addAction(
@@ -86,5 +89,15 @@ extension UIAlertController {
         }
         
         return alert
+    }
+}
+
+extension UIAlertAction {
+    var titleTextColor: UIColor? {
+        get {
+            return self.value(forKey: "titleTextColor") as? UIColor
+        } set {
+            self.setValue(newValue, forKey: "titleTextColor")
+        }
     }
 }
