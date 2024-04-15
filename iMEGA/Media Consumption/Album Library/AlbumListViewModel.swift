@@ -371,8 +371,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     private func newAlbumMonitoring() async {
-        for try await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(),
-                                                                  await monitorUserAlbums()) {
+        for await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(),
+                                                              await monitorUserAlbums()) {
             updateAlbums(systemAlbums + userAlbums)
         }
     }
@@ -386,24 +386,22 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     private func monitorSystemAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
-        do {
-            return try await monitorAlbumsUseCase.monitorLocalizedSystemAlbums()
-        } catch {
-            MEGALogError("[Album List] Failed to retrieve monitor system album async sequence: \(error.localizedDescription)")
-            return SingleItemAsyncSequence(item: [])
-                .eraseToAnyAsyncSequence()
-        }
+         await monitorAlbumsUseCase.monitorLocalizedSystemAlbums()
+            .map {
+                switch $0 {
+                case .success(let albums):
+                    return albums
+                case .failure(let error):
+                    MEGALogError("[Album List] Failed to retrieve system albums: \(error.localizedDescription)")
+                    return []
+                }
+            }
+            .eraseToAnyAsyncSequence()
     }
     
     private func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
-        do {
-            return try await monitorAlbumsUseCase.monitorSortedUserAlbums(
+        await monitorAlbumsUseCase.monitorSortedUserAlbums(
                 by: { $0.creationTime ?? Date.distantPast > $1.creationTime ?? Date.distantPast })
-        } catch {
-            MEGALogError("[Album List] Failed to retrieve monitor user album async sequence: \(error.localizedDescription)")
-            return SingleItemAsyncSequence(item: [])
-                .eraseToAnyAsyncSequence()
-        }
     }
     
     // Throttle is not available in swift-async-algorithms package and will most likely only be available for iOS 16 and above due to the use of `Clock`.
@@ -417,16 +415,18 @@ final class AlbumListViewModel: NSObject, ObservableObject {
 }
 
 private extension MonitorAlbumsUseCaseProtocol {
-    func monitorLocalizedSystemAlbums() async throws -> AnyAsyncSequence<[AlbumEntity]> {
-        try await monitorSystemAlbums()
-            .map {
-                $0.map {
-                    guard let localizedName = $0.type.localizedAlbumName else {
-                        return $0
+    func monitorLocalizedSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], any Error>> {
+        await monitorSystemAlbums()
+            .map { systemAlbumResult in
+                systemAlbumResult.map { albums in
+                    albums.map { album in
+                        guard let localizedName = album.type.localizedAlbumName else {
+                            return album
+                        }
+                        var album = album
+                        album.name = localizedName
+                        return album
                     }
-                    var album = $0
-                    album.name = localizedName
-                    return album
                 }
             }
             .eraseToAnyAsyncSequence()
@@ -434,8 +434,8 @@ private extension MonitorAlbumsUseCaseProtocol {
     
     func monitorSortedUserAlbums(
         by areInIncreasingOrder: @escaping @Sendable (AlbumEntity, AlbumEntity) -> Bool
-    ) async throws -> AnyAsyncSequence<[AlbumEntity]> {
-        try await monitorUserAlbums()
+    ) async -> AnyAsyncSequence<[AlbumEntity]> {
+        await monitorUserAlbums()
             .map { userAlbums in
                 var sortedUserAlbums = userAlbums
                 sortedUserAlbums.sort(by: areInIncreasingOrder)

@@ -1,14 +1,14 @@
 import MEGASwift
 
 public protocol MonitorPhotosUseCaseProtocol: Sendable {
-    /// Infinite `AnyAsyncSequence` returning photos for `PhotosFilterOptionsEntity`
+    /// Infinite `AnyAsyncSequence` returning photos for `PhotosFilterOptionsEntity` or `Error` in Result type
     ///
     /// The async sequence will immediately return photos and photos with updates when required.
     /// The async sequence is infinite and will require cancellation
     ///
     /// - Parameter filterOptions: filter options to apply on photos
     /// - Throws: `CancellationError`
-    func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async throws -> AnyAsyncSequence<[NodeEntity]>
+    func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async -> AnyAsyncSequence<Result<[NodeEntity], Error>>
 }
 
 private typealias NodeEntityFilter = ((NodeEntity) -> Bool)
@@ -23,25 +23,25 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         self.photoLibraryUseCase = photoLibraryUseCase
     }
     
-    public func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async throws -> AnyAsyncSequence<[NodeEntity]> {
+    public func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
         let filters = await makeNodeFilters(filterOptions)
         guard filters.isNotEmpty else {
-            return try await monitorPhotos()
+            return await monitorPhotos()
         }
-        return try await monitorPhotos(nodeEntityFilter: { node in filters.allSatisfy({ $0(node)}) })
+        return await monitorPhotos(nodeEntityFilter: { node in filters.allSatisfy({ $0(node)}) })
     }
     
     // MARK: - Private
     
-    private func monitorPhotos(nodeEntityFilter predicate: NodeEntityFilter? = nil) async throws -> AnyAsyncSequence<[NodeEntity]> {
-        let allPhotos = try await photosRepository.allPhotos()
-        
+    private func monitorPhotos(nodeEntityFilter predicate: NodeEntityFilter? = nil) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
         let monitorAll = await photosRepository
             .photosUpdated()
             .map { _ in
-                try await photosRepository.allPhotos()
+                await allPhotos()
             }
-            .prepend(allPhotos)
+            .prepend {
+                await allPhotos()
+            }
         
         guard let predicate else {
             return monitorAll.eraseToAnyAsyncSequence()
@@ -49,7 +49,7 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         
         return monitorAll
             .map {
-                $0.filter(predicate)
+                $0.map { $0.filter(predicate) }
             }
             .eraseToAnyAsyncSequence()
     }
@@ -90,5 +90,14 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
             return { $0.name.fileExtensionGroup.isVideo && $0.hasThumbnail }
         }
         return nil
+    }
+    
+    private func allPhotos() async -> Result<[NodeEntity], Error> {
+        do {
+            let photos = try await photosRepository.allPhotos()
+            return .success(photos)
+        } catch {
+            return .failure(error)
+        }
     }
 }
