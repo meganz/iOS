@@ -152,7 +152,7 @@ extension ContactsViewController {
         
         switch contactsMode {
         case .chatAddParticipant, .inviteParticipants, .scheduleMeeting:
-            itemListView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+            itemListView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_secondaryBackground(for: traitCollection)
         case .chatNamingGroup:
             [chatNamingGroupTableViewHeader, enterGroupNameView, encryptedKeyRotationView, getChatLinkView, allowNonHostToAddParticipantsView].forEach {
                 $0.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
