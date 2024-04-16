@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 class FilesExplorerListViewController: FilesExplorerViewController {
@@ -47,7 +48,9 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     
     override func configureSearchController(_ searchController: UISearchController) {
         tableView.tableHeaderView = searchController.searchBar
-        searchController.searchBar.barTintColor = .mnz_backgroundElevated(traitCollection)
+        searchController.searchBar.barTintColor = UIColor.isDesignTokenEnabled() 
+        ? TokenColors.Background.page
+        : .mnz_backgroundElevated(traitCollection)
     }
     
     override func removeSearchController(_ searchController: UISearchController) {

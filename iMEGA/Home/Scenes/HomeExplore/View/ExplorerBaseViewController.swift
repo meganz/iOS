@@ -1,4 +1,5 @@
 import ChatRepo
+import MEGADesignToken
 import MEGADomain
 import MEGASDKRepo
 import MEGAUIKit
@@ -25,7 +26,9 @@ class ExplorerBaseViewController: UIViewController {
         if !tabBarController.view.subviews.contains(toolbar) {
             toolbar.alpha = 0.0
             tabBarController.view.addSubview(toolbar)
-            toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+            toolbar.backgroundColor = UIColor.isDesignTokenEnabled()
+            ? TokenColors.Background.surface1
+            : .mnz_mainBars(for: traitCollection)
             toolbar.translatesAutoresizingMaskIntoConstraints = false
             toolbar.topAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor).isActive = true
             toolbar.leadingAnchor.constraint(equalTo: tabBarController.tabBar.leadingAnchor).isActive = true
