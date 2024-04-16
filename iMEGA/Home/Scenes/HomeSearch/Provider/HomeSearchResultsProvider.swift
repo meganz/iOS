@@ -46,7 +46,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodeIconUsecase: some NodeIconUsecaseProtocol,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
-        navigationController: UINavigationController,
+        nodeActions: NodeActions,
         onSearchResultUpdated: @escaping (SearchResult) -> Void
     ) {
         self.parentNodeProvider = parentNodeProvider
@@ -65,7 +65,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             nodeDetailUseCase: nodeDetailUseCase,
             nodeUseCase: nodeUseCase,
             mediaUseCase: mediaUseCase, 
-            nodeActions: .makeActions(sdk: sdk, navigationController: navigationController)
+            nodeActions: nodeActions
         )
 
         self.onSearchResultUpdated = onSearchResultUpdated
