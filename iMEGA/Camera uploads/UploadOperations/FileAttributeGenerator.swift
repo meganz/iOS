@@ -26,7 +26,7 @@ protocol FileAttributeGeneratorProtocol {
     private let pixelHeight: Int
     private let qlThumbnailGenerator: QLThumbnailGenerator
     
-    private enum Constants {
+    enum Constants {
         static let thumbnailSize = 200
         static let previewSize = 1000
         static let compressionQuality = 0.8
@@ -125,3 +125,15 @@ protocol FileAttributeGeneratorProtocol {
         return rect
     }
 }
+
+#if DEBUG
+extension FileAttributeGenerator {
+    func functionToTest_sizeForThumbnail() -> CGSize {
+        sizeForThumbnail()
+    }
+    
+    func functionToTest_tileRect(width: Int, height: Int) -> CGRect {
+        tileRect(width: width, height: height)
+    }
+}
+#endif

@@ -3,7 +3,6 @@ import XCTest
 
 final class FileAttributeGeneratorTests: XCTestCase {
     
-    let sourceURL = URL(fileURLWithPath: "/path/to/source")
     let thumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent("thumbnail")
     let previewURL = URL(fileURLWithPath: "/path/to/preview")
     
@@ -14,7 +13,7 @@ final class FileAttributeGeneratorTests: XCTestCase {
         let mockGenerator = MockThumbnailGenerator()
         mockGenerator._representation = mockRepresentation
         
-        let sut = FileAttributeGenerator(sourceURL: sourceURL, pixelWidth: 100, pixelHeight: 100, qlThumbnailGenerator: mockGenerator)
+        let sut = makeSUT(pixelWidth: 100, pixelHeight: 100, qlThumbnailGenerator: mockGenerator)
         
         let result = await sut.createThumbnail(at: thumbnailURL)
         
@@ -24,7 +23,7 @@ final class FileAttributeGeneratorTests: XCTestCase {
     func testCreateThumbnail_whenGenerationFails_shouldReturnFalse() async {
         let mockGenerator = MockThumbnailGenerator()
         mockGenerator._error = NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)
-        let sut = FileAttributeGenerator(sourceURL: sourceURL, pixelWidth: 1200, pixelHeight: 1200, qlThumbnailGenerator: mockGenerator)
+        let sut = makeSUT(pixelWidth: 1200, pixelHeight: 1200, qlThumbnailGenerator: mockGenerator)
         
         let result = await sut.createThumbnail(at: thumbnailURL)
         
@@ -33,7 +32,7 @@ final class FileAttributeGeneratorTests: XCTestCase {
     
     func testCreatePreview_whenGenerationSucceeds_shouldReturnTrue() async {
         let mockGenerator = MockThumbnailGenerator()
-        let sut = FileAttributeGenerator(sourceURL: sourceURL, pixelWidth: 1200, pixelHeight: 1200, qlThumbnailGenerator: mockGenerator)
+        let sut = makeSUT(pixelWidth: 1200, pixelHeight: 1200, qlThumbnailGenerator: mockGenerator)
         
         let result = await sut.createPreview(at: previewURL)
         
@@ -43,7 +42,7 @@ final class FileAttributeGeneratorTests: XCTestCase {
     func testCreatePreview_whenGenerationFails_shouldReturnFalse() async {
         let mockGenerator = MockThumbnailGenerator()
         mockGenerator._error = NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)
-        let sut = FileAttributeGenerator(sourceURL: sourceURL, pixelWidth: 1200, pixelHeight: 1200, qlThumbnailGenerator: mockGenerator)
+        let sut = makeSUT(pixelWidth: 1200, pixelHeight: 1200, qlThumbnailGenerator: mockGenerator)
         
         let result = await sut.createPreview(at: previewURL)
         
@@ -56,7 +55,7 @@ final class FileAttributeGeneratorTests: XCTestCase {
         let mockGenerator = MockThumbnailGenerator()
         mockGenerator._representation = mockRepresentation
         
-        let sut = FileAttributeGenerator(sourceURL: sourceURL, qlThumbnailGenerator: mockGenerator)
+        let sut = makeSUT(qlThumbnailGenerator: mockGenerator)
         
         let result = await sut.requestThumbnail()
         
@@ -67,16 +66,123 @@ final class FileAttributeGeneratorTests: XCTestCase {
         let mockGenerator = MockThumbnailGenerator()
         mockGenerator._error = NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)
         
-        let sut = FileAttributeGenerator(sourceURL: sourceURL, qlThumbnailGenerator: mockGenerator)
+        let sut = makeSUT(qlThumbnailGenerator: mockGenerator)
         
         let result = await sut.requestThumbnail()
         
         XCTAssertNil(result)
     }
     
+    func testSizeForThumbnail_whenWidthIsGreaterThanHeight_heightShouldBeThumbnailSize() {
+        let pixelWidth = 1000
+        let pixelHeight = 500
+        let sut = makeSUT(pixelWidth: pixelWidth, pixelHeight: pixelHeight)
+        
+        let size = sut.functionToTest_sizeForThumbnail()
+        
+        let expectedWidth = FileAttributeGenerator.Constants.thumbnailSize * pixelWidth / pixelHeight
+        
+        XCTAssertEqual(size.width, Double(expectedWidth), "Width should be \(expectedWidth)")
+        XCTAssertEqual(size.height, Double(FileAttributeGenerator.Constants.thumbnailSize), "Height should be \(FileAttributeGenerator.Constants.thumbnailSize)")
+    }
+    
+    func testSizeForThumbnail_whenWidthIsGreaterThanHeight_andHeightIsZero_heightAndWidthShouldBeThumbnailSize() {
+        let pixelWidth = 1000
+        let sut = makeSUT(pixelWidth: pixelWidth)
+        
+        let size = sut.functionToTest_sizeForThumbnail()
+        
+        XCTAssertEqual(size.width, Double(FileAttributeGenerator.Constants.thumbnailSize), "Width should be \(FileAttributeGenerator.Constants.thumbnailSize)")
+        XCTAssertEqual(size.height, Double(FileAttributeGenerator.Constants.thumbnailSize), "Height should be \(FileAttributeGenerator.Constants.thumbnailSize)")
+    }
+    
+    func testSizeForThumbnail_whenHeightIsGreaterThanWidth_widthShouldBeThumbnailSize() {
+        let pixelWidth = 500
+        let pixelHeight = 1000
+        let sut = makeSUT(pixelWidth: pixelWidth, pixelHeight: pixelHeight)
+        
+        let size = sut.functionToTest_sizeForThumbnail()
+        
+        let expectedWidth = FileAttributeGenerator.Constants.thumbnailSize * pixelHeight / pixelWidth
+        
+        XCTAssertEqual(size.height, Double(expectedWidth), "Width should be \(expectedWidth)")
+        XCTAssertEqual(size.width, Double(FileAttributeGenerator.Constants.thumbnailSize), "Height should be \(FileAttributeGenerator.Constants.thumbnailSize)")
+    }
+    
+    func testSizeForThumbnail_whenHeightIsGreaterThanWidth_andWidthIsZero_heightAndWidthShouldBeThumbnailSize() {
+        let pixelHeight = 1000
+        let sut = makeSUT(pixelHeight: pixelHeight)
+        
+        let size = sut.functionToTest_sizeForThumbnail()
+        
+        XCTAssertEqual(size.height, Double(FileAttributeGenerator.Constants.thumbnailSize), "Width should be \(FileAttributeGenerator.Constants.thumbnailSize)")
+        XCTAssertEqual(size.width, Double(FileAttributeGenerator.Constants.thumbnailSize), "Height should be \(FileAttributeGenerator.Constants.thumbnailSize)")
+    }
+    
+    func testSizeForThumbnail_whenHeightAndWidthAreEqual_heightAndWidthShouldBeThumbnailSize() {
+        let pixelWidth = 1000
+        let pixelHeight = 1000
+        let sut = makeSUT(pixelWidth: pixelWidth, pixelHeight: pixelHeight)
+        
+        let size = sut.functionToTest_sizeForThumbnail()
+        
+        XCTAssertEqual(size.height, Double(FileAttributeGenerator.Constants.thumbnailSize), "Width should be \(FileAttributeGenerator.Constants.thumbnailSize)")
+        XCTAssertEqual(size.width, Double(FileAttributeGenerator.Constants.thumbnailSize), "Height should be \(FileAttributeGenerator.Constants.thumbnailSize)")
+    }
+    
+    func testTileRect_whenWidthIsLessThanHeight_shouldReturnCorrectRect() {
+        let width = 200
+        let height = 400
+        let sut = makeSUT(pixelWidth: width, pixelHeight: height)
+        
+        let rect = sut.functionToTest_tileRect(width: width, height: height)
+        
+        XCTAssertEqual(rect.size.width, CGFloat(width), "Width should be \(width)")
+        XCTAssertEqual(rect.size.height, CGFloat(width), "Height should be \(width)")
+        XCTAssertEqual(rect.origin.x, CGFloat(0), "Origin x should be 0")
+        XCTAssertEqual(rect.origin.y, CGFloat((height - width) / 2), "Origin y should be \((height - width) / 2)")
+    }
+
+    func testTileRect_whenHeightIsLessThanWidth_shouldReturnCorrectRect() {
+        let width = 400
+        let height = 200
+        let sut = makeSUT(pixelWidth: width, pixelHeight: height)
+        
+        let rect = sut.functionToTest_tileRect(width: width, height: height)
+        
+        XCTAssertEqual(rect.size.width, CGFloat(height), "Width should be \(height)")
+        XCTAssertEqual(rect.size.height, CGFloat(height), "Height should be \(height)")
+        XCTAssertEqual(rect.origin.x, CGFloat((width - height) / 2), "Origin x should be \((width - height) / 2)")
+        XCTAssertEqual(rect.origin.y, CGFloat(0), "Origin y should be 0")
+    }
+
+    func testTileRect_whenWidthAndHeightAreEqual_shouldReturnCorrectRect() {
+        let width = 300
+        let height = 300
+        let sut = makeSUT(pixelWidth: width, pixelHeight: height)
+        
+        let rect = sut.functionToTest_tileRect(width: width, height: height)
+        
+        XCTAssertEqual(rect.size.width, CGFloat(width), "Width should be \(width)")
+        XCTAssertEqual(rect.size.height, CGFloat(width), "Height should be \(width)")
+        XCTAssertEqual(rect.origin.x, CGFloat(0), "Origin x should be 0")
+        XCTAssertEqual(rect.origin.y, CGFloat(0), "Origin y should be 0")
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(
+        sourceURL: URL = URL(fileURLWithPath: "/path/to/source"),
+        pixelWidth: Int = 0,
+        pixelHeight: Int = 0,
+        qlThumbnailGenerator: QLThumbnailGenerator = MockThumbnailGenerator()
+    ) -> FileAttributeGenerator {
+        FileAttributeGenerator(sourceURL: sourceURL, pixelWidth: pixelWidth, pixelHeight: pixelHeight, qlThumbnailGenerator: qlThumbnailGenerator)
+    }
+    
     // MARK: - Mock Classes
     
-    class MockThumbnailRepresentation: QLThumbnailRepresentation {
+    private final class MockThumbnailRepresentation: QLThumbnailRepresentation {
         var _cgImage: CGImage?
         var _uiImage: UIImage?
         
@@ -89,7 +195,7 @@ final class FileAttributeGeneratorTests: XCTestCase {
         }
     }
     
-    class MockThumbnailGenerator: QLThumbnailGenerator {
+    private final class MockThumbnailGenerator: QLThumbnailGenerator {
         var _representation: QLThumbnailRepresentation?
         var _error: NSError?
         
