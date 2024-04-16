@@ -347,7 +347,7 @@ final class HomeScreenFactory: NSObject {
             nodeIconUsecase: makeNodeIconUsecase(),
             allChips: Self.allChips(areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)),
             sdk: sdk,
-            navigationController: navigationController,
+            nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
             onSearchResultUpdated: { [weak searchBridge] searchResult in
                 searchBridge?.searchResultChanged(searchResult)
             }
