@@ -119,12 +119,9 @@ struct CloudDriveViewControllerFactory {
             nodeRepository: NodeRepository.newRepo
         )
         
-        let nodeActionViewControllerDelegate = CloudDriveNodeActionViewControllerDelegate(
-            nodeActionGenericDelegate: NodeActionViewControllerGenericDelegate(
-                viewController: navController,
-                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController)
-            ),
-            nodeActions: nodeActions
+        let nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
+            viewController: navController,
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController)
         )
         let router = HomeSearchResultRouter(
             navigationController: navController,
@@ -571,7 +568,9 @@ struct CloudDriveViewControllerFactory {
             selectionHandler: selectionHandler,
             toolbarBuilder: CloudDriveBottomToolbarItemsFactory(
                 sdk: sdk,
-                nodeActionHandler: nodeActions.makeNodeActionsHandler(),
+                nodeActionHandler: nodeActions.makeNodeActionsHandler(toggleEditMode: { [weak nodeBrowserViewModel] editing in
+                    nodeBrowserViewModel?.setEditMode(editing)
+                }),
                 actionFactory: ToolbarActionFactory()
             ),
             backButtonTitle: titleFor(

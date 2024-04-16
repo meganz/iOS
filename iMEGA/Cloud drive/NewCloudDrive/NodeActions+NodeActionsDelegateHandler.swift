@@ -4,7 +4,7 @@ extension NodeActions {
     /// action on any nodes.
     /// NodeActionsDelegateHandler implements NodeActionViewControllerDelegate protocol used and required by
     /// NodeActionViewController
-    func makeNodeActionsHandler() -> NodeActionsDelegateHandler {
+    func makeNodeActionsHandler(toggleEditMode: @escaping (Bool) -> Void) -> NodeActionsDelegateHandler {
         .init(
             download: nodeDownloader,
             browserAction: browserAction,
@@ -27,7 +27,8 @@ extension NodeActions {
             manageShare: { manageShare([$0]) },
             shareFolder: { shareFolders([$0]) },
             editTextFile: editTextFile,
-            disputeTakedown: disputeTakedown
+            disputeTakedown: disputeTakedown,
+            toggleEditMode: toggleEditMode
         )
     }
     

@@ -27,7 +27,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
     
     // This closure could be used to implement finishing up and disabling edit mode
     // when each node action was finished, to be implemented in [SAO-190]
-    var toggleEditMode: ((_ editModeActive: Bool) -> Void)?
+    var toggleEditMode: (_ editModeActive: Bool) -> Void
     
     init(
         download: @escaping ([NodeEntity]) -> Void,
@@ -51,8 +51,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         manageShare: @escaping (NodeEntity) -> Void,
         shareFolder: @escaping (NodeEntity) -> Void,
         editTextFile: @escaping (NodeEntity) -> Void,
-        disputeTakedown: @escaping (NodeEntity) -> Void
-        
+        disputeTakedown: @escaping (NodeEntity) -> Void,
+        toggleEditMode: @escaping (_ editModeActive: Bool) -> Void
     ) {
         self.download = download
         self.browserAction = browserAction
@@ -76,6 +76,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         self.shareFolder = shareFolder
         self.editTextFile = editTextFile
         self.disputeTakedown = disputeTakedown
+        self.toggleEditMode = toggleEditMode
     }
     
     func nodeAction(
@@ -90,7 +91,6 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         switch action {
         case .download:
             download(nodeEntities)
-            toggleEditMode?(false)
         case .copy:
             browserAction(.copy, nodeEntities)
         case .move:
@@ -103,10 +103,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
             shareFolders(nodeEntities)
         case .shareLink, .manageLink:
             shareOrManageLink(nodeEntities)
-            toggleEditMode?(false)
         case .sendToChat:
             sendToChat(nodeEntities)
-            toggleEditMode?(false)
         case .removeLink:
             removeLink(nodeEntities)
         case .saveToPhotos:
@@ -114,6 +112,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         default:
             break
         }
+        
+        toggleEditMode(false)
     }
     
     func nodeAction(
@@ -174,6 +174,6 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
             break
         }
         
-        toggleEditMode?(false)
+        toggleEditMode(false)
     }
 }

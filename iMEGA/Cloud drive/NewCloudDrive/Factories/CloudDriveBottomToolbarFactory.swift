@@ -88,19 +88,25 @@ struct CloudDriveBottomToolbarItemsFactory {
         switch type {
         case .download:
             nodeActionHandler.download(selectedNodes)
+            nodeActionHandler.toggleEditMode(false)
         case .shareLink:
             nodeActionHandler.shareOrManageLink(selectedNodes)
+            nodeActionHandler.toggleEditMode(false)
         case .move:
             nodeActionHandler.browserAction(.move, selectedNodes)
+            nodeActionHandler.toggleEditMode(false)
         case .copy:
             nodeActionHandler.browserAction(.copy, selectedNodes)
+            nodeActionHandler.toggleEditMode(false)
         case .delete:
             delete(
                 displayMode: displayMode,
                 for: selectedNodes
             )
+            nodeActionHandler.toggleEditMode(false)
         case .restore:
             nodeActionHandler.restore(selectedNodes)
+            nodeActionHandler.toggleEditMode(false)
         case .actions:
             presentMoreActions(
                 displayMode: displayMode,

@@ -1518,7 +1518,6 @@
 		9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB88B62290D98BB008CB09E /* ImageScrollView.swift */; };
 		9DD2E84B29555880000983A3 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */; };
 		9DD2E84D295558D0000983A3 /* TextFieldAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD2E84C295558D0000983A3 /* TextFieldAlertViewModel.swift */; };
-		A51E61292BB6B152007ED64A /* CloudDriveNodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E61282BB6B152007ED64A /* CloudDriveNodeActionViewControllerDelegate.swift */; };
 		A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A58871C82BA03F14004CAD72 /* AccountRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */; };
@@ -4240,7 +4239,6 @@
 		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		9DD2E84C295558D0000983A3 /* TextFieldAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewModel.swift; sourceTree = "<group>"; };
-		A51E61282BB6B152007ED64A /* CloudDriveNodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveNodeActionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASdkCleanUp.swift; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
 		A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountRepository+Additions.swift"; sourceTree = "<group>"; };
@@ -10122,7 +10120,6 @@
 				94B09E4C2B84CC86007D6B84 /* StorageFullAlertViewModel */,
 				94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */,
 				94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */,
-				A51E61282BB6B152007ED64A /* CloudDriveNodeActionViewControllerDelegate.swift */,
 				94B09E462B84CC86007D6B84 /* CloudDriveNodeInsertionRouter.swift */,
 				94B09E422B84CC86007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift */,
 				94B09E442B84CC86007D6B84 /* ContextMenuManager+ActionHandlersArray.swift */,
@@ -14326,7 +14323,6 @@
 				BF11FEE42B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift in Sources */,
 				BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */,
 				94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */,
-				A51E61292BB6B152007ED64A /* CloudDriveNodeActionViewControllerDelegate.swift in Sources */,
 				94B09E5E2B84CC87007D6B84 /* CloudDriveNodeInsertionRouter.swift in Sources */,
 				BF2406A92BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift in Sources */,
 				C403FA4D2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift in Sources */,

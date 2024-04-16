@@ -33,7 +33,8 @@ extension NodeActionsDelegateHandler {
             manageShare: { _ in },
             shareFolder: { _ in },
             editTextFile: { _ in },
-            disputeTakedown: { _ in }
+            disputeTakedown: { _ in },
+            toggleEditMode: { _ in }
         )
     }
 }
