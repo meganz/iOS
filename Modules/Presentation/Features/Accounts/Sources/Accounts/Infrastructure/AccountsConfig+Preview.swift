@@ -5,9 +5,11 @@ extension AccountsConfig {
     
     static let preview: AccountsConfig = AccountsConfig(
         onboardingViewAssets: OnboardingViewAssets(
-            cloudImage: MEGAAssetsPreviewImageProvider.image(named: "cloud"),
-            pieChartImage: MEGAAssetsPreviewImageProvider.image(named: "pieChartImage"),
-            securityLockImage: MEGAAssetsPreviewImageProvider.image(named: "securityLock"),
+            storageImage: MEGAAssetsPreviewImageProvider.image(named: "storage"),
+            fileSharingImage: MEGAAssetsPreviewImageProvider.image(named: "fileSharing"),
+            backupImage: MEGAAssetsPreviewImageProvider.image(named: "backup"),
+            vpnImage: MEGAAssetsPreviewImageProvider.image(named: "shield"),
+            meetingsImage: MEGAAssetsPreviewImageProvider.image(named: "meetings"),
             onboardingHeaderImage: MEGAAssetsPreviewImageProvider.image(named: "onboardingHeader"),
             primaryTextColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "upgrade_account_primaryText"),
             primaryGrayTextColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "upgrade_account_primaryGrayText"),

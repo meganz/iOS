@@ -46,18 +46,27 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
         guard let products = purchase.products, products.isNotEmpty else { return }
         
         if featureFlagProvider.isFeatureFlagEnabled(for: .onboardingProPlan) {
-            let accountsConfig = AccountsConfig(onboardingViewAssets: AccountsConfig.OnboardingViewAssets(cloudImage: .cloud, pieChartImage: .pieChart, securityLockImage: .securityLock, onboardingHeaderImage: .onboardingHeader, 
-                                                                                                          primaryTextColor: MEGAAppColor.Account.upgradeAccountPrimaryText.color,
-                                                                                                          primaryGrayTextColor: MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color,
-                                                                                                          secondaryTextColor: MEGAAppColor.Account.upgradeAccountSecondaryText.color,
-                                                                                                          subMessageBackgroundColor: MEGAAppColor.Account.upgradeAccountSubMessageBackground.color,
-                                                                                                          headerForegroundSelectedColor: MEGAAppColor.View.turquoise.color,
-                                                                                                          headerForegroundUnSelectedColor: MEGAAppColor.Account.planUnselectedTint.color,
-                                                                                                          headerBackgroundColor: MEGAAppColor.Account.planHeaderBackground.color,
-                                                                                                          headerStrokeColor: MEGAAppColor.Account.planBorderTint.color,
-                                                                                                          backgroundColor: MEGAAppColor.Account.planBodyBackground.color,
-                                                                                                         currentPlanTagColor: MEGAAppColor.Account.currentPlan.color,
-                                                                                                         recommededPlanTagColor: MEGAAppColor.Account.planRecommended.color))
+            let accountsConfig = AccountsConfig(
+                onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
+                    storageImage: .storage,
+                    fileSharingImage: .fileSharing,
+                    backupImage: .backup,
+                    vpnImage: .shield,
+                    meetingsImage: .meetings,
+                    onboardingHeaderImage: .onboardingHeader,
+                    primaryTextColor: MEGAAppColor.Account.upgradeAccountPrimaryText.color,
+                    primaryGrayTextColor: MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color,
+                    secondaryTextColor: MEGAAppColor.Account.upgradeAccountSecondaryText.color,
+                    subMessageBackgroundColor: MEGAAppColor.Account.upgradeAccountSubMessageBackground.color,
+                    headerForegroundSelectedColor: MEGAAppColor.View.turquoise.color,
+                    headerForegroundUnSelectedColor: MEGAAppColor.Account.planUnselectedTint.color,
+                    headerBackgroundColor: MEGAAppColor.Account.planHeaderBackground.color,
+                    headerStrokeColor: MEGAAppColor.Account.planBorderTint.color,
+                    backgroundColor: MEGAAppColor.Account.planBodyBackground.color,
+                    currentPlanTagColor: MEGAAppColor.Account.currentPlan.color,
+                    recommededPlanTagColor: MEGAAppColor.Account.planRecommended.color
+                )
+            )
             
             OnboardingUpgradeAccountRouter(
                 purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
