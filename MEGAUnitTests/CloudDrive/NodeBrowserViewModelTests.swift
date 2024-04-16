@@ -203,6 +203,36 @@ class NodeBrowserViewModelTests: XCTestCase {
             return
         }
     }
+    
+    func testViewState_whenToggleSelectionToTrue_viewStateShouldBeInEditingState() {
+        // given
+        let harness = Harness(node: .init())
+        
+        // when
+        harness.sut.setEditMode(true)
+        
+        // then
+        XCTAssertTrue(harness.sut.editing)
+        guard case .editing = harness.sut.viewState else {
+            XCTFail("view state should be editing")
+            return
+        }
+    }
+    
+    func testViewState_whenToggleSelectionToFalse_viewStateShouldBeInRegularState() {
+        // given
+        let harness = Harness(node: .init())
+        
+        // when
+        harness.sut.setEditMode(false)
+        
+        // then
+        XCTAssertFalse(harness.sut.editing)
+        guard case .regular = harness.sut.viewState else {
+            XCTFail("view state should be regular")
+            return
+        }
+    }
 
     func testChangeSortOrder_forAllCases_shouldMatchExpectedResult() {
         [

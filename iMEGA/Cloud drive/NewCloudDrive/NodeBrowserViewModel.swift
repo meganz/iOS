@@ -282,6 +282,12 @@ class NodeBrowserViewModel: ObservableObject {
         refresh()
     }
     
+    func setEditMode(_ enabled: Bool) {
+        guard editing != enabled else { return }
+        editing = enabled
+        refresh()
+    }
+    
     func changeViewMode(_ viewMode: ViewModePreferenceEntity) {
         self.viewMode = viewMode
     }
