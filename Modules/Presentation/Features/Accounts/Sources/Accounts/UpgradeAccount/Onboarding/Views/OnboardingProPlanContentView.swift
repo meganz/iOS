@@ -10,29 +10,34 @@ struct OnboardingProPlanContentView: View {
     var body: some View {
         VStack(spacing: 30) {
             
-            Text(Strings.Localizable.Onboarding.UpgradeAccount.Content.proPlanFeatureHeader)
-                .font(.headline)
-                .bold()
-                .foregroundStyle(
-                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(.label)
-                )
-            
             ProPlanView(
-                image: accountsConfig.onboardingViewAssets.cloudImage,
+                image: accountsConfig.onboardingViewAssets.storageImage,
                 title: Strings.Localizable.Onboarding.UpgradeAccount.Content.GenerousStorage.title,
                 message: viewModel.storageContentMessage
             )
             
             ProPlanView(
-                image: accountsConfig.onboardingViewAssets.pieChartImage,
+                image: accountsConfig.onboardingViewAssets.fileSharingImage,
                 title: Strings.Localizable.Onboarding.UpgradeAccount.Content.TransferSharing.title,
                 message: Strings.Localizable.Onboarding.UpgradeAccount.Content.TransferSharing.message
             )
             
             ProPlanView(
-                image: accountsConfig.onboardingViewAssets.securityLockImage,
-                title: Strings.Localizable.Onboarding.UpgradeAccount.Content.AdditionalSecurity.title,
-                message: Strings.Localizable.Onboarding.UpgradeAccount.Content.AdditionalSecurity.message
+                image: accountsConfig.onboardingViewAssets.backupImage,
+                title: Strings.Localizable.Onboarding.UpgradeAccount.Content.BackupAndRewind.title,
+                message: Strings.Localizable.Onboarding.UpgradeAccount.Content.BackupAndRewind.message
+            )
+            
+            ProPlanView(
+                image: accountsConfig.onboardingViewAssets.vpnImage,
+                title: Strings.Localizable.Onboarding.UpgradeAccount.Content.MegaVPN.title,
+                message: Strings.Localizable.Onboarding.UpgradeAccount.Content.MegaVPN.message
+            )
+            
+            ProPlanView(
+                image: accountsConfig.onboardingViewAssets.meetingsImage,
+                title: Strings.Localizable.Onboarding.UpgradeAccount.Content.CallsAndMeetings.title,
+                message: Strings.Localizable.Onboarding.UpgradeAccount.Content.CallsAndMeetings.message
             )
         }
     }
@@ -74,6 +79,6 @@ private struct ProPlanView: View {
 
 struct ProPlanView_Previews: PreviewProvider {
     static var previews: some View {
-        ProPlanView(image: MEGAAssetsPreviewImageProvider.image(named: "cloud"), title: "Title", message: "Message")
+        ProPlanView(image: MEGAAssetsPreviewImageProvider.image(named: "storage"), title: "Title", message: "Message")
     }
 }
