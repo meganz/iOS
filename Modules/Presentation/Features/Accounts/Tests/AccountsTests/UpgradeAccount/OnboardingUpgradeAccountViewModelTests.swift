@@ -155,6 +155,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     }
     
     // MARK: - Purchase
+    
     func testPurchasePlan_shouldCallPurchasePlan() async {
         let planList = [proI_monthly, proII_monthly, proI_yearly, proII_yearly]
         let (sut, mockUseCase) = makeSUT(planList: planList)
@@ -181,6 +182,60 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         }
         XCTAssertEqual(status, .failed)
         XCTAssertTrue(sut.isAlertPresented)
+    }
+    
+    // MARK: - Event Tracking
+    
+    func testTrackProIIICardDisplayedEvent_onMultipleCalls_shouldTrackEventOnce() {
+        let tracker = MockTracker()
+        let (sut, _) = makeSUT(tracker: tracker)
+
+        sut.trackProIIICardDisplayedEvent()
+        sut.trackProIIICardDisplayedEvent() // Second call to see if it tracks again
+
+        let count = tracker.trackedEventIdentifiers.filter { $0.eventName == OnboardingUpsellingDialogVariantBProPlanIIIDisplayedEvent().eventName }.count
+        XCTAssertEqual(count, 1, "Expected Pro III plan card displayed event to be tracked only once")
+    }
+    
+    private func testPlanSelectionEventTracking(
+        planType: AccountTypeEntity,
+        expectedEvent: String,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let tracker = MockTracker()
+        let (sut, _) = makeSUT(tracker: tracker)
+        sut.setSelectedPlan(AccountPlanEntity(type: planType))
+
+        sut.purchaseSelectedPlan()
+
+        XCTAssertTrue(
+            tracker.trackedEventIdentifiers.contains(
+                where: { $0.eventName == expectedEvent }),
+            "Expected \(expectedEvent) to be tracked",
+            file: file,
+            line: line
+        )
+    }
+    
+    func testTrackEvent_forFreePlan_shouldTrackCorrectEvent() {
+        testPlanSelectionEventTracking(planType: .free, expectedEvent: OnboardingUpsellingDialogVariantBFreePlanContinueButtonPressedEvent().eventName)
+    }
+
+    func testTrackEvent_forProIPlan_shouldTrackCorrectEvent() {
+        testPlanSelectionEventTracking(planType: .proI, expectedEvent: OnboardingUpsellingDialogVariantBProIPlanContinueButtonPressedEvent().eventName)
+    }
+
+    func testTrackEvent_forProIIPlan_shouldTrackCorrectEvent() {
+        testPlanSelectionEventTracking(planType: .proII, expectedEvent: OnboardingUpsellingDialogVariantBProIIPlanContinueButtonPressedEvent().eventName)
+    }
+
+    func testTrackEvent_forProIIIPlan_shouldTrackCorrectEvent() {
+        testPlanSelectionEventTracking(planType: .proIII, expectedEvent: OnboardingUpsellingDialogVariantBProIIIPlanContinueButtonPressedEvent().eventName)
+    }
+
+    func testTrackEvent_forLitePlan_shouldTrackCorrectEvent() {
+        testPlanSelectionEventTracking(planType: .lite, expectedEvent: OnboardingUpsellingDialogVariantBProLitePlanContinueButtonPressedEvent().eventName)
     }
 
     // MARK: - Helper
