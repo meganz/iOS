@@ -29,6 +29,10 @@ public struct OnboardingWithProPlanListView: View {
                             AccountPlanView(viewModel: viewModel.createAccountPlanViewModel(plan),
                                             config: accountsConfig)
                             .padding(.bottom, 5)
+                            .onAppear {
+                                guard plan.type == .proIII else { return }
+                                viewModel.trackProIIICardDisplayedEvent()
+                            }
                         }
                     } footer: {
                         PrimaryActionButtonView(title: Strings.Localizable.continue) {

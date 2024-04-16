@@ -6,12 +6,18 @@ import MEGAL10n
 import MEGAPresentation
 import Settings
 
+enum OnboardingUpgradeAccountEvent {
+    case selectedPlan(plan: AccountTypeEntity)
+    case proIIIPlanCardDisplayed
+}
+
 public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private var subscriptions: Set<AnyCancellable> = []
     private let router: OnboardingUpgradeAccountRouting
+    private var proIIIPlanCardShownEventTracked: Bool = false
     
     @Published private(set) var shouldDismiss: Bool = false
     @Published private(set) var lowestProPlan: AccountPlanEntity = AccountPlanEntity()
@@ -235,6 +241,35 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         selectedPlanType = plan.type
     }
     
+    // MARK: - Analytics events tracking
+    
+    private func trackEvent(_ event: OnboardingUpgradeAccountEvent) {
+        switch event {
+        case .selectedPlan(let plan):
+            switch plan {
+            case .free: tracker.trackAnalyticsEvent(with: OnboardingUpsellingDialogVariantBFreePlanContinueButtonPressedEvent())
+            case .proI: tracker.trackAnalyticsEvent(with: OnboardingUpsellingDialogVariantBProIPlanContinueButtonPressedEvent())
+            case .proII: tracker.trackAnalyticsEvent(with: OnboardingUpsellingDialogVariantBProIIPlanContinueButtonPressedEvent())
+            case .proIII: tracker.trackAnalyticsEvent(with: OnboardingUpsellingDialogVariantBProIIIPlanContinueButtonPressedEvent())
+            case .lite: tracker.trackAnalyticsEvent(with: OnboardingUpsellingDialogVariantBProLitePlanContinueButtonPressedEvent())
+            default: break
+            }
+        case .proIIIPlanCardDisplayed:
+            guard !proIIIPlanCardShownEventTracked else { return }
+            tracker.trackAnalyticsEvent(with: OnboardingUpsellingDialogVariantBProPlanIIIDisplayedEvent())
+            proIIIPlanCardShownEventTracked = true
+        }
+    }
+    
+    func trackSelectedPlanEvent() {
+        guard let selectedPlanType else { return }
+        trackEvent(.selectedPlan(plan: selectedPlanType))
+    }
+    
+    func trackProIIICardDisplayedEvent() {
+        trackEvent(.proIIIPlanCardDisplayed)
+    }
+    
     // MARK: - Variant B functionalities
     func restorePurchase() {
         purchaseUseCase.restorePurchase()
@@ -245,6 +280,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     }
     
     func purchaseSelectedPlan() {
+        trackSelectedPlanEvent()
         guard let selectedPlan = filteredPlanList.first(where: { $0.type == selectedPlanType }) else { return }
         
         purchasePlanTask = Task { [weak self] in
