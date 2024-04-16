@@ -56,6 +56,10 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     if ([NSUserDefaults.standardUserDefaults objectForKey:UploadAllBurstAssetsKey] == nil) {
         [self setUploadAllBurstPhotos:YES];
     }
+    
+    if ([NSUserDefaults.standardUserDefaults objectForKey:IsVideoUploadsEnabledKey] == nil) {
+        [self setVideoUploadEnabled:YES];
+    }
 }
 
 + (void)configDefaultSharedAlbumsAndSyncedAlbumsSettingsIfNeeded {
