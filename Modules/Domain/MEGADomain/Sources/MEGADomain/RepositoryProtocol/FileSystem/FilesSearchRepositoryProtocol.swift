@@ -7,6 +7,23 @@ public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
     func stopMonitoringNodesUpdate()
     func node(by id: HandleEntity) async -> NodeEntity?
     
+    /// Search files and folders by name. It will return a list of nodes based on the criteria provided in the params.
+    /// - Parameters:
+    ///   - filter: SearchFilterEntity contains all necessary information to build search query.
+    ///   - completion: Completion block to handle result from the request
+    func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void)
+    
+    /// Search files and folders by name. It will return a list of nodes based on the criteria provided in the params.
+    /// - Parameters:
+    ///   - filter: SearchFilterEntity contains all necessary information to build search query.
+    /// - Returns: List of NodeEntities that match the criteria provided.
+    func search(filter: SearchFilterEntity) async throws -> [NodeEntity]
+    
+    /// Cancel last search that had set `supportCancel` to true.
+    func cancelSearch()
+   
+    /// This function is deprecated and we should begin to use:
+    /// -  `func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void)`
     func search(string: String?,
                 parent node: NodeEntity?,
                 recursive: Bool,
@@ -15,12 +32,12 @@ public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
                 formatType: NodeFormatEntity,
                 completion: @escaping ([NodeEntity]?, Bool) -> Void)
     
+    /// This function is deprecated and we should begin to use:
+    /// -  `func search(filter: SearchFilterEntity) async throws -> [NodeEntity]`
     func search(string: String?,
                 parent node: NodeEntity?,
                 recursive: Bool,
                 supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity) async throws -> [NodeEntity]
-    
-    func cancelSearch()
 }

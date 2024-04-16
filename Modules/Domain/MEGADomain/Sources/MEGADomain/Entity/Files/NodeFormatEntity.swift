@@ -1,6 +1,6 @@
 import Foundation
 
-public enum NodeFormatEntity {
+public enum NodeFormatEntity: Sendable {
     case unknown
     case photo
     case audio
