@@ -61,8 +61,6 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content>,
             setMenuCapableBackButtonWith(menuTitle: backButtonTitle)
         }
         self.navigationItem.searchController = searchBarVisible ? wrapper?.searchController : nil
-
-        audioPlayerManager?.addDelegate(self)
         
         wrapper?.onUpdateSearchBarVisibility = { [weak self] isVisible in
             guard let self, let wrapper = self.wrapper else { return }
@@ -97,16 +95,12 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content>,
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
-            audioPlayerManager.playerHiddenIgnoringPlayerLifeCycle(selectionModeEnabled, presenter: self)
+            audioPlayerManager.addDelegate(self)
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        audioPlayerManager?.playerHiddenIgnoringPlayerLifeCycle(true, presenter: self)
-    }
-    
-    deinit {
         audioPlayerManager?.removeDelegate(self)
     }
     
