@@ -18,4 +18,8 @@ extension NodeFormatEntity {
         default: return .unknown
         }
     }
+    
+    func toInt32() -> Int32 {
+        Int32(toMEGANodeFormatType().rawValue)
+    }
 }

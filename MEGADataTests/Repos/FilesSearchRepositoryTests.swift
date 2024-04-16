@@ -90,7 +90,8 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 searchString: searchString,
                                                                 recursive: recursive,
                                                                 sortOrderType: sortOrderType.toMEGASortOrderType(),
-                                                                formatType: formatType.toMEGANodeFormatType())
+                                                                formatType: formatType.toMEGANodeFormatType(), 
+                                                                excludeSensitive: false)
         
         let result = try await repo.search(string: searchString,
                                            parent: parent.toNodeEntity(),
@@ -100,6 +101,75 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                            formatType: formatType)
         
         XCTAssertEqual(result, nodes.toNodeEntities())
+        XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
+    }
+    
+    func testSearch_onSuccessAndExcludeSensitveEqualTrue_shouldCallWithCorrectQueryParameters() async throws {
+        let parent = MockNode(handle: 1)
+        let nodes = [parent,
+                     MockNode(handle: 34),
+                     MockNode(handle: 65)]
+        let mockSdk = MockSdk(nodes: nodes)
+        let repo = FilesSearchRepository(sdk: mockSdk)
+        let searchString = "*"
+        let recursive = true
+        let sortOrderType = SortOrderEntity.defaultAsc
+        let formatType = NodeFormatEntity.photo
+        
+        let expectedSearchQuery = MockSdk.SearchQueryParameters(node: parent,
+                                                                searchString: searchString,
+                                                                recursive: recursive,
+                                                                sortOrderType: sortOrderType.toMEGASortOrderType(),
+                                                                formatType: formatType.toMEGANodeFormatType(), 
+                                                                excludeSensitive: true)
+        
+        let result = try await repo.search(filter: .init(
+            searchText: searchString,
+            parentNode: parent.toNodeEntity(),
+            recursive: recursive,
+            supportCancel: false,
+            sortOrderType: sortOrderType,
+            formatType: formatType,
+            excludeSensitive: true))
+        
+        XCTAssertEqual(result, nodes.toNodeEntities())
+        XCTAssertEqual(mockSdk.searchNonRecursivelyWithFilterCallCount, 0)
+        XCTAssertEqual(mockSdk.searchWithFilterCallCount, 1)
+        XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
+    }
+    
+    func testSearch_onSuccessAndExcludeSensitveEqualTrueAndWithoutRecursive_shouldCallWithCorrectQueryParameters() async throws {
+        let parent = MockNode(handle: 1)
+        let nodes = [parent,
+                     MockNode(handle: 34),
+                     MockNode(handle: 65)]
+        let mockSdk = MockSdk(nodes: nodes)
+        let repo = FilesSearchRepository(sdk: mockSdk)
+        let searchString = "*"
+        let recursive = false
+        let sortOrderType = SortOrderEntity.defaultAsc
+        let formatType = NodeFormatEntity.photo
+        
+        let expectedSearchQuery = MockSdk.SearchQueryParameters(node: parent,
+                                                                searchString: searchString,
+                                                                recursive: recursive,
+                                                                sortOrderType: sortOrderType.toMEGASortOrderType(),
+                                                                formatType: formatType.toMEGANodeFormatType(),
+                                                                excludeSensitive: true)
+        
+        let result = try await repo.search(filter: .init(
+            searchText: searchString,
+            parentNode: parent.toNodeEntity(),
+            recursive: recursive,
+            supportCancel: false,
+            sortOrderType: sortOrderType,
+            formatType: formatType,
+            excludeSensitive: true)
+        )
+        
+        XCTAssertEqual(result, nodes.toNodeEntities())
+        XCTAssertEqual(mockSdk.searchNonRecursivelyWithFilterCallCount, 1)
+        XCTAssertEqual(mockSdk.searchWithFilterCallCount, 0)
         XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
     }
     

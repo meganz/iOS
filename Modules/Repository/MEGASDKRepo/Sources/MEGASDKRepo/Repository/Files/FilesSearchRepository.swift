@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: FilesSearchRepository {
@@ -38,13 +39,72 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
         sdk.remove(self)
     }
     
+    public func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
+        search(filter: filter) { result in
+            switch result {
+            case .success(let nodes):
+                completion(nodes, false)
+            case .failure:
+                completion(nil, true)
+            }
+        }
+    }
+    
+    public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
+        try await withAsyncThrowingValue { completion in
+            search<[NodeEntity]>(filter: filter) { completion($0) }
+        }
+    }
+        
+    public func node(by handle: HandleEntity) async -> NodeEntity? {
+        sdk.node(forHandle: handle)?.toNodeEntity()
+    }
+    
+    public func cancelSearch() {
+        guard searchOperationQueue.operationCount > 0 else { return }
+        
+        cancelToken.cancel()
+        searchOperationQueue.cancelAllOperations()
+    }
+    
+    private func search(filter: SearchFilterEntity, completion: @escaping (Result<[NodeEntity], Error>) -> Void) {
+        
+        guard let parentHandle = filter.parentNode?.handle ?? sdk.rootNode?.handle else {
+            return completion(.failure(NodeSearchResultErrorEntity.noDataAvailable))
+        }
+        
+        cancelToken = MEGACancelToken()
+                
+        let searchOperation = SearchWithFilterOperation(
+            sdk: sdk,
+            filter: filter.toMEGASearchFilter(defaultParentHandle: parentHandle),
+            recursive: filter.recursive,
+            sortOrder: filter.sortOrderType.toMEGASortOrderType(),
+            cancelToken: filter.supportCancel ? cancelToken : MEGACancelToken(),
+            completion: { nodeList, isCanceled in
+                guard !isCanceled else {
+                    completion(.failure(NodeSearchResultErrorEntity.noDataAvailable))
+                    return
+                }
+                
+                let nodes = nodeList?.toNodeEntities() ?? []
+                completion(.success(nodes))
+            })
+        
+        searchOperationQueue.addOperation(searchOperation)
+    }
+}
+
+// MARK: - Deprecated searchApi usage
+extension FilesSearchRepository {
+    
     public func search(string: String?,
-                parent node: NodeEntity?,
-                recursive: Bool,
-                supportCancel: Bool,
-                sortOrderType: SortOrderEntity,
-                formatType: NodeFormatEntity,
-                completion: @escaping ([NodeEntity]?, Bool) -> Void) {
+                       parent node: NodeEntity?,
+                       recursive: Bool,
+                       supportCancel: Bool,
+                       sortOrderType: SortOrderEntity,
+                       formatType: NodeFormatEntity,
+                       completion: @escaping ([NodeEntity]?, Bool) -> Void) {
         guard let parent = node?.toMEGANode(in: sdk) ?? sdk.rootNode else {
             return completion(nil, true)
         }
@@ -61,11 +121,11 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
     }
     
     public func search(string: String?,
-                parent node: NodeEntity?,
-                recursive: Bool,
-                supportCancel: Bool,
-                sortOrderType: SortOrderEntity,
-                formatType: NodeFormatEntity) async throws -> [NodeEntity] {
+                       parent node: NodeEntity?,
+                       recursive: Bool,
+                       supportCancel: Bool,
+                       sortOrderType: SortOrderEntity,
+                       formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         return try await withCheckedThrowingContinuation({ continuation in
             search(string: string,
                    parent: node,
@@ -79,19 +139,6 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
             }
         })
     }
-    
-    public func node(by handle: HandleEntity) async -> NodeEntity? {
-        sdk.node(forHandle: handle)?.toNodeEntity()
-    }
-    
-    public func cancelSearch() {
-        guard searchOperationQueue.operationCount > 0 else { return }
-        
-        cancelToken.cancel()
-        searchOperationQueue.cancelAllOperations()
-    }
-    
-    // MARK: - Private
     
     private func search(string: String?,
                         parent node: NodeEntity?,

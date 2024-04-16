@@ -57,6 +57,8 @@ public final class MockSdk: MEGASdk {
     public private(set) var messages = [Message]()
     public private(set) var searchQueryParameters: SearchQueryParameters?
     public private(set) var nodeListSearchCallCount = 0
+    public private(set) var searchWithFilterCallCount = 0
+    public private(set) var searchNonRecursivelyWithFilterCallCount = 0
     public private(set) var isNodeSensitive: Bool?
     public private(set) var megaSetsCallCount = 0
     
@@ -272,8 +274,32 @@ public final class MockSdk: MEGASdk {
                                                       searchString: searchString,
                                                       recursive: recursive,
                                                       sortOrderType: orderType,
-                                                      formatType: nodeFormatType)
+                                                      formatType: nodeFormatType, 
+                                                      excludeSensitive: false)
         nodeListSearchCallCount += 1
+        return MockNodeList(nodes: nodes)
+    }
+    
+    public override func search(with filter: MEGASearchFilter, orderType: MEGASortOrderType, cancelToken: MEGACancelToken) -> MEGANodeList {
+        searchQueryParameters = SearchQueryParameters(node: MockNode(handle: filter.parentNodeHandle),
+                                                      searchString: filter.term,
+                                                      recursive: true,
+                                                      sortOrderType: orderType,
+                                                      formatType: MEGANodeFormatType(rawValue: Int(filter.category)) ?? .unknown,
+                                                      excludeSensitive: filter.sensitivity)
+        searchWithFilterCallCount += 1
+        return MockNodeList(nodes: nodes)
+    }
+    
+    public override func searchNonRecursively(with filter: MEGASearchFilter, orderType: MEGASortOrderType, cancelToken: MEGACancelToken) -> MEGANodeList {
+        searchQueryParameters = SearchQueryParameters(node: MockNode(handle: filter.parentNodeHandle),
+                                                      searchString: filter.term,
+                                                      recursive: false,
+                                                      sortOrderType: orderType,
+                                                      formatType: MEGANodeFormatType(rawValue: Int(filter.category)) ?? .unknown,
+                                                      excludeSensitive: filter.sensitivity)
+        
+        searchNonRecursivelyWithFilterCallCount += 1
         return MockNodeList(nodes: nodes)
     }
     
@@ -635,17 +661,20 @@ extension MockSdk {
         public let recursive: Bool
         public let sortOrderType: MEGASortOrderType
         public let formatType: MEGANodeFormatType
+        public let excludeSensitive: Bool
         
         public init(node: MEGANode,
                     searchString: String?,
                     recursive: Bool,
                     sortOrderType: MEGASortOrderType,
-                    formatType: MEGANodeFormatType) {
+                    formatType: MEGANodeFormatType,
+                    excludeSensitive: Bool) {
             self.node = node
             self.searchString = searchString
             self.recursive = recursive
             self.sortOrderType = sortOrderType
             self.formatType = formatType
+            self.excludeSensitive = excludeSensitive
         }
     }
 }

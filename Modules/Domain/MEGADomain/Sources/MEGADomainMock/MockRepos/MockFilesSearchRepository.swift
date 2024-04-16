@@ -3,6 +3,7 @@ import Foundation
 import MEGADomain
 
 final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
+    
     public static let newRepo = MockFilesSearchRepository()
     
     public var hasCancelSearchCalled = false
@@ -44,13 +45,53 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         }
     }
     
+    public func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void) { 
+        searchString = filter.searchText
+        searchRecursive = filter.recursive
+        let nodes: [NodeEntity] = switch filter.formatType {
+        case .photo: photoNodes.filter { !$0.isFolder }
+        case .video: videoNodes.filter { !$0.isFolder }
+        default: []
+        }
+        
+        completion(nodes, false)
+    }
+    
+    public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
+        searchString = filter.searchText
+        searchRecursive = filter.recursive
+        return switch filter.formatType {
+        case .photo: photoNodes.filter { !$0.isFolder }
+        case .video: videoNodes.filter { !$0.isFolder }
+        default: []
+        }
+    }
+        
+    public func cancelSearch() {
+        hasCancelSearchCalled = true
+    }
+}
+
+// MARK: - Deprecated searchApi usage
+extension MockFilesSearchRepository {
+    
     public func search(string: String?,
                        parent node: NodeEntity?,
                        recursive: Bool,
                        supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity,
-                       completion: @escaping ([NodeEntity]?, Bool) -> Void) {
+                       completion: @escaping ([NodeEntity]?, Bool) -> Void) { 
+        
+        searchString = string
+        searchRecursive = recursive
+        let nodes: [NodeEntity] = switch formatType {
+        case .photo: photoNodes.filter { !$0.isFolder }
+        case .video: videoNodes.filter { !$0.isFolder }
+        default: []
+        }
+        
+        completion(nodes, false)
     }
     
     public func search(string: String?,
@@ -61,16 +102,10 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                        formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         searchString = string
         searchRecursive = recursive
-        if formatType == .photo {
-            return photoNodes.filter { !$0.isFolder }
-        } else if formatType == .video {
-            return videoNodes.filter { !$0.isFolder }
-        } else {
-            return []
+        return switch formatType {
+        case .photo: photoNodes.filter { !$0.isFolder }
+        case .video: videoNodes.filter { !$0.isFolder }
+        default: []
         }
-    }
-    
-    public func cancelSearch() {
-        hasCancelSearchCalled = true
     }
 }
