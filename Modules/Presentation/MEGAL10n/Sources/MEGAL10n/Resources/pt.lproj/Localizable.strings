@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até %@ e tente novamente.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Verifique o seu e-mail e clique no link para confirmar a sua conta.";
+"accountNotConfirmed"="Acesse o seu email e clique no link para confirmar a sua conta.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="A sua conta foi encerrada por infringir os Termos de Serviço do MEGA, incluindo a cláusula 15, mas não se limitando à mesma.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Senha incorreta";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Erro. Este endereço de email já está sendo usado.";
+"emailAlreadyInUse"="Este email já está sendo usado";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Você precisa libertar algum espaço no seu dispositivo";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -937,7 +937,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirmar email";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirmar novo email";
+"confirmNewEmail"="Confirme o novo email";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Alterar email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +947,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Você já solicitou um link de confirmação para esse endereço de email.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Por favor, acesse a sua caixa de entrada e clique no link para confirmar o seu novo endereço de email.";
+"emailIsChanging_description"="Acesse o a caixa de entrada do novo email e clique no link para confirmar a alteração.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Por favor, digite a sua senha para confirmar o seu email";
+"verifyYourEmailAddress_description"="Digite a sua senha para confirmar o email";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Parabéns, o novo endereço de email para esta conta MEGA é: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1301,7 +1301,7 @@
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="Você não terá mais acesso a esse chat";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="Deixar o grupo";
+"leaveGroup"="Sair do grupo";
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Participantes";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
@@ -2194,6 +2194,10 @@
 "Default Tab"="Aba predeterminada";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Classificação e tipo de visualização";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the section title. */
+"settings.userInterface.hiddenItems.header"="Itens ocultos";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
+"settings.userInterface.hiddenItems.label"="Mostrar itens ocultos";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Visualização do explorador multimídia";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -3847,23 +3851,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Obtenha mais com um plano Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Faça o upgrade a um plano Pro para obter mais armazenamento e muitos recursos adicionais. O nossos planos são a partir de %@ por mês.";
+"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Alguns dos recursos incluídos são:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Amplo espaço de armazenamento";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Armazene uma quantidade ilimitada de dados, a partir de [A] [B].";
+"onboarding.upgradeAccount.content.generousStorage.title"="Flexibilidade de armazenamento máxima";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Compartilhamento de transferência";
+"onboarding.upgradeAccount.content.transferSharing.title"="Compartilhamento de arquivos fácil e seguro";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="As pessoas com as quais você compartilhar dados podem usar a sua cota de transferência para fazer download e streaming dos itens que você compartilhou.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Compartilhe arquivos grandes graças a uma ampla cota de transferência e garanta a segurança com links protegidos por senha.";
+/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.title"="Nunca mais perca dados";
+/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.message"="Faça backup e sincronize os seus dados para não correr riscos. Além disso, use a função Retroceder para fazer com que as suas pastas voltem ao estado que tinham em qualquer momento dos últimos 180 dias.";
+/* Upgrade account screen content title about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+/* Upgrade account screen content message about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.message"="Mantenha a sua navegação online privada usando a nossa VPN de alta velocidade.";
+/* Upgrade account screen content title about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.title"="Chamadas e reuniões sem restrições";
+/* Upgrade account screen content message about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="Envie mensagens, faça chamadas de vídeo e reuniões com privacidade total e um número ilimitado de participantes.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Segurança adicional ao compartilhar";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Adicione senhas e datas de validade para links de arquivos e de pastas.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Conheça os planos Pro";
+"onboarding.upgradeAccount.button.viewProPlans"="Fazer o upgrade a um plano Pro";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Ativar Uploads da câmera";
 /* Camera uploads banner enable state description */
@@ -3990,8 +4006,8 @@
 "calls.freePlanLimitWarning.usersLimitAlert.message"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Entendi";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Precisa adicionar mais participantes? [A]Faça um upgrade[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4009,13 +4025,17 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Solicite ao organizador que elimine essa restrição.";
+"meetings.contact-picker.warning.over-limit.non-host"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Faça o upgrade a um plano Pro para ter chamadas ilimitadas";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="A sua chamada atingiu o limite de 60 minutos e foi finalizada. Os usuários Pro podem fazer chamadas com qualquer duração e convidar até 1000 participantes.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgrade";
+/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
+/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Arquivos e pastas ocultos";
 /* Hidden files and folders onboarding content hide important title */

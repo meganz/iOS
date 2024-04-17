@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="您於短時間內嘗試登入的次數過多。請等待至%@後再重試。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="請檢查您的電子信箱，並點擊信中的連結以確認啟用您的帳戶。";
+"accountNotConfirmed"="檢查您的電子郵件收件匣，並點選連結以確認您的帳戶。";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="您的帳戶因違反MEGA服務條款，包括但不限於第15條而被停用。";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="密碼錯誤";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="發生錯誤，此電子信箱已被使用。";
+"emailAlreadyInUse"="此電子郵件地址已在使用中";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您需要釋出裝置上一些空間";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -853,7 +853,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您將遺失所有與此帳戶相關的資料。確定要繼續嗎？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡 support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="如果您無法存取您的電子郵件收件匣，請聯繫support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="取消連結已過期。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -937,7 +937,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="確認電子郵件地址";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="確認新電子郵件地址";
+"confirmNewEmail"="確認新的電子郵件地址";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="更改電子郵件地址";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +947,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="你已經為此電子郵件地址申請了確認連結。";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="請至您的收件匣，並點擊該連結以確認您的新電子郵件地址。";
+"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="請輸入您的密碼以驗證您的電子郵件地址";
+"verifyYourEmailAddress_description"="輸入您的密碼以驗證您的電子郵件地址";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="恭喜您完成更換，您於此MEGA帳戶的新電子郵件地址為：[X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1375,7 +1375,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="您確定要中止註冊嗎？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="如果您填錯您的電子郵件地址，請修正然後按「重新發送」。";
+"misspelledEmailAddress"="如果您拼錯您的電子郵件地址，請更正並點選「重新發送」。";
 /* A button to resend the email confirmation. */
 "resend"="重新發送";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2194,6 +2194,10 @@
 "Default Tab"="預設分頁";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和檢視模式";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the section title. */
+"settings.userInterface.hiddenItems.header"="隱藏的項目";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
+"settings.userInterface.hiddenItems.label"="顯示隱藏的項目";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="媒體探索檢視";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -3139,7 +3143,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="安排會議";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="由於多次指控侵犯版權，您的MEGA帳戶已被暫停。這意味著您無法存取您的帳戶或其中的資料。\n\n請檢查您的電子郵件以獲取有關如何提交反對通知的更多資訊。";
+"account.suspension.message.copyright"="由於多次侵犯版權的指控，您的MEGA帳戶已被暫停。這意味著您無法存取您的帳戶或當中的資料。\n\n檢查您的電子郵件收件匣，瞭解有關如何提交反對通知的更多資訊。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="您的帳戶由於違反MEGA的服務條款而被終止。\n\n您將無法重新存取您儲存的資料，也無法被授權註冊新的MEGA帳戶。";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3429,7 +3433,7 @@
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="檔案不能單獨同步。您需要從資料夾中設定同步。";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="初始掃描失敗。您需要從桌面應用程式重新啟用同步或備份。";
+"device.center.backup.error.initialScanFailed"="初始掃描失敗。 您需要從桌面應用程式重新啟用同步或備份。";
 /* Device Center backup error: Device folder not located */
 "device.center.backup.error.folderDeviceUnlocatedNow"="現在無法找到您裝置中的資料夾，請稍後再試。";
 /* Device Center backup error: Device folder can't be located */
@@ -3847,23 +3851,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="透過Pro方案獲得更多功能";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="升級到Pro方案獲得更多儲存空間和許多額外的功能。我們的方案從每月%@起。";
+"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="一些值得期待的功能是：";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="大容量空間";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
-"onboarding.upgradeAccount.content.generousStorage.message"="儲存無限資料，從[A][B]起。";
+"onboarding.upgradeAccount.content.generousStorage.title"="終極的儲存彈性";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="傳輸流量共享";
+"onboarding.upgradeAccount.content.transferSharing.title"="輕鬆、安全的檔案共享";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="與您共享資料的人可以使用您的傳輸配額來下載和串流傳輸您所共享的項目。";
+"onboarding.upgradeAccount.content.transferSharing.message"="透過大量的傳輸配額共享大檔案，並使用受密碼保護的連結確保安全性。";
+/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.title"="再也不會遺失資料";
+/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.message"="讓您完全放心的備份和同步您的資料。此外，使用回溯功能可將資料夾恢復到任何日期，最長可達180天。";
+/* Upgrade account screen content title about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+/* Upgrade account screen content message about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.message"="使用我們的高速VPN保持線上隱私。";
+/* Upgrade account screen content title about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.title"="無限制的通話和會議";
+/* Upgrade account screen content message about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="訊息、視訊通話，以及無限制與會人數的完全私密會議。";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="共享時的額外安全性";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="設定檔案和資料夾連結的密碼和到期日期。";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="查看Pro方案";
+"onboarding.upgradeAccount.button.viewProPlans"="立即升級到Pro";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="啟用相機上傳";
 /* Camera uploads banner enable state description */
@@ -3987,11 +4003,11 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="無法登入";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這個限制。";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="只有100個與會者可以加入通話。任何其他與會者將只能發送和讀取對話。需要新增更多與會者嗎？[A]立即升級[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4009,13 +4025,17 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="只有100個與會者可以加入通話。任何其他與會者將只能發送和讀取對話記錄。請召集人取消此限制。";
+"meetings.contact-picker.warning.over-limit.non-host"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="升級到Pro方案可獲得不受限制的通話時間";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="您的通話時間已達60分鐘的限制並已結束。Pro使用者的通話時間不受限制，最多可邀請1000位與會者。";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="立即升級";
+/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
+/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="隱藏的檔案和資料夾";
 /* Hidden files and folders onboarding content hide important title */
