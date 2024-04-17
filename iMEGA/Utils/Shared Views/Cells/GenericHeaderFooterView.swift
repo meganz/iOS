@@ -43,7 +43,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         preferredBackgroundColor = color
         updateAppearance()
     }
-
+    
     @objc func configureHeaderForAlphabeticSection(title: String?, font: UIFont) {
         titleLabel.font = font
         titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.label
@@ -74,7 +74,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     
     @objc func configure(attributedTitle: NSAttributedString, topDistance: CGFloat, isTopSeparatorVisible: Bool, isBottomSeparatorVisible: Bool) {
         configure(topDistance: topDistance, isTopSeparatorVisible: isTopSeparatorVisible, isBottomSeparatorVisible: isBottomSeparatorVisible)
-
+        
         titleLabel.isHidden = false
         titleLabel.attributedText = attributedTitle
     }
@@ -94,11 +94,11 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     }
     
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            self.contentView.backgroundColor = tokenBackgroundColor
+        if let preferredBackgroundColor {
+            self.contentView.backgroundColor = preferredBackgroundColor
         } else {
-            if let preferredBackgroundColor {
-                self.contentView.backgroundColor = preferredBackgroundColor
+            if UIColor.isDesignTokenEnabled() {
+                self.contentView.backgroundColor = tokenBackgroundColor
             } else {
                 if self.contentView.backgroundColor != nil && !usingDefaultBackgroundColor {
                     self.contentView.backgroundColor = .mnz_secondaryBackground(for: traitCollection)
@@ -109,9 +109,11 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
             }
         }
         
-        self.titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: self.traitCollection)
-        self.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        if titleLabel.attributedText == nil {
+            self.titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: self.traitCollection)
+        }
         
+        self.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         self.topSeparatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)
         self.bottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)
     }
