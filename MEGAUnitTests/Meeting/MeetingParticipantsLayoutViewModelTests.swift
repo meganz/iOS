@@ -1208,11 +1208,4 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await viewModel.namesFetchingTask?.value
         await fulfillment(of: [commandExpectation], timeout: 1.0)
     }
-    
-    private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {
-        let predicate = NSPredicate { _, _ in expression() }
-        let expectation = expectation(for: predicate, evaluatedWith: nil)
-        expectation.isInverted = isInverted
-        wait(for: [expectation], timeout: 5)
-    }
 }
