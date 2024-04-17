@@ -91,11 +91,11 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Alătură-te întâlnirii ca invitat";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Invalid email address or password. Try again.";
+"invalidMailOrPassword"="Adresă de e-mail sau parolă nevalide. Încercați din nou.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Ați încercat să vă conectați de prea multe ori. Vă rugăm să așteptați până %@ și încercați din nou.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Vă rugăm să verificați adresa de e-mail și să urmați linkul pentru a vă confirma contul.";
+"accountNotConfirmed"="Verificați căsuța de e-mail și urmați linkul pentru a vă confirma contul.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Contul dvs. a fost desființat din cauza încălcării Termenii de utilizare a serviciului MEGA, inclusiv, dar fără a se limita la, clauza 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Parolă greșită";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Eroare. Această adresă de e-mail este folosită deja.";
+"emailAlreadyInUse"="Această adresă de e-mail este deja folosită";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Trebuie să eliberezi ceva spațiu pe dispozitiv";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -853,7 +853,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Vei pierde toate datele asociate cu acest cont. Sigur vrei să continui?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Dacă nu-ți poți accesa e-mailul, te rugăm să contactezi support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Dacă nu puteți accesa căsuța de e-mail, contactați support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Linkul de anulare a expirat.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -937,7 +937,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirmă e-mailul";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirmă e-mailul nou";
+"confirmNewEmail"="Confirmați noua adresă de e-mail";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Modifică adresa de e-mail";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +947,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ai solicitat deja un link de confirmare pentru acea adresă de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Te rugăm să accesezi e-mailul și să dai clic pe link pentru a-ți confirma noua adresă de e-mail.";
+"emailIsChanging_description"="Accesați căsuța a noii adrese de e-mail și faceți clic pe link pentru a confirma noua adresă de e-mail.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Te rugăm să introduci parola pentru a-ți verifica adresa de e-mail";
+"verifyYourEmailAddress_description"="Introduceți parola pentru a vă confirma adresa de e-mail";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Felicitări, noua adresă de e-mail pentru acest cont MEGA este: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -2194,6 +2194,10 @@
 "Default Tab"="Filă implicită";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mod de sortare și vizualizare";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the section title. */
+"settings.userInterface.hiddenItems.header"="Elemente ascunse";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
+"settings.userInterface.hiddenItems.label"="Afișați elementele ascunse";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Vizualizare pentru descoperire media";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -3139,7 +3143,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Planifică o întâlnire";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Contul dvs. MEGA a fost suspendat din cauza acuzațiilor repetate de încălcare a drepturilor de autor. Aceasta înseamnă că nu vă puteți accesa contul sau datele din cadrul acestuia.\n\nVerificați-vă e-mailul pentru mai multe informații despre cum să depuneți o contranotificare. ";
+"account.suspension.message.copyright"="Contul dvs. MEGA a fost suspendat din cauza acuzațiilor repetate de încălcare a drepturilor de autor. Aceasta înseamnă că nu vă puteți accesa contul sau datele din acesta.\n\nVerificați căsuța de e-mail pentru mai multe informații despre cum să depuneți o contranotificare.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Contul dvs. a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA.\n\nNu veți putea recâștiga accesul la datele stocate sau nu veți putea fi autorizat să înregistrați un nou cont MEGA.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3847,23 +3851,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Obțineți mai mult cu un abonament Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Treceți la un abonament Pro pentru mai mult spațiu de stocare și o mulțime de funcții suplimentare. Abonamentele noastre încep de la %@ o lună.";
+"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Lată ce obțineți:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Spațiu de stocare generos";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Stocați date nelimitate, începând de la [A] [B].";
+"onboarding.upgradeAccount.content.generousStorage.title"="Flexibilitate maximă în spațiu de stocare";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Partajarea transferurilor";
+"onboarding.upgradeAccount.content.transferSharing.title"="Partajare de fișiere ușoară și sigură";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Persoanele cu care partajați date pot folosi cota de transfer pentru a descărca și transmite în flux elementele pe care le-ați partajat.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Partajați fișiere mari datorită unei cote generoase de transfer și asigurați securitatea cu link-uri protejate prin parolă.";
+/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.title"="Nu pierdeți niciodată datele";
+/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.message"="Fiți liniștit prin back-up și sincronizare a datelor. În plus, utilizați Derulează înapoi pentru a restabili folderele la orice dată de până la 180 de zile.";
+/* Upgrade account screen content title about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+/* Upgrade account screen content message about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.message"="Rămâneți privat online cu VPN-ul nostru de mare viteză.";
+/* Upgrade account screen content title about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.title"="Apeluri și întâlniri nerestricționate";
+/* Upgrade account screen content message about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="Întâlnirile, mesajele și apelurile video sunt complet private și protejate, cu un număr nelimitat de participanți.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Securitate suplimentară la partajare";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Setați parolele și datele de expirare pentru linkurile de fișiere și folder.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Vezi abonamentele Pro";
+"onboarding.upgradeAccount.button.viewProPlans"="Upgradeați la un abonament Pro";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Activează Încărcări cameră";
 /* Camera uploads banner enable state description */
@@ -3979,7 +3995,7 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promoție";
 /* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
-"notifications.expiration.message"="Expires on [date] at [time]";
+"notifications.expiration.message"="Expiră pe [date] la [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Ascunde";
 /* Title for action that allows user to unhide files or folders */
@@ -3987,11 +4003,11 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Imposibil de a participa";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica această restricție.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, am înțeles";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Doar 100 de participanții se pot alătura apelului. Orice participanți suplimentari vor putea trimite și citi doar chat-uri. Trebuie să adăugați mai mulți participanți? [A]Upgradați acum[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4009,24 +4025,28 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și citi doar chat-uri. Solicitați organizatorului să elimine această restricție.";
+"meetings.contact-picker.warning.over-limit.non-host"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica aceste restricții.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgradați la Pro pentru a primi apeluri nelimitate";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Apelul dvs. a atins limita de 60 de minute și s-a încheiat. Utilizatorii Pro au o durată nelimitată a apelului și pot invita până la 1000 de participanți.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgradați acum";
+/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica aceste restricții.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Fișiere și foldere ascunse";
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Ascundeți fișierele și folderele importante";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy. Only you can reveal them, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puteți ascunde fișierele și folderele sensibile pentru confidențialitate. Numai dvs. le puteți dezvălui, fie individual, fie prin afișarea temporară a elementelor ascunse din setări.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Exclude from Timeline";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Excludeți din vizualizarea cronologică";
 /* Hidden files and folders onboarding content exclude from timeline section message */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Elementele ascunse sunt accesibile numai prin Unitatea cloud și nu vor apărea în Fotografii, Albume sau Recente.";
 /* Hidden files and folders onboarding content out of sight title */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Invizibile";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="You decide when hidden files are visible. There is a new setting to show hidden items temporarily.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Dvs. decideți când sunt vizibile fișierele ascunse. Există o nouă setare pentru a afișa temporar elementele ascunse.";

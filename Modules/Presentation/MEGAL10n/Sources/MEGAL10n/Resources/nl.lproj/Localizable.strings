@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="U hebt te vaak geprobeerd om in te loggen. Wacht alstublieft tot %@ en probeer het opnieuw.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Controleer uw email en klik op de link om uw account te bevestigen.";
+"accountNotConfirmed"="Controleer uw e-mailinbox en volg de link om uw account te bevestigen.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Uw account is beëindigd vanwege een schending van de Algemene Voorwaarden van MEGA, inclusief maar niet beperkt tot clausule 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Onjuist wachtwoord";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Fout. Dit e-mailadres is al in gebruik.";
+"emailAlreadyInUse"="Dit e-mailadres is al in gebruik";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="U moet ruimte vrij maken op uw apparaat";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -853,7 +853,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="U zal alle gegevens verliezen die op dit account staan. Weet u zeker dat u door wilt gaan?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Als u geen toegang heeft tot uw e-mailaccount, neem dan alstublieft contact op met support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Als u geen toegang heeft tot uw e-mailinbox, neem contact op met support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Annuleringskoppeling is verstreken.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -937,7 +937,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Bevestig e-mailadres";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Bevestig nieuw e-mailadres";
+"confirmNewEmail"="Nieuw e-mailadres bevestigen";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Wijzig e-mailadres";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +947,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="U heeft al een bevestigingslink voor dat e-mailadres gevraagd.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Ga naar uw postvak in en klik de link om uw nieuwe email te bevestigen.";
+"emailIsChanging_description"="Ga naar de inbox van uw nieuwe e-mailadres en klik op de link om uw nieuwe e-mailadres te bevestigen.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Vul alstublieft uw wachtwoord in om uw e-mailadres te controleren";
+"verifyYourEmailAddress_description"="Voer uw wachtwoord in om uw e-mailadres te verifiëren";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Gefeliciteerd, uw nieuwe e-mailadres voor dit MEGA-account is: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1375,7 +1375,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Weet u zeker dat u de registratie wilt afbreken?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Als u uw e-mailadres verkeerd heeft gespeld, corrigeer het en tip op “Opnieuw versturen”";
+"misspelledEmailAddress"="Als u uw e-mailadres verkeerd hebt gespeld, corrigeer het dan en tik op „Opnieuw vesturen”.";
 /* A button to resend the email confirmation. */
 "resend"="Opnieuw versturen";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2194,6 +2194,10 @@
 "Default Tab"="Standaard Tabblad";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sorteer- en Weergavemodus";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the section title. */
+"settings.userInterface.hiddenItems.header"="Verborgen items";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
+"settings.userInterface.hiddenItems.label"="Verborgen items weergeven";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Media discovery weergave";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -3139,7 +3143,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Plan vergadering";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Uw MEGA-account is opgeschort vanwege herhaalde beschuldigingen van inbreuk op het auteursrecht. Dit betekent dat u geen toegang heeft tot uw account of gegevens daarin.\n\n Controleer uw e-mail voor meer informatie over het indienen van een tegenmelding.";
+"account.suspension.message.copyright"="Uw MEGA-account is opgeschort vanwege herhaalde beschuldigingen van schendingen van auteursrechten. Dit betekent dat u geen toegang hebt tot uw account of de gegevens die erin staan.\n\nKijk in uw  e-mailinbox voor meer informatie over hoe u een tegenmelding kunt indienen.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Uw account is beëindigd vanwege een schending van MEGA's Algemene Voorwaarden.\n\n U kunt geen toegang meer krijgen tot uw opgeslagen gegevens of worden geautoriseerd om een ​​nieuw MEGA-account te registreren.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3847,23 +3851,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Krijg meer met een Pro abonnement";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade naar een Pro-abonnement voor meer opslagruimte en veel extra functies. Onze plannen beginnen bij %@ per maand.";
+"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Enkele functies om naar uit te kijken zijn:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Vrijgevige opslag";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Bewaar onbeperkt data, vanaf [A][B].";
+"onboarding.upgradeAccount.content.generousStorage.title"="Ultieme opslagflexibiliteit";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Overdracht deling";
+"onboarding.upgradeAccount.content.transferSharing.title"="Eenvoudig en veilig bestanden delen";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="De mensen met wie u gegevens deelt, kunnen uw overdrachtstegoed gebruiken om de items die u hebt gedeeld te downloaden en te streamen.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Deel grote bestanden dankzij een royaal overdrachtstegoed en zorg voor beveiliging met links die met een wachtwoord zijn beveiligd.";
+/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.title"="Verlies nooit meer gegevens";
+/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.message"="Maak een back-up van je gegevens en synchroniseer ze in alle vertrouwen. Bovendien kunt u Terugspoelen gebruiken om mappen te herstellen naar een willekeurige datum tot 180 dagen.";
+/* Upgrade account screen content title about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+/* Upgrade account screen content message about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.message"="Blijf privé online met onze supersnelle VPN.";
+/* Upgrade account screen content title about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.title"="Onbeperkt bellen en vergaderen";
+/* Upgrade account screen content message about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="Berichten sturen, videogesprekken voeren en vergaderen in volledige privacy met ongelimiteerde deelnemers.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Extra veiligheid bij het delen";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Stel wachtwoorden en vervaldata in voor bestands- en mapkoppelingen.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Bekijk Pro abonnementen";
+"onboarding.upgradeAccount.button.viewProPlans"="Upgrade vandaag nog naar Pro";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Camera uploads inschakelen";
 /* Camera uploads banner enable state description */
@@ -3987,11 +4003,11 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Kan niet aansluiten";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperkingen op te heffen.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperking op te heffen.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, ik snap het";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperkingen op te heffen.";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Slechts 100 deelnemers kunnen deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen gesprekken verzenden en lezen. Wil je meer deelnemers toevoegen? [A]Nu upgraden[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4009,13 +4025,17 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Slechts 100 deelnemers kunnen deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen gesprekken verzenden en lezen. Vraag de organisator om deze beperking op te heffen.";
+"meetings.contact-picker.warning.over-limit.non-host"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperkingen op te heffen.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgrade naar Pro om ongelimiteerd te kunnen bellen";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Uw gesprek heeft de limiet van 60 minuten bereikt en is beëindigd. Pro-gebruikers hebben een onbeperkte gespreksduur en kunnen tot 1000 deelnemers uitnodigen.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Nu upgraden";
+/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperkingen op te heffen.";
+/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperkingen op te heffen.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Verborgen bestanden en mappen";
 /* Hidden files and folders onboarding content hide important title */

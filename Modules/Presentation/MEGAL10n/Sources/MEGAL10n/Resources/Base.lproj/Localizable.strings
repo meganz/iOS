@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Please check your email and follow the link to confirm your account.";
+"accountNotConfirmed"="Check your email inbox and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Your account was terminated due to a breach of MEGA’s Terms of Service including, but not limited to, clause 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Wrong password";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Error. This email address is already in use.";
+"emailAlreadyInUse"="This email address is already in use";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="You need to free some space on your device";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -853,7 +853,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can’t access your email, please contact support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="If you can’t access your email inbox, contact support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Cancellation link has expired.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -937,7 +937,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirm email address";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirm new email";
+"confirmNewEmail"="Confirm new email address";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Change email address";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +947,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="You have already requested a confirmation link for that email address.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Please go to your inbox and click the link to confirm your new email address.";
+"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Please enter your password to verify your email address";
+"verifyYourEmailAddress_description"="Enter your password to verify your email address";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Congratulations, your new email address for this MEGA account is: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1375,7 +1375,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Are you sure you want to abort the registration?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelled your email address, correct it and tap on “Resend”.";
+"misspelledEmailAddress"="If you have misspelt your email address, correct it and tap “Resend”.";
 /* A button to resend the email confirmation. */
 "resend"="Resend";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -3143,7 +3143,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email inbox for more information on how to file a counter-notice.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to register a new MEGA account.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3433,7 +3433,7 @@
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="A file cannot be synced individually. You need to set up the sync from a folder.";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the Desktop app.";
+"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the desktop app.";
 /* Device Center backup error: Device folder not located */
 "device.center.backup.error.folderDeviceUnlocatedNow"="Folder in your device can’t be located now, try again later.";
 /* Device Center backup error: Device folder can't be located */
@@ -3591,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10  years\n\n• Priority support\n\n• Ad free";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -4003,11 +4003,11 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove this restriction.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, got it";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */

@@ -91,11 +91,11 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="انضم إلى الاجتماع كضيف";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Invalid email address or password. Try again.";
+"invalidMailOrPassword"="عنوان بريد إلكتروني أو كلمة مرور غير صالحين. حاول مرة أخرى.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="لقد حاولت تسجيل الدخول مرات كثيرة. الرجاء الانتظار حتى %@ ثم المحاولة ثانية.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="الرجاء تفقد بريدك الالكتروني والضغط على رابط تأكيد الحساب.";
+"accountNotConfirmed"="تحقق من صندوق البريد الإلكتروني الخاص بك واتبع الرابط لتأكيد حسابك.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="تم إنهاء حسابك بسبب خرق لشروط الخدمة لدى ميغا MEGA بما في ذلك على سبيل المثال لا الحصر ، البند 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="كلمة مرور خاطئة";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="خطأ. هذا البريد الإلكتروني قيد الاستخدام بالفعل.";
+"emailAlreadyInUse"="عنوان البريد الإلكتروني هذا قيد الاستخدام بالفعل";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="تحتاج إلى إفراغ المزيد من مساحة جهازك";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -853,7 +853,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="سوف تفقد جميع البيانات المرتبطة بهذا الحساب. هل أنت متأكد أنك تريد المتابعة؟";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="إذا لم تتمكن من الوصول إلى البريد الإلكتروني الخاص بك، يرجى التواصل عبر support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="إذا لم تتمكن من الوصول إلى صندوق البريد الإلكتروني الخاص بك، فتواصل معsupport@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="انتهت صلاحية رابط الإلغاء.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -937,7 +937,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="تأكيد عنوان لبريد الإلكتروني";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="تأكيد البريد الإلكتروني الجديد";
+"confirmNewEmail"="تأكيد عنوان البريد الإلكتروني الجديد";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="تغيير البريد الالكتروني";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +947,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="لقد طلبت بالفعل رابط التأكيد لعنوان البريد الإلكتروني.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="يرجى الذهاب الى صندوق الوارد في بريدك الالكتروني والضغط على الرابط المرسل اليك لتأكيد بريدك الالكتروني.";
+"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="يرجى إدخال كلمة المرور للتحقق من عنوان البريد الإلكتروني الخاص بك";
+"verifyYourEmailAddress_description"="أدخل كلمة المرور للتحقق من عنوان بريدك الإلكتروني";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="تهانينا، عنوان بريدك الإلكتروني الجديد لحساب ميغا MEGA هو: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1375,7 +1375,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="هل أنت متأكد أنك تريد إلغاء التسجيل؟";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="إذا أخطأت في كتابة عنوان بريدك الإلكتروني فقم بتصحيحه واضغط على ”إعادة إرسال“.";
+"misspelledEmailAddress"="إذا أخطأت في كتابة عنوان بريدك الإلكتروني، فقم بتصحيحه وانقر على «إعادة الإرسال».";
 /* A button to resend the email confirmation. */
 "resend"="إعادة إرسال";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2194,6 +2194,10 @@
 "Default Tab"="التبويب الرئيسي";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="شكل الفرز والعرض";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the section title. */
+"settings.userInterface.hiddenItems.header"="عناصر مخفية";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
+"settings.userInterface.hiddenItems.label"="عرض العناصر المخفية";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="عرض اكتشاف الوسائط";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -3139,7 +3143,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="جدول اجتماع";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="تم تعليق حساب ميغا MEGA الخاص بك بسبب الادعاءات المتكررة بانتهاكات حقوق النشر. هذا يعني أنه لا يمكنك الوصول إلى حسابك أو البيانات الموجودة فيه.\n\nتحقق من بريدنا الإلكتروني للحصول على مزيد من المعلومات حول كيفية تقديم إشعار مضاد.";
+"account.suspension.message.copyright"="تم تعليق حساب ميغا MEGA الخاص بك بسبب الادعاءات المتكررة بانتهاكات حقوق الطبع والنشر. هذا يعني أنه لا يمكنك الوصول إلى حسابك أو البيانات الموجودة فيه.\n\nتحقق من صندوق البريد الإلكتروني الخاص بك للحصول على مزيد من المعلومات حول كيفية تقديم إشعار مضاد.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="تم إنهاء حسابك بسبب خرق لشروط خدمة ميغا MEGA.\n\n لن تتمكن من استعادة الوصول إلى بياناتك المخزنة أو لن يُسمح لك بتسجيل حساب ميغا MEGA جديد.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3847,23 +3851,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="احصل على المزيد مع باقة برو Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="قم بالترقية إلى باقة برو Pro لمزيد من مساحة التخزين والكثير من الميزات الإضافية. تبدأ باقاتنا من %@ في الشهر الواحد.";
+"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="بعض الميزات التي تتطلع إليها هي:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="مساحة تخزين سخية";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
-"onboarding.upgradeAccount.content.generousStorage.message"="قم بتخزين بيانات غير محدودة، بدءًا من [A][B].";
+"onboarding.upgradeAccount.content.generousStorage.title"="Ultimate storage flexibility";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="تشارك تراسل المعطيات";
+"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="يمكن للأشخاص الذين تشارك البيانات معهم استخدام حجم تراسل المعطيات الخاص بك لتنزيل وبث العناصر التي شاركتها.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+/* Upgrade account screen content title about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.title"="ميغا في بي إن MEGA VPN";
+/* Upgrade account screen content message about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.message"="حافظ على خصوصيتك على الإنترنت من خلال في بي إن VPN عالي السرعة.";
+/* Upgrade account screen content title about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.title"="مكالمات واجتماعات غير مقيدة";
+/* Upgrade account screen content message about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="أمان إضافي عند المشاركة";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="قم بتعيين كلمات المرور وتواريخ انتهاء الصلاحية لروابط الملفات والمجلدات.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="عرض باقات برو Pro";
+"onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="تمكين ترفيعات الكاميرا";
 /* Camera uploads banner enable state description */
@@ -3979,7 +3995,7 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="ترويج";
 /* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
-"notifications.expiration.message"="Expires on [date] at [time]";
+"notifications.expiration.message"="تنتهي الصلاحية في [date] الساعة [time]";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="إخفاء";
 /* Title for action that allows user to unhide files or folders */
@@ -3987,11 +4003,11 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="لا يمكن الانضمام";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذا القيد.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="حسنًا، فهمت ذلك";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="يمكن لـ 100 مشارك الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال المحادثات وقراءتها. هل تحتاج إلى إضافة المزيد من المشاركين؟ [A]قم بالترقية الآن[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4009,24 +4025,28 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال المحادثات وقراءتها. اطلب من المنظم إزالة هذا التقييد.";
+"meetings.contact-picker.warning.over-limit.non-host"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
-"calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgrade to Pro to get unlimited calls";
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="قم بالترقية إلى برو Pro للحصول على مكالمات غير محدودة";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="وصلت مكالمتك إلى حد 60 دقيقة وانتهت. يتمتع مستخدمو برو Pro بمدة مكالمات غير محدودة ويمكنهم دعوة ما يصل إلى 1000 مشارك.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="رق حسابك الآن";
+/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Hidden files and folders onboarding title */
-"onboarding.hiddenFilesAndFolders.title"="Hidden files and folders";
+"onboarding.hiddenFilesAndFolders.title"="الملفات والمجلدات المخفية";
 /* Hidden files and folders onboarding content hide important title */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Hide important files and folders";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="إخفاء الملفات والمجلدات المهمة";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy. Only you can reveal them, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="يمكنك إخفاء الملفات والمجلدات الحساسة للخصوصية. يمكنك فقط الكشف عنها إما بشكل فردي أو عن طريق عرض العناصر المخفية مؤقتًا من الإعدادات.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Exclude from Timeline";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="الاستبعاد من المخطط الزمني";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Hidden items are only accessible through the Cloud drive and will not appear in your Photos, Albums or Recents.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="لا يمكن الوصول إلى العناصر المخفية إلا من خلال السواقة السحابية ولن تظهر في الصور أو الألبومات أو الأحداث الأخيرة.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Out of sight";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="بعيدًا عن الأنظار";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="You decide when hidden files are visible. There is a new setting to show hidden items temporarily.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="عليك أن تقرر متى تكون الملفات المخفية مرئية. هناك إعداد جديد لإظهار العناصر المخفية مؤقتًا.";

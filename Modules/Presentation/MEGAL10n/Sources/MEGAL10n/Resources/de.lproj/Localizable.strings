@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Zuviele Fehlversuche. Bitte warten Sie bis %@ und versuchen Sie es dann erneut.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Bitte klicken Sie auf den Link, den Sie per E-Mail erhalten haben, um Ihren Account zu bestätigen.";
+"accountNotConfirmed"="Check your email inbox and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ihr Account wurde gekündigt aufgrund eines Verstoßes gegen die MEGA-Nutzungsbedingungen, einschließlich, aber nicht beschränkt auf Ziffer 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Falsches Passwort";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Fehler: Diese E-Mail-Adresse wird bereits verwendet.";
+"emailAlreadyInUse"="This email address is already in use";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Bitte geben Sie Speicherplatz frei";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -853,7 +853,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Sie werden alle gespeicherten Daten dieses Accounts verlieren. Wirklich löschen?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Falls Sie keinen Zugang zu Ihren E-Mails haben, wenden Sie sich bitte an support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="If you can’t access your email inbox, contact support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Stornolink abgelaufen.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -937,7 +937,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="E-Mail-Adresse bestätigen";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Bestätigung der E-Mail-Adresse";
+"confirmNewEmail"="Confirm new email address";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="E-Mail-Adresse ändern";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +947,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Sie haben einen Bestätigungslink für diese E-Mail-Adresse angefordert.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Bitte sehen Sie in Ihrem Posteingang nach und klicken Sie auf den Bestätigungslink, um Ihre neue E-Mail-Adresse zu bestätigen.";
+"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Geben Sie Ihr Passwort ein, um Ihre E-Mail-Adresse zu bestätigen";
+"verifyYourEmailAddress_description"="Enter your password to verify your email address";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Ihre neue Adresse für diesen MEGA-Account ist: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1375,7 +1375,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Sind Sie sicher, dass Sie die Registrierung abbrechen wollen?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Wenn Sie sich bei der E-Mail-Adresse vertippt haben, korrigieren Sie diese und tippen Sie auf „Erneut senden“.";
+"misspelledEmailAddress"="If you have misspelt your email address, correct it and tap “Resend”.";
 /* A button to resend the email confirmation. */
 "resend"="Erneut senden";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2194,6 +2194,10 @@
 "Default Tab"="Standard-Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sortierung und Ansicht";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the section title. */
+"settings.userInterface.hiddenItems.header"="Hidden items";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
+"settings.userInterface.hiddenItems.label"="Show hidden items";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Medienerkennungsansicht";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -3139,7 +3143,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Meeting planen";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Ihr MEGA-Account wurde aufgrund von wiederholten Vorwürfen von Urheberrechtsverstößen gesperrt. Dies bedeutet, dass Sie nicht auf Ihren Account oder die darin enthaltenen Daten zugreifen können.\n\nIn Ihrem E-Mail-Postfach finden Sie weitere Informationen darüber, wie Sie eine Löschbeanstandung einreichen können.";
+"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email inbox for more information on how to file a counter-notice.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Ihr Account wurde aufgrund eines Verstoßes gegen die Nutzungsbedingungen von MEGA gekündigt.\n\nSie können nicht mehr auf Ihre gespeicherten Daten zugreifen und sind nicht berechtigt, einen neuen MEGA-Account zu registrieren.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3847,23 +3851,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Mit einem Pro-Paket bekommen Sie mehr";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Ein Pro-Paket bietet Ihnen mehr Speicherplatz und viele zusätzliche Funktionen. Unsere Pakete erhalten Sie bereits ab %@ pro Monat.";
+"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Sie können sich unter anderem auf folgende Funktionen freuen:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Großzügiger Speicherplatz";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Speichern Sie beliebig viele Daten, beginnend mit [A] [B].";
+"onboarding.upgradeAccount.content.generousStorage.title"="Ultimate storage flexibility";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Transfervolumen teilen";
+"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Die Personen, für die Sie Daten freigeben, können Ihr Transfervolumen nutzen, um die von Ihnen freigegebenen Inhalte herunterzuladen und zu streamen.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
+"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+/* Upgrade account screen content title about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+/* Upgrade account screen content message about pro plan featuring the MEGA VPN */
+"onboarding.upgradeAccount.content.megaVPN.message"="Surfen Sie unerkannt mit unserem schnellen VPN.";
+/* Upgrade account screen content title about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.title"="Keine Anruf- und Meeting-Beschränkungen";
+/* Upgrade account screen content message about pro plan featuring the calls and meetings */
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Mehr Sicherheit beim Teilen";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Schützen Sie Datei- und Ordnerlinks mit Passwort und Ablaufdatum.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Pro-Pakete ansehen";
+"onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Kamera-Uploads aktivieren";
 /* Camera uploads banner enable state description */
@@ -3987,11 +4003,11 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Beitritt nicht möglich";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Nur 100 Teilnehmer können der Konferenz beitreten. Alle weiteren Teilnehmer können nur Nachrichten senden und empfangen. Der Veranstalter kann auf Pro upgraden, um diese Einschränkungen aufzuheben.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove this restriction.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Alles klar";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Nur 100 Teilnehmer können der Konferenz beitreten. Alle weiteren Teilnehmer können nur Nachrichten senden und empfangen. Der Veranstalter kann auf Pro upgraden, um diese Einschränkungen aufzuheben.";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Nur 100 Teilnehmer können der Konferenz beitreten. Alle weiteren Teilnehmer können nur Chatnachrichten senden und lesen. Sie möchten weitere Teilnehmer hinzufügen? [A]Jetzt upgraden[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4009,13 +4025,17 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Nur 100 Teilnehmer können der Konferenz beitreten. Alle weiteren Teilnehmer können nur Chatnachrichten senden und lesen. Bitten Sie den Organisator, diese Einschränkung aufzuheben.";
+"meetings.contact-picker.warning.over-limit.non-host"="Nur 100 Teilnehmer können der Konferenz beitreten. Alle weiteren Teilnehmer können nur Nachrichten senden und empfangen. Der Veranstalter kann auf Pro upgraden, um diese Einschränkungen aufzuheben.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Auf Pro upgraden, um unbegrenzte Anrufe zu führen";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Ihr Anruf hat das Limit von 60 Minuten erreicht und wurde beendet. Pro-Benutzer können beliebig lange Anrufe führen und bis zu 1000 Teilnehmer einladen.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Jetzt upgraden";
+/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="Nur 100 Teilnehmer können der Konferenz beitreten. Alle weiteren Teilnehmer können nur Nachrichten senden und empfangen. Der Veranstalter kann auf Pro upgraden, um diese Einschränkungen aufzuheben.";
+/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Nur 100 Teilnehmer können der Konferenz beitreten. Alle weiteren Teilnehmer können nur Nachrichten senden und empfangen. Der Veranstalter kann auf Pro upgraden, um diese Einschränkungen aufzuheben.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Verborgene Dateien und Ordner";
 /* Hidden files and folders onboarding content hide important title */
