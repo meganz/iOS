@@ -294,40 +294,6 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
-    func testCallUpdate_callWillEndReceivedUserIsModeratorAndCallUIHidden_shouldShowCallWillEndAlert() {
-        let callUseCase = MockCallUseCase()
-
-        let viewModel = makeMainTabBarCallsViewModel(
-            callUseCase: callUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator)),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
-        )
-        viewModel.isCallUIVisible = false
-        
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callWillEnd))
-
-        evaluate {
-            self.router.showCallWillEndAlert_calledTimes == 1
-        }
-    }
-    
-    func testCallUpdate_callWillEndReceivedUserIsNotModeratorAndCallUIHidden_shouldShowCallWillEndAlert() {
-        let callUseCase = MockCallUseCase()
-
-        let viewModel = makeMainTabBarCallsViewModel(
-            callUseCase: callUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
-        )
-        viewModel.isCallUIVisible = false
-        
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callWillEnd))
-
-        evaluate {
-            self.router.showCallWillEndAlert_calledTimes == 0
-        }
-    }
-    
     func testCallUpdate_callDestroyedUserIsCallerAndCallUINotVisible_shouldShowUpgradeToPro() {
         let callUseCase = MockCallUseCase()
 

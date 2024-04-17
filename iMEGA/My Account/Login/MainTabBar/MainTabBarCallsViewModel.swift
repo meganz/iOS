@@ -198,8 +198,6 @@ class MainTabBarCallsViewModel: ViewModelType {
         switch call.changeType {
         case .status:
             manageCallStatusChange(for: call)
-        case .callWillEnd:
-            showCallWillEndAlertIfNeeded(call)
         default:
             break
         }
@@ -207,21 +205,6 @@ class MainTabBarCallsViewModel: ViewModelType {
     
     private var chatMonetisationFeatureEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
-    }
-    
-    /// If call UI is visible, then this event would be handled there. See MeetingParticipantsLayoutViewModel:manageCallWillEnd().
-    /// If call UI is not visible, the call will end dialog will be presented just for moderators in the visible view.
-    private func showCallWillEndAlertIfNeeded(_ call: CallEntity) {
-        guard chatMonetisationFeatureEnabled,
-              !isCallUIVisible,
-              let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-              chatRoom.ownPrivilege == .moderator
-        else { return }
-        
-        let secondsToCallWillEnd = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
-        router.showCallWillEndAlert(
-            timeToEndCall: secondsToCallWillEnd,
-            isCallUIVisible: isCallUIVisible)
     }
     
     private func manageCallStatusChange(for call: CallEntity) {
