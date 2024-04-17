@@ -1077,13 +1077,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     /// For non moderators, countdown is showed directly.
     private func manageCallWillEnd(for call: CallEntity) {
         let timeToEndCall = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
-        if chatRoom.ownPrivilege == .moderator {
-            containerViewModel?.dispatch(.showCallWillEndAlert(timeToEndCall: timeToEndCall, completion: { [weak self] timeToEndCall in
-                self?.showCallWillEndNotification(timeToEndCall: timeToEndCall)
-            }))
-        } else {
-            showCallWillEndNotification(timeToEndCall: timeToEndCall)
-        }
+        showCallWillEndNotification(timeToEndCall: timeToEndCall)
     }
     
     private func showCallWillEndNotification(timeToEndCall: Double) {
