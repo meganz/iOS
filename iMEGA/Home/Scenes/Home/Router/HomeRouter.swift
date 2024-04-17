@@ -152,10 +152,8 @@ final class HomeRouter: HomeRouterProtocol {
         case .manageShare(let node):
             nodeShareRouter.showManageSharing(for: node)
         case .hide(let node):
-            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-            Task {
-                _ = await nodeActionUseCase.hide(nodes: [node].toNodeEntities())
-            }
+            HideFilesAndFoldersRouter(presenter: navigationController)
+                .hideNodes([node.toNodeEntity()])
         }
     }
     

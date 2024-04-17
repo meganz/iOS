@@ -253,10 +253,11 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func hide(node: NodeEntity) {
-        Task {
-            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-            _ = await nodeActionUseCase.hide(nodes: [node])
+        guard let baseViewController else {
+            return
         }
+        HideFilesAndFoldersRouter(presenter: baseViewController)
+            .hideNodes([node])
     }
     
     func unhide(node: NodeEntity) {
