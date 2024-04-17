@@ -24,7 +24,7 @@ public extension String {
     }
 
     var base64URLDecoded: String? {
-        return base64URLToBase64.base64Decoded
+        base64URLToBase64.base64Decoded
     }
 
     // Conversion of base64-URL to base64 https://stackoverflow.com/questions/43499651/decode-base64url-to-base64-swift
@@ -40,7 +40,7 @@ public extension String {
     }
 
     var mnz_isDecimalNumber: Bool {
-        return CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: self))
+        CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: self))
     }
 
     var containsInvalidFileFolderNameCharacters: Bool {
@@ -48,7 +48,7 @@ public extension String {
     }
 
     func append(pathComponent: String) -> String {
-        return URL(fileURLWithPath: self).appendingPathComponent(pathComponent).path
+        URL(fileURLWithPath: self).appendingPathComponent(pathComponent).path
     }
   
     func initialForAvatar() -> String {
@@ -85,7 +85,7 @@ public extension String {
 
 public extension String {
     func matches(regex: String) -> Bool {
-        return (self.range(of: regex, options: .regularExpression) ?? nil) != nil
+        (self.range(of: regex, options: .regularExpression) ?? nil) != nil
     }
 }
 
