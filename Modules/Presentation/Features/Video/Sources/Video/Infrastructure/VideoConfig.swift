@@ -146,6 +146,7 @@ public struct VideoConfig: Equatable {
         
         public let primaryTextColor: Color
         public let secondaryTextColor: Color
+        public let primaryIconColor: Color
         public let secondaryIconColor: Color
         public let pageBackgroundColor: Color
         public let whiteColor: Color
@@ -161,11 +162,13 @@ public struct VideoConfig: Equatable {
         public let emptyFavoriteThumbnaillImageForegroundColor: Color
         public let videoThumbnailImageViewPlaceholderBackgroundColor: Color
         public let videoThumbnailDurationTextBackgroundColor: Color
+        public let disabledColor: Color
         
         /// Specify colors that needs to be injected from Main module.
         public init(
             primaryTextColor: Color,
             secondaryTextColor: Color,
+            primaryIconColor: Color,
             secondaryIconColor: Color,
             pageBackgroundColor: Color,
             whiteColor: Color,
@@ -180,10 +183,12 @@ public struct VideoConfig: Equatable {
             emptyFavoriteThumbnailBackgroundColor: Color,
             emptyFavoriteThumbnaillImageForegroundColor: Color,
             videoThumbnailImageViewPlaceholderBackgroundColor: Color,
-            videoThumbnailDurationTextBackgroundColor: Color
+            videoThumbnailDurationTextBackgroundColor: Color,
+            disabledColor: Color
         ) {
             self.primaryTextColor = primaryTextColor
             self.secondaryTextColor = secondaryTextColor
+            self.primaryIconColor = primaryIconColor
             self.secondaryIconColor = secondaryIconColor
             self.pageBackgroundColor = pageBackgroundColor
             self.whiteColor = whiteColor
@@ -199,6 +204,7 @@ public struct VideoConfig: Equatable {
             self.emptyFavoriteThumbnaillImageForegroundColor = emptyFavoriteThumbnaillImageForegroundColor
             self.videoThumbnailImageViewPlaceholderBackgroundColor = videoThumbnailImageViewPlaceholderBackgroundColor
             self.videoThumbnailDurationTextBackgroundColor = videoThumbnailDurationTextBackgroundColor
+            self.disabledColor = disabledColor
         }
     }
 }

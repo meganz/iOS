@@ -1,5 +1,5 @@
-import MEGADesignToken
 import MEGAAssets
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -31,7 +31,8 @@ extension VideoConfig {
         colorAssets: ColorAssets(
             primaryTextColor: TokenColors.Text.primary.swiftUI,
             secondaryTextColor: TokenColors.Text.secondary.swiftUI,
-            secondaryIconColor: TokenColors.Icon.primary.swiftUI,
+            primaryIconColor: TokenColors.Icon.primary.swiftUI,
+            secondaryIconColor: TokenColors.Icon.secondary.swiftUI,
             pageBackgroundColor: TokenColors.Background.page.swiftUI,
             whiteColor: TokenColors.Text.onColor.swiftUI,
             durationTextColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "black_161616")!).opacity(0.5),
@@ -45,7 +46,8 @@ extension VideoConfig {
             emptyFavoriteThumbnailBackgroundColor: TokenColors.Background.surface2.swiftUI,
             emptyFavoriteThumbnaillImageForegroundColor: TokenColors.Icon.secondary.swiftUI,
             videoThumbnailImageViewPlaceholderBackgroundColor: Color.black,
-            videoThumbnailDurationTextBackgroundColor: Color.black.opacity(0.2)
+            videoThumbnailDurationTextBackgroundColor: Color.black.opacity(0.2),
+            disabledColor: TokenColors.Text.disabled.swiftUI
         ),
         toolbarAssets: ToolbarAssets(
             offlineImage: MEGAAssetsPreviewImageProvider.image(named: "offline")!,

@@ -52,8 +52,8 @@ public class VideoRevampFactory {
         return UIHostingController(rootView: view)
     }
     
-    public static func makeToolbarView(isDisabled: Bool, videoConfig: VideoConfig) -> UIViewController {
-        let controller = UIHostingController(rootView: VideoToolbar(videoConfig: videoConfig, isDisabled: isDisabled))
+    public static func makeToolbarView(viewModel: VideoToolbarViewModel, videoConfig: VideoConfig) -> UIViewController {
+        let controller = UIHostingController(rootView: VideoToolbar(videoConfig: videoConfig, viewModel: viewModel))
         controller.view.backgroundColor = .clear
         return controller
     }
