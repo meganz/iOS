@@ -34,14 +34,18 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (void)setCameraUploadEnabled:(BOOL)cameraUploadEnabled {
-    [self setMigratedToCameraUploadsV2:YES];
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabledKey];
     [self configDefaultSettingsIfNeededForCameraUpload];
     [self configDefaultSharedAlbumsAndSyncedAlbumsSettingsIfNeeded];
+    [self setMigratedToCameraUploadsV2:YES];
 }
 
 + (void)configDefaultSettingsIfNeededForCameraUpload {
     if (![self isCameraUploadEnabled]) {
+        // Reset default value for VideoUploadsEnabled to YES, so that next time user turns on it will be the default
+        if([NSUserDefaults.standardUserDefaults objectForKey:IsVideoUploadsEnabledKey] == nil) {
+            [self setVideoUploadEnabled:YES];
+        }
         return;
     }
     
@@ -55,10 +59,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
     if ([NSUserDefaults.standardUserDefaults objectForKey:UploadAllBurstAssetsKey] == nil) {
         [self setUploadAllBurstPhotos:YES];
-    }
-    
-    if ([NSUserDefaults.standardUserDefaults objectForKey:IsVideoUploadsEnabledKey] == nil) {
-        [self setVideoUploadEnabled:YES];
     }
 }
 
