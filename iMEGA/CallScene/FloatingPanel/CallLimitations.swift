@@ -102,23 +102,33 @@ class CallLimitations {
             isMyselfModerator = chatRoom.ownPrivilege == .moderator
             if isMyselfModerator != previousValue {
                 MEGALogDebug("[CallLimitations] did change privilege host: \(chatRoom.ownPrivilege == .moderator)")
-                _limitsChanged.send(())
+                _limitsChanged.send()
             }
         }
     }
     
     private func onCallUpdate(_ call: CallEntity) {
         switch call.changeType {
+        case .status:
+            // we can only rely on call limits once we are connected to SFU
+            if call.status == .inProgress {
+                let previousLimit = limitOfFreeTierUsers
+                limitOfFreeTierUsers = call.callLimits.maxUsers
+                if previousLimit != limitOfFreeTierUsers {
+                    MEGALogDebug("[CallLimitations] status changed, did change limits to \(limitOfFreeTierUsers) from previous \(previousLimit)")
+                    _limitsChanged.send()
+                }
+            }
         case .callLimitsUpdated:
             let previousLimit = limitOfFreeTierUsers
             limitOfFreeTierUsers = call.callLimits.maxUsers
             if previousLimit != limitOfFreeTierUsers {
                 MEGALogDebug("[CallLimitations] did change limits to \(limitOfFreeTierUsers) from previous \(previousLimit)")
-                _limitsChanged.send(())
+                _limitsChanged.send()
             }
         case .callComposition:
             MEGALogDebug("[CallLimitations] call composition changed)")
-            _limitsChanged.send(())
+            _limitsChanged.send()
         default:
             break
         }

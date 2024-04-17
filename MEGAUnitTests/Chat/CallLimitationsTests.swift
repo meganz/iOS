@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -14,6 +15,9 @@ final class CallLimitationsTests: XCTestCase {
     
     class Harness {
         let sut: CallLimitations
+        let callUseCase = MockCallUseCase()
+        var subscriptions = Set<AnyCancellable>()
+        var limitsUpdatedCount = 0
         init(
             initialLimit: Int = .testLimit,
             flagEnabled: Bool,
@@ -35,10 +39,31 @@ final class CallLimitationsTests: XCTestCase {
             sut = .init(
                 initialLimit: initialLimit,
                 chatRoom: ChatRoomEntity(ownPrivilege: ownPrivilege),
-                callUseCase: MockCallUseCase(),
+                callUseCase: callUseCase,
                 chatRoomUseCase: MockChatRoomUseCase(),
                 featureFlagProvider: MockFeatureFlagProvider(
                     list: list
+                )
+            )
+            
+            sut.limitsChangedPublisher
+                .sink { [weak self] in
+                    self?.limitsUpdatedCount += 1
+                }
+                .store(in: &subscriptions)
+        }
+        
+        func callStarted(maxUsers: Int) {
+            callUseCase.callUpdateSubject.send(
+                .init(
+                    status: .inProgress,
+                    changeType: .status,
+                    callLimits: .init(
+                        durationLimit: -1,
+                        maxUsers: maxUsers,
+                        maxClientsPerUser: -1,
+                        maxClients: -1
+                    )
                 )
             )
         }
@@ -129,5 +154,14 @@ final class CallLimitationsTests: XCTestCase {
     func test_contactPickerLimitChecker_FF_on_allow_to_invite_overLimit_returnsTrue() {
         let harness = Harness(flagEnabled: true) // 10 > 5 + 6
         XCTAssertTrue(harness.sut.contactPickerLimitChecker(callParticipantCount: 6, selectedCount: 5, allowsNonHostToInvite: true))
+    }
+    
+    func test_callStatusChange_updatesLimit() {
+        let harness = Harness(flagEnabled: true)
+        XCTAssertEqual(harness.limitsUpdatedCount, 0)
+        harness.callStarted(maxUsers: 5)
+        evaluate {
+            harness.limitsUpdatedCount == 1
+        }
     }
 }
