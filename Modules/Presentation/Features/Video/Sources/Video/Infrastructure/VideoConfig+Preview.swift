@@ -84,6 +84,24 @@ extension VideoConfig {
                     )
                 )
             )
+        ),
+        playlistContentAssets: PlaylistContentAssets(
+            headerView: .init(
+                image: .init(
+                    dotSeparatorImage: UIImage(systemName: "circle.fill")!,
+                    publicLinkImage: MEGAAssetsPreviewImageProvider.image(named: "linked")!,
+                    addButtonImage: UIImage(systemName: "plus")!,
+                    playButtonImage: UIImage(systemName: "play.fill")!
+                ),
+                color: .init(
+                    pageBackgroundColor: TokenColors.Background.surface1.swiftUI,
+                    thumbnailBackgroundColor: TokenColors.Background.surface2.swiftUI,
+                    primaryTextColor: TokenColors.Text.primary.swiftUI,
+                    secondaryTextColor: TokenColors.Text.secondary.swiftUI,
+                    secondaryIconColor: TokenColors.Text.secondary.swiftUI,
+                    buttonTintColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "videoPlaylistContent_buttonTintColor")
+                )
+            )
         )
     )
 }
