@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAFoundation
 import MEGAL10n
 import UIKit
@@ -18,7 +19,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
         } else {
             nameLabel.text = Strings.Localizable.setPassword
         }
-        nameLabel.textColor = UIColor.label
+        nameLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         proImageView.isHidden = justUpgraded ? true : isPro
         detailLabel.isHidden = true
         

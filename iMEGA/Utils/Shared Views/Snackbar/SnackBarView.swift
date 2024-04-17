@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct SnackBar: Equatable {
@@ -23,13 +24,20 @@ struct SnackBarView: View {
         static let spacing: CGFloat = 8
         static let cornerRadius: CGFloat = 8
     }
+    private var backgroundColor: Color {
+        colorScheme == .light ? UIColor.gray3A3A3C.swiftUI : UIColor.whiteFFFFFF.swiftUI
+    }
+    
+    private var foregroundColor: Color {
+        colorScheme == .light ? UIColor.whiteFFFFFF.swiftUI : UIColor.black000000.swiftUI
+    }
     
     var body: some View {
         VStack(alignment: .trailing, spacing: Constants.spacing) {
             HStack {
                 Text(viewModel.snackBar.message)
                     .font(.footnote)
-                    .foregroundColor(colorScheme == .light ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Black._000000.color)
+                    .foregroundColor(foregroundColor)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     .padding(viewModel.snackBar.isActionable ? [.leading, .top] : [.leading, .top, .trailing, .bottom], Constants.padding)
@@ -49,7 +57,7 @@ struct SnackBarView: View {
                 }
             }
         }
-        .background(colorScheme == .light ? MEGAAppColor.Gray._3A3A3C.color : MEGAAppColor.White._FFFFFF.color)
+        .background(backgroundColor)
         .cornerRadius(Constants.cornerRadius)
         .shadow(color: MEGAAppColor.Black._000000.color.opacity(0.1), radius: 4, x: 0, y: 1)
         .padding(Constants.padding)

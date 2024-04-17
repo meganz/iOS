@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -144,7 +145,7 @@ class GetLinkViewController: UIViewController {
         getLinkVC.getLinkVM.multilink = nodes.count > 1
         getLinkVC.getLinkVM.nodeTypes = nodes.map { $0.toNodeEntity().nodeType ?? .unknown }
         
-        return MEGANavigationController.init(rootViewController: getLinkVC)
+        return MEGANavigationController(rootViewController: getLinkVC)
     }
     
     class func instantiate(viewModel: any GetLinkViewModelType) -> MEGANavigationController {
@@ -620,6 +621,13 @@ class GetLinkViewController: UIViewController {
         }
     }
     
+    // MARK: - DesignToken
+    private func setBackgroundColorWithDesignToken(on cell: UITableViewCell) {
+        guard UIColor.isDesignTokenEnabled() else { return }
+        
+        cell.backgroundColor = TokenColors.Background.page
+    }
+    
     // MARK: - TableView cells
     
     private func infoCell(forIndexPath indexPath: IndexPath, cellViewModel: GetLinkAlbumInfoCellViewModel? = nil) -> GetLinkInfoTableViewCell {
@@ -633,6 +641,8 @@ class GetLinkViewController: UIViewController {
             cell.configure(forNode: nodes[sectionIndex])
         }
         
+        setBackgroundColorWithDesignToken(on: cell)
+        
         return cell
     }
     
@@ -642,6 +652,8 @@ class GetLinkViewController: UIViewController {
         }
         
         cell.configure(nodesCount: nodes.count, isPasswordSet: getLinkVM.passwordProtect)
+        
+        setBackgroundColorWithDesignToken(on: cell)
         
         return cell
     }
@@ -653,6 +665,8 @@ class GetLinkViewController: UIViewController {
         
         cell.configureDecryptKeySeparatedCell(isOn: getLinkVM.separateKey, enabled: !getLinkVM.passwordProtect)
         
+        setBackgroundColorWithDesignToken(on: cell)
+        
         return cell
     }
     
@@ -663,6 +677,8 @@ class GetLinkViewController: UIViewController {
         
         cell.configureActivateExpiryDateCell(isOn: getLinkVM.expiryDate, isPro: MEGASdk.shared.mnz_isProAccount, justUpgraded: justUpgradedToProAccount)
         
+        setBackgroundColorWithDesignToken(on: cell)
+        
         return cell
     }
     
@@ -672,6 +688,8 @@ class GetLinkViewController: UIViewController {
         }
         
         cell.configureExpiryDateCell(date: getLinkVM.date, dateSelected: getLinkVM.selectDate)
+        
+        setBackgroundColorWithDesignToken(on: cell)
         
         return cell
     }
@@ -692,6 +710,8 @@ class GetLinkViewController: UIViewController {
         }
         
         cell.configurePasswordCell(passwordActive: getLinkVM.passwordProtect, isPro: MEGASdk.shared.mnz_isProAccount, justUpgraded: justUpgradedToProAccount)
+        
+        setBackgroundColorWithDesignToken(on: cell)
         
         return cell
     }
@@ -718,6 +738,8 @@ class GetLinkViewController: UIViewController {
             }
         }
         
+        setBackgroundColorWithDesignToken(on: cell)
+        
         return cell
     }
     
@@ -727,6 +749,8 @@ class GetLinkViewController: UIViewController {
         }
         
         cell.configurePasswordCell(password: getLinkVM.password ?? "")
+        
+        setBackgroundColorWithDesignToken(on: cell)
         
         return cell
     }
@@ -738,6 +762,8 @@ class GetLinkViewController: UIViewController {
         
         cell.configureKeyCell(key: getLinkVM.key)
         
+        setBackgroundColorWithDesignToken(on: cell)
+        
         return cell
     }
     
@@ -748,6 +774,8 @@ class GetLinkViewController: UIViewController {
         
         cell.configureRemovePasswordCell()
         
+        setBackgroundColorWithDesignToken(on: cell)
+        
         return cell
     }
     
@@ -755,7 +783,10 @@ class GetLinkViewController: UIViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkSwitchOptionTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkSwitchOptionTableViewCell else {
             fatalError("Could not get GetLinkSwitchOptionTableViewCell")
         }
+        
         cell.configure(viewModel: cellViewModel)
+        setBackgroundColorWithDesignToken(on: cell)
+        
         return cell
     }
     
@@ -764,6 +795,8 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkStringTableViewCell")
         }
         cell.viewModel = cellViewModel
+        setBackgroundColorWithDesignToken(on: cell)
+        
         return cell
     }
     
@@ -868,15 +901,14 @@ class GetLinkViewController: UIViewController {
     private func updateFooterViewForSingleItem(forFooter footer: inout GenericHeaderFooterView, forSection sectionType: GetLinkTableViewSection) {
         switch sectionType {
         case .decryptKeySeparate:
-            let attributedString = NSMutableAttributedString(string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately)
-            let learnMoreString = NSAttributedString(string: " " + Strings.Localizable.learnMore, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
+            let foregroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_turquoise(for: traitCollection)
+            let attributedString = NSMutableAttributedString(string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately, attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary as Any])
+            let learnMoreString = NSAttributedString(string: " " + Strings.Localizable.learnMore, attributes: [NSAttributedString.Key.foregroundColor: foregroundColor as Any])
             attributedString.append(learnMoreString)
             footer.titleLabel.numberOfLines = 0
             footer.titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(learnMoreTapped)))
             footer.titleLabel.isUserInteractionEnabled = true
-            
             footer.configure(attributedTitle: attributedString, topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-            
         case .expiryDate:
             if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
                 footer.configure(title: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
@@ -1041,7 +1073,7 @@ extension GetLinkViewController: UITableViewDelegate {
         guard var footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-
+        
         footer.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
         
         if getLinkViewModel != nil {
