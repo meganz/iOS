@@ -20,7 +20,7 @@ public struct AccountPlanView: View {
                            backgroundColor: config.onboardingViewAssets.headerBackgroundColor,
                            strokeColor: config.onboardingViewAssets.headerStrokeColor,
                            currentPlanTagColor: config.onboardingViewAssets.currentPlanTagColor,
-                           recommededPlanTagColor: config.onboardingViewAssets.recommededPlanTagColor)
+                           recommendedPlanTagColor: config.onboardingViewAssets.recommendedPlanTagColor)
             
             HStack {
                 PlanStorageView(plan: viewModel.plan,

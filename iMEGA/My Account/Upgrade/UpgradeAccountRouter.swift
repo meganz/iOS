@@ -1,5 +1,6 @@
 import Accounts
 import Foundation
+import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -45,6 +46,8 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
     func presentChooseAccountType() {
         guard let products = purchase.products, products.isNotEmpty else { return }
         
+        let isDesignTokenEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        
         if featureFlagProvider.isFeatureFlagEnabled(for: .onboardingProPlan) {
             let accountsConfig = AccountsConfig(
                 onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
@@ -54,17 +57,17 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
                     vpnImage: .shield,
                     meetingsImage: .meetings,
                     onboardingHeaderImage: .onboardingHeader,
-                    primaryTextColor: MEGAAppColor.Account.upgradeAccountPrimaryText.color,
-                    primaryGrayTextColor: MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color,
-                    secondaryTextColor: MEGAAppColor.Account.upgradeAccountSecondaryText.color,
-                    subMessageBackgroundColor: MEGAAppColor.Account.upgradeAccountSubMessageBackground.color,
-                    headerForegroundSelectedColor: MEGAAppColor.View.turquoise.color,
-                    headerForegroundUnSelectedColor: MEGAAppColor.Account.planUnselectedTint.color,
-                    headerBackgroundColor: MEGAAppColor.Account.planHeaderBackground.color,
-                    headerStrokeColor: MEGAAppColor.Account.planBorderTint.color,
-                    backgroundColor: MEGAAppColor.Account.planBodyBackground.color,
-                    currentPlanTagColor: MEGAAppColor.Account.currentPlan.color,
-                    recommededPlanTagColor: MEGAAppColor.Account.planRecommended.color
+                    primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryText.color,
+                    primaryGrayTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color,
+                    secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.Account.upgradeAccountSecondaryText.color,
+                    subMessageBackgroundColor: isDesignTokenEnabled ? TokenColors.Notifications.notificationSuccess.swiftUI : MEGAAppColor.Account.upgradeAccountSubMessageBackground.color,
+                    headerForegroundSelectedColor: isDesignTokenEnabled ? TokenColors.Text.accent.swiftUI : MEGAAppColor.View.turquoise.color,
+                    headerForegroundUnSelectedColor: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : MEGAAppColor.Account.planUnselectedTint.color,
+                    headerBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : MEGAAppColor.Account.planHeaderBackground.color,
+                    headerStrokeColor: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : MEGAAppColor.Account.planBorderTint.color,
+                    backgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : MEGAAppColor.Account.planBodyBackground.color,
+                    currentPlanTagColor: isDesignTokenEnabled ? TokenColors.Notifications.notificationWarning.swiftUI : MEGAAppColor.Account.currentPlan.color,
+                    recommendedPlanTagColor: isDesignTokenEnabled ? TokenColors.Notifications.notificationInfo.swiftUI : MEGAAppColor.Account.planRecommended.color
                 )
             )
             

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -8,15 +9,27 @@ public struct OnboardingWithProPlanListView: View {
     @StateObject var viewModel: OnboardingUpgradeAccountViewModel
     let accountsConfig: AccountsConfig
     
+    @Environment(\.colorScheme) private var colorScheme
+    private var backgroundColor: Color {
+       guard isDesignTokenEnabled else {
+           return colorScheme == .dark ? Color(red: 28/255, green: 28/255, blue: 30/255) : .white
+       }
+       return TokenColors.Background.page.swiftUI
+   }
+    
     public var body: some View {
         ZStack {
-            Color("background_regular_primaryElevated").edgesIgnoringSafeArea(.all)
+            backgroundColor.edgesIgnoringSafeArea(.all)
             
             ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 10, pinnedViews: .sectionFooters) {
                     OnboardingProPlanHeaderView(
                         lowestPlanPrice: viewModel.lowestProPlan.formattedPrice,
-                        primaryGrayTextColor: accountsConfig.onboardingViewAssets.primaryGrayTextColor
+                        accountsConfig: accountsConfig,
+                        titleFont: .headline,
+                        descriptionFont: .title3,
+                        showHeaderImage: false,
+                        spacing: 30
                     )
                     .padding(.vertical, 15)
                     
@@ -91,23 +104,5 @@ public struct OnboardingWithProPlanListView: View {
     
     private func dismiss() {
         presentationMode.wrappedValue.dismiss()
-    }
-}
-
-private struct OnboardingProPlanHeaderView: View {
-    var lowestPlanPrice: String
-    var primaryGrayTextColor: Color
-    
-    var body: some View {
-        VStack(spacing: 30) {
-            Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.title)
-                .font(.headline)
-                .bold()
-            
-            Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.subTitle(lowestPlanPrice))
-                .foregroundColor(primaryGrayTextColor)
-                .font(.title3)
-                .multilineTextAlignment(.center)
-        }
     }
 }

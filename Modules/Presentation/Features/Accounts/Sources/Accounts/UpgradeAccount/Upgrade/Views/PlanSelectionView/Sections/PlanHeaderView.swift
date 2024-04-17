@@ -8,7 +8,7 @@ public struct PlanHeaderView: View {
     public var backgroundColor: Color
     public var strokeColor: Color
     public var currentPlanTagColor: Color
-    public var recommededPlanTagColor: Color
+    public var recommendedPlanTagColor: Color
     
     public var body: some View {
         HStack {
@@ -17,7 +17,7 @@ public struct PlanHeaderView: View {
             
             PlanHeaderTagView(planTag: viewModel.planTag,
                               currentPlanTagColor: currentPlanTagColor,
-                              recommededPlanTagColor: recommededPlanTagColor)
+                              recommendedPlanTagColor: recommendedPlanTagColor)
             
             Spacer()
             
