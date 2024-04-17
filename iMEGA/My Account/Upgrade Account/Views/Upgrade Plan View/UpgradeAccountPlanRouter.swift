@@ -48,7 +48,7 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
                 headerStrokeColor: TokenColors.Border.strong.swiftUI,
                 backgroundColor: TokenColors.Background.page.swiftUI,
                 currentPlanTagColor: TokenColors.Notifications.notificationWarning.swiftUI,
-                recommededPlanTagColor: TokenColors.Notifications.notificationInfo.swiftUI))
+                recommendedPlanTagColor: TokenColors.Notifications.notificationInfo.swiftUI))
         } else {
             accountsConfigs = AccountsConfig(onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
                 primaryTextColor: MEGAAppColor.Account.upgradeAccountPrimaryText.color,
@@ -61,7 +61,7 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
                 headerStrokeColor: MEGAAppColor.Account.planBorderTint.color,
                 backgroundColor: MEGAAppColor.Account.planBodyBackground.color,
                 currentPlanTagColor: MEGAAppColor.Account.currentPlan.color,
-                recommededPlanTagColor: MEGAAppColor.Account.planRecommended.color))
+                recommendedPlanTagColor: MEGAAppColor.Account.planRecommended.color))
         }
         
         let upgradeAccountPlanView = UpgradeAccountPlanView(viewModel: viewModel, accountConfigs: accountsConfigs)

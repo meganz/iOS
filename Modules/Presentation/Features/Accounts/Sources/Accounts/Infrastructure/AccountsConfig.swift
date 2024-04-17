@@ -30,7 +30,7 @@ public struct AccountsConfig {
         public let headerStrokeColor: Color
         public let backgroundColor: Color
         public let currentPlanTagColor: Color
-        public let recommededPlanTagColor: Color
+        public let recommendedPlanTagColor: Color
         
         public init(
             storageImage: UIImage? = nil,
@@ -49,7 +49,7 @@ public struct AccountsConfig {
             headerStrokeColor: Color,
             backgroundColor: Color,
             currentPlanTagColor: Color,
-            recommededPlanTagColor: Color
+            recommendedPlanTagColor: Color
         ) {
             self.storageImage = storageImage
             self.fileSharingImage = fileSharingImage
@@ -67,7 +67,7 @@ public struct AccountsConfig {
             self.headerStrokeColor = headerStrokeColor
             self.backgroundColor = backgroundColor
             self.currentPlanTagColor = currentPlanTagColor
-            self.recommededPlanTagColor = recommededPlanTagColor
+            self.recommendedPlanTagColor = recommendedPlanTagColor
         }
     }
 }

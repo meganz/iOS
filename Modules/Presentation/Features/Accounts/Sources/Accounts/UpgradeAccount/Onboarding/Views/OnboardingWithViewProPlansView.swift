@@ -64,31 +64,3 @@ public struct OnboardingWithViewProPlansView: View {
         presentationMode.wrappedValue.dismiss()
     }
 }
-
-private struct OnboardingProPlanHeaderView: View {
-    @Environment(\.colorScheme) private var colorScheme
-    let lowestPlanPrice: String
-    let accountsConfig: AccountsConfig
-    
-    var body: some View {
-        VStack(spacing: 10) {
-            Image(uiImage: accountsConfig.onboardingViewAssets.onboardingHeaderImage)
-            
-            Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.title)
-                .font(.title3)
-                .bold()
-                .foregroundStyle(
-                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(.label)
-                )
-            
-            Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.subTitle(lowestPlanPrice))
-                .font(.subheadline)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(
-                    isDesignTokenEnabled ?
-                    TokenColors.Text.secondary.swiftUI :
-                        colorScheme == .dark ? Color(red: 181/255, green: 181/255, blue: 181/255) : Color(red: 132/255, green: 132/255, blue: 132/255)
-                )
-        }
-    }
-}

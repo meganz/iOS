@@ -8,7 +8,7 @@ import SwiftUI
 public struct PlanHeaderTagView: View {
     public var planTag: AccountPlanTagEntity
     public var currentPlanTagColor: Color
-    public var recommededPlanTagColor: Color
+    public var recommendedPlanTagColor: Color
     
     public var body: some View {
         TagView(
@@ -29,7 +29,7 @@ public struct PlanHeaderTagView: View {
     private var planTagColor: Color {
         switch planTag {
         case .currentPlan: currentPlanTagColor
-        case .recommended: recommededPlanTagColor
+        case .recommended: recommendedPlanTagColor
         case .none: .clear
         }
     }

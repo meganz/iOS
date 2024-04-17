@@ -21,7 +21,7 @@ extension AccountsConfig {
             headerStrokeColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "borderTint"),
             backgroundColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "bodyBackground"),
             currentPlanTagColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "currentPlan"),
-            recommededPlanTagColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "recommended")
+            recommendedPlanTagColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "recommended")
         )
     )
 }
