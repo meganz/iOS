@@ -205,6 +205,7 @@ class CallLimitations {
     /// This is used to show UI or disable buttons that will add several participants at once  when the call limit is not reached
     /// * selecting participants to add to a cal from the contact picker
     /// * disabling `Admit all` button in the floating panel in the call UI
+    /// * disabling `Admit` and `Admit all` buttons in the alert view shown from `MainTabBarCallsViewModel` when users are joining waiting room
     static func callParticipantsPlusAdditionalUsersLimitPassed(
         featureFlagEnabled: Bool,
         isMyselfModerator: Bool,

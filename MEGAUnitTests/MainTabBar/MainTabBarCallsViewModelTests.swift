@@ -300,7 +300,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator)),
-            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
         )
         viewModel.isCallUIVisible = false
         
@@ -317,7 +317,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
         )
         viewModel.isCallUIVisible = false
         
@@ -335,7 +335,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
             accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
-            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
         )
         viewModel.isCallUIVisible = false
         
@@ -353,7 +353,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
             accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
-            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
         )
         viewModel.isCallUIVisible = true
         
@@ -371,7 +371,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
             accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
-            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
         )
         viewModel.isCallUIVisible = false
         
@@ -379,6 +379,40 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
 
         evaluate {
             self.router.showUpgradeToProDialog_calledTimes == 0
+        }
+    }
+    
+    func testCallUpdate_callPlusWaitingRoomExceedLimit_AdmitButtonDisabled() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
+        let callUseCase = MockCallUseCase()
+        
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
+        )
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
+        
+        evaluate {
+            viewModel.callWaitingRoomUsersUpdateSubscription != nil
+        }
+        
+        callUseCase.callWaitingRoomUsersUpdateSubject.send(
+            CallEntity(
+                callLimits: .init(durationLimit: -1, maxUsers: 3, maxClientsPerUser: -1, maxClients: -1),
+                numberOfParticipants: 3,
+                waitingRoom: WaitingRoomEntity(sessionClientIds: [100, 101])
+            )
+        )
+        
+        evaluate {
+            self.router.showSeveralUsersWaitingRoomDialog_calledTimes == 1
+        }
+        evaluate {
+            self.router.shouldBlockAddingUsersToCall_received == [true]
         }
     }
     
@@ -399,7 +433,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
         callManager: some CallManagerProtocol = MockCallManager(),
-        featureFlag: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> MainTabBarCallsViewModel {
         MainTabBarCallsViewModel(
             router: router,
@@ -411,7 +445,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             accountUseCase: accountUseCase,
             callKitManager: callKitManager, 
             callManager: callManager,
-            featureFlagProvider: featureFlag
+            featureFlagProvider: featureFlagProvider
         )
     }
 }
@@ -431,12 +465,31 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var showCallWillEndAlert_calledTimes = 0
     var showUpgradeToProDialog_calledTimes = 0
     var startCallUI_calledTimes = 0
+    var shouldBlockAddingUsersToCall_received = [Bool]()
 
-    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, shouldBlockAddingUsersToCall: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
+    func showOneUserWaitingRoomDialog(
+        for username: String,
+        chatName: String,
+        isCallUIVisible: Bool,
+        shouldUpdateDialog: Bool,
+        shouldBlockAddingUsersToCall: Bool,
+        admitAction: @escaping () -> Void,
+        denyAction: @escaping () -> Void
+    ) {
+        shouldBlockAddingUsersToCall_received.append(shouldBlockAddingUsersToCall)
         showOneUserWaitingRoomDialog_calledTimes += 1
     }
 
-    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, shouldBlockAddingUsersToCall: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void) {
+    func showSeveralUsersWaitingRoomDialog(
+        for participantsCount: Int,
+        chatName: String,
+        isCallUIVisible: Bool,
+        shouldUpdateDialog: Bool,
+        shouldBlockAddingUsersToCall: Bool,
+        admitAction: @escaping () -> Void,
+        seeWaitingRoomAction: @escaping () -> Void
+    ) {
+        shouldBlockAddingUsersToCall_received.append(shouldBlockAddingUsersToCall)
         showSeveralUsersWaitingRoomDialog_calledTimes += 1
     }
     

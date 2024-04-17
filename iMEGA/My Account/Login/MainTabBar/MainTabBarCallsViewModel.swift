@@ -284,13 +284,29 @@ class MainTabBarCallsViewModel: ViewModelType {
     
     private func showWaitingRoomAlert(_ chatRoom: ChatRoomEntity, _ call: CallEntity) {
         
-        // show appropriate copy and disable admit button when limit of free participants is each reached
-        let shouldBlockAddingUsersToCall = CallLimitations.callParticipantsLimitReached(
+        // Show appropriate copy and disable admit button when limit of free participants is each reached
+        //
+        // Note: The logic of disabling 'Admit' or 'Admit all' button, in essence is that,
+        // it should be disabled, when number of call participants plus waiting room users is greater than limit
+        // ie. they would simply not fit into call limit if all admitted, hence we disable 'Admit all'.
+        // Example: Limit 100
+        // a) in-call 95, waiting room 3 (sum is 98, below limit -> `Admit all` enabled
+        // b) in-call 95, waiting room 6 (sum is 101, above limit -> `Admit all` disabled
+        // c) in-call 99, waiting room 1 (sum is 100, at limit -> `Admit` enabled
+        //
+        // We still allow user to go to waiting room user list and admit participants one by one.
+        let shouldBlockAddingUsersToCall = CallLimitations.callParticipantsPlusAdditionalUsersLimitPassed(
             featureFlagEnabled: chatMonetisationFeatureEnabled,
             isMyselfModerator: chatRoom.ownPrivilege == .moderator,
             currentLimit: call.callLimits.maxUsers,
-            callParticipantCount: call.numberOfParticipants
+            callParticipantCount: call.numberOfParticipants,
+            additionalParticipantCount: currentWaitingRoomUserHandles.count
         )
+        
+        // 'shouldBlockAddingUsersToCall' controls both 
+        // 1. "Admit" button state when there's 1 person in the waiting room
+        // 2. "Admit all" button state when there are more than 1 persons in the waiting room.
+        
         MEGALogDebug("[CallLimitations] should block adding from waiting room \(shouldBlockAddingUsersToCall)")
         if currentWaitingRoomUserHandles.count == 1 {
             guard let userHandle = currentWaitingRoomUserHandles.first else { return }
