@@ -72,10 +72,8 @@ extension PreviewDocumentViewController {
     }
     
     @objc func hideNode(_ node: MEGANode) {
-        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-        Task {
-            _ = await nodeActionUseCase.hide(nodes: [node.toNodeEntity()])
-        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .hideNodes([node.toNodeEntity()])
     }
     
     @objc func unhideNode(_ node: MEGANode) {
