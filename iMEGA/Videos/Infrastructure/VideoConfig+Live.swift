@@ -29,6 +29,7 @@ extension VideoConfig {
         colorAssets: VideoConfig.ColorAssets(
             primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary,
             secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : Color.secondary,
+            primaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : Color.videoToolbarIconEnabled,
             secondaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.secondary,
             pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear,
             whiteColor: isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : Color.white,
@@ -38,12 +39,13 @@ extension VideoConfig {
             tabInactiveTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.videosTabTitle.swiftUI,
             addPlaylistButtonTextColor: isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : Color.white,
             addPlaylistButtonBackgroundColor: isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color.videoPlaylistAddButtonBackground,
-            toolbarBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.navigationBg,
+            toolbarBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.mainBar,
             navigationBgColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.mainBar,
             emptyFavoriteThumbnailBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : Color.videoPlaylistEmptyFavoriteThumbnailBackground,
             emptyFavoriteThumbnaillImageForegroundColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.videoPlaylistEmptyFavoriteThumbnaillImageForeground,
             videoThumbnailImageViewPlaceholderBackgroundColor: MEGAAppColor.Videos.videoThumbnailImageViewPlaceholderBackgroundColor.color,
-            videoThumbnailDurationTextBackgroundColor: MEGAAppColor.Videos.videoThumbnailDurationTextBackgroundColor.color
+            videoThumbnailDurationTextBackgroundColor: MEGAAppColor.Videos.videoThumbnailDurationTextBackgroundColor.color,
+            disabledColor: isDesignTokenEnabled ? TokenColors.Text.disabled.swiftUI : Color.videoToolbarIconDisabled
         ),
         toolbarAssets: VideoConfig.ToolbarAssets(
             offlineImage: UIImage.offline,

@@ -41,6 +41,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoConfig: VideoConfig
     private let router: any VideoRevampRouting
+    private let videoToolbarViewModel: VideoToolbarViewModel
     
     init(viewModel: VideoRevampTabContainerViewModel, fileSearchUseCase: some FilesSearchUseCaseProtocol, thumbnailUseCase: some ThumbnailUseCaseProtocol, videoConfig: VideoConfig, router: some VideoRevampRouting) {
         self.viewModel = viewModel
@@ -48,9 +49,11 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.thumbnailUseCase = thumbnailUseCase
         self.videoConfig = videoConfig
         self.router = router
+        self.videoToolbarViewModel = VideoToolbarViewModel()
         super.init(nibName: nil, bundle: nil)
         
         subscribeToCurrentTabChanged()
+        subscribeToVideoSelection()
     }
     
     required init?(coder: NSCoder) {
@@ -64,7 +67,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         viewModel.dispatch(.onViewDidLoad)
         setupNavigationBar()
         
-        toolbar = VideoRevampFactory.makeToolbarView(isDisabled: true, videoConfig: videoConfig)
+        toolbar = VideoRevampFactory.makeToolbarView(viewModel: videoToolbarViewModel, videoConfig: videoConfig)
         
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -209,6 +212,16 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private func subscribeToCurrentTabChanged() {
         viewModel.syncModel.$currentTab
             .sink { [weak self] in self?.refreshContextMenuBarButton(currentTab: $0) }
+            .store(in: &cancellables)
+    }
+    
+    private func subscribeToVideoSelection() {
+        viewModel.videoSelection.$videos
+            .map { $0.isNotEmpty }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] hasSelectedItem in
+                self?.videoToolbarViewModel.isDisabled = !hasSelectedItem
+            }
             .store(in: &cancellables)
     }
 }
