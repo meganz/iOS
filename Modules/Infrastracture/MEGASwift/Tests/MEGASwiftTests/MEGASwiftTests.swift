@@ -2,16 +2,17 @@
 import XCTest
 
 final class MEGASwiftTests: XCTestCase {
+    private let helloMEGA = "Hello, MEGA!"
+    private let helloMEGAbase64Encoded = "SGVsbG8sIE1FR0Eh"
+    
     func testBase64Encoded() throws {
-        let string = "Hello, MEGA!"
-        let base64Encoded = try XCTUnwrap(string.base64Encoded)
-        XCTAssertEqual(base64Encoded, "SGVsbG8sIE1FR0Eh")
+        let base64Encoded = try XCTUnwrap(helloMEGA.base64Encoded)
+        XCTAssertEqual(base64Encoded, helloMEGAbase64Encoded)
     }
     
     func testBase64Decoded() throws {
-        let base64Encoded = "SGVsbG8sIE1FR0Eh"
-        let string = try XCTUnwrap(base64Encoded.base64Decoded)
-        XCTAssertEqual(string, "Hello, MEGA!")
+        let string = try XCTUnwrap(helloMEGAbase64Encoded.base64Decoded)
+        XCTAssertEqual(string, helloMEGA)
     }
     
     func testBase64Decoded_stringOmittingASinglePadding_shouldMatch() throws {
@@ -34,32 +35,32 @@ final class MEGASwiftTests: XCTestCase {
     
     func testSubString_withPlainString_shouldReturnCorrectString() {
         let sampleString = "This is a [A]test string[/A]"
-        let testString = sampleString.subString(from: "[A]", to: "[/A]")
-        XCTAssertEqual(testString, "test string")
+        let helloMEGA = sampleString.subString(from: "[A]", to: "[/A]")
+        XCTAssertEqual(helloMEGA, "test string")
     }
     
     func testSubString_withEmoji_shouldReturnCorrectString() {
         let sampleString = "This is a [C]🎉test🍏string🍎[/C]"
-        let testString = sampleString.subString(from: "[C]", to: "[/C]")
-        XCTAssertEqual(testString, "🎉test🍏string🍎")
+        let helloMEGA = sampleString.subString(from: "[C]", to: "[/C]")
+        XCTAssertEqual(helloMEGA, "🎉test🍏string🍎")
     }
     
     func testSubString_shouldReturnNilString() {
         let sampleString = "This is a test string."
-        let testString = sampleString.subString(from: "[A]", to: "[/A]")
-        XCTAssertNil(testString)
+        let helloMEGA = sampleString.subString(from: "[A]", to: "[/A]")
+        XCTAssertNil(helloMEGA)
     }
     
     func testSubString_withStartStringButNoEndString_shouldReturnNilString() {
         let sampleString = "This is a [A]test string."
-        let testString = sampleString.subString(from: "[A]", to: "[/A]")
-        XCTAssertNil(testString)
+        let helloMEGA = sampleString.subString(from: "[A]", to: "[/A]")
+        XCTAssertNil(helloMEGA)
     }
     
     func testSubString_withEndStringButNoStartString_shouldReturnNilString() {
         let sampleString = "This is a test string.[/A]"
-        let testString = sampleString.subString(from: "[A]", to: "[/A]")
-        XCTAssertNil(testString)
+        let helloMEGA = sampleString.subString(from: "[A]", to: "[/A]")
+        XCTAssertNil(helloMEGA)
     }
 
     func testContainsInvalidFileFolderNameCharacters_forValidFolderNameWithoutSpaces_shouldBeFalse() {
@@ -104,5 +105,49 @@ final class MEGASwiftTests: XCTestCase {
 
     func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithBackwardSlash_shouldBeTrue() {
         XCTAssertTrue("New Folder\\".containsInvalidFileFolderNameCharacters)
+    }
+    
+    func testTrim_withWhitespaceAtBeginningAndEnd_returnsTrimmedString() {
+        let string = "  Hello, MEGA!  "
+        let trimmedString = string.trim
+        XCTAssertEqual(trimmedString, helloMEGA)
+    }
+    
+    func testBase64URLDecoded_withBase64URLString_returnsDecodedString() {
+        let base64String = helloMEGAbase64Encoded.base64URLToBase64
+        let decodedString = base64String.base64Decoded
+        XCTAssertEqual(decodedString, helloMEGA)
+    }
+    
+    func testMNZIsDecimalNumber_withNumberString_returnsTrue() {
+        let numberString = "12345"
+        XCTAssertTrue(numberString.mnz_isDecimalNumber)
+        
+        XCTAssertFalse(helloMEGA.mnz_isDecimalNumber)
+    }
+    
+    func testMNZIsDecimalNumber_withNonNumberString_returnsFalse() {
+        XCTAssertFalse(helloMEGA.mnz_isDecimalNumber)
+    }
+    
+    func testAppendPathComponent_withBasePath_returnsAppendedPath() {
+        let path = "/Users/mega/Documents"
+        let appendedPath = path.append(pathComponent: "file.txt")
+        XCTAssertEqual(appendedPath, "/Users/mega/Documents/file.txt")
+    }
+    
+    func testInitialForAvatar_returnsFirstNonWhiteSpaceCharacter() {
+        let string = "  Hello, World!  "
+        let initial = string.initialForAvatar()
+        XCTAssertEqual(initial, "H")
+    }
+    
+    func testMatchetestMatchesRegex_withMatchingString_returnsTruesRegex() {
+        XCTAssertTrue(helloMEGA.matches(regex: "Hello.*MEGA"))
+        XCTAssertFalse(helloMEGA.matches(regex: "Goodbye.*MEGA"))
+    }
+    
+    func testMatchesRegex_withNonMatchingString_returnsFalse() {
+        XCTAssertFalse(helloMEGA.matches(regex: "Goodbye.*MEGA"))
     }
 }
