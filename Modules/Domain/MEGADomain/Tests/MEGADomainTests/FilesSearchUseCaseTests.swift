@@ -49,13 +49,13 @@ final class FilesSearchUseCaseTests: XCTestCase {
     
     func testSearchWithFilterAsync_shouldReturnAllPhotosNodes() async throws {
         let nodes = [
-            NodeEntity(name: "sample1.raw", handle: 1, hasThumbnail: true),
-            NodeEntity(name: "sample2.raw", handle: 6, hasThumbnail: false),
-            NodeEntity(name: "test2.jpg", handle: 3, hasThumbnail: true),
-            NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true),
-            NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true),
-            NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true),
-            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true)
+            NodeEntity(name: "sample1.raw", handle: 1, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "sample2.raw", handle: 6, isFile: true, hasThumbnail: false),
+            NodeEntity(name: "test2.jpg", handle: 3, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "test3.png", handle: 4, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "sample3.raw", handle: 7, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "test.gif", handle: 2, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "test3.mp4", handle: 5, isFile: true, hasThumbnail: true)
         ]
         
         let sut = FilesSearchUseCase(repo: MockFilesSearchRepository(photoNodes: nodes),

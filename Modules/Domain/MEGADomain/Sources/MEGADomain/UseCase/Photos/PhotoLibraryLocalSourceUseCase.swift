@@ -1,6 +1,7 @@
 import Foundation
 
 public struct PhotoLibraryLocalSourceUseCase<T: PhotoLibraryRepositoryProtocol, U: PhotosRepositoryProtocol>: PhotoLibraryUseCaseProtocol {
+
     private let photoLibraryRepository: T
     private let photosRepository: U
     
@@ -18,6 +19,10 @@ public struct PhotoLibraryLocalSourceUseCase<T: PhotoLibraryRepositoryProtocol, 
             cameraUploadNode: cameraUploadNode,
             mediaUploadNode: mediaUploadNode
         )
+    }
+    
+    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?) async throws -> [NodeEntity] {
+        []
     }
     
     public func allPhotos() async throws -> [NodeEntity] {

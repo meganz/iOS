@@ -37,11 +37,13 @@ struct AlbumContentRouter: AlbumContentRouting {
             userAlbumRepo: userAlbumRepo
         )
         let photoLibraryRepository = PhotoLibraryRepository(
-            sdk: MEGASdk.shared,
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared
         )
         let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
-                                                      searchRepository: FilesSearchRepository.newRepo)
+                                                      searchRepository: FilesSearchRepository.newRepo,
+                                                      contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                                                        repo: UserAttributeRepository.newRepo),
+                                                      hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         
         let alertViewModel = TextFieldAlertViewModel(textString: album.name,
                                                      title: Strings.Localizable.rename,
@@ -68,12 +70,13 @@ struct AlbumContentRouter: AlbumContentRouting {
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void) {
         
         let photoLibraryRepository = PhotoLibraryRepository(
-            sdk: MEGASdk.shared,
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared
         )
         let fileSearchRepository = FilesSearchRepository.newRepo
         let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
-                                                      searchRepository: fileSearchRepository)
+                                                      searchRepository: fileSearchRepository,
+                                                      contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                                                      hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         
         let viewModel = AlbumContentPickerViewModel(album: album,
                                                     photoLibraryUseCase: photoLibraryUseCase,

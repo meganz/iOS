@@ -179,17 +179,9 @@ final class PhotosViewModel: NSObject {
     // MARK: - Private
     private func loadFilteredPhotos() async throws -> [NodeEntity] {
         let filterOptions: PhotosFilterOptions = [filterType, filterLocation]
-        var nodes: [NodeEntity]
-        
-        switch filterOptions {
-        case .allVisualFiles, .allImages, .allVideos:
-            nodes = try await photoLibraryUseCase.allPhotos()
-        case .cloudDriveAll, .cloudDriveImages, .cloudDriveVideos:
-            nodes = try await photoLibraryUseCase.allPhotosFromCloudDriveOnly()
-        case .cameraUploadAll, .cameraUploadImages, .cameraUploadVideos:
-            nodes = try await photoLibraryUseCase.allPhotosFromCameraUpload()
-        default: nodes = []
-        }
+        var nodes: [NodeEntity] = try await photoLibraryUseCase.media(
+            for: filterOptions.toPhotosFilterOptionsEntity(),
+            excludeSensitive: nil)
         
         filter(nodes: &nodes, with: filterType)
         

@@ -164,11 +164,13 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         if let photoViewController = photoViewController {
             let photoUpdatePublisher = PhotoUpdatePublisher(photosViewController: photoViewController)
             let photoLibraryRepository = PhotoLibraryRepository(
-                sdk: MEGASdk.shared,
-                cameraUploadNodeAccess: CameraUploadNodeAccess.shared
-            )
+                cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
             let fileSearchRepository = FilesSearchRepository.newRepo
-            let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
+            let photoLibraryUseCase = PhotoLibraryUseCase(
+                photosRepository: photoLibraryRepository,
+                searchRepository: fileSearchRepository,
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
                 photoLibraryUseCase: photoLibraryUseCase,

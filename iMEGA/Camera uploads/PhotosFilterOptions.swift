@@ -119,3 +119,35 @@ extension PhotosFilterOptions {
         return [.allMedia, .cameraUploads]
     }
 }
+
+extension PhotosFilterOptions {
+    func toPhotosFilterOptionsEntity() -> PhotosFilterOptionsEntity {
+        var entity: PhotosFilterOptionsEntity = []
+        
+        if isSuperset(of: .allMedia) {
+            entity.insert(.allMedia)
+        }
+        
+        if contains(.images) {
+            entity.insert(.images)
+        }
+        
+        if contains(.videos) {
+            entity.insert(.videos)
+        }
+        
+        if isSuperset(of: .allLocations) {
+            entity.insert(.allLocations)
+        }
+        
+        if contains(.cloudDrive) {
+            entity.insert(.cloudDrive)
+        }
+        
+        if contains(.cameraUploads) {
+            entity.insert(.cameraUploads)
+        }
+        
+        return entity
+    }
+}

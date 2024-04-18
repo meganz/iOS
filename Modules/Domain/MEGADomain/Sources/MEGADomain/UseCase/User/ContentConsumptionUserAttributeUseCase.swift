@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol ContentConsumptionUserAttributeUseCaseProtocol {
+public protocol ContentConsumptionUserAttributeUseCaseProtocol: Sendable {
     
     /// Fetch stored user attributes associated with Timeline.
     /// The returned object TimelineUserAttributeEntity is an accumulation of all attributes stored in users account attributes associated to timeline. This can include both account and account-platform specific values.

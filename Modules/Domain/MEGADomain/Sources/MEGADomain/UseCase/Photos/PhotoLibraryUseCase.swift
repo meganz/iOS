@@ -1,30 +1,31 @@
+import AsyncAlgorithms
 import Combine
+import MEGASwift
 
 public protocol PhotoLibraryUseCaseProtocol: Sendable {
     /// Load CameraUpload and MediaUpload node
     /// - Returns: PhotoLibraryContainerEntity, which contains CameraUpload and MediaUpload node itself
     func photoLibraryContainer() async -> PhotoLibraryContainerEntity
     
-    /// Load Cloud Drive(include camera upload and media upload) photos and videos
-    /// - Returns: All images and videos nodes from cloud drive
-    func allPhotos() async throws -> [NodeEntity]
-    
-    /// Load Cloud Drive(except camera upload and media upload) images and videos
-    /// - Returns: All images and videos nodes
-    func allPhotosFromCloudDriveOnly() async throws -> [NodeEntity]
-    
-    /// Load camera upload and media upload images and videos
-    /// - Returns: All images and videos nodes
-    func allPhotosFromCameraUpload() async throws -> [NodeEntity]
+    ///  Load media nodes filtering the results based on the filter options which provide location and mediaType information
+    /// - Parameters:
+    ///   - filterOptions: PhotosFilterOptionsEntity containing location and mediaTypes to load
+    ///   - excludeSensitive: Optional Boolean indicator to exclude sensitiveNodes.If value is not set, it will default to using users account level setting for excluding hidden nodes.
+    /// - Returns: List of media NodeEntities based on the criteria in the parameters provided.
+    func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?) async throws -> [NodeEntity]
 }
 
-public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepositoryProtocol>: PhotoLibraryUseCaseProtocol {
+public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepositoryProtocol, V: ContentConsumptionUserAttributeUseCaseProtocol>: PhotoLibraryUseCaseProtocol {
     private let photosRepository: T
     private let searchRepository: U
+    private let contentConsumptionUserAttributeUseCase: V
+    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
     
-    public init(photosRepository: T, searchRepository: U) {
+    public init(photosRepository: T, searchRepository: U, contentConsumptionUserAttributeUseCase: V, hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
         self.photosRepository = photosRepository
         self.searchRepository = searchRepository
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
     public func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
@@ -36,55 +37,88 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
             mediaUploadNode: mediaUploadNode
         )
     }
-    
-    public func allPhotos() async throws -> [NodeEntity] {
-        try await loadAllPhotos()
+
+    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool? = nil) async throws -> [NodeEntity] {
+        
+        let shouldExcludeSensitive = await shouldExcludeSensitive(override: excludeSensitive)
+  
+        return if filterOptions.isSuperset(of: .allLocations) {
+            try await loadAllPhotos(recursive: true, excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats)
+        } else if filterOptions.contains(.cloudDrive) {
+            try await mediaFromCloudDriveOnly(excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats)
+        } else if filterOptions.contains(.cameraUploads) {
+            try await mediaFromCameraUpload(excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats)
+        } else {
+            []
+        }
     }
     
-    public func allPhotosFromCloudDriveOnly() async throws -> [NodeEntity] {
-        let container = await photoLibraryContainer()
-        let nodes: [NodeEntity] = try await loadAllPhotos()
+    private func shouldExcludeSensitive(override: Bool? = nil) async -> Bool {
+        guard hiddenNodesFeatureFlagEnabled() else {
+            return false
+        }
         
-        return nodes.filter({$0.parentHandle != container.cameraUploadNode?.handle && $0.parentHandle != container.mediaUploadNode?.handle})
+        guard let override else {
+            return await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        }
+        return override
     }
     
-    public func allPhotosFromCameraUpload() async throws -> [NodeEntity] {
+    private func mediaFromCloudDriveOnly(excludeSensitive: Bool, includedFormats: [NodeFormatEntity]) async throws -> [NodeEntity] {
         let container = await photoLibraryContainer()
+        let exclusionHandles = [container.cameraUploadNode, container.mediaUploadNode]
+            .compactMap(\.?.handle)
         
-        async let photosCameraUpload = photosRepository.visualMediaNodes(inParent: container.cameraUploadNode)
-        async let photosMediaUpload = photosRepository.visualMediaNodes(inParent: container.mediaUploadNode)
+        return try await loadAllPhotos(recursive: true, excludeSensitive: excludeSensitive, includedFormats: includedFormats)
+            .filter { exclusionHandles.notContains($0.parentHandle) }
+    }
+    
+    private func mediaFromCameraUpload(excludeSensitive: Bool, includedFormats: [NodeFormatEntity]) async throws -> [NodeEntity] {
+        
+        let container = await photoLibraryContainer()
         
         var nodes: [NodeEntity] = []
-        nodes.append(contentsOf: await photosCameraUpload)
-        nodes.append(contentsOf: await photosMediaUpload)
+        if let cameraUploadNode = container.cameraUploadNode,
+           let photosCameraUpload = try? await loadAllPhotos(parentNode: cameraUploadNode, recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats) {
+            nodes.append(contentsOf: photosCameraUpload)
+        }
+        
+        if let mediaUploadNode = container.mediaUploadNode,
+           let photosMediaUpload = try? await loadAllPhotos(parentNode: mediaUploadNode, recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats) {
+            nodes.append(contentsOf: photosMediaUpload)
+        }
+        
         return nodes
     }
     
     // MARK: - Private
-    private func loadAllPhotos() async throws -> [NodeEntity] {
-        let photosFromCloudDrive = try? await searchRepository.search(string: "",
-                                                                      parent: nil,
-                                                                      recursive: true,
-                                                                      supportCancel: false,
-                                                                      sortOrderType: .defaultDesc,
-                                                                      formatType: .photo)
-        let videosFromCloudDrive = try? await searchRepository.search(string: "",
-                                                                      parent: nil,
-                                                                      recursive: true,
-                                                                      supportCancel: false,
-                                                                      sortOrderType: .defaultDesc,
-                                                                      formatType: .video)
+    private func loadAllPhotos(parentNode: NodeEntity? = nil, recursive: Bool, excludeSensitive: Bool, includedFormats: [NodeFormatEntity]) async throws -> [NodeEntity] {
         
-        var nodes: [NodeEntity] = []
-        
-        if let photos = photosFromCloudDrive {
-            nodes.append(contentsOf: photos)
+        await includedFormats
+            .async
+            .compactMap { format -> [NodeEntity]? in
+                try? await searchRepository.search(filter: .init(
+                    parentNode: parentNode,
+                    recursive: recursive,
+                    supportCancel: false,
+                    sortOrderType: .defaultDesc,
+                    formatType: format,
+                    excludeSensitive: excludeSensitive))
+            }
+            .reduce([NodeEntity]()) { $0 + $1 }
+    }
+}
+
+private extension PhotosFilterOptionsEntity {
+    var requestedNodeFormats: [NodeFormatEntity] {
+        if isSuperset(of: .allMedia) {
+            [.photo, .video]
+        } else if contains(.images) {
+            [.photo]
+        } else if contains(.videos) {
+            [.video]
+        } else {
+            []
         }
-        
-        if let videos = videosFromCloudDrive {
-            nodes.append(contentsOf: videos)
-        }
-        
-        return nodes
     }
 }

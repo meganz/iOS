@@ -1,8 +1,8 @@
 import Foundation
 import MEGADomain
 
-public final class MockContentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCaseProtocol {
-    @Published public private(set) var sensitiveAttributeChanged: SensitiveNodesUserAttributeEntity
+public final class MockContentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCaseProtocol, @unchecked Sendable {
+     @Published public private(set) var sensitiveAttributeChanged: SensitiveNodesUserAttributeEntity
     
     private var sensitiveShowHiddenNodes: Bool
     private var sensitiveOnboarded: Bool

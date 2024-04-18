@@ -133,7 +133,11 @@ extension FilesSearchRepository {
                    supportCancel: supportCancel,
                    sortOrderType: sortOrderType,
                    formatType: formatType) {
-                guard Task.isCancelled == false else { continuation.resume(throwing: FileSearchResultErrorEntity.cancelled); return }
+                
+                guard !Task.isCancelled else {
+                    continuation.resume(throwing: FileSearchResultErrorEntity.cancelled)
+                    return
+                }
                 
                 continuation.resume(with: $0)
             }

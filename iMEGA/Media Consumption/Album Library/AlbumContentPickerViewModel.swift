@@ -99,9 +99,8 @@ final class AlbumContentPickerViewModel: ObservableObject {
     private func loadPhotos(forPhotoLocation filterLocation: PhotosFilterLocation) {
         photosLoadingTask = Task(priority: .userInitiated) { [photoLibraryUseCase] in
             do {
-                async let cloudDrive = await photoLibraryUseCase.allPhotosFromCloudDriveOnly()
-                async let cameraUpload = await photoLibraryUseCase.allPhotosFromCameraUpload()
-                let (cloudDrivePhotos, cameraUploadPhotos) = try await (cloudDrive, cameraUpload)
+                let cloudDrivePhotos = try await photoLibraryUseCase.media(for: [.cloudDrive, .allMedia], excludeSensitive: nil)
+                let cameraUploadPhotos = try await photoLibraryUseCase.media(for: [.cameraUploads, .allMedia], excludeSensitive: nil)
                 await hideFilter(cloudDrivePhotos.isEmpty || cameraUploadPhotos.isEmpty)
                 await updatePhotoSourceLocationIfRequired(filterLocation: filterLocation,
                                                           isCloudDriveEmpty: cloudDrivePhotos.isEmpty,

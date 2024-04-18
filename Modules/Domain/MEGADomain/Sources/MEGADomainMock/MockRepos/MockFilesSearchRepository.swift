@@ -10,6 +10,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     private let photoNodes: [NodeEntity]
     private let videoNodes: [NodeEntity]
+    private let nodesForHandle: [HandleEntity: [NodeEntity]]
     
     public var callback: (([NodeEntity]) -> Void)?
     
@@ -22,10 +23,12 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     public init(photoNodes: [NodeEntity] = [],
                 videoNodes: [NodeEntity] = [],
+                nodesForHandle: [HandleEntity: [NodeEntity]] = [:],
                 nodesUpdatePublisher: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher()
     ) {
         self.photoNodes = photoNodes
         self.videoNodes = videoNodes
+        self.nodesForHandle = nodesForHandle
         self.nodeUpdatesPublisher = nodesUpdatePublisher
     }
     
@@ -60,9 +63,27 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
         searchString = filter.searchText
         searchRecursive = filter.recursive
+        
+        let filterCondition = { (node: NodeEntity) -> Bool in
+            node.isFile && (filter.excludeSensitive ? !node.isMarkedSensitive : true)
+        }
+        
+        if let parentHandle = filter.parentNode?.handle,
+           let nodes = nodesForHandle[parentHandle] {
+            return nodes
+                .filter(filterCondition)
+                .filter {
+                    switch filter.formatType {
+                    case .photo: $0.name.fileExtensionGroup.isImage
+                    case .video: $0.name.fileExtensionGroup.isVideo
+                    default: false
+                    }
+                }
+        }
+        
         return switch filter.formatType {
-        case .photo: photoNodes.filter { !$0.isFolder }
-        case .video: videoNodes.filter { !$0.isFolder }
+        case .photo: photoNodes.filter(filterCondition)
+        case .video: videoNodes.filter(filterCondition)
         default: []
         }
     }
