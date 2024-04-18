@@ -121,6 +121,7 @@ private struct FileExtensionGroup: FileExtensionGroupRepresentable {
             "wpd": .text,
             "json": .text,
             "md": .text,
+            "org": .text,
             // MARK: - Audio
             "aac": .audio,
             "ac3": .audio,
