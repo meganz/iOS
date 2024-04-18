@@ -711,6 +711,7 @@
                                                @"otf":@"general.filetype.otf",
                                                @"ots":@"general.filetype.spreadsheet",
                                                @"orf":@"general.filetype.rawImage",
+                                               @"org":@"general.filetype.textDocument",
                                                @"pages":@"general.filetype.pages",
                                                @"pcast":@"general.filetype.podcast",
                                                @"pdb":@"general.filetype.database",
