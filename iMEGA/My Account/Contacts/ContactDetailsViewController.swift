@@ -105,6 +105,14 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
             headerView.tokenBackgroundColor = TokenColors.Background.page
         }
     }
+    
+    @objc func reloadTableViewAsync() {
+        Task {
+            await MainActor.run {
+                self.tableView.reloadData()
+            }
+        }
+    }
 }
 
 // MARK: - NodeInfo
