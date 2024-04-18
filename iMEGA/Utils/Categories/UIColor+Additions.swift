@@ -13,17 +13,13 @@ extension UIColor {
         
         switch status {
         case .offline:
-            color = mnz_primaryGray(
-                for: UIScreen.main.traitCollection
-            )
+            color = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.disabled : mnz_primaryGray(for: UIScreen.main.traitCollection)
         case .away:
-            color = .systemOrange
+            color = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.yellow : .systemOrange
         case .online:
-            color = systemGreen
+            color = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : systemGreen
         case .busy:
-            color = mnz_red(
-                for: UIScreen.main.traitCollection
-            )
+            color = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : mnz_red(for: UIScreen.main.traitCollection)
         default: break
         }
         

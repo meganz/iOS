@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import UIKit
@@ -34,7 +35,14 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     }
     
     private func updateAppearance() {
-        backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = TokenColors.Background.page
+            nameLabel.textColor = TokenColors.Text.primary
+            sizeLabel.textColor = TokenColors.Text.primary
+            shareButton.mnz_setupPrimary(traitCollection)
+        } else {
+            backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        }
     }
     
     func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {

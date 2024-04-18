@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -26,11 +27,16 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     }
     
     private func updateAppearance() {
-        backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = TokenColors.Background.page
+            keyLabel.textColor = TokenColors.Text.secondary
+        } else {
+            backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        }
     }
     
     func configure(forNode node: MEGANode, rowType: DetailsSectionRow, folderInfo: MEGAFolderInfo?) {
-        valueLabel.textColor = UIColor.label
+        valueLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary :  UIColor.label
         
         switch rowType {
         case .location:
@@ -72,7 +78,7 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
         } else {
             valueLabel.text = parentNode.name
         }
-        valueLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
+        valueLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_turquoise(for: traitCollection)
     }
     
     private func configureAsCountVersions(withFolderInfo folderInfo: MEGAFolderInfo?) {

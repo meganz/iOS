@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -124,8 +125,9 @@ class NodeInfoViewController: UIViewController {
     // MARK: - Private methods
 
     private func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        tableView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        let backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_secondaryBackground(for: traitCollection)
+        view.backgroundColor = backgroundColor
+        tableView.backgroundColor = backgroundColor
     }
     
     private var sdk: MEGASdk {
@@ -436,7 +438,7 @@ class NodeInfoViewController: UIViewController {
         )
         cell.host(upgradeCellView, parent: self)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
         return cell
     }
     
@@ -475,9 +477,9 @@ class NodeInfoViewController: UIViewController {
             return UITableViewCell()
         }
         
-        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
-        cell.avatarImageView.image = UIImage.inviteToChat
+        cell.avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.inviteContactShare : UIImage.inviteToChat
         cell.nameLabel.text = Strings.Localizable.addContact
         cell.shareLabel.isHidden = true
         
@@ -494,7 +496,7 @@ class NodeInfoViewController: UIViewController {
             return UITableViewCell()
         }
         
-        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
         cell.avatarImageView.mnz_setImage(forUserHandle: user.handle, name: user.mnz_displayName)
         cell.verifiedImageView.isHidden = !sdk.areCredentialsVerified(of: user)
         if user.mnz_displayName != "" {
@@ -506,8 +508,14 @@ class NodeInfoViewController: UIViewController {
         }
         
         cell.permissionsImageView.isHidden = false
-        cell.permissionsImageView.image = UIImage.mnz_permissionsButtonImage(for: cachedActiveShares[indexPath.row - 1].access)
-
+        
+        let permissionImage = UIImage.mnz_permissionsButtonImage(for: cachedActiveShares[indexPath.row - 1].access)
+        if UIColor.isDesignTokenEnabled() {
+            cell.permissionsImageView.image = permissionImage?.withRenderingMode(.alwaysTemplate)
+            cell.permissionsImageView.tintColor = TokenColors.Icon.secondary
+        } else {
+            cell.permissionsImageView.image = permissionImage
+        }
         return cell
     }
     
@@ -516,7 +524,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get ContactTableViewCell")
         }
         
-        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
         cell.avatarImageView.mnz_setImage(forUserHandle: MEGAInvalidHandle, name: cachedPendingShares[indexPath.row].user ?? "")
         cell.nameLabel.text = cachedPendingShares[indexPath.row].user
         cell.shareLabel.isHidden = true
@@ -529,13 +537,16 @@ class NodeInfoViewController: UIViewController {
     private func removeSharingCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nodeInfoRemoveSharing", for: indexPath)
         
-        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
         guard let removeLabel = cell.viewWithTag(1) as? UILabel else {
             fatalError("Could not get RemoveLabel")
         }
 
         removeLabel.text = Strings.Localizable.removeShare
         
+        if UIColor.isDesignTokenEnabled() {
+            removeLabel.textColor = TokenColors.Text.error
+        }
         return cell
     }
 }
@@ -604,7 +615,7 @@ extension NodeInfoViewController: UITableViewDelegate {
             return UIView(frame: .zero)
         }
         
-        header.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
+        header.setPreferredBackgroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_secondaryBackground(for: traitCollection))
         
         switch cachedSections[section] {
         case .details:
@@ -630,7 +641,7 @@ extension NodeInfoViewController: UITableViewDelegate {
         guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-        footer.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
+        footer.setPreferredBackgroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_secondaryBackground(for: traitCollection))
         footer.configure(title: nil, topDistance: 5.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
         return footer
     }
