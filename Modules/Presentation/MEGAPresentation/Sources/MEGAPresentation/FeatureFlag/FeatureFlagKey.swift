@@ -12,4 +12,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case chatMonetization =  "Chats and Meetings Monetization"
     case hiddenNodes =  "Hidden Nodes"
     case callKitRefactor =  "Call Kit refactor"
+    case cancelSubscription = "Cancel Subscription"
 }
