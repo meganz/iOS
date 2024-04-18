@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "contactGroupsLight.pdf",
+      "filename" : "groupsLight.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "contactGroupsDark.pdf",
+      "filename" : "groupsDark.svg",
       "idiom" : "universal"
     }
   ],
