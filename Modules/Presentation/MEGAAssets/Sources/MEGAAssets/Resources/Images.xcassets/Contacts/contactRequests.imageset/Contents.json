@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "contactRequestsLight.pdf",
+      "filename" : "contactRequestsLight.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "contactRequestsDark.pdf",
+      "filename" : "contactRequestsDark.svg",
       "idiom" : "universal"
     }
   ],
