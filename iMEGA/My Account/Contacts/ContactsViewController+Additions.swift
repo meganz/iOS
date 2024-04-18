@@ -140,6 +140,23 @@ extension ContactsViewController {
             
             tableView.separatorColor = TokenColors.Border.strong
             tableView.sectionIndexColor = TokenColors.Text.primary
+            
+            switch contactsMode {
+            case .chatAddParticipant, .inviteParticipants, .scheduleMeeting:
+                itemListView.backgroundColor = TokenColors.Background.page
+            case .chatNamingGroup:
+                [chatNamingGroupTableViewHeader, enterGroupNameView, encryptedKeyRotationView, getChatLinkView, allowNonHostToAddParticipantsView].forEach {
+                    $0.backgroundColor = TokenColors.Background.page
+                }
+                
+                [enterGroupNameBottomSeparatorView, encryptedKeyRotationTopSeparatorView, encryptedKeyRotationBottomSeparatorView, getChatLinkTopSeparatorView, getChatLinkBottomSeparatorView, allowNonHostToAddParticipantsTopSeparatorView, allowNonHostToAddParticipantsBottomSeparatorView].forEach {
+                    $0.backgroundColor = TokenColors.Border.strong
+                }
+                
+                addGroupAvatarImageView.image = UIImage.groupAvatar
+            default:
+                break
+            }
         } else {
             let bgColor = contactsMode == .default ? UIColor.mnz_backgroundGrouped(for: traitCollection) : UIColor.mnz_secondaryBackground(for: traitCollection)
             
@@ -148,21 +165,23 @@ extension ContactsViewController {
             
             tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
             tableView.sectionIndexColor = UIColor.mnz_turquoise(for: traitCollection)
-        }
-        
-        switch contactsMode {
-        case .chatAddParticipant, .inviteParticipants, .scheduleMeeting:
-            itemListView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_secondaryBackground(for: traitCollection)
-        case .chatNamingGroup:
-            [chatNamingGroupTableViewHeader, enterGroupNameView, encryptedKeyRotationView, getChatLinkView, allowNonHostToAddParticipantsView].forEach {
-                $0.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-            }
             
-            [enterGroupNameBottomSeparatorView, encryptedKeyRotationTopSeparatorView, encryptedKeyRotationBottomSeparatorView, getChatLinkTopSeparatorView, getChatLinkBottomSeparatorView, allowNonHostToAddParticipantsTopSeparatorView, allowNonHostToAddParticipantsBottomSeparatorView].forEach {
-                $0.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+            switch contactsMode {
+            case .chatAddParticipant, .inviteParticipants, .scheduleMeeting:
+                itemListView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+            case .chatNamingGroup:
+                [chatNamingGroupTableViewHeader, enterGroupNameView, encryptedKeyRotationView, getChatLinkView, allowNonHostToAddParticipantsView].forEach {
+                    $0.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+                }
+                
+                [enterGroupNameBottomSeparatorView, encryptedKeyRotationTopSeparatorView, encryptedKeyRotationBottomSeparatorView, getChatLinkTopSeparatorView, getChatLinkBottomSeparatorView, allowNonHostToAddParticipantsTopSeparatorView, allowNonHostToAddParticipantsBottomSeparatorView].forEach {
+                    $0.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+                }
+                
+                addGroupAvatarImageView.image = UIImage.addGroupAvatar
+            default:
+                break
             }
-        default:
-            break
         }
     }
 }
