@@ -116,24 +116,10 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
             // meetings only support single interface style - dark
             // override this to force just single theme
             hosting.overrideUserInterfaceStyle = .dark
-            let size = hosting.sizeThatFits(in: parent.frame.size)
-            // Seem to be reliable way to have the dynamic height of the table view header working
-            // by forcing the height calculated by SwiftUI
-            let heightConstraintId = "123"
-            if let constraint = hosting.view.constraints.first(where: { $0.identifier == heightConstraintId}) {
-                constraint.constant = size.height
-            } else {
-                let anchor =  hosting.view.heightAnchor.constraint(equalToConstant: size.height)
-                anchor.identifier = heightConstraintId
-                NSLayoutConstraint.activate([
-                    anchor
-                ])
-            }
             hosting.view.isHidden = false
         } else {
             hosting.view.isHidden = true
         }
-        
     }
     
     @objc private func actionButtonTapped(_ sender: UIButton) {
