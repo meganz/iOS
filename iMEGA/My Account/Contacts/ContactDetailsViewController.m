@@ -230,9 +230,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
-    }
-    
-    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        // We need to async reload tableView because the tableView cell color is reset
+        // from storyboard right after traitCollectionDidChange is called
+        [self reloadTableViewAsync];
+    } else if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
         [self.tableView reloadData];
     }
 }
