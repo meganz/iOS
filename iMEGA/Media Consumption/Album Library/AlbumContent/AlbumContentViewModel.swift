@@ -231,7 +231,7 @@ final class AlbumContentViewModel: ViewModelType {
             photos = try await albumContentsUseCase.photos(in: album)
             doesPhotoLibraryContainPhotos = photos.isEmpty
             if photos.isEmpty && album.type == .user {
-                doesPhotoLibraryContainPhotos = (try? await photoLibraryUseCase.allPhotos()
+                doesPhotoLibraryContainPhotos = (try? await photoLibraryUseCase.media(for: [.allMedia, .allLocations], excludeSensitive: nil)
                     .isEmpty) ?? true
             }
             shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()

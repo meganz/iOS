@@ -2,42 +2,10 @@ import MEGADomain
 import MEGASdk
 
 public struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {    
-    private let sdk: MEGASdk
     private let cameraUploadNodeAccess: CameraUploadNodeAccess
     
-    public init(sdk: MEGASdk, cameraUploadNodeAccess: CameraUploadNodeAccess) {
-        self.sdk = sdk
+    public init(cameraUploadNodeAccess: CameraUploadNodeAccess) {
         self.cameraUploadNodeAccess = cameraUploadNodeAccess
-    }
-    
-    public func visualMediaNodes(inParent parentNode: NodeEntity?) -> [NodeEntity] {
-        guard let parentNode = parentNode?.toMEGANode(in: sdk) else {
-            return []
-        }
-        
-        let nodeList = sdk.children(
-            forParent: parentNode,
-            order: MEGASortOrderType.modificationDesc.rawValue
-        )
-        
-        return nodeList.toNodeArray().filter {
-            $0.name?.fileExtensionGroup.isVisualMedia ?? false
-        }.toNodeEntities()
-    }
-    
-    public func videoNodes(inParent parentNode: NodeEntity?) -> [NodeEntity] {
-        guard let parentNode = parentNode?.toMEGANode(in: sdk) else {
-            return []
-        }
-        
-        let nodeList = sdk.children(
-            forParent: parentNode,
-            order: MEGASortOrderType.modificationDesc.rawValue
-        )
-        
-        return nodeList.toNodeArray().filter {
-            $0.name?.fileExtensionGroup.isVideo ?? false
-        }.toNodeEntities()
     }
     
     public func photoSourceNode(for source: PhotoSourceEntity) async throws -> NodeEntity? {

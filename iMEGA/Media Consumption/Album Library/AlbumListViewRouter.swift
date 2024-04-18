@@ -69,11 +69,12 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     
     private func makeMonitorAlbumsUseCase() -> MonitorAlbumsUseCase {
         let photoLibraryRepository = PhotoLibraryRepository(
-            sdk: MEGASdk.shared,
-            cameraUploadNodeAccess: CameraUploadNodeAccess.shared
-        )
+            cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
+        
         let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
-                                                      searchRepository: FilesSearchRepository.newRepo)
+                                                      searchRepository: FilesSearchRepository.newRepo,
+                                                      contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                                                      hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         
         return MonitorAlbumsUseCase(
             monitorPhotosUseCase: MonitorPhotosUseCase(

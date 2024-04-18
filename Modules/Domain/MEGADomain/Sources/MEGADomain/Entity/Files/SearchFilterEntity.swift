@@ -15,7 +15,7 @@ public struct SearchFilterEntity: Sendable {
     /// Filter option to decide if search should exclude sensitive nodes from the final result.
     public let excludeSensitive: Bool
     
-    public init(searchText: String?, parentNode: NodeEntity?, recursive: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, excludeSensitive: Bool) {
+    public init(searchText: String? = nil, parentNode: NodeEntity? = nil, recursive: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, excludeSensitive: Bool) {
         self.searchText = searchText
         self.parentNode = parentNode
         self.recursive = recursive

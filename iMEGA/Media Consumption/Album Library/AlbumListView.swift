@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
 
@@ -73,10 +74,10 @@ struct AlbumListView: View {
             album: album,
             photoLibraryUseCase: PhotoLibraryUseCase(
                 photosRepository: PhotoLibraryRepository(
-                    sdk: MEGASdk.shared,
-                    cameraUploadNodeAccess: CameraUploadNodeAccess.shared
-                ),
-                searchRepository: FilesSearchRepository.newRepo
+                    cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
+                searchRepository: FilesSearchRepository.newRepo, 
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
             ),
             completion: { album, selectedPhotos in
                 viewModel.onNewAlbumContentAdded(album, photos: selectedPhotos)

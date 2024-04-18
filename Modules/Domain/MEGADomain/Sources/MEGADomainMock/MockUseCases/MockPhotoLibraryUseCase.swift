@@ -1,6 +1,7 @@
 import MEGADomain
 
 public struct MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
+
     private let allPhotos: [NodeEntity]
     private let allPhotosFromCloudDriveOnly: [NodeEntity]
     private let allPhotosFromCameraUpload: [NodeEntity]
@@ -22,15 +23,15 @@ public struct MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
         photoLibraryContainer
     }
     
-    public func allPhotos() async throws -> [NodeEntity] {
-        allPhotos
-    }
-    
-    public func allPhotosFromCloudDriveOnly() async throws -> [NodeEntity] {
-        allPhotosFromCloudDriveOnly
-    }
-    
-    public func allPhotosFromCameraUpload() async throws -> [NodeEntity] {
-        allPhotosFromCameraUpload
+    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?) async throws -> [NodeEntity] {
+        return if filterOptions.isSuperset(of: .allLocations) {
+            allPhotos
+        } else if filterOptions.contains(.cloudDrive) {
+            allPhotosFromCloudDriveOnly
+        } else if filterOptions.contains(.cameraUploads) {
+            allPhotosFromCameraUpload
+        } else {
+            []
+        }
     }
 }
