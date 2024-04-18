@@ -37,6 +37,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let albumContentsUpdatesRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
         let userAlbumRepo = userAlbumRepository()
+        let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+        let hiddenNodesFeatureFlagEnabled = { @Sendable in DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+        
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(
                 fileSearchRepository: filesSearchRepo,
@@ -46,7 +49,11 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 albumContentsUseCase: AlbumContentsUseCase(albumContentsRepo: albumContentsUpdatesRepo,
                                                            mediaUseCase: mediaUseCase,
                                                            fileSearchRepo: filesSearchRepo,
-                                                           userAlbumRepo: userAlbumRepo)
+                                                           userAlbumRepo: userAlbumRepo,
+                                                           contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                                                           hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
+                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled
             ),
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),

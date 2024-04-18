@@ -26,8 +26,8 @@ public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
         photos
     }
     
-    public func userAlbumPhotos(by id: HandleEntity) async -> [AlbumPhotoEntity] {
-        photos
+    public func userAlbumPhotos(by id: HandleEntity, showHidden: Bool) async -> [AlbumPhotoEntity] {
+        photos.filter { showHidden || !$0.photo.isMarkedSensitive }
     }
     
     public func userAlbumUpdatedPublisher(for album: AlbumEntity) -> AnyPublisher<SetEntity, Never>? {

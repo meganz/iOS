@@ -34,7 +34,9 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumContentsRepo: albumContentsUpdateRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
             fileSearchRepo: filesSearchRepo,
-            userAlbumRepo: userAlbumRepo
+            userAlbumRepo: userAlbumRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let photoLibraryRepository = PhotoLibraryRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared
@@ -98,7 +100,9 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumContentsRepo: AlbumContentsUpdateNotifierRepository.newRepo,
             mediaUseCase: mediaUseCase,
             fileSearchRepo: filesSearchRepo,
-            userAlbumRepo: userAlbumRepository()
+            userAlbumRepo: userAlbumRepository(),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         
         let viewModel = AlbumCoverPickerViewModel(album: album,
