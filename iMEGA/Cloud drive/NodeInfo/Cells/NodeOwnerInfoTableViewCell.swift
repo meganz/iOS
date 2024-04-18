@@ -1,4 +1,5 @@
 import MEGAChatSdk
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -30,22 +31,24 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
     }
 
     private func updateAppearance() {
-        backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
     }
     
     func configure(
         user: MEGAUser,
         shouldDisplayUserVerifiedIcon: Bool
     ) {
-        emailLabel.textColor = UIColor.label
+        let primaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
+        let secondaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : .mnz_secondaryGray(for: traitCollection)
+        emailLabel.textColor = primaryTextColor
         emailLabel.text = user.email
         
         let userDisplayName = user.mnz_displayName ?? ""
         nameLabel.attributedText = createOwnerAttributedString(string: Strings.Localizable.CloudDrive.NodeInfo.owner(userDisplayName as Any),
                                                                highligthedString: userDisplayName,
-                                                               normalAttributes: [.foregroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
+                                                               normalAttributes: [.foregroundColor: secondaryTextColor,
                                                                                   .font: UIFont.preferredFont(style: .body, weight: .bold)],
-                                                               highlightedAttributes: [.foregroundColor: UIColor.label,
+                                                               highlightedAttributes: [.foregroundColor: primaryTextColor,
                                                                                        .font: UIFont.preferredFont(style: .body, weight: .semibold)])
         
         avatarImageView.mnz_setImage(forUserHandle: user.handle, name: userDisplayName)

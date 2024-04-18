@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -10,7 +11,7 @@ struct NodeInfoVerifyAccountTableViewCell: View {
             label: {
                 Text(Strings.Localizable.verifyCredentials)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .foregroundColor(MEGAAppColor.Green._00A886.color)
+                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : MEGAAppColor.Green._00A886.color)
             }
         )
     }
