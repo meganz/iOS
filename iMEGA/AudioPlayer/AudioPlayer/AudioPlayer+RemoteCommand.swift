@@ -30,54 +30,25 @@ extension AudioPlayer {
         guard let item = currentItem() else { return }
         
         Task { @MainActor in
-            var nowPlayingInfo = [String: Any]()
-            
-            updateNowPlayingInfoDescription(&nowPlayingInfo, item)
-            updateNowPlayingInfoPropertyElapsedPlaybackTimeAsync(item)
-            updateNowPlayingInfoPropertyPlakbackRate(&nowPlayingInfo)
-            updateNowPlayingInfoArtwork(item, &nowPlayingInfo)
-            mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
-            
             guard let duration = try? await item.asset.load(.duration) else { return }
-            nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration.seconds
-            mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+            
+            mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = [
+                MPMediaItemPropertyPlaybackDuration: duration.seconds,
+                MPMediaItemPropertyTitle: item.name,
+                MPMediaItemPropertyArtist: item.artist ?? "",
+                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: isPaused ? 0.0 : 1.0),
+                MPMediaItemPropertyArtwork: mediaItemPropertyArtwork(item),
+                MPNowPlayingInfoPropertyElapsedPlaybackTime: item.currentTime().seconds
+            ]
         }
     }
     
-    private func updateNowPlayingInfoDescription(_ nowPlayingInfo: inout [String: Any], _ item: AudioPlayerItem) {
-        nowPlayingInfo[MPMediaItemPropertyTitle] = item.name
-        nowPlayingInfo[MPMediaItemPropertyArtist] = item.artist
-    }
-    
-    private func updateNowPlayingInfoPlayback(_ nowPlayingInfo: inout [String: Any], _ item: AudioPlayerItem) {
-        updateNowPlayingInfoPropertyElapsedPlaybackTimeAsync(item)
-        updateNowPlayingInfoPropertyPlakbackRate(&nowPlayingInfo)
-    }
-    
-    private func updateNowPlayingInfoPropertyElapsedPlaybackTime(_ nowPlayingInfo: inout [String: Any], _ item: AudioPlayerItem) {
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = item.currentTime().seconds
-    }
-    
-    private func updateNowPlayingInfoPropertyElapsedPlaybackTimeAsync(_ item: AudioPlayerItem) {
-        var nowPlayingInfo = mediaPlayerNowPlayingInfoCenter.nowPlayingInfo
-        nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = item.currentTime().seconds
-        mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
-    }
-    
-    private func updateNowPlayingInfoPropertyPlakbackRate(_ nowPlayingInfo: inout [String: Any]) {
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: isPaused ? 0.0 : 1.0)
-    }
-    
-    private func updateNowPlayingInfoArtwork(_ item: AudioPlayerItem, _ nowPlayingInfo: inout [String: Any]) {
+    private func mediaItemPropertyArtwork(_ item: AudioPlayerItem) -> MPMediaItemArtwork {
         if let artwork = item.artwork {
-            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { _ in
-                artwork
-            }
+            return MPMediaItemArtwork(boundsSize: artwork.size) { _ in artwork }
         } else {
             let defaultArtworkImage = UIImage(resource: .defaultArtwork)
-            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: defaultArtworkImage.size) { _ in
-                defaultArtworkImage
-            }
+            return MPMediaItemArtwork(boundsSize: defaultArtworkImage.size) { _ in defaultArtworkImage }
         }
     }
 }
