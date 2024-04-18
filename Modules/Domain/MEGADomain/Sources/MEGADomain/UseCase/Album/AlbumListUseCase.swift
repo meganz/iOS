@@ -16,6 +16,8 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let albumContentsUpdateRepository: any AlbumContentsUpdateNotifierRepositoryProtocol
     private let albumContentsUseCase: any AlbumContentsUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
     
     public var albumsUpdatedPublisher: AnyPublisher<Void, Never> {
         userAlbumUpdates
@@ -40,13 +42,17 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
         mediaUseCase: some MediaUseCaseProtocol,
         userAlbumRepository: some UserAlbumRepositoryProtocol,
         albumContentsUpdateRepository: some AlbumContentsUpdateNotifierRepositoryProtocol,
-        albumContentsUseCase: some AlbumContentsUseCaseProtocol
+        albumContentsUseCase: some AlbumContentsUseCaseProtocol,
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
     ) {
         self.fileSearchRepository = fileSearchRepository
         self.mediaUseCase = mediaUseCase
         self.userAlbumRepository = userAlbumRepository
         self.albumContentsUpdateRepository = albumContentsUpdateRepository
         self.albumContentsUseCase = albumContentsUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
     public func systemAlbums() async throws -> [AlbumEntity] {
@@ -56,13 +62,16 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
     
     public func userAlbums() async -> [AlbumEntity] {
         let albums = await userAlbumRepository.albums()
+        let showHiddenPhotos = await showHiddenPhotos()
+        
         return await withTaskGroup(of: AlbumEntity.self,
                                    returning: [AlbumEntity].self) { group in
             albums.forEach { setEntity in
                 group.addTask {
-                    var userAlbumContent = await albumContentsUseCase.userAlbumPhotos(by: setEntity.handle)
+                    let userAlbumContent = await albumContentsUseCase.userAlbumPhotos(by: setEntity.handle,
+                                                                                      showHidden: showHiddenPhotos)
                     let coverNode = await albumCoverNode(forAlbum: setEntity,
-                                                         albumContent: &userAlbumContent)
+                                                         albumContent: userAlbumContent)
                     return AlbumEntity(id: setEntity.handle,
                                        name: setEntity.name,
                                        coverNode: coverNode,
@@ -164,20 +173,14 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
         return albums
     }
     
-    private func albumCoverNode(forAlbum entity: SetEntity, albumContent: inout [AlbumPhotoEntity]) async -> NodeEntity? {
+    private func albumCoverNode(forAlbum entity: SetEntity, albumContent: [AlbumPhotoEntity]) async -> NodeEntity? {
         if entity.coverId != .invalid,
            let albumCoverSetElement = await userAlbumRepository.albumElement(by: entity.handle,
                                                                              elementId: entity.coverId),
            let albumCover = albumContent.first(where: { $0.id == albumCoverSetElement.nodeId }) {
             return albumCover.photo
         }
-        albumContent.sort {
-            if $0.photo.modificationTime == $1.photo.modificationTime {
-                return $0.id > $1.id
-            }
-            return $0.photo.modificationTime > $1.photo.modificationTime
-        }
-        return albumContent.first?.photo
+        return albumContent.latestModifiedPhoto()
     }
     
     private func makeAlbumMetaData(albumContent: [AlbumPhotoEntity]) -> AlbumMetaDataEntity {
@@ -205,5 +208,12 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
             .filter { $0.hasThumbnail }
         
         return allPhotosAndVideos.isEmpty
+    }
+    
+    private func showHiddenPhotos() async -> Bool {
+        guard hiddenNodesFeatureFlagEnabled() else { return true }
+        
+        return await contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute()
+            .showHiddenNodes
     }
 }

@@ -16,26 +16,24 @@ final class AlbumListUseCaseTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     func testSystemAlbums_whenLoadingRawSystemAlbum_shouldReturnFavouriteAndRawAlbumEntity() async throws {
-        let sut = AlbumListUseCase(
+        let sut = makeAlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository(photoNodes: photos),
-            mediaUseCase: MockMediaUseCase(isRawImage: true),
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+            mediaUseCase: MockMediaUseCase(isRawImage: true))
+        
         let albums = try await sut.systemAlbums()
+        
         XCTAssert(albums.count == 2)
         XCTAssertEqual(albums.first, emptyFavouritesAlbum)
         XCTAssertEqual(albums.last?.type, .raw)
     }
     
     func testSystemAlbums_whenLoadingGifSystemAlbum_shouldReturnFavouriteAndGifAlbumEntity() async throws {
-        let sut = AlbumListUseCase(
+        let sut = makeAlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository(photoNodes: photos),
-            mediaUseCase: MockMediaUseCase(isGifImage: true),
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+            mediaUseCase: MockMediaUseCase(isGifImage: true))
+        
         let albums = try await sut.systemAlbums()
+        
         XCTAssert(albums.count == 2)
         XCTAssertEqual(albums.first, emptyFavouritesAlbum)
         XCTAssertEqual(albums.last?.type, .gif)
@@ -45,13 +43,12 @@ final class AlbumListUseCaseTests: XCTestCase {
         let favouriteGifPhotos = [
             NodeEntity(name: "1.gif", handle: 2, hasThumbnail: true, isFavourite: true, mediaType: .image)
         ]
-        let sut = AlbumListUseCase(
+        let sut = makeAlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouriteGifPhotos),
-            mediaUseCase: MockMediaUseCase(isGifImage: true),
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+            mediaUseCase: MockMediaUseCase(isGifImage: true))
+        
         let albums = try await sut.systemAlbums()
+        
         XCTAssertTrue(albums.count == 2)
         XCTAssertEqual(albums.first?.type, AlbumEntityType.favourite)
         XCTAssertEqual(albums.last?.type, AlbumEntityType.gif)
@@ -62,13 +59,12 @@ final class AlbumListUseCaseTests: XCTestCase {
             NodeEntity(name: "\($0).raw", handle: $0, hasThumbnail: true, isFavourite: true,
                        modificationTime: try "2022-08-18T22:0\($0):04Z".date, mediaType: .image)
         }
-        let sut = AlbumListUseCase(
+        let sut = makeAlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouriteRawPhotos),
-            mediaUseCase: MockMediaUseCase(isRawImage: true),
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+            mediaUseCase: MockMediaUseCase(isRawImage: true))
+        
         let albums = try await sut.systemAlbums()
+        
         XCTAssertTrue(albums.count == 2)
         XCTAssertEqual(albums.first, AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "",
                                                  coverNode: favouriteRawPhotos.last, count: favouriteRawPhotos.count, type: .favourite))
@@ -88,13 +84,11 @@ final class AlbumListUseCaseTests: XCTestCase {
             NodeEntity(name: "c.mp4", handle: 5, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date)
         ]
         let expectedFavouritesCount = (favouritePhotos + favouriteVideos).filter { $0.hasThumbnail && $0.mediaType != nil && $0.isFavourite }.count
-        let sut = AlbumListUseCase(
-            fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
-            mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+        let sut = makeAlbumListUseCase(
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos))
+        
         let albums = try await sut.systemAlbums()
+        
         XCTAssertTrue(albums.count == 1)
         XCTAssertEqual(albums.first, AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "",
                                                  coverNode: expectedCoverNode, count: expectedFavouritesCount, type: .favourite))
@@ -102,13 +96,11 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     func testSystemAlbums_onLoad_verifySharedLinkStatusIsUnavailable() async throws {
         let favouriteImage = NodeEntity(handle: 22, hasThumbnail: true, isFavourite: true, mediaType: .image)
-        let sut = AlbumListUseCase(
-            fileSearchRepository: MockFilesSearchRepository(photoNodes: [favouriteImage]),
-            mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: MockUserAlbumRepository(),
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+        let sut = makeAlbumListUseCase(
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: [favouriteImage]))
+        
         let albums = try await sut.systemAlbums()
+        
         XCTAssertEqual(albums.first?.sharedLinkStatus, .unavailable)
     }
     
@@ -123,12 +115,12 @@ final class AlbumListUseCaseTests: XCTestCase {
                                             nodeId: albumCoverNodeId, name: "Test")
         var albumPhotos = try makeAlbumPhotos()
         albumPhotos.append(AlbumPhotoEntity(photo: expectedAlbumCover, albumPhotoId: albumSetCoverId))
-    
+        let albumContentsUseCase = MockAlbumContentUseCase(photos: albumPhotos)
         let sut = makeAlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository(photoNodes: [expectedAlbumCover]),
             userAlbumRepository: MockUserAlbumRepository(albums: [setEntity],
                                                          albumElement: albumElement),
-            albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos))
+            albumContentsUseCase: albumContentsUseCase)
         
         let albums = await sut.userAlbums()
         
@@ -153,13 +145,11 @@ final class AlbumListUseCaseTests: XCTestCase {
             SetEntity(handle: 1, userId: HandleEntity(2), coverId: HandleEntity.invalid,
                       modificationTime: Date(), name: "Album 1")
         ]
-        let sut = AlbumListUseCase(
-            fileSearchRepository: MockFilesSearchRepository(),
-            mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+        let sut = makeAlbumListUseCase(
+            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums))
+        
         let albums = await sut.userAlbums()
+        
         XCTAssertEqual(albums.count, expectedAlbums.count)
         XCTAssertNil(albums.first?.coverNode)
     }
@@ -203,14 +193,89 @@ final class AlbumListUseCaseTests: XCTestCase {
         let expectedAlbums = [
             SetEntity(handle: albumId, isExported: expectedIsExported)
         ]
-        let sut = AlbumListUseCase(
-            fileSearchRepository: MockFilesSearchRepository(),
-            mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+        let sut = makeAlbumListUseCase(
+            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums))
+        
         let albums = await sut.userAlbums()
+        
         XCTAssertEqual(albums.first?.sharedLinkStatus, .exported(expectedIsExported))
+    }
+    
+    func testUserAlbums_showHiddenItemsFalseAlbumCoverSet_shouldNotUseHiddenPhotoAsCoverAndCount() async {
+        let albumId = HandleEntity(65)
+        let albumCoverId = HandleEntity(3)
+        let album = SetEntity(handle: albumId, coverId: albumCoverId,
+                              name: "Test")
+        let coverPhoto = NodeEntity(name: "Test 1.jpg", handle: 1, isMarkedSensitive: true, mediaType: .image)
+        let albumElement = SetElementEntity(handle: albumCoverId, ownerId: albumId,
+                                            nodeId: coverPhoto.handle, name: "Test")
+        let albumPhotos = [
+            AlbumPhotoEntity(photo: coverPhoto, albumPhotoId: albumCoverId)]
+        let userAlbumRepository = MockUserAlbumRepository(albums: [album],
+                                                          albumElement: albumElement)
+        let albumContentUseCase = MockAlbumContentUseCase(photos: albumPhotos)
+        let ccUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
+            sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
+        
+        let sut = makeAlbumListUseCase(
+            userAlbumRepository: userAlbumRepository,
+            albumContentsUseCase: albumContentUseCase,
+            contentConsumptionUserAttributeUseCase: ccUserAttributeUseCase,
+            hiddenNodesFeatureFlagEnabled: { true })
+        
+        let albums = await sut.userAlbums()
+        
+        XCTAssertEqual(albums, [
+            AlbumEntity(id: albumId,
+                        name: album.name,
+                        coverNode: nil,
+                        count: 0,
+                        type: .user,
+                        creationTime: album.creationTime,
+                        modificationTime: album.modificationTime,
+                        sharedLinkStatus: .exported(album.isExported),
+                        metaData: AlbumMetaDataEntity(
+                            imageCount: 0,
+                            videoCount: 0)
+                       )
+        ])
+    }
+    
+    func testUserAlbums_showHiddenItemsFalseAlbumCoverNotSet_shouldNotUseHiddenPhotoAsCoverAndCount() async throws {
+        let albumId = HandleEntity(65)
+        let album = SetEntity(handle: albumId, name: "Test")
+        let photo = NodeEntity(name: "Test 1.jpg", handle: 1, isMarkedSensitive: true, mediaType: .image)
+        var albumPhotos = try makeAlbumPhotos()
+        albumPhotos.append(AlbumPhotoEntity(photo: photo))
+        
+        let userAlbumRepository = MockUserAlbumRepository(albums: [album])
+        let albumContentUseCase = MockAlbumContentUseCase(photos: albumPhotos)
+        let ccUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
+            sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
+        
+        let sut = makeAlbumListUseCase(
+            userAlbumRepository: userAlbumRepository,
+            albumContentsUseCase: albumContentUseCase,
+            contentConsumptionUserAttributeUseCase: ccUserAttributeUseCase,
+            hiddenNodesFeatureFlagEnabled: { true })
+        
+        let albums = await sut.userAlbums()
+        
+        let albumPhotosWithoutHidden = albumPhotos.filter { !$0.photo.isMarkedSensitive }
+        XCTAssertEqual(albums, [
+            AlbumEntity(id: albumId,
+                        name: album.name,
+                        coverNode: albumPhotosWithoutHidden.latestModifiedPhoto(),
+                        count: albumPhotosWithoutHidden.count,
+                        type: .user,
+                        creationTime: album.creationTime,
+                        modificationTime: album.modificationTime,
+                        sharedLinkStatus: .exported(album.isExported),
+                        metaData: AlbumMetaDataEntity(
+                            imageCount: albumPhotosWithoutHidden.count(for: .image),
+                            videoCount: albumPhotosWithoutHidden.count(for: .video))
+                       )
+        ])
     }
     
     func testCreateUserAlbum_shouldCreateAlbumWithName() async throws {
@@ -226,44 +291,35 @@ final class AlbumListUseCaseTests: XCTestCase {
         let albumName = "Custom Album"
         let userAlbumRepository = MockUserAlbumRepository(
             createAlbumResult: .success(SetEntity(name: albumName)))
-        let sut = AlbumListUseCase(
+        let sut = makeAlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
-            mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: userAlbumRepository,
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+            userAlbumRepository: userAlbumRepository)
         
         let result = try await sut.createUserAlbum(with: albumName)
+        
         XCTAssertEqual(result.name, albumName)
         XCTAssertNotNil(result.modificationTime)
     }
     
     func testHasNoPhotosAndVideos_whenCreatingAlbumInFreshNewAccount_shouldReturnEmpty() async throws {
-        let sut = AlbumListUseCase(
+        let sut = makeAlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository(
                 photoNodes: [
                     NodeEntity(name: "0.jpg", handle: 0, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date),
                     NodeEntity(name: "1.png", handle: 1, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:04:04Z".date)
                 ]
-            ),
-            mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+            ))
         
         let hasNoPhotosAndVideos = await sut.hasNoPhotosAndVideos()
+        
         XCTAssertTrue(hasNoPhotosAndVideos)
     }
     
     func testAlbumsUpdatedPublisher_onAlbumReload_shouldEmitToPublisher() {
         let albumReloadPublisher = PassthroughSubject<Void, Never>()
         let albumContentRepo = MockAlbumContentsUpdateNotifierRepository(albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
-        let sut = AlbumListUseCase(
-            fileSearchRepository: MockFilesSearchRepository.newRepo,
-            mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
-            albumContentsUpdateRepository: albumContentRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+        let sut = makeAlbumListUseCase(
+            albumContentsUpdateRepository: albumContentRepo)
         
         let exp = expectation(description: "album update publisher should emit")
         sut.albumsUpdatedPublisher
@@ -280,12 +336,8 @@ final class AlbumListUseCaseTests: XCTestCase {
         let setElementsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
         let userRepo = MockUserAlbumRepository(setsUpdatedPublisher: setsUpdatedPublisher.eraseToAnyPublisher(),
                                                setElementsUpdatedPublisher: setElementsUpdatedPublisher.eraseToAnyPublisher())
-        let sut = AlbumListUseCase(
-            fileSearchRepository: MockFilesSearchRepository.newRepo,
-            mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: userRepo,
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
+        let sut = makeAlbumListUseCase(
+            userAlbumRepository: userRepo)
         
         let exp = expectation(description: "album update publisher should emit multiple times")
         exp.expectedFulfillmentCount = 2
@@ -310,13 +362,17 @@ final class AlbumListUseCaseTests: XCTestCase {
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
         albumContentsUpdateRepository: some AlbumContentsUpdateNotifierRepositoryProtocol = MockAlbumContentsUpdateNotifierRepository(),
-        albumContentsUseCase: some AlbumContentsUseCaseProtocol = MockAlbumContentUseCase()
+        albumContentsUseCase: some AlbumContentsUseCaseProtocol = MockAlbumContentUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool = { false }
     ) -> some AlbumListUseCaseProtocol {
         AlbumListUseCase(fileSearchRepository: fileSearchRepository,
                          mediaUseCase: mediaUseCase,
                          userAlbumRepository: userAlbumRepository,
                          albumContentsUpdateRepository: albumContentsUpdateRepository,
-                         albumContentsUseCase: albumContentsUseCase)
+                         albumContentsUseCase: albumContentsUseCase,
+                         contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                         hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled)
     }
     
     private func makeAlbumPhotos() throws -> [AlbumPhotoEntity] {

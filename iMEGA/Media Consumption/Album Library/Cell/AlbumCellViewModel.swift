@@ -117,13 +117,7 @@ final class AlbumCellViewModel: ObservableObject {
     
     @MainActor
     private func setDefaultAlbumCover(_ photos: [AlbumPhotoEntity]) async {
-        guard let latestPhoto = photos.max(by: { lhs, rhs in
-            if lhs.photo.modificationTime == rhs.photo.modificationTime {
-                lhs.id < rhs.id
-            } else {
-                lhs.photo.modificationTime < rhs.photo.modificationTime
-            }
-        })?.photo else { return }
+        guard let latestPhoto = photos.latestModifiedPhoto() else { return }
         
         await loadThumbnail(for: latestPhoto)
     }
