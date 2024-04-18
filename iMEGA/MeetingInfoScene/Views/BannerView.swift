@@ -163,7 +163,7 @@ struct BannerView_Previews: PreviewProvider {
             
             BannerView(
                 config: .init(
-                    copy: Strings.Localizable.Meetings.WaitingRoom.Banner.Limit100Participants.nonOrganizerHost,
+                    copy: "Nice long copy describing a situation [A]Link[/A]",
                     underline: false,
                     theme: .dark,
                     closeAction: {
@@ -182,7 +182,7 @@ struct BannerView_Previews: PreviewProvider {
             
             BannerView(
                 config: .init(
-                    copy: Strings.Localizable.Meetings.WaitingRoom.Banner.Limit100Participants.nonOrganizerHost,
+                    copy: "Nice long copy describing a situation [A]Link[/A]",
                     underline: false,
                     theme: .darkMeetingsFloatingPanel,
                     closeAction: {

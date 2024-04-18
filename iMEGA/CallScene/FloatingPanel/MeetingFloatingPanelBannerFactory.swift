@@ -88,7 +88,7 @@ struct MeetingFloatingPanelBannerFactory: MeetingFloatingPanelBannerFactoryProto
         dismissFreeUserLimitBanner: @escaping ActionHandler
     ) -> MeetingInfoHeaderData {
         .init(
-            copy: Strings.Localizable.Meetings.WaitingRoom.Warning.limit100Participants,
+            copy: Strings.Localizable.Meetings.FloatingPanel.Banner.Limit100Participants.nonOrganizerHost,
             linkTapped: nil,
             dismissTapped: dismissFreeUserLimitBanner
         )

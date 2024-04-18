@@ -111,7 +111,7 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
             warningMode: .dismissible
         )
         let result = try XCTUnwrap(maybeResult)
-        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.WaitingRoom.Warning.limit100Participants)
+        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.FloatingPanel.Banner.Limit100Participants.nonOrganizerHost)
         XCTAssertNotNil(result.dismissTapped)
     }
     
@@ -135,7 +135,7 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
             warningMode: .dismissible
         )
         let result = try XCTUnwrap(maybeResult)
-        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.WaitingRoom.Warning.limit100Participants)
+        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.FloatingPanel.Banner.Limit100Participants.nonOrganizerHost)
         XCTAssertNotNil(result.dismissTapped)
     }
     
