@@ -47,6 +47,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsView;
 @property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsBottomSeparatorView;
+@property (weak, nonatomic) IBOutlet UIImageView *addGroupAvatarImageView;
 
 @property (nonatomic) ContactsMode contactsMode;
 @property (nonatomic) ChatOptionType chatOptionType;
