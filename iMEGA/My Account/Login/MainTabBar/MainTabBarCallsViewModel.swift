@@ -63,7 +63,11 @@ class MainTabBarCallsViewModel: ViewModelType {
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
     private(set) var callSessionUpdateSubscription: AnyCancellable?
-
+    // we cache this value here to be able to reload
+    // waiting room alert when needed -> so do it also when waiting room users are not changed
+    // but call count is changed -> this could result in change of state of "admit\admit all"
+    // alert button when call has some participants limits [MEET-3401]
+    private var callCount = 0
     private var currentWaitingRoomUserHandles: [HandleEntity] = []
     
     @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
@@ -198,6 +202,9 @@ class MainTabBarCallsViewModel: ViewModelType {
         switch call.changeType {
         case .status:
             manageCallStatusChange(for: call)
+        case .callComposition:
+            MEGALogDebug("[CallLimitations] MainTabBarCalls: call composition changed: [participants: \(call.numberOfParticipants)]")
+            manageWaitingRoom(for: call)
         default:
             break
         }
@@ -223,6 +230,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         case .terminatingUserParticipation:
             currentWaitingRoomUserHandles.removeAll()
             router.dismissWaitingRoomDialog(animated: false)
+            callCount = 0
             if !chatUseCase.existsActiveCall() {
                 invokeCommand?(.hideActiveCallIcon)
             }
@@ -250,6 +258,7 @@ class MainTabBarCallsViewModel: ViewModelType {
               let waitingRoomUserHandles = call.waitingRoom?.userIds,
               let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
                 !isWaitingRoomListVisible else { return }
+        MEGALogDebug("[CallLimitations] waitingRoomUserHandles : \(waitingRoomUserHandles)")
         let waitingRoomNonModeratorUserHandles = waitingRoomUserHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
         
         guard waitingRoomNonModeratorUserHandles.isNotEmpty else {
@@ -258,7 +267,17 @@ class MainTabBarCallsViewModel: ViewModelType {
             return
         }
         
-        guard waitingRoomNonModeratorUserHandles != currentWaitingRoomUserHandles else { return }
+        let waitingRoomHasChanged = waitingRoomNonModeratorUserHandles != currentWaitingRoomUserHandles
+        MEGALogDebug("[CallLimitations] old call count : \(callCount), new call count: \(call.numberOfParticipants)")
+        let callParticipantsHasChanged = callCount != call.numberOfParticipants
+        callCount = call.numberOfParticipants
+        
+        let waitingRoomOrCallCountChanged = waitingRoomHasChanged || callParticipantsHasChanged
+        MEGALogDebug("[CallLimitations] waitingRoomHasChanged : \(waitingRoomHasChanged), callParticipantsHasChanged: \(callParticipantsHasChanged)")
+        guard waitingRoomOrCallCountChanged else {
+            MEGALogDebug("[CallLimitations] conditions for waiting room alert did not change")
+            return
+        }
         
         currentWaitingRoomUserHandles = waitingRoomNonModeratorUserHandles
         
