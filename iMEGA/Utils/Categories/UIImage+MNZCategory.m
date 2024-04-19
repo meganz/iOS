@@ -137,7 +137,7 @@
             initialForAvatar = name.mnz_initialForAvatar;
         }
         
-        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.mnz_whiteFFFFFF font:[UIFont systemFontOfSize:(size.width/2.0f)]];
+        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:(size.width/2.0f)]];
         [UIImageJPEGRepresentation(image, 1) writeToFile:avatarFilePath atomically:YES];
         
         [MEGASdk.shared getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
