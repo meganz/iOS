@@ -1,3 +1,4 @@
+import Accounts
 import MEGADesignToken
 import UIKit
 
@@ -102,17 +103,4 @@ extension MyAccountHallTableViewCell {
             promoView.layer.cornerRadius = 4.0
         }
     }
-}
-
-struct MyAccountHallCellData {
-    var sectionText: String?
-    var detailText: String?
-    var icon: UIImage?
-    var storageText: String?
-    var transferText: String?
-    var storageUsedText: String?
-    var transferUsedText: String?
-    var isPendingViewVisible: Bool = false
-    var pendingText: String?
-    var promoText: String?
 }
