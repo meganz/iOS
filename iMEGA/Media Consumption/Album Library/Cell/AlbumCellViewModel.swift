@@ -5,6 +5,11 @@ import MEGASwiftUI
 import SwiftUI
 
 final class AlbumCellViewModel: ObservableObject {
+    let album: AlbumEntity
+    let selection: AlbumSelection
+    let isLinkShared: Bool
+    let isSensitive: Bool
+    
     @Published var numberOfNodes: Int = 0
     @Published var thumbnailContainer: any ImageContaining
     @Published var isLoading: Bool = false
@@ -27,14 +32,11 @@ final class AlbumCellViewModel: ObservableObject {
     @Published var shouldShowEditStateOpacity: Double = 0.0
     @Published var opacity: Double = 1.0
     
-    let album: AlbumEntity
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
-    let selection: AlbumSelection
     
     private var subscriptions = Set<AnyCancellable>()
     private var albumMetaData: AlbumMetaDataEntity?
@@ -42,8 +44,6 @@ final class AlbumCellViewModel: ObservableObject {
     private var isEditing: Bool {
         selection.editMode.isEditing
     }
-    
-    let isLinkShared: Bool
     
     init(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
@@ -65,6 +65,7 @@ final class AlbumCellViewModel: ObservableObject {
         title = album.name
         numberOfNodes = album.count
         isLinkShared = album.isLinkShared
+        isSensitive = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) && album.coverNode?.isMarkedSensitive ?? false
         
         if let coverNode = album.coverNode,
            let container = thumbnailUseCase.cachedThumbnailContainer(for: coverNode, type: .thumbnail) {
