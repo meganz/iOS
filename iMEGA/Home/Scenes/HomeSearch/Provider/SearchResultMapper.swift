@@ -164,7 +164,8 @@ struct SearchResultMapper {
         let turquoiseBackgroundColor = isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : Color(.turquoise)
 
         if nodeUseCase.isInRubbishBin(nodeHandle: node.handle) {
-            if !nodeUseCase.isInRubbishBin(nodeHandle: node.restoreParentHandle) {
+            if nodeUseCase.isRestorable(node: node),
+               !nodeUseCase.isInRubbishBin(nodeHandle: node.restoreParentHandle) {
                 return [
                     SearchResultSwipeAction(
                         image: Image(.restore),
