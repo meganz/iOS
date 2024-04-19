@@ -29,7 +29,7 @@ extension NodeActionsDelegateHandler {
             rename: { _, _ in },
             removeSharing: { _ in },
             viewVersions: { _ in },
-            restore: { _ in },
+            restore: { _, _ in },
             manageShare: { _ in },
             shareFolder: { _ in },
             editTextFile: { _ in },
@@ -215,11 +215,13 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
     func testRestoreAction_whenTriggered_CallsCorrectNodeActionClosure() throws {
         let harness = Harness()
         var restoreCalled = false
+        var shouldPopViewResult = false
         var passedInNodes = [NodeEntity]()
         let exp = expectation(description: "action tapped")
-        harness.actionHandler.restore = { nodes in
+        harness.actionHandler.restore = { nodes, shouldPopView in
             restoreCalled = true
             passedInNodes = nodes
+            shouldPopViewResult = shouldPopView
             exp.fulfill()
         }
         harness.actionFactory.actionsToReturn = [.restore]
@@ -227,6 +229,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         wait(for: [exp], timeout: 1)
         XCTAssertTrue(restoreCalled)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
+        XCTAssertTrue(shouldPopViewResult)
     }
     
     func testDeleteAction_whenTriggered_CallsRemoveFromRubbishBinIfInRubbishBin() throws {
