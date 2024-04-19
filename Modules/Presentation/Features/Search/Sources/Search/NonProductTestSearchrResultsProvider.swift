@@ -14,7 +14,7 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
         self.empty = empty
     }
 
-    public func search(queryRequest: SearchQuery, lastItemIndex: Int?) async throws -> SearchResultsEntity? {
+    public func search(queryRequest: SearchQuery, lastItemIndex: Int?) async -> SearchResultsEntity? {
         
         if
             queryRequest == .initial ||

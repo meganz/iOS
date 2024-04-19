@@ -2,7 +2,7 @@
 
 public protocol SearchResultsProviding {
     
-    func search(queryRequest: SearchQuery, lastItemIndex: Int?) async throws -> SearchResultsEntity?
+    func search(queryRequest: SearchQuery, lastItemIndex: Int?) async -> SearchResultsEntity?
     // ids of all siblings a of a node (for initial [root] search)
     // or
     // ids of all results in the current search results

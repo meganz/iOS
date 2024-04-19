@@ -251,13 +251,7 @@ public class SearchResultsViewModel: ObservableObject {
 
         if Task.isCancelled { return }
         
-        var results: SearchResultsEntity?
-        do {
-            results = try await resultsProvider.search(queryRequest: query, lastItemIndex: lastItemIndex)
-        } catch {
-            // error handling to be done
-            // in the FM-800
-        }
+        let results = await resultsProvider.search(queryRequest: query, lastItemIndex: lastItemIndex)
 
         if Task.isCancelled { return }
         

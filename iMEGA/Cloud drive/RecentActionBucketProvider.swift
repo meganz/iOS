@@ -16,7 +16,7 @@ struct RecentActionBucketProvider: SearchResultsProviding {
     func search(
         queryRequest: SearchQuery,
         lastItemIndex: Int?
-    ) async throws -> SearchResultsEntity? {
+    ) async -> SearchResultsEntity? {
         switch queryRequest {
         case .initial:
                 all
