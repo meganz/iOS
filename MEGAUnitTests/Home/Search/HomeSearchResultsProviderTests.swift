@@ -34,6 +34,18 @@ extension Array where Element == NodeEntity {
     }
 }
 
+fileprivate extension UInt64 {
+    static func array(start: UInt64, end: UInt64) -> [UInt64] {
+        return Array(start...end)
+    }
+}
+
+fileprivate extension NodeEntity {
+    static func entities(startHandle: UInt64, endHandle: UInt64) -> [NodeEntity] {
+        UInt64.array(start: startHandle, end: endHandle).map { NodeEntity(handle: $0) }
+    }
+}
+
 fileprivate extension Date {
     static func testDate(_ string: String) -> Date {
         let dateFormatter = DateFormatter()
@@ -141,7 +153,7 @@ class HomeSearchProviderTests: XCTestCase {
         }
         
         func propertyIdsForFoundNode() async throws -> Set<NodePropertyId> {
-            let searchResults = try await sut.search(
+            let searchResults = await sut.search(
                 queryRequest: .userSupplied(.query("node 0", isSearchActive: true))
             )
             let result = try XCTUnwrap(searchResults?.results.first)
@@ -153,7 +165,7 @@ class HomeSearchProviderTests: XCTestCase {
     
         @discardableResult
         func resultsFor(chip: SearchChipEntity) async throws -> [SearchResult] {
-            let results = try await sut.search(
+            let results = await sut.search(
                 queryRequest: .userSupplied(
                     .init(query: "", sorting: .nameAscending, mode: .home, isSearchActive: false, chips: [chip])
                 )
@@ -191,7 +203,7 @@ class HomeSearchProviderTests: XCTestCase {
     func testSearch_whenFailures_returnsNoResults() async throws {
         let harness = Harness(self, nodeActions: await nodeActions)
 
-        let searchResults = try await harness.sut.search(
+        let searchResults = await harness.sut.search(
             queryRequest: .userSupplied(.query("node 1", isSearchActive: true))
         )
 
@@ -204,7 +216,7 @@ class HomeSearchProviderTests: XCTestCase {
         
         let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: await nodeActions)
 
-        let response = try await harness.sut.search(queryRequest: .initial)
+        let response = await harness.sut.search(queryRequest: .initial)
         XCTAssertEqual(response?.results.map(\.id), [2, 3, 4])
     }
     
@@ -213,7 +225,7 @@ class HomeSearchProviderTests: XCTestCase {
         let children = [NodeEntity(handle: 6), NodeEntity(handle: 7), NodeEntity(handle: 8)]
         let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: await nodeActions)
 
-        let response = try await harness.sut.search(queryRequest: .userSupplied(.query("", isSearchActive: false)))
+        let response = await harness.sut.search(queryRequest: .userSupplied(.query("", isSearchActive: false)))
         XCTAssertEqual(response?.results.map(\.id), [6, 7, 8])
     }
     
@@ -223,7 +235,7 @@ class HomeSearchProviderTests: XCTestCase {
         
         let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: await nodeActions)
 
-        _ = try await harness.sut.search(queryRequest: .userSupplied(.query("any search string", isSearchActive: true)))
+        _ = await harness.sut.search(queryRequest: .userSupplied(.query("any search string", isSearchActive: true)))
         XCTAssertEqual(harness.searchFile.passedInSortOrders, [.defaultAsc])
     }
     
@@ -391,6 +403,100 @@ class HomeSearchProviderTests: XCTestCase {
                 subchips: []
             )
         )
+    }
+    
+    func testRefreshedSearchResults_with200Nodes_shouldReturn20results() async throws {
+        // given
+        let root = NodeEntity(handle: 0)
+        let handles = UInt64.array(start: 1, end: 200)
+        let childrenNodes: [NodeEntity] = {
+            return handles.map { NodeEntity(name: "node \($0)", handle: $0) }
+        }()
+            
+        // when
+        let harness = Harness(self, rootNode: root, childrenNodes: childrenNodes, nodeActions: await nodeActions)
+        
+        // then
+        let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        let expectedResultsIds = Array(handles.prefix(upTo: 20))
+        XCTAssertEqual(expectedResultsIds, resultIds)
+    }
+    
+    func testRefreshedSearchResults_withContinousNodeChanges_shouldReturnCorrectResults() async throws {
+        // given: Original folder has a full page of nodes
+        let root = NodeEntity(handle: 0)
+        let childrenNodes = NodeEntity.entities(startHandle: 1, endHandle: 100)
+        
+        // when: searchInitially and refresh invoked
+        let harness = Harness(self, rootNode: root, childrenNodes: childrenNodes, nodeActions: await nodeActions)
+        _ = await harness.sut.searchInitially(queryRequest: .initial)
+        var resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        
+        // then: Refreshed result should have 100 nodes
+        XCTAssertEqual(UInt64.array(start: 1, end: 100), resultIds)
+        
+        // and when: nodes are reduced to 50 nodes
+        harness.nodeRepo.childrenNodes.removeLast(50)
+        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        
+        // and then: Refreshed result should have 50 nodes
+        XCTAssertEqual(UInt64.array(start: 1, end: 50), resultIds)
+        
+        // and when: nodes are reduced by 10
+        harness.nodeRepo.childrenNodes.removeFirst(10)
+        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        
+        // and then: Refreshed result should have 40 nodes
+        XCTAssertEqual(UInt64.array(start: 11, end: 50), resultIds)
+        
+        // and when: 200 nodes are added
+        harness.nodeRepo.childrenNodes.append(contentsOf: NodeEntity.entities(startHandle: 51, endHandle: 251))
+        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        
+        // and then: Refreshed result should have: 40 orginall + 20 buffered offset
+        XCTAssertEqual(UInt64.array(start: 11, end: 70), resultIds)
+        
+        // and when: Load more results and refresh
+        _ = await harness.sut.loadMore(queryRequest: .initial, index: 40)
+        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        
+        // and then: Refreshed result should have: 80 original + 100 loadmore + 20 buffered offset
+        XCTAssertEqual(UInt64.array(start: 11, end: 190), resultIds)
+        
+        // and when: Load more results to the end and refresh
+        _ = await harness.sut.loadMore(queryRequest: .initial, index: 160)
+        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        
+        // and then: Refreshed result should have all 240 children nodes
+        XCTAssertEqual(UInt64.array(start: 11, end: 251), resultIds)
+        
+        // and when: 100 more nodes are added
+        harness.nodeRepo.childrenNodes.append(contentsOf: NodeEntity.entities(startHandle: 252, endHandle: 353))
+        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        
+        // and then: Refreshed result should have: 240 original + 20 buffered offset
+        XCTAssertEqual(UInt64.array(start: 11, end: 271), resultIds)
+    }
+    
+    func testRefreshedSearchResults_withUserSuppliedQuery_shouldReturnUpdatedResults() async throws {
+        // given
+        let harness = Harness(self, nodes: NodeEntity.entities(startHandle: 1, endHandle: 200), nodeActions: await nodeActions)
+        
+        // when
+        let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("node 0", isSearchActive: false)))?.results.map(\.id)
+        
+        // then
+        XCTAssertEqual(UInt64.array(start: 1, end: 20), resultIds)
+    }
+    
+    func testRefreshedSearchResults_withUserSuppliedQueryShowRoot_shouldReturnUpdatedResults() async throws {
+        // given
+        let harness = Harness(self, childrenNodes: NodeEntity.entities(startHandle: 1, endHandle: 200), nodeActions: await nodeActions)
+        // when
+        let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("", isSearchActive: false)))?.results.map(\.id)
+        
+        // then
+        XCTAssertEqual(UInt64.array(start: 1, end: 20), resultIds)
     }
 
     // MARK: - Private methods.

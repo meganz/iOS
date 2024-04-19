@@ -8,7 +8,7 @@ public class MockSearchResultsProviding: SearchResultsProviding {
     
     public var passedInQueries: [SearchQuery] = []
     public var currentResultIdsToReturn: [ResultId] = []
-    public var resultFactory: (_ query: SearchQuery) async throws -> SearchResultsEntity
+    public var resultFactory: (_ query: SearchQuery) async -> SearchResultsEntity
     
     public init() {
         resultFactory = { _ in
@@ -19,9 +19,9 @@ public class MockSearchResultsProviding: SearchResultsProviding {
     public func search(
         queryRequest: SearchQuery,
         lastItemIndex: Int?
-    ) async throws -> SearchResultsEntity? {
+    ) async -> SearchResultsEntity? {
         passedInQueries.append(queryRequest)
-        return try await resultFactory(queryRequest)
+        return await resultFactory(queryRequest)
     }
 }
 

@@ -1,9 +1,9 @@
 import Foundation
 import MEGADomain
 
-public struct MockNodeRepository: NodeRepositoryProtocol {
+public final class MockNodeRepository: NodeRepositoryProtocol {
     
-    public static let newRepo = MockNodeRepository()
+    public static var newRepo: MockNodeRepository { MockNodeRepository() }
     
     private let node: NodeEntity?
     private let rubbishBinNode: NodeEntity?
@@ -14,7 +14,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     private let images: [NodeEntity]
     private let fileLinkNode: NodeEntity?
     private let childNodes: [String: NodeEntity]
-    private let childrenNodes: [NodeEntity]
+    public var childrenNodes: [NodeEntity]
     private let parentNodes: [NodeEntity]
     
     public init(
@@ -103,7 +103,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     public func asyncChildren(of node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity? {
         guard !childrenNodes.isEmpty else { return nil }
         return .init(nodesCount: childrenNodes.count, nodeAt: { index in
-            return childrenNodes[index]
+            return self.childrenNodes[index]
         })
     }
 

@@ -7,7 +7,7 @@ public enum SearchQuery: Equatable, Sendable {
     case initial
     case userSupplied(SearchQueryEntity)
     
-    var chips: [SearchChipEntity] {
+    public var chips: [SearchChipEntity] {
         switch self {
         case .initial:
             return []

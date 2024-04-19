@@ -6,6 +6,11 @@ import MEGASDKRepo
 import MEGASwift
 import Search
 
+/// Dedicated actor to isolate loadMore function to prevent data race where multiple cells can trigger loadMore at the same time
+@globalActor fileprivate actor LoadMoreActor {
+    static var shared = LoadMoreActor()
+}
+
 /// abstraction into a search results
 final class HomeSearchResultsProvider: SearchResultsProviding {
     
@@ -21,11 +26,12 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     // We only initially fetch the node list when the user triggers search
     // Concrete nodes are then loaded one by one in the pagination
     private var nodeList: NodeListEntity?
-    private var currentPage = 0
-    private var totalPages = 0
+    
+    /// Keeps track of how many SearchResult were returned to client's through search queries.
+    /// This value plays an important role in pagination and node updates logic: When user query "loadMore" or there are node updates, we use this value incombination with `nodeList` to perform the needed computation.
+    private var filledItemsCount = 0
     private var pageSize = 100
     private var loadMorePagesOffset = 20
-    private var isLastPageReached = false
     private var availableChips: [SearchChipEntity]
     private let onSearchResultUpdated: (SearchResult) -> Void
     
@@ -73,11 +79,47 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         addTransferCompletedHandler()
     }
     
-    func search(queryRequest: SearchQuery, lastItemIndex: Int? = nil) async throws -> SearchResultsEntity? {
+    /// Get the most updated results from data source according to a query.
+    /// - Parameter queryRequest: The query
+    /// - Returns: The updated results list, paginated based on the current number of results that was filled previously (plus an amount of `loadMorePagesOffset` results to facilite "load more" function)
+    func refreshedSearchResults(queryRequest: SearchQuery) async -> SearchResultsEntity? {
+        let refreshedNodeList = await nodeListEntity(from: queryRequest)
+        
+        guard let refreshedNodeList else { return nil }
+        
+        // After refreshing, the number of nodes can change and we need to update the pagination info
+        let newNodesCount = refreshedNodeList.nodesCount
+        
+        // IMPORTANT NOTES: Here we're using `filledItemsCount + loadMorePagesOffset` instead of merely `filledItemsCount`
+        // because we want the refreshed results to contains some more elements than the original list.
+        // This is important to solve a edge case: When users already scrolled to be end of the result list and
+        // there are update with  many new nodes added to parentNode:
+        // if we only return `filledItemsCount`, due to the current `load more` mechanism, user must manually scroll the list to trigger `load more`.
+        // By using `filledItemsCount + loadMorePagesOffset` some new element will be
+        // added to the end of the list and when user can scroll down to see more content and trigger `load more` in a natural manner.
+        let numOfNodesToReturn = min(filledItemsCount + loadMorePagesOffset, newNodesCount)
+        self.filledItemsCount = numOfNodesToReturn
+        
+        var results: [SearchResult] = []
+        
+        if numOfNodesToReturn > 0 {
+            results += (0..<numOfNodesToReturn).compactMap { refreshedNodeList.nodeAt($0) }.map(mapNodeToSearchResult)
+        }
+        
+        self.nodeList = refreshedNodeList
+        
+        return SearchResultsEntity(
+            results: results,
+            availableChips: availableChips,
+            appliedChips: queryRequest.chips
+        )
+    }
+    
+    func search(queryRequest: SearchQuery, lastItemIndex: Int? = nil) async -> SearchResultsEntity? {
         if let lastItemIndex {
-            return try await loadMore(queryRequest: queryRequest, index: lastItemIndex)
+            return await loadMore(queryRequest: queryRequest, index: lastItemIndex)
         } else {
-            return try await searchInitially(queryRequest: queryRequest)
+            return await searchInitially(queryRequest: queryRequest)
         }
     }
     
@@ -88,13 +130,12 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         // need to cache this probably so that subsequent opens are fast for large datasets
         return nodeList.toNodeEntities().map { $0.id }
     }
-    
-    func searchInitially(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
-        // the requirement is to return children/contents of the
-        // folder being searched when query is empty, no chips etc
+    /// the requirement is to return children/contents of the
+    /// folder being searched when query is empty, no chips etc
+    func searchInitially(queryRequest: SearchQuery) async -> SearchResultsEntity {
         
-        currentPage = 0
-        isLastPageReached = false
+        // Initially, no item is filled yet
+        filledItemsCount = 0
         let sorting = queryRequest.sorting
 
         switch queryRequest {
@@ -104,23 +145,43 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             if shouldShowRoot(for: query) {
                 return await childrenOfRoot(with: sorting)
             } else {
-                self.nodeList = try await fullSearch(with: query)
-                return await fillResults(query: query)
+                self.nodeList = await fullSearch(with: query)
+                return fillResults(query: query)
             }
         }
     }
     
-    func loadMore(queryRequest: SearchQuery, index: Int) async throws -> SearchResultsEntity? {
-        let itemsInPage = (currentPage == 0 ? 1 : currentPage)*pageSize
-        guard index >= itemsInPage - loadMorePagesOffset else { return nil }
-        
-        currentPage+=1
-        
+    @LoadMoreActor
+    func loadMore(queryRequest: SearchQuery, index: Int) async -> SearchResultsEntity? {
+        guard let nodeList,
+                filledItemsCount < nodeList.nodesCount,
+              index >= filledItemsCount - loadMorePagesOffset else { return nil }
         switch queryRequest {
         case .initial:
-            return await fillResults()
+            return fillResults()
         case .userSupplied(let query):
-            return await fillResults(query: query)
+            return fillResults(query: query)
+        }
+    }
+    
+    private func nodeListEntity(from queryRequest: SearchQuery) async -> NodeListEntity? {
+        guard let parentNode else { return nil }
+        let sorting = queryRequest.sorting
+        switch queryRequest {
+        case .initial:
+            return await nodeRepository.asyncChildren(
+                of: parentNode,
+                sortOrder: sorting.toDomainSortOrderEntity()
+            )
+        case .userSupplied(let query):
+            if shouldShowRoot(for: query) {
+                return await nodeRepository.asyncChildren(
+                    of: parentNode,
+                    sortOrder: sorting.toDomainSortOrderEntity()
+                )
+            } else {
+                return await fullSearch(with: query)
+            }
         }
     }
     
@@ -136,7 +197,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             of: parentNode,
             sortOrder: sortOrder.toDomainSortOrderEntity()
         )
-        return await fillResults()
+        return fillResults()
     }
     
     private var searchPath: SearchFileRootPath {
@@ -149,7 +210,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         return .specific(parentNode.handle)
     }
     
-    private func fullSearch(with queryRequest: SearchQueryEntity) async throws -> NodeListEntity? {
+    private func fullSearch(with queryRequest: SearchQueryEntity) async -> NodeListEntity? {
         // SDK does not support empty query and MEGANodeFormatType.unknown
         assert(!(queryRequest.query == "" && queryRequest.chips == []))
         MEGALogInfo("[search] full search \(queryRequest.query)")
@@ -177,8 +238,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         return false
     }
     
-    private func fillResults(query: SearchQueryEntity? = nil) async -> SearchResultsEntity {
-        guard let nodeList, nodeList.nodesCount > 0, !isLastPageReached else {
+    private func fillResults(query: SearchQueryEntity? = nil) -> SearchResultsEntity {
+        guard let nodeList, filledItemsCount < nodeList.nodesCount else {
             return .init(
                 results: [],
                 availableChips: availableChips,
@@ -186,23 +247,17 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             )
         }
         
-        let nodesCount = nodeList.nodesCount
-        let previousPageStartIndex = (currentPage-1)*pageSize
-        let currentPageStartIndex = currentPage*pageSize
-        let nextPageFirstIndex = (currentPage+1)*pageSize
-        
-        isLastPageReached = nextPageFirstIndex >= nodesCount
-        
-        let firstItemIndex = currentPageStartIndex > nodesCount ? previousPageStartIndex : currentPageStartIndex
-        let lastItemIndex = isLastPageReached ? nodesCount : nextPageFirstIndex
+        let nextPageFirstIndex = filledItemsCount
+        let nextPageLastIndex = min(nextPageFirstIndex + pageSize - 1, nodeList.nodesCount - 1)
         
         var results: [SearchResult] = []
-
-        for i in firstItemIndex...lastItemIndex-1 {
+        for i in nextPageFirstIndex...nextPageLastIndex {
             if let nodeAt = nodeList.nodeAt(i) {
                 results.append(mapNodeToSearchResult(nodeAt))
             }
         }
+        
+        filledItemsCount = nextPageLastIndex + 1
 
         return .init(
             results: results,
@@ -220,6 +275,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     }
     
     private func addNodesUpdateHandler() {
+        // Note: In case of multiple node changes (e.g: Delete/Move multiple nodes), the SDK will emit multiple update signals
+        // We should debouce these emission to optimize update performance.
         nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
             // After update, the first node in nodeList is always the updated one
             guard let self, let node = nodes.first else { return }
