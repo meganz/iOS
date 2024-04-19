@@ -15,6 +15,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private var nodeEntity: NodeEntity?
     private let nodeListEntity: NodeListEntity?
     private let createFolderResult: Result<NodeEntity, NodeCreationErrorEntity>
+    private let isNodeRestorable: Bool
 
     public var isMultimediaFileNode_CalledTimes = 0
     
@@ -30,7 +31,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 node: NodeEntity? = nil,
                 nodeListEntity: NodeListEntity? = nil,
                 createFolderResult: Result<NodeEntity, NodeCreationErrorEntity> = .success(.init()),
-                isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false}
+                isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false },
+                isNodeRestorable: Bool = false
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
@@ -45,6 +47,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.nodeListEntity = nodeListEntity
         self.createFolderResult = createFolderResult
         self.isNodeInRubbishBin = isNodeInRubbishBin
+        self.isNodeRestorable = isNodeRestorable
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -112,7 +115,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     }
     
     public func isRestorable(node: MEGADomain.NodeEntity) -> Bool {
-        false
+        isNodeRestorable
     }
 
     public func asyncChildrenOf(node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity? {

@@ -41,6 +41,14 @@ final class SearchResultMapperTests: XCTestCase {
         )
     }
 
+    func testSwipeActions_whenNodeIsChildNodeOfParentNodeInRubbishBin_shouldReturnSwipeActionsAsEmpty() {
+        assertSwipeActions(
+            isNodeInRubbishBin: { _ in true },
+            isNodeRestorable: false,
+            expectedSwipeActionsCount: 0
+        )
+    }
+
     // MARK: - Private methods
 
     private typealias SUT = SearchResultMapper
@@ -67,6 +75,7 @@ final class SearchResultMapperTests: XCTestCase {
         accessLevel: NodeAccessTypeEntity = .owner,
         nodeEntity: NodeEntity = NodeEntity(),
         isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false },
+        isNodeRestorable: Bool = true,
         expectedSwipeActionsCount: Int,
         expectedSwipeActionImages: [Image] = [],
         file: StaticString = #filePath,
@@ -75,7 +84,8 @@ final class SearchResultMapperTests: XCTestCase {
         let sut = makeSUT(
             nodeUseCase: MockNodeDataUseCase(
                 nodeAccessLevelVariable: accessLevel,
-                isNodeInRubbishBin: isNodeInRubbishBin
+                isNodeInRubbishBin: isNodeInRubbishBin,
+                isNodeRestorable: isNodeRestorable
             )
         )
         let searchResult = sut.map(node: nodeEntity)
