@@ -36,7 +36,8 @@ struct NodeActions {
     var disputeTakedown: (NodeEntity) -> Void
     
     var moveToRubbishBin: ([NodeEntity]) -> Void
-    var restoreFromRubbishBin: ([NodeEntity]) -> Void
+    // When using the restore option by swiping left, we don't want the view to pop.
+    var restoreFromRubbishBin: (_ nodes: [NodeEntity], _ shouldPopView: Bool) -> Void
     var removeFromRubbishBin: ([NodeEntity]) -> Void
 }
 
@@ -272,14 +273,15 @@ extension NodeActions {
             moveToRubbishBin: { nodes in
                 moveNodesToRubbishBin(nodes, presenter: navigationController)
             },
-            restoreFromRubbishBin: { nodes in
+            restoreFromRubbishBin: { nodes, shouldPopView in
                 let megaNodes = megaNodes(from: nodes, using: sdk)
                 for megaNode in megaNodes {
                     megaNode.mnz_restore()
                 }
                 
-                // check if need pop
-                navigationController.popViewController(animated: true)
+                if shouldPopView {
+                    navigationController.popViewController(animated: true)
+                }
             },
             removeFromRubbishBin: { nodes in
                 confirmDeleteActionFiles(
