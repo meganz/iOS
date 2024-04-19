@@ -1192,6 +1192,10 @@ extension UIColor {
         UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection)
     }
     
+    @objc class func whiteTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.white
+    }
+    
     // MARK: - Feature Flag
     
     @objc class func isDesignTokenEnabled() -> Bool {

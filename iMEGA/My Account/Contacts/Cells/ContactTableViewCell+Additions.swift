@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 
 extension ContactTableViewCell {
     @objc func updateAppearance() {
@@ -41,5 +42,24 @@ extension ContactTableViewCell {
         case .busy: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : MEGAAppColor.Chat.chatStatusBusy.uiColor
         default: .clear
         }
+    }
+    
+    @objc func configureCellForContactsModeChatStartConversation(_ option: ContactsStartConversation) {
+        permissionsImageView.isHidden = true
+        
+        switch option {
+        case .newGroupChat:
+            nameLabel.text = Strings.Localizable.newGroupChat
+            avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.groupChatToken : UIImage.createGroup
+        case .newMeeting:
+            nameLabel.text = Strings.Localizable.Meetings.Create.newMeeting
+            avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.newMeetingToken : UIImage.newMeeting
+        case .joinMeeting:
+            nameLabel.text = Strings.Localizable.Meetings.Link.LoggedInUser.joinButtonText
+            avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.joinMeetingToken : UIImage.joinMeeting
+        @unknown default: break
+        }
+        
+        shareLabel.isHidden = true
     }
 }

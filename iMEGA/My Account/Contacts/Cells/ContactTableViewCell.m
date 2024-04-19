@@ -147,25 +147,6 @@
     }
 }
 
-- (void)configureCellForContactsModeChatStartConversation:(ContactsStartConversation)option {
-    self.permissionsImageView.hidden = YES;
-    switch (option) {
-        case ContactsStartConversationNewGroupChat:
-            self.nameLabel.text = LocalizedString(@"New Group Chat", @"Text button for init a group chat");
-            self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
-            break;
-        case ContactsStartConversationNewMeeting:
-            self.nameLabel.text = LocalizedString(@"meetings.create.newMeeting", @"Text button for init a Meeting.");
-            self.avatarImageView.image = [UIImage imageNamed:@"newMeeting"];
-            break;
-        case ContactsStartConversationJoinMeeting:
-            self.nameLabel.text = LocalizedString(@"meetings.link.loggedInUser.joinButtonText", @"Text button for joining a Meeting.");
-            self.avatarImageView.image = [UIImage imageNamed:@"joinMeeting"];
-            break;
-    }
-    self.shareLabel.hidden = YES;
-}
-
 - (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {
     if ([self.delegate respondsToSelector:@selector(notificationSwitchValueChanged:)]) {
         [self.delegate notificationSwitchValueChanged:sender];

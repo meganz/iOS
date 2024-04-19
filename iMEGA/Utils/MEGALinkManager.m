@@ -685,7 +685,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
     
     if (imageOnBase64URLEncoding.mnz_isEmpty) {
-        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor mnz_fromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:UIColor.mnz_whiteFFFFFF font:[UIFont systemFontOfSize:64.0f]];
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor mnz_fromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:64.0f]];
     } else {
         inviteOrDismissModal.roundImage = YES;
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
