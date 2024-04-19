@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGAPresentation
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
@@ -8,8 +9,9 @@ import SwiftUI
 class PhotoCellViewModel: ObservableObject {
 
     // MARK: public state
-    var duration: String
-    var isVideo: Bool
+    let duration: String
+    let isVideo: Bool
+    let isSensitive: Bool
     
     @Published var currentZoomScaleFactor: PhotoLibraryZoomState.ScaleFactor
     @Published var thumbnailContainer: any ImageContaining
@@ -42,13 +44,16 @@ class PhotoCellViewModel: ObservableObject {
     
     init(photo: NodeEntity,
          viewModel: PhotoLibraryModeAllViewModel,
-         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: some ThumbnailUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailUseCase = thumbnailUseCase
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
+        isSensitive = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) && photo.isMarkedSensitive
+        
         let type: ThumbnailTypeEntity = viewModel.zoomState.scaleFactor == .one ? .preview : .thumbnail
         if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: type) {
             thumbnailContainer = container

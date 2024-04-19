@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 import SwiftUI
 
 final class AlbumCoverPickerPhotoCellViewModel: PhotoCellViewModel {
@@ -11,11 +12,15 @@ final class AlbumCoverPickerPhotoCellViewModel: PhotoCellViewModel {
     init(albumPhoto: AlbumPhotoEntity,
          photoSelection: AlbumCoverPickerPhotoSelection,
          viewModel: PhotoLibraryModeAllViewModel,
-         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: some ThumbnailUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.albumPhoto = albumPhoto
         self.photoSelection = photoSelection
         
-        super.init(photo: albumPhoto.photo, viewModel: viewModel, thumbnailUseCase: thumbnailUseCase)
+        super.init(photo: albumPhoto.photo,
+                   viewModel: viewModel,
+                   thumbnailUseCase: thumbnailUseCase,
+                   featureFlagProvider: featureFlagProvider)
         
         setupSubscription()
     }

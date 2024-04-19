@@ -3,6 +3,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAFoundation
+import MEGAPresentationMock
 import MEGASwiftUI
 import SwiftUI
 import XCTest
@@ -954,5 +955,30 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldApplyContentOpacity)
         sut.editMode = .inactive
         XCTAssertFalse(sut.shouldApplyContentOpacity)
+    }
+    
+    func testIsSensitive_onNodeMarkedSensitive_shouldSetCorrectState() {
+        [true, false].forEach { isMarkedSensitive in
+            let photo = NodeEntity(name: "0.jpg", handle: 65, isMarkedSensitive: isMarkedSensitive)
+            
+            let sut = PhotoCellViewModel(
+                photo: photo,
+                viewModel: allViewModel,
+                thumbnailUseCase: MockThumbnailUseCase(),
+                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
+            )
+            
+            XCTAssertEqual(sut.isSensitive, isMarkedSensitive)
+        }
+    }
+    
+    func testIsSensitive_markedSensitiveFeatureFlagOff_shouldSetToFalse() {
+        let photo = NodeEntity(name: "0.jpg", handle: 34, isMarkedSensitive: true)
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase())
+        
+        XCTAssertFalse(sut.isSensitive)
     }
 }
