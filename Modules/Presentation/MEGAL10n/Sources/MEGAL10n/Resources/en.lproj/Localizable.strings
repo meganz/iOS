@@ -4052,3 +4052,5 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Out of sight";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="You decide when hidden files are visible. There is a new setting to show hidden items temporarily.";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="My Account";

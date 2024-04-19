@@ -1,3 +1,4 @@
+import Accounts
 import MEGAL10n
 import MEGASwiftUI
 

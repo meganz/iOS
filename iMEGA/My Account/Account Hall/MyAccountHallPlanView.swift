@@ -21,7 +21,7 @@ struct MyAccountHallPlanView: View {
                 .renderingMode(isDesignTokenEnabled ? .template : .original)
                 .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : Color.primary)
                 .frame(width: 24, height: 24)
-                .padding(.horizontal, 14)
+                .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 18))
             
             VStack(alignment: .leading, spacing: 0) {
                 Text(Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
@@ -37,7 +37,7 @@ struct MyAccountHallPlanView: View {
                     Text(viewModel.currentPlanName)
                         .font(.body)
                         .foregroundStyle(
-                            isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color
+                            isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label)
                         )
                         .opacity(viewModel.isUpdatingAccountDetails ? 0 : 1)
                 }
