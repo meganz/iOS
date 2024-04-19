@@ -13,7 +13,7 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
             lhs.actionButtonHidden == rhs.actionButtonHidden &&
             lhs.actionButtonEnabled == rhs.actionButtonEnabled &&
             lhs.callAllButtonHidden == rhs.callAllButtonHidden &&
-            lhs.infoViewModel == rhs.infoViewModel 
+            lhs.infoViewModel == rhs.infoViewModel
         }
         
         var title: String
@@ -27,13 +27,13 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
     }
     
     private var titleLabel: UILabel!
+    private var warningLabel: UILabel!
+    private var closeButton: UIButton!
+    private var warningStack: UIStackView!
     private var actionButton: UIButton!
     private var callAllIcon: UIImageView!
-    private var header: UIView!
     private var actionButtonTappedHandler: (() -> Void)?
-    private let hosting = UIHostingController(
-        rootView: AnyView(BannerView(config: .empty))
-    )
+    private var closeButtonTappedHandler: (() -> Void)?
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -48,11 +48,15 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         titleLabel = UILabel()
         actionButton = UIButton()
         callAllIcon = UIImageView(image: UIImage.phoneCallAll)
+        
         callAllIcon.contentMode = .center
-        
-        titleLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+        closeButton = UIButton()
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        warningLabel = UILabel()
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         titleLabel.textColor = .white // static color does change when dark/light mode changes
-        
+        warningLabel.preferredMaxLayoutWidth = 300
+        warningLabel.font  = UIFont.preferredFont(forTextStyle: .caption2).bold()
         let titleColor = UIColor.isDesignTokenEnabled()
         ? TokenColors.Support.success
         : MEGAAppColor.Green._00A886.uiColor
@@ -61,12 +65,12 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         actionButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         
-        header = hosting.view
-
+        closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        warningLabel.translatesAutoresizingMaskIntoConstraints = false
         actionButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
         callAllIcon.translatesAutoresizingMaskIntoConstraints = false
-        header.translatesAutoresizingMaskIntoConstraints = false
         
         let stackH = UIStackView(
             arrangedSubviews: [
@@ -78,19 +82,31 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         stackH.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         stackH.isLayoutMarginsRelativeArrangement = true
         stackH.axis = .horizontal
-        
         stackH.translatesAutoresizingMaskIntoConstraints = false
         
+        warningStack = UIStackView(
+            arrangedSubviews: [
+                warningLabel,
+                closeButton
+            ]
+        )
+        warningStack.axis = .horizontal
+        warningStack.translatesAutoresizingMaskIntoConstraints = false
+        warningStack.layoutMargins = UIEdgeInsets(top: 14, left: 16, bottom: 14, right: 16)
+        warningStack.isLayoutMarginsRelativeArrangement = true
         let stackV = UIStackView(
             arrangedSubviews: [
                 stackH,
-                header
+                warningStack
             ]
         )
         stackV.translatesAutoresizingMaskIntoConstraints = false
         stackV.axis = .vertical
         contentView.addSubview(stackV)
         contentView.wrap(stackV)
+        NSLayoutConstraint.activate([
+            closeButton.widthAnchor.constraint(equalToConstant: 40)
+        ])
     }
     
     func configureWith(config: ViewConfig, parent: UIView) {
@@ -103,26 +119,24 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         callAllIcon.isHidden = config.callAllButtonHidden
         
         if let info = config.infoViewModel {
-            let config = BannerView.Config(
-                copy: info.copy,
-                underline: true,
-                theme: .darkMeetingsFloatingPanel,
-                closeAction: info.dismissTapped,
-                tapAction: info.linkTapped
-            )
-            
-            let view = BannerView(config: config).font(.footnote)
-            hosting.rootView = AnyView(view)
-            // meetings only support single interface style - dark
-            // override this to force just single theme
-            hosting.overrideUserInterfaceStyle = .dark
-            hosting.view.isHidden = false
+            let theme = BannerView.Config.Theme.darkMeetingsFloatingPanel
+            closeButtonTappedHandler = info.dismissTapped
+            warningLabel.text = info.copy
+            warningLabel.textColor = theme.foregroundUIColor(.dark)
+            closeButton.tintColor = theme.foregroundUIColor(.dark)
+            warningStack.backgroundColor = UIColor(theme.background(.dark))
+            warningLabel.numberOfLines = 0
+            warningStack.isHidden = false
         } else {
-            hosting.view.isHidden = true
+            warningStack.isHidden = true
         }
     }
     
     @objc private func actionButtonTapped(_ sender: UIButton) {
         actionButtonTappedHandler?()
+    }
+    
+    @objc private func closeButtonTapped(_ sender: UIButton) {
+        closeButtonTappedHandler?()
     }
 }
