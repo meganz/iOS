@@ -9,10 +9,12 @@ struct WaitingRoomParticipantsListView: View {
     var body: some View {
         ZStack {
             Color(MEGAAppColor.Black._2C2C2E.uiColor).edgesIgnoringSafeArea([.all])
-            VStack {
+            VStack(spacing: 0) {
                 headerView
                 searchBarView()
                     .padding(.horizontal, 30)
+                Spacer()
+                    .frame(height: 8)
                 bannerView
                 ScrollView {
                     ForEach(viewModel.displayWaitingRoomParticipants) { participantViewModel in
