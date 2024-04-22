@@ -12,7 +12,7 @@ public protocol ImageContaining: Equatable, Sendable {
     var type: ImageType { get }
 }
 
-public struct ImageContainer: ImageContaining, @unchecked Sendable {
+public struct ImageContainer: ImageContaining, Sendable {
     public let image: Image
     public let type: ImageType
     
@@ -30,7 +30,7 @@ public struct ImageContainer: ImageContaining, @unchecked Sendable {
     }
 }
 
-public struct URLImageContainer: ImageContaining, @unchecked Sendable {
+public struct URLImageContainer: ImageContaining, Sendable {
     public let imageURL: URL
     public let image: Image
     public let type: ImageType

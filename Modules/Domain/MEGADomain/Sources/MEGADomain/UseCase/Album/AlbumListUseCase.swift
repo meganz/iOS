@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Combine
 import Foundation
 
@@ -6,12 +7,12 @@ public protocol AlbumListUseCaseProtocol {
     func systemAlbums() async throws -> [AlbumEntity]
     func userAlbums() async -> [AlbumEntity]
     func createUserAlbum(with name: String?) async throws -> AlbumEntity
-    func hasNoPhotosAndVideos() async -> Bool
+    func hasNoVisualMedia() async -> Bool
 }
 
 public struct AlbumListUseCase: AlbumListUseCaseProtocol {
     
-    private let fileSearchRepository: any FilesSearchRepositoryProtocol
+    private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let albumContentsUpdateRepository: any AlbumContentsUpdateNotifierRepositoryProtocol
@@ -38,7 +39,7 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
     }
     
     public init(
-        fileSearchRepository: some FilesSearchRepositoryProtocol,
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
         userAlbumRepository: some UserAlbumRepositoryProtocol,
         albumContentsUpdateRepository: some AlbumContentsUpdateNotifierRepositoryProtocol,
@@ -46,7 +47,7 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
     ) {
-        self.fileSearchRepository = fileSearchRepository
+        self.photoLibraryUseCase = photoLibraryUseCase
         self.mediaUseCase = mediaUseCase
         self.userAlbumRepository = userAlbumRepository
         self.albumContentsUpdateRepository = albumContentsUpdateRepository
@@ -101,40 +102,32 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
                            sharedLinkStatus: .exported(false))
     }
     
+    public func hasNoVisualMedia() async -> Bool {
+        await ![PhotosFilterOptionsEntity.images, .videos]
+            .async
+            .contains { visualMediaOption in
+                guard let mediaForType = try? await photoLibraryUseCase.media(for: [visualMediaOption, .allLocations],
+                                                                        excludeSensitive: nil) else {
+                    return true
+                }
+                return mediaForType.contains(where: { $0.hasThumbnail && $0.name.fileExtensionGroup.isVisualMedia })
+            }
+    }
+    
     // MARK: - Private
     
-    private func allPhotos() async throws -> [NodeEntity] {
-        try await fileSearchRepository.search(string: "",
-                                              parent: nil,
-                                              recursive: true,
-                                              supportCancel: false,
-                                              sortOrderType: .defaultDesc,
-                                              formatType: .photo)
-    }
-    
-    private func allVideos() async throws -> [NodeEntity] {
-        try await fileSearchRepository.search(string: "",
-                                              parent: nil,
-                                              recursive: true,
-                                              supportCancel: false,
-                                              sortOrderType: .defaultDesc,
-                                              formatType: .video)
-    }
-    
     private func allSortedThumbnailPhotosAndVideos() async throws -> [NodeEntity] {
-        let allPhotos = try await allPhotos()
-        let allVideos = try await allVideos()
+        var allPhotos = try await photoLibraryUseCase.media(for: [.allMedia, .allLocations],
+                                                            excludeSensitive: nil)
+            .filter { $0.hasThumbnail && $0.name.fileExtensionGroup.isVisualMedia }
         
-        var allThumbnailPhotosAndVideos = [allPhotos, allVideos]
-            .flatMap { $0 }
-            .filter { $0.hasThumbnail && $0.mediaType != nil }
-        allThumbnailPhotosAndVideos.sort {
+        allPhotos.sort {
             if $0.modificationTime == $1.modificationTime {
                 return $0.handle > $1.handle
             }
             return $0.modificationTime > $1.modificationTime
         }
-        return allThumbnailPhotosAndVideos
+        return allPhotos
     }
     
     private func createSystemAlbums(_ photos: [NodeEntity]) async -> [AlbumEntity] {
@@ -186,28 +179,16 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
     private func makeAlbumMetaData(albumContent: [AlbumPhotoEntity]) -> AlbumMetaDataEntity {
         let counts = albumContent
             .reduce(into: (image: 0, video: 0)) { (result, content) in
-                guard let mediaType = content.photo.mediaType else { return }
-                switch mediaType {
-                case .image:
+                let fileExtensionGroup = content.photo.name.fileExtensionGroup
+                if fileExtensionGroup.isImage {
                     result.image += 1
-                case .video:
+                } else if fileExtensionGroup.isVideo {
                     result.video += 1
                 }
             }
         
         return AlbumMetaDataEntity(imageCount: counts.image,
                                    videoCount: counts.video)
-    }
-    
-    public func hasNoPhotosAndVideos() async -> Bool {
-        let allPhotos = try? await allPhotos()
-        let allVideos = try? await allVideos()
-        
-        let allPhotosAndVideos = [allPhotos, allVideos]
-            .flatMap { $0 ?? [] }
-            .filter { $0.hasThumbnail }
-        
-        return allPhotosAndVideos.isEmpty
     }
     
     private func showHiddenPhotos() async -> Bool {

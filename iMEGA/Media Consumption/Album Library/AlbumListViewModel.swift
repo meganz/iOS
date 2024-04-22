@@ -105,7 +105,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             do {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
                 
-                newlyAddedAlbum = await usecase.hasNoPhotosAndVideos() ? nil : newAlbum
+                newlyAddedAlbum = await usecase.hasNoVisualMedia() ? nil : newAlbum
                 photoAlbumContainerViewModel?.shouldShowSelectBarButton = true
             } catch {
                 MEGALogError("Error creating user album: \(error.localizedDescription)")
