@@ -45,6 +45,8 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
     }
     
     private func setup() {
+        isOpaque = true
+        overrideUserInterfaceStyle = .dark
         titleLabel = UILabel()
         actionButton = UIButton()
         callAllIcon = UIImageView(image: UIImage.phoneCallAll)
