@@ -14,6 +14,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     private let fileSearchRepo: any FilesSearchRepositoryProtocol
     private let userAlbumRepo: any UserAlbumRepositoryProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
     
     public init(albumContentsRepo: any AlbumContentsUpdateNotifierRepositoryProtocol,
@@ -21,12 +22,14 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
                 fileSearchRepo: any FilesSearchRepositoryProtocol,
                 userAlbumRepo: any UserAlbumRepositoryProtocol,
                 contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+                photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
                 hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
         self.albumContentsRepo = albumContentsRepo
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo
         self.userAlbumRepo = userAlbumRepo
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.photoLibraryUseCase = photoLibraryUseCase
         self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
@@ -48,16 +51,12 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         let showHiddenPhotos = await showHiddenPhotos()
         
         if album.systemAlbum {
-            return try await filter(forAlbum: album).compactMap {
-                guard $0.mediaType != nil else {
-                    return nil
-                }
-                return AlbumPhotoEntity(photo: $0)
-            }
-        } else {
-            return await userAlbumPhotos(by: album.id,
-                                         showHidden: showHiddenPhotos)
+            return try await systemAlbumPhotos(forAlbum: album,
+                                               showHiddenPhotos: showHiddenPhotos)
+            .map { AlbumPhotoEntity(photo: $0) }
         }
+        return await userAlbumPhotos(by: album.id,
+                                     showHidden: showHiddenPhotos)
     }
     
     public func userAlbumPhotos(by id: HandleEntity,
@@ -103,27 +102,27 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     
     // MARK: Private
     
-    private func filter(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
-        async let photos = try await mediaUseCase.allPhotos()
-        var nodes = [NodeEntity]()
-        
-        if album.type == .favourite {
-            async let videos = try mediaUseCase.allVideos()
-            nodes = try await [photos, videos]
-                .flatMap { $0 }
-                .filter { $0.hasThumbnail && $0.isFavourite }
-        } else if album.type == .raw {
-            nodes = try await photos.filter { $0.hasThumbnail && mediaUseCase.isRawImage($0.name) }
-        } else if album.type == .gif {
-            nodes = try await photos.filter { $0.hasThumbnail && mediaUseCase.isGifImage($0.name) }
+    private func systemAlbumPhotos(forAlbum album: AlbumEntity, showHiddenPhotos: Bool) async throws -> [NodeEntity] {
+        let photos = try await photoLibraryUseCase.media(for: [.allLocations, .images],
+                                                               excludeSensitive: !showHiddenPhotos)
+        switch album.type {
+        case .favourite:
+            let videos = try await photoLibraryUseCase.media(for: [.allLocations, .videos],
+                                                             excludeSensitive: !showHiddenPhotos)
+            return (photos + videos)
+                .filter { $0.hasThumbnail && $0.name.fileExtensionGroup.isVisualMedia && $0.isFavourite }
+        case .raw:
+            return photos.filter { $0.hasThumbnail && mediaUseCase.isRawImage($0.name) }
+        case .gif:
+            return photos.filter { $0.hasThumbnail && mediaUseCase.isGifImage($0.name) }
+        default:
+            return []
         }
-        
-        return nodes
     }
     
     private func photo(forNodeId nodeId: HandleEntity) async -> NodeEntity? {
         guard let photo = await fileSearchRepo.node(by: nodeId),
-              photo.mediaType != nil else {
+              photo.name.fileExtensionGroup.isVisualMedia else {
             return nil
         }
         return photo

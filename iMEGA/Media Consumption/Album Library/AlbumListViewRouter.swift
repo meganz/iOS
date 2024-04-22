@@ -38,11 +38,12 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
         let userAlbumRepo = userAlbumRepository()
         let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+        let photoLibraryUseCase = makePhotoLibraryUseCase()
         let hiddenNodesFeatureFlagEnabled = { @Sendable in DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(
-                fileSearchRepository: filesSearchRepo,
+                photoLibraryUseCase: photoLibraryUseCase,
                 mediaUseCase: mediaUseCase,
                 userAlbumRepository: userAlbumRepo,
                 albumContentsUpdateRepository: albumContentsUpdatesRepo,
@@ -51,6 +52,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                                                            fileSearchRepo: filesSearchRepo,
                                                            userAlbumRepo: userAlbumRepo,
                                                            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                                                           photoLibraryUseCase: photoLibraryUseCase,
                                                            hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled
@@ -75,18 +77,10 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     func start() {}
     
     private func makeMonitorAlbumsUseCase() -> MonitorAlbumsUseCase {
-        let photoLibraryRepository = PhotoLibraryRepository(
-            cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
-        
-        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
-                                                      searchRepository: FilesSearchRepository.newRepo,
-                                                      contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-                                                      hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
-        
-        return MonitorAlbumsUseCase(
+        MonitorAlbumsUseCase(
             monitorPhotosUseCase: MonitorPhotosUseCase(
                 photosRepository: PhotosRepository.sharedRepo,
-                photoLibraryUseCase: photoLibraryUseCase),
+                photoLibraryUseCase: makePhotoLibraryUseCase()),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             userAlbumRepository: userAlbumRepository(),
             photosRepository: PhotosRepository.sharedRepo)
@@ -97,5 +91,14 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             return UserAlbumRepository.newRepo
         }
         return UserAlbumCacheRepository.newRepo
+    }
+    
+    private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {
+        let photoLibraryRepository = PhotoLibraryRepository(
+            cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
+        return PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
+                                   searchRepository: FilesSearchRepository.newRepo,
+                                   contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                                   hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
 }

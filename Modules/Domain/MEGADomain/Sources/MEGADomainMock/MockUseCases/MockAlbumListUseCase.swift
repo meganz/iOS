@@ -38,7 +38,7 @@ public struct MockAlbumListUseCase: AlbumListUseCaseProtocol {
         createdUserAlbums[name ?? ""] ?? MockAlbumListUseCase.sampleUserAlbum(name: name ?? "Custom Name")
     }
     
-    public func hasNoPhotosAndVideos() async -> Bool {
+    public func hasNoVisualMedia() async -> Bool {
         false
     }
 }

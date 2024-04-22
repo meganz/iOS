@@ -8,20 +8,19 @@ final class AlbumContentUseCaseTests: XCTestCase {
     
     func testPhotosForAlbum_onThumbnailPhotosReturned_shouldReturnGifNodes() async throws {
         let nodes = [
-            NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "sample3.gif", handle: 7, hasThumbnail: false, mediaType: .image),
-            NodeEntity(name: "test.raw", handle: 3, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "test2.jpg", handle: 4, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "test3.png", handle: 5, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "test3.mp4", handle: 6, hasThumbnail: true, mediaType: .video),
-            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true, mediaType: .image)
+            NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true),
+            NodeEntity(name: "sample3.gif", handle: 7, hasThumbnail: false),
+            NodeEntity(name: "test.raw", handle: 3, hasThumbnail: true),
+            NodeEntity(name: "test2.jpg", handle: 4, hasThumbnail: true),
+            NodeEntity(name: "test3.png", handle: 5, hasThumbnail: true),
+            NodeEntity(name: "test3.mp4", handle: 6, hasThumbnail: true),
+            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true)
         ]
-        let gifNodes = nodes.filter { $0.name.contains(".gif") }
+        let gifNodes = nodes.filter { $0.name.contains(".gif") && $0.hasThumbnail }
         
         let sut = makeSUT(
-            mediaUseCase: MockMediaUseCase(gifImageFiles: gifNodes.map(\.name),
-                                           allPhotos: nodes)
-        )
+            mediaUseCase: MockMediaUseCase(gifImageFiles: gifNodes.map(\.name)),
+            photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: nodes))
         
         let result = try await sut.photos(in: AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif))
         let expectedResult = gifNodes.filter { $0.hasThumbnail }.map { AlbumPhotoEntity(photo: $0) }
@@ -30,20 +29,19 @@ final class AlbumContentUseCaseTests: XCTestCase {
     
     func testPhotosForAlbum_onThumbnailPhotosReturned_shouldReturnRawNodes() async throws {
         let nodes = [
-            NodeEntity(name: "sample1.raw", handle: 1, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "sample2.raw", handle: 6, hasThumbnail: false, mediaType: .image),
-            NodeEntity(name: "test2.jpg", handle: 3, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true, mediaType: .video)
+            NodeEntity(name: "sample1.raw", handle: 1, hasThumbnail: true),
+            NodeEntity(name: "sample2.raw", handle: 6, hasThumbnail: false),
+            NodeEntity(name: "test2.jpg", handle: 3, hasThumbnail: true),
+            NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true),
+            NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true),
+            NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true),
+            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true)
         ]
-        let rawImageNodes = nodes.filter { $0.name.contains(".raw") }
+        let rawImageNodes = nodes.filter { $0.name.contains(".raw") && $0.hasThumbnail }
         
         let sut = makeSUT(
-            mediaUseCase: MockMediaUseCase(rawImageFiles: rawImageNodes.map(\.name),
-                                           allPhotos: nodes)
-        )
+            mediaUseCase: MockMediaUseCase(rawImageFiles: rawImageNodes.map(\.name)),
+            photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: nodes))
         
         let result = try await sut.photos(in: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 1, type: .raw))
         let expectedResult = rawImageNodes.filter { $0.hasThumbnail }.map { AlbumPhotoEntity(photo: $0) }
@@ -51,22 +49,21 @@ final class AlbumContentUseCaseTests: XCTestCase {
     }
     
     func testPhotosForAlbum_onThumbnailPhotosReturned_onlyFavouritesAreReturned() async throws {
-        let expectedPhotoNode = NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true, isFavourite: true, mediaType: .image)
-        let expectedVideoNode = NodeEntity(name: "test.mp4", handle: 1, hasThumbnail: true, isFavourite: true, mediaType: .video)
+        let expectedPhotoNode = NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true, isFavourite: true)
+        let expectedVideoNode = NodeEntity(name: "test.mp4", handle: 1, hasThumbnail: true, isFavourite: true)
         let photoNodes = [
             expectedPhotoNode,
-            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "sample3.gif", handle: 2, hasThumbnail: false, mediaType: .image)
+            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true),
+            NodeEntity(name: "sample3.gif", handle: 2, hasThumbnail: false)
         ]
         let videoNodes = [
-            NodeEntity(name: "test-2.mp4", handle: 2, hasThumbnail: true, mediaType: .video),
+            NodeEntity(name: "test-2.mp4", handle: 2, hasThumbnail: true),
             expectedVideoNode,
-            NodeEntity(name: "test-3.mp4", handle: 2, hasThumbnail: false, mediaType: .video)
+            NodeEntity(name: "test-3.mp4", handle: 2, hasThumbnail: false)
         ]
         
         let sut = makeSUT(
-            mediaUseCase: MockMediaUseCase(allPhotos: photoNodes,
-                                           allVideos: videoNodes)
+            photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: photoNodes + videoNodes)
         )
         
         let result = try await sut.photos(in: AlbumEntity(id: 1, name: "Fav", coverNode: NodeEntity(handle: 2), count: 1, type: .favourite))
@@ -88,8 +85,8 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let albumPhotoId2 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 23, nodeId: photoHandle2)
         
         let album = AlbumEntity(id: albumId, name: albumName, coverNode: NodeEntity(handle: 1), count: 1, type: .user)
-        let node1 = NodeEntity(name: name1, handle: photoHandle1, hasThumbnail: true, mediaType: .image)
-        let node2 = NodeEntity(name: name2, handle: photoHandle2, hasThumbnail: true, mediaType: .video)
+        let node1 = NodeEntity(name: name1, handle: photoHandle1, hasThumbnail: true)
+        let node2 = NodeEntity(name: name2, handle: photoHandle2, hasThumbnail: true)
         
         let userAlbumRepo = MockUserAlbumRepository(albums: [set],
                                                     albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2]])
@@ -100,7 +97,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         )
         
         let result = try await sut.photos(in: album)
-            
+        
         XCTAssertEqual(Set(result), Set([
             AlbumPhotoEntity(photo: node1, albumPhotoId: albumPhotoId1.id),
             AlbumPhotoEntity(photo: node2, albumPhotoId: albumPhotoId2.id)
@@ -115,8 +112,8 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let albumPhotoId1 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 5, nodeId: hiddenNodeHandle)
         let albumPhotoId2 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 8, nodeId: visibleNodeHandle)
         
-        let hiddenNode =  NodeEntity(handle: hiddenNodeHandle, isMarkedSensitive: true, mediaType: .image)
-        let visibleNode =   NodeEntity(handle: visibleNodeHandle, isMarkedSensitive: false, mediaType: .image)
+        let hiddenNode = NodeEntity(name: "hide.jpg", handle: hiddenNodeHandle, isMarkedSensitive: true)
+        let visibleNode = NodeEntity(name: "vis.jpg", handle: visibleNodeHandle, isMarkedSensitive: false)
         
         let allNodesExpectedResult = Set([
             AlbumPhotoEntity(photo: visibleNode, albumPhotoId: albumPhotoId2.id),
@@ -170,7 +167,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         )
         
         let favouriteAlbum = AlbumEntity(id: 1, name: "Favourites", coverNode: nil,
-                                    count: 1, type: .favourite)
+                                         count: 1, type: .favourite)
         let exp = expectation(description: "Should reload once")
         sut.albumReloadPublisher(forAlbum: favouriteAlbum)
             .sink { _ in
@@ -179,7 +176,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         
         albumReloadPublisher.send()
         setElementsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: favouriteAlbum.id,
-                                                          order: 1, nodeId: 1, modificationTime: Date(), name: "")])
+                                                           order: 1, nodeId: 1, modificationTime: Date(), name: "")])
         
         wait(for: [exp], timeout: 1.0)
     }
@@ -222,8 +219,8 @@ final class AlbumContentUseCaseTests: XCTestCase {
                 let albumPhotoId1 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 5, nodeId: handle1)
                 let albumPhotoId2 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 8, nodeId: handle2)
                 
-                let imageNode =  NodeEntity(name: "Test.jpg", handle: handle1, mediaType: .image)
-                let videoNode =   NodeEntity(name: "Test.mp4", handle: handle2, mediaType: .video)
+                let imageNode =  NodeEntity(name: "Test.jpg", handle: handle1)
+                let videoNode =   NodeEntity(name: "Test.mp4", handle: handle2)
                 let userAlbumRepo = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2]])
                 
                 let sut = makeSUT(
@@ -257,8 +254,8 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let albumPhotoId1 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 5, nodeId: hiddenNodeHandle)
         let albumPhotoId2 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 8, nodeId: visibleNodeHandle)
         
-        let hiddenNode =  NodeEntity(handle: hiddenNodeHandle, isMarkedSensitive: true, mediaType: .image)
-        let visibleNode =   NodeEntity(handle: visibleNodeHandle, isMarkedSensitive: false, mediaType: .image)
+        let hiddenNode = NodeEntity(name: "hide.jpg", handle: hiddenNodeHandle, isMarkedSensitive: true)
+        let visibleNode = NodeEntity(name: "vis.jpg", handle: visibleNodeHandle, isMarkedSensitive: false)
         let userAlbumRepo = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2]])
         
         let sut = makeSUT(
@@ -323,9 +320,9 @@ final class AlbumContentUseCaseTests: XCTestCase {
     func testUserAlbumCoverPhoto_onUserAlbumElementFound_shouldReturnNode() async {
         let albumId = HandleEntity(25)
         let photoId = HandleEntity(42)
-        let expectedCoverPhoto = NodeEntity(handle: 15, mediaType: .image)
+        let expectedCoverPhoto = NodeEntity(name: "test.jpg", handle: 15)
         let coverSetElement = SetElementEntity(handle: photoId, ownerId: albumId,
-                                               order: 1, nodeId: expectedCoverPhoto.handle, modificationTime: Date(), name: "")
+                                               order: 1, nodeId: expectedCoverPhoto.handle)
         
         let sut = makeSUT(
             fileSearchRepo: MockFilesSearchRepository(photoNodes: [expectedCoverPhoto]),
@@ -338,15 +335,15 @@ final class AlbumContentUseCaseTests: XCTestCase {
         XCTAssertEqual(coverPhoto, expectedCoverPhoto)
     }
     
-    func testUserAlbumCoverPhoto_onUserAlbumElementFoundWithNoMediaType_shouldReturnNil() async {
+    func testUserAlbumCoverPhoto_onUserAlbumElementFoundWithNoVisualMedia_shouldReturnNil() async {
         let albumId = HandleEntity(25)
         let photoId = HandleEntity(42)
-        let expectedCoverPhoto = NodeEntity(handle: 15)
+        let photo = NodeEntity(name: "test.txt", handle: 15)
         let coverSetElement = SetElementEntity(handle: photoId, ownerId: albumId,
-                                               order: 1, nodeId: expectedCoverPhoto.handle, modificationTime: Date(), name: "")
+                                               order: 1, nodeId: photo.handle)
         
         let sut = makeSUT(
-            fileSearchRepo: MockFilesSearchRepository(photoNodes: [expectedCoverPhoto]),
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: [photo]),
             userAlbumRepo: MockUserAlbumRepository(albumElement: coverSetElement)
         )
         
@@ -365,13 +362,14 @@ final class AlbumContentUseCaseTests: XCTestCase {
         fileSearchRepo: some FilesSearchRepositoryProtocol = MockFilesSearchRepository(),
         userAlbumRepo: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
         hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool = { false }
     ) -> AlbumContentsUseCase {
         AlbumContentsUseCase(albumContentsRepo: albumContentsRepo,
                              mediaUseCase: mediaUseCase,
                              fileSearchRepo: fileSearchRepo,
                              userAlbumRepo: userAlbumRepo,
-                             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase, photoLibraryUseCase: photoLibraryUseCase,
                              hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled)
     }
 }

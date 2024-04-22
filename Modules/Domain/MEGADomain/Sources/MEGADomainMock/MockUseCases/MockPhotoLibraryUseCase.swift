@@ -24,6 +24,20 @@ public struct MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
     }
     
     public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?) async throws -> [NodeEntity] {
+        let media = mediaForLocation(filterOptions)
+        
+        return if filterOptions.isSuperset(of: .allMedia) {
+            media
+        } else if filterOptions.contains(.images) {
+            media.filter { $0.name.fileExtensionGroup.isImage }
+        } else if filterOptions.contains(.videos) {
+            media.filter { $0.name.fileExtensionGroup.isVideo }
+        } else {
+            []
+        }
+    }
+    
+    private func mediaForLocation(_ filterOptions: PhotosFilterOptionsEntity) -> [NodeEntity] {
         return if filterOptions.isSuperset(of: .allLocations) {
             allPhotos
         } else if filterOptions.contains(.cloudDrive) {

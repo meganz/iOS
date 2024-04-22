@@ -36,6 +36,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             fileSearchRepo: filesSearchRepo,
             userAlbumRepo: userAlbumRepo,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            photoLibraryUseCase: makePhotoLibraryUseCase(),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let photoLibraryRepository = PhotoLibraryRepository(
@@ -102,6 +103,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             fileSearchRepo: filesSearchRepo,
             userAlbumRepo: userAlbumRepository(),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            photoLibraryUseCase: makePhotoLibraryUseCase(),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         
@@ -147,5 +149,13 @@ struct AlbumContentRouter: AlbumContentRouting {
             return UserAlbumRepository.newRepo
         }
         return UserAlbumCacheRepository.newRepo
+    }
+    
+    private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {
+        PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository(
+            cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
+                            searchRepository: FilesSearchRepository.newRepo,
+                            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
 }
