@@ -18,10 +18,12 @@ final class NodeRepositoryTests: XCTestCase {
         
         init (
             megaRootNode: MEGANode = .rootNode,
-            nodes: [MEGANode] = []
+            nodes: [MEGANode] = [],
+            isNodeInheritingSensitivity: Bool = false
         ) {
             
-            sdk = MockSdk(megaRootNode: megaRootNode)
+            sdk = MockSdk(megaRootNode: megaRootNode,
+                          isNodeInheritingSensitivity: isNodeInheritingSensitivity)
             
             sut = NodeRepository(
                 sdk: sdk,
@@ -117,5 +119,29 @@ final class NodeRepositoryTests: XCTestCase {
         let result = await harness.sut.asyncChildren(of: root.toNodeEntity(), sortOrder: .defaultAsc)
         let resultNodes = [result?.nodeAt(0), result?.nodeAt(1), result?.nodeAt(2)]
         XCTAssertEqual(resultNodes, children.toNodeEntities())
+    }
+    
+    func testIsInheritingSensitivity_nodeNotFound_shouldThrowNodeNotFoundError() async {
+        let harness = Harness()
+        
+        do {
+            let node = NodeEntity(handle: 5)
+            _ = try await harness.sut.isInheritingSensitivity(node: node)
+            XCTFail("Should have caught error")
+        } catch let error as NodeErrorEntity {
+            XCTAssertEqual(error, NodeErrorEntity.nodeNotFound)
+        } catch {
+            XCTFail("Caught incorrect error")
+        }
+    }
+    
+    func testIsInheritingSensitivity_nodeFound_shouldReturn() async throws {
+        let isNodeInheritingSensitivity = true
+        let node = MockNode(handle: 24)
+        let harness = Harness(nodes: [node],
+                              isNodeInheritingSensitivity: isNodeInheritingSensitivity)
+        
+        let isSensitive = try await harness.sut.isInheritingSensitivity(node: node.toNodeEntity())
+        XCTAssertEqual(isSensitive, isNodeInheritingSensitivity)
     }
 }

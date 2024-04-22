@@ -76,4 +76,8 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         throw GenericErrorEntity()
     }
+    
+    func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
+        false
+    }
 }

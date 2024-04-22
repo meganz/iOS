@@ -16,6 +16,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let nodeListEntity: NodeListEntity?
     private let createFolderResult: Result<NodeEntity, NodeCreationErrorEntity>
     private let isNodeRestorable: Bool
+    private let isInheritingSensitivityResult: Result<Bool, Error>
 
     public var isMultimediaFileNode_CalledTimes = 0
     
@@ -32,7 +33,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 nodeListEntity: NodeListEntity? = nil,
                 createFolderResult: Result<NodeEntity, NodeCreationErrorEntity> = .success(.init()),
                 isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false },
-                isNodeRestorable: Bool = false
+                isNodeRestorable: Bool = false,
+                isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity())
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
@@ -48,6 +50,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.createFolderResult = createFolderResult
         self.isNodeInRubbishBin = isNodeInRubbishBin
         self.isNodeRestorable = isNodeRestorable
+        self.isInheritingSensitivityResult = isInheritingSensitivityResult
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -128,5 +131,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
 
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         try createFolderResult.get()
+    }
+    
+    public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: isInheritingSensitivityResult)
+        }
     }
 }
