@@ -436,21 +436,21 @@ class HomeSearchProviderTests: XCTestCase {
         XCTAssertEqual(UInt64.array(start: 1, end: 100), resultIds)
         
         // and when: nodes are reduced to 50 nodes
-        harness.nodeRepo.childrenNodes.removeLast(50)
+        harness.nodeRepo.$childrenNodes.mutate { $0.removeLast(50) }
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
         // and then: Refreshed result should have 50 nodes
         XCTAssertEqual(UInt64.array(start: 1, end: 50), resultIds)
         
         // and when: nodes are reduced by 10
-        harness.nodeRepo.childrenNodes.removeFirst(10)
+        harness.nodeRepo.$childrenNodes.mutate { $0.removeFirst(10) }
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
         // and then: Refreshed result should have 40 nodes
         XCTAssertEqual(UInt64.array(start: 11, end: 50), resultIds)
         
         // and when: 200 nodes are added
-        harness.nodeRepo.childrenNodes.append(contentsOf: NodeEntity.entities(startHandle: 51, endHandle: 251))
+        harness.nodeRepo.$childrenNodes.mutate { $0.append(contentsOf: NodeEntity.entities(startHandle: 51, endHandle: 251)) }
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
         // and then: Refreshed result should have: 40 orginall + 20 buffered offset
@@ -471,7 +471,7 @@ class HomeSearchProviderTests: XCTestCase {
         XCTAssertEqual(UInt64.array(start: 11, end: 251), resultIds)
         
         // and when: 100 more nodes are added
-        harness.nodeRepo.childrenNodes.append(contentsOf: NodeEntity.entities(startHandle: 252, endHandle: 353))
+        harness.nodeRepo.$childrenNodes.mutate { $0.append(contentsOf: NodeEntity.entities(startHandle: 252, endHandle: 353)) }
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
         // and then: Refreshed result should have: 240 original + 20 buffered offset

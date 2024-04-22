@@ -1,7 +1,8 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
-public final class MockNodeRepository: NodeRepositoryProtocol {
+public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendable {
     
     public static var newRepo: MockNodeRepository { MockNodeRepository() }
     
@@ -14,8 +15,9 @@ public final class MockNodeRepository: NodeRepositoryProtocol {
     private let images: [NodeEntity]
     private let fileLinkNode: NodeEntity?
     private let childNodes: [String: NodeEntity]
-    public var childrenNodes: [NodeEntity]
+    @Atomic public var childrenNodes: [NodeEntity] = []
     private let parentNodes: [NodeEntity]
+    private let isInheritingSensitivityResult: Result<Bool, Error>
     
     public init(
         node: NodeEntity? = nil,
@@ -28,7 +30,8 @@ public final class MockNodeRepository: NodeRepositoryProtocol {
         fileLinkNode: NodeEntity? = nil,
         childNodes: [String: NodeEntity] = [:],
         childrenNodes: [NodeEntity] = [],
-        parentNodes: [NodeEntity] = []
+        parentNodes: [NodeEntity] = [],
+        isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity())
     ) {
         self.node = node
         self.rubbishBinNode = rubbishBinNode
@@ -39,8 +42,9 @@ public final class MockNodeRepository: NodeRepositoryProtocol {
         self.images = images
         self.fileLinkNode = fileLinkNode
         self.childNodes = childNodes
-        self.childrenNodes = childrenNodes
         self.parentNodes = parentNodes
+        self.isInheritingSensitivityResult = isInheritingSensitivityResult
+        $childrenNodes.mutate { $0 = childrenNodes }
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
@@ -117,5 +121,11 @@ public final class MockNodeRepository: NodeRepositoryProtocol {
 
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         parent
+    }
+    
+    public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: isInheritingSensitivityResult)
+        }
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol NodeRepositoryProtocol: RepositoryProtocol {
+public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void)
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity
@@ -24,4 +24,9 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func childrenNames(of node: NodeEntity) -> [String]?
     func isInRubbishBin(node: NodeEntity) -> Bool
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
+    /// Ascertain if the node is marked as sensitive or a descendent of such node
+    ///  - Parameters: node - the node to check
+    ///  - Returns: true if the node is marked as sensitive or a descendent of such node
+    ///  - Throws: `NodeError.nodeNotFound` if the node cant be found
+    func isInheritingSensitivity(node: NodeEntity) async throws -> Bool
 }

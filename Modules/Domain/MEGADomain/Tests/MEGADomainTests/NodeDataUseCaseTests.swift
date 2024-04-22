@@ -170,6 +170,16 @@ final class NodeUseCaseTests: XCTestCase {
         XCTAssertTrue(sut.isRestorable(node: node))
     }
     
+    func testIsInheritingSensitivity_validNode_shouldReturnCorrectSensitivityStatus() async throws {
+        let expectedSensitiveStatus = true
+
+        let sut = makeSUT(isInheritingSensitivityResult: .success(expectedSensitiveStatus))
+        
+        let isSensitive = try await sut.isInheritingSensitivity(node: NodeEntity(handle: 1))
+        
+        XCTAssertEqual(isSensitive, expectedSensitiveStatus)
+    }
+    
     private func makeSUT(
         accessLevel: NodeAccessTypeEntity = .unknown,
         label: String = "",
@@ -182,7 +192,8 @@ final class NodeUseCaseTests: XCTestCase {
         node: NodeEntity? = nil,
         parentNode: NodeEntity? = nil,
         parents: [NodeEntity] = [],
-        children: [NodeEntity] = []
+        children: [NodeEntity] = [],
+        isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity())
     ) -> NodeUseCase<MockNodeDataRepository, MockNodeValidationRepository, MockNodeRepository> {
         let mockNodeDataRepository = MockNodeDataRepository(
             nodeAccessLevel: accessLevel,
@@ -202,7 +213,8 @@ final class NodeUseCaseTests: XCTestCase {
             node: node, 
             rubbishBinNode: nodeInRubbishBin,
             childrenNodes: children,
-            parentNodes: parents
+            parentNodes: parents,
+            isInheritingSensitivityResult: isInheritingSensitivityResult
         )
         return NodeUseCase(
             nodeDataRepository: mockNodeDataRepository,

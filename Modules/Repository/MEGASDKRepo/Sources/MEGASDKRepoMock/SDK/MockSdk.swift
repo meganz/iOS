@@ -45,6 +45,7 @@ public final class MockSdk: MEGASdk {
     private let _accountCreationDate: Date?
     private let _enabledNotificationIdList: MEGAIntegerList?
     private var _lastReadNotificationId: Int32
+    private var _isNodeInheritingSensitivity: Bool
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -122,7 +123,8 @@ public final class MockSdk: MEGASdk {
                 requestResult: MockSdkRequestResult = .failure(MockError.failingError),
                 accountCreationDate: Date? = nil,
                 enabledNotificationIdList: MEGAIntegerList? = nil,
-                lastReadNotificationId: Int32 = 0
+                lastReadNotificationId: Int32 = 0,
+                isNodeInheritingSensitivity: Bool = false
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -166,6 +168,7 @@ public final class MockSdk: MEGASdk {
         self._accountCreationDate = accountCreationDate
         _enabledNotificationIdList = enabledNotificationIdList
         _lastReadNotificationId = lastReadNotificationId
+        _isNodeInheritingSensitivity = isNodeInheritingSensitivity
         super.init()
     }
     
@@ -315,6 +318,10 @@ public final class MockSdk: MEGASdk {
             numberChildren += 1
         }
         return numberChildren
+    }
+    
+    public override func isNodeInheritingSensitivity(_ node: MEGANode) -> Bool {
+        _isNodeInheritingSensitivity
     }
     
     // MARK: - Sets

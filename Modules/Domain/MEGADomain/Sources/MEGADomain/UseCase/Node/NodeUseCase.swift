@@ -19,6 +19,11 @@ public protocol NodeUseCaseProtocol {
     func isRubbishBinRoot(node: NodeEntity) -> Bool
     func isRestorable(node: NodeEntity) -> Bool
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
+    /// Ascertain if the node is marked as sensitive or a descendent of such node
+    ///  - Parameters: node - the node to check
+    ///  - Returns: true if the node is marked as sensitive or a descendent of such node
+    ///  - Throws: `NodeError.nodeNotFound` if the node cant be found
+    func isInheritingSensitivity(node: NodeEntity) async throws -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -114,5 +119,9 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
 
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         try await nodeRepository.createFolder(with: name, in: parent)
+    }
+    
+    public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
+        try await nodeRepository.isInheritingSensitivity(node: node)
     }
 }

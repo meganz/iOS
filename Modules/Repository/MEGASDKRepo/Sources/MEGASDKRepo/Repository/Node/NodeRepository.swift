@@ -179,6 +179,13 @@ public struct NodeRepository: NodeRepositoryProtocol {
         }
     }
     
+    public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
+        guard let node = node.toMEGANode(in: sdk) else {
+            throw NodeErrorEntity.nodeNotFound
+        }
+        return sdk.isNodeInheritingSensitivity(node)
+    }
+    
     // MARK: - Private
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {
         let nodeList = sdk.children(forParent: node)
