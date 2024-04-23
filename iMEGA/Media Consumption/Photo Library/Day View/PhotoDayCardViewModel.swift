@@ -20,10 +20,10 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
     }
     
     init(photoByDay: PhotoByDay,
-         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
+         thumbnailLoader: some ThumbnailLoaderProtocol) {
         self.photoByDay = photoByDay
         title = DateFormatter.dateLong().localisedString(from: photoByDay.categoryDate)
         
-        super.init(coverPhoto: photoByDay.coverPhoto, thumbnailUseCase: thumbnailUseCase)
+        super.init(coverPhoto: photoByDay.coverPhoto, thumbnailLoader: thumbnailLoader)
     }
 }
