@@ -344,12 +344,13 @@ final class HomeScreenFactory: NSObject {
             nodeRepository: makeNodeRepo(),
             nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
             transferListenerRepo: makeTransferListenerRepo(), 
-            nodeIconUsecase: makeNodeIconUsecase(),
+            nodeIconUsecase: makeNodeIconUsecase(), 
+            nodeUpdateRepository: NodeUpdateRepository.newRepo,
             allChips: Self.allChips(areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
-            onSearchResultUpdated: { [weak searchBridge] searchResult in
-                searchBridge?.searchResultChanged(searchResult)
+            onSearchResultsUpdated: { [weak searchBridge] searchResult in
+                searchBridge?.onSearchResultsUpdated(searchResult)
             }
         )
     }

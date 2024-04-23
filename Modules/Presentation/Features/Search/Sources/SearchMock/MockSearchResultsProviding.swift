@@ -1,6 +1,10 @@
 import Search
 
 public class MockSearchResultsProviding: SearchResultsProviding {
+    public var refreshedSearchResultsToReturn: Search.SearchResultsEntity?
+    public func refreshedSearchResults(queryRequest: Search.SearchQuery) async -> Search.SearchResultsEntity? {
+        refreshedSearchResultsToReturn
+    }
     
     public func currentResultIds() -> [Search.ResultId] {
         currentResultIdsToReturn
@@ -8,7 +12,7 @@ public class MockSearchResultsProviding: SearchResultsProviding {
     
     public var passedInQueries: [SearchQuery] = []
     public var currentResultIdsToReturn: [ResultId] = []
-    public var resultFactory: (_ query: SearchQuery) async -> SearchResultsEntity
+    public var resultFactory: (_ query: SearchQuery) async -> SearchResultsEntity?
     
     public init() {
         resultFactory = { _ in

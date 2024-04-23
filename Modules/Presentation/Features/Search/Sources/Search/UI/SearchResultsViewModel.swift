@@ -3,6 +3,11 @@ import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
+/// Dedicated actor to isolate critical data
+@globalActor actor SearchResultsViewModelActor {
+    static var shared = SearchResultsViewModelActor()
+}
+
 public class SearchResultsViewModel: ObservableObject {
     @Published var listItems: [SearchResultRowViewModel]  = []
     @Published var bottomInset: CGFloat = 0.0
@@ -16,6 +21,9 @@ public class SearchResultsViewModel: ObservableObject {
 
     @Published var chipsItems: [ChipViewModel] = []
     @Published var presentedChipsPickerViewModel: ChipViewModel?
+    
+    /// Tracks the visible items that are currently  shown on screen, needed for node updates logic.
+    private var visibleItems = Set<ResultId>()
 
     var fileListItems: [SearchResultRowViewModel] {
         listItems.filter { $0.result.thumbnailDisplayMode == .vertical }
@@ -110,10 +118,25 @@ public class SearchResultsViewModel: ObservableObject {
                 await _self?.queryChanged(to: query, isSearchActive: true)
             }
         }
-
-        self.bridge.searchResultChanged = { [weak self] result in
-            let _self = self
-            Task { await _self?.searchResultUpdated(result) }
+        
+        self.bridge.onSearchResultsUpdated = { [weak self] signal in
+            guard let self else { return }
+            Task {
+                // Any possible ongoing searching task is no longer relevant upon result updates,
+                // it should be replaced with the refresh task
+                self.cancelSearchTask()
+                self.searchingTask = Task {
+                    switch signal {
+                    case .generic:
+                        await self.refreshSearchResults()
+                    case .specific(let result):
+                        await self.searchResultUpdated(result)
+                    }
+                }
+                
+                try? await self.searchingTask?.value
+                self.searchingTask = nil
+            }
         }
 
         self.bridge.queryCleaned = { [weak self] in
@@ -264,8 +287,18 @@ public class SearchResultsViewModel: ObservableObject {
         await prepareResults(results, query: query)
     }
 
+    @SearchResultsViewModelActor
     func loadMoreIfNeeded(at index: Int) async {
+        guard index < listItems.count else { return }
+        visibleItems.insert(listItems[index].result.id)
         await performSearch(using: currentQuery, lastItemIndex: index)
+    }
+    
+    func onItemDisappear(at index: Int) {
+        Task { @SearchResultsViewModelActor in
+            guard index < listItems.count else { return }
+            visibleItems.remove(listItems[index].result.id)
+        }
     }
 
     func loadMoreIfNeededThumbnailMode(at index: Int, isFile: Bool) async {
@@ -550,6 +583,50 @@ public class SearchResultsViewModel: ObservableObject {
     func searchResultUpdated(_ result: SearchResult) async {
         guard let index = listItems.firstIndex(where: { $0.result.id == result.id  }) else { return }
         await listItems[index].reload(with: result)
+    }
+    
+    private func refreshSearchResults() async {
+        guard let searchResults = await resultsProvider.refreshedSearchResults(queryRequest: currentQuery) else {
+            await updateListItem(with: [])
+            return
+        }
+        
+        var newResultViewModels = [SearchResultRowViewModel]()
+        
+        await withTaskGroup(of: Void.self) { group in
+            for result in searchResults.results {
+                if let item = self.listItems.first(where: { $0.result.id == result.id }), visibleItems.contains(result.id) {
+                    // Note: For items that are already visible on the screen, SwiftUI doesn't invoke
+                    // the `.task { await viewModel.loadThumbnail() }` operation to update their content
+                    // therefore we need to manually update them
+                    group.addTask {
+                        await item.reload(with: result)
+                    }
+                    newResultViewModels.append(item)
+                } else {
+                    newResultViewModels.append(mapSearchResultToViewModel(result))
+                }
+            }
+        }
+        
+        await updateListItem(with: newResultViewModels)
+        // After updating the nodes, there's a chance that user already scrolled to the very bottom of the list,
+        // in that case user will have to manually scroll the list to trigger load more, which is not convenient
+        // Hence we load an additional page here to mitigate that problem.
+        await loadMoreIfNeeded(at: newResultViewModels.count - 1)
+    }
+    
+    @MainActor
+    private func updateListItem(with newItems: [SearchResultRowViewModel]) {
+        self.listItems = newItems
+        withAnimation {
+            emptyViewModel = Self.makeEmptyView(
+                whenListItems: listItems.isEmpty,
+                query: currentQuery,
+                appliedChips: currentQuery.chips,
+                config: config
+            )
+        }
     }
 
     // when keyboard is shown we shouldn't add any additional bottom inset

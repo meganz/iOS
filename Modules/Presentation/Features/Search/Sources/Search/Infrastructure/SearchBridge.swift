@@ -4,8 +4,13 @@
 import Foundation
 import UIKit
 
-public class SearchBridge {
+// Signal for search results updates
+public enum SearchResultUpdateSignal {
+    case generic // A generic update in the results (e.g: multiple file changes, etc..) and client will need to refresh the whole result list.
+    case specific(result: SearchResult) // Update from a specific result, client only needs to update the item for that result
+}
 
+public class SearchBridge {
     let selection: (SearchResultSelection) -> Void
     let context: (SearchResult, UIButton) -> Void
     let resignKeyboard: () -> Void
@@ -35,7 +40,8 @@ public class SearchBridge {
     public var searchCancelled: () -> Void = { }
     public var updateBottomInset: (CGFloat) -> Void = { _ in  }
     public var layoutChanged: (PageLayout) -> Void = { _ in  }
-    public var searchResultChanged: (SearchResult) -> Void = { _ in  }
+     
+    public var onSearchResultsUpdated: (SearchResultUpdateSignal) -> Void = { _ in  }
     public var selectionChanged: (Set<ResultId>) -> Void = { _ in }
     public var editingChanged: (Bool) -> Void = { _ in }
     public var editingCancelled: () -> Void = { }

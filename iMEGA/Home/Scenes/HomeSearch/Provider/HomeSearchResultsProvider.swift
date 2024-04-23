@@ -13,7 +13,6 @@ import Search
 
 /// abstraction into a search results
 final class HomeSearchResultsProvider: SearchResultsProviding {
-    
     private let searchFileUseCase: any SearchFileUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
@@ -33,12 +32,14 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var pageSize = 100
     private var loadMorePagesOffset = 20
     private var availableChips: [SearchChipEntity]
-    private let onSearchResultUpdated: (SearchResult) -> Void
+    
+    private let onSearchResultsUpdated: (_ updated: SearchResultUpdateSignal) -> Void
     
     // The node from which we want start searching from,
     // root node can be nil in case when we start app in offline
     private let parentNodeProvider: () -> NodeEntity?
     private let mapper: SearchResultMapper
+    private let nodeUpdateRepository: any NodeUpdateRepositoryProtocol
     
     init(
         parentNodeProvider: @escaping () -> NodeEntity?,
@@ -47,13 +48,14 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodeUseCase: some NodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
         nodeRepository: some NodeRepositoryProtocol,
-        nodesUpdateListenerRepo: any NodesUpdateListenerProtocol,
+        nodesUpdateListenerRepo: some NodesUpdateListenerProtocol,
         transferListenerRepo: SDKTransferListenerRepository,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
+        nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
-        onSearchResultUpdated: @escaping (SearchResult) -> Void
+        onSearchResultsUpdated: @escaping (SearchResultUpdateSignal) -> Void
     ) {
         self.parentNodeProvider = parentNodeProvider
         self.searchFileUseCase = searchFileUseCase
@@ -62,6 +64,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.nodeRepository = nodeRepository
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         self.transferListenerRepo = transferListenerRepo
+        self.nodeUpdateRepository = nodeUpdateRepository
         self.availableChips = allChips
         self.sdk = sdk
         
@@ -74,7 +77,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             nodeActions: nodeActions
         )
 
-        self.onSearchResultUpdated = onSearchResultUpdated
+        self.onSearchResultsUpdated = onSearchResultsUpdated
         addNodesUpdateHandler()
         addTransferCompletedHandler()
     }
@@ -87,18 +90,11 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         
         guard let refreshedNodeList else { return nil }
         
-        // After refreshing, the number of nodes can change and we need to update the pagination info
+        // After refreshing, the number of nodes can change and we need to update pagination info
         let newNodesCount = refreshedNodeList.nodesCount
         
-        // IMPORTANT NOTES: Here we're using `filledItemsCount + loadMorePagesOffset` instead of merely `filledItemsCount`
-        // because we want the refreshed results to contains some more elements than the original list.
-        // This is important to solve a edge case: When users already scrolled to be end of the result list and
-        // there are update with  many new nodes added to parentNode:
-        // if we only return `filledItemsCount`, due to the current `load more` mechanism, user must manually scroll the list to trigger `load more`.
-        // By using `filledItemsCount + loadMorePagesOffset` some new element will be
-        // added to the end of the list and when user can scroll down to see more content and trigger `load more` in a natural manner.
-        let numOfNodesToReturn = min(filledItemsCount + loadMorePagesOffset, newNodesCount)
-        self.filledItemsCount = numOfNodesToReturn
+        let numOfNodesToReturn = min(filledItemsCount, newNodesCount)
+        filledItemsCount = numOfNodesToReturn
         
         var results: [SearchResult] = []
         
@@ -106,7 +102,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             results += (0..<numOfNodesToReturn).compactMap { refreshedNodeList.nodeAt($0) }.map(mapNodeToSearchResult)
         }
         
-        self.nodeList = refreshedNodeList
+        nodeList = refreshedNodeList
         
         return SearchResultsEntity(
             results: results,
@@ -152,7 +148,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     }
     
     @LoadMoreActor
-    func loadMore(queryRequest: SearchQuery, index: Int) async -> SearchResultsEntity? {
+    private func loadMore(queryRequest: SearchQuery, index: Int) -> SearchResultsEntity? {
         guard let nodeList,
                 filledItemsCount < nodeList.nodesCount,
               index >= filledItemsCount - loadMorePagesOffset else { return nil }
@@ -275,15 +271,18 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     }
     
     private func addNodesUpdateHandler() {
-        // Note: In case of multiple node changes (e.g: Delete/Move multiple nodes), the SDK will emit multiple update signals
-        // We should debouce these emission to optimize update performance.
-        nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
-            // After update, the first node in nodeList is always the updated one
-            guard let self, let node = nodes.first else { return }
-            self.onSearchResultUpdated(self.mapNodeToSearchResult(node))
+        nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] updatedNodes in
+            guard let self,
+                  let parentNode = self.parentNode,
+                  let childNodes = self.nodeList?.toNodeEntities(),
+                  self.nodeUpdateRepository.shouldProcessOnNodesUpdate(parentNode: parentNode, childNodes: childNodes, updatedNodes: updatedNodes) else {
+                return
+            }
+            self.onSearchResultsUpdated(.generic)
         }
     }
 
+    /// We need to listen to transfer completion events to update the "downloaded" icon of a node
     private func addTransferCompletedHandler() {
         transferListenerRepo.endHandler = { [weak self] megaNode, isStreamingTransfer, transferType in
             guard let self else { return }
@@ -296,7 +295,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
                 return
             }
 
-            self.onSearchResultUpdated(self.mapNodeToSearchResult(node))
+            self.onSearchResultsUpdated(.specific(result: self.mapNodeToSearchResult(node)))
         }
     }
 }
