@@ -575,7 +575,6 @@
     if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
         MEGAChatListItem *chatListItem = itemAtIndex;
         ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
         
         cell.onlineStatusView.hidden = YES;
 
@@ -604,7 +603,6 @@
     if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
         MEGAUser *user = itemAtIndex;
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
         
         UIColor *color = [UIColor colorWithChatStatus: [MEGAChatSdk.shared userOnlineStatus:user.handle]];
         
