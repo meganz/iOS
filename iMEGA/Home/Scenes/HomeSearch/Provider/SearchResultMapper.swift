@@ -171,7 +171,7 @@ struct SearchResultMapper {
                         image: Image(.restore),
                         backgroundColor: turquoiseBackgroundColor,
                         action: {
-                            nodeActions.restoreFromRubbishBin([node], false)
+                            nodeActions.restoreFromRubbishBin([node])
                         }
                     )
                 ]

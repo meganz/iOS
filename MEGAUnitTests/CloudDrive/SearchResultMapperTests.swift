@@ -50,52 +50,6 @@ final class SearchResultMapperTests: XCTestCase {
         )
     }
 
-    func testSwipeActionRestore_whenInvoked_shouldNotInvokePopView() {
-        let exp = expectation(description: "Wait for pop view to be called")
-        let nodeActions = NodeActions(
-            nodeDownloader: { _ in },
-            editTextFile: { _ in },
-            shareOrManageLink: { _ in },
-            showNodeInfo: { _ in },
-            assignLabel: { _ in },
-            toggleNodeFavourite: { _ in },
-            sendToChat: { _ in },
-            saveToPhotos: { _ in },
-            exportFiles: { _, _  in },
-            browserAction: { _, _ in },
-            userProfileOpener: { _ in },
-            removeLink: { _ in },
-            removeSharing: { _ in },
-            rename: { _, _ in },
-            shareFolders: { _ in },
-            leaveSharing: { _ in },
-            manageShare: { _ in },
-            showNodeVersions: { _ in },
-            disputeTakedown: { _ in },
-            moveToRubbishBin: { _ in },
-            restoreFromRubbishBin: { _, shouldPopView in
-                if !shouldPopView {
-                    exp.fulfill()
-                }
-            },
-            removeFromRubbishBin: { _ in }
-        )
-        let sut = makeSUT(
-            nodeUseCase: MockNodeDataUseCase(
-                nodeAccessLevelVariable: .owner,
-                isNodeInRubbishBin: { nodeHandle in
-                    return nodeHandle == 100 ? true : false
-                },
-                isNodeRestorable: true
-            ),
-            nodeActions: nodeActions
-        )
-        let searchResult = sut.map(node: NodeEntity(handle: 100, restoreParentHandle: 101))
-        let swipeActions = searchResult.swipeActions(.cloudDrive)
-        swipeActions.first?.action()
-        wait(for: [exp], timeout: 1.0)
-    }
-
     // MARK: - Private methods
 
     private typealias SUT = SearchResultMapper
