@@ -16,4 +16,8 @@ public struct MockMEGAHandleUseCase: MEGAHandleUseCaseProtocol {
     public func handle(forBase64Handle handle: Base64HandleEntity) -> HandleEntity? {
         userHandle
     }
+    
+    public func handle(forBase64UserHandle handle: Base64HandleEntity) -> HandleEntity? {
+        userHandle
+    }
 }

@@ -11,4 +11,8 @@ public struct MEGAHandleRepository: MEGAHandleRepositoryProtocol {
     public func handle(forBase64Handle handle: Base64HandleEntity) -> HandleEntity? {
         MEGASdk.handle(forBase64Handle: handle)
     }
+    
+    public func handle(forBase64UserHandle handle: Base64HandleEntity) -> HandleEntity? {
+        MEGASdk.handle(forBase64UserHandle: handle)
+    }
 }

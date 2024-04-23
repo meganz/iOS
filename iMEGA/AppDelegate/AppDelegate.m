@@ -3,7 +3,6 @@
 #import <CoreSpotlight/CoreSpotlight.h>
 #import <Intents/Intents.h>
 #import <Photos/Photos.h>
-#import <PushKit/PushKit.h>
 #import <QuickLook/QuickLook.h>
 #import <UserNotifications/UserNotifications.h>
 
@@ -54,7 +53,7 @@
 @import MEGAFoundation;
 #import "MEGA-Swift.h"
 
-@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface AppDelegate () <UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
 }
@@ -778,13 +777,6 @@
     } else {
         manageNotificationBlock();
     }
-}
-
-- (void)registerForVoIPNotifications {
-    dispatch_queue_t mainQueue = dispatch_get_main_queue();
-    PKPushRegistry *voipRegistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
-    voipRegistry.delegate = self;
-    voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
 }
 
 - (void)migrateLocalCachesLocation {

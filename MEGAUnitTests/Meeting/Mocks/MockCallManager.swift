@@ -8,7 +8,8 @@ final class MockCallManager: CallManagerProtocol {
     var callUUID_CalledTimes = 0
     var callForUUID_CalledTimes = 0
     var removeCall_CalledTimes = 0
-    
+    var addCall_CalledTimes = 0
+
     func startCall(in chatRoom: ChatRoomEntity, hasVideo: Bool, notRinging: Bool) {
         startCall_CalledTimes += 1
     }
@@ -33,5 +34,9 @@ final class MockCallManager: CallManagerProtocol {
     
     func removeCall(withUUID uuid: UUID) {
         removeCall_CalledTimes += 1
+    }
+    
+    func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
+        addCall_CalledTimes += 1
     }
 }

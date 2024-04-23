@@ -411,6 +411,8 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             accountUseCase: accountUseCase,
             callKitManager: callKitManager, 
             callManager: callManager,
+            uuidFactory: { UUID(uuidString: "deadbeef-dead-dead-dead-deaddeafbeef")! },
+            callUpdateFactory: CXCallUpdateFactory(builder: { CXCallUpdate() }),
             featureFlagProvider: featureFlagProvider
         )
     }

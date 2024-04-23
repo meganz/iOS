@@ -8,6 +8,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
+import PushKit
 import SafariServices
 
 extension AppDelegate {
@@ -625,13 +626,21 @@ extension AppDelegate {
     }
 }
 
-// MARK: - Legacy CallKit provider delegate and controller
+// MARK: - Legacy CallKit management: provider delegate and controller, VoIP push
 extension AppDelegate {
     @objc func initProviderDelegate() {
         if !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
             guard megaProviderDelegate == nil else { return }
             megaCallManager = MEGACallManager()
             megaProviderDelegate = MEGAProviderDelegate(megaCallManager: megaCallManager)
+        }
+    }
+    
+    @objc func registerForVoIPNotifications() {
+        if !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            let voipRegistry = PKPushRegistry(queue: DispatchQueue.main)
+            voipRegistry.delegate = self
+            voipRegistry.desiredPushTypes = Set([.voIP])
         }
     }
 }
