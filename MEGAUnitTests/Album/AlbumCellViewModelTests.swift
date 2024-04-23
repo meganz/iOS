@@ -14,16 +14,6 @@ final class AlbumCellViewModelTests: XCTestCase {
     private let album = AlbumEntity(id: 1, name: "Test", coverNode: NodeEntity(handle: 1), count: 15, type: .favourite)
     private var subscriptions = Set<AnyCancellable>()
     
-    private var imageURL: URL!
-    
-    override func setUp() async throws {
-        try await super.setUp()
-        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
-        imageURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isFileCreated = FileManager.default.createFile(atPath: imageURL.path, contents: remoteImage.pngData())
-        XCTAssertTrue(isFileCreated)
-    }
-    
     func testInit_setTitleNodesAndTitlePublishers() throws {
         let sut = makeAlbumCellViewModel(album: album)
         
@@ -33,10 +23,16 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isLoading)
     }
     
+    func testInit_album_noCover_shouldSetCorrectThumbnail() {
+        let sut = makeAlbumCellViewModel(album: AlbumEntity(id: 5, type: .user))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(.placeholder), type: .placeholder)))
+    }
+    
     func testLoadAlbumThumbnail_onThumbnailLoaded_loadingStateIsCorrect() async throws {
-        let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
+        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailLoader = MockThumbnailLoader(loadImage: makeThumbnailAsyncSequence(container: thumbnailContainer))
         let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)))
+                                         thumbnailLoader: thumbnailLoader)
         
         let exp = expectation(description: "loading should change during loading of albums")
         exp.expectedFulfillmentCount = 2
@@ -56,13 +52,14 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testLoadAlbumThumbnail_onLoadThumbnail_thumbnailContainerIsUpdatedWithLoadedImageIfContainerIsCurrentlyPlaceholder() async throws {
-        let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
+        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailLoader = MockThumbnailLoader(loadImage: makeThumbnailAsyncSequence(container: thumbnailContainer))
         let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)))
+                                         thumbnailLoader: thumbnailLoader)
         
         await sut.loadAlbumThumbnail()
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: self.imageURL, type: .thumbnail)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
     }
     
     func testLoadAlbumThumbnail_onLoadThumbnailFailed_thumbnailIsNotUpdatedAndLoadedIsFalse() async throws {
@@ -83,15 +80,13 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testThumbnailContainer_cachedThumbnail_setThumbnailContainerWithoutPlaceholder() async throws {
-        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
-        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
-        XCTAssertTrue(isLocalFileCreated)
+        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
         
         let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailUseCase: MockThumbnailUseCase(
-                                            cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)]))
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
+                                         thumbnailLoader: thumbnailLoader)
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
         
         let exp = expectation(description: "thumbnail should not update again")
         exp.isInverted = true
@@ -104,19 +99,16 @@ final class AlbumCellViewModelTests: XCTestCase {
         await sut.loadAlbumThumbnail()
         
         await fulfillment(of: [exp], timeout: 1.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
     }
     
     func testLoadAlbumThumbnail_cachedThumbnail_shouldNotLoadThumbnailAgain() async throws {
-        let localImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
-        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
-        XCTAssertTrue(isLocalFileCreated)
+        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
         
         let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailUseCase: MockThumbnailUseCase(
-                                            cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)]))
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
+                                         thumbnailLoader: thumbnailLoader)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
         
         let exp = expectation(description: "loading flag should not change")
         exp.isInverted = true
@@ -321,8 +313,9 @@ final class AlbumCellViewModelTests: XCTestCase {
         let latestCoverHandle = HandleEntity(76)
         let album = AlbumEntity(id: 65, name: "User",
                                 coverNode: nil, count: 0, type: .user)
-        let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
-        let thumbnailUseCase = MockThumbnailUseCase(loadThumbnailResults: [latestCoverHandle: .success(thumbnail)])
+        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: thumbnailContainer)
+        let thumbnailLoader = MockThumbnailLoader(loadImages: [latestCoverHandle: thumbnailAsyncSequence])
         
         let albumPhotos = [
             AlbumPhotoEntity(photo: NodeEntity(handle: 1, modificationTime: try "2024-04-08T22:01:04Z".date),
@@ -338,7 +331,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
        
         let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailUseCase: thumbnailUseCase,
+                                         thumbnailLoader: thumbnailLoader,
                                          monitorAlbumsUseCase: monitorAlbumsUseCase,
                                          featureFlagProvider: featureFlagProvider)
         
@@ -347,7 +340,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let subscription = sut.$thumbnailContainer
             .dropFirst()
             .sink {
-                XCTAssertTrue($0.isEqual(URLImageContainer(imageURL: self.imageURL, type: .thumbnail)))
+                XCTAssertTrue($0.isEqual(thumbnailContainer))
                 exp.fulfill()
             }
         
@@ -392,8 +385,9 @@ final class AlbumCellViewModelTests: XCTestCase {
         let album = AlbumEntity(id: 65, name: "User",
                                 coverNode: cover, count: 0, type: .user)
         let defaultCover = NodeEntity(handle: 87)
-        let thumbnailUseCase = MockThumbnailUseCase(
-            loadThumbnailResults: [defaultCover.handle: .success(ThumbnailEntity(url: imageURL, type: .thumbnail))])
+        let coverImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: coverImageContainer)
+        let thumbnailLoader = MockThumbnailLoader(loadImages: [defaultCover.handle: thumbnailAsyncSequence])
         
         let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: [
             AlbumPhotoEntity(photo: defaultCover)
@@ -404,7 +398,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
         let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailUseCase: thumbnailUseCase,
+                                         thumbnailLoader: thumbnailLoader,
                                          monitorAlbumsUseCase: monitorAlbumsUseCase,
                                          nodeUseCase: nodeUseCase,
                                          featureFlagProvider: featureFlagProvider)
@@ -414,7 +408,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let subscription = sut.$thumbnailContainer
             .dropFirst()
             .sink {
-                XCTAssertTrue($0.isEqual(URLImageContainer(imageURL: self.imageURL, type: .thumbnail)))
+                XCTAssertTrue($0.isEqual(coverImageContainer))
                 exp.fulfill()
             }
         
@@ -429,8 +423,9 @@ final class AlbumCellViewModelTests: XCTestCase {
         let cover = NodeEntity(handle: 54)
         let album = AlbumEntity(id: 65, name: "User",
                                 coverNode: cover, count: 0, type: .user)
-        let thumbnailUseCase = MockThumbnailUseCase(
-            loadThumbnailResults: [cover.handle: .success(ThumbnailEntity(url: imageURL, type: .thumbnail))])
+        let coverImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: coverImageContainer)
+        let thumbnailLoader = MockThumbnailLoader(loadImages: [cover.handle: thumbnailAsyncSequence])
         
         let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: [
             AlbumPhotoEntity(photo: cover)
@@ -441,7 +436,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
         let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailUseCase: thumbnailUseCase,
+                                         thumbnailLoader: thumbnailLoader,
                                          monitorAlbumsUseCase: monitorAlbumsUseCase,
                                          nodeUseCase: nodeUseCase,
                                          featureFlagProvider: featureFlagProvider)
@@ -454,7 +449,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let subscription = sut.$thumbnailContainer
             .dropFirst()
             .sink {
-                XCTAssertTrue($0.isEqual(URLImageContainer(imageURL: self.imageURL, type: .thumbnail)))
+                XCTAssertTrue($0.isEqual(coverImageContainer))
                 exp.fulfill()
             }
         
@@ -470,8 +465,9 @@ final class AlbumCellViewModelTests: XCTestCase {
         let album = AlbumEntity(id: 65, name: "User",
                                 coverNode: cover, count: 0, type: .user)
         let defaultCover = NodeEntity(handle: 87)
-        let thumbnailUseCase = MockThumbnailUseCase(
-            loadThumbnailResults: [defaultCover.handle: .success(ThumbnailEntity(url: imageURL, type: .thumbnail))])
+        let coverImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: coverImageContainer)
+        let thumbnailLoader = MockThumbnailLoader(loadImages: [defaultCover.handle: thumbnailAsyncSequence])
         
         let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: [
             AlbumPhotoEntity(photo: defaultCover)
@@ -482,7 +478,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
         let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailUseCase: thumbnailUseCase,
+                                         thumbnailLoader: thumbnailLoader,
                                          monitorAlbumsUseCase: monitorAlbumsUseCase,
                                          nodeUseCase: nodeUseCase,
                                          featureFlagProvider: featureFlagProvider)
@@ -492,7 +488,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let subscription = sut.$thumbnailContainer
             .dropFirst()
             .sink {
-                XCTAssertTrue($0.isEqual(URLImageContainer(imageURL: self.imageURL, type: .thumbnail)))
+                XCTAssertTrue($0.isEqual(coverImageContainer))
                 exp.fulfill()
             }
         
@@ -537,7 +533,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     private func makeAlbumCellViewModel(
         album: AlbumEntity,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
+        thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         selection: AlbumSelection = AlbumSelection(),
@@ -546,7 +542,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AlbumCellViewModel {
-        let sut = AlbumCellViewModel(thumbnailUseCase: thumbnailUseCase,
+        let sut = AlbumCellViewModel(thumbnailLoader: thumbnailLoader,
                                      monitorAlbumsUseCase: monitorAlbumsUseCase,
                                      nodeUseCase: nodeUseCase,
                                      album: album,
@@ -555,5 +551,12 @@ final class AlbumCellViewModelTests: XCTestCase {
                                      featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
+    }
+    
+    private func makeThumbnailAsyncSequence(
+        container: ImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+    ) -> AnyAsyncSequence<any ImageContaining> {
+        SingleItemAsyncSequence(item: container)
+            .eraseToAnyAsyncSequence()
     }
 }

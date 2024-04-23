@@ -8,7 +8,7 @@ import XCTest
 
 final class ThumbnailLoaderTests: XCTestCase {
     
-    func testInitialImageForType_noCachedImage_shouldReturnPlaceholder() {
+    func testInitialImageForType_noCachedImage_shouldReturnPlaceholderForFileType() {
         let fileName = "test.jpg"
         let photo = NodeEntity(name: fileName, handle: 43)
         
@@ -16,6 +16,16 @@ final class ThumbnailLoaderTests: XCTestCase {
         
         XCTAssertTrue(sut.initialImage(for: photo, type: .thumbnail)
             .isEqual(ImageContainer(image: Image(FileTypes().fileTypeResource(forFileName: "0.jpg")), type: .placeholder)))
+    }
+    
+    func testInitialImageForType_noCachedImage_shouldReturnPlaceholderProvided() {
+        let fileName = "test.jpg"
+        let photo = NodeEntity(name: fileName, handle: 43)
+        
+        let sut = makeSUT()
+        let expectedImage = Image(.placeholder)
+        XCTAssertTrue(sut.initialImage(for: photo, type: .thumbnail, placeholder: { expectedImage })
+            .isEqual(ImageContainer(image: expectedImage, type: .placeholder)))
     }
     
     func testInitialImageForType_imageCached_shouldReturnCachedImage() throws {

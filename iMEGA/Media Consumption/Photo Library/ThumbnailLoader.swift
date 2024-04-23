@@ -9,14 +9,35 @@ protocol ThumbnailLoaderProtocol {
     ///  - Parameters:
     ///   - node - the node to retrieve initial image
     ///   - type: thumbnail type to check
-    ///  - Returns: cached image for type or placeholder
+    ///  - Returns: cached image for type or placeholder for file type
     func initialImage(for node: NodeEntity, type: ThumbnailTypeEntity) -> any ImageContaining
+    
+    /// Load initial image for a node
+    ///  - Parameters:
+    ///   - node - the node to retrieve initial image
+    ///   - type: thumbnail type to check
+    ///   - placeholder: image resource to use as placeholder if item is not found
+    ///  - Returns: cached image for type or placeholder
+    func initialImage(for node: NodeEntity, type: ThumbnailTypeEntity, placeholder: @Sendable () -> Image) -> any ImageContaining
+    
     /// Load image for a node
     ///  - Parameters:
     ///   - node - the node to retrieve initial image
     ///   - type: thumbnail type to check
     ///  - Returns: Async sequence that will yield requested type. If type is `.preview` or `.original` it will yield until preview is returned
     func loadImage(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> AnyAsyncSequence<any ImageContaining>
+}
+
+extension ThumbnailLoaderProtocol {
+    /// Load image for a node
+    ///  - Parameters:
+    ///   - node - the node to retrieve initial image
+    ///   - type: thumbnail type to check
+    ///  - Returns: image container immediately  when type found
+    func loadImage(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> (any ImageContaining)? {
+        try await loadImage(for: node, type: type)
+            .first(where: { $0.type == type.toImageType() })
+    }
 }
 
 struct ThumbnailLoader: ThumbnailLoaderProtocol {
@@ -27,9 +48,15 @@ struct ThumbnailLoader: ThumbnailLoaderProtocol {
     }
     
     func initialImage(for node: NodeEntity, type: ThumbnailTypeEntity) -> any ImageContaining {
-        guard let container = thumbnailUseCase.cachedThumbnailContainer(for: node, type: type) else {
+        initialImage(for: node, type: type) {
             let placeholderFileTypeResource = FileTypes().fileTypeResource(forFileName: node.name)
-            return ImageContainer(image: Image(placeholderFileTypeResource), type: .placeholder)
+            return Image(placeholderFileTypeResource)
+        }
+    }
+    
+    func initialImage(for node: NodeEntity, type: ThumbnailTypeEntity, placeholder: @Sendable () -> Image) -> any ImageContaining {
+        guard let container = thumbnailUseCase.cachedThumbnailContainer(for: node, type: type) else {
+            return ImageContainer(image: placeholder(), type: .placeholder)
         }
         return container
     }
