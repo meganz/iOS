@@ -271,6 +271,26 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertTrue(didUpdateTransferWidget)
     }
 
+    func testEditMode_whenChangingTheEditing_shouldAlsoChangeTheEditMode() {
+        let harness = Harness(node: .init())
+        let exp = expectation(description: "Wait for editing mode to be enabled")
+        let editModeSubscription = harness
+            .sut
+            .$editMode
+            .dropFirst()
+            .sink { editMode in
+                guard editMode.isEditing else {
+                    XCTFail("Edit mode should be enabled")
+                    return
+                }
+
+                exp.fulfill()
+            }
+        harness.sut.editing = true
+        wait(for: [exp], timeout: 1.0)
+        editModeSubscription.cancel()
+    }
+
     private func assertChangeSortOrder(
         with sortOrderType: SortOrderType,
         expectedSortOrderEntity: MEGADomain.SortOrderEntity,

@@ -95,3 +95,13 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         await loadThumbnail()
     }
 }
+
+extension SearchResultRowViewModel: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(result)
+    }
+
+    static func == (lhs: SearchResultRowViewModel, rhs: SearchResultRowViewModel) -> Bool {
+        lhs.result == rhs.result
+    }
+}

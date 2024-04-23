@@ -254,7 +254,14 @@ final class SearchResultsViewModelTests: XCTestCase {
                     F7363D: Color("F7363D"),
                     _1C1C1E: Color("1C1C1E"),
                     _00A886: Color("00A886"),
-                    _3C3C43: Color("3C3C43")
+                    _3C3C43: Color("3C3C43"),
+                    checkmarkBackgroundTintColor: Color(
+                        UIColor {
+                            $0.userInterfaceStyle == .dark 
+                            ? UIColor(red: 0, green: 0.761, blue: 0.604, alpha: 1.0)
+                            : UIColor(red: 0, green: 0.659, blue: 0.525, alpha: 1.0)
+                        }
+                    )
                 ),
                 previewContent: .init(
                     actions: [],
@@ -548,6 +555,49 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
     }
 
+    func testSelectedRows_whenMultipleRowsSelected_shouldMatchResultsIds() {
+        let harness = Harness(self)
+        var selectedRows = Set<SearchResultRowViewModel>()
+        for i in 1...10 {
+            selectedRows.insert(generateRandomSearchResultRowViewModel(id: i))
+        }
+
+        let exp = expectation(description: "Wait for selected results")
+        let selectedResultsSubscription = harness
+            .sut
+            .$selectedResultIds
+            .sink { results in
+                if results == Set(1...10) {
+                    exp.fulfill()
+                }
+            }
+
+        harness.sut.selectedRows = selectedRows
+        wait(for: [exp], timeout: 1.0)
+        selectedResultsSubscription.cancel()
+    }
+
+    private func generateRandomSearchResultRowViewModel(id: Int) -> SearchResultRowViewModel {
+        .init(
+            result: .init(
+                id: UInt64(id),
+                thumbnailDisplayMode: .horizontal,
+                backgroundDisplayMode: .icon,
+                title: "Title",
+                description: { _ in ""},
+                type: .node,
+                properties: [],
+                thumbnailImageData: { Data() },
+                swipeActions: { _ in [] }
+            ),
+            rowAssets: .example,
+            colorAssets: .example,
+            previewContent: .example,
+            actions: .init(contextAction: { _ in }, selectionAction: { }, previewTapAction: { }),
+            swipeActions: []
+        )
+    }
+
     private func assertChangeSortOrder(
         with sortOrder: Search.SortOrderEntity,
         expectedReceivedQueries: [SearchQuery]? = nil,
@@ -598,11 +648,4 @@ fileprivate extension SearchResultsEntity {
             .chipWith(id: 1)
         ]
     )
-}
-
-extension SearchResultRowViewModel: Equatable {
-    // test only
-    public static func == (lhs: Search.SearchResultRowViewModel, rhs: Search.SearchResultRowViewModel) -> Bool {
-        lhs.result == rhs.result
-    }
 }

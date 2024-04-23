@@ -5,9 +5,14 @@ import SwiftUI
 
 public struct SearchResultsView: View {
     @StateObject var viewModel: SearchResultsViewModel
+    @Binding var editMode: EditMode
 
-    public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
+    public init(
+        viewModel: @autoclosure @escaping () -> SearchResultsViewModel,
+        editMode: Binding<EditMode>
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel())
+        _editMode = editMode
     }
 
     public var body: some View {
@@ -125,20 +130,18 @@ public struct SearchResultsView: View {
     }
 
     private var listContent: some View {
-        List {
-            ForEach(Array(viewModel.listItems.enumerated()), id: \.element.id) { index, item in
-                SearchResultRowView(
-                    viewModel: item,
-                    selected: $viewModel.selectedResultIds,
-                    selectionEnabled: $viewModel.editing
-                )
+        List(viewModel.listItems, id: \.self, selection: $viewModel.selectedRows) { item in
+            SearchResultRowView(viewModel: item)
                 .listRowBackground(TokenColors.Background.page.swiftUI)
                 .task {
+                    guard let index = viewModel.listItems.firstIndex(of: item) else { return }
                     await viewModel.loadMoreIfNeeded(at: index)
                 }
-            }
+
         }
         .listStyle(.plain)
+        .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
+        .environment(\.editMode, $editMode)
     }
 
     private var thumbnailContent: some View {
@@ -224,7 +227,8 @@ struct SearchResultsViewPreviews: PreviewProvider {
         )
         var body: some View {
             SearchResultsView(
-                viewModel: viewModel
+                viewModel: viewModel, 
+                editMode: .constant(.inactive)
             )
             .onChange(of: text, perform: { newValue in
                 viewModel.bridge.queryChanged(newValue)

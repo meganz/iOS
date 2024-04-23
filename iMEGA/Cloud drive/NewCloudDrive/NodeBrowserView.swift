@@ -31,7 +31,10 @@ struct NodeBrowserView: View {
             if let mediaDiscoveryViewModel = viewModel.viewModeAwareMediaDiscoveryViewModel {
                 MediaDiscoveryContentView(viewModel: mediaDiscoveryViewModel)
             } else {
-                SearchResultsView(viewModel: viewModel.searchResultsViewModel)
+                SearchResultsView(
+                    viewModel: viewModel.searchResultsViewModel,
+                    editMode: $viewModel.editMode
+                )
             }
         }
         .designTokenBackground(true)

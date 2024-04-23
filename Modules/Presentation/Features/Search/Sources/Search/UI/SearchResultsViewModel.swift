@@ -25,6 +25,8 @@ public class SearchResultsViewModel: ObservableObject {
     /// Tracks the visible items that are currently  shown on screen, needed for node updates logic.
     private var visibleItems = Set<ResultId>()
 
+    @Published var selectedRows = Set<SearchResultRowViewModel>()
+
     var fileListItems: [SearchResultRowViewModel] {
         listItems.filter { $0.result.thumbnailDisplayMode == .vertical }
     }
@@ -89,6 +91,8 @@ public class SearchResultsViewModel: ObservableObject {
     private let viewDisplayMode: ViewDisplayMode
 
     @Published public var editing: Bool = false
+
+    private var selectedRowsSubscription: AnyCancellable?
 
     public init(
         resultsProvider: any SearchResultsProviding,
@@ -163,6 +167,16 @@ public class SearchResultsViewModel: ObservableObject {
         }
 
         setupKeyboardVisibilityHandling()
+
+        selectedRowsSubscription = $selectedRows
+            .dropFirst()
+            .throttle(for: .seconds(0.4), scheduler: DispatchQueue.main, latest: true)
+            .sink { [weak self] selectedRows in
+                guard let self else { return }
+
+                selectedResultIds = Set(selectedRows.map(\.result.id))
+                bridge.selectionChanged(selectedResultIds)
+            }
     }
 
     /// meant called to be called in the SwiftUI View's .task modifier

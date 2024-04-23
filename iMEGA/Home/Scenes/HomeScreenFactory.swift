@@ -326,7 +326,12 @@ final class HomeScreenFactory: NSObject {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter), 
             viewDisplayMode: .home
         )
-        return UIHostingController(rootView: SearchResultsView(viewModel: vm))
+        return UIHostingController(
+            rootView: SearchResultsView(
+                viewModel: vm,
+                editMode: .constant(.inactive)
+            )
+        )
     }
 
     func makeResultsProvider(

@@ -4,24 +4,21 @@ import SwiftUI
 
 // MAKE SCREEN WIDE TO SEE DOCUMENTATION
 // ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-// │╔═════════════╗╔══════════════════════╗┌────────────┐                                                          ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
-// │║             ║║       [TITLE]        ║│ .prominent │                                                                             ││
-// │║             ║╚══════════════════════╝└────────────┘                                                          │                   │
-// │║             ║┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐                                                                       Menu       ││
-// │║Icon/Preview ║      [AuxTITLE] (optional)                                                                     │(optional, hidden  │
-// │║(.preview    ║└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                                                in selection mode)││
-// │║  Overlay)   ║┌──────────────────────┐╔═══════════════╗┌────────────────────────┐┌───────────────────────────┐│                   │
-// │║             ║│ .secondary(.leading) │║  [SUBTITLE]   ║│ .secondary(.trailing)  ││ .secondary(.trailingEdge) │                   ││
-// │╚═════════════╝└──────────────────────┘╚═══════════════╝└────────────────────────┘└───────────────────────────┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
+// │╔══════════════════════╗┌────────────┐                                                          ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
+// │║       [TITLE]        ║│ .prominent │                                                                             ││
+// │╚══════════════════════╝└────────────┘                                                          │                   │
+// │┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐                                                                       Menu       ││
+// │      [AuxTITLE] (optional)                                                                     │(optional, hidden  │
+// │└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                                                in selection mode)││
+// │┌──────────────────────┐╔═══════════════╗┌────────────────────────┐┌───────────────────────────┐│                   │
+// │└──────────────────────┘╚═══════════════╝└────────────────────────┘└───────────────────────────┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
 // └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 struct SearchResultRowView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
-    @Binding var selected: Set<ResultId>
-    @Binding var selectionEnabled: Bool
-    
     private let layout = ResultCellLayout.list
-    
+    @Environment(\.editMode) private var editMode
+
     var body: some View {
         content
             .swipeActions {
@@ -43,9 +40,6 @@ struct SearchResultRowView: View {
                     trailing: 16
                 )
             )
-            .onTapGesture {
-                viewModel.actions.selectionAction()
-            }
             .contextMenuWithPreview(
                 actions: viewModel.previewContent.actions.toUIActions,
                 sourcePreview: {
@@ -67,7 +61,6 @@ struct SearchResultRowView: View {
     private var content: some View {
         HStack {
             HStack {
-                selectionIcon
                 thumbnail
                 Spacer()
                     .frame(width: 8)
@@ -81,23 +74,6 @@ struct SearchResultRowView: View {
         }
         .contentShape(Rectangle())
         .frame(minHeight: 60)
-    }
-    
-    var isSelected: Bool {
-        selected.contains(viewModel.result.id)
-    }
-    
-    @ViewBuilder var selectionIcon: some View {
-        if selectionEnabled {
-            Image(
-                uiImage: isSelected ?
-                viewModel.selectedCheckmarkImage :
-                viewModel.unselectedCheckmarkImage
-            )
-            .resizable()
-            .scaledToFit()
-            .frame(width: 22, height: 22)
-        }
     }
     
     // optional overlay property in placement .previewOverlay
@@ -160,7 +136,7 @@ struct SearchResultRowView: View {
     
     @ViewBuilder
     private var moreButton: some View {
-        if !selectionEnabled {
+        if editMode?.wrappedValue.isEditing != true {
             UIButtonWrapper(
                 image: viewModel.contextButtonImage
             ) { button in
@@ -190,9 +166,7 @@ struct SearchResultRowView_Previews: PreviewProvider {
         List {
             ForEach(items) {
                 SearchResultRowView(
-                    viewModel: $0,
-                    selected: .constant([]),
-                    selectionEnabled: .constant(false)
+                    viewModel: $0
                 )
             }
         }
