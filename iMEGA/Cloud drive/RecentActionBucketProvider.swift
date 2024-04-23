@@ -3,6 +3,11 @@ import MEGASdk
 import Search
 
 struct RecentActionBucketProvider: SearchResultsProviding {
+    func refreshedSearchResults(queryRequest: Search.SearchQuery) async -> Search.SearchResultsEntity? {
+        // To be addressed in [SAO-1273]
+        nil
+    }
+    
     func currentResultIds() -> [Search.ResultId] {
         guard let list = bucket.nodesList else { return [] }
         return list.toNodeArray().map {

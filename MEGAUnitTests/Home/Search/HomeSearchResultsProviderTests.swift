@@ -1,3 +1,4 @@
+import ConcurrencyExtras
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -68,7 +69,9 @@ class HomeSearchProviderTests: XCTestCase {
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
         let nodeRepo: MockNodeRepository
-        let nodesUpdateListenerRepo: NodesUpdateListenerProtocol
+        let nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository
+        let transferListenerRepo: SDKTransferListenerRepository
+        let nodeUpdateRepository: MockNodeUpdateRepository
         let sut: HomeSearchResultsProvider
         var receivedFilters: [MEGASearchFilter] = []
         var receivedTimeFrames: [SearchChipEntity.TimeFrame] {
@@ -89,10 +92,10 @@ class HomeSearchProviderTests: XCTestCase {
             nodes: [NodeEntity] = [],
             childrenNodes: [NodeEntity] = [],
             nodeActions: NodeActions,
+            onSearchResultsUpdated: @escaping (SearchResultUpdateSignal) -> Void = { _ in },
             file: StaticString = #filePath,
             line: UInt = #line
         ) {
-            
             self.nodes = nodes
             searchFile = MockSearchFileUseCase(
                 nodes: nodes,
@@ -119,7 +122,10 @@ class HomeSearchProviderTests: XCTestCase {
             )
 
             nodesUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
+            transferListenerRepo = SDKTransferListenerRepository(sdk: MockSdk())
 
+            nodeUpdateRepository = MockNodeUpdateRepository()
+             
             sut = HomeSearchResultsProvider(
                 parentNodeProvider: {
                     rootNode ?? NodeEntity(handle: 123)
@@ -130,8 +136,9 @@ class HomeSearchProviderTests: XCTestCase {
                 mediaUseCase: mediaUseCase,
                 nodeRepository: nodeRepo,
                 nodesUpdateListenerRepo: nodesUpdateListenerRepo,
-                transferListenerRepo: SDKTransferListenerRepository(sdk: MockSdk()), 
+                transferListenerRepo: transferListenerRepo,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
+                nodeUpdateRepository: nodeUpdateRepository,
                 allChips: SearchChipEntity.allChips(
                     areChipsGroupEnabled: true,
                     currentDate: { .testDate },
@@ -139,7 +146,7 @@ class HomeSearchProviderTests: XCTestCase {
                 ),
                 sdk: MockSdk(),
                 nodeActions: nodeActions,
-                onSearchResultUpdated: {_ in}
+                onSearchResultsUpdated: onSearchResultsUpdated
             )
             
             testCase.trackForMemoryLeaks(on: sut, file: file, line: line)
@@ -418,8 +425,7 @@ class HomeSearchProviderTests: XCTestCase {
         
         // then
         let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        let expectedResultsIds = Array(handles.prefix(upTo: 20))
-        XCTAssertEqual(expectedResultsIds, resultIds)
+        XCTAssertEqual(resultIds?.count, 0)
     }
     
     func testRefreshedSearchResults_withContinousNodeChanges_shouldReturnCorrectResults() async throws {
@@ -450,32 +456,25 @@ class HomeSearchProviderTests: XCTestCase {
         XCTAssertEqual(UInt64.array(start: 11, end: 50), resultIds)
         
         // and when: 200 nodes are added
-        harness.nodeRepo.$childrenNodes.mutate { $0.append(contentsOf: NodeEntity.entities(startHandle: 51, endHandle: 251)) }
+        harness.nodeRepo.$childrenNodes.mutate { $0.append(contentsOf: NodeEntity.entities(startHandle: 51, endHandle: 250)) }
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
-        // and then: Refreshed result should have: 40 orginall + 20 buffered offset
-        XCTAssertEqual(UInt64.array(start: 11, end: 70), resultIds)
+        // and then: Refreshed result should have: 40 orginal
+        XCTAssertEqual(UInt64.array(start: 11, end: 50), resultIds)
         
         // and when: Load more results and refresh
-        _ = await harness.sut.loadMore(queryRequest: .initial, index: 40)
+        _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: 40)
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
-        // and then: Refreshed result should have: 80 original + 100 loadmore + 20 buffered offset
-        XCTAssertEqual(UInt64.array(start: 11, end: 190), resultIds)
+        // and then: Refreshed result should have: 40 original + 100 loadmore
+        XCTAssertEqual(UInt64.array(start: 11, end: 150), resultIds)
         
         // and when: Load more results to the end and refresh
-        _ = await harness.sut.loadMore(queryRequest: .initial, index: 160)
+        _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: 130)
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
         // and then: Refreshed result should have all 240 children nodes
-        XCTAssertEqual(UInt64.array(start: 11, end: 251), resultIds)
-        
-        // and when: 100 more nodes are added
-        harness.nodeRepo.$childrenNodes.mutate { $0.append(contentsOf: NodeEntity.entities(startHandle: 252, endHandle: 353)) }
-        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        
-        // and then: Refreshed result should have: 240 original + 20 buffered offset
-        XCTAssertEqual(UInt64.array(start: 11, end: 271), resultIds)
+        XCTAssertEqual(UInt64.array(start: 11, end: 250), resultIds)
     }
     
     func testRefreshedSearchResults_withUserSuppliedQuery_shouldReturnUpdatedResults() async throws {
@@ -486,7 +485,7 @@ class HomeSearchProviderTests: XCTestCase {
         let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("node 0", isSearchActive: false)))?.results.map(\.id)
         
         // then
-        XCTAssertEqual(UInt64.array(start: 1, end: 20), resultIds)
+        XCTAssertEqual(resultIds?.count, 0)
     }
     
     func testRefreshedSearchResults_withUserSuppliedQueryShowRoot_shouldReturnUpdatedResults() async throws {
@@ -496,7 +495,71 @@ class HomeSearchProviderTests: XCTestCase {
         let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("", isSearchActive: false)))?.results.map(\.id)
         
         // then
-        XCTAssertEqual(UInt64.array(start: 1, end: 20), resultIds)
+        XCTAssertEqual(resultIds?.count, 0)
+    }
+    
+    func testNodeUpdatesListener_whenNodeUpdateIsNotNeeded_shouldNotProcessNodeUpdates() async {
+        // given
+        let root = NodeEntity(handle: 0)
+        let children = NodeEntity.entities(startHandle: 1, endHandle: 3)
+        
+        var nodeUpdatesSignals = [SearchResultUpdateSignal]()
+        
+        let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: await nodeActions, onSearchResultsUpdated: {
+            nodeUpdatesSignals.append($0)
+        })
+        
+        harness.nodeUpdateRepository.shouldProcessOnNodesUpdateValue = false
+        _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
+        
+        // when
+        harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(children)
+        
+        // then
+        XCTAssertTrue(nodeUpdatesSignals.isEmpty)
+    }
+    
+    func testNodeUpdatesListener_whenShouldProcessNodesUpdate_shouldProcessNodeUpdates() async {
+        await withMainSerialExecutor {
+            // given
+            let root = NodeEntity(handle: 0)
+            let children = NodeEntity.entities(startHandle: 1, endHandle: 3)
+            
+            var nodeUpdatesSignals = [SearchResultUpdateSignal]()
+            
+            let expectation = expectation(description: "Waiting node updates signal")
+            
+            let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: nodeActions, onSearchResultsUpdated: {
+                nodeUpdatesSignals.append($0)
+                if nodeUpdatesSignals.count == 2 {
+                    expectation.fulfill()
+                }
+            })
+            
+            harness.nodeUpdateRepository.shouldProcessOnNodesUpdateValue = true
+            _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
+            
+            // when
+            harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(children) // Trigger .generic signal
+            harness.transferListenerRepo.endHandler?(MockNode.init(handle: 1), false, .download) // Trigger .specific signal
+            harness.transferListenerRepo.endHandler?(MockNode.init(handle: 1), true, .download) // Doesn't trigger signals
+            harness.transferListenerRepo.endHandler?(MockNode.init(handle: 1), false, .upload) // Doesn't trigger signals
+            harness.transferListenerRepo.endHandler?(MockNode.init(handle: 4), false, .download) // Doesn't trigger signals
+            
+            await fulfillment(of: [expectation], timeout: 1.0)
+            // then
+            guard case .generic = nodeUpdatesSignals[0] else {
+                XCTFail("Expecting .generic update signal")
+                return
+            }
+            
+            guard case let .specific(result) = nodeUpdatesSignals[1] else {
+                XCTFail("Expecting .specific update signal")
+                return
+            }
+            
+            XCTAssertEqual(result.id, 1)
+        }
     }
 
     // MARK: - Private methods.

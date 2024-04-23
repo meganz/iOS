@@ -156,6 +156,9 @@ public struct SearchResultsView: View {
                             .task {
                                 await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
                             }
+                            .onDisappear {
+                                viewModel.onItemDisappear(at: index)
+                            }
                     }
                 }
                 .padding(.horizontal, 8)

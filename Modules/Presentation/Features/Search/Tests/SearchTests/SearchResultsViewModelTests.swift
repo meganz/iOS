@@ -1,3 +1,4 @@
+import ConcurrencyExtras
 @testable import MEGASwift
 @testable import Search
 import SearchMock
@@ -163,6 +164,27 @@ final class SearchResultsViewModelTests: XCTestCase {
             sut.selectedResultIds = Set(selectedResults)
             resultsProvider.currentResultIdsToReturn = currentResults
             return self
+        }
+        
+        func resetResultFactory() {
+            resultsProvider.resultFactory = { _ in return nil }
+        }
+        
+        func simulateVisibleItems(startIndex: Int, endIndex: Int) async {
+            for index in startIndex...endIndex {
+                await sut.loadMoreIfNeeded(at: index)
+            }
+        }
+        
+        func simulateVisibleItemsRemoval(at index: Int) async {
+            sut.onItemDisappear(at: index)
+        }
+        
+        func prepareRefreshedResults(startId: UInt64, endId: UInt64) {
+            let results = Array(startId...endId).map {
+                SearchResult.resultWith(id: $0, title: "refreshed \($0)")
+            }
+            resultsProvider.refreshedSearchResultsToReturn = .init(results: results, availableChips: [], appliedChips: [])
         }
         
         var hasResults: Bool {
@@ -472,6 +494,58 @@ final class SearchResultsViewModelTests: XCTestCase {
             .initial
         ]
         XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
+    }
+    
+    func testOnSearchResultsUpdated_whenGenericUpdate_shouldReturnExpectedResults() async {
+        await withMainSerialExecutor {
+            // given
+            let harness = Harness(self).withResultsPrepared(10) // Initially there are 10 results
+            await harness.sut.task()
+            harness.resetResultFactory()
+            harness.prepareRefreshedResults(startId: 1, endId: 15) // After refreshing, there will be 15 results
+            
+            // Simulate visible items
+            await harness.simulateVisibleItems(startIndex: 0, endIndex: 9)
+            await harness.simulateVisibleItemsRemoval(at: 9) // At this point, visible item will be [1...8]
+
+            // when
+            harness.bridge.onSearchResultsUpdated(.generic)
+            
+            for _ in 1...11 { // Needs to yield to make way for other concurrent tasks to fully finished first.
+                await Task.yield()
+            }
+            
+            // then
+            XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...15))
+            
+            // Make sure to check the visible items' thumbnails are loaded
+            for index in 0..<harness.sut.listItems.count {
+                if index < 9 {
+                    XCTAssertEqual(harness.sut.listItems[index].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
+                } else {
+                    XCTAssertNil(harness.sut.listItems[index].thumbnailImage.pngData())
+                }
+            }
+        }
+    }
+    
+    func testOnSearchResultsUpdated_whenSpecificUpdate_shouldReturnExpectedResults() async {
+        await withMainSerialExecutor {
+            // given
+            let harness = Harness(self).withResultsPrepared(10)
+            await harness.sut.task()
+            
+            harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 1))) // Triggers item update
+            await Task.yield()
+            harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 2))) // Triggers item updates
+            await Task.yield()
+            harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 100))) // Not triggering item update
+            await Task.yield()
+            
+            XCTAssertEqual(harness.sut.listItems[0].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
+            XCTAssertEqual(harness.sut.listItems[1].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
+            XCTAssertNil(harness.sut.listItems[2].thumbnailImage.pngData())
+        }
     }
 
     private func assertChangeSortOrder(

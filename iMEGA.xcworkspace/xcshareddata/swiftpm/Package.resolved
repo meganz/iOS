@@ -210,7 +210,7 @@
     {
       "identity" : "mobile-analytics-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git",
+      "location" : "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios",
       "state" : {
         "branch" : "main",
         "revision" : "2d6684b7b1137b9ee856ca4a1363d8886f287679"
@@ -326,7 +326,7 @@
     {
       "identity" : "swift-concurrency-extras",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-concurrency-extras.git",
+      "location" : "https://github.com/pointfreeco/swift-concurrency-extras",
       "state" : {
         "revision" : "bb5059bde9022d69ac516803f4f227d8ac967f71",
         "version" : "1.1.0"
@@ -355,8 +355,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-snapshot-testing",
       "state" : {
-        "revision" : "5b0c434778f2c1a4c9b5ebdb8682b28e84dd69bd",
-        "version" : "1.15.4"
+        "revision" : "625ccca8570773dd84a34ee51a81aa2bc5a4f97a",
+        "version" : "1.16.0"
       }
     },
     {

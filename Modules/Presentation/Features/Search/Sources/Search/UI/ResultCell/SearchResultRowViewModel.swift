@@ -84,7 +84,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     @MainActor
     func loadThumbnail() async {
         let data = await result.thumbnailImageData()
-        
         if let image = UIImage(data: data) {
             self.thumbnailImage = image
         }

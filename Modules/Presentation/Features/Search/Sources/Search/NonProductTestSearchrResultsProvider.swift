@@ -5,6 +5,10 @@ import UIKit
 /// Development only implementation, will be moved to SearchMocks on next MR once
 /// we have actual results provider using real SDK
 public struct NonProductionTestResultsProvider: SearchResultsProviding {
+    public func refreshedSearchResults(queryRequest: SearchQuery) async -> SearchResultsEntity? {
+        nil
+    }
+    
     public func currentResultIds() -> [ResultId] {
         []
     }
