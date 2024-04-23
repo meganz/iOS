@@ -38,30 +38,25 @@ class PhotoCellViewModel: ObservableObject {
         
     // MARK: private state
     private let photo: NodeEntity
-    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let selection: PhotoSelection
     private var subscriptions = Set<AnyCancellable>()
     
     init(photo: NodeEntity,
          viewModel: PhotoLibraryModeAllViewModel,
-         thumbnailUseCase: some ThumbnailUseCaseProtocol,
+         thumbnailLoader: some ThumbnailLoaderProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
-        self.thumbnailUseCase = thumbnailUseCase
+        self.thumbnailLoader = thumbnailLoader
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
         isSensitive = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) && photo.isMarkedSensitive
         
         let type: ThumbnailTypeEntity = viewModel.zoomState.scaleFactor == .one ? .preview : .thumbnail
-        if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: type) {
-            thumbnailContainer = container
-        } else {
-            let placeholderFileTypeResource = FileTypes().fileTypeResource(forFileName: photo.name)
-            let placeholder = ImageContainer(image: Image(placeholderFileTypeResource), type: .placeholder)
-            thumbnailContainer = placeholder
-        }
+        thumbnailContainer = thumbnailLoader.initialImage(for: photo, type: type)
+        
         configZoomState(with: viewModel.$zoomState)
         configSelection()
         
@@ -104,23 +99,8 @@ class PhotoCellViewModel: ObservableObject {
     }
     
     private func loadThumbnail(type: ThumbnailTypeEntity) async throws {
-        switch type {
-        case .thumbnail:
-            if let container = try? await thumbnailUseCase.loadThumbnailContainer(for: photo, type: .thumbnail) {
-                await updateThumbnailContainerIfNeeded(container)
-            }
-        case .preview, .original:
-            if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .preview) {
-                return await updateThumbnailContainerIfNeeded(container)
-            }
-            
-            for try await imageContainer in thumbnailUseCase
-                .requestPreview(for: photo)
-                .compactMap({ $0.toURLImageContainer()}) {
-                
-                try Task.checkCancellation()
-                await updateThumbnailContainerIfNeeded(imageContainer)
-            }
+        for await imageContainer in try await thumbnailLoader.loadImage(for: photo, type: type) {
+            await updateThumbnailContainerIfNeeded(imageContainer)
         }
     }
     
