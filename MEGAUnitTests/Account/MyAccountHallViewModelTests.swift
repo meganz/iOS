@@ -221,6 +221,69 @@ final class MyAccountHallViewModelTests: XCTestCase {
         return sut.arePromosAvailable
     }
     
+    func testShowPlanRow_businessAccount_shouldBeFalse() {
+        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: .business))
+        
+        XCTAssertFalse(sut.showPlanRow)
+    }
+    
+    func testShowPlanRow_proFlexiAccount_shouldBeFalse() {
+        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: .proFlexi))
+        
+        XCTAssertFalse(sut.showPlanRow)
+    }
+    
+    func testShowPlanRow_freeOrProAccount_shouldBeTrue() {
+        let accountTypes: [AccountTypeEntity] = [.free, .proI, .proII, .proIII]
+        accountTypes.enumerated().forEach { (index, accountType) in
+            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: accountType))
+            
+            XCTAssertTrue(sut.showPlanRow, "failed at index: \(index) for accountType: \(accountType)")
+        }
+    }
+    
+    func testCalculateCellHeight_planSection_showPlanRowIsTrue_shouldNotBeZero() {
+        let accountTypes: [AccountTypeEntity] = [.free, .proI, .proII, .proIII]
+        let indexPath = IndexPath(row: MyAccountMegaSection.plan.rawValue,
+                                  section: MyAccountSection.mega.rawValue)
+        
+        accountTypes.enumerated().forEach { (index, accountType) in
+            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: accountType))
+            
+            XCTAssertNotEqual(sut.calculateCellHeight(at: indexPath), 0, "failed at index: \(index) for accountType: \(accountType)")
+        }
+    }
+    
+    func testCalculateCellHeight_planSection_showPlanRowIsFalse_shouldBeZero() {
+        let accountTypes: [AccountTypeEntity] = [.proFlexi, .business]
+        let indexPath = IndexPath(row: MyAccountMegaSection.plan.rawValue,
+                                  section: MyAccountSection.mega.rawValue)
+
+        accountTypes.enumerated().forEach { (index, accountType) in
+            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: accountType))
+            
+            XCTAssertEqual(sut.calculateCellHeight(at: indexPath), 0, "failed at index: \(index) for accountType: \(accountType)")
+        }
+    }
+    
+    func testCalculateCellHeight_myAccountSection_featureFlagIsEnabled_shouldNotBeZero() {
+        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.random,
+                               featureFlagProvider: MockFeatureFlagProvider(list: [.cancelSubscription: true]))
+        let indexPath = IndexPath(row: MyAccountMegaSection.myAccount.rawValue,
+                                  section: MyAccountSection.mega.rawValue)
+        
+        XCTAssertNotEqual(sut.calculateCellHeight(at: indexPath), 0)
+    }
+    
+    func testCalculateCellHeight_myAccountSection_featureFlagIsDisabled_shouldBeZero() {
+        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.random,
+                               featureFlagProvider: MockFeatureFlagProvider(list: [.cancelSubscription: false]))
+        let indexPath = IndexPath(row: MyAccountMegaSection.myAccount.rawValue,
+                                  section: MyAccountSection.mega.rawValue)
+        
+        XCTAssertEqual(sut.calculateCellHeight(at: indexPath), 0)
+    }
+    
     private func makeSUT(
         isMasterBusinessAccount: Bool = false,
         enabledNotifications: [NotificationIDEntity] = [],

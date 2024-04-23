@@ -2,18 +2,6 @@ import Accounts
 import MEGAL10n
 import MEGASwiftUI
 
-@objc enum MyAccountSection: Int, CaseIterable {
-    case mega = 0, other
-}
-
-@objc enum MyAccountMegaSection: Int, CaseIterable {
-    case plan = 0, storage, contacts, notifications, achievements, transfers, deviceCenter, offline, rubbishBin
-}
-
-@objc enum MyAccountOtherSection: Int, CaseIterable {
-    case settings
-}
-
 extension MyAccountHallViewController: UITableViewDataSource {
     // MARK: - Settings row setup data
     private func settingsSetupData() -> MyAccountHallCellData {
@@ -42,6 +30,21 @@ extension MyAccountHallViewController: UITableViewDataSource {
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
                                      detailText: detailText,
                                      icon: UIImage.iconStorage.imageFlippedForRightToLeftLayoutDirection())
+    }
+    
+    // MARK: - My Account row setup data
+    private func myAccountSetupCell(_ indexPath: IndexPath) -> HostingTableViewCell<MyAccountHallMenuView> {
+        guard let cell = tableView?.dequeueReusableCell(withIdentifier: "MyAccountHallMenuView", for: indexPath) as? HostingTableViewCell<MyAccountHallMenuView> else {
+            return HostingTableViewCell<MyAccountHallMenuView>()
+        }
+        
+        let menu = MyAccountHallCellData(sectionText: Strings.Localizable.Account.MyAccount.title,
+                                         icon: UIImage.myAccount.imageFlippedForRightToLeftLayoutDirection(),
+                                         disclosureIndicatorIcon: UIImage.standardDisclosureIndicator)
+        let cellView = MyAccountHallMenuView(menuDetails: menu)
+        cell.host(cellView, parent: self)
+        cell.selectionStyle = .none
+        return cell
     }
     
     // MARK: - Contacts row setup data
@@ -149,10 +152,17 @@ extension MyAccountHallViewController: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == MyAccountSection.mega.rawValue &&
-            indexPath.row == MyAccountMegaSection.plan.rawValue &&
-            showPlanRow {
-            return upgradePlanSetupCell(indexPath)
+        if indexPath.section == MyAccountSection.mega.rawValue {
+            switch indexPath.row {
+            case MyAccountMegaSection.plan.rawValue:
+                if viewModel.showPlanRow {
+                    return upgradePlanSetupCell(indexPath)
+                }
+            case MyAccountMegaSection.myAccount.rawValue:
+                return viewModel.isCancelSubscriptionFeatureFlagEnabled ? myAccountSetupCell(indexPath) : UITableViewCell()
+            default:
+                break
+            }
         }
         
         let isShowStorageUsageCell = (MEGASdk.shared.isAccountType(.business) ||

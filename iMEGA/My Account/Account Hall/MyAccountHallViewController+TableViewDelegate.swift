@@ -4,29 +4,8 @@ import MEGASwiftUI
 
 extension MyAccountHallViewController: UITableViewDelegate {
     
-    public var showPlanRow: Bool {
-        !MEGASdk.shared.isAccountType(.business) && !MEGASdk.shared.isAccountType(.proFlexi)
-    }
-    
-    private func calculateCellHeight(at indexPath: IndexPath) -> CGFloat {
-        guard indexPath.section != MyAccountSection.other.rawValue else {
-            return UITableView.automaticDimension
-        }
-        
-        var shouldShowCell = true
-        switch MyAccountMegaSection(rawValue: indexPath.row) {
-        case .plan:
-            shouldShowCell = showPlanRow
-        case .achievements:
-            shouldShowCell = MEGASdk.shared.isAchievementsEnabled
-        default: break
-        }
-        
-        return shouldShowCell ? UITableView.automaticDimension : 0.0
-    }
-    
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        calculateCellHeight(at: indexPath)
+        viewModel.calculateCellHeight(at: indexPath)
     }
     
     // To remove the space between the table view and the profile view or the add phone number view
@@ -49,6 +28,9 @@ extension MyAccountHallViewController: UITableViewDelegate {
             } else {
                 MEGALogError("Account details unavailable")
             }
+            
+        case MyAccountMegaSection.myAccount.rawValue:
+            showProfileView()
             
         case MyAccountMegaSection.notifications.rawValue:
             let notificationsUseCase = NotificationsUseCase(repository: NotificationsRepository.newRepo)

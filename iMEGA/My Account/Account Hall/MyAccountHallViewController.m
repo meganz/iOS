@@ -21,19 +21,13 @@
 
 @interface MyAccountHallViewController () <UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
 
-@property (weak, nonatomic) IBOutlet UIView *profileView;
-@property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
-@property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
-@property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileImageView;
 @property (weak, nonatomic) IBOutlet UIView *profileBottomSeparatorView;
-
 @property (weak, nonatomic) IBOutlet UIView *addPhoneNumberView;
 @property (weak, nonatomic) IBOutlet UIImageView *addPhoneNumberImageView;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *addPhoneNumberActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIImageView *qrCodeImageView;
-
 @property (weak, nonatomic) IBOutlet UIView *tableFooterContainerView;
 
 @end
@@ -49,10 +43,7 @@
     self.viewAndEditProfileButton.accessibilityLabel = LocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     
     [self registerCustomCells];
-    
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
-    self.profileView.gestureRecognizers = @[tapGestureRecognizer];
-    
+        
     self.avatarImageView.image = self.avatarImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.qrCodeImageView.image = self.qrCodeImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.viewAndEditProfileImageView.image = self.viewAndEditProfileImageView.image.imageFlippedForRightToLeftLayoutDirection;

@@ -10,6 +10,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *tableFooterView;
 @property (weak, nonatomic) IBOutlet UILabel *tableFooterLabel;
 @property (weak, nonatomic) IBOutlet MEGALabel *nameLabel;
+
+@property (weak, nonatomic) IBOutlet UIView *profileView;
+@property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
+@property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
+@property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileImageView;
+@property (nonatomic) IBOutlet NSLayoutConstraint *nameLabelCenterVerticalConstraint;
+
 @property (nonatomic, strong) MyAccountHallViewModel *viewModel;
 
 @end
