@@ -3944,6 +3944,16 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="Favourites";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Empty playlist";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="Enter playlist name";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="New playlist";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="Create";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Favourites";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Empty playlist";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
