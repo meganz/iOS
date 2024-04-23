@@ -37,6 +37,46 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         self.nodeActionListener = nodeActionListener
     }
     
+    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
+        nodeActionListener(action)
+        guard let viewController = viewController else { return }
+        
+        switch action {
+        case .copy, .move:
+            showBrowserViewController(nodes: nodes, action: (action == .copy) ? .copy : .move)
+        case .exportFile:
+            exportFile(nodes: nodes, sender: sender)
+        case .shareLink, .manageLink:
+            showLink(for: nodes)
+        case .removeLink:
+            removeLink(for: nodes, in: viewController)
+        case .sendToChat:
+            handleSendToChat(for: nodes, from: viewController)
+        case .moveToRubbishBin:
+            moveToRubbishBinViewModel.moveToRubbishBin(nodes: nodes.toNodeEntities())
+        case .download:
+            handleDownloadAction(for: nodes.toNodeEntities())
+        case .saveToPhotos:
+            saveToPhotos(nodes)
+        default:
+            break
+        }
+    }
+    
+    private func handleSendToChat(for nodes: [MEGANode], from viewController: UIViewController) {
+        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+        guard
+            let navigationController = storyboard.instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
+            let sendToViewController = navigationController.viewControllers.first as? SendToViewController
+        else {
+            return
+        }
+        
+        sendToViewController.nodes = nodes
+        sendToViewController.sendMode = .cloud
+        viewController.present(navigationController, animated: true)
+    }
+    
     func nodeAction(
         _ nodeAction: NodeActionViewController,
         didSelect action: MegaNodeActionType,
@@ -53,13 +93,13 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             download(node, isNodeFromFolderLink: isNodeFromFolderLink, messageId: messageId, chatId: chatId)
         
         case .copy, .move:
-            showBrowserViewController(node: node, action: (action == .copy) ? .copy : .move)
+            showBrowserViewController(nodes: [node], action: (action == .copy) ? .copy : .move)
 
         case .rename:
             node.mnz_renameNode(in: viewController)
             
         case .exportFile:
-            exportFile(node: node, sender: sender)
+            exportFile(nodes: [node], sender: sender)
 
         case .shareFolder:
             openShareFolderDialog(node, viewController: viewController)
@@ -79,20 +119,10 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             node.mnz_leaveSharing(in: viewController)
 
         case .shareLink, .manageLink:
-            showLink(for: node)
+            showLink(for: [node])
             
         case .removeLink:
-            let router = ActionWarningViewRouter(presenter: viewController, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
-                SVProgressHUD.show()
-            }, onActionFinish: {
-                switch $0 {
-                case .success(let message):
-                    SVProgressHUD.showSuccess(withStatus: message)
-                case .failure:
-                    SVProgressHUD.dismiss()
-                }
-            })
-            router.start()
+            removeLink(for: [node], in: viewController)
             
         case .moveToRubbishBin:
             moveToRubbishBinViewModel.moveToRubbishBin(nodes: [node].toNodeEntities())
@@ -107,7 +137,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             node.mnz_sendToChat(in: viewController)
             
         case .saveToPhotos:
-            saveToPhotos(node)
+            saveToPhotos([node])
             
         case .favourite:
             favourite(node)
@@ -131,6 +161,20 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         }
     }
     
+    private func removeLink(for nodes: [MEGANode], in viewController: UIViewController) {
+        let router = ActionWarningViewRouter(presenter: viewController, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
+            SVProgressHUD.show()
+        }, onActionFinish: {
+            switch $0 {
+            case .success(let message):
+                SVProgressHUD.showSuccess(withStatus: message)
+            case .failure:
+                SVProgressHUD.dismiss()
+            }
+        })
+        router.start()
+    }
+    
     private func remove(_ node: MEGANode, in viewController: UIViewController) {
         node.mnz_remove(in: viewController) { shouldRemove in
             if shouldRemove {
@@ -140,10 +184,10 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         }
     }
     
-    private func showLink(for node: MEGANode) {
+    private func showLink(for nodes: [MEGANode]) {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
-                          nodes: [node]).start()
+                          nodes: nodes).start()
         }
     }
     
@@ -173,20 +217,20 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         node.mnz_showVersions(in: viewController)
     }
     
-    private func showBrowserViewController(node: MEGANode, action: BrowserAction) {
+    private func showBrowserViewController(nodes: [MEGANode], action: BrowserAction) {
         if let navigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController {
             viewController?.present(navigationController, animated: true, completion: nil)
 
             if let browserViewController = navigationController.viewControllers.first as? BrowserViewController {
-                browserViewController.selectedNodesArray = [node]
+                browserViewController.selectedNodesArray = nodes
                 browserViewController.browserAction = action
             }
         }
     }
     
-    private func saveToPhotos(_ node: MEGANode) {
+    private func saveToPhotos(_ nodes: [MEGANode]) {
         let wrapper = SaveMediaToPhotosUseCaseOCWrapper()
-        wrapper.saveToPhotos(node: node)
+        wrapper.saveToPhotos(nodes: nodes)
     }
     
     private func download(_ node: MEGANode, isNodeFromFolderLink: Bool, messageId: HandleEntity? = nil, chatId: HandleEntity? = nil) {
@@ -212,6 +256,20 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         )
         let router = routerFactory.make()
         router.start()
+    }
+    
+    private func handleDownloadAction(for nodes: [NodeEntity]) {
+        guard let viewController = viewController else {
+            return
+        }
+        
+        let transfers = nodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile, type: .download) }
+        CancellableTransferRouter(
+            presenter: viewController,
+            transfers: transfers,
+            transferType: .download
+        )
+        .start()
     }
     
     private func openShareFolderDialog(_ node: MEGANode, viewController: UIViewController) {
@@ -268,9 +326,9 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         }
     }
     
-    private func exportFile(node: MEGANode, sender: Any) {
+    private func exportFile(nodes: [MEGANode], sender: Any) {
         guard let viewController = viewController else { return }
-        ExportFileRouter(presenter: viewController, sender: sender).export(node: node.toNodeEntity())
+        ExportFileRouter(presenter: viewController, sender: sender).export(nodes: nodes.toNodeEntities())
     }
     
     private func hide(nodes: [NodeEntity]) {

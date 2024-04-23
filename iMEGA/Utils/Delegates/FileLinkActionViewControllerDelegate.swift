@@ -41,9 +41,9 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
         viewController?.present(activityViewController, animated: true, completion: nil)
     }
     
-    private func saveToPhotos(node: MEGANode) {
+    private func saveToPhotos(nodes: [MEGANode]) {
         let wrapper = SaveMediaToPhotosUseCaseOCWrapper()
-        wrapper.saveToPhotos(node: node)
+        wrapper.saveToPhotos(nodes: nodes)
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
@@ -52,7 +52,7 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
         case .import: importNode(node)
         case .sendToChat: sendToChat()
         case .shareLink: shareLink(sender: sender as? UIBarButtonItem)
-        case .saveToPhotos: saveToPhotos(node: node)
+        case .saveToPhotos: saveToPhotos(nodes: [node])
         default:
             break
         }

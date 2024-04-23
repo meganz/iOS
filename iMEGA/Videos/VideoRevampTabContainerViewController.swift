@@ -20,7 +20,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         UIBarButtonItem(image: UIImage.selectAllItems, style: .plain, target: self, action: #selector(selectAllBarButtonItemTapped))
     }()
     
-    private var toolbar: UIViewController?
+    private var toolbar = UIToolbar()
     
     private lazy var contextMenuManager = ContextMenuManager(
         displayMenuDelegate: self,
@@ -40,7 +40,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoConfig: VideoConfig
-    private let router: any VideoRevampRouting
+    let router: any VideoRevampRouting
+    
     private let videoToolbarViewModel: VideoToolbarViewModel
     
     init(viewModel: VideoRevampTabContainerViewModel, fileSearchUseCase: some FilesSearchUseCaseProtocol, thumbnailUseCase: some ThumbnailUseCaseProtocol, videoConfig: VideoConfig, router: some VideoRevampRouting) {
@@ -66,9 +67,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         setupContentView()
         viewModel.dispatch(.onViewDidLoad)
         setupNavigationBar()
-        
-        toolbar = VideoRevampFactory.makeToolbarView(viewModel: videoToolbarViewModel, videoConfig: videoConfig)
-        
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
     }
@@ -110,34 +108,72 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func showToolbar() {
-        guard let tabBarController, let toolbar else { return }
+        toolbar.alpha = 0
+        configureToolbar()
         
-        toolbar.view.alpha = 0
-        toolbar.view.translatesAutoresizingMaskIntoConstraints = false
+        tabBarController?.view.addSubview(toolbar)
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
         
-        toolbar.view.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
-        
-        tabBarController.view.addSubview(toolbar.view)
-        NSLayoutConstraint.activate([
-             toolbar.view.topAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor),
-             toolbar.view.leadingAnchor.constraint(equalTo: tabBarController.tabBar.leadingAnchor),
-             toolbar.view.trailingAnchor.constraint(equalTo: tabBarController.tabBar.trailingAnchor),
-             toolbar.view.bottomAnchor.constraint(equalTo: tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor)
-        ])
-        
-        UIView.animate(withDuration: 0.33) {
-            toolbar.view.alpha = 1.0
+        if let tabBar = tabBarController?.tabBar {
+            NSLayoutConstraint.activate([
+                toolbar.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: 0),
+                toolbar.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor, constant: 0),
+                toolbar.trailingAnchor.constraint(equalTo: tabBar.trailingAnchor, constant: 0),
+                toolbar.bottomAnchor.constraint(equalTo: tabBar.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+            ])
         }
+        
+        UIView.animate(
+            withDuration: 0.33,
+            animations: { [weak self] in
+                self?.toolbar.alpha = 1
+            }
+        )
+    }
+    
+    private func configureToolbar() {
+        let moreButton = UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: nil)
+        moreButton.action = #selector(moreAction(_:))
+        
+        toolbar.items = [
+            UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: nil),
+            UIBarButtonItem.flexibleSpace(),
+            UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: nil),
+            UIBarButtonItem.flexibleSpace(),
+            UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: nil),
+            UIBarButtonItem.flexibleSpace(),
+            UIBarButtonItem(image: videoConfig.toolbarAssets.hudMinusImage, style: .plain, target: self, action: nil),
+            UIBarButtonItem.flexibleSpace(),
+            moreButton
+        ]
+        
+        configureToolbarAppearance()
+    }
+    
+    private func configureToolbarAppearance() {
+        videoToolbarViewModel.$isDisabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isDisabled in
+                self?.toolbar.items?.forEach { $0.isEnabled = !isDisabled }
+            }
+            .store(in: &cancellables)
+        
+        if UIColor.isDesignTokenEnabled() {
+            toolbar.items?.forEach { $0.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor) }
+        }
+        toolbar.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
     }
     
     private func hideToolbar() {
-        UIView.animate(withDuration: 0.33, animations: { [weak self] in
-            self?.toolbar?.view.alpha = 0.0
-        }, completion: { [weak self] finished in
-            if finished {
-                self?.toolbar?.view.removeFromSuperview()
+        UIView.animate(
+            withDuration: 0.33,
+            animations: { [weak self] in
+                self?.toolbar.alpha = 0
+            },
+            completion: {  [weak self] _ in
+                self?.toolbar.removeFromSuperview()
             }
-        })
+        )
     }
     
     private func add(_ child: UIViewController) {
@@ -168,7 +204,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         }
     }
     
-    private func toggleEditing() {
+    func toggleEditing() {
         setEditing(!isEditing, animated: true)
         setupNavigationBarButtons()
     }
@@ -187,9 +223,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     @objc private func cancelBarButtonItemTapped() {
-        setEditing(false, animated: true)
-        setupNavigationBarButtons()
-        viewModel.dispatch(.navigationBarAction(.didTapCancel))
+        resetNavigationBar()
     }
     
     @objc private func selectAllBarButtonItemTapped() {
@@ -223,6 +257,21 @@ final class VideoRevampTabContainerViewController: UIViewController {
                 self?.videoToolbarViewModel.isDisabled = !hasSelectedItem
             }
             .store(in: &cancellables)
+    }
+    
+    @objc private func moreAction(_ sender: UIBarButtonItem) {
+        let selectedVideos = viewModel.videoSelection.videos.values
+            .map { $0 }
+            .compactMap { $0.toMEGANode(in: .sharedSdk) }
+        
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, sender: sender)
+        present(nodeActionsViewController, animated: true, completion: nil)
+    }
+    
+    func resetNavigationBar() {
+        setEditing(false, animated: true)
+        setupNavigationBarButtons()
+        viewModel.dispatch(.navigationBarAction(.didTapCancel))
     }
 }
 
@@ -303,5 +352,14 @@ extension VideoRevampTabContainerViewController: TraitEnvironmentAware {
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+    }
+}
+
+// MARK: - BrowserViewControllerDelegate
+
+extension VideoRevampTabContainerViewController: BrowserViewControllerDelegate {
+ 
+    public func nodeEditCompleted(_ complete: Bool) {
+        resetNavigationBar()
     }
 }
