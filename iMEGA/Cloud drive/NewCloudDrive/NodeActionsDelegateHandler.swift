@@ -19,7 +19,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
     var rename: (_ node: NodeEntity, _ nameChanged: @escaping () -> Void) -> Void
     var removeSharing: (NodeEntity) -> Void
     var viewVersions: (NodeEntity) -> Void
-    var restore: (_ nodes: [NodeEntity], _ shouldPopView: Bool) -> Void
+    var restore: ([NodeEntity]) -> Void
     var manageShare: (NodeEntity) -> Void
     var shareFolder: (NodeEntity) -> Void
     var editTextFile: (NodeEntity) -> Void
@@ -47,7 +47,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         rename: @escaping (_ node: NodeEntity, _ nameChanged: @escaping () -> Void) -> Void,
         removeSharing: @escaping (NodeEntity) -> Void,
         viewVersions: @escaping (NodeEntity) -> Void,
-        restore: @escaping (_ nodes: [NodeEntity], _ shouldPopView: Bool) -> Void,
+        restore: @escaping ([NodeEntity]) -> Void,
         manageShare: @escaping (NodeEntity) -> Void,
         shareFolder: @escaping (NodeEntity) -> Void,
         editTextFile: @escaping (NodeEntity) -> Void,
@@ -155,7 +155,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         case .viewVersions:
             viewVersions(nodeEntity)
         case .restore:
-            restore([nodeEntity], true)
+            restore([nodeEntity])
         case .saveToPhotos:
             saveToPhotos([nodeEntity])
         case .manageShare:

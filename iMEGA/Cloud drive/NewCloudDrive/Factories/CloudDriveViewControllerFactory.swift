@@ -386,7 +386,7 @@ struct CloudDriveViewControllerFactory {
         )
         
         let rubbishBinMenuDelegate = RubbishBinMenuDelegateHandler(
-            restore: { nodeActions.restoreFromRubbishBin([$0], true) },
+            restore: { nodeActions.restoreFromRubbishBin([$0]) },
             showNodeInfo: nodeActions.showNodeInfo,
             showNodeVersions: nodeActions.showNodeVersions,
             remove: { nodeActions.removeFromRubbishBin([$0]) },

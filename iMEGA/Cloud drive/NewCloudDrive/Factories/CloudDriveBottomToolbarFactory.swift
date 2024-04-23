@@ -106,7 +106,7 @@ struct CloudDriveBottomToolbarItemsFactory {
             )
             nodeActionHandler.toggleEditMode(false)
         case .restore:
-            nodeActionHandler.restore(selectedNodes, true)
+            nodeActionHandler.restore(selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .actions:
             presentMoreActions(
