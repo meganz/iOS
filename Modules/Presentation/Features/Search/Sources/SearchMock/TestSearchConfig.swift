@@ -34,7 +34,8 @@ extension SearchConfig {
                 F7363D: Color("F7363D"),
                 _1C1C1E: Color("1C1C1E"),
                 _00A886: Color("00A886"),
-                _3C3C43: Color("3C3C43")
+                _3C3C43: Color("3C3C43"), 
+                checkmarkBackgroundTintColor: Color("00A886")
             ),
             contextPreviewFactory: .test
         )

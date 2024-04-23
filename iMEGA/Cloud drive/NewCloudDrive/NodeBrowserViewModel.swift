@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
 import Search
+import SwiftUI
 
 class NodeBrowserViewModel: ObservableObject {
 
@@ -41,6 +42,7 @@ class NodeBrowserViewModel: ObservableObject {
     @Published var editing = false
     @Published var title = ""
     @Published var viewState: ViewState = .regular(showBackButton: false)
+    @Published var editMode: EditMode = .inactive
     var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
     let avatarViewModel: MyAvatarViewModel
@@ -153,6 +155,7 @@ class NodeBrowserViewModel: ObservableObject {
 
                 refreshTitle(isEditing: editing)
                 onEditingChanged(editing)
+                editMode = editing ? .active : .inactive
             }
             .store(in: &subscriptions)
         

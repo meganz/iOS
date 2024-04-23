@@ -112,7 +112,8 @@ extension SearchConfig {
                 F7363D: MEGAAppColor.Red._F7363D.color,
                 _1C1C1E: MEGAAppColor.Black._1C1C1E.color,
                 _00A886: MEGAAppColor.Green._00A886.color,
-                _3C3C43: MEGAAppColor.Gray._3C3C43.color
+                _3C3C43: MEGAAppColor.Gray._3C3C43.color, 
+                checkmarkBackgroundTintColor: UIColor.turquoise.swiftUI
             ),
             contextPreviewFactory: contextPreviewFactory
         )
