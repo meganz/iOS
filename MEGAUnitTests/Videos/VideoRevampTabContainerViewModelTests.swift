@@ -67,6 +67,14 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.syncModel.editMode, .active)
     }
     
+    func testDispatch_navigationBarActionDidReceivedDisplayMenuActionNewPlaylist_showsShowNewPlaylistAlert() {
+        let (sut, _, _) = makeSUT()
+        
+        sut.dispatch(.navigationBarAction(.didReceivedDisplayMenuAction(action: .newPlaylist)))
+        
+        XCTAssertTrue(sut.syncModel.shouldShowAddNewPlaylistAlert)
+    }
+    
     // MARK: - Dispatch.navigationBarAction.didTapCancel
     
     func testDispatch_navigationBarActionDidTapCancel_setsIsEditing() {

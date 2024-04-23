@@ -14,6 +14,7 @@ public final class VideoRevampSyncModel: ObservableObject {
     @Published public var searchText = ""
     @Published public private(set) var showsTabView = false
     @Published public var currentTab: VideosTab = .all
+    @Published public var shouldShowAddNewPlaylistAlert = false
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -43,8 +44,12 @@ public class VideoRevampFactory {
             syncModel: syncModel,
             selection: videoSelection
         )
+        let videoPlaylistViewModel = VideoPlaylistsViewModel(
+            syncModel: syncModel
+        )
         let view = TabContainerView(
             videoListViewModel: videoListViewModel,
+            videoPlaylistViewModel: videoPlaylistViewModel,
             videoConfig: videoConfig,
             router: router,
             didChangeCurrentTab: { syncModel.currentTab = $0 }

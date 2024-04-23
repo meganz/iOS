@@ -6,6 +6,7 @@ struct TabContainerView: View {
     @State private var currentTab: VideosTab = .all
     
     @StateObject var videoListViewModel: VideoListViewModel
+    @StateObject var videoPlaylistViewModel: VideoPlaylistsViewModel
     let videoConfig: VideoConfig
     let router: any VideoRevampRouting
     let didChangeCurrentTab: (_ currentTab: VideosTab) -> Void
@@ -31,6 +32,7 @@ struct TabContainerView: View {
                 .gesture(showTabView ? nil : DragGesture())
                 
                 PlaylistView(
+                    viewModel: videoPlaylistViewModel,
                     videoConfig: videoConfig
                 )
                 .tag(VideosTab.playlist)
@@ -139,12 +141,14 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             TabContainerView(
                 videoListViewModel: makeNullViewModel(),
+                videoPlaylistViewModel: makeVideoPlaylistsViewModel(),
                 videoConfig: .preview,
-                router: Preview_VideoRevampRouter(), 
+                router: Preview_VideoRevampRouter(),
                 didChangeCurrentTab: { _ in }
             )
             TabContainerView(
                 videoListViewModel: makeNullViewModel(),
+                videoPlaylistViewModel: makeVideoPlaylistsViewModel(),
                 videoConfig: .preview,
                 router: Preview_VideoRevampRouter(),
                 didChangeCurrentTab: { _ in }
@@ -160,5 +164,9 @@ struct ContentView_Previews: PreviewProvider {
             syncModel: VideoRevampSyncModel(),
             selection: VideoSelection()
         )
+    }
+    
+    static func makeVideoPlaylistsViewModel() -> VideoPlaylistsViewModel {
+        VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel())
     }
 }

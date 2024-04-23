@@ -75,6 +75,8 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
                 invokeCommand?(.navigationBarCommand(.toggleEditing))
                 invokeCommand?(.searchBarCommand(.hideSearchBar))
                 syncModel.searchText.removeAll()
+            case .newPlaylist:
+                syncModel.shouldShowAddNewPlaylistAlert = true
             default:
                 break
             }
