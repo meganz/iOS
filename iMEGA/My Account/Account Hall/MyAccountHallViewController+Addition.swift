@@ -1,3 +1,4 @@
+import Accounts
 import Foundation
 import MEGAL10n
 import MEGASwiftUI
@@ -31,6 +32,8 @@ extension MyAccountHallViewController {
     @objc func registerCustomCells() {
         self.tableView?.register(HostingTableViewCell<MyAccountHallPlanView>.self,
                                  forCellReuseIdentifier: "AccountPlanUpgradeCell")
+        self.tableView?.register(HostingTableViewCell<MyAccountHallMenuView>.self,
+                                 forCellReuseIdentifier: "MyAccountHallMenuView")
     }
     
     @objc func setUpInvokeCommands() {
@@ -88,6 +91,7 @@ extension MyAccountHallViewController {
             configNavigationBar()
             configPlanDisplay()
             configTableFooterView()
+            configViewAndEditProfileMenu()
             setUserAvatar()
             setUserFullName()
             tableView?.reloadData()
@@ -133,5 +137,17 @@ extension MyAccountHallViewController {
         }
         tableFooterLabel?.text = Strings.Localizable.userManagementIsOnlyAvailableFromADesktopWebBrowser
         tableView?.tableFooterView = tableFooterView
+    }
+    
+    private func configViewAndEditProfileMenu() {
+        let isCancelSubscriptionFeatureFlagEnabled = viewModel.isCancelSubscriptionFeatureFlagEnabled
+        viewAndEditProfileLabel?.isHidden = isCancelSubscriptionFeatureFlagEnabled
+        viewAndEditProfileButton?.isHidden = isCancelSubscriptionFeatureFlagEnabled
+        viewAndEditProfileImageView?.isHidden = isCancelSubscriptionFeatureFlagEnabled
+        
+        let profileTapGesture = UITapGestureRecognizer(target: self, action: #selector(showProfileView))
+        profileView?.gestureRecognizers = isCancelSubscriptionFeatureFlagEnabled ? nil : [profileTapGesture]
+        
+        nameLabelCenterVerticalConstraint.isActive = isCancelSubscriptionFeatureFlagEnabled
     }
 }

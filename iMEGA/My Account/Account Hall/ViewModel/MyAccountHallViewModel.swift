@@ -6,6 +6,18 @@ import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 
+enum MyAccountSection: Int, CaseIterable {
+    case mega = 0, other
+}
+
+enum MyAccountMegaSection: Int, CaseIterable {
+    case plan = 0, storage, myAccount, contacts, notifications, achievements, transfers, deviceCenter, offline, rubbishBin
+}
+
+enum MyAccountOtherSection: Int, CaseIterable {
+    case settings
+}
+
 enum MyAccountHallLoadTarget {
     case planList, accountDetails, contentCounts, promos
 }
@@ -81,6 +93,10 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     // MARK: Feature flags
     func isNotificationCenterEnabled() -> Bool { true }
     
+    var isCancelSubscriptionFeatureFlagEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .cancelSubscription)
+    }
+    
     // MARK: - Dispatch actions
     
     func dispatch(_ action: MyAccountHallAction) {
@@ -127,6 +143,30 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     var isMasterBusinessAccount: Bool {
         myAccountHallUseCase.isMasterBusinessAccount
+    }
+    
+    var showPlanRow: Bool {
+        guard let accountDetails else { return false }
+        return accountDetails.proLevel != .business && accountDetails.proLevel != .proFlexi
+    }
+    
+    func calculateCellHeight(at indexPath: IndexPath) -> CGFloat {
+        guard indexPath.section != MyAccountSection.other.rawValue else {
+            return UITableView.automaticDimension
+        }
+        
+        var shouldShowCell = true
+        switch MyAccountMegaSection(rawValue: indexPath.row) {
+        case .plan:
+            shouldShowCell = showPlanRow
+        case .myAccount:
+            shouldShowCell = isCancelSubscriptionFeatureFlagEnabled
+        case .achievements:
+            shouldShowCell = MEGASdk.shared.isAchievementsEnabled
+        default: break
+        }
+        
+        return shouldShowCell ? UITableView.automaticDimension : 0.0
     }
     
     // MARK: - Private
