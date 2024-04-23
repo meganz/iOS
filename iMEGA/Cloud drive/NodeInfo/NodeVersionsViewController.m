@@ -384,7 +384,7 @@ MEGADelegate
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node isFolderLink:NO];
+            [SaveMediaToPhotosUseCaseOCWrapper.new saveToPhotosWithNodes:@[node] isFolderLink:NO];
             break;
             
         case MegaNodeActionTypeExportFile:
