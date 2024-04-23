@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGAPresentation
 import SwiftUI
 import UIKit
 
@@ -68,7 +69,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             let viewModel = PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
-                thumbnailUseCase: ThumbnailUseCase.makeThumbnailUseCase(mode: representer.contentMode)
+                thumbnailLoader: ThumbnailLoader(thumbnailUseCase: ThumbnailUseCase.makeThumbnailUseCase(mode: representer.contentMode))
             )
             cell.viewModel = viewModel
             

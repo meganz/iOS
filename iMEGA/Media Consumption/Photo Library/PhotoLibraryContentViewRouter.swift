@@ -56,7 +56,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
             viewModel: PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
-                thumbnailUseCase: makeThumbnailUseCase()
+                thumbnailLoader: ThumbnailLoader(thumbnailUseCase: makeThumbnailUseCase())
             )
         )
     }
