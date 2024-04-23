@@ -7,43 +7,40 @@ import SwiftUI
 
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
-    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
-    private var placeholderImageContainer = ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
     
     @Published var thumbnailContainer: any ImageContaining
     
-    init(coverPhoto: NodeEntity?, thumbnailUseCase: any ThumbnailUseCaseProtocol) {
+    init(coverPhoto: NodeEntity?,
+         thumbnailLoader: some ThumbnailLoaderProtocol) {
         self.coverPhoto = coverPhoto
-        self.thumbnailUseCase = thumbnailUseCase
-        thumbnailContainer = placeholderImageContainer
+        self.thumbnailLoader = thumbnailLoader
+        
+        thumbnailContainer = if let photo = coverPhoto {
+            thumbnailLoader.initialImage(for: photo, type: .preview,
+                                         placeholder: { Image(.photoCardPlaceholder) })
+        } else {
+            ImageContainer(image: Image(.photoCardPlaceholder), type: .placeholder)
+        }
     }
     
     func loadThumbnail() async {
         guard let photo = coverPhoto,
-              isShowingThumbnail(placeholderImageContainer) else {
+              thumbnailContainer.type == .placeholder else {
             return
         }
-        
-        if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .preview) {
-            return await updateThumbnailContainerIfNeeded(container)
-        }
-        
         do {
-            try await requestThumbnailPreview(photo: photo)
-        } catch {
+            for await imageContainer in try await thumbnailLoader.loadImage(for: photo, type: .preview) {
+                await updateThumbnailContainerIfNeeded(imageContainer)
+            }
+        } catch is CancellationError {
             MEGALogDebug("[PhotoCardViewModel] Cancelled loading thumbnail for \(photo.handle)")
+        } catch {
+            MEGALogError("[PhotoCardViewModel] failed to load preview: \(error)")
         }
     }
     
     // MARK: - Private
-    private func requestThumbnailPreview(photo: NodeEntity) async throws {
-        for try await imageContainer in thumbnailUseCase.requestPreview(for: photo)
-            .compactMap({ $0.toURLImageContainer()}) {
-            try Task.checkCancellation()
-            await updateThumbnailContainerIfNeeded(imageContainer)
-        }
-    }
-    
     private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {
         guard !isShowingThumbnail(container) else { return }
         await updateThumbnailContainer(container)

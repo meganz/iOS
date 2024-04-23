@@ -16,10 +16,10 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
     }
 
     init(photoByMonth: PhotoByMonth,
-         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
+         thumbnailLoader: some ThumbnailLoaderProtocol) {
         self.photoByMonth = photoByMonth
         title = DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
         
-        super.init(coverPhoto: photoByMonth.coverPhoto, thumbnailUseCase: thumbnailUseCase)
+        super.init(coverPhoto: photoByMonth.coverPhoto, thumbnailLoader: thumbnailLoader)
     }
 }

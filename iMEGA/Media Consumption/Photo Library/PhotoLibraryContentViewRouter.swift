@@ -28,7 +28,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoYearCard(
             viewModel: PhotoYearCardViewModel(
                 photoByYear: photoByYear,
-                thumbnailUseCase: makeThumbnailUseCase()
+                thumbnailLoader: makeThumbnailLoader()
             )
         )
     }
@@ -37,7 +37,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoMonthCard(
             viewModel: PhotoMonthCardViewModel(
                 photoByMonth: photoByMonth,
-                thumbnailUseCase: makeThumbnailUseCase()
+                thumbnailLoader: makeThumbnailLoader()
             )
         )
     }
@@ -46,7 +46,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoDayCard(
             viewModel: PhotoDayCardViewModel(
                 photoByDay: photoByDay,
-                thumbnailUseCase: makeThumbnailUseCase()
+                thumbnailLoader: makeThumbnailLoader()
             )
         )
     }
@@ -56,7 +56,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
             viewModel: PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
-                thumbnailLoader: ThumbnailLoader(thumbnailUseCase: makeThumbnailUseCase())
+                thumbnailLoader: makeThumbnailLoader()
             )
         )
     }
@@ -90,8 +90,8 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         .start()
     }
     
-    private func makeThumbnailUseCase() -> some ThumbnailUseCaseProtocol {
-        return ThumbnailUseCase.makeThumbnailUseCase(mode: contentMode)
+    private func makeThumbnailLoader() -> some ThumbnailLoaderProtocol {
+        ThumbnailLoader(thumbnailUseCase: ThumbnailUseCase.makeThumbnailUseCase(mode: contentMode))
     }
 }
 
