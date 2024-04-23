@@ -659,6 +659,14 @@ extension UIColor {
         MEGAAppColor.Account.proAccountLite.uiColor
     }
     
+    @objc class func mnz_background() -> UIColor {
+        if UIColor.isDesignTokenEnabled() {
+            TokenColors.Background.page
+        } else {
+            UIColor.systemBackground
+        }
+    }
+    
     /**
      The color hex value is #E13339
      
