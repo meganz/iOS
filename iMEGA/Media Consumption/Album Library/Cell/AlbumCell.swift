@@ -90,7 +90,7 @@ struct AlbumCell: View {
 #Preview {
     AlbumCell(
         viewModel: AlbumCellViewModel(
-            thumbnailUseCase: Preview_ThumbnailUseCase(),
+            thumbnailLoader: Preview_ThumbnailLoader(),
             monitorAlbumsUseCase: Preview_MonitorAlbumsUseCase(),
             nodeUseCase: Preview_NodeUseCase(),
             album: AlbumEntity(

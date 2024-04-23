@@ -32,7 +32,7 @@ final class AlbumCellViewModel: ObservableObject {
     @Published var shouldShowEditStateOpacity: Double = 0.0
     @Published var opacity: Double = 1.0
     
-    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
@@ -46,7 +46,7 @@ final class AlbumCellViewModel: ObservableObject {
     }
     
     init(
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         album: AlbumEntity,
@@ -54,7 +54,7 @@ final class AlbumCellViewModel: ObservableObject {
         tracker: some AnalyticsTracking = DIContainer.tracker,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
-        self.thumbnailUseCase = thumbnailUseCase
+        self.thumbnailLoader = thumbnailLoader
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.nodeUseCase = nodeUseCase
         self.album = album
@@ -67,9 +67,8 @@ final class AlbumCellViewModel: ObservableObject {
         isLinkShared = album.isLinkShared
         isSensitive = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) && album.coverNode?.isMarkedSensitive ?? false
         
-        if let coverNode = album.coverNode,
-           let container = thumbnailUseCase.cachedThumbnailContainer(for: coverNode, type: .thumbnail) {
-            thumbnailContainer = container
+        if let coverNode = album.coverNode {
+            thumbnailContainer = thumbnailLoader.initialImage(for: coverNode, type: .thumbnail, placeholder: { Image(.placeholder) })
         } else {
             thumbnailContainer = ImageContainer(image: Image(.placeholder), type: .placeholder)
         }
@@ -125,7 +124,7 @@ final class AlbumCellViewModel: ObservableObject {
     
     @MainActor
     private func loadThumbnail(for node: NodeEntity) async {
-        guard let imageContainer = try? await thumbnailUseCase.loadThumbnailContainer(for: node, type: .thumbnail) else {
+        guard let imageContainer = try? await thumbnailLoader.loadImage(for: node, type: .thumbnail) else {
             isLoading = false
             return
         }
@@ -164,7 +163,7 @@ final class AlbumCellViewModel: ObservableObject {
     @MainActor
     private func loadAlbumCoverIfNeeded(from photos: [AlbumPhotoEntity]) async {
         guard let cover = album.coverNode,
-              let imageContainer = try? await thumbnailUseCase.loadThumbnailContainer(for: cover, type: .thumbnail),
+              let imageContainer = try? await thumbnailLoader.loadImage(for: cover, type: .thumbnail),
               !thumbnailContainer.isEqual(imageContainer) else {
             return
         }
