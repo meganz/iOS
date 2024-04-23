@@ -191,7 +191,10 @@ extension MainTabBarController {
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             callKitManager: CallKitManager(),
-            callManager: CallKitCallManager.shared
+            callManager: CallKitCallManager.shared,
+            uuidFactory: { UUID() },
+            callUpdateFactory: .defaultFactory,
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
         
         mainTabBarCallsViewModel.invokeCommand = { [weak self] command in

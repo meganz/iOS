@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "MEGACallManager.h"
 #import "MEGAProviderDelegate.h"
+#import <PushKit/PushKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -13,7 +14,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @class MainTabBarController;
 @class CloudDriveQuickUploadActionRouter;
 
-@interface AppDelegate : UIResponder 
+@interface AppDelegate : UIResponder <PKPushRegistryDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong, nullable) MEGACallManager *megaCallManager;

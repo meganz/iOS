@@ -12,4 +12,8 @@ public struct MockMEGAHandleRepository: MEGAHandleRepositoryProtocol {
     public func handle(forBase64Handle handle: Base64HandleEntity) -> HandleEntity? {
         HandleEntity(handle)
     }
+    
+    public func handle(forBase64UserHandle handle: Base64HandleEntity) -> HandleEntity? {
+        HandleEntity(handle)
+    }
 }

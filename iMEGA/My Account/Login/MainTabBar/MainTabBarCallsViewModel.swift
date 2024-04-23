@@ -2,6 +2,7 @@ import Combine
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASDKRepo
 
 protocol MainTabBarCallsRouting: AnyObject {
     func showOneUserWaitingRoomDialog(
@@ -35,6 +36,31 @@ protocol MainTabBarCallsRouting: AnyObject {
     func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool)
 }
 
+struct CXCallUpdateFactory {
+    let builder: () -> CXCallUpdate
+    init(builder: @escaping () -> CXCallUpdate) {
+        self.builder = builder
+    }
+    
+    func createCallUpdate(
+        title: String
+    ) -> CXCallUpdate {
+        let update = builder()
+        update.remoteHandle = CXHandle(
+            type: .generic,
+            value: title
+        )
+        update.localizedCallerName = title
+        return update
+    }
+    
+    static var defaultFactory: Self {
+        .init {
+            CXCallUpdate()
+        }
+    }
+}
+
 enum MainTabBarCallsAction: ActionType { }
 
 class MainTabBarCallsViewModel: ViewModelType {
@@ -59,7 +85,8 @@ class MainTabBarCallsViewModel: ViewModelType {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private var providerDelegate: CallKitProviderDelegate?
-    
+    private var voipPushDelegate: VoIPPushDelegate?
+
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
     private(set) var callSessionUpdateSubscription: AnyCancellable?
@@ -79,7 +106,8 @@ class MainTabBarCallsViewModel: ViewModelType {
 
     private var callWillEndTimer: Timer?
     private var callWillEndCountdown: Int = 10
-    
+    private let uuidFactory: () -> UUID
+    private let callUpdateFactory: CXCallUpdateFactory
     init(
         router: some MainTabBarCallsRouting,
         chatUseCase: some ChatUseCaseProtocol,
@@ -90,7 +118,9 @@ class MainTabBarCallsViewModel: ViewModelType {
         accountUseCase: some AccountUseCaseProtocol,
         callKitManager: some CallKitManagerProtocol,
         callManager: some CallManagerProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        uuidFactory: @escaping () -> UUID,
+        callUpdateFactory: CXCallUpdateFactory,
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -101,10 +131,17 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.accountUseCase = accountUseCase
         self.callKitManager = callKitManager
         self.callManager = callManager
+        self.uuidFactory = uuidFactory
+        self.callUpdateFactory = callUpdateFactory
         self.featureFlagProvider = featureFlagProvider
         
         if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
             self.providerDelegate = CallKitProviderDelegate(callCoordinator: self, callManager: callManager)
+            self.voipPushDelegate = VoIPPushDelegate(
+                callCoordinator: self,
+                voIpTokenUseCase: VoIPTokenUseCase(repo: VoIPTokenRepository.newRepo),
+                megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+            )
         }
         
         onCallUpdateListener()
@@ -450,5 +487,29 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
             callUseCase.hangCall(for: call.callId)
         }
         return true
+    }
+    
+    func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else {
+            return
+        }
+        
+        let incomingCallUUID = uuidFactory()
+        
+        callManager.addCall(
+            withUUID: incomingCallUUID,
+            chatRoom: chatRoom
+        )
+
+        let update = callUpdateFactory.createCallUpdate(title: chatRoom.title ?? "Unknown")
+        
+        MEGALogDebug("[CallKit] Provider report new incoming call")
+        providerDelegate?.provider.reportNewIncomingCall(with: incomingCallUUID, update: update) { error in
+            guard error == nil else {
+                MEGALogError("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
+                return
+            }
+            completion()
+        }
     }
 }

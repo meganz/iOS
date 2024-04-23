@@ -861,6 +861,7 @@
 		830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */; };
 		830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28CC25E68FC200E9B56E /* DetailItemView.swift */; };
 		830C28E025E6900200E9B56E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28DF25E6900200E9B56E /* GridView.swift */; };
+		830F60F12BD16BE600A1DA60 /* MockCallsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */; };
 		831056332BB432D50094A872 /* SimpleDialogView+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831056322BB432D50094A872 /* SimpleDialogView+Factory.swift */; };
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
@@ -1194,6 +1195,7 @@
 		83E135F8292E5209004EAA0D /* ChatRoomNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E135F6292E5209004EAA0D /* ChatRoomNotificationsView.swift */; };
 		83E135F9292E520A004EAA0D /* ChatRoomNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E135F7292E5209004EAA0D /* ChatRoomNotificationsViewModel.swift */; };
 		83E27AEA27ABD8640086E11E /* MeetingCreatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */; };
+		83E3443C2BCE9F45006A2E3D /* VoIPPushDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3443B2BCE9F45006A2E3D /* VoIPPushDelegate.swift */; };
 		83E3454E25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */; };
 		83E3454F25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */; };
 		83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3455825B58FA9006F2AD6 /* MEGAStore+QuickAccessWidget.swift */; };
@@ -1210,6 +1212,7 @@
 		83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */; };
 		83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */; };
 		83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */; };
+		83F58E952BD29D7A001DB6EC /* VoIPPushDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F58E942BD29D7A001DB6EC /* VoIPPushDelegateTests.swift */; };
 		83F79CBB2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */; };
 		83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */; };
 		83FB1434219AC7DD00418BE6 /* OfflineCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1433219AC7DD00418BE6 /* OfflineCollectionViewController.m */; };
@@ -3604,6 +3607,7 @@
 		830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetView.swift; sourceTree = "<group>"; };
 		830C28CC25E68FC200E9B56E /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		830C28DF25E6900200E9B56E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallsCoordinator.swift; sourceTree = "<group>"; };
 		831056322BB432D50094A872 /* SimpleDialogView+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SimpleDialogView+Factory.swift"; sourceTree = "<group>"; };
 		8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailViewController.swift; sourceTree = "<group>"; };
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
@@ -3940,6 +3944,7 @@
 		83E135F6292E5209004EAA0D /* ChatRoomNotificationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomNotificationsView.swift; sourceTree = "<group>"; };
 		83E135F7292E5209004EAA0D /* ChatRoomNotificationsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomNotificationsViewModel.swift; sourceTree = "<group>"; };
 		83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingCreatingViewController.xib; sourceTree = "<group>"; };
+		83E3443B2BCE9F45006A2E3D /* VoIPPushDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPPushDelegate.swift; sourceTree = "<group>"; };
 		83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		83E3455825B58FA9006F2AD6 /* MEGAStore+QuickAccessWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+QuickAccessWidget.swift"; sourceTree = "<group>"; };
@@ -3954,6 +3959,7 @@
 		83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupsViewController.swift; sourceTree = "<group>"; };
 		83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactsGroups.storyboard; sourceTree = "<group>"; };
 		83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupTableViewCell.swift; sourceTree = "<group>"; };
+		83F58E942BD29D7A001DB6EC /* VoIPPushDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPPushDelegateTests.swift; sourceTree = "<group>"; };
 		83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsRouter.swift; sourceTree = "<group>"; };
 		83FB142F219AC7CD00418BE6 /* OfflineTableViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewViewController.h; sourceTree = "<group>"; };
 		83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewViewController.m; sourceTree = "<group>"; };
@@ -8679,6 +8685,7 @@
 			children = (
 				83E8097C2BC0055F00E1B3FF /* CallKit */,
 				83E8097B2BC0054C00E1B3FF /* Legacy */,
+				83E3443A2BCE9F2B006A2E3D /* VoIP */,
 				837D0F382BC7E23000C629AE /* CallActionSync.swift */,
 				83E809682BBEA2C000E1B3FF /* CallManagerProtocol.swift */,
 				83E809792BC000EE00E1B3FF /* CallsCoordinatorProtocol.swift */,
@@ -9769,6 +9776,14 @@
 			path = CallScene;
 			sourceTree = "<group>";
 		};
+		83E3443A2BCE9F2B006A2E3D /* VoIP */ = {
+			isa = PBXGroup;
+			children = (
+				83E3443B2BCE9F45006A2E3D /* VoIPPushDelegate.swift */,
+			);
+			path = VoIP;
+			sourceTree = "<group>";
+		};
 		83E3454A25B58DDC006F2AD6 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
@@ -9836,6 +9851,14 @@
 				83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */,
 			);
 			path = ContactsGroups;
+			sourceTree = "<group>";
+		};
+		83F58E932BD29D63001DB6EC /* VoIP */ = {
+			isa = PBXGroup;
+			children = (
+				83F58E942BD29D7A001DB6EC /* VoIPPushDelegateTests.swift */,
+			);
+			path = VoIP;
 			sourceTree = "<group>";
 		};
 		83F79CC42AA7789E00D2DE64 /* MainTabBar */ = {
@@ -11631,6 +11654,7 @@
 				83B5E87527F6F8300073C870 /* Transfers */,
 				B63AEB16251203F5000B8517 /* Utils */,
 				244CEFBF2B2319CF00147302 /* Videos */,
+				83F58E932BD29D63001DB6EC /* VoIP */,
 				B5B0E30427F1BC1100DB6146 /* Warning */,
 				948176C32A93E9BC00E3A181 /* Widget */,
 				B6CED48F22B8AC70009C4861 /* Info.plist */,
@@ -12162,6 +12186,7 @@
 				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
 				BF8895E72631213C002A18CA /* MockCallKitManager.swift */,
 				837D0F362BC7D3B000C629AE /* MockCallManager.swift */,
+				830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */,
 				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
 				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
 				8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */,
@@ -15667,6 +15692,7 @@
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */,
 				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,
+				83E3443C2BCE9F45006A2E3D /* VoIPPushDelegate.swift in Sources */,
 				99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */,
 				992453F02A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift in Sources */,
 				9911BA9C2A8B949200B88F28 /* WaitingRoomMessageView.swift in Sources */,
@@ -16186,6 +16212,7 @@
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,
 				BF8895E82631213C002A18CA /* MockCallKitManager.swift in Sources */,
 				837D0F372BC7D3B000C629AE /* MockCallManager.swift in Sources */,
+				830F60F12BD16BE600A1DA60 /* MockCallsCoordinator.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
@@ -16337,6 +16364,7 @@
 				9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */,
 				244CEFC12B2319F400147302 /* VideoRevampTabContainerViewModelTests.swift in Sources */,
 				9474F23F2B0F8F4700C5F63B /* ViewModeStoreTests.swift in Sources */,
+				83F58E952BD29D7A001DB6EC /* VoIPPushDelegateTests.swift in Sources */,
 				8396E2A32ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift in Sources */,
 				8396E2A62ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift in Sources */,
 				BFB889932A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift in Sources */,

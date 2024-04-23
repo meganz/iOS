@@ -1,6 +1,7 @@
 public protocol MEGAHandleUseCaseProtocol {
     func base64Handle(forUserHandle handle: HandleEntity) -> Base64HandleEntity?
     func handle(forBase64Handle handle: Base64HandleEntity) -> HandleEntity?
+    func handle(forBase64UserHandle handle: Base64HandleEntity) -> HandleEntity?
 }
 
 public struct MEGAHandleUseCase<T: MEGAHandleRepositoryProtocol>: MEGAHandleUseCaseProtocol {
@@ -16,5 +17,9 @@ public struct MEGAHandleUseCase<T: MEGAHandleRepositoryProtocol>: MEGAHandleUseC
     
     public func handle(forBase64Handle handle: Base64HandleEntity) -> HandleEntity? {
         repo.handle(forBase64Handle: handle)
+    }
+    
+    public func handle(forBase64UserHandle handle: Base64HandleEntity) -> HandleEntity? {
+        repo.handle(forBase64UserHandle: handle)
     }
 }

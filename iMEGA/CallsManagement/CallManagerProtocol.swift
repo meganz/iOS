@@ -9,4 +9,5 @@ protocol CallManagerProtocol: AnyObject {
     func callUUID(forChatRoom chatRoom: ChatRoomEntity) -> UUID?
     func call(forUUID uuid: UUID) -> CallActionSync?
     func removeCall(withUUID uuid: UUID)
+    func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity)
 }
