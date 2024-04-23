@@ -174,11 +174,11 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     
     private let freeAccountPlan = AccountPlanEntity(
         type: .free,
-        name: "Free",
+        name: Strings.Localizable.Free.Plan.name,
         subscriptionCycle: .none,
-        storage: "20 GB",
-        transfer: "Limited",
-        formattedPrice: "Free"
+        storage: Strings.Localizable.Storage.Limit.capacity(20),
+        transfer: Strings.Localizable.Limited.Transfer.limit,
+        formattedPrice: Strings.Localizable.Free.Plan.Price.description
     )
     
     var selectedPlanName: String {
