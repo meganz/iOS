@@ -49,8 +49,7 @@ struct ThumbnailLoader: ThumbnailLoaderProtocol {
     
     func initialImage(for node: NodeEntity, type: ThumbnailTypeEntity) -> any ImageContaining {
         initialImage(for: node, type: type) {
-            let placeholderFileTypeResource = FileTypes().fileTypeResource(forFileName: node.name)
-            return Image(placeholderFileTypeResource)
+            node.placeholderImage
         }
     }
     
@@ -84,5 +83,11 @@ struct ThumbnailLoader: ThumbnailLoaderProtocol {
                     .eraseToAnyAsyncSequence()
             }
         }
+    }
+}
+
+extension NodeEntity {
+    var placeholderImage: Image {
+        Image(FileTypes().fileTypeResource(forFileName: name))
     }
 }

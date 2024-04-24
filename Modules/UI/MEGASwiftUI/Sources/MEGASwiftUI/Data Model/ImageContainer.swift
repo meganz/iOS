@@ -12,6 +12,10 @@ public protocol ImageContaining: Equatable, Sendable {
     var type: ImageType { get }
 }
 
+public protocol SensitiveImageContaining: ImageContaining {
+    var isSensitive: Bool { get }
+}
+
 public struct ImageContainer: ImageContaining, Sendable {
     public let image: Image
     public let type: ImageType
@@ -47,5 +51,17 @@ public struct URLImageContainer: ImageContaining, Sendable {
     
     public static func == (lhs: URLImageContainer, rhs: URLImageContainer) -> Bool {
         lhs.imageURL == rhs.imageURL && lhs.type == rhs.type
+    }
+}
+
+public struct SensitiveImageContainer: SensitiveImageContaining {
+    public let image: Image
+    public let type: ImageType
+    public let isSensitive: Bool
+    
+    public init(image: Image, type: ImageType, isSensitive: Bool) {
+        self.image = image
+        self.type = type
+        self.isSensitive = isSensitive
     }
 }
