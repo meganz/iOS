@@ -6,9 +6,9 @@ import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 import MEGASwift
+import MEGAUIKit
 import Search
 import SwiftUI
-import UIKit
 
 struct CloudDriveViewControllerFactory {
     private let featureFlagProvider: any FeatureFlagProviderProtocol

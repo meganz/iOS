@@ -1,6 +1,6 @@
-import XCTest
 import Combine
-@testable import MEGASwift
+@testable import MEGAUIKit
+import XCTest
 
 final class KeyboardVisibilityHandlerTests: XCTestCase {
     var sut: KeyboardVisibilityHandler!

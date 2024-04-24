@@ -1,5 +1,5 @@
+@testable import MEGAUIKit
 import ConcurrencyExtras
-@testable import MEGASwift
 @testable import Search
 import SearchMock
 import SwiftUI

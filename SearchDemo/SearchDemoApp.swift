@@ -1,4 +1,4 @@
-import MEGASwift
+import MEGAUIKit
 import Search
 import SearchMock
 import SwiftUI

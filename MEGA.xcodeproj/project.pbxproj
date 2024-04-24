@@ -1713,6 +1713,7 @@
 		A8F515B127F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F515B027F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift */; };
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */; };
+		A8FA953D2BD2C2BA0009F43D /* MEGAUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = A8FA953C2BD2C2BA0009F43D /* MEGAUIKit */; };
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */; };
 		B5120F4A2A16050A00A56354 /* ShareAttachmentCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */; };
@@ -5503,6 +5504,7 @@
 			files = (
 				940BA4D42AD80FFC00C69514 /* MEGASwift in Frameworks */,
 				940BA4D62AD80FFC00C69514 /* MEGASwiftUI in Frameworks */,
+				A8FA953D2BD2C2BA0009F43D /* MEGAUIKit in Frameworks */,
 				940BA4CA2AD7EE2F00C69514 /* Search in Frameworks */,
 				940BA4CC2AD7EE2F00C69514 /* SearchMock in Frameworks */,
 			);
@@ -13345,6 +13347,7 @@
 				940BA4CB2AD7EE2F00C69514 /* SearchMock */,
 				940BA4D32AD80FFC00C69514 /* MEGASwift */,
 				940BA4D52AD80FFC00C69514 /* MEGASwiftUI */,
+				A8FA953C2BD2C2BA0009F43D /* MEGAUIKit */,
 			);
 			productName = SearchDemo;
 			productReference = 940BA4B82AD7EE1100C69514 /* SearchDemo.app */;
@@ -18564,6 +18567,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */;
 			productName = FlexLayoutYogaKit;
+		};
+		A8FA953C2BD2C2BA0009F43D /* MEGAUIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAUIKit;
 		};
 		B51616482B83361900C6E842 /* Notifications */ = {
 			isa = XCSwiftPackageProductDependency;

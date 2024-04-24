@@ -1,6 +1,7 @@
 import Combine
 import MEGASwift
 import MEGASwiftUI
+import MEGAUIKit
 import SwiftUI
 
 /// Dedicated actor to isolate critical data
