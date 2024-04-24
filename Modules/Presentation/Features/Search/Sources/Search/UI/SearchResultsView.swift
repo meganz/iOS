@@ -128,7 +128,7 @@ public struct SearchResultsView: View {
             thumbnailContent
         }
     }
-
+    
     private var listContent: some View {
         List(viewModel.listItems, id: \.self, selection: $viewModel.selectedRows) { item in
             SearchResultRowView(viewModel: item)
@@ -137,7 +137,8 @@ public struct SearchResultsView: View {
                     guard let index = viewModel.listItems.firstIndex(of: item) else { return }
                     await viewModel.loadMoreIfNeeded(at: index)
                 }
-
+                .onAppear { viewModel.onItemAppear(item.result.id) }
+                .onDisappear { viewModel.onItemDisappear(item.result.id) }
         }
         .listStyle(.plain)
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
@@ -156,12 +157,11 @@ public struct SearchResultsView: View {
                             selected: $viewModel.selectedResultIds,
                             selectionEnabled: $viewModel.editing
                         )
-                            .task {
-                                await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
-                            }
-                            .onDisappear {
-                                viewModel.onItemDisappear(at: index)
-                            }
+                        .task {
+                            await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
+                        }
+                        .onAppear { viewModel.onItemAppear(item.result.id) }
+                        .onDisappear { viewModel.onItemDisappear(item.result.id) }
                     }
                 }
                 .padding(.horizontal, 8)
@@ -175,9 +175,11 @@ public struct SearchResultsView: View {
                             selected: $viewModel.selectedResultIds,
                             selectionEnabled: $viewModel.editing
                         )
-                            .task {
-                                await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: true)
-                            }
+                        .task {
+                            await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: true)
+                        }
+                        .onAppear { viewModel.onItemAppear(item.result.id) }
+                        .onDisappear { viewModel.onItemDisappear(item.result.id) }
                     }
                 }
                 .padding(.horizontal, 8)

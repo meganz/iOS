@@ -170,14 +170,14 @@ final class SearchResultsViewModelTests: XCTestCase {
             resultsProvider.resultFactory = { _ in return nil }
         }
         
-        func simulateVisibleItems(startIndex: Int, endIndex: Int) async {
-            for index in startIndex...endIndex {
-                await sut.loadMoreIfNeeded(at: index)
+        func simulateVisibleItems(startId: ResultId, endId: ResultId) {
+            for id in startId...endId {
+                sut.onItemAppear(id)
             }
         }
         
-        func simulateVisibleItemsRemoval(at index: Int) async {
-            sut.onItemDisappear(at: index)
+        func simulateVisibleItemsRemoval(_ id: ResultId) {
+            sut.onItemDisappear(id)
         }
         
         func prepareRefreshedResults(startId: UInt64, endId: UInt64) {
@@ -512,13 +512,13 @@ final class SearchResultsViewModelTests: XCTestCase {
             harness.prepareRefreshedResults(startId: 1, endId: 15) // After refreshing, there will be 15 results
             
             // Simulate visible items
-            await harness.simulateVisibleItems(startIndex: 0, endIndex: 9)
-            await harness.simulateVisibleItemsRemoval(at: 9) // At this point, visible item will be [1...8]
+            harness.simulateVisibleItems(startId: 0, endId: 9)
+            harness.simulateVisibleItemsRemoval(9) // At this point, visible item will be [1...8]
 
             // when
             harness.bridge.onSearchResultsUpdated(.generic)
             
-            for _ in 1...11 { // Needs to yield to make way for other concurrent tasks to fully finished first.
+            for _ in 1...12 { // Needs to yield to make way for other concurrent tasks to fully finished first.
                 await Task.yield()
             }
             
@@ -527,7 +527,7 @@ final class SearchResultsViewModelTests: XCTestCase {
             
             // Make sure to check the visible items' thumbnails are loaded
             for index in 0..<harness.sut.listItems.count {
-                if index < 9 {
+                if index < 8 {
                     XCTAssertEqual(harness.sut.listItems[index].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
                 } else {
                     XCTAssertNil(harness.sut.listItems[index].thumbnailImage.pngData())

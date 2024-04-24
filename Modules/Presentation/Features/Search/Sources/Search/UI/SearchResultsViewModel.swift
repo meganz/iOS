@@ -303,15 +303,18 @@ public class SearchResultsViewModel: ObservableObject {
 
     @SearchResultsViewModelActor
     func loadMoreIfNeeded(at index: Int) async {
-        guard index < listItems.count else { return }
-        visibleItems.insert(listItems[index].result.id)
         await performSearch(using: currentQuery, lastItemIndex: index)
     }
     
-    func onItemDisappear(at index: Int) {
+    func onItemAppear(_ id: ResultId) {
         Task { @SearchResultsViewModelActor in
-            guard index < listItems.count else { return }
-            visibleItems.remove(listItems[index].result.id)
+            visibleItems.insert(id)
+        }
+    }
+    
+    func onItemDisappear(_ id: ResultId) {
+        Task { @SearchResultsViewModelActor in
+            visibleItems.remove(id)
         }
     }
 
