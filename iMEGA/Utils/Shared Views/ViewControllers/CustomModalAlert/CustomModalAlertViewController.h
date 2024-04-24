@@ -30,6 +30,8 @@
 @property (nonatomic) NSString *dismissButtonTitle;
 @property (nonatomic) NSString *link;
 
+@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
+
 @property (nonatomic, strong) CountdownTimer *countdownTimer;
 
 - (void)setDetailLabelText:(NSString*)detail;
