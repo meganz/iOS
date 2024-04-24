@@ -1,6 +1,8 @@
 import Accounts
 import Foundation
+import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 import MEGASwiftUI
 
 extension MyAccountHallViewController {
@@ -11,7 +13,7 @@ extension MyAccountHallViewController {
     }
     
     @objc func showProfileView() {
-        let profileViewModel = ProfileViewModel(sdk: MEGASdk.shared)
+        let profileViewModel = ProfileViewModel(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
         let profileRouter = ProfileViewRouter(navigationController: navigationController, viewModel: profileViewModel)
         profileRouter.start()
     }
