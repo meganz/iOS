@@ -1760,6 +1760,7 @@
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B58723D42BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58723D32BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift */; };
 		B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */; };
+		B590F8BF2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B590F8BE2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift */; };
 		B59580A82A1478D400E5FC1C /* UpgradeAccountPlanRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */; };
 		B59580A92A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */; };
 		B59580AA2A1478D400E5FC1C /* UpgradeAccountPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */; };
@@ -4502,6 +4503,7 @@
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58723D32BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+SortOrder.swift"; sourceTree = "<group>"; };
+		B590F8BE2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatAttachedContactsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanRouter.swift; sourceTree = "<group>"; };
 		B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModel.swift; sourceTree = "<group>"; };
 		B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanView.swift; sourceTree = "<group>"; };
@@ -7352,6 +7354,7 @@
 				415E69091DABCDF90043B75F /* ArchivedChatRoomsViewController.m */,
 				BF67C50A264B9A67003CE3C6 /* ArchivedChatRoomsViewController.swift */,
 				2F3083BB2428169E0058DF91 /* Chat.storyboard */,
+				B590F8BE2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift */,
 				5B39DAA01EF916D900BC2319 /* ChatAttachedContactsViewController.h */,
 				5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */,
 				0EE990932AA55D9300D43714 /* ChatAttachedNodesViewController+Additions.swift */,
@@ -14298,6 +14301,7 @@
 				94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
+				B590F8BF2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				0EE990942AA55D9300D43714 /* ChatAttachedNodesViewController+Additions.swift in Sources */,
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,

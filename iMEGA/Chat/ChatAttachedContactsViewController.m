@@ -110,25 +110,10 @@
 
 - (void)updatePromptTitle {
     if (self.tableView.isEditing) {
-        NSNumber *selectedUsersCount = [NSNumber numberWithUnsignedInteger:self.selectedUsersMutableArray.count];
-        self.navigationItem.prompt = [self titleForPromptWithCountOfContacts:selectedUsersCount];
+        self.navigationItem.prompt = [self titleForPromptWithCountOfContacts:(int)self.selectedUsersMutableArray.count];
     } else {
         self.navigationItem.prompt = nil;
     }
-}
-
-- (NSString *)titleForPromptWithCountOfContacts:(NSNumber *)count {
-    NSString *promptString;
-    if (count.unsignedIntegerValue == 0) {
-        promptString = LocalizedString(@"select", @"Button that allows you to select a given folder");
-    } else if (count.unsignedIntegerValue == 1) {
-        promptString = LocalizedString(@"oneContact", @"");
-    } else {
-        promptString = LocalizedString(@"XContactsSelected", @"[X] will be replaced by a plural number, indicating the total number of contacts the user has");
-        promptString = [promptString stringByReplacingOccurrencesOfString:@"[X]" withString:count.stringValue];
-    }
-    
-    return promptString;
 }
 
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {

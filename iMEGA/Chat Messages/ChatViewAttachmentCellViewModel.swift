@@ -82,9 +82,9 @@ class ChatViewAttachmentCellViewModel {
     
     private func titleForContact() -> String {
         if message.usersCount == 1 {
-            return message.contactName(at: 0) ?? message.userName(at: 0) ?? ""
+            message.contactName(at: 0) ?? message.userName(at: 0) ?? ""
         } else {
-            return Strings.Localizable.xContactsSelected.replacingOccurrences(of: "[X]", with: "\(message.usersCount)", options: .literal, range: nil)
+            Strings.Localizable.Chat.Message.numberOfContacts(Int(message.usersCount))
         }
     }
     
