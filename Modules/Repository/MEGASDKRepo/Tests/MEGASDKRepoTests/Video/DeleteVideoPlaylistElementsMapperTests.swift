@@ -3,10 +3,10 @@ import MEGADomain
 import MEGASDKRepoMock
 import XCTest
 
-final class AddVideosToVideoPlaylistResultMapperTests: XCTestCase {
+final class DeleteVideoPlaylistElementsMapperTests: XCTestCase {
     
     func testMap_whenRequestAndErrorNil_nil() {
-        let result = AddVideosToVideoPlaylistResultMapper.map(request: nil, error: nil)
+        let result = DeleteVideoPlaylistElementsMapper.map(request: nil, error: nil)
         
         switch result {
         case .success(let setEntity):
@@ -19,13 +19,13 @@ final class AddVideosToVideoPlaylistResultMapperTests: XCTestCase {
     func testMap_whenError_returnsError() throws {
         let error = MockError(errorType: .apiEAccess)
         
-        let result = AddVideosToVideoPlaylistResultMapper.map(request: nil, error: error)
+        let result = try XCTUnwrap(DeleteVideoPlaylistElementsMapper.map(request: nil, error: error))
         
         switch result {
         case .success(let setEntity):
             XCTFail("Expect to return error, got setEntity instead: \(setEntity)")
         case .failure(let error):
-            XCTAssertEqual(error as? VideoPlaylistErrorEntity, .failedToAddVideoToPlaylist)
+            XCTAssertEqual(error as? VideoPlaylistErrorEntity, .failedToDeleteVideoPlaylistElements)
         }
     }
     
@@ -33,7 +33,7 @@ final class AddVideosToVideoPlaylistResultMapperTests: XCTestCase {
         let request = MockRequest(handle: 1, set: nil)
         let error = MockError(errorType: .apiOk)
         
-        let result = AddVideosToVideoPlaylistResultMapper.map(request: request, error: error)
+        let result = DeleteVideoPlaylistElementsMapper.map(request: request, error: error)
         
         switch result {
         case .success(let setEntity):
@@ -47,7 +47,7 @@ final class AddVideosToVideoPlaylistResultMapperTests: XCTestCase {
         let request = MockRequest(handle: 1, set: MockMEGASet(handle: 2))
         let error = MockError(errorType: .apiOk)
         
-        let result = AddVideosToVideoPlaylistResultMapper.map(request: request, error: error)
+        let result = DeleteVideoPlaylistElementsMapper.map(request: request, error: error)
         
         switch result {
         case .success(let setEntity):
@@ -56,5 +56,4 @@ final class AddVideosToVideoPlaylistResultMapperTests: XCTestCase {
             XCTFail("Expect to success, got error instead: \(error)")
         }
     }
-
 }

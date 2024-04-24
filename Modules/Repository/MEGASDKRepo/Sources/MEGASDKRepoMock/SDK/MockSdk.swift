@@ -63,7 +63,7 @@ public final class MockSdk: MEGASdk {
     public private(set) var isNodeSensitive: Bool?
     public private(set) var megaSetsCallCount = 0
     
-    public enum Message: Equatable {
+    public enum Message: Equatable, Hashable {
         case publicNodeForMegaFileLink(String)
         case createSetElement(_ sid: MEGAHandle, nodeId: MEGAHandle, name: String?)
     }
