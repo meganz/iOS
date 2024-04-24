@@ -2,7 +2,7 @@ import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import MEGASwift
+import MEGAUIKit
 import Search
 import SearchMock
 import XCTest

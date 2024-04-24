@@ -1,6 +1,6 @@
 import MEGADesignToken
-import MEGASwift
 import MEGASwiftUI
+import MEGAUIKit
 import SwiftUI
 
 public struct SearchResultsView: View {

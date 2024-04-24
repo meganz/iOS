@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../../../Infrastructure/MEGASwift"),
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../UI/MEGASwiftUI"),
+        .package(path: "../../../UI/MEGAUIKit"),
         .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", from: "1.1.0"),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
@@ -50,6 +51,7 @@ let package = Package(
             dependencies: [
                 "Search", 
                 "SearchMock",
+                "MEGAUIKit",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras")
             ],

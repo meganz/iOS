@@ -10,6 +10,7 @@ import MEGARepo
 import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI
+import MEGAUIKit
 import Search
 import SwiftUI
 
