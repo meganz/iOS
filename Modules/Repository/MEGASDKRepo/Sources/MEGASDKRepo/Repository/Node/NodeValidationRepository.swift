@@ -1,17 +1,17 @@
 import MEGADomain
+import MEGASdk
 
-struct NodeValidationRepository: NodeValidationRepositoryProtocol {
-    static var newRepo: NodeValidationRepository {
-        NodeValidationRepository(sdk: MEGASdk.shared)
-    }
-    
+public struct NodeValidationRepository: NodeValidationRepositoryProtocol {
+
     private let sdk: MEGASdk
-
-    init(sdk: MEGASdk) {
+    private let offlineStore: OfflineStoreBridgeProtocol
+    
+    public init(sdk: MEGASdk, offlineStore: OfflineStoreBridgeProtocol) {
         self.sdk = sdk
+        self.offlineStore = offlineStore
     }
     
-    func hasVersions(nodeHandle: HandleEntity) -> Bool {
+    public func hasVersions(nodeHandle: HandleEntity) -> Bool {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return false
         }
@@ -19,15 +19,15 @@ struct NodeValidationRepository: NodeValidationRepositoryProtocol {
         return sdk.hasVersions(for: node)
     }
     
-    func isDownloaded(nodeHandle: HandleEntity) -> Bool {
+    public func isDownloaded(nodeHandle: HandleEntity) -> Bool {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return false
         }
         
-        return (MEGAStore.shareInstance().offlineNode(with: node) != nil)
+        return offlineStore.isDownloaded(node: node)
     }
     
-    func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
+    public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return false
         }
@@ -35,7 +35,7 @@ struct NodeValidationRepository: NodeValidationRepositoryProtocol {
         return sdk.isNode(inRubbish: node)
     }
     
-    func isFileNode(handle: HandleEntity) -> Bool {
+    public func isFileNode(handle: HandleEntity) -> Bool {
         guard let node = sdk.node(forHandle: handle) else {
             return false
         }
@@ -43,7 +43,7 @@ struct NodeValidationRepository: NodeValidationRepositoryProtocol {
         return node.isFile()
     }
     
-    func isNode(_ node: NodeEntity, descendantOf ancestor: NodeEntity) async -> Bool {
+    public func isNode(_ node: NodeEntity, descendantOf ancestor: NodeEntity) async -> Bool {
         let isDescendantNodeTask = Task.detached { () -> Bool in
             guard let parent = ancestor.toMEGANode(in: sdk) else {
                 return false

@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol NodeValidationRepositoryProtocol: RepositoryProtocol {
+public protocol NodeValidationRepositoryProtocol: Sendable {
     func hasVersions(nodeHandle: HandleEntity) -> Bool
     func isDownloaded(nodeHandle: HandleEntity) -> Bool
     func isInRubbishBin(nodeHandle: HandleEntity) -> Bool
