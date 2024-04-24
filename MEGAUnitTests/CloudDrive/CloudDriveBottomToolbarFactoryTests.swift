@@ -62,16 +62,20 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         let sut: CloudDriveBottomToolbarItemsFactory
         let actionFactory = MockToolbarActionFactory()
         let actionHandler: NodeActionsDelegateHandler
+        let nodeUseCase: any NodeUseCaseProtocol
         let parent = UIViewController()
 
         init(
-            actionHandler: NodeActionsDelegateHandler = .testingInstance
+            actionHandler: NodeActionsDelegateHandler = .testingInstance,
+            nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase()
         ) {
             self.actionHandler = actionHandler
+            self.nodeUseCase = nodeUseCase
             sut = CloudDriveBottomToolbarItemsFactory(
                 sdk: MockSdk(),
                 nodeActionHandler: actionHandler,
-                actionFactory: actionFactory
+                actionFactory: actionFactory,
+                nodeUseCase: nodeUseCase
             )
         }
         
@@ -109,6 +113,10 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         
         func buildAnyWithSelectedNodes() -> [UIBarButtonItem] {
             return build(accessType: .full, displayMode: .cloudDrive, isBackupNode: false, selectedNodes: selectedNodes)
+        }
+        
+        func buildAny(with selectedNodes: [NodeEntity]) -> [UIBarButtonItem] {
+            build(accessType: .full, displayMode: .cloudDrive, isBackupNode: false, selectedNodes: selectedNodes)
         }
         
         var selectedNodes: [NodeEntity] {
@@ -275,6 +283,130 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         wait(for: [exp], timeout: 1)
         XCTAssertTrue(moveToRubbishBinCalled)
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
+    }
+    
+    func testBarButtonItem_whenSelectedNodesIsEmpty_itShouldBeDisabled() {
+        // given
+        let harness = Harness()
+        harness.actionFactory.actionsToReturn = [
+            .download, .shareLink, .move, .copy, .delete, .restore, .actions
+        ]
+        let selectedNodes: [NodeEntity] = []
+        
+        // when
+        let items = harness.buildAny(with: selectedNodes)
+        
+        // then
+        XCTAssertEqual(
+            items.map { $0.isEnabled },
+            [
+                false, // download
+                false, // shareLink
+                false, // move
+                false, // copy
+                false, // delete
+                false, // restore
+                false // actions
+            ]
+        )
+    }
+    
+    func testBarButton_whenSelectedNodesContainDisputedNode_itShouldBeDisabled() {
+        // given
+        let harness = Harness()
+        harness.actionFactory.actionsToReturn = [
+            .download, .shareLink, .move, .copy, .delete, .restore, .actions
+        ]
+        let selectedNodes: [NodeEntity] = [
+            NodeEntity(isTakenDown: false),
+            NodeEntity(isTakenDown: true)
+        ]
+        
+        // when
+        let items = harness.buildAny(with: selectedNodes)
+        
+        // then
+        XCTAssertEqual(
+            items.map { $0.isEnabled },
+            [
+                false, // download
+                false, // shareLink
+                false, // move
+                false, // copy
+                true, // delete
+                false, // restore
+                true // actions
+            ]
+        )
+    }
+    
+    func testBarButton_whenSelectedNodesAreNotDisputed_itShouldBeEnabled() {
+        // given
+        let harness = Harness()
+        harness.actionFactory.actionsToReturn = [
+            .download, .shareLink, .move, .copy, .delete, .restore, .actions
+        ]
+        let selectedNodes: [NodeEntity] = [
+            NodeEntity(isTakenDown: false),
+            NodeEntity(isTakenDown: false)
+        ]
+        
+        // when
+        let items = harness.buildAny(with: selectedNodes)
+        
+        // then
+        XCTAssertEqual(
+            items.map { $0.isEnabled },
+            [
+                true, // download
+                true, // shareLink
+                true, // move
+                true, // copy
+                true, // delete
+                true, // restore
+                true // actions
+            ]
+        )
+    }
+    
+    func testBarButton_whenDisplayModeIsRubbishBin_andNodeIsNotDisputedButNotRestorable_itShouldBeDisable() throws {
+        // given
+        let harness = Harness(
+            nodeUseCase: MockNodeDataUseCase(isNodeRestorable: false)
+        )
+        harness.actionFactory.actionsToReturn = [.restore]
+        
+        let selectedNodes: [NodeEntity] = [
+            NodeEntity(isTakenDown: false)
+        ]
+        
+        // when
+        let items = harness.build(accessType: .owner, displayMode: .rubbishBin, isBackupNode: false, selectedNodes: selectedNodes)
+        
+        // then
+        XCTAssertEqual(items.count, 1)
+        let item = try XCTUnwrap(items.first)
+        XCTAssertFalse(item.isEnabled)
+    }
+    
+    func testBarButton_whenDisplayModeIsRubbishBin_andNodeIsNotDisputedAndIsRestorable_itShouldBeEnabled() throws {
+        // given
+        let harness = Harness(
+            nodeUseCase: MockNodeDataUseCase(isNodeRestorable: true)
+        )
+        harness.actionFactory.actionsToReturn = [.restore]
+        
+        let selectedNodes: [NodeEntity] = [
+            NodeEntity(isTakenDown: false)
+        ]
+        
+        // when
+        let items = harness.build(accessType: .owner, displayMode: .rubbishBin, isBackupNode: false, selectedNodes: selectedNodes)
+        
+        // then
+        XCTAssertEqual(items.count, 1)
+        let item = try XCTUnwrap(items.first)
+        XCTAssertTrue(item.isEnabled)
     }
 }
 
