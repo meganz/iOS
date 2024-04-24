@@ -46,7 +46,8 @@ public final class MockSdk: MEGASdk {
     private let _enabledNotificationIdList: MEGAIntegerList?
     private var _lastReadNotificationId: Int32
     private var _isNodeInheritingSensitivity: Bool
-    
+    private var _hasVersionsForNode: Bool
+
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
         message: String,
@@ -124,7 +125,8 @@ public final class MockSdk: MEGASdk {
                 accountCreationDate: Date? = nil,
                 enabledNotificationIdList: MEGAIntegerList? = nil,
                 lastReadNotificationId: Int32 = 0,
-                isNodeInheritingSensitivity: Bool = false
+                isNodeInheritingSensitivity: Bool = false,
+                hasVersionsForNode: Bool = false
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -169,6 +171,7 @@ public final class MockSdk: MEGASdk {
         _enabledNotificationIdList = enabledNotificationIdList
         _lastReadNotificationId = lastReadNotificationId
         _isNodeInheritingSensitivity = isNodeInheritingSensitivity
+        _hasVersionsForNode = hasVersionsForNode
         super.init()
     }
     
@@ -648,6 +651,11 @@ public final class MockSdk: MEGASdk {
     public override func getRecentActionsAsync(sinceDays days: Int, maxNodes: Int, delegate: MEGARequestDelegate) {
         getRecentActionsAsyncCalled = true
         processRequestResult(delegate: delegate)
+    }
+    
+    // MARK: - Filesystem inspection
+    public override func hasVersions(for node: MEGANode) -> Bool {
+        _hasVersionsForNode
     }
     
     // MARK: - Helper
