@@ -19,7 +19,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *firstButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondButton;
-@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
 @property (weak, nonatomic) IBOutlet UIView *mainView;
@@ -176,7 +175,13 @@
 #endif
     
     [self.firstButton mnz_setup:self.firstButtonStyle traitCollection:self.traitCollection];
-    [self.secondButton mnz_setupDestructive:self.traitCollection];
+    
+    if (UIColor.isDesignTokenEnabled) {
+        [self.secondButton mnz_setupSecondary:self.traitCollection];
+    } else {
+        [self.secondButton mnz_setupDestructive:self.traitCollection];
+    }
+    
     [self.dismissButton mnz_setup:self.dismissButtonStyle traitCollection:self.traitCollection];
 }
 

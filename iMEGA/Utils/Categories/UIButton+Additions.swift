@@ -4,6 +4,7 @@ import MEGADesignToken
     case none
     case basic
     case primary
+    case secondary
     case primaryDisabled
     case destructive
     case cancel
@@ -19,6 +20,9 @@ extension UIButton {
             
         case .primary:
             mnz_setupPrimary(traitCollection)
+            
+        case .secondary:
+            mnz_setupSecondary(traitCollection)
             
         case .primaryDisabled:
             mnz_setupPrimary_disabled(traitCollection)
@@ -118,7 +122,7 @@ extension UIButton {
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 0.15
         layer.shadowRadius = 3
-        layer.shadowColor = MEGAAppColor.Black._000000.uiColor.cgColor
+        layer.shadowColor = UIColor.black000000.cgColor
     }
     
     private func removeLayer() {
