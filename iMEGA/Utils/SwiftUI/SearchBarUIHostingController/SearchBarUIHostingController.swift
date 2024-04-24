@@ -142,15 +142,16 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content>,
     
     private func configureToolbar(with config: BottomToolbarConfig) {
         guard let toolbar else { return }
-        toolbar.items = toolbarBuilder.buildToolbarItems(
+        let items = toolbarBuilder.buildToolbarItems(
             config: config,
             parent: self,
             browseDelegate: browseDelegate
         )
         
-        toolbar.items?.forEach({ barItem in
-            barItem.isEnabled = config.selectedNodes.isNotEmpty
-        })
+        let flexibleItem = UIBarButtonItem(systemItem: .flexibleSpace)
+        
+        // insert flexibleItem to make all items evenly distributed
+        toolbar.items = items.flatMap { if $0 == items.last { [$0] } else { [$0, flexibleItem] } }
     }
     
     private func removeToolbar(animated: Bool) {

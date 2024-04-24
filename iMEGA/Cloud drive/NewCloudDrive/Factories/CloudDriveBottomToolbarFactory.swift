@@ -24,6 +24,7 @@ struct CloudDriveBottomToolbarItemsFactory {
     let sdk: MEGASdk
     let nodeActionHandler: NodeActionsDelegateHandler
     let actionFactory: any ToolbarActionFactoryProtocol
+    let nodeUseCase: any NodeUseCaseProtocol
     
     private func megaNodes(from nodeEntities: [NodeEntity]) -> [MEGANode] {
         nodeEntities.compactMap {
@@ -36,45 +37,53 @@ struct CloudDriveBottomToolbarItemsFactory {
         parent: UIViewController,
         browseDelegate: BrowserViewControllerDelegateHandler
     ) -> [UIBarButtonItem] {
-        
-        let flexibleItem = UIBarButtonItem(systemItem: .flexibleSpace)
-        
-        var barButtons: [UIBarButtonItem] = []
-        
         let actions = actionFactory.buildActions(
             accessType: config.accessType,
             isBackupNode: config.isBackupNode,
             displayMode: config.displayMode
         )
         
-        for (index, action) in actions.enumerated() {
-            
-            let item = UIBarButtonItem(image: action.image)
-            
-            item.primaryAction = UIAction(
-                image: action.image,
-                handler: { [weak parent] _ in
-                    guard let parent else { return }
-                    actionHandler(
-                        for: action,
-                        displayMode: config.displayMode,
-                        selectedNodes: config.selectedNodes,
-                        isIncomingShareChildView: config.isIncomingShareChildView,
-                        parent: parent,
-                        sender: item,
-                        onActionCompleted: config.onActionCompleted
-                    )
-                }
-            )
-            
-            barButtons.append(item)
-            
-            if index < actions.count - 1 {
-                barButtons.append(flexibleItem)
-            }
-        }
+        return actions.map { buildBarButtonItem(for: $0, config: config, parent: parent) }
+    }
+    
+    private func buildBarButtonItem(for action: BottomToolbarAction, config: BottomToolbarConfig, parent: UIViewController) -> UIBarButtonItem {
+        let item = UIBarButtonItem(image: action.image)
         
-        return barButtons
+        item.primaryAction = UIAction(
+            image: action.image,
+            handler: { [weak parent, weak item] _ in
+                guard let parent, let item else { return }
+                actionHandler(
+                    for: action,
+                    displayMode: config.displayMode,
+                    selectedNodes: config.selectedNodes,
+                    isIncomingShareChildView: config.isIncomingShareChildView,
+                    parent: parent,
+                    sender: item,
+                    onActionCompleted: config.onActionCompleted
+                )
+            }
+        )
+        
+        item.isEnabled = barButtonEnabled(for: action, config: config)
+        
+        return item
+    }
+    
+    private func barButtonEnabled(for action: BottomToolbarAction, config: BottomToolbarConfig) -> Bool {
+        let enabled = !config.selectedNodes.isEmpty
+        let enabledIfNotDisputed = !config.selectedNodes.contains { $0.isTakenDown } && enabled
+        
+        switch action {
+        case .download, .shareLink, .move, .copy:
+            return enabledIfNotDisputed
+        case .delete, .actions:
+            return enabled
+        case .restore:
+            guard config.displayMode == .rubbishBin && enabled else { return enabledIfNotDisputed }
+            let containsNotRestorableNode = config.selectedNodes.contains { !nodeUseCase.isRestorable(node: $0) }
+            return if containsNotRestorableNode { false } else { enabledIfNotDisputed }
+        }
     }
     
     private func actionHandler(
