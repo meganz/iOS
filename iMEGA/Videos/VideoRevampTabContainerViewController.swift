@@ -132,11 +132,14 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func configureToolbar() {
+        let downloadButton = UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: nil)
+        downloadButton.action = #selector(downloadAction(_:))
+        
         let moreButton = UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: nil)
         moreButton.action = #selector(moreAction(_:))
         
         toolbar.items = [
-            UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: nil),
+            downloadButton,
             UIBarButtonItem.flexibleSpace(),
             UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: nil),
             UIBarButtonItem.flexibleSpace(),
@@ -259,13 +262,34 @@ final class VideoRevampTabContainerViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    @objc private func downloadAction(_ sender: UIBarButtonItem) {
+        switch viewModel.syncModel.currentTab {
+        case .all:
+            let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+            nodeAction(nodeActionViewController, didSelect: .download, forNodes: selectedVideos, from: sender)
+        case .playlist:
+            break
+        }
+    }
+    
     @objc private func moreAction(_ sender: UIBarButtonItem) {
-        let selectedVideos = viewModel.videoSelection.videos.values
+        switch viewModel.syncModel.currentTab {
+        case .all:
+            let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+            present(nodeActionViewController, animated: true, completion: nil)
+        case .playlist:
+            break
+        }
+    }
+    
+    private func nodeActionViewController(with selectedVideos: [MEGANode], from sender: UIBarButtonItem) -> NodeActionViewController {
+        NodeActionViewController(nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, sender: sender)
+    }
+    
+    private var selectedVideos: [MEGANode] {
+        viewModel.videoSelection.videos.values
             .map { $0 }
             .compactMap { $0.toMEGANode(in: .sharedSdk) }
-        
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, sender: sender)
-        present(nodeActionsViewController, animated: true, completion: nil)
     }
     
     func resetNavigationBar() {
