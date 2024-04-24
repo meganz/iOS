@@ -67,18 +67,100 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         XCTAssertEqual(VideoPlaylistElementsResultEntity(success: 1, failure: 0), actualResultEntity)
     }
     
+    // MARK: - deleteVideos
+    
+    func testDeleteVideos_onVideoPlaylistVideoEntityWithEmptyIds_shouldNotExecuteRepository() async throws {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let (sut, userVideoPlaylistsRepository) = makeSUT()
+        
+        _ = try await sut.deleteVideos(in: videoPlaylist.id, videos: [])
+        
+        let messages = await userVideoPlaylistsRepository.messages
+        XCTAssertTrue(messages.isEmpty, "Expect not to execute repository")
+    }
+    
+    func testDeleteVideos_onVideoPlaylistVideoEntityWithEmptyIds_shouldReturnZeroVideoPlaylistResultEntity() async throws {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let (sut, _) = makeSUT()
+        
+        let result = try await sut.deleteVideos(in: videoPlaylist.id, videos: [])
+        
+        XCTAssertEqual(result.success, 0)
+        XCTAssertEqual(result.failure, 0)
+    }
+    
+    func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_shouldNotExecuteDeleteVideos() async throws {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videosToRemove = [ VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: nil) ]
+        let (sut, userVideoPlaylistsRepository) = makeSUT()
+        
+        _ = try await sut.deleteVideos(in: videoPlaylist.id, videos: videosToRemove)
+        
+        let messages = await userVideoPlaylistsRepository.messages
+        XCTAssertTrue(messages.isEmpty, "Expect not to execute repository")
+    }
+    
+    func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_shouldReturnZeroVideoPlaylistResultEntity() async throws {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videosToRemove = [ VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: nil) ]
+        let (sut, _) = makeSUT()
+        
+        let result = try await sut.deleteVideos(in: videoPlaylist.id, videos: videosToRemove)
+        
+        XCTAssertEqual(result.success, 0)
+        XCTAssertEqual(result.failure, 0)
+    }
+    
+    func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_executeDeleteVideoPlaylist() async throws {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videosToRemove = [
+            VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: 1),
+            VideoPlaylistVideoEntity(video: NodeEntity(handle: 2), videoPlaylistVideoId: 2)
+        ]
+        let expectedVideoPlaylistResult: VideoPlaylistCreateSetElementsResultEntity = [
+            1: .success(anySetEntity(handle: videosToRemove.first?.id ?? 1)),
+            2: .success(anySetEntity(handle: videosToRemove.first?.id ?? 2)),
+        ]
+        let (sut, userVideoPlaylistsRepository) = makeSUT(deleteVideosResult: .success(expectedVideoPlaylistResult))
+        
+        _ = try await sut.deleteVideos(in: videoPlaylist.id, videos: videosToRemove)
+        
+        let messages = await userVideoPlaylistsRepository.messages
+        XCTAssertEqual(messages, [ .deleteVideoPlaylistElements(videoPlaylistId: videoPlaylist.id, elementIds: videosToRemove.map { $0.id }) ])
+    }
+    
+    func testDeleteVideos_onVideoPlaylistVideoEntityWithValidVideoIds_shouldReturnVideoPlaylistResultEntityWithIdCount() async throws {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videosToRemove = [
+            VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: 1),
+            VideoPlaylistVideoEntity(video: NodeEntity(handle: 2), videoPlaylistVideoId: 2)
+        ]
+        let expectedVideoPlaylistResult: VideoPlaylistCreateSetElementsResultEntity = [
+            1: .success(anySetEntity(handle: videosToRemove.first?.id ?? 1)),
+            2: .success(anySetEntity(handle: videosToRemove.first?.id ?? 2)),
+        ]
+        let (sut, _) = makeSUT(deleteVideosResult: .success(expectedVideoPlaylistResult))
+        
+        let result = try await sut.deleteVideos(in: videoPlaylist.id, videos: videosToRemove)
+        
+        XCTAssertEqual(result.success, expectedVideoPlaylistResult.successCount)
+        XCTAssertEqual(result.failure, expectedVideoPlaylistResult.errorCount)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
         videoPlaylistsResult: [SetEntity] = [],
-        addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity())
+        addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
+        deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity())
     ) -> (
         sut: VideoPlaylistModificationUseCase,
         userVideoPlaylistsRepository: MockUserVideoPlaylistsRepository
     ) {
         let userVideoPlaylistsRepository = MockUserVideoPlaylistsRepository(
             videoPlaylistsResult: videoPlaylistsResult,
-            addVideosToVideoPlaylistResult: addVideosToVideoPlaylistResult
+            addVideosToVideoPlaylistResult: addVideosToVideoPlaylistResult,
+            deleteVideosResult: deleteVideosResult
         )
         let sut = VideoPlaylistModificationUseCase(userVideoPlaylistsRepository: userVideoPlaylistsRepository)
         return (sut, userVideoPlaylistsRepository)
