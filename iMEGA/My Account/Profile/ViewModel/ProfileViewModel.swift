@@ -40,17 +40,16 @@ final class ProfileViewModel: ViewModelType {
         .eraseToAnyPublisher()
     
     var invokeCommand: ((Command) -> Void)?
-
-    private let sdk: MEGASdk
     
     // Internal State
+    private let accountUseCase: any AccountUseCaseProtocol
     private let requestedChangeTypeValueSubject = CurrentValueSubject<ChangeType?, Never>(nil)
     private let twoFactorAuthStatusValueSubject = CurrentValueSubject<TwoFactorAuthStatus, Never>(.unknown)
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
-    init(sdk: MEGASdk) {
-        self.sdk = sdk
+    init(accountUseCase: some AccountUseCaseProtocol) {
+        self.accountUseCase = accountUseCase
         bindToSubscriptions()
     }
     
@@ -86,9 +85,7 @@ final class ProfileViewModel: ViewModelType {
     }
     
     private var shouldShowPlanSection: Bool {
-        let shouldShow = sdk.isAccountType(.proFlexi) || sdk.isAccountType(.business) || sdk.isMasterBusinessAccount
-        
-        return shouldShow
+        accountUseCase.isAccountType(.proFlexi) || accountUseCase.isAccountType(.business) || accountUseCase.isMasterBusinessAccount
     }
 }
 
@@ -125,19 +122,16 @@ extension ProfileViewModel {
                 return
             }
             
-            guard let myEmail = sdk.myEmail else {
+            guard let myEmail = accountUseCase.myEmail else {
                 return
             }
             
             twoFactorAuthStatusValueSubject.send(.querying)
-
-            sdk.multiFactorAuthCheck(withEmail: myEmail, delegate: RequestDelegate { [weak self] result in
-                
-                guard let self, case let .success(request) = result else { return }
-                
-                twoFactorAuthStatusValueSubject.send(request.flag ? .enabled : .disabled)
-                invokeCommand?(.changeProfile(requestedChangeType: requestedChangeType, isTwoFactorAuthenticationEnabled: request.flag))
-            })
+            Task { @MainActor in
+                let isFlagEnabled = try await self.accountUseCase.multiFactorAuthCheck(email: myEmail)
+                twoFactorAuthStatusValueSubject.send(isFlagEnabled ? .enabled : .disabled)
+                invokeCommand?(.changeProfile(requestedChangeType: requestedChangeType, isTwoFactorAuthenticationEnabled: isFlagEnabled))
+            }
         case .resetPassword, .parkAccount, .passwordFromLogout:
             break
         @unknown default:
@@ -148,9 +142,7 @@ extension ProfileViewModel {
 
 // MARK: Section Cell Structure Builders
 extension ProfileViewModel {
-    
     private func makeSectionCellDataSource(sections: [ProfileSection], requestedChangeType: ChangeType?, twoFactorAuthStatus: TwoFactorAuthStatus) -> SectionCellDataSource {
-        
         let sectionRows = sections
             .reduce([ProfileSection: [ProfileSectionRow]](), { result, sectionKey in
                 var mutableResult = result
@@ -171,9 +163,8 @@ extension ProfileViewModel {
     }
     
     private func makeRowsForProfileSection(_ requestedChangeType: ChangeType?, twoFactorAuthStatus: TwoFactorAuthStatus) -> [ProfileSectionRow] {
-        let isBusiness = sdk.isAccountType(.business)
-        let isMasterBusiness = sdk.isMasterBusinessAccount
-        let isSmsAllowed = sdk.smsAllowedState() == .optInAndUnblock
+        let isBusiness = accountUseCase.isAccountType(.business)
+        let isMasterBusiness = accountUseCase.isMasterBusinessAccount
         
         var profileRows = [ProfileSectionRow]()
         
@@ -189,7 +180,7 @@ extension ProfileViewModel {
         
         profileRows.append(.changePassword(isLoading: requestedChangeType == .password ? twoFactorAuthStatus == .querying : false))
         
-        if isSmsAllowed {
+        if accountUseCase.isSmsAllowed {
             profileRows.append(.phoneNumber)
         }
         
@@ -197,18 +188,14 @@ extension ProfileViewModel {
     }
     
     private func makeRowsForSecuritySection() -> [ProfileSectionRow] {
-        return [.recoveryKey]
+        [.recoveryKey]
     }
     
     private func makeRowsForPlanSection() -> [ProfileSectionRow] {
-        if sdk.isAccountType(.business) {
-            return [.upgrade, .role]
-        } else {
-            return [.upgrade]
-        }
+        accountUseCase.isAccountType(.business) ? [.upgrade, .role] : [.upgrade]
     }
     
     private func makeRowsForSessionSection() -> [ProfileSectionRow] {
-        return [.logout]
+        [.logout]
     }
 }

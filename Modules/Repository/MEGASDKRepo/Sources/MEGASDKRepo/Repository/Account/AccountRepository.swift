@@ -4,7 +4,7 @@ import MEGADomain
 import MEGASdk
 import MEGASwift
 
-public final class AccountRepository: NSObject, AccountRepositoryProtocol {    
+public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
     private let myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess
@@ -34,83 +34,57 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         self.myChatFilesFolderNodeAccess = myChatFilesFolderNodeAccess
     }
 
-    public func registerMEGARequestDelegate() async {
-        sdk.add(self as (any MEGARequestDelegate))
-    }
-    
-    public func deRegisterMEGARequestDelegate() async {
-        sdk.remove(self as (any MEGARequestDelegate))
-    }
-    
-    public func registerMEGAGlobalDelegate() async {
-        sdk.add(self as (any MEGAGlobalDelegate))
-    }
-    
-    public func deRegisterMEGAGlobalDelegate() async {
-        sdk.remove(self as (any MEGAGlobalDelegate))
-    }
-
+    // MARK: - User authentication status and identifiers
     public var currentUserHandle: HandleEntity? {
         currentUserSource.currentUserHandle
-    }
-    
-    public func currentUser() async -> UserEntity? {
-        await currentUserSource.currentUser()
     }
     
     public var isGuest: Bool {
         currentUserSource.isGuest
     }
     
-    public var isMasterBusinessAccount: Bool {
-        sdk.isMasterBusinessAccount
-    }
-    
     public var isNewAccount: Bool {
         sdk.isNewAccount
     }
     
+    public var myEmail: String? {
+        sdk.myEmail
+    }
+
+    // MARK: - Account characteristics
     public var accountCreationDate: Date? {
         sdk.accountCreationDate
+    }
+    
+    public var currentAccountDetails: AccountDetailsEntity? {
+        currentUserSource.accountDetails
     }
     
     public var bandwidthOverquotaDelay: Int64 {
         sdk.bandwidthOverquotaDelay
     }
     
+    public var isMasterBusinessAccount: Bool {
+        sdk.isMasterBusinessAccount
+    }
+    
+    public var isSMSAllowed: Bool {
+        sdk.smsAllowedState() == .optInAndUnblock
+    }
+
+    // MARK: - User and session management
+    public func currentUser() async -> UserEntity? {
+        await currentUserSource.currentUser()
+    }
+    
     public func isLoggedIn() -> Bool {
         currentUserSource.isLoggedIn
     }
     
-    public func contacts() -> [UserEntity] {
-        sdk.contacts().toUserEntities()
-    }
-    
-    public func incomingContactsRequestsCount() -> Int {
-        sdk.incomingContactRequests().size
-    }
-    
-    public func relevantUnseenUserAlertsCount() -> UInt {
-        sdk.userAlertList().relevantUnseenCount
-    }
-    
-    public func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
-        myChatFilesFolderNodeAccess.loadNode { myChatFilesFolderNode, _ in
-            guard let myChatFilesFolderNode = myChatFilesFolderNode else {
-                completion(.failure(AccountErrorEntity.nodeNotFound))
-                return
-            }
-            
-            completion(.success(myChatFilesFolderNode.toNodeEntity()))
-        }
-    }
-    
-    public func totalNodesCount() -> UInt64 {
-        sdk.totalNodes
-    }
-    
-    public var currentAccountDetails: AccountDetailsEntity? {
-        currentUserSource.accountDetails
+    public func isAccountType(_ type: AccountTypeEntity) -> Bool {
+        guard let currentAccountDetails else { return false }
+        
+        return currentAccountDetails.proLevel == type
     }
     
     public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
@@ -130,6 +104,26 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
                 }
             })
         })
+    }
+
+    // MARK: - Account operations
+    public func contacts() -> [UserEntity] {
+        sdk.contacts().toUserEntities()
+    }
+    
+    public func totalNodesCount() -> UInt64 {
+        sdk.totalNodes
+    }
+    
+    public func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
+        myChatFilesFolderNodeAccess.loadNode { myChatFilesFolderNode, _ in
+            guard let myChatFilesFolderNode = myChatFilesFolderNode else {
+                completion(.failure(AccountErrorEntity.nodeNotFound))
+                return
+            }
+            
+            completion(.success(myChatFilesFolderNode.toNodeEntity()))
+        }
     }
     
     public func upgradeSecurity() async throws -> Bool {
@@ -183,6 +177,45 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
                 }
             })
         })
+    }
+
+    // MARK: - Account social and notifications
+    public func incomingContactsRequestsCount() -> Int {
+        sdk.incomingContactRequests().size
+    }
+    
+    public func relevantUnseenUserAlertsCount() -> UInt {
+        sdk.userAlertList().relevantUnseenCount
+    }
+
+    // MARK: - Account events and delegates
+    public func registerMEGARequestDelegate() async {
+        sdk.add(self as (any MEGARequestDelegate))
+    }
+    
+    public func deRegisterMEGARequestDelegate() async {
+        sdk.remove(self as (any MEGARequestDelegate))
+    }
+    
+    public func registerMEGAGlobalDelegate() async {
+        sdk.add(self as (any MEGAGlobalDelegate))
+    }
+    
+    public func deRegisterMEGAGlobalDelegate() async {
+        sdk.remove(self as (any MEGAGlobalDelegate))
+    }
+    
+    public func multiFactorAuthCheck(email: String) async throws -> Bool {
+        try await withAsyncThrowingValue { completion in
+            sdk.multiFactorAuthCheck(withEmail: email, delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.flag))
+                case .failure:
+                    completion(.failure(AccountErrorEntity.generic))
+                }
+            })
+        }
     }
 }
 
