@@ -70,7 +70,6 @@ public struct OnboardingWithProPlanListView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top)
                 }
-                .frame(maxWidth: 390)
                 .padding(.horizontal, 16)
             }
             .clipped()
