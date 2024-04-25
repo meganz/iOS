@@ -63,6 +63,25 @@ extension CallKitCallManager: CallManagerProtocol {
         }
     }
     
+    func muteCall(in chatRoom: ChatRoomEntity, muted: Bool) {
+        guard let callUUID = callsDictionary.first(where: { $0.value.chatRoom == chatRoom })?.key else { return }
+
+        var mutedCallAction = callsDictionary[callUUID]
+        mutedCallAction?.audioEnabled = !muted
+        callsDictionary[callUUID] = mutedCallAction
+
+        let muteCallAction = CXSetMutedCallAction(call: callUUID, muted: muted)
+        
+        let transaction = CXTransaction(action: muteCallAction)
+        callController.request(transaction) { error in
+            if error == nil {
+                MEGALogDebug("[CallKit]: Controller mute/unmute call")
+            } else {
+                MEGALogError("[CallKit]: Controller error mute/unmute call: \(error!.localizedDescription)")
+            }
+        }
+    }
+    
     func callUUID(forChatRoom chatRoom: ChatRoomEntity) -> UUID? {
         callsDictionary.first(where: { $0.value.chatRoom == chatRoom })?.key
     }

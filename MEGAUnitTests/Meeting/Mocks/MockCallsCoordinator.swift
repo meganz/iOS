@@ -5,6 +5,7 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     var startCall_CalledTimes = 0
     var answerCall_CalledTimes = 0
     var endCall_CalledTimes = 0
+    var muteCall_CalledTimes = 0
     var reportIncomingCall_CalledTimes = 0
 
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
@@ -19,6 +20,11 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     
     func endCall(_ callActionSync: CallActionSync) async -> Bool {
         endCall_CalledTimes += 1
+        return false
+    }
+    
+    func muteCall(_ callActionSync: CallActionSync) async -> Bool {
+        muteCall_CalledTimes += 1
         return false
     }
     

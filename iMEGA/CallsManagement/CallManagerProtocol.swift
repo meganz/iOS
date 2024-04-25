@@ -6,6 +6,7 @@ protocol CallManagerProtocol: AnyObject {
     func startCall(in chatRoom: ChatRoomEntity, hasVideo: Bool, notRinging: Bool)
     func answerCall(in chatRoom: ChatRoomEntity)
     func endCall(in chatRoom: ChatRoomEntity, endForAll: Bool)
+    func muteCall(in chatRoom: ChatRoomEntity, muted: Bool)
     func callUUID(forChatRoom chatRoom: ChatRoomEntity) -> UUID?
     func call(forUUID uuid: UUID) -> CallActionSync?
     func removeCall(withUUID uuid: UUID)

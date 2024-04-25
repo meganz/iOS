@@ -23,6 +23,8 @@ public protocol CallUseCaseProtocol {
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int)
     func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws
     func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws
+    func enableAudioForCall(in chatRoom: ChatRoomEntity) async throws
+    func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws
 }
 
 public protocol CallCallbacksUseCaseProtocol: AnyObject {
@@ -161,6 +163,14 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
     
     public func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int? = nil, maxUsers: Int? = nil, maxClientPerUser: Int? = nil, maxClients: Int? = nil, divider: Int? = nil) async throws {
         try await repository.setCallLimit(inChat: chatRoom, duration: duration, maxUsers: maxUsers, maxClientPerUser: maxClientPerUser, maxClients: maxClients, divider: divider)
+    }
+    
+    public func enableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
+        try await repository.enableAudioForCall(in: chatRoom)
+    }
+    
+    public func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
+        try await repository.disableAudioForCall(in: chatRoom)
     }
 }
 
