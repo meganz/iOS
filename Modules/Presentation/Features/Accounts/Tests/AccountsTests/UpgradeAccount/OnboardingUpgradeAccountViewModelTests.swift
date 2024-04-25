@@ -168,6 +168,18 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         XCTAssertTrue(mockUseCase.purchasePlanCalled == 1)
     }
     
+    func testPurchasePlan_selectedFreePlan_shouldDismiss() async {
+        let planList = [freePlan, proI_monthly, proII_monthly, proI_yearly, proII_yearly]
+        let (sut, _) = makeSUT(planList: planList)
+        
+        await sut.setupPlans()
+        sut.setSelectedPlan(freePlan)
+        
+        sut.purchaseSelectedPlan()
+        await sut.purchasePlanTask?.value
+        XCTAssertTrue(sut.shouldDismiss)
+    }
+    
     func testPurchasePlanAlert_failedPurchase_shouldShowAlertForFailedPurchase() async throws {
         let planList = [proI_monthly, proII_monthly, proI_yearly, proII_yearly]
         let (sut, _) = makeSUT(planList: planList)

@@ -283,6 +283,11 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         trackSelectedPlanEvent()
         guard let selectedPlan = filteredPlanList.first(where: { $0.type == selectedPlanType }) else { return }
         
+        guard selectedPlan.type != .free else {
+            shouldDismiss = true
+            return
+        }
+        
         purchasePlanTask = Task { [weak self] in
             guard let self else { return }
             
