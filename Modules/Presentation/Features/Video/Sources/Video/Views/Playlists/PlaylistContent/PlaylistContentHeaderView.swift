@@ -31,7 +31,7 @@ struct PlaylistContentHeaderView: View {
                     .lineLimit(2)
                     .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.primaryTextColor)
                 
-                secondaryTextsContent
+                VideoPlaylistSecondaryInformationView(videoConfig: videoConfig, videosCount: videosCount, totalDuration: totalDuration)
                 
                 buttonsContent
             }
@@ -39,36 +39,6 @@ struct PlaylistContentHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
         .background(videoConfig.playlistContentAssets.headerView.color.pageBackgroundColor)
-    }
-    
-    private var secondaryTextsContent: some View {
-        HStack(spacing: TokenSpacing._3) {
-            secondaryText(text: videosCount)
-            
-            circleSeparatorImage
-            
-            secondaryText(text: totalDuration)
-            
-            circleSeparatorImage
-            
-            Image(uiImage: videoConfig.rowAssets.publicLinkImage)
-                .font(.system(size: 12))
-                .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryTextColor)
-        }
-    }
-    
-    private func secondaryText(text: String) -> some View {
-        Text(text)
-            .font(.caption)
-            .font(.system(size: 12))
-            .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryTextColor)
-    }
-    
-    private var circleSeparatorImage: some View {
-        Image(uiImage: videoConfig.playlistContentAssets.headerView.image.dotSeparatorImage.withRenderingMode(.alwaysTemplate))
-            .resizable()
-            .frame(width: 4, height: 4)
-            .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryIconColor)
     }
     
     private var buttonsContent: some View {
