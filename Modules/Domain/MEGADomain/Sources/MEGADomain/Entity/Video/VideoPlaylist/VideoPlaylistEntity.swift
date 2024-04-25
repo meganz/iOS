@@ -41,7 +41,7 @@ extension VideoPlaylistEntity {
     }
 }
 
-public enum VideoPlaylistEntityType: Sendable {
+public enum VideoPlaylistEntityType: Sendable, CaseIterable {
     case favourite
     case user
 }
