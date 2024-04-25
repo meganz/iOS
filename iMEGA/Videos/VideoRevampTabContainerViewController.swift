@@ -135,13 +135,16 @@ final class VideoRevampTabContainerViewController: UIViewController {
         let downloadButton = UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: nil)
         downloadButton.action = #selector(downloadAction(_:))
         
+        let linkButton = UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: nil)
+        linkButton.action = #selector(linkAction(_:))
+        
         let moreButton = UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: nil)
         moreButton.action = #selector(moreAction(_:))
         
         toolbar.items = [
             downloadButton,
             UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: nil),
+            linkButton,
             UIBarButtonItem.flexibleSpace(),
             UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: nil),
             UIBarButtonItem.flexibleSpace(),
@@ -267,6 +270,16 @@ final class VideoRevampTabContainerViewController: UIViewController {
         case .all:
             let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
             nodeAction(nodeActionViewController, didSelect: .download, forNodes: selectedVideos, from: sender)
+        case .playlist:
+            break
+        }
+    }
+    
+    @objc private func linkAction(_ sender: UIBarButtonItem) {
+        switch viewModel.syncModel.currentTab {
+        case .all:
+            let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+            nodeAction(nodeActionViewController, didSelect: .manageLink, forNodes: selectedVideos, from: sender)
         case .playlist:
             break
         }
