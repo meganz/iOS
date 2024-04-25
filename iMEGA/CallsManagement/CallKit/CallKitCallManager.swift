@@ -43,7 +43,7 @@ extension CallKitCallManager: CallManagerProtocol {
     }
     
     func endCall(in chatRoom: ChatRoomEntity, endForAll: Bool) {
-        guard let callUUID = callsDictionary.first(where: { $0.value.chatRoom == chatRoom })?.key else { return }
+        guard let callUUID = callUUID(forChatRoom: chatRoom) else { return }
         
         if endForAll {
             var endCallSync = callsDictionary[callUUID]
@@ -64,7 +64,7 @@ extension CallKitCallManager: CallManagerProtocol {
     }
     
     func muteCall(in chatRoom: ChatRoomEntity, muted: Bool) {
-        guard let callUUID = callsDictionary.first(where: { $0.value.chatRoom == chatRoom })?.key else { return }
+        guard let callUUID = callUUID(forChatRoom: chatRoom) else { return }
 
         var mutedCallAction = callsDictionary[callUUID]
         mutedCallAction?.audioEnabled = !muted
