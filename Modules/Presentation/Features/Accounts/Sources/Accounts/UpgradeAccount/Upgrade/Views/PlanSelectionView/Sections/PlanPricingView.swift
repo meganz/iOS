@@ -7,7 +7,7 @@ public struct PlanPricingView: View {
     public var primaryTextColor: Color
     
     public var body: some View {
-        VStack {
+        VStack(alignment: .trailing) {
             Text(plan.formattedPrice)
                 .font(.title2)
                 .bold()
