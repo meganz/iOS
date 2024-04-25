@@ -489,7 +489,7 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
         return true
     }
     
-    func muteCall(_ callActionSync: CallActionSync) async -> Bool {        
+    func muteCall(_ callActionSync: CallActionSync) async -> Bool {
         do {
             if callActionSync.audioEnabled {
                 try await callUseCase.enableAudioForCall(in: callActionSync.chatRoom)
@@ -525,5 +525,32 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
             }
             completion()
         }
+    }
+    
+    func reportEndCall(_ call: CallEntity) {
+        MEGALogDebug("[CallKit] Report end call \(call)")
+
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
+        
+        var callEndedReason: CXCallEndedReason?
+        switch call.termCodeType {
+        case .invalid, .error, .tooManyParticipants, .tooManyClients, .protocolVersion:
+            callEndedReason = .failed
+        case .reject, .userHangup, .noParticipate, .kicked, .callDurationLimit, .callUsersLimit:
+            callEndedReason = .remoteEnded
+        case .waitingRoomTimeout:
+            callEndedReason = .unanswered
+        default:
+            for handle in call.participants where chatUseCase.myUserHandle() == handle {
+                callEndedReason = .answeredElsewhere
+                break
+            }
+        }
+        
+        callManager.removeCall(withUUID: callUUID)
+        guard let callEndedReason else { return }
+        MEGALogDebug("[CallKit] Report end call reason \(callEndedReason.rawValue)")
+        providerDelegate?.provider.reportCall(with: callUUID, endedAt: nil, reason: callEndedReason)
     }
 }

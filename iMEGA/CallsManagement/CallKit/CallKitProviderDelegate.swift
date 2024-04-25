@@ -66,7 +66,6 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
         Task {
             let success = await callsCoordinator.endCall(callActionSync)
             success ? action.fulfill() : action.fail()
-            callManager.removeCall(withUUID: action.callUUID)
         }
     }
 

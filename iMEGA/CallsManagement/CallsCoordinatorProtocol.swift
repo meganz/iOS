@@ -9,4 +9,5 @@ protocol CallsCoordinatorProtocol: AnyObject {
     func endCall(_ callActionSync: CallActionSync) async -> Bool
     func muteCall(_ callActionSync: CallActionSync) async -> Bool
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void)
+    func reportEndCall(_ call: CallEntity)
 }
