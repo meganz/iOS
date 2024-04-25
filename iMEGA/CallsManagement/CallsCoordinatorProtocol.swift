@@ -7,5 +7,6 @@ protocol CallsCoordinatorProtocol: AnyObject {
     func startCall(_ callActionSync: CallActionSync) async -> Bool
     func answerCall(_ callActionSync: CallActionSync) async -> Bool
     func endCall(_ callActionSync: CallActionSync) async -> Bool
+    func muteCall(_ callActionSync: CallActionSync) async -> Bool
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void)
 }

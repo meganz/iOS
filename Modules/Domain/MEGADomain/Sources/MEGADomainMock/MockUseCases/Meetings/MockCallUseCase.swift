@@ -32,6 +32,7 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     public var callWaitingRoomUsersUpdateSubject = PassthroughSubject<CallEntity, Never>()
     public var callUpdateSubject: PassthroughSubject<CallEntity, Never>
     var muteParticipantCompletion: Result<Void, GenericErrorEntity>
+    public var enableDisableAudioError: GenericErrorEntity?
     
     public init(
         call: CallEntity? = CallEntity(),
@@ -147,6 +148,20 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     }
     
     public func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws { }
+    
+    public func enableAudioForCall(in chatRoom: MEGADomain.ChatRoomEntity) async throws {
+        guard let enableDisableAudioError else {
+            return
+        }
+        throw enableDisableAudioError
+    }
+    
+    public func disableAudioForCall(in chatRoom: MEGADomain.ChatRoomEntity) async throws {
+        guard let enableDisableAudioError else {
+            return
+        }
+        throw enableDisableAudioError
+    }
 }
 
 extension MockCallUseCase: CallCallbacksRepositoryProtocol {

@@ -75,7 +75,16 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
     }
 
     func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
-        
+        MEGALogDebug("[CallKit] Provider perform muted call action")
+        guard let callsCoordinator, let callManager,
+              let callActionSync = callManager.call(forUUID: action.callUUID) else {
+            action.fail()
+            return
+        }
+        Task {
+            let success = await callsCoordinator.muteCall(callActionSync)
+            success ? action.fulfill() : action.fail()
+        }
     }
     
     func provider(_ provider: CXProvider, timedOutPerforming action: CXAction) {

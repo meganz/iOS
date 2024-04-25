@@ -232,6 +232,39 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
+    func enableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.enableAudio(
+                forChat: chatRoom.chatId,
+                delegate: ChatRequestDelegate(completion: { result in
+                    switch result {
+                    case .success:
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            )
+        }
+    }
+    
+    func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.disableAudio(
+                forChat: chatRoom.chatId,
+                delegate: ChatRequestDelegate(completion: { result in
+                    switch result {
+                    case .success:
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            )
+        }
+    }
+    
+    // MARK: - Private
     private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
         guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {
             let callUpdateListener = CallUpdateListener(sdk: chatSdk, callId: callId, changeType: change)

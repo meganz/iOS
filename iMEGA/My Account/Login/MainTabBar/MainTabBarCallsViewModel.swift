@@ -489,6 +489,20 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
         return true
     }
     
+    func muteCall(_ callActionSync: CallActionSync) async -> Bool {        
+        do {
+            if callActionSync.audioEnabled {
+                try await callUseCase.enableAudioForCall(in: callActionSync.chatRoom)
+                return true
+            } else {
+                try await callUseCase.disableAudioForCall(in: callActionSync.chatRoom)
+                return true
+            }
+        } catch {
+            return false
+        }
+    }
+    
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else {
             return
