@@ -83,10 +83,14 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         guard let products = purchase.products as? [SKProduct] else { return [] }
 
         var accountPlans: [AccountPlanEntity] = []
-        for (index, product) in products.enumerated() {
+        for product in products {
+            // We need to find out where the current product is listed in our `MEGAPricing instance because sometimes
+            // there's a mismatch between the products listed in the SDK/API and those available in the Apple Store.
+            // This discrepancy can occur when new products are added to the SDK/API but haven't been added to the Apple Store yet.
+            let productIndex = purchase.pricingProductIndex(for: product)
             let plan = product.toAccountPlanEntity(
-                storage: storageGB(atProductIndex: index),
-                transfer: transferGB(atProductIndex: index)
+                storage: storageGB(atProductIndex: Int(productIndex)),
+                transfer: transferGB(atProductIndex: Int(productIndex))
             )
             accountPlans.append(plan)
         }
