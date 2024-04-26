@@ -124,7 +124,7 @@ extension AccountPlanPurchaseRepository: MEGARestoreDelegate {
 // MARK: - MEGAPurchaseDelegate
 extension AccountPlanPurchaseRepository: MEGAPurchaseDelegate {
     func successfulPurchase(_ megaPurchase: MEGAPurchase?) {
-        purchasePlanResultSourcePublisher.send(.success(()))
+        purchasePlanResultSourcePublisher.send(.success)
     }
     
     func failedPurchase(_ errorCode: Int, message errorMessage: String?) {
