@@ -32,6 +32,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private var planList: [AccountPlanEntity] = []
     private(set) var recommendedPlanType: AccountTypeEntity?
     
+    private(set) var registerDelegateTask: Task<Void, Never>?
     private(set) var purchasePlanTask: Task<Void, Never>?
     private(set) var alertType: UpgradeAccountPlanAlertType?
     
@@ -55,12 +56,22 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         self.viewProPlanAction = viewProPlanAction
         self.router = router
         
-        setupSubscriptions()
+        registerDelegates()
     }
     
     deinit {
+        registerDelegateTask?.cancel()
         purchasePlanTask?.cancel()
+        registerDelegateTask = nil
         purchasePlanTask = nil
+    }
+    
+    private func registerDelegates() {
+        registerDelegateTask = Task {
+            await purchaseUseCase.registerRestoreDelegate()
+            await purchaseUseCase.registerPurchaseDelegate()
+            setupSubscriptions()
+        }
     }
 
     private func setupSubscriptions() {

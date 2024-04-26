@@ -89,9 +89,21 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, .proII)
     }
     
-    func testSelectedCycleTab_freeAccount_defaultShouldBeYearly() {
+    func testSelectedCycleTab_freeAccount_defaultShouldBeYearly() async {
         let (sut, _) = makeSUT()
+        
+        await sut.registerDelegateTask?.value
+        
         XCTAssertEqual(sut.selectedCycleTab, .yearly)
+    }
+    
+    func testViewModelInit_registersDelegates() async {
+        let (sut, mockPurchaseUseCase) = makeSUT()
+        
+        await sut.setupPlans()
+        
+        XCTAssertEqual(mockPurchaseUseCase.registerRestoreDelegateCalled, 1, "registerRestoreDelegate should be called once during initialization")
+        XCTAssertEqual(mockPurchaseUseCase.registerPurchaseDelegateCalled, 1, "registerPurchaseDelegate should be called once during initialization")
     }
     
     // MARK: - Plan list
@@ -121,9 +133,11 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     
     // MARK: - Restore
     
-    private func testRestorePurchaseAlert(shouldShowAlertFor status: UpgradeAccountPlanAlertType.AlertStatus) throws {
+    private func testRestorePurchaseAlert(shouldShowAlertFor status: UpgradeAccountPlanAlertType.AlertStatus) async throws {
         let (sut, _) = makeSUT()
         sut.setAlertType(.restore(status))
+        
+        await sut.registerDelegateTask?.value
         
         let newAlertType = try XCTUnwrap(sut.alertType)
         guard case .restore(let resultStatus) = newAlertType else {
@@ -134,21 +148,23 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isAlertPresented)
     }
     
-    func testRestorePurchaseAlert_successRestore_shouldShowAlertForSuccessRestore() throws {
-        try testRestorePurchaseAlert(shouldShowAlertFor: .success)
+    func testRestorePurchaseAlert_successRestore_shouldShowAlertForSuccessRestore() async throws {
+        try await testRestorePurchaseAlert(shouldShowAlertFor: .success)
     }
 
-    func testRestorePurchaseAlert_incompleteRestore_shouldShowAlertForIncompleteRestore() throws {
-        try testRestorePurchaseAlert(shouldShowAlertFor: .incomplete)
+    func testRestorePurchaseAlert_incompleteRestore_shouldShowAlertForIncompleteRestore() async throws {
+        try await testRestorePurchaseAlert(shouldShowAlertFor: .incomplete)
     }
 
-    func testRestorePurchaseAlert_failedRestore_shouldShowAlertForFailedRestore() throws {
-        try testRestorePurchaseAlert(shouldShowAlertFor: .failed)
+    func testRestorePurchaseAlert_failedRestore_shouldShowAlertForFailedRestore() async throws {
+        try await testRestorePurchaseAlert(shouldShowAlertFor: .failed)
     }
 
-    func testRestorePurchaseAlert_setNilAlertType_shouldNotShowAnyAlert() {
+    func testRestorePurchaseAlert_setNilAlertType_shouldNotShowAnyAlert() async {
         let (sut, _) = makeSUT()
         sut.setAlertType(nil)
+        
+        await sut.registerDelegateTask?.value
         
         XCTAssertNil(sut.alertType)
         XCTAssertFalse(sut.isAlertPresented)
@@ -214,10 +230,12 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         expectedEvent: String,
         file: StaticString = #file,
         line: UInt = #line
-    ) {
+    ) async {
         let tracker = MockTracker()
         let (sut, _) = makeSUT(tracker: tracker)
         sut.setSelectedPlan(AccountPlanEntity(type: planType))
+        
+        await sut.registerDelegateTask?.value
 
         sut.purchaseSelectedPlan()
 
@@ -230,24 +248,24 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         )
     }
     
-    func testTrackEvent_forFreePlan_shouldTrackCorrectEvent() {
-        testPlanSelectionEventTracking(planType: .free, expectedEvent: OnboardingUpsellingDialogVariantBFreePlanContinueButtonPressedEvent().eventName)
+    func testTrackEvent_forFreePlan_shouldTrackCorrectEvent() async {
+        await testPlanSelectionEventTracking(planType: .free, expectedEvent: OnboardingUpsellingDialogVariantBFreePlanContinueButtonPressedEvent().eventName)
     }
 
-    func testTrackEvent_forProIPlan_shouldTrackCorrectEvent() {
-        testPlanSelectionEventTracking(planType: .proI, expectedEvent: OnboardingUpsellingDialogVariantBProIPlanContinueButtonPressedEvent().eventName)
+    func testTrackEvent_forProIPlan_shouldTrackCorrectEvent() async {
+        await testPlanSelectionEventTracking(planType: .proI, expectedEvent: OnboardingUpsellingDialogVariantBProIPlanContinueButtonPressedEvent().eventName)
     }
 
-    func testTrackEvent_forProIIPlan_shouldTrackCorrectEvent() {
-        testPlanSelectionEventTracking(planType: .proII, expectedEvent: OnboardingUpsellingDialogVariantBProIIPlanContinueButtonPressedEvent().eventName)
+    func testTrackEvent_forProIIPlan_shouldTrackCorrectEvent() async {
+        await testPlanSelectionEventTracking(planType: .proII, expectedEvent: OnboardingUpsellingDialogVariantBProIIPlanContinueButtonPressedEvent().eventName)
     }
 
-    func testTrackEvent_forProIIIPlan_shouldTrackCorrectEvent() {
-        testPlanSelectionEventTracking(planType: .proIII, expectedEvent: OnboardingUpsellingDialogVariantBProIIIPlanContinueButtonPressedEvent().eventName)
+    func testTrackEvent_forProIIIPlan_shouldTrackCorrectEvent() async {
+        await testPlanSelectionEventTracking(planType: .proIII, expectedEvent: OnboardingUpsellingDialogVariantBProIIIPlanContinueButtonPressedEvent().eventName)
     }
 
-    func testTrackEvent_forLitePlan_shouldTrackCorrectEvent() {
-        testPlanSelectionEventTracking(planType: .lite, expectedEvent: OnboardingUpsellingDialogVariantBProLitePlanContinueButtonPressedEvent().eventName)
+    func testTrackEvent_forLitePlan_shouldTrackCorrectEvent() async {
+        await testPlanSelectionEventTracking(planType: .lite, expectedEvent: OnboardingUpsellingDialogVariantBProLitePlanContinueButtonPressedEvent().eventName)
     }
 
     // MARK: - Helper
