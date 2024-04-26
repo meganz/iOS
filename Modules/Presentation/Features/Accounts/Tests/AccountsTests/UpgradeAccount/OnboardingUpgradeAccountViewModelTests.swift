@@ -26,6 +26,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
                         AccountPlanEntity(type: .proIII, subscriptionCycle: .monthly, price: 3)]
         
         let (sut, _) = makeSUT(planList: planList)
+        await awaitRegisterDelegateTask(in: sut)
         await sut.setUpLowestProPlan()
         
         XCTAssertEqual(sut.lowestProPlan, expectedLowestPlan)
@@ -44,14 +45,17 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
                                                    formattedPrice: "$4.99")
         
         let (sut, _) = makeSUT(planList: [expectedLowestPlan])
+        await awaitRegisterDelegateTask(in: sut)
         await sut.setUpLowestProPlan()
         
         XCTAssertEqual(sut.storageContentMessage, expectedStorageMessage)
     }
     
-    func testViewProPlans_onButtonTapped_shouldTrackEvent() {
+    func testViewProPlans_onButtonTapped_shouldTrackEvent() async {
         let tracker = MockTracker()
         let (sut, _) = makeSUT(tracker: tracker)
+        
+        await awaitRegisterDelegateTask(in: sut)
         
         sut.showProPlanView()
         
@@ -65,6 +69,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     
     func testInit_withEmptyPlanList_shouldSetDefaults() async {
         let (sut, _) = makeSUT()
+        await awaitRegisterDelegateTask(in: sut)
         await sut.setUpLowestProPlan()
         XCTAssertEqual(sut.lowestProPlan, AccountPlanEntity(), "Expected default empty lowest plan")
         XCTAssertEqual(sut.selectedCycleTab, .yearly, "Expected default cycle tab to be yearly")
@@ -77,6 +82,8 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
             AccountPlanEntity(type: .proIII, price: 3)
         ]
         let (sut, _) = makeSUT(planList: planList)
+        
+        await awaitRegisterDelegateTask(in: sut)
 
         await sut.setupPlans()
 
@@ -92,6 +99,8 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     func testSelectedCycleTab_freeAccount_defaultShouldBeYearly() async {
         let (sut, _) = makeSUT()
         
+        await awaitRegisterDelegateTask(in: sut)
+        
         await sut.registerDelegateTask?.value
         
         XCTAssertEqual(sut.selectedCycleTab, .yearly)
@@ -99,6 +108,8 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     
     func testViewModelInit_registersDelegates() async {
         let (sut, mockPurchaseUseCase) = makeSUT()
+        
+        await awaitRegisterDelegateTask(in: sut)
         
         await sut.setupPlans()
         
@@ -109,6 +120,8 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     // MARK: - Plan list
     private func testFilteredPlanList(planList: [AccountPlanEntity], expectedPlans: [AccountPlanEntity], forCycle cycle: SubscriptionCycleEntity) async {
         let (sut, _) = makeSUT(planList: planList)
+        
+        await awaitRegisterDelegateTask(in: sut)
         
         await sut.setupPlans()
         sut.selectedCycleTab = cycle
@@ -137,7 +150,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         let (sut, _) = makeSUT()
         sut.setAlertType(.restore(status))
         
-        await sut.registerDelegateTask?.value
+        await awaitRegisterDelegateTask(in: sut)
         
         let newAlertType = try XCTUnwrap(sut.alertType)
         guard case .restore(let resultStatus) = newAlertType else {
@@ -164,7 +177,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         let (sut, _) = makeSUT()
         sut.setAlertType(nil)
         
-        await sut.registerDelegateTask?.value
+        await awaitRegisterDelegateTask(in: sut)
         
         XCTAssertNil(sut.alertType)
         XCTAssertFalse(sut.isAlertPresented)
@@ -175,6 +188,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     func testPurchasePlan_shouldCallPurchasePlan() async {
         let planList = [proI_monthly, proII_monthly, proI_yearly, proII_yearly]
         let (sut, mockUseCase) = makeSUT(planList: planList)
+        await awaitRegisterDelegateTask(in: sut)
         
         await sut.setupPlans()
         sut.setSelectedPlan(proI_monthly)
@@ -187,6 +201,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     func testPurchasePlan_selectedFreePlan_shouldDismiss() async {
         let planList = [freePlan, proI_monthly, proII_monthly, proI_yearly, proII_yearly]
         let (sut, _) = makeSUT(planList: planList)
+        await awaitRegisterDelegateTask(in: sut)
         
         await sut.setupPlans()
         sut.setSelectedPlan(freePlan)
@@ -199,6 +214,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     func testPurchasePlanAlert_failedPurchase_shouldShowAlertForFailedPurchase() async throws {
         let planList = [proI_monthly, proII_monthly, proI_yearly, proII_yearly]
         let (sut, _) = makeSUT(planList: planList)
+        await awaitRegisterDelegateTask(in: sut)
         
         await sut.setupPlans()
         sut.setAlertType(UpgradeAccountPlanAlertType.purchase(.failed))
@@ -214,9 +230,11 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     
     // MARK: - Event Tracking
     
-    func testTrackProIIICardDisplayedEvent_onMultipleCalls_shouldTrackEventOnce() {
+    func testTrackProIIICardDisplayedEvent_onMultipleCalls_shouldTrackEventOnce() async {
         let tracker = MockTracker()
         let (sut, _) = makeSUT(tracker: tracker)
+        
+        await awaitRegisterDelegateTask(in: sut)
 
         sut.trackProIIICardDisplayedEvent()
         sut.trackProIIICardDisplayedEvent() // Second call to see if it tracks again
@@ -289,5 +307,10 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, mockPurchaseUseCase)
+    }
+    
+    private func awaitRegisterDelegateTask(in viewModel: OnboardingUpgradeAccountViewModel) async {
+        XCTAssertNotNil(viewModel.registerDelegateTask, "Expected registerDelegateTask to be initialized.")
+        await viewModel.registerDelegateTask?.value
     }
 }

@@ -60,6 +60,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     }
     
     deinit {
+        deRegisterDelegates()
         registerDelegateTask?.cancel()
         purchasePlanTask?.cancel()
         registerDelegateTask = nil
@@ -71,6 +72,13 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
             await purchaseUseCase.registerRestoreDelegate()
             await purchaseUseCase.registerPurchaseDelegate()
             setupSubscriptions()
+        }
+    }
+    
+    private func deRegisterDelegates() {
+        Task { [weak self] in
+            await self?.purchaseUseCase.deRegisterRestoreDelegate()
+            await self?.purchaseUseCase.deRegisterPurchaseDelegate()
         }
     }
 
