@@ -4009,7 +4009,7 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove this restriction.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, got it";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
