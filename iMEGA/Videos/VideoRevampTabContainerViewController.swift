@@ -134,9 +134,12 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private func configureToolbar() {
         let downloadButton = UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: nil)
         downloadButton.action = #selector(downloadAction(_:))
-        
+
         let linkButton = UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: nil)
         linkButton.action = #selector(linkAction(_:))
+        
+        let saveToPhotosButton = UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: nil)
+        saveToPhotosButton.action = #selector(saveToPhotosAction(_:))
         
         let moreButton = UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: nil)
         moreButton.action = #selector(moreAction(_:))
@@ -146,7 +149,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             UIBarButtonItem.flexibleSpace(),
             linkButton,
             UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: nil),
+            saveToPhotosButton,
             UIBarButtonItem.flexibleSpace(),
             UIBarButtonItem(image: videoConfig.toolbarAssets.hudMinusImage, style: .plain, target: self, action: nil),
             UIBarButtonItem.flexibleSpace(),
@@ -280,6 +283,16 @@ final class VideoRevampTabContainerViewController: UIViewController {
         case .all:
             let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
             nodeAction(nodeActionViewController, didSelect: .manageLink, forNodes: selectedVideos, from: sender)
+        case .playlist:
+            break
+        }
+    }
+
+    @objc private func saveToPhotosAction(_ sender: UIBarButtonItem) {
+        switch viewModel.syncModel.currentTab {
+        case .all:
+            let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+            nodeAction(nodeActionViewController, didSelect: .saveToPhotos, forNodes: selectedVideos, from: sender)
         case .playlist:
             break
         }
