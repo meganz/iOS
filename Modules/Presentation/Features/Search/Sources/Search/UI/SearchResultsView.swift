@@ -133,12 +133,15 @@ public struct SearchResultsView: View {
         List(viewModel.listItems, id: \.self, selection: $viewModel.selectedRows) { item in
             SearchResultRowView(viewModel: item)
                 .listRowBackground(TokenColors.Background.page.swiftUI)
-                .task {
-                    guard let index = viewModel.listItems.firstIndex(of: item) else { return }
-                    await viewModel.loadMoreIfNeeded(at: index)
+                .onAppear {
+                    Task {
+                        await viewModel.onItemAppear(item)
+                    }
+                }.onDisappear {
+                    Task {
+                        await viewModel.onItemDisappear(item)
+                    }
                 }
-                .onAppear { viewModel.onItemAppear(item.result.id) }
-                .onDisappear { viewModel.onItemDisappear(item.result.id) }
         }
         .listStyle(.plain)
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
@@ -151,17 +154,21 @@ public struct SearchResultsView: View {
                 LazyVGrid(
                     columns: viewModel.columns(geo.size.width)
                 ) {
-                    ForEach(Array(viewModel.folderListItems.enumerated()), id: \.element.id) { index, item in
+                    ForEach(viewModel.folderListItems, id: \.self) { item in
                         SearchResultThumbnailItemView(
                             viewModel: item,
                             selected: $viewModel.selectedResultIds,
                             selectionEnabled: $viewModel.editing
                         )
-                        .task {
-                            await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
+                        .onAppear {
+                            Task {
+                                await viewModel.onItemAppear(item)
+                            }
+                        }.onDisappear {
+                            Task {
+                                await viewModel.onItemDisappear(item)
+                            }
                         }
-                        .onAppear { viewModel.onItemAppear(item.result.id) }
-                        .onDisappear { viewModel.onItemDisappear(item.result.id) }
                     }
                 }
                 .padding(.horizontal, 8)
@@ -169,17 +176,21 @@ public struct SearchResultsView: View {
                 LazyVGrid(
                     columns: viewModel.columns(geo.size.width)
                 ) {
-                    ForEach(Array(viewModel.fileListItems.enumerated()), id: \.element.id) { index, item in
+                    ForEach(viewModel.fileListItems, id: \.self) { item in
                         SearchResultThumbnailItemView(
                             viewModel: item,
                             selected: $viewModel.selectedResultIds,
                             selectionEnabled: $viewModel.editing
                         )
-                        .task {
-                            await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: true)
+                        .onAppear {
+                            Task {
+                                await viewModel.onItemAppear(item)
+                            }
+                        }.onDisappear {
+                            Task {
+                                await viewModel.onItemDisappear(item)
+                            }
                         }
-                        .onAppear { viewModel.onItemAppear(item.result.id) }
-                        .onDisappear { viewModel.onItemDisappear(item.result.id) }
                     }
                 }
                 .padding(.horizontal, 8)

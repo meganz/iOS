@@ -302,31 +302,44 @@ public class SearchResultsViewModel: ObservableObject {
         await prepareResults(results, query: query)
     }
 
-    @SearchResultsViewModelActor
-    func loadMoreIfNeeded(at index: Int) async {
+    private func loadMoreIfNeeded(item: SearchResultRowViewModel) async {
+        switch layout {
+        case .list:
+            guard let index = listItems.firstIndex(of: item) else { return }
+            await loadMoreIfNeeded(at: index)
+        case .thumbnail:
+            await loadMoreIfNeededThumbnailMode(item: item)
+        }
+    }
+    
+    private func loadMoreIfNeeded(at index: Int) async {
         await performSearch(using: currentQuery, lastItemIndex: index)
     }
     
-    func onItemAppear(_ id: ResultId) {
-        Task { @SearchResultsViewModelActor in
-            visibleItems.insert(id)
+    private func loadMoreIfNeededThumbnailMode(item: SearchResultRowViewModel) async {
+        let isFileItem = item.result.thumbnailDisplayMode == .vertical
+        
+        if isFileItem {
+            guard let index = fileListItems.firstIndex(of: item) else { return }
+            // In thumbnail mode, we first display `folderListItems` and then `fileListItems` (check the `thumbnailContent` in `SearchResultsView`)
+            // It means the index of file item in the view is equal to its index in `fileListItems` plus number of items in `folderListItems`
+            // For example: Let's say we 20 folders and 5 files, then the index of file item in the view should start from 21 which are 21, 22, 23, 24, 25.
+            await loadMoreIfNeeded(at: index + folderListItems.count)
+        } else {
+            guard let index = folderListItems.firstIndex(of: item) else { return }
+            await loadMoreIfNeeded(at: index)
         }
     }
     
-    func onItemDisappear(_ id: ResultId) {
-        Task { @SearchResultsViewModelActor in
-            visibleItems.remove(id)
-        }
+    @SearchResultsViewModelActor
+    func onItemAppear(_ item: SearchResultRowViewModel) async {
+        visibleItems.insert(item.result.id)
+        await loadMoreIfNeeded(item: item)
     }
-
-    func loadMoreIfNeededThumbnailMode(at index: Int, isFile: Bool) async {
-        var index = index
-        if isFile {
-            index += folderListItems.count
-        } else if fileListItems.isNotEmpty {
-            index += fileListItems.count
-        }
-        await loadMoreIfNeeded(at: index)
+    
+    @SearchResultsViewModelActor
+    func onItemDisappear(_ item: SearchResultRowViewModel) {
+        visibleItems.remove(item.result.id)
     }
 
     @MainActor
