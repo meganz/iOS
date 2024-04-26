@@ -1,5 +1,5 @@
-@testable import MEGAUIKit
 import ConcurrencyExtras
+@testable import MEGAUIKit
 @testable import Search
 import SearchMock
 import SwiftUI
@@ -142,8 +142,8 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
         
         @discardableResult
-        func withResultsPrepared(_ idx: UInt64) -> Self {
-            let range = 1...idx
+        func withResultsPrepared(count: UInt64, startingId: UInt64 = 1) -> Self {
+            let range = startingId..<(startingId+count)
             let results = SearchResultsEntity(
                 results: Array(range).map {
                     .resultWith(id: $0, title: "\($0)")
@@ -170,14 +170,22 @@ final class SearchResultsViewModelTests: XCTestCase {
             resultsProvider.resultFactory = { _ in return nil }
         }
         
-        func simulateVisibleItems(startId: ResultId, endId: ResultId) {
-            for id in startId...endId {
-                sut.onItemAppear(id)
+        func simulateVisibleItems(startId: ResultId, endId: ResultId) async {
+            await withTaskGroup(of: Void.self) { group in
+                (startId...endId).compactMap { resultId in
+                    sut.listItems.first(where: { $0.result.id == resultId })
+                }.forEach { item in
+                    group.addTask {
+                        await self.sut.onItemAppear(item)
+                    }
+                }
             }
         }
         
-        func simulateVisibleItemsRemoval(_ id: ResultId) {
-            sut.onItemDisappear(id)
+        func simulateVisibleItemsRemoval(_ id: ResultId) async {
+            guard let item = sut.listItems.first(where: { $0.result.id == id }) else { return }
+            await sut.onItemDisappear(item)
+            
         }
         
         func prepareRefreshedResults(startId: UInt64, endId: UInt64) {
@@ -279,13 +287,13 @@ final class SearchResultsViewModelTests: XCTestCase {
     }
     
     func testListItems_onQueryCleaned_sendsEmptyQuery_toProvider() async throws {
-        let harness = Harness(self).withResultsPrepared(10) // 10 results
+        let harness = Harness(self).withResultsPrepared(count: 10) // 10 results
         await harness.sut.task()
         XCTAssertTrue(harness.hasExactlyResults(count: 10))
         harness.withSingleResultPrepared("5")
         await harness.sut.queryChanged(to: "5", isSearchActive: true)
         XCTAssert(harness.hasExactlyResults(count: 1))
-        harness.withResultsPrepared(10)
+        harness.withResultsPrepared(count: 10)
         await harness.sut.queryCleaned()
         XCTAssert(harness.hasExactlyResults(count: 10))
         let lastQuery = try XCTUnwrap(harness.resultsProvider.passedInQueries.last)
@@ -331,7 +339,7 @@ final class SearchResultsViewModelTests: XCTestCase {
     }
 
     func testListItems_shouldBeUpdated_whenNodeChanges() async throws {
-        let harness = Harness(self).withResultsPrepared(5)
+        let harness = Harness(self).withResultsPrepared(count: 5)
         await harness.sut.task()
         let initialProperties = harness.resultVM(at: 1).result.properties
         let property: ResultProperty = .init(
@@ -506,14 +514,14 @@ final class SearchResultsViewModelTests: XCTestCase {
     func testOnSearchResultsUpdated_whenGenericUpdate_shouldReturnExpectedResults() async {
         await withMainSerialExecutor {
             // given
-            let harness = Harness(self).withResultsPrepared(10) // Initially there are 10 results
+            let harness = Harness(self).withResultsPrepared(count: 10) // Initially there are 10 results
             await harness.sut.task()
             harness.resetResultFactory()
             harness.prepareRefreshedResults(startId: 1, endId: 15) // After refreshing, there will be 15 results
             
             // Simulate visible items
-            harness.simulateVisibleItems(startId: 0, endId: 9)
-            harness.simulateVisibleItemsRemoval(9) // At this point, visible item will be [1...8]
+            await harness.simulateVisibleItems(startId: 0, endId: 9)
+            await harness.simulateVisibleItemsRemoval(9) // At this point, visible item will be [1...8]
 
             // when
             harness.bridge.onSearchResultsUpdated(.generic)
@@ -539,7 +547,7 @@ final class SearchResultsViewModelTests: XCTestCase {
     func testOnSearchResultsUpdated_whenSpecificUpdate_shouldReturnExpectedResults() async {
         await withMainSerialExecutor {
             // given
-            let harness = Harness(self).withResultsPrepared(10)
+            let harness = Harness(self).withResultsPrepared(count: 10)
             await harness.sut.task()
             
             harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 1))) // Triggers item update
@@ -575,6 +583,22 @@ final class SearchResultsViewModelTests: XCTestCase {
         harness.sut.selectedRows = selectedRows
         wait(for: [exp], timeout: 1.0)
         selectedResultsSubscription.cancel()
+    }
+    
+    func testLoadMore_whenScrollingNearToTheBottomOfTheList_shouldTriggerLoadMoreItems() async {
+        // given
+        var harness = Harness(self).withResultsPrepared(count: 100) // Initially there are 100 results, id from 1 to 100
+        await harness.sut.task()
+        harness.resetResultFactory()
+        XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...100))
+        
+        // when
+        harness = harness.withResultsPrepared(count: 50, startingId: 101) // loading more 50 results, id from 101 to 150
+        let item = harness.sut.listItems[80]
+        await harness.sut.onItemAppear(item) // loading more should be triggered when item 80th appears
+        
+        // then
+        XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...150)) // 50 more results loaded, hence 150 in total
     }
 
     private func generateRandomSearchResultRowViewModel(id: Int) -> SearchResultRowViewModel {
