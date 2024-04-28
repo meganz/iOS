@@ -162,4 +162,52 @@ final class PhotoChronologicalCategory_nodeEntity_refreshTests: XCTestCase {
             XCTAssertFalse(testCategories.shouldRefresh(to: newCategories, visiblePositions: [node.position: true]))
         }
     }
+    
+    func testShouldRefresh_sensitivityOfNodeChange_shouldRefreshVisible() throws {
+        let testCategories = [
+            NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
+            NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2022-07-18T22:01:04Z".date),
+            NodeEntity(name: "c.mov", handle: 3, modificationTime: try "2022-04-18T22:01:04Z".date),
+            NodeEntity(name: "d.mp4", handle: 4, modificationTime: try "2021-08-18T22:01:04Z".date),
+            NodeEntity(name: "e.jpg", handle: 5, modificationTime: try "2021-01-18T22:01:04Z".date),
+            NodeEntity(name: "f.jpg", handle: 6, modificationTime: try "2020-12-18T22:01:04Z".date),
+            NodeEntity(name: "g.jpg", handle: 7, modificationTime: try "2020-10-18T22:01:04Z".date),
+            NodeEntity(name: "h.jpg", handle: 8, modificationTime: try "2020-10-15T22:01:04Z".date)
+        ]
+        
+        let newCategories = [
+            NodeEntity(name: "a.jpg", handle: 1, isMarkedSensitive: true, modificationTime: try "2022-08-18T22:01:04Z".date),
+            NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2022-07-18T22:01:04Z".date),
+            NodeEntity(name: "c.mov", handle: 3, modificationTime: try "2022-04-18T22:01:04Z".date),
+            NodeEntity(name: "d.mp4", handle: 4, isMarkedSensitive: true, modificationTime: try "2021-08-18T22:01:04Z".date),
+            NodeEntity(name: "e.jpg", handle: 5, modificationTime: try "2021-01-18T22:01:04Z".date),
+            NodeEntity(name: "f.jpg", handle: 6, modificationTime: try "2020-12-18T22:01:04Z".date),
+            NodeEntity(name: "g.jpg", handle: 7, modificationTime: try "2020-10-18T22:01:04Z".date),
+            NodeEntity(name: "h.jpg", handle: 8, modificationTime: try "2020-10-15T22:01:04Z".date)
+        ]
+        
+        XCTAssertFalse(testCategories.shouldRefresh(to: newCategories, visiblePositions: [:]))
+        
+        let visibleAndRefreshableNodes = [
+            NodeEntity(name: "a.jpg", handle: 1, isMarkedSensitive: true, modificationTime: try "2022-08-18T22:01:04Z".date),
+            NodeEntity(name: "d.mp4", handle: 4, isMarkedSensitive: true, modificationTime: try "2021-08-18T22:01:04Z".date)
+        ]
+        
+        for node in visibleAndRefreshableNodes {
+            XCTAssertTrue(testCategories.shouldRefresh(to: newCategories, visiblePositions: [node.position: true]))
+        }
+        
+        let visibleAndNonRefreshNodes = [
+            NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2022-07-18T22:01:04Z".date),
+            NodeEntity(name: "c.mov", handle: 3, modificationTime: try "2022-04-18T22:01:04Z".date),
+            NodeEntity(name: "e.jpg", handle: 5, modificationTime: try "2021-01-18T22:01:04Z".date),
+            NodeEntity(name: "f.jpg", handle: 6, modificationTime: try "2020-12-18T22:01:04Z".date),
+            NodeEntity(name: "g.jpg", handle: 7, modificationTime: try "2020-10-18T22:01:04Z".date),
+            NodeEntity(name: "h.jpg", handle: 8, modificationTime: try "2020-10-15T22:01:04Z".date)
+        ]
+        
+        for node in visibleAndNonRefreshNodes {
+            XCTAssertFalse(testCategories.shouldRefresh(to: newCategories, visiblePositions: [node.position: true]))
+        }
+    }
 }
