@@ -8,7 +8,6 @@ final class AlbumCellViewModel: ObservableObject {
     let album: AlbumEntity
     let selection: AlbumSelection
     let isLinkShared: Bool
-    let isSensitive: Bool
     
     @Published var numberOfNodes: Int = 0
     @Published var thumbnailContainer: any ImageContaining
@@ -65,7 +64,6 @@ final class AlbumCellViewModel: ObservableObject {
         title = album.name
         numberOfNodes = album.count
         isLinkShared = album.isLinkShared
-        isSensitive = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) && album.coverNode?.isMarkedSensitive ?? false
         
         if let coverNode = album.coverNode {
             thumbnailContainer = thumbnailLoader.initialImage(for: coverNode, type: .thumbnail, placeholder: { Image(.placeholder) })

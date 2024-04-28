@@ -18,8 +18,7 @@ struct AlbumCell: View {
                     container: viewModel.thumbnailContainer,
                     bgColor: isDesignTokenEnabled
                     ? TokenColors.Background.surface2.swiftUI
-                    : MEGAAppColor.Gray._EBEBEB.color,
-                    isSensitive: viewModel.isSensitive
+                    : MEGAAppColor.Gray._EBEBEB.color
                 )
                 /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
                 .overlay(Color.black000000.opacity(viewModel.isSelected ? 0.2 : 0.0))

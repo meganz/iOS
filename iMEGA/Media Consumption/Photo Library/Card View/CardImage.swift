@@ -16,6 +16,7 @@ struct CardImage: View {
         container.image
             .resizable()
             .aspectRatio(contentMode: .fill)
+            .sensitive(container)
             .clipped()
     }
 }

@@ -47,12 +47,10 @@ struct PhotoCellContent: View {
     private func image() -> some View {
         if isSelfSizing {
             PhotoCellImage(container: viewModel.thumbnailContainer,
-                           aspectRatio: viewModel.currentZoomScaleFactor == .one ? nil : 1,
-                           isSensitive: viewModel.isSensitive)
+                           aspectRatio: viewModel.currentZoomScaleFactor == .one ? nil : 1)
         } else {
             Color.clear
-                .overlay(PhotoCellImage(container: viewModel.thumbnailContainer,
-                                        isSensitive: viewModel.isSensitive))
+                .overlay(PhotoCellImage(container: viewModel.thumbnailContainer))
         }
     }
 }
