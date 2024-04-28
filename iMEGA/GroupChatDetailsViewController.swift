@@ -183,12 +183,8 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func configLeftImageForLeftGroup(for cell: GroupChatDetailsViewTableViewCell) {
-        if UIColor.isDesignTokenEnabled() {
-            cell.leftImageView.image = UIImage.leaveGroup.withRenderingMode(.alwaysTemplate)
-            cell.leftImageView.tintColor = iconRedColor()
-        } else {
-            cell.leftImageView.image = UIImage.leaveGroup
-        }
+        cell.leftImageView.image = UIImage.leaveGroup.withRenderingMode(.alwaysTemplate)
+        cell.leftImageView.tintColor = iconRedColor()
     }
     
     @objc func groupChatAddParticipantImage() -> UIImage {
