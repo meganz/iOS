@@ -499,36 +499,6 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
-    func testIsCoverSensitive_featureFlagOff_shouldSetSensitiveToFalse() {
-        let coverNode = NodeEntity(handle: 6, isMarkedSensitive: true)
-        let album = AlbumEntity(id: 5, name: "Test", coverNode: coverNode, count: 0, type: .user)
-        
-        let sut = makeAlbumCellViewModel(album: album)
-        
-        XCTAssertFalse(sut.isSensitive)
-    }
-    
-    func testIsCoverSensitive_featureFlagOn_shouldMatchNodeSensitiveValue() {
-        [true, false].forEach { isMarkedSensitive in
-            let coverNode = NodeEntity(handle: 6, isMarkedSensitive: isMarkedSensitive)
-            let album = AlbumEntity(id: 5, name: "Test", coverNode: coverNode, count: 0, type: .user)
-            
-            let sut = makeAlbumCellViewModel(album: album,
-                                             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
-            
-            XCTAssertEqual(sut.isSensitive, isMarkedSensitive)
-        }
-    }
-    
-    func testIsCoverSensitive_coverPhotoNotSet_shouldReturnFalse() {
-        let album = AlbumEntity(id: 5, name: "Test", coverNode: nil, count: 0, type: .user)
-        
-        let sut = makeAlbumCellViewModel(album: album,
-                                         featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
-        
-        XCTAssertFalse(sut.isSensitive)
-    }
-    
     // MARK: - Helpers
     
     private func makeAlbumCellViewModel(

@@ -5,7 +5,6 @@ struct PhotoCellImage: View {
     let container: any ImageContaining
     var aspectRatio: CGFloat?
     var bgColor = Color.clear
-    var isSensitive = false
     
     var body: some View {
         if container.type == .placeholder {
@@ -24,7 +23,7 @@ struct PhotoCellImage: View {
         container.image
             .resizable()
             .aspectRatio(aspectRatio, contentMode: .fill)
-            .sensitive(isSensitive)
+            .sensitive(container)
     }
 }
 

@@ -11,7 +11,6 @@ class PhotoCellViewModel: ObservableObject {
     // MARK: public state
     let duration: String
     let isVideo: Bool
-    let isSensitive: Bool
     
     @Published var currentZoomScaleFactor: PhotoLibraryZoomState.ScaleFactor
     @Published var thumbnailContainer: any ImageContaining
@@ -52,7 +51,6 @@ class PhotoCellViewModel: ObservableObject {
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
-        isSensitive = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) && photo.isMarkedSensitive
         
         let type: ThumbnailTypeEntity = viewModel.zoomState.scaleFactor == .one ? .preview : .thumbnail
         thumbnailContainer = thumbnailLoader.initialImage(for: photo, type: type)

@@ -685,26 +685,6 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldApplyContentOpacity)
     }
     
-    func testIsSensitive_onNodeMarkedSensitive_shouldSetCorrectState() {
-        [true, false].forEach { isMarkedSensitive in
-            let photo = NodeEntity(name: "0.jpg", handle: 65, isMarkedSensitive: isMarkedSensitive)
-            
-            let sut = makeSUT(
-                photo: photo,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
-            )
-            
-            XCTAssertEqual(sut.isSensitive, isMarkedSensitive)
-        }
-    }
-    
-    func testIsSensitive_markedSensitiveFeatureFlagOff_shouldSetToFalse() {
-        let photo = NodeEntity(name: "0.jpg", handle: 34, isMarkedSensitive: true)
-        let sut = makeSUT(photo: photo)
-        
-        XCTAssertFalse(sut.isSensitive)
-    }
-    
     private func makeSUT(
         photo: NodeEntity,
         viewModel: PhotoLibraryModeAllViewModel = PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: []))),

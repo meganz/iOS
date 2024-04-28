@@ -24,4 +24,17 @@ public extension View {
                                    radius: radius,
                                    opaque: opaque))
     }
+    
+    @ViewBuilder
+    func sensitive(_ container: any ImageContaining,
+                   radius: CGFloat = 6.0,
+                   opaque: Bool = false) -> some View {
+        if let container = container as? any SensitiveImageContaining {
+            sensitive(container.isSensitive,
+                      radius: radius,
+                      opaque: opaque)
+        } else {
+            self
+        }
+    }
 }
