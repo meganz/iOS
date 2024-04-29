@@ -4061,12 +4061,12 @@
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="My account";
 /* Free plan title */
-"Free.Plan.name"="Free";
+"free.Plan.name"="Free";
 /* Price description for the free plan */
-"Free.Plan.Price.description"="Free";
+"free.Plan.Price.description"="Free";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
-"Storage.Limit.capacity"="%d GB";
+"storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
-"Limited.Transfer.limit"="Limited";
+"limited.Transfer.limit"="Limited";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Cancel subscription";
