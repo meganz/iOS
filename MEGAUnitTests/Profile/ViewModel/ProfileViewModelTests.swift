@@ -3,6 +3,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
+import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
@@ -20,6 +21,24 @@ final class ProfileViewModelTests: XCTestCase {
         let expectedSections = ProfileViewModel.SectionCellDataSource(
             sectionOrder: sectionsOrder(),
             sectionRows: sectionRows())
+        
+        XCTAssertEqual(result, expectedSections)
+    }
+    
+    func testSectionsVisibility_withoutValidProAccount_shouldNotShowSubscriptionSection() {
+        let sut = makeSUT(hasValidProAccount: false)
+        sut.dispatch(.onViewDidLoad)
+        
+        let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
+        XCTAssertFalse(result?.sectionOrder.contains(.subscription) ?? true, "Subscription section should not appear for non-valid Pro accounts")
+    }
+    
+    func testAction_onViewDidLoadWithoutValidProAccount_shouldShowCorrectSectionsAndRows() {
+        let sut = makeSUT(hasValidProAccount: false)
+        let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
+        let expectedSections = ProfileViewModel.SectionCellDataSource(
+            sectionOrder: sectionsOrder(hasValidProAccount: false),
+            sectionRows: sectionRows(hasValidProAccount: false))
         
         XCTAssertEqual(result, expectedSections)
     }
@@ -171,10 +190,13 @@ final class ProfileViewModelTests: XCTestCase {
         smsState: SMSStateEntity = .notAllowed,
         isMasterBusinessAccount: Bool = false,
         multiFactorAuthCheckResult: Bool = false,
-        multiFactorAuthCheckDelay: TimeInterval = 0
+        multiFactorAuthCheckDelay: TimeInterval = 0,
+        hasValidProAccount: Bool = true,
+        featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [.cancelSubscription: true])
     ) -> ProfileViewModel {
         
         let accountUseCase = MockAccountUseCase(
+            hasValidProAccount: hasValidProAccount,
             currentAccountDetails: currentAccountDetails,
             email: email,
             isMasterBusinessAccount: isMasterBusinessAccount,
@@ -183,7 +205,10 @@ final class ProfileViewModelTests: XCTestCase {
             multiFactorAuthCheckDelay: 1.0
         )
         
-        return ProfileViewModel(accountUseCase: accountUseCase)
+        return ProfileViewModel(
+            accountUseCase: accountUseCase,
+            featureFlagProvider: featureFlagProvider
+        )
     }
     
     private func receivedSectionDataSource(
@@ -225,33 +250,51 @@ final class ProfileViewModelTests: XCTestCase {
         }
     }
     
-    private func sectionsOrder(isPlanHidden: Bool = true) -> [ProfileSection] {
-        isPlanHidden ? [.profile, .security, .session] : [.profile, .security, .plan, .session]
+    private func sectionsOrder(
+        isPlanHidden: Bool = true,
+        hasValidProAccount: Bool = true
+    ) -> [ProfileSection] {
+        var sections: [ProfileSection] = isPlanHidden ? [.profile, .security, .session]: [.profile, .security, .plan, .session]
+        
+        if hasValidProAccount {
+            sections.append(.subscription)
+        }
+        
+        return sections
     }
     
     private func sectionRows(
         isPlanHidden: Bool = true,
         isSmsAllowed: Bool = false,
         isBusiness: Bool = false,
-        isMasterBusinessAccount: Bool = false
+        isMasterBusinessAccount: Bool = false,
+        hasValidProAccount: Bool = true
     ) -> [ProfileSection: [ProfileSectionRow]] {
         let profileRows: [ProfileSectionRow] = isBusiness && !isMasterBusinessAccount ?
             [.changePhoto, .changePassword(isLoading: false)] :
             [.changeName, .changePhoto, .changeEmail(isLoading: false), .changePassword(isLoading: false)]
         
+        var sections: [ProfileSection: [ProfileSectionRow]]
+        
         if isPlanHidden {
-            return [
+            sections = [
                 .profile: isSmsAllowed ? profileRows + [.phoneNumber] : profileRows,
                 .security: [.recoveryKey],
                 .session: [.logout]
             ]
         } else {
-            return [
+            sections = [
                 .profile: isSmsAllowed ? profileRows + [.phoneNumber] : profileRows,
                 .security: [.recoveryKey],
                 .plan: isBusiness ? [.upgrade, .role] : [.upgrade],
                 .session: [.logout]
             ]
         }
+        
+        if hasValidProAccount {
+            sections[.subscription] = [.cancelSubscription]
+        }
+        
+        return sections
     }
 }

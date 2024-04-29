@@ -11,7 +11,7 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
             return Strings.Localizable.recoveryKey
         case .plan:
             return Strings.Localizable.plan
-        case .session, .profile:
+        case .session, .profile, .subscription:
             return nil
         }
     }
@@ -46,7 +46,7 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
             } else {
                 return nil
             }
-        case .profile:
+        case .profile, .subscription:
             return nil
         }
     }

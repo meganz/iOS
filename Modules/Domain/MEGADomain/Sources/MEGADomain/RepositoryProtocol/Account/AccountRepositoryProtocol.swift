@@ -21,6 +21,8 @@ public protocol AccountRepositoryProtocol {
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
+    func isExpiredAccount() -> Bool
+    func isInGracePeriod() -> Bool
 
     // Account operations
     func contacts() -> [UserEntity]

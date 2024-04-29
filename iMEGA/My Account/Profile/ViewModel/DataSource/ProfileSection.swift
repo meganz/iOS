@@ -5,6 +5,7 @@ enum ProfileSection: Int {
     case security
     case plan
     case session
+    case subscription
 }
 
 enum ProfileSectionRow: Hashable, Equatable {
@@ -17,6 +18,7 @@ enum ProfileSectionRow: Hashable, Equatable {
     case upgrade
     case role
     case logout
+    case cancelSubscription
     
     func hash(into hasher: inout Hasher) {
         switch self {
@@ -38,6 +40,8 @@ enum ProfileSectionRow: Hashable, Equatable {
             hasher.combine("role")
         case .logout:
             hasher.combine("logout")
+        case .cancelSubscription:
+            hasher.combine("cancelSubscription")
         }
     }
 }

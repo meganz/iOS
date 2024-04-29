@@ -1,7 +1,9 @@
+import Accounts
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
+import MEGASwiftUI
 import PhoneNumberKit
 import UIKit
 
@@ -11,9 +13,15 @@ final class ProfileTableViewDataSource {
     private weak var tableView: UITableView?
     private var snapshot = NSDiffableDataSourceSnapshot<ProfileSection, ProfileSectionRow>()
     private var dataSource: ProfileTableViewDiffableDataSource?
+    private let parent: UIViewController
     
-    init(tableView: UITableView, traitCollection: UITraitCollection) {
+    init(
+        tableView: UITableView,
+        parent: UIViewController,
+        traitCollection: UITraitCollection
+    ) {
         self.tableView = tableView
+        self.parent = parent
         self.traitCollection = traitCollection
     }
     
@@ -168,6 +176,15 @@ final class ProfileTableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
             cell.logoutLabel.text = Strings.Localizable.logoutLabel
             cell.logoutLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error :  UIColor.mnz_red(for: traitCollection)
+            return cell
+        case .cancelSubscription:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CancelSubscriptionView", for: indexPath) as? HostingTableViewCell<CancelSubscriptionView> else {
+                return HostingTableViewCell<CancelSubscriptionView>()
+            }
+            
+            let cellView = CancelSubscriptionView(textColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection))
+            cell.host(cellView, parent: parent)
+            cell.selectionStyle = .none
             return cell
         }
     }
