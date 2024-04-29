@@ -4,6 +4,7 @@ import MEGASwiftUI
 import SwiftUI
 
 public struct MyAccountHallMenuView: View {
+    @Environment(\.layoutDirection) var layoutDirection
     private var menuDetails: MyAccountHallCellData
     
     public init(menuDetails: MyAccountHallCellData) {
@@ -47,6 +48,7 @@ public struct MyAccountHallMenuView: View {
                 .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : Color.primary)
                 .frame(width: 24, height: 24)
                 .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 10))
+                .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
         }
     }
     
@@ -61,6 +63,7 @@ public struct MyAccountHallMenuView: View {
     private var disclosureIndicatorView: some View {
         Image(uiImage: menuDetails.disclosureIndicatorIcon)
             .frame(width: 24, height: 24)
-            .padding(.horizontal, 8)
+            .padding(.horizontal, 12)
+            .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
     }
 }
