@@ -62,6 +62,8 @@
 
 - (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api {
     self.node = node;
+    [self bindWithViewModel:[self createViewModelWithNodes:@[node]]];
+
     if (UIColor.isDesignTokenEnabled) {
         [self updateWithTrait:self.traitCollection];
     }
@@ -166,17 +168,17 @@
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
     self.cellFlavor = NodeTableViewCellFlavorRecentAction;
+    NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
+    [self bindWithViewModel:[self createViewModelWithNodes:nodesArray]];
     [self updateWithTrait:[self traitCollection]];
     self.leadingConstraint.constant = 24;
     self.recentActionBucket = recentActionBucket;
     
-    NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     [self setTitleAndFolderNameFor:recentActionBucket withNodes:nodesArray];
     
     BOOL isMultipleNodes = nodesArray.count > 1;
     self.moreButton.hidden = isMultipleNodes;
     self.disclosureIndicatorView.hidden = !isMultipleNodes;
-    
     MEGANode *node = nodesArray.firstObject;
     [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] : YES;
