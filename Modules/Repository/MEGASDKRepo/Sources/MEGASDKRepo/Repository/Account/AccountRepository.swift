@@ -71,6 +71,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public var isSMSAllowed: Bool {
         sdk.smsAllowedState() == .optInAndUnblock
     }
+    
+    public var isAchievementsEnabled: Bool {
+        sdk.isAchievementsEnabled
+    }
 
     // MARK: - User and session management
     public func currentUser() async -> UserEntity? {

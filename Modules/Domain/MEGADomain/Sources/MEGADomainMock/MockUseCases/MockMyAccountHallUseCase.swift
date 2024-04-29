@@ -9,6 +9,7 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
     private let _contactRequestPublisher: PassthroughSubject<[ContactRequestEntity], Never>
     private let _userAlertUpdatePublisher: PassthroughSubject<[UserAlertEntity], Never>
     private let _isMasterBusinessAccount: Bool
+    public var _isAchievementsEnabled: Bool
     private let _currentUserHandle: HandleEntity?
     
     public var registerMEGARequestDelegateCalled = 0
@@ -20,6 +21,7 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
                 unseenUserAlertsCount: UInt = 0,
                 currentAccountDetails: AccountDetailsEntity = AccountDetailsEntity(),
                 isMasterBusinessAccount: Bool = false,
+                isAchievementsEnabled: Bool = false,
                 currentUserHandle: HandleEntity? = nil,
                 requestResultPublisher: PassthroughSubject<Result<AccountRequestEntity, Error>, Never> = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>(),
                 contactRequestPublisher: PassthroughSubject<[ContactRequestEntity], Never> = PassthroughSubject<[ContactRequestEntity], Never>(),
@@ -31,6 +33,7 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
         _contactRequestPublisher = contactRequestPublisher
         _userAlertUpdatePublisher = userAlertUpdatePublisher
         _isMasterBusinessAccount = isMasterBusinessAccount
+        _isAchievementsEnabled = isAchievementsEnabled
         _currentUserHandle = currentUserHandle
     }
     
@@ -70,6 +73,10 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
         _isMasterBusinessAccount
     }
     
+    public var isAchievementsEnabled: Bool {
+        _isAchievementsEnabled
+    }
+
     public func registerMEGARequestDelegate() async {
         registerMEGARequestDelegateCalled += 1
     }

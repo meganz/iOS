@@ -32,6 +32,16 @@ final class MyAccountHallUseCaseTests: XCTestCase {
         XCTAssertFalse(sut.isMasterBusinessAccount)
     }
     
+    func testIsAchievementsEnabled_shouldBeTrue() {
+        let sut = MyAccountHallUseCase(repository: MockAccountRepository(isAchievementsEnabled: true))
+        XCTAssertTrue(sut.isAchievementsEnabled)
+    }
+    
+    func testIsAchievementsEnabled_shouldBeFalse() {
+        let sut = MyAccountHallUseCase(repository: MockAccountRepository(isAchievementsEnabled: false))
+        XCTAssertFalse(sut.isAchievementsEnabled)
+    }
+    
     func testCurrentAccountDetails_shouldReturnCurrentAccountDetails() {
         let accountDetails = AccountDetailsEntity.random
         let sut = MyAccountHallUseCase(repository: MockAccountRepository(currentAccountDetails: accountDetails))

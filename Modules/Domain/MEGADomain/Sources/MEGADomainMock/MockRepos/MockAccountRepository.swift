@@ -18,6 +18,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     private let nodesCount: UInt64
     private let _contacts: [UserEntity]
     private let _isSmsAllowed: Bool
+    private let _isAchievementsEnabled: Bool
 
     // MARK: - Result Handlers
     private let getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity>
@@ -53,6 +54,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         myEmail: String? = nil,
         isLoggedIn: Bool = true,
         isMasterBusinessAccount: Bool = false,
+        isAchievementsEnabled: Bool = false,
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
         nodesCount: UInt64 = 0,
@@ -76,6 +78,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         _myEmail = myEmail
         _isNewAccount = isNewAccount
         _isMasterBusinessAccount = isMasterBusinessAccount
+        _isAchievementsEnabled = isAchievementsEnabled
         _accountCreationDate = accountCreationDate
         _isSmsAllowed = isSmsAllowed
         _contacts = contacts
@@ -116,6 +119,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
 
     public var isMasterBusinessAccount: Bool {
         _isMasterBusinessAccount
+    }
+    
+    public var isAchievementsEnabled: Bool {
+        _isAchievementsEnabled
     }
 
     public var isNewAccount: Bool {

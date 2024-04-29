@@ -14,6 +14,7 @@ public protocol AccountRepositoryProtocol {
     var bandwidthOverquotaDelay: Int64 { get }
     var isMasterBusinessAccount: Bool { get }
     var isSMSAllowed: Bool { get }
+    var isAchievementsEnabled: Bool { get }
 
     // User and session management
     func currentUser() async -> UserEntity?

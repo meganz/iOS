@@ -13,6 +13,7 @@ public final class MockSdk: MEGASdk {
     public var _myUser: MEGAUser?
     public var _isLoggedIn: Int
     public var _isMasterBusinessAccount: Bool
+    public var _isAchievementsEnabled: Bool
     public var _isNewAccount: Bool
     public var _isContactVerificationWarningEnabled: Bool
     private let _bandwidthOverquotaDelay: Int64
@@ -95,6 +96,7 @@ public final class MockSdk: MEGASdk {
                 myUser: MEGAUser? = nil,
                 isLoggedIn: Int = 0,
                 isMasterBusinessAccount: Bool = false,
+                isAchievementsEnabled: Bool = false,
                 isNewAccount: Bool = false,
                 isContactVerificationWarningEnabled: Bool = false,
                 bandwidthOverquotaDelay: Int64 = 0,
@@ -137,6 +139,7 @@ public final class MockSdk: MEGASdk {
         _myUser = myUser
         _isLoggedIn = isLoggedIn
         _isMasterBusinessAccount = isMasterBusinessAccount
+        _isAchievementsEnabled = isAchievementsEnabled
         _isNewAccount = isNewAccount
         _isContactVerificationWarningEnabled = isContactVerificationWarningEnabled
         _bandwidthOverquotaDelay = bandwidthOverquotaDelay
@@ -521,6 +524,8 @@ public final class MockSdk: MEGASdk {
     // MARK: - Account Management
     
     public override var isMasterBusinessAccount: Bool { _isMasterBusinessAccount }
+    
+    public override var isAchievementsEnabled: Bool { _isAchievementsEnabled }
     
     public override func getAccountDetails(with delegate: any MEGARequestDelegate) {
         _accountDetails(self, delegate)

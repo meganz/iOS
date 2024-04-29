@@ -53,6 +53,11 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertFalse(makeSUT(sdk: MockSdk(isMasterBusinessAccount: false)).isMasterBusinessAccount)
     }
     
+    func testIsAchievementsEnabled() {
+        XCTAssertTrue(makeSUT(sdk: MockSdk(isAchievementsEnabled: true)).isAchievementsEnabled)
+        XCTAssertFalse(makeSUT(sdk: MockSdk(isAchievementsEnabled: false)).isAchievementsEnabled)
+    }
+    
     func testIsNewAccount() {
         XCTAssertTrue(makeSUT(sdk: MockSdk(isNewAccount: true)).isNewAccount)
         XCTAssertFalse(makeSUT(sdk: MockSdk(isNewAccount: false)).isNewAccount)
