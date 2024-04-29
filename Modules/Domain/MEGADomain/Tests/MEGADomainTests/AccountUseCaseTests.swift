@@ -10,7 +10,6 @@ final class AccountUseCaseTests: XCTestCase {
         isGuest: Bool = false,
         isNewAccount: Bool = false,
         accountCreationDate: Date? = nil,
-        isAccountTypeResult: Bool = false,
         myEmail: String? = nil,
         isLoggedIn: Bool = true,
         isMasterBusinessAccount: Bool = false,
@@ -25,17 +24,21 @@ final class AccountUseCaseTests: XCTestCase {
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
         multiFactorAuthCheckResult: Result<Bool, AccountErrorEntity> = .failure(.generic),
         isUpgradeSecuritySuccess: Bool = false,
-        bandwidthOverquotaDelay: Int64 = 0
+        bandwidthOverquotaDelay: Int64 = 0,
+        isExpiredAccount: Bool = false,
+        isInGracePeriod: Bool = false,
+        accountType: AccountTypeEntity = .free
     ) -> AccountUseCase<MockAccountRepository> {
         let repository = MockAccountRepository(
             currentUser: currentUser,
             isGuest: isGuest,
             isNewAccount: isNewAccount,
             accountCreationDate: accountCreationDate,
-            isAccountTypeResult: isAccountTypeResult,
             myEmail: myEmail,
             isLoggedIn: isLoggedIn,
             isMasterBusinessAccount: isMasterBusinessAccount,
+            isExpiredAccount: isExpiredAccount,
+            isInGracePeriod: isInGracePeriod,
             isAchievementsEnabled: isAchievementsEnabled,
             isSmsAllowed: isSmsAllowed,
             contacts: contacts,
@@ -47,7 +50,8 @@ final class AccountUseCaseTests: XCTestCase {
             sessionTransferURLResult: sessionTransferURLResult,
             multiFactorAuthCheckResult: multiFactorAuthCheckResult,
             isUpgradeSecuritySuccess: isUpgradeSecuritySuccess,
-            bandwidthOverquotaDelay: bandwidthOverquotaDelay
+            bandwidthOverquotaDelay: bandwidthOverquotaDelay,
+            accountType: accountType
         )
         return AccountUseCase(repository: repository)
     }
@@ -205,6 +209,39 @@ final class AccountUseCaseTests: XCTestCase {
     func testMultiFactorAuthCheck_whenFail_shouldThrow() async throws {
         let sut = makeSUT(multiFactorAuthCheckResult: .failure(AccountErrorEntity.generic))
         await XCTAsyncAssertThrowsError(try await sut.multiFactorAuthCheck(email: "test@example.com"))
+    }
+    
+    func testHasValidProAccount_whenAccountIsAValidProAccount_returnsTrue() {
+        testHasValidProAccount(.lite, expectedResult: true)
+        testHasValidProAccount(.proI, expectedResult: true)
+        testHasValidProAccount(.proII, expectedResult: true)
+        testHasValidProAccount(.proIII, expectedResult: true)
+        testHasValidProAccount(.proFlexi, expectedResult: true)
+    }
+    
+    func testHasValidProAccount_whenAccountIsNotAValidProAccount_returnsFalse() {
+        testHasValidProAccount(.free, expectedResult: false)
+        testHasValidProAccount(.proFlexi, isExpiredAccount: true, expectedResult: false)
+        testHasValidProAccount(.proFlexi, isInGracePeriod: true, expectedResult: false)
+    }
+    
+    private func testHasValidProAccount(
+        _ accountType: AccountTypeEntity,
+        isExpiredAccount: Bool = false,
+        isInGracePeriod: Bool = false,
+        expectedResult: Bool
+    ) {
+        let sut = makeSUT(
+            isExpiredAccount: isExpiredAccount,
+            isInGracePeriod: isInGracePeriod,
+            accountType: accountType
+        )
+        
+        if expectedResult {
+            XCTAssertTrue(sut.hasValidProAccount(), "\(accountType) result should be true")
+        } else {
+            XCTAssertFalse(sut.hasValidProAccount(), "\(accountType) result should be false")
+        }
     }
 }
 

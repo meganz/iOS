@@ -41,21 +41,34 @@ final class ProfileViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
+    var isCancelSubscriptionFeatureFlagEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .cancelSubscription)
+    }
+    
     // Internal State
+    private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let requestedChangeTypeValueSubject = CurrentValueSubject<ChangeType?, Never>(nil)
     private let twoFactorAuthStatusValueSubject = CurrentValueSubject<TwoFactorAuthStatus, Never>(.unknown)
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
-    init(accountUseCase: some AccountUseCaseProtocol) {
+    init(
+        accountUseCase: some AccountUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    ) {
         self.accountUseCase = accountUseCase
+        self.featureFlagProvider = featureFlagProvider
         bindToSubscriptions()
     }
     
     private func bindToSubscriptions() {
         
-        let sections: [ProfileSection] = shouldShowPlanSection ? [.profile, .security, .plan, .session] : [.profile, .security, .session]
+        var sections: [ProfileSection] = shouldShowPlanSection ? [.profile, .security, .plan, .session] : [.profile, .security, .session]
+        
+        if isCancelSubscriptionFeatureFlagEnabled && accountUseCase.hasValidProAccount() {
+            sections.append(.subscription)
+        }
         
         invalidateSectionsValueSubject
             .map { [weak self] _ -> AnyPublisher<SectionCellDataSource, Never> in
@@ -155,6 +168,8 @@ extension ProfileViewModel {
                     mutableResult[sectionKey] = makeRowsForPlanSection()
                 case .session:
                     mutableResult[sectionKey] = makeRowsForSessionSection()
+                case .subscription:
+                    mutableResult[sectionKey] = makeRowsForSubscriptionSection()
                 }
                 return mutableResult
             })
@@ -197,5 +212,9 @@ extension ProfileViewModel {
     
     private func makeRowsForSessionSection() -> [ProfileSectionRow] {
         [.logout]
+    }
+    
+    private func makeRowsForSubscriptionSection() -> [ProfileSectionRow] {
+        [.cancelSubscription]
     }
 }

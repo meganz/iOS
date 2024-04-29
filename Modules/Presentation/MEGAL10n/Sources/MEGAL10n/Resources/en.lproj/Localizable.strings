@@ -4072,3 +4072,5 @@
 "Storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
 "Limited.Transfer.limit"="Limited";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="Cancel subscription";

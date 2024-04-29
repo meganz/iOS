@@ -21,6 +21,7 @@ public protocol AccountUseCaseProtocol {
     func currentUser() async -> UserEntity?
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
+    func hasValidProAccount() -> Bool
 
     // Account operations
     func contacts() -> [UserEntity]
@@ -105,6 +106,23 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     
     public func isAccountType(_ type: AccountTypeEntity) -> Bool {
         repository.isAccountType(type)
+    }
+    
+    public func hasValidProAccount() -> Bool {
+        isStandardProAccount() || isValidProFlexiAccount()
+    }
+    
+    private func isStandardProAccount() -> Bool {
+        repository.isAccountType(.lite) ||
+        repository.isAccountType(.proI) ||
+        repository.isAccountType(.proII) ||
+        repository.isAccountType(.proIII)
+    }
+
+    private func isValidProFlexiAccount() -> Bool {
+        repository.isAccountType(.proFlexi) &&
+        !repository.isExpiredAccount() &&
+        !repository.isInGracePeriod()
     }
 
     // MARK: - Account operations

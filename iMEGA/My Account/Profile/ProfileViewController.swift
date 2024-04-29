@@ -1,8 +1,10 @@
+import Accounts
 import Combine
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGASwiftUI
 import UIKit
 
 @objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {
@@ -72,7 +74,14 @@ import UIKit
         
         $offlineLogOutWarningDismissed.useCase = PreferenceUseCase.default
         
-        dataSource = ProfileTableViewDataSource(tableView: tableView, traitCollection: traitCollection)
+        dataSource = ProfileTableViewDataSource(
+            tableView: tableView,
+            parent: self,
+            traitCollection: traitCollection
+        )
+        
+        registerCustomCells()
+        
         dataSource?.configureDataSource()
         bindToSubscriptions()
     }
@@ -100,6 +109,13 @@ import UIKit
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
         }
+    }
+    
+    @objc func registerCustomCells() {
+        self.tableView?.register(
+            HostingTableViewCell<CancelSubscriptionView>.self,
+            forCellReuseIdentifier: "CancelSubscriptionView"
+        )
     }
     
     private func bindToSubscriptions() {
@@ -379,6 +395,9 @@ extension ProfileViewController: UITableViewDelegate {
                 MEGASdk.shared.shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
                 offlineLogOutWarningDismissed = false
             }
+            
+        case .cancelSubscription:
+            break
         }
     }
     
@@ -401,7 +420,7 @@ extension ProfileViewController: UITableViewDelegate {
             return Strings.Localizable.recoveryKey
         case .plan:
             return Strings.Localizable.plan
-        case .profile, .session:
+        case .profile, .session, .subscription:
             return nil
         }
     }

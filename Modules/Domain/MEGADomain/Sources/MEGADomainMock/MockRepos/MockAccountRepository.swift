@@ -10,6 +10,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     private let _myEmail: String?
     private let _isNewAccount: Bool
     private let _isMasterBusinessAccount: Bool
+    private let _isExpiredAccount: Bool
+    private let _isInGracePeriod: Bool
+    private let accountType: AccountTypeEntity
 
     // MARK: - Account Characteristics
     private let _currentAccountDetails: AccountDetailsEntity?
@@ -27,7 +30,6 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     private let sessionTransferURLResult: Result<URL, AccountErrorEntity>
     private let multiFactorAuthCheckResult: Result<Bool, AccountErrorEntity>
     private let isUpgradeSecuritySuccess: Bool
-    private let isAccountTypeResult: Bool
     
     // MARK: - Management of Contacts and Alerts
     private let contactsRequestsCount: Int
@@ -50,10 +52,11 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         isGuest: Bool = false,
         isNewAccount: Bool = false,
         accountCreationDate: Date? = nil,
-        isAccountTypeResult: Bool = false,
         myEmail: String? = nil,
         isLoggedIn: Bool = true,
         isMasterBusinessAccount: Bool = false,
+        isExpiredAccount: Bool = false,
+        isInGracePeriod: Bool = false,
         isAchievementsEnabled: Bool = false,
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
@@ -70,7 +73,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> = Empty().eraseToAnyPublisher(),
         userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> = Empty().eraseToAnyPublisher(),
         isUpgradeSecuritySuccess: Bool = false,
-        bandwidthOverquotaDelay: Int64 = 0
+        bandwidthOverquotaDelay: Int64 = 0,
+        accountType: AccountTypeEntity = .free
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -78,6 +82,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         _myEmail = myEmail
         _isNewAccount = isNewAccount
         _isMasterBusinessAccount = isMasterBusinessAccount
+        _isExpiredAccount = isExpiredAccount
+        _isInGracePeriod = isInGracePeriod
         _isAchievementsEnabled = isAchievementsEnabled
         _accountCreationDate = accountCreationDate
         _isSmsAllowed = isSmsAllowed
@@ -92,11 +98,11 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         self.miscFlagsResult = miscFlagsResult
         self.sessionTransferURLResult = sessionTransferURLResult
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
-        self.isAccountTypeResult = isAccountTypeResult
         self.multiFactorAuthCheckResult = multiFactorAuthCheckResult
         self.requestResultPublisher = requestResultPublisher
         self.contactRequestPublisher = contactRequestPublisher
         self.userAlertUpdatePublisher = userAlertUpdatePublisher
+        self.accountType = accountType
     }
 
     // MARK: - AccountRepositoryProtocol Implementation
@@ -127,6 +133,14 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
 
     public var isNewAccount: Bool {
         _isNewAccount
+    }
+    
+    public func isExpiredAccount() -> Bool {
+        _isExpiredAccount
+    }
+    
+    public func isInGracePeriod() -> Bool {
+        _isInGracePeriod
     }
 
     public var accountCreationDate: Date? {
@@ -182,7 +196,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     }
 
     public func isAccountType(_ type: AccountTypeEntity) -> Bool {
-        isAccountTypeResult
+        type == accountType
     }
 
     public func multiFactorAuthCheck(email: String) async throws -> Bool {

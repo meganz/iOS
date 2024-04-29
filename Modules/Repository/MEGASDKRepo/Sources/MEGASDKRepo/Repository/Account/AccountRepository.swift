@@ -109,6 +109,14 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
             })
         })
     }
+    
+    public func isExpiredAccount() -> Bool {
+        sdk.businessStatus == .expired
+    }
+    
+    public func isInGracePeriod() -> Bool {
+        sdk.businessStatus == .gracePeriod
+    }
 
     // MARK: - Account operations
     public func contacts() -> [UserEntity] {
