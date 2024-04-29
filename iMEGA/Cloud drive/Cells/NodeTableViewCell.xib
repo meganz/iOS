@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -211,6 +211,7 @@
             <viewLayoutGuide key="safeArea" id="9oh-j7-TvT"/>
             <inset key="separatorInset" minX="62" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="bottomContainerStackView" destination="oBe-Z8-tyL" id="PWd-4c-2rf"/>
                 <outlet property="cancelButtonTrailingConstraint" destination="ZkZ-EK-Nu0" id="M1J-mX-b47"/>
                 <outlet property="downloadedImageView" destination="kXM-HW-g1i" id="6FV-9Q-Me3"/>
                 <outlet property="favouriteImageView" destination="pIz-hg-PVL" id="2Hs-hS-ROD"/>
@@ -223,8 +224,10 @@
                 <outlet property="linkView" destination="eBF-bX-yoh" id="kqe-8N-IX8"/>
                 <outlet property="moreButton" destination="OhI-W3-En8" id="kXo-at-NXJ"/>
                 <outlet property="nameLabel" destination="AgB-Vi-qLn" id="RHk-6U-759"/>
+                <outlet property="thumbnailContainer" destination="NEJ-77-LUr" id="dWv-tX-qKR"/>
                 <outlet property="thumbnailImageView" destination="gQx-1N-Fbx" id="M1d-xr-qnW"/>
                 <outlet property="thumbnailPlayImageView" destination="eLs-OI-Wck" id="sVd-vc-B0k"/>
+                <outlet property="topContainerStackView" destination="7fy-Dd-TmU" id="Jsd-Pb-yFI"/>
                 <outlet property="versionedImageView" destination="hKh-6E-mfl" id="Rs9-RZ-2JM"/>
             </connections>
             <point key="canvasLocation" x="-643" y="123"/>

@@ -1,10 +1,26 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
+import MEGAPresentation
+import MEGASDKRepo
+import MEGAUIKit
 
 extension NodeTableViewCell {
+    
+    open override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        viewModel = nil
+        thumbnailImageView.removeBlurFromView()
+        [thumbnailContainer, topContainerStackView, bottomContainerStackView]
+            .forEach { $0?.alpha = 1 }
+        
+        cancellables = nil
+    }
+    
     @objc func setTitleAndFolderName(for recentActionBucket: MEGARecentActionBucket,
                                      withNodes nodes: [MEGANode]) {
-  
+        
         guard let firstNode = nodes.first else {
             infoLabel.text = ""
             nameLabel.text = ""
@@ -22,7 +38,7 @@ extension NodeTableViewCell {
         let firstNodeName = firstNode.name ?? ""
         let nodesCount = nodes.count
         nameLabel.text = nodesCount == 1 ? firstNodeName : Strings.Localizable.Recents.Section.MultipleFile.title(nodesCount - 1).replacingOccurrences(of: "[A]", with: firstNodeName)
-
+        
         let parentNode = MEGASdk.shared.node(forHandle: recentActionBucket.parentHandle)
         let parentNodeName = parentNode?.name ?? ""
         infoLabel.text = "\(parentNodeName) ・"
@@ -37,7 +53,7 @@ extension NodeTableViewCell {
         favouriteImageView?.accessibilityLabel = Strings.Localizable.favourite
         linkImageView?.accessibilityLabel = Strings.Localizable.shared
     }
-
+    
     @objc func configureIconsImageColor() {
         guard UIColor.isDesignTokenEnabled() else { return }
         
@@ -46,13 +62,52 @@ extension NodeTableViewCell {
         configureIconImageColor(for: versionedImageView)
         configureIconImageColor(for: downloadedImageView)
     }
-
+    
+    @objc func createViewModel(nodes: [MEGANode]) -> NodeTableViewCellViewModel {
+        .init(nodes: nodes.toNodeEntities(),
+              flavour: cellFlavor,
+              nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo))
+    }
+    
+    @objc func bind(viewModel: NodeTableViewCellViewModel) {
+        
+        self.viewModel = viewModel
+        
+        viewModel.configureCell()
+        
+        cancellables = [
+            viewModel
+                .$isSensitive
+                .removeDuplicates()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.configureBlur(isSensitive: $0) }
+        ]
+    }
+    
+    private func configureBlur(isSensitive: Bool) {
+        let alpha: CGFloat = isSensitive ? 0.5 : 1
+        [
+            viewModel.hasThumbnail ? nil : thumbnailContainer,
+            topContainerStackView,
+            bottomContainerStackView
+        ].forEach { $0?.alpha = alpha }
+        
+        if viewModel.hasThumbnail, isSensitive {
+            thumbnailImageView.addBlurToView(style: .systemUltraThinMaterial)
+        } else {
+            thumbnailImageView.removeBlurFromView()
+        }
+    }
+    
     private func configureIconImageColor(for imageView: UIImageView?) {
         guard let imageView else { return }
         imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = TokenColors.Icon.secondary
     }
-
+    
     @objc func setCellBackgroundColor(with traitCollection: UITraitCollection) {
         var bgColor: UIColor = .black
         

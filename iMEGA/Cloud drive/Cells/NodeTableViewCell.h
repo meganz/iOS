@@ -11,10 +11,15 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
     NodeTableViewCellExplorerView
 };
 
+@class NodeTableViewCellViewModel;
+
 @interface NodeTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+@property (weak, nonatomic) IBOutlet UIView *thumbnailContainer;
+@property (weak, nonatomic) IBOutlet UIStackView *topContainerStackView;
+@property (weak, nonatomic) IBOutlet UIStackView *bottomContainerStackView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIView *labelView;
@@ -60,6 +65,9 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 @property (nonatomic) BOOL isNodeInBrowserView;
 
 @property (nonatomic) NodeTableViewCellFlavor cellFlavor;
+@property (strong, nonatomic) NodeTableViewCellViewModel *viewModel;
+
+@property (strong, nonatomic) NSSet<id> *cancellables;
 
 @property (nonatomic, copy) void(^moreButtonAction)(UIButton *) ;
 

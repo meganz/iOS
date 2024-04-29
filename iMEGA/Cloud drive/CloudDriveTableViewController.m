@@ -164,7 +164,7 @@
     }
     
     cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
-    cell.cellFlavor = NodeTableViewCellFlavorCloudDrive;
+    cell.cellFlavor = self.cloudDrive.isFromSharedItem ? NodeTableViewCellFlavorSharedLink : NodeTableViewCellFlavorCloudDrive;
     [cell configureCellForNode:node api:MEGASdk.shared];
     
     if (self.tableView.isEditing) {
