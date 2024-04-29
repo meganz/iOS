@@ -71,6 +71,8 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     }];
     
     [self configureActivityIndicator];
+    
+    [self configureViewColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
