@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGAAnalyticsiOS
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -270,5 +271,11 @@ extension MEGAAVViewController {
             self?.dismiss(animated: true)
         }))
         present(alertController, animated: true)
+    }
+    
+    @objc func configureViewColor() {
+        if UIColor.isDesignTokenEnabled() {
+            view.backgroundColor = TokenColors.Background.page
+        }
     }
 }
