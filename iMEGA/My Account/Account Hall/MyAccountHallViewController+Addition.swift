@@ -149,7 +149,5 @@ extension MyAccountHallViewController {
         
         let profileTapGesture = UITapGestureRecognizer(target: self, action: #selector(showProfileView))
         profileView?.gestureRecognizers = isCancelSubscriptionFeatureFlagEnabled ? nil : [profileTapGesture]
-        
-        nameLabelCenterVerticalConstraint.isActive = isCancelSubscriptionFeatureFlagEnabled
     }
 }

@@ -60,7 +60,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YqG-fz-6ti" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="27" width="0.0" height="60"/>
+                                                <rect key="frame" x="16" y="27" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -79,7 +79,7 @@
                                                 <rect key="frame" x="16" y="123" width="24" height="24"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcr-fM-O6t">
-                                                <rect key="frame" x="16" y="96" width="30" height="49"/>
+                                                <rect key="frame" x="16" y="36" width="30" height="109"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <connections>
@@ -97,7 +97,6 @@
                                             <constraint firstItem="YqG-fz-6ti" firstAttribute="top" secondItem="10p-Ba-INI" secondAttribute="bottom" constant="4" id="4QR-Nc-XVL"/>
                                             <constraint firstItem="Hcr-fM-O6t" firstAttribute="leading" secondItem="eYn-oF-AZu" secondAttribute="leading" constant="16" id="6JY-qU-GKV"/>
                                             <constraint firstItem="wKG-M1-Umc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hcr-fM-O6t" secondAttribute="trailing" constant="20" id="D4H-d2-2cc"/>
-                                            <constraint firstItem="YqG-fz-6ti" firstAttribute="centerY" secondItem="wKG-M1-Umc" secondAttribute="centerY" id="ESx-Pj-Gaa"/>
                                             <constraint firstItem="uOe-An-q3u" firstAttribute="leading" secondItem="eYn-oF-AZu" secondAttribute="leading" id="Ek7-F6-drJ"/>
                                             <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="Hcr-fM-O6t" secondAttribute="bottom" constant="50" id="LKo-LZ-nFG"/>
                                             <constraint firstItem="YqG-fz-6ti" firstAttribute="leading" secondItem="eYn-oF-AZu" secondAttribute="leading" constant="16" id="MLA-ly-quH"/>
@@ -415,7 +414,6 @@
                         <outlet property="addPhoneNumberView" destination="QRm-6M-zp1" id="Q7z-lg-1wU"/>
                         <outlet property="avatarImageView" destination="wKG-M1-Umc" id="Rkf-F1-Mgw"/>
                         <outlet property="nameLabel" destination="YqG-fz-6ti" id="ONK-2v-2hU"/>
-                        <outlet property="nameLabelCenterVerticalConstraint" destination="ESx-Pj-Gaa" id="Pmr-C8-sN6"/>
                         <outlet property="profileBottomSeparatorView" destination="uOe-An-q3u" id="746-sx-sOu"/>
                         <outlet property="profileView" destination="eYn-oF-AZu" id="wui-te-f6l"/>
                         <outlet property="qrCodeImageView" destination="7za-S6-P7g" id="zDD-j2-EzC"/>
