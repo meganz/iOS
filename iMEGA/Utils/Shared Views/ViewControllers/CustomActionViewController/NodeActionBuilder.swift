@@ -828,7 +828,7 @@ final class NodeActionBuilder {
         guard isHidden == true else {
             return false
         }
-        return [.cloudDrive, .previewDocument, .previewPdfPage, .textEditor,
+        return [.cloudDrive, .previewDocument, .previewPdfPage, .recents, .textEditor,
                 .photosAlbum, .photosFavouriteAlbum]
             .contains(displayMode)
     }
