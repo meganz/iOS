@@ -1,21 +1,30 @@
 import MEGADomain
 
-public struct MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
+public actor MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
 
     private let allPhotos: [NodeEntity]
     private let allPhotosFromCloudDriveOnly: [NodeEntity]
     private let allPhotosFromCameraUpload: [NodeEntity]
+    private let allVideos: [NodeEntity]
     private let photoLibraryContainer: PhotoLibraryContainerEntity
+    
+    public private(set) var messages = [Message]()
+    
+    public enum Message {
+        case media
+    }
     
     public init(
         allPhotos: [NodeEntity] = [],
         allPhotosFromCloudDriveOnly: [NodeEntity] = [],
         allPhotosFromCameraUpload: [NodeEntity] = [],
+        allVideos: [NodeEntity] = [],
         photoLibraryContainer: PhotoLibraryContainerEntity = PhotoLibraryContainerEntity(cameraUploadNode: nil, mediaUploadNode: nil)
     ) {
         self.allPhotos = allPhotos
         self.allPhotosFromCloudDriveOnly = allPhotosFromCloudDriveOnly
         self.allPhotosFromCameraUpload = allPhotosFromCameraUpload
+        self.allVideos = allVideos
         self.photoLibraryContainer = photoLibraryContainer
     }
     
@@ -24,6 +33,7 @@ public struct MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
     }
     
     public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?) async throws -> [NodeEntity] {
+        messages.append(.media)
         let media = mediaForLocation(filterOptions)
         
         return if filterOptions.isSuperset(of: .allMedia) {
@@ -39,7 +49,7 @@ public struct MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
     
     private func mediaForLocation(_ filterOptions: PhotosFilterOptionsEntity) -> [NodeEntity] {
         return if filterOptions.isSuperset(of: .allLocations) {
-            allPhotos
+            allPhotos + allVideos
         } else if filterOptions.contains(.cloudDrive) {
             allPhotosFromCloudDriveOnly
         } else if filterOptions.contains(.cameraUploads) {

@@ -20,6 +20,12 @@ public final class MockMediaUseCase: MediaUseCaseProtocol, @unchecked Sendable {
     private let allPhotos: [NodeEntity]
     private let allVideos: [NodeEntity]
     
+    public private(set) var messages = [Message]()
+    
+    public enum Message: Equatable {
+        case allVideos
+    }
+    
     public init(isURLVideo: Bool = false,
                 isURLImage: Bool = false,
                 isStringVideo: Bool = false,
@@ -95,7 +101,8 @@ public final class MockMediaUseCase: MediaUseCaseProtocol, @unchecked Sendable {
     }
     
     public func allVideos() async throws -> [NodeEntity] {
-        allVideos
+        messages.append(.allVideos)
+        return allVideos
     }
     
     public func isPlayableMediaFile(_ node: NodeEntity) -> Bool {

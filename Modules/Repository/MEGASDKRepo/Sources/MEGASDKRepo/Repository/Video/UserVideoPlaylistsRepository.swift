@@ -82,4 +82,11 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
             })
         }
     }
+    
+    // MARK: - videoPlaylistContent
+    
+    public func videoPlaylistContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
+        sdk.megaSetElements(bySid: id, includeElementsInRubbishBin: includeElementsInRubbishBin)
+            .toSetElementsEntities()
+    }
 }

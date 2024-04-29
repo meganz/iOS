@@ -21,6 +21,12 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     public var searchString: String?
     public var searchRecursive: Bool?
     
+    public private(set) var messages = [Message]()
+    
+    public enum Message: Equatable {
+        case node(id: HandleEntity)
+    }
+    
     public init(photoNodes: [NodeEntity] = [],
                 videoNodes: [NodeEntity] = [],
                 nodesForHandle: [HandleEntity: [NodeEntity]] = [:],
@@ -43,7 +49,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     }
 
     public func node(by id: HandleEntity) async -> NodeEntity? {
-        (photoNodes + videoNodes).first { node in
+        messages.append(.node(id: id))
+        return (photoNodes + videoNodes).first { node in
             node.handle == id
         }
     }

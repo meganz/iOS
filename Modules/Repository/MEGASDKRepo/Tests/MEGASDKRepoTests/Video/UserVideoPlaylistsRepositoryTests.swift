@@ -97,17 +97,29 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         XCTAssertTrue(messagesCount != 0)
     }
     
+    // MARK: - videoPlaylistContent
+    
+    func testVideoPlaylistContent_onRetrieved_shouldReturnVideoPlaylistElements() async {
+        let megaSetElements = sampleSetElements()
+        let (sut, _) = makeSUT(megaSetElements: megaSetElements)
+        
+        let setElements = await sut.videoPlaylistContent(by: 1, includeElementsInRubbishBin: false)
+        
+        XCTAssertEqual(setElements, megaSetElements.toSetElementsEntities())
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
         megaSets: [MockMEGASet] = [],
+        megaSetElements: [MockMEGASetElement] = [],
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
         sut: UserVideoPlaylistsRepository,
         sdk: MockSdk
     ) {
-        let sdk = MockSdk(megaSets: megaSets)
+        let sdk = MockSdk(megaSets: megaSets, megaSetElements: megaSetElements)
         let sut = UserVideoPlaylistsRepository(sdk: sdk)
         return (sut, sdk)
     }
@@ -130,5 +142,11 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         )
     }
     
+    private func sampleSetElements(ownerId: HandleEntity = 3) -> [MockMEGASetElement] {
+        [
+            MockMEGASetElement(handle: 1, ownerId: ownerId, order: 0, nodeId: 1),
+            MockMEGASetElement(handle: 2, ownerId: ownerId, order: 0, nodeId: 2)
+        ]
+    }
 }
 

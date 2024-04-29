@@ -22,4 +22,11 @@ public protocol UserVideoPlaylistsRepositoryProtocol: Sendable {
     ///   - success: means the number of videos deleted from the video playlist successfully
     ///   - failure: means the number of videos deleted from the video playlist unsuccessfully
     func deleteVideoPlaylistElements(videoPlaylistId: HandleEntity, elementIds: [HandleEntity]) async throws -> VideoPlaylistCreateSetElementsResultEntity
+    
+    /// Fetch videos for a video playlist
+    /// - Parameters:
+    ///   - id: Video playlist id
+    ///   - includeElementsInRubbishBin: a boolean flag to include or exclude fetching videos from rubbish bin
+    /// - Returns: array of videos in form of `SetElementEntity`
+    func videoPlaylistContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity]
 }
