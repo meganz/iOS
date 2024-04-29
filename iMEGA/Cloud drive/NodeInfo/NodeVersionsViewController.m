@@ -71,7 +71,12 @@ MEGADelegate
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        
         [self updateAppearance];
+        
+        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+        
+        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
         
         [self.tableView reloadData];
     }
@@ -80,7 +85,7 @@ MEGADelegate
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor isDesignTokenEnabled] ? [self defaultBackgroundColor] : [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - UITableViewDataSource
@@ -133,7 +138,7 @@ MEGADelegate
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    cell.backgroundColor = [UIColor isDesignTokenEnabled] ? [self defaultBackgroundColor] : [UIColor mnz_tertiaryBackground:self.traitCollection];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -176,6 +181,10 @@ MEGADelegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     GenericHeaderFooterView *sectionHeader = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
+    if ([UIColor isDesignTokenEnabled]) {
+        [sectionHeader setPreferredBackgroundColor:[self defaultBackgroundColor]];
+    }
+    
     if (section == 0) {
         [sectionHeader configureWithTitle:LocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     } else {
@@ -186,6 +195,10 @@ MEGADelegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     GenericHeaderFooterView *sectionFooter = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
+    
+    if ([UIColor isDesignTokenEnabled]) {
+        [sectionFooter setPreferredBackgroundColor:[self defaultBackgroundColor]];
+    }
     
     [sectionFooter configureWithTitle:nil topDistance:2.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:NO];
     
@@ -207,8 +220,8 @@ MEGADelegate
         UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self removeAction:nil];
         }];
-        removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
-        removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:[self swipeIconTintColor]];
+        removeAction.backgroundColor = [self deleteSwipeBackgroundColor];
         [rightActions addObject:removeAction];
     }
     
@@ -217,8 +230,8 @@ MEGADelegate
             [self revertAction:nil];
         }];
         
-        revertAction.image = [[UIImage imageNamed:@"history"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
-        revertAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        revertAction.image = [[UIImage imageNamed:@"history"] imageWithTintColor:[self swipeIconTintColor]];
+        revertAction.backgroundColor = [self revertSwipeBackgroundColor];
         [rightActions addObject:revertAction];
     }
         
@@ -229,8 +242,8 @@ MEGADelegate
         }
         [self setEditing:NO animated:YES];
     }];
-    downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
-    downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:[self swipeIconTintColor]];
+    downloadAction.backgroundColor = [self offlineSwipeBackgroundColor];
     [rightActions addObject:downloadAction];
     
     return [UISwipeActionsConfiguration configurationWithActions:rightActions];

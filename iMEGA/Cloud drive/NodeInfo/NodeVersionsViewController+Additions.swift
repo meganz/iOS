@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -115,6 +116,28 @@ extension NodeVersionsViewController {
                 NodeVersionSection(items: previousVersions)
             ]
         }
+    }
+    
+    // MARK: Appearance
+    
+    @objc func defaultBackgroundColor() -> UIColor {
+        TokenColors.Background.page
+    }
+    
+    @objc func swipeIconTintColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.onColor : .mnz_whiteFFFFFF()
+    }
+    
+    @objc func deleteSwipeBackgroundColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : .mnz_red(for: traitCollection)
+    }
+    
+    @objc func revertSwipeBackgroundColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Support.warning : .mnz_primaryGray(for: traitCollection)
+    }
+    
+    @objc func offlineSwipeBackgroundColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Support.success : .mnz_turquoise(for: traitCollection)
     }
 }
 
