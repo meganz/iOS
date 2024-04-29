@@ -14,6 +14,7 @@ final class AccountUseCaseTests: XCTestCase {
         myEmail: String? = nil,
         isLoggedIn: Bool = true,
         isMasterBusinessAccount: Bool = false,
+        isAchievementsEnabled: Bool = false,
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
         nodesCount: UInt64 = 0,
@@ -35,6 +36,7 @@ final class AccountUseCaseTests: XCTestCase {
             myEmail: myEmail,
             isLoggedIn: isLoggedIn,
             isMasterBusinessAccount: isMasterBusinessAccount,
+            isAchievementsEnabled: isAchievementsEnabled,
             isSmsAllowed: isSmsAllowed,
             contacts: contacts,
             nodesCount: nodesCount,
@@ -140,6 +142,16 @@ final class AccountUseCaseTests: XCTestCase {
         XCTAssertFalse(sut.isMasterBusinessAccount)
     }
     
+    func testIsAchievementsEnabled_whenTrue_shouldReturnTrue() {
+        let sut = makeSUT(isAchievementsEnabled: true)
+        XCTAssertTrue(sut.isAchievementsEnabled)
+    }
+    
+    func testIsAchievementsEnabled_whenFalse_shouldReturnFalse() {
+        let sut = makeSUT(isAchievementsEnabled: false)
+        XCTAssertFalse(sut.isAchievementsEnabled)
+    }
+
     func testIsSmsAllowed_whenAllowed_shouldReturnTrue() {
         let sut = makeSUT(isSmsAllowed: true)
         XCTAssertTrue(sut.isSmsAllowed)

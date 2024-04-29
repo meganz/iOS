@@ -162,7 +162,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         case .myAccount:
             shouldShowCell = isCancelSubscriptionFeatureFlagEnabled
         case .achievements:
-            shouldShowCell = MEGASdk.shared.isAchievementsEnabled
+            shouldShowCell = myAccountHallUseCase.isAchievementsEnabled
         default: break
         }
         

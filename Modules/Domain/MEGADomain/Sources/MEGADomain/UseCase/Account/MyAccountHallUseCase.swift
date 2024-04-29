@@ -3,6 +3,7 @@ import Combine
 public protocol MyAccountHallUseCaseProtocol {
     var currentUserHandle: HandleEntity? { get }
     var isMasterBusinessAccount: Bool { get }
+    var isAchievementsEnabled: Bool { get }
     func incomingContactsRequestsCount() async -> Int
     func relevantUnseenUserAlertsCount() async -> UInt
     
@@ -32,6 +33,10 @@ public struct MyAccountHallUseCase<T: AccountRepositoryProtocol>: MyAccountHallU
     
     public var isMasterBusinessAccount: Bool {
         repository.isMasterBusinessAccount
+    }
+    
+    public var isAchievementsEnabled: Bool {
+        repository.isAchievementsEnabled
     }
     
     public func incomingContactsRequestsCount() async -> Int {

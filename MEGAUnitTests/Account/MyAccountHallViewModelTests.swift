@@ -266,6 +266,24 @@ final class MyAccountHallViewModelTests: XCTestCase {
         }
     }
     
+    func testCalculateCellHeight_achievementSection_isAchievementEnabledTrue_shouldNotBeZero() {
+        let indexPath = IndexPath(row: MyAccountMegaSection.achievements.rawValue,
+                                  section: MyAccountSection.mega.rawValue)
+        
+        let (sut, _) = makeSUT(isAchievementsEnabled: true)
+        
+        XCTAssertNotEqual(sut.calculateCellHeight(at: indexPath), 0)
+    }
+    
+    func testCalculateCellHeight_achievementSection_isAchievementEnabledFalse_shouldBeZero() {
+        let indexPath = IndexPath(row: MyAccountMegaSection.achievements.rawValue,
+                                  section: MyAccountSection.mega.rawValue)
+        
+        let (sut, _) = makeSUT(isAchievementsEnabled: false)
+        
+        XCTAssertEqual(sut.calculateCellHeight(at: indexPath), 0)
+    }
+    
     func testCalculateCellHeight_myAccountSection_featureFlagIsEnabled_shouldNotBeZero() {
         let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.random,
                                featureFlagProvider: MockFeatureFlagProvider(list: [.cancelSubscription: true]))
@@ -286,6 +304,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     
     private func makeSUT(
         isMasterBusinessAccount: Bool = false,
+        isAchievementsEnabled: Bool = false,
         enabledNotifications: [NotificationIDEntity] = [],
         currentAccountDetails: AccountDetailsEntity? = nil,
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [:]),
@@ -293,7 +312,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
     ) -> (MyAccountHallViewModel, MockMyAccountHallRouter) {
         let myAccountHallUseCase = MockMyAccountHallUseCase(
             currentAccountDetails: currentAccountDetails ?? AccountDetailsEntity.random,
-            isMasterBusinessAccount: isMasterBusinessAccount
+            isMasterBusinessAccount: isMasterBusinessAccount,
+            isAchievementsEnabled: isAchievementsEnabled
         )
         
         let purchaseUseCase = MockAccountPlanPurchaseUseCase()

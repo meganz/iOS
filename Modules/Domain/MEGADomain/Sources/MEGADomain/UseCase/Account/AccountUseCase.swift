@@ -15,6 +15,7 @@ public protocol AccountUseCaseProtocol {
     var isOverQuota: Bool { get }
     var isMasterBusinessAccount: Bool { get }
     var isSmsAllowed: Bool { get }
+    var isAchievementsEnabled: Bool { get }
     
     // User and session management
     func currentUser() async -> UserEntity?
@@ -87,6 +88,10 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     
     public var isSmsAllowed: Bool {
         repository.isSMSAllowed
+    }
+    
+    public var isAchievementsEnabled: Bool {
+        repository.isAchievementsEnabled
     }
 
     // MARK: - User and session management

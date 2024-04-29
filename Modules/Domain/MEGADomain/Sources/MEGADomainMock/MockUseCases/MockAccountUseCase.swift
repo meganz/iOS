@@ -21,6 +21,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _isOverQuota: Bool
     private let _email: String?
     private let _isMasterBusinessAccount: Bool
+    private let _isAchievementsEnabled: Bool
     private let smsState: SMSStateEntity
     
     public init(
@@ -41,6 +42,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         isOverQuota: Bool = false,
         email: String? = nil,
         isMasterBusinessAccount: Bool = false,
+        isAchievementsEnabled: Bool = false,
         smsState: SMSStateEntity = .notAllowed,
         multiFactorAuthCheckResult: Bool = false,
         multiFactorAuthCheckDelay: TimeInterval = 0
@@ -56,6 +58,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         _isOverQuota = isOverQuota
         _email = email
         _isMasterBusinessAccount = isMasterBusinessAccount
+        _isAchievementsEnabled = isAchievementsEnabled
         self.smsState = smsState
         self.totalNodesCountVariable = totalNodesCountVariable
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
@@ -103,6 +106,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public var isMasterBusinessAccount: Bool {
         _isMasterBusinessAccount
+    }
+    
+    public var isAchievementsEnabled: Bool {
+        _isAchievementsEnabled
     }
     
     public var isSmsAllowed: Bool {
