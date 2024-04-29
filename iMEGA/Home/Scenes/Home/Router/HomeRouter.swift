@@ -46,6 +46,7 @@ enum HomeRoutingSource {
     case editTextFile(MEGANode)
     case viewTextFileVersions(MEGANode)
     case hide(MEGANode)
+    case unhide(MEGANode)
 }
 
 final class HomeRouter: HomeRouterProtocol {
@@ -154,6 +155,11 @@ final class HomeRouter: HomeRouterProtocol {
         case .hide(let node):
             HideFilesAndFoldersRouter(presenter: navigationController)
                 .hideNodes([node.toNodeEntity()])
+        case .unhide(let node):
+            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+            Task {
+                _ = await nodeActionUseCase.unhide(nodes: [node].toNodeEntities())
+            }
         }
     }
     
