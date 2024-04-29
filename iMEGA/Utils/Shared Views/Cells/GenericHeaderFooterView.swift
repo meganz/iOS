@@ -39,7 +39,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         }
     }
     
-    func setPreferredBackgroundColor(_ color: UIColor?) {
+    @objc func setPreferredBackgroundColor(_ color: UIColor?) {
         preferredBackgroundColor = color
         updateAppearance()
     }
