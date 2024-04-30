@@ -6,10 +6,16 @@ struct UserInput {
 }
 
 func userInput() throws -> UserInput {
-    let tagMessage = "Enter the version number (format: '[major].[minor]' or '[major].[minor].[patch]') of the version you're creating a hotfix for:"
-    let tag = try majorMinorOrMajorMinorPatchInput(tagMessage)
+    let tag = if let tag = readFromCache(key: .version) {
+        tag
+    } else {
+        try majorMinorOrMajorMinorPatchInput(
+            "Enter the version number (format: '[major].[minor]' or '[major].[minor].[patch]') of the version you're creating a hotfix for:"
+        )
+    }
 
     let hotfixVersion = try majorMinorOrMajorMinorPatchInput("Enter the hotfix version number (format: '[major].[minor].[patch]'):")
+    writeToCache(key: .version, value: hotfixVersion)
 
     return .init(tag: tag, hotfixVersion: hotfixVersion)
 }

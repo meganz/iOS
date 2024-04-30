@@ -4,7 +4,11 @@ setVerbose()
 
 do {
     log("Started execution")
-    let version = try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
+    let version = if let version = readFromCache(key: .version) {
+        version
+    } else {
+        try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
+    }
 
     log("Creating release branch and pushing to origin")
     let releaseBranch = try createReleaseBranchAndPushToOrigin(version: version)
