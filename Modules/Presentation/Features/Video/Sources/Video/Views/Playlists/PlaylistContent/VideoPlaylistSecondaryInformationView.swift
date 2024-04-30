@@ -5,6 +5,7 @@ struct VideoPlaylistSecondaryInformationView: View {
     let videoConfig: VideoConfig
     let videosCount: String
     let totalDuration: String
+    let isPublicLink: Bool
     
     var body: some View {
         HStack(spacing: TokenSpacing._3) {
@@ -15,9 +16,11 @@ struct VideoPlaylistSecondaryInformationView: View {
             secondaryText(text: totalDuration)
             
             circleSeparatorImage
+                .opacity(isPublicLink ? 1 : 0)
             
             Image(uiImage: videoConfig.rowAssets.publicLinkImage)
                 .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryTextColor)
+                .opacity(isPublicLink ? 1 : 0)
         }
     }
     
@@ -39,7 +42,8 @@ struct VideoPlaylistSecondaryInformationView: View {
     VideoPlaylistSecondaryInformationView(
         videoConfig: .preview,
         videosCount: "24 videos",
-        totalDuration: "3:05:20"
+        totalDuration: "3:05:20",
+        isPublicLink: true
     )
 }
 
@@ -47,7 +51,8 @@ struct VideoPlaylistSecondaryInformationView: View {
     VideoPlaylistSecondaryInformationView(
         videoConfig: .preview,
         videosCount: "24 videos",
-        totalDuration: "3:05:20"
+        totalDuration: "3:05:20",
+        isPublicLink: false
     )
     .preferredColorScheme(.dark)
 }

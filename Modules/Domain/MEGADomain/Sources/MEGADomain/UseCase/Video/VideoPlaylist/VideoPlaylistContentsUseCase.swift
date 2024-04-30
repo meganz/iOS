@@ -34,7 +34,7 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
     public func videos(in playlist: VideoPlaylistEntity) async throws -> [NodeEntity] {
         switch playlist.type {
         case .favourite:
-            try await photoLibraryUseCase.media(for: [.videos, .cloudDrive], excludeSensitive: nil)
+            try await photoLibraryUseCase.media(for: [.allLocations, .videos], excludeSensitive: nil)
                 .filter(\.isFavourite)
         default:
             await userVideoPlaylistVideos(by: playlist.id).map(\.video)

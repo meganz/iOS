@@ -31,7 +31,7 @@ struct PlaylistContentHeaderView: View {
                     .lineLimit(2)
                     .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.primaryTextColor)
                 
-                VideoPlaylistSecondaryInformationView(videoConfig: videoConfig, videosCount: videosCount, totalDuration: totalDuration)
+                VideoPlaylistSecondaryInformationView(videoConfig: videoConfig, videosCount: videosCount, totalDuration: totalDuration, isPublicLink: false)
                 
                 buttonsContent
             }

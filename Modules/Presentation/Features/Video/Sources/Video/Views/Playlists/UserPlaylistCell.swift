@@ -45,7 +45,8 @@ struct UserPlaylistCellContent: View {
                 VideoPlaylistSecondaryInformationView(
                     videoConfig: videoConfig,
                     videosCount: previewEntity.count,
-                    totalDuration: previewEntity.duration
+                    totalDuration: previewEntity.duration,
+                    isPublicLink: previewEntity.isExported
                 )
                 .frame(maxHeight: .infinity, alignment: .top)
             }
