@@ -2,6 +2,8 @@ import Combine
 import MEGADomain
 import MEGASdk
 
+private typealias ReloadCondition = () -> Bool
+
 final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContentsUpdateNotifierRepositoryProtocol {
     public static var newRepo = AlbumContentsUpdateNotifierRepository(sdk: MEGASdk.sharedSdk)
     
@@ -36,15 +38,15 @@ final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContent
             return false
         }
         
-        let isAnyNodesTrashed = isAnyNodeMovedIntoTrash(nodes)
-        let hasNewNodes = nodes.containsNewNode()
-        let hasModifiedNodes = nodes.hasModifiedAttributes()
-        let hasModifiedParent = nodes.hasModifiedParent()
-        let hasModifiedPublicLink = nodes.hasModifiedPublicLink()
+        let isAnyNodesTrashed: ReloadCondition = {
+            self.isAnyNodeMovedIntoTrash(nodes)
+        }
+        let containsChangeTypes: ReloadCondition = {
+            nodes.contains(changedTypes: [.new, .attributes, .parent, .publicLink, .sensitive])
+        }
         
-        return isAnyNodesTrashed || hasNewNodes ||
-        hasModifiedNodes || hasModifiedParent ||
-        hasModifiedPublicLink
+        return [isAnyNodesTrashed,
+                containsChangeTypes].contains { $0() }
     }
 }
 

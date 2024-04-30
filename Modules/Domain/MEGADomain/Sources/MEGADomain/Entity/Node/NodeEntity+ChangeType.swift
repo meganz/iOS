@@ -29,4 +29,8 @@ public extension Sequence where Element == NodeEntity {
     func hasModifiedFavourites() -> Bool {
         contains { $0.changeTypes.contains(.favourite) }
     }
+    
+    func contains(changedTypes: ChangeTypeEntity) -> Bool {
+        contains { $0.changeTypes.intersection(changedTypes).isNotEmpty }
+    }
 }

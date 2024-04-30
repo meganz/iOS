@@ -211,6 +211,24 @@ final class AlbumContentsUpdateNotifierRepositoryTests: XCTestCase {
         wait(for: [exp], timeout: 0.5)
     }
     
+    func testOnAlbumReload_onNodeSensitivityChanged_shouldPublishToPublisher() {
+        let node = anyNode(handle: 1, changeType: .inShare, isVisualMediaAndHasThumbnail: false)
+        let mockSdk = MockSdk(rubbishBinNode: node)
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "album reload publisher should be emit item")
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let changedNodes = [node,
+                            anyNode(handle: 76, changeType: .sensitive, isVisualMediaAndHasThumbnail: true)]
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: changedNodes))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(sdk: MockSdk, file: StaticString = #filePath, line: UInt = #line) -> AlbumContentsUpdateNotifierRepository {
