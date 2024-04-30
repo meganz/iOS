@@ -172,10 +172,27 @@ public class SearchResultsViewModel: ObservableObject {
         selectedRowsSubscription = $selectedRows
             .dropFirst()
             .throttle(for: .seconds(0.4), scheduler: DispatchQueue.main, latest: true)
-            .sink { [weak self] selectedRows in
+            .map { $0.map(\.result.id) }
+            .scan((Set<ResultId>(), Set<ResultId>())) { previous, current in
+                // We want only the items that are selected or deselected from the set.
+                // Hence we store the previous value and find out the difference.
+                return (Set(current), previous.0.symmetricDifference(Set(current)))
+            }
+            .sink { [weak self] result in
                 guard let self else { return }
 
-                selectedResultIds = Set(selectedRows.map(\.result.id))
+                let selectedRowIds = selectedRows.map(\.result.id)
+                let rowsRemoved = result.1.filter { selectedRowIds.notContains($0) }
+                let rowsAdded = result.1.filter { selectedRowIds.contains($0) }
+
+                if rowsAdded.isNotEmpty {
+                    selectedResultIds.formUnion(rowsAdded)
+                }
+
+                if rowsRemoved.isNotEmpty {
+                    selectedResultIds.subtract(rowsRemoved)
+                }
+
                 bridge.selectionChanged(selectedResultIds)
             }
     }
@@ -381,7 +398,10 @@ public class SearchResultsViewModel: ObservableObject {
         if !editing {
             handleEditingChanged(true)
         }
-        toggleSelected(result)
+
+        if let selectedRow = rowViewModel(for: result) {
+            toggleSelected(selectedRow)
+        }
     }
 
     func handleEditingChanged(_ isEditing: Bool) {
@@ -407,14 +427,16 @@ public class SearchResultsViewModel: ObservableObject {
         )
     }
 
-    private func toggleSelected(_ result: SearchResult) {
-        if selectedResultIds.contains(result.id) {
-            selectedResultIds.remove(result.id)
-        } else {
-            selectedResultIds.insert(result.id)
-        }
+    private func rowViewModel(for result: SearchResult) -> SearchResultRowViewModel? {
+        listItems.first { $0.result == result }
+    }
 
-        bridge.selectionChanged(selectedResultIds)
+    private func toggleSelected(_ row: SearchResultRowViewModel) {
+        if selectedRows.contains(row) {
+            selectedRows.remove(row)
+        } else {
+            selectedRows.insert(row)
+        }
     }
     
     private func selectionFor(result: SearchResult) -> SearchResultSelection {
@@ -436,7 +458,9 @@ public class SearchResultsViewModel: ObservableObject {
             selectionAction: { [weak self] in
                 guard let self else { return }
                 if editing {
-                    toggleSelected(result)
+                    if let selectedRow = rowViewModel(for: result) {
+                        toggleSelected(selectedRow)
+                    }
                 } else {
                     bridge.selection(selection)
                 }
@@ -459,6 +483,9 @@ public class SearchResultsViewModel: ObservableObject {
         updateChipsFrom(appliedChips: results.appliedChips)
 
         self.listItems.append(contentsOf: items)
+
+        let selectedItems = items.filter { selectedResultIds.contains($0.result.id) }
+        selectedRows.formUnion(selectedItems)
 
         withAnimation {
             emptyViewModel = Self.makeEmptyView(
@@ -763,11 +790,11 @@ public extension SearchResultsViewModel {
         let currentResultsIds = resultsProvider.currentResultIds()
         if Set(currentResultsIds) == selectedResultIds {
             selectedResultIds.removeAll()
+            selectedRows.removeAll()
         } else {
             selectedResultIds = Set(currentResultsIds)
+            selectedRows = Set(listItems)
         }
-        
-        bridge.selectionChanged(selectedResultIds)
     }
 
     @discardableResult

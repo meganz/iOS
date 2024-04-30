@@ -29,6 +29,18 @@ extension Array where Element == PeekAction {
             )
         }
     }
+
+    @ViewBuilder
+    public var toContentView: some View {
+        ForEach(self, id: \.title) { action in
+            Button {
+                action.handler()
+            } label: {
+                Label(action.title, systemImage: action.imageName)
+            }
+
+        }
+    }
 }
 
 public struct PreviewContent {

@@ -446,12 +446,15 @@ final class SearchResultsViewModelTests: XCTestCase {
     func testSelectAll_whenNoNodesAreSelected_shouldSelectAllNodes() {
         let currentNodes: [ResultId] = [1, 2, 3, 4]
         let harness = Harness(self).withSelectedNodes([], currentResults: currentNodes)
+        let exp = expectation(description: "Wait for selection changed")
         var selectionChangeResult: Set<ResultId>?
         harness.bridge.selectionChanged = {
             selectionChangeResult = $0
+            exp.fulfill()
         }
         harness.sut.toggleSelectAll()
-        
+        wait(for: [exp], timeout: 1.0)
+
         XCTAssertEqual(harness.sut.selectedResultIds.sorted(), [1, 2, 3, 4])
         XCTAssertEqual(selectionChangeResult?.sorted(), [1, 2, 3, 4])
     }
@@ -459,12 +462,15 @@ final class SearchResultsViewModelTests: XCTestCase {
     func testSelectAll_whenSomeNodesAreSelected_shouldSelectAllNodes() {
         let currentNodes: [ResultId] = [1, 2, 3, 4]
         let harness = Harness(self).withSelectedNodes([1, 2], currentResults: currentNodes)
+        let exp = expectation(description: "Wait for selection changed")
         var selectionChangeResult: Set<ResultId>?
         harness.bridge.selectionChanged = {
             selectionChangeResult = $0
+            exp.fulfill()
         }
         harness.sut.toggleSelectAll()
-        
+        wait(for: [exp], timeout: 1.0)
+
         XCTAssertEqual(harness.sut.selectedResultIds.sorted(), [1, 2, 3, 4])
         XCTAssertEqual(selectionChangeResult?.sorted(), [1, 2, 3, 4])
     }
@@ -474,13 +480,16 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self).withSelectedNodes(currentNodes, currentResults: currentNodes)
         harness.resultsProvider.currentResultIdsToReturn = [1, 2, 3, 4]
         harness.sut.selectedResultIds = [1, 2, 3, 4]
+        let exp = expectation(description: "Wait for selection changed")
         var selectionChangeResult: Set<ResultId>?
         harness.bridge.selectionChanged = {
             selectionChangeResult = $0
+            exp.fulfill()
         }
         
         harness.sut.toggleSelectAll()
-        
+        wait(for: [exp], timeout: 1.0)
+
         XCTAssertTrue(harness.sut.selectedResultIds.isEmpty)
         XCTAssertTrue(selectionChangeResult?.isEmpty == true)
     }

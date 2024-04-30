@@ -20,6 +20,33 @@ struct SearchResultRowView: View {
     @Environment(\.editMode) private var editMode
 
     var body: some View {
+        if editMode?.wrappedValue.isEditing == true {
+            contentWithInsetsAndSwipeActions
+                .contextMenu {
+                    viewModel.previewContent.actions.toContentView
+                }
+        } else {
+            contentWithInsetsAndSwipeActions
+                .contextMenuWithPreview(
+                    actions: viewModel.previewContent.actions.toUIActions,
+                    sourcePreview: {
+                        content
+                    },
+                    contentPreviewProvider: {
+                        switch viewModel.previewContent.previewMode {
+                        case let .preview(contentPreviewProvider):
+                            return contentPreviewProvider()
+                        case .noPreview:
+                            return nil
+                        }
+                    },
+                    didTapPreview: viewModel.actions.previewTapAction,
+                    didSelect: viewModel.actions.selectionAction
+                )
+        }
+    }
+
+    private var contentWithInsetsAndSwipeActions: some View {
         content
             .swipeActions {
                 ForEach(viewModel.swipeActions, id: \.self) { swipeAction in
@@ -40,24 +67,8 @@ struct SearchResultRowView: View {
                     trailing: 16
                 )
             )
-            .contextMenuWithPreview(
-                actions: viewModel.previewContent.actions.toUIActions,
-                sourcePreview: {
-                    content
-                },
-                contentPreviewProvider: {
-                    switch viewModel.previewContent.previewMode {
-                    case let .preview(contentPreviewProvider):
-                        return contentPreviewProvider()
-                    case .noPreview:
-                        return nil
-                    }
-                },
-                didTapPreview: viewModel.actions.previewTapAction,
-                didSelect: viewModel.actions.selectionAction
-            )
     }
-    
+
     private var content: some View {
         HStack {
             HStack {
