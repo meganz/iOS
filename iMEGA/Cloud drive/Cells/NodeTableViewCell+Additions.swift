@@ -11,11 +11,11 @@ extension NodeTableViewCell {
         super.prepareForReuse()
         
         viewModel = nil
+        cancellables = nil
+
         thumbnailImageView.removeBlurFromView()
         [thumbnailContainer, topContainerStackView, bottomContainerStackView]
-            .forEach { $0?.alpha = 1 }
-        
-        cancellables = nil
+            .forEach { $0?.alpha = 1 }        
     }
     
     @objc func setTitleAndFolderName(for recentActionBucket: MEGARecentActionBucket,
@@ -96,9 +96,9 @@ extension NodeTableViewCell {
         ].forEach { $0?.alpha = alpha }
         
         if viewModel.hasThumbnail, isSensitive {
-            thumbnailImageView.addBlurToView(style: .systemUltraThinMaterial)
+            thumbnailImageView?.addBlurToView(style: .systemUltraThinMaterial)
         } else {
-            thumbnailImageView.removeBlurFromView()
+            thumbnailImageView?.removeBlurFromView()
         }
     }
     

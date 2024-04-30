@@ -1,19 +1,76 @@
+import Combine
+import Foundation
 import MEGADomain
+import MEGAPresentation
+import MEGASwift
 
 @objc class NodeCollectionViewCellViewModel: NSObject {
-    private let mediaUseCase: any MediaUseCaseProtocol
     
-    init(mediaUseCase: any MediaUseCaseProtocol) {
-        self.mediaUseCase = mediaUseCase
+    @Published private(set) var isSensitive: Bool = false
+    var hasThumbnail: Bool { node?.hasThumbnail ?? false }
+    
+    private let node: NodeEntity?
+    private let isFromSharedItem: Bool
+    private let nodeUseCase: any NodeUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private var task: Task<Void, Never>?
+    
+    init(node: NodeEntity?,
+         isFromSharedItem: Bool,
+         nodeUseCase: some NodeUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+        
+        self.node = node
+        self.isFromSharedItem = isFromSharedItem
+        self.nodeUseCase = nodeUseCase
+        self.featureFlagProvider = featureFlagProvider
+    }
+    
+    deinit {
+        task?.cancel()
+        task = nil
+    }
+    
+    @discardableResult
+    func configureCell() -> Task<Void, Never> {
+        let task = Task { @MainActor [weak self] in
+            guard let self, let node else { return }
+            await applySensitiveConfiguration(for: node)
+        }
+        self.task = task
+        return task
+    }
+    
+    @objc func isNodeVideo() -> Bool {
+        node?.name.fileExtensionGroup.isVideo ?? false
     }
     
     @objc func isNodeVideo(name: String) -> Bool {
-        mediaUseCase.isVideo(name)
+        name.fileExtensionGroup.isVideo
     }
     
-    @objc func isNodeVideoWithValidDuration(node: MEGANode) -> Bool {
-        guard let nodeName = node.name else { return false }
-        return isNodeVideo(name: nodeName) && node.duration >= 0
+    @objc func isNodeVideoWithValidDuration() -> Bool {
+        guard let node else { return false }
+        return isNodeVideo(name: node.name) && node.duration >= 0
     }
     
+    @MainActor
+    private func applySensitiveConfiguration(for node: NodeEntity) async {
+        guard !isFromSharedItem,
+              featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
+            isSensitive = false
+            return
+        }
+                
+        guard !node.isMarkedSensitive else {
+            isSensitive = true
+            return
+        }
+        
+        do {
+            isSensitive = try await nodeUseCase.isInheritingSensitivity(node: node)
+        } catch {
+            MEGALogError("Error checking if node is inheriting sensitivity: \(error)")
+        }
+    }
 }

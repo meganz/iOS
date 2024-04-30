@@ -3,15 +3,59 @@ import MEGADomain
 import MEGASDKRepo
 import UIKit
 
-@objc extension NodeCollectionViewCell {
+extension NodeCollectionViewCell {
     
-     func createNodeCollectionCellViewModel() -> NodeCollectionViewCellViewModel {
-        let mediaUseCase = MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo,
-                                        videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo))
-        return NodeCollectionViewCellViewModel(mediaUseCase: mediaUseCase)
+    open override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cancellables = []
+
+        [thumbnailImageView, thumbnailIconView, topNodeIconsView, labelsContainerStackView]
+            .forEach { $0?.alpha = 1 }
     }
     
-    func setDurationForVideo(path: String) {
+    @objc func createViewModel(node: MEGANode?, isFromSharedItem: Bool) -> NodeCollectionViewCellViewModel {
+        NodeCollectionViewCellViewModel(
+            node: node?.toNodeEntity(),
+            isFromSharedItem: isFromSharedItem,
+            nodeUseCase: NodeUseCase(
+              nodeDataRepository: NodeDataRepository.newRepo,
+              nodeValidationRepository: NodeValidationRepository.newRepo,
+              nodeRepository: NodeRepository.newRepo))
+    }
+    
+    @objc  func bind(viewModel: NodeCollectionViewCellViewModel) {
+        self.viewModel = viewModel
+        
+        viewModel.configureCell()
+        
+        cancellables = [
+            viewModel
+                .$isSensitive
+                .removeDuplicates()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.configureBlur(isSensitive: $0) }
+        ]
+        
+    }
+    
+    private func configureBlur(isSensitive: Bool) {
+        let alpha: CGFloat = isSensitive ? 0.5 : 1
+        [
+            viewModel.hasThumbnail ? nil : thumbnailImageView,
+            thumbnailIconView,
+            topNodeIconsView,
+            labelsContainerStackView
+        ].forEach { $0?.alpha = alpha }
+        
+        if viewModel.hasThumbnail, isSensitive {
+            thumbnailImageView?.addBlurToView(style: .systemUltraThinMaterial)
+        } else {
+            thumbnailImageView?.removeBlurFromView()
+        }
+    }
+    
+    @objc func setDurationForVideo(path: String) {
         let asset = AVURLAsset(url: URL(fileURLWithPath: path, isDirectory: false))
         asset.loadValuesAsynchronously(forKeys: ["duration"]) {
             DispatchQueue.main.async {
@@ -35,7 +79,7 @@ import UIKit
         }
     }
     
-    func setThumbnail(url: URL) {
+    @objc func setThumbnail(url: URL) {
         let fileAttributeGenerator = FileAttributeGenerator(sourceURL: url)
         Task { @MainActor in
             guard let image = await fileAttributeGenerator.requestThumbnail() else { return }
@@ -44,7 +88,7 @@ import UIKit
         }
     }
     
-    func setupTokenColors() {
+    @objc func setupTokenColors() {
         nameLabel?.textColor = TokenColors.Text.primary
         infoLabel?.textColor = TokenColors.Text.secondary
         durationLabel?.textColor = TokenColors.Button.primary
@@ -70,7 +114,7 @@ import UIKit
         videoIconView?.tintColor = TokenColors.Icon.secondary
     }
     
-    func setupThumbnailBackground() {
+    @objc func setupThumbnailBackground() {
         if UIColor.isDesignTokenEnabled() {
             topNodeIconsView?.backgroundColor = TokenColors.Background.surface2
             thumbnailImageView?.backgroundColor = TokenColors.Background.surface1
@@ -93,7 +137,7 @@ import UIKit
         }
     }
     
-    func updateSelection() {
+    @objc func updateSelection() {
         if moreButton?.isHidden ?? false && self.isSelected {
             selectImageView?.image = UIImage(resource: .thumbnailSelected)
             self.contentView.layer.borderColor = UIColor.mnz_green00A886().cgColor
