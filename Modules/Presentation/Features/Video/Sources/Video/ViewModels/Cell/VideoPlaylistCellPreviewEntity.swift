@@ -7,3 +7,13 @@ struct VideoPlaylistCellPreviewEntity {
     let title: String
     let isExported: Bool
 }
+
+extension VideoPlaylistCellPreviewEntity {
+    static let placeholder = VideoPlaylistCellPreviewEntity(
+        imageContainers: [],
+        count: "",
+        duration: "",
+        title: "",
+        isExported: false
+    )
+}
