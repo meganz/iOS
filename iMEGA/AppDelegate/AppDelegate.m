@@ -96,6 +96,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [FIRApp configure];
     [AppEnvironmentConfigurator configAppEnvironment];
     
 #if defined(DEBUG) || defined(QA_CONFIG)
@@ -126,6 +127,11 @@
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:[NSString stringWithFormat: @"Application will finish launching with options: %@", launchOptions]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
     UNUserNotificationCenter.currentNotificationCenter.delegate = self;
     
@@ -133,7 +139,6 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [FIRApp configure];
     [self migrateLocalCachesLocation];
     [self registerCameraUploadBackgroundRefresh];
 
@@ -264,6 +269,11 @@
     
     MEGALogDebug(@"[App Lifecycle] Application did finish launching with options %@", launchOptions);
     
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:[NSString stringWithFormat: @"Application did finish launching with options: %@", launchOptions]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    
     [self.window makeKeyAndVisible];
     if (application.applicationState != UIApplicationStateBackground) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
@@ -279,6 +289,11 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will resign active");
     
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:@"Application will resign active"
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    
     if (MEGASdk.isLoggedIn) {
         [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
     }
@@ -292,6 +307,11 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did enter background");
+    
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:@"Application did enter background"
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
     
     [MEGAChatSdk.shared setBackgroundStatus:YES];
     [MEGAChatSdk.shared saveCurrentState];
@@ -314,6 +334,11 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
+    
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:@"Application will enter foreground"
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
     [self checkChatInitState];
     [MEGAReachabilityManager.sharedManager retryOrReconnect];
     
@@ -341,6 +366,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did become active");
     
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:@"Application did become active"
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults setInteger:0 forKey:MEGAApplicationIconBadgeNumber];    
     application.applicationIconBadgeNumber = 0;
@@ -358,6 +388,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:@"Application will terminate"
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
 
     [AudioPlayerManager.shared playbackStoppedForCurrentItem];
@@ -366,6 +401,11 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     MEGALogDebug(@"[App Lifecycle] Application open URL %@", url);
+    
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:[NSString stringWithFormat:@"Application open URL %@", url]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
     
     MEGALinkManager.linkURL = url;
     [self manageLink:url];
@@ -401,6 +441,11 @@
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
     MEGALogDebug(@"[App Lifecycle] Application continue user activity %@", userActivity.activityType);
+    
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:[NSString stringWithFormat:@"Application continue user activity %@", userActivity.activityType]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
     
     if ([MEGAReachabilityManager isReachable]) {
         if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
@@ -494,6 +539,11 @@
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
     MEGALogDebug(@"[App Lifecycle] Application perform action for shortcut item");
     
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:@"Application perform action for shortcut item"
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    
     if (isFetchNodesDone) {
         completionHandler([self manageQuickActionType:shortcutItem.type]);
     }
@@ -501,10 +551,21 @@
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     MEGALogWarning(@"[App Lifecycle] Application did receive memory warning");
+    
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:@"Application did receive memory warning"
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
+    
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:[NSString stringWithFormat:@"Application handle events for background session: %@", identifier]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    
     [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
     [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
