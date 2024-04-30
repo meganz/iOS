@@ -4,8 +4,6 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
-import MEGASdk
-import MEGASDKRepoMock
 import XCTest
 
 final class NodeTableViewCellViewModelTests: XCTestCase {
