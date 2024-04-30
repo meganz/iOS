@@ -7,7 +7,7 @@ public enum AlbumEntityType: Sendable {
     case user
 }
 
-public struct AlbumEntity: Identifiable, Hashable, Sendable {
+public struct AlbumEntity: Identifiable, Sendable {
     public let id: HandleEntity
     public var name: String
     public var coverNode: NodeEntity?
@@ -36,6 +36,21 @@ public struct AlbumEntity: Identifiable, Hashable, Sendable {
         self.modificationTime = modificationTime
         self.sharedLinkStatus = sharedLinkStatus
         self.metaData = metaData
+    }
+}
+
+extension AlbumEntity: Hashable {
+    public static func == (lhs: AlbumEntity, rhs: AlbumEntity) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.coverNode?.handle == rhs.coverNode?.handle &&
+        lhs.coverNode?.isMarkedSensitive == rhs.coverNode?.isMarkedSensitive &&
+        lhs.count == rhs.count &&
+        lhs.type == rhs.type &&
+        lhs.creationTime == rhs.creationTime &&
+        lhs.modificationTime == rhs.modificationTime &&
+        lhs.sharedLinkStatus == rhs.sharedLinkStatus &&
+        lhs.metaData == rhs.metaData
     }
 }
 

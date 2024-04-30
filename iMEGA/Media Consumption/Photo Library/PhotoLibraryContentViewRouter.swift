@@ -90,8 +90,8 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         .start()
     }
     
-    private func makeThumbnailLoader() -> some ThumbnailLoaderProtocol {
-        ThumbnailLoader(thumbnailUseCase: ThumbnailUseCase.makeThumbnailUseCase(mode: contentMode))
+    private func makeThumbnailLoader() -> any ThumbnailLoaderProtocol {
+        ThumbnailLoaderFactory.makeThumbnailLoader(mode: contentMode)
     }
 }
 
