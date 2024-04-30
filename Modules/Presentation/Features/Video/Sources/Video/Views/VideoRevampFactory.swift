@@ -15,6 +15,7 @@ public final class VideoRevampSyncModel: ObservableObject {
     @Published public private(set) var showsTabView = false
     @Published public var currentTab: VideosTab = .all
     @Published public var shouldShowAddNewPlaylistAlert = false
+    @Published public var isSearchActive = false
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -26,6 +27,11 @@ public final class VideoRevampSyncModel: ObservableObject {
                 self?.showsTabView = isEditing ? false : true
             }
             .store(in: &subscriptions)
+        
+        $isSearchActive
+            .map { !$0 }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$showsTabView)
     }
 }
 

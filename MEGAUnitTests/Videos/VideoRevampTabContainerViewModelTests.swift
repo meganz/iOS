@@ -85,6 +85,15 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.syncModel.editMode, .inactive)
     }
     
+    func testDispatch_navigationBarActionDidTapCancel_searchShouldNotActive() {
+        let (sut, _, _) = makeSUT()
+        
+        sut.dispatch(.navigationBarAction(.didTapCancel))
+        
+        XCTAssertFalse(sut.syncModel.isSearchActive)
+        XCTAssertTrue(sut.syncModel.showsTabView)
+    }
+    
     // MARK: - Dispatch.navigationBarAction.didTapSelectAll
     
     func testDispatch_navigationBarActionDidTapSelectAll_initialStateShouldFalse() {
@@ -133,6 +142,25 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         sut.dispatch(.searchBarAction(.cancel))
         
         XCTAssertEqual(sut.syncModel.searchText, "")
+    }
+    
+    func testDispatch_searchBarActionCancel_searchShouldBecomeInactive() {
+        let (sut, _, _) = makeSUT()
+        
+        sut.dispatch(.searchBarAction(.cancel))
+        
+        XCTAssertFalse(sut.syncModel.isSearchActive)
+    }
+    
+    // MARK: - Dispatch.searchBarAction.becomeActive
+    
+    func testDispatch_searchBarActionBecomeActive_searchShouldActivate() {
+        let (sut, _, _) = makeSUT()
+        
+        sut.dispatch(.searchBarAction(.becomeActive))
+        
+        XCTAssertTrue(sut.syncModel.isSearchActive)
+        XCTAssertFalse(sut.syncModel.showsTabView)
     }
     
     // MARK: - renderNavigationTitle

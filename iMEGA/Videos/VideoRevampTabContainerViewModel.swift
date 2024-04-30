@@ -21,6 +21,7 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
         enum SearchBarAction {
             case updateSearchResults(searchText: String)
             case cancel
+            case becomeActive
         }
     }
     
@@ -87,12 +88,16 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             syncModel.isAllSelected = !syncModel.isAllSelected
         case .navigationBarAction(.didTapCancel):
             syncModel.editMode = .inactive
+            syncModel.isSearchActive = false
             syncModel.searchText.removeAll()
             invokeCommand?(.searchBarCommand(.reshowSearchBar))
         case .searchBarAction(.updateSearchResults(let searchText)):
             syncModel.searchText = searchText
         case .searchBarAction(.cancel):
             syncModel.searchText = ""
+            syncModel.isSearchActive = false
+        case .searchBarAction(.becomeActive):
+            syncModel.isSearchActive = true
         }
     }
     
