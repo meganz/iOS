@@ -15,11 +15,6 @@ import MEGASwift
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var task: Task<Void, Never>?
     
-    deinit {
-        task?.cancel()
-        task = nil
-    }
-    
     init(nodes: [NodeEntity],
          flavour: NodeTableViewCellFlavor,
          nodeUseCase: some NodeUseCaseProtocol,
@@ -34,6 +29,11 @@ import MEGASwift
         self.flavour = flavour
         self.nodeUseCase = nodeUseCase
         self.featureFlagProvider = featureFlagProvider
+    }
+    
+    deinit {
+        task?.cancel()
+        task = nil
     }
     
     @discardableResult

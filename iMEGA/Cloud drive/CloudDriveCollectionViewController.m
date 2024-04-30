@@ -78,7 +78,11 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
     NodeCollectionViewCell *cell = indexPath.section == 1 ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
-    [cell configureCellForNode:node allowedMultipleSelection:self.collectionView.allowsMultipleSelection sdk:MEGASdk.shared delegate:self];
+    
+    [cell configureCellForNode:node
+      allowedMultipleSelection:self.collectionView.allowsMultipleSelection
+              isFromSharedItem: self.cloudDrive.isFromSharedItem
+                           sdk:MEGASdk.shared delegate:self];
     
     return cell;
 }

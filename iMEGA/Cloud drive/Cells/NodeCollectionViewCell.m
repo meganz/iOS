@@ -30,13 +30,6 @@ static NSString *kFileSize = @"kFileSize";
 
 @implementation NodeCollectionViewCell
 
-- (NodeCollectionViewCellViewModel *)viewModel {
-    if (_viewModel == nil) {
-        _viewModel = [self createNodeCollectionCellViewModel];
-    }
-    return _viewModel;
-}
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     
@@ -50,9 +43,12 @@ static NSString *kFileSize = @"kFileSize";
     [self updateSelection];
 }
 
-- (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
+- (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection isFromSharedItem:(BOOL)isFromSharedItem sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
     self.node = node;
     self.delegate = delegate;
+    
+    [self bindWithViewModel:[self createViewModelWithNode:node isFromSharedItem:isFromSharedItem]];
+    
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
@@ -104,8 +100,8 @@ static NSString *kFileSize = @"kFileSize";
         });
     }];
     
-    self.durationLabel.hidden = ![self.viewModel isNodeVideoWithValidDurationWithNode:node];
-    self.videoIconView.hidden = ![self.viewModel isNodeVideoWithName:node.name];
+    self.durationLabel.hidden = ![self.viewModel isNodeVideoWithValidDuration];
+    self.videoIconView.hidden = ![self.viewModel isNodeVideo];
     if (!self.durationLabel.hidden) {
         self.durationLabel.layer.cornerRadius = 4;
         self.durationLabel.layer.masksToBounds = true;
@@ -125,6 +121,9 @@ static NSString *kFileSize = @"kFileSize";
 }
 
 - (void)configureCellForOfflineItem:(NSDictionary *)item itemPath:(NSString *)pathForItem allowedMultipleSelection:(BOOL)multipleSelection sdk:(nonnull MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
+    
+    [self bindWithViewModel:[self createViewModelWithNode:nil isFromSharedItem:NO]];
+
     self.favouriteView.hidden = self.linkView.hidden = self.versionedView.hidden = self.topNodeIconsView.hidden = YES;
     self.labelView.hidden = self.downloadedImageView.hidden = self.downloadedView.hidden = YES;
     self.delegate = delegate;
@@ -203,7 +202,7 @@ static NSString *kFileSize = @"kFileSize";
 }
 
 - (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(nonnull MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
-    [self configureCellForNode:node allowedMultipleSelection:multipleSelection sdk:sdk delegate:delegate];
+    [self configureCellForNode:node allowedMultipleSelection:multipleSelection isFromSharedItem:NO sdk:sdk delegate:delegate];
     
     if (self.downloadedImageView != nil) {
         if ([node isFile] && [MEGAStore.shareInstance offlineNodeWithNode:node] != nil) {

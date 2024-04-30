@@ -1,70 +1,224 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
+import MEGASdk
 import MEGASDKRepoMock
 import XCTest
 
 final class NodeCollectionViewCellViewModelTests: XCTestCase {
-
+    
     func testIsNodeVideo_videoName_shouldBeTrue() {
-        let mockUsecase = MockMediaUseCase(isStringVideo: true)
-        let viewModel = NodeCollectionViewCellViewModel(mediaUseCase: mockUsecase)
+        let viewModel = sut()
         
         XCTAssertTrue(viewModel.isNodeVideo(name: "video.mp4"))
     }
     
     func testIsNodeVideo_imageName_shouldBeFalse() {
-        let mockUsecase = MockMediaUseCase(isStringVideo: false)
-        let viewModel = NodeCollectionViewCellViewModel(mediaUseCase: mockUsecase)
+        let viewModel = sut()
         
         XCTAssertFalse(viewModel.isNodeVideo(name: "image.png"))
     }
     
     func testIsNodeVideo_noName_shouldBeFalse() {
-        let mockUsecase = MockMediaUseCase(isStringVideo: false)
-        let viewModel = NodeCollectionViewCellViewModel(mediaUseCase: mockUsecase)
+        let viewModel = sut()
         
         XCTAssertFalse(viewModel.isNodeVideo(name: ""))
     }
     
     func testIsNodeVideoWithValidDuration_withVideo_validDuration_shouldBeTrue() {
-        let mockUsecase = MockMediaUseCase(isStringVideo: true)
-        let viewModel = NodeCollectionViewCellViewModel(mediaUseCase: mockUsecase)
+        let mockNode = NodeEntity(name: "video.mp4", handle: 1, duration: 10)
+        let viewModel = sut(node: mockNode)
         
-        let mockNode = MockNode(handle: 1, name: "video.mp4", duration: 10)
-        XCTAssertTrue(viewModel.isNodeVideoWithValidDuration(node: mockNode))
+        XCTAssertTrue(viewModel.isNodeVideoWithValidDuration())
     }
     
     func testIsNodeVideoWithValidDuration_withVideo_zeroDuration_shouldBeTrue() {
-        let mockUsecase = MockMediaUseCase(isStringVideo: true)
-        let viewModel = NodeCollectionViewCellViewModel(mediaUseCase: mockUsecase)
+        let mockNode = NodeEntity(name: "video.mp4", handle: 1, duration: 0)
+        let viewModel = sut(node: mockNode)
         
-        let mockNode = MockNode(handle: 1, name: "video.mp4", duration: 0)
-        XCTAssertTrue(viewModel.isNodeVideoWithValidDuration(node: mockNode))
+        XCTAssertTrue(viewModel.isNodeVideoWithValidDuration())
     }
     
     func testIsNodeVideoWithValidDuration_withVideo_invalidDuration_shouldBeFalse() {
-        let mockUsecase = MockMediaUseCase(isStringVideo: true)
-        let viewModel = NodeCollectionViewCellViewModel(mediaUseCase: mockUsecase)
+        let mockNode = NodeEntity(name: "video.mp4", handle: 1, duration: -1)
+        let viewModel = sut(node: mockNode)
         
-        let mockNode = MockNode(handle: 1, name: "video.mp4", duration: -1)
-        XCTAssertFalse(viewModel.isNodeVideoWithValidDuration(node: mockNode))
+        XCTAssertFalse(viewModel.isNodeVideoWithValidDuration())
     }
     
     func testIsNodeVideoWithValidDuration_notVideo_shouldBeFalse() {
-        let mockUsecase = MockMediaUseCase(isStringVideo: false)
-        let viewModel = NodeCollectionViewCellViewModel(mediaUseCase: mockUsecase)
+        let mockNode = NodeEntity(name: "image.png", handle: 1, duration: 0)
+        let viewModel = sut(node: mockNode)
         
-        let mockNode = MockNode(handle: 1, name: "image.png", duration: 0)
-        XCTAssertFalse(viewModel.isNodeVideoWithValidDuration(node: mockNode))
+        XCTAssertFalse(viewModel.isNodeVideoWithValidDuration())
     }
     
     func testIsNodeVideoWithValidDuration_noName_shouldBeFalse() {
-        let mockUsecase = MockMediaUseCase(isStringVideo: false)
-        let viewModel = NodeCollectionViewCellViewModel(mediaUseCase: mockUsecase)
+        let mockNode = NodeEntity(name: "", handle: 1, duration: 0)
+        let viewModel = sut(node: mockNode)
         
-        let mockNode = MockNode(handle: 1, name: "", duration: 0)
-        XCTAssertFalse(viewModel.isNodeVideoWithValidDuration(node: mockNode))
+        XCTAssertFalse(viewModel.isNodeVideoWithValidDuration())
     }
     
+    func testHasThumbnail_NodeEntityHasThumbnail_shouldBeTrue() {
+        let mockNode = NodeEntity(handle: 1, hasThumbnail: true)
+        let viewModel = sut(node: mockNode)
+        
+        XCTAssertTrue(viewModel.hasThumbnail)
+    }
+    
+    func testHasThumbnail_nodeIsNil_shouldBeFalse() {
+        let viewModel = sut(node: nil)
+        
+        XCTAssertFalse(viewModel.hasThumbnail)
+    }
+    
+    func testConfigureCell_whenFeatureFlagOnAndNodeIsNil_shouldSetIsSensitiveFalse() async {
+        let viewModel = sut(
+            node: NodeEntity(handle: 1, isMarkedSensitive: true),
+            isFromSharedItem: true,
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            featureFlagHiddenNodes: true)
+        
+        await viewModel.configureCell().value
+
+        let expectation = expectation(description: "viewModel.isSensitive should return value")
+        let subscription = viewModel.$isSensitive
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .sink { isSensitive in
+                XCTAssertFalse(isSensitive)
+                expectation.fulfill()
+            }
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        subscription.cancel()
+    }
+    
+    func testConfigureCell_whenFeatureFlagOnAndIsFromSharedItem_shouldSetIsSensitiveFalse() async {
+        let viewModel = sut(
+            node: nil,
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            featureFlagHiddenNodes: true)
+        
+        await viewModel.configureCell().value
+
+        let expectation = expectation(description: "viewModel.isSensitive should return value")
+        let subscription = viewModel.$isSensitive
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .sink { isSensitive in
+                XCTAssertFalse(isSensitive)
+                expectation.fulfill()
+            }
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        subscription.cancel()
+    }
+    
+    func testConfigureCell_whenFeatureFlagOnAndNodeIsSensitive_shouldSetIsSensitiveTrue() async {
+        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
+        let viewModel = sut(
+            node: node,
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            featureFlagHiddenNodes: true)
+        
+        await viewModel.configureCell().value
+
+        let expectation = expectation(description: "viewModel.isSensitive should return value")
+        let subscription = viewModel.$isSensitive
+            .first { $0 }
+            .sink { isSensitive in
+                XCTAssertTrue(isSensitive)
+                expectation.fulfill()
+            }
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        subscription.cancel()
+    }
+    
+    func testConfigureCell_whenFeatureFlagOffAndNodeIsSensitive_shouldSetIsSensitiveFalse() async {
+        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
+        let viewModel = sut(
+            node: node,
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            featureFlagHiddenNodes: false)
+        
+        await viewModel.configureCell().value
+
+        let expectation = expectation(description: "viewModel.isSensitive should return value")
+        let subscription = viewModel.$isSensitive
+            .debounce(for: 0.5, scheduler: DispatchQueue.main)
+            .first { !$0 }
+            .sink { isSensitive in
+                XCTAssertFalse(isSensitive)
+                expectation.fulfill()
+            }
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        subscription.cancel()
+    }
+    
+    func testConfigureCell_whenFeatureFlagOnAndNodeInheritedSensitivity_shouldSetIsSensitiveTrue() async {
+        let node = NodeEntity(handle: 1, isMarkedSensitive: false)
+        let viewModel = sut(
+            node: node,
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            featureFlagHiddenNodes: true)
+        
+        await viewModel.configureCell().value
+
+        let expectation = expectation(description: "viewModel.isSensitive should return value")
+        let subscription = viewModel.$isSensitive
+            .first { $0 }
+            .sink { isSensitive in
+                XCTAssertTrue(isSensitive)
+                expectation.fulfill()
+            }
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        subscription.cancel()
+    }
+        
+    func testConfigureCell_whenFeatureFlagOffAndNodeInheritedSensitivity_shouldSetIsSensitiveFalse() async {
+        let node = NodeEntity(handle: 1, isMarkedSensitive: false)
+        let viewModel = sut(
+            node: node,
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            featureFlagHiddenNodes: false)
+
+        await viewModel.configureCell().value
+        
+        let expectation = expectation(description: "viewModel.isSensitive should return value")
+        let subscription = viewModel.$isSensitive
+            .debounce(for: 0.5, scheduler: DispatchQueue.main)
+            .first { !$0 }
+            .sink { isSensitive in
+                XCTAssertFalse(isSensitive)
+                expectation.fulfill()
+            }
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        subscription.cancel()
+    }
+}
+
+extension NodeCollectionViewCellViewModelTests {
+    private func sut(node: NodeEntity? = nil,
+                     isFromSharedItem: Bool = false,
+                     nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+                     featureFlagHiddenNodes: Bool = false) -> NodeCollectionViewCellViewModel {
+        NodeCollectionViewCellViewModel(
+            node: node,
+            isFromSharedItem: isFromSharedItem,
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
+    }
 }

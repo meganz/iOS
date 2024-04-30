@@ -188,7 +188,8 @@ extension FavouritesExplorerGridSource: UICollectionViewDataSource {
         }
         
         cell.configureCell(for: node,
-                           allowedMultipleSelection: collectionView.allowsMultipleSelection,
+                           allowedMultipleSelection: collectionView.allowsMultipleSelection, 
+                           isFromSharedItem: false,
                            sdk: .shared,
                            delegate: self)
         return cell
@@ -202,6 +203,7 @@ extension FavouritesExplorerGridSource: DynamicTypeCollectionViewSizing {
         let cell = FavouritesSection(section: indexPath.section).sizingViewCell()
         cell.configureCell(for: node,
                            allowedMultipleSelection: collectionView.allowsMultipleSelection,
+                           isFromSharedItem: false,
                            sdk: .shared,
                            delegate: self)
         return cell
