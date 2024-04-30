@@ -4,14 +4,33 @@ public struct ReleaseInput {
 }
 
 public func releaseInput() throws -> ReleaseInput {
-    let version = try majorMinorOrMajorMinorPatchInput("Enter the version number you're releasing (format: '[major].[minor]' or '[major].[minor].[patch]'):")
-    let message = try releaseNotesInput(defaultReleaseNotes: defaultReleaseNotesInput())
+    let version = if let version = readFromCache(key: .version) {
+        version
+    } else {
+        try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
+    }
+
+    let message = if let message = readFromCache(key: .releaseNotes) {
+        message
+    } else {
+        try releaseNotesInput(defaultReleaseNotes: defaultReleaseNotesInput())
+    }
+
     return .init(version: version, message: message)
 }
 
 private func defaultReleaseNotesInput() throws -> String {
-    let sdkVersion = try submoduleVersionInput(.sdk)
-    let chatVersion = try submoduleVersionInput(.chatSDK)
+    let sdkVersion = if let sdkVersion = readFromCache(key: .sdkVersion) {
+        sdkVersion
+    } else {
+        try submoduleVersionInput(.sdk)
+    }
+
+    let chatVersion = if let chatVersion = readFromCache(key: .chatVersion) {
+        chatVersion
+    } else {
+        try submoduleVersionInput(.chatSDK)
+    }
 
     let defaultReleaseNotes =
     """

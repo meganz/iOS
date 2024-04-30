@@ -34,3 +34,4 @@ transifex/download/*
 scripts/ReleaseScripts/*/.build
 scripts/ReleaseScripts/*/.swiftpm
 scripts/ReleaseScripts/Resources/values.env
+scripts/ReleaseScripts/Resources/cache.json

@@ -39,7 +39,7 @@ private func sendReleaseCandidateMessage(input: UserInput, channelId: String) as
         <\(input.jiraReleasePackageLink)|\(input.version) JIRA Release Package>
 
         *Release notes*:
-        - \(input.releaseNotes)
+        \(input.releaseNotes)
         """
     ]
 
