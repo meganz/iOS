@@ -1,4 +1,6 @@
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAPresentation
 
 enum DeeplinkPathKey: String {
     case file = "/file"
@@ -135,19 +137,26 @@ extension NSURL {
         } else if host == DeeplinkHostKey.publicChat.rawValue {
             return .publicChatLink
         } else if host == DeeplinkHostKey.shortcutUpload.rawValue {
+            DIContainer.tracker.trackAnalyticsEvent(with: ShortcutWidgetUploadFileButtonPressedEvent())
             return .uploadFile
         } else if host == DeeplinkHostKey.shortcutScanDocument.rawValue {
+            DIContainer.tracker.trackAnalyticsEvent(with: ShortcutWidgetScanDocumentButtonPressedEvent())
             return .scanDocument
         } else if host == DeeplinkHostKey.shortcutStartConversation.rawValue {
+            DIContainer.tracker.trackAnalyticsEvent(with: ShortcutWidgetStartConversationButtonPressedEvent())
             return .startConversation
         } else if host == DeeplinkHostKey.shortcutAddContact.rawValue {
+            DIContainer.tracker.trackAnalyticsEvent(with: ShortcutWidgetAddContactButtonPressedEvent())
             return .addContact
         } else if host == DeeplinkHostKey.shortcutRecent.rawValue {
+            DIContainer.tracker.trackAnalyticsEvent(with: QuickAccessWidgetRecentsPressedEvent())
             return .showRecents
         } else if host == DeeplinkHostKey.shortcutFavourites.rawValue {
+            DIContainer.tracker.trackAnalyticsEvent(with: QuickAccessWidgetFavouritesPressedEvent())
             guard let path = path, !path.isEmpty else { return .showFavourites }
             return .presentFavouritesNode
         } else if host == DeeplinkHostKey.shortcutOffline.rawValue {
+            DIContainer.tracker.trackAnalyticsEvent(with: QuickAccessWidgetOffilePressedEvent())
             guard let path = path, !path.isEmpty else { return .showOffline }
             return .presentOfflineFile
         } else if host == DeeplinkHostKey.presentNode.rawValue {
