@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MegaAvatarView;
+@class MegaAvatarView, ItemCollectionViewCellViewModel;
 
 @interface ItemCollectionViewCell : UICollectionViewCell
 
@@ -17,5 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *removeUserButton;
 
 @property (weak, nonatomic) IBOutlet MegaAvatarView *avatarView;
+
+@property (strong, nonatomic) ItemCollectionViewCellViewModel *viewModel;
+@property (strong, nonatomic) NSSet<id> *cancellables;
 
 @end

@@ -8,7 +8,7 @@
 
 typedef void (^ShowSelectedNodeAction)(UIViewController *);
 
-@class CloudDriveViewController;
+@class CloudDriveViewController, ThumbnailViewerTableViewCellViewModel;
 
 @interface ThumbnailViewerTableViewCell : UITableViewCell
 
@@ -37,6 +37,9 @@ typedef void (^ShowSelectedNodeAction)(UIViewController *);
 @property (strong, nonatomic) NSArray<MEGANode *> *nodesArray;
 
 @property (nonatomic, copy) ShowSelectedNodeAction showNodeAction;
+
+@property (strong, nonatomic) ThumbnailViewerTableViewCellViewModel *viewModel;
+@property (strong, nonatomic) NSSet<id> *cancellables;
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket;
 

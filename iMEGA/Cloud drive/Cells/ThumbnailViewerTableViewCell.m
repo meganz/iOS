@@ -45,7 +45,9 @@
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
+    MEGANode *parentNode = [MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle];
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
+    self.viewModel = [self createViewModelWithNodes:nodesArray];
     
     if (recentActionBucket.mnz_isExpanded) {
         self.indicatorImageView.image = [UIImage imageNamed:@"standardDisclosureIndicator"].imageByRotateRight90;
@@ -111,7 +113,6 @@
         self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
     }
     
-    MEGANode *parentNode = [MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle];
     self.infoLabel.text = [NSString stringWithFormat:@"%@ ・", parentNode.name];
     
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
@@ -130,7 +131,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ItemCollectionViewCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItemCollectionViewCellID" forIndexPath:indexPath];
     
-    MEGANode *node  = [self.nodesArray objectAtIndex:indexPath.row];
+    MEGANode *node = [self.nodesArray objectAtIndex:indexPath.row];
     [itemCell.avatarImageView mnz_setThumbnailByNode:node];
     itemCell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     itemCell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
@@ -139,6 +140,8 @@
     itemCell.thumbnailPlayImageView.hidden = node.hasThumbnail ? !isVideoNode : YES;
     itemCell.videoDurationLabel.text = isVideoNode ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
     itemCell.videoOverlayView.hidden = !isVideoNode;
+    
+    [self configureItemAt:indexPath cell:itemCell];
     
     return itemCell;
 }

@@ -263,6 +263,14 @@
 		25C2F8D82AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */; };
 		25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */; };
 		25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */; };
+		25CEA2992BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */; };
+		25CEA29A2BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */; };
+		25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */; };
+		25CF5EB92BDBACD3005608F7 /* ThumbnailViewerTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EB82BDBACD3005608F7 /* ThumbnailViewerTableViewCellViewModel.swift */; };
+		25CF5EBB2BDBAD01005608F7 /* ItemCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EBA2BDBAD01005608F7 /* ItemCollectionViewCellViewModel.swift */; };
+		25CF5EBC2BDBADF3005608F7 /* ItemCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EBA2BDBAD01005608F7 /* ItemCollectionViewCellViewModel.swift */; };
+		25CF5EBE2BDBB09E005608F7 /* ThumbnailViewerTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EBD2BDBB09E005608F7 /* ThumbnailViewerTableViewCellViewModelTests.swift */; };
+		25CF5EC82BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EC72BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift */; };
 		25D0E0182ACA6FF4007B87B0 /* PhotoZoomControlPositionTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0E0172ACA6FF4007B87B0 /* PhotoZoomControlPositionTrackerTests.swift */; };
 		25D360B32BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D360B22BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift */; };
 		25D360B92BB5257200ACFDA4 /* PhotosRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D360B82BB5257200ACFDA4 /* PhotosRepository+Additions.swift */; };
@@ -2947,6 +2955,12 @@
 		25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewController.swift; sourceTree = "<group>"; };
 		25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewModelTests.swift; sourceTree = "<group>"; };
 		25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTableViewCellViewModelTests.swift; sourceTree = "<group>"; };
+		25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemCollectionViewCell+Additions.swift"; sourceTree = "<group>"; };
+		25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTableViewCellViewModelTests.swift; sourceTree = "<group>"; };
+		25CF5EB82BDBACD3005608F7 /* ThumbnailViewerTableViewCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailViewerTableViewCellViewModel.swift; sourceTree = "<group>"; };
+		25CF5EBA2BDBAD01005608F7 /* ItemCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
+		25CF5EBD2BDBB09E005608F7 /* ThumbnailViewerTableViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailViewerTableViewCellViewModelTests.swift; sourceTree = "<group>"; };
+		25CF5EC72BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCellViewModelTests.swift; sourceTree = "<group>"; };
 		25D0E0172ACA6FF4007B87B0 /* PhotoZoomControlPositionTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoZoomControlPositionTrackerTests.swift; sourceTree = "<group>"; };
 		25D360B22BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserAlbumCacheRepository+Additions.swift"; sourceTree = "<group>"; };
 		25D360B82BB5257200ACFDA4 /* PhotosRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosRepository+Additions.swift"; sourceTree = "<group>"; };
@@ -6417,7 +6431,9 @@
 		25CF5EB42BDB7042005608F7 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				25CF5EC72BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift */,
 				25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */,
+				25CF5EBD2BDBB09E005608F7 /* ThumbnailViewerTableViewCellViewModelTests.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -8890,6 +8906,7 @@
 				C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */,
 				5B16A736220D6E0900085F61 /* ThumbnailViewerTableViewCell.h */,
 				5B16A737220D6E0900085F61 /* ThumbnailViewerTableViewCell.m */,
+				25CF5EB82BDBACD3005608F7 /* ThumbnailViewerTableViewCellViewModel.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -9079,8 +9096,10 @@
 				9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */,
 				415226761A692ECC00EC7BB6 /* ContactTableViewCell.h */,
 				415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */,
+				25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */,
 				835223AF205957DD00A47438 /* ItemCollectionViewCell.h */,
 				835223B0205957DD00A47438 /* ItemCollectionViewCell.m */,
+				25CF5EBA2BDBAD01005608F7 /* ItemCollectionViewCellViewModel.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -14762,7 +14781,9 @@
 				8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */,
 				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				947C6CBA2A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift in Sources */,
+				25CEA2992BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift in Sources */,
 				835223B1205957DD00A47438 /* ItemCollectionViewCell.m in Sources */,
+				25CF5EBB2BDBAD01005608F7 /* ItemCollectionViewCellViewModel.swift in Sources */,
 				5D166B8B252198BB004F4F4A /* ItemGroup.swift in Sources */,
 				5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */,
 				83337CAB21009494000F40A7 /* ItemListModel.m in Sources */,
@@ -15628,6 +15649,7 @@
 				B68ED09327D05F9F00713850 /* ThumbnailUseCase+Additions.swift in Sources */,
 				C4463BAF2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift in Sources */,
 				5B16A738220D6E0A00085F61 /* ThumbnailViewerTableViewCell.m in Sources */,
+				25CF5EB92BDBACD3005608F7 /* ThumbnailViewerTableViewCellViewModel.swift in Sources */,
 				BF943E9223554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				32A2AA092A283D85007FC630 /* TimelineFilter.swift in Sources */,
 				25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */,
@@ -15930,7 +15952,9 @@
 				8340CB18284F530F007C3B39 /* HeaderViewModel.swift in Sources */,
 				B6D0B35B283CE4A30020C64D /* Helper+Additions.swift in Sources */,
 				835B1B90245AD23C00E41FBE /* Helper.m in Sources */,
+				25CEA29A2BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift in Sources */,
 				94478A452A80F452003B9BCE /* ItemCollectionViewCell.m in Sources */,
+				25CF5EBC2BDBADF3005608F7 /* ItemCollectionViewCellViewModel.swift in Sources */,
 				83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */,
 				940F4DED2A80F4C400FB940A /* ItemListViewController+Additions.swift in Sources */,
 				94478A432A80F43B003B9BCE /* ItemListViewController.m in Sources */,
@@ -16221,6 +16245,7 @@
 				943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
 				9439F1252B838F6F00B3633D /* InitialViewModeFactoryTests.swift in Sources */,
+				25CF5EC82BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift in Sources */,
 				B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */,
 				835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */,
 				25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */,
@@ -16396,6 +16421,7 @@
 				0E0045F92BD7B7D500A5AA96 /* ThumbnailLoaderFactoryTests.swift in Sources */,
 				0E4120482BD622B000249BE3 /* ThumbnailLoaderTests.swift in Sources */,
 				B622D8AA2966CEF400C265C4 /* ThumbnailTypeEntityMappingTests.swift in Sources */,
+				25CF5EBE2BDBB09E005608F7 /* ThumbnailViewerTableViewCellViewModelTests.swift in Sources */,
 				9402EF522B70DE69002F7714 /* ToolbarActionFactoryTests.swift in Sources */,
 				947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
