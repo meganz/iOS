@@ -57,15 +57,3 @@ extension SearchResult: Equatable {
         lhs.type == rhs.type
     }
 }
-
-extension SearchResult: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(title)
-        hasher.combine(description(.list))
-        hasher.combine(description(.thumbnail(.horizontal)))
-        hasher.combine(description(.thumbnail(.vertical)))
-        hasher.combine(properties)
-        hasher.combine(type)
-    }
-}

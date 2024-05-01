@@ -4,7 +4,7 @@ import UIKit
 /// it can specify a property of a result and be rendered as icon, text or a spacer element in swiftUI
 /// support dynamic positioning (single property can be differently placed depending on the layout in which the result view is shown) via
 /// placement closure
-public struct ResultProperty: Identifiable, Hashable, Comparable, Sendable {
+public struct ResultProperty: Identifiable, Equatable, Comparable, Sendable {
     // Comparable implementation is used for placement of properties within a single
     // location (line) to decide which one should go first, we place
     // vibrant properties as first in the line
@@ -30,11 +30,6 @@ public struct ResultProperty: Identifiable, Hashable, Comparable, Sendable {
             return false
         }
         return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(content)
     }
 
     public typealias Id = String

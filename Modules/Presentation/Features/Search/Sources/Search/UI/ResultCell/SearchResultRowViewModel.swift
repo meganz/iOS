@@ -98,10 +98,10 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
 
 extension SearchResultRowViewModel: Hashable {
     func hash(into hasher: inout Hasher) {
-        hasher.combine(result)
+        hasher.combine(id)
     }
 
     static func == (lhs: SearchResultRowViewModel, rhs: SearchResultRowViewModel) -> Bool {
-        lhs.result == rhs.result
+        lhs.id == rhs.id
     }
 }
