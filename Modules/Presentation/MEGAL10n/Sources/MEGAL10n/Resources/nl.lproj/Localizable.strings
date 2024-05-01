@@ -678,10 +678,6 @@
 "general.export"="Exporteren";
 /* Select all items/elements on the list */
 "selectAll"="Selecteer Alles";
-/*  */
-"oneContact"="1 contact";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] contacten";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Selecteren";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Volharding status";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Houd mijn gekozen statusweergave in stand ook als ik geen verbonden apparaten heb.";
+"maintainMyChosenStatusAppearance"="De geselecteerde status wordt altijd weergegeven, zelfs als ik de verbinding verbreek";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(bewerkt)";
 /*  */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Uw upload kan niet doorgaan omdat uw Cloud opslag vol is";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Contacten toestaan om te zien wanneer u de laatste keer actief was op MEGA.";
+"Allow your contacts to see the last time you were active on MEGA."="Laat uw contacten zien wanneer u voor het laatst actief was op MEGA";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Weergeven";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Uw Zakelijke account is gedeactiveerd vanwege een mislukte betaling. U heeft geen toegang tot de gegevens die in uw account zijn opgeslagen. Om een ​​betaling uit te voeren en uw abonnement opnieuw te activeren, logt u in op MEGA via een browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]geschorst[/B]. U kunt alleen door uw gegevens bladeren.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]gedeactiveerd[/B]. U kunt alleen uw gegevens bekijken.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA heeft geen toegang tot uw gegevens. Uw zakelijke accountbeheerder heeft echter wel toegang tot uw Camera uploads.";
 /*  */
@@ -3851,13 +3847,13 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Krijg meer met een Pro abonnement";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="Upgrade naar een Pro-abonnement en krijg meer opslag en toegang tot Pro-kenmerken. Abonnementen beginnen zo laag als %@ per maand";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Enkele functies om naar uit te kijken zijn:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Ultieme opslagflexibiliteit";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="Vanaf [A] [B], vind de perfecte oplossing voor uw opslagbehoeften.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
 "onboarding.upgradeAccount.content.transferSharing.title"="Eenvoudig en veilig bestanden delen";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
@@ -3867,7 +3863,7 @@
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
 "onboarding.upgradeAccount.content.backupAndRewind.message"="Maak een back-up van je gegevens en synchroniseer ze in alle vertrouwen. Bovendien kunt u Terugspoelen gebruiken om mappen te herstellen naar een willekeurige datum tot 180 dagen.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="Blijf privé online met onze supersnelle VPN.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="Favorieten";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Afspeellijst leeg";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="Voer de naam van de afspeellijst in";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="Nieuwe afspeellijst";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="Creëren";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Er is niemand in de wachtkamer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Kan niet aansluiten";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperking op te heffen.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, ik snap het";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Slechts 100 deelnemers kunnen deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen gesprekken verzenden en lezen. Wil je meer deelnemers toevoegen? [A]Nu upgraden[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperking op te heffen.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Uit het zicht";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="U bepaalt zelf wanneer verborgen bestanden zichtbaar zijn. Er is een nieuwe instelling om verborgen items tijdelijk weer te geven.";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="Mijn Account";
+/* Free plan title */
+"free.Plan.name"="Gratis";
+/* Price description for the free plan */
+"free.Plan.Price.description"="Gratis";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="Beperkt";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="Abonnement Opzeggen";

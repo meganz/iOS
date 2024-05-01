@@ -755,7 +755,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>minutes</string>
+        <string>phút</string>
       </dict>
     </dict>
     <key>chat.message.unreadMessage</key>
@@ -2534,6 +2534,20 @@
         <string>d</string>
         <key>other</key>
         <string>Các tệp tin đã được gửi tới %d cuộc chat</string>
+      </dict>
+    </dict>
+    <key>chat.message.numberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d tên liên lạc</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>

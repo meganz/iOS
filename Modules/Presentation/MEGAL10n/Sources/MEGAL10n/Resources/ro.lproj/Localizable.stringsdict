@@ -697,11 +697,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Partajează linkul</string>
+        <string>Partajați linkul</string>
         <key>few</key>
-        <string>Partajează linkurile</string>
+        <string>Partajați linkurile</string>
         <key>other</key>
-        <string>Partajează linkurile</string>
+        <string>Partajați linkurile</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -3258,6 +3258,24 @@
         <string>Fișiere trimise la %d chat-uri</string>
         <key>other</key>
         <string>Fișiere trimise la %d de chat-uri</string>
+      </dict>
+    </dict>
+    <key>chat.message.numberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d contact</string>
+        <key>few</key>
+        <string>%d contacte</string>
+        <key>other</key>
+        <string>%d de contacte</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>

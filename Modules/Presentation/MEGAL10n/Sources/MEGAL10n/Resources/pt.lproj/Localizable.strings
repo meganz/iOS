@@ -678,10 +678,6 @@
 "general.export"="Exportar";
 /* Select all items/elements on the list */
 "selectAll"="Selecionar tudo";
-/*  */
-"oneContact"="1 contato";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] contatos";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Selecionar";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Continuidade de status";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Manter o status escolhido mesmo quando eu não estiver conectado em nenhum dispositivo.";
+"maintainMyChosenStatusAppearance"="Mostrar sempre a aparência de status selecionada, mesmo quando eu estiver desconectado";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(editado)";
 /*  */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Não foi possível fazer o upload porque você já atingiu o seu limite de armazenamento";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Permitir que seus contatos vejam o seu último acesso ao MEGA.";
+"Allow your contacts to see the last time you were active on MEGA."="Permitir que seus contatos vejam o seu último acesso ao MEGA";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Mostrar";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="A sua conta Business foi desativada porque o pagamento falhou, e já não será possível acessar os dados armazenados na sua conta. Para fazer o pagamento e assim reativar a sua assinatura, faça login no MEGA por meio de um navegador.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="A sua conta [B]expirou[/B]. Somente é possível visualizar os seus dados.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="A sua conta foi [B]desativada[/B]. Somente é possível visualizar os seus dados.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Embora o MEGA não tenha acesso aos seus dados, o administrador da sua conta Business pode acessar os seus Uploads da câmera.";
 /*  */
@@ -3851,13 +3847,13 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Obtenha mais com um plano Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="Faça o upgrade a um plano Pro para obter mais armazenamento e acessar recursos exclusivos. O nossos planos são a partir de %@ por mês";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Alguns dos recursos incluídos são:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Flexibilidade de armazenamento máxima";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="Encontre a melhor opção para as suas necessidades de armazenamento a partir de [A] [B].";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
 "onboarding.upgradeAccount.content.transferSharing.title"="Compartilhamento de arquivos fácil e seguro";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
@@ -3867,7 +3863,7 @@
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
 "onboarding.upgradeAccount.content.backupAndRewind.message"="Faça backup e sincronize os seus dados para não correr riscos. Além disso, use a função Retroceder para fazer com que as suas pastas voltem ao estado que tinham em qualquer momento dos últimos 180 dias.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="Mantenha a sua navegação online privada usando a nossa VPN de alta velocidade.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="Favoritos";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Lista de reprodução vazia";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="Digite o nome da lista de reprodução";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="Nova lista de reprodução";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="Criar";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Não há ninguém na sala de espera";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Não foi possível entrar";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Esta chamada permite um máximo de 100 participantes. Solicite ao organizador que elimine essa restrição.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Entendi";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Precisa adicionar mais participantes? [A]Faça um upgrade[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Fora do alcance";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Você decide quando os arquivos ocultos ficam visíveis. Há uma nova configuração para mostrar itens ocultos temporariamente.";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="Minha conta";
+/* Free plan title */
+"free.Plan.name"="Grátis";
+/* Price description for the free plan */
+"free.Plan.Price.description"="Grátis";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="Limitado";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="Cancelar assinatura";

@@ -678,10 +678,6 @@
 "general.export"="Esporta";
 /* Select all items/elements on the list */
 "selectAll"="Seleziona tutto";
-/*  */
-"oneContact"="1 contatto";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] contatti";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Seleziona";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -947,7 +943,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Hai già richiesto un link di conferma per quell'indirizzo email.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
+"emailIsChanging_description"="Vai nella tua casella di posta elettronica e clicca sul link per confermare il tuo nuovo indirizzo email.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Inserisci la tua password per verificare il tuo indirizzo email";
 /* The [X] will be replaced with the e-mail address. */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Persistenza dello stato";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Mantieni il mio stato anche quando non ho dispositivi connessi.";
+"maintainMyChosenStatusAppearance"="Mostra sempre lo stato selezionato, anche se mi disconnetto";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(modificato)";
 /*  */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Il tuo upload non può procedere perché il tuo Cloud Drive è pieno";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Permetti ai tuoi contatti di vedere l'ultima volta in cui sei stato attivo su MEGA.";
+"Allow your contacts to see the last time you were active on MEGA."="Permetti ai tuoi contatti di vedere l'ultima volta in cui sei stato attivo su MEGA";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Mostra";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Il tuo account Business è stato disattivato a causa del fallimento del pagamento. Non potrai accedere ai dati archiviati nel tuo account. Per effettuare un pagamento e riattivare il tuo abbonamento, effettua il login in MEGA tramite browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Il tuo account è [B]sospeso[/B] al momento. Puoi solo sfogliare tra i tuoi dati.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Il tuo account è attualmente [B]disattivato[/B]. Puoi solo sfogliare tra i tuoi dati.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA non può accedere ai tuoi dati. Comunque, l'amministratore del tuo account Business può accedere ai tuoi Caricamenti da fotocamera.";
 /*  */
@@ -3851,35 +3847,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Ottieni di più con un piano Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="Effettua l'upgrade ad un piano Pro ed ottieni più spazio di archiviazione e accesso alle funzionalità Pro. I piani partono da un minimo di %@ al mese.";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Alcune funzioni che puoi trovare sono:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Ultimate storage flexibility";
+"onboarding.upgradeAccount.content.generousStorage.title"="Massima flessibilità di archiviazione";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="A partire da [A] [B], trova la soluzione perfetta per le tue esigenze di archiviazione.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
+"onboarding.upgradeAccount.content.transferSharing.title"="Condivisione di file facile e sicura";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Condividi file di grandi dimensioni grazie a una generosa banda di trasferimento e garantisci la sicurezza con link protetti da password.";
 /* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+"onboarding.upgradeAccount.content.backupAndRewind.title"="Non perdere mai più dati";
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+"onboarding.upgradeAccount.content.backupAndRewind.message"="Effettua il backup e la sincronizzazione dei dati per la massima sicurezza. Inoltre, utilizza il Riavvolgimento per ripristinare le cartelle a qualsiasi data fino a 180 giorni.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN ";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="Rimani nel privato anche quando sei online grazie alla nostra VPN ad alta velocità.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="Chiamate e meeting senza limiti";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="Invia messaggi, videochiama, e incontra in totale privacy con partecipanti illimitati.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Sicurezza addizionale nella condivisione";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Imposta password e date di scadenza per i link di file e cartelle.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
+"onboarding.upgradeAccount.button.viewProPlans"="Effettua oggi l'upgrade a Pro";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Attiva i Caricamenti da fotocamera";
 /* Camera uploads banner enable state description */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="Preferiti";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Svuota playlist";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="Inserisci un nome per la playlist";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="Nuova playlist";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="Crea";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Non c'è nessuno nella sala d'attesa";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Impossibile unirsi";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Solo 100 partecipanti possono partecipare alla chiamata. Eventuali partecipanti aggiuntivi potranno solo inviare e ricevere messaggi. L'organizzatore può effettuare l'upgrade a Pro per rimuovere questa restrizione.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, capito";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Solo 100 partecipanti possono partecipare alla chiamata. Eventuali partecipanti aggiuntivi potranno solo inviare e ricevere messaggi. L'organizzatore può effettuare l'upgrade a Pro per rimuovere questa restrizione.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Fuori dalla vista";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Sei tu a decidere quando i file nascosti sono visibili. C'è una nuova impostazione per mostrare temporaneamente gli oggetti nascosti.";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="Account";
+/* Free plan title */
+"free.Plan.name"="Gratis";
+/* Price description for the free plan */
+"free.Plan.Price.description"="Gratis";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="Limitata";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="Annulla Iscrizione";

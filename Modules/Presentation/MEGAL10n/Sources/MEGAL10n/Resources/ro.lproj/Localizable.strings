@@ -678,10 +678,6 @@
 "general.export"="Exportă";
 /* Select all items/elements on the list */
 "selectAll"="Selectează toate";
-/*  */
-"oneContact"="1 contact";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] contacte";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Selectează";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Persistența statusului";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Menține înfățișarea statusului meu ales chiar dacă nu am dispozitive conectate.";
+"maintainMyChosenStatusAppearance"="Afișează mereu înfățișarea selectată de stare, chiar și când mă deconectez";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(editat)";
 /*  */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Încărcarea dvs. nu poate continua, deoarece spațiul de stocare in cloud este plin";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Permite contactelor tale să vadă ultima dată când ai fost activ(ă) pe MEGA.";
+"Allow your contacts to see the last time you were active on MEGA."="Permiteți contactelor dvs. să vadă data și ora ultimei dvs. activități pe MEGA";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Afișează";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Contul dvs. Business a fost dezactivat din cauza eșecului plății. Nu veți putea accesa datele stocate în contul dvs. Pentru a efectua o plată și a reactiva abonamentul, conectați-vă la MEGA printr-un browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Contul dvs. este în prezent [B]suspendat[/B]. Puteți răsfoi doar datele dvs.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul dvs. este [B]dezactivat[/B]. Puteți răsfoi numai prin datele dvs.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA nu vă poate accesa datele. Cu toate acestea, administratorul contului dvs. de afaceri poate accesa Încărcările camerei.";
 /*  */
@@ -2625,7 +2621,7 @@
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Invită participanți";
 /* Meetings: Floating panel share link option */
-"meetings.panel.shareLink"="Partajează linkul";
+"meetings.panel.shareLink"="Partajați linkul";
 /* Meetings: Floating panel participants list selector for participants in call */
 "meetings.panel.listSelector.inCall"="În apelul";
 /* Meetings: Floating panel participants list selector for participants not in call */
@@ -2647,7 +2643,7 @@
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Redenumește întâlnirea";
 /* Action of a call/meeting to share its link */
-"meetings.action.shareLink"="Partajează linkul întâlnirii";
+"meetings.action.shareLink"="Partajați linkul întâlnirii";
 /* Message shown when a meeting starts and user is waiting other users to join */
 "meetings.message.waitingOthers"="Se așteaptă ca ceilalți să se alăture…";
 /* Message shown when the user is the only one left in the meeting */
@@ -3201,7 +3197,7 @@
 /* Title for a button to send a file to a chat */
 "meetings.info.shareOptions.sendToChat"="Trimite în chat";
 /* Title for share chat link option in meeting info */
-"meetings.info.shareChatLink"="Partajează linkul chatului";
+"meetings.info.shareChatLink"="Partajați linkul chatului";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeMore"="Vezi mai mulți";
 /* Button title to see less participants in meeting info view */
@@ -3523,7 +3519,7 @@
 /* Meeting Notifications DND: Title bar message for the dnd activate options */
 "meetings.info.muteMeetingNotificationsFor"="Amuțește notificările de întâlnire timp de";
 /* Title for share meeting link option in meeting info */
-"meetings.info.shareMeetingLink"="Partajează linkul întâlnirii";
+"meetings.info.shareMeetingLink"="Partajați linkul întâlnirii";
 /* The button or alert title to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistory"="Golește istoricul întâlnirilor";
 /* Message show when the history of a meeting has been successfully deleted */
@@ -3851,13 +3847,13 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Obțineți mai mult cu un abonament Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="Treceți la un abonament Pro și obțineți mai mult spațiu de stocare și acces la funcțiile Pro. Planurile încep de la %@ o lună";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Lată ce obțineți:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Flexibilitate maximă în spațiu de stocare";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="Începând de la [A] [B], găsiți potrivirea perfectă pentru nevoile dvs. de stocare.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
 "onboarding.upgradeAccount.content.transferSharing.title"="Partajare de fișiere ușoară și sigură";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
@@ -3867,7 +3863,7 @@
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
 "onboarding.upgradeAccount.content.backupAndRewind.message"="Fiți liniștit prin back-up și sincronizare a datelor. În plus, utilizați Derulează înapoi pentru a restabili folderele la orice dată de până la 180 de zile.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="Rămâneți privat online cu VPN-ul nostru de mare viteză.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="Favorite";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Lista de redare goală";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="Introduceți numele listei de redare";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="Listă de redare nouă";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="Creează";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Nu este nimeni în sala de așteptare";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Imposibil de a participa";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica această restricție.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="La acest apel pot participa maximum 100 de persoane. Cereți persoanei care a organizat-o să ridice această limită.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, am înțeles";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Doar 100 de participanții se pot alătura apelului. Orice participanți suplimentari vor putea trimite și citi doar chat-uri. Trebuie să adăugați mai mulți participanți? [A]Upgradați acum[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica această restricție.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Invizibile";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Dvs. decideți când sunt vizibile fișierele ascunse. Există o nouă setare pentru a afișa temporar elementele ascunse.";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="Contul meu";
+/* Free plan title */
+"free.Plan.name"="Gratuit";
+/* Price description for the free plan */
+"free.Plan.Price.description"="Gratuit";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="Limitat";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="Anulează abonamentul";
