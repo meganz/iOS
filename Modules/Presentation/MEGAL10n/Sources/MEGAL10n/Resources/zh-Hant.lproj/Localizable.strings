@@ -678,10 +678,6 @@
 "general.export"="匯出";
 /* Select all items/elements on the list */
 "selectAll"="全選";
-/*  */
-"oneContact"="1個聯絡人";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X]個聯絡人";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="選擇";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -947,7 +943,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="你已經為此電子郵件地址申請了確認連結。";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
+"emailIsChanging_description"="前往您新電子郵件地址的收件匣，點擊連結以確認您的新電子郵件地址。";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="輸入您的密碼以驗證您的電子郵件地址";
 /* The [X] will be replaced with the e-mail address. */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="狀態持續設定";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="即使我沒有連網的裝置，也一直維持在我所選擇的狀態。";
+"maintainMyChosenStatusAppearance"="即使斷開連線，也始終顯示選定的狀態外觀";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="（已編輯）";
 /*  */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="由於您的雲端空間已滿，您的上傳無法繼續，";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="允許您的聯絡人查看您上次在MEGA活動是什麼時候。";
+"Allow your contacts to see the last time you were active on MEGA."="允許您的聯絡人檢視您上次在MEGA上活動的時間";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="顯示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="由於付款失敗，您的商業帳戶已被停用。您將無法存取儲存在您帳戶中的資料。若要付款並重新啟用您的訂閱，請透過網頁瀏覽器登入MEGA進行。";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="您的帳戶目前[B]暫停使用[/B]。您只能瀏覽您的資料。";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="您的帳戶目前[B]已被停用[/B]。您只能瀏覽您的資料。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA無法存取您的資料。但是您的商業帳戶管理員可以存取您的相機上傳。";
 /*  */
@@ -3433,7 +3429,7 @@
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="檔案不能單獨同步。您需要從資料夾中設定同步。";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="初始掃描失敗。 您需要從桌面應用程式重新啟用同步或備份。";
+"device.center.backup.error.initialScanFailed"="初始掃描失敗。您需要從桌面應用程式重新啟用同步或備份。";
 /* Device Center backup error: Device folder not located */
 "device.center.backup.error.folderDeviceUnlocatedNow"="現在無法找到您裝置中的資料夾，請稍後再試。";
 /* Device Center backup error: Device folder can't be located */
@@ -3447,7 +3443,7 @@
 /* Device Center backup error: Shared folder quota reached */
 "device.center.backup.error.userSharedQuotaReached"="資料夾無法同步，因為共享此資料夾的使用者已達到其儲存配額限制。";
 /* Device Center backup error: Shared folder without full access */
-"device.center.backup.error.sharedFolderNoFullAccess"="由於它是一個不具完全控制權限的共享資料夾，因此無法進行同步。";
+"device.center.backup.error.sharedFolderNoFullAccess"="無法同步資料夾，因為它是沒有完全存取權限的共享資料夾。";
 /* Device Center backup error: Files can't be synced */
 "device.center.backup.error.filesInFolder"="無法同步或備份此資料夾中的檔案。您需要從桌面應用程式重新啟用同步或備份。";
 /* Device Center backup error: Folder contains synced folders */
@@ -3851,13 +3847,13 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="透過Pro方案獲得更多功能";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="升級到Pro方案可獲得更多儲存空間和使用Pro功能的權限。方案售價一個月%@起。";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="一些值得期待的功能是：";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="終極的儲存彈性";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="從[A] [B]起，找到最適合您的儲存需求方案。";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
 "onboarding.upgradeAccount.content.transferSharing.title"="輕鬆、安全的檔案共享";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
@@ -3867,7 +3863,7 @@
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
 "onboarding.upgradeAccount.content.backupAndRewind.message"="讓您完全放心的備份和同步您的資料。此外，使用回溯功能可將資料夾恢復到任何日期，最長可達180天。";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="使用我們的高速VPN保持線上隱私。";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="收藏";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="空的播放表列";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="輸入播放列表名稱";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="新的播放列表";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="建立";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室裡沒有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="無法登入";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這個限制。";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="此通話僅支援100位與會者。請召集人移除此限制。";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="只有100個與會者可以加入通話。任何其他與會者將只能發送和讀取對話。需要新增更多與會者嗎？[A]立即升級[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這個限制。";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4041,7 +4045,7 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="隱藏重要的檔案和資料夾";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="您可以隱藏敏感的檔案和資料夾以保護隱私。只有您可以單獨或從設定暫時顯示隱藏的項目來顯示它們。";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="為保護隱私，您可以隱藏敏感的檔案和資料夾。只有您可以個別，或透過在設定中的暫時顯示隱藏項目來顯示它們。";
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="從時間軸中排除";
 /* Hidden files and folders onboarding content exclude from timeline section message */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="隱藏";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="您可以決定何時要讓隱藏的檔案顯示。有一個新的設定可以暫時顯示隱藏的項目。";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="我的帳戶";
+/* Free plan title */
+"free.Plan.name"="免費";
+/* Price description for the free plan */
+"free.Plan.Price.description"="免費";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="有限制的";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="取消訂閱";

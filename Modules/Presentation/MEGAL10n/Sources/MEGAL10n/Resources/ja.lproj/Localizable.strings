@@ -678,10 +678,6 @@
 "general.export"="エクスポート";
 /* Select all items/elements on the list */
 "selectAll"="すべて選択";
-/*  */
-"oneContact"="1人の連絡先";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X]人の連絡先";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="選択";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="ステータスの永続性";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="接続された端末がない場合でも、選択したステータスの状態を維持します。";
+"maintainMyChosenStatusAppearance"="接続していなくても、常に選択したステータスの状態を表示します";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="（編集済み）";
 /*  */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="クラウドストレージがいっぱいのため、アップロードを続行できません";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="あなたの連絡先がMEGAであなたが最後に活動していた時間を見れるようにします。";
+"Allow your contacts to see the last time you were active on MEGA."="あなたの連絡先が、MEGAであなたが最後に活動していた時間を見れるようにします";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="表示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="お支払いが失敗したため、お客様のビジネスアカウントが無効化されました。そのため、アカウントに保存されているデータにアクセスできなくなります。お支払いを行ってサブスクリプションを再開するには、ブラウザからMEGAにログインしてください。";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="あなたのアカウントは現在[B]凍結[/B]されています。あなたのデータの閲覧のみ可能です。";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="あなたのアカウントは現在[B]無効になっています[/B]。閲覧できるのはデータだけです。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGAはお客様のデータにアクセスできません。ただし、ビジネスアカウントの管理者様は、あなたのカメラアップロードにアクセスすることができます。";
 /*  */
@@ -3851,13 +3847,13 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Proプランでさらに充実";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="Proプランにアップグレードしていただくと、ストレージが増え、各種Pro機能をご利用いただけるようになります。プランは月額%@からご利用いただけます";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="ご期待いただける機能としては次のようなものがあります。";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="究極のストレージの柔軟性";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="[A] [B]から始めて、お客様のストレージのニーズに最適なものを見つけてください。";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
 "onboarding.upgradeAccount.content.transferSharing.title"="簡単で安全なファイル共有";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
@@ -3867,7 +3863,7 @@
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
 "onboarding.upgradeAccount.content.backupAndRewind.message"="データをバックアップして同期すると、完全に自信が持てます。さらに、巻き戻しを使用すると、フォルダを最大180日以内の任意の日付に復元できます。";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="当社の高速VPNでオンラインでのプライバシーを確​​保";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="お気に入り";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="プレイリストが空です";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="プレイリスト名を入力";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="新しいプレイリスト";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="作成";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="待合室に誰もいません";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="参加できません";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="通話に参加できる参加者は100名のみです。追加の参加者は、メッセージの送受信のみが可能になります。主催者様はProにアップグレードして、この制限を解除できます。";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="この通話では100 人の参加者のみをサポートできます。この制限を解除するには、主催者様にご依頼ください。";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="はい、わかりました。";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="通話に参加できる参加者は100名のみです。追加の参加者は、チャットの送信と読み取りのみが可能になります。さらに参加者を追加する必要がありますか？[A]今すぐアップグレード[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="通話に参加できる参加者は100名のみです。追加の参加者は、メッセージの送受信のみが可能になります。主催者様はProにアップグレードして、この制限を解除できます。";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="非表示の解除";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="隠しファイルをいつ表示するかを決定します。非表示の項目を一時的に表示する新しい設定が追加されました。";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="私のアカウント";
+/* Free plan title */
+"free.Plan.name"="無料";
+/* Price description for the free plan */
+"free.Plan.Price.description"="無料";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="制限付き";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="定期契約をキャンセル";

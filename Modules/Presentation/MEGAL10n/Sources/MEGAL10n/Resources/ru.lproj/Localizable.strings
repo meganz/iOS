@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Вы пытались зайти очень много раз. Пожалуйста, подождите до %@ и попробуйте снова.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Check your email inbox and follow the link to confirm your account.";
+"accountNotConfirmed"="Подтвердите регистрацию, перейдя по ссылке в письме, которое вам придёт.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ваш аккаунт был заблокирован из-за нарушения условий использования MEGA, включая, помимо прочего, пункт 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Неверный пароль";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="This email address is already in use";
+"emailAlreadyInUse"="Этот адрес электронной почты уже используется";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Нужно освободить больше места на устройстве";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -678,10 +678,6 @@
 "general.export"="Экспорт";
 /* Select all items/elements on the list */
 "selectAll"="Выбрать все";
-/*  */
-"oneContact"="1 контакт";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] контакта/ов:";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Выбрать";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -853,7 +849,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Вы потеряете все связанные данные. Действительно хотите продолжить?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can’t access your email inbox, contact support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Если вы не можете получить доступ к своей электронной почте, напишите на support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Срок действия ссылки для удаления истёк.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -935,9 +931,9 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Новый адрес электронной почты";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="Подтвердите электронную почту";
+"confirmEmail"="Подтвердите адрес электронной почты";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirm new email address";
+"confirmNewEmail"="Подтвердите адрес электронной почты";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Изменить адрес почты";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +943,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Вы уже запрашивали ссылку подтверждения для этого адреса.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
+"emailIsChanging_description"="Откройте электронную почту с новым адресом и перейдите по ссылке в письме, чтобы подтвердить новый адрес.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Enter your password to verify your email address";
+"verifyYourEmailAddress_description"="Введите пароль, чтобы подтвердить адрес электронной почты";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Поздравляем, ваш новый адрес эл. почты для этого аккаунта: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Сохранение статуса";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Поддерживать выбранный статус, даже когда я не в сети.";
+"maintainMyChosenStatusAppearance"="Всегда показывать выбранный статус, даже когда я отключаюсь";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(изменено)";
 /*  */
@@ -1375,7 +1371,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Вы действительно хотите прервать регистрацию?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelt your email address, correct it and tap “Resend”.";
+"misspelledEmailAddress"="Если вы неправильно написали адрес электронной почты, исправьте его и нажмите «Отправить повторно».";
 /* A button to resend the email confirmation. */
 "resend"="Выслать повторно";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Загрузку нельзя продолжить, потому что облачное хранилище заполнено";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Разрешать контактам видеть, когда я был активен в MEGA последний раз.";
+"Allow your contacts to see the last time you were active on MEGA."="Разрешать контактам видеть, когда вы были активны в MEGA последний раз";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Показывать";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Ваш бизнес-аккаунт был деактивирован из-за сбоя оплаты. Вы не сможете получить доступ к данным, хранящимся в вашем аккаунте. Для оплаты и возобновления подписки войдите в MEGA через веб-браузер.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Ваш аккаунт [B]приостановлен[/B]. Вы можете только просматривать данные.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Ваш аккаунт [B]деактивирован[/B]. Вы можете только просматривать данные.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA не может получить доступ к вашим данным. Однако администратор вашего бизнес-аккаунта может получить доступ к вашим Загрузкам из камеры.";
 /*  */
@@ -3143,7 +3139,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Запланировать встречу";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email inbox for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="Ваш аккаунт MEGA был заблокирован из-за неоднократных обвинений в нарушении авторских прав. Это означает, что вы не можете получить доступ к аккаунту или данным в нём.\n\nДля получения дополнительной информации о том, как подать встречное заявление, проверьте свою электронную почту.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Ваш аккаунт был удалён из-за нарушения Условий использования MEGA.\n\nВы не сможете восстановить доступ к своим сохранённым данным или зарегистрировать новый аккаунт MEGA.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3851,35 +3847,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Получите больше с планом Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="Перейдите на план Pro и получите больше места для хранения и доступ к функциям Pro. Планы стоят от %@ в месяц";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Некоторые особенности, которые вас ждут:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Ultimate storage flexibility";
+"onboarding.upgradeAccount.content.generousStorage.title"="Максимально гибкое хранилище";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="Найдите свой идеальный объём хранилища. От [A] [B].";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
+"onboarding.upgradeAccount.content.transferSharing.title"="Простой и безопасный обмен файлами";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Делитесь большими файлами благодаря большому объёму передачи данных и обеспечьте безопасность с помощью ссылок, защищённых паролем.";
 /* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+"onboarding.upgradeAccount.content.backupAndRewind.title"="Данные больше не потеряются";
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+"onboarding.upgradeAccount.content.backupAndRewind.message"="Создавайте резервные копии и синхронизируйте данные для полной уверенности. Также используйте функцию перемотки, чтобы восстановить папки до любой даты за период до 180 дней.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="Mega VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="Онлайн-конфиденциальность со скоростным VPN.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="Неограниченные звонки и встречи";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="Пишите сообщения, совершайте видеозвонки и проводите встречи в условиях полной конфиденциальности с неограниченным количеством участников.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Дополнительная безопасность при обмене";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Устанавливайте пароли и сроки действия для ссылок на файлы и папки.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
+"onboarding.upgradeAccount.button.viewProPlans"="Перейти на Pro";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Включить Загрузки из камеры";
 /* Camera uploads banner enable state description */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="Избранное";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Пустой плейлист";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="Введите название плейлиста";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="Новый плейлист";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="Создать";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="В комнате ожидания никого нет";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Не удалось войти";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать и писать сообщения. Организатор может перейти на план Pro, чтобы снять это ограничение.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Этот звонок может включать до 100 участников. Попросите организатора снять это ограничение.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Понятно";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать чаты и делиться ссылками на них. Нужно добавить больше участников? [A]Улучшите аккаунт[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать и писать сообщения. Организатор может перейти на план Pro, чтобы снять это ограничение.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="С глаз долой";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Вы сами решаете, когда будут видны скрытые файлы. Появилась новая настройка для временного отображения скрытых элементов.";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="Мой аккаунт";
+/* Free plan title */
+"free.Plan.name"="Бесплатный";
+/* Price description for the free plan */
+"free.Plan.Price.description"="Бесплатный";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d ГБ";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="Ограничено";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="Отменить подписку";

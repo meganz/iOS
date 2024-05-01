@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="คุณได้พยายามเข้าสู่ระบบบ่อยเกินไป โปรดรอจนกว่า %@ และลองอีกครั้ง";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Check your email inbox and follow the link to confirm your account.";
+"accountNotConfirmed"="ตรวจสอบกล่องจดหมายอีเมลของคุณและไปที่ลิงก์เพื่อยืนยันการเปิดบัญชีของคุณ";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="บัญชีของคุณถูกยกเลิกเนื่องจากการละเมิดเงื่อนไขการให้บริการของ MEGA รวมถึงแต่ไม่จำกัดเพียงข้อที่ 15";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="รหัสผ่านไม่ถูกต้อง";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="This email address is already in use";
+"emailAlreadyInUse"="ที่อยู่อีเมลนี้ได้ถูกใช้งานไปแล้ว";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="คุณจำเป็นต้องเพิ่มพื้นที่ว่างบนอุปกรณ์ของคุณ";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -678,10 +678,6 @@
 "general.export"="ส่งออก";
 /* Select all items/elements on the list */
 "selectAll"="เลือกทั้งหมด";
-/*  */
-"oneContact"="1 รายการ";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] รายการ";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="เลือก";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -853,7 +849,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="คุณจะสูญเสียข้อมูลทั้งหมดที่เชื่อมโยงกับบัญชีนี้ คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can’t access your email inbox, contact support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="หากคุณไม่สามารถเข้าถึงกล่องจดหมายอีเมลของคุณได้ ติดต่อ support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="ลิงก์ยกเลิกหมดอายุแล้ว";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -937,7 +933,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="ยืนยันอีเมล";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirm new email address";
+"confirmNewEmail"="ยืนยันที่อยู่อีเมลใหม่";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="เปลี่ยนอีเมล";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +943,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="คุณได้ส่งคำขอลิงก์ยืนยันสำหรับที่อยู่อีเมลนั้นแล้ว";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
+"emailIsChanging_description"="ไปที่กล่องจดหมายอีเมลใหม่ของคุณและคลิกลิงก์เพื่อยืนยันที่อยู่อีเมลใหม่ของคุณ";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Enter your password to verify your email address";
+"verifyYourEmailAddress_description"="กรอกรหัสผ่านเพื่อตรวจสอบที่อยู่อีเมลของคุณ";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="ขอแสดงความยินดี อีเมลใหม่ของคุณสำหรับบัญชี MEGA นี้คือ: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="สถานะคงอยู่";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="รักษาลักษณะที่ปรากฏของฉันไว้แม้จะไม่มีอุปกรณ์เชื่อมต่อก็ตาม";
+"maintainMyChosenStatusAppearance"="แสดงสถานะที่เลือกไว้เสมอ แม้ว่าฉันจะตัดการเชื่อมต่อแล้ว";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(มีการแก้ไข)";
 /*  */
@@ -1375,7 +1371,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="คุณแน่ใจว่าต้องการที่จะยกเลิกการลงทะเบียนนี้";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelt your email address, correct it and tap “Resend”.";
+"misspelledEmailAddress"="หากคุณสะกดที่อยู่อีเมลผิด ให้แก้ไขและแตะ “ส่งใหม่”";
 /* A button to resend the email confirmation. */
 "resend"="ส่งใหม่";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="การอัปโหลดของคุณไม่สามารถดำเนินการต่อได้เนื่องจากที่เก็บข้อมูลบนคลาวด์ของคุณเต็มแล้ว";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="อนุญาตให้ผู้ติดต่อของคุณเห็นว่า เป็นครั้งสุดท้ายที่คุณใช้งาน MEGA";
+"Allow your contacts to see the last time you were active on MEGA."="อนุญาตให้ผู้ติดต่อของคุณเห็นเวลาใช้งาน MEGA ล่าสุดของคุณ";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="แสดง";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="บัญชีธุรกิจของคุณถูกปิดใช้งานเนื่องจากการชำระเงินไม่สำเร็จ คุณจะไม่สามารถเข้าถึงข้อมูลของคุณได้ กรุณาเข้าสู่ระบบ MEGA ผ่านเบราว์เซอร์เพื่อดำเนินการชำระเงินและเปิดใช้การสมัครใช้งานของคุณอีกครั้ง";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="บัญชีของคุณ[B]ถูกระงับ[/B]ในขณะนี้ คุณสามารถเรียกดูได้แค่ข้อมูลของคุณเท่านั้น";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="บัญชีของคุณ[B]ถูกปิดใช้งาน[/B]ในขณะนี้ คุณสามารถเรียกดูได้แค่ข้อมูลของคุณเท่านั้น";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA ไม่สามารถเข้าถึงข้อมูลของคุณได้ อย่างไรก็ตาม ผู้ดูแลระบบบัญชีธุรกิจของคุณจะยังสามารถเข้าถึงการอัปโหลดจากกล้องของคุณได้";
 /*  */
@@ -2195,9 +2191,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="เรียงลําดับและโหมดมุมมอง";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the section title. */
-"settings.userInterface.hiddenItems.header"="Hidden items";
+"settings.userInterface.hiddenItems.header"="รายการที่ถูกซ่อน";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
-"settings.userInterface.hiddenItems.label"="Show hidden items";
+"settings.userInterface.hiddenItems.label"="แสดงรายการที่ถูกซ่อนไว้";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="มุมมองการค้นพบสื่อ";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -3143,7 +3139,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="จัดกำหนดการประชุม";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email inbox for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="บัญชี MEGA ของคุณถูกระงับชั่วคราว เนื่องจากมีการร้องเรียนเรื่องการละเมิดลิขสิทธิ์ซ้ำหลายครั้ง หมายความว่าคุณไม่สามารถเข้าถึงบัญชีหรือข้อมูลใด ๆ ภายในบัญชีของคุณได้\n\nตรวจสอบกล่องจดหมายอีเมลของคุณเพื่อดูข้อมูลเพิ่มเติมเกี่ยวกับวิธีการยื่นเรื่องโต้แย้ง";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="บัญชีของคุณถูกยุติการใช้งานเนื่องจากละเมิดเงื่อนไขการให้บริการของ MEGA\n\nคุณจะไม่สามารถเข้าถึงข้อมูลที่เก็บไว้หรือลงทะเบียนบัญชี MEGA ใหม่ได้อีกต่อไป";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3591,7 +3587,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน (สำหรับ Pro Lite) หรือ 180 วัน (สำหรับ Pro I, II, III)\n\n• VPN ความเร็วสูง ปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน (สำหรับ Pro Lite) หรือ 180 วัน (สำหรับ Pro I, II, III)\n\n• VPN ความเร็วสูง ปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ\n\n• ไม่มีโฆษณา";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน (สำหรับ Pro Lite) หรือ 180 วัน (สำหรับ Pro I, II, III)\n\n• VPN ความเร็วสูง เพื่อปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ\n\n• ไม่มีโฆษณา";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="รายละเอียดการสมัครใช้งาน";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3851,35 +3847,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="รับสิทธิประโยชน์เพิ่มเติมด้วยการอัปเกรดเป็นแผน Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="อัปเกรดเป็นแผน Pro เพิ่มพื้นที่เก็บข้อมูลและเข้าถึงฟีเจอร์ Pro เริ่มต้นเพียง %@ ต่อเดือน";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="คุณสมบัติที่คุณจะได้สัมผัสอย่างเต็มอิ่มคือ:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Ultimate storage flexibility";
+"onboarding.upgradeAccount.content.generousStorage.title"="พื้นที่จัดเก็บที่ยืดหยุ่นเหนือระดับ";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="เริ่มต้นที่ [A] [B] เลือกขนาดพื้นที่เก็บข้อมูลที่เหมาะกับคุณ";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
+"onboarding.upgradeAccount.content.transferSharing.title"="แชร์ไฟล์ได้ง่าย ปลอดภัย ไร้กังวล";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+"onboarding.upgradeAccount.content.transferSharing.message"="แชร์ไฟล์ใหญ่ ๆ สบายใจด้วยโควต้าการโอนถ่ายที่จุใจ พร้อมทั้งมั่นใจในความปลอดภัยด้วยลิงก์ที่ป้องกันด้วยรหัสผ่าน";
 /* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+"onboarding.upgradeAccount.content.backupAndRewind.title"="ไม่มีพลาดทุกข้อมูลสำคัญของคุณ";
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+"onboarding.upgradeAccount.content.backupAndRewind.message"="สำรองและซิงค์ข้อมูลของคุณเพื่อความมั่นใจสูงสุด เพิ่มเติมด้วยฟีเจอร์ย้อนกลับ ที่ช่วยให้คุณกู้คืนโฟลเดอร์กลับไปยังวันที่ต้องการได้สูงสุด 180 วัน";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="ปกป้องความเป็นส่วนตัวของคุณบนโลกออนไลน์ด้วย VPN ความเร็วสูงของเรา";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="โทรและประชุมได้ไม่จำกัด";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="สื่อสารแบบส่วนตัว ปลอดภัยไร้กังวล กับข้อความ วิดีโอคอล และการประชุม รองรับผู้เข้าร่วมได้ไม่จำกัด";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="เพิ่มความปลอดภัยเมื่อแชร์ข้อมูล";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="ลิงก์ไฟล์และโฟลเดอร์สามารถตั้งรหัสผ่านและวันหมดอายุได้";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
+"onboarding.upgradeAccount.button.viewProPlans"="อัปเกรดเป็นแผน Pro วันนี้เลย";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="เปิดใช้งานอัปโหลดกล้อง";
 /* Camera uploads banner enable state description */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="รายการโปรด";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="ไม่พบรายการในเพลย์ลิสต์";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="กรอกชื่อเพลย์ลิสต์";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="เพลย์ลิสต์ใหม่";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="สร้าง";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="ไม่มีใครอยู่ในห้องนั่งรอ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="ไม่สามารถเข้าร่วมได้";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove this restriction.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="การโทรนี้รองรับผู้เข้าร่วมได้สูงสุด 100 คน หากต้องการเพิ่มมากกว่านั้น กรุณาขอให้ผู้จัดการประชุมยกเลิกข้อจำกัดนี้ก่อน";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="โอเค เข้าใจแล้ว";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมเพิ่มเติม จะสามารถส่งและอ่านข้อความในแชทได้เท่านั้น ต้องการเพิ่มผู้เข้าร่วมเพิ่มเติมหรือไม่ [A]อัปเกรดแผนของคุณตอนนี้[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="แสดงไฟล์ที่ซ่อนอยู่";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="คุณสามารถเลือกได้ว่าต้องการให้ไฟล์ที่ซ่อนอยู่ปรากฏหรือไม่ มีการตั้งค่าใหม่ที่ช่วยให้คุณแสดงไฟล์ที่ซ่อนอยู่ชั่วคราวได้";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="บัญชีของฉัน";
+/* Free plan title */
+"free.Plan.name"="ฟรี";
+/* Price description for the free plan */
+"free.Plan.Price.description"="ฟรี";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="ถูกจำกัด";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="ยกเลิกการสมัครใช้งาน";

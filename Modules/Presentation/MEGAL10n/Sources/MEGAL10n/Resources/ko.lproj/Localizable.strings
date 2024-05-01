@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="로그인 시도를 너무 많이 했습니다. %@까지 기다렸다가 다시 시도하세요.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Check your email inbox and follow the link to confirm your account.";
+"accountNotConfirmed"="계정을 확인하려면 이메일 수신함을 확인하고 링크를 따라가세요.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="당신의 계정은 MEGA 이용 약관 제15조를 포함한 위반 행위로 인하여 제거되었습니다.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="잘못된 암호";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="This email address is already in use";
+"emailAlreadyInUse"="이 이메일 주소는 이미 사용중입니다";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="장치에 여유 공간이 필요합니다";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -678,10 +678,6 @@
 "general.export"="내보내기";
 /* Select all items/elements on the list */
 "selectAll"="모두 선택";
-/*  */
-"oneContact"="연락처 1명";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="연락처 [X]명";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="선택";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -853,7 +849,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="이 계정과 연결된 모든 데이터를 잃게 됩니다. 진행하시겠습니까?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can’t access your email inbox, contact support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="당신의 이메일 수신함에 접근할 수 없다면, support@mega.nz로 연락주세요.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="취소 링크가 만료되었습니다.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -937,7 +933,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="이메일 확인";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirm new email address";
+"confirmNewEmail"="새 이메일 주소 확인";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="이메일 주소 변경";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -947,9 +943,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="그 이메일 주소에 대한 확인 링크를 이미 요청하였습니다.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
+"emailIsChanging_description"="새 이메일 주소의 수신함에 가서 새 이메일 주소를 확인하는 링크를 클릭하세요.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Enter your password to verify your email address";
+"verifyYourEmailAddress_description"="이메일 주소를 승인하려면 암호를 입력하세요";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="축하합니다, 이 MEGA 계정에 대한 새 이메일 주소는 다음과 같습니다: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="상태 유지";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="연결된 장치가 없어도 내가 선택한 상태를 유지합니다.";
+"maintainMyChosenStatusAppearance"="접속을 종료해도 선택된 상태로 항상 보이게 함";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="수정됨";
 /*  */
@@ -1375,7 +1371,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="가입을 취소하시겠습니까?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelt your email address, correct it and tap “Resend”.";
+"misspelledEmailAddress"="당신의 이메일 주소를 잘못 입력하였다면, 수정하고 “재발송”을 탭하세요.";
 /* A button to resend the email confirmation. */
 "resend"="재발송";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="당신의 클라우드 저장소가 꽉 차서 업로드를 진행할 수 없습니다";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="당신의 연락처가 당신이 최근에 MEGA에서 활동한 시간을 볼 수 있도록 합니다.";
+"Allow your contacts to see the last time you were active on MEGA."="당신의 연락처가 당신이 최근에 MEGA에서 활동한 시간을 볼 수 있도록 합니다";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="보기";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="당신의 비즈니스 계정은 결제 실패로 인해 비활성화 되었습니다. 계정 안에 있는 데이터에 접근하지 못할 것입니다. 결제를 하고 구독을 재활성화 하려면, 브라우저에서 MEGA에 로그인 하세요.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="당신의 계정은 현재 [B]정지[/B]되었습니다. 당신의 데이터를 탐색만할 수 있습니다.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]deactivated[/B]. You can only browse your data.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA는 당신의 데이터에 접근할 수 없습니다. 그러나 당신의 비즈니스 계정 관리자는 당신의 카메라 업로드에 접근할 수 있습니다.";
 /*  */
@@ -3143,7 +3139,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="회의 예약";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email inbox for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="당신의 MEGA 계정이 반복된 저작권 침해 혐의로 인해 정지 되었습니다. 이것은 당신의 계정이나 그 안의 데이터에 접근할 수 없다는 뜻입니다.\n\n이의 제기를 제출하는 방법에 대한 자세한 정보는 이메일 수신함을 확인하세요.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="당신의 계정이 MEGA의 이용 약관 위반으로 삭제되었습니다.\n\n저장된 데이터에 대한 접근 또는 새 MEGA 계정을 등록하는 것이 금지됩니다.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3851,35 +3847,35 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Pro 요금제로 더 받기";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="더 많은 저장소와 Pro 기능에 접근하기 위해 Pro 요금제로 업그레이드 하세요. 요금제는 월 %@의 저렴한 가격으로 시작합니다";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="기대할 수 있는 몇 가지 기능은 다음과 같습니다:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Ultimate storage flexibility";
+"onboarding.upgradeAccount.content.generousStorage.title"="엄청난 저장소 유연성";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="[A][B]부터 시작하여, 당신의 저장소 수요에 완벽하게 맞는 크기를 찾으세요.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
+"onboarding.upgradeAccount.content.transferSharing.title"="쉽고, 안전한 파일 공유";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+"onboarding.upgradeAccount.content.transferSharing.message"="넉넉한 전송 할당량 덕분에 큰 파일을 공유하고 암호로 공유된 링크로 보안을 보장하세요.";
 /* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+"onboarding.upgradeAccount.content.backupAndRewind.title"="다시는 데이터를 잃지 마세요";
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+"onboarding.upgradeAccount.content.backupAndRewind.message"="완벽한 확신을 위해 데이터를 백업하고 동기화하세요. 또한, 되돌리기를 이용하여 폴더를 최대 180일까지 원하는 날짜로 복원하세요.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="우리의 고속 VPN으로 온라인에서 개인 정보를 지키세요.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="제한 없는 통화와 회의";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="제한 없는 참가자와 함께 완벽한 개인 정보 보호 안에서 메시지, 영상 통화, 회의하세요.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="공유할 때 추가 보안";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="파일과 폴더 링크에 암호와 만료일을 설정";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
+"onboarding.upgradeAccount.button.viewProPlans"="오늘 Pro로 업그레이드";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="카메라 업로드 활성화";
 /* Camera uploads banner enable state description */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="즐겨찾기";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="빈 재생 목록";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="재생목록 이름을 입력하세요";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="새 재생 목록";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="생성";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="대기실에 아무도 없습니다";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="참여할 수 없음";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="100명의 참여자만 통화에 참여할 수 있습니다. 모든 추가 참여자는 메시지를 보내고 받을 수만 있습니다. 주최자는 Pro로 업그레이드하여 이 제한을 없앨 수 있습니다.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restrictions.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="알겠습니다";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="100명의 참여자만 통화에 참여할 수 있습니다. 추가 참여자는 대화를 읽고 보내기만 할 수 있습니다. 더 많은 참여자를 추가해야 하나요? [A]지금 업그레이드 하세요[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="100명의 참여자만 통화에 참여할 수 있습니다. 모든 추가 참여자는 메시지를 보내고 받을 수만 있습니다. 주최자는 Pro로 업그레이드하여 이 제한을 없앨 수 있습니다.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="시야 범위 밖";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="숨겨진 파일이 보일 때를 정할 수 있습니다. 숨겨진 항목을 일시적으로 보이게 하는 새로운 설정이 있습니다.";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="내 계정";
+/* Free plan title */
+"free.Plan.name"="무료";
+/* Price description for the free plan */
+"free.Plan.Price.description"="무료";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="제한됨";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="구독 취소";

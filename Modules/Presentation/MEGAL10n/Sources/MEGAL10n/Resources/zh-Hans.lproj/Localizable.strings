@@ -678,10 +678,6 @@
 "general.export"="导出";
 /* Select all items/elements on the list */
 "selectAll"="全选";
-/*  */
-"oneContact"="1位联系人";
-/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X]位联系人";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="选择";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1241,7 +1237,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="状态持续设置";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="即使我没有连接设备仍保持我已选择的状态。";
+"maintainMyChosenStatusAppearance"="即使我断开连接，也始终显示选定的状态";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="（已编辑）";
 /*  */
@@ -1897,7 +1893,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="由于您的云盘已满，您的上传无法继续";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="允许您的联系人查看您在MEGA的上次登录时间。";
+"Allow your contacts to see the last time you were active on MEGA."="允许您的联系人查看您上次在MEGA的活跃时间";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="显示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -2033,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="由于付款失败，您的企业帐户已被停用。您将无法访问存储在您帐户中的数据。若要付款并重新激活您的订阅，请通过网页浏览器登入MEGA进行。";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="当前您的帐户已被[B]禁用[/B]。您只能浏览数据。";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="您的帐户目前[B]已被停用[/B]。您只能浏览您的数据。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA无法访问您的数据，而您的企业帐户管理员可以查看并删除您的相机上传文件。";
 /*  */
@@ -3851,29 +3847,29 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="通过Pro方案获得更多权益";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="升级到Pro方案，获得更多存储空间和使用Pro功能的权限。方案低至一个月%@起。";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="一些值得期待的功能是：";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="极致的存储灵活性";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="从[A] [B]起，找到最适合您存储需求的方案。";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
+"onboarding.upgradeAccount.content.transferSharing.title"="轻松、安全的文件共享";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+"onboarding.upgradeAccount.content.transferSharing.message"="得益于充足的传输流量来共享大文件，并通过受密码保护的链接确保安全。";
 /* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+"onboarding.upgradeAccount.content.backupAndRewind.title"="再也不会丢失数据";
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+"onboarding.upgradeAccount.content.backupAndRewind.message"="让您完全放心的备份和同步您的数据。另外，使用还原功能将可将文件夹恢复到最长可达180天内的任何日期。";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="使用我们的高速VPN保持在线隐私。";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="无限制的通话和会议";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="消息，视频通话，以及无限参与者的完全私密会议。";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="共享时的额外安全性";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
@@ -3944,6 +3940,12 @@
 "videos.tab.playlist.content.playlistCell.title.favorites"="收藏";
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="空播放列表";
+/* Videos: video playlist add new playlist alert title */
+"videos.tab.playlist.content.alert.title"="输入播放列表名称";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.placeholder"="新播放列表";
+/* Videos: video playlist add new playlist alert text field placeholder */
+"videos.tab.playlist.content.alert.button.create"="创建";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室里没有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4003,11 +4005,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="无法加入";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro版以移除此限制。";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="此通话只能支持100位参与者。请求组织者移除此限制。";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="只有100位参与者可以加入通话。任何其他参与者将只能发送和阅读聊天记录。需要添加更多参与者吗？[A]立即升级[/A]";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro版以移除此限制。";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4050,3 +4054,15 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="隐藏";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="您可以决定何时显示隐藏的文件。有一个新的设置可以暂时显示隐藏的项目。";
+/* My Account page: Menu Title of user account page */
+"account.myAccount.title"="我的帐户";
+/* Free plan title */
+"free.Plan.name"="免费";
+/* Price description for the free plan */
+"free.Plan.Price.description"="免费";
+/* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
+"storage.Limit.capacity"="%d GB";
+/* Limited transfer limit title */
+"limited.Transfer.limit"="有限制";
+/* Cancel account subscription title */
+"account.subscription.cancel.title"="取消订阅";

@@ -2536,6 +2536,20 @@
         <string>ไฟล์ถูกส่งไปที่ห้องแชท %d แชทแล้ว</string>
       </dict>
     </dict>
+    <key>chat.message.numberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ผู้ติดต่อ %d คน</string>
+      </dict>
+    </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2547,7 +2561,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>เชิญผู้ติดต่อ %d ราย</string>
+        <string>เชิญผู้ติดต่อ %d คน</string>
       </dict>
     </dict>
     <key>chat.info.numberOfParticipants</key>
