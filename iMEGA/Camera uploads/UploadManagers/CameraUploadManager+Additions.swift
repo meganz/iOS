@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAPermissions
+import MEGASDKRepo
 
 extension CameraUploadManager {
     @objc func scheduleCameraUploadBackgroundRefresh() {
@@ -26,12 +27,9 @@ extension CameraUploadManager {
     
     @objc
     func initializeCameraUploadHeartbeat() {
-        let cameraUploadsUseCase = CameraUploadsUseCase(
-            cameraUploadsRepository: CameraUploadsRepository.newRepo
-        )
-        
         self.heartbeat = CameraUploadHeartbeat(
-            cameraUploadsUseCase: cameraUploadsUseCase
+            cameraUploadsUseCase: CameraUploadsUseCase(cameraUploadsRepository: CameraUploadsRepository.newRepo),
+            deviceUseCase: DeviceUseCase(repository: DeviceRepository.newRepo)
         )
     }
 }
