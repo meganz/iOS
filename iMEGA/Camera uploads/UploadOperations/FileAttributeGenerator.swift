@@ -19,7 +19,7 @@ protocol FileAttributeGeneratorProtocol {
     func requestThumbnail() async -> UIImage?
 }
 
-@objc final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
+final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
     
     private let sourceURL: URL
     private let pixelWidth: Int
@@ -32,14 +32,14 @@ protocol FileAttributeGeneratorProtocol {
         static let compressionQuality = 0.8
     }
     
-    @objc init(sourceURL: URL, pixelWidth: Int = 0, pixelHeight: Int = 0, qlThumbnailGenerator: QLThumbnailGenerator = QLThumbnailGenerator.shared) {
+    init(sourceURL: URL, pixelWidth: Int = 0, pixelHeight: Int = 0, qlThumbnailGenerator: QLThumbnailGenerator = QLThumbnailGenerator.shared) {
         self.sourceURL = sourceURL
         self.pixelWidth = pixelWidth
         self.pixelHeight = pixelHeight
         self.qlThumbnailGenerator = qlThumbnailGenerator
     }
     
-    @objc func createThumbnail(at destinationURL: URL) async -> Bool {
+    func createThumbnail(at destinationURL: URL) async -> Bool {
         let size = sizeForThumbnail()
         let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
                                                    size: size,
@@ -52,13 +52,13 @@ protocol FileAttributeGeneratorProtocol {
             let data = UIImage(cgImage: newImage).jpegData(compressionQuality: Constants.compressionQuality)
             try data?.write(to: destinationURL)
         } catch let error {
-            MEGALogError("[Camera Uploads] create thumbnail fails with error \(error)")
+            MEGALogError("[Camera Uploads] create thumbnail fails for \(sourceURL.lastPathComponent) with error \(error)")
             return false
         }
         return true
     }
     
-    @objc func createPreview(at destinationURL: URL) async -> Bool {
+    func createPreview(at destinationURL: URL) async -> Bool {
         let size = CGSize(width: Constants.previewSize, height: Constants.previewSize)
             let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
                                                        size: size,
@@ -68,13 +68,13 @@ protocol FileAttributeGeneratorProtocol {
             do {
                 try await qlThumbnailGenerator.saveBestRepresentation(for: request, to: destinationURL, contentType: UTType.jpeg.identifier)
             } catch let error {
-                MEGALogError("[Camera Uploads] create preview fails with error \(error)")
+                MEGALogError("[Camera Uploads] create preview fails for \(sourceURL.lastPathComponent) with error \(error)")
                 return false
             }
             return true
     }
     
-    @objc func requestThumbnail() async -> UIImage? {
+    func requestThumbnail() async -> UIImage? {
         let size = CGSize(width: Constants.thumbnailSize, height: Constants.thumbnailSize)
         let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
                                                    size: size,
@@ -85,7 +85,7 @@ protocol FileAttributeGeneratorProtocol {
             let representation = try await qlThumbnailGenerator.generateBestRepresentation(for: request)
             return representation.uiImage
         } catch let error {
-            MEGALogError("Error generating thumbnail for local file \(error)")
+            MEGALogError("Create thumbnail for local file \(sourceURL.lastPathComponent) fails with error \(error)")
             return nil
         }
     }
