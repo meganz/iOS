@@ -2,6 +2,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGASwiftUI
 import XCTest
 
 final class AlbumNameValidatorTests: XCTestCase {

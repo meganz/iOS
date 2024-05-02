@@ -33,7 +33,7 @@ struct TextFieldAlertRepresenter: UIViewControllerRepresentable {
     }
 }
 
-extension View {
+public extension View {
     func alert(isPresented: Binding<Bool>, _ alert: TextFieldAlertViewModel) -> some View {
         background(TextFieldAlertRepresenter(isPresented: isPresented, alert: alert))
     }

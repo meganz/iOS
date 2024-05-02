@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwiftUI
 import SwiftUI
 
 protocol AlbumListViewRouting {
@@ -64,6 +65,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                     placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                     affirmativeButtonTitle: Strings.Localizable.createFolderButton,
+                                                    destructiveButtonTitle: Strings.Localizable.cancel,
                                                     message: nil),
             photoAlbumContainerViewModel: photoAlbumContainerViewModel
         )

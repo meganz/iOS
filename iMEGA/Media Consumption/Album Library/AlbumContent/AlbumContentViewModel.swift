@@ -4,6 +4,7 @@ import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASwiftUI
 
 enum AlbumContentAction: ActionType {
     case onViewReady

@@ -262,7 +262,6 @@
 		25BE0B092AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */; };
 		25C2F8D82AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */; };
 		25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */; };
-		25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */; };
 		25CEA2992BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */; };
 		25CEA29A2BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */; };
 		25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */; };
@@ -1507,7 +1506,6 @@
 		99F7043D2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */; };
 		99F9ABC02A7B428A0050B5E4 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */; };
 		99FF30E42A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF30E32A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift */; };
-		9D26F234294BADCA00FAD016 /* TextFieldAlertRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
 		9D3563C828B54C1300CB3365 /* AppearanceViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */; };
@@ -1542,8 +1540,6 @@
 		9D94AF7029653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */; };
 		9DAC1B632951589F00562475 /* NodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC1B622951589E00562475 /* NodeInfoRepository.swift */; };
 		9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB88B62290D98BB008CB09E /* ImageScrollView.swift */; };
-		9DD2E84B29555880000983A3 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */; };
-		9DD2E84D295558D0000983A3 /* TextFieldAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD2E84C295558D0000983A3 /* TextFieldAlertViewModel.swift */; };
 		A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
@@ -2954,7 +2950,6 @@
 		25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModelTests.swift; sourceTree = "<group>"; };
 		25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewController.swift; sourceTree = "<group>"; };
 		25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewModelTests.swift; sourceTree = "<group>"; };
-		25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTableViewCellViewModelTests.swift; sourceTree = "<group>"; };
 		25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemCollectionViewCell+Additions.swift"; sourceTree = "<group>"; };
 		25CF5EB52BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTableViewCellViewModelTests.swift; sourceTree = "<group>"; };
 		25CF5EB82BDBACD3005608F7 /* ThumbnailViewerTableViewCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailViewerTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -4252,7 +4247,6 @@
 		99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
 		99FF30E32A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScheduleMeetingViewModel+Init.swift"; sourceTree = "<group>"; };
-		9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertRepresenter.swift; sourceTree = "<group>"; };
 		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
 		9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouter.swift; sourceTree = "<group>"; };
 		9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewRouter.swift; sourceTree = "<group>"; };
@@ -4287,8 +4281,6 @@
 		9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentPickerViewModelTests.swift; sourceTree = "<group>"; };
 		9DAC1B622951589E00562475 /* NodeInfoRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
 		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
-		9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
-		9DD2E84C295558D0000983A3 /* TextFieldAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewModel.swift; sourceTree = "<group>"; };
 		A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASdkCleanUp.swift; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
 		A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountRepository+Additions.swift"; sourceTree = "<group>"; };
@@ -5774,7 +5766,6 @@
 			isa = PBXGroup;
 			children = (
 				12BDD4DB28285EAF00009D73 /* AlbumContent */,
-				9DD2E849295557E5000983A3 /* Alert */,
 				12397E1B2820C45800A30CCC /* Cell */,
 				12F23A5A284EB7C6007B9821 /* Data */,
 				0EED79E62A9C0AFF00213201 /* Extensions */,
@@ -10362,16 +10353,6 @@
 				9D7E602628DB9BBA00055875 /* SlideShowOptionViewModel.swift */,
 			);
 			path = Options;
-			sourceTree = "<group>";
-		};
-		9DD2E849295557E5000983A3 /* Alert */ = {
-			isa = PBXGroup;
-			children = (
-				9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */,
-				9DD2E84C295558D0000983A3 /* TextFieldAlertViewModel.swift */,
-				9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */,
-			);
-			path = Alert;
 			sourceTree = "<group>";
 		};
 		A5C0BD432BC3E676006CF7D7 /* MoveToRubbishBin */ = {
@@ -15634,8 +15615,6 @@
 				12466830275DBE0500C94335 /* TextEditorViewController.swift in Sources */,
 				12466832275DBE0500C94335 /* TextEditorViewModel.swift in Sources */,
 				12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */,
-				9D26F234294BADCA00FAD016 /* TextFieldAlertRepresenter.swift in Sources */,
-				9DD2E84D295558D0000983A3 /* TextFieldAlertViewModel.swift in Sources */,
 				5D7D53472551263C00D3582E /* TextFieldStyleFactory.swift in Sources */,
 				1246682E275DBE0500C94335 /* TextFile.swift in Sources */,
 				5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */,
@@ -15678,7 +15657,6 @@
 				83B906BC249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
 				8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */,
 				9495DBB32A4086DD00FA22EE /* UIAlertController+AlertModel.swift in Sources */,
-				9DD2E84B29555880000983A3 /* UIAlertController+Extension.swift in Sources */,
 				5B9FBDFD26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift in Sources */,
 				5B0343D925822867005307A6 /* UIApplication+Additions.swift in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
