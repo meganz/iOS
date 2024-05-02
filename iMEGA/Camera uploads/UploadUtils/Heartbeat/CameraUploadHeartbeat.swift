@@ -1,9 +1,8 @@
 import FirebaseCrashlytics
 import Foundation
+import MEGADomain
 import MEGASDKRepo
 import MEGAUI
-
-import MEGADomain
 
 final class CameraUploadHeartbeat: NSObject {
     private enum Constants {
@@ -12,6 +11,7 @@ final class CameraUploadHeartbeat: NSObject {
     }
     
     private let sdk: MEGASdk
+    private let deviceUseCase: any DeviceUseCaseProtocol
     private let register: BackupRegister
     private let recorder: BackupRecorder
     private var activeTimer: (any DispatchSourceTimer)?
@@ -19,11 +19,13 @@ final class CameraUploadHeartbeat: NSObject {
     private var lastHeartbeatNodeHandle: HandleEntity?
     
     init(
-        cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
+        cameraUploadsUseCase: any CameraUploadsUseCaseProtocol,
+        deviceUseCase: some DeviceUseCaseProtocol
     ) {
         sdk = MEGASdk.shared
         register = BackupRegister(sdk: sdk, cameraUploadsUseCase: cameraUploadsUseCase)
         recorder = BackupRecorder()
+        self.deviceUseCase = deviceUseCase
         super.init()
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNodeCurrentNotification), name: Notification.Name.MEGANodesCurrent, object: nil)
@@ -64,15 +66,28 @@ final class CameraUploadHeartbeat: NSObject {
     }
     
     private func setDeviceNameIfNeeded() {
-        sdk.getDeviceName(nil, delegate: RequestDelegate { [weak self] getResult in
-            if case let .failure(getError) = getResult, getError.type == .apiENoent {
-                self?.sdk.setDeviceName(UIDevice.current.modelName, delegate: RequestDelegate { setResult in
-                    if case let .failure(setError) = setResult {
-                        MEGALogError("[Camera Upload] heartbeat - error when to set device name \(setError.type) \(String(describing: setError.name))")
-                    }
-                })
+        Task {
+            do {
+                let deviceName = try await deviceUseCase.fetchCurrentDeviceName()
+                MEGALogError("[Camera Upload] heartbeat - The device already has a name associated with it:  \(String(describing: deviceName))")
+            } catch let error as MEGAError {
+                if error.type == .apiENoent {
+                    await setDeviceName(UIDevice.current.modelName)
+                }
+            } catch {
+                MEGALogError("[Camera Upload] heartbeat - error getting the device name")
             }
-        })
+        }
+    }
+    
+    private func setDeviceName(_ name: String) async {
+        do {
+            try await deviceUseCase.renameCurrentDevice(newName: name)
+        } catch let error as MEGAError {
+            MEGALogError("[Camera Upload] heartbeat - error when to set device name \(error.type) \(String(describing: error.name))")
+        } catch {
+            MEGALogError("[Camera Upload] heartbeat - error when to set device name")
+        }
     }
     
     // MARK: - Manage Timers
