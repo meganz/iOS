@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGASwiftUI
 import MEGATest
 import XCTest
 
@@ -516,6 +517,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let albumModificationUseCase = MockAlbumModificationUseCase()
         let alertViewModel = TextFieldAlertViewModel(textString: "Old Album", title: "Hey there", placeholderText: "",
                                                      affirmativeButtonTitle: "Rename", affirmativeButtonInitiallyEnabled: true,
+                                                     destructiveButtonTitle: Strings.Localizable.cancel,
                                                      message: "", action: nil, validator: nil)
         let sut = makeAlbumContentViewModel(album: album,
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
@@ -775,7 +777,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     private func makeAlertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                 placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
-                                affirmativeButtonTitle: Strings.Localizable.rename, message: nil)
+                                affirmativeButtonTitle: Strings.Localizable.rename, destructiveButtonTitle: Strings.Localizable.cancel, message: nil)
     }
 }
 

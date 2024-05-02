@@ -1,7 +1,8 @@
 import Foundation
 import MEGAL10n
+import UIKit
 
-extension UIAlertController {
+public extension UIAlertController {
     convenience init(alert: TextFieldAlertViewModel) {
         self.init(title: alert.title, message: alert.message, preferredStyle: .alert)
         self.addTextField { textField in
@@ -15,7 +16,7 @@ extension UIAlertController {
             }
         }
         
-        addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel) { _ in
+        addAction(UIAlertAction(title: alert.destructiveButtonTitle, style: .cancel) { _ in
             alert.action?(nil)
         })
         let textField = self.textFields?.first

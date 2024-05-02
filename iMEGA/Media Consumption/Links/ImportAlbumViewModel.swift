@@ -5,6 +5,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGASwift
+import MEGASwiftUI
 import SwiftUI
 
 final class ImportAlbumViewModel: ObservableObject {
@@ -461,6 +462,7 @@ extension ImportAlbumViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.AlbumLink.Alert.RenameAlbum.title,
                                 affirmativeButtonTitle: Strings.Localizable.rename,
                                 affirmativeButtonInitiallyEnabled: false,
+                                destructiveButtonTitle: Strings.Localizable.cancel,
                                 message: renameAlbumMessage,
                                 action: { [ weak self] in
             guard let self, let newName = $0 else { return }

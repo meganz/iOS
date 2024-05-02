@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 
 struct AlbumNameValidator {
     let existingAlbumNames: () -> [String]

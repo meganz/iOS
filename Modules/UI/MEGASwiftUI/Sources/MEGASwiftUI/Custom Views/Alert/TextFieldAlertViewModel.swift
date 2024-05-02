@@ -1,22 +1,24 @@
 import Foundation
 
-struct TextFieldAlertViewModel {
-    var textString: String
+public struct TextFieldAlertViewModel {
+    public var textString: String
     let title: String
-    var placeholderText: String?
+    public var placeholderText: String?
     let affirmativeButtonTitle: String
     let affirmativeButtonInitiallyEnabled: Bool?
+    let destructiveButtonTitle: String
     let highlightInitialText: Bool?
     let message: String?
-    var action: ((String?) -> Void)?
-    var validator: ((String?) -> TextFieldAlertError?)?
+    public var action: ((String?) -> Void)?
+    public var validator: ((String?) -> TextFieldAlertError?)?
     
-    init(
+    public init(
         textString: String = "",
         title: String,
         placeholderText: String? = nil,
         affirmativeButtonTitle: String,
         affirmativeButtonInitiallyEnabled: Bool? = nil,
+        destructiveButtonTitle: String,
         highlightInitialText: Bool? = nil,
         message: String? = nil,
         action: ((String?) -> Void)? = nil,
@@ -27,6 +29,7 @@ struct TextFieldAlertViewModel {
         self.placeholderText = placeholderText
         self.affirmativeButtonTitle = affirmativeButtonTitle
         self.affirmativeButtonInitiallyEnabled = affirmativeButtonInitiallyEnabled
+        self.destructiveButtonTitle = destructiveButtonTitle
         self.highlightInitialText = highlightInitialText
         self.message = message
         self.action = action
@@ -35,7 +38,7 @@ struct TextFieldAlertViewModel {
 }
 
 extension TextFieldAlertViewModel: Equatable {
-    static func == (lhs: TextFieldAlertViewModel, rhs: TextFieldAlertViewModel) -> Bool {
+    public static func == (lhs: TextFieldAlertViewModel, rhs: TextFieldAlertViewModel) -> Bool {
         lhs.textString == rhs.textString &&
         lhs.title == rhs.title &&
         lhs.placeholderText == rhs.placeholderText &&
@@ -45,7 +48,12 @@ extension TextFieldAlertViewModel: Equatable {
     }
 }
 
-struct TextFieldAlertError: Equatable {
+public struct TextFieldAlertError: Equatable {
     let title: String
     let description: String
+    
+    public init(title: String, description: String) {
+        self.title = title
+        self.description = description
+    }
 }

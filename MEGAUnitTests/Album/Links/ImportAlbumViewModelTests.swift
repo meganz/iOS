@@ -9,6 +9,7 @@ import MEGAPermissionsMock
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwift
+import MEGASwiftUI
 import MEGATest
 import XCTest
 
@@ -548,6 +549,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let expectedAlertViewModel = TextFieldAlertViewModel(title: Strings.Localizable.AlbumLink.Alert.RenameAlbum.title,
                                                              affirmativeButtonTitle: Strings.Localizable.rename,
                                                              affirmativeButtonInitiallyEnabled: false,
+                                                             destructiveButtonTitle: Strings.Localizable.cancel,
                                                              message: Strings.Localizable.AlbumLink.Alert.RenameAlbum.message(albumName))
         
         let alertViewModel = sut.renameAlbumAlertViewModel()

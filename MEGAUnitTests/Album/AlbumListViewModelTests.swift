@@ -7,6 +7,7 @@ import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwift
+import MEGASwiftUI
 import MEGATest
 import XCTest
 
@@ -811,6 +812,7 @@ final class AlbumListViewModelTests: XCTestCase {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                 placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                 affirmativeButtonTitle: Strings.Localizable.createFolderButton,
+                                destructiveButtonTitle: Strings.Localizable.cancel,
                                 message: nil)
     }
     
