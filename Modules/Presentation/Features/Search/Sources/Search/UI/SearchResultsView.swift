@@ -137,10 +137,14 @@ public struct SearchResultsView: View {
                     Task {
                         await viewModel.onItemAppear(item)
                     }
-                }.onDisappear {
+                }
+                .onDisappear {
                     Task {
                         await viewModel.onItemDisappear(item)
                     }
+                }
+                .task {
+                    await item.loadThumbnail()
                 }
         }
         .listStyle(.plain)

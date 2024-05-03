@@ -80,9 +80,6 @@ struct SearchResultRowView: View {
             }
             moreButton
         }
-        .task {
-            await viewModel.loadThumbnail()
-        }
         .contentShape(Rectangle())
         .frame(minHeight: 60)
     }
