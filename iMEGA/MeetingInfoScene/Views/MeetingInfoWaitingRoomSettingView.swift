@@ -30,7 +30,7 @@ struct MeetingInfoWaitingRoomSettingView: View {
         if isDesignTokenEnabled {
             TokenColors.Text.secondary.swiftUI
         } else {
-            colorScheme == .dark ? 
+            colorScheme == .dark ?
             MEGAAppColor.White._FFFFFF.color.opacity(0.6) :
             Color(MEGAAppColor.Gray._3C3C43.uiColor).opacity(0.6)
         }
@@ -41,9 +41,8 @@ struct MeetingInfoWaitingRoomSettingView: View {
     }
 }
 
-struct MeetingInfoWaitingRoomSettingView_Previews: PreviewProvider {
-    
-    private struct Shim: View {
+#Preview {
+    struct Shim: View {
         @Environment(\.colorScheme) private var colorScheme
         
         var body: some View {
@@ -56,8 +55,6 @@ struct MeetingInfoWaitingRoomSettingView_Previews: PreviewProvider {
         }
     }
     
-    static var previews: some View {
-        Shim()
-            .previewLayout(.sizeThatFits)
-    }
+    return Shim()
+        .previewLayout(.sizeThatFits)
 }

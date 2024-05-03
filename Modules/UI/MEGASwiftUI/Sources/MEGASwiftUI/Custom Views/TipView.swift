@@ -115,35 +115,33 @@ extension View {
     }
 }
 
-struct TipView_Previews: PreviewProvider {
-    
-    private struct Shim: View {
-        var body: some View {
-            VStack {
-                TipView(tip: Tip(title: "Start meeting",
-                                 message: "You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.",
-                                 buttonTitle: "Got it",
-                                 buttonAction: nil)
-                )
-                
-                TipView(tip: Tip(title: "Start meeting",
-                                 message: "You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.",
-                                 buttonTitle: "Got it",
-                                 buttonAction: nil),
-                        arrowDirection: .down
-                )
-                
-                TipView(tip: Tip(title: "Start meeting",
-                                 message: "You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.",
-                                 boldMessage: "Start meeting",
-                                 buttonTitle: "Got it",
-                                 buttonAction: nil)
-                )
-            }
-        }
+#Preview {
+    VStack {
+        TipView(tip: Tip(title: "Start meeting",
+                         message: "You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.",
+                         buttonTitle: "Got it",
+                         buttonAction: nil)
+        )
     }
-    
-    static var previews: some View {
-        Shim()
+}
+
+#Preview {
+    VStack {
+        TipView(tip: Tip(title: "Start meeting",
+                         message: "You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.",
+                         buttonTitle: "Got it",
+                         buttonAction: nil),
+                arrowDirection: .down
+        )
+    }
+}
+
+#Preview {
+    VStack {
+        TipView(tip: Tip(title: "Start meeting",
+                         message: "You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.",
+                         buttonTitle: "Got it",
+                         buttonAction: nil)
+        )
     }
 }

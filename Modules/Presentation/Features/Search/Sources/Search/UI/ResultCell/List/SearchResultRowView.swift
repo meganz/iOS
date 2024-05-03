@@ -18,7 +18,7 @@ struct SearchResultRowView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
-
+    
     var body: some View {
         if editMode?.wrappedValue.isEditing == true {
             contentWithInsetsAndSwipeActions
@@ -45,7 +45,7 @@ struct SearchResultRowView: View {
                 )
         }
     }
-
+    
     private var contentWithInsetsAndSwipeActions: some View {
         content
             .swipeActions {
@@ -68,7 +68,7 @@ struct SearchResultRowView: View {
                 )
             )
     }
-
+    
     private var content: some View {
         HStack {
             HStack {
@@ -155,9 +155,8 @@ struct SearchResultRowView: View {
     }
 }
 
-struct SearchResultRowView_Previews: PreviewProvider {
-    
-    static var items: [SearchResultRowViewModel] {
+#Preview {
+    var items: [SearchResultRowViewModel] {
         Array(0...9).map {
             .init(
                 result: result(for: $0),
@@ -169,27 +168,16 @@ struct SearchResultRowView_Previews: PreviewProvider {
             )
         }
     }
-
-    static var previews: some View {
-        List {
-            ForEach(items) {
-                SearchResultRowView(
-                    viewModel: $0
-                )
-            }
-        }
-        .listStyle(.plain)
-    }
-
-    static private var actions: SearchResultRowViewModel.UserActions {
+    
+    var actions: SearchResultRowViewModel.UserActions {
         .init(
             contextAction: { _ in },
             selectionAction: {},
             previewTapAction: {}
         )
     }
-
-    static private func result(for index: Int) -> SearchResult {
+    
+    func result(for index: Int) -> SearchResult {
         .previewResult(
             idx: UInt64(index),
             backgroundDisplayMode: .icon,
@@ -199,6 +187,15 @@ struct SearchResultRowView_Previews: PreviewProvider {
             ]
         )
     }
+    
+    return List {
+        ForEach(items) {
+            SearchResultRowView(
+                viewModel: $0
+            )
+        }
+    }
+    .listStyle(.plain)
 }
 
 extension SearchResult {

@@ -45,14 +45,12 @@ struct WaitingRoomControl: View {
     }
 }
 
-struct WaitingRoomControlsView_Previews: PreviewProvider {
-    static var previews: some View {
-        WaitingRoomControlsView(isVideoEnabled: .constant(false),
-                                isMicrophoneMuted: .constant(true),
-                                isSpeakerEnabled: .constant(true),
-                                speakerOnIcon: .constant(.speakerOn),
-                                isBluetoothAudioRouteAvailable: .constant(false))
-        .background(MEGAAppColor.Black._000000.color)
-        .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    WaitingRoomControlsView(isVideoEnabled: .constant(false),
+                            isMicrophoneMuted: .constant(true),
+                            isSpeakerEnabled: .constant(true),
+                            speakerOnIcon: .constant(.speakerOn),
+                            isBluetoothAudioRouteAvailable: .constant(false))
+    .background(MEGAAppColor.Black._000000.color)
+    .previewLayout(.sizeThatFits)
 }

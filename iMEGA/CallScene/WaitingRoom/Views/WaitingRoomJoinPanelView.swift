@@ -63,18 +63,16 @@ struct WaitingRoomJoinPanelView: View {
     }
 }
 
-struct WaitingRoomJoinPanelView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Spacer()
-            ZStack {
-                WaitingRoomJoinPanelView(tapJoinAction: {firstName, lastName in
-                    MEGALogDebug("firstName: \(firstName), lastName: \(lastName)")
-                }, appearFocused: false)
-            }
-            .frame(height: 142)
+#Preview {
+    VStack {
+        Spacer()
+        ZStack {
+            WaitingRoomJoinPanelView(tapJoinAction: {firstName, lastName in
+                MEGALogDebug("firstName: \(firstName), lastName: \(lastName)")
+            }, appearFocused: false)
         }
-        .preferredColorScheme(.dark)
-        .background(MEGAAppColor.Black._000000.color)
+        .frame(height: 142)
     }
+    .preferredColorScheme(.dark)
+    .background(MEGAAppColor.Black._000000.color)
 }

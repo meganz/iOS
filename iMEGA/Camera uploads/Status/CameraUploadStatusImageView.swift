@@ -92,42 +92,30 @@ struct CameraUploadStatusImageView: View {
     }
 }
 
-struct CameraUploadStatusImageView_Preview: PreviewProvider {
-    static var previews: some View {
-        Group {
-            CameraUploadStatusImageView(
-                viewModel: .init(status: .turnedOff))
-            .previewDisplayName("Turned off")
-            
-            CameraUploadStatusImageView(
-                viewModel: .init(status: .checkPendingItemsToUpload))
-            .previewDisplayName("Check Pending items to upload")
-            
-            CameraUploadStatusImageView(
-                viewModel: .init(status: .uploading(progress: 0.20)))
-            .previewDisplayName("Progress 20%")
-            
-            CameraUploadStatusImageView(
-                viewModel: .init(status: .uploading(progress: 0.45)))
-            .previewDisplayName("Progress 45%")
-            
-            CameraUploadStatusImageView(
-                viewModel: .init(status: .uploading(progress: 0.65)))
-            .previewDisplayName("Progress 65%")
-            
-            CameraUploadStatusImageView(
-                viewModel: .init(status: .completed))
-            .previewDisplayName("Completed")
-            
-            CameraUploadStatusImageView(
-                viewModel: .init(status: .idle))
-            .previewDisplayName("Idle")
-            
-            CameraUploadStatusImageView(
-                viewModel: .init(status: .warning))
-            .previewDisplayName("Warning")
-        }
-        .previewLayout(.sizeThatFits)
-        .padding()
+#Preview {
+    Group {
+        CameraUploadStatusImageView(
+            viewModel: .init(status: .turnedOff))
+        
+        CameraUploadStatusImageView(
+            viewModel: .init(status: .checkPendingItemsToUpload))
+        
+        CameraUploadStatusImageView(
+            viewModel: .init(status: .uploading(progress: 0.20)))
+        
+        CameraUploadStatusImageView(
+            viewModel: .init(status: .uploading(progress: 0.45)))
+        
+        CameraUploadStatusImageView(
+            viewModel: .init(status: .uploading(progress: 0.65)))
+        
+        CameraUploadStatusImageView(
+            viewModel: .init(status: .completed))
+        
+        CameraUploadStatusImageView(
+            viewModel: .init(status: .idle))
+        
+        CameraUploadStatusImageView(
+            viewModel: .init(status: .warning))
     }
 }

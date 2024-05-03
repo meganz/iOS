@@ -23,12 +23,10 @@ struct AppearanceListFooterWithLinkView: View {
     }
 }
 
-struct AppearanceListFooterView_Preview: PreviewProvider {
-    static var previews: some View {
-        AppearanceListFooterWithLinkView(
-            message: "Folders that contain only images and videos will open in media discovery view by default.",
-            linkMessage: "Learn more about mega",
-            linkUrl: URL(string: "https://www.mega.io")!)
-        .previewDevice(.none)
-    }
+#Preview {
+    AppearanceListFooterWithLinkView(
+        message: "Folders that contain only images and videos will open in media discovery view by default.",
+        linkMessage: "Learn more about mega",
+        linkUrl: URL(string: "https://www.mega.io")!)
+    .previewDevice(.none)
 }

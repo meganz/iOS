@@ -14,11 +14,9 @@ struct WaitingRoomMessageView: View {
     }
 }
 
-struct WaitingRoomMessageView_Previews: PreviewProvider {
-    static var previews: some View {
-        WaitingRoomMessageView(title: "Wait for host to let you in")
-            .padding(20)
-            .background(MEGAAppColor.Black._000000.color)
-            .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    WaitingRoomMessageView(title: "Wait for host to let you in")
+        .padding(20)
+        .background(MEGAAppColor.Black._000000.color)
+        .previewLayout(.sizeThatFits)
 }

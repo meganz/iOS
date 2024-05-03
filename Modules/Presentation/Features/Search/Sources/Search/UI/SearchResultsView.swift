@@ -6,7 +6,7 @@ import SwiftUI
 public struct SearchResultsView: View {
     @StateObject var viewModel: SearchResultsViewModel
     @Binding var editMode: EditMode
-
+    
     public init(
         viewModel: @autoclosure @escaping () -> SearchResultsViewModel,
         editMode: Binding<EditMode>
@@ -14,7 +14,7 @@ public struct SearchResultsView: View {
         _viewModel = StateObject(wrappedValue: viewModel())
         _editMode = editMode
     }
-
+    
     public var body: some View {
         VStack(spacing: .zero) {
             chips
@@ -44,7 +44,7 @@ public struct SearchResultsView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private var chips: some View {
         ScrollViewReader { proxy in
@@ -70,7 +70,7 @@ public struct SearchResultsView: View {
             }
         }
     }
-
+    
     private func chipsPickerView(for item: ChipViewModel) -> some View {
         ChipsPickerView(
             viewModel: .init(
@@ -91,7 +91,7 @@ public struct SearchResultsView: View {
             )
         )
     }
-
+    
     @ViewBuilder
     private var content: some View {
         Group {
@@ -119,7 +119,7 @@ public struct SearchResultsView: View {
             await viewModel.task()
         }
     }
-
+    
     @ViewBuilder
     private var contentWrapper: some View {
         if viewModel.layout == .list {
@@ -151,7 +151,7 @@ public struct SearchResultsView: View {
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
         .environment(\.editMode, $editMode)
     }
-
+    
     private var thumbnailContent: some View {
         GeometryReader { geo in
             ScrollView {
@@ -176,7 +176,7 @@ public struct SearchResultsView: View {
                     }
                 }
                 .padding(.horizontal, 8)
-
+                
                 LazyVGrid(
                     columns: viewModel.columns(geo.size.width)
                 ) {
@@ -201,21 +201,21 @@ public struct SearchResultsView: View {
             }
         }
     }
-
+    
     private var placeholderRowView: some View {
         HStack(spacing: 4) {
             RoundedRectangle(cornerRadius: 0)
                 .frame(width: 40, height: 40)
-
+            
             VStack(alignment: .leading, spacing: 4) {
                 RoundedRectangle(cornerRadius: 100)
                     .frame(width: 152, height: 20)
-
+                
                 RoundedRectangle(cornerRadius: 100)
                     .frame(width: 121, height: 20)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-
+            
             RoundedRectangle(cornerRadius: 0)
                 .frame(width: 28, height: 28)
         }
@@ -224,8 +224,7 @@ public struct SearchResultsView: View {
     }
 }
 
-struct SearchResultsViewPreviews: PreviewProvider {
-
+#Preview {
     struct Wrapper: View {
         @State var text: String = ""
         @StateObject var viewModel = SearchResultsViewModel(
@@ -234,17 +233,17 @@ struct SearchResultsViewPreviews: PreviewProvider {
                 selection: { _ in },
                 context: {_, _ in },
                 resignKeyboard: {},
-                chipTapped: { _, _ in }, 
+                chipTapped: { _, _ in },
                 sortingOrder: { .nameAscending }
             ),
             config: .example,
             layout: .list,
-            keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
+            keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
             viewDisplayMode: .unknown
         )
         var body: some View {
             SearchResultsView(
-                viewModel: viewModel, 
+                viewModel: viewModel,
                 editMode: .constant(.inactive)
             )
             .onChange(of: text, perform: { newValue in
@@ -253,9 +252,8 @@ struct SearchResultsViewPreviews: PreviewProvider {
             .searchable(text: $text)
         }
     }
-    static var previews: some View {
-        NavigationView {
-            Wrapper()
-        }
+    
+    return NavigationView {
+        Wrapper()
     }
 }

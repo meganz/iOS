@@ -11,7 +11,7 @@ struct ResourceInfoView: View {
     private var backgroundColor: Color {
         isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear
     }
-
+    
     var body: some View {
         VStack(spacing: 0) {
             customNavigationBar
@@ -29,7 +29,7 @@ struct ResourceInfoView: View {
                 .frame(maxWidth: .infinity)
                 .listRowSeparator(.hidden)
                 .listRowBackground(backgroundColor)
-
+                
                 Text(viewModel.title)
                     .font(.callout)
                     .bold()
@@ -68,7 +68,7 @@ struct ResourceInfoView: View {
                 .font(.headline)
                 .bold()
                 .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
-
+            
             HStack {
                 Spacer()
                 Button {
@@ -83,7 +83,7 @@ struct ResourceInfoView: View {
         .background(isDesignTokenEnabled ?
                     TokenColors.Background.surface1.swiftUI :
                         colorScheme == .dark ? Color(UIColor(red: 0.173, green: 0.173, blue: 0.18, alpha: 1.0)) :
-                                               Color(UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1.0))
+                        Color(UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1.0))
         )
     }
 }
@@ -112,8 +112,12 @@ struct DetailRow: View {
     }
 }
 
-struct InfoView_Previews: PreviewProvider {
-    static let infoModel = ResourceInfoModel(
+#Preview {
+    let dateFormatter: DateFormatterClosure = { date in
+        DateFormatter.dateMediumTimeShort().localisedString(from: date)
+    }
+    
+    let infoModel = ResourceInfoModel(
         icon: "pc-mac",
         name: "MEGA Mac",
         counter: ResourceCounter(
@@ -125,21 +129,15 @@ struct InfoView_Previews: PreviewProvider {
         formatDateClosure: dateFormatter
     )
     
-    static let dateFormatter: DateFormatterClosure = { date in
-        DateFormatter.dateMediumTimeShort().localisedString(from: date)
-    }
-    
-    static var previews: some View {
-        ResourceInfoView(
-            viewModel:
-                ResourceInfoViewModel(
-                    infoModel: infoModel,
-                    router:
-                        ResourceInfoViewRouter(
-                            presenter: UIViewController(),
-                            infoModel: infoModel
-                        )
-                )
-        )
-    }
+    return ResourceInfoView(
+        viewModel:
+            ResourceInfoViewModel(
+                infoModel: infoModel,
+                router:
+                    ResourceInfoViewRouter(
+                        presenter: UIViewController(),
+                        infoModel: infoModel
+                    )
+            )
+    )
 }

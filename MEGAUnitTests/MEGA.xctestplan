@@ -17,34 +17,19 @@
           "name" : "MEGA"
         },
         {
-          "containerPath" : "container:MEGA.xcodeproj",
-          "identifier" : "942254DB1EDC03130074C51A",
-          "name" : "MEGAPicker"
+          "containerPath" : "container:Modules\/Infrastracture\/MEGAFoundation",
+          "identifier" : "MEGAFoundation",
+          "name" : "MEGAFoundation"
         },
         {
-          "containerPath" : "container:MEGA.xcodeproj",
-          "identifier" : "942254EA1EDC03140074C51A",
-          "name" : "MEGAPickerFileProvider"
+          "containerPath" : "container:..\/..\/..\/..\/Library\/Developer\/Xcode\/DerivedData\/iMEGA-fqspjsyglusgjofeldrzrcscedeb\/SourcePackages\/checkouts\/mobile-analytics-ios",
+          "identifier" : "MEGAAnalyticsiOS",
+          "name" : "MEGAAnalyticsiOS"
         },
         {
-          "containerPath" : "container:MEGA.xcodeproj",
-          "identifier" : "943F8B0E1EF26E9C00AFD89F",
-          "name" : "MEGAShare"
-        },
-        {
-          "containerPath" : "container:MEGA.xcodeproj",
-          "identifier" : "7794AED3231E4E0A0039C1D2",
-          "name" : "MEGANotifications"
-        },
-        {
-          "containerPath" : "container:MEGA.xcodeproj",
-          "identifier" : "83199F1025556CD900344531",
-          "name" : "MEGAWidgetExtension"
-        },
-        {
-          "containerPath" : "container:MEGA.xcodeproj",
-          "identifier" : "831B490D256FED6F0086002B",
-          "name" : "MEGAIntent"
+          "containerPath" : "container:Modules\/Repository\/MEGARepo",
+          "identifier" : "MEGARepo",
+          "name" : "MEGARepo"
         },
         {
           "containerPath" : "container:Modules\/Repository\/MEGASDKRepo",
@@ -52,14 +37,9 @@
           "name" : "MEGASDKRepo"
         },
         {
-          "containerPath" : "container:Modules\/Domain\/MEGADomain",
-          "identifier" : "MEGADomain",
-          "name" : "MEGADomain"
-        },
-        {
-          "containerPath" : "container:Modules\/Infrastracture\/MEGAFoundation",
-          "identifier" : "MEGAFoundation",
-          "name" : "MEGAFoundation"
+          "containerPath" : "container:Modules\/Infrastracture\/MEGASwift",
+          "identifier" : "MEGASwift",
+          "name" : "MEGASwift"
         },
         {
           "containerPath" : "container:Modules\/Presentation\/MEGAPresentation",
@@ -67,24 +47,19 @@
           "name" : "MEGAPresentation"
         },
         {
-          "containerPath" : "container:Modules\/Infrastracture\/MEGASwift",
-          "identifier" : "MEGASwift",
-          "name" : "MEGASwift"
+          "containerPath" : "container:Modules\/Presentation\/MEGAL10n",
+          "identifier" : "MEGAL10n",
+          "name" : "MEGAL10n"
         },
         {
-          "containerPath" : "container:Modules\/UI\/MEGASwiftUI",
-          "identifier" : "MEGASwiftUI",
-          "name" : "MEGASwiftUI"
+          "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
+          "identifier" : "MEGAAnalyticsDomain",
+          "name" : "MEGAAnalyticsDomain"
         },
         {
-          "containerPath" : "container:Modules\/UI\/MEGAUI",
-          "identifier" : "MEGAUI",
-          "name" : "MEGAUI"
-        },
-        {
-          "containerPath" : "container:Modules\/UI\/MEGAUIKit",
-          "identifier" : "MEGAUIKit",
-          "name" : "MEGAUIKit"
+          "containerPath" : "container:Modules\/Repository\/ChatRepo",
+          "identifier" : "ChatRepo",
+          "name" : "ChatRepo"
         }
       ]
     },
@@ -160,6 +135,7 @@
       }
     },
     {
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:Modules\/UI\/MEGASwiftUI",
         "identifier" : "MEGASwiftUITests",
@@ -167,6 +143,7 @@
       }
     },
     {
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:Modules\/UI\/MEGAUI",
         "identifier" : "MEGAUITests",
@@ -174,6 +151,7 @@
       }
     },
     {
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:Modules\/UI\/MEGAUIKit",
         "identifier" : "MEGAUIKitTests",

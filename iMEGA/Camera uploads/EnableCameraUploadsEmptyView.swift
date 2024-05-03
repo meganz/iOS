@@ -40,11 +40,6 @@ struct EnableCameraUploadsEmptyView: View {
     }
 }
 
-struct EnableCameraUploadsEmptyView_Preview: PreviewProvider {
-    static var previews: some View {
-        EnableCameraUploadsEmptyView { }
-        
-        EnableCameraUploadsEmptyView { }
-            .previewInterfaceOrientation(.landscapeLeft)
-    }
+#Preview {
+    EnableCameraUploadsEmptyView { }
 }

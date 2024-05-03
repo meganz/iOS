@@ -41,7 +41,7 @@ struct TabContainerView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .background(videoConfig.colorAssets.pageBackgroundColor)
         }
-        .onChange(of: currentTab) { 
+        .onChange(of: currentTab) {
             didChangeCurrentTab($0)
         }
     }
@@ -136,28 +136,8 @@ struct TabBarItem: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            TabContainerView(
-                videoListViewModel: makeNullViewModel(),
-                videoPlaylistViewModel: makeVideoPlaylistsViewModel(),
-                videoConfig: .preview,
-                router: Preview_VideoRevampRouter(),
-                didChangeCurrentTab: { _ in }
-            )
-            TabContainerView(
-                videoListViewModel: makeNullViewModel(),
-                videoPlaylistViewModel: makeVideoPlaylistsViewModel(),
-                videoConfig: .preview,
-                router: Preview_VideoRevampRouter(),
-                didChangeCurrentTab: { _ in }
-            )
-            .preferredColorScheme(.dark)
-        }
-    }
-    
-    static func makeNullViewModel() -> VideoListViewModel {
+#Preview {
+    func makeNullViewModel() -> VideoListViewModel {
         VideoListViewModel(
             fileSearchUseCase: Preview_FilesSearchUseCase(),
             thumbnailUseCase: Preview_ThumbnailUseCase(),
@@ -166,7 +146,25 @@ struct ContentView_Previews: PreviewProvider {
         )
     }
     
-    static func makeVideoPlaylistsViewModel() -> VideoPlaylistsViewModel {
+    func makeVideoPlaylistsViewModel() -> VideoPlaylistsViewModel {
         VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel())
+    }
+    
+    return Group {
+        TabContainerView(
+            videoListViewModel: makeNullViewModel(),
+            videoPlaylistViewModel: makeVideoPlaylistsViewModel(),
+            videoConfig: .preview,
+            router: Preview_VideoRevampRouter(),
+            didChangeCurrentTab: { _ in }
+        )
+        TabContainerView(
+            videoListViewModel: makeNullViewModel(),
+            videoPlaylistViewModel: makeVideoPlaylistsViewModel(),
+            videoConfig: .preview,
+            router: Preview_VideoRevampRouter(),
+            didChangeCurrentTab: { _ in }
+        )
+        .preferredColorScheme(.dark)
     }
 }

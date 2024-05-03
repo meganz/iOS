@@ -84,35 +84,33 @@ struct ChipsPickerView: View {
     }
 }
 
-struct ChipsPickerViewPreviews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Spacer()
-            ChipsPickerView(
-                viewModel: .init(
-                    title: "Select Type",
-                    chips: [
-                        .init(
-                            id: "Chips 1",
-                            pill: .init(
-                                title: "Chips 1",
-                                selected: false,
-                                icon: .trailing(Image(systemName: "ellipsis")),
-                                config: .example
-                            ),
-                            subchips: [],
-                            selectionIndicatorImage: UIImage(systemName: "ellipsis"),
-                            select: {}
-                        )
-                    ],
-                    closeIcon: UIImage(systemName: "ellipsis")!,
-                    colorAssets: .example,
-                    chipSelection: {_ in},
-                    dismiss: {}
-                )
+#Preview {
+    VStack {
+        Spacer()
+        ChipsPickerView(
+            viewModel: .init(
+                title: "Select Type",
+                chips: [
+                    .init(
+                        id: "Chips 1",
+                        pill: .init(
+                            title: "Chips 1",
+                            selected: false,
+                            icon: .trailing(Image(systemName: "ellipsis")),
+                            config: .example
+                        ),
+                        subchips: [],
+                        selectionIndicatorImage: UIImage(systemName: "ellipsis"),
+                        select: {}
+                    )
+                ],
+                closeIcon: UIImage(systemName: "ellipsis")!,
+                colorAssets: .example,
+                chipSelection: {_ in},
+                dismiss: {}
             )
-            .frame(height: 440)
-            .background(Color.gray)
-        }
+        )
+        .frame(height: 440)
+        .background(Color.gray)
     }
 }

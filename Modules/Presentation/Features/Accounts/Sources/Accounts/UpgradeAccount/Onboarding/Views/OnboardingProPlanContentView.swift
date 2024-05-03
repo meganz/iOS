@@ -77,8 +77,6 @@ private struct ProPlanView: View {
     }
 }
 
-struct ProPlanView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProPlanView(image: MEGAAssetsPreviewImageProvider.image(named: "storage"), title: "Title", message: "Message")
-    }
+#Preview {
+    ProPlanView(image: MEGAAssetsPreviewImageProvider.image(named: "storage"), title: "Title", message: "Message")
 }

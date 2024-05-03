@@ -60,9 +60,6 @@ extension CustomModalAlertView {
     }
 }
 
-struct CustomModalAlertView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        CustomModalAlertView(mode: .storageQuotaError)
-    }
+#Preview {
+    CustomModalAlertView(mode: .storageQuotaError)
 }

@@ -231,40 +231,80 @@ struct VerticalThumbnailView: View {
     }
 }
 
-struct VerticalThumbnailView_Previews: PreviewProvider {
-    static func testView(
-        mode: VerticalBackgroundViewMode,
-        properties: [ResultProperty] = []
-    ) -> some View {
-        VerticalThumbnailView(
-            viewModel: .init(
-                result: .previewResult(
-                    idx: 1,
-                    thumbnailDisplayMode: .vertical,
-                    backgroundDisplayMode: mode,
-                    properties: properties
-                ),
-                rowAssets: .example,
-                colorAssets: .example,
-                previewContent: .example,
-                actions: .init(
-                    contextAction: { _ in },
-                    selectionAction: {},
-                    previewTapAction: {}
-                ), 
-                swipeActions: []
+#Preview("Video") {
+    VerticalThumbnailView(
+        viewModel: .init(
+            result: .previewResult(
+                idx: 1,
+                thumbnailDisplayMode: .vertical,
+                backgroundDisplayMode: .preview,
+                properties: [.play, .duration, .someProminentIcon, .someTopIcon]
             ),
-            selected: .constant([]),
-            selectionEnabled: .constant(false)
-        )
-        .frame(width: 173, height: 214)
-    }
-    static var previews: some View {
-        testView(mode: .preview, properties: [.play, .duration, .someProminentIcon, .someTopIcon])
-            .previewDisplayName("Video")
-        testView(mode: .preview)
-            .previewDisplayName("Preview")
-        testView(mode: .icon)
-            .previewDisplayName("Icon")
-    }
+            rowAssets: .example,
+            colorAssets: .example,
+            previewContent: .example,
+            actions: .init(
+                contextAction: { _ in },
+                selectionAction: {},
+                previewTapAction: {}
+            ),
+            swipeActions: []
+        ),
+        selected: .constant([]),
+        selectionEnabled: .constant(false)
+    )
+    .frame(width: 173, height: 214)
+    .previewDisplayName("Video")
+}
+
+#Preview("Preview") {
+    VerticalThumbnailView(
+        viewModel: .init(
+            result: .previewResult(
+                idx: 1,
+                thumbnailDisplayMode: .vertical,
+                backgroundDisplayMode: .preview,
+                properties: []
+            ),
+            rowAssets: .example,
+            colorAssets: .example,
+            previewContent: .example,
+            actions: .init(
+                contextAction: { _ in },
+                selectionAction: {},
+                previewTapAction: {}
+            ),
+            swipeActions: []
+        ),
+        selected: .constant([]),
+        selectionEnabled: .constant(false)
+    )
+    .frame(width: 173, height: 214)
+    .previewDisplayName("Preview")
+}
+
+#Preview("Icon") {
+    VerticalThumbnailView(
+        viewModel: .init(
+            result: .previewResult(
+                idx: 1,
+                thumbnailDisplayMode: .vertical,
+                backgroundDisplayMode: .icon,
+                properties: []
+            ),
+            rowAssets: .example,
+            colorAssets: .example,
+            previewContent: .example,
+            actions: .init(
+                contextAction: { _ in },
+                selectionAction: {},
+                previewTapAction: {}
+            ),
+            swipeActions: []
+        ),
+        selected: .constant([]),
+        selectionEnabled: .constant(false)
+    )
+    .frame(width: 173, height: 214)
+    .previewDisplayName("Icon")
 }
