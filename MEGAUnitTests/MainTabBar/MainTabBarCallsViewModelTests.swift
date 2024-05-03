@@ -62,7 +62,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callKitManager.notifyStartCallToCallKit_CalledTimes == 1
         }
         
-        callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(changeType: .onRecording, onRecording: true))
+        callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(changeType: .onRecording, onRecording: true), CallEntity()))
         
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
     }
@@ -89,7 +89,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callKitManager.notifyStartCallToCallKit_CalledTimes == 1
         }
         
-        callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: true))
+        callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: true), CallEntity()))
         
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
     }
@@ -116,7 +116,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callKitManager.notifyStartCallToCallKit_CalledTimes == 1
         }
         
-        callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: false))
+        callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: false), CallEntity()))
         
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 0 }
     }
@@ -143,7 +143,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callKitManager.notifyStartCallToCallKit_CalledTimes == 1
         }
         
-        callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(changeType: .onRecording, onRecording: false))
+        callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(changeType: .onRecording, onRecording: false), CallEntity()))
         
         evaluate { self.router.showScreenRecordingNotification_calledTimes == 1 }
     }
@@ -399,6 +399,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
         callManager: some CallManagerProtocol = MockCallManager(),
+        passcodeManager: some PasscodeManagerProtocol = MockPasscodeManager(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> MainTabBarCallsViewModel {
         MainTabBarCallsViewModel(
@@ -410,7 +411,8 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callSessionUseCase: callSessionUseCase, 
             accountUseCase: accountUseCase,
             callKitManager: callKitManager, 
-            callManager: callManager,
+            callManager: callManager, 
+            passcodeManager: passcodeManager,
             uuidFactory: { UUID(uuidString: "deadbeef-dead-dead-dead-deaddeafbeef")! },
             callUpdateFactory: CXCallUpdateFactory(builder: { CXCallUpdate() }),
             featureFlagProvider: featureFlagProvider

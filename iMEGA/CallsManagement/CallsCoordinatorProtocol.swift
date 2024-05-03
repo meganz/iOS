@@ -10,4 +10,5 @@ protocol CallsCoordinatorProtocol: AnyObject {
     func muteCall(_ callActionSync: CallActionSync) async -> Bool
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void)
     func reportEndCall(_ call: CallEntity)
+    func disablePassCodeIfNeeded()
 }

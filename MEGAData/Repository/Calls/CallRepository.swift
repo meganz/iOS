@@ -264,6 +264,16 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
+    func enableAudioMonitor(forCall call: CallEntity) {
+        guard !chatSdk.isAudioLevelMonitorEnabled(forChatId: call.chatId) else { return }
+        chatSdk.enableAudioMonitor(true, chatId: call.chatId)
+    }
+    
+    func disableAudioMonitor(forCall call: CallEntity) {
+        guard chatSdk.isAudioLevelMonitorEnabled(forChatId: call.chatId) else { return }
+        chatSdk.enableAudioMonitor(false, chatId: call.chatId)
+    }
+    
     // MARK: - Private
     private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
         guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {

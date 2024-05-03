@@ -14,7 +14,7 @@ public struct CallSessionRepository: CallSessionRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
-    mutating public func onCallSessionUpdate() -> AnyPublisher<ChatSessionEntity, Never> {
+    public mutating func onCallSessionUpdate() -> AnyPublisher<(ChatSessionEntity, CallEntity), Never> {
         let onCallSessionUpdate = OnCallSessionUpdateListener(sdk: chatSdk)
         onCallSessionUpdateListener = onCallSessionUpdate
 
@@ -25,9 +25,9 @@ public struct CallSessionRepository: CallSessionRepositoryProtocol {
 
 private final class OnCallSessionUpdateListener: NSObject, MEGAChatCallDelegate {
     private let sdk: MEGAChatSdk
-    private let source = PassthroughSubject<ChatSessionEntity, Never>()
+    private let source = PassthroughSubject<(ChatSessionEntity, CallEntity), Never>()
     
-    var monitor: AnyPublisher<ChatSessionEntity, Never> {
+    var monitor: AnyPublisher<(ChatSessionEntity, CallEntity), Never> {
         source.eraseToAnyPublisher()
     }
     
@@ -42,6 +42,7 @@ private final class OnCallSessionUpdateListener: NSObject, MEGAChatCallDelegate 
     }
     
     func onChatSessionUpdate(_ api: MEGAChatSdk, chatId: UInt64, callId: UInt64, session: MEGAChatSession) {
-        source.send(session.toChatSessionEntity())
+        guard let call = api.chatCall(forCallId: callId) else { return }
+        source.send((session.toChatSessionEntity(), call.toCallEntity()))
     }
 }

@@ -905,6 +905,8 @@
 		831D61AA218738F40038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831DF0242B189BF5004819B2 /* ParticipantNotInCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831DF0232B189BF5004819B2 /* ParticipantNotInCallViewModel.swift */; };
 		831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */; };
+		8326E6862BE5040400481711 /* PasscodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8326E6852BE5040400481711 /* PasscodeManager.swift */; };
+		8326E68C2BE50A5400481711 /* MockPasscodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8326E68B2BE50A5400481711 /* MockPasscodeManager.swift */; };
 		8327EE21283391D400068856 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		83293C5A2806CB7800369A86 /* NameCollisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83293C592806CB7800369A86 /* NameCollisionView.swift */; };
 		832CAEEF2864857D0069409D /* HangOrEndCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832CAEEE2864857D0069409D /* HangOrEndCallViewModel.swift */; };
@@ -3665,6 +3667,8 @@
 		831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAArchiveChatRequestDelegate.h; sourceTree = "<group>"; };
 		831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAArchiveChatRequestDelegate.m; sourceTree = "<group>"; };
 		83209DF6231D05B700F5E2DB /* ContacLinkQRType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContacLinkQRType.h; sourceTree = "<group>"; };
+		8326E6852BE5040400481711 /* PasscodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeManager.swift; sourceTree = "<group>"; };
+		8326E68B2BE50A5400481711 /* MockPasscodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPasscodeManager.swift; sourceTree = "<group>"; };
 		83293C592806CB7800369A86 /* NameCollisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCollisionView.swift; sourceTree = "<group>"; };
 		832CAEEE2864857D0069409D /* HangOrEndCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallViewModel.swift; sourceTree = "<group>"; };
 		832CAEF2286485A40069409D /* HangOrEndCallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallRouter.swift; sourceTree = "<group>"; };
@@ -6037,6 +6041,7 @@
 				B69A1765270B756F00AAD334 /* Media Consumption */,
 				E889C9DE1B55652B00ECEFDF /* My Account */,
 				B6B1A27728A1DC660057E75B /* Node */,
+				8326E6842BE503E400481711 /* Passcode */,
 				1373618D1A6664C300B740E8 /* Supporting Files */,
 				415226861A692ECC00EC7BB6 /* Utils */,
 				415226671A692EBD00EC7BB6 /* Vendor */,
@@ -8824,6 +8829,14 @@
 				831B4912256FED6F0086002B /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8326E6842BE503E400481711 /* Passcode */ = {
+			isa = PBXGroup;
+			children = (
+				8326E6852BE5040400481711 /* PasscodeManager.swift */,
+			);
+			path = Passcode;
 			sourceTree = "<group>";
 		};
 		83293C582806CB6000369A86 /* NameCollisionScene */ = {
@@ -12226,6 +12239,7 @@
 				837D0F362BC7D3B000C629AE /* MockCallManager.swift */,
 				830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */,
 				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
+				8326E68B2BE50A5400481711 /* MockPasscodeManager.swift */,
 				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
 				8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */,
 				83669E8B2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift */,
@@ -15179,6 +15193,7 @@
 				83B804E92ABB3D97006B356F /* ParticipantsListTab.swift in Sources */,
 				83B804E72ABB3D5D006B356F /* ParticipantsListView.swift in Sources */,
 				A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */,
+				8326E6862BE5040400481711 /* PasscodeManager.swift in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */,
 				240A15402B5503730000CD08 /* PasswordReminderViewController+Additions.swift in Sources */,
@@ -16275,6 +16290,7 @@
 				94B09E702B84D0B6007D6B84 /* MockNodeInsertionRouter.swift in Sources */,
 				BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
+				8326E68C2BE50A5400481711 /* MockPasscodeManager.swift in Sources */,
 				9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */,
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
 				9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */,

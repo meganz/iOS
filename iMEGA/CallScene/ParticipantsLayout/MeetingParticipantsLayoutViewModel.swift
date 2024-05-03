@@ -493,7 +493,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func configureCallSessionsListener() {
         guard callSessionUpdateSubscription == nil else { return }
         callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
-            .sink { [weak self] session in
+            .sink { [weak self] session, _ in
                 guard let self, session.changeType == .onRecording else { return }
                 invokeCommand?(.hideRecording(!session.onRecording))
             }

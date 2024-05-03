@@ -24,6 +24,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
     // MARK: - CXProviderDelegate
     func providerDidReset(_ provider: CXProvider) {
         MEGALogDebug("[CallKit] Provider did reset")
+        callManager?.removeAllCalls()
     }
     
     func providerDidBegin(_ provider: CXProvider) {
@@ -39,7 +40,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
         }
         Task {
             let success = await callsCoordinator.startCall(callActionSync)
-            success ? action.fulfill() : action.fail()
+            manageActionSuccess(action, success: success)
         }
     }
     
@@ -52,7 +53,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
         }
         Task {
             let success = await callsCoordinator.answerCall(callActionSync)
-            success ? action.fulfill() : action.fail()
+            manageActionSuccess(action, success: success)
         }
     }
 
@@ -87,7 +88,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
     }
     
     func provider(_ provider: CXProvider, timedOutPerforming action: CXAction) {
-        
+        MEGALogDebug("[CallKit] Provider time out performing action \(action)")
     }
 
     func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
@@ -96,5 +97,15 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
 
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
         MEGALogDebug("[CallKit] Provider did deactivate audio session")
+    }
+    
+    // MARK: - Private
+    private func manageActionSuccess(_ action: CXAction, success: Bool) {
+        if success {
+            action.fulfill()
+            callsCoordinator?.disablePassCodeIfNeeded()
+        } else {
+            action.fail()
+        }
     }
 }

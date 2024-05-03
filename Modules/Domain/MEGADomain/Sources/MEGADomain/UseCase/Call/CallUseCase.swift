@@ -25,6 +25,8 @@ public protocol CallUseCaseProtocol {
     func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws
     func enableAudioForCall(in chatRoom: ChatRoomEntity) async throws
     func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws
+    func enableAudioMonitor(forCall call: CallEntity)
+    func disableAudioMonitor(forCall call: CallEntity)
 }
 
 public protocol CallCallbacksUseCaseProtocol: AnyObject {
@@ -171,6 +173,14 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
     
     public func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
         try await repository.disableAudioForCall(in: chatRoom)
+    }
+    
+    public func enableAudioMonitor(forCall call: CallEntity) {
+        repository.enableAudioMonitor(forCall: call)
+    }
+    
+    public func disableAudioMonitor(forCall call: CallEntity) {
+        repository.disableAudioMonitor(forCall: call)
     }
 }
 

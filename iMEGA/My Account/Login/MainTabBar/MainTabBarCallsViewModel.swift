@@ -54,6 +54,14 @@ struct CXCallUpdateFactory {
         return update
     }
     
+    func callUpdate(
+        withVideo video: Bool
+    ) -> CXCallUpdate {
+        let update = builder()
+        update.hasVideo = video
+        return update
+    }
+    
     static var defaultFactory: Self {
         .init {
             CXCallUpdate()
@@ -82,6 +90,7 @@ class MainTabBarCallsViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private let callKitManager: any CallKitManagerProtocol
     private let callManager: any CallManagerProtocol
+    private let passcodeManager: any PasscodeManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private var providerDelegate: CallKitProviderDelegate?
@@ -118,6 +127,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         accountUseCase: some AccountUseCaseProtocol,
         callKitManager: some CallKitManagerProtocol,
         callManager: some CallManagerProtocol,
+        passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID,
         callUpdateFactory: CXCallUpdateFactory,
         featureFlagProvider: some FeatureFlagProviderProtocol
@@ -131,6 +141,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.accountUseCase = accountUseCase
         self.callKitManager = callKitManager
         self.callManager = callManager
+        self.passcodeManager = passcodeManager
         self.uuidFactory = uuidFactory
         self.callUpdateFactory = callUpdateFactory
         self.featureFlagProvider = featureFlagProvider
@@ -164,7 +175,7 @@ class MainTabBarCallsViewModel: ViewModelType {
     private func configureCallSessionsListener(forCall call: CallEntity) {
         guard callSessionUpdateSubscription == nil else { return }
         callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
-            .sink { [weak self] session in
+            .sink { [weak self] session, call in
                 switch session.changeType {
                 case .status:
                     if session.statusType == .inProgress && session.onRecording {
@@ -172,6 +183,8 @@ class MainTabBarCallsViewModel: ViewModelType {
                     }
                 case .onRecording:
                     self?.manageOnRecordingSession(session: session, in: call)
+                case .remoteAvFlags:
+                    self?.updateVideoForCall(call)
                 default:
                     break
                 }
@@ -242,6 +255,8 @@ class MainTabBarCallsViewModel: ViewModelType {
         case .callComposition:
             MEGALogDebug("[CallLimitations] MainTabBarCalls: call composition changed: [participants: \(call.numberOfParticipants)]")
             manageWaitingRoom(for: call)
+        case .localAVFlags:
+            updateVideoForCall(call)
         default:
             break
         }
@@ -253,10 +268,20 @@ class MainTabBarCallsViewModel: ViewModelType {
     
     private func manageCallStatusChange(for call: CallEntity) {
         switch call.status {
+        case .initial:
+            reportCallStartedConnectingIfNeeded(call)
+        case .userNoPresent:
+            if call.isRinging {
+                sendAudioPlayerInterruptDidStartNotificationIfNeeded()
+            }
         case .joining:
+            callUseCase.enableAudioMonitor(forCall: call)
             configureCallSessionsListener(forCall: call)
-            callKitManager.notifyStartCallToCallKit(call)
+            if !featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                callKitManager.notifyStartCallToCallKit(call)
+            }
         case .inProgress:
+            reportCallConnectedIfNeeded(call)
             invokeCommand?(.showActiveCallIcon)
             guard callWaitingRoomUsersUpdateSubscription == nil, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
             if chatRoom.isWaitingRoomEnabled && chatRoom.ownPrivilege == .moderator {
@@ -265,19 +290,31 @@ class MainTabBarCallsViewModel: ViewModelType {
             }
             
         case .terminatingUserParticipation:
-            currentWaitingRoomUserHandles.removeAll()
-            router.dismissWaitingRoomDialog(animated: false)
-            callCount = 0
-            if !chatUseCase.existsActiveCall() {
-                invokeCommand?(.hideActiveCallIcon)
+            manageTerminatingUserParticipation(call)
+        case .destroyed:
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                reportEndCall(call)
             }
-            screenRecordingAlertShownForCall = false
-            manageCallTerminatedErrorIfNeeded(call)
-            removeCallListeners()
             
         default:
             break
         }
+    }
+    
+    private func manageTerminatingUserParticipation(_ call: CallEntity) {
+        currentWaitingRoomUserHandles.removeAll()
+        router.dismissWaitingRoomDialog(animated: false)
+        callCount = 0
+        if !chatUseCase.existsActiveCall() {
+            invokeCommand?(.hideActiveCallIcon)
+        }
+        screenRecordingAlertShownForCall = false
+        manageCallTerminatedErrorIfNeeded(call)
+        if call.termCodeType == .reject {
+            sendAudioPlayerInterruptDidEndNotificationIfNeeded()
+        }
+        callUseCase.disableAudioMonitor(forCall: call)
+        removeCallListeners()
     }
     
     private func manageCallTerminatedErrorIfNeeded(_ call: CallEntity) {
@@ -454,6 +491,66 @@ class MainTabBarCallsViewModel: ViewModelType {
     }
 }
 
+// MARK: - CallsCoordinator Private Methods
+extension MainTabBarCallsViewModel {
+    private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            guard call.isOwnClientCaller, let providerDelegate else { return }
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+                  let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
+            
+            providerDelegate.provider.reportOutgoingCall(with: callUUID, startedConnectingAt: nil)
+        }
+    }
+    
+    private func reportCallConnectedIfNeeded(_ call: CallEntity) {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            guard call.isOwnClientCaller, let providerDelegate else { return }
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+                  let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
+
+            providerDelegate.provider.reportOutgoingCall(with: callUUID, connectedAt: nil)
+        }
+    }
+    
+    private func configureWebRTCAudioSession() {
+        RTCDispatcher.dispatchAsync(on: .typeAudioSession) {
+            let audioSession = RTCAudioSession.sharedInstance()
+            audioSession.lockForConfiguration()
+            let configuration = RTCAudioSessionConfiguration.webRTC()
+            configuration.categoryOptions = [.allowBluetooth, .allowBluetoothA2DP]
+            try? audioSession.setConfiguration(configuration)
+            audioSession.unlockForConfiguration()
+        }
+    }
+    
+    private func updateVideoForCall(_ call: CallEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
+        
+        var video = call.hasLocalVideo
+    
+        for session in call.clientSessions where session.hasVideo == true {
+            video = true
+            break
+        }
+        
+        providerDelegate?.provider.reportCall(with: callUUID, updated: callUpdateFactory.callUpdate(withVideo: video))
+    }
+    
+    private func sendAudioPlayerInterruptDidStartNotificationIfNeeded() {
+        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        AudioPlayerManager.shared.audioInterruptionDidStart()
+    }
+    
+    private func sendAudioPlayerInterruptDidEndNotificationIfNeeded() {
+        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
+    }
+}
+
+// MARK: - CallsCoordinatorProtocol
+
 extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
         let isSpeakerEnabled = callActionSync.videoEnabled || callActionSync.chatRoom.isMeeting
@@ -508,6 +605,8 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
             return
         }
         
+        configureWebRTCAudioSession()
+        
         let incomingCallUUID = uuidFactory()
         
         callManager.addCall(
@@ -553,4 +652,20 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
         MEGALogDebug("[CallKit] Report end call reason \(callEndedReason.rawValue)")
         providerDelegate?.provider.reportCall(with: callUUID, endedAt: nil, reason: callEndedReason)
     }
-}
+    
+    func disablePassCodeIfNeeded() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if passcodeManager.shouldPresentPasscodeViewLater() {
+                UserDefaults.standard.set(true, forKey: Constants.presentPasscodeLater)
+                passcodeManager.closePasscodeView()
+            }
+            passcodeManager.disablePasscodeWhenApplicationEntersBackground()
+        }
+    }
+    
+    private enum Constants {
+        /// Key to store if the passcode view should be presented after starting or answering a call (outside of the app), to avoid app being unlocked without user interaction
+        static let presentPasscodeLater = "presentPasscodeLater"
+    }
+ }
