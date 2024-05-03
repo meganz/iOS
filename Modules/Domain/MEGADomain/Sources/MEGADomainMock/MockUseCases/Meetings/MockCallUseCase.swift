@@ -17,6 +17,8 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     var removePeerAsModerator_CalledTimes = 0
     public var callAbsentParticipant_CalledTimes = 0
     public var muteParticipant_CalledTimes = 0
+    public var enableAudioMonitor_CalledTimes = 0
+    public var disableAudioMonitor_CalledTimes = 0
 
     public var call: CallEntity?
     public var callCompletion: Result<CallEntity, CallErrorEntity>
@@ -161,6 +163,14 @@ public final class MockCallUseCase: CallUseCaseProtocol {
             return
         }
         throw enableDisableAudioError
+    }
+    
+    public func enableAudioMonitor(forCall call: MEGADomain.CallEntity) {
+        enableAudioMonitor_CalledTimes += 1
+    }
+    
+    public func disableAudioMonitor(forCall call: MEGADomain.CallEntity) {
+        disableAudioMonitor_CalledTimes += 1
     }
 }
 

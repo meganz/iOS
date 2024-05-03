@@ -191,7 +191,8 @@ extension MainTabBarController {
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             callKitManager: CallKitManager(),
-            callManager: CallKitCallManager.shared,
+            callManager: CallKitCallManager.shared, 
+            passcodeManager: PasscodeManager(),
             uuidFactory: { UUID() },
             callUpdateFactory: .defaultFactory,
             featureFlagProvider: DIContainer.featureFlagProvider

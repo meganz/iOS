@@ -1,7 +1,7 @@
 import Combine
 
 public protocol CallSessionUseCaseProtocol {
-    mutating func onCallSessionUpdate() -> AnyPublisher<ChatSessionEntity, Never>
+    mutating func onCallSessionUpdate() -> AnyPublisher<(ChatSessionEntity, CallEntity), Never>
 }
 
 public struct CallSessionUseCase<T: CallSessionRepositoryProtocol>: CallSessionUseCaseProtocol {
@@ -11,7 +11,7 @@ public struct CallSessionUseCase<T: CallSessionRepositoryProtocol>: CallSessionU
         self.repository = repository
     }
     
-    mutating public func onCallSessionUpdate() -> AnyPublisher<ChatSessionEntity, Never> {
+    mutating public func onCallSessionUpdate() -> AnyPublisher<(ChatSessionEntity, CallEntity), Never> {
         repository.onCallSessionUpdate()
     }
 }

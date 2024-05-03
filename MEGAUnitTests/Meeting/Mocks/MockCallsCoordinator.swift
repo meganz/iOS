@@ -8,6 +8,7 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     var muteCall_CalledTimes = 0
     var reportIncomingCall_CalledTimes = 0
     var reportEndCall_CalledTimes = 0
+    var disablePassCodeIfNeeded_CalledTimes = 0
 
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
         startCall_CalledTimes += 1
@@ -35,5 +36,9 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     
     func reportEndCall(_ call: CallEntity) {
         reportEndCall_CalledTimes += 1
+    }
+    
+    func disablePassCodeIfNeeded() {
+        disablePassCodeIfNeeded_CalledTimes += 1
     }
 }

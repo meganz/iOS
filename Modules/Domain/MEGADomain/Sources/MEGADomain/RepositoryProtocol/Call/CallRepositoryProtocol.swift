@@ -27,6 +27,8 @@ public protocol CallRepositoryProtocol {
     func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws
     func enableAudioForCall(in chatRoom: ChatRoomEntity) async throws
     func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws
+    func enableAudioMonitor(forCall call: CallEntity)
+    func disableAudioMonitor(forCall call: CallEntity)
 }
 
 public protocol CallCallbacksRepositoryProtocol {

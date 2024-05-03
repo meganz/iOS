@@ -94,6 +94,10 @@ extension CallKitCallManager: CallManagerProtocol {
         callsDictionary.removeValue(forKey: uuid)
     }
     
+    func removeAllCalls() {
+        callsDictionary.removeAll()
+    }
+    
     func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
         callsDictionary[uuid] = CallActionSync(chatRoom: chatRoom)
     }
