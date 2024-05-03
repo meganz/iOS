@@ -58,8 +58,6 @@ struct AlbumListPlaceholderView: View {
     }
 }
 
-struct AlbumListPlaceholderView_Preview: PreviewProvider {
-    static var previews: some View {
-        AlbumListPlaceholderView(isActive: true) { print("AlbumListPlaceholderView onCreateTapHandler tapped") }
-    }
+#Preview {
+    AlbumListPlaceholderView(isActive: true) { print("AlbumListPlaceholderView onCreateTapHandler tapped") }
 }

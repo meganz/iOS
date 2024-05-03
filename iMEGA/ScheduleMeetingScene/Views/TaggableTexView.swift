@@ -27,25 +27,23 @@ struct TaggableText: View {
     }
 }
 
-struct TaggableText_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            TaggableText(
-                "Some interesting long copy with a [A]LINK[/A]",
-                underline: false,
-                linkColor: { _ in .red }
-            )
-            .foregroundColor(.blue)
-            .colorScheme(.light)
-            
-            TaggableText(
-                "Some interesting long copy with a [A]LINK[/A]",
-                underline: true,
-                linkColor: { _ in .blue }
-            )
-            .foregroundColor(.black)
-            .colorScheme(.light)
-        }
-        .previewLayout(.sizeThatFits)
+#Preview {
+    VStack {
+        TaggableText(
+            "Some interesting long copy with a [A]LINK[/A]",
+            underline: false,
+            linkColor: { _ in .red }
+        )
+        .foregroundColor(.blue)
+        .colorScheme(.light)
+        
+        TaggableText(
+            "Some interesting long copy with a [A]LINK[/A]",
+            underline: true,
+            linkColor: { _ in .blue }
+        )
+        .foregroundColor(.black)
+        .colorScheme(.light)
     }
+    .previewLayout(.sizeThatFits)
 }

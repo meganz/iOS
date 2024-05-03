@@ -55,7 +55,6 @@ struct ShortcutsWidget: Widget {
     let kind: String = MEGAShortcutsWidget
 
     var body: some WidgetConfiguration {
-        
         IntentConfiguration(kind: kind, intent: SelectShortcutIntent.self, provider: ShortcutsProvider()) { entry in
             ShortcutsWidgetView(entry: entry)
         }
@@ -174,11 +173,16 @@ struct ShortcutsWidgetView: View {
     }
 }
 
-struct ShortcutsWidgetView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShortcutsWidgetView(entry: ShortcutsWidgetEntry(date: Date(), shortcuts: ShortcutDetail.availableShortcuts))
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
-        ShortcutsWidgetView(entry: ShortcutsWidgetEntry(date: Date(), shortcuts: ShortcutDetail.availableShortcuts))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-    }
+@available(iOS 17.0, *)
+#Preview(as: .systemMedium) {
+    ShortcutsWidget()
+} timeline: {
+    ShortcutsWidgetEntry(date: Date.now, shortcuts: ShortcutDetail.availableShortcuts)
+}
+
+@available(iOS 17.0, *)
+#Preview(as: .systemSmall) {
+    ShortcutsWidget()
+} timeline: {
+    ShortcutsWidgetEntry(date: Date.now, shortcuts: ShortcutDetail.availableShortcuts)
 }

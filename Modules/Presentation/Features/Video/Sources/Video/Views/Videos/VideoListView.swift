@@ -66,17 +66,15 @@ struct VideoListEmptyView: View {
     }
 }
 
-struct VideoListView_Previews: PreviewProvider {
-    static var previews: some View {
-        VideoListView(
-            viewModel: VideoListViewModel(
-                fileSearchUseCase: Preview_FilesSearchUseCase(),
-                thumbnailUseCase: Preview_ThumbnailUseCase(),
-                syncModel: VideoRevampSyncModel(),
-                selection: VideoSelection()
-            ),
-            videoConfig: .preview,
-            router: Preview_VideoRevampRouter()
-        )
-    }
+#Preview {
+    VideoListView(
+        viewModel: VideoListViewModel(
+            fileSearchUseCase: Preview_FilesSearchUseCase(),
+            thumbnailUseCase: Preview_ThumbnailUseCase(),
+            syncModel: VideoRevampSyncModel(),
+            selection: VideoSelection()
+        ),
+        videoConfig: .preview,
+        router: Preview_VideoRevampRouter()
+    )
 }

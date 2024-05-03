@@ -37,47 +37,38 @@ struct CameraUploadBannerStatusView: View {
     }
 }
 
-struct CameraUploadBannerStatusView_Preview: PreviewProvider {
-    
-    private static let inProgressStatuses: [CameraUploadBannerStatusViewStates] = [
-        .uploadInProgress(numberOfFilesPending: 1),
-        .uploadInProgress(numberOfFilesPending: 32)
-    ]
-    
-    private static let completedStatuses: [CameraUploadBannerStatusViewStates] = [
-        .uploadCompleted
-    ]
-    
-    private static let uploadPausedStatuses: [CameraUploadBannerStatusViewStates] = [
-        .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 1)),
-        .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 23))
-    ]
-    
-    private static let uploadPartialCompletedStatuses: [CameraUploadBannerStatusViewStates] = [
-        .uploadPartialCompleted(reason: .photoLibraryLimitedAccess),
-        .uploadPartialCompleted(reason: .videoUploadIsNotEnabled(pendingVideoUploadCount: 1)),
-        .uploadPartialCompleted(reason: .videoUploadIsNotEnabled(pendingVideoUploadCount: 23))
-    ]
-    
-    private static func previewGroup(for name: String, statuses: [CameraUploadBannerStatusViewStates]) -> some View {
-        let previews = statuses.map { $0.toPreviewEntity() }
-        return VStack(spacing: 8) {
-            ForEach(previews, id: \.self) { previewEntity in
-                CameraUploadBannerStatusView(previewEntity: previewEntity) { }
-            }
-        }
-        .previewDisplayName(name)
+#Preview("Uploads In-Progress") {
+    VStack(spacing: 8) {
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusViewStates.uploadInProgress(numberOfFilesPending: 1).toPreviewEntity()) {}
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusViewStates.uploadInProgress(numberOfFilesPending: 32).toPreviewEntity()) {}
     }
-    
-    static var previews: some View {
-        
-        Group {
-            previewGroup(for: "Uploads In-Progress", statuses: inProgressStatuses)
-            previewGroup(for: "Uploads Completed", statuses: completedStatuses)
-            previewGroup(for: "Uploads Paused", statuses: uploadPausedStatuses)
-            previewGroup(for: "Uploads Partially Completed", statuses: uploadPartialCompletedStatuses)
-        }
-        .frame(maxHeight: .infinity, alignment: .center)
-        .background(.background)
+    .frame(maxHeight: .infinity, alignment: .center)
+    .background(.background)
+}
+
+#Preview("Uploads Completed") {
+    VStack(spacing: 8) {
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusViewStates.uploadCompleted.toPreviewEntity()) {}
     }
+    .frame(maxHeight: .infinity, alignment: .center)
+    .background(.background)
+}
+
+#Preview("Uploads Paused") {
+    VStack(spacing: 8) {
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusUploadPausedReason.noWifiConnection(numberOfFilesPending: 1)) {}
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusUploadPausedReason.noWifiConnection(numberOfFilesPending: 23)) {}
+    }
+    .frame(maxHeight: .infinity, alignment: .center)
+    .background(.background)
+}
+
+#Preview("Uploads Partially Completed") {
+    VStack(spacing: 8) {
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusViewStates.uploadPartialCompleted(reason: .photoLibraryLimitedAccess).toPreviewEntity()) {}
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusPartiallyCompletedReason.videoUploadIsNotEnabled(pendingVideoUploadCount: 1)) {}
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusPartiallyCompletedReason.videoUploadIsNotEnabled(pendingVideoUploadCount: 23)) {}
+    }
+    .frame(maxHeight: .infinity, alignment: .center)
+    .background(.background)
 }

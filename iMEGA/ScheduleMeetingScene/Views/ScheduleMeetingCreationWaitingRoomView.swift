@@ -11,7 +11,7 @@ struct ScheduleMeetingCreationWaitingRoomView: View {
         VStack(spacing: 0) {
             Divider()
                 .foregroundStyle(TokenColors.Border.subtle.swiftUI)
-
+            
             Toggle(isOn: $waitingRoomEnabled) {
                 Text(Strings.Localizable.Meetings.ScheduleMeeting.waitingRoom)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
@@ -36,9 +36,8 @@ struct ScheduleMeetingCreationWaitingRoomView: View {
     }
 }
 
-struct ScheduleMeetingCreationWaitingRoomView_Previews: PreviewProvider {
-    
-    private struct Shim: View {
+#Preview() {
+    struct Shim: View {
         @Environment(\.colorScheme) private var colorScheme
         
         var body: some View {
@@ -49,8 +48,6 @@ struct ScheduleMeetingCreationWaitingRoomView_Previews: PreviewProvider {
         }
     }
     
-    static var previews: some View {
-        Shim()
-            .previewLayout(.sizeThatFits)
-    }
+    return Shim()
+        .previewLayout(.sizeThatFits)
 }

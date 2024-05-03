@@ -36,8 +36,6 @@ struct PhotoLibraryPlaceholderView: View {
     }
 }
 
-struct PhotoLibraryLoadingView_Preview: PreviewProvider {
-    static var previews: some View {
-        PhotoLibraryPlaceholderView(isActive: true)
-    }
+#Preview {
+    PhotoLibraryPlaceholderView(isActive: true)
 }

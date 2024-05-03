@@ -80,27 +80,27 @@ public extension View {
     }
 }
 
-struct Shimmer_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            Text("SwiftUI Shimmer").preferredColorScheme(.light)
-            Text("SwiftUI Shimmer").preferredColorScheme(.dark)
-
-            VStack(alignment: .leading) {
-                Text("Loading...").font(.title)
-                Text(String(repeating: "Shimmer", count: 12))
-                    .redacted(reason: .placeholder)
-            }.frame(maxWidth: 200)
-        }
-        .padding()
-        .shimmering()
-        .previewLayout(.sizeThatFits)
+#Preview {
+    Group {
+        Text("SwiftUI Shimmer").preferredColorScheme(.light)
+        Text("SwiftUI Shimmer").preferredColorScheme(.dark)
 
         VStack(alignment: .leading) {
-            Text("← Right-to-left layout direction").font(.body)
-        }
-        .font(.largeTitle)
-        .shimmering()
-        .environment(\.layoutDirection, .rightToLeft)
+            Text("Loading...").font(.title)
+            Text(String(repeating: "Shimmer", count: 12))
+                .redacted(reason: .placeholder)
+        }.frame(maxWidth: 200)
     }
+    .padding()
+    .shimmering()
+    .previewLayout(.sizeThatFits)
+}
+
+#Preview {
+    VStack(alignment: .leading) {
+        Text("← Right-to-left layout direction").font(.body)
+    }
+    .font(.largeTitle)
+    .shimmering()
+    .environment(\.layoutDirection, .rightToLeft)
 }

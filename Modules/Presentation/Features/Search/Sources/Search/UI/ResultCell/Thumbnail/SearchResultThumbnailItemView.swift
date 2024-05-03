@@ -5,7 +5,7 @@ import SwiftUI
 /// it has two modes of rendering:
 /// .vertical for files that show big preview
 /// .horizontal for folders, that show small icon only
-struct SearchResultThumbnailItemView: View {
+public struct SearchResultThumbnailItemView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     
@@ -13,7 +13,7 @@ struct SearchResultThumbnailItemView: View {
     var selected: Binding<Set<ResultId>>
     var selectionEnabled: Binding<Bool>
     
-    var body: some View {
+    public var body: some View {
         content
             .task {
                 await viewModel.loadThumbnail()
@@ -64,37 +64,52 @@ extension PreviewContent {
     )
 }
 
-struct SearchResultThumbnailItemView_Previews: PreviewProvider {
-    static func testView(mode: ResultCellLayout.ThumbnailMode) -> SearchResultThumbnailItemView {
-        SearchResultThumbnailItemView(
-            viewModel: .init(
-                result: .previewResult(
-                    idx: 1,
-                    thumbnailDisplayMode: mode,
-                    backgroundDisplayMode: .preview
-                ),
-                rowAssets: .example,
-                colorAssets: .example,
-                previewContent: .example,
-                actions: .init(
-                    contextAction: { _ in },
-                    selectionAction: {},
-                    previewTapAction: {}
-                ), 
-                swipeActions: []
+#Preview("Folder") {
+    SearchResultThumbnailItemView(
+        viewModel: .init(
+            result: .previewResult(
+                idx: 1,
+                thumbnailDisplayMode: .horizontal,
+                backgroundDisplayMode: .preview
             ),
-            selected: .constant([]),
-            selectionEnabled: .constant(false)
-        )
-    }
-    static var previews: some View {
-        
-        testView(mode: .horizontal)
-            .previewDisplayName("Folder")
-            .frame(width: 173, height: 214)
-        
-        testView(mode: .vertical)
-            .previewDisplayName("File")
-            .frame(width: 173, height: 214)
-    }
+            rowAssets: .example,
+            colorAssets: .example,
+            previewContent: .example,
+            actions: .init(
+                contextAction: { _ in },
+                selectionAction: {},
+                previewTapAction: {}
+            ),
+            swipeActions: []
+        ),
+        selected: .constant([]),
+        selectionEnabled: .constant(false)
+    )
+    .frame(width: 173, height: 214)
+    .previewDisplayName("Folder")
+}
+
+#Preview("File") {
+    SearchResultThumbnailItemView(
+        viewModel: .init(
+            result: .previewResult(
+                idx: 1,
+                thumbnailDisplayMode: .vertical,
+                backgroundDisplayMode: .preview
+            ),
+            rowAssets: .example,
+            colorAssets: .example,
+            previewContent: .example,
+            actions: .init(
+                contextAction: { _ in },
+                selectionAction: {},
+                previewTapAction: {}
+            ),
+            swipeActions: []
+        ),
+        selected: .constant([]),
+        selectionEnabled: .constant(false)
+    )
+    .frame(width: 173, height: 214)
+    .previewDisplayName("File")
 }

@@ -70,12 +70,10 @@ struct PlaylistView: View {
     }
 }
 
-struct PlaylistView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            PlaylistView(viewModel: VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel()), videoConfig: .preview)
-            PlaylistView(viewModel: VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel()), videoConfig: .preview)
-                .preferredColorScheme(.dark)
-        }
+#Preview {
+    Group {
+        PlaylistView(viewModel: VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel()), videoConfig: .preview)
+        PlaylistView(viewModel: VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel()), videoConfig: .preview)
+            .preferredColorScheme(.dark)
     }
 }

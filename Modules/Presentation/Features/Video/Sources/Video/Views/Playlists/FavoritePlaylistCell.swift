@@ -62,14 +62,13 @@ private struct ThumbnailLayerView: View {
     }
 }
 
-struct FavoritePlaylistCell_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            FavoritePlaylistCell(videoConfig: .preview)
-                .frame(height: 80, alignment: .center)
-            FavoritePlaylistCell(videoConfig: .preview)
-                .frame(height: 80, alignment: .center)
-                .preferredColorScheme(.dark)
-        }
-    }
+#Preview("Default") {
+    FavoritePlaylistCell(videoConfig: .preview)
+        .frame(height: 80, alignment: .center)
+}
+
+#Preview("Dark") {
+    FavoritePlaylistCell(videoConfig: .preview)
+        .frame(height: 80, alignment: .center)
+        .preferredColorScheme(.dark)
 }

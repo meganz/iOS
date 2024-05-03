@@ -61,9 +61,7 @@ struct AutoMediaDiscoveryBannerView: View {
     }
 }
 
-struct AutoMediaDiscoveryBannerView_Previews: PreviewProvider {
-    static var previews: some View {
-        AutoMediaDiscoveryBannerView(showBanner: .constant(true))
-        .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    AutoMediaDiscoveryBannerView(showBanner: .constant(true))
+    .previewLayout(.sizeThatFits)
 }

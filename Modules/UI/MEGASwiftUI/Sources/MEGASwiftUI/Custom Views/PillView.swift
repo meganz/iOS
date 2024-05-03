@@ -63,65 +63,63 @@ public struct PillView: View {
     }
 }
 
-struct PillView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            HStack {
-                PillView(
-                    viewModel: .init(
-                        title: "Videos",
-                        icon: .trailing(Image(systemName: "checkmark")),
-                        foreground: .white,
-                        background: Color(red: 64.0/255.0, green: 155.0/255.0, blue: 125.0/255.0)
-                    )
+#Preview {
+    VStack {
+        HStack {
+            PillView(
+                viewModel: .init(
+                    title: "Videos",
+                    icon: .trailing(Image(systemName: "checkmark")),
+                    foreground: .white,
+                    background: Color(red: 64.0/255.0, green: 155.0/255.0, blue: 125.0/255.0)
                 )
-                PillView(
-                    viewModel: .init(
-                        title: "Videos",
-                        icon: .trailing(Image(systemName: "checkmark")),
-                        foreground: .white,
-                        background: Color(red: 64.0/255.0, green: 155.0/255.0, blue: 125.0/255.0)
-                    )
+            )
+            PillView(
+                viewModel: .init(
+                    title: "Videos",
+                    icon: .trailing(Image(systemName: "checkmark")),
+                    foreground: .white,
+                    background: Color(red: 64.0/255.0, green: 155.0/255.0, blue: 125.0/255.0)
                 )
-            }
-            HStack {
-                PillView(
-                    viewModel: .init(
-                        title: "Images",
-                        icon: .trailing(Image(systemName: "checkmark")),
-                        foreground: Color(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0),
-                        background: Color(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0)
-                    )
+            )
+        }
+        HStack {
+            PillView(
+                viewModel: .init(
+                    title: "Images",
+                    icon: .trailing(Image(systemName: "checkmark")),
+                    foreground: Color(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0),
+                    background: Color(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0)
                 )
-                PillView(
-                    viewModel: .init(
-                        title: "GIFs",
-                        icon: .trailing(Image(systemName: "checkmark")),
-                        foreground: Color(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0),
-                        background: Color(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0)
-                    )
+            )
+            PillView(
+                viewModel: .init(
+                    title: "GIFs",
+                    icon: .trailing(Image(systemName: "checkmark")),
+                    foreground: Color(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0),
+                    background: Color(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0)
                 )
-            }
-            HStack {
-                PillView(
-                    viewModel: .init(
-                        title: "Play",
-                        icon: .leading(Image(systemName: "play.fill")),
-                        foreground: .white,
-                        background: Color(red: 64.0/255.0, green: 155.0/255.0, blue: 125.0/255.0),
-                        shape: .capsule
-                    )
+            )
+        }
+        HStack {
+            PillView(
+                viewModel: .init(
+                    title: "Play",
+                    icon: .leading(Image(systemName: "play.fill")),
+                    foreground: .white,
+                    background: Color(red: 64.0/255.0, green: 155.0/255.0, blue: 125.0/255.0),
+                    shape: .capsule
                 )
-                PillView(
-                    viewModel: .init(
-                        title: "Play",
-                        icon: .leading(Image(systemName: "play.fill")),
-                        foreground: Color(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0),
-                        background: Color(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0),
-                        shape: .capsule
-                    )
+            )
+            PillView(
+                viewModel: .init(
+                    title: "Play",
+                    icon: .leading(Image(systemName: "play.fill")),
+                    foreground: Color(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0),
+                    background: Color(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0),
+                    shape: .capsule
                 )
-            }
+            )
         }
     }
 }

@@ -49,20 +49,19 @@ struct SimpleDialogView: View {
     }
 }
 
-struct SimpleDialogView_Previews: PreviewProvider {
-    static var previews: some View {
-        let dialogConfig = SimpleDialogConfig(
-            imageResource: .upgradeToProPlan,
-            title: "Dialog title",
-            message: "Fancy dialog message",
-            buttonTitle: "Button action title"
-        ) { }
-        VStack {
-            SimpleDialogView(dialogConfig: dialogConfig)
-                .colorScheme(.light)
-            
-            SimpleDialogView(dialogConfig: dialogConfig)
-                .colorScheme(.dark)
-        }
+#Preview {
+    let dialogConfig = SimpleDialogConfig(
+        imageResource: .upgradeToProPlan,
+        title: "Dialog title",
+        message: "Fancy dialog message",
+        buttonTitle: "Button action title"
+    ) { }
+    
+    return VStack {
+        SimpleDialogView(dialogConfig: dialogConfig)
+            .colorScheme(.light)
+        
+        SimpleDialogView(dialogConfig: dialogConfig)
+            .colorScheme(.dark)
     }
 }

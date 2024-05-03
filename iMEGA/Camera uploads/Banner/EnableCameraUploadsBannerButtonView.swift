@@ -67,15 +67,16 @@ struct EnableCameraUploadsBannerButtonView: View {
     }
 }
 
-struct EnableCameraUploadsBannerButtonView_Preview: PreviewProvider {
-    static var previews: some View {
-        
-        EnableCameraUploadsBannerButtonView()
-        
-        EnableCameraUploadsBannerButtonView()
-            .preferredColorScheme(.dark)
-        
-        EnableCameraUploadsBannerButtonView()
-            .previewInterfaceOrientation(.landscapeLeft)
-    }
+#Preview("Default") {
+    EnableCameraUploadsBannerButtonView()
+}
+
+#Preview("Dark Mode") {
+    EnableCameraUploadsBannerButtonView()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Landscape") {
+    EnableCameraUploadsBannerButtonView()
+        .previewInterfaceOrientation(.landscapeLeft)
 }

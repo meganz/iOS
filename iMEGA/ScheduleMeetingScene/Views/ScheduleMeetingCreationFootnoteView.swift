@@ -17,10 +17,8 @@ struct ScheduleMeetingCreationFootnoteView: View {
     }
 }
 
-struct ScheduleMeetingCreationFootnoteView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScheduleMeetingCreationFootnoteView(title: "Email a calendar invite to participants so they can add the meeting to their calendars.")
-            .padding(20)
-            .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    ScheduleMeetingCreationFootnoteView(title: "Email a calendar invite to participants so they can add the meeting to their calendars.")
+        .padding(20)
+        .previewLayout(.sizeThatFits)
 }

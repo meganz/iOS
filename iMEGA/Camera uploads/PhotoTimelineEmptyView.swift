@@ -23,15 +23,13 @@ struct PhotoTimelineEmptyView: View {
     }
 }
 
-struct PhotoTimelineEmptyView_Preview: PreviewProvider {
-    static var previews: some View {
-        PhotoTimelineEmptyView(centerImageResource: .cameraEmptyState,
-                               title: "No media found",
-                               enableCameraUploadsAction: nil)
-        .previewDisplayName("No enable camera uploads banner")
-        
-        PhotoTimelineEmptyView(centerImageResource: .cameraEmptyState,
-                               title: "No media found") { }
-        .previewDisplayName("With camera uploads banner")
-    }
+#Preview("No enable camera uploads banner") {
+    PhotoTimelineEmptyView(centerImageResource: .cameraEmptyState,
+                           title: "No media found",
+                           enableCameraUploadsAction: nil)
+}
+
+#Preview("With camera uploads banner") {
+    PhotoTimelineEmptyView(centerImageResource: .cameraEmptyState,
+                           title: "No media found") { }
 }

@@ -88,7 +88,7 @@ struct BannerView: View {
                     ? TokenColors.Text.primary.swiftUI
                     : colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Black._000000.color
                 },
-                link: { _ in 
+                link: { _ in
                     isDesignTokenEnabled
                     ? TokenColors.Support.success
                     : MEGAAppColor.Green._00A886.uiColor
@@ -139,66 +139,64 @@ struct BannerView: View {
     }
 }
 
-struct BannerView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            BannerView(
-                config: .init(
-                    copy: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.title,
-                    underline: false,
-                    theme: .dark,
-                    closeAction: {
-                    })
+#Preview {
+    VStack {
+        BannerView(
+            config: .init(
+                copy: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.title,
+                underline: false,
+                theme: .dark,
+                closeAction: {
+                })
+        )
+        .colorScheme(.light)
+        
+        BannerView(
+            config: .init(
+                copy: "Some interesting long copy with a [A]LINK[/A]",
+                underline: true,
+                theme: .light
             )
-            .colorScheme(.light)
-            
-            BannerView(
-                config: .init(
-                    copy: "Some interesting long copy with a [A]LINK[/A]",
-                    underline: true,
-                    theme: .light
-                )
+        )
+        .colorScheme(.light)
+        
+        BannerView(
+            config: .init(
+                copy: "Nice long copy describing a situation [A]Link[/A]",
+                underline: false,
+                theme: .dark,
+                closeAction: {
+                })
+        )
+        .colorScheme(.dark)
+        
+        BannerView(
+            config: .init(
+                copy: "Some interesting long copy with a [A]LINK[/A]",
+                underline: true,
+                theme: .light
             )
-            .colorScheme(.light)
-            
-            BannerView(
-                config: .init(
-                    copy: "Nice long copy describing a situation [A]Link[/A]",
-                    underline: false,
-                    theme: .dark,
-                    closeAction: {
-                    })
+        )
+        .colorScheme(.dark)
+        
+        BannerView(
+            config: .init(
+                copy: "Nice long copy describing a situation [A]Link[/A]",
+                underline: false,
+                theme: .darkMeetingsFloatingPanel,
+                closeAction: {
+                })
+        )
+        .colorScheme(.dark)
+        
+        BannerView(
+            config: .init(
+                copy: "Some interesting long copy with a [A]LINK[/A]",
+                underline: true,
+                theme: .darkMeetingsFloatingPanel
             )
-            .colorScheme(.dark)
-            
-            BannerView(
-                config: .init(
-                    copy: "Some interesting long copy with a [A]LINK[/A]",
-                    underline: true,
-                    theme: .light
-                )
-            )
-            .colorScheme(.dark)
-            
-            BannerView(
-                config: .init(
-                    copy: "Nice long copy describing a situation [A]Link[/A]",
-                    underline: false,
-                    theme: .darkMeetingsFloatingPanel,
-                    closeAction: {
-                    })
-            )
-            .colorScheme(.dark)
-            
-            BannerView(
-                config: .init(
-                    copy: "Some interesting long copy with a [A]LINK[/A]",
-                    underline: true,
-                    theme: .darkMeetingsFloatingPanel
-                )
-            )
-            .colorScheme(.light)
-        }
-        .previewLayout(.sizeThatFits)
+        )
+        .colorScheme(.light)
     }
+    .previewLayout(.sizeThatFits)
 }

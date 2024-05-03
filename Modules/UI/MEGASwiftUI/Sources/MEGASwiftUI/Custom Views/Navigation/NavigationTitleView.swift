@@ -33,9 +33,7 @@ public struct NavigationTitleView: View {
     }
 }
 
-struct NavigationTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationTitleView(title: "Test Title.jpeg", subtitle: "Album Link")
-            .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    NavigationTitleView(title: "Test Title.jpeg", subtitle: "Album Link")
+        .previewLayout(.sizeThatFits)
 }

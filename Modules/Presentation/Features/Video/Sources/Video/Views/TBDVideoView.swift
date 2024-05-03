@@ -9,8 +9,6 @@ public struct TBDVideoView: View {
     }
 }
 
-struct TBDVideoView_Previews: PreviewProvider {
-    static var previews: some View {
-        TBDVideoView()
-    }
+#Preview {
+    TBDVideoView()
 }
