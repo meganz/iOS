@@ -73,9 +73,7 @@ struct AlbumCell: View {
         if isDesignTokenEnabled {
             CheckMarkView(
                 markedSelected: viewModel.isSelected,
-                iconForegroundColor: TokenColors.Icon.inverseAccent.swiftUI,
-                foregroundColor: viewModel.isSelected ? TokenColors.Components.selectionControl.swiftUI : Color.clear,
-                borderColor: viewModel.isSelected ? Color.clear : TokenColors.Border.strong.swiftUI
+                foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
             )
         } else {
             CheckMarkView(

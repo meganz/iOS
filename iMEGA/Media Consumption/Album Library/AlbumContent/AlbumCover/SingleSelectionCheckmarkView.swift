@@ -1,11 +1,15 @@
+import MEGADesignToken
 import SwiftUI
 
-/// @available(*, deprecated, message: "Will be depcreated once Semantic Design Token is no longer a feature flag. Please reuse `CheckMarkView` without provided border instead.")
 struct SingleSelectionCheckmarkView: View {
     let markedSelected: Bool
     
     private var foregroundStyle: Color {
-        markedSelected ? UIColor.green34C759.swiftUI : UIColor.photosPhotoSeletionBorder.swiftUI
+        if isDesignTokenEnabled {
+            markedSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
+        } else {
+            markedSelected ? UIColor.green34C759.swiftUI : UIColor.photosPhotoSeletionBorder.swiftUI
+        }
     }
     
     private var backgroundView: some View {

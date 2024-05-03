@@ -10,7 +10,7 @@ struct AlbumCoverPickerPhotoCell: View {
         ZStack(alignment: .bottomTrailing) {
             image()
             
-            singleSelectionCheckmarkView()
+            SingleSelectionCheckmarkView(markedSelected: viewModel.isSelected)
         }
         .favorite(viewModel.shouldShowFavorite)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration))
@@ -24,22 +24,6 @@ struct AlbumCoverPickerPhotoCell: View {
     @ViewBuilder
     private func image() -> some View {
         PhotoCellImage(container: viewModel.thumbnailContainer)
-    }
-    
-    private func singleSelectionCheckmarkView() -> some View {
-        Group {
-            if isDesignTokenEnabled {
-                CheckMarkView(
-                    markedSelected: viewModel.isSelected,
-                    iconForegroundColor: TokenColors.Icon.inverseAccent.swiftUI,
-                    foregroundColor: viewModel.isSelected ? TokenColors.Components.selectionControl.swiftUI : Color.clear,
-                    borderColor: Color.clear
-                )
-            } else {
-                SingleSelectionCheckmarkView(markedSelected: viewModel.isSelected)
-            }
-        }
-        .offset(x: -5, y: -5)
     }
 }
 
