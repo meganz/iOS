@@ -53,7 +53,6 @@ let package = Package(
                 "src/mega_utf8proc_data.c",
                 "src/thread/libuvthread.cpp",
                 "src/win32",
-                "src/wincurl",
                 "tests",
                 "tools"
             ],
