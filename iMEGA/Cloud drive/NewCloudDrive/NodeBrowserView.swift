@@ -10,6 +10,7 @@ struct NodeBrowserView: View {
     var body: some View {
         content
             .noInternetViewModifier(viewModel: viewModel.noInternetViewModel)
+            .ignoresSafeArea(.keyboard)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     leftToolbarContent
