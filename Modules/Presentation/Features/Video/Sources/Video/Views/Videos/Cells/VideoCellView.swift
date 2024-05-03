@@ -127,9 +127,7 @@ struct VideoCellViewContent: View {
         if isDesignTokenEnabled {
             CheckMarkView(
                 markedSelected: isSelected.wrappedValue,
-                iconForegroundColor: TokenColors.Icon.inverseAccent.swiftUI,
-                foregroundColor: isSelected.wrappedValue ? TokenColors.Components.selectionControl.swiftUI : Color.clear,
-                borderColor: isSelected.wrappedValue ? Color.clear : TokenColors.Border.strong.swiftUI
+                foregroundColor: isSelected.wrappedValue ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI
             )
         } else {
             CheckMarkView(

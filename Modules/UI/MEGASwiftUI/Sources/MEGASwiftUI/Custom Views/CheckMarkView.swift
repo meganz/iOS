@@ -25,28 +25,6 @@ public struct CheckMarkView: View {
         self.borderColor = borderColor
     }
     
-    /// Semantic Design token initializer
-    /// - Parameters:
-    ///   - markedSelected: a boolean indicates selected state
-    ///   - iconForegroundColor: checkmark icon color
-    ///   - foregroundColor: view background color
-    ///   - showBorder: a boolean indicates border
-    ///   - borderColor: a border color
-    public init(markedSelected: Bool,
-                iconForegroundColor: Color,
-                foregroundColor: Color,
-                showBorder: Bool = true,
-                borderColor: Color) {
-        self.init(
-            markedSelected: markedSelected,
-            foregroundColor: foregroundColor,
-            showBorder: showBorder,
-            borderColor: borderColor
-        )
-        
-        self.iconForegroundColor = iconForegroundColor
-    }
-    
     private var imageName: String {
         markedSelected ? "checkmark.circle.fill" : "circle"
     }
@@ -56,14 +34,10 @@ public struct CheckMarkView: View {
     }
     
     public var body: some View {
-        if isDesignTokenEnabled {
-            designTokenCheckMarkView
-        } else {
-            Image(systemName: imageName)
-                .font(.system(size: 23))
-                .foregroundStyle(foregroundColor)
-                .background(backgroundView)
-        }
+        Image(systemName: imageName)
+            .font(.system(size: 23))
+            .foregroundStyle(foregroundColor)
+            .background(backgroundView)
     }
     
     private var designTokenCheckMarkView: some View {
@@ -100,24 +74,5 @@ public struct CheckMarkView: View {
     Group {
         /// Example legacy
         CheckMarkView(markedSelected: true, foregroundColor: Color.green)
-    }
-}
-
-#Preview {
-    /// Example semantic color token
-    Group {
-        CheckMarkView(
-            markedSelected: false,
-            iconForegroundColor: TokenColors.Icon.inverseAccent.swiftUI,
-            foregroundColor: TokenColors.Border.strong.swiftUI,
-            borderColor: TokenColors.Border.strong.swiftUI
-        )
-        
-        CheckMarkView(
-            markedSelected: true,
-            iconForegroundColor: TokenColors.Icon.inverseAccent.swiftUI,
-            foregroundColor: TokenColors.Components.selectionControl.swiftUI,
-            borderColor: Color.clear
-        )
     }
 }
