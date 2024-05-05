@@ -48,7 +48,8 @@ public final class MockSdk: MEGASdk {
     private var _lastReadNotificationId: Int32
     private var _isNodeInheritingSensitivity: Bool
     private var _hasVersionsForNode: Bool
-
+    private let setUserAttributeTypeMegaSetError: (MEGAUserAttribute) -> MEGAErrorType
+    
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
         message: String,
@@ -128,7 +129,8 @@ public final class MockSdk: MEGASdk {
                 enabledNotificationIdList: MEGAIntegerList? = nil,
                 lastReadNotificationId: Int32 = 0,
                 isNodeInheritingSensitivity: Bool = false,
-                hasVersionsForNode: Bool = false
+                hasVersionsForNode: Bool = false,
+                setUserAttributeTypeMegaSetError: @escaping (MEGAUserAttribute) -> MEGAErrorType = { _ in .apiOk }
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -175,6 +177,7 @@ public final class MockSdk: MEGASdk {
         _lastReadNotificationId = lastReadNotificationId
         _isNodeInheritingSensitivity = isNodeInheritingSensitivity
         _hasVersionsForNode = hasVersionsForNode
+        self.setUserAttributeTypeMegaSetError = setUserAttributeTypeMegaSetError
         super.init()
     }
     
@@ -574,7 +577,7 @@ public final class MockSdk: MEGASdk {
             return
         }
         
-        delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: MockError(errorType: megaSetError))
+        delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: MockError(errorType: setUserAttributeTypeMegaSetError(type)))
     }
     
     public override func deviceId() -> String? {
