@@ -33,7 +33,7 @@ public struct UserAttributeRepository: UserAttributeRepositoryProtocol {
     
     public func mergeUserAttribute(_ attribute: UserAttributeEntity, key: String, object: Encodable) async throws {
         let supportedModelDictionary = try object.convertToDictionary()
-        let currentAppsPreference = try await userAttribute(for: attribute)
+        let currentAppsPreference = try? await userAttribute(for: attribute)
         
         let contentToSave: [String: Any] = if let existingEncodedString = currentAppsPreference?[key],
             existingEncodedString.isNotEmpty,
@@ -74,8 +74,14 @@ public struct UserAttributeRepository: UserAttributeRepositoryProtocol {
                 switch result {
                 case .success(let request):
                     completion(.success(request.megaStringDictionary))
-                case .failure:
-                    completion(.failure(GenericErrorEntity()))
+                case .failure(let error):
+                    let mappedError: any Error = switch error.type {
+                    case .apiERange:
+                        UserAttributeErrorEntity.attributeNotFound
+                    default:
+                        GenericErrorEntity()
+                    }
+                    completion(.failure(mappedError))
                 }
             })
         })
