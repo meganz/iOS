@@ -43,14 +43,6 @@ extension CloudDriveViewController {
         MEGASdk.shared
     }
     
-    @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
-        NodeInfoViewModel(
-            withNode: node,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
-            shouldDisplayContactVerificationInfo: sdk.isContactVerificationWarningEnabled
-        )
-    }
-    
     @objc func createCloudDriveViewModel() -> CloudDriveViewModel {
         let preferenceUseCase = PreferenceUseCase.default
         return CloudDriveViewModel(
@@ -505,5 +497,13 @@ extension CloudDriveViewController {
     @objc func configureAdsVisibility() {
         guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
         mainTabBar.configureAdsVisibility()
+    }
+}
+
+// MARK: - Node Info
+extension CloudDriveViewController {
+    @objc func showNodeInfo(_ node: MEGANode) {
+        let router = NodeInfoRouter(navigationController: navigationController, contacstUseCase: ContactsUseCase(repository: ContactsRepository.newRepo))
+        router.showInformation(for: node)
     }
 }

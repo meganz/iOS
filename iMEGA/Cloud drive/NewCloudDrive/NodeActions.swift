@@ -100,7 +100,7 @@ extension NodeActions {
                 ).start()
             },
             showNodeInfo: {
-                let nodeInfoRouter = NodeInfoRouter(navigationController: navigationController)
+                let nodeInfoRouter = NodeInfoRouter(navigationController: navigationController, contacstUseCase: ContactsUseCase(repository: ContactsRepository.newRepo))
                 nodeInfoRouter.showInformation(for: $0)
             },
             assignLabel: { node in
