@@ -18,9 +18,9 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         cleanTestArtifacts()
     }
     
-    // MARK: - attemptLoadThumbnail
+    // MARK: - onViewAppeared
     
-    func testAttemptLoadThumbnail_whenNoCachedThumbnailsThumbnailAndErrors_deliversPlaceholderImage() async {
+    func testOnViewAppeared_whenNoCachedThumbnailsThumbnailAndErrors_deliversPlaceholderImage() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
         let mockThumbnailUseCase = MockThumbnailUseCase(
             cachedThumbnails: [],
@@ -34,7 +34,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             videos: [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ]
         )
         
-        await sut.attemptLoadThumbnail()
+        await sut.onViewAppeared()
         
         let previewEntity = sut.previewEntity
         previewEntity.imageContainers.enumerated().forEach { (index, imageContainer) in
@@ -42,7 +42,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         }
     }
     
-    func testAttemptLoadThumbnail_whenHasCachedThumbnailThumbnailAndErrors_deliversImage() async {
+    func testOnViewAppeared_whenHasCachedThumbnailThumbnailAndErrors_deliversImage() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
         let (_, _, imageURL) = imagePathData()
         let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
@@ -58,7 +58,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             videos: [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ]
         )
         
-        await sut.attemptLoadThumbnail()
+        await sut.onViewAppeared()
         
         let previewEntity = sut.previewEntity
         previewEntity.imageContainers.enumerated().forEach { (index, imageContainer) in
@@ -66,7 +66,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         }
     }
     
-    func testAttemptLoadThumbnail_whenSucessLoadThumbnail_useLoadedImage() async {
+    func testOnViewAppeared_whenSucessLoadThumbnail_useLoadedImage() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
         let (_, _, imageURL) = imagePathData()
         let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
@@ -80,7 +80,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             videos: [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ]
         )
         
-        await sut.attemptLoadThumbnail()
+        await sut.onViewAppeared()
         
         let previewEntity = sut.previewEntity
         previewEntity.imageContainers.enumerated().forEach { (index, imageContainer) in
@@ -113,7 +113,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     // MARK: - previewEntity
     
-    func testPreviewEntity_whenViewModelInit_createsCorrectEntity() async {
+    func testPreviewEntity_whenOnViewAppeared_createsCorrectEntity() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, sharedLinkStatus: .exported(true), count: 2)
         let (_, _, imageURL) = imagePathData()
         let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
@@ -129,30 +129,37 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
                 nodeEntity(name: "video 2", handle: 2, hasThumbnail: true, duration: 30)
             ]
         )
+        
+        await sut.onViewAppeared()
         
         assertThatPreviewEntityCreatesCorrectly(on: sut, videoPlaylist: videoPlaylist)
     }
     
-    func testPreviewEntity_whenAttemptLoadThumbnail_createsCorrectEntity() async {
-        let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, sharedLinkStatus: .exported(true), count: 2)
-        let (_, _, imageURL) = imagePathData()
-        let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
-        let mockThumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
-            loadThumbnailResult: .success(thumbnailEntity)
-        )
+    // MARK: - secondaryInformationViewType
+    
+    func testSecondaryInformationViewType_whenEntityCountZero_showEmptyPlaylistView() async {
+        let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: 0)
         let sut = await makeSUT(
-            thumbnailUseCase: mockThumbnailUseCase,
-            videoPlaylistEntity: videoPlaylist,
-            videos: [
-                nodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 30),
-                nodeEntity(name: "video 2", handle: 2, hasThumbnail: true, duration: 30)
-            ]
+            thumbnailUseCase: MockThumbnailUseCase(),
+            videoPlaylistEntity: videoPlaylist
         )
         
-        await sut.attemptLoadThumbnail()
+        let result = sut.secondaryInformationViewType
         
-        assertThatPreviewEntityCreatesCorrectly(on: sut, videoPlaylist: videoPlaylist)
+        XCTAssertEqual(result, .emptyPlaylist)
+    }
+    
+    func testSecondaryInformationViewType_whenEntityCountNotZero_showInformationView() async {
+        let nonZeroRandomCount = Int.random(in: 1...10000)
+        let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: nonZeroRandomCount)
+        let sut = await makeSUT(
+            thumbnailUseCase: MockThumbnailUseCase(),
+            videoPlaylistEntity: videoPlaylist
+        )
+        
+        let result = sut.secondaryInformationViewType
+        
+        XCTAssertEqual(result, .information)
     }
     
     // MARK: - Helpers
@@ -167,8 +174,8 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     ) async -> VideoPlaylistCellViewModel {
         let sut = VideoPlaylistCellViewModel(
             thumbnailUseCase: thumbnailUseCase,
+            videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(allVideos: videos),
             videoPlaylistEntity: videoPlaylistEntity,
-            videos: videos,
             onTapMoreOptions: onTapMoreOptions
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
@@ -234,7 +241,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.previewEntity.title, videoPlaylist.name, file: file, line: line)
         XCTAssertEqual(sut.previewEntity.count, "\(videoPlaylist.count) Videos", file: file, line: line)
         XCTAssertEqual(sut.previewEntity.isExported, videoPlaylist.isLinkShared, file: file, line: line)
-        XCTAssertEqual(sut.previewEntity.duration, "00:01:00")
+        XCTAssertEqual(sut.previewEntity.duration, "00:01:00", file: file, line: line)
         XCTAssertEqual(sut.previewEntity.imageContainers.count, videoPlaylist.count, file: file, line: line)
     }
 }

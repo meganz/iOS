@@ -145,9 +145,14 @@ struct TabBarItem: View {
             selection: VideoSelection()
         )
     }
-    
+
     func makeVideoPlaylistsViewModel() -> VideoPlaylistsViewModel {
-        VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel())
+        VideoPlaylistsViewModel(
+            videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
+            thumbnailUseCase: Preview_ThumbnailUseCase(),
+            videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+            syncModel: VideoRevampSyncModel()
+        )
     }
     
     return Group {

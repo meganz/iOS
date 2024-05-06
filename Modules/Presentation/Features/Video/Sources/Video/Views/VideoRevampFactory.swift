@@ -41,6 +41,8 @@ public class VideoRevampFactory {
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
         videoSelection: VideoSelection,
+        videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
+        videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
@@ -51,6 +53,9 @@ public class VideoRevampFactory {
             selection: videoSelection
         )
         let videoPlaylistViewModel = VideoPlaylistsViewModel(
+            videoPlaylistsUseCase: videoPlaylistUseCase,
+            thumbnailUseCase: thumbnailUseCase, 
+            videoPlaylistContentUseCase: videoPlaylistContentUseCase,
             syncModel: syncModel
         )
         let view = TabContainerView(

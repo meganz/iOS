@@ -1,3 +1,4 @@
+import MEGADomain
 import MEGAL10n
 import SwiftUI
 
@@ -20,6 +21,9 @@ struct PlaylistView: View {
             listView
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
+        .task {
+            await viewModel.onViewAppeared()
+        }
     }
     
     private var newPlaylistView: some View {
@@ -60,20 +64,61 @@ struct PlaylistView: View {
     }
     
     private var listView: some View {
-        List {
-            FavoritePlaylistCell(videoConfig: videoConfig)
+        List(viewModel.videoPlaylists, id: \.id) { videoPlaylist in
+            if videoPlaylist.isSystemVideoPlaylist {
+                favoritePlaylistCell(videoPlaylist: videoPlaylist)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(.init())
+            } else {
+                UserPlaylistCell(
+                    viewModel: videoPlaylistCellViewModel(videoPlaylist),
+                    videoConfig: videoConfig
+                )
                 .listRowSeparator(.hidden)
                 .listRowInsets(.init())
+            }
         }
         .listStyle(PlainListStyle())
         .padding(.horizontal, 8)
+    }
+    
+    private func favoritePlaylistCell(videoPlaylist: VideoPlaylistEntity) -> some View {
+        let cellViewModel = videoPlaylistCellViewModel(videoPlaylist)
+        return FavoritePlaylistCell(viewModel: cellViewModel, videoConfig: videoConfig)
+            .listRowSeparator(.hidden)
+            .listRowInsets(.init())
+    }
+    
+    private func videoPlaylistCellViewModel(_ videoPlaylist: VideoPlaylistEntity) -> VideoPlaylistCellViewModel {
+        VideoPlaylistCellViewModel(
+            thumbnailUseCase: viewModel.thumbnailUseCase, 
+            videoPlaylistContentUseCase: viewModel.videoPlaylistContentUseCase,
+            videoPlaylistEntity: videoPlaylist,
+            onTapMoreOptions: { _ in }
+        )
     }
 }
 
 #Preview {
     Group {
-        PlaylistView(viewModel: VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel()), videoConfig: .preview)
-        PlaylistView(viewModel: VideoPlaylistsViewModel(syncModel: VideoRevampSyncModel()), videoConfig: .preview)
-            .preferredColorScheme(.dark)
+        PlaylistView(
+            viewModel: VideoPlaylistsViewModel(
+                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
+                thumbnailUseCase: Preview_ThumbnailUseCase(),
+                videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+                syncModel: VideoRevampSyncModel()
+            ),
+            videoConfig: .preview
+        )
+        PlaylistView(
+            viewModel: VideoPlaylistsViewModel(
+                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
+                thumbnailUseCase: Preview_ThumbnailUseCase(),
+                videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+                syncModel: VideoRevampSyncModel()
+            ),
+            videoConfig: .preview
+        )
+        .preferredColorScheme(.dark)
     }
 }

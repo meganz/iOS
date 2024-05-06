@@ -39,15 +39,27 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let viewModel: VideoRevampTabContainerViewModel
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
+    private let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let videoConfig: VideoConfig
     let router: any VideoRevampRouting
     
     private let videoToolbarViewModel: VideoToolbarViewModel
     
-    init(viewModel: VideoRevampTabContainerViewModel, fileSearchUseCase: some FilesSearchUseCaseProtocol, thumbnailUseCase: some ThumbnailUseCaseProtocol, videoConfig: VideoConfig, router: some VideoRevampRouting) {
+    init(
+        viewModel: VideoRevampTabContainerViewModel,
+        fileSearchUseCase: some FilesSearchUseCaseProtocol,
+        thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
+        videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
+        videoConfig: VideoConfig,
+        router: some VideoRevampRouting
+    ) {
         self.viewModel = viewModel
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailUseCase = thumbnailUseCase
+        self.videoPlaylistUseCase = videoPlaylistUseCase
+        self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.videoConfig = videoConfig
         self.router = router
         self.videoToolbarViewModel = VideoToolbarViewModel()
@@ -86,6 +98,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
             thumbnailUseCase: thumbnailUseCase,
             syncModel: viewModel.syncModel,
             videoSelection: viewModel.videoSelection,
+            videoPlaylistUseCase: videoPlaylistUseCase,
+            videoPlaylistContentUseCase: videoPlaylistContentUseCase,
             videoConfig: videoConfig,
             router: router
         )

@@ -1,8 +1,9 @@
 import MEGADomain
+import MEGASwift
 
 public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
-    public private(set) var messages = [Message]()
+    @Atomic public var messages = [Message]()
     
     public enum Message: Equatable {
         case systemVideoPlaylists
@@ -12,13 +13,13 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     public init() { }
     
     public func systemVideoPlaylists() async throws -> [VideoPlaylistEntity] {
-        messages.append(.systemVideoPlaylists)
+        $messages.mutate { $0.append(.systemVideoPlaylists) }
         let systemVideoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite)
         return [systemVideoPlaylist]
     }
     
     public func userVideoPlaylists() async -> [VideoPlaylistEntity] {
-        messages.append(.userVideoPlaylists)
+        $messages.mutate { $0.append(.userVideoPlaylists) }
         return []
     }
 }
