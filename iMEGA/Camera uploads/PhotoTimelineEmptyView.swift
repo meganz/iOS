@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -13,10 +14,22 @@ struct PhotoTimelineEmptyView: View {
             }
             
             ContentUnavailableView {
-                Image(centerImageResource)
+                if isDesignTokenEnabled {
+                    Image(centerImageResource)
+                        .renderingMode(.template)
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                } else {
+                    Image(centerImageResource)
+                }
             } description: { _ in
-                Text(title)
-                    .font(.body)
+                if isDesignTokenEnabled {
+                    Text(title)
+                        .font(.body)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                } else {
+                    Text(title)
+                        .font(.body)
+                }
             }
             .frame(maxHeight: .infinity)
         }
@@ -32,4 +45,16 @@ struct PhotoTimelineEmptyView: View {
 #Preview("With camera uploads banner") {
     PhotoTimelineEmptyView(centerImageResource: .cameraEmptyState,
                            title: "No media found") { }
+}
+
+#Preview("All photos empty") {
+    PhotoTimelineEmptyView(centerImageResource: .allPhotosEmptyState,
+                           title: "No media found",
+                           enableCameraUploadsAction: nil)
+}
+
+#Preview("All photos empty") {
+    PhotoTimelineEmptyView(centerImageResource: .videoEmptyState,
+                           title: "No media found",
+                           enableCameraUploadsAction: nil)
 }
