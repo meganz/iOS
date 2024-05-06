@@ -13,6 +13,7 @@ final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowse
         searchBarVisible: Bool,
         viewModeProvider: CloudDriveViewModeProvider,
         displayModeProvider: CloudDriveDisplayModeProvider,
+        matchingNodeProvider: CloudDriveMatchingNodeProvider,
         audioPlayerManager: some AudioPlayerHandlerProtocol
     ) {
         self.viewModeProvider = viewModeProvider
@@ -24,6 +25,7 @@ final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowse
             toolbarBuilder: toolbarBuilder,
             backButtonTitle: backButtonTitle,
             searchBarVisible: searchBarVisible,
+            matchingNodeProvider: matchingNodeProvider,
             audioPlayerManager: audioPlayerManager
         )
     }

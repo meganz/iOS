@@ -52,7 +52,8 @@ class NodeBrowserViewModel: ObservableObject {
     @Published var nodeSource: NodeSource
     
     private let nodeSourceUpdatesListener: any CloudDriveNodeSourceUpdatesListening
-    
+    private var nodesUpdateListener: any NodesUpdateListenerProtocol
+
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onOpenUserProfile: () -> Void
     private let onUpdateSearchBarVisibility: (Bool) -> Void
@@ -60,6 +61,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let onEditingChanged: (Bool) -> Void
     private let updateTransferWidgetHandler: () -> Void
     private let sortOrderProvider: () -> MEGADomain.SortOrderEntity
+    private let onNodeStructureChanged: () -> Void
 
     init(
         viewMode: ViewModePreferenceEntity,
@@ -73,6 +75,7 @@ class NodeBrowserViewModel: ObservableObject {
         avatarViewModel: MyAvatarViewModel,
         noInternetViewModel: NoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
+        nodesUpdateListener: some NodesUpdateListenerProtocol,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
         // - context menu can be reconstructed
@@ -84,7 +87,8 @@ class NodeBrowserViewModel: ObservableObject {
         onBack: @escaping () -> Void,
         onEditingChanged: @escaping (Bool) -> Void,
         updateTransferWidgetHandler: @escaping () -> Void,
-        sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity
+        sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
+        onNodeStructureChanged: @escaping () -> Void
     ) {
         self.viewMode = viewMode
         self.searchResultsViewModel = searchResultsViewModel
@@ -106,7 +110,9 @@ class NodeBrowserViewModel: ObservableObject {
         self.onBack = onBack
         self.updateTransferWidgetHandler = updateTransferWidgetHandler
         self.nodeSourceUpdatesListener = nodeSourceUpdatesListener
-        
+        self.nodesUpdateListener = nodesUpdateListener
+        self.onNodeStructureChanged = onNodeStructureChanged
+
         $viewMode
             .removeDuplicates()
             .sink { viewMode in
@@ -194,6 +200,8 @@ class NodeBrowserViewModel: ObservableObject {
                 }
             }
         }
+
+        addNodesUpdateHandler()
     }
     
     var viewModeAwareMediaDiscoveryViewModel: MediaDiscoveryContentViewModel? {
@@ -221,7 +229,11 @@ class NodeBrowserViewModel: ObservableObject {
         configureAdsVisibility()
         nodeSourceUpdatesListener.stopListening()
     }
-    
+
+    func parentNodeMatches(node: NodeEntity) -> Bool {
+        node == nodeSource.parentNode
+    }
+
     private func startObservingNodeSourceChanges() {
         nodeSourceUpdatesListener.nodeSourcePublisher
             .receive(on: DispatchQueue.main)
@@ -247,6 +259,25 @@ class NodeBrowserViewModel: ObservableObject {
 
     private func refreshViewState() {
         viewState = editing ? .editing : .regular(showBackButton: isBackButtonShown)
+    }
+
+    private func addNodesUpdateHandler() {
+        nodesUpdateListener.onNodesUpdateHandler = { [weak self] updatedNodes in
+            guard let self,
+                  let parentNode = nodeSource.parentNode else {
+                return
+            }
+
+            if updatedNodes.contains(
+                where: {
+                    $0.handle == parentNode.handle &&
+                    ($0.changeTypes.contains(.parent)
+                     || $0.changeTypes.contains(.removed))
+                }
+            ) {
+                onNodeStructureChanged()
+            }
+        }
     }
 
     // this is also triggered from outside when node folder is renamed
