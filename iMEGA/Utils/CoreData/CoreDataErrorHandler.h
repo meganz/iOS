@@ -4,7 +4,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CoreDataErrorHandler : NSObject
 
-+ (void)abortAppWithError:(NSError *)error;
++ (void)exitAppWithError:(NSError *)error;
 + (BOOL)isSQLiteFullError:(NSError *)error;
 + (BOOL)hasSQLiteFullErrorInException:(NSException *)exception;
 

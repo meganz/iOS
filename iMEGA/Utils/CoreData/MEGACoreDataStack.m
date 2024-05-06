@@ -57,7 +57,7 @@
             MEGALogError(@"error when to create core data stack %@", error);
             if (shouldConfigFileProtection) {
                 [self addProtectionToURL:self.storeURL];
-                [CoreDataErrorHandler abortAppWithError:error];
+                [CoreDataErrorHandler exitAppWithError:error];
             } else {
                 if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_AUTH) {
                     container = [self newPersistentContainerByConfigFileProtection:YES];
@@ -65,7 +65,7 @@
                     container = nil;
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
                 } else {
-                    [CoreDataErrorHandler abortAppWithError:error];
+                    [CoreDataErrorHandler exitAppWithError:error];
                 }
             }
         }
