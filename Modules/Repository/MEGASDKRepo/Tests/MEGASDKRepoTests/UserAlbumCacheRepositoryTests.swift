@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGADomainMock
 @testable import MEGASDKRepo
@@ -6,29 +7,41 @@ import MEGASwift
 import XCTest
 
 final class UserAlbumCacheRepositoryTests: XCTestCase {
-    func testAlbums_notCached_shouldRetrieveAlbumsFromUserAlbumRepository() async {
+    func testAlbums_notPrimed_shouldRetrieveAlbumsFromUserAlbumRepositoryAndCacheIt() async {
+        let albumCacheMonitorTaskManager = MockAlbumCacheMonitorTaskManager()
         let userAlbumCache = MockUserAlbumCache(albums: [])
         let albums = [SetEntity(handle: 12),
                       SetEntity(handle: 17)]
         let userAlbumRepository = MockUserAlbumRepository(albums: albums)
         let sut = makeSUT(userAlbumRepository: userAlbumRepository,
-                          userAlbumCache: userAlbumCache)
+                          userAlbumCache: userAlbumCache,
+                          albumCacheMonitorTaskManager: albumCacheMonitorTaskManager)
         
         let result = await sut.albums()
         
-        XCTAssertEqual(result, albums)
+        XCTAssertEqual(Set(result), Set(albums))
+        
+        let cachedValues = await userAlbumCache.albums
+        XCTAssertEqual(Set(cachedValues), Set(albums))
+        
+        await assertTaskManager(albumCacheMonitorTaskManager)
     }
     
     func testAlbums_cachedAlbums_shouldReturn() async {
         let albums = [SetEntity(handle: 12),
                       SetEntity(handle: 17)]
-        let userAlbumCache = MockUserAlbumCache(albums: albums)
+        let userAlbumRepository = MockUserAlbumRepository(albums: albums)
+        let userAlbumCache = MockUserAlbumCache()
         
-        let sut = makeSUT(userAlbumCache: userAlbumCache)
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository,
+                          userAlbumCache: userAlbumCache)
         
         let result = await sut.albums()
         
         XCTAssertEqual(Set(result), Set(albums))
+        
+        let afterPrimeResult = await sut.albums()
+        XCTAssertEqual(Set(afterPrimeResult), Set(albums))
     }
     
     func testAlbumContent_notCached_shouldRetrieveAlbumContentFromUserAlbumRepository() async {
@@ -56,30 +69,41 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
     }
     
     func testAlbumElementIds_notCached_shouldRetrieveAlbumElementIdsFromUserAlbumRepository() async {
+        let albumCacheMonitorTaskManager = MockAlbumCacheMonitorTaskManager()
         let albumId = HandleEntity(65)
         let expectedAlbumPhotoIds = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
                                      AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)]
         
         let userAlbumRepository = MockUserAlbumRepository(albumElementIds: [albumId: expectedAlbumPhotoIds])
-        let sut = makeSUT(userAlbumRepository: userAlbumRepository)
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository,
+                          albumCacheMonitorTaskManager: albumCacheMonitorTaskManager)
         
         let albumPhotoIds = await sut.albumElementIds(by: albumId, includeElementsInRubbishBin: false)
         
         XCTAssertEqual(albumPhotoIds, expectedAlbumPhotoIds)
+        await assertTaskManager(albumCacheMonitorTaskManager)
     }
     
-    func testAlbumElementIds_cachedElementIds_shouldReturnCachedValues() async {
+    func testAlbumElementIds_cachedElementIds_shouldReturnCachedValues() async throws {
         let albumId = HandleEntity(65)
         let expectedAlbumPhotoIds = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
                                      AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)]
         
-        let userAlbumCache = MockUserAlbumCache(albumsElementIds: [albumId: expectedAlbumPhotoIds])
+        let userAlbumRepository = MockUserAlbumRepository(albumElementIds: [albumId: expectedAlbumPhotoIds])
+        let userAlbumCache = MockUserAlbumCache()
         
-        let sut = makeSUT(userAlbumCache: userAlbumCache)
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository,
+                          userAlbumCache: userAlbumCache)
         
-        let albumPhotoIds = await sut.albumElementIds(by: albumId, includeElementsInRubbishBin: false)
+        let primedResult = await sut.albumElementIds(by: albumId, includeElementsInRubbishBin: false)
+        let cachedValues = await userAlbumCache.albumElementIds(forAlbumId: albumId)
         
-        XCTAssertEqual(albumPhotoIds, expectedAlbumPhotoIds)
+        let expectedPhotoIds = Set(expectedAlbumPhotoIds)
+        XCTAssertEqual(Set(primedResult), expectedPhotoIds)
+        XCTAssertEqual(Set(try XCTUnwrap(cachedValues)), expectedPhotoIds)
+        
+        let cachedResult = await sut.albumElementIds(by: albumId, includeElementsInRubbishBin: false)
+        XCTAssertEqual(Set(cachedResult), expectedPhotoIds)
     }
     
     func testCreateAlbum_onSuccess_shouldReturnAlbumCreatedByUserAlbumRepository() async throws {
@@ -174,501 +198,145 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         XCTAssertEqual(result, elementId)
     }
     
-    func testMonitorSetUpdates_onNewSetsAdded_shouldUpdateCacheWithNewSet() async {
+    func testAlbumsUpdated_onSetUpdate_shouldYieldAllCachedAlbums() async throws {
+        let albumCacheMonitorTaskManager = MockAlbumCacheMonitorTaskManager()
+        let expectedResult = [SetEntity(handle: 1),
+                              SetEntity(handle: 3),
+                              SetEntity(handle: 6)]
         
-        // Arrange
-        let expectedResults = [SetEntity(handle: 123)]
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(albums: [])
+        let userAlbumRepository = MockUserAlbumRepository(albums: expectedResult)
         
-        // Act
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-
-        // Assert
-        let exp = expectation(description: "A non-empty result from publisher")
-        let cancellable = sut.setsUpdatedPublisher
-            .first { $0.isNotEmpty }
-            .sink { result in
-                XCTAssertEqual(Set(result), Set(expectedResults))
-                exp.fulfill()
-            }
+        let updates = [SetEntity(handle: 1)]
         
-        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResults)
-
-        await fulfillment(of: [exp], timeout: 1)
-        cancellable.cancel()
+        let setUpdateAsyncSequences = SingleItemAsyncSequence(item: updates)
+            .eraseToAnyAsyncSequence()
+        
+        let repositoryMonitor = MockUserAlbumCacheRepositoryMonitors(
+            setUpdateAsyncSequences: setUpdateAsyncSequences)
+        
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository,
+                          userAlbumCacheRepositoryMonitors: repositoryMonitor,
+                          albumCacheMonitorTaskManager: albumCacheMonitorTaskManager)
+        
+        var iterator = await sut.albumsUpdated().makeAsyncIterator()
+        
+        let updatedAlbums = await iterator.next()
+        
+        XCTAssertEqual(Set(try XCTUnwrap(updatedAlbums)), Set(expectedResult))
+        await assertTaskManager(albumCacheMonitorTaskManager)
     }
     
-    func testMonitorSetUpdates_onNewSetsRemoved_shouldUpdateCacheWithRemovedSet() async {
+    func testAlbumUpdatedForId_onSetUpdate_shouldYieldUpdatedSetsForGivenSetOnly() async {
+        let albumId = HandleEntity(3)
+        let expectedResult = SetEntity(handle: albumId)
+        let userAlbumRepository = MockUserAlbumRepository(albums: [expectedResult])
         
-        // Arrange
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 123)])
-        
-        // Act
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-
-        // Assert
-        let exp = expectation(description: "An empty result from publisher")
-        let cancellable = sut.setsUpdatedPublisher
-            .first { $0.isNotEmpty }
-            .sink { result in
-                XCTAssertTrue(result.allSatisfy { $0.changeTypes == .removed })
-                exp.fulfill()
-            }
-        
-        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: [SetEntity(handle: 123, changeTypes: .removed)])
-
-        await fulfillment(of: [exp], timeout: 1)
-        cancellable.cancel()
-    }
-    
-    func testMonitorSetUpdates_onNewSetNameChange_shouldUpdateCacheWithUpdatedSet() async {
-        
-        // Arrange
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 123, name: "Test 123")])
-        
-        // Act
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-
-        // Assert
-        let exp = expectation(description: "A non-empty result from publisher")
-        let cancellable = sut.setsUpdatedPublisher
-            .first { $0.isNotEmpty }
-            .sink { result in
-                XCTAssertEqual(result.map(\.name), ["Test 1234"])
-                exp.fulfill()
-            }
-        
-        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: [SetEntity(handle: 123, name: "Test 1234", changeTypes: .name)])
-
-        await fulfillment(of: [exp], timeout: 1)
-        cancellable.cancel()
-    }
-    
-    func testMonitorSetElementUpdates_onSetElementRemoval_shouldInvalidateElementsInCacheForTheSet() async {
-        
-        // Arrange
-        let albumId = HandleEntity(65)
-        let expectedAlbumPhotoIds = [
-            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
-            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)
-        ]
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(
-            albums: [SetEntity(handle: albumId, name: "Test 123")],
-            albumsElementIds: [albumId: expectedAlbumPhotoIds])
-        
-        // Act
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-
-        // Assert
-        
-        let initialResult = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertEqual(initialResult, expectedAlbumPhotoIds)
-
-        let exp = expectation(description: "A non-empty result from publisher")
-        let cancellable = sut.setElementsUpdatedPublisher
-            .first { $0.isNotEmpty }
-            .sink { _ in exp.fulfill() }
-        
-        setAndElementsUpdatesProvider
-            .mockSendSetElementUpdate(setElementUpdate: [
-                .init(handle: 65, ownerId: albumId, changeTypes: .removed)
-            ])
-
-        await fulfillment(of: [exp], timeout: 1)
-        cancellable.cancel()
-        
-        let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertNil(result)
-    }
-    
-    func testMonitorSetElementUpdates_onSetElementInsertion_shouldInvalidateElementsInCacheForTheSet() async {
-        
-        // Arrange
-        let albumId = HandleEntity(65)
-        let expectedAlbumPhotoIds = [
-            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
-            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)
-        ]
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(
-            albums: [SetEntity(handle: albumId, name: "Test 123")],
-            albumsElementIds: [albumId: expectedAlbumPhotoIds])
-        
-        // Act
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-
-        // Assert
-        
-        let initialResult = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertEqual(initialResult, expectedAlbumPhotoIds)
-
-        let exp = expectation(description: "A non-empty result from publisher")
-        let cancellable = sut.setElementsUpdatedPublisher
-            .first { $0.isNotEmpty }
-            .sink { _ in exp.fulfill() }
-        
-        setAndElementsUpdatesProvider
-            .mockSendSetElementUpdate(setElementUpdate: [
-                .init(handle: 65, ownerId: albumId, changeTypes: .new)
-            ])
-
-        await fulfillment(of: [exp], timeout: 1)
-        cancellable.cancel()
-        
-        let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertNil(result)
-    }
-    
-    func testMonitorSetElementUpdates_onSetElementNameChange_shouldInvalidateElementsInCacheForTheSet() async {
-        
-        // Arrange
-        let albumId = HandleEntity(65)
-        let expectedAlbumPhotoIds = [
-            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
-            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)
-        ]
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(
-            albums: [SetEntity(handle: albumId, name: "Test 123")],
-            albumsElementIds: [albumId: expectedAlbumPhotoIds])
-        
-        // Act
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-
-        // Assert
-        
-        let initialResult = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertEqual(initialResult, expectedAlbumPhotoIds)
-
-        let exp = expectation(description: "A non-empty result from publisher")
-        let cancellable = sut.setElementsUpdatedPublisher
-            .first { $0.isNotEmpty }
-            .sink { _ in exp.fulfill() }
-        
-        setAndElementsUpdatesProvider
-            .mockSendSetElementUpdate(setElementUpdate: [
-                .init(handle: 65, ownerId: albumId, name: "New Name", changeTypes: .name)
-            ])
-
-        await fulfillment(of: [exp], timeout: 1)
-        cancellable.cancel()
-        
-        let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertNil(result)
-    }
-  
-    func testAlbumUpdated_onSetUpdate_shouldUpdateCacheAndYieldUpdatedSets() async {
-        
-        let expectedResult = [
-            SetEntity(handle: 1),
-            SetEntity(handle: 3),
-            SetEntity(handle: 6)
-        ]
-        
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache()
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-        
-        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
-        let updatedExp = expectation(description: "update was emitted")
-        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
-        
-        let task = Task {
-            let sequence = await sut.albumsUpdated()
-            expectedTasksStarted.fulfill()
-            for await updatedSets in sequence {
-                XCTAssertEqual(Set(updatedSets), Set(expectedResult))
-                updatedExp.fulfill()
-            }
-            taskFinishedExp.fulfill()
-        }
-        
-        await fulfillment(of: [expectedTasksStarted], timeout: 1)
-        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResult)
-        await fulfillment(of: [updatedExp], timeout: 0.5)
-        task.cancel()
-        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
-    }
-    
-    func testAlbumUpdated_onSetUpdate_shouldUpdateCacheAndYieldUpdatedSetsToMultipleListeners() async {
-        
-        let expectedResult = [
-            SetEntity(handle: 1),
-            SetEntity(handle: 3),
-            SetEntity(handle: 6)
-        ]
-        
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache()
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-        
-        let numberOfSequences = 20
-        let updatedExp = expectation(description: "update was emitted")
-        updatedExp.expectedFulfillmentCount = numberOfSequences
-        updatedExp.assertForOverFulfill = false
-        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
-        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
-        taskFinishedExp.assertForOverFulfill = false
-        
-        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
-        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
-        expectedTasksStarted.assertForOverFulfill = false
-        
-        let tasks = (0..<numberOfSequences)
-            .map { _ in
-                Task {
-                    let sequence = await sut.albumsUpdated()
-                    expectedTasksStarted.fulfill()
-                    for await updatedSets in sequence {
-                        XCTAssertEqual(Set(updatedSets), Set(expectedResult))
-                        updatedExp.fulfill()
-                    }
-                    taskFinishedExp.fulfill()
-                }
-            }
-          
-        await fulfillment(of: [expectedTasksStarted], timeout: 1)
-        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResult)
-        await fulfillment(of: [updatedExp], timeout: 0.5)
-        tasks.forEach { $0.cancel() }
-        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
-    }
-    
-    func testAlbumUpdatedForId_onSetUpdate_shouldYieldUpdatedSetsToMultipleListenersForGivenSetOnly() async {
-        
-        let expectedResult = SetEntity(handle: 3)
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache()
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-        
-        let numberOfSequences = 20
-        let updatedExp = expectation(description: "update was emitted")
-        updatedExp.expectedFulfillmentCount = numberOfSequences
-        updatedExp.assertForOverFulfill = false
-        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
-        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
-        taskFinishedExp.assertForOverFulfill = false
-        
-        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
-        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
-        expectedTasksStarted.assertForOverFulfill = false
-        
-        let tasks = (0..<numberOfSequences)
-            .map { _ in
-                Task {
-                    let sequence = await sut.albumUpdated(by: 3)
-                    expectedTasksStarted.fulfill()
-                    for await updatedSet in sequence {
-                        XCTAssertEqual(updatedSet, expectedResult)
-                        updatedExp.fulfill()
-                    }
-                    taskFinishedExp.fulfill()
-                }
-            }
-          
-        await fulfillment(of: [expectedTasksStarted], timeout: 1)
-        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: [
+        let updates = [
             SetEntity(handle: 1),
             expectedResult,
-            SetEntity(handle: 6)
-        ])
-        await fulfillment(of: [updatedExp], timeout: 0.5)
-        tasks.forEach { $0.cancel() }
-        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+            SetEntity(handle: 6)]
+        
+        let setUpdateAsyncSequences = SingleItemAsyncSequence(item: updates)
+            .eraseToAnyAsyncSequence()
+        
+        let repositoryMonitor = MockUserAlbumCacheRepositoryMonitors(
+            setUpdateAsyncSequences: setUpdateAsyncSequences)
+        
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository,
+                          userAlbumCacheRepositoryMonitors: repositoryMonitor)
+
+        var iterator = await sut.albumUpdated(by: albumId).makeAsyncIterator()
+        
+        let updatedAlbum = await iterator.next()
+        
+        XCTAssertEqual(updatedAlbum, expectedResult)
     }
     
-    func testAlbumUpdatedForId_onSetUpdateForSetNotBeingMonitored_shouldNotYieldUpdatedSetsToMultipleListeners() async {
-        
-        let expectedResult = [
+    func testAlbumUpdatedForId_onSetElementUpdateAlbumNotBeingMonitored_shouldNotYieldUpdated() async throws {
+        let albumCacheMonitorTaskManager = MockAlbumCacheMonitorTaskManager()
+        let updates = [
             SetEntity(handle: 1),
             SetEntity(handle: 3),
-            SetEntity(handle: 6)
-        ]
+            SetEntity(handle: 6)]
         
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache()
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        let setUpdateAsyncSequences = SingleItemAsyncSequence(item: updates)
+            .eraseToAnyAsyncSequence()
         
-        let numberOfSequences = 20
-        let updatedExp = expectation(description: "expecting no update for set that is not being monitored for a change")
-        updatedExp.isInverted = true
-        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
-        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
-        taskFinishedExp.assertForOverFulfill = false
+        let repositoryMonitor = MockUserAlbumCacheRepositoryMonitors(
+            setUpdateAsyncSequences: setUpdateAsyncSequences)
         
-        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
-        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
-        expectedTasksStarted.assertForOverFulfill = false
+        let sut = makeSUT(userAlbumCacheRepositoryMonitors: repositoryMonitor,
+                          albumCacheMonitorTaskManager: albumCacheMonitorTaskManager)
+
+        var iterator = await sut.albumUpdated(by: 3).makeAsyncIterator()
         
-        let tasks = (0..<numberOfSequences)
-            .map { _ in
-                Task {
-                    let sequence = await sut.albumUpdated(by: 4)
-                    expectedTasksStarted.fulfill()
-                    for await _ in sequence {
-                        updatedExp.fulfill()
-                    }
-                    taskFinishedExp.fulfill()
-                }
-            }
-          
-        await fulfillment(of: [expectedTasksStarted], timeout: 1)
-        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResult)
-        await fulfillment(of: [updatedExp], timeout: 0.5)
-        tasks.forEach { $0.cancel() }
-        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+        let updatedAlbum = await iterator.next()
+        
+        XCTAssertNil(try XCTUnwrap(updatedAlbum))
+        await assertTaskManager(albumCacheMonitorTaskManager)
     }
     
-    func testAlbumUpdatedForId_onSetUpdateAndUpdateContainsRemoveChange_shouldYieldNilUpdateToMultipleListeners() async {
+    func testAlbumUpdatedForId_onSetUpdateAndUpdateContainsRemoveChange_shouldYieldNilUpdateToMultipleListeners() async throws {
+        let albumId = HandleEntity(3)
         
-        let expectedResult = [
+        let updates = [
             SetEntity(handle: 1),
-            SetEntity(handle: 3, changeTypes: .removed),
-            SetEntity(handle: 6)
-        ]
+            SetEntity(handle: albumId, changeTypes: .removed),
+            SetEntity(handle: 6)]
         
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 3)])
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        let setUpdateAsyncSequences = SingleItemAsyncSequence(item: updates)
+            .eraseToAnyAsyncSequence()
         
-        let numberOfSequences = 20
-        let updatedExp = expectation(description: "expecting no update for set that is not being monitored for a change")
-        updatedExp.expectedFulfillmentCount = numberOfSequences
-        updatedExp.assertForOverFulfill = false
-        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
-        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
-        taskFinishedExp.assertForOverFulfill = false
+        let repositoryMonitor = MockUserAlbumCacheRepositoryMonitors(
+            setUpdateAsyncSequences: setUpdateAsyncSequences)
         
-        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
-        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
-        expectedTasksStarted.assertForOverFulfill = false
+        let sut = makeSUT(userAlbumCacheRepositoryMonitors: repositoryMonitor)
+
+        var iterator = await sut.albumUpdated(by: 3).makeAsyncIterator()
         
-        let tasks = (0..<numberOfSequences)
-            .map { _ in
-                Task {
-                    let sequence = await sut.albumUpdated(by: 3)
-                    expectedTasksStarted.fulfill()
-                    for await updatedSet in sequence {
-                        XCTAssertNil(updatedSet)
-                        updatedExp.fulfill()
-                    }
-                    taskFinishedExp.fulfill()
-                }
-            }
-          
-        await fulfillment(of: [expectedTasksStarted], timeout: 1)
-        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResult)
-        await fulfillment(of: [updatedExp], timeout: 0.5)
-        tasks.forEach { $0.cancel() }
-        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+        let updatedAlbum = await iterator.next()
+        
+        XCTAssertNil(try XCTUnwrap(updatedAlbum))
     }
     
     func testAlbumContentUpdatedForId_onSetElementUpdate_shouldYieldUpdateToMultipleListeners() async {
         let albumId: HandleEntity = 3
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 3)])
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        let updatedSets = [SetEntity(handle: albumId)]
+        let expectedResult  = [SetElementEntity(handle: 1, ownerId: albumId)]
+        let setElementUpdateOnSetsAsyncSequences = SingleItemAsyncSequence(item: updatedSets)
+            .eraseToAnyAsyncSequence()
+        let userAlbumRepository = MockUserAlbumRepository(albumContent: [albumId: expectedResult])
+        let repositoryMonitor = MockUserAlbumCacheRepositoryMonitors(
+            setElementUpdateOnSetsAsyncSequences: setElementUpdateOnSetsAsyncSequences)
+      
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository,
+                          userAlbumCacheRepositoryMonitors: repositoryMonitor)
+
+        var iterator = await sut.albumContentUpdated(by: albumId, includeElementsInRubbishBin: false).makeAsyncIterator()
         
-        let numberOfSequences = 20
-        let updatedExp = expectation(description: "expecting update for set elements for the monitored change")
-        updatedExp.expectedFulfillmentCount = numberOfSequences
-        updatedExp.assertForOverFulfill = false
-        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
-        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
-        taskFinishedExp.assertForOverFulfill = false
+        let updatedAlbum = await iterator.next()
         
-        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
-        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
-        expectedTasksStarted.assertForOverFulfill = false
-        
-        let tasks = (0..<numberOfSequences)
-            .map { _ in
-                Task {
-                    let sequence = await sut.albumContentUpdated(by: albumId, includeElementsInRubbishBin: false)
-                    expectedTasksStarted.fulfill()
-                    for await _ in sequence {
-                        updatedExp.fulfill()
-                    }
-                    taskFinishedExp.fulfill()
-                }
-            }
-          
-        await fulfillment(of: [expectedTasksStarted], timeout: 1)
-        setAndElementsUpdatesProvider
-            .mockSendSetElementUpdate(setElementUpdate: [
-                .init(handle: 1, ownerId: albumId)
-            ])
-        await fulfillment(of: [updatedExp], timeout: 0.5)
-        tasks.forEach { $0.cancel() }
-        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+        XCTAssertEqual(updatedAlbum, expectedResult)
     }
     
-    func testAlbumContentUpdatedForId_onSetElementUpdateAndChangeOccuredForUnmonitoredSet_shouldNotYieldUpdateToMultipleListeners() async {
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 3)])
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+    func testAlbumContentUpdatedForId_onSetElementUpdateAndChangeOccuredForUnmonitoredSet_shouldNotYieldUpdate() async throws {
+        let albumCacheMonitorTaskManager = MockAlbumCacheMonitorTaskManager()
+        let updatedSets = [SetEntity(handle: 54)]
+        let setElementUpdateOnSetsAsyncSequences = SingleItemAsyncSequence(item: updatedSets)
+            .eraseToAnyAsyncSequence()
         
-        let numberOfSequences = 20
-        let updatedExp = expectation(description: "expecting no update for set elements for the monitored change")
-        updatedExp.isInverted = true
-        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
-        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
-        taskFinishedExp.assertForOverFulfill = false
+        let repositoryMonitor = MockUserAlbumCacheRepositoryMonitors(
+            setElementUpdateOnSetsAsyncSequences: setElementUpdateOnSetsAsyncSequences)
+      
+        let sut = makeSUT(userAlbumCacheRepositoryMonitors: repositoryMonitor,
+                          albumCacheMonitorTaskManager: albumCacheMonitorTaskManager)
+
+        var iterator = await sut.albumContentUpdated(by: 45, includeElementsInRubbishBin: false).makeAsyncIterator()
         
-        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
-        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
-        expectedTasksStarted.assertForOverFulfill = false
+        let updatedAlbum = await iterator.next()
         
-        let tasks = (0..<numberOfSequences)
-            .map { _ in
-                Task {
-                    let sequence = await sut.albumContentUpdated(by: 2, includeElementsInRubbishBin: false)
-                    expectedTasksStarted.fulfill()
-                    for await _ in sequence {
-                        updatedExp.fulfill()
-                    }
-                    taskFinishedExp.fulfill()
-                }
-            }
-          
-        await fulfillment(of: [expectedTasksStarted], timeout: 1)
-        setAndElementsUpdatesProvider
-            .mockSendSetElementUpdate(setElementUpdate: [
-                .init(handle: 1, ownerId: 1)
-            ])
-        await fulfillment(of: [updatedExp], timeout: 0.5)
-        tasks.forEach { $0.cancel() }
-        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+        XCTAssertNil(updatedAlbum)
+        await assertTaskManager(albumCacheMonitorTaskManager)
     }
     
     func testAlbumElementId_photoIdNotCached_shouldRetrieveAndCacheValue() async {
@@ -696,167 +364,20 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         XCTAssertNil(result)
     }
     
-    func testAlbumElementId_photoIdCached_shouldReturnCachedValue() async {
+    func testAlbumElementId_photoIdPrimed_shouldReturnCachedValue() async {
         let albumId = HandleEntity(67)
         let elementId = HandleEntity(877)
         let expected = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: elementId, nodeId: 77)
         
-        let userAlbumCache = MockUserAlbumCache(albumsElementIds: [albumId: [expected]])
-        let sut = makeSUT(userAlbumCache: userAlbumCache)
+        let userAlbumRepository = MockUserAlbumRepository(albumElementIds: [albumId: [expected]])
+        let userAlbumCache = MockUserAlbumCache()
+        let sut = makeSUT(
+            userAlbumRepository: userAlbumRepository,
+            userAlbumCache: userAlbumCache)
         
         let result = await sut.albumElementId(by: albumId, elementId: elementId)
         
         XCTAssertEqual(result, expected)
-    }
-    
-    func testAlbumContentUpdated_onSetElementsUpdates_shouldReturnAllChangedElementsForTheSet() async {
-        let numberOfSequences = 3
-        let albumId = HandleEntity(37)
-        let expectedResult = [SetElementEntity(handle: 4, ownerId: albumId),
-                              SetElementEntity(handle: 7, ownerId: albumId),
-                              SetElementEntity(handle: 8, ownerId: albumId)]
-        
-        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
-        let sut = makeSUT(setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
-        
-        let taskStartedExp = expectation(description: "Tasks started")
-        taskStartedExp.expectedFulfillmentCount = numberOfSequences
-        let albumContentUpdatesYieldedExp = expectation(description: "Album content update was emitted")
-        albumContentUpdatesYieldedExp.expectedFulfillmentCount = numberOfSequences
-        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
-        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
-        
-        let tasks = (0..<numberOfSequences)
-            .map { _ in
-                Task {
-                    let sequence = await sut.albumContentUpdated(by: albumId)
-                    taskStartedExp.fulfill()
-                    for await updatedSetElements in sequence {
-                        XCTAssertEqual(updatedSetElements, expectedResult)
-                        albumContentUpdatesYieldedExp.fulfill()
-                    }
-                    taskFinishedExp.fulfill()
-                }
-        }
-        
-        await fulfillment(of: [taskStartedExp], timeout: 0.5)
-        let otherSetElementUpdates = [SetElementEntity(handle: 65, ownerId: 8),
-                                      SetElementEntity(handle: 78, ownerId: 90)]
-        setAndElementsUpdatesProvider.mockSendSetElementUpdate(setElementUpdate: expectedResult + otherSetElementUpdates)
-        await fulfillment(of: [albumContentUpdatesYieldedExp], timeout: 1.0)
-        tasks.forEach {$0.cancel() }
-        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
-    }
-    
-    func testMonitorCacheInvalidationTriggers_onLogoutEvent_shouldClearCaches() async throws {
-        
-        let albumsElements: [HandleEntity: [AlbumPhotoIdEntity]] = [
-            12: [.init(albumId: 12, albumPhotoId: 54, nodeId: 4)],
-            17: [.init(albumId: 17, albumPhotoId: 65, nodeId: 87)]
-        ]
-        let albums = albumsElements.keys.map { SetEntity(handle: $0) }
-        let userAlbumCache = MockUserAlbumCache(
-            albums: albums,
-            albumsElementIds: albumsElements)
-        let notificationCentre = NotificationCenter()
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            cacheInvalidationTrigger: CacheInvalidationTrigger(
-                notificationCentre: notificationCentre,
-                logoutNotificationName: .accountDidLogout,
-                didReceiveMemoryWarningNotificationName: { .init("TestMemoryWarningOccurred") }
-            ))
-
-        let result = await sut.albums()
-        
-        XCTAssertEqual(Set(result), Set(albums))
-        
-        let cacheClearExpectation = expectation(description: "Expect cache to be cleared")
-        let publisher = await userAlbumCache.$removeAllCachedValuesCalledCount
-        let subscription = publisher
-            .first(where: { $0 == 1})
-            .sink { _ in cacheClearExpectation.fulfill() }
-
-        // Await for monitoring tasks to start
-        try await Task.sleep(nanoseconds: 1_000_000_000 / 2)
-        
-        notificationCentre.post(name: .accountDidLogout, object: nil)
-        
-        await fulfillment(of: [cacheClearExpectation], timeout: 1)
-        subscription.cancel()
-
-        await withTaskGroup(of: Void.self) { taskGroup in
-            // Check Albums are cleared
-            taskGroup.addTask {
-                let expectedClearedAlbums = await userAlbumCache.albums
-                XCTAssertTrue(expectedClearedAlbums.isEmpty)
-            }
-            
-            // Check Elements linked to albums are cleared
-            albumsElements
-                .keys
-                .forEach { key in
-                    taskGroup.addTask {
-                        let expectedClearedElements = await userAlbumCache.albumElementIds(forAlbumId: key)
-                        XCTAssertNil(expectedClearedElements, "Expected \(key) to not contain any elements in cache")
-                    }
-                }
-        }
-    }
-    
-    func testMonitorCacheInvalidationTriggers_onMemoryWarning_shouldClearCaches() async throws {
-        let albumsElements: [HandleEntity: [AlbumPhotoIdEntity]] = [
-            12: [.init(albumId: 12, albumPhotoId: 54, nodeId: 4)],
-            17: [.init(albumId: 17, albumPhotoId: 65, nodeId: 87)]
-        ]
-        let albums = albumsElements.keys.map { SetEntity(handle: $0) }
-        let userAlbumCache = MockUserAlbumCache(
-            albums: albums,
-            albumsElementIds: albumsElements)
-        let notificationCentre = NotificationCenter()
-        let memoryWarningNotification = Notification.Name("TestMemoryWarningOccurred")
-        let sut = makeSUT(
-            userAlbumCache: userAlbumCache,
-            cacheInvalidationTrigger: CacheInvalidationTrigger(
-                notificationCentre: notificationCentre,
-                logoutNotificationName: .accountDidLogout,
-                didReceiveMemoryWarningNotificationName: { memoryWarningNotification }))
-        
-        let result = await sut.albums()
-        
-        XCTAssertEqual(Set(result), Set(albums))
-            
-        let cacheClearExpectation = expectation(description: "Expect cache to be cleared")
-        let publisher = await userAlbumCache.$removeAllCachedValuesCalledCount
-        let subscription = publisher
-            .first(where: { $0 == 1})
-            .sink { _ in cacheClearExpectation.fulfill() }
-
-        // Await for monitoring tasks to start
-        try await Task.sleep(nanoseconds: 1_000_000_000 / 2)
-        
-        notificationCentre.post(name: memoryWarningNotification, object: nil)
-        
-        await fulfillment(of: [cacheClearExpectation], timeout: 1)
-        subscription.cancel()
-        
-        await withTaskGroup(of: Void.self) { taskGroup in
-            // Check Albums are cleared
-            taskGroup.addTask {
-                let expectedClearedAlbums = await userAlbumCache.albums
-                XCTAssertTrue(expectedClearedAlbums.isEmpty)
-            }
-            
-            // Check Elements linked to albums are cleared
-            albumsElements
-                .keys
-                .forEach { key in
-                    taskGroup.addTask {
-                        let expectedClearedElements = await userAlbumCache.albumElementIds(forAlbumId: key)
-                        XCTAssertNil(expectedClearedElements, "Expected \(key) to not contain any elements in cache")
-                    }
-                }
-        }
     }
     
     // MARK: - Helpers
@@ -864,21 +385,25 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
     private func makeSUT(
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
         userAlbumCache: some UserAlbumCacheProtocol = MockUserAlbumCache(),
-        setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol = MockSetAndElementUpdatesProvider(),
-        cacheInvalidationTrigger: CacheInvalidationTrigger = .init(
-            notificationCentre: .default,
-            logoutNotificationName: .accountDidLogout,
-            didReceiveMemoryWarningNotificationName: { .init("TestMemoryWarningOccurred") }),
+        userAlbumCacheRepositoryMonitors: some UserAlbumCacheRepositoryMonitorsProtocol = MockUserAlbumCacheRepositoryMonitors(),
+        albumCacheMonitorTaskManager: some AlbumCacheMonitorTaskManagerProtocol = MockAlbumCacheMonitorTaskManager(),
         file: StaticString = #file,
         line: UInt = #line
     ) -> UserAlbumCacheRepository {
         let sut = UserAlbumCacheRepository(
             userAlbumRepository: userAlbumRepository,
             userAlbumCache: userAlbumCache,
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider,
-            cacheInvalidationTrigger: cacheInvalidationTrigger)
+            userAlbumCacheRepositoryMonitors: userAlbumCacheRepositoryMonitors,
+            albumCacheMonitorTaskManager: albumCacheMonitorTaskManager)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
+    }
+    
+    private func assertTaskManager(_ taskManager: MockAlbumCacheMonitorTaskManager) async {
+        let stopMonitoringCalled = await taskManager.stopMonitoringCalled
+        XCTAssertEqual(stopMonitoringCalled, 1)
+        let starMonitorCalled = await taskManager.startMonitoringCalled
+        XCTAssertEqual(starMonitorCalled, 1)
     }
 }
 
