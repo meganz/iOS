@@ -51,7 +51,7 @@ extension VideoConfig {
             offlineImage: UIImage.offline,
             linkImage: UIImage.link,
             saveToPhotosImage: UIImage.saveToPhotos,
-            hudMinusImage: UIImage.hudMinus,
+            sendToChatImage: UIImage.sendToChat,
             moreListImage: UIImage.moreList
         ),
         recentlyWatchedAssets: RecentlyWatchedAssets(
