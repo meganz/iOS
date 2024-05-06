@@ -53,7 +53,7 @@ extension VideoConfig {
             offlineImage: MEGAAssetsPreviewImageProvider.image(named: "offline")!,
             linkImage: MEGAAssetsPreviewImageProvider.image(named: "link")!,
             saveToPhotosImage: MEGAAssetsPreviewImageProvider.image(named: "saveToPhotos")!,
-            hudMinusImage: MEGAAssetsPreviewImageProvider.image(named: "hudMinus")!,
+            sendToChatImage: MEGAAssetsPreviewImageProvider.image(named: "sendToChat")!,
             moreListImage: MEGAAssetsPreviewImageProvider.image(named: "moreList")!
         ),
         recentlyWatchedAssets: RecentlyWatchedAssets(

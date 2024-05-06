@@ -132,28 +132,16 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func configureToolbar() {
-        let downloadButton = UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: nil)
-        downloadButton.action = #selector(downloadAction(_:))
-
-        let linkButton = UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: nil)
-        linkButton.action = #selector(linkAction(_:))
-        
-        let saveToPhotosButton = UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: nil)
-        saveToPhotosButton.action = #selector(saveToPhotosAction(_:))
-        
-        let moreButton = UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: nil)
-        moreButton.action = #selector(moreAction(_:))
-        
         toolbar.items = [
-            downloadButton,
+            UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: #selector(downloadAction(_:))),
             UIBarButtonItem.flexibleSpace(),
-            linkButton,
+            UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: #selector(linkAction(_:))),
             UIBarButtonItem.flexibleSpace(),
-            saveToPhotosButton,
+            UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: #selector(saveToPhotosAction(_:))),
             UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: videoConfig.toolbarAssets.hudMinusImage, style: .plain, target: self, action: nil),
+            UIBarButtonItem(image: videoConfig.toolbarAssets.sendToChatImage, style: .plain, target: self, action: #selector(sendToChatAction(_:))),
             UIBarButtonItem.flexibleSpace(),
-            moreButton
+            UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
         ]
         
         configureToolbarAppearance()
@@ -293,6 +281,16 @@ final class VideoRevampTabContainerViewController: UIViewController {
         case .all:
             let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
             nodeAction(nodeActionViewController, didSelect: .saveToPhotos, forNodes: selectedVideos, from: sender)
+        case .playlist:
+            break
+        }
+    }
+    
+    @objc private func sendToChatAction(_ sender: UIBarButtonItem) {
+        switch viewModel.syncModel.currentTab {
+        case .all:
+            let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+            nodeAction(nodeActionViewController, didSelect: .sendToChat, forNodes: selectedVideos, from: sender)
         case .playlist:
             break
         }

@@ -128,20 +128,20 @@ public struct VideoConfig: Equatable {
         public let offlineImage: UIImage
         public let linkImage: UIImage
         public let saveToPhotosImage: UIImage
-        public let hudMinusImage: UIImage
+        public let sendToChatImage: UIImage
         public let moreListImage: UIImage
         
         public init(
             offlineImage: UIImage,
             linkImage: UIImage,
             saveToPhotosImage: UIImage,
-            hudMinusImage: UIImage,
+            sendToChatImage: UIImage,
             moreListImage: UIImage
         ) {
             self.offlineImage = offlineImage
             self.linkImage = linkImage
             self.saveToPhotosImage = saveToPhotosImage
-            self.hudMinusImage = hudMinusImage
+            self.sendToChatImage = sendToChatImage
             self.moreListImage = moreListImage
         }
     }
