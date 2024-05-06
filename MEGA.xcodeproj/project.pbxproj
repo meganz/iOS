@@ -2550,6 +2550,7 @@
 		C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */; };
 		C48CADB02BB54C550005519B /* NodeBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */; };
 		C48CADB92BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADB82BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift */; };
+		C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
 		C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */; };
 		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
@@ -5299,6 +5300,7 @@
 		C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDisplayModeProviderTests.swift; sourceTree = "<group>"; };
 		C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserConfig.swift; sourceTree = "<group>"; };
 		C48CADB82BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveNodeSourceUpdatesListener.swift; sourceTree = "<group>"; };
+		C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveViewController.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
 		C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModelTests.swift; sourceTree = "<group>"; };
 		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
@@ -10239,6 +10241,7 @@
 				94B09E442B84CC86007D6B84 /* ContextMenuManager+ActionHandlersArray.swift */,
 				94B09E402B84CC86007D6B84 /* DisplayMenuDelegateHandler.swift */,
 				94B09E4F2B84CC86007D6B84 /* MediaContentDelegateHandler.swift */,
+				C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */,
 				94B09E532B84CC86007D6B84 /* NodeActions+NodeActionsDelegateHandler.swift */,
 				94B09E3F2B84CC86007D6B84 /* NodeActions.swift */,
 				94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */,
@@ -15071,6 +15074,7 @@
 				8363282428102BFC004F6121 /* NameCollisionViewModel.swift in Sources */,
 				5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */,
 				C48CADB92BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift in Sources */,
+				C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */,
 				5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */,
 				BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */,
 				94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */,

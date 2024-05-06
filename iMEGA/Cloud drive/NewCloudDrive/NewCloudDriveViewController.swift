@@ -1,0 +1,48 @@
+import MEGADomain
+
+/// Mordern replacement of CloudDriveViewController
+final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowserView> {
+    private(set) var viewModeProvider: CloudDriveViewModeProvider
+    private(set) var displayModeProvider: CloudDriveDisplayModeProvider
+    init(
+        rootView: NodeBrowserView,
+        wrapper: SearchControllerWrapper,
+        selectionHandler: SearchControllerSelectionHandler,
+        toolbarBuilder: CloudDriveBottomToolbarItemsFactory,
+        backButtonTitle: String?,
+        searchBarVisible: Bool,
+        viewModeProvider: CloudDriveViewModeProvider,
+        displayModeProvider: CloudDriveDisplayModeProvider,
+        audioPlayerManager: some AudioPlayerHandlerProtocol
+    ) {
+        self.viewModeProvider = viewModeProvider
+        self.displayModeProvider = displayModeProvider
+        super.init(
+            rootView: rootView,
+            wrapper: wrapper,
+            selectionHandler: selectionHandler,
+            toolbarBuilder: toolbarBuilder,
+            backButtonTitle: backButtonTitle,
+            searchBarVisible: searchBarVisible,
+            audioPlayerManager: audioPlayerManager
+        )
+    }
+    
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension NewCloudDriveViewController: TextFileEditable {}
+
+/// For Quick Quick Upload feature, we need to know the current viewMode of the CloudDriveVC in order to generate the correct upload actions
+/// CloudDriveViewModeProvider is used for that purpose
+struct CloudDriveViewModeProvider {
+    let viewMode: () -> ViewModePreferenceEntity?
+}
+
+/// For Ads Slot feature, we need to know the current displayMode of the CloudDriveVC in order to decide whether to show ads slot or not.
+/// CloudDriveDisplayModeProvider is used for that purpose
+struct CloudDriveDisplayModeProvider {
+    let displayMode: () -> DisplayMode?
+}

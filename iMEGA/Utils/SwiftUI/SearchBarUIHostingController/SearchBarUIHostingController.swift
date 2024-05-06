@@ -10,16 +10,14 @@ import SwiftUI
 // use .searchable.
 
 // Add delegate methods for BrowserViewControllerDelegate, should end editing
-final class SearchBarUIHostingController<Content>: UIHostingController<Content>, AudioPlayerPresenterProtocol where Content: View {
+class SearchBarUIHostingController<Content>: UIHostingController<Content>, AudioPlayerPresenterProtocol where Content: View {
     private var wrapper: SearchControllerWrapper?
     private var selectionHandler: SearchControllerSelectionHandler?
     private var toolbar: UIToolbar?
     private var backButtonTitle: String?
     private var toolbarBuilder: CloudDriveBottomToolbarItemsFactory
     private var browseDelegate: BrowserViewControllerDelegateHandler
-    private var searchBarVisible: Bool!
-    private(set) var viewModeProvider: CloudDriveViewModeProvider
-    private(set) var displayModeProvider: CloudDriveDisplayModeProvider
+    private var searchBarVisible: Bool
     private weak var audioPlayerManager: (any AudioPlayerHandlerProtocol)?
     private var selectionModeEnabled = false
     
@@ -30,8 +28,6 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content>,
         toolbarBuilder: CloudDriveBottomToolbarItemsFactory,
         backButtonTitle: String?,
         searchBarVisible: Bool,
-        viewModeProvider: CloudDriveViewModeProvider,
-        displayModeProvider: CloudDriveDisplayModeProvider,
         audioPlayerManager: some AudioPlayerHandlerProtocol
     ) {
         self.wrapper = wrapper
@@ -40,8 +36,6 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content>,
         self.backButtonTitle = backButtonTitle
         self.browseDelegate = BrowserViewControllerDelegateHandler()
         self.searchBarVisible = searchBarVisible
-        self.viewModeProvider = viewModeProvider
-        self.displayModeProvider = displayModeProvider
         self.audioPlayerManager = audioPlayerManager
         super.init(rootView: rootView)
     }
@@ -251,16 +245,4 @@ extension SearchControllerWrapper: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         onCancel?()
     }
-}
-
-/// For Quick Quick Upload feature, we need to know the current viewMode of the CloudDriveVC in order to generate the correct upload actions
-/// CloudDriveViewModeProvider is used for that purpose
-struct CloudDriveViewModeProvider {
-    let viewMode: () -> ViewModePreferenceEntity?
-}
-
-/// For Ads Slot feature, we need to know the current displayMode of the CloudDriveVC in order to decide whether to show ads slot or not.
-/// CloudDriveDisplayModeProvider is used for that purpose
-struct CloudDriveDisplayModeProvider {
-    let displayMode: () -> DisplayMode?
 }
