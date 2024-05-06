@@ -1,12 +1,17 @@
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 
 final class NodeInfoRouter: NSObject {
 
     private weak var navigationController: UINavigationController?
+    private let contacstUseCase: any ContactsUseCaseProtocol
 
-    init(navigationController: UINavigationController? = nil) {
+    init(navigationController: UINavigationController? = nil,
+         contacstUseCase: some ContactsUseCaseProtocol
+    ) {
         self.navigationController = navigationController
+        self.contacstUseCase = contacstUseCase
     }
 
     // MARK: - Info
@@ -18,12 +23,14 @@ final class NodeInfoRouter: NSObject {
     }
 
     func showInformation(for node: MEGANode) {
-        let nodeInfoNavigation = UIStoryboard(name: "Node", bundle: nil)
-            .instantiateViewController(withIdentifier: "NodeInfoNavigationControllerID") as! UINavigationController
-        guard let nodeInfoVC = nodeInfoNavigation.viewControllers.first as? NodeInfoViewController else { return }
-
-        nodeInfoVC.display(node, withDelegate: self)
-        navigationController?.present(nodeInfoNavigation, animated: true, completion: nil)
+        let viewModel = NodeInfoViewModel(
+            withNode: node,
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            shouldDisplayContactVerificationInfo: MEGASdk.shared.isContactVerificationWarningEnabled
+        )
+        
+        let nodeInfoVC = NodeInfoViewController.instantiate(withViewModel: viewModel, delegate: self)
+        navigationController?.present(nodeInfoVC, animated: true, completion: nil)
     }
     
     // MARK: - Version

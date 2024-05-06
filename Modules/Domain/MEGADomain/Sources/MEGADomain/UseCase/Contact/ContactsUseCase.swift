@@ -1,6 +1,7 @@
 // MARK: - Use case protocol
 public protocol ContactsUseCaseProtocol {
     func contact(forUserHandle handle: HandleEntity) -> UserEntity?
+    var isContactVerificationWarningEnabled: Bool { get }
 }
 
 // MARK: - Use case implementation
@@ -13,5 +14,9 @@ public struct ContactsUseCase<T: ContactsRepositoryProtocol>: ContactsUseCasePro
     
     public func contact(forUserHandle handle: HandleEntity) -> UserEntity? {
         repository.contact(forUserHandle: handle)
+    }
+    
+    public var isContactVerificationWarningEnabled: Bool {
+        repository.isContactVerificationWarningEnabled
     }
 }

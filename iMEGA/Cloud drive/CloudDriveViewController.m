@@ -599,12 +599,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-- (void)showNodeInfo:(MEGANode *)node {
-    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithViewModel:[self createNodeInfoViewModelWithNode:node]
-                                                                                           delegate:self];
-    [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
-}
-
 - (void)reloadList {
     if (self.viewModePreference_ObjC == ViewModePreferenceEntityList) {
         [self.cdTableView.tableView reloadData];

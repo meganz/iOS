@@ -197,7 +197,6 @@ class NodeInfoViewController: UIViewController {
     
     @objc private func closeButtonTapped() {
         sdk.remove(self)
-        viewModel?.complete()
         dismiss(animated: true, completion: nil)
     }
     

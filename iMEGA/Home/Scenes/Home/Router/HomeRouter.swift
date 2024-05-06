@@ -80,7 +80,7 @@ final class HomeRouter: HomeRouterProtocol {
         self.navigationController = navigationController
         self.newChatRouter = NewChatRouter(navigationController: navigationController, tabBarController: tabBarController)
         self.nodeActionRouter = RecentNodeRouter(navigationController: navigationController)
-        self.nodeInfoRouter = NodeInfoRouter(navigationController: navigationController)
+        self.nodeInfoRouter = NodeInfoRouter(navigationController: navigationController, contacstUseCase: ContactsUseCase(repository: ContactsRepository.newRepo))
         self.nodeLinkManagementRouter = NodeLinkRouter(navigationController: navigationController)
         self.nodeManageRouter = NodeManagementRouter(navigationController: navigationController)
         self.nodeShareRouter = NodeShareRouter(viewController: navigationController)

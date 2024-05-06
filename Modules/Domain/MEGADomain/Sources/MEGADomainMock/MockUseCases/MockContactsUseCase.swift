@@ -10,4 +10,6 @@ public struct MockContactsUseCase: ContactsUseCaseProtocol {
     public func contact(forUserHandle handle: HandleEntity) -> UserEntity? {
         contact
     }
+    
+    public var isContactVerificationWarningEnabled: Bool { false }
 }

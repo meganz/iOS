@@ -73,7 +73,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)moveNode:(MEGANode * _Nonnull)node;
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction;
 - (void)setEditMode:(BOOL)editMode;
-- (void)showNodeInfo:(MEGANode *)node;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (void)toolbarActionsForShareType:(MEGAShareType)shareType isBackupNode:(BOOL)isBackupNode;
 

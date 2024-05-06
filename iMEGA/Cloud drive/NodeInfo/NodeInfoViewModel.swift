@@ -3,7 +3,6 @@ import MEGADomain
 @objc final class NodeInfoViewModel: NSObject {
     private let router = SharedItemsViewRouter()
     private let shareUseCase: (any ShareUseCaseProtocol)?
-    private let completion: (() -> Void)?
 
     let shouldDisplayContactVerificationInfo: Bool
 
@@ -21,7 +20,6 @@ import MEGADomain
         self.node = node
         self.isNodeUndecryptedFolder = isNodeUndecryptedFolder
         self.shouldDisplayContactVerificationInfo = shouldDisplayContactVerificationInfo
-        self.completion = completion
     }
     
     @MainActor
@@ -66,9 +64,5 @@ import MEGADomain
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
         navigationController.addRightCancelButton()
         rootNavigationController.present(navigationController, animated: true)
-    }
-
-    func complete() {
-        completion?()
     }
 }
