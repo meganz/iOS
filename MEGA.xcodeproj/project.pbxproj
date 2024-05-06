@@ -242,6 +242,7 @@
 		257F0B522AEEFB6400216F79 /* PhotoDateSection+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F0B512AEEFB6400216F79 /* PhotoDateSection+Additions.swift */; };
 		2592C2A22AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */; };
 		259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */; };
+		2599D0C42BE202F9003DC13C /* FilesExplorerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2599D0C32BE202F9003DC13C /* FilesExplorerViewModelTests.swift */; };
 		259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */; };
 		259FA4082A3A9CEB00C038B2 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */; };
 		25A4E4E92BD8B83700B3F308 /* NodeTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A4E4E82BD8B83700B3F308 /* NodeTableViewCellViewModel.swift */; };
@@ -2937,6 +2938,7 @@
 		257F0B512AEEFB6400216F79 /* PhotoDateSection+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoDateSection+Additions.swift"; sourceTree = "<group>"; };
 		2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+SnackBarPresenting.swift"; sourceTree = "<group>"; };
 		259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+AudioPlayerPresenterProtocol.swift"; sourceTree = "<group>"; };
+		2599D0C32BE202F9003DC13C /* FilesExplorerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
 		25A4E4E82BD8B83700B3F308 /* NodeTableViewCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -6338,6 +6340,14 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
+		2599D0C22BE202E8003DC13C /* FileExplorer */ = {
+			isa = PBXGroup;
+			children = (
+				2599D0C32BE202F9003DC13C /* FilesExplorerViewModelTests.swift */,
+			);
+			path = FileExplorer;
+			sourceTree = "<group>";
+		};
 		259FA4002A3A946500C038B2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -8527,6 +8537,7 @@
 			isa = PBXGroup;
 			children = (
 				5B9B992F26CD6953006FFBDD /* Favourites */,
+				2599D0C22BE202E8003DC13C /* FileExplorer */,
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
 				9961E7242A282FBA004FB05F /* Videos */,
 				943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */,
@@ -16221,6 +16232,7 @@
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
+				2599D0C42BE202F9003DC13C /* FilesExplorerViewModelTests.swift in Sources */,
 				328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,

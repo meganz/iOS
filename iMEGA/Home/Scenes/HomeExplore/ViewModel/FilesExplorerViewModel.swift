@@ -11,10 +11,10 @@ enum FilesExplorerAction: ActionType {
     case downloadNode(MEGANode)
 }
 
-final class FilesExplorerViewModel {
+final class FilesExplorerViewModel: ViewModelType {
     
     enum Command: CommandType {
-        case reloadNodes(nodes: [MEGANode]?, searchText: String?)
+        case reloadNodes(nodes: [MEGANode], searchText: String?)
         case onNodesUpdate([MEGANode])
         case reloadData
         case setViewConfiguration(any FilesExplorerViewConfiguration)
@@ -33,13 +33,17 @@ final class FilesExplorerViewModel {
     }
     
     private let router: FilesExplorerRouter
-    private let useCase: (any FilesSearchUseCaseProtocol)?
-    private let favouritesUseCase: (any FavouriteNodesUseCaseProtocol)?
+    private let useCase: any FilesSearchUseCaseProtocol
+    private let favouritesUseCase: any FavouriteNodesUseCaseProtocol
     private let filesDownloadUseCase: FilesDownloadUseCase
     private let nodeClipboardOperationUseCase: NodeClipboardOperationUseCase
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let explorerType: ExplorerTypeEntity
     private var contextMenuManager: ContextMenuManager?
+    private let nodeProvider: any MEGANodeProviderProtocol
+    
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var viewConfiguration: any FilesExplorerViewConfiguration {
         switch explorerType {
         case .allDocs:
@@ -66,27 +70,33 @@ final class FilesExplorerViewModel {
     // MARK: - Initializer
     required init(explorerType: ExplorerTypeEntity,
                   router: FilesExplorerRouter,
-                  useCase: (any FilesSearchUseCaseProtocol)?,
-                  favouritesUseCase: (any FavouriteNodesUseCaseProtocol)?,
+                  useCase: some FilesSearchUseCaseProtocol,
+                  favouritesUseCase: some FavouriteNodesUseCaseProtocol,
                   filesDownloadUseCase: FilesDownloadUseCase,
                   nodeClipboardOperationUseCase: NodeClipboardOperationUseCase,
-                  createContextMenuUseCase: any CreateContextMenuUseCaseProtocol) {
+                  contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+                  createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
+                  nodeProvider: some MEGANodeProviderProtocol,
+                  featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.explorerType = explorerType
         self.router = router
         self.useCase = useCase
         self.favouritesUseCase = favouritesUseCase
         self.nodeClipboardOperationUseCase = nodeClipboardOperationUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.filesDownloadUseCase = filesDownloadUseCase
-
-        self.useCase?.onNodesUpdate { [weak self] _ in
+        self.nodeProvider = nodeProvider
+        self.featureFlagProvider = featureFlagProvider
+        
+        self.useCase.onNodesUpdate { [weak self] _ in
             guard let self else { return }
             self.debouncer.start {
                 self.invokeCommand?(.reloadData)
             }
         }
         
-        self.favouritesUseCase?.registerOnNodesUpdate { [weak self] _ in
+        self.favouritesUseCase.registerOnNodesUpdate { [weak self] _ in
             guard let self else { return }
             self.debouncer.start {
                 self.invokeCommand?(.reloadData)
@@ -141,7 +151,7 @@ final class FilesExplorerViewModel {
             invokeCommand?(.setViewConfiguration(viewConfiguration))
             configureContextMenus()
         case .startSearching(let text):
-            startSearching(text)
+            Task { await startSearching(text) }
         case .didSelectNode(let node, let allNodes):
             didSelect(node: node, allNodes: allNodes)
         case .didChangeViewMode(let viewType):
@@ -153,25 +163,56 @@ final class FilesExplorerViewModel {
     }
     
     // MARK: search
-    private func startSearching(_ text: String?) {
-        guard explorerType != .favourites else {
-            startSearchingFavouriteNodes(text)
-            return
-        }
-        
-        useCase?.search(string: text,
-                        parent: nil,
-                        recursive: true,
-                        supportCancel: true,
-                        sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
-                        cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
-            DispatchQueue.main.async {
-                guard let self = self, !isCancelled else { return }
-                
-                let megaNodes = nodes?.toMEGANodes(in: .sharedSdk)
-                self.updateListenerForFilesDownload(withNodes: megaNodes)
-                self.invokeCommand?(.reloadNodes(nodes: megaNodes, searchText: text))
+    @MainActor
+    private func startSearching(_ text: String?) async {
+        do {
+            let shouldExcludeSensitive = await shouldExcludeHiddenSensitive()
+            let nodes: [NodeEntity] = switch explorerType {
+            case .audio, .video, .allDocs:
+                try await startSearch(for: explorerType.toNodeFormatEntity(), excludeSensitive: shouldExcludeSensitive, text: text)
+            case .favourites:
+                try await startSearchingFavouriteNodes(text)
             }
+            
+            let megaNodes = await toMEGANode(from: nodes)
+            updateListenerForFilesDownload(withNodes: megaNodes)
+            invokeCommand?(.reloadNodes(nodes: megaNodes, searchText: text))
+        } catch is CancellationError, NodeSearchResultErrorEntity.cancelled {
+            MEGALogError("[Files Explorer] startSearching cancelled for type:\(explorerType)")
+        } catch {
+            MEGALogError("[Files Explorer] Error getting all nodes for type:\(explorerType)")
+        }
+    }
+    
+    private func shouldExcludeHiddenSensitive() async -> Bool {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
+            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        } else {
+            false
+        }
+    }
+        
+    private func startSearch(for formatType: NodeFormatEntity, excludeSensitive: Bool, text: String?) async throws -> [NodeEntity] {
+        try await useCase.search(
+            filter: .init(
+                searchText: text,
+                recursive: true,
+                supportCancel: true,
+                sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
+                formatType: explorerType.toNodeFormatEntity(),
+                excludeSensitive: excludeSensitive),
+            cancelPreviousSearchIfNeeded: true)
+    }
+    
+    private func toMEGANode(from nodes: [NodeEntity]) async -> [MEGANode] {
+        await withTaskGroup(of: (Int, MEGANode?).self, returning: [MEGANode].self) { taskGroup in
+            let nodeProvider = self.nodeProvider
+            for (index, node) in nodes.enumerated() {
+                _ = taskGroup.addTaskUnlessCancelled { (index, await nodeProvider.node(for: node.handle)) }
+            }
+            return await taskGroup
+                .reduce(into: Array(repeating: Optional<MEGANode>.none, count: nodes.count)) { $0[$1.0] = $1.1 }
+                .compactMap { $0 }
         }
     }
     
@@ -192,15 +233,10 @@ final class FilesExplorerViewModel {
     }
     
     // MARK: Favourites
-    private func startSearchingFavouriteNodes(_ text: String?) {
-        favouritesUseCase?.allFavouriteNodes(searchString: text) { [weak self] result in
-            switch result {
-            case .success(let nodes):
-                let nodeList = nodes.toMEGANodes(in: .sharedSdk)
-                self?.updateListenerForFilesDownload(withNodes: nodeList)
-                self?.invokeCommand?(.reloadNodes(nodes: nodeList, searchText: text))
-            case .failure:
-                MEGALogError("Error getting all favourites nodes")
+    private func startSearchingFavouriteNodes(_ text: String?) async throws -> [NodeEntity] {
+        try await withCheckedThrowingContinuation { continuation in
+            favouritesUseCase.allFavouriteNodes(searchString: text) {
+                continuation.resume(with: $0)
             }
         }
     }

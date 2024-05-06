@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGASdk
 
-public protocol MEGANodeProviderProtocol {
+public protocol MEGANodeProviderProtocol: Sendable {
     /// The MEGANode for the `HandleEntity`
     ///
     /// If the node is cached it will be returned immediately.

@@ -49,7 +49,7 @@ import MEGASwift
     @MainActor
     private func applySensitiveConfiguration(for nodes: [NodeEntity]) async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-              [.flavorRecentAction].contains(flavour)
+              [.flavorRecentAction, .explorerView, .flavorCloudDrive].contains(flavour)
         else {
             isSensitive = false
             return

@@ -42,13 +42,17 @@ struct FilesExplorerRouter {
         let favouriteRepository = FavouriteNodesRepository.newRepo
         let favouritesUseCase = FavouriteNodesUseCase(repo: favouriteRepository)
         
-        let viewModel = FilesExplorerViewModel(explorerType: explorerType,
-                                               router: self,
-                                               useCase: useCase,
-                                               favouritesUseCase: favouritesUseCase,
-                                               filesDownloadUseCase: fileDownloadUseCase,
-                                               nodeClipboardOperationUseCase: nodeClipboardOperationUseCase,
-                                               createContextMenuUseCase: createContextMenuUseCase)
+        let viewModel = FilesExplorerViewModel(
+            explorerType: explorerType,
+            router: self,
+            useCase: useCase,
+            favouritesUseCase: favouritesUseCase,
+            filesDownloadUseCase: fileDownloadUseCase,
+            nodeClipboardOperationUseCase: nodeClipboardOperationUseCase,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            createContextMenuUseCase: createContextMenuUseCase,
+            nodeProvider: DefaultMEGANodeProvider(sdk: .sharedSdk))
         let preference: FilesExplorerContainerViewController.ViewPreference = explorerType == .video ? .list : .both
         let vc = FilesExplorerContainerViewController(viewModel: viewModel,
                                                       viewPreference: preference)

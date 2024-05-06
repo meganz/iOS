@@ -7,13 +7,39 @@ extension XCTestCase {
         test(
             viewModel: viewModel,
             actions: [action],
-            expectedCommands: expectedCommands,
+            expectedCommands: expectedCommands, 
+            timeout: timeout,
+            expectationValidation: ==,
             file: file,
             line: line
         )
     }
     
     func test<T: ViewModelType>(viewModel: T, actions: [T.Action], expectedCommands: [T.Command], timeout: TimeInterval = 3.0, file: StaticString = #filePath, line: UInt = #line) where T.Command: Equatable {
+        test(
+            viewModel: viewModel,
+            actions: actions,
+            expectedCommands: expectedCommands,
+            timeout: timeout,
+            expectationValidation: ==,
+            file: file,
+            line: line
+        )
+    }
+    
+    func test<T: ViewModelType>(viewModel: T, action: T.Action, expectedCommands: [T.Command], timeout: TimeInterval = 3.0, expectationValidation: @escaping (T.Command, T.Command) -> Bool, file: StaticString = #filePath, line: UInt = #line) {
+        test(
+            viewModel: viewModel,
+            actions: [action],
+            expectedCommands: expectedCommands,
+            timeout: timeout,
+            expectationValidation: expectationValidation,
+            file: file,
+            line: line
+        )
+    }
+    
+    func test<T: ViewModelType>(viewModel: T, actions: [T.Action], expectedCommands: [T.Command], timeout: TimeInterval = 3.0, expectationValidation: @escaping (T.Command, T.Command) -> Bool, file: StaticString = #filePath, line: UInt = #line) {
         var expectedCommands = expectedCommands
         var viewModel = viewModel
         
@@ -27,7 +53,7 @@ extension XCTestCase {
         // Subscribe the invoke command event
         viewModel.invokeCommand = { command in
             let expect = expectedCommands.removeFirstWithAssertion()
-            guard expect == command else {
+            guard expectationValidation(expect, command) else {
                 XCTFail("received command \(command) is not \(expect)", file: file, line: line)
                 return
             }

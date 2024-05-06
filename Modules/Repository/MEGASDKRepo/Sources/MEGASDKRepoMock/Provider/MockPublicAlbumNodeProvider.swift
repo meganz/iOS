@@ -2,7 +2,7 @@ import MEGADomain
 import MEGASdk
 import MEGASDKRepo
 
-public final class MockPublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
+public final class MockPublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol, @unchecked Sendable {
     
     private let nodes: [MEGANode]
     

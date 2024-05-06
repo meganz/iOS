@@ -2,7 +2,7 @@ import MEGADomain
 import MEGASdk
 import MEGASDKRepo
 
-public class MockMEGANodeProvider: MEGANodeProviderProtocol {
+public final class MockMEGANodeProvider: MEGANodeProviderProtocol, @unchecked Sendable {
     
     public private(set) var nodeForHandleCallCount = 0
 

@@ -21,7 +21,7 @@ public protocol PublicAlbumNodeProviderProtocol: MEGANodeProviderProtocol {
 }
 
 /// The `PublicAlbumNodeProvider` retrieve and cache `MEGANode` for a public album link
-public class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
+public final class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
     
     private let sdk: MEGASdk
     private let nodeCache = PublicAlbumNodeCache()
