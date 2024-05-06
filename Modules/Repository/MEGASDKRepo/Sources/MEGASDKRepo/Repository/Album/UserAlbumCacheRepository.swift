@@ -4,51 +4,33 @@ import MEGADomain
 import MEGASwift
 
 final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
-    
     public var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
-        setsUpdatedSourcePublisher.eraseToAnyPublisher()
+        userAlbumCacheRepositoryMonitors.setsUpdatedPublisher
     }
     public var setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> {
-        setElementsUpdatedSourcePublisher.eraseToAnyPublisher()
+        userAlbumCacheRepositoryMonitors.setElementsUpdatedPublisher
     }
     
-    private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let userAlbumCache: any UserAlbumCacheProtocol
-    private let setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol
-    private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
-    private let setUpdateSequences = MulticastAsyncSequence<[SetEntity]>()
-    private let setElementUpdateSequences = MulticastAsyncSequence<[SetElementEntity]>()
-    private let setElementUpdateOnSetsSequences = MulticastAsyncSequence<[SetEntity]>()
-    private var monitoredTasks: [Task<Void, any Error>] = []
-
+    private let userAlbumCacheRepositoryMonitors: any UserAlbumCacheRepositoryMonitorsProtocol
+    private let albumCacheMonitorTaskManager: any AlbumCacheMonitorTaskManagerProtocol
+    
     public init(
         userAlbumRepository: some UserAlbumRepositoryProtocol,
         userAlbumCache: some UserAlbumCacheProtocol,
-        setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol,
-        cacheInvalidationTrigger: CacheInvalidationTrigger
+        userAlbumCacheRepositoryMonitors: some UserAlbumCacheRepositoryMonitorsProtocol,
+        albumCacheMonitorTaskManager: some AlbumCacheMonitorTaskManagerProtocol
     ) {
         self.userAlbumRepository = userAlbumRepository
         self.userAlbumCache = userAlbumCache
-        self.setAndElementsUpdatesProvider = setAndElementsUpdatesProvider
-        
-        monitoredTasks = UserAlbumCacheRepositoryMonitors(
-            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider,
-            setUpdateSequences: setUpdateSequences,
-            userAlbumCache: userAlbumCache,
-            setElementUpdateSequences: setElementUpdateSequences,
-            setElementUpdateOnSetsSequences: setElementUpdateOnSetsSequences,
-            cacheInvalidationTrigger: cacheInvalidationTrigger,
-            setsUpdatedSourcePublisher: { [weak self] in self?.setsUpdatedSourcePublisher.send($0) },
-            setElementsUpdatedSourcePublisher: { [weak self] in self?.setElementsUpdatedSourcePublisher.send($0) })
-        .startMonitoring()
-    }
-    
-    deinit {
-        monitoredTasks.cancelTasks()
+        self.userAlbumCacheRepositoryMonitors = userAlbumCacheRepositoryMonitors
+        self.albumCacheMonitorTaskManager = albumCacheMonitorTaskManager
     }
     
     public func albums() async -> [SetEntity] {
+        await monitorAlbumUpdates()
+        
         let cachedAlbums = await userAlbumCache.albums
         guard cachedAlbums.isEmpty else {
             return cachedAlbums
@@ -61,7 +43,9 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     /// AnyAsyncSequence that produces a new list of SetEntity when a change has occurred on any given UserAlbum SetEntity for this users account
     /// - Returns: AnyAsyncSequence<[SetEntity]> of all the available Albums, only yields when a new update has occurred.
     public func albumsUpdated() async -> AnyAsyncSequence<[SetEntity]> {
-        await setUpdateSequences.make()
+        await monitorAlbumUpdates()
+        
+        return await userAlbumCacheRepositoryMonitors.setUpdateAsyncSequences
             .compactMap { [weak self] _ in await self?.albums() }
             .eraseToAnyAsyncSequence()
     }
@@ -70,8 +54,9 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     /// - Parameter id: HandleEntity for a given set. This will be used to filter results from Set Changes
     /// - Returns: AnyAsyncSequence<SetEntity> of all the available Albums, only yields when a new update has occurred for the provided SetEntity Id. If the yielded results is nil, this means that the Set has been removed and no longer available.
     public func albumUpdated(by id: HandleEntity) async -> AnyAsyncSequence<SetEntity?> {
-        await setUpdateSequences
-            .make()
+        await monitorAlbumUpdates()
+        
+        return await userAlbumCacheRepositoryMonitors.setUpdateAsyncSequences
             .compactMap { $0.first { setEntity in setEntity.handle == id }}
             .map({ [weak self] updatedSet -> SetEntity? in
                 guard let self else {
@@ -88,7 +73,9 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     }
     
     public func albumContentUpdated(by id: HandleEntity) async -> AnyAsyncSequence<[SetElementEntity]> {
-        await setElementUpdateSequences.make()
+        await monitorAlbumUpdates()
+        
+        return await userAlbumCacheRepositoryMonitors.setElementUpdateAsyncSequences
             .map {
                 $0.filter { $0.ownerId == id }
             }
@@ -103,8 +90,9 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     ///   - includeElementsInRubbishBin:  Boolean indicating if elements in the rubbish bin should be included in the yielded value.
     /// - Returns: AnyAsyncSequence<[SetElementEntity]> of all the Album Elements, it only yields when a new update has occurred in  the provided SetEntity Id.
     public func albumContentUpdated(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> AnyAsyncSequence<[SetElementEntity]> {
-        await setElementUpdateOnSetsSequences
-            .make()
+        await monitorAlbumUpdates()
+        
+        return await userAlbumCacheRepositoryMonitors.setElementUpdateOnSetsAsyncSequences
             .compactMap({ [weak self] updatedSets -> [SetElementEntity]? in
                 guard
                     let self,
@@ -125,6 +113,8 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     }
     
     public func albumElementIds(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [AlbumPhotoIdEntity] {
+        await monitorAlbumUpdates()
+        
         if let cachedAlbumElementIds = await userAlbumCache.albumElementIds(forAlbumId: id),
            cachedAlbumElementIds.isNotEmpty {
             return cachedAlbumElementIds
@@ -171,5 +161,32 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     
     public func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
         try await userAlbumRepository.updateAlbumCover(for: albumId, elementId: elementId)
+    }
+    
+    // Monitor album updates will ensure that the tasks are still running in the background. If a child task is stopped all tasks will be stopped and cache will be re-primed
+    // and monitoring will be restarted to avoid stale data.
+    private func monitorAlbumUpdates() async {
+        guard await albumCacheMonitorTaskManager.didChildTaskStop() else { return }
+        
+        await albumCacheMonitorTaskManager.stopMonitoring()
+        await primeCaches()
+        await albumCacheMonitorTaskManager.startMonitoring()
+    }
+    
+    private func primeCaches() async {
+        await userAlbumCache.removeAllCachedValues()
+        
+        let userAlbums = await userAlbumRepository.albums()
+        await userAlbumCache.setAlbums(userAlbums)
+        
+        await withTaskGroup(of: Void.self) { group in
+            userAlbums.forEach { album in
+                group.addTask {
+                    let albumElementIds = await self.userAlbumRepository.albumElementIds(
+                        by: album.id, includeElementsInRubbishBin: false)
+                    await self.userAlbumCache.setAlbumElementIds(forAlbumId: album.id, elementIds: albumElementIds)
+                }
+            }
+        }
     }
 }

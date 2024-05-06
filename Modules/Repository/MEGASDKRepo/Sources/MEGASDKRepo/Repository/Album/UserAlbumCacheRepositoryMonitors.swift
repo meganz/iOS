@@ -1,45 +1,61 @@
+@preconcurrency import Combine
 import Foundation
 import MEGADomain
 import MEGASwift
 
-struct UserAlbumCacheRepositoryMonitors: Sendable {
+public protocol UserAlbumCacheRepositoryMonitorsProtocol: Sendable {
+    var setUpdateAsyncSequences: AnyAsyncSequence<[SetEntity]> { get async }
+    var setElementUpdateAsyncSequences: AnyAsyncSequence<[SetElementEntity]> { get async }
+    var setElementUpdateOnSetsAsyncSequences: AnyAsyncSequence<[SetEntity]> { get async }
+    var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> { get }
+    var setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> { get }
+    func monitorSetUpdates() async
+    func monitorSetElementUpdates() async
+    func monitorCacheInvalidationTriggers() async
+}
+
+public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitorsProtocol {
+    public var setUpdateAsyncSequences: AnyAsyncSequence<[SetEntity]> {
+        get async {
+            await setUpdateSequences.make()
+        }
+    }
+    public var setElementUpdateAsyncSequences: AnyAsyncSequence<[SetElementEntity]> {
+        get async {
+            await setElementUpdateSequences.make()
+        }
+    }
+    public var setElementUpdateOnSetsAsyncSequences: AnyAsyncSequence<[SetEntity]> {
+        get async {
+            await setElementUpdateOnSetsSequences.make()
+        }
+    }
+    public var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
+        setsUpdatedSourcePublisher.eraseToAnyPublisher()
+    }
+    
+    public var setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> {
+        setElementsUpdatedSourcePublisher.eraseToAnyPublisher()
+    }
     
     private let setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol
-    private let setUpdateSequences: MulticastAsyncSequence<[SetEntity]>
     private let userAlbumCache: any UserAlbumCacheProtocol
-    private let setElementUpdateSequences: MulticastAsyncSequence<[SetElementEntity]>
-    private let setElementUpdateOnSetsSequences: MulticastAsyncSequence<[SetEntity]>
     private let cacheInvalidationTrigger: CacheInvalidationTrigger
-    private let setsUpdatedSourcePublisher: @Sendable ([SetEntity]) -> Void
-    private let setElementsUpdatedSourcePublisher: @Sendable ([SetElementEntity]) -> Void
+    private let setUpdateSequences = MulticastAsyncSequence<[SetEntity]>()
+    private let setElementUpdateSequences = MulticastAsyncSequence<[SetElementEntity]>()
+    private let setElementUpdateOnSetsSequences = MulticastAsyncSequence<[SetEntity]>()
+    private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
+    private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     
-    init(setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol,
-         setUpdateSequences: MulticastAsyncSequence<[SetEntity]>,
-         userAlbumCache: any UserAlbumCacheProtocol,
-         setElementUpdateSequences: MulticastAsyncSequence<[SetElementEntity]>,
-         setElementUpdateOnSetsSequences: MulticastAsyncSequence<[SetEntity]>,
-         cacheInvalidationTrigger: CacheInvalidationTrigger,
-         setsUpdatedSourcePublisher: @Sendable @escaping ([SetEntity]) -> Void,
-         setElementsUpdatedSourcePublisher: @Sendable @escaping ([SetElementEntity]) -> Void) {
+    public init(setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol,
+                userAlbumCache: any UserAlbumCacheProtocol,
+                cacheInvalidationTrigger: CacheInvalidationTrigger) {
         self.setAndElementsUpdatesProvider = setAndElementsUpdatesProvider
-        self.setUpdateSequences = setUpdateSequences
         self.userAlbumCache = userAlbumCache
-        self.setElementUpdateSequences = setElementUpdateSequences
-        self.setElementUpdateOnSetsSequences = setElementUpdateOnSetsSequences
         self.cacheInvalidationTrigger = cacheInvalidationTrigger
-        self.setsUpdatedSourcePublisher = setsUpdatedSourcePublisher
-        self.setElementsUpdatedSourcePublisher = setElementsUpdatedSourcePublisher
     }
     
-    func startMonitoring() -> [Task<Void, any Error>] {
-        var monitorTasks: [Task<Void, any Error>] = []
-        monitorTasks.appendTask { await monitorSetUpdates() }
-        monitorTasks.appendTask { await monitorCacheInvalidationTriggers() }
-        monitorTasks.appendTask { await monitorSetElementUpdates() }
-        return monitorTasks
-    }
-    
-    private func monitorSetUpdates() async {
+    public func monitorSetUpdates() async {
         for await setUpdates in setAndElementsUpdatesProvider.setUpdates(filteredBy: [.album]) {
             guard !Task.isCancelled else {
                 await setUpdateSequences.terminateContinuations()
@@ -58,12 +74,12 @@ struct UserAlbumCacheRepositoryMonitors: Sendable {
             await userAlbumCache.remove(albums: deletions)
             await userAlbumCache.setAlbums(insertions)
             
-            setsUpdatedSourcePublisher(setUpdates)
+            setsUpdatedSourcePublisher.send(setUpdates)
             await setUpdateSequences.yield(element: setUpdates)
         }
     }
     
-    private func monitorSetElementUpdates() async {
+    public func monitorSetElementUpdates() async {
         for await setElementUpdate in setAndElementsUpdatesProvider.setElementUpdates() {
             guard !Task.isCancelled else {
                 break
@@ -73,7 +89,7 @@ struct UserAlbumCacheRepositoryMonitors: Sendable {
             
             await userAlbumCache.removeElements(of: invalidateAlbumSets)
             
-            setElementsUpdatedSourcePublisher(setElementUpdate)
+            setElementsUpdatedSourcePublisher.send(setElementUpdate)
             
             let updatedAlbums = await withTaskGroup(of: SetEntity?.self, returning: [SetEntity].self) { taskGroup in
                 invalidateAlbumSets
@@ -89,7 +105,7 @@ struct UserAlbumCacheRepositoryMonitors: Sendable {
         }
     }
     
-    private func monitorCacheInvalidationTriggers() async {
+    public func monitorCacheInvalidationTriggers() async {
         for await _ in await cacheInvalidationTrigger.cacheInvalidationSequence() {
             guard !Task.isCancelled else {
                 break
