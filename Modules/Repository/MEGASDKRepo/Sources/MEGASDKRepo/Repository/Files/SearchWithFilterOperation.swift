@@ -35,7 +35,7 @@ final class SearchWithFilterOperation: AsyncOperation {
             sdk.searchNonRecursively(with: filter, orderType: sortOrder, cancelToken: cancelToken)
         }
 
-        guard !isCancelled else {
+        guard !isCancelled, !cancelToken.isCancelled else {
             completion(nil, true)
             return
         }

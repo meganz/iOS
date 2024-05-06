@@ -173,16 +173,21 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         
         subscription.cancel()
     }
-    
-    func testConfigureCell_whenUnsupportedFlavourSet_shouldSetIsSensitiveFalse() async {
-        for await flavour in [NodeTableViewCellFlavor.explorerView, .flavorSharedLink, .flavorVersions, .flavorCloudDrive].async {
+        
+    func testConfigureCell_whenAllFlavourSet_shouldSetExpectedResult() async {
+        
+        let expectedFlavourResult: [(NodeTableViewCellFlavor, Bool)] = [
+            (.flavorRecentAction, true),
+            (.flavorCloudDrive, true),
+            (.explorerView, true),
+            (.flavorSharedLink, false),
+            (.flavorVersions, false)
+        ]
+        
+        for await (flavour, expectedResult) in expectedFlavourResult.async {
             
-            let nodes = [
-                NodeEntity(handle: 1, isMarkedSensitive: true),
-                NodeEntity(handle: 2, isMarkedSensitive: true)
-            ]
             let viewModel = sut(
-                nodes: nodes,
+                nodes: [.init(handle: 1, isMarkedSensitive: true)],
                 flavour: flavour,
                 nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
                 featureFlags: [.hiddenNodes: true]
@@ -193,9 +198,8 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             let expectation = expectation(description: "viewModel.isSensitive should return value")
             let subscription = viewModel.$isSensitive
                 .debounce(for: 0.5, scheduler: DispatchQueue.main)
-                .first { !$0 }
                 .sink { isSensitive in
-                    XCTAssertFalse(isSensitive)
+                    XCTAssertEqual(isSensitive, expectedResult, "\(flavour) \(expectedResult ? "should" : "shouldn't") support isSensitive")
                     expectation.fulfill()
                 }
             

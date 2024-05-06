@@ -52,7 +52,7 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
     
     public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
         try await withAsyncThrowingValue { completion in
-            search<[NodeEntity]>(filter: filter) { completion($0) }
+            search(filter: filter) { completion($0) }
         }
     }
         
@@ -67,7 +67,7 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
         searchOperationQueue.cancelAllOperations()
     }
     
-    private func search(filter: SearchFilterEntity, completion: @escaping (Result<[NodeEntity], Error>) -> Void) {
+    private func search(filter: SearchFilterEntity, completion: @escaping (Result<[NodeEntity], any Error>) -> Void) {
         
         guard let parentHandle = filter.parentNode?.handle ?? sdk.rootNode?.handle else {
             return completion(.failure(NodeSearchResultErrorEntity.noDataAvailable))
@@ -83,7 +83,7 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
             cancelToken: filter.supportCancel ? cancelToken : MEGACancelToken(),
             completion: { nodeList, isCanceled in
                 guard !isCanceled else {
-                    completion(.failure(NodeSearchResultErrorEntity.noDataAvailable))
+                    completion(.failure(NodeSearchResultErrorEntity.cancelled))
                     return
                 }
                 
