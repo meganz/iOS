@@ -21,7 +21,7 @@ struct UserPlaylistCell: View {
             previewEntity: viewModel.previewEntity
         )
         .task {
-            await viewModel.attemptLoadThumbnail()
+            await viewModel.onViewAppeared()
         }
     }
 }

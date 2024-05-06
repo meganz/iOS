@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASdk
 import MEGASDKRepo
 import Video
@@ -17,12 +18,32 @@ struct VideoRevampRouter: VideoRevampRouting {
             nodeFormat: explorerType.toNodeFormatEntity(),
             nodesUpdateListenerRepo: nodesUpdateListenerRepo
         )
+        let userVideoPlaylistsRepo = UserVideoPlaylistsRepository(sdk: sdk)
+        
         let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection())
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        let videoPlaylistUseCase = VideoPlaylistUseCase(
+            fileSearchUseCase: fileSearchUseCase,
+            userVideoPlaylistsRepository: userVideoPlaylistsRepo
+        )
+        let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
+        let photoLibraryUseCase = PhotoLibraryUseCase(
+            photosRepository: photoLibraryRepository,
+            searchRepository: fileSearchRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+        )
+        let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
+            userVideoPlaylistRepository: userVideoPlaylistsRepo,
+            photoLibraryUseCase: photoLibraryUseCase,
+            fileSearchRepository: fileSearchRepo
+        )
         let viewController = VideoRevampTabContainerViewController(
             viewModel: viewModel,
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: thumbnailUseCase,
+            videoPlaylistUseCase: videoPlaylistUseCase,
+            videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
             videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled),
             router: self
         )
