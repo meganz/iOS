@@ -563,7 +563,7 @@ struct CloudDriveViewControllerFactory {
             viewModel: nodeBrowserViewModel
         )
         
-        let vc = SearchBarUIHostingController(
+        let vc = NewCloudDriveViewController(
             rootView: view,
             wrapper: searchControllerWrapper,
             selectionHandler: selectionHandler,
@@ -880,14 +880,14 @@ struct CloudDriveViewControllerFactory {
         )
     }
     
-    /// This is to be injected into the SearchBarUIHostingController to server the Quick Upload feature.
+    /// This is to be injected into the NewCloudDriveViewController to server the Quick Upload feature.
     private func makeViewModeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveViewModeProvider {
         CloudDriveViewModeProvider { [weak viewModel] in
             viewModel?.viewMode
         }
     }
     
-    /// This is to be injected into the SearchBarUIHostingController to server the Ads slot feature.
+    /// This is to be injected into the NewCloudDriveViewController to server the Ads slot feature.
     private func makeDisplayModeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveDisplayModeProvider {
         CloudDriveDisplayModeProvider { [weak viewModel] in
             viewModel?.config.displayMode
