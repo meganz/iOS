@@ -5,7 +5,7 @@
 
 @implementation CoreDataErrorHandler
 
-+ (void)abortAppWithError:(NSError *)error {
++ (void)exitAppWithError:(NSError *)error {
     if (error.userInfo[NSSQLiteErrorDomain] != nil) {
         NSInteger sqliteErrorCode = [error.userInfo[NSSQLiteErrorDomain] integerValue];
         NSError *sqliteError = [NSError errorWithDomain:NSSQLiteErrorDomain code:sqliteErrorCode userInfo:nil];
@@ -16,7 +16,7 @@
         [[FIRCrashlytics crashlytics] recordError:error];
     }
     
-    abort();
+    exit(0);
 }
 
 + (BOOL)isSQLiteFullError:(NSError *)error {

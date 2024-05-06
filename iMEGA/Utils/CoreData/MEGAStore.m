@@ -97,7 +97,7 @@
     if ([CoreDataErrorHandler isSQLiteFullError:error]) {
         [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
     } else {
-        [CoreDataErrorHandler abortAppWithError:error];
+        [CoreDataErrorHandler exitAppWithError:error];
     }
 }
 
