@@ -18,6 +18,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
     private var toolbarBuilder: CloudDriveBottomToolbarItemsFactory
     private var browseDelegate: BrowserViewControllerDelegateHandler
     private var searchBarVisible: Bool
+    let matchingNodeProvider: CloudDriveMatchingNodeProvider
     private weak var audioPlayerManager: (any AudioPlayerHandlerProtocol)?
     private var selectionModeEnabled = false
     
@@ -28,6 +29,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         toolbarBuilder: CloudDriveBottomToolbarItemsFactory,
         backButtonTitle: String?,
         searchBarVisible: Bool,
+        matchingNodeProvider: CloudDriveMatchingNodeProvider,
         audioPlayerManager: some AudioPlayerHandlerProtocol
     ) {
         self.wrapper = wrapper
@@ -36,6 +38,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         self.backButtonTitle = backButtonTitle
         self.browseDelegate = BrowserViewControllerDelegateHandler()
         self.searchBarVisible = searchBarVisible
+        self.matchingNodeProvider = matchingNodeProvider
         self.audioPlayerManager = audioPlayerManager
         super.init(rootView: rootView)
     }
@@ -245,4 +248,9 @@ extension SearchControllerWrapper: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         onCancel?()
     }
+}
+/// For handling changes to parent nodes structure, we need to know the current input node is matching the current node that is displayed on the screen.
+/// CloudDriveMatchingNodeProvider is used for that purpose
+struct CloudDriveMatchingNodeProvider {
+    let matchingNode: (NodeEntity) -> Bool
 }

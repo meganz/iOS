@@ -257,13 +257,15 @@ struct CloudDriveViewControllerFactory {
         searchResultsViewModel: SearchResultsViewModel,
         noInternetViewModel: NoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
+        nodesUpdateListener: some NodesUpdateListenerProtocol,
         config: NodeBrowserConfig,
         nodeActions: NodeActions,
         navigationController: UINavigationController,
         mediaContentDelegate: MediaContentDelegateHandler,
         searchControllerWrapper: SearchControllerWrapper,
         onSelectionModeChange: @escaping (Bool) -> Void,
-        sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity
+        sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
+        onNodeStructureChanged: @escaping () -> Void
     ) -> NodeBrowserViewModel {
         
         let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
@@ -288,6 +290,7 @@ struct CloudDriveViewControllerFactory {
             avatarViewModel: avatarViewModel, 
             noInternetViewModel: noInternetViewModel,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
+            nodesUpdateListener: nodesUpdateListener,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
@@ -328,10 +331,11 @@ struct CloudDriveViewControllerFactory {
             updateTransferWidgetHandler: {
                 TransfersWidgetViewController.sharedTransfer().showWidgetIfNeeded()
             }, 
-            sortOrderProvider: sortOrderProvider
+            sortOrderProvider: sortOrderProvider,
+            onNodeStructureChanged: onNodeStructureChanged
         )
     }
-    
+
     // This factory method creates all the machinery need to show and handle three dot context menu
     // ContextMenuManager holds weak references to the action handles, so they
     // need to be retained in the viewModel to make sure they live as long as the view
@@ -508,13 +512,34 @@ struct CloudDriveViewControllerFactory {
             }
         }
 
+        let onNodeStructureChanged = { [weak navigationController, weak searchResultsVM] in
+            guard let navigationController, let searchResultsVM else { return }
+
+            var removeVCFromStack = false
+            navigationController.viewControllers.removeAll { vc in
+                guard let searchBarUIHostingVC = vc as? NewCloudDriveViewController,
+                      let parentNode = nodeSource.parentNode else {
+                    return false
+                }
+
+                if searchBarUIHostingVC.matchingNodeProvider.matchingNode(parentNode) {
+                    searchResultsVM.bridge.editingCancelled()
+                    removeVCFromStack = true
+                }
+
+                return removeVCFromStack
+            }
+        }
+
         let noInternetViewModel = NoInternetViewModel(
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
         
+        let nodesUpdateListener = SDKNodesUpdateListenerRepository(sdk: sdk)
+
         let nodeSourceUpdatesListener = NewCloudDriveNodeSourceUpdatesListener(
             originalNodeSource: nodeSource,
-            nodeUpdatesListener: SDKNodesUpdateListenerRepository(sdk: sdk)
+            nodeUpdatesListener: nodesUpdateListener
         )
 
         let mediaContentDelegate = MediaContentDelegateHandler()
@@ -524,6 +549,7 @@ struct CloudDriveViewControllerFactory {
             searchResultsViewModel: searchResultsVM,
             noInternetViewModel: noInternetViewModel, 
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
+            nodesUpdateListener: nodesUpdateListener,
             config: overriddenConfig,
             nodeActions: nodeActions,
             navigationController: navigationController,
@@ -532,7 +558,8 @@ struct CloudDriveViewControllerFactory {
             onSelectionModeChange: onSelectionModeChange,
             sortOrderProvider: {
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
-            }
+            }, 
+            onNodeStructureChanged: onNodeStructureChanged
         )
         
         mediaContentDelegate.selectedPhotosHandler = { [weak nodeBrowserViewModel] selected, _ in
@@ -581,7 +608,8 @@ struct CloudDriveViewControllerFactory {
             ),
             searchBarVisible: initialViewMode != .mediaDiscovery, 
             viewModeProvider: makeViewModeProvider(viewModel: nodeBrowserViewModel),
-            displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel),
+            displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel), 
+            matchingNodeProvider: makeMatchingNodeProvider(viewModel: nodeBrowserViewModel),
             audioPlayerManager: AudioPlayerManager.shared
         )
 
@@ -891,6 +919,13 @@ struct CloudDriveViewControllerFactory {
     private func makeDisplayModeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveDisplayModeProvider {
         CloudDriveDisplayModeProvider { [weak viewModel] in
             viewModel?.config.displayMode
+        }
+    }
+
+    /// This is to be injected into the SearchBarUIHostingController to serve the changes to parent nodes structure
+    private func makeMatchingNodeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveMatchingNodeProvider {
+        CloudDriveMatchingNodeProvider { [weak viewModel] node in
+            viewModel?.parentNodeMatches(node: node) == true
         }
     }
 }

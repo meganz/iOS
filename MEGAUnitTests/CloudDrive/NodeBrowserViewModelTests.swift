@@ -42,7 +42,9 @@ class NodeBrowserViewModelTests: XCTestCase {
         let sut: NodeBrowserViewModel
         var savedViewModes: [ViewModePreferenceEntity] = []
         var updateTransferWidgetHandler: () -> Void
-        
+
+        let nodesUpdateListener: any NodesUpdateListenerProtocol
+
         init(
             // this may appear strange but view mode is a "bigger" enum that has mediaDiscovery/list/thumbnail
             // but PageLayout is a SearchResultsView concept which only supports list/thumbnail, hence they need to (and are) be
@@ -51,7 +53,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             defaultLayout: PageLayout = .list,
             node: NodeEntity,
             updateTransferWidgetHandler: @escaping () -> Void = {},
-            sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity = { .defaultAsc }
+            sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity = { .defaultAsc },
+            onNodeStructureChanged: @escaping () -> Void = {}
         ) {
             let nodeSource = NodeSource.node { node }
             let expectedNodes = [
@@ -67,7 +70,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             var saver: (ViewModePreferenceEntity) -> Void = {_ in }
             
             self.updateTransferWidgetHandler = updateTransferWidgetHandler
-            
+            self.nodesUpdateListener = MockSDKNodesUpdateListenerRepository.newRepo
+
             sut = NodeBrowserViewModel(
                 viewMode: defaultViewMode,
                 searchResultsViewModel: .init(
@@ -111,8 +115,9 @@ class NodeBrowserViewModelTests: XCTestCase {
                 ),
                 nodeSourceUpdatesListener: NewCloudDriveNodeSourceUpdatesListener(
                     originalNodeSource: .testNode,
-                    nodeUpdatesListener: MockSDKNodesUpdateListenerRepository.newRepo
+                    nodeUpdatesListener: nodesUpdateListener
                 ),
+                nodesUpdateListener: nodesUpdateListener,
                 viewModeSaver: { saver($0) },
                 storageFullAlertViewModel: .init(router: MockStorageFullAlertViewRouting()),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
@@ -121,7 +126,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onBack: {},
                 onEditingChanged: { _ in },
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
-                sortOrderProvider: sortOrderProvider
+                sortOrderProvider: sortOrderProvider, 
+                onNodeStructureChanged: onNodeStructureChanged
             )
             
             saver = { self.savedViewModes.append($0) }
@@ -289,6 +295,23 @@ class NodeBrowserViewModelTests: XCTestCase {
         harness.sut.editing = true
         wait(for: [exp], timeout: 1.0)
         editModeSubscription.cancel()
+    }
+
+    func testOnNodesUpdateHandler_whenANodeIsRemovedFromTree_shouldInvokeOnRemove() async {
+        let exp = expectation(description: "Wait for on remove to be triggered")
+        let nodes: [NodeEntity] = [
+            .init(),
+            .init(changeTypes: [.removed])
+        ]
+        let harness = Harness(node: nodes[1], onNodeStructureChanged: exp.fulfill)
+        harness.nodesUpdateListener.onNodesUpdateHandler?(nodes)
+        await fulfillment(of: [exp], timeout: 1.0)
+    }
+
+    func testMatches_whenNodeSourceIsSet_shouldMatchTheSource() {
+        let node = NodeEntity(handle: 100)
+        let harness = Harness(node: node)
+        XCTAssertTrue(harness.sut.parentNodeMatches(node: node))
     }
 
     private func assertChangeSortOrder(
