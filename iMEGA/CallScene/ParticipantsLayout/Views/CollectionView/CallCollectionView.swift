@@ -20,13 +20,18 @@ class CallCollectionView: UICollectionView {
     
     private lazy var blurEffectView: UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-        blurEffectView.frame = bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurEffectView.clipsToBounds = true
         return blurEffectView
     }()
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateBlurViewBounds()
+    }
+    
     func addBlurEffect() {
+        updateBlurViewBounds()
         addSubview(blurEffectView)
     }
     
@@ -112,6 +117,10 @@ class CallCollectionView: UICollectionView {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         callCollectionViewDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)), visibleIndexPaths: indexPathsForVisibleItems)
+    }
+    
+    private func updateBlurViewBounds() {
+        blurEffectView.frame = bounds
     }
 }
 
