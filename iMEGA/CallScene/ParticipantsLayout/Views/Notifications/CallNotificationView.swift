@@ -6,6 +6,7 @@ class CallNotificationView: UIView {
         static let notificationHeight: CGFloat = 44
         static let defaultMargin: CGFloat = 32
         static let defaultPaddingTop: CGFloat = 16
+        static let fixedPaddingTop: CGFloat = 160
     }
     
     @IBOutlet weak var notificationLabel: UILabel!
@@ -39,7 +40,20 @@ class CallNotificationView: UIView {
         }
     }
     
-    func show(message: String, backgroundColor: UIColor, textColor: UIColor, autoFadeOut: Bool, blinking: Bool = false, completion: (() -> Void)? = nil) {
+    override func safeAreaInsetsDidChange() {
+        super.safeAreaInsetsDidChange()
+        
+        if let topLayoutConstraint = topLayoutConstraint,
+           let topPadding = topPadding {
+            topLayoutConstraint.constant = topPadding
+        }
+    }
+    
+    // MARK: - Public methods
+    
+    /// Show an in call notification centred horizontally, with a fade in animation from top of screen and optional fade out.
+    /// Used for temporal notifications as user join/leave notifications.
+    func show(message: String, backgroundColor: UIColor, textColor: UIColor, autoFadeOut: Bool, extraPaddingTop: Bool = false, completion: (() -> Void)? = nil) {
         translatesAutoresizingMaskIntoConstraints = false
         
         guard let superview = superview else {
@@ -58,9 +72,7 @@ class CallNotificationView: UIView {
         ])
         
         fadeIn()
-        
-        blinking ? addBlinkingAnimation() : removeOpacityAnimations()
-        
+                
         if autoFadeOut {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.fadeOut(completion: completion)
@@ -68,18 +80,8 @@ class CallNotificationView: UIView {
         }
     }
     
-    func addBlinkingAnimation() {
-        UIView.animate(withDuration: 0.8,
-                       delay: 0.5,
-                       options: [.curveEaseInOut, .autoreverse, .repeat],
-                       animations: { [weak self] in self?.notificationLabel.alpha = 0 },
-                       completion: nil)
-    }
-    
-    func removeOpacityAnimations() {
-        self.layer.removeAnimation(forKey: "opacity")
-    }
-
+    /// Show an in call notification centred horizontally and with a padding from the top taking into account safe are insets.
+    /// Used for waiting for others to join and call will end notifications.
     func show(message: String, backgroundColor: UIColor, textColor: UIColor) {
         guard let superview = superview else {
             return
@@ -101,12 +103,50 @@ class CallNotificationView: UIView {
         self.topLayoutConstraint = topLayoutConstraint
     }
     
+    /// Updates a notification message. For example for call will end countdown timer.
     func updateMessage(string: String) {
         self.notificationLabel.text = string
         invalidateIntrinsicContentSize()
     }
     
-    func fadeIn(withDuration duration: TimeInterval = 0.25) {
+    /// Show an in call notification centred horizontally and with a fixed padding from the top.
+    /// Used for reconnecting and bad network notifications.
+    /// It could have a  blink animation through opacity.
+    func showWithFixedPosition(message: String, backgroundColor: UIColor, textColor: UIColor, blinking: Bool = false) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        guard let superview = superview else {
+            return
+        }
+        
+        self.notificationLabel.text = message
+        self.backgroundColor = backgroundColor
+        self.notificationLabel.textColor = textColor
+        let anchorX: NSLayoutXAxisAnchor = superview.centerXAnchor
+        let anchorTop: NSLayoutYAxisAnchor = superview.topAnchor
+        NSLayoutConstraint.activate([centerXAnchor.constraint(equalTo: anchorX),
+                                     heightAnchor.constraint(equalToConstant: Constants.notificationHeight),
+                                     topAnchor.constraint(equalTo: anchorTop, constant: Constants.fixedPaddingTop)
+        ])
+                
+        blinking ? addBlinkingAnimation() : removeOpacityAnimations()
+    }
+    
+    // MARK: - Private methods
+    
+    private func addBlinkingAnimation() {
+        UIView.animate(withDuration: 0.8,
+                       delay: 0.5,
+                       options: [.curveEaseInOut, .autoreverse, .repeat],
+                       animations: { [weak self] in self?.notificationLabel.alpha = 0 },
+                       completion: nil)
+    }
+    
+    private func removeOpacityAnimations() {
+        self.layer.removeAnimation(forKey: "opacity")
+    }
+    
+    private func fadeIn(withDuration duration: TimeInterval = 0.25) {
         var offsetY: CGFloat = frame.size.height + Constants.defaultPaddingTop
         let offsetX: CGFloat = 0
 
@@ -119,7 +159,7 @@ class CallNotificationView: UIView {
         })
     }
     
-    func fadeOut(withDuration duration: TimeInterval = 0.25, completion: (() -> Void)?) {
+    private func fadeOut(withDuration duration: TimeInterval = 0.25, completion: (() -> Void)?) {
         let offset: CGFloat = superview?.safeAreaInsets.top ?? 0 + frame.size.height + 16
 
         UIView.animate(withDuration: duration, animations: { [weak self] in
@@ -128,14 +168,5 @@ class CallNotificationView: UIView {
             self?.removeFromSuperview()
             completion?()
         })
-    }
-    
-    override func safeAreaInsetsDidChange() {
-        super.safeAreaInsetsDidChange()
-        
-        if let topLayoutConstraint = topLayoutConstraint,
-           let topPadding = topPadding {
-            topLayoutConstraint.constant = topPadding
-        }
     }
 }

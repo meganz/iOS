@@ -228,9 +228,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .showBadNetworkQuality:
             if reconnectingNotificationView == nil {
                 showPoorConnectionNotification()
+                addParticipantsBlurEffect()
             }
         case .hideBadNetworkQuality:
             removePoorConnectionNotification()
+            removeParticipantsBlurEffect()
         case .updateAvatar(let image, let participant):
             callCollectionView.updateAvatar(image: image, for: participant)
         case .updateSpeakerAvatar(let image):
@@ -417,11 +419,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func showReconnectingNotification() {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: Strings.Localizable.Meetings.Reconnecting.title,
-                          backgroundColor: .clear,
-                          textColor: Constants.notificationMessageWhiteTextColor,
-                          autoFadeOut: false,
-                          blinking: true)
+        notification.showWithFixedPosition(
+            message: Strings.Localizable.Meetings.Reconnecting.title,
+            backgroundColor: .clear,
+            textColor: Constants.notificationMessageWhiteTextColor,
+            blinking: true)
         reconnectingNotificationView = notification
     }
     
@@ -434,10 +436,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func showPoorConnectionNotification() {
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: Strings.Localizable.Meetings.poorConnection,
-                          backgroundColor: .clear,
-                          textColor: Constants.notificationMessageWhiteTextColor,
-                          autoFadeOut: false)
+        notification.showWithFixedPosition(
+            message: Strings.Localizable.Meetings.poorConnection,
+            backgroundColor: .clear,
+            textColor: Constants.notificationMessageWhiteTextColor)
         poorConnectionNotificationView = notification
     }
     
