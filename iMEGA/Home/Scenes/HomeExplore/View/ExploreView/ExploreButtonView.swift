@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 final class ExplorerView: UIView {
@@ -47,7 +48,9 @@ final class ExplorerView: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.lineWidth = 4.0
         shapeLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 6.0).cgPath
-        shapeLayer.strokeColor = MEGAAppColor.Black._000000.uiColor.cgColor
+        shapeLayer.strokeColor = UIColor.isDesignTokenEnabled()
+        ? TokenColors.Background.page.cgColor
+        : UIColor.black000000.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
         return shapeLayer
     }()

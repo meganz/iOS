@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAUIKit
 import UIKit
 
@@ -59,14 +60,24 @@ class FileExplorerGridCell: UICollectionViewCell {
     private var markSelection: Bool = false {
         didSet {
             selectImageView.image = markSelection ? UIImage.thumbnailSelected : UIImage.checkBoxUnselected
-            if markSelection {
-                self.borderColor = MEGAAppColor.Green._00A886.uiColor
+            updateBorderColor()
+        }
+    }
+
+    private func updateBorderColor() {
+        if markSelection {
+            borderColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.success : UIColor.green00A886
+        } else {
+            if UIColor.isDesignTokenEnabled() {
+                borderColor = TokenColors.Border.strong
             } else {
-                self.borderColor = traitCollection.theme == .dark ? MEGAAppColor.Gray._545458.uiColor.withAlphaComponent(0.65) : MEGAAppColor.White._F7F7F7.uiColor
+                borderColor = traitCollection.theme == .dark
+                ? UIColor.gray545457.withAlphaComponent(0.65)
+                : UIColor.whiteF7F7F7
             }
         }
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         thumbnailIconImageView.image = nil
@@ -82,12 +93,11 @@ class FileExplorerGridCell: UICollectionViewCell {
     private func setupAppearance(with trait: UITraitCollection) {
         switch trait.theme {
         case .dark:
-            self.borderColor = MEGAAppColor.Gray._545458.uiColor.withAlphaComponent(0.65)
             thumbnailImageView.backgroundColor = MEGAAppColor.Black._1C1C1E.uiColor
         default:
-            self.borderColor = MEGAAppColor.White._F7F7F7.uiColor
             thumbnailImageView.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
         }
+        updateBorderColor()
     }
 }
 
