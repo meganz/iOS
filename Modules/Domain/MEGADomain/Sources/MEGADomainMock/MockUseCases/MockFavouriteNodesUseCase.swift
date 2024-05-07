@@ -19,8 +19,16 @@ public final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
         self.onNodesUpdateCallback = onNodesUpdateCallback
     }
    
-    public func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        completion(getAllFavouriteNodesWithSearchResult)
+    public func allFavouriteNodes(searchString: String?) async throws -> [NodeEntity] {
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: getAllFavouriteNodesWithSearchResult)
+        }
+    }
+    
+    public func allFavouriteNodes(searchString: String?, excludeSensitives: Bool) async throws -> [NodeEntity] {
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: getAllFavouriteNodesWithSearchResult)
+        }
     }
     
     public func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {

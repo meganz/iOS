@@ -166,10 +166,9 @@ final class FilesExplorerViewModel: ViewModelType {
     @MainActor
     private func startSearching(_ text: String?) async {
         do {
-            let shouldExcludeSensitive = await shouldExcludeHiddenSensitive()
             let nodes: [NodeEntity] = switch explorerType {
             case .audio, .video, .allDocs:
-                try await startSearch(for: explorerType.toNodeFormatEntity(), excludeSensitive: shouldExcludeSensitive, text: text)
+                try await startSearch(text: text, formatType: explorerType.toNodeFormatEntity())
             case .favourites:
                 try await startSearchingFavouriteNodes(text)
             }
@@ -191,8 +190,8 @@ final class FilesExplorerViewModel: ViewModelType {
             false
         }
     }
-        
-    private func startSearch(for formatType: NodeFormatEntity, excludeSensitive: Bool, text: String?) async throws -> [NodeEntity] {
+    
+    private func startSearch(text: String?, formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         try await useCase.search(
             filter: .init(
                 searchText: text,
@@ -200,10 +199,14 @@ final class FilesExplorerViewModel: ViewModelType {
                 supportCancel: true,
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                 formatType: explorerType.toNodeFormatEntity(),
-                excludeSensitive: excludeSensitive),
+                excludeSensitive: await shouldExcludeHiddenSensitive()),
             cancelPreviousSearchIfNeeded: true)
     }
-    
+    	
+    private func startSearchingFavouriteNodes(_ text: String?) async throws -> [NodeEntity] {
+        try await favouritesUseCase.allFavouriteNodes(searchString: text)
+    }
+	
     private func toMEGANode(from nodes: [NodeEntity]) async -> [MEGANode] {
         await withTaskGroup(of: (Int, MEGANode?).self, returning: [MEGANode].self) { taskGroup in
             let nodeProvider = self.nodeProvider
@@ -214,7 +217,7 @@ final class FilesExplorerViewModel: ViewModelType {
                 .reduce(into: Array(repeating: Optional<MEGANode>.none, count: nodes.count)) { $0[$1.0] = $1.1 }
                 .compactMap { $0 }
         }
-    }
+	}
     
     private func didSelect(node: MEGANode, allNodes: [MEGANode]) {
         router.didSelect(node: node, allNodes: allNodes)
@@ -229,16 +232,7 @@ final class FilesExplorerViewModel: ViewModelType {
     }
     
     func getExplorerType() -> ExplorerTypeEntity {
-        return self.explorerType
-    }
-    
-    // MARK: Favourites
-    private func startSearchingFavouriteNodes(_ text: String?) async throws -> [NodeEntity] {
-        try await withCheckedThrowingContinuation { continuation in
-            favouritesUseCase.allFavouriteNodes(searchString: text) {
-                continuation.resume(with: $0)
-            }
-        }
+        self.explorerType
     }
 }
 

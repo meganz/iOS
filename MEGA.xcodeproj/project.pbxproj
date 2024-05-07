@@ -8538,6 +8538,7 @@
 			children = (
 				5B9B992F26CD6953006FFBDD /* Favourites */,
 				2599D0C22BE202E8003DC13C /* FileExplorer */,
+				2599D0C22BE202E8003DC13C /* FileExplorer */,
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
 				9961E7242A282FBA004FB05F /* Videos */,
 				943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */,
@@ -16232,6 +16233,7 @@
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
+				2599D0C42BE202F9003DC13C /* FilesExplorerViewModelTests.swift in Sources */,
 				2599D0C42BE202F9003DC13C /* FilesExplorerViewModelTests.swift in Sources */,
 				328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,

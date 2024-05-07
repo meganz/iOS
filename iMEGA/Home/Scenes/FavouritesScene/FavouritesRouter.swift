@@ -18,13 +18,14 @@ extension FavouritesRouter: FavouritesRouting {
     func build() -> UIViewController {
         let favouritesVC = UIStoryboard(name: "Favourites", bundle: nil)
             .instantiateViewController(withIdentifier: "FavouritesViewControllerID") as! FavouritesViewController
-        
-        let repository = FavouriteNodesRepository.newRepo
-        let favouritesUseCase = FavouriteNodesUseCase(repo: repository)
+        let favouritesUseCase = FavouriteNodesUseCase(
+            repo: FavouriteNodesRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         
         let viewModel = FavouritesViewModel(router: self, favouritesUseCase: favouritesUseCase)
         favouritesVC.viewModel = viewModel
-        
         return favouritesVC
     }
     
