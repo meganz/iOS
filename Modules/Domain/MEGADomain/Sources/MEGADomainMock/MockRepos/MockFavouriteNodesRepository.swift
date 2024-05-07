@@ -1,6 +1,7 @@
 import MEGADomain
 
 public final class MockFavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
+    
     public static var newRepo: MockFavouriteNodesRepository = MockFavouriteNodesRepository(result: .success([]))
     
     private let result: Result<[NodeEntity], GetFavouriteNodesErrorEntity>
@@ -19,6 +20,12 @@ public final class MockFavouriteNodesRepository: FavouriteNodesRepositoryProtoco
     
     public func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         completion(result)
+    }
+    
+    public func allFavouritesNodes(searchString: String?) async throws -> [NodeEntity] {
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: result)
+        }
     }
     
     public func allFavouritesNodes() async throws -> [NodeEntity] {

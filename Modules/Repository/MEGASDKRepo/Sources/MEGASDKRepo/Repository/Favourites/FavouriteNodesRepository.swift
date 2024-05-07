@@ -3,6 +3,7 @@ import MEGADomain
 import MEGASdk
 
 public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol {
+    
     public static var newRepo: FavouriteNodesRepository {
         FavouriteNodesRepository(sdk: MEGASdk.sharedSdk)
     }
@@ -69,6 +70,12 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
         }
     }
     
+    public func allFavouritesNodes(searchString: String?) async throws -> [NodeEntity] {
+        try await withCheckedThrowingContinuation { continuation in
+            allFavouriteNodes(searchString: searchString) { continuation.resume(with: $0) }
+        }
+    }
+    
     public func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
         sdk.add(self)
         
@@ -94,7 +101,7 @@ extension FavouriteNodesRepository: MEGAGlobalDelegate {
         
         for nodeUpdated in nodesUpdateArray {
             if let base64Handle = nodeUpdated.base64Handle,
-               (nodeUpdated.hasChangedType(.attributes) || favouritesDictionary[base64Handle] != nil) {
+               nodeUpdated.hasChangedType(.attributes) || favouritesDictionary[base64Handle] != nil {
                 shouldProcessOnNodesUpdate = true
                 break
             }

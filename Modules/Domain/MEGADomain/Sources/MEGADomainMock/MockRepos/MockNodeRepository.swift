@@ -18,6 +18,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     @Atomic public var childrenNodes: [NodeEntity] = []
     private let parentNodes: [NodeEntity]
     private let isInheritingSensitivityResult: Result<Bool, Error>
+    private let isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>]
     
     public init(
         node: NodeEntity? = nil,
@@ -31,7 +32,9 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         childNodes: [String: NodeEntity] = [:],
         childrenNodes: [NodeEntity] = [],
         parentNodes: [NodeEntity] = [],
-        isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity())
+        isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
+        isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:]
+
     ) {
         self.node = node
         self.rubbishBinNode = rubbishBinNode
@@ -44,6 +47,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         self.childNodes = childNodes
         self.parentNodes = parentNodes
         self.isInheritingSensitivityResult = isInheritingSensitivityResult
+        self.isInheritingSensitivityResults = isInheritingSensitivityResults
         $childrenNodes.mutate { $0 = childrenNodes }
     }
     
@@ -125,7 +129,10 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
         try await withCheckedThrowingContinuation {
-            $0.resume(with: isInheritingSensitivityResult)
+            guard let result = isInheritingSensitivityResults[node] else {
+                return $0.resume(with: isInheritingSensitivityResult)
+            }
+            return $0.resume(with: result)
         }
     }
 }

@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAFoundation
+import MEGAPresentation
 import MEGASDKRepo
 import WidgetKit
 
@@ -15,7 +16,11 @@ class QuickAccessWidgetManager: NSObject {
         self.recentItemsUseCase = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance()))
         self.recentNodesUseCase = RecentNodesUseCase(repo: RecentNodesRepository.newRepo)
         self.favouriteItemsUseCase = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance()))
-        self.favouriteNodesUseCase = FavouriteNodesUseCase(repo: FavouriteNodesRepository.newRepo)
+        self.favouriteNodesUseCase = FavouriteNodesUseCase(
+            repo: FavouriteNodesRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         self.debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .background))
 
         super.init()
@@ -25,7 +30,11 @@ class QuickAccessWidgetManager: NSObject {
         recentItemsUseCase: some RecentItemsUseCaseProtocol = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance())),
         recentNodesUseCase: some RecentNodesUseCaseProtocol = RecentNodesUseCase(repo: RecentNodesRepository.newRepo),
         favouriteItemsUseCase: some FavouriteItemsUseCaseProtocol = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance())),
-        favouriteNodesUseCase: some FavouriteNodesUseCaseProtocol = FavouriteNodesUseCase(repo: FavouriteNodesRepository.newRepo),
+        favouriteNodesUseCase: some FavouriteNodesUseCaseProtocol = FavouriteNodesUseCase(
+            repo: FavouriteNodesRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
         debouncer: Debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .background))
     ) {
         self.recentItemsUseCase = recentItemsUseCase

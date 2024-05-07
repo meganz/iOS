@@ -1,6 +1,7 @@
 import Combine
 import CoreSpotlight
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import UniformTypeIdentifiers
 
@@ -27,8 +28,11 @@ final class SpotlightIndexer: NSObject {
     
     @objc init(sdk: MEGASdk, passcodeEnabled: Bool = false) {
         self.sdk = sdk
-        let favoritesRepository = FavouriteNodesRepository.newRepo
-        self.favouritesUseCase = FavouriteNodesUseCase(repo: favoritesRepository)
+        self.favouritesUseCase = FavouriteNodesUseCase(
+            repo: FavouriteNodesRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         self.passcodeEnabled = passcodeEnabled
         super.init()
         sdk.add(self)
