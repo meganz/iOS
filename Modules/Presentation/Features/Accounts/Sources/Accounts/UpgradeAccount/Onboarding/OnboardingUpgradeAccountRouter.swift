@@ -5,7 +5,7 @@ import Settings
 import SwiftUI
 import UIKit
 
-public protocol OnboardingUpgradeAccountRouting: Routing {
+public protocol OnboardingUpgradeAccountRouting {
     func showTermsAndPolicies()
 }
 
@@ -15,14 +15,16 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let onboardingABvariant: ABTestVariant
     private let accountsConfig: AccountsConfig
     private let viewProPlanAction: () -> Void
     
     public init(
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
-        tracker: some AnalyticsTracking,
-        presenter: UIViewController?,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        onboardingABvariant: ABTestVariant,
+        presenter: UIViewController? = nil,
         accountsConfig: AccountsConfig,
         viewProPlanAction: @escaping () -> Void
     ) {
@@ -30,31 +32,53 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
         self.purchaseUseCase = purchaseUseCase
         self.accountUseCase = accountUseCase
         self.tracker = tracker
+        self.onboardingABvariant = onboardingABvariant
         self.accountsConfig = accountsConfig
         self.viewProPlanAction = viewProPlanAction
     }
     
-    public func build() -> UIViewController {
-        let viewModel = OnboardingUpgradeAccountViewModel(
+    public func build() -> UIViewController? {
+        // Variant A - Show onboarding dialog without the plan list but with button that redirects to Upgrade plan page.
+        // Variant B - Show onboarding dialog with complete list of plans.
+        // Baseline - Won't be handled on this router. Should show the current Choose your Account Type page.
+        switch onboardingABvariant {
+        case .baseline: 
+            return nil
+            
+        case .variantA:
+            let hostingController = UIHostingController(
+                rootView: OnboardingWithViewProPlansView(
+                    viewModel: self.onboardingViewModel(),
+                    accountsConfig: accountsConfig
+                )
+            )
+            baseViewController = hostingController
+            return hostingController
+        
+        case .variantB:
+            let hostingController = UIHostingController(
+                rootView: OnboardingWithProPlanListView(
+                    viewModel: self.onboardingViewModel(),
+                    accountsConfig: accountsConfig
+                )
+            )
+            baseViewController = hostingController
+            return hostingController
+        }
+    }
+    
+    private func onboardingViewModel() -> OnboardingUpgradeAccountViewModel {
+        OnboardingUpgradeAccountViewModel(
             purchaseUseCase: purchaseUseCase,
             accountUseCase: accountUseCase,
             tracker: tracker,
             viewProPlanAction: viewProPlanAction,
             router: self
         )
-        
-        let onboardingWithViewProPlansView = OnboardingWithViewProPlansView(
-            viewModel: viewModel,
-            accountsConfig: accountsConfig
-        )
-        
-        let hostingController = UIHostingController(rootView: onboardingWithViewProPlansView)
-        baseViewController = hostingController
-        return hostingController
     }
-    
+
     public func start() {
-        let viewController = build()
+        guard let viewController = build() else { return }
         viewController.modalPresentationStyle = .fullScreen
         presenter?.present(viewController, animated: true)
     }
