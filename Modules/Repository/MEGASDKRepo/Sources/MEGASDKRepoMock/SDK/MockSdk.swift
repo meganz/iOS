@@ -666,6 +666,15 @@ public final class MockSdk: MEGASdk {
         _hasVersionsForNode
     }
     
+    // MARK: - Devices
+    public override func getDeviceName(_ deviceId: String?, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func renameDevice(_ deviceId: String?, newName name: String, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
     // MARK: - Helper
     private func processRequestResult(delegate: any MEGARequestDelegate) {
         switch requestResult {
