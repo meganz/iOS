@@ -50,6 +50,14 @@ final class SearchResultMapperTests: XCTestCase {
         )
     }
 
+    func testProperties_whenFolderIsDownloaded_propertiesShouldContainDownload() {
+        let nodeUseCase = MockNodeDataUseCase(downloaded: true)
+        let sut = makeSUT(nodeUseCase: nodeUseCase)
+        let node = NodeEntity(isFolder: true)
+        let result = sut.map(node: node)
+        XCTAssertTrue(result.properties.contains(.downloaded))
+    }
+
     // MARK: - Private methods
 
     private typealias SUT = SearchResultMapper

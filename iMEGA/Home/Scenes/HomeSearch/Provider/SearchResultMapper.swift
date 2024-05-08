@@ -121,8 +121,7 @@ struct SearchResultMapper {
     }
     
     private func isDownloaded(for node: NodeEntity) -> Bool {
-        guard node.isFile else { return false }
-        return nodeUseCase.isDownloaded(nodeHandle: node.handle)
+        nodeUseCase.isDownloaded(nodeHandle: node.handle)
     }
     
     private func isNodeVideoWithValidDuration(for node: NodeEntity) -> Bool {
