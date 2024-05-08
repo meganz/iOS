@@ -202,7 +202,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             showNotification(
                 message: Strings.Localizable.online,
                 backgroundColor: Constants.notificationMessageWhiteBackgroundColor,
-                textColor: Constants.notificationMessageWhiteTextColor
+                textColor: Constants.notificationMessageBlackTextColor
             )
         case .updateCameraPositionTo(let position):
             localUserView.addBlurEffect()
@@ -335,12 +335,14 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     private func showNotification(message: String, backgroundColor: UIColor, textColor: UIColor, completion: (() -> Void)? = nil) {
+        callEndTimerNotificationView?.isHidden = true
         callWillEndTimerNotificationView?.isHidden = true
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
         notification.show(message: message, backgroundColor: backgroundColor, textColor: textColor, autoFadeOut: true) { [weak self] in
             completion?()
             self?.callWillEndTimerNotificationView?.isHidden = false
+            self?.callEndTimerNotificationView?.isHidden = false
         }
     }
     
@@ -423,6 +425,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     private func showReconnectingNotification() {
+        poorConnectionNotificationView?.isHidden = true
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
         notification.showWithFixedPosition(
@@ -437,6 +440,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         guard let notification = reconnectingNotificationView else { return }
         notification.removeFromSuperview()
         reconnectingNotificationView = nil
+        poorConnectionNotificationView?.isHidden = false
     }
     
     private func showPoorConnectionNotification() {
