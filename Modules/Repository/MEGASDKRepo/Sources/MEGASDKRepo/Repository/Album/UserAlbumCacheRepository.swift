@@ -29,7 +29,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     }
     
     public func albums() async -> [SetEntity] {
-        await monitorAlbumUpdates()
+        await updateAlbumsMonitoring()
         
         let cachedAlbums = await userAlbumCache.albums
         guard cachedAlbums.isEmpty else {
@@ -43,7 +43,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     /// AnyAsyncSequence that produces a new list of SetEntity when a change has occurred on any given UserAlbum SetEntity for this users account
     /// - Returns: AnyAsyncSequence<[SetEntity]> of all the available Albums, only yields when a new update has occurred.
     public func albumsUpdated() async -> AnyAsyncSequence<[SetEntity]> {
-        await monitorAlbumUpdates()
+        await updateAlbumsMonitoring()
         
         return await userAlbumCacheRepositoryMonitors.setUpdateAsyncSequences
             .compactMap { [weak self] _ in await self?.albums() }
@@ -54,7 +54,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     /// - Parameter id: HandleEntity for a given set. This will be used to filter results from Set Changes
     /// - Returns: AnyAsyncSequence<SetEntity> of all the available Albums, only yields when a new update has occurred for the provided SetEntity Id. If the yielded results is nil, this means that the Set has been removed and no longer available.
     public func albumUpdated(by id: HandleEntity) async -> AnyAsyncSequence<SetEntity?> {
-        await monitorAlbumUpdates()
+        await updateAlbumsMonitoring()
         
         return await userAlbumCacheRepositoryMonitors.setUpdateAsyncSequences
             .compactMap { $0.first { setEntity in setEntity.handle == id }}
@@ -73,7 +73,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     }
     
     public func albumContentUpdated(by id: HandleEntity) async -> AnyAsyncSequence<[SetElementEntity]> {
-        await monitorAlbumUpdates()
+        await updateAlbumsMonitoring()
         
         return await userAlbumCacheRepositoryMonitors.setElementUpdateAsyncSequences
             .map {
@@ -90,7 +90,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     ///   - includeElementsInRubbishBin:  Boolean indicating if elements in the rubbish bin should be included in the yielded value.
     /// - Returns: AnyAsyncSequence<[SetElementEntity]> of all the Album Elements, it only yields when a new update has occurred in  the provided SetEntity Id.
     public func albumContentUpdated(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> AnyAsyncSequence<[SetElementEntity]> {
-        await monitorAlbumUpdates()
+        await updateAlbumsMonitoring()
         
         return await userAlbumCacheRepositoryMonitors.setElementUpdateOnSetsAsyncSequences
             .compactMap({ [weak self] updatedSets -> [SetElementEntity]? in
@@ -113,7 +113,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     }
     
     public func albumElementIds(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [AlbumPhotoIdEntity] {
-        await monitorAlbumUpdates()
+        await updateAlbumsMonitoring()
         
         if let cachedAlbumElementIds = await userAlbumCache.albumElementIds(forAlbumId: id),
            cachedAlbumElementIds.isNotEmpty {
@@ -163,9 +163,15 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
         try await userAlbumRepository.updateAlbumCover(for: albumId, elementId: elementId)
     }
     
-    // Monitor album updates will ensure that the tasks are still running in the background. If a child task is stopped all tasks will be stopped and cache will be re-primed
-    // and monitoring will be restarted to avoid stale data.
-    private func monitorAlbumUpdates() async {
+    /// Unsure that cache is primed and background monitoring is running.
+    private func updateAlbumsMonitoring() async {
+        await ensureCacheIsPrimedAfterInvalidation()
+        await ensureAlbumUpdateBackgroundMonitoring()
+    }
+    
+    /// Monitor album updates will ensure that the tasks are still running in the background. If a child task is stopped all tasks will be stopped and cache will be re-primed
+    /// and monitoring will be restarted to avoid stale data.
+    private func ensureAlbumUpdateBackgroundMonitoring() async {
         guard await albumCacheMonitorTaskManager.didChildTaskStop() else { return }
         
         await albumCacheMonitorTaskManager.stopMonitoring()
@@ -173,8 +179,15 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
         await albumCacheMonitorTaskManager.startMonitoring()
     }
     
+    private func ensureCacheIsPrimedAfterInvalidation() async {
+        guard await userAlbumCache.wasForcedCleared else { return }
+        
+        await primeCaches()
+        await userAlbumCache.clearForcedFlag()
+    }
+    
     private func primeCaches() async {
-        await userAlbumCache.removeAllCachedValues()
+        await userAlbumCache.removeAllCachedValues(forced: false)
         
         let userAlbums = await userAlbumRepository.albums()
         await userAlbumCache.setAlbums(userAlbums)

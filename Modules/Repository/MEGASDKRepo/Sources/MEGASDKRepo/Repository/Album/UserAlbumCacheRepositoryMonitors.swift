@@ -110,7 +110,7 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
             guard !Task.isCancelled else {
                 break
             }
-            await userAlbumCache.removeAllCachedValues()
+            await userAlbumCache.removeAllCachedValues(forced: true)
         }
     }
 }
