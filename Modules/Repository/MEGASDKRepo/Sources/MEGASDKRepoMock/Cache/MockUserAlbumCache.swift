@@ -9,14 +9,17 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     }
     
     @Published public var removeAllCachedValuesCalledCount = 0
+    public private(set) var wasForcedCleared: Bool
     
     private var _albums: [HandleEntity: SetEntity]
     private var albumsElementIds: [HandleEntity: [AlbumPhotoIdEntity]]
     
     public init(albums: [SetEntity] = [],
-                albumsElementIds: [HandleEntity: [AlbumPhotoIdEntity]] = [:]) {
+                albumsElementIds: [HandleEntity: [AlbumPhotoIdEntity]] = [:],
+                wasForcedCleared: Bool = false) {
         _albums = Dictionary(uniqueKeysWithValues: albums.map { ($0.handle, $0) })
         self.albumsElementIds = albumsElementIds
+        self.wasForcedCleared = wasForcedCleared
     }
     
     public func setAlbums(_ albums: [SetEntity]) {
@@ -41,10 +44,11 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
         albumsElementIds[id] = elementIds
     }
         
-    public func removeAllCachedValues() {
+    public func removeAllCachedValues(forced: Bool) {
         _albums.removeAll()
         albumsElementIds.removeAll()
         removeAllCachedValuesCalledCount += 1
+        wasForcedCleared = forced
     }
     
     public func remove(albums: [SetEntity]) {
@@ -58,5 +62,9 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
         albums.forEach {
             albumsElementIds.removeValue(forKey: $0)
         }
+    }
+    
+    public func clearForcedFlag() {
+        wasForcedCleared = false
     }
 }

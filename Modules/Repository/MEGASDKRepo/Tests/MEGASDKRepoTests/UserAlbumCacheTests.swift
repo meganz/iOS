@@ -6,7 +6,7 @@ final class UserAlbumCacheTests: XCTestCase {
     
     override func tearDown() async throws {
         try await super.tearDown()
-        await UserAlbumCache.shared.removeAllCachedValues()
+        await UserAlbumCache.shared.removeAllCachedValues(forced: false)
     }
     
     func testAlbums_albumsSet_shouldRetrieve() async {
@@ -46,5 +46,36 @@ final class UserAlbumCacheTests: XCTestCase {
         let afterRemovedResult = await sut.albums
 
         XCTAssertEqual(afterRemovedResult.map(\.handle), [654])
+    }
+    
+    func testRemoveAllCachedValues_forced_shouldSetFlagAndClearCorrectly() async {
+        let sut = UserAlbumCache.shared
+        let albums = [SetEntity(handle: 534),
+                      SetEntity(handle: 654)]
+        await sut.setAlbums(albums)
+        
+        await sut.removeAllCachedValues(forced: true)
+        
+        let wasForcedCleared = await sut.wasForcedCleared
+        XCTAssertTrue(wasForcedCleared)
+        
+        await sut.clearForcedFlag()
+        
+        let wasForcedFlagCleared = await sut.wasForcedCleared
+        XCTAssertFalse(wasForcedFlagCleared)
+    }
+    
+    func testRemoveAlbums_cachedAlbums_shouldBeRemoved() async {
+        let albumId = HandleEntity(54)
+        let albumElements = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 56, nodeId: 65),
+                             AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 665, nodeId: 976)]
+    
+        let sut = UserAlbumCache.shared
+        await sut.setAlbumElementIds(forAlbumId: albumId, elementIds: albumElements)
+       
+        await sut.removeElements(of: [albumId])
+        
+        let result = await sut.albumElementIds(forAlbumId: albumId)
+        XCTAssertNil(result)
     }
 }

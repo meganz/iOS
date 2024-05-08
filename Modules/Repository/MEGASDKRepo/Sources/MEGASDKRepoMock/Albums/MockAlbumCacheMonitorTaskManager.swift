@@ -6,7 +6,9 @@ public actor MockAlbumCacheMonitorTaskManager: AlbumCacheMonitorTaskManagerProto
     public private(set) var stopMonitoringCalled = 0
     private var _didChildTaskStop = true
     
-    public init() {}
+    public init(didChildTaskStop: Bool = true) {
+        _didChildTaskStop = didChildTaskStop
+    }
     
     public func startMonitoring() {
         startMonitoringCalled += 1

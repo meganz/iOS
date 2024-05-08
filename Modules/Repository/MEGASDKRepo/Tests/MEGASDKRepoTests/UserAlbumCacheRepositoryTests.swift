@@ -380,6 +380,28 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
     
+    func testEnsureCacheIsPrimedAfterInvalidation_onForcedCleared_shouldPrimeCache() async {
+        let expectedAlbums = [SetEntity(handle: 12),
+                              SetEntity(handle: 17)]
+        let userAlbumRepository = MockUserAlbumRepository(albums: expectedAlbums)
+        let userAlbumCache = MockUserAlbumCache(wasForcedCleared: true)
+        let albumCacheMonitorTaskManager = MockAlbumCacheMonitorTaskManager(didChildTaskStop: false)
+        
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository,
+                          userAlbumCache: userAlbumCache,
+                          albumCacheMonitorTaskManager: albumCacheMonitorTaskManager)
+        
+        let albums = await sut.albums()
+        
+        XCTAssertEqual(Set(albums), Set(expectedAlbums))
+        
+        let cachedAlbums = await userAlbumCache.albums
+        XCTAssertEqual(Set(cachedAlbums), Set(expectedAlbums))
+        
+        let wasForcedCleared = await userAlbumCache.wasForcedCleared
+        XCTAssertFalse(wasForcedCleared)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
