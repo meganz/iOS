@@ -228,7 +228,9 @@ public struct NodeActionRepository: NodeActionRepositoryProtocol {
                         return
                     }
                     completion(.success(node.toNodeEntity()))
-                case .failure:
+                case .failure(let error):
+                    let message = "[iOS] [NodeActionRepository] could not setNodeSensitive (\(sensitive)) - \(error.localizedDescription)"
+                    MEGASdk.log(with: .error, message: message, filename: #file, line: #line)
                     completion(.failure(GenericErrorEntity()))
                 }
             })

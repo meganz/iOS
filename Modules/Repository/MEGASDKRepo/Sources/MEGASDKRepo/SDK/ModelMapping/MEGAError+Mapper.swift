@@ -1,3 +1,7 @@
 import MEGASdk
 
-extension MEGAError: Error {}
+extension MEGAError: LocalizedError {
+    public var errorDescription: String? {
+        "\(name)(\(type.rawValue))"
+    }
+}
