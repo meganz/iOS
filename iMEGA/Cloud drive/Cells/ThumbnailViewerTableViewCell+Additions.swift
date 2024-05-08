@@ -21,7 +21,9 @@ extension ThumbnailViewerTableViewCell {
               nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo))
+                nodeRepository: NodeRepository.newRepo), 
+              nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared),
+              thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo))
     }
     
     @objc func configureItem(at indexPath: NSIndexPath, cell: ItemCollectionViewCell) {

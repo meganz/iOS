@@ -12,7 +12,7 @@ extension NodeTableViewCell {
         
         viewModel = nil
         cancellables = nil
-
+        thumbnailImageView.image = nil
         thumbnailImageView.removeBlurFromView()
         [thumbnailContainer, topContainerStackView, bottomContainerStackView]
             .forEach { $0?.alpha = 1 }        
