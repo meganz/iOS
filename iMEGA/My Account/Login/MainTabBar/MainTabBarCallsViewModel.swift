@@ -596,6 +596,7 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
                 return true
             }
         } catch {
+            MEGALogDebug("[CallsCoordinator] muteCall failed: \(error.localizedDescription)")
             return false
         }
     }
