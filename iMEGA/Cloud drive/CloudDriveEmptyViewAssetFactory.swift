@@ -21,10 +21,10 @@ struct CloudDriveEmptyViewAssetFactory {
         self.isDesignTokenEnabled = isDesignTokenEnabled
         self.titleTextColor = { colorScheme in
             guard isDesignTokenEnabled else {
-                return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
+                return colorScheme == .light ? UIColor.black.swiftUI : UIColor.white.swiftUI
             }
 
-            return TokenColors.Icon.secondary.swiftUI
+            return TokenColors.Text.primary.swiftUI
         }
         self.nodeInsertionRouter = nodeInsertionRouter
     }
@@ -132,12 +132,11 @@ struct CloudDriveEmptyViewAssetFactory {
     private func addFilesAction(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.Action {
         .init(
             title: Strings.Localizable.addFiles,
-            backgroundColor: { colorScheme in
-                guard isDesignTokenEnabled else {
-                    return colorScheme == .light ? UIColor.green00A886.swiftUI : UIColor.green00C29A.swiftUI
-                }
-
-                return TokenColors.Support.success.swiftUI
+            titleTextColor: { _ in
+                isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : UIColor.white.swiftUI
+            },
+            backgroundColor: { _ in
+                isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : UIColor.turquoise.swiftUI
             },
             menu: menu(for: nodeEntity)
         )

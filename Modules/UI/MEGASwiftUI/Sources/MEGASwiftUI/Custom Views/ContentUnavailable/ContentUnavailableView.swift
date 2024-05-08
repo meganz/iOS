@@ -85,14 +85,17 @@ public struct ContentUnavailableViewModel {
     public struct MenuAction: Action {
         public let id = UUID()
         public let title: String
+        public let titleTextColor: (ColorScheme) -> Color?
         public let backgroundColor: (ColorScheme) -> Color?
         public let actions: [ButtonAction]
         public init(
             title: String,
+            titleTextColor: @escaping (ColorScheme) -> Color? = { _ in nil },
             backgroundColor: @escaping (ColorScheme) -> Color? = { _ in nil },
             actions: [ButtonAction]
         ) {
             self.title = title
+            self.titleTextColor = titleTextColor
             self.backgroundColor = backgroundColor
             self.actions = actions
         }
@@ -211,7 +214,7 @@ struct MenuActionView: View {
             }
         } label: {
             Text(action.title)
-                .foregroundColor(.white)
+                .foregroundColor(action.titleTextColor(colorScheme) ?? .white)
                 .fontWeight(.semibold)
                 .frame(width: 288, height: 50)
                 .background(action.backgroundColor(colorScheme))
