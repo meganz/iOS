@@ -1450,13 +1450,25 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.photosTimeline)
+            .setIsHidden(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat,
+                                                .unhide, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_photosTimelineNotContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setDisplayMode(.photosTimeline)
             .setIsHidden(false)
             .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat,
                                                 .hide, .move, .copy, .moveToRubbishBin]))
     }
-    
+
     func testMultiselectBuild_photosTimelineContainsHiddenFileOrFolderForFileAndFolderDisplayMode_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setAccessLevel(.accessOwner)

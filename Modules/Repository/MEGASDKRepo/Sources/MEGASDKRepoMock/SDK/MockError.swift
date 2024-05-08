@@ -11,6 +11,8 @@ public final class MockError: MEGAError {
         megaErrorType
     }
     
+    public override var name: String { "MockError" }
+    
     public static var failingError: MEGAError { MockError(errorType: .anyFailingErrorType) }
 }
 

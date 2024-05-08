@@ -120,6 +120,14 @@ extension PhotosViewController {
         self.toggleEditing()
     }
     
+    private func unhide(nodes: [NodeEntity]) {
+        Task {
+            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+            _ = await nodeActionUseCase.unhide(nodes: nodes)
+        }
+        self.toggleEditing()
+    }
+    
     @objc func isTimelineActive() -> Bool {
         parentPhotoAlbumsController?.isTimelineActive() ?? false
     }
@@ -166,6 +174,8 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
             handleSaveToPhotos(for: nodes)
         case .hide:
             hide(nodes: nodes.toNodeEntities())
+        case .unhide:
+            unhide(nodes: nodes.toNodeEntities())
         default:
             break
         }
