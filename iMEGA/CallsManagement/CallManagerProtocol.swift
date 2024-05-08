@@ -12,4 +12,5 @@ protocol CallManagerProtocol: AnyObject {
     func removeCall(withUUID uuid: UUID)
     func removeAllCalls()
     func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity)
+    func updateCall(withUUID uuid: UUID, muted: Bool)
 }

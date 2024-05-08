@@ -66,10 +66,6 @@ extension CallKitCallManager: CallManagerProtocol {
     func muteCall(in chatRoom: ChatRoomEntity, muted: Bool) {
         guard let callUUID = callUUID(forChatRoom: chatRoom) else { return }
 
-        var mutedCallAction = callsDictionary[callUUID]
-        mutedCallAction?.audioEnabled = !muted
-        callsDictionary[callUUID] = mutedCallAction
-
         let muteCallAction = CXSetMutedCallAction(call: callUUID, muted: muted)
         
         let transaction = CXTransaction(action: muteCallAction)
@@ -100,5 +96,9 @@ extension CallKitCallManager: CallManagerProtocol {
     
     func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
         callsDictionary[uuid] = CallActionSync(chatRoom: chatRoom)
+    }
+    
+    func updateCall(withUUID uuid: UUID, muted: Bool) {
+        callsDictionary[uuid]?.audioEnabled = !muted
     }
 }
