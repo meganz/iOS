@@ -1,4 +1,5 @@
 import FirebaseCrashlytics
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import PanModal
@@ -68,20 +69,27 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        backgroundView.backgroundColor = MEGAAppColor.Black._2C2C2E.uiColor
+        overrideUserInterfaceStyle = .dark
+
+        backgroundView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : MEGAAppColor.Black._2C2C2E.uiColor
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = UIImage(resource: .hangCallMeetingAction)
+        endQuickActionView.properties = MeetingQuickActionView.Properties(
+            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: iconNormalTintColor, selected: iconSelectedTintColor),
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: endCallNormalBackgroundColor, selected: endCallNormalBackgroundColor)
+        )
         endQuickActionView.name = Strings.Localizable.leave
 
+        shareLinkLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.accent : MEGAAppColor.Green._00C29A.uiColor
+        
         registerTableViewCells()
         
         flipQuickActionView.disabled = true
         
         let quickActionProperties = MeetingQuickActionView.Properties(
-            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: MEGAAppColor.White._FFFFFF.uiColor, selected: MEGAAppColor.Black._000000.uiColor),
-            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: MEGAAppColor.Gray._474747.uiColor, selected: MEGAAppColor.White._FFFFFF.uiColor)
+            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: iconNormalTintColor, selected: iconSelectedTintColor),
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: iconNormalBackgroundColor, selected: iconSelectedBackgroundColor)
         )
         let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]
         quickActions.forEach { $0?.properties = quickActionProperties }
@@ -429,6 +437,26 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         guard let callParticipantsListView, let cell = participantsTableView.dequeueReusableCell(withIdentifier: EmptyParticipantsListTableViewCell.reuseIdentifier, for: indexPath) as? EmptyParticipantsListTableViewCell else { return EmptyParticipantsListTableViewCell() }
         cell.configure(for: callParticipantsListView.selectedTab)
         return cell
+    }
+    
+    private var iconNormalTintColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary : MEGAAppColor.White._FFFFFF.uiColor
+    }
+    
+    private var iconSelectedTintColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.inverse : MEGAAppColor.Black._000000.uiColor
+    }
+    
+    private var iconNormalBackgroundColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Button.secondary : MEGAAppColor.Gray._474747.uiColor
+    }
+    
+    private var iconSelectedBackgroundColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : MEGAAppColor.White._FFFFFF.uiColor
+    }
+    
+    private var endCallNormalBackgroundColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : MEGAAppColor.Red._FF453A.uiColor
     }
 }
 

@@ -63,6 +63,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <gestureRecognizers/>
             <connections>
+                <outlet property="inviteIcon" destination="XJF-Bz-4sJ" id="VOq-HO-ONH"/>
                 <outlet property="inviteLabel" destination="NCm-AB-eTw" id="shd-EZ-a6L"/>
             </connections>
             <point key="canvasLocation" x="166.41221374045801" y="0.0"/>

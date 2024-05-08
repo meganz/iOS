@@ -8,12 +8,6 @@ class ParticipantsListSelectorTableViewCell: UITableViewCell {
     var segmentedControlChangeHandler: ((ParticipantsListTab) -> Void)?
     private var tabs: [ParticipantsListTab] = []
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: MEGAAppColor.White._FFFFFF.uiColor], for: .selected)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: MEGAAppColor.White._FFFFFF.uiColor], for: .normal)
-    }
-     
     func configureFor(tabs: [ParticipantsListTab], selectedTab: ParticipantsListTab) {
         self.tabs = tabs
         

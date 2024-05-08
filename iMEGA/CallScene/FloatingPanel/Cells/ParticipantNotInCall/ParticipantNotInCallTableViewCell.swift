@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -20,6 +21,10 @@ class ParticipantNotInCallTableViewCell: UITableViewCell, ViewType {
     override func awakeFromNib() {
         super.awakeFromNib()
         callButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsNotInCall.Participant.call, for: .normal)
+        callButton.setTitleColor(UIColor.isDesignTokenEnabled()
+                                 ? TokenColors.Link.primary
+                                 : MEGAAppColor.Green._00A886.uiColor,
+                                 for: .normal)
     }
     
     var viewModel: ParticipantNotInCallViewModel? {

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -24,12 +25,16 @@ struct HangOrEndCallView: View {
                     }, label: {
                         Text(Strings.Localizable.Meetings.LeaveCall.buttonTitle)
                             .font(.headline)
-                            .foregroundColor(MEGAAppColor.Green._00C29A.color)
+                            .foregroundColor(UIColor.isDesignTokenEnabled() ?
+                                             TokenColors.Support.success.swiftUI :
+                                                MEGAAppColor.Green._00C29A.color)
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
-                            .background(MEGAAppColor.Gray._363638.color)
+                            .background(UIColor.isDesignTokenEnabled() ?
+                                        TokenColors.Background.surface1.swiftUI :
+                                            MEGAAppColor.Gray._363638.color)
                             .cornerRadius(Constants.cornerRadius)
-                            .shadow(color: MEGAAppColor.Black._000000.color.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
+                            .shadow(color: shadowColor.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
                     })
                     
                     Button(action: {
@@ -37,18 +42,30 @@ struct HangOrEndCallView: View {
                     }, label: {
                         Text(Strings.Localizable.Meetings.EndForAll.buttonTitle)
                             .font(.headline)
-                            .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+                            .foregroundColor(UIColor.isDesignTokenEnabled() ?
+                                             TokenColors.Text.primary.swiftUI :
+                                                MEGAAppColor.White._FFFFFF.color)
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
-                            .background(Color(.redFF453A))
+                            .background(UIColor.isDesignTokenEnabled() ?
+                                        TokenColors.Components.interactive.swiftUI :
+                                           Color(.redFF453A))
                             .cornerRadius(Constants.cornerRadius)
-                            .shadow(color: MEGAAppColor.Black._000000.color.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
+                            .shadow(color: shadowColor.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
                     })
                 }
                 .padding(Constants.buttonsPadding)
             }
             .cornerRadius(Constants.cornerRadius, corners: [.topLeft, .topRight])
-            .background(MEGAAppColor.Black._1C1C1E.color.edgesIgnoringSafeArea(.bottom))
+            .background((UIColor.isDesignTokenEnabled() ?
+                         TokenColors.Background.page.swiftUI :
+                            MEGAAppColor.Black._1C1C1E.color).edgesIgnoringSafeArea(.bottom))
         }
+    }
+    
+    private var shadowColor: Color {
+        UIColor.isDesignTokenEnabled() ?
+         TokenColors.Background.page.swiftUI :
+            MEGAAppColor.Black._000000.color
     }
 }
