@@ -132,7 +132,6 @@
     ItemCollectionViewCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItemCollectionViewCellID" forIndexPath:indexPath];
     
     MEGANode *node = [self.nodesArray objectAtIndex:indexPath.row];
-    [itemCell.avatarImageView mnz_setThumbnailByNode:node];
     itemCell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     itemCell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     

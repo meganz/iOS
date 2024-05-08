@@ -6,11 +6,11 @@ import MEGAUIKit
 extension ItemCollectionViewCell {
     
     open override func prepareForReuse() {
-        super.prepareForReuse()
-        
         viewModel = nil
+        cancellables = []
+        avatarImageView.image = nil
         avatarImageView.removeBlurFromView()
-        cancellables = nil
+        super.prepareForReuse()
     }
     
     @objc func bind(viewModel: ItemCollectionViewCellViewModel) {
@@ -23,7 +23,11 @@ extension ItemCollectionViewCell {
             viewModel
                 .$isSensitive
                 .removeDuplicates()
-                .sink { [weak self] in self?.configureBlur(isSensitive: $0) }
+                .sink { [weak self] in self?.configureBlur(isSensitive: $0) },
+            viewModel
+                .$thumbnail
+                .removeDuplicates()
+                .sink { [weak avatarImageView] in avatarImageView?.image = $0 }
         ]
     }
     

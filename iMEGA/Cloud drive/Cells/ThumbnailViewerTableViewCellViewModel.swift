@@ -8,10 +8,17 @@ import MEGAPresentation
     
     init(nodes: [NodeEntity],
          nodeUseCase: some NodeUseCaseProtocol,
+         nodeIconUseCase: some NodeIconUsecaseProtocol,
+         thumbnailUseCase: some ThumbnailUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
         self.thumbnailViewModels = nodes.map {
-            ItemCollectionViewCellViewModel(node: $0, nodeUseCase: nodeUseCase, featureFlagProvider: featureFlagProvider)
+            ItemCollectionViewCellViewModel(
+                node: $0,
+                nodeUseCase: nodeUseCase,
+                thumbnailUseCase: thumbnailUseCase,
+                nodeIconUseCase: nodeIconUseCase,
+                featureFlagProvider: featureFlagProvider)
         }
     }
     

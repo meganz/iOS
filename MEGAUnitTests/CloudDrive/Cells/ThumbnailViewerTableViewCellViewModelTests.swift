@@ -46,7 +46,9 @@ extension ThumbnailViewerTableViewCellViewModelTests {
              featureFlagHiddenNodes: Bool = false) -> ThumbnailViewerTableViewCellViewModel {
         ThumbnailViewerTableViewCellViewModel(
             nodes: nodes,
-            nodeUseCase: nodeUseCase,
+            nodeUseCase: nodeUseCase, 
+            nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: Data()), 
+            thumbnailUseCase: MockThumbnailUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
     }
 }
