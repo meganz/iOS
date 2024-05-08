@@ -130,6 +130,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
                 removeEmptyView()
             }
         case .dismissAlbum:
+            presentedViewController?.dismiss(animated: false)
             dismiss(animated: true)
         case .showResultMessage(let messageType):
             SVProgressHUD.dismiss(withDelay: 3)
