@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -40,6 +41,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let parentNodeProvider: () -> NodeEntity?
     private let mapper: SearchResultMapper
     private let nodeUpdateRepository: any NodeUpdateRepositoryProtocol
+    private let notificationCenter: NotificationCenter
+    private var subscriptions = Set<AnyCancellable>()
     
     init(
         parentNodeProvider: @escaping () -> NodeEntity?,
@@ -52,6 +55,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         transferListenerRepo: SDKTransferListenerRepository,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
         nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
+        notificationCenter: NotificationCenter = .default,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
@@ -65,6 +69,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         self.transferListenerRepo = transferListenerRepo
         self.nodeUpdateRepository = nodeUpdateRepository
+        self.notificationCenter = notificationCenter
         self.availableChips = allChips
         self.sdk = sdk
         
@@ -80,6 +85,14 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.onSearchResultsUpdated = onSearchResultsUpdated
         addNodesUpdateHandler()
         addTransferCompletedHandler()
+        
+        notificationCenter
+            .publisher(for: .didFallbackToMakingOfflineForMediaNode)
+            .compactMap { $0.object as? NodeEntity }
+            .sink { [weak self] node in
+                guard let self else { return }
+                onSearchResultsUpdated(.specific(result: mapNodeToSearchResult(node)))
+            }.store(in: &subscriptions)
     }
     
     /// Get the most updated results from data source according to a query.

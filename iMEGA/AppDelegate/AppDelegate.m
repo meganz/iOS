@@ -1879,8 +1879,8 @@
         return;
     }
     
-    if ([transfer type] == MEGATransferTypeDownload) {        
-        [SaveNodeUseCaseOCWrapper.alloc.init saveNodeIfNeededFrom:transfer];
+    if ([transfer type] == MEGATransferTypeDownload) {
+        [[[SaveNodeUseCaseOCWrapper alloc] initWithSaveMediaToPhotoFailureHandler:self] saveNodeIfNeededFrom:transfer];
         
         [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
     }
