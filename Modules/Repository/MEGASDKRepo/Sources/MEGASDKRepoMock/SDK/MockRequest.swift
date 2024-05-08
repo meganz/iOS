@@ -18,6 +18,7 @@ public final class MockRequest: MEGARequest {
     private let _numDetails: Int
     private let _notifications: MEGANotificationList?
     private let _recentActionsBuckets: [MEGARecentActionBucket]?
+    private let _name: String?
     
     public init(handle: MEGAHandle,
                 set: MEGASet? = nil,
@@ -34,7 +35,9 @@ public final class MockRequest: MEGARequest {
                 accountDetails: MEGAAccountDetails? = nil,
                 numDetails: Int = 0,
                 notifications: MEGANotificationList? = nil,
-                recentActionsBuckets: [MEGARecentActionBucket] = []
+                recentActionsBuckets: [MEGARecentActionBucket] = [],
+                name: String? = nil
+                
     ) {
         self.handle = handle
         _set = set
@@ -52,6 +55,7 @@ public final class MockRequest: MEGARequest {
         _numDetails = numDetails
         _notifications = notifications
         _recentActionsBuckets = recentActionsBuckets
+        _name = name
         super.init()
     }
     
@@ -71,4 +75,5 @@ public final class MockRequest: MEGARequest {
     public override var numDetails: Int { _numDetails }
     public override var megaNotifications: MEGANotificationList? { _notifications }
     public override var recentActionsBuckets: [MEGARecentActionBucket]? { _recentActionsBuckets }
+    public override var name: String? { _name }
 }
