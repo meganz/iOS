@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 
 protocol CallCollectionViewDelegate: AnyObject {
@@ -66,7 +67,7 @@ class CallCollectionView: UICollectionView {
         delegate = self
         self.callCollectionViewDelegate = callCollectionViewDelegate
         register(CallParticipantCell.nib, forCellWithReuseIdentifier: CallParticipantCell.reuseIdentifier)
-        backgroundColor = MEGAAppColor.Black._000000.uiColor
+        backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : MEGAAppColor.Black._000000.uiColor
     }
     
     // call this instead of manual calling insert/delete/reload cell

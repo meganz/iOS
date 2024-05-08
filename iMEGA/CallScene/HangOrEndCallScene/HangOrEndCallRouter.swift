@@ -28,6 +28,7 @@ final class HangOrEndCallRouter: HangOrEndCallRouting {
         let hangOrEndCallView = HangOrEndCallView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: hangOrEndCallView)
         hostingController.view.backgroundColor = .clear
+        hostingController.overrideUserInterfaceStyle = .dark
         return hostingController
     }
     

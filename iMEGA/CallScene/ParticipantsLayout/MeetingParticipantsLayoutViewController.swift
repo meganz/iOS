@@ -1,14 +1,15 @@
 import Combine
 import Foundation
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     private enum Constants {
-        static let notificationMessageWhiteBackgroundColor = UIColor(white: 1.0, alpha: 0.95)
-        static let notificationMessageWhiteTextColor = MEGAAppColor.White._FFFFFF.uiColor
-        static let notificationMessageBlackTextColor = MEGAAppColor.Black._000000.uiColor
+        static let notificationMessageWhiteBackgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.inverse : UIColor(white: 1.0, alpha: 0.95)
+        static let notificationMessageWhiteTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : MEGAAppColor.White._FFFFFF.uiColor
+        static let notificationMessageBlackTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.colorInverse : MEGAAppColor.Black._000000.uiColor
     }
     
     @IBOutlet private weak var callCollectionView: CallCollectionView!
@@ -80,6 +81,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         super.viewDidLoad()
         navigationController?.navigationBar.isTranslucent = true
         overrideUserInterfaceStyle = .dark
+        callCollectionView.overrideUserInterfaceStyle = .dark
         
         viewModel.invokeCommand = { [weak self] in
             self?.executeCommand($0)
@@ -197,7 +199,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .reconnected:
             removeReconnectingNotification()
             removeParticipantsBlurEffect()
-            showNotification(message: Strings.Localizable.online, backgroundColor: UIColor.systemGreen, textColor: Constants.notificationMessageWhiteTextColor)
+            showNotification(
+                message: Strings.Localizable.online,
+                backgroundColor: Constants.notificationMessageWhiteBackgroundColor,
+                textColor: Constants.notificationMessageWhiteTextColor
+            )
         case .updateCameraPositionTo(let position):
             localUserView.addBlurEffect()
             localUserView.transformLocalVideo(for: position)

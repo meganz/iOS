@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import UIKit
@@ -13,9 +14,15 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        moderatorTextLabel.backgroundColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.1957759226)
+        moderatorTextLabel.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface3 : MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.1957759226)
+        moderatorTextLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .white
         moderatorTextLabel.layer.cornerRadius = 4.0
+        moderatorTextLabel.layer.masksToBounds = true
         moderatorTextLabel.text = "  \(Strings.Localizable.Meetings.Participant.moderator)  "
+        nameLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .white
+        micButton.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : .white
+        videoButton.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : .white
+        contextMenuButton.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary : .white
     }
     
     var viewModel: MeetingParticipantViewModel? {

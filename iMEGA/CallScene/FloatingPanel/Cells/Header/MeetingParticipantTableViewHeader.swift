@@ -60,7 +60,7 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         warningLabel.preferredMaxLayoutWidth = 300
         warningLabel.font  = UIFont.preferredFont(forTextStyle: .caption2).bold()
         let titleColor = UIColor.isDesignTokenEnabled()
-        ? TokenColors.Support.success
+        ? TokenColors.Link.primary
         : MEGAAppColor.Green._00A886.uiColor
         actionButton.setTitleColor(titleColor, for: .normal)
         actionButton.setTitleColor(titleColor.withAlphaComponent(0.4), for: .disabled)

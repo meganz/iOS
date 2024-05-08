@@ -5,6 +5,7 @@ final class MeetingContainerViewController: UINavigationController {
     init(viewModel: MeetingContainerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        overrideUserInterfaceStyle = .dark
     }
     
     required init?(coder: NSCoder) {

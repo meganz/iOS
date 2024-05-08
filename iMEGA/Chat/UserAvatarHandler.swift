@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 
 protocol UserAvatarHandling {
@@ -56,7 +57,7 @@ struct UserAvatarHandler: UserAvatarHandling {
             forInitials: initials,
             size: size,
             backgroundColor: avatarBackgroundColor,
-            textColor: MEGAAppColor.White._FFFFFF.uiColor,
+            textColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : MEGAAppColor.White._FFFFFF.uiColor,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage)
     }
