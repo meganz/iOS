@@ -4066,3 +4066,7 @@
 "limited.Transfer.limit"="Limited";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Cancel subscription";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";

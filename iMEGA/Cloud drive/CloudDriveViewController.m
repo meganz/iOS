@@ -168,6 +168,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
     
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:NSNotification.didFallbackToMakingOfflineForMediaNode object:nil];
+    
     [self observeViewModeNotification];
     
     [MEGASdk.shared addMEGADelegate:self];
@@ -199,6 +201,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSNotification.didFallbackToMakingOfflineForMediaNode object:nil];
     [MEGASdk.shared removeMEGADelegateAsync:self];
 }
 

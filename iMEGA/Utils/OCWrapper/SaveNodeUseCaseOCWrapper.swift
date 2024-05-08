@@ -4,14 +4,21 @@ import MEGARepo
 import MEGASDKRepo
 
 @objc class SaveNodeUseCaseOCWrapper: NSObject {
-    let saveNodeUseCase = SaveNodeUseCase(
-        offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdk.shared),
-        fileCacheRepository: FileCacheRepository.newRepo,
-        nodeRepository: NodeRepository.newRepo,
-        photosLibraryRepository: PhotosLibraryRepository.newRepo,
-        mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
-        preferenceUseCase: PreferenceUseCase.default,
-        transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared))
+    private let saveNodeUseCase: any SaveNodeUseCaseProtocol
+        
+    @objc init(saveMediaToPhotoFailureHandler: any SaveMediaToPhotoFailureHandling) {
+        self.saveNodeUseCase = SaveNodeUseCase(
+            offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdk.shared),
+            fileCacheRepository: FileCacheRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo,
+            photosLibraryRepository: PhotosLibraryRepository.newRepo,
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
+            preferenceUseCase: PreferenceUseCase.default,
+            transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo,
+            saveMediaToPhotoFailureHandler: saveMediaToPhotoFailureHandler
+        )
+        super.init()
+    }
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {
         saveNodeUseCase.saveNode(from: transfer.toTransferEntity()) { result in
