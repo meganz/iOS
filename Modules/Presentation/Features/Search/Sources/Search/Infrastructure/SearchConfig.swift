@@ -89,6 +89,7 @@ public struct SearchConfig {
         ///   menu: [
         ///     .init(
         ///       title: "MenuOption 1",
+        ///       titleTextColor: { _ in nil }
         ///       image: Image(systemName: "plus"),
         ///       handler: {}
         ///     )
@@ -100,6 +101,7 @@ public struct SearchConfig {
         /// ```
         /// let buttonAction = Action(
         ///   title: "Title",
+        ///   titleTextColor: { _ in .black }
         ///   backgroundColor: { _ in .red },
         ///   menu: [],
         ///   handler: {}
@@ -107,6 +109,7 @@ public struct SearchConfig {
         /// ```
          public struct Action {
             public let title: String
+            public let titleTextColor: (ColorScheme) -> Color?
             public let backgroundColor: (ColorScheme) -> Color
             public let menu: [MenuOption]
             public typealias Handler = () -> Void
@@ -114,10 +117,12 @@ public struct SearchConfig {
 
             public init(
                 title: String,
+                titleTextColor: @escaping (ColorScheme) -> Color?,
                 backgroundColor: @escaping (ColorScheme) -> Color,
                 menu: [MenuOption],
                 handler: Handler? = nil) {
                 self.title = title
+                self.titleTextColor = titleTextColor
                 self.backgroundColor = backgroundColor
                 self.menu = menu
                 self.handler = handler

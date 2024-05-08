@@ -766,7 +766,7 @@ fileprivate extension SearchConfig.EmptyViewAssets {
         .init(
             image: image,
             title: title,
-            font: .callout.bold(),
+            font: .body,
             titleTextColor: titleTextColor,
             actions: actions.map(\.action)
         )
@@ -775,7 +775,12 @@ fileprivate extension SearchConfig.EmptyViewAssets {
 
 fileprivate extension SearchConfig.EmptyViewAssets.Action {
     var action: ContentUnavailableViewModel.MenuAction {
-        .init(title: title, backgroundColor: backgroundColor, actions: menu.map(\.buttonAction))
+        .init(
+            title: title,
+            titleTextColor: titleTextColor,
+            backgroundColor: backgroundColor,
+            actions: menu.map(\.buttonAction)
+        )
     }
 }
 

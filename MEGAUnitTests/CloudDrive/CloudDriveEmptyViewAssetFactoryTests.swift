@@ -123,7 +123,8 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
             expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitle,
             actions: [
                 .init(
-                    title: Strings.Localizable.addFiles,
+                    title: Strings.Localizable.addFiles, 
+                    titleTextColor: { _ in TokenColors.Text.inverseAccent.swiftUI },
                     backgroundColor: { _ in TokenColors.Support.success.swiftUI },
                     menu: [
                         .init(title: Strings.Localizable.newTextFile, image: Image(.textfile), handler: {}),

@@ -103,16 +103,16 @@ extension SearchConfig {
                 moreGrid: UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
             ),
             colorAssets: .init(
-                F7F7F7: MEGAAppColor.White._F7F7F7.color,
-                _161616: MEGAAppColor.Black._161616.color,
-                _545458: MEGAAppColor.Gray._545458.color,
-                CE0A11: MEGAAppColor.Red._CE0A11.color,
-                F30C14: MEGAAppColor.Red._F30C14.color,
-                F95C61: MEGAAppColor.Red._F95C61.color,
-                F7363D: MEGAAppColor.Red._F7363D.color,
-                _1C1C1E: MEGAAppColor.Black._1C1C1E.color,
-                _00A886: MEGAAppColor.Green._00A886.color,
-                _3C3C43: MEGAAppColor.Gray._3C3C43.color, 
+                F7F7F7: UIColor.whiteF7F7F7.swiftUI,
+                _161616: UIColor.black161616.swiftUI,
+                _545458: UIColor.gray545458.swiftUI,
+                CE0A11: UIColor.redCE0A11.swiftUI,
+                F30C14: UIColor.redF30C14.swiftUI,
+                F95C61: UIColor.redF95C61.swiftUI,
+                F7363D: UIColor.redF7363D.swiftUI,
+                _1C1C1E: UIColor.black1C1C1E.swiftUI,
+                _00A886: UIColor.green00A886.swiftUI,
+                _3C3C43: UIColor.gray3C3C43.swiftUI,
                 checkmarkBackgroundTintColor: UIColor.isDesignTokenEnabled()
                 ? TokenColors.Support.success.swiftUI
                 : UIColor.turquoise.swiftUI
