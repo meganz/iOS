@@ -22,6 +22,7 @@
 @interface NodeTableViewCell()
 
 @property (weak, nonatomic) IBOutlet UILabel *infoStringRightLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicator;
 
 @end
 
@@ -184,6 +185,9 @@
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] : YES;
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    
+    NSString *imageName = [UIColor isDesignTokenEnabled] ? @"standardDisclosureIndicator_designToken" : @"standardDisclosureIndicator";
+    self.disclosureIndicator.image = [UIImage imageNamed:imageName];
     
     MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
     if ([recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail]) {
