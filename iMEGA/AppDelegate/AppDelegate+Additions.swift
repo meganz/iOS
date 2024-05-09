@@ -1,6 +1,7 @@
 import ChatRepo
 import Combine
 import Foundation
+import Intents
 import LogRepo
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -642,5 +643,13 @@ extension AppDelegate {
             voipRegistry.delegate = self
             voipRegistry.desiredPushTypes = Set([.voIP])
         }
+    }
+    
+    @objc func startCall(fromIntent intent: INStartCallIntent) {
+        mainTBC?.mainTabBarViewModel.dispatch(.startCallIntent(intent))
+    }
+    
+    @objc public func isCallKitRefactorEnabled() -> Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor)
     }
 }

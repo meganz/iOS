@@ -669,6 +669,8 @@ final class ChatContentViewModelTests: XCTestCase {
         permissionRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
         meetingNoUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
+        handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        callManager: some CallManagerProtocol = MockCallManager(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> ChatContentViewModel {
         let sut = ChatContentViewModel(
@@ -682,6 +684,8 @@ final class ChatContentViewModelTests: XCTestCase {
             permissionRouter: permissionRouter,
             analyticsEventUseCase: analyticsEventUseCase,
             meetingNoUserJoinedUseCase: meetingNoUserJoinedUseCase,
+            handleUseCase: handleUseCase, 
+            callManager: callManager,
             featureFlagProvider: featureFlagProvider
         )
         return sut

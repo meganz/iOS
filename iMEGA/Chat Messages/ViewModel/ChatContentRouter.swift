@@ -55,7 +55,9 @@ enum ChatContentRoutingStyle {
             router: self,
             permissionRouter: PermissionAlertRouter.makeRouter(deviceHandler: DevicePermissionsHandler.makeHandler()), 
             analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
-            meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
+            meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo),
+            handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
+            callManager: CallKitCallManager.shared
         )
         
         let chatViewController = ChatViewController(chatRoom: megaChatRoom, chatContentViewModel: chatContentViewModel)
