@@ -6,6 +6,8 @@ extension SearchResult {
     public static func resultWith(
         id: ResultId,
         title: String,
+        isSensitive: Bool = false,
+        hasThumbnail: Bool = false,
         properties: [ResultProperty] = [],
         thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
         backgroundDisplayMode: VerticalBackgroundViewMode = .preview
@@ -15,6 +17,8 @@ extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: title,
+            isSensitive: isSensitive,
+            hasThumbnail: hasThumbnail,
             description: { _ in "Desc" },
             type: .node,
             properties: properties,

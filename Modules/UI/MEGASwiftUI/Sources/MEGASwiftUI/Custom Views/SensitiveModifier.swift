@@ -1,38 +1,33 @@
 import SwiftUI
 
+public enum SensitiveModifierType {
+    case none, blur, opacity
+}
+
 struct SensitiveModifier: ViewModifier {
-    let isSensitive: Bool
-    let radius: CGFloat
-    let opaque: Bool
+    let type: SensitiveModifierType
     
     func body(content: Content) -> some View {
-        if isSensitive {
+        switch type {
+        case .none:
             content
-                .blur(radius: radius,
-                      opaque: opaque)
-        } else {
-            content
+        case .blur:
+            content.blur(radius: 7.0)
+        case .opacity:
+            content.opacity(0.5)
         }
     }
 }
 
 public extension View {
-    func sensitive(_ isSensitive: Bool,
-                   radius: CGFloat = 6.0,
-                   opaque: Bool = false) -> some View {
-        modifier(SensitiveModifier(isSensitive: isSensitive,
-                                   radius: radius,
-                                   opaque: opaque))
+    func sensitive(_ type: SensitiveModifierType) -> some View {
+        modifier(SensitiveModifier(type: type))
     }
     
     @ViewBuilder
-    func sensitive(_ container: any ImageContaining,
-                   radius: CGFloat = 6.0,
-                   opaque: Bool = false) -> some View {
+    func sensitive(_ container: any ImageContaining) -> some View {
         if let container = container as? any SensitiveImageContaining {
-            sensitive(container.isSensitive,
-                      radius: radius,
-                      opaque: opaque)
+            sensitive(container.isSensitive ? .blur : .none)
         } else {
             self
         }

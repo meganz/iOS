@@ -15,6 +15,7 @@ struct BackgroundView<Header: View, Footer: View>: View {
     let backgroundColor: Color
     let header: Header
     let footer: Footer
+    let isSensitive: Bool
     
     var body: some View {
         ZStack {
@@ -42,6 +43,7 @@ struct BackgroundView<Header: View, Footer: View>: View {
             Image(uiImage: image)
                 .resizable()
                 .aspectRatio(1, contentMode: .fill)
+                .sensitive(isSensitive ? .blur : .none)
                 .frame(height: 174)
                 .clipped()
         case .icon:

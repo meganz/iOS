@@ -151,6 +151,8 @@ fileprivate extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: "\(prefix) \(idx)",
+            isSensitive: false,
+            hasThumbnail: false,
             description: { _ in "Parent folder" },
             type: .node,
             properties: [],

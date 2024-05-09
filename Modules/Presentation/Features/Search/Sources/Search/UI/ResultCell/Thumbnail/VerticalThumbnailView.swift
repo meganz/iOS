@@ -30,6 +30,7 @@ import SwiftUI
 // │║  [SUBTITLE]   ║ │.secondary(.trail│ │           │ │
 // │╚═══════════════╝ └─────────────────┘  ─ ─ ─ ─ ─ ─  │
 // └────────────────────────────────────────────────────┘
+// The Menu Select (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 
 struct VerticalThumbnailView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -65,8 +66,9 @@ struct VerticalThumbnailView: View {
             mode: viewModel.result.backgroundDisplayMode,
             backgroundColor: thumbnailBackgroundColor,
             header: backgroundHeader,
-            footer: backgroundFooter
-        )
+            footer: backgroundFooter,
+            isSensitive: viewModel.isSensitive
+        ).sensitive(viewModel.isSensitive ? .opacity : .none)
         .clipped()
     }
     
@@ -137,7 +139,7 @@ struct VerticalThumbnailView: View {
             VStack(alignment: .leading, spacing: .zero) {
                 topLine
                 bottomLine
-            }
+            }.sensitive(viewModel.isSensitive ? .opacity : .none)
             
             Spacer()
             trailingView

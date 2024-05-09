@@ -617,6 +617,8 @@ final class SearchResultsViewModelTests: XCTestCase {
                 thumbnailDisplayMode: .horizontal,
                 backgroundDisplayMode: .icon,
                 title: "Title",
+                isSensitive: false,
+                hasThumbnail: false,
                 description: { _ in ""},
                 type: .node,
                 properties: [],

@@ -11,6 +11,8 @@ public struct SearchResult: Identifiable, Sendable {
         /// a preview or a solid background with an icon
         backgroundDisplayMode: VerticalBackgroundViewMode,
         title: String,
+        isSensitive: Bool,
+        hasThumbnail: Bool,
         description: @escaping @Sendable (ResultCellLayout) -> String,
         type: ResultType,
         /// represents various properties such as label color, offline status, versioning etc;
@@ -24,6 +26,8 @@ public struct SearchResult: Identifiable, Sendable {
         self.thumbnailDisplayMode = thumbnailDisplayMode
         self.backgroundDisplayMode = backgroundDisplayMode
         self.title = title
+        self.isSensitive = isSensitive
+        self.hasThumbnail = hasThumbnail
         self.description = description
         self.type = type
         self.properties = properties
@@ -37,6 +41,8 @@ public struct SearchResult: Identifiable, Sendable {
     public let thumbnailDisplayMode: ResultCellLayout.ThumbnailMode
     public let backgroundDisplayMode: VerticalBackgroundViewMode
     public let title: String
+    public let isSensitive: Bool
+    public let hasThumbnail: Bool
     public let description: @Sendable (ResultCellLayout) -> String
     public let type: ResultType
     public let properties: [ResultProperty]
@@ -50,6 +56,8 @@ extension SearchResult: Equatable {
     public static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
         lhs.id == rhs.id &&
         lhs.title == rhs.title &&
+        lhs.isSensitive == rhs.isSensitive &&
+        lhs.hasThumbnail == rhs.hasThumbnail &&
         lhs.description(.list) == rhs.description(.list) &&
         lhs.description(.thumbnail(.horizontal)) == rhs.description(.thumbnail(.horizontal)) &&
         lhs.description(.thumbnail(.vertical)) == rhs.description(.thumbnail(.vertical)) &&

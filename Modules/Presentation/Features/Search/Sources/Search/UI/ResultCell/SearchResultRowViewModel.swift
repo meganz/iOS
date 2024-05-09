@@ -1,3 +1,4 @@
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 import UIKit
@@ -14,11 +15,20 @@ extension SearchResultRowViewModel {
 }
 
 class SearchResultRowViewModel: Identifiable, ObservableObject {
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     @Published var thumbnailImage: UIImage = UIImage()
 
     var title: String {
         result.title
+    }
+    
+    var isSensitive: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) && result.isSensitive
+    }
+    
+    var hasThumbnail: Bool {
+        result.hasThumbnail
     }
     
     var hasVibrantTitle: Bool {
@@ -66,6 +76,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     let swipeActions: [SearchResultSwipeAction]
 
     init(
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         result: SearchResult,
         rowAssets: SearchConfig.RowAssets,
         colorAssets: SearchConfig.ColorAssets,
@@ -73,6 +84,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         actions: UserActions,
         swipeActions: [SearchResultSwipeAction]
     ) {
+        self.featureFlagProvider = featureFlagProvider
         self.result = result
         self.colorAssets = colorAssets
         self.previewContent = previewContent

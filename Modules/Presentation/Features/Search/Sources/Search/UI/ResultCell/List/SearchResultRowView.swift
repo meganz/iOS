@@ -13,6 +13,7 @@ import SwiftUI
 // │┌──────────────────────┐╔═══════════════╗┌────────────────────────┐┌───────────────────────────┐│                   │
 // │└──────────────────────┘╚═══════════════╝└────────────────────────┘└───────────────────────────┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
 // └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+// The Menu (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 
 struct SearchResultRowView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
@@ -78,6 +79,7 @@ struct SearchResultRowView: View {
                 lines
                 Spacer()
             }
+            .sensitive(viewModel.isSensitive ? .opacity : .none)
             moreButton
         }
         .contentShape(Rectangle())
@@ -90,6 +92,7 @@ struct SearchResultRowView: View {
             .resizable()
             .scaledToFit()
             .frame(width: 40, height: 40)
+            .sensitive(viewModel.isSensitive ? (viewModel.hasThumbnail ? .blur : .opacity) : .none)
             .clipShape(RoundedRectangle(cornerRadius: 4))
             .overlay(propertyViewsFor(placement: .previewOverlay))
     }
@@ -210,6 +213,8 @@ extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: "title\(idx)",
+            isSensitive: false,
+            hasThumbnail: false,
             description: { _ in "desc\(idx)" },
             type: .node,
             properties: properties,

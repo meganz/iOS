@@ -12,6 +12,7 @@ import SwiftUI
 // │║             ║║  [SUBTITLE]   ║│ .secondary(.leading) ││ .secondary(.trailing)  ││ .secondary(.trailingEdge) │                   ││
 // │╚═════════════╝╚═══════════════╝└──────────────────────┘└────────────────────────┘└───────────────────────────┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
 // └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+// The Menu (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 
 struct HorizontalThumbnailView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -34,6 +35,7 @@ struct HorizontalThumbnailView: View {
                 }
                 .padding(.vertical, 8)
             }
+            .sensitive(viewModel.isSensitive ? .opacity : .none)
             Spacer()
             trailingView
         }
@@ -51,6 +53,7 @@ struct HorizontalThumbnailView: View {
             .resizable()
             .scaledToFit()
             .frame(width: 24, height: 24)
+            .sensitive(viewModel.isSensitive ? (viewModel.hasThumbnail ? .blur : .opacity) : .none)
     }
     
     private var isSelected: Bool {
