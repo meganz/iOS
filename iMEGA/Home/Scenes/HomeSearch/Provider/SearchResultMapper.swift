@@ -25,6 +25,8 @@ struct SearchResultMapper {
             thumbnailDisplayMode: node.isFile ? .vertical : .horizontal,
             backgroundDisplayMode: node.hasThumbnail ? .preview : .icon,
             title: node.name,
+            isSensitive: node.isMarkedSensitive,
+            hasThumbnail: node.hasThumbnail,
             description: info(for: node),
             type: .node,
             properties: properties(for: node),
