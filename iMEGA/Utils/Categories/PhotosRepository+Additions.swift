@@ -5,14 +5,21 @@ extension PhotosRepository: SharedRepositoryProtocol {
     
     public static let sharedRepo = {
         let sdk = MEGASdk.sharedSdk
+        let localSource = PhotosInMemoryCache.shared
         return PhotosRepository(
             sdk: sdk,
-            photoLocalSource: PhotosInMemoryCache.shared,
-            nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk),
-            cacheInvalidationTrigger: .init(
-                logoutNotificationName: .accountDidLogout,
-                didReceiveMemoryWarningNotificationName: {
-                    await UIApplication.didReceiveMemoryWarningNotification
-                }))
+            photoLocalSource: localSource,
+            photosRepositoryTaskManager: PhotosRepositoryTaskManager(
+                photoLocalSource: localSource,
+                photoCacheRepositoryMonitors: PhotoCacheRepositoryMonitors(
+                    sdk: sdk,
+                    nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk),
+                    photoLocalSource: localSource,
+                    cacheInvalidationTrigger: .init(
+                        logoutNotificationName: .accountDidLogout,
+                        didReceiveMemoryWarningNotificationName: {
+                            await UIApplication.didReceiveMemoryWarningNotification
+                        })))
+            )
     }()
 }

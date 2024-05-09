@@ -44,8 +44,12 @@ final class AlbumCacheMonitorTaskManagerTests: XCTestCase {
     }
 
     private func makeSUT(
-        repositoryMonitor: some UserAlbumCacheRepositoryMonitorsProtocol = MockUserAlbumCacheRepositoryMonitors()
+        repositoryMonitor: some UserAlbumCacheRepositoryMonitorsProtocol = MockUserAlbumCacheRepositoryMonitors(),
+        file: StaticString = #file,
+        line: UInt = #line
     ) -> AlbumCacheMonitorTaskManager {
-        AlbumCacheMonitorTaskManager(repositoryMonitor: repositoryMonitor)
+        let sut = AlbumCacheMonitorTaskManager(repositoryMonitor: repositoryMonitor)
+        trackForMemoryLeaks(on: sut, file: file, line: line)
+        return sut
     }
 }
