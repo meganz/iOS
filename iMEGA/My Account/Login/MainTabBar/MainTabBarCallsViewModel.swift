@@ -1,4 +1,5 @@
 import Combine
+import Intents
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -62,6 +63,14 @@ struct CXCallUpdateFactory {
         return update
     }
     
+    func callUpdate(
+        withChatTitle title: String
+    ) -> CXCallUpdate {
+        let update = builder()
+        update.localizedCallerName = title
+        return update
+    }
+    
     static var defaultFactory: Self {
         .init {
             CXCallUpdate()
@@ -69,7 +78,9 @@ struct CXCallUpdateFactory {
     }
 }
 
-enum MainTabBarCallsAction: ActionType { }
+enum MainTabBarCallsAction: ActionType { 
+    case startCallIntent(INStartCallIntent)
+}
 
 class MainTabBarCallsViewModel: ViewModelType {
     
@@ -88,6 +99,7 @@ class MainTabBarCallsViewModel: ViewModelType {
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var callSessionUseCase: any CallSessionUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let handleUseCase: any MEGAHandleUseCaseProtocol
     private let callKitManager: any CallKitManagerProtocol
     private let callManager: any CallManagerProtocol
     private let passcodeManager: any PasscodeManagerProtocol
@@ -125,6 +137,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
         callSessionUseCase: some CallSessionUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
+        handleUseCase: some MEGAHandleUseCaseProtocol,
         callKitManager: some CallKitManagerProtocol,
         callManager: some CallManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
@@ -139,6 +152,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.callSessionUseCase = callSessionUseCase
         self.accountUseCase = accountUseCase
+        self.handleUseCase = handleUseCase
         self.callKitManager = callKitManager
         self.callManager = callManager
         self.passcodeManager = passcodeManager
@@ -160,7 +174,12 @@ class MainTabBarCallsViewModel: ViewModelType {
     
     // MARK: - Dispatch actions
     
-    func dispatch(_ action: MainTabBarCallsAction) { }
+    func dispatch(_ action: MainTabBarCallsAction) {
+        switch action {
+        case .startCallIntent(let intent):
+           startCall(fromIntent: intent)
+        }
+    }
     
     // MARK: - Private
 
@@ -268,13 +287,13 @@ class MainTabBarCallsViewModel: ViewModelType {
     
     private func manageCallStatusChange(for call: CallEntity) {
         switch call.status {
-        case .initial:
-            reportCallStartedConnectingIfNeeded(call)
         case .userNoPresent:
             if call.isRinging {
                 sendAudioPlayerInterruptDidStartNotificationIfNeeded()
             }
         case .joining:
+            updateChatTitleForCall(call)
+            reportCallStartedConnectingIfNeeded(call)
             callUseCase.enableAudioMonitor(forCall: call)
             configureCallSessionsListener(forCall: call)
             if !featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
@@ -489,28 +508,46 @@ class MainTabBarCallsViewModel: ViewModelType {
             }
         }
     }
+    
+    private func startCall(fromIntent intent: INStartCallIntent) {
+        guard let personHandle = intent.contacts?.first?.personHandle,
+              personHandle.type == .unknown,
+              let chatIdBase64Handle = personHandle.value,
+              let chatId = handleUseCase.handle(forBase64UserHandle: chatIdBase64Handle),
+              let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId)
+        else {
+            MEGALogDebug("Failed to start call from intent")
+            return
+        }
+        
+        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: intent.callCapability == .videoCall, notRinging: false)
+    }
 }
 
 // MARK: - CallsCoordinator Private Methods
 extension MainTabBarCallsViewModel {
     private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {
         if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            guard call.isOwnClientCaller, let providerDelegate else { return }
-            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-                  let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
-            
+            guard call.isOwnClientCaller,
+                  let callUUID = uuidToReportCallConnectChanges(for: call),
+                  let providerDelegate else { return }
             providerDelegate.provider.reportOutgoingCall(with: callUUID, startedConnectingAt: nil)
         }
     }
     
     private func reportCallConnectedIfNeeded(_ call: CallEntity) {
         if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            guard call.isOwnClientCaller, let providerDelegate else { return }
-            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-                  let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
-
+            guard call.isOwnClientCaller,
+                  let callUUID = uuidToReportCallConnectChanges(for: call),
+                  let providerDelegate else { return }
             providerDelegate.provider.reportOutgoingCall(with: callUUID, connectedAt: nil)
         }
+    }
+    
+    private func uuidToReportCallConnectChanges(for call: CallEntity) -> UUID? {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return nil }
+        return callUUID
     }
     
     private func configureWebRTCAudioSession() {
@@ -522,6 +559,14 @@ extension MainTabBarCallsViewModel {
             try? audioSession.setConfiguration(configuration)
             audioSession.unlockForConfiguration()
         }
+    }
+    
+    private func updateChatTitleForCall(_ call: CallEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              let chatTitle = chatRoom.title,
+              let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
+        
+        providerDelegate?.provider.reportCall(with: callUUID, updated: callUpdateFactory.callUpdate(withChatTitle: chatTitle))
     }
     
     private func updateVideoForCall(_ call: CallEntity) {

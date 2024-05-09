@@ -56,6 +56,8 @@ final class ChatContentViewModel: ViewModelType {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let meetingNoUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
+    private let handleUseCase: any MEGAHandleUseCaseProtocol
+    private let callManager: any CallManagerProtocol
 
     private let router: any ChatContentRouting
     private let permissionRouter: any PermissionAlertRouting
@@ -83,6 +85,8 @@ final class ChatContentViewModel: ViewModelType {
          permissionRouter: some PermissionAlertRouting,
          analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
          meetingNoUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
+         handleUseCase: some MEGAHandleUseCaseProtocol,
+         callManager: some CallManagerProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.chatRoom = chatRoom
@@ -95,6 +99,8 @@ final class ChatContentViewModel: ViewModelType {
         self.permissionRouter = permissionRouter
         self.analyticsEventUseCase = analyticsEventUseCase
         self.meetingNoUserJoinedUseCase = meetingNoUserJoinedUseCase
+        self.handleUseCase = handleUseCase
+        self.callManager = callManager
         self.featureFlagProvider = featureFlagProvider
         
         subscribeToOnCallUpdate()
@@ -375,7 +381,12 @@ final class ChatContentViewModel: ViewModelType {
             if callUseCase.call(for: chatRoom.chatId) != nil {
                 answerCall()
             } else {
-                startCall(enableVideo: videoCall, notRinging: notRinging)
+                if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                    let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+                    callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging)
+                } else {
+                    startCall(enableVideo: videoCall, notRinging: notRinging)
+                }
             }
         }
     }

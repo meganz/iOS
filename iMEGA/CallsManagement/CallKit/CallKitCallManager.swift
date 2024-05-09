@@ -10,9 +10,9 @@ final class CallKitCallManager {
 
 extension CallKitCallManager: CallManagerProtocol {
     
-    func startCall(in chatRoom: ChatRoomEntity, hasVideo: Bool, notRinging: Bool) {
+    func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool) {
         let startCallUUID = UUID()
-        let callKitHandle = CXHandle(type: .generic, value: chatRoom.title ?? "Unknown")
+        let callKitHandle = CXHandle(type: .generic, value: chatIdBase64Handle)
         let startCallAction = CXStartCallAction(call: startCallUUID, handle: callKitHandle)
         startCallAction.isVideo = hasVideo
         startCallAction.contactIdentifier = chatRoom.title
