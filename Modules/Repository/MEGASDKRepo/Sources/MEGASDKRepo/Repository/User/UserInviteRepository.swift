@@ -2,19 +2,19 @@ import MEGADomain
 import MEGASdk
 import MEGASwift
 
-struct UserInviteRepository: UserInviteRepositoryProtocol {
-    static var newRepo: UserInviteRepository {
+public struct UserInviteRepository: UserInviteRepositoryProtocol {
+    public static var newRepo: UserInviteRepository {
         UserInviteRepository(sdk: MEGASdk.sharedSdk)
     }
     
     private let sdk: MEGASdk
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
     
-    func sendInvite(forEmail email: String) async throws {
-        return try await withAsyncThrowingValue { completion in
+    public func sendInvite(forEmail email: String) async throws {
+        try await withAsyncThrowingValue { completion in
             sdk.inviteContact(withEmail: email, message: "", action: .add, delegate: RequestDelegate { result in
                 switch result {
                 case .success:

@@ -49,6 +49,7 @@ public final class MockSdk: MEGASdk {
     private var _isNodeInheritingSensitivity: Bool
     private var _hasVersionsForNode: Bool
     private let setUserAttributeTypeMegaSetError: (MEGAUserAttribute) -> MEGAErrorType
+    private let _outgoingContactRequests: MEGAContactRequestList
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -130,7 +131,8 @@ public final class MockSdk: MEGASdk {
                 lastReadNotificationId: Int32 = 0,
                 isNodeInheritingSensitivity: Bool = false,
                 hasVersionsForNode: Bool = false,
-                setUserAttributeTypeMegaSetError: @escaping (MEGAUserAttribute) -> MEGAErrorType = { _ in .apiOk }
+                setUserAttributeTypeMegaSetError: @escaping (MEGAUserAttribute) -> MEGAErrorType = { _ in .apiOk },
+                outgoingContactRequests: MEGAContactRequestList = MEGAContactRequestList()
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -178,6 +180,7 @@ public final class MockSdk: MEGASdk {
         _isNodeInheritingSensitivity = isNodeInheritingSensitivity
         _hasVersionsForNode = hasVersionsForNode
         self.setUserAttributeTypeMegaSetError = setUserAttributeTypeMegaSetError
+        _outgoingContactRequests = outgoingContactRequests
         super.init()
     }
     
@@ -672,6 +675,15 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func renameDevice(_ deviceId: String?, newName name: String, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+
+    // MARK: - Contacts
+    public override func outgoingContactRequests() -> MEGAContactRequestList {
+        _outgoingContactRequests
+    }
+  
+    public override func inviteContact(withEmail email: String, message: String?, action: MEGAInviteAction, delegate: MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
     
