@@ -2,7 +2,7 @@ import MEGADomain
 import MEGASdk
 import MEGASwift
 
-public protocol NodeUpdatesProviderProtocol {
+public protocol NodeUpdatesProviderProtocol: Sendable {
     /// Node updates from `MEGAGlobalDelegate` `onNodesUpdate` as an `AnyAsyncSequence`
     ///
     /// - Returns: `AnyAsyncSequence` that will call sdk.add on creation and sdk.remove onTermination of `AsyncStream`. 

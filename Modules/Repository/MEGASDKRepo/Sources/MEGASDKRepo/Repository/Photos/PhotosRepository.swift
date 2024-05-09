@@ -3,44 +3,29 @@ import MEGADomain
 import MEGASdk
 import MEGASwift
 
-public actor PhotosRepository: PhotosRepositoryProtocol {
+public struct PhotosRepository: PhotosRepositoryProtocol {
     
     private let sdk: MEGASdk
     private let photoLocalSource: any PhotoLocalSourceProtocol
-    private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
-    
-    private var searchAllPhotosTask: Task<[NodeEntity], Error>?
-    private var monitorNodeUpdatesTask: Task<Void, Error>?
-    private var monitorCacheInvalidationTask: Task<Void, Error>?
-    private let photosUpdateSequences = MulticastAsyncSequence<[NodeEntity]>()
+    private let photosRepositoryTaskManager: any PhotosRepositoryTaskManagerProtocol
     
     public init(sdk: MEGASdk,
                 photoLocalSource: some PhotoLocalSourceProtocol,
-                nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
-                cacheInvalidationTrigger: CacheInvalidationTrigger) {
+                photosRepositoryTaskManager: some PhotosRepositoryTaskManagerProtocol) {
         self.sdk = sdk
         self.photoLocalSource = photoLocalSource
-        self.nodeUpdatesProvider = nodeUpdatesProvider
-        
-        Task {
-            await monitorNodeUpdates()
-            await monitorCacheInvalidationTriggers(
-                cacheInvalidationTrigger: cacheInvalidationTrigger,
-                photoLocalSource: photoLocalSource)
-        }
-    }
-    
-    deinit {
-        searchAllPhotosTask?.cancel()
-        monitorNodeUpdatesTask?.cancel()
-        monitorCacheInvalidationTask?.cancel()
+        self.photosRepositoryTaskManager = photosRepositoryTaskManager
     }
     
     public func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]> {
-        await photosUpdateSequences.make()
+        await ensureBackgroundMonitoringIsRunning()
+        
+        return await photosRepositoryTaskManager.photosUpdatedAsyncSequence
     }
     
     public func allPhotos() async throws -> [NodeEntity] {
+        await ensureBackgroundMonitoringIsRunning()
+        
         let photosFromSource = await photoLocalSource.photos
         try Task.checkCancellation()
         if photosFromSource.isNotEmpty {
@@ -50,6 +35,8 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
     }
     
     public func photo(forHandle handle: HandleEntity) async -> NodeEntity? {
+        await ensureBackgroundMonitoringIsRunning()
+        
         if let photoFromSource = await photoLocalSource.photo(forHandle: handle) {
             return photoFromSource
         }
@@ -64,22 +51,10 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
     
     // MARK: Private
     
+    /// Load all photos ensure that only single task is running to retrieve the photos from the SDK to avoid multiple calls to the SDK.
     private func loadAllPhotos() async throws -> [NodeEntity] {
-        if let searchAllPhotosTask {
-            return try await searchAllPhotosTask.value
-        }
-        let searchPhotosTask = Task<[NodeEntity], Error> {
+        try await photosRepositoryTaskManager.loadAllPhotos {
             return try await searchAllPhotos()
-        }
-        self.searchAllPhotosTask = searchPhotosTask
-        defer { self.searchAllPhotosTask = nil }
-        
-        return try await withTaskCancellationHandler {
-            let photos = try await searchPhotosTask.value
-            await photoLocalSource.setPhotos(photos)
-            return photos
-        } onCancel: {
-            searchPhotosTask.cancel()
         }
     }
     
@@ -117,66 +92,16 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
         }
     }
     
-    private func monitorNodeUpdates() {
-        monitorNodeUpdatesTask = Task {
-            for await nodeUpdates in nodeUpdatesProvider.nodeUpdates {
-                guard !Task.isCancelled else {
-                    await photosUpdateSequences.terminateContinuations()
-                    break
-                }
-                let updatedPhotos = nodeUpdates.filter(\.fileExtensionGroup.isVisualMedia)
-                guard updatedPhotos.isNotEmpty else { continue }
-                await updatePhotos(updatedPhotos)
+    // MARK: Monitoring
     
-                await photosUpdateSequences.yield(element: updatedPhotos)
-            }
-        }
-    }
-    
-    private func updatePhotos(_ updatedPhotos: [NodeEntity]) async {
-        let photosToStore = await withTaskGroup(of: NodeEntity?.self) { group in
-            updatedPhotos.forEach { updatedPhoto in
-                group.addTask { [weak self] in
-                    guard let self else { return nil }
-                    
-                    if !updatedPhoto.changeTypes.contains(.new) {
-                        await photoLocalSource.removePhoto(forHandle: updatedPhoto.handle)
-                    }
-                    
-                    guard let photo = sdk.node(forHandle: updatedPhoto.handle),
-                          !sdk.isNode(inRubbish: photo) else {
-                        return nil
-                    }
-                    return photo.toNodeEntity()
-                }
-            }
-
-            var photos = [NodeEntity]()
-            for await photo in group {
-                if let photo { photos.append(photo) }
-            }
-            return photos
-        }
+    /// Monitor photo node updates and ensure that the tasks are still running in the background.
+    /// If a monitor task is stopped all tasks will be stopped and cache will be re-primed and monitoring will be restarted to avoid stale data.
+    private func ensureBackgroundMonitoringIsRunning() async {
+        guard await photosRepositoryTaskManager.didMonitoringTaskStop() else { return }
         
-        guard photosToStore.isNotEmpty else { return }
-        await photoLocalSource.setPhotos(photosToStore)
-    }
-    
-    private func monitorCacheInvalidationTriggers(
-        cacheInvalidationTrigger: CacheInvalidationTrigger,
-        photoLocalSource: some PhotoLocalSourceProtocol) {
-        
-        monitorCacheInvalidationTask = Task {
-            guard !Task.isCancelled else {
-                return
-            }
-            
-            for await _ in await cacheInvalidationTrigger.cacheInvalidationSequence() {
-                guard !Task.isCancelled else {
-                    break
-                }
-                await photoLocalSource.removeAllPhotos()
-            }
-        }
+        await photosRepositoryTaskManager.stopBackgroundMonitoring()
+        await photoLocalSource.removeAllPhotos()
+        _ = try? await loadAllPhotos()
+        await photosRepositoryTaskManager.startBackgroundMonitoring()
     }
 }

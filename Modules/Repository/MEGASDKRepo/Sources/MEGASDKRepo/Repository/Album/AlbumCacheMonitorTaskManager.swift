@@ -32,10 +32,8 @@ public actor AlbumCacheMonitorTaskManager: AlbumCacheMonitorTaskManagerProtocol 
     }
     
     public func stopMonitoring() {
-        monitorTasks.keys.forEach {
-            monitorTasks[$0]?.cancel()
-            monitorTasks[$0] = nil
-        }
+        monitorTasks.values.forEach { $0.cancel() }
+        monitorTasks.removeAll()
     }
     
     public func didChildTaskStop() -> Bool {
@@ -43,34 +41,35 @@ public actor AlbumCacheMonitorTaskManager: AlbumCacheMonitorTaskManagerProtocol 
     }
     
     private func startMonitorCacheInvalidationTriggers() {
-        startMonitoring(identifier: .cacheInvalidation) { [weak self] in
-            guard let self else { return }
+        startMonitoring(identifier: .cacheInvalidation) { [repositoryMonitor] in
             await repositoryMonitor.monitorCacheInvalidationTriggers()
         }
     }
     
     private func startMonitoringSetUpdates() {
-        startMonitoring(identifier: .setUpdates) { [weak self] in
-            guard let self else { return }
+        startMonitoring(identifier: .setUpdates) { [repositoryMonitor] in
             await repositoryMonitor.monitorSetUpdates()
         }
     }
     
     private func startMonitorSetElementUpdates() {
-        startMonitoring(identifier: .setElementUpdates) { [weak self] in
-            guard let self else { return }
+        startMonitoring(identifier: .setElementUpdates) { [repositoryMonitor] in
             await repositoryMonitor.monitorSetElementUpdates()
         }
     }
     
     private func startMonitoring(identifier: ChildTaskIdentifier,
-                                 operation: @escaping () async -> Void) {
+                                 operation: @escaping @Sendable () async -> Void) {
         guard monitorTasks[identifier] == nil else {
             return
         }
-        monitorTasks[identifier] = Task(priority: .background) {
+        monitorTasks[identifier] = Task(priority: .background) { [weak self] in
             await operation()
-            monitorTasks[identifier] = nil
+            await self?.removeTask(for: identifier)
         }
+    }
+    
+    private func removeTask(for identifier: ChildTaskIdentifier) {
+        monitorTasks.removeValue(forKey: identifier)?.cancel()
     }
 }
