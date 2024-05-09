@@ -49,15 +49,17 @@
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     self.viewModel = [self createViewModelWithNodes:nodesArray];
     
+    NSString *imageName = [UIColor isDesignTokenEnabled] ? @"standardDisclosureIndicator_designToken" : @"standardDisclosureIndicator";
+    
     if (recentActionBucket.mnz_isExpanded) {
-        self.indicatorImageView.image = [UIImage imageNamed:@"standardDisclosureIndicator"].imageByRotateRight90;
+        self.indicatorImageView.image = [UIImage imageNamed:imageName].imageByRotateRight90;
         self.thumbnailViewerView.hidden = NO;
         self.thumbnailViewerCollectionView.dataSource = self;
         self.thumbnailViewerCollectionView.delegate = self;
         self.nodesArray = nodesArray;
         [self.thumbnailViewerCollectionView reloadData];
     } else {
-        self.indicatorImageView.image = [UIImage imageNamed:@"standardDisclosureIndicator"];
+        self.indicatorImageView.image = [UIImage imageNamed:imageName];
         self.thumbnailViewerView.hidden = YES;
     }
     

@@ -208,6 +208,7 @@
                                         <viewLayoutGuide key="safeArea" id="SmN-c0-knL"/>
                                         <inset key="separatorInset" minX="62" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="disclosureIndicator" destination="14y-Hv-01H" id="Zhj-Bl-Ucp"/>
                                             <outlet property="disclosureIndicatorView" destination="9kD-Sp-cIT" id="mdr-RU-7M5"/>
                                             <outlet property="incomingOrOutgoingImageView" destination="1BF-Cp-JBn" id="B9m-F4-pqb"/>
                                             <outlet property="incomingOrOutgoingView" destination="veN-uJ-V2X" id="YEy-py-jN0"/>
