@@ -163,7 +163,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private func setupPlans() {
         setUpPlanTask = Task {
             planList = await purchaseUseCase.accountPlanProducts()
-            setRecommendedPlan()
+            
+            if viewType == .upgrade {
+                setRecommendedPlan(basedOnPlan: accountDetails.proLevel)
+            } else {
+                let lowestPlan = planList.sorted(by: { $0.price < $1.price }).first ?? AccountPlanEntity()
+                setRecommendedPlan(basedOnPlan: lowestPlan.type)
+            }
+            
             await setDefaultPlanCycleTab()
             await setCurrentPlan(type: accountDetails.proLevel)
         }
@@ -302,8 +309,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
     }
     
-    private func setRecommendedPlan() {
-        switch accountDetails.proLevel {
+    private func setRecommendedPlan(basedOnPlan plan: AccountTypeEntity) {
+        switch plan {
         case .free, .lite, .starter, .basic, .essential:
             recommendedPlanType = .proI
         case .proI:
