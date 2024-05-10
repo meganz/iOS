@@ -16,7 +16,8 @@ import SwiftUI
 // The Menu (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 
 struct SearchResultRowView: View {
-    @ObservedObject var viewModel: SearchResultRowViewModel
+    /// Need to use StateObject instead of ObservedObject to avoid blank thumbnail bug
+    @StateObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
     
@@ -84,6 +85,9 @@ struct SearchResultRowView: View {
         }
         .contentShape(Rectangle())
         .frame(minHeight: 60)
+        .task {
+            await viewModel.loadThumbnail()
+        }
     }
     
     // optional overlay property in placement .previewOverlay
