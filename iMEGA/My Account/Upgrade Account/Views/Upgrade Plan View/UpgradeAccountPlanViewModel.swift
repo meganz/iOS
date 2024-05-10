@@ -181,6 +181,11 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             currentPlan = AccountPlanEntity(type: .free, name: AccountTypeEntity.free.toAccountTypeDisplayName())
             return
         }
+        
+        guard !type.isLowerTierPlan else {
+            currentPlan = AccountPlanEntity(type: type, name: type.toAccountTypeDisplayName())
+            return
+        }
 
         let cycle = accountDetails.subscriptionCycle
         currentPlan = planList.first { plan in
@@ -292,7 +297,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     private func setRecommendedPlan() {
         switch accountDetails.proLevel {
-        case .free, .lite:
+        case .free, .lite, .starter, .basic, .essential:
             recommendedPlanType = .proI
         case .proI:
             recommendedPlanType = .proII
