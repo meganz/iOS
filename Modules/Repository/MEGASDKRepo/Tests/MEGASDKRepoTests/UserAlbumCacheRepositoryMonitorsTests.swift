@@ -102,13 +102,13 @@ final class UserAlbumCacheRepositoryMonitorsTests: XCTestCase {
         monitorTask.cancel()
     }
     
-    func testSetElementsUpdatedPublisher_onSetElementRemoval_shouldInvalidateElementsInCacheForTheSet() async throws {
+    func testSetElementsUpdatedPublisher_onSetElementRemoval_shouldRemoveDeletedElementsOnlyInCacheForTheSet() async throws {
         
         // Arrange
         let albumId = HandleEntity(65)
         let expectedAlbumPhotoIds = [
             AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
-            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 55, nodeId: 87)
         ]
         let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
         let userAlbumCache = MockUserAlbumCache(
@@ -139,20 +139,20 @@ final class UserAlbumCacheRepositoryMonitorsTests: XCTestCase {
         }
         await fulfillment(of: [taskStartedExp], timeout: 1)
         
+        let deletedElement = SetElementEntity(handle: 55, ownerId: albumId, nodeId: 87, changeTypes: .removed)
+
         setAndElementsUpdatesProvider
-            .mockSendSetElementUpdate(setElementUpdate: [
-                .init(handle: 65, ownerId: albumId, changeTypes: .removed)
-            ])
+            .mockSendSetElementUpdate(setElementUpdate: [deletedElement])
         
-        await fulfillment(of: [exp], timeout: 1)
+        await fulfillment(of: [exp], timeout: 10)
         cancellable.cancel()
         
         let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertNil(result)
+        XCTAssertEqual(result, expectedAlbumPhotoIds.filter { $0.albumPhotoId != deletedElement.handle })
         monitorTask.cancel()
     }
     
-    func testSetElementsUpdatedPublisher_onSetElementInsertion_shouldInvalidateElementsInCacheForTheSet() async throws {
+    func testSetElementsUpdatedPublisher_onSetElementInsertion_shouldInsertElementsInCacheForTheSet() async throws {
         // Arrange
         let albumId = HandleEntity(65)
         let expectedAlbumPhotoIds = [
@@ -188,20 +188,20 @@ final class UserAlbumCacheRepositoryMonitorsTests: XCTestCase {
         }
         await fulfillment(of: [taskStartedExp], timeout: 1)
         
+        let insertedElements = [SetElementEntity(handle: 65, ownerId: albumId, nodeId: 99, changeTypes: .new)]
         setAndElementsUpdatesProvider
-            .mockSendSetElementUpdate(setElementUpdate: [
-                .init(handle: 65, ownerId: albumId, changeTypes: .new)
-            ])
+            .mockSendSetElementUpdate(setElementUpdate: insertedElements)
         
         await fulfillment(of: [exp], timeout: 1)
         cancellable.cancel()
         
         let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertNil(result)
+        let expectedUpdatedResult = expectedAlbumPhotoIds + insertedElements.toAlbumPhotoIdEntities()
+        XCTAssertEqual(result, expectedUpdatedResult)
         monitorTask.cancel()
     }
     
-    func testSetElementsUpdatedPublisher_onSetElementNameChange_shouldInvalidateElementsInCacheForTheSet() async {
+    func testSetElementsUpdatedPublisher_onSetElementNameChange_noChangeToCacheApplied() async {
         // Arrange
         let albumId = HandleEntity(65)
         let expectedAlbumPhotoIds = [
@@ -244,7 +244,7 @@ final class UserAlbumCacheRepositoryMonitorsTests: XCTestCase {
         cancellable.cancel()
         
         let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
-        XCTAssertNil(result)
+        XCTAssertEqual(result, expectedAlbumPhotoIds)
         monitorTask.cancel()
     }
     

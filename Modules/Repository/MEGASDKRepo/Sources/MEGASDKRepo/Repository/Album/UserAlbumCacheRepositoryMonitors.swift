@@ -85,21 +85,28 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
                 break
             }
             
-            let invalidateAlbumSets = Set(setElementUpdate.map(\.ownerId))
+            let (insertion, deletions) = setElementUpdate
+                .reduce(into: (insertions: [AlbumPhotoIdEntity], deletions: [AlbumPhotoIdEntity])([], [])) { result, setElementEntity in
+                    if setElementEntity.changeTypes.contains(.removed) {
+                        result.deletions.append(setElementEntity.toAlbumPhotoIdEntity())
+                    } else if setElementEntity.changeTypes.contains(.new) {
+                        result.insertions.append(setElementEntity.toAlbumPhotoIdEntity())
+                    }
+                }
             
-            await userAlbumCache.removeElements(of: invalidateAlbumSets)
-            
-            setElementsUpdatedSourcePublisher.send(setElementUpdate)
+            await userAlbumCache.remove(elements: deletions)
+            await userAlbumCache.insert(elements: insertion)
             
             let updatedAlbums = await withTaskGroup(of: SetEntity?.self, returning: [SetEntity].self) { taskGroup in
-                invalidateAlbumSets
-                    .forEach { albumHandle in
-                        taskGroup.addTask { await self.userAlbumCache.album(forHandle: albumHandle) }
+                setElementUpdate
+                    .forEach { set in
+                        taskGroup.addTask { await userAlbumCache.album(forHandle: set.ownerId) }
                     }
                 
                 return await taskGroup.reduce(into: [SetEntity](), { if let set = $1 { $0.append(set) } })
             }
             
+            setElementsUpdatedSourcePublisher.send(setElementUpdate)
             await setElementUpdateSequences.yield(element: setElementUpdate)
             await setElementUpdateOnSetsSequences.yield(element: updatedAlbums)
         }
