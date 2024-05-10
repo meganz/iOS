@@ -108,6 +108,17 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         XCTAssertEqual(setElements, megaSetElements.toSetElementsEntities())
     }
     
+    // MARK: - deleteVideoPlaylist
+    
+    func testDeleteVideoPlaylist_whenCalled_removeSet() async {
+        let videoPlaylistToDelete = userVideoPlaylist(id: 1)
+        let (sut, sdk) = makeSUT()
+        
+        _ = try? await sut.deleteVideoPlaylist(by: videoPlaylistToDelete)
+        
+        XCTAssertEqual(sdk.messages, [ .removeSet(sid: videoPlaylistToDelete.id) ])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -147,6 +158,10 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
             MockMEGASetElement(handle: 1, ownerId: ownerId, order: 0, nodeId: 1),
             MockMEGASetElement(handle: 2, ownerId: ownerId, order: 0, nodeId: 2)
         ]
+    }
+    
+    private func userVideoPlaylist(id: HandleEntity) -> VideoPlaylistEntity {
+        VideoPlaylistEntity(id: id, name: "name: \(id)", count: 0, type: .user)
     }
 }
 
