@@ -49,15 +49,19 @@ extension GroupChatDetailsViewController {
         ) { [weak self] in
             self?.endCallDialog = nil
         } endCallAction: { [weak self] in
-            guard let self = self,
-                  let call = MEGAChatSdk.shared.chatCall(forChatId: self.chatRoom.chatId) else {
-                return
-            }
+            guard let self else { return }
             
             let statsRepoSitory = AnalyticsRepository(sdk: MEGASdk.shared)
             AnalyticsEventUseCase(repository: statsRepoSitory).sendAnalyticsEvent(.meetings(.endCallForAll))
             
-            MEGAChatSdk.shared.endChatCall(call.callId)
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                CallKitCallManager.shared.endCall(in: chatRoom.toChatRoomEntity(), endForAll: true)
+            } else {
+                guard let call = MEGAChatSdk.shared.chatCall(forChatId: self.chatRoom.chatId) else {
+                    return
+                }
+                MEGAChatSdk.shared.endChatCall(call.callId)
+            }
             self.navigationController?.popViewController(animated: true)
         }
         

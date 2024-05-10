@@ -24,6 +24,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private let callKitManager: any CallKitManagerProtocol
+    private let callManager: any CallManagerProtocol
     private let meetingUseCase: any MeetingCreatingUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
     private let waitingRoomUseCase: any WaitingRoomUseCaseProtocol
@@ -95,6 +96,7 @@ final class WaitingRoomViewModel: ObservableObject {
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
          callKitManager: some CallKitManagerProtocol,
+         callManager: some CallManagerProtocol,
          meetingUseCase: some MeetingCreatingUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
          waitingRoomUseCase: some WaitingRoomUseCaseProtocol,
@@ -114,6 +116,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
         self.callKitManager = callKitManager
+        self.callManager = callManager
         self.meetingUseCase = meetingUseCase
         self.authUseCase = authUseCase
         self.waitingRoomUseCase = waitingRoomUseCase
@@ -192,9 +195,14 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     func muteLocalMicrophone(mute: Bool) {
-        checkForAudioPermission {
-            guard let call = self.call else { return }
-            self.callKitManager.muteUnmuteCall(call, muted: mute)
+        checkForAudioPermission { [weak self] in
+            guard let self, let call else { return }
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+                callManager.muteCall(in: chatRoom, muted: mute)
+            } else {
+                callKitManager.muteUnmuteCall(call, muted: mute)
+            }
         }
     }
     
@@ -450,10 +458,15 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func dismissCall() {
-        guard let call else { return }
-        callKitManager.removeCallRemovedHandler()
-        callUseCase.hangCall(for: call.callId)
-        callKitManager.endCall(call)
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
+            callManager.endCall(in: chatRoom, endForAll: false)
+        } else {
+            guard let call else { return }
+            callKitManager.removeCallRemovedHandler()
+            callUseCase.hangCall(for: call.callId)
+            callKitManager.endCall(call)
+        }
     }
     
     private func createEphemeralAccountAndJoinChat(firstName: String, lastName: String) {

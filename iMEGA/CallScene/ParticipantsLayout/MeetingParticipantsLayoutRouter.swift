@@ -56,6 +56,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             userImageUseCase: userImageUseCase,
             analyticsEventUseCase: analyticsEventUseCase,
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
+            callManager: CallKitCallManager.shared,
             chatRoom: chatRoom,
             call: call
         )

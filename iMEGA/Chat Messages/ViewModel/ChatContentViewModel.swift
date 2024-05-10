@@ -370,8 +370,12 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     private func endCall(_ call: CallEntity) {
-        callUseCase.hangCall(for: call.callId)
-        CallKitManager().endCall(call)
+        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            callManager.endCall(in: chatRoom, endForAll: false)
+        } else {
+            callUseCase.hangCall(for: call.callId)
+            CallKitManager().endCall(call)
+        }
     }
     
     private func manageStartOrJoinCall(videoCall: Bool, notRinging: Bool) {

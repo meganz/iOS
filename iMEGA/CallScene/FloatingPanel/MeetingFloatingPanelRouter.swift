@@ -91,6 +91,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             selectWaitingRoomList: selectWaitingRoomList,
             headerConfigFactory: MeetingFloatingPanelHeaderConfigFactory(infoBannerFactory: MeetingFloatingPanelBannerFactory()),
+            callManager: CallKitCallManager.shared,
             featureFlags: DIContainer.featureFlagProvider,
             presentUpgradeFlow: showUpgradeFlow
         )
