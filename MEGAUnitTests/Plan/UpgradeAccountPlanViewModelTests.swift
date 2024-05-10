@@ -11,11 +11,12 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     private let freePlan = AccountPlanEntity(type: .free, name: "Free")
-    private let proI_monthly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .monthly)
-    private let proI_yearly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly)
-    private let proII_monthly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .monthly)
-    private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .yearly)
-    private let proIII_monthly = AccountPlanEntity(type: .proIII, name: "Pro III", subscriptionCycle: .monthly)
+    private let proLite_monthly = AccountPlanEntity(type: .lite, name: "Pro lite", subscriptionCycle: .monthly, price: 1)
+    private let proI_monthly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .monthly, price: 2)
+    private let proI_yearly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly, price: 3)
+    private let proII_monthly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .monthly, price: 4)
+    private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .yearly, price: 5)
+    private let proIII_monthly = AccountPlanEntity(type: .proIII, name: "Pro III", subscriptionCycle: .monthly, price: 6)
     
     // MARK: - Init
     func testInit_registerDelegates_shouldRegisterDelegates() async {
@@ -234,6 +235,62 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             }.store(in: &subscriptions)
         wait(for: [exp], timeout: 0.5)
         
+        XCTAssertNil(sut.recommendedPlanType)
+        XCTAssertNil(sut.selectedPlanType)
+    }
+    
+    func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProLite_shouldBeProI() async {
+        let planList = [proLite_monthly, proI_monthly, proII_monthly, proIII_monthly]
+        let (sut, _) = makeSUT(
+            accountDetails: AccountDetailsEntity(proLevel: .free),
+            planList: planList,
+            viewType: .onboarding
+        )
+        
+        await sut.setUpPlanTask?.value
+
+        XCTAssertEqual(sut.recommendedPlanType, .proI)
+        XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
+    }
+    
+    func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProI_shouldBeProII() async {
+        let planList = [proI_monthly, proII_monthly, proIII_monthly]
+        let (sut, _) = makeSUT(
+            accountDetails: AccountDetailsEntity(proLevel: .free),
+            planList: planList,
+            viewType: .onboarding
+        )
+        
+        await sut.setUpPlanTask?.value
+
+        XCTAssertEqual(sut.recommendedPlanType, .proII)
+        XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
+    }
+    
+    func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProII_shouldBeProIII() async {
+        let planList = [proII_monthly, proIII_monthly]
+        let (sut, _) = makeSUT(
+            accountDetails: AccountDetailsEntity(proLevel: .free),
+            planList: planList,
+            viewType: .onboarding
+        )
+        
+        await sut.setUpPlanTask?.value
+
+        XCTAssertEqual(sut.recommendedPlanType, .proIII)
+        XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
+    }
+    
+    func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProIII_shouldHaveNoRecommendedPlan() async {
+        let planList = [proIII_monthly]
+        let (sut, _) = makeSUT(
+            accountDetails: AccountDetailsEntity(proLevel: .free),
+            planList: planList,
+            viewType: .onboarding
+        )
+        
+        await sut.setUpPlanTask?.value
+
         XCTAssertNil(sut.recommendedPlanType)
         XCTAssertNil(sut.selectedPlanType)
     }
@@ -696,7 +753,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             accountDetails: accountDetails,
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
-            abTestProvider: abTestProvider, 
+            abTestProvider: abTestProvider,
             viewType: viewType,
             router: router
         )
