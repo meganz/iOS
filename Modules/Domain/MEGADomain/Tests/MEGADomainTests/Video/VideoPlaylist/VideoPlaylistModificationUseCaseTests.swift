@@ -147,12 +147,68 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         XCTAssertEqual(result.failure, expectedVideoPlaylistResult.errorCount)
     }
     
+    // MARK: - deleteVideoPlaylists
+    
+    func testDeleteVideoPlaylists_whenEmptyIds_doesNotDeletePlaylist() async {
+        let (sut, userVideoPlaylistsRepository) = makeSUT()
+        
+        _ = await sut.delete(videoPlaylists: [])
+        
+        let messages = await userVideoPlaylistsRepository.messages
+        XCTAssertTrue(messages.isEmpty, "Expect not to call any repository functions")
+    }
+    
+    func testDeleteVideoPlaylists_whenCalled_deletesSinglePlaylist() async {
+        let (sut, userVideoPlaylistsRepository) = makeSUT()
+        let videoPlaylistToDelete = userVideoPlaylist(id: 1)
+        
+        _ = await sut.delete(videoPlaylists: [videoPlaylistToDelete])
+        
+        let messages = await userVideoPlaylistsRepository.messages
+        XCTAssertEqual(messages, [
+            .deleteVideoPlaylist(id: videoPlaylistToDelete.id)
+        ])
+    }
+    
+    func testDeleteVideoPlaylists_whenCalled_deletesMoreThanOnePlaylists() async {
+        let (sut, userVideoPlaylistsRepository) = makeSUT()
+        let videoPlaylistsToDelete = (1...4)
+            .map { userVideoPlaylist(id: HandleEntity($0)) }
+        
+        _ = await sut.delete(videoPlaylists: videoPlaylistsToDelete)
+        
+        let messages = await userVideoPlaylistsRepository.messages
+        XCTAssertEqual(messages.count, videoPlaylistsToDelete.count)
+        XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 1)))
+        XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 2)))
+        XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 3)))
+        XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 4)))
+    }
+    
+    func testDeleteVideoPlaylists_whenFailedToDelete_returnsEmptyIds() async {
+        let (sut, _) = makeSUT(deleteVideoPlaylistResult: .failure(GenericErrorEntity()))
+        
+        let deletedVideoPlaylistIds = await sut.delete(videoPlaylists: [])
+        
+        XCTAssertTrue(deletedVideoPlaylistIds.isEmpty)
+    }
+    
+    func testDeleteVideoPlaylists_whenSuccessDelete_returnsDeletedVideoPlaylistIds() async {
+        let videoPlaylistIdToDelete = userVideoPlaylist(id: 1)
+        let (sut, _) = makeSUT(deleteVideoPlaylistResult: .success(videoPlaylistIdToDelete))
+        
+        let deletedVideoPlaylistIds = await sut.delete(videoPlaylists: [videoPlaylistIdToDelete])
+        
+        XCTAssertEqual(deletedVideoPlaylistIds, [videoPlaylistIdToDelete])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
         videoPlaylistsResult: [SetEntity] = [],
         addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
-        deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity())
+        deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
+        deleteVideoPlaylistResult: Result<VideoPlaylistEntity, any Error> = .failure(GenericErrorEntity())
     ) -> (
         sut: VideoPlaylistModificationUseCase,
         userVideoPlaylistsRepository: MockUserVideoPlaylistsRepository
@@ -160,7 +216,8 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         let userVideoPlaylistsRepository = MockUserVideoPlaylistsRepository(
             videoPlaylistsResult: videoPlaylistsResult,
             addVideosToVideoPlaylistResult: addVideosToVideoPlaylistResult,
-            deleteVideosResult: deleteVideosResult
+            deleteVideosResult: deleteVideosResult,
+            deleteVideoPlaylistResult: deleteVideoPlaylistResult
         )
         let sut = VideoPlaylistModificationUseCase(userVideoPlaylistsRepository: userVideoPlaylistsRepository)
         return (sut, userVideoPlaylistsRepository)
@@ -188,4 +245,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         )
     }
     
+    private func userVideoPlaylist(id: HandleEntity) -> VideoPlaylistEntity {
+        VideoPlaylistEntity(id: id, name: "name: \(id)", count: 0, type: .user)
+    }
 }

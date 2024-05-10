@@ -70,6 +70,7 @@ public final class MockSdk: MEGASdk {
     public enum Message: Equatable, Hashable {
         case publicNodeForMegaFileLink(String)
         case createSetElement(_ sid: MEGAHandle, nodeId: MEGAHandle, name: String?)
+        case removeSet(sid: MEGAHandle)
     }
     
     public var hasGlobalDelegate = false
@@ -368,6 +369,7 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func removeSet(_ sid: MEGAHandle, delegate: any MEGARequestDelegate) {
+        messages.append(.removeSet(sid: sid))
         let mockRequest = MockRequest(handle: 1, parentHandle: sid)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())

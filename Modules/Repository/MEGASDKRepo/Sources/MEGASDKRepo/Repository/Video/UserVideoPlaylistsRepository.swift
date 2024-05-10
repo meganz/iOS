@@ -83,6 +83,26 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
         }
     }
     
+    // MARK: - deleteVideoPlaylist
+    
+    public func deleteVideoPlaylist(by videoPlaylist: VideoPlaylistEntity) async throws -> VideoPlaylistEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            sdk.removeSet(videoPlaylist.id, delegate: RequestDelegate { result in
+                guard Task.isCancelled == false else { 
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
+                switch result {
+                case .success:
+                    continuation.resume(returning: videoPlaylist)
+                case .failure:
+                    continuation.resume(throwing: GenericErrorEntity())
+                }
+            })
+        }
+    }
+    
     // MARK: - videoPlaylistContent
     
     public func videoPlaylistContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {

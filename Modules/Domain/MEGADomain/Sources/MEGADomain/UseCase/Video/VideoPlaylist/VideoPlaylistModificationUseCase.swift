@@ -1,6 +1,7 @@
 public protocol VideoPlaylistModificationUseCaseProtocol {
     func addVideoToPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity
     func deleteVideos(in videoPlaylistId: HandleEntity, videos: [VideoPlaylistVideoEntity]) async throws -> VideoPlaylistElementsResultEntity
+    func delete(videoPlaylists: [VideoPlaylistEntity]) async -> [VideoPlaylistEntity]
 }
 
 public struct VideoPlaylistModificationUseCase: VideoPlaylistModificationUseCaseProtocol {
@@ -31,5 +32,19 @@ public struct VideoPlaylistModificationUseCase: VideoPlaylistModificationUseCase
             success: createSetElementsResultEntity.successCount,
             failure: createSetElementsResultEntity.errorCount
         )
+    }
+    
+    public func delete(videoPlaylists: [VideoPlaylistEntity]) async -> [VideoPlaylistEntity] {
+        await withTaskGroup(of: VideoPlaylistEntity?.self) { group in
+            videoPlaylists.forEach { videoPlaylist in
+                _ = group.addTaskUnlessCancelled {
+                    try? await userVideoPlaylistsRepository.deleteVideoPlaylist(by: videoPlaylist)
+                }
+            }
+            
+            return await group.reduce(into: [VideoPlaylistEntity](), {
+                if let id = $1 { $0.append(id) }
+            })
+        }
     }
 }
