@@ -1,22 +1,31 @@
-final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
-    private weak var callsCoordinator: (any CallsCoordinatorProtocol)?
-    private weak var callManager: (any CallManagerProtocol)?
-    
-    let provider: CXProvider = {
+struct DefaultCXProviderFactory {
+    private var providerConfig: CXProviderConfiguration {
         let providerConfig = CXProviderConfiguration()
         providerConfig.supportsVideo = true
         providerConfig.maximumCallsPerCallGroup = 1
         providerConfig.maximumCallGroups = 1
         providerConfig.supportedHandleTypes = [.generic, .emailAddress]
         providerConfig.iconTemplateImageData = UIImage.megaIconCall.pngData()
-        
-        return CXProvider(configuration: providerConfig)
-    }()
+        return providerConfig
+    }
+    func build() -> CXProvider {
+        .init(configuration: providerConfig)
+    }
+}
 
-    init(callCoordinator: some CallsCoordinatorProtocol,
-         callManager: some CallManagerProtocol) {
+final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
+    private weak var callsCoordinator: (any CallsCoordinatorProtocol)?
+    private weak var callManager: (any CallManagerProtocol)?
+    let provider: CXProvider
+    
+    init(
+        callCoordinator: some CallsCoordinatorProtocol,
+        callManager: some CallManagerProtocol,
+        cxProviderFactory: () -> CXProvider = { DefaultCXProviderFactory().build() }
+    ) {
         self.callsCoordinator = callCoordinator
         self.callManager = callManager
+        provider = cxProviderFactory()
         super.init()
         provider.setDelegate(self, queue: nil)
     }
@@ -56,7 +65,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
             manageActionSuccess(action, success: success)
         }
     }
-
+    
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
         MEGALogDebug("[CallKit] Provider perform end call action")
         guard let callsCoordinator, let callManager,
@@ -69,11 +78,11 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
             success ? action.fulfill() : action.fail()
         }
     }
-
+    
     func provider(_ provider: CXProvider, perform action: CXSetHeldCallAction) {
         
     }
-
+    
     func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
         MEGALogDebug("[CallKit] Provider perform muted call action - is muted: \(action.isMuted)")
         guard let callsCoordinator, let callManager else {
@@ -97,11 +106,11 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
     func provider(_ provider: CXProvider, timedOutPerforming action: CXAction) {
         MEGALogDebug("[CallKit] Provider time out performing action \(action)")
     }
-
+    
     func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
         MEGALogDebug("[CallKit] Provider did activate audio session")
     }
-
+    
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
         MEGALogDebug("[CallKit] Provider did deactivate audio session")
     }

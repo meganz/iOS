@@ -11,6 +11,7 @@ final class MockCallManager: CallManagerProtocol {
     var removeCall_CalledTimes = 0
     var removeAllCalls_CalledTimes = 0
     var addCall_CalledTimes = 0
+    var callForUUIDToReturn: CallActionSync?
     var updateCallMuted_CalledTimes = 0
 
     func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool) {
@@ -36,7 +37,7 @@ final class MockCallManager: CallManagerProtocol {
 
     func call(forUUID uuid: UUID) -> CallActionSync? {
         callForUUID_CalledTimes += 1
-        return nil
+        return callForUUIDToReturn
     }
     
     func removeCall(withUUID uuid: UUID) {

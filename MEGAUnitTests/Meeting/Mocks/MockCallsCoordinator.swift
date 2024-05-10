@@ -9,25 +9,29 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     var reportIncomingCall_CalledTimes = 0
     var reportEndCall_CalledTimes = 0
     var disablePassCodeIfNeeded_CalledTimes = 0
-
+    var startCallResult_ToReturn = false
+    var answerCallResult_ToReturn = false
+    var endCallResult_ToReturn = false
+    var muteCallResult_ToReturn = false
+    
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
         startCall_CalledTimes += 1
-        return false
+        return startCallResult_ToReturn
     }
     
     func answerCall(_ callActionSync: CallActionSync) async -> Bool {
         answerCall_CalledTimes += 1
-        return false
+        return answerCallResult_ToReturn
     }
     
     func endCall(_ callActionSync: CallActionSync) async -> Bool {
         endCall_CalledTimes += 1
-        return false
+        return endCallResult_ToReturn
     }
     
     func muteCall(_ callActionSync: CallActionSync) async -> Bool {
         muteCall_CalledTimes += 1
-        return false
+        return muteCallResult_ToReturn
     }
     
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {

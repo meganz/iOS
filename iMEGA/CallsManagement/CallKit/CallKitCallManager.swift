@@ -1,17 +1,35 @@
 import MEGADomain
+import MEGASwift
+
+protocol CallControlling {
+    func request(_ transaction: CXTransaction, completion: @escaping ((any Error)?) -> Void)
+    func request(_ transaction: CXTransaction) async throws
+    func requestTransaction(with actions: [CXAction], completion: @escaping ((any Error)?) -> Void)
+    func requestTransaction(with actions: [CXAction]) async throws
+    func requestTransaction(with action: CXAction, completion: @escaping ((any Error)?) -> Void)
+    func requestTransaction(with action: CXAction) async throws
+}
+
+extension CXCallController: CallControlling {}
 
 final class CallKitCallManager {
-    static var shared = CallKitCallManager()
-
-    private let callController = CXCallController()
-    
-    private var callsDictionary = [UUID: CallActionSync]()
+    static var shared = CallKitCallManager(callController: CXCallController(), uuidFactory: { UUID() })
+    private let callController: any CallControlling
+    private let uuidFactory: () -> UUID
+    @Atomic private var callsDictionary = [UUID: CallActionSync]()
+    init(
+        callController: any CallControlling,
+        uuidFactory: @escaping () -> UUID
+    ) {
+        self.callController = callController
+        self.uuidFactory = uuidFactory
+    }
 }
 
 extension CallKitCallManager: CallManagerProtocol {
     
     func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool) {
-        let startCallUUID = UUID()
+        let startCallUUID = uuidFactory()
         let callKitHandle = CXHandle(type: .generic, value: chatIdBase64Handle)
         let startCallAction = CXStartCallAction(call: startCallUUID, handle: callKitHandle)
         startCallAction.isVideo = hasVideo
@@ -19,9 +37,12 @@ extension CallKitCallManager: CallManagerProtocol {
 
         let transaction = CXTransaction(action: startCallAction)
         callController.request(transaction) { [weak self] error in
+            guard let self else { return }
             if error == nil {
                 MEGALogDebug("[CallKit]: Controller Call started")
-                self?.callsDictionary[startCallUUID] = CallActionSync(chatRoom: chatRoom, videoEnabled: hasVideo, notRinging: notRinging)
+                $callsDictionary.mutate {
+                    $0[startCallUUID] = CallActionSync(chatRoom: chatRoom, videoEnabled: hasVideo, notRinging: notRinging)
+                }
             } else {
                 MEGALogError("[CallKit]: Controller error starting call: \(error!.localizedDescription)")
             }
@@ -29,13 +50,16 @@ extension CallKitCallManager: CallManagerProtocol {
     }
     
     func answerCall(in chatRoom: ChatRoomEntity) {
-        let answerCallUUID = UUID()
+        let answerCallUUID = uuidFactory()
         let answerCallAction = CXAnswerCallAction(call: answerCallUUID)
         let transaction = CXTransaction(action: answerCallAction)
         callController.request(transaction) { [weak self] error in
+            guard let self else { return }
             if error == nil {
                 MEGALogDebug("[CallKit]: Controller Call answered")
-                self?.callsDictionary[answerCallUUID] = CallActionSync(chatRoom: chatRoom, audioEnabled: !chatRoom.isMeeting)
+                $callsDictionary.mutate {
+                    $0[answerCallUUID] = CallActionSync(chatRoom: chatRoom, audioEnabled: !chatRoom.isMeeting)
+                }
             } else {
                 MEGALogError("[CallKit]: Controller error answering call: \(error!.localizedDescription)")
             }
@@ -48,8 +72,10 @@ extension CallKitCallManager: CallManagerProtocol {
         if endForAll {
             var endCallSync = callsDictionary[callUUID]
             endCallSync?.endForAll = true
-            callsDictionary[callUUID] = endCallSync
-        }        
+            $callsDictionary.mutate {
+                $0[callUUID] = endCallSync
+            }
+        }
         
         let endCallAction = CXEndCallAction(call: callUUID)
         
@@ -87,18 +113,26 @@ extension CallKitCallManager: CallManagerProtocol {
     }
     
     func removeCall(withUUID uuid: UUID) {
-        callsDictionary.removeValue(forKey: uuid)
+        $callsDictionary.mutate {
+            $0.removeValue(forKey: uuid)
+        }
     }
     
     func removeAllCalls() {
-        callsDictionary.removeAll()
+        $callsDictionary.mutate {
+            $0.removeAll()
+        }
     }
     
     func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
-        callsDictionary[uuid] = CallActionSync(chatRoom: chatRoom)
+        $callsDictionary.mutate {
+            $0[uuid] = CallActionSync(chatRoom: chatRoom)
+        }
     }
     
     func updateCall(withUUID uuid: UUID, muted: Bool) {
-        callsDictionary[uuid]?.audioEnabled = !muted
+        $callsDictionary.mutate {
+            $0[uuid]?.audioEnabled = !muted
+        }
     }
 }
