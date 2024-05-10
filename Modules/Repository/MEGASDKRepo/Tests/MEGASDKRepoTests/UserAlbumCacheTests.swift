@@ -78,4 +78,46 @@ final class UserAlbumCacheTests: XCTestCase {
         let result = await sut.albumElementIds(forAlbumId: albumId)
         XCTAssertNil(result)
     }
+    
+    func testInsertAlbumPhotoIdEntity_afterExistingElementsAreSet_shouldIncludeToCache() async {
+        let albumId = HandleEntity(54)
+        let albumElements = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 56, nodeId: 65),
+                             AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 665, nodeId: 976)]
+        let insertedElement = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 66, nodeId: 66)
+        
+        let sut = UserAlbumCache.shared
+        await sut.setAlbumElementIds(forAlbumId: albumId, elementIds: albumElements)
+       
+        await sut.insert(elements: [insertedElement])
+        
+        let result = await sut.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(result, albumElements + [insertedElement])
+    }
+    
+    func testInsertAlbumPhotoIdEntity_noExistingElementSetCache_shouldIncludeToCache() async {
+        let albumId = HandleEntity(54)
+
+        let insertedElement = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 66, nodeId: 66)
+        
+        let sut = UserAlbumCache.shared
+        await sut.insert(elements: [insertedElement])
+        
+        let result = await sut.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(result, [insertedElement])
+    }
+    
+    func testRemoveAlbumPhotoIdEntity_shouldRemoveFromCache() async {
+        let albumId = HandleEntity(54)
+        let albumElements = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 56, nodeId: 65),
+                             AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 665, nodeId: 976)]
+        let toBeDeletedElement = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 66, nodeId: 66)
+        
+        let sut = UserAlbumCache.shared
+        await sut.setAlbumElementIds(forAlbumId: albumId, elementIds: albumElements + [toBeDeletedElement])
+       
+        await sut.remove(elements: [toBeDeletedElement])
+        
+        let result = await sut.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(result, albumElements)
+    }
 }

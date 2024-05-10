@@ -43,6 +43,17 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     public func setAlbumElementIds(forAlbumId id: HandleEntity, elementIds: [AlbumPhotoIdEntity]) {
         albumsElementIds[id] = elementIds
     }
+    
+    public func insert(elements: [AlbumPhotoIdEntity]) {
+        elements.forEach {
+            let albumId = $0.albumId
+            if albumsElementIds[albumId] == nil {
+                albumsElementIds[albumId] = [$0]
+            } else {
+                albumsElementIds[albumId]?.append($0)
+            }
+        }
+    }
         
     public func removeAllCachedValues(forced: Bool) {
         _albums.removeAll()
@@ -61,6 +72,12 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     public func removeElements(of albums: any Sequence<HandleEntity>) {
         albums.forEach {
             albumsElementIds.removeValue(forKey: $0)
+        }
+    }
+    
+    public func remove(elements: any Sequence<AlbumPhotoIdEntity>) {
+        elements.forEach {
+            albumsElementIds[$0.albumId]?.remove(object: $0)
         }
     }
     
