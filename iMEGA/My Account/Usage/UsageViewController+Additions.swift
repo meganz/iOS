@@ -20,8 +20,8 @@ extension UsageViewController {
         pieChartSecondaryLabel?.textColor = TokenColors.Text.primary
         pieChartTertiaryLabel?.textColor = TokenColors.Text.secondary
 
-        usagePageControl?.currentPageIndicatorTintColor = TokenColors.Icon.accent
-        usagePageControl?.pageIndicatorTintColor = TokenColors.Icon.secondary
+        usagePageControl?.currentPageIndicatorTintColor = TokenColors.Background.surface3
+        usagePageControl?.pageIndicatorTintColor = TokenColors.Background.surface2
 
         [usageBottomSeparatorView, cloudDriveBottomSeparatorView, backupsBottomSeparatorView, rubbishBinBottomSeparatorView, incomingSharesBottomSeparatorView].forEach { view in
             view?.backgroundColor = TokenColors.Border.strong
@@ -133,6 +133,8 @@ extension UsageViewController {
         backupsLabel?.text = Strings.Localizable.Backups.title
         rubbishBinLabel?.text = Strings.Localizable.rubbishBinLabel
         incomingSharesLabel?.text = Strings.Localizable.incomingShares
+        
+        usagePageControl?.numberOfPages = showTransferQuota ? 2 : 0
     }
     
     var isShowPieChartView: Bool {
