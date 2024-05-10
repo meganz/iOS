@@ -53,6 +53,12 @@ private extension AccountTypeEntity {
             return "Business"
         case .proFlexi:
             return "Pro Flexi"
+        case .starter:
+            return "Starter"
+        case .basic:
+            return "Basic"
+        case .essential:
+            return "Essential"
         }
     }
 }

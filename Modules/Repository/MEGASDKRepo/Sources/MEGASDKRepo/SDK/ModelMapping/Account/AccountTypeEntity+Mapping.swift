@@ -18,6 +18,12 @@ extension MEGAAccountType {
             return .business
         case .proFlexi:
             return .proFlexi
+        case .starter:
+            return .starter
+        case .basic:
+            return .basic
+        case .essential:
+            return .essential
         @unknown default:
             return .free
         }
@@ -41,6 +47,12 @@ extension AccountTypeEntity {
             return .business
         case .proFlexi:
             return .proFlexi
+        case .starter:
+            return .starter
+        case .basic:
+            return .basic
+        case .essential:
+            return .essential
         }
     }
     

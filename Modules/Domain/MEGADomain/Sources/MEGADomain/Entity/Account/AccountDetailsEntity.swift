@@ -6,6 +6,15 @@ public enum AccountTypeEntity: CaseIterable, Sendable {
     case lite
     case business
     case proFlexi
+    case starter
+    case basic
+    case essential
+    
+    static let lowerTierPlans: [AccountTypeEntity] = [.starter, .basic, .essential]
+
+    public var isLowerTierPlan: Bool {
+        return AccountTypeEntity.lowerTierPlans.contains(self)
+    }
 }
 
 public enum SubscriptionStatusEntity: Sendable {
