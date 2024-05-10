@@ -143,9 +143,6 @@ public struct SearchResultsView: View {
                         await viewModel.onItemDisappear(item)
                     }
                 }
-                .task {
-                    await item.loadThumbnail()
-                }
         }
         .listStyle(.plain)
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
