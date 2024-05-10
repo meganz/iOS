@@ -1273,6 +1273,7 @@
 		941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
+		941255522BED03C700058C0D /* CallKitCallManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941255512BED03C700058C0D /* CallKitCallManagerTests.swift */; };
 		9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 9418A7A12ACF84210014C01C /* MEGADesignToken */; };
 		9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB282A4EE5FB002B0077 /* MEGAPermissions */; };
 		9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422494128DB77A2009626E6 /* ContactLinkContentView.swift */; };
@@ -1467,6 +1468,7 @@
 		94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */; };
 		94E7180B283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift */; };
 		94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */; };
+		94EC99BC2BEA37F10007E30C /* CallKitProviderDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EC99BB2BEA37F10007E30C /* CallKitProviderDelegateTests.swift */; };
 		94EFD0B02B0E66C2009247FF /* MyAccountHallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EFD0AF2B0E66C2009247FF /* MyAccountHallRouter.swift */; };
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
 		94F4157C2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */; };
@@ -4015,6 +4017,7 @@
 		940CEE3B2A83DA5E007DD202 /* WarningViewRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewRouting.swift; sourceTree = "<group>"; };
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		940F41362A9ED39200C2543F /* MEGAIntentDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAIntentDomain; sourceTree = "<group>"; };
+		941255512BED03C700058C0D /* CallKitCallManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitCallManagerTests.swift; sourceTree = "<group>"; };
 		9418DB272A4EE5E7002B0077 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		9422494128DB77A2009626E6 /* ContactLinkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkContentView.swift; sourceTree = "<group>"; };
@@ -4215,6 +4218,7 @@
 		94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepositoryTests.swift; sourceTree = "<group>"; };
 		94E7180A283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArchivedChatRoomsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewController+Additions.swift"; sourceTree = "<group>"; };
+		94EC99BB2BEA37F10007E30C /* CallKitProviderDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitProviderDelegateTests.swift; sourceTree = "<group>"; };
 		94EFD0AF2B0E66C2009247FF /* MyAccountHallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallRouter.swift; sourceTree = "<group>"; };
 		94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsDetailsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -8543,7 +8547,6 @@
 			children = (
 				5B9B992F26CD6953006FFBDD /* Favourites */,
 				2599D0C22BE202E8003DC13C /* FileExplorer */,
-				2599D0C22BE202E8003DC13C /* FileExplorer */,
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
 				9961E7242A282FBA004FB05F /* Videos */,
 				943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */,
@@ -12589,6 +12592,8 @@
 			children = (
 				BF8895AA2630F1AB002A18CA /* Mocks */,
 				BFC060F428A0C2DB00BA2AD7 /* Utils */,
+				941255512BED03C700058C0D /* CallKitCallManagerTests.swift */,
+				94EC99BB2BEA37F10007E30C /* CallKitProviderDelegateTests.swift */,
 				992003572B0C09620058FF5F /* CallParticipantCellTests.swift */,
 				838116232BA32565001A2937 /* CallWillEndAlertViewModelTests.swift */,
 				990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */,
@@ -16186,6 +16191,8 @@
 				0E43E1462B2F9F860079700A /* AVViewModelTests.swift in Sources */,
 				99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */,
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
+				941255522BED03C700058C0D /* CallKitCallManagerTests.swift in Sources */,
+				94EC99BC2BEA37F10007E30C /* CallKitProviderDelegateTests.swift in Sources */,
 				94C2884E2BC4253B008BBA3C /* CallLimitationsTests.swift in Sources */,
 				992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
