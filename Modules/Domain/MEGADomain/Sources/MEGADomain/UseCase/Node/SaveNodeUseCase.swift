@@ -65,17 +65,14 @@ public struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRep
 
         if savePhotoInGallery && mediaUseCase.isImage(name) || saveVideoInGallery && mediaUseCase.isVideo(name) || transferInventoryRepository.isSaveToPhotosAppTransfer(transfer) {
             photosLibraryRepository.copyMediaFileToPhotos(at: transferUrl) { error in
-                guard let error else {
+                guard error != nil else {
                     completion(.success(true))
                     return
                 }
                 
                 Task { @MainActor in
-                    if await saveMediaToPhotoFailureHandler.shouldFallbackToMakingOffline() {
-                        moveFileToOffline(name: name, transferUrl: transferUrl, nodeHandle: transfer.nodeHandle)
-                    } else {
-                        completion(.failure(error))
-                    }
+                    guard await saveMediaToPhotoFailureHandler.shouldFallbackToMakingOffline() else { return }
+                    moveFileToOffline(name: name, transferUrl: transferUrl, nodeHandle: transfer.nodeHandle)
                 }
             }
         } else {
