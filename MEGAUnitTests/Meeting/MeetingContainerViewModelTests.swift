@@ -435,6 +435,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        callManager: some CallManagerProtocol = MockCallManager(),
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlag: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> (MeetingContainerViewModel, MockMeetingContainerRouter) {
@@ -454,6 +455,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
                 noUserJoinedUseCase: noUserJoinedUseCase,
                 analyticsEventUseCase: analyticsEventUseCase,
                 megaHandleUseCase: megaHandleUseCase,
+                callManager: callManager,
                 tracker: tracker,
                 featureFlagProvider: featureFlag
             ),

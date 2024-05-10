@@ -53,6 +53,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let callManager: any CallManagerProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
@@ -82,6 +83,7 @@ final class MeetingContainerViewModel: ViewModelType {
          noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
          analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         callManager: some CallManagerProtocol,
          tracker: some AnalyticsTracking = DIContainer.tracker,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
@@ -97,6 +99,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.callManager = callManager
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         
@@ -206,7 +209,11 @@ final class MeetingContainerViewModel: ViewModelType {
     // MARK: - Private
     private func hangCall(presenter: UIViewController?, sender: UIButton?) {
         if !accountUseCase.isGuest {
-            hangAndDismissCall(completion: nil)
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                callManager.endCall(in: chatRoom, endForAll: false)
+            } else {
+                hangAndDismissCall(completion: nil)
+            }
         } else {
             guard let presenter = presenter, let sender = sender else {
                 return
@@ -218,34 +225,42 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func endCallForAll() {
-        if let call = call {
-            if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
-               let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
-                MEGALogDebug("Meeting: Container view model - End call for all - for call id \(callId) and chat id \(chatId)")
-            } else {
-                MEGALogDebug("Meeting: Container view model - End call for all - cannot get the call id and chat id string")
+        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            callManager.endCall(in: chatRoom, endForAll: true)
+        } else {
+            if let call = call {
+                if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
+                   let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
+                    MEGALogDebug("Meeting: Container view model - End call for all - for call id \(callId) and chat id \(chatId)")
+                } else {
+                    MEGALogDebug("Meeting: Container view model - End call for all - cannot get the call id and chat id string")
+                }
+                
+                callKitManager.removeCallRemovedHandler()
+                callUseCase.endCall(for: call.callId)
+                callKitManager.endCall(call)
             }
             
-            callKitManager.removeCallRemovedHandler()
-            callUseCase.endCall(for: call.callId)
-            callKitManager.endCall(call)
+            router.dismiss(animated: true, completion: nil)
         }
-        
-        router.dismiss(animated: true, completion: nil)
     }
     
     private func hangCall() {
-        if let call {
-            if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
-               let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
-                MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
-            } else {
-                MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")
+        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            callManager.endCall(in: chatRoom, endForAll: false)
+        } else {
+            if let call {
+                if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
+                   let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
+                    MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
+                } else {
+                    MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")
+                }
+                callKitManager.muteUnmuteCall(call, muted: false)
+                callKitManager.removeCallRemovedHandler()
+                callUseCase.hangCall(for: call.callId)
+                callKitManager.endCall(call)
             }
-            callKitManager.muteUnmuteCall(call, muted: false)
-            callKitManager.removeCallRemovedHandler()
-            callUseCase.hangCall(for: call.callId)
-            callKitManager.endCall(call)
         }
     }
     
@@ -259,7 +274,11 @@ final class MeetingContainerViewModel: ViewModelType {
            call.hasLocalAudio,
            isOneToOneChat == false,
            isOnlyMyselfInTheMeeting() {
-            callKitManager.muteUnmuteCall(call, muted: true)
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                callManager.muteCall(in: chatRoom, muted: true)
+            } else {
+                callKitManager.muteUnmuteCall(call, muted: true)
+            }
         }
     }
     
@@ -432,7 +451,9 @@ final class MeetingContainerViewModel: ViewModelType {
                 hangAndDismissCall(completion: nil)
             }
         default:
-            break
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                router.dismiss(animated: true, completion: nil)
+            }
         }
     }
     

@@ -157,6 +157,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var userImageUseCase: any UserImageUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
@@ -205,6 +206,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         userImageUseCase: some UserImageUseCaseProtocol,
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        callManager: some CallManagerProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         chatRoom: ChatRoomEntity,
         call: CallEntity,
@@ -223,6 +225,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.userImageUseCase = userImageUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.callManager = callManager
         self.featureFlagProvider = featureFlagProvider
         self.chatRoom = chatRoom
         self.call = call
@@ -1373,7 +1376,11 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
         self.call = call
         if chatRoom.chatType == .oneToOne && call.numberOfParticipants == 1 {
-            callUseCase.hangCall(for: call.callId)
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                callManager.endCall(in: chatRoom, endForAll: false)
+            } else {
+                callUseCase.hangCall(for: call.callId)
+            }
             self.tonePlayer.play(tone: .callEnded)
         }
     }

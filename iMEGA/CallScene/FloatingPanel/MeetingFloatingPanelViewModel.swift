@@ -74,6 +74,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
+    private let callManager: any CallManagerProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var callParticipantsNotInCall = [CallParticipantEntity]()
@@ -151,6 +152,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          chatUseCase: some ChatUseCaseProtocol,
          selectWaitingRoomList: Bool,
          headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol,
+         callManager: some CallManagerProtocol,
          featureFlags: some FeatureFlagProviderProtocol,
          presentUpgradeFlow: @escaping (AccountDetailsEntity) -> Void
     ) {
@@ -168,6 +170,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.chatRoomUseCase = chatRoomUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.chatUseCase = chatUseCase
+        self.callManager = callManager
         self.selectWaitingRoomList = selectWaitingRoomList
         self.selectedParticipantsListTab = selectWaitingRoomList ? .waitingRoom : .inCall
         self.headerConfigFactory = headerConfigFactory
@@ -204,12 +207,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                    meetingFloatingPanelModel: self)
             
         case .muteUnmuteCall(let muted):
-            guard let call = self.call else { return }
-            checkForAudioPermission { granted in
-                let microphoneMuted = granted ? muted : true
-                self.callKitManager.muteUnmuteCall(call, muted: microphoneMuted)
-                self.invokeCommand?(.microphoneMuted(muted: microphoneMuted))
-            }
+            muteCall(muted)
         case .turnCamera(let on):
             checkForVideoPermission {
                 self.turnCamera(on: on) {
@@ -311,7 +309,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
         }
         
-        dispatch(.muteUnmuteCall(mute: !(call?.hasLocalAudio ?? true)))
+        muteCall(!(call?.hasLocalAudio ?? true))
         if isSpeakerEnabled {
             enableLoudSpeaker()
         } else {
@@ -325,6 +323,21 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     // MARK: - Private methods
+    private func muteCall(_ muted: Bool) {
+        MEGALogDebug("[MeetingFloatingPanelViewModel] mute call \(muted)")
+        guard let call = self.call else { return }
+        checkForAudioPermission { [weak self] granted in
+            guard let self else { return }
+            let microphoneMuted = granted ? muted : true
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                callManager.muteCall(in: chatRoom, muted: microphoneMuted)
+            } else {
+                callKitManager.muteUnmuteCall(call, muted: microphoneMuted)
+            }
+            invokeCommand?(.microphoneMuted(muted: microphoneMuted))
+        }
+    }
+    
     private func inviteParticipants() {
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
         
@@ -521,7 +534,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         if (chatRoom.chatType == .group || chatRoom.chatType == .meeting) && chatRoom.ownPrivilege == .moderator && callParticipants.count > 1 {
             containerViewModel?.dispatch(.showHangOrEndCallDialog)
         } else {
-            containerViewModel?.dispatch(.hangCall(presenter: presenter, sender: sender))
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                callManager.endCall(in: chatRoom, endForAll: false)
+            } else {
+                containerViewModel?.dispatch(.hangCall(presenter: presenter, sender: sender))
+            }
         }
     }
     

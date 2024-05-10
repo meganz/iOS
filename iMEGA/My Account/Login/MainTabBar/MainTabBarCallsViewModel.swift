@@ -238,10 +238,15 @@ class MainTabBarCallsViewModel: ViewModelType {
             self?.showRecordingAlert(username, call)
         } leaveCallAction: { [weak self] in
             guard let self else { return }
-            if isCallUIVisible {
-                router.dismissCallUI()
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+                callManager.endCall(in: chatRoom, endForAll: false)
             } else {
-                callUseCase.hangCall(for: call.callId)
+                if isCallUIVisible {
+                    router.dismissCallUI()
+                } else {
+                    callUseCase.hangCall(for: call.callId)
+                }
             }
         }
     }

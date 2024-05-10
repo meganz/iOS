@@ -84,18 +84,21 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
         let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: .shared))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
-        let viewModel = MeetingContainerViewModel(router: self,
-                                                  chatRoom: chatRoom,
-                                                  callUseCase: createCallUseCase,
-                                                  chatRoomUseCase: chatRoomUseCase,
-                                                  chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-                                                  scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),
-                                                  callKitManager: CallKitManager(),
-                                                  accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                                                  authUseCase: DIContainer.authUseCase,
-                                                  noUserJoinedUseCase: meetingNoUserJoinedUseCase,
-                                                  analyticsEventUseCase: analyticsEventUseCase,
-                                                  megaHandleUseCase: megaHandleUseCase)
+        let viewModel = MeetingContainerViewModel(
+            router: self,
+            chatRoom: chatRoom,
+            callUseCase: createCallUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),
+            callKitManager: CallKitManager(),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            authUseCase: DIContainer.authUseCase,
+            noUserJoinedUseCase: meetingNoUserJoinedUseCase,
+            analyticsEventUseCase: analyticsEventUseCase,
+            megaHandleUseCase: megaHandleUseCase,
+            callManager: CallKitCallManager.shared
+        )
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         containerViewModel = viewModel

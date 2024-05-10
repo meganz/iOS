@@ -54,7 +54,8 @@ extension MeetingFloatingPanelViewModel {
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         selectWaitingRoomList: Bool = false,
-        headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol
+        headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol,
+        callManager: some CallManagerProtocol = MockCallManager()
     ) -> MeetingFloatingPanelViewModel {
         .init(
             router: router,
@@ -73,6 +74,7 @@ extension MeetingFloatingPanelViewModel {
             chatUseCase: chatUseCase,
             selectWaitingRoomList: selectWaitingRoomList,
             headerConfigFactory: headerConfigFactory,
+            callManager: callManager,
             featureFlags: MockFeatureFlagProvider(list: .init()),
             presentUpgradeFlow: {_ in }
         )
