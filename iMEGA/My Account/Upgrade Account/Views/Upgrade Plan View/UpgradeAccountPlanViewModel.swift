@@ -13,6 +13,10 @@ enum UpgradeAccountPlanTarget {
     case buyPlan, restorePlan, termsAndPolicies
 }
 
+enum UpgradeAccountPlanViewType {
+    case onboarding, upgrade
+}
+
 final class UpgradeAccountPlanViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private let accountUseCase: any AccountUseCaseProtocol
@@ -21,6 +25,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let router: any UpgradeAccountPlanRouting
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
+    private(set) var viewType: UpgradeAccountPlanViewType
     @Published var isExternalAdsActive: Bool = false
     
     private(set) var alertType: UpgradeAccountPlanAlertType?
@@ -57,12 +62,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+        viewType: UpgradeAccountPlanViewType,
         router: any UpgradeAccountPlanRouting
     ) {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
         self.accountDetails = accountDetails
         self.abTestProvider = abTestProvider
+        self.viewType = viewType
         self.router = router
         registerDelegates()
         setupPlans()

@@ -22,28 +22,25 @@ public struct OnboardingWithViewProPlansView: View {
             backgroundColor.edgesIgnoringSafeArea(.all)
             
             ScrollView(showsIndicators: false) {
-                LazyVStack(spacing: 30, pinnedViews: .sectionFooters) {
-                    Section {
-                        OnboardingProPlanHeaderView(
-                            lowestPlanPrice: viewModel.lowestProPlan.formattedPrice,
-                            accountsConfig: accountsConfig
-                        )
-                        .padding(.top, 30)
-                        
-                        OnboardingProPlanContentView(viewModel: viewModel, accountsConfig: accountsConfig)
-                    } footer: {
-                        VStack(spacing: 15) {
-                            PrimaryActionButtonView(title: Strings.Localizable.Onboarding.UpgradeAccount.Button.viewProPlans) {
-                                viewModel.showProPlanView()
-                            }
-                            
-                            SecondaryActionButtonView(title: Strings.Localizable.skipButton) {
-                                dismiss()
-                            }
+                VStack(spacing: 30) {
+                    OnboardingProPlanHeaderView(
+                        lowestPlanPrice: viewModel.lowestProPlan.formattedPrice,
+                        accountsConfig: accountsConfig
+                    )
+                    .padding(.top, 30)
+                    
+                    OnboardingProPlanContentView(viewModel: viewModel, accountsConfig: accountsConfig)
+                    
+                    VStack(spacing: 15) {
+                        PrimaryActionButtonView(title: Strings.Localizable.Onboarding.UpgradeAccount.Button.viewProPlans) {
+                            viewModel.showProPlanView()
                         }
-                        .padding(EdgeInsets(top: 10, leading: 2, bottom: 20, trailing: 2))
-                        .background(backgroundColor)
+                        
+                        SecondaryActionButtonView(title: Strings.Localizable.skipButton) {
+                            dismiss()
+                        }
                     }
+                    .padding(EdgeInsets(top: 10, leading: 2, bottom: 20, trailing: 2))
                 }
                 .padding(.horizontal, 16)
                 .frame(maxWidth: 390)
