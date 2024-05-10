@@ -63,6 +63,10 @@ extension NodeTableViewCell {
         configureIconImageColor(for: downloadedImageView)
     }
     
+    @objc func createViewModel(node: MEGANode?) -> NodeTableViewCellViewModel {
+        createViewModel(nodes: [node].compactMap { $0 })
+    }
+    
     @objc func createViewModel(nodes: [MEGANode]) -> NodeTableViewCellViewModel {
         .init(nodes: nodes.toNodeEntities(),
               flavour: cellFlavor,

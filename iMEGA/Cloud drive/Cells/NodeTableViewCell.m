@@ -63,7 +63,7 @@
 
 - (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api {
     self.node = node;
-    [self bindWithViewModel:[self createViewModelWithNodes:@[node]]];
+    [self bindWithViewModel:[self createViewModelWithNode:node]];
 
     if (UIColor.isDesignTokenEnabled) {
         [self updateWithTrait:self.traitCollection];
