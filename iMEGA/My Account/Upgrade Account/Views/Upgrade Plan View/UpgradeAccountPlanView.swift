@@ -38,7 +38,7 @@ struct UpgradeAccountPlanView: View {
             cancelButton
             
             ScrollView {
-                LazyVStack(pinnedViews: .sectionFooters) {
+                LazyVStack(pinnedViews: viewModel.viewType == .upgrade ? .sectionFooters : .init()) {
                     UpgradeSectionHeaderView(currentPlanName: viewModel.currentPlanName,
                                              selectedCycleTab: $viewModel.selectedCycleTab,
                                              subMessageBackgroundColor:

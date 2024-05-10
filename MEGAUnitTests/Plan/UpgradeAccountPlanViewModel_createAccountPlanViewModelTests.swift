@@ -218,7 +218,8 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     private func makeSUT(
         accountDetails: AccountDetailsEntity,
         currentAccountDetails: AccountDetailsEntity? = nil,
-        planList: [AccountPlanEntity] = []
+        planList: [AccountPlanEntity] = [],
+        viewType: UpgradeAccountPlanViewType = .upgrade
     ) -> UpgradeAccountPlanViewModel {
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         let mockAccountUseCase = MockAccountUseCase(currentAccountDetails: currentAccountDetails)
@@ -226,6 +227,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
             accountDetails: accountDetails,
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
+            viewType: viewType,
             router: MockUpgradeAccountPlanRouter()
         )
         return sut

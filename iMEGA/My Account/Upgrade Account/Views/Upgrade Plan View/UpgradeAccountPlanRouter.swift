@@ -15,14 +15,16 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
     private weak var baseViewController: UIViewController?
     private var accountDetails: AccountDetailsEntity
     private let accountUseCase: any AccountUseCaseProtocol
-
+    private let viewType: UpgradeAccountPlanViewType
+    
     init(
         presenter: UIViewController,
-        accountDetails: AccountDetailsEntity
+        accountDetails: AccountDetailsEntity,
+        viewType: UpgradeAccountPlanViewType = .upgrade
     ) {
         self.presenter = presenter
         self.accountDetails = accountDetails
-        
+        self.viewType = viewType
         accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
     }
 
@@ -31,6 +33,7 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
             accountDetails: accountDetails,
             accountUseCase: accountUseCase,
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            viewType: viewType, 
             router: self
         )
         

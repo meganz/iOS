@@ -104,16 +104,17 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
             presenter: UIApplication.mnz_presentingViewController(),
             accountsConfig: accountsConfig,
             viewProPlanAction: {
-                UpgradeAccountRouter(purchase: self.purchase).presentUpgradeTVC()
+                UpgradeAccountRouter().presentNewPlanPage(viewType: .onboarding)
             }
         ).start()
     }
     
-    private func presentNewPlanPage() {
+    private func presentNewPlanPage(viewType: UpgradeAccountPlanViewType) {
         guard let accountDetails = MEGASdk.shared.mnz_accountDetails else { return }
         UpgradeAccountPlanRouter(
             presenter: UIApplication.mnz_presentingViewController(),
-            accountDetails: accountDetails.toAccountDetailsEntity()
+            accountDetails: accountDetails.toAccountDetailsEntity(), 
+            viewType: viewType
         ).start()
     }
     
@@ -140,7 +141,7 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
         case UpgradeAccountError.reachability:
             MEGAReachabilityManager.isReachableHUDIfNot()
         case UpgradeAccountError.newPlanPageRequired:
-            presentNewPlanPage()
+            presentNewPlanPage(viewType: .upgrade)
         default:
             MEGALogError("[Upgrade Account] Could not show the upgrade with error \(error)")
         }

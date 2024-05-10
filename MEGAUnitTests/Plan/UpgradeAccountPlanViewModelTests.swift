@@ -686,7 +686,8 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         accountDetails: AccountDetailsEntity,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [AccountPlanEntity] = [],
-        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA])
+        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA]),
+        viewType: UpgradeAccountPlanViewType = .upgrade
     ) -> (UpgradeAccountPlanViewModel, MockAccountPlanPurchaseUseCase) {
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         let mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
@@ -695,7 +696,8 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             accountDetails: accountDetails,
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
-            abTestProvider: abTestProvider,
+            abTestProvider: abTestProvider, 
+            viewType: viewType,
             router: router
         )
         return (sut, mockPurchaseUseCase)

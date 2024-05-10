@@ -11,18 +11,18 @@ public struct OnboardingWithProPlanListView: View {
     
     @Environment(\.colorScheme) private var colorScheme
     private var backgroundColor: Color {
-       guard isDesignTokenEnabled else {
-           return colorScheme == .dark ? Color(red: 28/255, green: 28/255, blue: 30/255) : .white
-       }
-       return TokenColors.Background.page.swiftUI
-   }
+        guard isDesignTokenEnabled else {
+            return colorScheme == .dark ? Color(red: 28/255, green: 28/255, blue: 30/255) : .white
+        }
+        return TokenColors.Background.page.swiftUI
+    }
     
     public var body: some View {
         ZStack {
             backgroundColor.edgesIgnoringSafeArea(.all)
             
             ScrollView(showsIndicators: false) {
-                LazyVStack(spacing: 10, pinnedViews: .sectionFooters) {
+                VStack(spacing: 10) {
                     OnboardingProPlanHeaderView(
                         lowestPlanPrice: viewModel.lowestProPlan.formattedPrice,
                         accountsConfig: accountsConfig,
@@ -47,14 +47,13 @@ public struct OnboardingWithProPlanListView: View {
                                 viewModel.trackProIIICardDisplayedEvent()
                             }
                         }
-                    } footer: {
-                        PrimaryActionButtonView(title: Strings.Localizable.continue) {
-                            viewModel.purchaseSelectedPlan()
-                        }
-                        .padding(.vertical)
-                        .frame(maxWidth: .infinity)
-                        .background(Color("background_regular_primaryElevated"))
                     }
+                    
+                    PrimaryActionButtonView(title: Strings.Localizable.continue) {
+                        viewModel.purchaseSelectedPlan()
+                    }
+                    .padding(.vertical)
+                    .frame(maxWidth: .infinity)
                     
                     UpgradeSectionSubscriptionView()
                     
