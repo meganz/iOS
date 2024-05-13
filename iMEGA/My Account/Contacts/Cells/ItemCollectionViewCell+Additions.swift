@@ -8,8 +8,8 @@ extension ItemCollectionViewCell {
     open override func prepareForReuse() {
         viewModel = nil
         cancellables = []
-        avatarImageView.image = nil
-        avatarImageView.removeBlurFromView()
+        avatarImageView?.image = nil
+        avatarImageView?.removeBlurFromView()
         super.prepareForReuse()
     }
     
