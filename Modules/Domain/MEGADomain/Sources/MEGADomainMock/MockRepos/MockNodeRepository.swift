@@ -12,7 +12,6 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     private let nodeAccessLevel: NodeAccessTypeEntity
     private let childNodeNamed: NodeEntity?
     private let childNode: NodeEntity?
-    private let images: [NodeEntity]
     private let fileLinkNode: NodeEntity?
     private let childNodes: [String: NodeEntity]
     @Atomic public var childrenNodes: [NodeEntity] = []
@@ -27,7 +26,6 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         nodeAccessLevel: NodeAccessTypeEntity = .unknown,
         childNodeNamed: NodeEntity? = nil,
         childNode: NodeEntity? = nil,
-        images: [NodeEntity] = [],
         fileLinkNode: NodeEntity? = nil,
         childNodes: [String: NodeEntity] = [:],
         childrenNodes: [NodeEntity] = [],
@@ -42,7 +40,6 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         self.nodeAccessLevel = nodeAccessLevel
         self.childNodeNamed = childNodeNamed
         self.childNode = childNode
-        self.images = images
         self.fileLinkNode = fileLinkNode
         self.childNodes = childNodes
         self.parentNodes = parentNodes
@@ -78,14 +75,6 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
                           name: String,
                           type: NodeTypeEntity) async -> NodeEntity? {
         childNodes[name]
-    }
-    
-    public func images(for parentNode: NodeEntity) -> [NodeEntity] {
-        images
-    }
-    
-    public func images(for parentHandle: HandleEntity) -> [NodeEntity] {
-        images
     }
     
     public func rubbishNode() -> NodeEntity? {
