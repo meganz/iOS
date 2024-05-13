@@ -9,4 +9,5 @@ struct CallActionSync {
     var videoEnabled: Bool = false
     var notRinging: Bool = false
     var endForAll: Bool = false
+    var isJoiningActiveCall: Bool = false
 }
