@@ -43,7 +43,7 @@ public struct OnboardingWithViewProPlansView: View {
                     .padding(EdgeInsets(top: 10, leading: 2, bottom: 20, trailing: 2))
                 }
                 .padding(.horizontal, 16)
-                .frame(maxWidth: 390)
+                .frame(maxWidth: 768)
             }
             .clipped()
         }
