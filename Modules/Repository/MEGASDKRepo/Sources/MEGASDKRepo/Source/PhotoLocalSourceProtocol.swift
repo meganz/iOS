@@ -1,6 +1,9 @@
 import MEGADomain
 
 public protocol PhotoLocalSourceProtocol: Actor {
+    /// Flag to indicate that the cache was forcefully cleared
+    /// - Returns: Bool
+    var wasForcedCleared: Bool { get }
     /// Retrieve all photos
     var photos: [NodeEntity] { get }
     /// Store photos in source location
@@ -13,5 +16,8 @@ public protocol PhotoLocalSourceProtocol: Actor {
     /// - Parameter handle: HandleEntity for photo to invalidate
     func removePhoto(forHandle handle: HandleEntity)
     /// Remove all photos from source
-    func removeAllPhotos()
+    /// - Parameter forced: Flag to indicate that it was forcefully cleared
+    func removeAllPhotos(forced: Bool)
+    /// Clear the forced flag
+    func clearForcedFlag()
 }

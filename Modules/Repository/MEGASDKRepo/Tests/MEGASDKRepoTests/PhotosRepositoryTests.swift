@@ -109,6 +109,43 @@ final class PhotosRepositoryTests: XCTestCase {
         XCTAssertEqual(updatedNodes, expectedNodes)
     }
     
+    func testPhotosUpdated_onCacheForcedClearedMonitoringStopped_shouldRePrimeCacheAndClearFlag() async throws {
+        let expectedPhotos = [NodeEntity(handle: 43),
+                              NodeEntity(handle: 99)]
+        let photosRepositoryTaskManager = MockPhotosRepositoryTaskManager(
+            didMonitoringTaskStop: true,
+            loadPhotosResult: .success(expectedPhotos))
+        let photoLocalSource = MockPhotoLocalSource(wasForcedCleared: true)
+        let sut = makeSUT(
+            photoLocalSource: photoLocalSource,
+            photosRepositoryTaskManager: photosRepositoryTaskManager)
+        
+        let result = try await sut.allPhotos()
+        
+        XCTAssertEqual(Set(result), Set(expectedPhotos))
+        
+        let wasForcedCleared = await photoLocalSource.wasForcedCleared
+        XCTAssertFalse(wasForcedCleared)
+    }
+    
+    func testPhotosUpdated_onCacheForcedClearedMonitoringNotStopped_shouldPrimeCacheOnce() async throws {
+        let expectedPhotos = [NodeEntity(handle: 43),
+                              NodeEntity(handle: 99)]
+        let photosRepositoryTaskManager = MockPhotosRepositoryTaskManager(
+            didMonitoringTaskStop: false,
+            loadPhotosResult: .success(expectedPhotos))
+        let photoLocalSource = MockPhotoLocalSource(wasForcedCleared: true)
+        let sut = makeSUT(
+            photoLocalSource: photoLocalSource,
+            photosRepositoryTaskManager: photosRepositoryTaskManager)
+        
+        let result = try await sut.allPhotos()
+        XCTAssertEqual(Set(result), Set(expectedPhotos))
+        
+        let wasForcedCleared = await photoLocalSource.wasForcedCleared
+        XCTAssertFalse(wasForcedCleared)
+    }
+    
     private func makeSUT(sdk: MEGASdk = MockSdk(),
                          photoLocalSource: some PhotoLocalSourceProtocol = MockPhotoLocalSource(),
                          photosRepositoryTaskManager: some PhotosRepositoryTaskManagerProtocol = MockPhotosRepositoryTaskManager()

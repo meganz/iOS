@@ -18,13 +18,13 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     }
     
     public func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]> {
-        await ensureBackgroundMonitoringIsRunning()
+        await updatePhotoBackgroundMonitoring()
         
         return await photosRepositoryTaskManager.photosUpdatedAsyncSequence
     }
     
     public func allPhotos() async throws -> [NodeEntity] {
-        await ensureBackgroundMonitoringIsRunning()
+        await updatePhotoBackgroundMonitoring()
         
         let photosFromSource = await photoLocalSource.photos
         try Task.checkCancellation()
@@ -35,7 +35,7 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     }
     
     public func photo(forHandle handle: HandleEntity) async -> NodeEntity? {
-        await ensureBackgroundMonitoringIsRunning()
+        await updatePhotoBackgroundMonitoring()
         
         if let photoFromSource = await photoLocalSource.photo(forHandle: handle) {
             return photoFromSource
@@ -94,14 +94,37 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     
     // MARK: Monitoring
     
+    /// Unsure that cache is primed and background monitoring is running.
+    private func updatePhotoBackgroundMonitoring() async {
+        await ensureCacheIsPrimedAfterInvalidation()
+        await ensureBackgroundMonitoringIsRunning()
+    }
+    
+    /// Re-prime cache if it was forcefully cleared.
+    private func ensureCacheIsPrimedAfterInvalidation() async {
+        guard await photoLocalSource.wasForcedCleared else { return }
+        if await !didMonitoringTaskStop() {
+            await primeCaches()
+        }
+        await photoLocalSource.clearForcedFlag()
+    }
+    
     /// Monitor photo node updates and ensure that the tasks are still running in the background.
     /// If a monitor task is stopped all tasks will be stopped and cache will be re-primed and monitoring will be restarted to avoid stale data.
     private func ensureBackgroundMonitoringIsRunning() async {
-        guard await photosRepositoryTaskManager.didMonitoringTaskStop() else { return }
+        guard await didMonitoringTaskStop() else { return }
         
         await photosRepositoryTaskManager.stopBackgroundMonitoring()
-        await photoLocalSource.removeAllPhotos()
-        _ = try? await loadAllPhotos()
+        await primeCaches()
         await photosRepositoryTaskManager.startBackgroundMonitoring()
+    }
+    
+    private func primeCaches() async {
+        await photoLocalSource.removeAllPhotos(forced: false)
+        _ = try? await loadAllPhotos()
+    }
+    
+    private func didMonitoringTaskStop() async -> Bool {
+        await photosRepositoryTaskManager.didMonitoringTaskStop()
     }
 }
