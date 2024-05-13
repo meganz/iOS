@@ -203,6 +203,9 @@ final class PhotoCacheRepositoryMonitorsTests: XCTestCase {
 
         let expectedClearedPhotos = await photoLocalSource.photos
         XCTAssertTrue(expectedClearedPhotos.isEmpty)
+        
+        let wasForcedCleared = await photoLocalSource.wasForcedCleared
+        XCTAssertTrue(wasForcedCleared)
         monitorTask.cancel()
     }
     
@@ -241,6 +244,9 @@ final class PhotoCacheRepositoryMonitorsTests: XCTestCase {
         
         let expectedClearedPhotos = await photoLocalSource.photos
         XCTAssertTrue(expectedClearedPhotos.isEmpty)
+        
+        let wasForcedCleared = await photoLocalSource.wasForcedCleared
+        XCTAssertTrue(wasForcedCleared)
         monitorTask.cancel()
     }
 

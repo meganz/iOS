@@ -4,24 +4,17 @@ import MEGADomain
 public final actor PhotosInMemoryCache: PhotoLocalSourceProtocol {
     public static let shared = PhotosInMemoryCache()
     
-    private let cache = NSCache<NSNumber, PhotoNodeEntityEntryProxy>()
-    private let nodeHandleTracker = CacheIdTracker<PhotoNodeEntityEntryProxy>()
+    public private(set) var wasForcedCleared = false
+    
+    private var cache = [HandleEntity: NodeEntity]()
     
     public var photos: [NodeEntity] {
-        nodeHandleTracker.identifiers
-            .compactMap {
-                photo(forHandle: $0)
-            }
-    }
-    
-    private init() {
-        cache.delegate = nodeHandleTracker
+        Array(cache.values)
     }
     
     public func setPhotos(_ photos: [NodeEntity]) {
-        photos.forEach { photo in
-            cache[photo.handle] = photo
-            nodeHandleTracker.$identifiers.mutate { $0.insert(photo.handle) }
+        photos.forEach {
+            cache[$0.handle] = $0
         }
     }
 
@@ -33,34 +26,12 @@ public final actor PhotosInMemoryCache: PhotoLocalSourceProtocol {
         cache[handle] = nil
     }
     
-    public func removeAllPhotos() {
-        cache.removeAllObjects()
+    public func removeAllPhotos(forced: Bool) {
+        cache.removeAll()
+        wasForcedCleared = forced
     }
-}
-
-/// `PhotoNodeEntityCacheEntryProxy` class wrapper thats stored in `NSCache`
-private final class PhotoNodeEntityEntryProxy {
-    let node: NodeEntity
-    init(node: NodeEntity) { self.node = node }
-}
-
-extension PhotoNodeEntityEntryProxy: Identifiable {
-    var id: HandleEntity { node.handle }
-}
-
-private extension NSCache where KeyType == NSNumber, ObjectType == PhotoNodeEntityEntryProxy {
-    subscript(_ handle: HandleEntity) -> NodeEntity? {
-        get {
-            object(forKey: NSNumber(value: handle))?.node
-        }
-        set {
-            let key = NSNumber(value: handle)
-            if let entry = newValue {
-                let value = PhotoNodeEntityEntryProxy(node: entry)
-                setObject(value, forKey: key)
-            } else {
-                removeObject(forKey: key)
-            }
-        }
+    
+    public func clearForcedFlag() {
+        wasForcedCleared = false
     }
 }

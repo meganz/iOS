@@ -172,7 +172,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     /// Monitor album updates will ensure that the tasks are still running in the background. If a child task is stopped all tasks will be stopped and cache will be re-primed
     /// and monitoring will be restarted to avoid stale data.
     private func ensureAlbumUpdateBackgroundMonitoring() async {
-        guard await albumCacheMonitorTaskManager.didChildTaskStop() else { return }
+        guard await didMonitoringTaskStop() else { return }
         
         await albumCacheMonitorTaskManager.stopMonitoring()
         await primeCaches()
@@ -182,7 +182,9 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     private func ensureCacheIsPrimedAfterInvalidation() async {
         guard await userAlbumCache.wasForcedCleared else { return }
         
-        await primeCaches()
+        if await !didMonitoringTaskStop() {
+            await primeCaches()
+        }
         await userAlbumCache.clearForcedFlag()
     }
     
@@ -201,5 +203,9 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
                 }
             }
         }
+    }
+    
+    private func didMonitoringTaskStop() async -> Bool {
+        await albumCacheMonitorTaskManager.didChildTaskStop()
     }
 }

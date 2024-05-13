@@ -94,7 +94,12 @@ final class PhotosRepositoryTaskManagerTests: XCTestCase {
     ) -> PhotosRepositoryTaskManager {
         let sut = PhotosRepositoryTaskManager(photoLocalSource: photoLocalSource,
                                               photoCacheRepositoryMonitors: photoCacheRepositoryMonitors)
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        addTeardownBlock { [weak sut] in
+            // Add sleep to give actor time to deinit. Could not see any retain cycles in instruments or when debugging deinit
+            try await Task.sleep(nanoseconds: 100_000_000)
+            
+            XCTAssertNil(sut, "PhotosRepositoryTaskManager should have been deallocated, potential memory leak.", file: file, line: line)
+        }
         return sut
     }
 }

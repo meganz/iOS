@@ -62,7 +62,7 @@ public struct PhotoCacheRepositoryMonitors: PhotoCacheRepositoryMonitorsProtocol
             guard !Task.isCancelled else {
                 break
             }
-            await photoLocalSource.removeAllPhotos()
+            await photoLocalSource.removeAllPhotos(forced: true)
         }
     }
     

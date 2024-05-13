@@ -3,6 +3,8 @@ import MEGADomain
 import MEGASDKRepo
 
 public actor MockPhotoLocalSource: PhotoLocalSourceProtocol {
+    public var wasForcedCleared: Bool
+    
     private var _photos: [HandleEntity: NodeEntity]
 
     @Published public var removeAllCachedValuesCalledCount = 0
@@ -12,8 +14,10 @@ public actor MockPhotoLocalSource: PhotoLocalSourceProtocol {
         Array(_photos.values)
     }
     
-    public init(photos: [NodeEntity] = []) {
+    public init(photos: [NodeEntity] = [],
+                wasForcedCleared: Bool = false) {
         _photos = Dictionary(uniqueKeysWithValues: photos.map { ($0.handle, $0) })
+        self.wasForcedCleared = wasForcedCleared
     }
     
     public func setPhotos(_ photos: [NodeEntity]) {
@@ -31,8 +35,13 @@ public actor MockPhotoLocalSource: PhotoLocalSourceProtocol {
         _photos[handle] = nil
     }
     
-    public func removeAllPhotos() {
+    public func removeAllPhotos(forced: Bool) {
         _photos.removeAll()
         removeAllCachedValuesCalledCount += 1
+        wasForcedCleared = forced
+    }
+    
+    public func clearForcedFlag() {
+        wasForcedCleared = false
     }
 }

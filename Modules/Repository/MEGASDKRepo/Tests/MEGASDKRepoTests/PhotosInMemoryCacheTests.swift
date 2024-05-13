@@ -6,7 +6,7 @@ final class PhotosInMemoryCacheTests: XCTestCase {
 
     override func tearDown() async throws {
         try await super.tearDown()
-        await PhotosInMemoryCache.shared.removeAllPhotos()
+        await PhotosInMemoryCache.shared.removeAllPhotos(forced: false)
     }
     
     func testPhotos_photosSet_shouldRetrieve() async {
@@ -52,17 +52,37 @@ final class PhotosInMemoryCacheTests: XCTestCase {
         XCTAssertNil(cachedPhoto)
     }
     
-    func testRemoveAllPhotos_onCachedPhotos_shouldRemoveAllValues() async {
+    func testRemoveAllPhotos_onCachedPhotosForcedClear_shouldRemoveAllValuesAndSetFlagToStateProvided() async {
         let photos = [NodeEntity(handle: 8),
                       NodeEntity(handle: 5)
         ]
-        
+        await withTaskGroup(of: Void.self) { taskGroup in
+            [true, false].forEach { forceCleared in
+                taskGroup.addTask {
+                    let sut = PhotosInMemoryCache.shared
+                    await sut.setPhotos(photos)
+                    
+                    await sut.removeAllPhotos(forced: forceCleared)
+                    
+                    let cachedPhotos = await sut.photos
+                    XCTAssertTrue(cachedPhotos.isEmpty)
+                    
+                    let wasForcedCleared = await sut.wasForcedCleared
+                    XCTAssertEqual(wasForcedCleared, wasForcedCleared)
+                }
+            }
+        }
+    }
+    
+    func testClearForcedFlag_onForcedCleared_shouldResetFlag() async {
         let sut = PhotosInMemoryCache.shared
-        await sut.setPhotos(photos)
+        await sut.removeAllPhotos(forced: true)
+        let ensureWasForcedCleared = await sut.wasForcedCleared
+        XCTAssertTrue(ensureWasForcedCleared)
         
-        await sut.removeAllPhotos()
+        await sut.clearForcedFlag()
         
-        let cachedPhotos = await sut.photos
-        XCTAssertTrue(cachedPhotos.isEmpty)
+        let result = await sut.wasForcedCleared
+        XCTAssertFalse(result)
     }
 }

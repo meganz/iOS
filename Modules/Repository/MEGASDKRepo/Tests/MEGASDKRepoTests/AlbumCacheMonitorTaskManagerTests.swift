@@ -49,7 +49,12 @@ final class AlbumCacheMonitorTaskManagerTests: XCTestCase {
         line: UInt = #line
     ) -> AlbumCacheMonitorTaskManager {
         let sut = AlbumCacheMonitorTaskManager(repositoryMonitor: repositoryMonitor)
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        addTeardownBlock { [weak sut] in
+            // Add sleep to give actor time to deinit. Could not see any retain cycles in instruments or when debugging deinit
+            try await Task.sleep(nanoseconds: 100_000_000)
+            
+            XCTAssertNil(sut, "AlbumCacheMonitorTaskManager should have been deallocated, potential memory leak.", file: file, line: line)
+        }
         return sut
     }
 }
