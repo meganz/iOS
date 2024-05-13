@@ -71,6 +71,7 @@ public struct OnboardingWithProPlanListView: View {
                 }
                 .padding(.horizontal, 16)
             }
+            .frame(maxWidth: 768)
             .clipped()
         }
         .onChange(of: viewModel.shouldDismiss) { newValue in

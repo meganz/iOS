@@ -91,7 +91,7 @@ struct UpgradeAccountPlanView: View {
                 .padding()
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: 768, alignment: .leading)
         .clipped()
         .disabled(viewModel.isLoading)
         .task {
