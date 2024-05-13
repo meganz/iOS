@@ -14,8 +14,6 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
     func childNode(parent node: NodeEntity,
                    name: String,
                    type: NodeTypeEntity) async -> NodeEntity?
-    func images(for parentNode: NodeEntity) -> [NodeEntity]
-    func images(for parentHandle: HandleEntity) -> [NodeEntity]
     func rubbishNode() -> NodeEntity?
     func rootNode() -> NodeEntity?
     func parents(of node: NodeEntity) async -> [NodeEntity]

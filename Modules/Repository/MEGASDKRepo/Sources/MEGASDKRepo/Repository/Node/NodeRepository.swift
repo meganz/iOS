@@ -73,18 +73,6 @@ public struct NodeRepository: NodeRepositoryProtocol {
                              type: type.rawValue)?.toNodeEntity()
     }
     
-    public func images(for parentNode: NodeEntity) -> [NodeEntity] {
-        guard let parent = parentNode.toMEGANode(in: sdk) else { return [] }
-        
-        return images(forParentNode: parent)
-    }
-    
-    public func images(for parentHandle: HandleEntity) -> [NodeEntity] {
-        guard let parent = sdk.node(forHandle: parentHandle) else { return [] }
-        
-        return images(forParentNode: parent)
-    }
-    
     public func rubbishNode() -> NodeEntity? {
         sdk.rubbishNode?.toNodeEntity()
     }
@@ -184,14 +172,5 @@ public struct NodeRepository: NodeRepositoryProtocol {
             throw NodeErrorEntity.nodeNotFound
         }
         return sdk.isNodeInheritingSensitivity(node)
-    }
-    
-    // MARK: - Private
-    private func images(forParentNode node: MEGANode) -> [NodeEntity] {
-        let nodeList = sdk.children(forParent: node)
-        let mediaNodes = nodeList.toNodeArray().filter { $0.name?.fileExtensionGroup.isMultiMedia == true }
-        let imageNodes = mediaNodes.filter { $0.name?.fileExtensionGroup.isImage == true }
-        
-        return imageNodes.toNodeEntities()
     }
 }

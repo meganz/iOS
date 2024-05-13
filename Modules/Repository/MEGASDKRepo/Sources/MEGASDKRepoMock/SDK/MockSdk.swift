@@ -4,6 +4,7 @@ import MEGASDKRepo
 public typealias MockSdkRequestResult = Result<MEGARequest, MEGAError>
 
 public final class MockSdk: MEGASdk {
+    private var fileLinkNode: MEGANode?
     private var nodes: [MEGANode]
     private let rubbishNodes: [MEGANode]
     private let syncDebrisNodes: [MEGANode]
@@ -50,6 +51,7 @@ public final class MockSdk: MEGASdk {
     private var _hasVersionsForNode: Bool
     private let setUserAttributeTypeMegaSetError: (MEGAUserAttribute) -> MEGAErrorType
     private let _outgoingContactRequests: MEGAContactRequestList
+    private let createdFolderHandle: MEGAHandle?
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -80,14 +82,15 @@ public final class MockSdk: MEGASdk {
     public var removeMEGADelegateCallCount = 0
     public var apiURL: String?
     public var disablepkp: Bool?
-    public var shareAccessLevel: MEGAShareType = .accessUnknown
+    public var shareAccessLevel: MEGAShareType
     public var stopPublicSetPreviewCalled = 0
     public var authorizeNodeCalled = 0
     public var getRecentActionsAsyncCalled = false
     public var delegateQueueType: ListenerQueueType?
     public var contentConsumptionPreferences: [String: String]
     
-    public init(nodes: [MEGANode] = [],
+    public init(fileLinkNode: MEGANode? = nil,
+                nodes: [MEGANode] = [],
                 rubbishNodes: [MEGANode] = [],
                 syncDebrisNodes: [MEGANode] = [],
                 incomingNodes: MEGANodeList = MEGANodeList(),
@@ -133,8 +136,11 @@ public final class MockSdk: MEGASdk {
                 isNodeInheritingSensitivity: Bool = false,
                 hasVersionsForNode: Bool = false,
                 setUserAttributeTypeMegaSetError: @escaping (MEGAUserAttribute) -> MEGAErrorType = { _ in .apiOk },
-                outgoingContactRequests: MEGAContactRequestList = MEGAContactRequestList()
+                outgoingContactRequests: MEGAContactRequestList = MEGAContactRequestList(),
+                createdFolderHandle: MEGAHandle? = nil,
+                shareAccessLevel: MEGAShareType = .accessUnknown
     ) {
+        self.fileLinkNode = fileLinkNode
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
         self.syncDebrisNodes = syncDebrisNodes
@@ -182,6 +188,8 @@ public final class MockSdk: MEGASdk {
         _hasVersionsForNode = hasVersionsForNode
         self.setUserAttributeTypeMegaSetError = setUserAttributeTypeMegaSetError
         _outgoingContactRequests = outgoingContactRequests
+        self.createdFolderHandle = createdFolderHandle
+        self.shareAccessLevel = shareAccessLevel
         super.init()
     }
     
@@ -230,6 +238,10 @@ public final class MockSdk: MEGASdk {
     
     public override func childNode(forParent parent: MEGANode, name: String, type: Int) -> MEGANode? {
         nodes.first(where: { $0.name == name && $0.type.rawValue == type })
+    }
+    
+    public override func childNode(forParent parent: MEGANode, name: String) -> MEGANode? {
+        nodes.first(where: { $0.name == name && $0.parentHandle == parent.handle })
     }
     
     public override func contacts() -> MEGAUserList { myContacts }
@@ -605,6 +617,13 @@ public final class MockSdk: MEGASdk {
     
     public override func publicNode(forMegaFileLink megaFileLink: String, delegate: any MEGARequestDelegate) {
         messages.append(.publicNodeForMegaFileLink(megaFileLink))
+        
+        let mockRequest = MockRequest(
+            handle: 1,
+            publicNode: fileLinkNode
+        )
+        
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
     
     // MARK: - A/B testing
@@ -687,6 +706,16 @@ public final class MockSdk: MEGASdk {
   
     public override func inviteContact(withEmail email: String, message: String?, action: MEGAInviteAction, delegate: MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
+    }
+    
+    public override func createFolder(withName name: String, parent: MEGANode, delegate: any MEGARequestDelegate) {
+        let mockRequest = MockRequest(
+            handle: createdFolderHandle ?? .invalid,
+            parentHandle: parent.handle,
+            name: name
+        )
+        
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
     
     // MARK: - Helper
