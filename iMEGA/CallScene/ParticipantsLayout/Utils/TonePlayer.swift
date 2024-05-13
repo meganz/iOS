@@ -8,6 +8,7 @@ final class TonePlayer: NSObject {
         case participantLeft
         case reconnecting
         case waitingRoomEvent
+        case outgoingTone
         
         fileprivate var fileURL: URL? {
             Bundle.main.url(forResource: rawValue, withExtension: "wav")
@@ -17,21 +18,26 @@ final class TonePlayer: NSObject {
     private var audioPlayer: AVAudioPlayer?
     private var audioSessionUseCase: (any AudioSessionUseCaseProtocol)?
     
-    func play(tone: ToneType) {
+    func play(tone: ToneType, numberOfLoops loops: Int = 0) {
         guard let toneURL = tone.fileURL else {
             MEGALogDebug("\(tone.rawValue) file not found")
             return
         }
         
-        if let audioPlayer = audioPlayer {
-            audioPlayer.stop()
-            resetAudioPlayer()
-        }
+        stopAudioPlayer()
 
         self.audioPlayer = try? AVAudioPlayer(contentsOf: toneURL)
         self.audioPlayer?.delegate = self
         self.audioPlayer?.volume = 1
+        self.audioPlayer?.numberOfLoops = loops
         self.audioPlayer?.play()
+    }
+    
+    func stopAudioPlayer() {
+        if let audioPlayer = audioPlayer {
+            audioPlayer.stop()
+            resetAudioPlayer()
+        }
     }
     
     private func resetAudioPlayer() {
