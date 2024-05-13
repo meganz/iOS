@@ -4,7 +4,6 @@ import ConcurrencyExtras
 import MEGADomain
 import XCTest
 
-@MainActor
 final class CallKitProviderDelegateTests: XCTestCase {
     class MockStartAction: CXStartCallAction {
         
@@ -98,7 +97,7 @@ final class CallKitProviderDelegateTests: XCTestCase {
         
         override func pendingCallActions(of callActionClass: AnyClass, withCall callUUID: UUID) -> [CXCallAction] { [] }
     }
-    actor Harness {
+    class Harness {
         let callManager = MockCallManager()
         let cxProvider: MockCXProvider
         let callCoordinator = MockCallsCoordinator()
