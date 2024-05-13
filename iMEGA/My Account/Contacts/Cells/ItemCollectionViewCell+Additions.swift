@@ -6,11 +6,11 @@ import MEGAUIKit
 extension ItemCollectionViewCell {
     
     open override func prepareForReuse() {
-        super.prepareForReuse()
-        
         viewModel = nil
-        avatarImageView.removeBlurFromView()
-        cancellables = nil
+        cancellables = []
+        avatarImageView?.image = nil
+        avatarImageView?.removeBlurFromView()
+        super.prepareForReuse()
     }
     
     @objc func bind(viewModel: ItemCollectionViewCellViewModel) {
