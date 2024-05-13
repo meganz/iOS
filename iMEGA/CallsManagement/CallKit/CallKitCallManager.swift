@@ -28,7 +28,7 @@ final class CallKitCallManager {
 
 extension CallKitCallManager: CallManagerProtocol {
     
-    func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool) {
+    func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool, isJoiningActiveCall: Bool) {
         let startCallUUID = uuidFactory()
         let callKitHandle = CXHandle(type: .generic, value: chatIdBase64Handle)
         let startCallAction = CXStartCallAction(call: startCallUUID, handle: callKitHandle)
@@ -41,7 +41,7 @@ extension CallKitCallManager: CallManagerProtocol {
             if error == nil {
                 MEGALogDebug("[CallKit]: Controller Call started")
                 $callsDictionary.mutate {
-                    $0[startCallUUID] = CallActionSync(chatRoom: chatRoom, videoEnabled: hasVideo, notRinging: notRinging)
+                    $0[startCallUUID] = CallActionSync(chatRoom: chatRoom, videoEnabled: hasVideo, notRinging: notRinging, isJoiningActiveCall: isJoiningActiveCall)
                 }
             } else {
                 MEGALogError("[CallKit]: Controller error starting call: \(error!.localizedDescription)")

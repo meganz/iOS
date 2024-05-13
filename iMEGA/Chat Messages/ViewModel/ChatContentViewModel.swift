@@ -382,12 +382,16 @@ final class ChatContentViewModel: ViewModelType {
         if shouldOpenWaitingRoom() {
             openWaitingRoom()
         } else {
+            let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
             if callUseCase.call(for: chatRoom.chatId) != nil {
-                answerCall()
+                if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                    callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: true)
+                } else {
+                    answerCall()
+                }
             } else {
                 if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                    let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
-                    callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging)
+                    callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: false)
                 } else {
                     startCall(enableVideo: videoCall, notRinging: notRinging)
                 }

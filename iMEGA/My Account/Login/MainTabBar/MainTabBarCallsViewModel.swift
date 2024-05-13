@@ -525,7 +525,12 @@ class MainTabBarCallsViewModel: ViewModelType {
             return
         }
         
-        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: intent.callCapability == .videoCall, notRinging: false)
+        callManager.startCall(
+            in: chatRoom, chatIdBase64Handle: chatIdBase64Handle,
+            hasVideo: intent.callCapability == .videoCall,
+            notRinging: false,
+            isJoiningActiveCall: callUseCase.call(for: chatRoom.chatId) != nil
+        )
     }
 }
 
@@ -533,18 +538,26 @@ class MainTabBarCallsViewModel: ViewModelType {
 extension MainTabBarCallsViewModel {
     private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {
         if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            guard call.isOwnClientCaller,
-                  let callUUID = uuidToReportCallConnectChanges(for: call),
-                  let providerDelegate else { return }
+            guard let providerDelegate,
+                  let callUUID = uuidToReportCallConnectChanges(for: call)
+            else { return }
+
+            guard (callManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
+            else { return }
+            
             providerDelegate.provider.reportOutgoingCall(with: callUUID, startedConnectingAt: nil)
         }
     }
     
     private func reportCallConnectedIfNeeded(_ call: CallEntity) {
         if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            guard call.isOwnClientCaller,
-                  let callUUID = uuidToReportCallConnectChanges(for: call),
-                  let providerDelegate else { return }
+            guard let providerDelegate,
+                  let callUUID = uuidToReportCallConnectChanges(for: call)
+            else { return }
+
+            guard (callManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
+            else { return }
+            
             providerDelegate.provider.reportOutgoingCall(with: callUUID, connectedAt: nil)
         }
     }
