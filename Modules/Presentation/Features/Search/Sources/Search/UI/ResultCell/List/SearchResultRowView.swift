@@ -16,8 +16,7 @@ import SwiftUI
 // The Menu (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 
 struct SearchResultRowView: View {
-    /// Need to use StateObject instead of ObservedObject to avoid blank thumbnail bug
-    @StateObject var viewModel: SearchResultRowViewModel
+    @ObservedObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
     
