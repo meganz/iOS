@@ -1100,6 +1100,7 @@
 		83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */; };
 		83850A4526B2BC1100C62304 /* MEGAProviderDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */; };
 		838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B6825D5678C00767DB0 /* CallRepository.swift */; };
+		838B274B2BF21DC1005AD3F7 /* outgoingTone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 838B274A2BF21DC1005AD3F7 /* outgoingTone.wav */; };
 		838CC2652B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */; };
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
 		838D90A02B57FE550031CD62 /* SVProgressHUD+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */; };
@@ -3873,6 +3874,7 @@
 		83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAChatResultDelegate.swift; sourceTree = "<group>"; };
 		83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAProviderDelegate+Additions.swift"; sourceTree = "<group>"; };
 		838A7B6825D5678C00767DB0 /* CallRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRepository.swift; sourceTree = "<group>"; };
+		838B274A2BF21DC1005AD3F7 /* outgoingTone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = outgoingTone.wav; sourceTree = "<group>"; };
 		838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkPresentationItemSource.swift; sourceTree = "<group>"; };
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
 		838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+Additions.swift"; sourceTree = "<group>"; };
@@ -10729,6 +10731,7 @@
 				A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */,
 				A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */,
 				A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */,
+				838B274A2BF21DC1005AD3F7 /* outgoingTone.wav */,
 				BF49DFA2282B230800DE3742 /* participantJoined.wav */,
 				BF49DFA6282B231300DE3742 /* participantLeft.wav */,
 				839B9FCE283D2DCA001A49DF /* reconnecting.wav */,
@@ -13806,6 +13809,7 @@
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,
 				7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */,
 				7795677F21C83130002B6227 /* OnboardingView.xib in Resources */,
+				838B274B2BF21DC1005AD3F7 /* outgoingTone.wav in Resources */,
 				5DAB28F324875269004B5D5A /* OverDiskQuotaViewController.xib in Resources */,
 				5DBAC8442487B8A10050996E /* OverDiskQuotaWarningView.xib in Resources */,
 				83B804DC2ABB0090006B356F /* ParticipantInWaitingRoomTableViewCell.xib in Resources */,

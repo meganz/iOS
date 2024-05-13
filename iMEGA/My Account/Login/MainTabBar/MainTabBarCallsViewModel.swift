@@ -129,6 +129,9 @@ class MainTabBarCallsViewModel: ViewModelType {
     private var callWillEndCountdown: Int = 10
     private let uuidFactory: () -> UUID
     private let callUpdateFactory: CXCallUpdateFactory
+    
+    private let tonePlayer = TonePlayer()
+
     init(
         router: some MainTabBarCallsRouting,
         chatUseCase: some ChatUseCaseProtocol,
@@ -195,15 +198,24 @@ class MainTabBarCallsViewModel: ViewModelType {
         guard callSessionUpdateSubscription == nil else { return }
         callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
             .sink { [weak self] session, call in
+                guard let self else { return }
                 switch session.changeType {
                 case .status:
-                    if session.statusType == .inProgress && session.onRecording {
-                        self?.manageOnRecordingSession(session: session, in: call)
+                    switch session.statusType {
+                    case .inProgress:
+                        if session.onRecording {
+                            manageOnRecordingSession(session: session, in: call)
+                        }
+                        stopOutgoingToneIfNeeded(for: call)
+                    case .destroyed:
+                        playCallEndedToneIfNeeded(for: call, with: session)
+                    default:
+                        break
                     }
                 case .onRecording:
-                    self?.manageOnRecordingSession(session: session, in: call)
+                    manageOnRecordingSession(session: session, in: call)
                 case .remoteAvFlags:
-                    self?.updateVideoForCall(call)
+                    updateVideoForCall(call)
                 default:
                     break
                 }
@@ -297,6 +309,7 @@ class MainTabBarCallsViewModel: ViewModelType {
                 sendAudioPlayerInterruptDidStartNotificationIfNeeded()
             }
         case .joining:
+            startOutgoingToneIfNeeded(for: call)
             updateChatTitleForCall(call)
             reportCallStartedConnectingIfNeeded(call)
             callUseCase.enableAudioMonitor(forCall: call)
@@ -312,14 +325,12 @@ class MainTabBarCallsViewModel: ViewModelType {
                 configureWaitingRoomListener(forCall: call)
                 manageWaitingRoom(for: call)
             }
-            
         case .terminatingUserParticipation:
             manageTerminatingUserParticipation(call)
         case .destroyed:
             if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
                 reportEndCall(call)
             }
-            
         default:
             break
         }
@@ -334,10 +345,8 @@ class MainTabBarCallsViewModel: ViewModelType {
         }
         screenRecordingAlertShownForCall = false
         manageCallTerminatedErrorIfNeeded(call)
-        if call.termCodeType == .reject {
-            sendAudioPlayerInterruptDidEndNotificationIfNeeded()
-        }
         callUseCase.disableAudioMonitor(forCall: call)
+        stopOutgoingToneIfNeeded(for: call)
         removeCallListeners()
     }
     
@@ -532,6 +541,27 @@ class MainTabBarCallsViewModel: ViewModelType {
             isJoiningActiveCall: callUseCase.call(for: chatRoom.chatId) != nil
         )
     }
+    
+    private func startOutgoingToneIfNeeded(for call: CallEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              chatRoom.chatType == .oneToOne,
+              call.isOwnClientCaller else { return }
+        tonePlayer.play(tone: .outgoingTone, numberOfLoops: -1)
+    }
+    
+    private func stopOutgoingToneIfNeeded(for call: CallEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              chatRoom.chatType == .oneToOne,
+              call.isOwnClientCaller else { return }
+        tonePlayer.stopAudioPlayer()
+    }
+    
+    private func playCallEndedToneIfNeeded(for call: CallEntity, with session: ChatSessionEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              chatRoom.chatType == .oneToOne,
+              session.termCode == .nonRecoverable else { return }
+        tonePlayer.play(tone: .callEnded)
+    }
 }
 
 // MARK: - CallsCoordinator Private Methods
@@ -715,6 +745,8 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
         guard let callEndedReason else { return }
         MEGALogDebug("[CallKit] Report end call reason \(callEndedReason.rawValue)")
         providerDelegate?.provider.reportCall(with: callUUID, endedAt: nil, reason: callEndedReason)
+        
+        sendAudioPlayerInterruptDidEndNotificationIfNeeded()
     }
     
     func disablePassCodeIfNeeded() {
