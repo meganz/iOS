@@ -34,7 +34,7 @@ final class VideoListViewModelTests: XCTestCase {
         
         await sut.onViewAppeared()
         
-        XCTAssertTrue(fileSearchUseCase.messages.contains(.search), "Expect to search")
+        XCTAssertTrue(fileSearchUseCase.messages.contains(.searchLegacy), "Expect to search")
     }
     
     func testOnViewAppeared_whenCalledOnFailedLoadVideos_executesSearchUseCaseInOrder() async {
@@ -42,7 +42,7 @@ final class VideoListViewModelTests: XCTestCase {
         
         await sut.onViewAppeared()
         
-        XCTAssertEqual(fileSearchUseCase.messages, [ .search ])
+        XCTAssertEqual(fileSearchUseCase.messages, [ .searchLegacy ])
     }
     
     func testOnViewAppeared_whenCalledOnSuccessfullyLoadVideos_executesSearchUseCaseInOrder() async {
@@ -51,7 +51,7 @@ final class VideoListViewModelTests: XCTestCase {
         await sut.onViewAppeared()
         
         XCTAssertEqual(fileSearchUseCase.messages, [
-            .search,
+            .searchLegacy,
             .startNodesUpdateListener,
             .onNodesUpdate
         ])
@@ -220,9 +220,9 @@ final class VideoListViewModelTests: XCTestCase {
         
         let exp = expectation(description: "search message found")
         let cancellation = fileSearchUseCase.$messages
-            .first { $0 == [ .search ] }
+            .first { $0 == [ .searchLegacy ] }
             .sink { messages in
-                XCTAssertEqual(messages, [ .search ])
+                XCTAssertEqual(messages, [ .searchLegacy ])
                 exp.fulfill()
             }
         await fulfillment(of: [exp], timeout: 1.0)
@@ -250,7 +250,7 @@ final class VideoListViewModelTests: XCTestCase {
         syncModel.searchText = "any search text"
         let exp = expectation(description: "search message found")
         let cancellation = fileSearchUseCase.$messages
-            .first { $0 == [ .search ] }
+            .first { $0 == [ .searchLegacy ] }
             .sink { _ in exp.fulfill() }
         
         await fulfillment(of: [exp], timeout: 1.0)
@@ -286,7 +286,7 @@ final class VideoListViewModelTests: XCTestCase {
         syncModel.searchText = "any search text"
         let exp = expectation(description: "search message found")
         let cancellation = fileSearchUseCase.$messages
-            .first { $0 == [ .search ] }
+            .first { $0 == [ .searchLegacy ] }
             .sink { _ in exp.fulfill() }
         
         await fulfillment(of: [exp], timeout: 1.0)

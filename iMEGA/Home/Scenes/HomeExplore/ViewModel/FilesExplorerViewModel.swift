@@ -192,7 +192,26 @@ final class FilesExplorerViewModel: ViewModelType {
     }
     
     private func startSearch(text: String?, formatType: NodeFormatEntity) async throws -> [NodeEntity] {
-        try await useCase.search(
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
+            // We need to maintain legacy version for the release, as there is currently a bug
+            // with sortorder that should be fixed before hidden nodes is release
+            return try await withCheckedThrowingContinuation { [weak self] continuation in
+                self?.useCase.search(string: text,
+                                parent: nil,
+                                recursive: true,
+                                supportCancel: true,
+                                sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
+                                cancelPreviousSearchIfNeeded: true) { nodes, isCancelled in
+                    if isCancelled {
+                        continuation.resume(throwing: CancellationError())
+                    } else {
+                        continuation.resume(returning: nodes ?? [])
+                    }
+                }
+            }
+        }
+        
+        return try await useCase.search(
             filter: .init(
                 searchText: text,
                 recursive: true,

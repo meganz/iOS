@@ -9,22 +9,26 @@ import XCTest
 final class FilesExplorerViewModelTests: XCTestCase {
     
     func testActionStartSearching_ForAllDocsAndAudio_shouldReturnNodes() {
-        
-        for explorerType in [ExplorerTypeEntity.allDocs, .audio] {
-            
-            let expectedNodes = [
-                MockNode(handle: 1, name: "1", parentHandle: 0),
-                MockNode(handle: 2, name: "2", parentHandle: 0),
-                MockNode(handle: 3, name: "3", parentHandle: 0)
-            ]
-            
-            let searchText: String? = "test"
-            let sut = sut(
-                explorerType: explorerType,
-                filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(expectedNodes.toNodeEntities())),
-                nodeProvider: MockMEGANodeProvider(nodes: expectedNodes))
-            
-            test(viewModel: sut, action: .startSearching(searchText), expectedCommands: [.reloadNodes(nodes: expectedNodes, searchText: searchText)], expectationValidation: isEquals)
+        for featureFlagActive in [true, false] {
+            for explorerType in [ExplorerTypeEntity.allDocs, .audio] {
+                
+                let expectedNodes = [
+                    MockNode(handle: 1, name: "1", parentHandle: 0),
+                    MockNode(handle: 2, name: "2", parentHandle: 0),
+                    MockNode(handle: 3, name: "3", parentHandle: 0)
+                ]
+                let filesSearchUseCase = MockFilesSearchUseCase(searchResult: .success(expectedNodes.toNodeEntities()))
+                
+                let searchText: String? = "test"
+                let sut = sut(
+                    explorerType: explorerType,
+                    filesSearchUseCase: filesSearchUseCase,
+                    nodeProvider: MockMEGANodeProvider(nodes: expectedNodes),
+                    featureFlagHiddenNodes: featureFlagActive)
+                
+                test(viewModel: sut, action: .startSearching(searchText), expectedCommands: [.reloadNodes(nodes: expectedNodes, searchText: searchText)], expectationValidation: isEquals)
+                XCTAssertEqual(filesSearchUseCase.messages, [.onNodesUpdate] + [featureFlagActive ? .search : .searchLegacy])
+            }
         }
     }
     
