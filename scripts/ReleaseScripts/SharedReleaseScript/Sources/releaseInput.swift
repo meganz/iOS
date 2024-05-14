@@ -19,6 +19,17 @@ public func releaseInput() throws -> ReleaseInput {
     return .init(version: version, message: message)
 }
 
+public func defaultReleaseNotesTemplate(
+    sdkVersion: String,
+    chatVersion: String
+) -> String {
+    """
+    Bug fixes and performance improvements.
+    - SDK release - release/v\(sdkVersion)
+    - MEGAChat release - release/v\(chatVersion)
+    """
+}
+
 private func defaultReleaseNotesInput() throws -> String {
     let sdkVersion = if let sdkVersion = readFromCache(key: .sdkVersion) {
         sdkVersion
@@ -32,14 +43,7 @@ private func defaultReleaseNotesInput() throws -> String {
         try submoduleVersionInput(.chatSDK)
     }
 
-    let defaultReleaseNotes =
-    """
-    Bug fixes and performance improvements.
-    - SDK release - release/v\(sdkVersion)
-    - MEGAChat release - release/v\(chatVersion)
-    """
-
-    return defaultReleaseNotes
+    return defaultReleaseNotesTemplate(sdkVersion: sdkVersion, chatVersion: chatVersion)
 }
 
 private func submoduleVersionInput(_ submodule: Submodule) throws -> String {
