@@ -63,8 +63,10 @@ public func urlInput(_ message: String) -> String {
     }
 }
 
+private let defaultNotesTemplate = "Bug fixes and performance improvements."
+
 public func releaseNotesInput(defaultReleaseNotes: @autoclosure () throws -> String) throws -> String {
-    print("Do you want the default \"Bug fixes and performance improvements.\" message? (yes/no)")
+    print("Do you want the default \"\(defaultNotesTemplate)\" message? (yes/no)")
 
     guard let input = readLine() else {
         throw InputError.missingInput
@@ -80,6 +82,12 @@ public func releaseNotesInput(defaultReleaseNotes: @autoclosure () throws -> Str
         return customReleaseNotes()
     default:
         throw InputError.wrongInput
+    }
+}
+
+public extension String {
+    var isDefaultReleaseNotes: Bool {
+        self == defaultNotesTemplate
     }
 }
 

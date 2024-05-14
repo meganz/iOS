@@ -33,8 +33,8 @@ private func sendReleaseCandidateMessage(input: UserInput, channelId: String) as
         "text":
         """
         Hi <!here>, the iOS team has uploaded a new <\(input.testFlightLink)|Release Candidate build \(input.version)> to TestFlight.
-        - SDK release `release/\(input.sdkVersion)`
-        - MEGAChat release `release/\(input.chatVersion)`
+        - SDK release `release/v\(input.sdkVersion)`
+        - MEGAChat release `release/v\(input.chatVersion)`
 
         <\(input.jiraReleasePackageLink)|\(input.version) JIRA Release Package>
 

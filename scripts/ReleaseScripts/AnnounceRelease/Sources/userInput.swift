@@ -25,7 +25,15 @@ func userInput() throws -> UserInput {
     writeToCache(key: .chatVersion, value: chatVersion)
 
     let releaseNotes = try releaseNotesInput(defaultReleaseNotes: "Bug fixes and performance improvements.")
-    writeToCache(key: .releaseNotes, value: releaseNotes)
+
+    if releaseNotes.isDefaultReleaseNotes {
+        writeToCache(
+            key: .releaseNotes,
+            value: defaultReleaseNotesTemplate(sdkVersion: sdkVersion, chatVersion: chatVersion)
+        )
+    } else {
+        writeToCache(key: .releaseNotes, value: releaseNotes)
+    }
 
     let jiraReleasePackageLink = urlInput("Enter the Jira release package link for \(version) - (The one you created on 'Monday - Prepare Code Freeze'):")
     let testFlightLink = urlInput("Enter the TestFlight link for this build")
