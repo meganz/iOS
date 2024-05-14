@@ -26,7 +26,7 @@ public class SearchResultsViewModel: ObservableObject {
     /// Tracks the visible items that are currently  shown on screen, needed for node updates logic.
     private var visibleItems = Set<ResultId>()
 
-    @Published var selectedRows = Set<SearchResultRowViewModel>()
+    @Published var selectedRowIds = Set<ResultId>()
 
     var fileListItems: [SearchResultRowViewModel] {
         listItems.filter { $0.result.thumbnailDisplayMode == .vertical }
@@ -169,10 +169,9 @@ public class SearchResultsViewModel: ObservableObject {
 
         setupKeyboardVisibilityHandling()
 
-        selectedRowsSubscription = $selectedRows
+        selectedRowsSubscription = $selectedRowIds
             .dropFirst()
             .throttle(for: .seconds(0.4), scheduler: DispatchQueue.main, latest: true)
-            .map { $0.map(\.result.id) }
             .scan((Set<ResultId>(), Set<ResultId>())) { previous, current in
                 // We want only the items that are selected or deselected from the set.
                 // Hence we store the previous value and find out the difference.
@@ -181,9 +180,8 @@ public class SearchResultsViewModel: ObservableObject {
             .sink { [weak self] result in
                 guard let self else { return }
 
-                let selectedRowIds = selectedRows.map(\.result.id)
-                let rowsRemoved = result.1.filter { selectedRowIds.notContains($0) }
-                let rowsAdded = result.1.filter { selectedRowIds.contains($0) }
+                let rowsRemoved = result.1.filter { self.selectedRowIds.notContains($0) }
+                let rowsAdded = result.1.filter { self.selectedRowIds.contains($0) }
 
                 if rowsAdded.isNotEmpty {
                     selectedResultIds.formUnion(rowsAdded)
@@ -322,7 +320,7 @@ public class SearchResultsViewModel: ObservableObject {
     private func loadMoreIfNeeded(item: SearchResultRowViewModel) async {
         switch layout {
         case .list:
-            guard let index = listItems.firstIndex(of: item) else { return }
+            guard let index = listItems.firstIndex(where: { $0.id == item.id }) else { return }
             await loadMoreIfNeeded(at: index)
         case .thumbnail:
             await loadMoreIfNeededThumbnailMode(item: item)
@@ -337,13 +335,13 @@ public class SearchResultsViewModel: ObservableObject {
         let isFileItem = item.result.thumbnailDisplayMode == .vertical
         
         if isFileItem {
-            guard let index = fileListItems.firstIndex(of: item) else { return }
+            guard let index = fileListItems.firstIndex(where: { $0.id == item.id }) else { return }
             // In thumbnail mode, we first display `folderListItems` and then `fileListItems` (check the `thumbnailContent` in `SearchResultsView`)
             // It means the index of file item in the view is equal to its index in `fileListItems` plus number of items in `folderListItems`
             // For example: Let's say we 20 folders and 5 files, then the index of file item in the view should start from 21 which are 21, 22, 23, 24, 25.
             await loadMoreIfNeeded(at: index + folderListItems.count)
         } else {
-            guard let index = folderListItems.firstIndex(of: item) else { return }
+            guard let index = folderListItems.firstIndex(where: { $0.id == item.id }) else { return }
             await loadMoreIfNeeded(at: index)
         }
     }
@@ -432,10 +430,11 @@ public class SearchResultsViewModel: ObservableObject {
     }
 
     private func toggleSelected(_ row: SearchResultRowViewModel) {
-        if selectedRows.contains(row) {
-            selectedRows.remove(row)
+        let resultId = row.result.id
+        if selectedRowIds.contains(resultId) {
+            selectedRowIds.remove(resultId)
         } else {
-            selectedRows.insert(row)
+            selectedRowIds.insert(resultId)
         }
     }
     
@@ -485,7 +484,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.listItems.append(contentsOf: items)
 
         let selectedItems = items.filter { selectedResultIds.contains($0.result.id) }
-        selectedRows.formUnion(selectedItems)
+        selectedRowIds.formUnion(selectedItems.map { $0.result.id })
 
         withAnimation {
             emptyViewModel = Self.makeEmptyView(
@@ -795,10 +794,10 @@ public extension SearchResultsViewModel {
         let currentResultsIds = resultsProvider.currentResultIds()
         if Set(currentResultsIds) == selectedResultIds {
             selectedResultIds.removeAll()
-            selectedRows.removeAll()
+            selectedRowIds.removeAll()
         } else {
             selectedResultIds = Set(currentResultsIds)
-            selectedRows = Set(listItems)
+            selectedRowIds = Set(listItems.map { $0.result.id })
         }
     }
 

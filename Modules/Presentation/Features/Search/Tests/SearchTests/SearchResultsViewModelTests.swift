@@ -218,7 +218,7 @@ final class SearchResultsViewModelTests: XCTestCase {
             .resultWithNoItemsAndSingleChip
         }
         await harness.sut.task()
-        XCTAssertEqual(harness.sut.listItems, [])
+        XCTAssertTrue(harness.sut.listItems.isEmpty)
         XCTAssertEqual(harness.sut.chipsItems.map(\.id), ["chip_2"])
     }
     
@@ -283,7 +283,7 @@ final class SearchResultsViewModelTests: XCTestCase {
                 swipeActions: []
             )
         ]
-        XCTAssertEqual(harness.sut.listItems, expectedListItems)
+        XCTAssertEqual(harness.sut.listItems.map(\.result), expectedListItems.map(\.result))
     }
     
     func testListItems_onQueryCleaned_sendsEmptyQuery_toProvider() async throws {
@@ -574,9 +574,9 @@ final class SearchResultsViewModelTests: XCTestCase {
 
     func testSelectedRows_whenMultipleRowsSelected_shouldMatchResultsIds() {
         let harness = Harness(self)
-        var selectedRows = Set<SearchResultRowViewModel>()
+        var selectedRows = Set<ResultId>()
         for i in 1...10 {
-            selectedRows.insert(generateRandomSearchResultRowViewModel(id: i))
+            selectedRows.insert(generateRandomSearchResultRowViewModel(id: i).id)
         }
 
         let exp = expectation(description: "Wait for selected results")
@@ -589,7 +589,7 @@ final class SearchResultsViewModelTests: XCTestCase {
                 }
             }
 
-        harness.sut.selectedRows = selectedRows
+        harness.sut.selectedRowIds = selectedRows
         wait(for: [exp], timeout: 1.0)
         selectedResultsSubscription.cancel()
     }

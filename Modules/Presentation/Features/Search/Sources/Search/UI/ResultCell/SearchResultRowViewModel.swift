@@ -35,8 +35,8 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         result.properties.first { $0.vibrancyEnabled } != nil
     }
     
-    var id: String {
-        result.id.description
+    var id: ResultId {
+        result.id
     }
     
     var selectedCheckmarkImage: UIImage {
@@ -105,15 +105,5 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     func reload(with result: SearchResult) async {
         self.result = result
         await loadThumbnail()
-    }
-}
-
-extension SearchResultRowViewModel: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-
-    static func == (lhs: SearchResultRowViewModel, rhs: SearchResultRowViewModel) -> Bool {
-        lhs.id == rhs.id
     }
 }
