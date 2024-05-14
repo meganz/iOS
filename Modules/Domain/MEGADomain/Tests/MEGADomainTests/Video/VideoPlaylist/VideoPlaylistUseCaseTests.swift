@@ -19,7 +19,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         
         _ = try? await sut.systemVideoPlaylists()
         
-        XCTAssertEqual(filesSearchUseCase.messages, [ .search ])
+        XCTAssertEqual(filesSearchUseCase.messages, [ .searchLegacy ])
     }
     
     func testSystemVideoPlaylists_whenCalledTwice_TriggerFilesSearchUseCaseTwice() async {
@@ -28,7 +28,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         _ = try? await sut.systemVideoPlaylists()
         _ = try? await sut.systemVideoPlaylists()
         
-        XCTAssertEqual(filesSearchUseCase.messages, [ .search, .search ])
+        XCTAssertEqual(filesSearchUseCase.messages, [ .searchLegacy, .searchLegacy ])
     }
     
     func testSystemVideoPlaylists_whenError_returnsError() async {
@@ -38,7 +38,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             _ = try await sut.systemVideoPlaylists()
             XCTFail("Expect to fail")
         } catch {
-            XCTAssertTrue(error is GenericErrorEntity,  "Expect to get error")
+            XCTAssertTrue(error is GenericErrorEntity, "Expect to get error")
         }
     }
     

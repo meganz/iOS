@@ -4,6 +4,7 @@ import MEGADomain
 public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, ObservableObject {
     
     public enum Message: Equatable {
+        case searchLegacy
         case search
         case onNodesUpdate
         case stopNodesUpdateListener
@@ -36,6 +37,7 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, Observabl
     }
     
     public func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {
+        messages.append(.search)
         switch searchResult {
         case .success(let nodes):
             return nodes ?? []
@@ -66,7 +68,7 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, Observabl
 extension MockFilesSearchUseCase {
     
     public func search(string: String?, parent node: NodeEntity?, recursive: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
-        messages.append(.search)
+        messages.append(.searchLegacy)
         switch searchResult {
         case .success(let nodes):
             completion(nodes, false)
@@ -76,7 +78,7 @@ extension MockFilesSearchUseCase {
     }
     
     public func search(string: String?, parent node: NodeEntity?, recursive: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {
-        messages.append(.search)
+        messages.append(.searchLegacy)
         switch searchResult {
         case .success(let nodes):
             return nodes ?? []
