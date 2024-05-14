@@ -130,7 +130,7 @@ public struct SearchResultsView: View {
     }
     
     private var listContent: some View {
-        List(viewModel.listItems, id: \.self, selection: $viewModel.selectedRows) { item in
+        List(viewModel.listItems, selection: $viewModel.selectedRowIds) { item in
             SearchResultRowView(viewModel: item)
                 .listRowBackground(TokenColors.Background.page.swiftUI)
                 .onAppear {
@@ -155,7 +155,7 @@ public struct SearchResultsView: View {
                 LazyVGrid(
                     columns: viewModel.columns(geo.size.width)
                 ) {
-                    ForEach(viewModel.folderListItems, id: \.self) { item in
+                    ForEach(viewModel.folderListItems) { item in
                         SearchResultThumbnailItemView(
                             viewModel: item,
                             selected: $viewModel.selectedResultIds,
@@ -177,7 +177,7 @@ public struct SearchResultsView: View {
                 LazyVGrid(
                     columns: viewModel.columns(geo.size.width)
                 ) {
-                    ForEach(viewModel.fileListItems, id: \.self) { item in
+                    ForEach(viewModel.fileListItems) { item in
                         SearchResultThumbnailItemView(
                             viewModel: item,
                             selected: $viewModel.selectedResultIds,
