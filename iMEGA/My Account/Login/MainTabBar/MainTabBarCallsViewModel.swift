@@ -327,7 +327,6 @@ class MainTabBarCallsViewModel: ViewModelType {
             }
         case .terminatingUserParticipation:
             manageTerminatingUserParticipation(call)
-        case .destroyed:
             if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
                 reportEndCall(call)
             }
@@ -703,7 +702,7 @@ extension MainTabBarCallsViewModel: CallsCoordinatorProtocol {
         
         let incomingCallUUID = uuidFactory()
         
-        callManager.addCall(
+        callManager.addIncomingCall(
             withUUID: incomingCallUUID,
             chatRoom: chatRoom
         )

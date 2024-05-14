@@ -40,9 +40,7 @@ extension CallKitCallManager: CallManagerProtocol {
             guard let self else { return }
             if error == nil {
                 MEGALogDebug("[CallKit]: Controller Call started")
-                $callsDictionary.mutate {
-                    $0[startCallUUID] = CallActionSync(chatRoom: chatRoom, videoEnabled: hasVideo, notRinging: notRinging, isJoiningActiveCall: isJoiningActiveCall)
-                }
+                addCall(withUUID: startCallUUID, chatRoom: chatRoom, videoEnabled: hasVideo, notRinging: notRinging, isJoiningActiveCall: isJoiningActiveCall)
             } else {
                 MEGALogError("[CallKit]: Controller error starting call: \(error!.localizedDescription)")
             }
@@ -57,9 +55,7 @@ extension CallKitCallManager: CallManagerProtocol {
             guard let self else { return }
             if error == nil {
                 MEGALogDebug("[CallKit]: Controller Call answered")
-                $callsDictionary.mutate {
-                    $0[answerCallUUID] = CallActionSync(chatRoom: chatRoom, audioEnabled: !chatRoom.isMeeting)
-                }
+                addCall(withUUID: answerCallUUID, chatRoom: chatRoom, audioEnabled: !chatRoom.isMeeting)
             } else {
                 MEGALogError("[CallKit]: Controller error answering call: \(error!.localizedDescription)")
             }
@@ -124,15 +120,20 @@ extension CallKitCallManager: CallManagerProtocol {
         }
     }
     
-    func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
-        $callsDictionary.mutate {
-            $0[uuid] = CallActionSync(chatRoom: chatRoom)
-        }
+    func addIncomingCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
+        addCall(withUUID: uuid, chatRoom: chatRoom)
     }
     
     func updateCall(withUUID uuid: UUID, muted: Bool) {
         $callsDictionary.mutate {
             $0[uuid]?.audioEnabled = !muted
+        }
+    }
+    
+    // MARK: - Private
+    private func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity, audioEnabled: Bool = true, videoEnabled: Bool = false, notRinging: Bool = false, isJoiningActiveCall: Bool = false) {
+        $callsDictionary.mutate {
+            $0[uuid] = CallActionSync(chatRoom: chatRoom, videoEnabled: videoEnabled, notRinging: notRinging, isJoiningActiveCall: isJoiningActiveCall)
         }
     }
 }
