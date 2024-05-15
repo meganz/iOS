@@ -453,66 +453,6 @@ static NSString *kisDirectory = @"kisDirectory";
     return pathFromOffline;
 }
 
-- (NSArray *)offlinePathOnFolder:(NSString *)path {
-    NSString *relativePath = [Helper pathRelativeToOfflineDirectory:path];
-    NSMutableArray *offlinePathsOnFolder = [[NSMutableArray alloc] init];
-    
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
-    for (NSString *item in directoryContents) {
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            [offlinePathsOnFolder addObject:[relativePath stringByAppendingPathComponent:item]];
-            [offlinePathsOnFolder addObjectsFromArray:[self offlinePathOnFolder:[path stringByAppendingPathComponent:item]]];
-        } else {
-            [offlinePathsOnFolder addObject:[relativePath stringByAppendingPathComponent:item]];
-        }
-    }
-    
-    return offlinePathsOnFolder;
-}
-
-- (void)cancelPendingTransfersOnFolder:(NSString *)folderPath folderLink:(BOOL)isFolderLink {
-    MEGATransferList *transferList;
-    NSInteger transferListSize;
-    if (isFolderLink) {
-        transferList = [MEGASdk.sharedFolderLink transfers];
-        transferListSize = transferList.size;
-    } else {
-        transferList = [MEGASdk.shared transfers];
-        transferListSize = transferList.size;
-    }
-    
-    for (NSInteger i = 0; i < transferListSize; i++) {
-        MEGATransfer *transfer = [transferList transferAtIndex:i];
-        if (transfer.type == MEGATransferTypeUpload) {
-            continue;
-        }
-        
-        if ([transfer.parentPath isEqualToString:[folderPath stringByAppendingString:@"/"]]) {
-            if (isFolderLink) {
-                [MEGASdk.sharedFolderLink cancelTransferByTag:transfer.tag];
-            } else {
-                [MEGASdk.shared cancelTransferByTag:transfer.tag];
-            }
-        } else {
-            NSString *lastPathComponent = [folderPath lastPathComponent];
-            NSArray *pathComponentsArray = [transfer.parentPath pathComponents];
-            NSUInteger pathComponentsArrayCount = [pathComponentsArray count];
-            for (NSUInteger j = 0; j < pathComponentsArrayCount; j++) {
-                NSString *folderString = [pathComponentsArray objectAtIndex:j];
-                if ([folderString isEqualToString:lastPathComponent]) {
-                    if (isFolderLink) {
-                        [MEGASdk.sharedFolderLink cancelTransferByTag:transfer.tag];
-                    } else {
-                        [MEGASdk.shared cancelTransferByTag:transfer.tag];
-                    }
-                    break;
-                }
-            }
-        }
-    }
-}
-
 - (void)sortBySortType:(MEGASortOrderType)sortOrderType {
     NSSortDescriptor *sortDescriptor = nil;
     NSSortDescriptor *sortDirectoryDescriptor = nil;
@@ -696,10 +636,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (IBAction)deleteTapped:(UIBarButtonItem *)sender {
     [self showRemoveAlertWithConfirmAction:^{
-        for (NSURL *url in self.selectedItems) {
-            [self removeOfflineNodeCell:url.path];
-        }
-        [self reloadUI];
+        [self removeOfflineItems:self.selectedItems];
         [self setEditMode:NO];
     } andCancelAction:nil];
 }
@@ -851,53 +788,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
-- (BOOL)removeOfflineNodeCell:(NSString *)itemPath {
-    NSArray *offlinePathsOnFolderArray;
-    MOOfflineNode *offlineNode;
-    
-    BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
-    if (isDirectory) {
-        if ([[MEGASdk.shared transfers] size]) {
-            [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
-        }
-        if ([[MEGASdk.sharedFolderLink transfers] size]) {
-            [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
-        }
-        offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];
-    }
-    
-    NSError *error = nil;
-    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
-    [self removeLogFromSharedSandboxIfNeededWithPath:itemPath];
-    
-    offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
-    if (!success || error) {
-        [SVProgressHUD showErrorWithStatus:@""];
-        return NO;
-    } else {
-        if (isDirectory) {
-            NSString *relativePath = [itemPath stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] withString:@""];
-            [MEGAStore.shareInstance deleteOfflineAppearancePreferenceWithPath:relativePath];
-            
-            for (NSString *localPathAux in offlinePathsOnFolderArray) {
-                MOOfflineNode *childOfflineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
-                if (childOfflineNode) {
-                    [[MEGAStore shareInstance] removeOfflineNode:childOfflineNode];
-                }
-            }
-        }
-        
-        if (offlineNode) {
-            [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-        }
-        
-        [self reloadUI];
-        [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
-        return YES;
-    }
-}
-
 - (void)updateNavigationBarTitle {
     NSString *navigationTitle;
     if (self.offlineTableView.tableView.isEditing || self.offlineCollectionView.collectionView.allowsMultipleSelection) {
@@ -959,7 +849,7 @@ static NSString *kisDirectory = @"kisDirectory";
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         [self showRemoveAlertWithConfirmAction:^{
-            [self removeOfflineNodeCell:itemPath];
+            [self removeOfflineItems:@[[NSURL fileURLWithPath:itemPath]]];
         } andCancelAction:nil];
     }]];
     

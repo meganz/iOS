@@ -1698,7 +1698,6 @@
 		A8DF55682A5F0F6900CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55672A5F0F6900CA33E5 /* MEGASDKRepo */; };
 		A8DF556A2A5F0F8100CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55692A5F0F8100CA33E5 /* MEGASDKRepo */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
-		A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */; };
 		A8E5E52B282A913F007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */; };
 		A8E5E52F282A917D007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
@@ -4463,7 +4462,6 @@
 		A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountExpiredViewController.xib; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
 		A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ShareLocationViewController.m; path = Chat/ShareLocationViewController.m; sourceTree = "<group>"; };
-		A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ExtensionLogFiles.swift"; sourceTree = "<group>"; };
 		A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SynchronousBGThread.swift"; sourceTree = "<group>"; };
 		A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetPreviewRequestDelegate.h; path = API/Requests/MEGAGetPreviewRequestDelegate.h; sourceTree = "<group>"; };
 		A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPreviewRequestDelegate.m; path = API/Requests/MEGAGetPreviewRequestDelegate.m; sourceTree = "<group>"; };
@@ -6958,7 +6956,6 @@
 				83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */,
 				243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */,
 				9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */,
-				A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */,
 				837A88C020B44AA8007B55D1 /* OfflineViewController.h */,
 				837A88C120B44AA8007B55D1 /* OfflineViewController.m */,
 			);
@@ -15199,7 +15196,6 @@
 				83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */,
 				243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */,
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
-				A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
 				B52CB2342A7FA78A00F9C56C /* OfflineViewModel.swift in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,

@@ -37,7 +37,6 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 
 - (nullable NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)updateNavigationBarTitle;
-- (BOOL)removeOfflineNodeCell:(NSString *)itemPath;
 - (void)setViewEditing:(BOOL)editing;
 - (void)itemTapped:(NSString *)name atIndexPath:(NSIndexPath *)indexPath;
 - (void)enableButtonsBySelectedItems;

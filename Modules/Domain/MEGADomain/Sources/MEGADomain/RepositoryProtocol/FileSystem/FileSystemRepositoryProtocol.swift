@@ -9,4 +9,5 @@ public protocol FileSystemRepositoryProtocol: RepositoryProtocol {
     func removeFile(at url: URL)
     func fileSize(at url: URL) -> UInt64?
     func fileCreationDate(at url: URL) -> Date?
+    func relativePathToDocumentsDirectory(for url: URL) -> String
 }
