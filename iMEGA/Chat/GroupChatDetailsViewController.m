@@ -473,7 +473,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GroupChatDetailsViewTableViewCell *cell;
-    cell.backgroundColor = [self backgroundElevatedColor];
     
     if (self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionParticipants
         && self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionObservers
@@ -668,6 +667,8 @@
         default:
             break;
     }
+    
+    cell.backgroundColor = [self backgroundElevatedColor];
     
     return cell;
 }
