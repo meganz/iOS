@@ -6,6 +6,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     
     public static var newRepo: MockNodeRepository { MockNodeRepository() }
     
+    public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
     private let node: NodeEntity?
     private let rubbishBinNode: NodeEntity?
     private let nodeRoot: NodeEntity?
@@ -31,8 +32,8 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         childrenNodes: [NodeEntity] = [],
         parentNodes: [NodeEntity] = [],
         isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
-        isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:]
-
+        isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:],
+        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.node = node
         self.rubbishBinNode = rubbishBinNode
@@ -45,6 +46,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         self.parentNodes = parentNodes
         self.isInheritingSensitivityResult = isInheritingSensitivityResult
         self.isInheritingSensitivityResults = isInheritingSensitivityResults
+        self.nodeUpdates = nodeUpdates
         $childrenNodes.mutate { $0 = childrenNodes }
     }
     

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASwift
 
 public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     
@@ -17,6 +18,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let createFolderResult: Result<NodeEntity, NodeCreationErrorEntity>
     private let isNodeRestorable: Bool
     private let isInheritingSensitivityResult: Result<Bool, Error>
+    private let monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error>
 
     public var isMultimediaFileNode_CalledTimes = 0
     
@@ -34,7 +36,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 createFolderResult: Result<NodeEntity, NodeCreationErrorEntity> = .success(.init()),
                 isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false },
                 isNodeRestorable: Bool = false,
-                isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity())
+                isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
+                monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
@@ -51,6 +54,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.isNodeInRubbishBin = isNodeInRubbishBin
         self.isNodeRestorable = isNodeRestorable
         self.isInheritingSensitivityResult = isInheritingSensitivityResult
+        self.monitorInheritedSensitivityForNode = monitorInheritedSensitivityForNode
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -137,5 +141,9 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         try await withCheckedThrowingContinuation {
             $0.resume(with: isInheritingSensitivityResult)
         }
+    }
+    
+    public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
+        monitorInheritedSensitivityForNode
     }
 }

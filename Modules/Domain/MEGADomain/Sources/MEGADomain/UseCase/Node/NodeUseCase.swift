@@ -1,3 +1,5 @@
+import AsyncAlgorithms
+import MEGASwift
 // MARK: - Use case protocol -
 public protocol NodeUseCaseProtocol {
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
@@ -24,6 +26,10 @@ public protocol NodeUseCaseProtocol {
     ///  - Returns: true if the node is marked as sensitive or a descendent of such node
     ///  - Throws: `NodeError.nodeNotFound` if the node cant be found
     func isInheritingSensitivity(node: NodeEntity) async throws -> Bool
+    /// On a folder sensitivity change it will recalculate the inherited sensitivity for the node.
+    /// - Parameter node: The node check for inherited sensitivity changes
+    /// - Returns: An `AnyAsyncSequence<Bool>` indicating inherited sensitivity changes
+    func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error>
 }
 
 // MARK: - Use case implementation -
@@ -123,5 +129,15 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
         try await nodeRepository.isInheritingSensitivity(node: node)
+    }
+    
+    public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
+        nodeRepository.nodeUpdates
+            .filter { $0.contains { $0.isFolder && $0.changeTypes.contains(.sensitive)} }
+            .map { _ in
+                try await nodeRepository.isInheritingSensitivity(node: node)
+            }
+            .removeDuplicates()
+            .eraseToAnyAsyncThrowingSequence()
     }
 }

@@ -2,9 +2,33 @@ import MEGADomain
 import MEGASdk
 import MEGASDKRepo
 import MEGASDKRepoMock
+import MEGASwift
 import XCTest
 
 final class NodeRepositoryTests: XCTestCase {
+    class Harness {
+        let sharedFolderSdk = MockSdk()
+        let sdk: MockSdk
+        let sut: NodeRepository
+        
+        init (
+            megaRootNode: MEGANode = .rootNode,
+            nodes: [MEGANode] = [],
+            isNodeInheritingSensitivity: Bool = false
+        ) {
+            
+            sdk = MockSdk(megaRootNode: megaRootNode,
+                          isNodeInheritingSensitivity: isNodeInheritingSensitivity)
+            
+            sut = NodeRepository(
+                sdk: sdk,
+                sharedFolderSdk: sharedFolderSdk,
+                nodeUpdatesProvider: MockNodeUpdatesProvider()
+            )
+            sdk.setNodes(nodes)
+        }
+    }
+    
     let defaultHandle: UInt64 = 123
     let invalidHandle: UInt64 = 999
     let defaultNodeName = "testNode"
@@ -53,7 +77,8 @@ final class NodeRepositoryTests: XCTestCase {
         rootNode: MockNode? = nil,
         createdFolderHandle: MEGAHandle? = nil,
         isNodeInheritingSensitivity: Bool = false,
-        accessLevel: MEGAShareType = .accessOwner
+        accessLevel: MEGAShareType = .accessOwner,
+        nodeUpdatesProvider: some NodeUpdatesProviderProtocol = MockNodeUpdatesProvider()
     ) -> NodeRepository {
         
         let mockSdk = MockSdk(
@@ -71,7 +96,8 @@ final class NodeRepositoryTests: XCTestCase {
         
         let sut = NodeRepository(
             sdk: mockSdk,
-            sharedFolderSdk: mockSharedFolderSdk
+            sharedFolderSdk: mockSharedFolderSdk,
+            nodeUpdatesProvider: nodeUpdatesProvider
         )
         
         return sut
@@ -617,7 +643,119 @@ final class NodeRepositoryTests: XCTestCase {
         }
     }
     
-    // MARK: - Is inheriting sentitivity
+    func testParentTreeArray_severalFolderLevels() async {
+        let grandParentNode = MockNode(handle: 2, nodeType: .folder, parentHandle: 1)
+        let parentNode = MockNode(handle: 3, nodeType: .folder, parentHandle: 2)
+        let childNode = MockNode(handle: 4, nodeType: .file, parentHandle: 3)
+        
+        let harness = Harness(nodes: [.rootNode, grandParentNode, parentNode, childNode])
+        harness.sdk.setShareAccessLevel(.accessOwner)
+        
+        let childNodeParentTreeArray = await harness.sut.parents(of: childNode.toNodeEntity())
+        XCTAssertEqual(childNodeParentTreeArray, [grandParentNode, parentNode].toNodeEntities())
+        
+        let parentNodeParentTreeArray = await harness.sut.parents(of: parentNode.toNodeEntity())
+        XCTAssertEqual(parentNodeParentTreeArray, [grandParentNode, parentNode].toNodeEntities())
+        
+        let grandParentNodeParentTreeArray = await harness.sut.parents(of: grandParentNode.toNodeEntity())
+        XCTAssertEqual(grandParentNodeParentTreeArray, [grandParentNode.toNodeEntity()])
+    }
+    
+    func testParentTreeArray_rootNodeChild_file() async {
+        let rootNodeChild = MockNode(handle: 5, nodeType: .file, parentHandle: 1)
+        let harness = Harness(nodes: [.rootNode, rootNodeChild])
+        harness.sdk.setShareAccessLevel(.accessOwner)
+        
+        let rootNodeParentTreeArray = await harness.sut.parents(of: rootNodeChild.toNodeEntity())
+        XCTAssertTrue(rootNodeParentTreeArray.isEmpty)
+    }
+    
+    func testChildNode_parentNotFound_shouldReturnNil() async {
+        let harness = Harness()
+        let childNode = await harness.sut.childNode(
+            parent: NodeEntity(handle: 4),
+            name: "Test",
+            type: .folder
+        )
+        
+        XCTAssertNil(childNode)
+    }
+    
+    func testChildNode_nodeFound_shouldReturnNode() async throws {
+        let name = "Test"
+        let nodeType = MEGANodeType.folder
+        let expectedNode = MockNode(handle: 3, name: name, nodeType: nodeType)
+        let parent = MockNode(handle: 86)
+        let harness = Harness(nodes: [parent, expectedNode])
+        
+        let childNode = await harness.sut.childNode(
+            parent: parent.toNodeEntity(),
+            name: name,
+            type: try XCTUnwrap(NodeTypeEntity(nodeType: nodeType))
+        )
+        
+        XCTAssertEqual(childNode, expectedNode.toNodeEntity())
+    }
+    
+    func testChildNode_nodeNotFound_shouldReturnNil() async {
+        let parent = MockNode(handle: 86)
+        let harness = Harness(nodes: [parent])
+        
+        let childNode = await harness.sut.childNode(
+            parent: parent.toNodeEntity(),
+            name: "Test",
+            type: .folder
+        )
+        
+        XCTAssertNil(childNode)
+    }
+    
+    func testChildrenOfParent_returnEmptyArray_whenNoChildrenFound() async {
+        let root = MockNode(handle: 1, nodeType: .folder)
+        let harness = Harness(nodes: [root] )
+        let result = await harness.sut.asyncChildren(of: root.toNodeEntity(), sortOrder: .defaultAsc)
+        XCTAssertEqual(result?.nodesCount ?? 0, 0)
+    }
+    
+    func testChildrenOfParent_returnChildrenArray_whenNoChildrenFound() async {
+        let root = MockNode(handle: 1, nodeType: .folder)
+        let child0 = MockNode(handle: 2, nodeType: .file, parentHandle: 1)
+        let child1 = MockNode(handle: 3, nodeType: .file, parentHandle: 1)
+        let child2 = MockNode(handle: 4, nodeType: .folder, parentHandle: 1)
+        let grandChild = MockNode(handle: 5, nodeType: .file, parentHandle: 4)
+        
+        let children = [child0, child1, child2]
+        let harness = Harness(nodes: [root] + children + [grandChild])
+        let result = await harness.sut.asyncChildren(of: root.toNodeEntity(), sortOrder: .defaultAsc)
+        let resultNodes = [result?.nodeAt(0), result?.nodeAt(1), result?.nodeAt(2)]
+        XCTAssertEqual(resultNodes, children.toNodeEntities())
+    }
+    
+    // MARK: - Is inheriting sensitivity
+    func testIsInheritingSensitivity_nodeNotFound_shouldThrowNodeNotFoundError() async {
+        let harness = Harness()
+        
+        do {
+            let node = NodeEntity(handle: 5)
+            _ = try await harness.sut.isInheritingSensitivity(node: node)
+            XCTFail("Should have caught error")
+        } catch let error as NodeErrorEntity {
+            XCTAssertEqual(error, NodeErrorEntity.nodeNotFound)
+        } catch {
+            XCTFail("Caught incorrect error")
+        }
+    }
+    
+    func testIsInheritingSensitivity_nodeFound_shouldReturn() async throws {
+        let isNodeInheritingSensitivity = true
+        let node = MockNode(handle: 24)
+        let harness = Harness(nodes: [node],
+                              isNodeInheritingSensitivity: isNodeInheritingSensitivity)
+        
+        let isSensitive = try await harness.sut.isInheritingSensitivity(node: node.toNodeEntity())
+        XCTAssertEqual(isSensitive, isNodeInheritingSensitivity)
+    }
+    
     func testIsInheritingSensitivity_nodeFound_inheritsSettings() async throws {
         let node = defaultNode()
         let sut = makeSUT(
@@ -660,4 +798,23 @@ final class NodeRepositoryTests: XCTestCase {
             XCTAssertEqual(error, .nodeNotFound, "Should throw 'nodeNotFound' when the node does not exist.")
         }
     }
+    
+    func testNodeUpdates_onProviderUpdates_shouldYieldValues() async {
+        let updates = [NodeEntity(handle: 1),
+                       NodeEntity(handle: 2)]
+                       
+        let updateSequence = SingleItemAsyncSequence(item: updates)
+            .eraseToAnyAsyncSequence()
+        let sut = makeSUT(nodeUpdatesProvider: MockNodeUpdatesProvider(nodeUpdates: updateSequence))
+        
+        var iterator = sut.nodeUpdates.makeAsyncIterator()
+        
+        let result = await iterator.next()
+        
+        XCTAssertEqual(result, updates)
+    }
+}
+
+fileprivate extension MEGANode {
+    static let rootNode = MockNode(handle: 1, nodeType: .folder)
 }

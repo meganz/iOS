@@ -1,18 +1,29 @@
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 public struct NodeRepository: NodeRepositoryProtocol {
-    
     public static var newRepo: NodeRepository {
-        NodeRepository(sdk: MEGASdk.sharedSdk, sharedFolderSdk: MEGASdk.sharedFolderLinkSdk)
+        let sdk = MEGASdk.sharedSdk
+        return NodeRepository(sdk: sdk,
+                              sharedFolderSdk: MEGASdk.sharedFolderLinkSdk,
+                              nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk))
+    }
+    
+    public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        nodeUpdatesProvider.nodeUpdates
     }
     
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
+    private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     
-    public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk) {
+    public init(sdk: MEGASdk,
+                sharedFolderSdk: MEGASdk,
+                nodeUpdatesProvider: some NodeUpdatesProviderProtocol) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
+        self.nodeUpdatesProvider = nodeUpdatesProvider
     }
     
     // MARK: - Node

@@ -1,6 +1,10 @@
-import Foundation
+import MEGASwift
 
 public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
+    /// Node updates from `MEGAGlobalDelegate` `onNodesUpdate`
+    ///
+    /// - Returns: `AnyAsyncSequence` that will yield `[NodeEntity]` items until sequence terminated.
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void)
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity
