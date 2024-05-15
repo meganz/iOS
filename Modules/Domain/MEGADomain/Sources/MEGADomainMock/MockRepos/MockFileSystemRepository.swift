@@ -11,6 +11,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
     private let containsOriginalsDirectory: Bool
     private let fileSize: UInt64
     private let creationDate: Date
+    private let relativePath: String
     
     public var removeFileURLs = [URL]()
 
@@ -20,7 +21,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
                 movedNode: Bool = false,
                 containsOriginalsDirectory: Bool = false,
                 fileSize: UInt64 = 0,
-                creationDate: Date = Date()) {
+                creationDate: Date = Date(),
+                relativePath: String = "relativePath") {
         self.sizeAvailability = sizeAvailability
         self.fileExists = fileExists
         self.copiedNode = copiedNode
@@ -28,6 +30,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
         self.containsOriginalsDirectory = containsOriginalsDirectory
         self.fileSize = fileSize
         self.creationDate = creationDate
+        self.relativePath = relativePath
     }
     
     public func documentsDirectory() -> URL {
@@ -61,4 +64,9 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
     public func fileCreationDate(at url: URL) -> Date? {
         creationDate
     }
+    
+    public func relativePathToDocumentsDirectory(for url: URL) -> String {
+        relativePath
+    }
+    
 }

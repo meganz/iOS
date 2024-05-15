@@ -80,4 +80,10 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
     public func fileCreationDate(at url: URL) -> Date? {
         url.attributes?[.creationDate] as? Date
     }
+    
+    public func relativePathToDocumentsDirectory(for url: URL) -> String {
+        guard let documentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return "" }
+        let relativePath = url.path.replacingOccurrences(of: documentsDirectoryURL.path.appending("/"), with: "")
+        return relativePath
+    }
 }

@@ -1,10 +1,15 @@
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 import MEGASDKRepo
 
 extension OfflineViewController {
     @objc func createOfflineViewModel() -> OfflineViewModel {
-        OfflineViewModel(transferUseCase: NodeTransferUseCase(repo: NodeTransferRepository.newRepo))
+        OfflineViewModel(
+            transferUseCase: NodeTransferUseCase(repo: NodeTransferRepository.newRepo),
+            offlineUseCase: OfflineUseCase(fileSystemRepository: FileSystemRepository.newRepo),
+            megaStore: MEGAStore.shareInstance()
+        )
     }
     
     @objc func setUpInvokeCommands() {
@@ -46,6 +51,10 @@ extension OfflineViewController {
         viewModel.dispatch(.removeSubscriptions)
     }
     
+    @objc func removeOfflineItems(_ items: [URL]) {
+        viewModel.dispatch(.removeOfflineItems(items))
+    }
+    
     @objc func selectedCountTitle() -> String {
         guard let selectedCount = selectedItems?.count,
               selectedCount > 0 else {
@@ -55,7 +64,7 @@ extension OfflineViewController {
     }
     
     // MARK: - Private
-    
+
     private var screenTitle: String {
         if let path = folderPathFromOffline?.lastPathComponent {
             return path

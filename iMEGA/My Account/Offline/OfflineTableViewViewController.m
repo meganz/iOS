@@ -225,7 +225,7 @@ static NSString *kPath = @"kPath";
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.itemNameString];
         [self.offline showRemoveAlertWithConfirmAction:^{
-            [self.offline removeOfflineNodeCell:itemPath];
+            [self.offline removeOfflineItems:@[[NSURL fileURLWithPath:itemPath]]];
             [self.offline updateNavigationBarTitle];
         } andCancelAction:^{
             [self.offline setEditMode:NO];
