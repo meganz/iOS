@@ -186,7 +186,9 @@ extension GroupChatDetailsViewController {
         UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
     }
     
-    @objc func configLeftImageForLeftGroup(for cell: GroupChatDetailsViewTableViewCell) {
+    @objc func configLeftImageForLeftGroup(for cell: GroupChatDetailsViewTableViewCell?) {
+        guard let cell else { return }
+        
         cell.leftImageView.image = UIImage.leaveGroup.withRenderingMode(.alwaysTemplate)
         cell.leftImageView.tintColor = iconRedColor()
     }
