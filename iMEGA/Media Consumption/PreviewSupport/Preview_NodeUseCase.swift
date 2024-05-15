@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASwift
 
 struct Preview_NodeUseCase: NodeUseCaseProtocol {
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -79,5 +80,9 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
     
     func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
         false
+    }
+    
+    func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
+        EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
     }
 }
