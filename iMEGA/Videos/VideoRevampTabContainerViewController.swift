@@ -406,6 +406,10 @@ extension VideoRevampTabContainerViewController: UISearchBarDelegate {
         viewModel.dispatch(.searchBarAction(.becomeActive))
         return true
     }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        viewModel.dispatch(.searchBarAction(.cancel))
+    }
 }
 
 // MARK: - TraitEnvironmentAware
