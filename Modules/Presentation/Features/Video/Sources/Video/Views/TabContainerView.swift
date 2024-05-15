@@ -5,22 +5,35 @@ import SwiftUI
 struct TabContainerView: View {
     @State private var currentTab: VideosTab = .all
     
-    @StateObject var videoListViewModel: VideoListViewModel
-    @StateObject var videoPlaylistViewModel: VideoPlaylistsViewModel
-    let videoConfig: VideoConfig
-    let router: any VideoRevampRouting
-    let didChangeCurrentTab: (_ currentTab: VideosTab) -> Void
+    @StateObject private var videoListViewModel: VideoListViewModel
+    @StateObject private var videoPlaylistViewModel: VideoPlaylistsViewModel
+    @StateObject private var syncModel: VideoRevampSyncModel
+    private let videoConfig: VideoConfig
+    private let router: any VideoRevampRouting
+    private let didChangeCurrentTab: (_ currentTab: VideosTab) -> Void
     
-    private var showTabView: Bool {
-        videoListViewModel.syncModel.showsTabView
+    init(
+        videoListViewModel: @autoclosure @escaping () -> VideoListViewModel,
+        videoPlaylistViewModel: @autoclosure @escaping () -> VideoPlaylistsViewModel,
+        syncModel: @autoclosure @escaping () -> VideoRevampSyncModel,
+        videoConfig: VideoConfig,
+        router: any VideoRevampRouting,
+        didChangeCurrentTab: @escaping (_: VideosTab) -> Void
+    ) {
+        self._videoListViewModel = StateObject(wrappedValue: videoListViewModel())
+        self._videoPlaylistViewModel = StateObject(wrappedValue: videoPlaylistViewModel())
+        self._syncModel = StateObject(wrappedValue: syncModel())
+        self.videoConfig = videoConfig
+        self.router = router
+        self.didChangeCurrentTab = didChangeCurrentTab
     }
     
     var body: some View {
         VStack(spacing: 0) {
             TabBarView(currentTab: self.$currentTab, videoConfig: videoConfig)
-                .frame(height: showTabView ? 44 : 0)
-                .opacity(showTabView ? 1 : 0)
-                .animation(.easeInOut(duration: 0.1), value: showTabView)
+                .frame(height: syncModel.showsTabView ? 44 : 0)
+                .opacity(syncModel.showsTabView ? 1 : 0)
+                .animation(.easeInOut(duration: 0.1), value: syncModel.showsTabView)
             
             TabView(selection: self.$currentTab) {
                 VideoListView(
@@ -29,14 +42,14 @@ struct TabContainerView: View {
                     router: router
                 )
                 .tag(VideosTab.all)
-                .gesture(showTabView ? nil : DragGesture())
+                .gesture(syncModel.showsTabView ? nil : DragGesture())
                 
                 PlaylistView(
                     viewModel: videoPlaylistViewModel,
                     videoConfig: videoConfig
                 )
                 .tag(VideosTab.playlist)
-                .gesture(showTabView ? nil : DragGesture())
+                .gesture(syncModel.showsTabView ? nil : DragGesture())
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .background(videoConfig.colorAssets.pageBackgroundColor)
@@ -159,6 +172,7 @@ struct TabBarItem: View {
         TabContainerView(
             videoListViewModel: makeNullViewModel(),
             videoPlaylistViewModel: makeVideoPlaylistsViewModel(),
+            syncModel: VideoRevampSyncModel(),
             videoConfig: .preview,
             router: Preview_VideoRevampRouter(),
             didChangeCurrentTab: { _ in }
@@ -166,6 +180,7 @@ struct TabBarItem: View {
         TabContainerView(
             videoListViewModel: makeNullViewModel(),
             videoPlaylistViewModel: makeVideoPlaylistsViewModel(),
+            syncModel: VideoRevampSyncModel(),
             videoConfig: .preview,
             router: Preview_VideoRevampRouter(),
             didChangeCurrentTab: { _ in }

@@ -20,16 +20,9 @@ public final class VideoRevampSyncModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     
     public init() {
-        _editMode.projectedValue
-            .map(\.isEditing)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isEditing in
-                self?.showsTabView = isEditing ? false : true
-            }
-            .store(in: &subscriptions)
-        
-        $isSearchActive
-            .map { !$0 }
+        $editMode.combineLatest($isSearchActive)
+            .map { editMode, isSearchActive in !(editMode.isEditing || isSearchActive) }
+            .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .assign(to: &$showsTabView)
     }
@@ -61,6 +54,7 @@ public class VideoRevampFactory {
         let view = TabContainerView(
             videoListViewModel: videoListViewModel,
             videoPlaylistViewModel: videoPlaylistViewModel,
+            syncModel: syncModel,
             videoConfig: videoConfig,
             router: router,
             didChangeCurrentTab: { syncModel.currentTab = $0 }
