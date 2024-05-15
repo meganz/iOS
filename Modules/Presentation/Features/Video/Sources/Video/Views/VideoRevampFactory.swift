@@ -1,5 +1,7 @@
 import Combine
 import MEGADomain
+import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 public final class VideoRevampSyncModel: ObservableObject {
@@ -49,7 +51,14 @@ public class VideoRevampFactory {
             videoPlaylistsUseCase: videoPlaylistUseCase,
             thumbnailUseCase: thumbnailUseCase, 
             videoPlaylistContentUseCase: videoPlaylistContentUseCase,
-            syncModel: syncModel
+            syncModel: syncModel,
+            alertViewModel: TextFieldAlertViewModel(
+                title: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.title,
+                placeholderText: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.placeholder,
+                affirmativeButtonTitle: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Button.create,
+                destructiveButtonTitle: Strings.Localizable.cancel,
+                message: nil
+            )
         )
         let view = TabContainerView(
             videoListViewModel: videoListViewModel,

@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 
 final class VideoPlaylistsViewModel: ObservableObject {
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
@@ -11,16 +12,31 @@ final class VideoPlaylistsViewModel: ObservableObject {
     @Published var shouldShowAddNewPlaylistAlert = false
     @Published var playlistName = ""
     
+    private var videoPlaylistNames: [String] = []
+    
+    private(set) var alertViewModel: TextFieldAlertViewModel
+    
     init(
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
-        syncModel: VideoRevampSyncModel
+        syncModel: VideoRevampSyncModel,
+        alertViewModel: TextFieldAlertViewModel
     ) {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
+        self.alertViewModel = alertViewModel
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
+        
+        assignVideoPlaylistNameValidator()
+    }
+    
+    private func assignVideoPlaylistNameValidator() {
+        let validator = VideoPlaylistNameValidator(existingVideoPlaylistNames: { [weak self] in
+            self?.videoPlaylistNames ?? []
+        })
+        alertViewModel.validator = { try? validator.validateWhenCreated(with: $0) }
     }
     
     @MainActor

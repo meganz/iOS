@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct PlaylistView: View {
@@ -21,6 +22,7 @@ struct PlaylistView: View {
             listView
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
+        .alert(isPresented: $viewModel.shouldShowAddNewPlaylistAlert, viewModel.alertViewModel)
         .task {
             await viewModel.onViewAppeared()
         }
@@ -29,7 +31,6 @@ struct PlaylistView: View {
     private var newPlaylistView: some View {
         HStack(spacing: 8) {
             addPlaylistButton
-            
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.newPlaylist)
                 .font(.system(size: 15, weight: .medium))
                 .foregroundColor(videoConfig.colorAssets.primaryTextColor)
@@ -91,7 +92,7 @@ struct PlaylistView: View {
     
     private func videoPlaylistCellViewModel(_ videoPlaylist: VideoPlaylistEntity) -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
-            thumbnailUseCase: viewModel.thumbnailUseCase, 
+            thumbnailUseCase: viewModel.thumbnailUseCase,
             videoPlaylistContentUseCase: viewModel.videoPlaylistContentUseCase,
             videoPlaylistEntity: videoPlaylist,
             onTapMoreOptions: { _ in }
@@ -100,25 +101,28 @@ struct PlaylistView: View {
 }
 
 #Preview {
-    Group {
-        PlaylistView(
-            viewModel: VideoPlaylistsViewModel(
-                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
-                thumbnailUseCase: Preview_ThumbnailUseCase(),
-                videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
-                syncModel: VideoRevampSyncModel()
-            ),
-            videoConfig: .preview
-        )
-        PlaylistView(
-            viewModel: VideoPlaylistsViewModel(
-                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
-                thumbnailUseCase: Preview_ThumbnailUseCase(),
-                videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
-                syncModel: VideoRevampSyncModel()
-            ),
-            videoConfig: .preview
-        )
-        .preferredColorScheme(.dark)
-    }
+    PlaylistView(
+        viewModel: VideoPlaylistsViewModel(
+            videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
+            thumbnailUseCase: Preview_ThumbnailUseCase(),
+            videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+            syncModel: VideoRevampSyncModel(),
+            alertViewModel: .preview
+        ),
+        videoConfig: .preview
+    )
+}
+
+#Preview {
+    PlaylistView(
+        viewModel: VideoPlaylistsViewModel(
+            videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
+            thumbnailUseCase: Preview_ThumbnailUseCase(),
+            videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+            syncModel: VideoRevampSyncModel(),
+            alertViewModel: .preview
+        ),
+        videoConfig: .preview
+    )
+    .preferredColorScheme(.dark)
 }
