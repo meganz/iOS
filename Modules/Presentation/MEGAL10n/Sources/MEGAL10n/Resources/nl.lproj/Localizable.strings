@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="Nieuwe afspeellijst";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Creëren";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="Voer een nieuwe naam in";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="Voer een andere naam in";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Er bestaat al een playlist met deze naam";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Er is niemand in de wachtkamer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4005,7 +4013,7 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Kan niet aansluiten";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restrictions.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Deze oproep kan slechts 100 deelnemers ondersteunen. Vraag de organisator om deze beperking op te heffen.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, ik snap het";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
@@ -4066,3 +4074,7 @@
 "limited.Transfer.limit"="Beperkt";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Abonnement Opzeggen";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="Bestand kan niet worden opgeslagen";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="Dit bestandstype wordt niet ondersteund door iOS. Wilt u het offline beschikbaar maken?";

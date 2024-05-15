@@ -434,24 +434,6 @@
         <string>%d de elemente</string>
       </dict>
     </dict>
-    <key>general.format.rubbishBin.days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@days@</string>
-      <key>days</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>recents.section.title.items</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2648,24 +2630,6 @@
         <string>[Fișiere nedecriptate]</string>
       </dict>
     </dict>
-    <key>account.upgradeSecurity.message.sharedFolderNames</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folderNames@</string>
-      <key>folderNames</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>În prezent partajezi următorul folder: [A]</string>
-        <key>few</key>
-        <string>În prezent partajezi următoarele foldere: [A]</string>
-        <key>other</key>
-        <string>În prezent partajezi următoarele foldere: [A]</string>
-      </dict>
-    </dict>
     <key>account.achievement.complete.validDays.subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3222,24 +3186,6 @@
         <string>Fișier trimis la %d chat-uri</string>
         <key>other</key>
         <string>Fișier trimis la %d de chat-uri</string>
-      </dict>
-    </dict>
-    <key>chat.message.filesSent</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d fișier trimis la chat-uri</string>
-        <key>few</key>
-        <string>%d fișiere trimise la chat-uri</string>
-        <key>other</key>
-        <string>%d de fișiere trimise la chat-uri</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>

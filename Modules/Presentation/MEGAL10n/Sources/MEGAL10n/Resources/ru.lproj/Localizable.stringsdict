@@ -482,26 +482,6 @@
         <string>%d элемента</string>
       </dict>
     </dict>
-    <key>general.format.rubbishBin.days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@days@</string>
-      <key>days</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>recents.section.title.items</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2942,26 +2922,6 @@
         <string>[Нерасшифрованные файлы]</string>
       </dict>
     </dict>
-    <key>account.upgradeSecurity.message.sharedFolderNames</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folderNames@</string>
-      <key>folderNames</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>В настоящее время у вас открыт доступ к следующей папке: [A]</string>
-        <key>few</key>
-        <string>В настоящее время у вас открыт доступ к следующим папкам: [A]</string>
-        <key>many</key>
-        <string>В настоящее время у вас открыт доступ к следующим папкам: [A]</string>
-        <key>other</key>
-        <string>В настоящее время у вас открыт доступ к следующим папкам: [A]</string>
-      </dict>
-    </dict>
     <key>account.achievement.complete.validDays.subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3580,26 +3540,6 @@
         <string>Файл отправлен в %d чатов</string>
         <key>other</key>
         <string>Файл отправлен в %d чата</string>
-      </dict>
-    </dict>
-    <key>chat.message.filesSent</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d файл отправлен в чаты</string>
-        <key>few</key>
-        <string>%d файла отправлено в чаты</string>
-        <key>many</key>
-        <string>%d файлов отправлено в чаты</string>
-        <key>other</key>
-        <string>%d файла отправлено в чаты</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>

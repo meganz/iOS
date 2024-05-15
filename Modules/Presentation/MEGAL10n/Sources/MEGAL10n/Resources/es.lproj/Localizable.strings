@@ -953,7 +953,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sesiones cerradas";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Cambiar código de acceso";
+"changePasscodeLabel"="Cambiar el código de acceso";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Código de acceso simple";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -2011,7 +2011,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="No puedes eliminar %1$s como contacto porque es parte de tu cuenta Business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Solicitar código de acceso";
+"Require Passcode"="Solicitar un código de acceso";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Inmediatamente";
 /* Popup notification text on mouse-over of taken down file. */
@@ -3305,7 +3305,7 @@
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="No se puede verificar %@ porque no está en tu lista de contactos. Espera a que acepte tu invitación primero.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Desactivar código de acceso de MEGA";
+"picker.disable.passcode.title"="Desactivar el código de acceso de MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="Para usar MEGA en la aplicación Files, desactiva tu código de acceso de MEGA. Ve a Ajustes en la aplicación de MEGA, toca en Seguridad > Código de acceso.";
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="Nueva lista de reproducción";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Crear";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="Introducir un nombre nuevo";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="Introduce un nombre diferente";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Ya existe una lista de reproducción con este nombre";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="No hay nadie en la sala de espera";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4065,4 +4073,8 @@
 /* Limited transfer limit title */
 "limited.Transfer.limit"="Limitado";
 /* Cancel account subscription title */
-"account.subscription.cancel.title"="Cancelar Suscripción";
+"account.subscription.cancel.title"="Cancelar suscripción";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="No se puede guardar el archivo";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="iOS no admite este tipo de archivo. ¿Quieres que esté disponible sin conexión?";

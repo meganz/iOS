@@ -3495,7 +3495,7 @@
 /* Device Center rename device action title */
 "device.center.rename.device.title"="Nome do dispositivo";
 /* Device Center rename device action duplicated name message */
-"device.center.rename.device.duplicated.name"="Um dispositivo com esse nome já existe";
+"device.center.rename.device.duplicated.name"="Já existe um dispositivo com este nome";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Digite um nome diferente";
 /* Device Center rename device action invalid long name message */
@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="Nova lista de reprodução";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Criar";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="Digite um novo nome";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="Digite um nome diferente";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Já existe uma lista de reprodução com este nome";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Não há ninguém na sala de espera";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4066,3 +4074,7 @@
 "limited.Transfer.limit"="Limitado";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Cancelar assinatura";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="Não foi possível salvar o arquivo";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="Esse tipo de arquivo não é compatível com o iOS. Você quer fazer com que esteja disponível offline?";

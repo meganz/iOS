@@ -434,24 +434,6 @@
         <string>%d éléments</string>
       </dict>
     </dict>
-    <key>general.format.rubbishBin.days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@days@</string>
-      <key>days</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>recents.section.title.items</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2648,24 +2630,6 @@
         <string>[Fichiers non déchiffrés]</string>
       </dict>
     </dict>
-    <key>account.upgradeSecurity.message.sharedFolderNames</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folderNames@</string>
-      <key>folderNames</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Vous partagez actuellement le dossier suivant : [A]</string>
-        <key>many</key>
-        <string>Vous partagez actuellement les dossiers suivants : [A]</string>
-        <key>other</key>
-        <string>Vous partagez actuellement les dossiers suivants : [A]</string>
-      </dict>
-    </dict>
     <key>account.achievement.complete.validDays.subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3222,24 +3186,6 @@
         <string>Le fichier a été envoyé vers %d de conversations</string>
         <key>other</key>
         <string>Le fichier a été envoyé vers %d conversations</string>
-      </dict>
-    </dict>
-    <key>chat.message.filesSent</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d fichier a été envoyé vers les conversations</string>
-        <key>many</key>
-        <string>%d de fichiers ont été envoyés vers les conversations</string>
-        <key>other</key>
-        <string>%d fichiers ont été envoyés vers les conversations</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>
