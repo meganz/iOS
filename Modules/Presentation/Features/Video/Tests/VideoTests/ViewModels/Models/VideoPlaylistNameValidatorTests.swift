@@ -1,0 +1,102 @@
+import MEGAL10n
+import MEGASwiftUI
+@testable import Video
+import XCTest
+
+final class VideoPlaylistNameValidatorTests: XCTestCase {
+    
+    // MARK: - validateWhenCreated
+    
+    func testCreate_whenNameIsEmpty_shouldReturnNil() {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName = ""
+        
+        assertCreateByCatchingError(on: sut, name: testName, expectedError: .emptyName)
+    }
+    
+    func testValidateWhenCreated_whenNameHasEmptySpaces_shouldThrowError() {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName = "       "
+        
+        assertCreateByCatchingError(on: sut, name: testName, expectedError: .emptyName)
+    }
+    
+    func testValidateWhenCreated_whenNameHasInvalidChars_shouldReturnRightErrorObject() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName = "* adkd"
+        let targetError = TextFieldAlertError(
+            title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay),
+            description:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterNewName
+        )
+        
+        let result = try sut.validateWhenCreated(with: testName)
+        
+        XCTAssertEqual(result, targetError)
+    }
+    
+    func testValidateWhenCreated_whenNameHasReservedVideoPlaylistNames_shouldReturnRightErrorObject() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName =  Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites
+        let targetError = TextFieldAlertError(
+            title:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.videoPlaylistNameNotAllowed,
+            description:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterDifferentName
+        )
+        
+        let result = try sut.validateWhenCreated(with: testName)
+        
+        XCTAssertEqual(result, targetError)
+    }
+    
+    func testValidateWhenCreated_whenNameHasExistingVideoPlaylistNames_shouldReturnRightErrorObject() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
+        let testName = "aaa"
+        let targetError = TextFieldAlertError(
+            title:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.userVideoPlaylistExists,
+            description:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterDifferentName
+        )
+        
+        let result = try sut.validateWhenCreated(with: testName)
+        
+        XCTAssertEqual(result, targetError)
+    }
+    
+    func testValidateWhenCreated_whenNameHasValidName_shouldReturnNil() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
+        let testName = "Hey there this is a new video playlist"
+        
+        let result = try sut.validateWhenCreated(with: testName)
+        
+        XCTAssertNil(result)
+    }
+    
+    // MARK: - validateWhenRenamed
+    
+    func testValidateWhenRenamed_whenNameIsEmpty_shouldReturnErrorObject() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName = ""
+        
+        do {
+            _ = try sut.validateWhenRenamed(into: testName)
+            XCTFail("Should catch error")
+        } catch {
+            XCTAssertEqual(error as? VideoPlaylistNameValidator.ValidatorError, .emptyName)
+        }
+    }
+    
+    // MARK: - Helpers
+    
+    private func assertCreateByCatchingError(
+        on sut: VideoPlaylistNameValidator,
+        name testName: String,
+        expectedError: VideoPlaylistNameValidator.ValidatorError,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        do {
+            _ = try sut.validateWhenCreated(with: testName)
+            XCTFail("Should catch error", file: file, line: line)
+        } catch {
+            XCTAssertEqual(error as? VideoPlaylistNameValidator.ValidatorError, expectedError, file: file, line: line)
+        }
+    }
+}
