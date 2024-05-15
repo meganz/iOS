@@ -2681,7 +2681,7 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
 "meetings.reconnecting.failed"="Nu se poate reconecta";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Conexiune proastă";
+"meetings.poorConnection"="Conexiune slabă";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Previzualizează imagini de înaltă rezoluție";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="Listă de redare nouă";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Creează";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="Introduceți un nume nou";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="Introduceți un alt nume";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Există deja o listă de redare cu acest nume";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Nu este nimeni în sala de așteptare";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4066,3 +4074,7 @@
 "limited.Transfer.limit"="Limitat";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Anulează abonamentul";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";

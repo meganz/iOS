@@ -2681,7 +2681,7 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
 "meetings.reconnecting.failed"="Impossible de se reconnecter";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="La connexion est mauvaise";
+"meetings.poorConnection"="La connexion est de mauvaise qualité";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Prévisualiser des images à haute résolution";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="Nouvelle liste de lecture";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Créer";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="Saisissez un nouveau nom.";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="Saisissez un nom différent";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Une liste de lecture du même nom existe déjà";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="La salle d’attente est vide";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4063,6 +4071,10 @@
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d Go";
 /* Limited transfer limit title */
-"limited.Transfer.limit"="Limité";
+"limited.Transfer.limit"="Limités";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Annuler l’abonnement";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="Le fichier ne peut pas être enregistré";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="Ce type de fichier n’est pas pris en charge par iOS. Voulez-vous le rendre disponible hors ligne ?";

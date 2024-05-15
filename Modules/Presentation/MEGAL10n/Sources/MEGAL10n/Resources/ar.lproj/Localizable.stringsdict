@@ -578,30 +578,6 @@
         <string>%d عنصر</string>
       </dict>
     </dict>
-    <key>general.format.rubbishBin.days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@days@</string>
-      <key>days</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>zero</key>
-        <string></string>
-        <key>one</key>
-        <string></string>
-        <key>two</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>recents.section.title.items</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3530,30 +3506,6 @@
         <string>[ملفات غير مشفرة]</string>
       </dict>
     </dict>
-    <key>account.upgradeSecurity.message.sharedFolderNames</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folderNames@</string>
-      <key>folderNames</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>zero</key>
-        <string></string>
-        <key>one</key>
-        <string></string>
-        <key>two</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>account.achievement.complete.validDays.subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -4296,30 +4248,6 @@
         <string>تم إرسال الملف إلى %d محادثة</string>
         <key>other</key>
         <string>تم إرسال الملف إلى %d محادثة</string>
-      </dict>
-    </dict>
-    <key>chat.message.filesSent</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>zero</key>
-        <string></string>
-        <key>one</key>
-        <string></string>
-        <key>two</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>

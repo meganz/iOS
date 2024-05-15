@@ -2029,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="당신의 비즈니스 계정은 결제 실패로 인해 비활성화 되었습니다. 계정 안에 있는 데이터에 접근하지 못할 것입니다. 결제를 하고 구독을 재활성화 하려면, 브라우저에서 MEGA에 로그인 하세요.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]deactivated[/B]. You can only browse your data.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="당신의 계정은 현재 [B]비활성화[/B]되었습니다. 당신의 데이터를 탐색만 할 수 있습니다.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA는 당신의 데이터에 접근할 수 없습니다. 그러나 당신의 비즈니스 계정 관리자는 당신의 카메라 업로드에 접근할 수 있습니다.";
 /*  */
@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="새 재생 목록";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="생성";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="새 이름을 입력하세요";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="다른 이름을 입력하세요";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="대기실에 아무도 없습니다";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4005,7 +4013,7 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="참여할 수 없음";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restrictions.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="이 통화는 100명의 참여자만 지원합니다. 주최자에게 이 제한을 없앨 것을 요청하세요.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="알겠습니다";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
@@ -4061,8 +4069,12 @@
 /* Price description for the free plan */
 "free.Plan.Price.description"="무료";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
-"storage.Limit.capacity"="%d GB";
+"storage.Limit.capacity"="%dGB";
 /* Limited transfer limit title */
 "limited.Transfer.limit"="제한됨";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="구독 취소";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";

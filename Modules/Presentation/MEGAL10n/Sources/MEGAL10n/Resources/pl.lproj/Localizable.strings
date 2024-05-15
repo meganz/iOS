@@ -2681,7 +2681,7 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
 "meetings.reconnecting.failed"="Nie można nawiązać ponownego połączenia";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Złe połączenie";
+"meetings.poorConnection"="Słabe połączenie";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Podgląd obrazów w wysokiej rozdzielczości";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="Nowa lista odtwarzania";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Utwórz";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="Wprowadź nową nazwę";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="Wprowadź inną nazwę";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Lista odtwarzania o tej nazwie już istnieje";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="W poczekalni nie ma nikogo";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4005,7 +4013,7 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Nie można dołączyć";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="To połączenie może obsłużyć tylko 100 uczestników. Poproś organizatora o usunięcie tych ograniczeń.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="To połączenie może wesprzeć tylko 100 uczestników. Poproś organizatora o usunięcie tego ograniczenia.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, rozumiem";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
@@ -4066,3 +4074,7 @@
 "limited.Transfer.limit"="Ograniczony";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Anuluj subskrypcję";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="Plik nie może zostać zapisany";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="Ten typ plik nie jest obsługiwany przez system iOS. Czy chciałbyś udostępnić go w trybie offline?";

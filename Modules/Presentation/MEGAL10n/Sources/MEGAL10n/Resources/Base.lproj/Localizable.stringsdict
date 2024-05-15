@@ -386,22 +386,6 @@
         <string>%d items</string>
       </dict>
     </dict>
-    <key>general.format.rubbishBin.days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@days@</string>
-      <key>days</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>day</string>
-        <key>other</key>
-        <string>days</string>
-      </dict>
-    </dict>
     <key>recents.section.title.items</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2354,22 +2338,6 @@
         <string>[Undecrypted files]</string>
       </dict>
     </dict>
-    <key>account.upgradeSecurity.message.sharedFolderNames</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folderNames@</string>
-      <key>folderNames</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>You’re currently sharing the following folder: [A]</string>
-        <key>other</key>
-        <string>You’re currently sharing the following folders: [A]</string>
-      </dict>
-    </dict>
     <key>account.achievement.complete.validDays.subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2864,22 +2832,6 @@
         <string>File sent to %d chat</string>
         <key>other</key>
         <string>File sent to %d chats</string>
-      </dict>
-    </dict>
-    <key>chat.message.filesSent</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d file sent to chats</string>
-        <key>other</key>
-        <string>%d files sent to chats</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>

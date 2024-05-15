@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="เพลย์ลิสต์ใหม่";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="สร้าง";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="กรอกชื่อใหม่";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="กรอกชื่ออื่น";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="มีชื่อเพลย์ลิสต์นี้อยู่แล้ว";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="ไม่มีใครอยู่ในห้องนั่งรอ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4005,7 +4013,7 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="ไม่สามารถเข้าร่วมได้";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="การโทรนี้รองรับผู้เข้าร่วมได้สูงสุด 100 คน หากต้องการเพิ่มมากกว่านั้น กรุณาขอให้ผู้จัดการประชุมยกเลิกข้อจำกัดนี้ก่อน";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="การโทรนี้รองรับผู้เข้าร่วมได้สูงสุด 100 คน หากต้องการเพิ่มจำนวนผู้เข้าร่วม กรุณาขอให้ผู้จัดการประชุมยกเลิกข้อจำกัดนี้ก่อน";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="โอเค เข้าใจแล้ว";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
@@ -4066,3 +4074,7 @@
 "limited.Transfer.limit"="ถูกจำกัด";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="ยกเลิกการสมัครใช้งาน";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="ไม่สามารถบันทึกไฟล์ได้";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="ไฟล์ประเภทนี้ไม่สนับสนุนบน iOS ต้องการทำให้ไฟล์นี้พร้อมใช้งานแบบออฟไลน์หรือไม่";

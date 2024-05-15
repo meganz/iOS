@@ -386,22 +386,6 @@
         <string>%d Elemente</string>
       </dict>
     </dict>
-    <key>general.format.rubbishBin.days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@days@</string>
-      <key>days</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>recents.section.title.items</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2354,22 +2338,6 @@
         <string>[Nicht entschlüsselte Dateien]</string>
       </dict>
     </dict>
-    <key>account.upgradeSecurity.message.sharedFolderNames</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folderNames@</string>
-      <key>folderNames</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Sie haben aktuell den folgenden Ordner freigegeben: [A]</string>
-        <key>other</key>
-        <string>Sie haben aktuell folgende Ordner freigegeben: [A]</string>
-      </dict>
-    </dict>
     <key>account.achievement.complete.validDays.subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2866,22 +2834,6 @@
         <string>Datei an %d Chats gesendet</string>
       </dict>
     </dict>
-    <key>chat.message.filesSent</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d Datei an Chats gesendet</string>
-        <key>other</key>
-        <string>%d Dateien an Chats gesendet</string>
-      </dict>
-    </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2909,9 +2861,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d contact</string>
+        <string>%d Kontakt</string>
         <key>other</key>
-        <string>%d contacts</string>
+        <string>%d Kontakte</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>

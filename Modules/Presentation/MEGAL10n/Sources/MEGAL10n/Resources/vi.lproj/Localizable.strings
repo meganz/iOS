@@ -2681,7 +2681,7 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
 "meetings.reconnecting.failed"="Không thể kết nối lại";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Đường truyền kém";
+"meetings.poorConnection"="Mạng yếu";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Xem trước hình ảnh độ phân giải cao";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -3946,6 +3946,14 @@
 "videos.tab.playlist.content.alert.placeholder"="Tạo danh sách phát mới";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Tạo";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="Nhập một tên mới.";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="Đặt một cái tên khác";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Đã có một danh sách phát với tên này rồi";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Không có ai ở trong phòng chờ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4066,3 +4074,7 @@
 "limited.Transfer.limit"="Bị giới hạn";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Hủy Gói Đăng Ký Dịch Vụ";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="Không thể lưu tệp tin";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="Loại tệp này không được hỗ trợ bởi iOS. Bạn có muốn lưu sẵn về ngoại tuyến không?";

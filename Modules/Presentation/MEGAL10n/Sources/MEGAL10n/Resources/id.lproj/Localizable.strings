@@ -95,7 +95,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Anda berusaha masuk terlalu banyak. Harap tunggu sampai %@ dan coba kembali.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Check your email inbox and follow the link to confirm your account.";
+"accountNotConfirmed"="Periksa kotak masuk email anda dan ikuti tautan untuk mengonfirmasi akun anda.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Akun anda dihentikan karena pelanggaran Persyaratan Layanan MEGA termasuk, namun tidak terbatas pada, klausul 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Password salah";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="This email address is already in use";
+"emailAlreadyInUse"="Alamat email ini sudah digunakan";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Anda harus mengosongkan tempat pada perangkat anda";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -849,7 +849,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Anda akan kehilangan seluruh data yang berhubungan dengan akun ini. Anda yakin ingin melanjutkan?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can’t access your email inbox, contact support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Jika anda tidak dapat mengakses kotak masuk email anda, hubungi support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link pembatalan telah habis.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -933,7 +933,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Konfirmasi alamat email";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirm new email address";
+"confirmNewEmail"="Konfirmasi alamat email baru";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Mengganti alamat email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -943,9 +943,9 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Anda telah meminta link konfirmasi untuk alamat email tersebut.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
+"emailIsChanging_description"="Buka kotak masuk alamat email baru anda dan klik tautan untuk mengonfirmasi alamat email baru anda.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Enter your password to verify your email address";
+"verifyYourEmailAddress_description"="Masukkan kata sandi anda untuk memverifikasi alamat email anda";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Selamat, alamat email baru anda untuk akun MEGA ini adalah: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1371,7 +1371,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Apakah anda yakin ingin membatalkan pendaftaran?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelt your email address, correct it and tap “Resend”.";
+"misspelledEmailAddress"="Jika anda salah mengeja alamat email anda, perbaiki dan ketuk “Kirim Ulang”.";
 /* A button to resend the email confirmation. */
 "resend"="Kirim lagi";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2029,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Akun Bisnis anda telah dinonaktifkan karena kegagalan pembayaran. Anda tidak akan dapat mengakses data yang disimpan di akun anda. Untuk melakukan pembayaran dan mengaktifkan kembali langganan anda, masuk ke MEGA melalui browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]deactivated[/B]. You can only browse your data.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Akun anda saat ini [B]dinonaktifkan[/B]. Anda hanya dapat menelusuri data anda.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA tidak dapat mengakses data anda. Namun, administrator akun bisnis anda dapat mengakses Unggahan Kamera anda.";
 /*  */
@@ -2191,9 +2191,9 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mode Penyortiran Dan Tampilan";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the section title. */
-"settings.userInterface.hiddenItems.header"="Hidden items";
+"settings.userInterface.hiddenItems.header"="Item tersembunyi";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
-"settings.userInterface.hiddenItems.label"="Show hidden items";
+"settings.userInterface.hiddenItems.label"="Tampilkan item tersembunyi";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Tampilan penemuan media";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -2681,7 +2681,7 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
 "meetings.reconnecting.failed"="Tidak dapat menyambung kembali";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Koneksi buruk";
+"meetings.poorConnection"="Koneksi lemah";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Pratinjau gambar resolusi tinggi";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -3139,7 +3139,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Jadwalkan pertemuan";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email inbox for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="Akun MEGA anda telah ditangguhkan karena dugaan berulang pelanggaran hak cipta. Ini berarti anda tidak dapat mengakses akun atau data anda di dalamnya.\n\nPeriksa kotak masuk email anda untuk informasi lebih lanjut tentang cara mengajukan pemberitahuan balasan.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.\n\nAnda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftarkan akun MEGA baru.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3429,7 +3429,7 @@
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="File tidak dapat disinkronkan satu per satu. Anda perlu mengatur sinkronisasi dari folder.";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the desktop app.";
+"device.center.backup.error.initialScanFailed"="Pemindaian awal gagal. Anda harus mengaktifkan kembali sinkronisasi atau cadangan dari aplikasi desktop.";
 /* Device Center backup error: Device folder not located */
 "device.center.backup.error.folderDeviceUnlocatedNow"="Folder di perangkat anda tidak dapat ditemukan sekarang, coba lagi nanti.";
 /* Device Center backup error: Device folder can't be located */
@@ -3847,21 +3847,21 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Dapatkan lebih banyak dengan paket Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="Tingkatkan ke paket Pro dan dapatkan lebih banyak penyimpanan dan akses ke fitur Pro. Paket mulai dari serendah %@ sebulan";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Beberapa fitur yang dinantikan adalah:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Ultimate storage flexibility";
+"onboarding.upgradeAccount.content.generousStorage.title"="Fleksibilitas penyimpanan terbaik";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="Mulai dari [A] [B], temukan yang cocok untuk kebutuhan penyimpanan anda.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
+"onboarding.upgradeAccount.content.transferSharing.title"="Berbagi file yang mudah dan aman";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Bagikan file besar berkat kuota transfer yang banyak dan pastikan keamanan dengan tautan yang dilindungi kata sandi.";
 /* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+"onboarding.upgradeAccount.content.backupAndRewind.title"="Jangan pernah kehilangan data lagi";
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+"onboarding.upgradeAccount.content.backupAndRewind.message"="Cadangkan dan sinkronkan data anda untuk kepercayaan penuh. Dan, gunakan Putar Ulang untuk mengembalikan folder ke tanggal apa pun hingga 180 hari.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3869,13 +3869,13 @@
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="Panggilan dan rapat tanpa batas";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="Pesan, panggilan video, dan bertemu dalam privasi total dengan peserta tak terbatas.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Keamanan tambahan saat berbagi";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Tetapkan kata sandi dan tanggal kedaluwarsa untuk tautan file dan folder.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
+"onboarding.upgradeAccount.button.viewProPlans"="Tingkatkan ke Pro hari ini";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Aktifkan Unggahan kamera";
 /* Camera uploads banner enable state description */
@@ -3941,11 +3941,19 @@
 /* Videos: video playlist playlist cell subtitle */
 "videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Daftar putar kosong";
 /* Videos: video playlist add new playlist alert title */
-"videos.tab.playlist.content.alert.title"="Enter playlist name";
+"videos.tab.playlist.content.alert.title"="Masukkan nama daftar putar";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.placeholder"="Daftar putar baru";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Buat";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterNewName"="Masukkan nama baru";
+/* Used in create video playlist popup system video playlist name validation */
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+/* Used in create video playlist popup video playlist name validation */
+"videos.tab.playlist.create.alert.enterDifferentName"="Masukkan nama yang berbeda";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Tidak ada seorang pun di ruang tunggu";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4005,13 +4013,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Tidak dapat bergabung";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restrictions.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Panggilan ini hanya dapat mendukung 100 peserta. Minta penyelenggara untuk menghapus batasan ini.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, mengerti";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan membaca obrolan. Perlu menambahkan lebih banyak peserta? [A]Tingkatkan sekarang[/A]";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove this restriction.";
+"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Hanya 100 peserta yang dapat bergabung dalam panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan menerima pesan. Penyelenggara dapat meningkatkan ke Pro untuk menghapus batasan ini.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4066,3 +4074,7 @@
 "limited.Transfer.limit"="Terbatas";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Batalkan Langganan";
+/* The alert title shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+/* The alert message shown when asking user if they want to make media node offline. */
+"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";

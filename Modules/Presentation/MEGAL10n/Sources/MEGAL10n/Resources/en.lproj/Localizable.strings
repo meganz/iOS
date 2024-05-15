@@ -2681,7 +2681,7 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
 "meetings.reconnecting.failed"="Unable to reconnect";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="Poor connection";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Preview high resolution images";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -3950,12 +3950,10 @@
 "videos.tab.playlist.create.alert.enterNewName"="Enter a new name";
 /* Used in create video playlist popup system video playlist name validation */
 "videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
-/* Used in create video playlist popup video playlistname validation */
-"videos.tab.playlist.create.alert.enterDifferentName"="Enter a different name.";
-/* Used in create video playlist popup user video playlist name validation */
-"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists.";
 /* Used in create video playlist popup video playlist name validation */
-"videos.tab.playlist.create.alert.enterDifferentName"="Enter a different name.";
+"videos.tab.playlist.create.alert.enterDifferentName"="Enter a different name";
+/* Used in create video playlist popup user video playlist name validation */
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4015,7 +4013,7 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restrictions.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to remove this restriction.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, got it";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */

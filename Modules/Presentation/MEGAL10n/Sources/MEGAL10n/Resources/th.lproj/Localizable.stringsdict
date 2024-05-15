@@ -338,20 +338,6 @@
         <string>%d รายการ</string>
       </dict>
     </dict>
-    <key>general.format.rubbishBin.days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@days@</string>
-      <key>days</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>recents.section.title.items</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2060,20 +2046,6 @@
         <string>[ไฟล์ที่ไม่ได้ถอดรหัส]</string>
       </dict>
     </dict>
-    <key>account.upgradeSecurity.message.sharedFolderNames</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folderNames@</string>
-      <key>folderNames</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>คุณกำลังแชร์โฟลเดอร์ต่อไปนี้: [A]</string>
-      </dict>
-    </dict>
     <key>account.achievement.complete.validDays.subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2506,20 +2478,6 @@
         <string>d</string>
         <key>other</key>
         <string>ไฟล์ถูกส่งไปที่แชทแล้ว %d แชท</string>
-      </dict>
-    </dict>
-    <key>chat.message.filesSent</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>ส่งไฟล์ %d รายการไปที่แชทแล้ว</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>
