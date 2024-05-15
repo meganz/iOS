@@ -6,7 +6,7 @@ public protocol FileSystemRepositoryProtocol: RepositoryProtocol {
     func systemVolumeAvailability() -> Int64
     func moveFile(at sourceURL: URL, to destinationURL: URL) -> Bool
     func copyFile(at sourceURL: URL, to destinationURL: URL) -> Bool
-    func removeFile(at url: URL)
+    func removeItem(at url: URL) throws
     func fileSize(at url: URL) -> UInt64?
     func fileCreationDate(at url: URL) -> Date?
     func relativePathToDocumentsDirectory(for url: URL) -> String

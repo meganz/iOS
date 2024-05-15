@@ -50,7 +50,7 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
             case .failure(let error):
                 completion?(.failure(error))
             }
-            fileSystemRepository.removeFile(at: uploadUrl)
+            try? fileSystemRepository.removeItem(at: uploadUrl)
         }
     }
     

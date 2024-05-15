@@ -31,7 +31,7 @@ public struct NodesRemovedUseCase: NodesRemovedUseCaseProtocol {
         let allURLs = thumbnailURLs + previewURLs + originalURLs
         
         allURLs.forEach { url in
-            fileRepository.removeFile(at: url)
+            try? fileRepository.removeItem(at: url)
         }
     }
 }

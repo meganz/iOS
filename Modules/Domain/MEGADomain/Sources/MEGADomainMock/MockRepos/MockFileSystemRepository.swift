@@ -53,7 +53,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
         copiedNode
     }
     
-    public func removeFile(at url: URL) {
+    public func removeItem(at url: URL) throws {
         removeFileURLs.append(url)
     }
     

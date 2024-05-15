@@ -48,7 +48,7 @@ public struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepos
     public func clearAvatarCache(base64Handle: Base64HandleEntity) {
         let destinationURL = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
         guard fileSystemRepo.fileExists(at: destinationURL) else { return }
-        fileSystemRepo.removeFile(at: destinationURL)
+        try? fileSystemRepo.removeItem(at: destinationURL)
     }
     
     public func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
