@@ -68,8 +68,8 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
         }
     }
         
-    public func removeFile(at url: URL) {
-        try? fileManager.removeItem(at: url)
+    public func removeItem(at url: URL) throws {
+        try fileManager.removeItem(at: url)
     }
     
     // MARK: - File attributes

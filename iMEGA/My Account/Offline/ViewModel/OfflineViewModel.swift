@@ -86,16 +86,20 @@ final class OfflineViewModel: NSObject, ViewModelType {
     /// - Parameter items: An array of URLs representing the offline items to be removed.
     private func removeOfflineItems(_ items: [URL]) {
         items.forEach { url in
-            offlineUseCase.removeItem(at: url)
-            removeLogFromSharedSandboxIfNeeded(path: url.path)
-            
-            let relativePath = offlineUseCase.relativePathToDocumentsDirectory(for: url)
-            if url.hasDirectoryPath {
-                megaStore.deleteOfflineAppearancePreference(path: relativePath)
-            }
-            
-            if let offlineNode = megaStore.fetchOfflineNode(withPath: relativePath) {
-                megaStore.remove(offlineNode)
+            do {
+                try offlineUseCase.removeItem(at: url)
+                removeLogFromSharedSandboxIfNeeded(path: url.path)
+                
+                let relativePath = offlineUseCase.relativePathToDocumentsDirectory(for: url)
+                if url.hasDirectoryPath {
+                    megaStore.deleteOfflineAppearancePreference(path: relativePath)
+                }
+                
+                if let offlineNode = megaStore.fetchOfflineNode(withPath: relativePath) {
+                    megaStore.remove(offlineNode)
+                }
+            } catch {
+                MEGALogError("Remote item at \(url) failed with \(error)")
             }
         }
         invokeCommand?(.reloadUI)

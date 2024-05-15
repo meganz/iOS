@@ -21,7 +21,7 @@ public struct AppGroupContainerRepository: AppGroupContainerRepositoryProtocol {
     public func cleanContainer() {
         for directory in AppGroupContainer.Directory.allCases {
             let url = container.url(for: directory)
-            fileSystemRepository.removeFile(at: url)
+            try? fileSystemRepository.removeItem(at: url)
         }
     }
 }

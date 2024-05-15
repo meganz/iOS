@@ -12,7 +12,7 @@ public protocol OfflineUseCaseProtocol {
     
     /// Removes the item at the specified URL.
     /// - Parameter url: The URL of the item to remove.
-    func removeItem(at url: URL)
+    func removeItem(at url: URL) throws
 }
 
 public struct OfflineUseCase<T: FileSystemRepositoryProtocol>: OfflineUseCaseProtocol {
@@ -27,7 +27,7 @@ public struct OfflineUseCase<T: FileSystemRepositoryProtocol>: OfflineUseCasePro
         fileSystemRepository.relativePathToDocumentsDirectory(for: url)
     }
     
-    public func removeItem(at url: URL) {
-        fileSystemRepository.removeFile(at: url)
+    public func removeItem(at url: URL) throws {
+        try fileSystemRepository.removeItem(at: url)
     }
 }
