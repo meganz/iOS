@@ -230,6 +230,7 @@
 		2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */; };
 		2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */; };
 		25484F782B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */; };
+		2554C5C62BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2554C5C52BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift */; };
 		255FE6902ACBB5D40077A85C /* AppearanceListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255FE68F2ACBB5D40077A85C /* AppearanceListFooterView.swift */; };
 		255FE6932ACCB1810077A85C /* AppearanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255FE6922ACCB1810077A85C /* AppearanceViewModel.swift */; };
 		2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */; };
@@ -2929,6 +2930,7 @@
 		2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertView.swift; sourceTree = "<group>"; };
 		2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManagerTests.swift; sourceTree = "<group>"; };
 		25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadBannerStatusProviderTests.swift; sourceTree = "<group>"; };
+		2554C5C52BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemGeneratedNodeRepository+Additions.swift"; sourceTree = "<group>"; };
 		255FE68F2ACBB5D40077A85C /* AppearanceListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceListFooterView.swift; sourceTree = "<group>"; };
 		255FE6922ACCB1810077A85C /* AppearanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModel.swift; sourceTree = "<group>"; };
 		2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -6402,6 +6404,7 @@
 			children = (
 				A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */,
 				25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */,
+				2554C5C52BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift */,
 				25D360B22BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift */,
 			);
 			path = RepoExtensions;
@@ -15643,6 +15646,7 @@
 				B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				B695B5FF264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */,
+				2554C5C62BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift in Sources */,
 				0D30D86225BFA14A00C26367 /* Tab.swift in Sources */,
 				5D876543252CAAE200E6CB91 /* TableDataSourceConfiguration.swift in Sources */,
 				5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */,
