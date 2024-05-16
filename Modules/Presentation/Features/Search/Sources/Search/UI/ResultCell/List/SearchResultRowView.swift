@@ -21,6 +21,14 @@ struct SearchResultRowView: View {
     @Environment(\.editMode) private var editMode
     
     var body: some View {
+        contentWrapper
+            .task {
+                await viewModel.loadThumbnail()
+            }
+    }
+    
+    @ViewBuilder
+    private var contentWrapper: some View {
         if editMode?.wrappedValue.isEditing == true {
             contentWithInsetsAndSwipeActions
                 .contextMenu {
@@ -44,6 +52,7 @@ struct SearchResultRowView: View {
                     didTapPreview: viewModel.actions.previewTapAction,
                     didSelect: viewModel.actions.selectionAction
                 )
+                
         }
     }
     
@@ -84,9 +93,7 @@ struct SearchResultRowView: View {
         }
         .contentShape(Rectangle())
         .frame(minHeight: 60)
-        .task {
-            await viewModel.loadThumbnail()
-        }
+        
     }
     
     // optional overlay property in placement .previewOverlay

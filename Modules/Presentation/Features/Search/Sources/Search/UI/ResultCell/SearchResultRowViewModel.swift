@@ -35,10 +35,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         result.properties.first { $0.vibrancyEnabled } != nil
     }
     
-    var id: ResultId {
-        result.id
-    }
-    
     var selectedCheckmarkImage: UIImage {
         rowAssets.itemSelected
     }

@@ -22,9 +22,6 @@ public class SearchResultsViewModel: ObservableObject {
 
     @Published var chipsItems: [ChipViewModel] = []
     @Published var presentedChipsPickerViewModel: ChipViewModel?
-    
-    /// Tracks the visible items that are currently  shown on screen, needed for node updates logic.
-    private var visibleItems = Set<ResultId>()
 
     @Published var selectedRowIds = Set<ResultId>()
 
@@ -348,13 +345,7 @@ public class SearchResultsViewModel: ObservableObject {
     
     @SearchResultsViewModelActor
     func onItemAppear(_ item: SearchResultRowViewModel) async {
-        visibleItems.insert(item.result.id)
         await loadMoreIfNeeded(item: item)
-    }
-    
-    @SearchResultsViewModelActor
-    func onItemDisappear(_ item: SearchResultRowViewModel) {
-        visibleItems.remove(item.result.id)
     }
 
     @MainActor
@@ -649,21 +640,13 @@ public class SearchResultsViewModel: ObservableObject {
         }
         
         var newResultViewModels = [SearchResultRowViewModel]()
-        
-        await withTaskGroup(of: Void.self) { group in
-            for result in searchResults.results {
-                if let item = self.listItems.first(where: { $0.result.id == result.id }), visibleItems.contains(result.id) {
-                    // Note: For items that are already visible on the screen, SwiftUI doesn't invoke
-                    // the `.task { await viewModel.loadThumbnail() }` operation to update their content
-                    // therefore we need to manually update them
-                    group.addTask {
-                        await item.reload(with: result)
-                    }
-                    newResultViewModels.append(item)
-                } else {
-                    newResultViewModels.append(mapSearchResultToViewModel(result))
-                }
+        for result in searchResults.results {
+            let item = mapSearchResultToViewModel(result)
+            // For items that already have their thumbnails fetched, we can reuse them
+            if let existingItem = listItems.first(where: { $0.result.id == result.id }) {
+                item.thumbnailImage = existingItem.thumbnailImage
             }
+            newResultViewModels.append(item)
         }
         
         await updateListItem(with: newResultViewModels)
