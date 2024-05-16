@@ -18,9 +18,13 @@ struct FavoritePlaylistCell: View {
     
     var body: some View {
         HStack {
-            ThumbnailLayerView(videoConfig: videoConfig, imageContainers: viewModel.previewEntity.imageContainers)
-                .frame(width: 142, height: 80, alignment: .center)
-                .clipShape(RoundedRectangle(cornerRadius: 4))
+            ThumbnailLayerView(
+                videoConfig: videoConfig,
+                imageContainers: viewModel.previewEntity.imageContainers,
+                centerBackgroundImage: videoConfig.rowAssets.favouritePlaylistThumbnailImage
+            )
+            .frame(width: 142, height: 80, alignment: .center)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
             
             VStack(alignment: .leading, spacing: 8) {
                 Text(viewModel.previewEntity.title)
@@ -38,7 +42,7 @@ struct FavoritePlaylistCell: View {
         .padding(0)
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .task {
-            await viewModel.onViewAppeared()
+            await viewModel.onViewAppear()
         }
     }
     
@@ -60,10 +64,11 @@ struct FavoritePlaylistCell: View {
     }
 }
 
-private struct ThumbnailLayerView: View {
+struct ThumbnailLayerView: View {
     
     let videoConfig: VideoConfig
     let imageContainers: [any ImageContaining]
+    let centerBackgroundImage: UIImage
     
     var body: some View {
         ZStack {
@@ -90,7 +95,7 @@ private struct ThumbnailLayerView: View {
             .padding(.top, -16)
             .padding(.trailing, 4)
             
-            Image(uiImage: videoConfig.rowAssets.favouritePlaylistThumbnailImage)
+            Image(uiImage: centerBackgroundImage)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 32, height: 32)

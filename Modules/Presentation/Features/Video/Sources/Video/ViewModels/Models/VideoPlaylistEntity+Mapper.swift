@@ -7,20 +7,20 @@ extension VideoPlaylistEntity {
     func toVideoPlaylistCellPreviewEntity(thumbnailContainers: [any ImageContaining], durationText: String) -> VideoPlaylistCellPreviewEntity {
         VideoPlaylistCellPreviewEntity(
             imageContainers: thumbnailContainers,
-            count: countText(),
+            count: countText(thumbnailContainers: thumbnailContainers),
             duration: durationText,
             title: name,
             isExported: isLinkShared
         )
     }
     
-    private func countText() -> String {
-        if count == 0 {
+    private func countText(thumbnailContainers: [any ImageContaining]) -> String {
+        if thumbnailContainers.count == 0 {
             Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist
-        } else if count == 1 {
-            "\(count)" + " " + Strings.Localizable.video
+        } else if thumbnailContainers.count == 1 {
+            "\(thumbnailContainers.count)" + " " + Strings.Localizable.video
         } else {
-            "\(count)" + " " + Strings.Localizable.videos
+            "\(thumbnailContainers.count)" + " " + Strings.Localizable.videos
         }
     }
 }
