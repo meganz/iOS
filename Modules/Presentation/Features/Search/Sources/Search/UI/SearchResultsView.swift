@@ -138,11 +138,6 @@ public struct SearchResultsView: View {
                         await viewModel.onItemAppear(item)
                     }
                 }
-                .onDisappear {
-                    Task {
-                        await viewModel.onItemDisappear(item)
-                    }
-                }
         }
         .listStyle(.plain)
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
@@ -165,10 +160,6 @@ public struct SearchResultsView: View {
                             Task {
                                 await viewModel.onItemAppear(item)
                             }
-                        }.onDisappear {
-                            Task {
-                                await viewModel.onItemDisappear(item)
-                            }
                         }
                     }
                 }
@@ -186,10 +177,6 @@ public struct SearchResultsView: View {
                         .onAppear {
                             Task {
                                 await viewModel.onItemAppear(item)
-                            }
-                        }.onDisappear {
-                            Task {
-                                await viewModel.onItemDisappear(item)
                             }
                         }
                     }

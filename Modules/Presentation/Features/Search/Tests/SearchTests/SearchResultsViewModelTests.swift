@@ -170,24 +170,6 @@ final class SearchResultsViewModelTests: XCTestCase {
             resultsProvider.resultFactory = { _ in return nil }
         }
         
-        func simulateVisibleItems(startId: ResultId, endId: ResultId) async {
-            await withTaskGroup(of: Void.self) { group in
-                (startId...endId).compactMap { resultId in
-                    sut.listItems.first(where: { $0.result.id == resultId })
-                }.forEach { item in
-                    group.addTask {
-                        await self.sut.onItemAppear(item)
-                    }
-                }
-            }
-        }
-        
-        func simulateVisibleItemsRemoval(_ id: ResultId) async {
-            guard let item = sut.listItems.first(where: { $0.result.id == id }) else { return }
-            await sut.onItemDisappear(item)
-            
-        }
-        
         func prepareRefreshedResults(startId: UInt64, endId: UInt64) {
             let results = Array(startId...endId).map {
                 SearchResult.resultWith(id: $0, title: "refreshed \($0)")
@@ -527,29 +509,16 @@ final class SearchResultsViewModelTests: XCTestCase {
             await harness.sut.task()
             harness.resetResultFactory()
             harness.prepareRefreshedResults(startId: 1, endId: 15) // After refreshing, there will be 15 results
-            
-            // Simulate visible items
-            await harness.simulateVisibleItems(startId: 0, endId: 9)
-            await harness.simulateVisibleItemsRemoval(9) // At this point, visible item will be [1...8]
 
             // when
             harness.bridge.onSearchResultsUpdated(.generic)
             
-            for _ in 1...12 { // Needs to yield to make way for other concurrent tasks to fully finished first.
+            for _ in 1...3 { // Needs to yield to make way for other concurrent tasks to fully finished first.
                 await Task.yield()
             }
             
             // then
             XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...15))
-            
-            // Make sure to check the visible items' thumbnails are loaded
-            for index in 0..<harness.sut.listItems.count {
-                if index < 8 {
-                    XCTAssertEqual(harness.sut.listItems[index].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
-                } else {
-                    XCTAssertNil(harness.sut.listItems[index].thumbnailImage.pngData())
-                }
-            }
         }
     }
     
@@ -576,7 +545,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self)
         var selectedRows = Set<ResultId>()
         for i in 1...10 {
-            selectedRows.insert(generateRandomSearchResultRowViewModel(id: i).id)
+            selectedRows.insert(generateRandomSearchResultRowViewModel(id: i).result.id)
         }
 
         let exp = expectation(description: "Wait for selected results")
