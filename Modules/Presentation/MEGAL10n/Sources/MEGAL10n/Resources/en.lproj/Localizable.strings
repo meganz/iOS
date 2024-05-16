@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Weekly";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Monthly";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="End";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Mic";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Camera";
 /* Device Center title */
