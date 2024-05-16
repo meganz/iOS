@@ -2,8 +2,6 @@ import Foundation
 import MEGADomain
 import MEGASdk
 
-public typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: (any Error)?) -> Void
-
 struct NodeAccessConfiguration {
     var autoCreate: (() -> Bool)?
     let updateInMemoryNotificationName: Notification.Name?
@@ -14,7 +12,8 @@ struct NodeAccessConfiguration {
     var createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)?
 }
 
-public class NodeAccess: NSObject, @unchecked Sendable {
+public class NodeAccess: NSObject, NodeAccessProtocol, @unchecked Sendable {
+    
     private let sdk = MEGASdk.sharedSdk
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
     private var nodeLoadOperation: NodeLoadOperation?
@@ -53,6 +52,7 @@ public class NodeAccess: NSObject, @unchecked Sendable {
     /// - Parameter node: The given node to be checked
     /// - Returns: if the node is the target folder return true, otherwise return false
     @objc public func isTargetNode(for node: MEGANode) -> Bool { handle != nil && node.handle == handle }
+    public func isTargetNode(for node: NodeEntity) -> Bool { handle != nil && node.handle == handle }
     
     /// Load the current type node, it follows the below steps to load the node:
     /// 1. If the handle in memory is valid, we return it
