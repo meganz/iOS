@@ -3,14 +3,9 @@ import SwiftUI
 
 extension VideoPlaylistCellPreviewEntity {
     
-    static func preview(isExported: Bool) -> VideoPlaylistCellPreviewEntity {
+    static func preview(isExported: Bool, imageContainers: [any ImageContaining] = []) -> VideoPlaylistCellPreviewEntity {
         VideoPlaylistCellPreviewEntity(
-            imageContainers: [
-                ImageContainer(image: sampleImage, type: .thumbnail),
-                ImageContainer(image: sampleImage, type: .thumbnail),
-                ImageContainer(image: sampleImage, type: .thumbnail),
-                ImageContainer(image: sampleImage, type: .thumbnail)
-            ],
+            imageContainers: imageContainers,
             count: "48 videos",
             duration: "02:11:21",
             title: "My custom playlist",

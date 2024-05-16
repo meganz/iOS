@@ -10,6 +10,7 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     private let onTapMoreOptions: (_ node: VideoPlaylistEntity) -> Void
     
     @Published var previewEntity: VideoPlaylistCellPreviewEntity
+    @Published var secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType = .emptyPlaylist
     
     init(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
@@ -25,7 +26,7 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     }
     
     @MainActor
-    func onViewAppeared() async {
+    func onViewAppear() async {
         let videos = await videos(for: videoPlaylistEntity)
         try? Task.checkCancellation()
         
@@ -56,6 +57,8 @@ final class VideoPlaylistCellViewModel: ObservableObject {
             thumbnailContainers: imageContainers.compactMap { $0 },
             durationText: durationText(from: videos)
         )
+        
+        secondaryInformationViewType = videos.count == 0 ? .emptyPlaylist : .information
     }
     
     private func imageContainer(from video: NodeEntity) async -> (any ImageContaining)? {
@@ -103,11 +106,5 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     enum SecondaryInformationViewType: Equatable {
         case emptyPlaylist
         case information
-    }
-}
-
-extension VideoPlaylistCellViewModel {
-    var secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType {
-        videoPlaylistEntity.count == 0 ? .emptyPlaylist : .information
     }
 }
