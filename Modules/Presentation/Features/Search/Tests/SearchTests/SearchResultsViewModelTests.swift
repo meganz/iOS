@@ -543,17 +543,17 @@ final class SearchResultsViewModelTests: XCTestCase {
 
     func testSelectedRows_whenMultipleRowsSelected_shouldMatchResultsIds() {
         let harness = Harness(self)
-        var selectedRows = Set<ResultId>()
-        for i in 1...10 {
-            selectedRows.insert(generateRandomSearchResultRowViewModel(id: i).result.id)
-        }
-
+        
+        harness.sut.listItems = Array(1...10).map { generateRandomSearchResultRowViewModel(id: $0) }
+        
+        let selectedRows: Set<SearchResultRowViewModel.ID> = Set(harness.sut.listItems.prefix(5).map(\.id))
+        
         let exp = expectation(description: "Wait for selected results")
         let selectedResultsSubscription = harness
             .sut
             .$selectedResultIds
             .sink { results in
-                if results == Set(1...10) {
+                if results == Set(1...5) {
                     exp.fulfill()
                 }
             }
