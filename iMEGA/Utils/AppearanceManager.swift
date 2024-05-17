@@ -43,7 +43,7 @@ class AppearanceManager: NSObject {
         
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.label
         
-        UITextField.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
+        UITextField.appearance().tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.accent : UIColor.mnz_turquoise(for: traitCollection)
         
         if !UIColor.isDesignTokenEnabled() {
             UITextView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)

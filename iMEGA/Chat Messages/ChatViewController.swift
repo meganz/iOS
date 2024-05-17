@@ -1,6 +1,7 @@
 import ChatRepo
 import Combine
 import KeyboardLayoutGuide
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -197,6 +198,7 @@ class ChatViewController: MessagesViewController {
         registerCustomCells()
         
         super.viewDidLoad()
+        
         chatRoomDelegate.chatViewController = self
         configureMessageCollectionView()
         update()
