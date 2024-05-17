@@ -174,6 +174,7 @@
 		242A140A2ABC9252009E4788 /* AudioPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242A14092ABC9252009E4788 /* AudioPlayerUseCase.swift */; };
 		24352DE42ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */; };
 		2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */; };
+		24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */; };
 		243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */; };
 		243E92062AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */; };
 		243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */; };
@@ -2874,6 +2875,7 @@
 		242A14092ABC9252009E4788 /* AudioPlayerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerUseCase.swift; sourceTree = "<group>"; };
 		24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVideoPlayerItemMetadataCommand.swift; sourceTree = "<group>"; };
 		2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewControllerTests.swift; sourceTree = "<group>"; };
+		24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentViewController.swift; sourceTree = "<group>"; };
 		243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouterFactoryTests.swift; sourceTree = "<group>"; };
 		243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CancellableTransferType+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -6107,6 +6109,14 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		24385D272BF09420002F0561 /* VideoPlaylist */ = {
+			isa = PBXGroup;
+			children = (
+				24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */,
+			);
+			path = VideoPlaylist;
+			sourceTree = "<group>";
+		};
 		243ABB492AB0420500FF4A56 /* Node */ = {
 			isa = PBXGroup;
 			children = (
@@ -6138,6 +6148,7 @@
 			isa = PBXGroup;
 			children = (
 				244CEFCD2B257AB500147302 /* Infrastructure */,
+				24385D272BF09420002F0561 /* VideoPlaylist */,
 				241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */,
 				240C98A82BD04738008C9F98 /* VideoRevampTabContainerViewController+NodeActionViewControllerDelegate.swift */,
 				2486F1A82B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift */,
@@ -15770,6 +15781,7 @@
 				BFAAF726252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift in Sources */,
 				BFAAF717252E85810053A9BF /* VideoExplorerTableViewCell.swift in Sources */,
 				BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */,
+				24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */,
 				241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */,
 				240C98A92BD04738008C9F98 /* VideoRevampTabContainerViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				2486F1A92B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift in Sources */,

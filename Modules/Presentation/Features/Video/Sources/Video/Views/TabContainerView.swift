@@ -46,7 +46,8 @@ struct TabContainerView: View {
                 
                 PlaylistView(
                     viewModel: videoPlaylistViewModel,
-                    videoConfig: videoConfig
+                    videoConfig: videoConfig,
+                    router: router
                 )
                 .tag(VideosTab.playlist)
                 .gesture(syncModel.showsTabView ? nil : DragGesture())

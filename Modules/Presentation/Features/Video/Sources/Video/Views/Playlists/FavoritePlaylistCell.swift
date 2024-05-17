@@ -7,13 +7,16 @@ struct FavoritePlaylistCell: View {
     
     @StateObject private var viewModel: VideoPlaylistCellViewModel
     private let videoConfig: VideoConfig
+    private let router: any VideoRevampRouting
     
     init(
         viewModel: @autoclosure @escaping () -> VideoPlaylistCellViewModel,
-        videoConfig: VideoConfig
+        videoConfig: VideoConfig,
+        router: some VideoRevampRouting
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
         self.videoConfig = videoConfig
+        self.router = router
     }
     
     var body: some View {
@@ -43,6 +46,9 @@ struct FavoritePlaylistCell: View {
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .task {
             await viewModel.onViewAppear()
+        }
+        .onTapGesture {
+            router.openVideoPlaylistContent(for: viewModel.previewEntity)
         }
     }
     
@@ -134,13 +140,15 @@ struct ThumbnailLayerView: View {
     return Group {
         FavoritePlaylistCell(
             viewModel: makeNullViewModel(),
-            videoConfig: .preview
+            videoConfig: .preview,
+            router: Preview_VideoRevampRouter()
         )
         .frame(height: 80, alignment: .center)
         
         FavoritePlaylistCell(
             viewModel: makeNullViewModel(),
-            videoConfig: .preview
+            videoConfig: .preview,
+            router: Preview_VideoRevampRouter()
         )
         .frame(height: 80, alignment: .center)
         .preferredColorScheme(.dark)

@@ -10,7 +10,8 @@ extension VideoPlaylistEntity {
             count: countText(thumbnailContainers: thumbnailContainers),
             duration: durationText,
             title: name,
-            isExported: isLinkShared
+            isExported: isLinkShared,
+            type: type
         )
     }
     
