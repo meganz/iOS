@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 
 class MessageTextView: UITextView {
@@ -136,6 +137,10 @@ class MessageTextView: UITextView {
     
     private func updateAppearance() {
         placeholderTextView.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
+        
+        if UIColor.isDesignTokenEnabled() {
+            tintColor = TokenColors.Icon.accent
+        }
     }
     
     private func updatePlaceholder() {

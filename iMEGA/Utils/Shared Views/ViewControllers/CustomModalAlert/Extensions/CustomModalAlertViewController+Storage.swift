@@ -63,7 +63,6 @@ extension CustomModalAlertViewController {
     }
     
     func configureForStorageQuotaWillExceed(for displayMode: CustomModalAlertView.Mode.StorageQuotaWillExceedDisplayMode) {
-        
         let title: String
         let detailText: String
         let storageStateImage: UIImage
