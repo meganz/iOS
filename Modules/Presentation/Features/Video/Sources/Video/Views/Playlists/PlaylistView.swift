@@ -7,13 +7,16 @@ struct PlaylistView: View {
     
     @StateObject private var viewModel: VideoPlaylistsViewModel
     private let videoConfig: VideoConfig
+    private let router: any VideoRevampRouting
     
     init(
         viewModel: @autoclosure @escaping () -> VideoPlaylistsViewModel,
-        videoConfig: VideoConfig
+        videoConfig: VideoConfig,
+        router: some VideoRevampRouting
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
         self.videoConfig = videoConfig
+        self.router = router
     }
     
     var body: some View {
@@ -73,7 +76,8 @@ struct PlaylistView: View {
             } else {
                 UserPlaylistCell(
                     viewModel: videoPlaylistCellViewModel(videoPlaylist),
-                    videoConfig: videoConfig
+                    videoConfig: videoConfig,
+                    router: router
                 )
                 .listRowSeparator(.hidden)
                 .listRowInsets(.init())
@@ -85,7 +89,7 @@ struct PlaylistView: View {
     
     private func favoritePlaylistCell(videoPlaylist: VideoPlaylistEntity) -> some View {
         let cellViewModel = videoPlaylistCellViewModel(videoPlaylist)
-        return FavoritePlaylistCell(viewModel: cellViewModel, videoConfig: videoConfig)
+        return FavoritePlaylistCell(viewModel: cellViewModel, videoConfig: videoConfig, router: router)
             .listRowSeparator(.hidden)
             .listRowInsets(.init())
     }
@@ -109,7 +113,8 @@ struct PlaylistView: View {
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview
         ),
-        videoConfig: .preview
+        videoConfig: .preview,
+        router: Preview_VideoRevampRouter()
     )
 }
 
@@ -122,7 +127,8 @@ struct PlaylistView: View {
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview
         ),
-        videoConfig: .preview
+        videoConfig: .preview,
+        router: Preview_VideoRevampRouter()
     )
     .preferredColorScheme(.dark)
 }

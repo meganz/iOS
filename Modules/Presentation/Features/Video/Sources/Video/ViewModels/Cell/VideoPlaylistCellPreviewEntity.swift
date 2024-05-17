@@ -1,11 +1,13 @@
+import MEGADomain
 import MEGASwiftUI
 
-struct VideoPlaylistCellPreviewEntity {
+public struct VideoPlaylistCellPreviewEntity {
     let imageContainers: [any ImageContaining]
     let count: String
     let duration: String
     let title: String
     let isExported: Bool
+    let type: VideoPlaylistEntityType
 }
 
 extension VideoPlaylistCellPreviewEntity {
@@ -14,6 +16,7 @@ extension VideoPlaylistCellPreviewEntity {
         count: "",
         duration: "",
         title: "",
-        isExported: false
+        isExported: false,
+        type: .user
     )
 }

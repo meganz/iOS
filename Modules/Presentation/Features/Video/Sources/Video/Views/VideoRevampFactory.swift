@@ -70,4 +70,17 @@ public class VideoRevampFactory {
         )
         return UIHostingController(rootView: view)
     }
+    
+    public static func makeVideoContentContainerView(
+        videoConfig: VideoConfig,
+        previewEntity: VideoPlaylistCellPreviewEntity
+    ) -> UIViewController {
+        let view = PlaylistContentView(
+            videoConfig: videoConfig,
+            previewEntity: previewEntity,
+            onTapAddButton: {},
+            onTapPlayButton: {}
+        )
+        return UIHostingController(rootView: view)
+    }
 }

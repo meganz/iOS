@@ -9,7 +9,8 @@ extension VideoPlaylistCellPreviewEntity {
             count: "48 videos",
             duration: "02:11:21",
             title: "My custom playlist",
-            isExported: isExported
+            isExported: isExported,
+            type: .favourite
         )
     }
     

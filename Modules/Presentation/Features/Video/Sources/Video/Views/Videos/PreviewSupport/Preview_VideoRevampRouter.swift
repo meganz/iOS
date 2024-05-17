@@ -6,6 +6,8 @@ struct Preview_VideoRevampRouter: VideoRevampRouting {
     
     func openMoreOptions(for video: NodeEntity, sender: Any) { }
     
+    func openVideoPlaylistContent(for previewEntity: VideoPlaylistCellPreviewEntity) { }
+    
     func build() -> UIViewController { UIViewController() }
     
     func start() { }

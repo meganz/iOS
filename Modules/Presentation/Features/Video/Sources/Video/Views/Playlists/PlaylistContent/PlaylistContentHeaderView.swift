@@ -1,37 +1,28 @@
 import MEGADesignToken
+import MEGADomain
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
 struct PlaylistContentHeaderView: View {
     let videoConfig: VideoConfig
-    let imageContainers: [any ImageContaining]
-    let title: String
-    let videosCount: String
-    let totalDuration: String
+    let previewEntity: VideoPlaylistCellPreviewEntity
     let onTapAddButton: () -> Void
     let onTapPlayButton: () -> Void
     
-    private var sampleImage: Image {
-        PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 1, height: 1)).image
-    }
-    
     var body: some View {
         HStack(alignment: .top) {
-            VideoPlaylistThumbnailView(videoConfig: videoConfig, imageContainers: [
-                ImageContainer(image: sampleImage, type: .thumbnail),
-                ImageContainer(image: sampleImage, type: .thumbnail),
-                ImageContainer(image: sampleImage, type: .thumbnail),
-                ImageContainer(image: sampleImage, type: .thumbnail)
-            ])
-            .frame(width: 142, height: 80)
+            thumbnailView
             
             VStack(alignment: .leading, spacing: TokenSpacing._4) {
-                Text(title)
-                    .font(.headline)
-                    .lineLimit(2)
-                    .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.primaryTextColor)
-                
-                VideoPlaylistSecondaryInformationView(videoConfig: videoConfig, videosCount: videosCount, totalDuration: totalDuration, isPublicLink: false)
+                VStack(alignment: .leading, spacing: textVStackSpacing) {
+                    Text(previewEntity.title)
+                        .font(.headline)
+                        .lineLimit(2)
+                        .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.primaryTextColor)
+                    
+                    secondaryInformationView
+                }
                 
                 buttonsContent
             }
@@ -39,6 +30,62 @@ struct PlaylistContentHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
         .background(videoConfig.playlistContentAssets.headerView.color.pageBackgroundColor)
+    }
+    
+    private var thumbnailView: some View {
+        Group {
+            if previewEntity.imageContainers.isEmpty {
+                emptyThumbnailView()
+            } else {
+                VideoPlaylistThumbnailView(
+                    videoConfig: videoConfig,
+                    imageContainers: previewEntity.imageContainers
+                )
+            }
+        }
+        .frame(width: 142, height: 80)
+    }
+    
+    private func emptyThumbnailView() -> some View {
+        Group {
+            emptyThumbnailImage
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 32, height: 32)
+                .foregroundStyle(videoConfig.colorAssets.emptyFavoriteThumbnaillImageForegroundColor)
+        }
+        .frame(width: 142, height: 80)
+        .background(videoConfig.colorAssets.emptyFavoriteThumbnailBackgroundColor.cornerRadius(4))
+    }
+    
+    private var emptyThumbnailImage: Image {
+        let image = switch previewEntity.type {
+        case .favourite:
+            videoConfig.rowAssets.favouritePlaylistThumbnailImage
+        case .user:
+            videoConfig.rowAssets.rectangleVideoStackPlaylistImage
+        }
+        return Image(uiImage: image.withRenderingMode(.alwaysTemplate))
+    }
+    
+    private var textVStackSpacing: CGFloat {
+        previewEntity.imageContainers.isEmpty ? TokenSpacing._1 : TokenSpacing._4
+    }
+    
+    @ViewBuilder
+    private var secondaryInformationView: some View {
+        if previewEntity.imageContainers.isEmpty {
+            Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
+                .font(.caption)
+                .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
+        } else {
+            VideoPlaylistSecondaryInformationView(
+                videoConfig: videoConfig,
+                videosCount: previewEntity.count,
+                totalDuration: previewEntity.duration,
+                isPublicLink: previewEntity.isExported
+            )
+        }
     }
     
     private var buttonsContent: some View {
@@ -85,27 +132,66 @@ struct PlaylistContentHeaderView: View {
     }
 }
 
+// MARK: - Helpers
+
 #Preview {
+    Group {
+        view(
+            imageContainers: [],
+            isExported: false,
+            playlistType: .favourite
+        )
+        
+        view(
+            imageContainers: [],
+            isExported: false,
+            playlistType: .user
+        )
+    }
+}
+
+#Preview {
+    view(
+        imageContainers: [
+            ImageContainer(image: sampleImage, type: .thumbnail),
+            ImageContainer(image: sampleImage, type: .thumbnail),
+            ImageContainer(image: sampleImage, type: .thumbnail),
+            ImageContainer(image: sampleImage, type: .thumbnail)
+        ],
+        isExported: false,
+        playlistType: .favourite
+    )
+}
+
+#Preview {
+    view(
+        imageContainers: [
+            ImageContainer(image: sampleImage, type: .thumbnail),
+            ImageContainer(image: sampleImage, type: .thumbnail),
+            ImageContainer(image: sampleImage, type: .thumbnail),
+            ImageContainer(image: sampleImage, type: .thumbnail)
+        ],
+        isExported: true,
+        playlistType: .favourite
+    )
+}
+
+private func view(imageContainers: [any ImageContaining], isExported: Bool, playlistType: VideoPlaylistEntityType) -> some View {
     PlaylistContentHeaderView(
         videoConfig: .preview,
-        imageContainers: [],
-        title: "Magic of Disney’s Animal Kingdom",
-        videosCount: "24 Videos",
-        totalDuration: "3:05:20",
+        previewEntity: VideoPlaylistCellPreviewEntity(
+            imageContainers: imageContainers,
+            count: "24 Videos",
+            duration: "3:05:20",
+            title: "Magic of Disney’s Animal Kingdom",
+            isExported: isExported,
+            type: playlistType
+        ),
         onTapAddButton: {},
         onTapPlayButton: {}
     )
 }
 
-#Preview {
-    PlaylistContentHeaderView(
-        videoConfig: .preview,
-        imageContainers: [],
-        title: "Magic of Disney’s Animal Kingdom",
-        videosCount: "24 Videos",
-        totalDuration: "3:05:20",
-        onTapAddButton: {},
-        onTapPlayButton: {}
-    )
-    .preferredColorScheme(.dark)
+private var sampleImage: Image {
+    PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 400, height: 400)).image
 }

@@ -9,6 +9,10 @@ struct VideoRevampRouter: VideoRevampRouting {
     let navigationController: UINavigationController?
     let isDesignTokenEnabled: Bool
     
+    private var videoConfig: VideoConfig {
+        .live(isDesignTokenEnabled: isDesignTokenEnabled)
+    }
+    
     func build() -> UIViewController {
         let sdk = MEGASdk.shared
         let nodesUpdateListenerRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
@@ -95,5 +99,14 @@ struct VideoRevampRouter: VideoRevampRouting {
         )
         
         navigationController.present(viewController, animated: true, completion: nil)
+    }
+    
+    func openVideoPlaylistContent(for previewEntity: VideoPlaylistCellPreviewEntity) {
+        let viewController = VideoPlaylistContentViewController(
+            videoConfig: videoConfig,
+            previewEntity: previewEntity
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

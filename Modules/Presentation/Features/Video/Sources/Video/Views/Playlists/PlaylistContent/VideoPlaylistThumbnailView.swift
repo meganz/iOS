@@ -72,7 +72,7 @@ struct VideoPlaylistThumbnailView: View {
                 image.image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(width: 142, height: 80)
             default:
                 EmptyView()
                     .frame(width: 142, height: 80)
