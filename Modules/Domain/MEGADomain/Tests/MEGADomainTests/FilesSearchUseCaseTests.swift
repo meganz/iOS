@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import XCTest
 
 final class FilesSearchUseCaseTests: XCTestCase {
@@ -15,9 +16,11 @@ final class FilesSearchUseCaseTests: XCTestCase {
             NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true)
         ]
         
-        let sut = FilesSearchUseCase(repo: MockFilesSearchRepository(photoNodes: nodes),
-                                     nodeFormat: NodeFormatEntity.photo,
-                                     nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
+        let sut = makeSUT(
+            filesSearchRepository: MockFilesSearchRepository(photoNodes: nodes),
+            nodeFormat: NodeFormatEntity.photo,
+            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
+        )
         
         sut.search(string: "", parent: nil, recursive: true, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: false) { results, _ in
             guard let results else { XCTFail("Search results shouldn't be nil"); return }
@@ -37,9 +40,11 @@ final class FilesSearchUseCaseTests: XCTestCase {
             NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true)
         ]
         
-        let sut = FilesSearchUseCase(repo: MockFilesSearchRepository(photoNodes: nodes),
-                                     nodeFormat: NodeFormatEntity.photo,
-                                     nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
+        let sut = makeSUT(
+            filesSearchRepository: MockFilesSearchRepository(photoNodes: nodes),
+            nodeFormat: NodeFormatEntity.photo,
+            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
+        )
         sut.search(filter: .init(searchText: "", parentNode: nil, recursive: true, supportCancel: false, sortOrderType: .none, formatType: .photo, excludeSensitive: false), cancelPreviousSearchIfNeeded: false) { results, _ in
             guard let results else { XCTFail("Search results shouldn't be nil"); return }
             
@@ -58,9 +63,11 @@ final class FilesSearchUseCaseTests: XCTestCase {
             NodeEntity(name: "test3.mp4", handle: 5, isFile: true, hasThumbnail: true)
         ]
         
-        let sut = FilesSearchUseCase(repo: MockFilesSearchRepository(photoNodes: nodes),
-                                     nodeFormat: NodeFormatEntity.photo,
-                                     nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
+        let sut = makeSUT(
+            filesSearchRepository: MockFilesSearchRepository(photoNodes: nodes),
+            nodeFormat: NodeFormatEntity.photo,
+            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
+        )
         let results = try await sut.search(filter: .init(searchText: "", parentNode: nil, recursive: true, supportCancel: false, sortOrderType: .none, formatType: .photo, excludeSensitive: false), cancelPreviousSearchIfNeeded: false)
         XCTAssertEqual(results, nodes)
     }
@@ -71,9 +78,11 @@ final class FilesSearchUseCaseTests: XCTestCase {
             NodeEntity(name: "2.nef", handle: 2, hasThumbnail: true)
         ]
         let mockNodeUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
-        let sut = FilesSearchUseCase(repo: MockFilesSearchRepository.newRepo,
-                                     nodeFormat: NodeFormatEntity.photo,
-                                     nodesUpdateListenerRepo: mockNodeUpdateListenerRepo)
+        let sut = makeSUT(
+            filesSearchRepository: MockFilesSearchRepository(photoNodes: nodesUpdated),
+            nodeFormat: NodeFormatEntity.photo,
+            nodesUpdateListenerRepo: mockNodeUpdateListenerRepo
+        )
         
         sut.onNodesUpdate { results in
             XCTAssertEqual(results, nodesUpdated)
@@ -84,12 +93,67 @@ final class FilesSearchUseCaseTests: XCTestCase {
     
     func testSearchPhotosCancelled_CancelSearchShouldReturnTrue() {
         let repo = MockFilesSearchRepository.newRepo
-        let sut = FilesSearchUseCase(repo: repo,
-                                     nodeFormat: NodeFormatEntity.photo,
-                                     nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
+        let sut = makeSUT(
+            filesSearchRepository: repo,
+            nodeFormat: NodeFormatEntity.photo,
+            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
+        )
         
         sut.search(string: "", parent: nil, recursive: true, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: true) { _, _ in
             XCTAssertTrue(repo.hasCancelSearchCalled)
         }
+    }
+    
+    // MARK: - nodeUpdates
+    
+    func testNodeUpdates_whenHasNoNodeUpdates_shouldNotEmitsUpdate() async {
+        let sut = makeSUT(
+            nodeRepository: MockNodeRepository(nodeUpdates: EmptyAsyncSequence().eraseToAnyAsyncSequence())
+        )
+        
+        var receivedNodeUpdates: [NodeEntity] = []
+        for await nodes in sut.nodeUpdates {
+            receivedNodeUpdates.append(contentsOf: nodes)
+        }
+        
+        XCTAssertTrue(receivedNodeUpdates.isEmpty)
+    }
+    
+    func testNodeUpdates_whenHasNodeUpdates_emitsUpdate() async {
+        let expectedResults = [ NodeEntity(name: "node-1", handle: 1), NodeEntity(name: "node-2", handle: 2) ]
+        let nodeUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }
+            .eraseToAnyAsyncSequence()
+        let sut = makeSUT(
+            nodeFormat: NodeFormatEntity.video,
+            nodeRepository: MockNodeRepository(nodeUpdates: nodeUpdatesStream)
+        )
+        
+        var receivedNodeUpdates: [NodeEntity] = []
+        for await nodes in sut.nodeUpdates {
+            receivedNodeUpdates.append(contentsOf: nodes)
+        }
+        
+        XCTAssertTrue(receivedNodeUpdates.isNotEmpty)
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(
+        filesSearchRepository: MockFilesSearchRepository = MockFilesSearchRepository.newRepo,
+        nodeFormat: NodeFormatEntity = .photo,
+        nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository = MockSDKNodesUpdateListenerRepository.newRepo,
+        nodeRepository: MockNodeRepository = MockNodeRepository.newRepo
+    ) -> FilesSearchUseCase {
+        FilesSearchUseCase(
+            repo: filesSearchRepository,
+            nodeFormat: nodeFormat,
+            nodesUpdateListenerRepo: nodesUpdateListenerRepo,
+            nodeRepository: nodeRepository
+        )
     }
 }

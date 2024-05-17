@@ -1,4 +1,10 @@
+import MEGASwift
+
 public protocol FilesSearchUseCaseProtocol {
+    
+    /// Listen to node updates through an async sequence.
+    /// Returns: Stream of updated node entities.
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
     
     /// Search files and folders by name. It will return a list of nodes based on the criteria provided in the params.
     /// - Parameters:
@@ -35,7 +41,6 @@ public protocol FilesSearchUseCaseProtocol {
                 cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity]
     
     func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void)
-    
     func stopNodesUpdateListener()
     func startNodesUpdateListener()
 }
@@ -46,15 +51,18 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     private let nodeFormat: NodeFormatEntity
     private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
     private var nodesUpdateHandler: (([NodeEntity]) -> Void)?
+    private let nodeRepository: any NodeRepositoryProtocol
     
     public init(
         repo: any FilesSearchRepositoryProtocol,
         nodeFormat: NodeFormatEntity,
-        nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
+        nodesUpdateListenerRepo: any NodesUpdateListenerProtocol,
+        nodeRepository: any NodeRepositoryProtocol
     ) {
         self.repo = repo
         self.nodeFormat = nodeFormat
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
+        self.nodeRepository = nodeRepository
         
         addNodesUpdateHandler()
     }
@@ -87,6 +95,10 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
         if nodesUpdateHandler == nil {
             addNodesUpdateHandler()
         }
+    }
+    
+    public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        nodeRepository.nodeUpdates
     }
     
     // MARK: - Private
