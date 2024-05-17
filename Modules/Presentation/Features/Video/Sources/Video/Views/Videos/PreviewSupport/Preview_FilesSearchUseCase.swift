@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASwift
 
 struct Preview_FilesSearchUseCase: FilesSearchUseCaseProtocol {
     
@@ -17,6 +18,11 @@ struct Preview_FilesSearchUseCase: FilesSearchUseCaseProtocol {
     func stopNodesUpdateListener() { }
     
     func startNodesUpdateListener() { }
+    
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        EmptyAsyncSequence()
+            .eraseToAnyAsyncSequence()
+    }
 }
 
 // MARK: - Deprecated searchApi usage

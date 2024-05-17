@@ -20,7 +20,8 @@ struct VideoRevampRouter: VideoRevampRouting {
         let fileSearchUseCase = FilesSearchUseCase(
             repo: fileSearchRepo,
             nodeFormat: explorerType.toNodeFormatEntity(),
-            nodesUpdateListenerRepo: nodesUpdateListenerRepo
+            nodesUpdateListenerRepo: nodesUpdateListenerRepo,
+            nodeRepository: NodeRepository.newRepo
         )
         let userVideoPlaylistsRepo = UserVideoPlaylistsRepository(sdk: sdk)
         

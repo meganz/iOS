@@ -35,7 +35,8 @@ struct FilesExplorerRouter {
         let clipboardOperationRepo = SDKNodeClipboardOperationRepository(sdk: sdk)
         let useCase = FilesSearchUseCase(repo: fileSearchRepo,
                                          nodeFormat: explorerType.toNodeFormatEntity(),
-                                         nodesUpdateListenerRepo: nodesUpdateListenerRepo)
+                                         nodesUpdateListenerRepo: nodesUpdateListenerRepo,
+                                         nodeRepository: NodeRepository.newRepo)
         let nodeClipboardOperationUseCase = NodeClipboardOperationUseCase(repo: clipboardOperationRepo)
         let fileDownloadUseCase = FilesDownloadUseCase(repo: transferListenerRepo)
         let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)

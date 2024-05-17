@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGASwift
 
 public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, ObservableObject {
     
@@ -61,6 +62,11 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, Observabl
     
     public func startNodesUpdateListener() {
         messages.append(.startNodesUpdateListener)
+    }
+    
+    public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        EmptyAsyncSequence()
+            .eraseToAnyAsyncSequence()
     }
 }
 
