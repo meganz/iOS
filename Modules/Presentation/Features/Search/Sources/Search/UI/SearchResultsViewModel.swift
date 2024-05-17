@@ -23,7 +23,7 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var chipsItems: [ChipViewModel] = []
     @Published var presentedChipsPickerViewModel: ChipViewModel?
 
-    @Published var selectedRowIds = Set<ResultId>()
+    @Published var selectedRowIds = Set<SearchResultRowViewModel.ID>()
 
     var fileListItems: [SearchResultRowViewModel] {
         listItems.filter { $0.result.thumbnailDisplayMode == .vertical }
@@ -169,25 +169,26 @@ public class SearchResultsViewModel: ObservableObject {
         selectedRowsSubscription = $selectedRowIds
             .dropFirst()
             .throttle(for: .seconds(0.4), scheduler: DispatchQueue.main, latest: true)
-            .scan((Set<ResultId>(), Set<ResultId>())) { previous, current in
+            .scan((Set<SearchResultRowViewModel.ID>(), Set<SearchResultRowViewModel.ID>())) { previous, current in
                 // We want only the items that are selected or deselected from the set.
                 // Hence we store the previous value and find out the difference.
                 return (Set(current), previous.0.symmetricDifference(Set(current)))
-            }
-            .sink { [weak self] result in
+            }.sink { [weak self] (_, result) in
                 guard let self else { return }
-
-                let rowsRemoved = result.1.filter { self.selectedRowIds.notContains($0) }
-                let rowsAdded = result.1.filter { self.selectedRowIds.contains($0) }
-
-                if rowsAdded.isNotEmpty {
-                    selectedResultIds.formUnion(rowsAdded)
+                let rowsRemoved = result.filter { self.selectedRowIds.notContains($0) }
+                let rowsAdded = result.filter { self.selectedRowIds.contains($0) }
+                
+                let idsRemoved = listItems.filter { rowsRemoved.contains($0.id) }.map { $0.result.id }
+                let idsAdded = listItems.filter { rowsAdded.contains($0.id) }.map { $0.result.id }
+                
+                if idsAdded.isNotEmpty {
+                    selectedResultIds.formUnion(idsAdded)
                 }
-
-                if rowsRemoved.isNotEmpty {
-                    selectedResultIds.subtract(rowsRemoved)
+                
+                if idsRemoved.isNotEmpty {
+                    selectedResultIds.subtract(idsRemoved)
                 }
-
+                
                 bridge.selectionChanged(selectedResultIds)
             }
     }
@@ -421,11 +422,11 @@ public class SearchResultsViewModel: ObservableObject {
     }
 
     private func toggleSelected(_ row: SearchResultRowViewModel) {
-        let resultId = row.result.id
-        if selectedRowIds.contains(resultId) {
-            selectedRowIds.remove(resultId)
+        let rowId = row.id
+        if selectedRowIds.contains(rowId) {
+            selectedRowIds.remove(rowId)
         } else {
-            selectedRowIds.insert(resultId)
+            selectedRowIds.insert(rowId)
         }
     }
     
@@ -474,8 +475,9 @@ public class SearchResultsViewModel: ObservableObject {
 
         self.listItems.append(contentsOf: items)
 
-        let selectedItems = items.filter { selectedResultIds.contains($0.result.id) }
-        selectedRowIds.formUnion(selectedItems.map { $0.result.id })
+        let selectedItems = items
+            .filter { selectedResultIds.contains($0.result.id) }
+        selectedRowIds.formUnion(selectedItems.map { $0.id })
 
         withAnimation {
             emptyViewModel = Self.makeEmptyView(
@@ -780,7 +782,7 @@ public extension SearchResultsViewModel {
             selectedRowIds.removeAll()
         } else {
             selectedResultIds = Set(currentResultsIds)
-            selectedRowIds = Set(listItems.map { $0.result.id })
+            selectedRowIds = Set(listItems.map { $0.id })
         }
     }
 
