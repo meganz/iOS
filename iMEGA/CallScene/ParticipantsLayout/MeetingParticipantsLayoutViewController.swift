@@ -234,11 +234,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .showBadNetworkQuality:
             if reconnectingNotificationView == nil {
                 showPoorConnectionNotification()
-                addParticipantsBlurEffect()
             }
         case .hideBadNetworkQuality:
             removePoorConnectionNotification()
-            removeParticipantsBlurEffect()
         case .updateAvatar(let image, let participant):
             callCollectionView.updateAvatar(image: image, for: participant)
         case .updateSpeakerAvatar(let image):
