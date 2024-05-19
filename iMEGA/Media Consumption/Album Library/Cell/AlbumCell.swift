@@ -64,6 +64,9 @@ struct AlbumCell: View {
             await viewModel.loadAlbumThumbnail()
         }
         .task {
+            await viewModel.monitorCoverPhotoSensitivity()
+        }
+        .task {
             await viewModel.monitorAlbumPhotos()
         }
         .gesture(viewModel.editMode.isEditing ? tap : nil)

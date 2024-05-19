@@ -5,13 +5,16 @@ import XCTest
 final class ThumbnailLoaderFactoryTests: XCTestCase {
 
     func testMakeThumbnailLoader_featureFlagOffNilMode_shouldReturnThumbnailLoaderInstance() {
-        let thumbnailLoader = ThumbnailLoaderFactory.makeThumbnailLoader()
+        let thumbnailLoader = ThumbnailLoaderFactory
+            .makeThumbnailLoader(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
         XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
     }
     
     func testMakeThumbnailLoader_featureFlagOffModeProvided_shouldReturnThumbnailLoaderInstance() {
-        let thumbnailLoader = ThumbnailLoaderFactory.makeThumbnailLoader(mode: .albumLink)
+        let thumbnailLoader = ThumbnailLoaderFactory
+            .makeThumbnailLoader(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]),
+                                 mode: .albumLink)
         
         XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
     }
