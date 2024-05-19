@@ -65,3 +65,11 @@ public struct SensitiveImageContainer: SensitiveImageContaining {
         self.isSensitive = isSensitive
     }
 }
+
+public extension ImageContaining {
+    func toSensitiveImageContaining(isSensitive: Bool) -> some SensitiveImageContaining {
+        SensitiveImageContainer(image: image,
+                                type: type,
+                                isSensitive: isSensitive)
+    }
+}
