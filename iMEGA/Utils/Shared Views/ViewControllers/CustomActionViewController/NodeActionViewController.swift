@@ -16,7 +16,10 @@ import MEGASwift
 class NodeActionViewController: ActionSheetViewController {
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
-    private let viewModel = NodeActionViewModel(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
+    private let viewModel = NodeActionViewModel(
+        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+        systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
+            systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo))
     
     var sender: Any
     var delegate: any NodeActionViewControllerDelegate
@@ -103,32 +106,36 @@ class NodeActionViewController: ActionSheetViewController {
         
         configurePresentationStyle(from: sender)
         
-        var selectionType: NodeSelectionType = .filesAndFolders
-        let fileNodes = nodes.filter { $0.isFile() }
-        if fileNodes.isEmpty {
-            selectionType = .folders
-        } else if fileNodes.count == nodes.count {
-            selectionType = .files
+        Task { @MainActor in
+            var selectionType: NodeSelectionType = .filesAndFolders
+            let fileNodes = nodes.filter { $0.isFile() }
+            if fileNodes.isEmpty {
+                selectionType = .folders
+            } else if fileNodes.count == nodes.count {
+                selectionType = .files
+            }
+            
+            let mediaUseCase = MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo, videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo))
+            let areMediaFiles = nodes.allSatisfy { mediaUseCase.isPlayableMediaFile($0.toNodeEntity()) }
+            
+            let nodesCount = nodes.count
+            let linkedNodeCount = nodes.publicLinkedNodes().count
+            let containsDisputedFiles = nodes.filter { $0.isTakenDown() }.count > 0
+            let actions = NodeActionBuilder()
+                .setDisplayMode(displayMode)
+                .setIsTakedown(containsDisputedFiles)
+                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
+                .setLinkedNodeCount(linkedNodeCount)
+                .setIsAllLinkedNode(linkedNodeCount == nodesCount)
+                .setIsFavourite(displayMode == .photosFavouriteAlbum)
+                .setIsBackupNode(containsABackupNode)
+                .setAreMediaFiles(areMediaFiles)
+                .setIsHidden(await viewModel.containsOnlySensitiveNodes(nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem))
+                .setAccountType(viewModel.accountType)
+                .multiselectBuild()
+            
+            update(actions: actions, sender: sender)
         }
-        
-        let mediaUseCase = MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo, videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo))
-        let areMediaFiles = nodes.allSatisfy { mediaUseCase.isPlayableMediaFile($0.toNodeEntity()) }
-        
-        let nodesCount = nodes.count
-        let linkedNodeCount = nodes.publicLinkedNodes().count
-        let containsDisputedFiles = nodes.filter { $0.isTakenDown() }.count > 0
-        actions = NodeActionBuilder()
-            .setDisplayMode(displayMode)
-            .setIsTakedown(containsDisputedFiles)
-            .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
-            .setLinkedNodeCount(linkedNodeCount)
-            .setIsAllLinkedNode(linkedNodeCount == nodesCount)
-            .setIsFavourite(displayMode == .photosFavouriteAlbum)
-            .setIsBackupNode(containsABackupNode)
-            .setAreMediaFiles(areMediaFiles)
-            .setIsHidden(viewModel.containsOnlySensitiveNodes(nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem))
-            .setAccountType(viewModel.accountType)
-            .multiselectBuild()
     }
 
     @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, isFromSharedItem: Bool = false, sender: Any) {
@@ -211,21 +218,24 @@ class NodeActionViewController: ActionSheetViewController {
         super.init(nibName: nil, bundle: nil)
         
         configurePresentationStyle(from: sender)
-        
-        self.actions = NodeActionBuilder()
-            .setDisplayMode(self.displayMode)
-            .setIsPdf(node.name?.pathExtension == "pdf")
-            .setIsLink(isLink)
-            .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
-            .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
-            .setVersionCount(node.mnz_numberOfVersions() - 1)
-            .setIsChildVersion(MEGASdk.shared.node(forHandle: node.parentHandle)?.isFile())
-            .setIsInVersionsView(isInVersionsView)
-            .setIsBackupNode(isBackupNode)
-            .setIsExported(node.isExported())
-            .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
-            .setAccountType(viewModel.accountType)
-            .build()
+        Task { @MainActor in
+            let actions = NodeActionBuilder()
+                .setDisplayMode(self.displayMode)
+                .setIsPdf(node.name?.pathExtension == "pdf")
+                .setIsLink(isLink)
+                .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
+                .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
+                .setVersionCount(node.mnz_numberOfVersions() - 1)
+                .setIsChildVersion(MEGASdk.shared.node(forHandle: node.parentHandle)?.isFile())
+                .setIsInVersionsView(isInVersionsView)
+                .setIsBackupNode(isBackupNode)
+                .setIsExported(node.isExported())
+                .setIsHidden(await viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
+                .setAccountType(viewModel.accountType)
+                .build()
+            
+            update(actions: actions, sender: sender)
+        }
     }
     
     @objc func addAction(_ action: BaseAction) {
@@ -377,38 +387,42 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false) {
-        let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
-        let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
-        let isEditableTextFile = node.isFile() && node.name?.fileExtensionGroup.isEditableText == true
-        let isTakedown = node.isTakenDown()
-        let isVerifyContact = displayMode == .sharedItem &&
-                            shouldShowVerifyContact &&
-                            !sharedFolder.isVerified
-        let sharedFolderContact = MEGASdk.shared.contact(forEmail: sharedFolder.user)
-        
-        self.actions = NodeActionBuilder()
-            .setDisplayMode(displayMode)
-            .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
-            .setIsMediaFile(isMediaFile)
-            .setIsEditableTextFile(isEditableTextFile)
-            .setIsFile(node.isFile())
-            .setVersionCount(node.mnz_numberOfVersions() - 1)
-            .setIsFavourite(node.isFavourite)
-            .setLabel(node.label)
-            .setIsBackupNode(isBackupNode)
-            .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
-            .setIsPdf(node.name?.pathExtension == "pdf")
-            .setisIncomingShareChildView(isIncoming)
-            .setIsExported(node.isExported())
-            .setIsOutshare(node.isOutShare())
-            .setIsChildVersion(MEGASdk.shared.node(forHandle: node.parentHandle)?.isFile())
-            .setIsInVersionsView(isInVersionsView)
-            .setIsTakedown(isTakedown)
-            .setIsVerifyContact(isVerifyContact,
-                                sharedFolderReceiverEmail: sharedFolder.user ?? "",
-                                sharedFolderContact: sharedFolderContact)
-            .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
-            .setAccountType(viewModel.accountType)
-            .build()
+        Task { @MainActor in
+            let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
+            let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
+            let isEditableTextFile = node.isFile() && node.name?.fileExtensionGroup.isEditableText == true
+            let isTakedown = node.isTakenDown()
+            let isVerifyContact = displayMode == .sharedItem &&
+            shouldShowVerifyContact &&
+            !sharedFolder.isVerified
+            let sharedFolderContact = MEGASdk.shared.contact(forEmail: sharedFolder.user)
+            
+            let actions = NodeActionBuilder()
+                .setDisplayMode(displayMode)
+                .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
+                .setIsMediaFile(isMediaFile)
+                .setIsEditableTextFile(isEditableTextFile)
+                .setIsFile(node.isFile())
+                .setVersionCount(node.mnz_numberOfVersions() - 1)
+                .setIsFavourite(node.isFavourite)
+                .setLabel(node.label)
+                .setIsBackupNode(isBackupNode)
+                .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
+                .setIsPdf(node.name?.pathExtension == "pdf")
+                .setisIncomingShareChildView(isIncoming)
+                .setIsExported(node.isExported())
+                .setIsOutshare(node.isOutShare())
+                .setIsChildVersion(MEGASdk.shared.node(forHandle: node.parentHandle)?.isFile())
+                .setIsInVersionsView(isInVersionsView)
+                .setIsTakedown(isTakedown)
+                .setIsVerifyContact(isVerifyContact,
+                                    sharedFolderReceiverEmail: sharedFolder.user ?? "",
+                                    sharedFolderContact: sharedFolderContact)
+                .setIsHidden(await viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
+                .setAccountType(viewModel.accountType)
+                .build()
+            
+            update(actions: actions, sender: self.sender)
+        }
     }
 }

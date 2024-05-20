@@ -8,7 +8,7 @@ import UIKit
 
 extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     // MARK: - Context Menus configuration
-    func contextMenuConfiguration(parentNode: MEGANode, parentAccessLevel: NodeAccessTypeEntity) -> CMConfigEntity {
+    func contextMenuConfiguration(parentNode: MEGANode, parentAccessLevel: NodeAccessTypeEntity, isHidden: Bool?) -> CMConfigEntity {
         if parentNode.isFolder(),
            displayMode == .rubbishBin,
            parentNode.handle != MEGASdk.sharedSdk.rubbishNode?.handle {
@@ -31,7 +31,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                   isOutShare: parentNode.isOutShare(),
                                   isExported: parentNode.isExported(),
                                   showMediaDiscovery: shouldShowMediaDiscoveryContextMenuOption(),
-                                  isHidden: viewModel.isParentMarkedAsSensitive(forDisplayMode: displayMode, isFromSharedItem: isFromSharedItem))
+                                  isHidden: isHidden)
         }
     }
     
@@ -53,17 +53,17 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     @objc func setNavigationBarButtons() {
         Task { @MainActor in
             guard let parentNode = parentNode else { return }
-            let nodeUseCase = NodeUseCase(
+            
+            let parentAccessLevel = await NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo
-            )
-            let parentAccessLevel = await nodeUseCase.nodeAccessLevelAsync(
-                nodeHandle: parentNode.handle
-            )
+            ).nodeAccessLevelAsync(nodeHandle: parentNode.handle)
+            
             let menuConfig = contextMenuConfiguration(
                 parentNode: parentNode,
-                parentAccessLevel: parentAccessLevel
+                parentAccessLevel: parentAccessLevel, 
+                isHidden: await viewModel.isParentMarkedAsSensitive(forDisplayMode: displayMode, isFromSharedItem: isFromSharedItem)
             )
             configNavigationBarMenus(
                 menuConfig: menuConfig,
