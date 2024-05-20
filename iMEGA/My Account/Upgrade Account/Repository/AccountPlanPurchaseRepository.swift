@@ -58,6 +58,7 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         purchase.restore()
     }
     
+    @MainActor
     func purchasePlan(_ plan: AccountPlanEntity) async {
         guard let products = purchase.products as? [SKProduct],
               let productPlan = products.first(where: { $0.productIdentifier == plan.productIdentifier }) else {

@@ -123,7 +123,7 @@ extension MEGAPurchase {
     }
     
     private func fetchAccountDetailsToPurchaseProduct(_ product: SKProduct) {
-        Task {
+        Task { @MainActor in
             do {
                 _ = try await refreshAccountDetails()
                 
@@ -135,7 +135,7 @@ extension MEGAPurchase {
             } catch {
                 MEGALogError("[StoreKit] Error loading account details. Error: \(error)")
                 await SVProgressHUD.dismiss()
-                await SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
+                SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
             }
         }
     }
