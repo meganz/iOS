@@ -38,16 +38,21 @@ class PhotoCellViewModel: ObservableObject {
     // MARK: private state
     private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let nodeUseCase: (any NodeUseCaseProtocol)?
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let selection: PhotoSelection
     private var subscriptions = Set<AnyCancellable>()
     
     init(photo: NodeEntity,
          viewModel: PhotoLibraryModeAllViewModel,
          thumbnailLoader: some ThumbnailLoaderProtocol,
+         nodeUseCase: (any NodeUseCaseProtocol)?,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailLoader = thumbnailLoader
+        self.nodeUseCase = nodeUseCase
+        self.featureFlagProvider = featureFlagProvider
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
@@ -92,7 +97,22 @@ class PhotoCellViewModel: ObservableObject {
                 }
             }
         } catch {
-            MEGALogDebug("[PhotoCellViewModel] Cancelled loading thumbnail for \(photo.handle)")
+            MEGALogDebug("[\(type(of: self))] Cancelled loading thumbnail for \(photo.handle)")
+        }
+    }
+    
+    @MainActor
+    func monitorSensitivityChanges() async {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+              nodeUseCase != nil,
+              await $thumbnailContainer.values.contains(where: { $0.type != .placeholder }) else { return }
+        
+        do {
+            for try await isInheritingSensitivity in monitorInheritedSensitivity(for: photo) {
+                await updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity))
+            }
+        } catch {
+            MEGALogError("[\(type(of: self))] failed to retrieve inherited sensitivity for photo: \(error.localizedDescription)")
         }
     }
     
@@ -177,5 +197,18 @@ class PhotoCellViewModel: ObservableObject {
     /// - Returns: Boolean - Representing if the given photo should present a favourite indicator.
     private func canShowFavorite(photo: NodeEntity, atCurrentZoom scale: PhotoLibraryZoomState.ScaleFactor, withMaximumZoom scaleLimit: PhotoLibraryZoomState.ScaleFactor = .thirteen) -> Bool {
         photo.isFavourite && scale.rawValue < scaleLimit.rawValue
+    }
+
+    /// Async sequence will yield inherited sensitivity changes. It will immediately yield the current inherited sensitivity since it could have changed since thumbnail loaded
+    /// - Parameters:
+    ///   - photo: Photo NodeEntity to monitor
+    private func monitorInheritedSensitivity(for photo: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
+        guard let nodeUseCase else { return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence() }
+        
+        return nodeUseCase.monitorInheritedSensitivity(for: photo)
+            .prepend {
+                try await nodeUseCase.isInheritingSensitivity(node: photo)
+            }
+            .eraseToAnyAsyncThrowingSequence()
     }
 }
