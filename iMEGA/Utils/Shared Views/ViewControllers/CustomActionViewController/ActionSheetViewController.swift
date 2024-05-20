@@ -196,10 +196,12 @@ class ActionSheetViewController: UIViewController {
         guard let sender = sender else { return }
         
         self.actions = actions
+        configurePresentationStyle(from: sender)
+        layoutViews(to: view.frame.size)
+        tableView.reloadData()
         
-        UIView.performWithoutAnimation { [weak self] in
-            self?.configurePresentationStyle(from: sender)
-            self?.tableView.reloadData()
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            self?.view.layoutIfNeeded()
         }
     }
     
@@ -401,6 +403,7 @@ extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIVi
             containerView.addSubview(toView)
 
             transitionContext.completeTransition(true)
+
             presentView(toView, presentingView: fromView, animationDuration: TimeInterval(0.2), completion: nil)
         } else {
             dismissView(fromView, presentingView: toView, animationDuration: TimeInterval(0.2)) { completed in

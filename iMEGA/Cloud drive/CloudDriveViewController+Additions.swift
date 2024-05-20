@@ -51,7 +51,9 @@ extension CloudDriveViewController {
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: preferenceUseCase,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
-            preferenceUseCase: preferenceUseCase,
+            preferenceUseCase: preferenceUseCase, 
+            systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
+                systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo),
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
     }

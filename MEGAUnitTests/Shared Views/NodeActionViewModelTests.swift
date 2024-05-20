@@ -7,42 +7,91 @@ import XCTest
 
 final class NodeActionViewModelTests: XCTestCase {
 
-    func testContainsOnlySensitiveNodes_hiddenNodeFeatureOff_shouldReturnNil() {
+    func testContainsOnlySensitiveNodes_hiddenNodeFeatureOff_shouldReturnNil() async {
         let node = NodeEntity(handle: 65, isMarkedSensitive: true)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-        
-        XCTAssertNil(sut.containsOnlySensitiveNodes([node], isFromSharedItem: false))
+        let result = await sut.containsOnlySensitiveNodes([node], isFromSharedItem: false)
+        XCTAssertNil(result)
     }
     
-    func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnTrue() throws {
+    func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnTrue() async throws {
         let nodes = makeSensitiveNodes()
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let containsOnlySensitiveNodes = try XCTUnwrap(sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false))
+        let containsOnlySensitiveNodes = await sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false)
         
-        XCTAssertTrue(containsOnlySensitiveNodes)
+        XCTAssertTrue(try XCTUnwrap(containsOnlySensitiveNodes))
     }
     
-    func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnFalse() throws {
+    func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnFalse() async throws {
         var nodes = makeSensitiveNodes()
         nodes.append(NodeEntity(handle: HandleEntity(nodes.count + 1), isMarkedSensitive: false))
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let containsOnlySensitiveNodes = try XCTUnwrap(sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false))
+        let containsOnlySensitiveNodes = await sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false)
         
-        XCTAssertFalse(containsOnlySensitiveNodes)
+        XCTAssertFalse(try XCTUnwrap(containsOnlySensitiveNodes))
     }
     
-    func testContainsOnlySensitiveNodes_isFromSharedItemIsTrue_shouldReturnNil() throws {
-        [true, false].forEach {
-            let node = NodeEntity(handle: 65, isMarkedSensitive: $0)
+    func testContainsOnlySensitiveNodes_isFromSharedItemIsTrue_shouldReturnNil() async throws {
+        for await isMarkedSensitive in [true, false].async {
+            let node = NodeEntity(handle: 65, isMarkedSensitive: isMarkedSensitive)
             let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
             let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-            
-            XCTAssertNil(sut.containsOnlySensitiveNodes([node], isFromSharedItem: true))
+            let result = await sut.containsOnlySensitiveNodes([node], isFromSharedItem: true)
+            XCTAssertNil(result)
+        }
+    }
+    
+    func testContainsOnlySensitiveNodes_nodeIsSystemManaged_shouldReturnExpectedResult() async throws {
+        
+        let situationResult: [(Bool, Bool?)] = [
+            (true, true),
+            (false, nil)
+        ]
+        
+        for await (isMarkedSensitive, expectedResult) in situationResult.async {
+            let systemNode = NodeEntity(handle: 65)
+            let nodes = [
+                systemNode,
+                NodeEntity(handle: 66, isMarkedSensitive: isMarkedSensitive)
+            ]
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+            let sut = makeSUT(
+                systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
+                    nodesForLocation: [.cameraUpload: systemNode]),
+                featureFlagProvider: featureFlagProvider
+            )
+            let result = await sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false)
+            XCTAssertEqual(result, expectedResult)
+        }
+    }
+    
+    func testContainsOnlySensitiveNodes_nodeIsSystemManagedAndErrorWasThrown_shouldReturnNil() async throws {
+        
+        let errors: [any Error] = [
+            GenericErrorEntity(),
+            CancellationError()
+        ]
+        
+        for await error in errors.async {
+            let systemNode = NodeEntity(handle: 65)
+            let nodes = [
+                systemNode,
+                NodeEntity(handle: 66, isMarkedSensitive: true)
+            ]
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+            let sut = makeSUT(
+                systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
+                    nodesForLocation: [.cameraUpload: systemNode],
+                    containsSystemGeneratedNodeError: error),
+                featureFlagProvider: featureFlagProvider
+            )
+            let result = await sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false)
+            XCTAssertNil(result)
         }
     }
 
@@ -58,10 +107,13 @@ final class NodeActionViewModelTests: XCTestCase {
     
     private func makeSUT(
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> NodeActionViewModel {
-        NodeActionViewModel(accountUseCase: accountUseCase,
-                            featureFlagProvider: featureFlagProvider)
+        NodeActionViewModel(
+            accountUseCase: accountUseCase,
+            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+            featureFlagProvider: featureFlagProvider)
     }
     
     private func makeSensitiveNodes() -> [NodeEntity] {

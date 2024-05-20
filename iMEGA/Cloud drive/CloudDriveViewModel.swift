@@ -31,6 +31,8 @@ enum CloudDriveAction: ActionType {
     private let router = SharedItemsViewRouter()
     private let shareUseCase: any ShareUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
+
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     private var parentNode: MEGANode?
@@ -40,12 +42,14 @@ enum CloudDriveAction: ActionType {
          shareUseCase: some ShareUseCaseProtocol,
          sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol,
+         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     ) {
         self.parentNode = parentNode
         self.shareUseCase = shareUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
@@ -90,14 +94,29 @@ enum CloudDriveAction: ActionType {
         nodes?.containsVisualMedia() ?? false
     }
     
-    func isParentMarkedAsSensitive(forDisplayMode displayMode: DisplayMode, isFromSharedItem: Bool) -> Bool? {
+    func isParentMarkedAsSensitive(forDisplayMode displayMode: DisplayMode, isFromSharedItem: Bool) async -> Bool? {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               isFromSharedItem == false,
               displayMode == .cloudDrive,
-              parentNode?.isFolder() == true else {
+              let parentNode,
+              parentNode.isFolder() == true else {
             return nil
         }
-        return parentNode?.isMarkedSensitive
+        
+        do {
+            return if parentNode.isMarkedSensitive {
+                true // Always allow a node to be unhidden, if it is currently hidden.
+            } else if try await systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode].toNodeEntities()) {
+                nil // System generated nodes should not be able to be hidden.
+            } else {
+                false // Defaults to allow to hide the parent node.
+            }
+        } catch is CancellationError {
+            MEGALogError("[\(type(of:self))] loadPublicAlbumContents cancelled")
+        } catch {
+            MEGALogError("[\(type(of:self))] Error determining node sensitivity. Error: \(error)")
+        }
+        return nil
     }
     
     func dispatch(_ action: CloudDriveAction) {
