@@ -116,11 +116,32 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
                 return Strings.Localizable.Home.Search.Filter.archives
             }
         }
+        
+        var chipType: SearchChipEntity.ChipType {
+            switch self {
+            case .images:
+                .nodeFormat(.photo)
+            case .folders:
+                .nodeType(.folder)
+            case .audio:
+                .nodeFormat(.audio)
+            case .video:
+                .nodeFormat(.video)
+            case .pdf:
+                .nodeFormat(.pdf)
+            case .docs:
+                .nodeFormat(.allDocs)
+            case .presentations:
+                .nodeFormat(.presentation)
+            case .archives:
+                .nodeFormat(.archive)
+            }
+        }
     }
     
     var allChips: [SearchChipEntity] {
         TestChip.allCases.map {
-            .init(type: .nodeFormat($0.rawValue), title: $0.title)
+            .init(type: $0.chipType, title: $0.title)
         }
     }
 

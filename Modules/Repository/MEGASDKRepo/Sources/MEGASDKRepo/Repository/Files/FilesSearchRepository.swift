@@ -55,6 +55,12 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
             search(filter: filter) { completion($0) }
         }
     }
+    
+    public func search(filter: SearchFilterEntity) async throws -> NodeListEntity {
+        try await withAsyncThrowingValue { completion in
+            search(filter: filter) { completion($0) }
+        }
+    }
         
     public func node(by handle: HandleEntity) async -> NodeEntity? {
         sdk.node(forHandle: handle)?.toNodeEntity()
@@ -67,7 +73,7 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
         searchOperationQueue.cancelAllOperations()
     }
     
-    private func search(filter: SearchFilterEntity, completion: @escaping (Result<[NodeEntity], any Error>) -> Void) {
+    private func search(filter: SearchFilterEntity, completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
         
         guard let parentHandle = filter.parentNode?.handle ?? sdk.rootNode?.handle else {
             return completion(.failure(NodeSearchResultErrorEntity.noDataAvailable))
@@ -87,11 +93,20 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
                     return
                 }
                 
-                let nodes = nodeList?.toNodeEntities() ?? []
-                completion(.success(nodes))
+                guard let nodeList else {
+                    completion(.failure(NodeSearchResultErrorEntity.noDataAvailable))
+                    return
+                }
+                completion(.success(nodeList.toNodeListEntity()))
             })
         
         searchOperationQueue.addOperation(searchOperation)
+    }
+    
+    private func search(filter: SearchFilterEntity, completion: @escaping (Result<[NodeEntity], any Error>) -> Void) {
+        search(filter: filter) { result in
+            completion(result.map { $0.toNodeEntities() })
+        }
     }
 }
 

@@ -14,13 +14,12 @@ import Search
 
 /// abstraction into a search results
 final class HomeSearchResultsProvider: SearchResultsProviding {
-    private let searchFileUseCase: any SearchFileUseCaseProtocol
+    private let filesSearchUseCase: any FilesSearchUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
-    private let nodeRepository: any NodeRepositoryProtocol
     private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
     private var transferListenerRepo: SDKTransferListenerRepository
-
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sdk: MEGASdk
 
     // We only initially fetch the node list when the user triggers search
@@ -33,7 +32,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var pageSize = 100
     private var loadMorePagesOffset = 20
     private var availableChips: [SearchChipEntity]
-    
+    private let hiddenNodesFeatureEnabled: Bool
     private let onSearchResultsUpdated: (_ updated: SearchResultUpdateSignal) -> Void
     
     // The node from which we want start searching from,
@@ -46,32 +45,34 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     
     init(
         parentNodeProvider: @escaping () -> NodeEntity?,
-        searchFileUseCase: some SearchFileUseCaseProtocol,
+        filesSearchUseCase: some FilesSearchUseCaseProtocol,
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
-        nodeRepository: some NodeRepositoryProtocol,
         nodesUpdateListenerRepo: some NodesUpdateListenerProtocol,
         transferListenerRepo: SDKTransferListenerRepository,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
         nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         notificationCenter: NotificationCenter = .default,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
+        hiddenNodesFeatureEnabled: Bool,
         onSearchResultsUpdated: @escaping (SearchResultUpdateSignal) -> Void
     ) {
         self.parentNodeProvider = parentNodeProvider
-        self.searchFileUseCase = searchFileUseCase
+        self.filesSearchUseCase = filesSearchUseCase
         self.nodeUseCase = nodeUseCase
         self.mediaUseCase = mediaUseCase
-        self.nodeRepository = nodeRepository
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         self.transferListenerRepo = transferListenerRepo
         self.nodeUpdateRepository = nodeUpdateRepository
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.notificationCenter = notificationCenter
         self.availableChips = allChips
         self.sdk = sdk
+        self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
         
         mapper = SearchResultMapper(
             sdk: sdk,
@@ -145,17 +146,17 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         
         // Initially, no item is filled yet
         filledItemsCount = 0
-        let sorting = queryRequest.sorting
-
-        switch queryRequest {
+        
+        self.nodeList = await nodeListEntity(from: queryRequest)
+        
+        return switch queryRequest {
         case .initial:
-            return await childrenOfRoot(with: sorting)
-        case .userSupplied(let query):
-            if shouldShowRoot(for: query) {
-                return await childrenOfRoot(with: sorting)
+            fillResults()
+        case .userSupplied(let searchQueryEntity):
+            if shouldShowRoot(for: searchQueryEntity) {
+                fillResults()
             } else {
-                self.nodeList = await fullSearch(with: query)
-                return fillResults(query: query)
+                fillResults(query: searchQueryEntity)
             }
         }
     }
@@ -173,68 +174,39 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         }
     }
     
-    private func nodeListEntity(from queryRequest: SearchQuery) async -> NodeListEntity? {
-        guard let parentNode else { return nil }
-        let sorting = queryRequest.sorting
-        switch queryRequest {
+    private func nodeListEntity(from searchQuery: SearchQuery) async -> NodeListEntity? {
+        let searchFilterEntity = await buildSearchFilterEntity(from: searchQuery)
+        return try? await filesSearchUseCase.search(filter: searchFilterEntity, cancelPreviousSearchIfNeeded: searchFilterEntity.supportCancel)
+    }
+    
+    private func buildSearchFilterEntity(from searchQuery: SearchQuery) async -> SearchFilterEntity {
+        let recursive = switch searchQuery {
         case .initial:
-            return await nodeRepository.asyncChildren(
-                of: parentNode,
-                sortOrder: sorting.toDomainSortOrderEntity()
-            )
-        case .userSupplied(let query):
-            if shouldShowRoot(for: query) {
-                return await nodeRepository.asyncChildren(
-                    of: parentNode,
-                    sortOrder: sorting.toDomainSortOrderEntity()
-                )
-            } else {
-                return await fullSearch(with: query)
-            }
+            false
+        case .userSupplied(let searchQueryEntity):
+            !shouldShowRoot(for: searchQueryEntity)
         }
+        
+        return SearchFilterEntity(
+            searchText: searchQuery.query,
+            parentNode: parentNode,
+            recursive: recursive,
+            supportCancel: true,
+            sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
+            formatType: searchQuery.selectedNodeFormat?.toNodeFormatEntity() ?? .unknown,
+            excludeSensitive: await shouldExcludeSensitive(),
+            nodeTypeEntity: searchQuery.selectedNodeType?.toNodeTypeEntity() ?? .unknown,
+            modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame()
+        )
+    }
+    
+    private func shouldExcludeSensitive() async -> Bool {
+        let showHiddenNodesSettingsEnabled = await contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        return hiddenNodesFeatureEnabled && !showHiddenNodesSettingsEnabled
     }
     
     private var parentNode: NodeEntity? {
         parentNodeProvider()
-    }
-    
-    private func childrenOfRoot(with sortOrder: Search.SortOrderEntity) async -> SearchResultsEntity {
-        guard let parentNode else {
-            return .empty
-        }
-        self.nodeList = await nodeRepository.asyncChildren(
-            of: parentNode,
-            sortOrder: sortOrder.toDomainSortOrderEntity()
-        )
-        return fillResults()
-    }
-    
-    private var searchPath: SearchFileRootPath {
-        guard 
-            let parentNode,
-            parentNode != nodeRepository.rootNode()
-        else {
-            return .root
-        }
-        return .specific(parentNode.handle)
-    }
-    
-    private func fullSearch(with queryRequest: SearchQueryEntity) async -> NodeListEntity? {
-        // SDK does not support empty query and MEGANodeFormatType.unknown
-        assert(!(queryRequest.query == "" && queryRequest.chips == []))
-        MEGALogInfo("[search] full search \(queryRequest.query)")
-
-        return await withAsyncValue(in: { completion in
-            searchFileUseCase.searchFiles(
-                withFilter: queryRequest.searchFilter,
-                recursive: true,
-                sortOrder: queryRequest.sorting.toMEGASortOrderType(),
-                searchPath: searchPath,
-                completion: { nodeList in
-                    completion(.success(nodeList))
-                }
-            )
-        })
     }
 
     private func shouldShowRoot(for queryRequest: SearchQueryEntity) -> Bool {
@@ -310,5 +282,61 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
 
             self.onSearchResultsUpdated(.specific(result: self.mapNodeToSearchResult(node)))
         }
+    }
+}
+
+extension SearchChipEntity.NodeType {
+    func toNodeTypeEntity() -> NodeTypeEntity {
+        switch self {
+        case .unknown:
+            .unknown
+        case .file:
+            .file
+        case .folder:
+            .folder
+        case .root:
+            .root
+        case .incoming:
+            .incoming
+        case .rubbish:
+            .rubbish
+        }
+    }
+}
+
+extension SearchChipEntity.NodeFormat {
+    func toNodeFormatEntity() -> NodeFormatEntity {
+        switch self {
+        case .unknown:
+            .unknown
+        case .photo:
+            .photo
+        case .audio:
+            .audio
+        case .video:
+            .video
+        case .document:
+            .document
+        case .pdf:
+            .pdf
+        case .presentation:
+            .presentation
+        case .archive:
+            .archive
+        case .program:
+            .program
+        case .misc:
+            .misc
+        case .spreadsheet:
+            .spreadsheet
+        case .allDocs:
+            .allDocs
+        }
+    }
+}
+
+extension SearchChipEntity.TimeFrame {
+    func toSearchFilterTimeFrame() -> SearchFilterEntity.TimeFrame {
+        SearchFilterEntity.TimeFrame(startDate: startDate, endDate: endDate)
     }
 }

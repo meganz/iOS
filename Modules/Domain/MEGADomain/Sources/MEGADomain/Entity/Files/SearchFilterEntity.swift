@@ -1,4 +1,15 @@
+import Foundation
+
 public struct SearchFilterEntity: Sendable {
+    public struct TimeFrame: Equatable, Sendable {
+        public let startDate: Date
+        public let endDate: Date
+
+        public init(startDate: Date, endDate: Date) {
+            self.startDate = startDate
+            self.endDate = endDate
+        }
+    }
     
     /// Set option for filtering by name. Contains a name or an expression using wildcard. If nil set, it will return all results ignoring the name.
     public let searchText: String?
@@ -15,7 +26,21 @@ public struct SearchFilterEntity: Sendable {
     /// Filter option to decide if search should exclude sensitive nodes from the final result.
     public let excludeSensitive: Bool
     
-    public init(searchText: String? = nil, parentNode: NodeEntity? = nil, recursive: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, excludeSensitive: Bool) {
+    public let nodeTypeEntity: NodeTypeEntity?
+    
+    public let modificationTimeFrame: TimeFrame?
+    
+    public init(
+        searchText: String? = nil,
+        parentNode: NodeEntity? = nil,
+        recursive: Bool,
+        supportCancel: Bool,
+        sortOrderType: SortOrderEntity,
+        formatType: NodeFormatEntity,
+        excludeSensitive: Bool,
+        nodeTypeEntity: NodeTypeEntity? = nil,
+        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
+    ) {
         self.searchText = searchText
         self.parentNode = parentNode
         self.recursive = recursive
@@ -23,5 +48,7 @@ public struct SearchFilterEntity: Sendable {
         self.sortOrderType = sortOrderType
         self.formatType = formatType
         self.excludeSensitive = excludeSensitive
+        self.nodeTypeEntity = nodeTypeEntity
+        self.modificationTimeFrame = modificationTimeFrame
     }
 }

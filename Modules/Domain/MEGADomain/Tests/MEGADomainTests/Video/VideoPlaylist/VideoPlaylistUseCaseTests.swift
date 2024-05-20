@@ -32,7 +32,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     }
     
     func testSystemVideoPlaylists_whenError_returnsError() async {
-        let (sut, _, _) = makeSUT(filesSearchUseCase: MockFilesSearchUseCase(searchResult: .failure(.generic)))
+        let (sut, _, _) = makeSUT()
         
         do {
             _ = try await sut.systemVideoPlaylists()
@@ -185,7 +185,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(
-        filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic)),
+        filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic), nodeListSearchResult: .failure(.generic)),
         userVideoPlaylistRepositoryResult: [SetEntity] = []
     ) -> (
         sut: VideoPlaylistUseCase,

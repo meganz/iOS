@@ -75,13 +75,16 @@ public struct NodeRepository: NodeRepositoryProtocol {
     
     public func childNode(parent node: NodeEntity,
                           name: String,
-                          type: NodeTypeEntity) async -> NodeEntity? {
+                          type: NodeTypeEntity
+    ) async -> NodeEntity? {
         guard let parent = node.toMEGANode(in: sdk) else {
             return nil
         }
-        return sdk.childNode(forParent: parent,
-                             name: name,
-                             type: type.rawValue)?.toNodeEntity()
+        return sdk.childNode(
+            forParent: parent,
+            name: name,
+            type: type.toMEGANodeType().rawValue
+        )?.toNodeEntity()
     }
     
     public func rubbishNode() -> NodeEntity? {

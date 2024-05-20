@@ -33,7 +33,7 @@ fileprivate extension NodeEntity {
             // swiftlint:disable colon
             // MARK: - Types
             changeTypes                        : ChangeTypeEntity(rawValue: node.getChanges().rawValue),
-            nodeType                           : NodeTypeEntity(nodeType: node.type),
+            nodeType                           : node.type.toNodeTypeEntity(),
             
             // MARK: - Identification
             name                               : node.name ?? "",

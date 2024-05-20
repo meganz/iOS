@@ -11,6 +11,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     private let photoNodes: [NodeEntity]
     private let videoNodes: [NodeEntity]
     private let nodesForHandle: [HandleEntity: [NodeEntity]]
+    private let nodeListEntityForHandle: [HandleEntity: NodeListEntity]
     
     public var callback: (([NodeEntity]) -> Void)?
     
@@ -30,11 +31,13 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     public init(photoNodes: [NodeEntity] = [],
                 videoNodes: [NodeEntity] = [],
                 nodesForHandle: [HandleEntity: [NodeEntity]] = [:],
+                nodeListEntityForHandle: [HandleEntity: NodeListEntity] = [:],
                 nodesUpdatePublisher: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher()
     ) {
         self.photoNodes = photoNodes
         self.videoNodes = videoNodes
         self.nodesForHandle = nodesForHandle
+        self.nodeListEntityForHandle = nodeListEntityForHandle
         self.nodeUpdatesPublisher = nodesUpdatePublisher
     }
     
@@ -93,6 +96,15 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         case .video: videoNodes.filter(filterCondition)
         default: []
         }
+    }
+    
+    public func search(filter: SearchFilterEntity) async throws -> NodeListEntity {
+        searchString = filter.searchText
+        searchRecursive = filter.recursive
+        if let parentNodeHandle = filter.parentNode?.handle, let nodeListEntity = nodeListEntityForHandle[parentNodeHandle] {
+            return nodeListEntity
+        }
+        throw NodeSearchResultErrorEntity.noDataAvailable
     }
         
     public func cancelSearch() {

@@ -16,7 +16,7 @@ public enum SearchQuery: Equatable, Sendable {
         }
     }
     
-    var query: String {
+    public var query: String {
         switch self {
         case .initial:
             return ""
@@ -48,5 +48,25 @@ public enum SearchQuery: Equatable, Sendable {
     
     var mode: SearchModeEntity {
         .home
+    }
+}
+
+extension SearchQuery {
+    public var selectedNodeType: SearchChipEntity.NodeType? {
+        guard let nodeTypeChipEntity = chips.first(where: { $0.type.isNodeTypeChip }) else { return nil }
+        guard case let SearchChipEntity.ChipType.nodeType(nodeType) = nodeTypeChipEntity.type else { return nil }
+        return nodeType
+    }
+    
+    public var selectedNodeFormat: SearchChipEntity.NodeFormat? {
+        guard let nodeFormatChipEntity = chips.first(where: { $0.type.isNodeFormatChip }) else { return nil }
+        guard case let SearchChipEntity.ChipType.nodeFormat(nodeFormat) = nodeFormatChipEntity.type else { return nil }
+        return nodeFormat
+    }
+    
+    public var selectedModificationTimeFrame: SearchChipEntity.TimeFrame? {
+        guard let timeFilterChipEntity = chips.first(where: { $0.type.isTimeFilterChip }) else { return nil }
+        guard case let SearchChipEntity.ChipType.timeFrame(timeFrame) = timeFilterChipEntity.type else { return nil }
+        return timeFrame
     }
 }

@@ -123,7 +123,7 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 formatType: formatType.toMEGANodeFormatType(), 
                                                                 excludeSensitive: true)
         
-        let result = try await repo.search(filter: .init(
+        let result: NodeListEntity = try await repo.search(filter: .init(
             searchText: searchString,
             parentNode: parent.toNodeEntity(),
             recursive: recursive,
@@ -132,7 +132,7 @@ final class FilesSearchRepositoryTests: XCTestCase {
             formatType: formatType,
             excludeSensitive: true))
         
-        XCTAssertEqual(result, nodes.toNodeEntities())
+        XCTAssertEqual(result.toNodeEntities(), nodes.toNodeEntities())
         XCTAssertEqual(mockSdk.searchNonRecursivelyWithFilterCallCount, 0)
         XCTAssertEqual(mockSdk.searchWithFilterCallCount, 1)
         XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
@@ -157,7 +157,7 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 formatType: formatType.toMEGANodeFormatType(),
                                                                 excludeSensitive: true)
         
-        let result = try await repo.search(filter: .init(
+        let result: NodeListEntity = try await repo.search(filter: .init(
             searchText: searchString,
             parentNode: parent.toNodeEntity(),
             recursive: recursive,
@@ -167,7 +167,7 @@ final class FilesSearchRepositoryTests: XCTestCase {
             excludeSensitive: true)
         )
         
-        XCTAssertEqual(result, nodes.toNodeEntities())
+        XCTAssertEqual(result.toNodeEntities(), nodes.toNodeEntities())
         XCTAssertEqual(mockSdk.searchNonRecursivelyWithFilterCallCount, 1)
         XCTAssertEqual(mockSdk.searchWithFilterCallCount, 0)
         XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)

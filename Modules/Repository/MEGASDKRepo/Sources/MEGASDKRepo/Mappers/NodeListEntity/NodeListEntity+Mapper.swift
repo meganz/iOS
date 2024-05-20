@@ -9,3 +9,9 @@ extension MEGANodeList {
         )
     }
 }
+
+extension NodeListEntity {
+    public static var emptyNodeList: Self {
+        .init(nodesCount: 0, nodeAt: { _ in nil })
+    }
+}
