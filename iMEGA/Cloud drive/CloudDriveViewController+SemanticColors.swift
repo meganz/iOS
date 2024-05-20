@@ -11,7 +11,7 @@ extension CloudDriveViewController {
     }
 
     @objc var validTextFieldColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .label
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
     }
 
     @objc var toolBarBackgroundColor: UIColor {
