@@ -35,11 +35,35 @@ public struct SearchChipEntity: Equatable, Sendable {
             self.endDate = endDate
         }
     }
+    
+    public enum NodeType: Sendable {
+        case unknown
+        case file
+        case folder
+        case root
+        case incoming
+        case rubbish
+    }
+    
+    public enum NodeFormat: Sendable {
+        case unknown
+        case photo
+        case audio
+        case video
+        case document
+        case pdf
+        case presentation
+        case archive
+        case program
+        case misc
+        case spreadsheet
+        case allDocs
+    }
 
     public enum ChipType: Equatable, Sendable {
         case Grouped
-        case nodeFormat(Int)
-        case nodeType(Int)
+        case nodeFormat(NodeFormat)
+        case nodeType(NodeType)
         case timeFrame(TimeFrame)
 
         public var isNodeFormatChip: Bool {

@@ -49,7 +49,7 @@ extension SearchResultsEntity {
 extension SearchChipEntity {
     public static func chipWith(id: Int) -> Self {
         .init(
-            type: .nodeFormat(id),
+            type: .nodeFormat(.photo),
             title: "chip_\(id)",
             icon: nil
         )

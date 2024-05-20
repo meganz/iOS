@@ -343,18 +343,19 @@ final class HomeScreenFactory: NSObject {
         let featureFlagProvider = makeFeatureFlagProvider()
         return HomeSearchResultsProvider(
             parentNodeProvider: parentNodeProvider,
-            searchFileUseCase: makeSearchFileUseCase(),
+            filesSearchUseCase: makeFilesSearchUseCase(),
             nodeDetailUseCase: makeNodeDetailUseCase(),
             nodeUseCase: makeNodeUseCase(),
             mediaUseCase: makeMediaUseCase(),
-            nodeRepository: makeNodeRepo(),
             nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
             transferListenerRepo: makeTransferListenerRepo(), 
             nodeIconUsecase: makeNodeIconUsecase(), 
             nodeUpdateRepository: NodeUpdateRepository.newRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             allChips: Self.allChips(areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
+            hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
             onSearchResultsUpdated: { [weak searchBridge] searchResult in
                 searchBridge?.onSearchResultsUpdated(searchResult)
             }
@@ -448,6 +449,15 @@ final class HomeScreenFactory: NSObject {
             searchFileHistoryUseCase: SearchFileHistoryUseCase(
                 fileSearchHistoryRepository: .live
             )
+        )
+    }
+    
+    private func makeFilesSearchUseCase() -> some FilesSearchUseCaseProtocol {
+        FilesSearchUseCase(
+            repo: FilesSearchRepository.newRepo,
+            nodeFormat: .unknown,
+            nodesUpdateListenerRepo: SDKNodesUpdateListenerRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
         )
     }
 

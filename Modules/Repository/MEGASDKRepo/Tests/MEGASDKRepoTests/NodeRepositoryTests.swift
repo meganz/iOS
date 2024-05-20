@@ -691,7 +691,7 @@ final class NodeRepositoryTests: XCTestCase {
         let childNode = await harness.sut.childNode(
             parent: parent.toNodeEntity(),
             name: name,
-            type: try XCTUnwrap(NodeTypeEntity(nodeType: nodeType))
+            type: nodeType.toNodeTypeEntity()
         )
         
         XCTAssertEqual(childNode, expectedNode.toNodeEntity())

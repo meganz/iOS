@@ -9,7 +9,7 @@ import XCTest
 final class HomeChipsTrackingTests: XCTestCase {
     func testTrackChip_trackingUnselectedChip_sendsResetEvent() {
         let tracker = MockTracker()
-        tracker.trackChip(tapped: SearchChipEntity(type: .nodeFormat(1), title: "chip"), selected: false)
+        tracker.trackChip(tapped: SearchChipEntity(type: .nodeFormat(.photo), title: "chip"), selected: false)
 
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,

@@ -114,10 +114,10 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
         
         @discardableResult
-        func withChipsPrepared(_ idx: Int) -> Self {
+        func withChipsPrepared(chipTypes: [SearchChipEntity.ChipType] = [.nodeFormat(.photo)]) -> Self {
             let results = SearchResultsEntity(
                 results: [],
-                availableChips: Array(1...idx).map { .init(type: .nodeFormat($0), title: "chip_\($0)")},
+                availableChips: chipTypes.enumerated().map { .init(type: $0.element, title: "chip_\($0.offset)")},
                 appliedChips: []
             )
             
@@ -129,12 +129,12 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
         
         @discardableResult
-        func noResultsWithSingleChipApplied() -> Self {
+        func noResultsWithSingleChipApplied(chipType: SearchChipEntity.ChipType = .nodeFormat(.photo)) -> Self {
             resultsProvider.resultFactory = { _ in
                 let results = SearchResultsEntity(
                     results: [],
-                    availableChips: [.init(type: .nodeFormat(1), title: "appliedChip")],
-                    appliedChips: [.init(type: .nodeFormat(1), title: "appliedChip")]
+                    availableChips: [.init(type: chipType, title: "appliedChip")],
+                    appliedChips: [.init(type: chipType, title: "appliedChip")]
                 )
                 return results
             }
@@ -343,7 +343,12 @@ final class SearchResultsViewModelTests: XCTestCase {
     }
 
     func testChipItems_byDefault_noChipsSelected() async {
-        let harness = Harness(self).withChipsPrepared(4)
+        let harness = Harness(self).withChipsPrepared(chipTypes: [
+            .nodeFormat(.photo),
+            .nodeFormat(.audio),
+            .nodeFormat(.pdf),
+            .nodeFormat(.presentation)
+        ])
         await harness.sut.task()
         let allDeselected = harness.sut.chipsItems.allSatisfy {
             $0.pill.background == .deselectedColor
@@ -379,7 +384,10 @@ final class SearchResultsViewModelTests: XCTestCase {
     }
     
     func testEmptyView_isDefault_whenChipSelected_AndQueryNotEmpty() async throws {
-        let harness = Harness(self).withChipsPrepared(2)
+        let harness = Harness(self).withChipsPrepared(chipTypes: [
+            .nodeFormat(.photo),
+            .nodeFormat(.audio)
+        ])
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
         await harness.sut.chipsItems.first!.select()
         _ = try XCTUnwrap(harness.sut.emptyViewModel)
@@ -396,7 +404,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let content: [Harness.EmptyContent] = [
             .init(chip: nil, isSearchActive: false),
             .init(
-                chip: .some(.init(type: .nodeFormat(1), title: "appliedChip")), 
+                chip: .some(.init(type: SearchChipEntity.ChipType.nodeFormat(.photo), title: "appliedChip")),
                 isSearchActive: false
             )
         ]

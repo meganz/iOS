@@ -10,6 +10,10 @@ struct Preview_FilesSearchUseCase: FilesSearchUseCaseProtocol {
     func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {
         []
     }
+    
+    func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> NodeListEntity {
+        return .emptyNodeList
+    }
         
     func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void) {
         nodesUpdateHandler([])

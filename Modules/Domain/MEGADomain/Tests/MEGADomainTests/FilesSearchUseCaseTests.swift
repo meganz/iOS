@@ -68,7 +68,18 @@ final class FilesSearchUseCaseTests: XCTestCase {
             nodeFormat: NodeFormatEntity.photo,
             nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
         )
-        let results = try await sut.search(filter: .init(searchText: "", parentNode: nil, recursive: true, supportCancel: false, sortOrderType: .none, formatType: .photo, excludeSensitive: false), cancelPreviousSearchIfNeeded: false)
+        let results: [NodeEntity] = try await sut.search(
+            filter: .init(
+                searchText: "",
+                parentNode: nil,
+                recursive: true,
+                supportCancel: false,
+                sortOrderType: .none,
+                formatType: .photo,
+                excludeSensitive: false)
+            ,
+            cancelPreviousSearchIfNeeded: false
+        )
         XCTAssertEqual(results, nodes)
     }
     

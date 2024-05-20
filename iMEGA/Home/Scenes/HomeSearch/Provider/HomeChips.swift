@@ -5,39 +5,39 @@ import Search
 extension SearchChipEntity {
     // MARK: - Node format chips
     public static let images = SearchChipEntity(
-        type: .nodeFormat(MEGANodeFormatType.photo.rawValue),
+        type: .nodeFormat(.photo),
         title: Strings.Localizable.Home.Search.Filter.images
     )
     public static let folders = SearchChipEntity(
-        type: .nodeType(MEGANodeType.folder.rawValue),
+        type: .nodeType(.folder),
         title: Strings.Localizable.Home.Search.Filter.folders
     )
     public static let audio = SearchChipEntity(
-        type: .nodeFormat(MEGANodeFormatType.audio.rawValue),
+        type: .nodeFormat(.audio),
         title: Strings.Localizable.Home.Search.Filter.audio
     )
     public static let video = SearchChipEntity(
-        type: .nodeFormat(MEGANodeFormatType.video.rawValue),
+        type: .nodeFormat(.video),
         title: Strings.Localizable.Home.Search.Filter.video
     )
     public static let pdf = SearchChipEntity(
-        type: .nodeFormat(MEGANodeFormatType.pdf.rawValue),
+        type: .nodeFormat(.pdf),
         title: Strings.Localizable.Home.Search.Filter.pdfs
     )
     public static let docs = SearchChipEntity(
-        type: .nodeFormat(MEGANodeFormatType.document.rawValue),
+        type: .nodeFormat(.document),
         title: Strings.Localizable.Home.Search.Filter.docs
     )
     public static let presentation = SearchChipEntity(
-        type: .nodeFormat(MEGANodeFormatType.presentation.rawValue),
+        type: .nodeFormat(.presentation),
         title: Strings.Localizable.Home.Search.Filter.presentations
     )
     public static let archives = SearchChipEntity(
-        type: .nodeFormat(MEGANodeFormatType.archive.rawValue),
+        type: .nodeFormat(.archive),
         title: Strings.Localizable.Home.Search.Filter.archives
     )
     public static let spreadsheets = SearchChipEntity(
-        type: .nodeFormat(MEGANodeFormatType.spreadsheet.rawValue),
+        type: .nodeFormat(.spreadsheet),
         title: Strings.Localizable.Home.Search.Filter.spreadsheets
     )
 
@@ -200,39 +200,5 @@ extension SearchChipEntity {
             calendar: calendar
         )
         return areChipsGroupEnabled ? allChipsGrouped : allNodeFormatChips
-    }
-}
-
-extension SearchQueryEntity {
-    var searchFilter: MEGASearchFilter {
-        let filter = MEGASearchFilter()
-
-        filter.term = query
-
-        if let firstNodeTypeChip = chips.first(where: { $0.type.isNodeTypeChip })?.type,
-           case let SearchChipEntity.ChipType.nodeType(nodeType) = firstNodeTypeChip {
-            filter.nodeType = Int32(nodeType)
-        } else {
-            filter.nodeType = Int32(MEGANodeType.unknown.rawValue)
-        }
-
-        if let firstNodeFormatChip = chips.first(where: { $0.type.isNodeFormatChip })?.type,
-           case let SearchChipEntity.ChipType.nodeFormat(nodeFormat) = firstNodeFormatChip {
-            filter.category = Int32(nodeFormat)
-        } else {
-            filter.category = Int32(MEGANodeFormatType.unknown.rawValue)
-        }
-
-        // SDK support both creation and modification date
-        // but we only support modification date
-        if let firstTimeFilterChip = chips.first(where: { $0.type.isTimeFilterChip })?.type,
-           case let SearchChipEntity.ChipType.timeFrame(timeFrame) = firstTimeFilterChip {
-            filter.modificationTimeFrame = .init(
-                lowerLimit: timeFrame.startDate,
-                upperLimit: timeFrame.endDate
-            )
-        }
-
-        return filter
     }
 }

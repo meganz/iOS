@@ -20,6 +20,13 @@ public protocol FilesSearchUseCaseProtocol {
     /// - Returns: List of NodeEntities that match the criteria provided.
     func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity]
     
+    /// Search files and folders by name. It will return a list of nodes based on the criteria provided in the params.
+    /// - Parameters:
+    ///   - filter: SearchFilterEntity contains all necessary information to build search query.
+    ///   - cancelPreviousSearchIfNeeded: Indicates if the previous search should be cancelled before starting a new one.
+    /// - Returns: NodeListEntity that matches the criteria provided.
+    func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> NodeListEntity
+    
     /// This function is deprecated and we should begin to use:
     /// -  `func search(string: String?, parent node: NodeEntity?, recursive: Bool, sensitiveIncluded: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void)`
     func search(string: String?,
@@ -73,6 +80,14 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
         }
         
         repo.search(filter: filter, completion: completion)
+    }
+    
+    public func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> NodeListEntity {
+        if cancelPreviousSearchIfNeeded {
+            repo.cancelSearch()
+        }
+        
+        return try await repo.search(filter: filter)
     }
     
     public func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {

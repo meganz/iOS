@@ -64,99 +64,72 @@ fileprivate extension Date {
 class HomeSearchProviderTests: XCTestCase {
     
     class Harness {
-        let searchFile: MockSearchFileUseCase
+        let filesSearchUseCase: MockFilesSearchUseCase
         let nodeDetails: MockNodeDetailUseCase
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
-        let nodeRepo: MockNodeRepository
         let nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository
         let transferListenerRepo: SDKTransferListenerRepository
         let nodeUpdateRepository: MockNodeUpdateRepository
+        let contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase
         let sut: HomeSearchResultsProvider
-        var receivedFilters: [MEGASearchFilter] = []
-        var receivedTimeFrames: [SearchChipEntity.TimeFrame] {
-            receivedFilters.compactMap {
-                guard let timeFrame = $0.modificationTimeFrame else { return nil }
-                let start = Date(timeIntervalSince1970: TimeInterval(timeFrame.lowerLimit))
-                let end = Date(timeIntervalSince1970: TimeInterval(timeFrame.upperLimit))
-                return .init(
-                    startDate: start,
-                    endDate: end
-                )
-            }
-        }
         let nodes: [NodeEntity]
+        
         init(
             _ testCase: XCTestCase,
-            rootNode: NodeEntity? = nil,
             nodes: [NodeEntity] = [],
-            childrenNodes: [NodeEntity] = [],
-            nodeActions: NodeActions,
+            showHiddenNodes: Bool = false,
+            hiddenNodesFeatureEnabled: Bool = true,
             onSearchResultsUpdated: @escaping (SearchResultUpdateSignal) -> Void = { _ in },
             file: StaticString = #filePath,
             line: UInt = #line
         ) {
+            let sdk = MockSdk()
+            
             self.nodes = nodes
-            searchFile = MockSearchFileUseCase(
-                nodes: nodes,
-                nodeList: nodes.isNotEmpty ? .init(
-                    nodesCount: nodes.count,
-                    nodeAt: { nodes[$0] }
-                ) : nil,
-                nodesToReturnFactory: { _ in
-                    .init(nodesCount: 0, nodeAt: { _ in nil })
-                }
-            )
-            nodeDetails = MockNodeDetailUseCase(
+            self.nodeDetails = MockNodeDetailUseCase(
                 owner: .init(name: "owner"),
                 thumbnail: UIImage(systemName: "square.and.arrow.up")
             )
-
+            let nodeListEntity = NodeListEntity(nodes: nodes)
+            filesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic), nodeListSearchResult: .success(nodeListEntity))
+            
             nodeDataUseCase = MockNodeDataUseCase()
 
             mediaUseCase = MockMediaUseCase()
 
-            nodeRepo = MockNodeRepository(
-                nodeRoot: rootNode,
-                childrenNodes: childrenNodes
-            )
-
             nodesUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
-            transferListenerRepo = SDKTransferListenerRepository(sdk: MockSdk())
+            transferListenerRepo = SDKTransferListenerRepository(sdk: sdk)
 
             nodeUpdateRepository = MockNodeUpdateRepository()
              
+            contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
+                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes)
+            )
+            
             sut = HomeSearchResultsProvider(
-                parentNodeProvider: {
-                    rootNode ?? NodeEntity(handle: 123)
-                },
-                searchFileUseCase: searchFile,
+                parentNodeProvider: { NodeEntity(handle: 123) },
+                filesSearchUseCase: filesSearchUseCase,
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,
                 mediaUseCase: mediaUseCase,
-                nodeRepository: nodeRepo,
                 nodesUpdateListenerRepo: nodesUpdateListenerRepo,
                 transferListenerRepo: transferListenerRepo,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 nodeUpdateRepository: nodeUpdateRepository,
+                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 allChips: SearchChipEntity.allChips(
                     areChipsGroupEnabled: true,
                     currentDate: { .testDate },
                     calendar: .testCalendar
                 ),
-                sdk: MockSdk(),
-                nodeActions: nodeActions,
+                sdk: sdk,
+                nodeActions: NodeActions.mock(),
+                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
                 onSearchResultsUpdated: onSearchResultsUpdated
             )
             
             testCase.trackForMemoryLeaks(on: sut, file: file, line: line)
-            
-            searchFile.nodesToReturnFactory = {[weak self] filter in
-                self?.receivedFilters.append(filter)
-                return .init(nodesCount: nodes.count, nodeAt: {
-                    nodes[$0]
-                })
-            }
         }
         
         func propertyIdsForFoundNode() async throws -> Set<NodePropertyId> {
@@ -187,69 +160,200 @@ class HomeSearchProviderTests: XCTestCase {
         }
     }
 
-    @MainActor
-    private var nodeActions: NodeActions {
-        .makeActions(sdk: MockSdk(), navigationController: .init())
-    }
-
-    func testSearch_whenTimeChipApplied_searchUseReceivedTimeFrame_returnsValidNodes() async throws {
-        let harness = Harness(self, nodes: .anyNodes, nodeActions: await nodeActions)
-        let timeFrame = SearchChipEntity.TimeFrame(
-            startDate: .testDate("05/12/2023 13:55"),
-            endDate: .testDate("06/12/2023 12:00")
-        )
-        let timeChip = SearchChipEntity(
-            type: .timeFrame(timeFrame),
-            title: "Some time chip"
-        )
-        try await harness.idsMatch(harness.resultsFor(chip: timeChip))
-        
-        XCTAssertEqual(harness.receivedTimeFrames, [timeFrame])
-    }
-
     func testSearch_whenFailures_returnsNoResults() async throws {
-        let harness = Harness(self, nodeActions: await nodeActions)
+        let harness = Harness(self)
 
         let searchResults = await harness.sut.search(
-            queryRequest: .userSupplied(.query("node 1", isSearchActive: true))
+            queryRequest: .userSupplied(.query("", isSearchActive: true))
         )
 
         XCTAssertEqual(searchResults?.results, [])
     }
     
-    func testSearch_whenInitialQuery_returnsContentsOfRoot() async throws {
-        let root = NodeEntity(handle: 1)
-        let children = [NodeEntity(handle: 2), NodeEntity(handle: 3), NodeEntity(handle: 4)]
-        
-        let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: await nodeActions)
+    func testSearch_whenInitialQuery_searchWithoutRecursive() async throws {
+        // given
+        let harness = Harness(self)
 
-        let response = await harness.sut.search(queryRequest: .initial)
-        XCTAssertEqual(response?.results.map(\.id), [2, 3, 4])
+        // when
+        _ = await harness.sut.search(queryRequest: .initial)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertFalse(filter.recursive)
     }
     
-    func testSearch_whenEmptyQuery_returnsContentsOfRoot() async throws {
-        let root = NodeEntity(handle: 1)
-        let children = [NodeEntity(handle: 6), NodeEntity(handle: 7), NodeEntity(handle: 8)]
-        let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: await nodeActions)
+    func testSearch_whenEmptyQuery_searchWithoutRecursive() async throws {
+        // given
+        let harness = Harness(self)
 
-        let response = await harness.sut.search(queryRequest: .userSupplied(.query("", isSearchActive: false)))
-        XCTAssertEqual(response?.results.map(\.id), [6, 7, 8])
+        // when
+        _ = await harness.sut.search(queryRequest: .userSupplied(.query("", isSearchActive: false)))
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertFalse(filter.recursive)
+    }
+    
+    func testSearch_whenNotEmptyQuery_searchWitRecursive() async throws {
+        // given
+        let harness = Harness(self)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: .userSupplied(.query("foo", isSearchActive: false)))
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertTrue(filter.recursive)
+    }
+    
+    func testSearch_whenHiddenNodesFeatureEnabledAndShowHiddenNodesSettingIsOn_shouldNotExcludeHiddenNodes() async throws {
+        // given
+        let harness = Harness(self, showHiddenNodes: true)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: .initial)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertFalse(filter.excludeSensitive)
+    }
+    
+    func testSearch_whenHiddenNodesFeatureEnabledAndShowHiddenNodesSettingIsOff_shouldExcludeHiddenNodes() async throws {
+        // given
+        let harness = Harness(self, showHiddenNodes: false)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: .initial)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertTrue(filter.excludeSensitive)
+    }
+    
+    func testSearch_whenHiddenNodesFeatureNotEnabledAndShowHiddenNodesSettingIsOn_shouldNotExcludeHiddenNodes() async throws {
+        // given
+        let harness = Harness(self, showHiddenNodes: true, hiddenNodesFeatureEnabled: false)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: .initial)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertFalse(filter.excludeSensitive)
+    }
+    
+    func testSearch_nodeType_shouldMatchChipIfSelected() async throws {
+        // given
+        let query = SearchQuery.userSupplied(.query(chips: [.folders]))
+        let harness = Harness(self)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: query)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertEqual(filter.nodeTypeEntity, .folder)
+    }
+    
+    func testSearch_nodeType_shouldBeUnknownIfChipNotSelected() async throws {
+        // given
+        let query = SearchQuery.userSupplied(.query(chips: []))
+        let harness = Harness(self)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: query)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertEqual(filter.nodeTypeEntity, .unknown)
+    }
+    
+    func testSearch_nodeFormat_shouldMatchChipIfSelected() async throws {
+        // given
+        let query = SearchQuery.userSupplied(.query(chips: [.audio]))
+        let harness = Harness(self)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: query)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertEqual(filter.formatType, .audio)
+    }
+    
+    func testSearch_nodeFormat_shouldBeUnknownIfChipNotSelected() async throws {
+        // given
+        let query = SearchQuery.userSupplied(.query(chips: []))
+        let harness = Harness(self)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: query)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertEqual(filter.formatType, .unknown)
+    }
+    
+    func testSearch_modificationTimeFrame_shouldMatchChipIfSelected() async throws {
+        // given
+        let timeFrame = SearchChipEntity.TimeFrame(
+            startDate: .testDate("16/04/2024 13:55"),
+            endDate: .testDate("16/05/2024 12:00")
+        )
+        let timeChipEntity = SearchChipEntity(
+            type: .timeFrame(timeFrame),
+            title: "Some time chip"
+        )
+        let query = SearchQuery.userSupplied(.query(chips: [timeChipEntity]))
+        let harness = Harness(self)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: query)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertEqual(filter.modificationTimeFrame?.startDate, timeFrame.startDate)
+        XCTAssertEqual(filter.modificationTimeFrame?.endDate, timeFrame.endDate)
+    }
+    
+    func testSearch_modificationTimeFrame_shouldBeNilIfChipNotSelected() async throws {
+        // given
+        let query = SearchQuery.userSupplied(.query(chips: []))
+        let harness = Harness(self, showHiddenNodes: true, hiddenNodesFeatureEnabled: false)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: query)
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertNil(filter.modificationTimeFrame)
     }
     
     func testSearch_whenUsedForUserQuery_usesDefaultAscSortOrder() async throws {
-        let root = NodeEntity(handle: 1)
-        let children = [NodeEntity(handle: 2)]
-        
-        let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: await nodeActions)
+        let harness = Harness(self)
 
         _ = await harness.sut.search(queryRequest: .userSupplied(.query("any search string", isSearchActive: true)))
-        XCTAssertEqual(harness.searchFile.passedInSortOrders, [.defaultAsc])
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertEqual(filter.sortOrderType, .defaultAsc)
     }
     
     func testSearch_resultProperty_isFavorite() async throws {
         let harness = Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isFavourite: true)
-        ], nodeActions: await nodeActions)
+        ])
         let propertyIds = try await harness.propertyIdsForFoundNode()
         XCTAssertEqual(propertyIds, [.favorite])
     }
@@ -257,9 +361,7 @@ class HomeSearchProviderTests: XCTestCase {
     func testSearch_resultProperty_label() async throws {
         let node = NodeEntity(name: "node 0", handle: 0, label: .red)
         
-        let harness = Harness(self, nodes: [
-            node
-        ], nodeActions: await nodeActions)
+        let harness = Harness(self, nodes: [node])
 
         harness.nodeDataUseCase.labelStringToReturn = "Red"
         let propertyIds = try await harness.propertyIdsForFoundNode()
@@ -267,10 +369,9 @@ class HomeSearchProviderTests: XCTestCase {
     }
     
     func testSearch_resultProperty_isLinked() async throws {
-        
         let harness = Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isExported: true)
-        ], nodeActions: await nodeActions)
+        ])
 
         harness.nodeDataUseCase.isNodeInRubbishBin = { _ in false }
         let propertyIds = try await harness.propertyIdsForFoundNode()
@@ -278,10 +379,9 @@ class HomeSearchProviderTests: XCTestCase {
     }
     
     func testSearch_resultProperty_isVersioned() async throws {
-        
         let harness = Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isFile: true)
-        ], nodeActions: await nodeActions)
+        ])
 
         harness.nodeDataUseCase.versions = true
         let propertyIds = try await harness.propertyIdsForFoundNode()
@@ -289,10 +389,9 @@ class HomeSearchProviderTests: XCTestCase {
     }
     
     func testSearch_resultProperty_isDownloaded() async throws {
-        
         let harness = Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isFile: true)
-        ], nodeActions: await nodeActions)
+        ])
 
         harness.nodeDataUseCase.downloadedToReturn = true
         let propertyIds = try await harness.propertyIdsForFoundNode()
@@ -300,10 +399,9 @@ class HomeSearchProviderTests: XCTestCase {
     }
     
     func testSearch_resultProperty_isVideo() async throws {
-        
         let harness = Harness(self, nodes: [
             .init(name: "node 0", handle: 0, duration: 123)
-        ], nodeActions: await nodeActions)
+        ])
 
         harness.mediaUseCase.$isStringVideoToReturn.mutate { $0 = true}
         let propertyIds = try await harness.propertyIdsForFoundNode()
@@ -311,10 +409,9 @@ class HomeSearchProviderTests: XCTestCase {
     }
     
     func testSearch_resultProperty_multipleProperties() async throws {
-        
         let harness = Harness(self, nodes: [
             .init(name: "node 0", handle: 0, isFile: true, isExported: true)
-        ], nodeActions: await nodeActions)
+        ])
         
         harness.nodeDataUseCase.isNodeInRubbishBin = { _ in false }
         harness.nodeDataUseCase.versions = true
@@ -403,7 +500,7 @@ class HomeSearchProviderTests: XCTestCase {
             expectedAsset: emptyAsset,
             defaultEmptyAsset: emptyAsset,
             searchChipEntity: SearchChipEntity(
-                type: .nodeType(1000),
+                type: .nodeType(.folder),
                 title: "",
                 icon: "",
                 subchipsPickerTitle: nil,
@@ -412,29 +509,88 @@ class HomeSearchProviderTests: XCTestCase {
         )
     }
     
-    func testRefreshedSearchResults_with200Nodes_shouldReturn20results() async throws {
+    func testSearch_whenLastItemIndexIsAtTheLoadMorePoint_shouldFillMoreItems() async throws {
         // given
-        let root = NodeEntity(handle: 0)
-        let handles = UInt64.array(start: 1, end: 200)
-        let childrenNodes: [NodeEntity] = {
-            return handles.map { NodeEntity(name: "node \($0)", handle: $0) }
-        }()
-            
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 150)
+        let harness = Harness(self, nodes: nodes)
+        
         // when
-        let harness = Harness(self, rootNode: root, childrenNodes: childrenNodes, nodeActions: await nodeActions)
+        var resultIds = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)?.results.map(\.id)
         
         // then
-        let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        XCTAssertEqual(resultIds?.count, 0)
+        XCTAssertEqual(resultIds, UInt64.array(start: 1, end: 100))
+        
+        // when
+        resultIds = await harness.sut.search(queryRequest: .initial, lastItemIndex: 81)?.results.map(\.id)
+        
+        XCTAssertEqual(resultIds, UInt64.array(start: 101, end: 150))
+    }
+    
+    func testSearch_whenLastItemIndexIsNotAtTheLoadMorePoint_shouldFillMoreItems() async throws {
+        // given
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 150)
+        let harness = Harness(self, nodes: nodes)
+        
+        // when
+        let resultIds = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)?.results.map(\.id)
+        
+        // then
+        XCTAssertEqual(resultIds, UInt64.array(start: 1, end: 100))
+        
+        // when
+        let resultEntity = await harness.sut.search(queryRequest: .initial, lastItemIndex: 79)
+        
+        XCTAssertNil(resultEntity)
+    }
+    
+    func testSearch_whenAtTheEndOfList_shouldReturnNil() async throws {
+        // given
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 90)
+        let harness = Harness(self, nodes: nodes)
+        
+        // when
+        let resultIds = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)?.results.map(\.id)
+        
+        // then
+        XCTAssertEqual(resultIds, UInt64.array(start: 1, end: 90))
+        
+        // when
+        let resultEntity = await harness.sut.search(queryRequest: .initial, lastItemIndex: 90)
+        
+        XCTAssertNil(resultEntity)
+    }
+    
+    func testRefreshedSearchResults_whenNotSearchYet_shouldReturnEmpty() async throws {
+        // given
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 100)
+        let harness = Harness(self, nodes: nodes)
+        
+        // when
+        let results = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results
+        
+        // then
+        XCTAssertEqual(results?.count, 0)
+    }
+    
+    func testRefreshedSearchResults_whenThrowError_shouldReturnNil() async throws {
+        // given
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 100)
+        let harness = Harness(self, nodes: nodes)
+        harness.filesSearchUseCase.updateNodeListSearchResult(.failure(.generic))
+        
+        // when
+        let resultEntity = await harness.sut.refreshedSearchResults(queryRequest: .initial)
+        
+        // then
+        XCTAssertNil(resultEntity)
     }
     
     func testRefreshedSearchResults_withContinousNodeChanges_shouldReturnCorrectResults() async throws {
         // given: Original folder has a full page of nodes
-        let root = NodeEntity(handle: 0)
-        let childrenNodes = NodeEntity.entities(startHandle: 1, endHandle: 100)
+        var nodes = NodeEntity.entities(startHandle: 1, endHandle: 100)
         
         // when: searchInitially and refresh invoked
-        let harness = Harness(self, rootNode: root, childrenNodes: childrenNodes, nodeActions: await nodeActions)
+        let harness = Harness(self, nodes: nodes)
         _ = await harness.sut.searchInitially(queryRequest: .initial)
         var resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
@@ -442,21 +598,24 @@ class HomeSearchProviderTests: XCTestCase {
         XCTAssertEqual(UInt64.array(start: 1, end: 100), resultIds)
         
         // and when: nodes are reduced to 50 nodes
-        harness.nodeRepo.$childrenNodes.mutate { $0.removeLast(50) }
+        nodes.removeLast(50)
+        harness.filesSearchUseCase.updateNodeListSearchResult(.success(NodeListEntity(nodes: nodes)))
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
         // and then: Refreshed result should have 50 nodes
         XCTAssertEqual(UInt64.array(start: 1, end: 50), resultIds)
         
         // and when: nodes are reduced by 10
-        harness.nodeRepo.$childrenNodes.mutate { $0.removeFirst(10) }
+        nodes.removeFirst(10)
+        harness.filesSearchUseCase.updateNodeListSearchResult(.success(NodeListEntity(nodes: nodes)))
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
         // and then: Refreshed result should have 40 nodes
         XCTAssertEqual(UInt64.array(start: 11, end: 50), resultIds)
         
         // and when: 200 nodes are added
-        harness.nodeRepo.$childrenNodes.mutate { $0.append(contentsOf: NodeEntity.entities(startHandle: 51, endHandle: 250)) }
+        nodes.append(contentsOf: NodeEntity.entities(startHandle: 51, endHandle: 250))
+        harness.filesSearchUseCase.updateNodeListSearchResult(.success(NodeListEntity(nodes: nodes)))
         resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
         
         // and then: Refreshed result should have: 40 orginal
@@ -479,7 +638,7 @@ class HomeSearchProviderTests: XCTestCase {
     
     func testRefreshedSearchResults_withUserSuppliedQuery_shouldReturnUpdatedResults() async throws {
         // given
-        let harness = Harness(self, nodes: NodeEntity.entities(startHandle: 1, endHandle: 200), nodeActions: await nodeActions)
+        let harness = Harness(self, nodes: NodeEntity.entities(startHandle: 1, endHandle: 200))
         
         // when
         let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("node 0", isSearchActive: false)))?.results.map(\.id)
@@ -490,7 +649,7 @@ class HomeSearchProviderTests: XCTestCase {
     
     func testRefreshedSearchResults_withUserSuppliedQueryShowRoot_shouldReturnUpdatedResults() async throws {
         // given
-        let harness = Harness(self, childrenNodes: NodeEntity.entities(startHandle: 1, endHandle: 200), nodeActions: await nodeActions)
+        let harness = Harness(self, nodes: NodeEntity.entities(startHandle: 1, endHandle: 200))
         // when
         let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("", isSearchActive: false)))?.results.map(\.id)
         
@@ -500,12 +659,11 @@ class HomeSearchProviderTests: XCTestCase {
     
     func testNodeUpdatesListener_whenNodeUpdateIsNotNeeded_shouldNotProcessNodeUpdates() async {
         // given
-        let root = NodeEntity(handle: 0)
-        let children = NodeEntity.entities(startHandle: 1, endHandle: 3)
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 3)
         
         var nodeUpdatesSignals = [SearchResultUpdateSignal]()
         
-        let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: await nodeActions, onSearchResultsUpdated: {
+        let harness = Harness(self, nodes: nodes, onSearchResultsUpdated: {
             nodeUpdatesSignals.append($0)
         })
         
@@ -513,53 +671,50 @@ class HomeSearchProviderTests: XCTestCase {
         _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
         
         // when
-        harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(children)
+        harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(nodes)
         
         // then
         XCTAssertTrue(nodeUpdatesSignals.isEmpty)
     }
     
     func testNodeUpdatesListener_whenShouldProcessNodesUpdate_shouldProcessNodeUpdates() async {
-        await withMainSerialExecutor {
-            // given
-            let root = NodeEntity(handle: 0)
-            let children = NodeEntity.entities(startHandle: 1, endHandle: 3)
-            
-            var nodeUpdatesSignals = [SearchResultUpdateSignal]()
-            
-            let expectation = expectation(description: "Waiting node updates signal")
-            
-            let harness = Harness(self, rootNode: root, childrenNodes: children, nodeActions: nodeActions, onSearchResultsUpdated: {
-                nodeUpdatesSignals.append($0)
-                if nodeUpdatesSignals.count == 2 {
-                    expectation.fulfill()
-                }
-            })
-            
-            harness.nodeUpdateRepository.shouldProcessOnNodesUpdateValue = true
-            _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
-            
-            // when
-            harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(children) // Trigger .generic signal
-            harness.transferListenerRepo.endHandler?(MockNode.init(handle: 1), false, .download) // Trigger .specific signal
-            harness.transferListenerRepo.endHandler?(MockNode.init(handle: 1), true, .download) // Doesn't trigger signals
-            harness.transferListenerRepo.endHandler?(MockNode.init(handle: 1), false, .upload) // Doesn't trigger signals
-            harness.transferListenerRepo.endHandler?(MockNode.init(handle: 4), false, .download) // Doesn't trigger signals
-            
-            await fulfillment(of: [expectation], timeout: 1.0)
-            // then
-            guard case .generic = nodeUpdatesSignals[0] else {
-                XCTFail("Expecting .generic update signal")
-                return
+        // given
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 3)
+        
+        var nodeUpdatesSignals = [SearchResultUpdateSignal]()
+        
+        let expectation = expectation(description: "Waiting node updates signal")
+        
+        let harness = Harness(self, nodes: nodes, onSearchResultsUpdated: {
+            nodeUpdatesSignals.append($0)
+            if nodeUpdatesSignals.count == 2 {
+                expectation.fulfill()
             }
-            
-            guard case let .specific(result) = nodeUpdatesSignals[1] else {
-                XCTFail("Expecting .specific update signal")
-                return
-            }
-            
-            XCTAssertEqual(result.id, 1)
+        })
+        
+        harness.nodeUpdateRepository.shouldProcessOnNodesUpdateValue = true
+        _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
+        
+        // when
+        harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(nodes) // Trigger .generic signal
+        harness.transferListenerRepo.endHandler?(MockNode(handle: 1), false, .download) // Trigger .specific signal
+        harness.transferListenerRepo.endHandler?(MockNode(handle: 1), true, .download) // Doesn't trigger signals because isStreamingTransfer is true
+        harness.transferListenerRepo.endHandler?(MockNode(handle: 1), false, .upload) // Doesn't trigger signals because type is not download
+        harness.transferListenerRepo.endHandler?(MockNode(handle: 4), false, .download) // Doesn't trigger signals because node is not in the list: list is [1, 2, 3] but updated node is 4
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        // then
+        guard case .generic = nodeUpdatesSignals[0] else {
+            XCTFail("Expecting .generic update signal")
+            return
         }
+        
+        guard case let .specific(result) = nodeUpdatesSignals[1] else {
+            XCTFail("Expecting .specific update signal")
+            return
+        }
+        
+        XCTAssertEqual(result.id, 1)
     }
 
     // MARK: - Private methods.
@@ -607,5 +762,40 @@ extension SearchConfig.EmptyViewAssets.MenuOption: Equatable {
         lhs: SearchConfig.EmptyViewAssets.MenuOption, rhs: SearchConfig.EmptyViewAssets.MenuOption
     ) -> Bool {
         lhs.title == rhs.title
+    }
+}
+
+extension NodeListEntity {
+    public init(nodes: [NodeEntity]) {
+        self.init(nodesCount: nodes.count, nodeAt: { nodes[safe: $0] })
+    }
+}
+
+extension NodeActions {
+    static func mock() -> Self {
+        .init(
+            nodeDownloader: { _ in },
+            editTextFile: { _ in },
+            shareOrManageLink: { _ in },
+            showNodeInfo: { _ in },
+            assignLabel: { _ in },
+            toggleNodeFavourite: { _ in },
+            sendToChat: { _ in },
+            saveToPhotos: { _ in },
+            exportFiles: { _, _ in },
+            browserAction: { _, _ in },
+            userProfileOpener: { _ in },
+            removeLink: { _ in },
+            removeSharing: { _ in },
+            rename: { _, _ in },
+            shareFolders: { _ in },
+            leaveSharing: { _ in },
+            manageShare: { _ in },
+            showNodeVersions: { _ in },
+            disputeTakedown: { _ in },
+            moveToRubbishBin: { _ in },
+            restoreFromRubbishBin: { _ in },
+            removeFromRubbishBin: { _ in }
+        )
     }
 }

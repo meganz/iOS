@@ -1,6 +1,6 @@
-public enum NodeTypeEntity: Int, Sendable {
-    case unknown    = -1
-    case file       = 0
+public enum NodeTypeEntity: Sendable {
+    case unknown
+    case file
     case folder
     case root
     case incoming
