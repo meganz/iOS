@@ -142,7 +142,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testLoadThumbnail_hasDifferentThumbnailAndLoadThumbnail_noLoading() async {
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         
-        let sut = PhotoCellViewModel(
+        let sut = makeSUT(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
             thumbnailLoader: MockThumbnailLoader(initialImage: thumbnailContainer)
@@ -685,16 +685,118 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldApplyContentOpacity)
     }
     
+    func testMonitorPhotoSensitivityChanges_photoAndNodeUseCaseProvided_shouldUpdateImageContainerWithInitialResultFirst() async throws {
+        let photo = NodeEntity(handle: 65, isMarkedSensitive: true)
+       
+        let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let isInheritedSensitivity = false
+        let isInheritedSensitivityUpdate = true
+        let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: isInheritedSensitivityUpdate)
+            .eraseToAnyAsyncThrowingSequence()
+        let nodeUseCase = MockNodeDataUseCase(
+            isInheritingSensitivityResult: .success(isInheritedSensitivity),
+            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+        let sut = makeSUT(
+            photo: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        )
+        
+        var expectedImageContainer = [
+            imageContainer.toSensitiveImageContaining(isSensitive: isInheritedSensitivity),
+            imageContainer.toSensitiveImageContaining(isSensitive: isInheritedSensitivityUpdate)
+        ]
+        
+        let exp = expectation(description: "Should update photo with initial then from monitor")
+        exp.expectedFulfillmentCount = expectedImageContainer.count
+        
+        let subscription = thumbnailContainerUpdates(on: sut) {
+            XCTAssertTrue($0.isEqual(expectedImageContainer.removeFirst()))
+            exp.fulfill()
+        }
+        
+        let task = Task { await sut.monitorSensitivityChanges() }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        subscription.cancel()
+    }
+    
+    func testMonitorPhotoSensitivityChanges_inheritedSensitivityChange_shouldNotUpdateIfImageContainerTheSame() async throws {
+        let photo = NodeEntity(handle: 65, isMarkedSensitive: true)
+        let imageContainer = SensitiveImageContainer(image: Image("folder"), type: .thumbnail, isSensitive: photo.isMarkedSensitive)
+        
+        let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
+            .eraseToAnyAsyncThrowingSequence()
+        let nodeUseCase = MockNodeDataUseCase(
+            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+        
+        let sut = makeSUT(photo: photo,
+                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+                          nodeUseCase: nodeUseCase,
+                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+        
+        let exp = expectation(description: "Should not update image container")
+        exp.isInverted = true
+        
+        let subscription = thumbnailContainerUpdates(on: sut) { _ in
+            exp.fulfill()
+        }
+        
+        let task = Task { await sut.monitorSensitivityChanges() }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        subscription.cancel()
+    }
+    
+    func testMonitorPhotoSensitivityChanges_thumbnailContainerPlaceholder_shouldNotUpdateImageContainer() async throws {
+        let photo = NodeEntity(handle: 65, isMarkedSensitive: true)
+        let imageContainer = ImageContainer(image: Image("folder"), type: .placeholder)
+        
+        let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
+            .eraseToAnyAsyncThrowingSequence()
+        let nodeUseCase = MockNodeDataUseCase(
+            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+        
+        let sut = makeSUT(photo: photo,
+                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+                          nodeUseCase: nodeUseCase,
+                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+        
+        let exp = expectation(description: "Should not update image container")
+        exp.isInverted = true
+        
+        let subscription = thumbnailContainerUpdates(on: sut) { _ in
+            exp.fulfill()
+        }
+        
+        let task = Task { await sut.monitorSensitivityChanges() }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        subscription.cancel()
+    }
+    
     private func makeSUT(
         photo: NodeEntity,
         viewModel: PhotoLibraryModeAllViewModel = PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: []))),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> PhotoCellViewModel {
         PhotoCellViewModel(
             photo: photo,
             viewModel: viewModel,
             thumbnailLoader: thumbnailLoader,
+            nodeUseCase: nodeUseCase,
             featureFlagProvider: featureFlagProvider)
+    }
+    
+    private func thumbnailContainerUpdates(on sut: PhotoCellViewModel, action: @escaping (any ImageContaining) -> Void) -> AnyCancellable {
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink(receiveValue: action)
     }
 }

@@ -25,6 +25,7 @@ struct PhotoCellContent: View {
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
         .gesture(viewModel.editMode.isEditing ? tap : nil)
         .task { await viewModel.startLoadingThumbnail() }
+        .task { await viewModel.monitorSensitivityChanges() }
     }
     
     private var checkMarkView: some View {

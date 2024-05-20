@@ -78,6 +78,8 @@
 		0ECFECF72ACE0D5C00CBC420 /* AppearanceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */; };
 		0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */; };
 		0EDE0DDD2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */; };
+		0EDE903E2BF6D21700D2F96E /* NodeUseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE903D2BF6D21700D2F96E /* NodeUseCaseFactory.swift */; };
+		0EDE90422BF6D7E300D2F96E /* NodeUseCaseFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE90412BF6D7E200D2F96E /* NodeUseCaseFactoryTests.swift */; };
 		0EDF33382BC7371800EEF8F8 /* Preview_NodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDF33372BC7371800EEF8F8 /* Preview_NodeUseCase.swift */; };
 		0EE396F82B87E4B200927E7E /* NodeActionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE396F72B87E4B200927E7E /* NodeActionViewModelTests.swift */; };
 		0EE5AC162B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */; };
@@ -2778,6 +2780,8 @@
 		0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModelTests.swift; sourceTree = "<group>"; };
 		0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewModel.swift; sourceTree = "<group>"; };
 		0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlbumsLinkInitialSections.swift; sourceTree = "<group>"; };
+		0EDE903D2BF6D21700D2F96E /* NodeUseCaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeUseCaseFactory.swift; sourceTree = "<group>"; };
+		0EDE90412BF6D7E200D2F96E /* NodeUseCaseFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeUseCaseFactoryTests.swift; sourceTree = "<group>"; };
 		0EDF33372BC7371800EEF8F8 /* Preview_NodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_NodeUseCase.swift; sourceTree = "<group>"; };
 		0EE396F72B87E4B200927E7E /* NodeActionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewModelTests.swift; sourceTree = "<group>"; };
 		0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertViewModelTests.swift; sourceTree = "<group>"; };
@@ -6781,6 +6785,7 @@
 				B688C02F29412AD200976CE9 /* Photo Library Model */,
 				B688C015293ED95800976CE9 /* Timeline All View */,
 				B688C02E29412AB900976CE9 /* Timeline Card View */,
+				0EDE90412BF6D7E200D2F96E /* NodeUseCaseFactoryTests.swift */,
 				0E95615F2A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift */,
 				0E5336222B2A521C00FD5089 /* PhotoLibraryContentViewRouterTests.swift */,
 				0E2A4EE729D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift */,
@@ -11661,6 +11666,7 @@
 				B6C444D9274A284900268D9A /* Month View */,
 				B6F853452794D22900028D51 /* Photo Selection */,
 				B6C444D8274A284300268D9A /* Year View */,
+				0EDE903D2BF6D21700D2F96E /* NodeUseCaseFactory.swift */,
 				3234143729F0F6A500A06EFE /* PhotoLibraryContentConfiguration.swift */,
 				B6FCBFD427121AB600B3599F /* PhotoLibraryContentView.swift */,
 				B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */,
@@ -15162,6 +15168,7 @@
 				25A4E4E92BD8B83700B3F308 /* NodeTableViewCellViewModel.swift in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
+				0EDE903E2BF6D21700D2F96E /* NodeUseCaseFactory.swift in Sources */,
 				25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */,
 				94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
@@ -16372,6 +16379,7 @@
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
 				245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */,
 				25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */,
+				0EDE90422BF6D7E300D2F96E /* NodeUseCaseFactoryTests.swift in Sources */,
 				BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */,
 				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,

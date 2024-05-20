@@ -122,7 +122,12 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumPhoto: albumPhoto,
             photoSelection: photoSelection,
             viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())),
-            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader())
+            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo)
+        )
         
         return AlbumCoverPickerPhotoCell(viewModel: vm)
     }
