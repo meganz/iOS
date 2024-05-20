@@ -29,9 +29,7 @@ extension MyAccountHallTableViewCell {
             promoView?.isHidden = true
         }
         
-        if let detailText = data.detailText, detailLabel != nil {
-            detailLabel.text = detailText
-        }
+        detailLabel?.text = data.detailText ?? ""
         
         if let storageText = data.storageText, storageLabel != nil {
             storageLabel.text = storageText
@@ -87,7 +85,6 @@ extension MyAccountHallTableViewCell {
         }
 
         if detailLabel != nil {
-            detailLabel.text = ""
             detailLabel.textColor = UIColor.mnz_secondaryLabelTextColor()
         }
         
