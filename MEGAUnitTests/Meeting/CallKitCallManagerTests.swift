@@ -93,7 +93,7 @@ final class CallKitCallManagerTests: XCTestCase {
     
     func test_AnswerCall_notifiesCallController() throws {
         let harness = Harness()
-        harness.sut.answerCall(in: .testEntity)
+        harness.sut.answerCall(in: .testEntity, withUUID: .testUUID)
         let action = try XCTUnwrap(harness.firstReceivedAction() as? CXAnswerCallAction)
         XCTAssertEqual(action.callUUID, .testUUID)
     }

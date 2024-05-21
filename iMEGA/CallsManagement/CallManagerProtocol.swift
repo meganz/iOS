@@ -4,7 +4,7 @@ import MEGADomain
 /// and management of calls in progress
 protocol CallManagerProtocol: AnyObject {
     func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool, isJoiningActiveCall: Bool)
-    func answerCall(in chatRoom: ChatRoomEntity)
+    func answerCall(in chatRoom: ChatRoomEntity, withUUID uuid: UUID)
     func endCall(in chatRoom: ChatRoomEntity, endForAll: Bool)
     func muteCall(in chatRoom: ChatRoomEntity, muted: Bool)
     func callUUID(forChatRoom chatRoom: ChatRoomEntity) -> UUID?

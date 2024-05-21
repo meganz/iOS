@@ -47,15 +47,12 @@ extension CallKitCallManager: CallManagerProtocol {
         }
     }
     
-    func answerCall(in chatRoom: ChatRoomEntity) {
-        let answerCallUUID = uuidFactory()
-        let answerCallAction = CXAnswerCallAction(call: answerCallUUID)
+    func answerCall(in hatRoom: ChatRoomEntity, withUUID uuid: UUID) {
+        let answerCallAction = CXAnswerCallAction(call: uuid)
         let transaction = CXTransaction(action: answerCallAction)
-        callController.request(transaction) { [weak self] error in
-            guard let self else { return }
+        callController.request(transaction) { error in
             if error == nil {
                 MEGALogDebug("[CallKit]: Controller Call answered")
-                addCall(withUUID: answerCallUUID, chatRoom: chatRoom, audioEnabled: !chatRoom.isMeeting)
             } else {
                 MEGALogError("[CallKit]: Controller error answering call: \(error!.localizedDescription)")
             }
