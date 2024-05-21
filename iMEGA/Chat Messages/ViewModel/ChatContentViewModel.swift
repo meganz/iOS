@@ -385,7 +385,11 @@ final class ChatContentViewModel: ViewModelType {
             let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
             if callUseCase.call(for: chatRoom.chatId) != nil {
                 if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                    callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: true)
+                    if let incomingCallUUID = uuidForActiveCallKitCall() {
+                        callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
+                    } else {
+                        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: true)
+                    }
                 } else {
                     answerCall()
                 }
@@ -397,6 +401,10 @@ final class ChatContentViewModel: ViewModelType {
                 }
             }
         }
+    }
+    
+    private func uuidForActiveCallKitCall() -> UUID? {
+        callManager.callUUID(forChatRoom: chatRoom)
     }
     
     private func checkPermissionsAndStartCall(isVideoEnabled: Bool, notRinging: Bool) {

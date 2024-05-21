@@ -18,7 +18,7 @@ final class MockCallManager: CallManagerProtocol {
         startCall_CalledTimes += 1
     }
     
-    func answerCall(in chatRoom: ChatRoomEntity) {
+    func answerCall(in chatRoom: ChatRoomEntity, withUUID uuid: UUID) {
         answerCall_CalledTimes += 1
     }
     
