@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -15,9 +16,15 @@ class RichPreviewContentView: UIView {
     }
     
     private func updateAppearance () {
-        backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
-        titleLabel.textColor = UIColor.label
-        descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = TokenColors.Background.page
+            titleLabel.textColor = TokenColors.Text.primary
+            descriptionLabel.textColor = TokenColors.Text.secondary
+        } else {
+            backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
+            titleLabel.textColor = UIColor.label
+            descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

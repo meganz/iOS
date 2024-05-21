@@ -1,3 +1,5 @@
+import MEGADesignToken
+
 class EnlargementView: UIView {
     @IBOutlet weak var nonSelectionView: UIView!
     @IBOutlet weak var selectionView: UIView!
@@ -105,8 +107,14 @@ class EnlargementView: UIView {
     }
     
     func updateAppearance() {
-        nonSelectionView.backgroundColor = .mnz_voiceRecordingViewButtonBackground(traitCollection)
-        imageView.tintColor = .mnz_inputbarButtonImageTint(traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            nonSelectionView.backgroundColor = TokenColors.Button.secondary
+            selectionView.backgroundColor = TokenColors.Button.secondaryHover
+            imageView.tintColor = TokenColors.Icon.primary
+        } else {
+            nonSelectionView.backgroundColor = .mnz_voiceRecordingViewButtonBackground(traitCollection)
+            imageView.tintColor = .mnz_inputbarButtonImageTint(traitCollection)
+        }
     }
 
 }

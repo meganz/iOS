@@ -1,13 +1,18 @@
+import MEGADesignToken
 import MessageKit
 
 extension ChatViewController: MessagesDisplayDelegate {
+    
+    private var containerViewBorderColor: CGColor {
+        UIColor.grayE4EBEA.withAlphaComponent(0).cgColor
+    }
     
     func backgroundColor(for message: any MessageType,
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
         
         guard let chatMessage = messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
-            return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            return chatBubbleBackgroundColor(for: message)
         }
         
         if chatMessage.message.isManagementMessage {
@@ -15,27 +20,38 @@ extension ChatViewController: MessagesDisplayDelegate {
         }
         
         if chatMessage.transfer?.transferChatMessageType() == .attachment {
-            return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            if UIColor.isDesignTokenEnabled() {
+                return chatBubbleBackgroundColor(for: message)
+            } else {
+                return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            }
         }
         
         switch chatMessage.message.type {
         case .contact, .attachment:
-            return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            if UIColor.isDesignTokenEnabled() {
+                return chatBubbleBackgroundColor(for: message)
+            } else {
+                return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            }
         case .normal:
             if ((chatMessage.message.content ?? "") as NSString).mnz_isPureEmojiString() {
                 return .clear
             }
-            return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            return chatBubbleBackgroundColor(for: message)
             
         default:
-            return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            return chatBubbleBackgroundColor(for: message)
             
         }
-        
     }
 
     func textColor(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? MEGAAppColor.White._FFFFFF.uiColor : .label
+        if UIColor.isDesignTokenEnabled() {
+            return isFromCurrentSender(message: message) ? TokenColors.Text.colorInverse : TokenColors.Text.primary
+        } else {
+            return isFromCurrentSender(message: message) ? UIColor.whiteFFFFFF : .label
+        }
     }
 
     func messageStyle(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
@@ -49,7 +65,7 @@ extension ChatViewController: MessagesDisplayDelegate {
             }
             containerView.layer.cornerRadius = 13.0
             
-            let boraderColor = self.isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            let boraderColor = chatBubbleBackgroundColor(for: message)
             containerView.layer.borderColor = boraderColor.cgColor
             containerView.layer.borderWidth = 1
             
@@ -60,27 +76,29 @@ extension ChatViewController: MessagesDisplayDelegate {
             }
             
             if chatMessage.message.isManagementMessage {
-                containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
+                containerView.layer.borderColor = containerViewBorderColor
                 return
             }
             
             if chatMessage.message.type == .normal && ((chatMessage.message.content ?? "") as NSString).mnz_isPureEmojiString() {
-                containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
+                containerView.layer.borderColor = containerViewBorderColor
             }
             
             if chatMessage.transfer?.transferChatMessageType() == .attachment {
-                containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
+                containerView.layer.borderColor = containerViewBorderColor
             }
             
             if chatMessage.message.type == .attachment && (chatMessage.message.nodeList?.size ?? 0 == 1) {
-                if let node = chatMessage.message.nodeList?.node(at: 0), (node.name?.fileExtensionGroup.isVisualMedia ?? false) {
-                    containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
+                if let node = chatMessage.message.nodeList?.node(at: 0),
+                   let nodeName = node.name,
+                   nodeName.fileExtensionGroup.isVisualMedia {
+                    containerView.layer.borderColor = containerViewBorderColor
                 }
             }
             
             if chatMessage.message.type == .containsMeta,
                 chatMessage.message.containsMeta?.type == .giphy {
-                containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
+                containerView.layer.borderColor = containerViewBorderColor
             }
             
         }
@@ -104,7 +122,12 @@ extension ChatViewController: MessagesDisplayDelegate {
         if let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed {
             button.setImage(UIImage(resource: .triangle).imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         } else {
-            button.setImage(UIImage(resource: .forward).imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+            let forwardImage = if UIColor.isDesignTokenEnabled() {
+                UIImage(resource: .forwardButton).imageFlippedForRightToLeftLayoutDirection()
+            } else {
+                UIImage(resource: .forward).imageFlippedForRightToLeftLayoutDirection()
+            }
+            button.setImage(forwardImage, for: .normal)
         }
     }
     
@@ -147,7 +170,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     // MARK: - Audio Messages
     
     func audioTintColor(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? MEGAAppColor.White._FFFFFF.uiColor : .label
+        textColor(for: message, at: indexPath, in: messagesCollectionView)
     }
     
     func configureAudioCell(_ cell: AudioMessageCell, message: any MessageType) {
@@ -166,5 +189,29 @@ extension ChatViewController: MessagesDisplayDelegate {
             else { return false }
         
         return chatMessage.message.shouldShowForwardAccessory()
+    }
+    
+    private func chatBubbleBackgroundColor(for message: any MessageType) -> UIColor {
+        if UIColor.isDesignTokenEnabled() {
+
+            return isFromCurrentSender(message: message) ?
+                senderBubbleBackgroundColor :
+                TokenColors.Background.surface2
+        } else {
+            return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+        }
+    }
+    
+    // The new sender chat bubble background: --color-surface-accent is not available
+    // This directly uses the color value from Figma as a temporary solution
+    private var senderBubbleBackgroundColor: UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            UIColor(red: 0.224, green: 0.259, blue: 0.306, alpha: 1.0)
+        case .dark:
+            UIColor(red: 0.741, green: 0.753, blue: 0.769, alpha: 1.0)
+        @unknown default:
+            UIColor(red: 0.224, green: 0.259, blue: 0.306, alpha: 1.0)
+        }
     }
 }

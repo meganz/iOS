@@ -398,6 +398,7 @@ class ChatViewController: MessagesViewController {
                 traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory else {
             return
         }
+
         messagesCollectionView.reloadData()
         
         let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.White._FFFFFF.uiColor

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 
 extension MEGAChatMessage {
@@ -97,5 +98,13 @@ extension MEGAChatMessage {
             )
         }
         attributedText = mutableAttributedString
+    }
+    
+    @objc func normalTextColor(isFromCurrentSender: Bool) -> UIColor {
+        if UIColor.isDesignTokenEnabled() {
+            return isFromCurrentSender ? TokenColors.Text.colorInverse : TokenColors.Text.primary
+        } else {
+            return isFromCurrentSender ? UIColor.whiteFFFFFF : .label
+        }
     }
 }

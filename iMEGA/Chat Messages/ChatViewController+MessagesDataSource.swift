@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MessageKit
 
@@ -22,28 +23,59 @@ extension ChatViewController: MessagesDataSource {
         }
         
         if isTimeLabelVisible(at: indexPath) {
-            var topLabelString: String = chatMessage.sentDate.string(withDateFormat: "HH:mm")
-            
-            if !isFromCurrentSender(message: chatMessage) && chatRoom.isGroup {
-                let displayName = !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
-                topLabelString = displayName + topLabelString
+            if UIColor.isDesignTokenEnabled() {
+                let dateString = chatMessage.sentDate.string(withDateFormat: "HH:mm")
+                let displayName = if !isFromCurrentSender(message: chatMessage) && chatRoom.isGroup {
+                    !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
+                } else {
+                    ""
+                }
+                let fullText = "\(displayName)\(dateString)"
+                
+                let attributedString = NSMutableAttributedString(
+                    string: fullText,
+                    attributes: [
+                        NSAttributedString.Key.font: UIFont.preferredFont(style: .caption1, weight: .bold)
+                    ]
+                )
+                
+                let dateRange = (fullText as NSString).range(of: dateString)
+                attributedString.addAttribute(.foregroundColor, value: TokenColors.Text.secondary, range: dateRange)
+
+                if !displayName.isEmpty {
+                    let displayNameRange = (fullText as NSString).range(of: displayName)
+                    attributedString.addAttribute(.foregroundColor, value: TokenColors.Text.primary, range: displayNameRange)
+                }
+
+                return attributedString
+            } else {
+                var topLabelString: String = chatMessage.sentDate.string(withDateFormat: "HH:mm")
+                
+                if !isFromCurrentSender(message: chatMessage) && chatRoom.isGroup {
+                    let displayName = !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
+                    topLabelString = displayName + topLabelString
+                }
+                return NSAttributedString(
+                    string: topLabelString,
+                    attributes: [
+                        NSAttributedString.Key.font: UIFont.preferredFont(style: .footnote, weight: .medium),
+                        NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
+                )
             }
-            
-            return NSAttributedString(
-                string: topLabelString,
-                attributes: [NSAttributedString.Key.font: UIFont.preferredFont(style: .footnote, weight: .medium),
-                             NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
         }
         return nil
     }
 
     func cellTopLabelAttributedText(for message: any MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isDateLabelVisible(for: indexPath) {
+            let textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
             return NSAttributedString(
                 string: NSCalendar.current.isDateInToday(message.sentDate) ? Strings.Localizable.today : message.sentDate.string(withDateFormat: "E dd MMM"),
-                attributes: [NSAttributedString.Key.font: UIFont.preferredFont(style: .subheadline, weight: .bold),
-                             NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
-
+                attributes: [
+                    NSAttributedString.Key.font: UIFont.preferredFont(style: .subheadline, weight: .bold),
+                    NSAttributedString.Key.foregroundColor: textColor
+                ]
+            )
         }
 
         return nil

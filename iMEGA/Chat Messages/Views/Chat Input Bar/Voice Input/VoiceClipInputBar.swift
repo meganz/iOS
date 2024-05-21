@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 protocol VoiceClipInputBarDelegate: AnyObject {
@@ -28,7 +29,7 @@ class VoiceClipInputBar: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        sendImageView.renderImage(withColor: MEGAAppColor.White._FFFFFF.uiColor)
+        sendImageView.renderImage(withColor: UIColor.whiteFFFFFF)
         
         audioWavesView = AudioWavesView.instanceFromNib        
         audioWavesholderView.wrap(audioWavesView)
@@ -177,5 +178,8 @@ class VoiceClipInputBar: UIView {
     
     private func updateAppearance() {
         backgroundColor = UIColor.mnz_voiceRecordingViewBackground(traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            sendView.backgroundColor = TokenColors.Button.primary
+        }
     }
 }
