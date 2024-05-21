@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "shield-light.svg",
+      "filename" : "mega-light.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "shield-dark.svg",
+      "filename" : "mega-dark.svg",
       "idiom" : "universal"
     }
   ],

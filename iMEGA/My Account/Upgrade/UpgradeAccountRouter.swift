@@ -56,14 +56,19 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
         }
         
         Task { @MainActor in
-            let abTestVariant = await abTestProvider.abTestVariant(for: .onboardingUpsellingDialog)
+            let onboardingVariant = await abTestProvider.abTestVariant(for: .onboardingUpsellingDialog)
         
-            guard abTestVariant != .baseline else {
+            guard onboardingVariant != .baseline else {
                 presentUpgradeAccountChooseAccountType()
                 return
             }
             
-            presentOnboardingUpsellingDialog(abTestVariant: abTestVariant)
+            let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
+            
+            presentOnboardingUpsellingDialog(
+                onboardingVariant: onboardingVariant,
+                isAdsEnabled: isAdsEnabled
+            )
         }
     }
     
@@ -72,15 +77,14 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
         UIApplication.mnz_presentingViewController().present(upgradeAccountNC, animated: true, completion: nil)
     }
     
-    private func presentOnboardingUpsellingDialog(abTestVariant: ABTestVariant) {
+    private func presentOnboardingUpsellingDialog(onboardingVariant: ABTestVariant, isAdsEnabled: Bool) {
         let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
         let accountsConfig = AccountsConfig(
             onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
                 storageImage: .storage,
                 fileSharingImage: .fileSharing,
                 backupImage: .backup,
-                vpnImage: .shield,
-                meetingsImage: .meetings,
+                megaImage: .mega,
                 onboardingHeaderImage: .onboardingHeader,
                 primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryText.color,
                 primaryGrayTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color,
@@ -100,9 +104,10 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             tracker: DIContainer.tracker,
-            onboardingABvariant: abTestVariant,
+            onboardingABvariant: onboardingVariant,
             presenter: UIApplication.mnz_presentingViewController(),
             accountsConfig: accountsConfig,
+            isAdsEnabled: isAdsEnabled,
             viewProPlanAction: {
                 UpgradeAccountRouter().presentNewPlanPage(viewType: .onboarding)
             }

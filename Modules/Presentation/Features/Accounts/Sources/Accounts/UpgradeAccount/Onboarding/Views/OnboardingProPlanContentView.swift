@@ -29,15 +29,10 @@ struct OnboardingProPlanContentView: View {
             )
             
             ProPlanView(
-                image: accountsConfig.onboardingViewAssets.vpnImage,
-                title: Strings.Localizable.Onboarding.UpgradeAccount.Content.MegaVPN.title,
-                message: Strings.Localizable.Onboarding.UpgradeAccount.Content.MegaVPN.message
-            )
-            
-            ProPlanView(
-                image: accountsConfig.onboardingViewAssets.meetingsImage,
-                title: Strings.Localizable.Onboarding.UpgradeAccount.Content.CallsAndMeetings.title,
-                message: Strings.Localizable.Onboarding.UpgradeAccount.Content.CallsAndMeetings.message
+                image: accountsConfig.onboardingViewAssets.megaImage,
+                title: Strings.Localizable.Onboarding.UpgradeAccount.Content.PlusBenefits.title,
+                message: viewModel.isAdsEnabled ? Strings.Localizable.Onboarding.UpgradeAccount.Content.PlusBenefits.messageWithAds :
+                    Strings.Localizable.Onboarding.UpgradeAccount.Content.PlusBenefits.messageWithoutAds
             )
         }
     }

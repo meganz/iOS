@@ -117,6 +117,20 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         XCTAssertEqual(mockPurchaseUseCase.registerPurchaseDelegateCalled, 1, "registerPurchaseDelegate should be called once during initialization")
     }
     
+    func testIsAdsEnabled_withAdsEnabled_shouldBeTrue() async {
+        let (sut, _) = makeSUT(isAdsEnabled: true)
+        await awaitRegisterDelegateTask(in: sut)
+        
+        XCTAssertTrue(sut.isAdsEnabled)
+    }
+    
+    func testIsAdsEnabled_withAdsDisabled_shouldBefalse() async {
+        let (sut, _) = makeSUT(isAdsEnabled: false)
+        await awaitRegisterDelegateTask(in: sut)
+        
+        XCTAssertFalse(sut.isAdsEnabled)
+    }
+    
     // MARK: - Plan list
     private func testFilteredPlanList(planList: [AccountPlanEntity], expectedPlans: [AccountPlanEntity], forCycle cycle: SubscriptionCycleEntity) async {
         let (sut, _) = makeSUT(planList: planList)
@@ -292,6 +306,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         planList: [AccountPlanEntity] = [],
         tracker: AnalyticsTracking = MockTracker(),
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
+        isAdsEnabled: Bool = false,
         file: StaticString = #file,
         line: UInt = #line
     ) -> (OnboardingUpgradeAccountViewModel, MockAccountPlanPurchaseUseCase) {
@@ -301,7 +316,8 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         let sut = OnboardingUpgradeAccountViewModel(
             purchaseUseCase: mockPurchaseUseCase, 
             accountUseCase: mockAccountUseCase,
-            tracker: tracker,
+            tracker: tracker, 
+            isAdsEnabled: isAdsEnabled,
             viewProPlanAction: {},
             router: router
         )

@@ -3878,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Additional security when sharing";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Set passwords and expiry dates for file and folder links.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Plus access to these great benefits:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Unrestricted calls and meetings";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free*/
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Unrestricted calls and meetings\n• Ad-free";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
 /* Camera uploads banner enable state title */
