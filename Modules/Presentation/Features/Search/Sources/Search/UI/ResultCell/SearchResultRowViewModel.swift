@@ -15,8 +15,6 @@ extension SearchResultRowViewModel {
 }
 
 class SearchResultRowViewModel: Identifiable, ObservableObject {
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
     @Published var thumbnailImage: UIImage = UIImage()
 
     var title: String {
@@ -24,7 +22,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     }
     
     var isSensitive: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) && result.isSensitive
+        result.isSensitive
     }
     
     var hasThumbnail: Bool {
@@ -80,7 +78,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         actions: UserActions,
         swipeActions: [SearchResultSwipeAction]
     ) {
-        self.featureFlagProvider = featureFlagProvider
         self.result = result
         self.colorAssets = colorAssets
         self.previewContent = previewContent

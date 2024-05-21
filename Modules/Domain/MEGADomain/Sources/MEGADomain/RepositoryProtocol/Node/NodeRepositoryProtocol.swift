@@ -31,4 +31,6 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
     ///  - Returns: true if the node is marked as sensitive or a descendent of such node
     ///  - Throws: `NodeError.nodeNotFound` if the node cant be found
     func isInheritingSensitivity(node: NodeEntity) async throws -> Bool
+    /// This could possibly block the calling thread, make sure not to call it on main thread.
+    func isInheritingSensitivity(node: NodeEntity) throws -> Bool
 }

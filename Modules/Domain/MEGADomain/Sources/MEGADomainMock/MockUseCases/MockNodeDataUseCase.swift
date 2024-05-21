@@ -143,6 +143,15 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         }
     }
     
+    public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
+        switch isInheritingSensitivityResult {
+        case .success(let isSensitive):
+           isSensitive
+        case .failure(let error):
+            throw error
+        }
+    }
+    
     public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
         monitorInheritedSensitivityForNode
     }

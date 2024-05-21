@@ -38,6 +38,9 @@ struct NodeActions {
     var moveToRubbishBin: ([NodeEntity]) -> Void
     var restoreFromRubbishBin: ([NodeEntity]) -> Void
     var removeFromRubbishBin: ([NodeEntity]) -> Void
+    
+    var hide: ([NodeEntity]) -> Void
+    var unhide: ([NodeEntity]) -> Void
 }
 
 // Disabling cyclomatic check as this right now
@@ -284,6 +287,15 @@ extension NodeActions {
                     sdk: sdk,
                     parent: navigationController
                 )
+            },
+            hide: { nodes in
+                HideFilesAndFoldersRouter(presenter: navigationController).hideNodes(nodes)
+            },
+            unhide: { nodes in
+                let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+                Task {
+                    _ = await nodeActionUseCase.unhide(nodes: nodes)
+                }
             }
         )
     }

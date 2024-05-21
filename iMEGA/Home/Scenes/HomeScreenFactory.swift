@@ -356,6 +356,7 @@ final class HomeScreenFactory: NSObject {
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
             hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+            isDesignTokenEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .designToken),
             onSearchResultsUpdated: { [weak searchBridge] searchResult in
                 searchBridge?.onSearchResultsUpdated(searchResult)
             }

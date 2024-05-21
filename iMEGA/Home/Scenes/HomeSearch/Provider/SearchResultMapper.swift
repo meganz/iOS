@@ -18,14 +18,16 @@ struct SearchResultMapper {
     let nodeUseCase: any NodeUseCaseProtocol
     let mediaUseCase: any MediaUseCaseProtocol
     let nodeActions: NodeActions
-
+    let hiddenNodesFeatureEnabled: Bool
+    let isDesignTokenEnabled: Bool
+    
     func map(node: NodeEntity) -> SearchResult {
         .init(
             id: node.handle,
             thumbnailDisplayMode: node.isFile ? .vertical : .horizontal,
             backgroundDisplayMode: node.hasThumbnail ? .preview : .icon,
             title: node.name,
-            isSensitive: node.isMarkedSensitive,
+            isSensitive: isSensitive(node: node),
             hasThumbnail: node.hasThumbnail,
             description: info(for: node),
             type: .node,
@@ -161,7 +163,6 @@ struct SearchResultMapper {
             return []
         }
 
-        let isDesignTokenEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
         let turquoiseBackgroundColor = isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : Color(.turquoise)
 
         if nodeUseCase.isInRubbishBin(nodeHandle: node.handle) {
@@ -210,5 +211,13 @@ struct SearchResultMapper {
         }
 
         return []
+    }
+    
+    private func isSensitive(node: NodeEntity) -> Bool {
+        guard hiddenNodesFeatureEnabled else { return false }
+        if node.isMarkedSensitive {
+            return true
+        }
+        return (try? nodeUseCase.isInheritingSensitivity(node: node)) ?? false
     }
 }

@@ -187,4 +187,11 @@ public struct NodeRepository: NodeRepositoryProtocol {
         }
         return sdk.isNodeInheritingSensitivity(node)
     }
+    
+    public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
+        guard let node = node.toMEGANode(in: sdk) else {
+            throw NodeErrorEntity.nodeNotFound
+        }
+        return sdk.isNodeInheritingSensitivity(node)
+    }
 }

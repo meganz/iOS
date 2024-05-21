@@ -28,6 +28,8 @@ extension NodeActions {
             shareFolder: { shareFolders([$0]) },
             editTextFile: editTextFile,
             disputeTakedown: disputeTakedown,
+            hide: hide,
+            unhide: unhide,
             toggleEditMode: toggleEditMode
         )
     }

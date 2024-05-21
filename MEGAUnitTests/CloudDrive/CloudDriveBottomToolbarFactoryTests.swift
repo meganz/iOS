@@ -34,6 +34,8 @@ extension NodeActionsDelegateHandler {
             shareFolder: { _ in },
             editTextFile: { _ in },
             disputeTakedown: { _ in },
+            hide: { _ in },
+            unhide: { _ in },
             toggleEditMode: { _ in }
         )
     }
