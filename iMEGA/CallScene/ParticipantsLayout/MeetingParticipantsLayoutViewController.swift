@@ -134,6 +134,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
+                updateNavigationBarAppearance()
                 callCollectionView.reloadData()
                 viewModel.dispatch(.onViewReady)
             }

@@ -103,11 +103,13 @@ final class MeetingContainerViewModel: ViewModelType {
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         
-        let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
-        self.callKitManager.addCallRemoved { [weak self] uuid in
-            guard let uuid = uuid, let self = self, callUUID == uuid else { return }
-            self.callKitManager.removeCallRemovedHandler()
-            router.dismiss(animated: false, completion: nil)
+        if !featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
+            self.callKitManager.addCallRemoved { [weak self] uuid in
+                guard let uuid = uuid, let self = self, callUUID == uuid else { return }
+                self.callKitManager.removeCallRemovedHandler()
+                router.dismiss(animated: false, completion: nil)
+            }
         }
         
         listenToMuteUnmuteFailedNotifications()
