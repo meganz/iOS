@@ -1,7 +1,11 @@
+import AsyncAlgorithms
 import Foundation
 import MEGASwift
 
 public protocol VideoPlaylistUseCaseProtocol {
+    
+    /// An AsyncSequence of Void that triggers updates when changes occur in the user's video playlists.
+    var videoPlaylistsUpdatedAsyncSequence: AnyAsyncSequence<Void> { get }
     
     /// Getting MEGA default system video playlists. For example, the favourite playlist.
     /// - Returns: returns array of system video playlists based on requirement.
@@ -17,6 +21,33 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     private let userVideoPlaylistsRepository: any UserVideoPlaylistsRepositoryProtocol
+    
+    public var videoPlaylistsUpdatedAsyncSequence: AnyAsyncSequence<Void> {
+        merge(favoriteVideoPlaylistUpdates, userVideoPlaylistUpdates)
+            .eraseToAnyAsyncSequence()
+    }
+    
+    private var favoriteVideoPlaylistUpdates: AnyAsyncSequence<Void> {
+        fileSearchUseCase.nodeUpdates
+            .filter { $0.contains { node in node.name.fileExtensionGroup.isVideo }}
+            .map { _ in () }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    private var userVideoPlaylistUpdates: AnyAsyncSequence<Void> {
+        let videoPlaylistUpdatesStream = userVideoPlaylistsRepository.setsUpdatedAsyncSequence
+            .filter { $0.isNotEmpty && $0.contains { $0.setType == .playlist } }
+            .map { _ in () }
+            .eraseToAnyAsyncSequence()
+        
+        let videoPlaylistContentUpdatesStream = userVideoPlaylistsRepository.setElementsUpdatedAsyncSequence
+            .filter { $0.isNotEmpty }
+            .map { _ in () }
+            .eraseToAnyAsyncSequence()
+        
+        return merge(videoPlaylistUpdatesStream, videoPlaylistContentUpdatesStream)
+            .eraseToAnyAsyncSequence()
+    }
     
     public init(
         fileSearchUseCase: some FilesSearchUseCaseProtocol,

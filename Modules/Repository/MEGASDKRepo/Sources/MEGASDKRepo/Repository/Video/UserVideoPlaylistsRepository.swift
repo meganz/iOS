@@ -1,12 +1,26 @@
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol {
     
-    private let sdk: MEGASdk
+    public var setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> {
+        setAndElementsUpdatesProvider.setUpdates(filteredBy: [.playlist])
+    }
     
-    public init(sdk: MEGASdk) {
+    public var setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> {
+        setAndElementsUpdatesProvider.setElementUpdates()
+    }
+    
+    private let sdk: MEGASdk
+    private let setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol
+    
+    public init(
+        sdk: MEGASdk,
+        setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol
+    ) {
         self.sdk = sdk
+        self.setAndElementsUpdatesProvider = setAndElementsUpdatesProvider
     }
     
     // MARK: - videoPlaylists
@@ -26,7 +40,7 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
         return try await withThrowingTaskGroup(of: (HandleEntity, Result<SetEntity, Error>).self, body: { group in
             for node in nodes {
                 group.addTask {
-                    try await createSetElement(videoPlaylistId: id, nodeId: node.id)
+                    try await self.createSetElement(videoPlaylistId: id, nodeId: node.id)
                 }
             }
             
@@ -88,7 +102,7 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
     public func deleteVideoPlaylist(by videoPlaylist: VideoPlaylistEntity) async throws -> VideoPlaylistEntity {
         try await withCheckedThrowingContinuation { continuation in
             sdk.removeSet(videoPlaylist.id, delegate: RequestDelegate { result in
-                guard Task.isCancelled == false else { 
+                guard Task.isCancelled == false else {
                     continuation.resume(throwing: CancellationError())
                     return
                 }

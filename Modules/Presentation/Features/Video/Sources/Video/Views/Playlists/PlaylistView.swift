@@ -66,23 +66,14 @@ struct PlaylistView: View {
             Button(Strings.Localizable.cancel, role: .cancel) { }
         }
     }
-    
+        
     private var listView: some View {
-        List(viewModel.videoPlaylists, id: \.id) { videoPlaylist in
-            if videoPlaylist.isSystemVideoPlaylist {
-                favoritePlaylistCell(videoPlaylist: videoPlaylist)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(.init())
-            } else {
-                UserPlaylistCell(
-                    viewModel: videoPlaylistCellViewModel(videoPlaylist),
-                    videoConfig: videoConfig,
-                    router: router
-                )
-                .listRowSeparator(.hidden)
-                .listRowInsets(.init())
-            }
-        }
+        VideoPlaylistsCollectionViewRepresenter(
+            thumbnailUseCase: viewModel.thumbnailUseCase,
+            viewModel: viewModel,
+            videoConfig: videoConfig,
+            router: router
+        )
         .listStyle(PlainListStyle())
         .padding(.horizontal, 8)
     }

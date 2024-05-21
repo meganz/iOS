@@ -1,5 +1,6 @@
 @testable import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import XCTest
 
 final class VideoPlaylistUseCaseTests: XCTestCase {
@@ -104,7 +105,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         
         _ = await sut.userVideoPlaylists()
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages, [ .userVideoPlaylists ])
     }
     
@@ -116,7 +117,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         _ = await sut.userVideoPlaylists()
         _ = await sut.userVideoPlaylists()
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages, [ .userVideoPlaylists, .userVideoPlaylists ])
     }
     
@@ -182,11 +183,289 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         XCTAssert(userVideoPlaylists.allSatisfy { $0.type == .user })
     }
     
+    // MARK: - videoPlaylistsUpdatedAsyncSequence
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenHasNoFavoriteVideoPlaylistUpdates_doesNotEmitsUpdate() async {
+        let initialPlaylists = anyPlaylists()
+        let (sut, _, _) = makeSUT(
+            filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: EmptyAsyncSequence().eraseToAnyAsyncSequence()),
+            userVideoPlaylistRepositoryResult: initialPlaylists
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.isInverted = true
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenHasFavoriteImagePlaylistUpdates_doesNotEmitsUpdate() async {
+        let expectedResults = [
+            NodeEntity(name: "node-1.png", handle: 1, mediaType: .image),
+            NodeEntity(name: "node-2.png", handle: 2, mediaType: .image)
+        ]
+        let nodeUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _, _) = makeSUT(
+            filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: nodeUpdatesStream)
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.isInverted = true
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenHasFavoriteImagePlaylistUpdates_emitsUpdateOnlyForVideoNodeUpdates() async {
+        let expectedResults = [
+            NodeEntity(name: "node-1.mp4", handle: 1, mediaType: .video),
+            NodeEntity(name: "node-2.png", handle: 2, mediaType: .image)
+        ]
+        let nodeUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _, _) = makeSUT(
+            filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: nodeUpdatesStream)
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = expectedResults.filter { $0.mediaType == .video }.count
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenHasFavoriteImagePlaylistUpdates_emitsUpdate() async {
+        let expectedResults = [
+            NodeEntity(name: "node-1.mp4", handle: 1, mediaType: .video),
+            NodeEntity(name: "node-2.mp4", handle: 2, mediaType: .video)
+        ]
+        let nodeUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _, _) = makeSUT(
+            filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: nodeUpdatesStream)
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = expectedResults.count
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenHasNoUserVideoPlaylistUpdates_doesNotEmitsUpdate() async {
+        let initialPlaylists = anyPlaylists()
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: initialPlaylists,
+            setsUpdatedAsyncSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.isInverted = true
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenHasUserVideoPlaylistUpdates_emitsUpdate() async {
+        let expectedResults = anyPlaylists()
+        let setsUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let initialPlaylists = anyPlaylists()
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: initialPlaylists,
+            setsUpdatedAsyncSequence: setsUpdatesStream
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = 2
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenHasNoUserVideoPlaylistContentUpdates_doesNotEmitsUpdate() async {
+        let initialPlaylists = anyPlaylists()
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: initialPlaylists,
+            setElementsUpdatedAsyncSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.isInverted = true
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenHasUserVideoPlaylistContentUpdates_emitsUpdate() async {
+        let expectedResults = anyVideoPlaylistContents()
+        let setElementUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let initialPlaylists = anyPlaylists()
+        let (sut, _, _) = makeSUT(
+            userVideoPlaylistRepositoryResult: initialPlaylists,
+            setElementsUpdatedAsyncSequence: setElementUpdatesStream
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = 1
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    func testVideoPlaylistsUpdatedAsyncSequence_whenhasAnyTypesOfPlaylistUpdates_emitsUpdate() async {
+        let expectedFavoriteVideosUpdateResults = [
+            NodeEntity(name: "node-1", handle: 1),
+            NodeEntity(name: "node-2", handle: 2)
+        ]
+        let nodeUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedFavoriteVideosUpdateResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        
+        let initialPlaylists = anyPlaylists()
+        let expectedUserVideoPlaylistResults = anyPlaylists()
+        let setsUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedUserVideoPlaylistResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        
+        let expectedVideoPlaylistContentResults = anyVideoPlaylistContents()
+        let setElementUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedVideoPlaylistContentResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        
+        let (sut, _, _) = makeSUT(
+            filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: nodeUpdatesStream),
+            userVideoPlaylistRepositoryResult: initialPlaylists,
+            setsUpdatedAsyncSequence: setsUpdatesStream,
+            setElementsUpdatedAsyncSequence: setElementUpdatesStream
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = 3
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await _ in sut.videoPlaylistsUpdatedAsyncSequence {
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
-        filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic), nodeListSearchResult: .failure(.generic)),
-        userVideoPlaylistRepositoryResult: [SetEntity] = []
+        filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic)),
+        userVideoPlaylistRepositoryResult: [SetEntity] = [],
+        setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) -> (
         sut: VideoPlaylistUseCase,
         filesSearchUseCase: MockFilesSearchUseCase,
@@ -195,13 +474,28 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         let userVideoPlaylistRepository = MockUserVideoPlaylistsRepository(
             videoPlaylistsResult: userVideoPlaylistRepositoryResult,
             addVideosToVideoPlaylistResult: .failure(GenericErrorEntity()),
-            deleteVideosResult: .failure(GenericErrorEntity())
+            deleteVideosResult: .failure(GenericErrorEntity()),
+            setsUpdatedAsyncSequence: setsUpdatedAsyncSequence,
+            setElementsUpdatedAsyncSequence: setElementsUpdatedAsyncSequence
         )
         let sut = VideoPlaylistUseCase(
             fileSearchUseCase: filesSearchUseCase,
             userVideoPlaylistsRepository: userVideoPlaylistRepository
         )
         return (sut, filesSearchUseCase, userVideoPlaylistRepository)
+    }
+    
+    private func anyPlaylists() -> [SetEntity] {
+        [
+            videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist"),
+            videoPlaylistSetEntity(handle: 2, setType: .playlist, name: "My Video Playlist 2")
+        ]
+    }
+    
+    private func anyVideoPlaylistContents() -> [SetElementEntity] {
+        [
+            SetElementEntity(handle: 1, ownerId: 1, order: 1, nodeId: 1, modificationTime: Date(), name: "name", changeTypes: .name)
+        ]
     }
     
     private func anyNode(id: HandleEntity, isFavorite: Bool = false) -> NodeEntity {

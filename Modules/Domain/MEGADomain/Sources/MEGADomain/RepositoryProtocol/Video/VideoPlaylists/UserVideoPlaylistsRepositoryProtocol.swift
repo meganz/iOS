@@ -1,4 +1,14 @@
+import MEGASwift
+
 public protocol UserVideoPlaylistsRepositoryProtocol: Sendable {
+    
+    /// Listen to video playlist set update changes.
+    /// - Returns: an AsyncSequence that emits video playlist updates.
+    var setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> { get }
+    
+    /// Listen to video playlist content  set element updates.
+    /// - Returns: An AnyAsyncSequence that emits video playlist content updates.
+    var setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> { get }
     
     /// Fetch all user video playlists
     /// - Returns: array of set entitites representing user video playlists

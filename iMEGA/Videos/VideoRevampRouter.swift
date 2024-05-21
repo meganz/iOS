@@ -23,7 +23,10 @@ struct VideoRevampRouter: VideoRevampRouting {
             nodesUpdateListenerRepo: nodesUpdateListenerRepo,
             nodeRepository: NodeRepository.newRepo
         )
-        let userVideoPlaylistsRepo = UserVideoPlaylistsRepository(sdk: sdk)
+        let userVideoPlaylistsRepo = UserVideoPlaylistsRepository(
+            sdk: sdk,
+            setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: sdk)
+        )
         
         let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection())
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)

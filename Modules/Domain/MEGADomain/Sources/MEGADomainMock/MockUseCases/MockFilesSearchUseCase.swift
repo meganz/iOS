@@ -20,17 +20,20 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, Observabl
     private let searchResult: Result<[NodeEntity]?, FileSearchResultErrorEntity>
     private var nodeListSearchResult: Result<NodeListEntity, FileSearchResultErrorEntity>
     private var onNodesUpdateResult: [NodeEntity]?
+    public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
     
     private var nodesUpdateHandlers: [([MEGADomain.NodeEntity]) -> Void] = []
     
     public init(
-        searchResult: Result<[NodeEntity]?, FileSearchResultErrorEntity>,
+        searchResult: Result<[NodeEntity]?, FileSearchResultErrorEntity> = .failure(.cancelled),
         nodeListSearchResult: Result<NodeListEntity, FileSearchResultErrorEntity> = .failure(.generic),
-        onNodesUpdateResult: [NodeEntity]? = nil
+        onNodesUpdateResult: [NodeEntity]? = nil,
+        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.searchResult = searchResult
         self.nodeListSearchResult = nodeListSearchResult
         self.onNodesUpdateResult = onNodesUpdateResult
+        self.nodeUpdates = nodeUpdates
     }
     
     public func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
@@ -82,11 +85,6 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, Observabl
     
     public func startNodesUpdateListener() {
         messages.append(.startNodesUpdateListener)
-    }
-    
-    public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
-        EmptyAsyncSequence()
-            .eraseToAnyAsyncSequence()
     }
     
     public func updateNodeListSearchResult(_ result: Result<NodeListEntity, FileSearchResultErrorEntity>) {

@@ -9,7 +9,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     func testInit_whenInit_doesNotPerformRequestToCollaborators() async {
         let (_, userVideoPlaylistRepository, photoLibraryUseCase, fileSearchRepository) = makeSUT()
         
-        let userVideoPlaylistRepositoryMessages = await userVideoPlaylistRepository.messages
+        let userVideoPlaylistRepositoryMessages = userVideoPlaylistRepository.messages
         let photoLibraryUseCaseMessages = await photoLibraryUseCase.messages
         XCTAssertTrue(userVideoPlaylistRepositoryMessages.isEmpty)
         XCTAssertTrue(photoLibraryUseCaseMessages.isEmpty)
@@ -52,7 +52,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         
         _ = try? await sut.videos(in: videoPlaylist)
         
-        let userVideoPlaylistRepositoryMessages = await userVideoPlaylistRepository.messages
+        let userVideoPlaylistRepositoryMessages = userVideoPlaylistRepository.messages
         XCTAssertEqual(userVideoPlaylistRepositoryMessages, [
             .videoPlaylistContent(id: videoPlaylist.id, includeElementsInRubbishBin: false)
         ])
