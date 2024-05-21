@@ -13,12 +13,16 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 
 @class MainTabBarController;
 @class CloudDriveQuickUploadActionRouter;
+@class CallsCoordinator;
+@class VoIPPushDelegate;
 
 @interface AppDelegate : UIResponder <PKPushRegistryDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong, nullable) MEGACallManager *megaCallManager;
 @property (nonatomic, nullable) MEGAProviderDelegate *megaProviderDelegate;
+@property (nonatomic, nullable) CallsCoordinator *callsCoordinator;
+@property (nonatomic, nullable) VoIPPushDelegate *voIPPushDelegate;
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;
 @property (nonatomic, weak, readonly) MainTabBarController *mainTBC;
 @property (nonatomic) NSNumber *openChatLater;

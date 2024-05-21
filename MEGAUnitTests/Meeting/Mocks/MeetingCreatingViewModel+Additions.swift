@@ -22,7 +22,9 @@ extension MeetingCreatingViewModel {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+        callManager: some CallManagerProtocol = MockCallManager(),
         tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         link: String? = nil,
         userHandle: UInt64 = 0,
         isTesting: Bool = true
@@ -39,7 +41,9 @@ extension MeetingCreatingViewModel {
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase,
             callUseCase: callUseCase,
+            callManager: callManager,
             tracker: tracker,
+            featureFlagProvider: featureFlagProvider,
             link: link,
             userHandle: userHandle
         )

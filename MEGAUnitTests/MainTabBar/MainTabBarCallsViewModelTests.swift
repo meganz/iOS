@@ -400,7 +400,6 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
         callManager: some CallManagerProtocol = MockCallManager(),
-        passcodeManager: some PasscodeManagerProtocol = MockPasscodeManager(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> MainTabBarCallsViewModel {
         MainTabBarCallsViewModel(
@@ -414,8 +413,6 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             handleUseCase: handleUseCase,
             callKitManager: callKitManager,
             callManager: callManager, 
-            passcodeManager: passcodeManager,
-            uuidFactory: { UUID(uuidString: "deadbeef-dead-dead-dead-deaddeafbeef")! },
             callUpdateFactory: CXCallUpdateFactory(builder: { CXCallUpdate() }),
             featureFlagProvider: featureFlagProvider
         )

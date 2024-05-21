@@ -630,7 +630,26 @@ extension AppDelegate {
 // MARK: - Legacy CallKit management: provider delegate and controller, VoIP push
 extension AppDelegate {
     @objc func initProviderDelegate() {
-        if !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            let callsCoordinator = CallsCoordinatorFactory().makeCallsCoordinator(
+                callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
+                chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
+                chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+                callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
+                scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),
+                callManager: CallKitCallManager.shared,
+                passcodeManager: PasscodeManager(),
+                uuidFactory: { UUID() },
+                callUpdateFactory: .defaultFactory,
+                featureFlagProvider: DIContainer.featureFlagProvider
+            )
+            self.callsCoordinator = callsCoordinator
+            voIPPushDelegate = VoIPPushDelegate(
+                callCoordinator: callsCoordinator,
+                voIpTokenUseCase: VoIPTokenUseCase(repo: VoIPTokenRepository.newRepo),
+                megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+            )
+        } else {
             guard megaProviderDelegate == nil else { return }
             megaCallManager = MEGACallManager()
             megaProviderDelegate = MEGAProviderDelegate(megaCallManager: megaCallManager)

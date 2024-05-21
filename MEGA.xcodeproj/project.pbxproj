@@ -1198,6 +1198,7 @@
 		83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */; };
 		83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */; };
 		83CBA3E627A81B2F005F0FD5 /* CancellableTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BA00692798703600498493 /* CancellableTransfer.swift */; };
+		83CCA0D42BF782580072FC53 /* CallsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCA0D32BF782580072FC53 /* CallsCoordinator.swift */; };
 		83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D0E56727C78D53003BEC2E /* ExportFileUseCaseHelper.swift */; };
 		83D374E82A431ED400F7B07C /* CancelMeetingAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D374E72A431ED400F7B07C /* CancelMeetingAlertDataModel.swift */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
@@ -3965,6 +3966,7 @@
 		83CB60ED2AC58F9E00042EBD /* WaitingRoomParticipantsListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantsListRouter.swift; sourceTree = "<group>"; };
 		83CB60F22AC5952500042EBD /* WaitingRoomParticipantsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantsListViewModel.swift; sourceTree = "<group>"; };
 		83CB60F52AC5953100042EBD /* WaitingRoomParticipantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantsListView.swift; sourceTree = "<group>"; };
+		83CCA0D32BF782580072FC53 /* CallsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsCoordinator.swift; sourceTree = "<group>"; };
 		83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferControllerWrapper.swift; sourceTree = "<group>"; };
 		83CCBC3D2795954E00B90EF2 /* CancellableTransferRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouter.swift; sourceTree = "<group>"; };
 		83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferViewModel.swift; sourceTree = "<group>"; };
@@ -8778,6 +8780,7 @@
 				83E3443A2BCE9F2B006A2E3D /* VoIP */,
 				837D0F382BC7E23000C629AE /* CallActionSync.swift */,
 				83E809682BBEA2C000E1B3FF /* CallManagerProtocol.swift */,
+				83CCA0D32BF782580072FC53 /* CallsCoordinator.swift */,
 				83E809792BC000EE00E1B3FF /* CallsCoordinatorProtocol.swift */,
 			);
 			path = CallsManagement;
@@ -14329,6 +14332,7 @@
 				8366518A26497B3600BC02F0 /* CallNotificationView.swift in Sources */,
 				8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */,
 				838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */,
+				83CCA0D42BF782580072FC53 /* CallsCoordinator.swift in Sources */,
 				83E8097A2BC000EE00E1B3FF /* CallsCoordinatorProtocol.swift in Sources */,
 				8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */,
 				8330A99728882E4A003E80DB /* CallsSettingsView.swift in Sources */,

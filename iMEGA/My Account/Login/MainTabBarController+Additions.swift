@@ -193,8 +193,6 @@ extension MainTabBarController {
             handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             callKitManager: CallKitManager(),
             callManager: CallKitCallManager.shared, 
-            passcodeManager: PasscodeManager(),
-            uuidFactory: { UUID() },
             callUpdateFactory: .defaultFactory,
             featureFlagProvider: DIContainer.featureFlagProvider
         )

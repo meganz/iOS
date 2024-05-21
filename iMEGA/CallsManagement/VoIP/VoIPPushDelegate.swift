@@ -1,7 +1,7 @@
 import MEGADomain
 import PushKit
 
-final class VoIPPushDelegate: NSObject, PKPushRegistryDelegate {
+@objc final class VoIPPushDelegate: NSObject, PKPushRegistryDelegate {
     private weak var callsCoordinator: (any CallsCoordinatorProtocol)?
     private let voIpTokenUseCase: any VoIPTokenUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
