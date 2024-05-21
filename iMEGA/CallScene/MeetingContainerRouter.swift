@@ -405,8 +405,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     private func dismissCallUI(animated: Bool, completion: (() -> Void)?) {
-        floatingPanelRouter?.dismiss(animated: animated)
-        baseViewController?.dismiss(animated: animated, completion: completion)
+        let shouldAnimateDismissal = UIApplication.shared.isBackgroundState ? false : animated
+        floatingPanelRouter?.dismiss(animated: shouldAnimateDismissal)
+        baseViewController?.dismiss(animated: shouldAnimateDismissal, completion: completion)
         
         UIApplication.shared.isIdleTimerDisabled = false
         isCallUIVisible = false
