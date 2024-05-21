@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 class AudioWaveView: UIView {
@@ -10,6 +11,9 @@ class AudioWaveView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         proportionalDefaultMultiplier = proportionalHeightConstraint?.multiplier ?? .zero
+        if UIColor.isDesignTokenEnabled() {
+            representationView.backgroundColor = TokenColors.Icon.accent
+        }
     }
 
     /// The value of level can be between 1 and 100

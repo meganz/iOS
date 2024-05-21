@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -122,9 +123,15 @@ class RichPreviewDialogView: UIView {
     }
     
     private func updateAppearance() {
-        rootFlexContainer.backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
-        titleLabel.textColor = UIColor.label
-        descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = TokenColors.Background.surface2
+            titleLabel.textColor = TokenColors.Text.primary
+            descriptionLabel.textColor = TokenColors.Text.primary
+        } else {
+            rootFlexContainer.backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
+            titleLabel.textColor = UIColor.label
+            descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
+        }
     }
     
     override func layoutSubviews() {

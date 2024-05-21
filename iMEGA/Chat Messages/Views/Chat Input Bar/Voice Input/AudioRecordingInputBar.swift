@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -45,6 +46,9 @@ class AudioRecordingInputBar: UIView {
         suggestionLabel.text = Strings.Localizable.dragLeftToCancelReleaseToSend
         audioWavesView = AudioWavesView.instanceFromNib
         audioWavesholderView.wrap(audioWavesView)
+        if UIColor.isDesignTokenEnabled() {
+            trashView.imageView.image = UIImage(resource: .rubbishBin).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
+        }
         updateAppearance()
 
         audioRecorder.updateHandler = {[weak self] timeString, level in
@@ -95,9 +99,14 @@ class AudioRecordingInputBar: UIView {
         locked = true
         let width = voiceView.bounds.width - trashView.bounds.width
         voiceView.finalRatio = width / voiceView.bounds.width
-        voiceView.selectionView.backgroundColor = MEGAAppColor.Green._009476.uiColor
         voiceView.imageView.image = UIImage(resource: .sendChatDisabled)
-        voiceView.imageView.renderImage(withColor: MEGAAppColor.White._FFFFFF.uiColor)
+        if UIColor.isDesignTokenEnabled() {
+            voiceView.selectionView.backgroundColor = TokenColors.Button.primary
+            voiceView.imageView.renderImage(withColor: TokenColors.Icon.inverseAccent)
+        } else {
+            voiceView.selectionView.backgroundColor = UIColor.green009476
+            voiceView.imageView.renderImage(withColor: UIColor.whiteFFFFFF)
+        }
         let audioWaveTrailing = self.trashView.frame.width
             + (self.trashView.frame.origin.x * CGFloat(2.0))
         audioWavesholderViewTrailingConstraint.constant = audioWaveTrailing
@@ -163,7 +172,12 @@ class AudioRecordingInputBar: UIView {
     }
     
     private func updateAppearance() {
-        suggestionLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        audioWavesBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            suggestionLabel.textColor = TokenColors.Text.secondary
+            audioWavesBackgroundView.backgroundColor = TokenColors.Background.surface1
+        } else {
+            suggestionLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
+            audioWavesBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        }
     }
 }

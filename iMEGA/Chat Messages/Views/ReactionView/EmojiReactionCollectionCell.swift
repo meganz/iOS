@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 class EmojiReactionCollectionCell: UICollectionViewCell {
@@ -37,7 +38,11 @@ class EmojiReactionCollectionCell: UICollectionViewCell {
     }
         
     private func updateAppearance() {
-        let color = isSelected ?  UIColor.mnz_emojiLabelSelectedState(traitCollection) : UIColor.label
+        let color = if UIColor.isDesignTokenEnabled() {
+            isSelected ? TokenColors.Button.secondary : UIColor.label
+        } else {
+            isSelected ? UIColor.mnz_emojiLabelSelectedState(traitCollection) : UIColor.label
+        }
         numberOfUsersReactedLabel.textColor = color
         selectedMarkerView.backgroundColor = color
     }

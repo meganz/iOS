@@ -33,6 +33,10 @@ class ChatViewAttachmentCellViewModel {
         }
     }
     
+    var isFromCurrentSender: Bool {
+        UInt64(chatMessage.sender.senderId) == MEGAChatSdk.shared.myUserHandle
+    }
+
     // MARK: - Intializers.
     
     init(chatMessage: ChatMessage) {

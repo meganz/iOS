@@ -279,7 +279,8 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
     } else if (self.type == MEGAChatMessageTypeVoiceClip) {
         text = @"MEGAChatMessageTypeVoiceClip";
     } else {
-        UIColor *textColor = self.userHandle == myHandle ? UIColor.mnz_whiteFFFFFF : UIColor.labelColor;
+        BOOL IsFromCurrentSender = self.userHandle == myHandle;
+        UIColor *textColor = [self normalTextColorWithIsFromCurrentSender: IsFromCurrentSender];
         UIFont *textFont = textFontRegular;
         if (self.content.mnz_isPureEmojiString) {
             textFont = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[self.content mnz_emojiCount]];

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -292,10 +293,17 @@ class MessageInputBar: UIView {
     }
     
     private func updateAppearance() {
-        micButton.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        messageTextViewCoverView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        addButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        expandedTextViewCoverView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            micButton.backgroundColor = TokenColors.Background.surface1
+            messageTextViewCoverView.backgroundColor = TokenColors.Background.surface1
+            addButton.tintColor = TokenColors.Icon.primary
+            expandedTextViewCoverView.backgroundColor = TokenColors.Background.page
+        } else {
+            micButton.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+            messageTextViewCoverView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+            addButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+            expandedTextViewCoverView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        }
         messageTextView.keyboardAppearance = traitCollection.userInterfaceStyle == .dark ? .dark : .light
     }
     
