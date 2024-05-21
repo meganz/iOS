@@ -2,6 +2,7 @@ import ChatRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 
@@ -58,6 +59,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
+            featureFlagProvider: DIContainer.featureFlagProvider,
             chatLink: chatLink,
             requestUserHandle: requestUserHandle
         )

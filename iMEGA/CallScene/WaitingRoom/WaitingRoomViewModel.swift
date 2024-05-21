@@ -36,6 +36,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let chatLink: String?
     private let requestUserHandle: HandleEntity
     
@@ -108,6 +109,7 @@ final class WaitingRoomViewModel: ObservableObject {
          audioSessionUseCase: some AudioSessionUseCaseProtocol,
          permissionHandler: some DevicePermissionsHandling,
          tracker: some AnalyticsTracking = DIContainer.tracker,
+         featureFlagProvider: some FeatureFlagProviderProtocol,
          chatLink: String? = nil,
          requestUserHandle: HandleEntity = 0) {
         self.scheduledMeeting = scheduledMeeting
@@ -128,6 +130,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.audioSessionUseCase = audioSessionUseCase
         self.permissionHandler = permissionHandler
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
         self.chatLink = chatLink
         self.requestUserHandle = requestUserHandle
         initializeState()
@@ -197,7 +200,7 @@ final class WaitingRoomViewModel: ObservableObject {
     func muteLocalMicrophone(mute: Bool) {
         checkForAudioPermission { [weak self] in
             guard let self, let call else { return }
-            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
                 guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
                 callManager.muteCall(in: chatRoom, muted: mute)
             } else {
@@ -446,19 +449,26 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func answerCall() {
-        Task { @MainActor in
-            do {
-                _ = try await callUseCase.answerCall(for: chatId, enableVideo: isVideoEnabled, enableAudio: true)
-                viewState = .waitForHostToLetIn
-                muteLocalMicrophone(mute: isMicrophoneMuted)
-            } catch {
-                MEGALogDebug("Cannot answer call")
+        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
+            let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+            callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: isVideoEnabled, notRinging: false, isJoiningActiveCall: true)
+            viewState = .waitForHostToLetIn
+        } else {
+            Task { @MainActor in
+                do {
+                    _ = try await callUseCase.answerCall(for: chatId, enableVideo: isVideoEnabled, enableAudio: true)
+                    viewState = .waitForHostToLetIn
+                    muteLocalMicrophone(mute: isMicrophoneMuted)
+                } catch {
+                    MEGALogDebug("Cannot answer call")
+                }
             }
         }
     }
     
     private func dismissCall() {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
             callManager.endCall(in: chatRoom, endForAll: false)
         } else {

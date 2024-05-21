@@ -47,7 +47,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
             action.fail()
             return
         }
-        Task {
+        Task { @MainActor in
             let success = await callsCoordinator.startCall(callActionSync)
             manageActionSuccess(action, success: success)
         }
@@ -60,7 +60,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
             action.fail()
             return
         }
-        Task {
+        Task { @MainActor in
             let success = await callsCoordinator.answerCall(callActionSync)
             manageActionSuccess(action, success: success)
         }
@@ -116,7 +116,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
     }
     
     // MARK: - Private
-    private func manageActionSuccess(_ action: CXAction, success: Bool) {
+    @MainActor private func manageActionSuccess(_ action: CXAction, success: Bool) {
         if success {
             action.fulfill()
             callsCoordinator?.disablePassCodeIfNeeded()

@@ -31,6 +31,7 @@ extension WaitingRoomViewModel {
                 videoAuthorized: true
             ),
         tracker: some AnalyticsTracking = MockTracker(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         chatLink: String? = nil,
         requestUserHandle: HandleEntity = 0,
         isTesting: Bool = true
@@ -54,6 +55,7 @@ extension WaitingRoomViewModel {
             audioSessionUseCase: audioSessionUseCase,
             permissionHandler: permissionHandler,
             tracker: tracker,
+            featureFlagProvider: featureFlagProvider,
             chatLink: chatLink,
             requestUserHandle: requestUserHandle
         )

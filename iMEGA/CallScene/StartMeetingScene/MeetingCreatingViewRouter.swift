@@ -7,7 +7,7 @@ import MEGARepo
 import MEGASDKRepo
 
 protocol MeetingCreatingViewRouting: Routing {
-    func dismiss()
+    func dismiss(completion: (() -> Void)?)
     func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool)
     func showVideoPermissionError()
     func showAudioPermissionError()
@@ -51,6 +51,8 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            callManager: CallKitCallManager.shared,
+            featureFlagProvider: DIContainer.featureFlagProvider, 
             link: link,
             userHandle: userHandle)
         let vc = MeetingCreatingViewController(viewModel: vm)
@@ -69,8 +71,8 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     }
     
     // MARK: - UI Actions
-    func dismiss() {
-        baseViewController?.dismiss(animated: true, completion: nil)
+    func dismiss(completion: (() -> Void)?) {
+        baseViewController?.dismiss(animated: true, completion: completion)
     }
 
     func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {

@@ -58,7 +58,10 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
+    private let callManager: any CallManagerProtocol
+
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private var isVideoEnabled = false
     private var isSpeakerEnabled = true
@@ -93,7 +96,9 @@ final class MeetingCreatingViewModel: ViewModelType {
         accountUseCase: some AccountUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
+        callManager: some CallManagerProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         link: String?,
         userHandle: UInt64
     ) {
@@ -108,7 +113,9 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.accountUseCase = accountUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.callUseCase = callUseCase
+        self.callManager = callManager
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
         self.link = link
         self.userHandle = userHandle
         
@@ -274,14 +281,18 @@ final class MeetingCreatingViewModel: ViewModelType {
             guard let self else { return }
             switch $0 {
             case .success(let chatRoom):
-                Task { @MainActor in
-                    do {
-                        let call = try await self.callUseCase.answerCall(for: chatId, enableVideo: self.isVideoEnabled, enableAudio: self.isMicrophoneEnabled)
-                        self.router.dismiss()
-                        self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isSpeakerEnabled: self.isSpeakerEnabled)
-                    } catch {
-                        MEGALogDebug("Cannot answer call")
-                        self.dismiss()
+                if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                    startCall(inChatRoom: chatRoom)
+                } else {
+                    Task { @MainActor in
+                        do {
+                            let call = try await self.callUseCase.answerCall(for: chatId, enableVideo: self.isVideoEnabled, enableAudio: self.isMicrophoneEnabled)
+                            self.router.dismiss(completion: nil)
+                            self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isSpeakerEnabled: self.isSpeakerEnabled)
+                        } catch {
+                            MEGALogDebug("Cannot answer call")
+                            self.dismiss()
+                        }
                     }
                 }
             case .failure:
@@ -295,7 +306,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             dispatch(.updateMeetingName(defaultMeetingName))
         }
         
-        let startCall = StartCallEntity(
+        let startCallData = StartCallEntity(
             meetingName: meetingName,
             enableVideo: isVideoEnabled,
             enableAudio: isMicrophoneEnabled,
@@ -305,23 +316,35 @@ final class MeetingCreatingViewModel: ViewModelType {
         
         Task { @MainActor in
             do {
-                let chatRoom = try await meetingUseCase.createMeeting(startCall)
-                let call = try await callUseCase.startCall(
-                    for: chatRoom.chatId,
-                    enableVideo: isVideoEnabled,
-                    enableAudio: isMicrophoneEnabled, 
-                    notRinging: false
-                )
-                meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
-                dismiss()
-                router.goToMeetingRoom(
-                    chatRoom: chatRoom,
-                    call: call,
-                    isSpeakerEnabled: isSpeakerEnabled
-                )
+                let chatRoom = try await meetingUseCase.createMeeting(startCallData)
+                if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+                    startCall(inChatRoom: chatRoom)
+                } else {
+                    let call = try await callUseCase.startCall(
+                        for: chatRoom.chatId,
+                        enableVideo: isVideoEnabled,
+                        enableAudio: isMicrophoneEnabled,
+                        notRinging: false
+                    )
+                    meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
+                    dismiss()
+                    router.goToMeetingRoom(
+                        chatRoom: chatRoom,
+                        call: call,
+                        isSpeakerEnabled: isSpeakerEnabled
+                    )
+                }
             } catch {
                 self.dismiss()
             }
+        }
+    }
+    
+    private func startCall(inChatRoom chatRoom: ChatRoomEntity) {
+        let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+        dismiss { [weak self] in
+            guard let self else { return }
+            callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: isVideoEnabled, notRinging: false, isJoiningActiveCall: true)
         }
     }
         
@@ -367,9 +390,9 @@ final class MeetingCreatingViewModel: ViewModelType {
         }
     }
     
-    private func dismiss() {
+    private func dismiss(completion: (() -> Void)? = nil) {
         disableLocalVideoIfNeeded()
-        router.dismiss()
+        router.dismiss(completion: completion)
     }
     
     private func selectFrontCameraIfNeeded() {
