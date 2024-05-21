@@ -1,6 +1,7 @@
+import MEGASwift
 import MEGADomain
 
-public actor MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol {
+public class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol, @unchecked Sendable {
     
     public enum Message: Sendable, Equatable {
         case userVideoPlaylists
@@ -12,6 +13,8 @@ public actor MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProto
     
     public private(set) var messages = [Message]()
     
+    public let setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]>
+    public let setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]>
     private let videoPlaylistsResult: [SetEntity]
     private let addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error>
     private let deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error>
@@ -23,13 +26,17 @@ public actor MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProto
         addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
         deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
         deleteVideoPlaylistResult: Result<VideoPlaylistEntity, Error> = .failure(GenericErrorEntity()),
-        videoPlaylistContentResult: [SetElementEntity] = []
+        videoPlaylistContentResult: [SetElementEntity] = [],
+        setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.videoPlaylistsResult = videoPlaylistsResult
         self.addVideosToVideoPlaylistResult = addVideosToVideoPlaylistResult
         self.deleteVideosResult = deleteVideosResult
         self.deleteVideoPlaylistResult = deleteVideoPlaylistResult
         self.videoPlaylistContentResult = videoPlaylistContentResult
+        self.setsUpdatedAsyncSequence = setsUpdatedAsyncSequence
+        self.setElementsUpdatedAsyncSequence = setElementsUpdatedAsyncSequence
     }
     
     public func videoPlaylists() async -> [SetEntity] {

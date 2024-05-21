@@ -3,6 +3,11 @@ import MEGASwift
 
 public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
+    public var videoPlaylistsUpdatedAsyncSequence: AnyAsyncSequence<Void> {
+        EmptyAsyncSequence()
+            .eraseToAnyAsyncSequence()
+    }
+    
     @Atomic public var messages = [Message]()
     
     public enum Message: Equatable {

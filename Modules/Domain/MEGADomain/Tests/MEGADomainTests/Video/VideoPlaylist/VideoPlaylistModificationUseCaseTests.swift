@@ -9,7 +9,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     func testInit_whenCalled_doesNotExecuteUseCase() async {
         let (_, userVideoPlaylistsRepository) = makeSUT()
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertTrue(messages.isEmpty)
     }
     
@@ -21,7 +21,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         
         _ = try? await sut.addVideoToPlaylist(by: 1, nodes: nodesToAdd)
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages, [
             .addVideosToVideoPlaylist(id: 1, nodes: nodesToAdd)
         ])
@@ -34,7 +34,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         _ = try? await sut.addVideoToPlaylist(by: 1, nodes: nodesToAdd)
         _ = try? await sut.addVideoToPlaylist(by: 1, nodes: nodesToAdd)
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages, [
             .addVideosToVideoPlaylist(id: 1, nodes: nodesToAdd),
             .addVideosToVideoPlaylist(id: 1, nodes: nodesToAdd)
@@ -75,7 +75,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         
         _ = try await sut.deleteVideos(in: videoPlaylist.id, videos: [])
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertTrue(messages.isEmpty, "Expect not to execute repository")
     }
     
@@ -96,7 +96,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         
         _ = try await sut.deleteVideos(in: videoPlaylist.id, videos: videosToRemove)
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertTrue(messages.isEmpty, "Expect not to execute repository")
     }
     
@@ -125,7 +125,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         
         _ = try await sut.deleteVideos(in: videoPlaylist.id, videos: videosToRemove)
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages, [ .deleteVideoPlaylistElements(videoPlaylistId: videoPlaylist.id, elementIds: videosToRemove.map { $0.id }) ])
     }
     
@@ -154,7 +154,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         
         _ = await sut.delete(videoPlaylists: [])
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertTrue(messages.isEmpty, "Expect not to call any repository functions")
     }
     
@@ -164,7 +164,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         
         _ = await sut.delete(videoPlaylists: [videoPlaylistToDelete])
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages, [
             .deleteVideoPlaylist(id: videoPlaylistToDelete.id)
         ])
@@ -177,7 +177,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         
         _ = await sut.delete(videoPlaylists: videoPlaylistsToDelete)
         
-        let messages = await userVideoPlaylistsRepository.messages
+        let messages = userVideoPlaylistsRepository.messages
         XCTAssertEqual(messages.count, videoPlaylistsToDelete.count)
         XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 1)))
         XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 2)))

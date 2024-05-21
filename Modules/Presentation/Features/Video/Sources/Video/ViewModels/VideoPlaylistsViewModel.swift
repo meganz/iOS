@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -41,6 +42,21 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     @MainActor
     func onViewAppeared() async {
+        await loadVideoPlaylists()
+        await monitorVideoPlaylists()
+    }
+    
+    private func monitorVideoPlaylists() async {
+        for await _ in videoPlaylistsUseCase.videoPlaylistsUpdatedAsyncSequence {
+            guard !Task.isCancelled else {
+                break
+            }
+            await loadVideoPlaylists()
+        }
+    }
+    
+    @MainActor
+    private func loadVideoPlaylists() async {
         async let systemVideoPlaylists = loadSystemVideoPlaylists()
         async let userVideoPlaylists = videoPlaylistsUseCase.userVideoPlaylists()
         

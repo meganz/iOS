@@ -1,6 +1,7 @@
 import MEGADomain
 @testable import MEGASDKRepo
 import MEGASDKRepoMock
+import MEGASwift
 import XCTest
 
 final class UserVideoPlaylistsRepositoryTests: XCTestCase {
@@ -131,7 +132,10 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         sdk: MockSdk
     ) {
         let sdk = MockSdk(megaSets: megaSets, megaSetElements: megaSetElements)
-        let sut = UserVideoPlaylistsRepository(sdk: sdk)
+        let sut = UserVideoPlaylistsRepository(
+            sdk: sdk,
+            setAndElementsUpdatesProvider: MockSetAndElementUpdatesProvider()
+        )
         return (sut, sdk)
     }
     
