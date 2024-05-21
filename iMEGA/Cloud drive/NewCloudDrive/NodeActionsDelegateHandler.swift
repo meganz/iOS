@@ -24,6 +24,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
     var shareFolder: (NodeEntity) -> Void
     var editTextFile: (NodeEntity) -> Void
     var disputeTakedown: (NodeEntity) -> Void
+    var hide: ([NodeEntity]) -> Void
+    var unhide: ([NodeEntity]) -> Void
     
     // This closure could be used to implement finishing up and disabling edit mode
     // when each node action was finished, to be implemented in [SAO-190]
@@ -52,6 +54,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         shareFolder: @escaping (NodeEntity) -> Void,
         editTextFile: @escaping (NodeEntity) -> Void,
         disputeTakedown: @escaping (NodeEntity) -> Void,
+        hide: @escaping ([NodeEntity]) -> Void,
+        unhide: @escaping ([NodeEntity]) -> Void,
         toggleEditMode: @escaping (_ editModeActive: Bool) -> Void
     ) {
         self.download = download
@@ -77,6 +81,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         self.editTextFile = editTextFile
         self.disputeTakedown = disputeTakedown
         self.toggleEditMode = toggleEditMode
+        self.hide = hide
+        self.unhide = unhide
     }
     
     func nodeAction(
@@ -109,6 +115,10 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
             removeLink(nodeEntities)
         case .saveToPhotos:
             saveToPhotos(nodeEntities)
+        case .hide:
+            hide(nodeEntities)
+        case .unhide:
+            unhide(nodeEntities)
         default:
             break
         }
@@ -170,7 +180,11 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
             editTextFile(nodeEntity)
         case .disputeTakedown:
             disputeTakedown(nodeEntity)
-        default: 
+        case .hide:
+            hide([nodeEntity])
+        case .unhide:
+            unhide([nodeEntity])
+        default:
             break
         }
         

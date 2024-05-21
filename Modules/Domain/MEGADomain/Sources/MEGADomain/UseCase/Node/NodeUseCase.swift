@@ -26,6 +26,8 @@ public protocol NodeUseCaseProtocol {
     ///  - Returns: true if the node is marked as sensitive or a descendent of such node
     ///  - Throws: `NodeError.nodeNotFound` if the node cant be found
     func isInheritingSensitivity(node: NodeEntity) async throws -> Bool
+    /// This could possibly block the calling thread, make sure not to call it on main thread.
+    func isInheritingSensitivity(node: NodeEntity) throws -> Bool
     /// On a folder sensitivity change it will recalculate the inherited sensitivity for the node.
     /// - Parameter node: The node check for inherited sensitivity changes
     /// - Returns: An `AnyAsyncSequence<Bool>` indicating inherited sensitivity changes
@@ -129,6 +131,10 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
         try await nodeRepository.isInheritingSensitivity(node: node)
+    }
+    
+    public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
+        try nodeRepository.isInheritingSensitivity(node: node)
     }
     
     public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {

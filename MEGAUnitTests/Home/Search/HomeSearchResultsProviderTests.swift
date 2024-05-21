@@ -126,6 +126,7 @@ class HomeSearchProviderTests: XCTestCase {
                 sdk: sdk,
                 nodeActions: NodeActions.mock(),
                 hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
+                isDesignTokenEnabled: true,
                 onSearchResultsUpdated: onSearchResultsUpdated
             )
             
@@ -795,7 +796,9 @@ extension NodeActions {
             disputeTakedown: { _ in },
             moveToRubbishBin: { _ in },
             restoreFromRubbishBin: { _ in },
-            removeFromRubbishBin: { _ in }
+            removeFromRubbishBin: { _ in },
+            hide: { _ in },
+            unhide: { _ in }
         )
     }
 }

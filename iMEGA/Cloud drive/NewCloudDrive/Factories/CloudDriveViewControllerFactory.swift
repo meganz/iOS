@@ -132,8 +132,10 @@ struct CloudDriveViewControllerFactory {
         
         let nodeAssetsManager = NodeAssetsManager.shared
         
+        let featureFlagProvider = DIContainer.featureFlagProvider
+        
         return CloudDriveViewControllerFactory(
-            featureFlagProvider: DIContainer.featureFlagProvider,
+            featureFlagProvider: featureFlagProvider,
             abTestProvider: DIContainer.abTestProvider,
             navigationController: navController,
             viewModeStore: ViewModeStore(
@@ -158,7 +160,9 @@ struct CloudDriveViewControllerFactory {
                 nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
                 nodeUseCase: nodeUseCase,
                 mediaUseCase: homeFactory.makeMediaUseCase(), 
-                nodeActions: nodeActions
+                nodeActions: nodeActions,
+                hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+                isDesignTokenEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
             ),
             nodeUseCase: nodeUseCase,
             preferences: PreferenceUseCase.default, 

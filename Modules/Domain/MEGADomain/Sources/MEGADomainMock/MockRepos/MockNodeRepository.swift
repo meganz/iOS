@@ -126,4 +126,14 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
             return $0.resume(with: result)
         }
     }
+    
+    public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
+        let result = isInheritingSensitivityResults[node] ?? isInheritingSensitivityResult
+        return switch result {
+        case .success(let isSensitive):
+           isSensitive
+        case .failure(let error):
+            throw error
+        }
+    }
 }

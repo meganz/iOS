@@ -82,6 +82,10 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
         false
     }
     
+    func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
+        false
+    }
+    
     func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
         EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
     }

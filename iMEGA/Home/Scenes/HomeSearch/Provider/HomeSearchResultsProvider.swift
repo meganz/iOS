@@ -59,6 +59,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         sdk: MEGASdk,
         nodeActions: NodeActions,
         hiddenNodesFeatureEnabled: Bool,
+        isDesignTokenEnabled: Bool,
         onSearchResultsUpdated: @escaping (SearchResultUpdateSignal) -> Void
     ) {
         self.parentNodeProvider = parentNodeProvider
@@ -80,7 +81,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             nodeDetailUseCase: nodeDetailUseCase,
             nodeUseCase: nodeUseCase,
             mediaUseCase: mediaUseCase, 
-            nodeActions: nodeActions
+            nodeActions: nodeActions,
+            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
+            isDesignTokenEnabled: isDesignTokenEnabled
         )
 
         self.onSearchResultsUpdated = onSearchResultsUpdated
