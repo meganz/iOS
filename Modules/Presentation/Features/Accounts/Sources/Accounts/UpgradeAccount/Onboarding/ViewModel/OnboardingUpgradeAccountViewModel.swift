@@ -18,6 +18,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private var subscriptions: Set<AnyCancellable> = []
     private let router: OnboardingUpgradeAccountRouting
     private var proIIIPlanCardShownEventTracked: Bool = false
+    let isAdsEnabled: Bool
     
     @Published private(set) var shouldDismiss: Bool = false
     @Published private(set) var lowestProPlan: AccountPlanEntity = AccountPlanEntity()
@@ -47,12 +48,14 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         tracker: some AnalyticsTracking,
+        isAdsEnabled: Bool,
         viewProPlanAction: @escaping () -> Void,
         router: OnboardingUpgradeAccountRouting
     ) {
         self.purchaseUseCase = purchaseUseCase
         self.accountUseCase = accountUseCase
         self.tracker = tracker
+        self.isAdsEnabled = isAdsEnabled
         self.viewProPlanAction = viewProPlanAction
         self.router = router
         

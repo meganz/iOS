@@ -7,7 +7,7 @@ import XCTest
 final class OnboardingUpgradeAccountRouterTests: XCTestCase {
 
     func testBuild_variantA_shouldBeOnboardingWithViewProPlansView() {
-        let sut = makeSUT(abTestVariant: .variantA)
+        let sut = makeSUT(onboardingVariant: .variantA)
         
         let viewController = sut.build()
         
@@ -16,7 +16,7 @@ final class OnboardingUpgradeAccountRouterTests: XCTestCase {
     }
     
     func testBuild_variantB_shouldBeOnboardingWithViewProPlansView() {
-        let sut = makeSUT(abTestVariant: .variantB)
+        let sut = makeSUT(onboardingVariant: .variantB)
         
         let viewController = sut.build()
         
@@ -25,13 +25,14 @@ final class OnboardingUpgradeAccountRouterTests: XCTestCase {
     }
     
     func testBuild_baseline_shouldReturnNil() {
-        let sut = makeSUT(abTestVariant: .baseline)
+        let sut = makeSUT(onboardingVariant: .baseline)
         
         XCTAssertNil(sut.build())
     }
 
     func makeSUT(
-        abTestVariant: ABTestVariant,
+        onboardingVariant: ABTestVariant,
+        isAdsEnabled: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> OnboardingUpgradeAccountRouter {
@@ -52,8 +53,9 @@ final class OnboardingUpgradeAccountRouterTests: XCTestCase {
         let sut = OnboardingUpgradeAccountRouter(
             purchaseUseCase: MockAccountPlanPurchaseUseCase(),
             accountUseCase: MockAccountUseCase(),
-            onboardingABvariant: abTestVariant,
+            onboardingABvariant: onboardingVariant,
             accountsConfig: AccountsConfig(onboardingViewAssets: accountsConfig),
+            isAdsEnabled: isAdsEnabled, 
             viewProPlanAction: {}
         )
         

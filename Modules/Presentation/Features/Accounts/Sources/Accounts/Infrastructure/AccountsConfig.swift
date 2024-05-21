@@ -16,8 +16,7 @@ public struct AccountsConfig {
         public let storageImage: UIImage?
         public let fileSharingImage: UIImage?
         public let backupImage: UIImage?
-        public let vpnImage: UIImage?
-        public let meetingsImage: UIImage?
+        public let megaImage: UIImage?
         public let onboardingHeaderImage: UIImage?
         
         public let primaryTextColor: Color
@@ -36,8 +35,7 @@ public struct AccountsConfig {
             storageImage: UIImage? = nil,
             fileSharingImage: UIImage? = nil,
             backupImage: UIImage? = nil,
-            vpnImage: UIImage? = nil,
-            meetingsImage: UIImage? = nil,
+            megaImage: UIImage? = nil,
             onboardingHeaderImage: UIImage? = nil,
             primaryTextColor: Color,
             primaryGrayTextColor: Color,
@@ -54,8 +52,7 @@ public struct AccountsConfig {
             self.storageImage = storageImage
             self.fileSharingImage = fileSharingImage
             self.backupImage = backupImage
-            self.vpnImage = vpnImage
-            self.meetingsImage = meetingsImage
+            self.megaImage = megaImage
             self.onboardingHeaderImage = onboardingHeaderImage
             self.primaryGrayTextColor = primaryGrayTextColor
             self.primaryTextColor = primaryTextColor

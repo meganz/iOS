@@ -17,6 +17,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
     private let tracker: any AnalyticsTracking
     private let onboardingABvariant: ABTestVariant
     private let accountsConfig: AccountsConfig
+    private let isAdsEnabled: Bool
     private let viewProPlanAction: () -> Void
     
     public init(
@@ -26,6 +27,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
         onboardingABvariant: ABTestVariant,
         presenter: UIViewController? = nil,
         accountsConfig: AccountsConfig,
+        isAdsEnabled: Bool,
         viewProPlanAction: @escaping () -> Void
     ) {
         self.presenter = presenter
@@ -34,6 +36,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
         self.tracker = tracker
         self.onboardingABvariant = onboardingABvariant
         self.accountsConfig = accountsConfig
+        self.isAdsEnabled = isAdsEnabled
         self.viewProPlanAction = viewProPlanAction
     }
     
@@ -70,8 +73,9 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
     private func onboardingViewModel() -> OnboardingUpgradeAccountViewModel {
         OnboardingUpgradeAccountViewModel(
             purchaseUseCase: purchaseUseCase,
-            accountUseCase: accountUseCase,
-            tracker: tracker,
+            accountUseCase: accountUseCase, 
+            tracker: tracker, 
+            isAdsEnabled: isAdsEnabled,
             viewProPlanAction: viewProPlanAction,
             router: self
         )
