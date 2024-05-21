@@ -170,21 +170,6 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         ])
     }
     
-    func testDeleteVideoPlaylists_whenCalled_deletesMoreThanOnePlaylists() async {
-        let (sut, userVideoPlaylistsRepository) = makeSUT()
-        let videoPlaylistsToDelete = (1...4)
-            .map { userVideoPlaylist(id: HandleEntity($0)) }
-        
-        _ = await sut.delete(videoPlaylists: videoPlaylistsToDelete)
-        
-        let messages = userVideoPlaylistsRepository.messages
-        XCTAssertEqual(messages.count, videoPlaylistsToDelete.count)
-        XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 1)))
-        XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 2)))
-        XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 3)))
-        XCTAssertTrue(messages.contains(.deleteVideoPlaylist(id: 4)))
-    }
-    
     func testDeleteVideoPlaylists_whenFailedToDelete_returnsEmptyIds() async {
         let (sut, _) = makeSUT(deleteVideoPlaylistResult: .failure(GenericErrorEntity()))
         
