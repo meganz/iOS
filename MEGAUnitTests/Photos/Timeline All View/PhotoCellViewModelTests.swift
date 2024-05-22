@@ -72,7 +72,11 @@ final class PhotoCellViewModelTests: XCTestCase {
                                                  loadImage: loadImageAsyncSequence)
         )
         
-        let task = Task { await sut.startLoadingThumbnail() }
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.startLoadingThumbnail()
+            cancelledExp.fulfill()
+        }
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
         
@@ -91,6 +95,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertTrue(sut.thumbnailContainer.isEqual(previewContainer))
         
         task.cancel()
+        wait(for: [cancelledExp], timeout: 0.5)
     }
     
     func testLoadThumbnail_zoomOut_noLoadLocalThumbnailAndRemotePreview() {
@@ -106,8 +111,12 @@ final class PhotoCellViewModelTests: XCTestCase {
                                                  loadImage: loadImageAsyncSequence)
         )
         
-        let task = Task { await sut.startLoadingThumbnail() }
-
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.startLoadingThumbnail()
+            cancelledExp.fulfill()
+        }
+        
         let exp = expectation(description: "thumbnail should not be changed")
         exp.isInverted = true
         
@@ -121,10 +130,11 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.out)
         
         wait(for: [exp], timeout: 1.0)
-
+         
         XCTAssertEqual(sut.currentZoomScaleFactor, .five)
         
         task.cancel()
+        wait(for: [cancelledExp], timeout: 0.5)
     }
     
     func testLoadThumbnail_hasCachedThumbnail_showThumbnailUponInit() async {
@@ -159,7 +169,6 @@ final class PhotoCellViewModelTests: XCTestCase {
                 exp.fulfill()
             }
             .store(in: &subscriptions)
-                
         await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(systemName: "heart"), type: .thumbnail)))
     }
@@ -199,9 +208,12 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailLoader: MockThumbnailLoader(initialImage: placeholder,
                                                  loadImage: loadImageAsyncSequence)
         )
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.startLoadingThumbnail()
+            cancelledExp.fulfill()
+        }
         
-        let task = Task { await sut.startLoadingThumbnail() }
-
         XCTAssertTrue(sut.thumbnailContainer.isEqual(placeholder))
         
         let exp = expectation(description: "thumbnail is changed")
@@ -217,6 +229,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
         task.cancel()
+        wait(for: [cancelledExp], timeout: 0.5)
     }
     
     func testLoadThumbnail_noCachedThumbnailAndZoomInToSingleColumn_loadBothThumbnailAndPreview() {
@@ -232,9 +245,13 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailLoader: MockThumbnailLoader(initialImage: placeholder,
                                                  loadImage: stream.eraseToAnyAsyncSequence())
         )
-
-        let task = Task { await sut.startLoadingThumbnail() }
-
+        
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.startLoadingThumbnail()
+            cancelledExp.fulfill()
+        }
+        
         XCTAssertTrue(sut.thumbnailContainer.isEqual(placeholder))
         
         let exp = expectation(description: "thumbnail is changed")
@@ -263,9 +280,10 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertTrue(sut.thumbnailContainer.isEqual(previewContainer))
         XCTAssertTrue(expectedContainers.isEmpty)
         task.cancel()
+        wait(for: [cancelledExp], timeout: 0.5)
     }
     
-    func testLoadThumbnail_hasCachedThumbnailAndNonSingleColumnAndSameRemoteThumbnail_noLoading() async {
+    func testLoadThumbnail_hasCachedThumbnailAndNonSingleColumnAndSameRemoteThumbnail_noLoading() async throws {
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let loadImageAsyncSequence = SingleItemAsyncSequence<any ImageContaining>(item: thumbnailContainer)
             .eraseToAnyAsyncSequence()
@@ -306,8 +324,12 @@ final class PhotoCellViewModelTests: XCTestCase {
                                                  loadImage: loadImageAsyncSequence)
         )
         
-        let task = Task { await sut.startLoadingThumbnail() }
-
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.startLoadingThumbnail()
+            cancelledExp.fulfill()
+        }
+        
         XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
         
         let exp = expectation(description: "thumbnail is changed")
@@ -321,10 +343,11 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         allViewModel.zoomState.zoom(.in)
         wait(for: [exp], timeout: 1.0)
-
+        
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(previewContainer))
         task.cancel()
+        wait(for: [cancelledExp], timeout: 0.5)
     }
     
     func testLoadThumbnail_hasCachedThumbnailAndZoomInToSingleColumnAndDifferentRemoteThumbnail_loadBothThumbnailAndPreview() {
@@ -341,8 +364,12 @@ final class PhotoCellViewModelTests: XCTestCase {
                                                  loadImage: stream.eraseToAnyAsyncSequence())
         )
         
-        let task = Task { await sut.startLoadingThumbnail() }
-
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.startLoadingThumbnail()
+            cancelledExp.fulfill()
+        }
+        
         XCTAssertTrue(sut.thumbnailContainer.isEqual(initialThumbnail))
         
         let exp = expectation(description: "thumbnail is changed")
@@ -370,6 +397,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertTrue(sut.thumbnailContainer.isEqual(loadedPreview))
         XCTAssertTrue(expectedContainers.isEmpty)
         task.cancel()
+        wait(for: [cancelledExp], timeout: 0.5)
     }
     
     func testLoadThumbnail_hasCachedPreviewAndSingleColumn_showPreviewAndNoLoading() async throws {
@@ -503,9 +531,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertFalse(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
     }
     
-    func testShouldShowEditState_editing() {
+    func testShouldShowEditState_editing() throws {
         let sut = makeSUT(photo: NodeEntity(handle: 1),
-                                     viewModel: allViewModel)
+                          viewModel: allViewModel)
         sut.editMode = .active
         
         for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
@@ -516,7 +544,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     func testShouldShowEditState_notEditing() {
         let sut = makeSUT(photo: NodeEntity(handle: 1),
-                                     viewModel: allViewModel)
+                          viewModel: allViewModel)
         sut.editMode = .inactive
         
         for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
@@ -528,7 +556,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldShowFavorite_whenFavouriteIsTrueAndIncrementalZoomLevelChange_shouldEmitTrueThenFalse() {
         // Arrange
         let sut = makeSUT(photo: NodeEntity(handle: 1, isFavourite: true),
-                                     viewModel: allViewModel)
+                          viewModel: allViewModel)
         
         let exp = expectation(description: "Should emit shouldShowFavorite events")
         
@@ -557,11 +585,11 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldShowFavorite_whenFavouriteIsTrueAndDecrementalZoomLevelChange_shouldEmitFalseThenTrueThenFalse() {
         // Arrange
         let sut = makeSUT(photo: NodeEntity(handle: 1, isFavourite: true),
-                                     viewModel: allViewModel)
+                          viewModel: allViewModel)
         
         let exp = expectation(description: "Should emit 2 shouldShowFavorite events")
         allViewModel.zoomState = PhotoLibraryZoomState(scaleFactor: .thirteen, maximumScaleFactor: .thirteen)
-
+        
         let zoomActions: [ZoomType] = [.in, .in, .in]
         
         var events: [Bool] = []
@@ -574,7 +602,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         zoomActions.forEach { allViewModel.zoomState.zoom($0) }
         
         _  = XCTWaiter.wait(for: [exp], timeout: 1)
-
+        
         subscription.cancel()
         
         // Assert"
@@ -585,7 +613,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldShowFavorite_whenFavouriteIsFalse_shouldEmitFalse() {
         // Arrange
         let sut = makeSUT(photo: NodeEntity(handle: 1, isFavourite: false),
-                                     viewModel: allViewModel)
+                          viewModel: allViewModel)
         
         let exp = expectation(description: "Should emit 1 shouldShowFavorite events")
         
@@ -604,9 +632,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(events, expectedResults)
     }
     
-    func testSelect_onEditModeNoLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {
+    func testSelect_onEditModeNoLimitConfigured_shouldChangeIsSelectedOnCellTap() {
         let sut = makeSUT(photo: NodeEntity(handle: 1),
-                                     viewModel: allViewModel)
+                          viewModel: allViewModel)
         allViewModel.libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
         sut.select()
@@ -687,7 +715,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     func testMonitorPhotoSensitivityChanges_photoAndNodeUseCaseProvided_shouldUpdateImageContainerWithInitialResultFirst() async throws {
         let photo = NodeEntity(handle: 65, isMarkedSensitive: true)
-       
+        
         let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let isInheritedSensitivity = false
         let isInheritedSensitivityUpdate = true
@@ -771,11 +799,15 @@ final class PhotoCellViewModelTests: XCTestCase {
         let subscription = thumbnailContainerUpdates(on: sut) { _ in
             exp.fulfill()
         }
-        
-        let task = Task { await sut.monitorSensitivityChanges() }
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.monitorSensitivityChanges()
+            cancelledExp.fulfill()
+        }
         
         await fulfillment(of: [exp], timeout: 1.0)
         task.cancel()
+        await fulfillment(of: [cancelledExp], timeout: 0.5)
         subscription.cancel()
     }
     
@@ -784,14 +816,25 @@ final class PhotoCellViewModelTests: XCTestCase {
         viewModel: PhotoLibraryModeAllViewModel = PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: []))),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        file: StaticString = #filePath,
+        line: UInt = #line
     ) -> PhotoCellViewModel {
-        PhotoCellViewModel(
+        let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: viewModel,
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
             featureFlagProvider: featureFlagProvider)
+        addTeardownBlock { [weak self, weak sut] in
+            self?.subscriptions.removeAll()
+            
+            // Add sleep to give `@Published` properties used in infinite async sequences via `.values` time to cancel
+            try await Task.sleep(nanoseconds: 100_000_000)
+            
+            XCTAssertNil(sut, "PhotoCellViewModel should have been deallocated, potential memory leak.", file: file, line: line)
+        }
+        return sut
     }
     
     private func thumbnailContainerUpdates(on sut: PhotoCellViewModel, action: @escaping (any ImageContaining) -> Void) -> AnyCancellable {

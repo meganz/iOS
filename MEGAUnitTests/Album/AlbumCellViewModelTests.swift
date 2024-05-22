@@ -489,10 +489,10 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
-    func testMonitorCoverPhotoSensitivity_albumCoverWithPlaceholderSensitivityUpdate_shouldUpdateImageContainerWithInitialResultFirst() async throws {
+    func testMonitorCoverPhotoSensitivity_withAlbumCoverSensitivityUpdate_shouldUpdateImageContainerWithInitialResultThenMonitorUpdates() async throws {
         let cover = NodeEntity(handle: 65)
         let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
-        let imageContainer = ImageContainer(image: Image(.placeholder), type: .placeholder)
+        let coverImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let isInheritedSensitivity = false
         let isInheritedSensitivityUpdate = true
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: isInheritedSensitivityUpdate)
@@ -502,14 +502,14 @@ final class AlbumCellViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         let sut = makeAlbumCellViewModel(
             album: album,
-            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            thumbnailLoader: MockThumbnailLoader(initialImage: coverImageContainer),
             nodeUseCase: nodeUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
         )
         
         var expectedImageContainer = [
-            imageContainer.toSensitiveImageContaining(isSensitive: isInheritedSensitivity),
-            imageContainer.toSensitiveImageContaining(isSensitive: isInheritedSensitivityUpdate)
+            coverImageContainer.toSensitiveImageContaining(isSensitive: isInheritedSensitivity),
+            coverImageContainer.toSensitiveImageContaining(isSensitive: isInheritedSensitivityUpdate)
         ]
         
         let exp = expectation(description: "Should update cover with initial then from monitor")
@@ -520,41 +520,15 @@ final class AlbumCellViewModelTests: XCTestCase {
             exp.fulfill()
         }
         
-        let task = Task { await sut.monitorCoverPhotoSensitivity() }
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        subscription.cancel()
-    }
-    
-    func testMonitorCoverPhotoSensitivity_albumCoverWithNotPlaceholderSensitivityUpdate_shouldUpdateImageContainerOnlyViaMonitoring() async throws {
-        let cover = NodeEntity(handle: 65)
-        let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
-        let isInheritedSensitivityUpdate = false
-        let imageContainer = SensitiveImageContainer(image: Image("folder"), type: .thumbnail, isSensitive: !isInheritedSensitivityUpdate)
-        
-        let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: isInheritedSensitivityUpdate)
-            .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
-            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
-        let sut = makeAlbumCellViewModel(
-            album: album,
-            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
-        )
-        
-        let exp = expectation(description: "Should update cover from monitoring")
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(imageContainer.toSensitiveImageContaining(isSensitive: isInheritedSensitivityUpdate)))
-            exp.fulfill()
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.monitorCoverPhotoSensitivity()
+            cancelledExp.fulfill()
         }
         
-        let task = Task { await sut.monitorCoverPhotoSensitivity() }
-        
         await fulfillment(of: [exp], timeout: 1.0)
         task.cancel()
+        await fulfillment(of: [cancelledExp], timeout: 0.5)
         subscription.cancel()
     }
     
@@ -582,10 +556,50 @@ final class AlbumCellViewModelTests: XCTestCase {
             exp.fulfill()
         }
         
-        let task = Task { await sut.monitorCoverPhotoSensitivity() }
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.monitorCoverPhotoSensitivity()
+            cancelledExp.fulfill()
+        }
         
         await fulfillment(of: [exp], timeout: 1.0)
         task.cancel()
+        await fulfillment(of: [cancelledExp], timeout: 0.5)
+        subscription.cancel()
+    }
+    
+    func testMonitorCoverPhotoSensitivity_thumbnailContainerPlaceholder_shouldNotUpdateImageContainerWithInheritedChanges() async throws {
+        let cover = NodeEntity(handle: 65, isMarkedSensitive: false)
+        let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
+        let imageContainer = ImageContainer(image: Image("folder"), type: .placeholder)
+        
+        let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: !cover.isMarkedSensitive)
+            .eraseToAnyAsyncThrowingSequence()
+        let nodeUseCase = MockNodeDataUseCase(
+            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+        
+        let sut = makeAlbumCellViewModel(
+            album: album,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        )
+        
+        let exp = expectation(description: "Should not update image container")
+        exp.isInverted = true
+        
+        let subscription = thumbnailContainerUpdates(on: sut) { _ in
+            exp.fulfill()
+        }
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.monitorCoverPhotoSensitivity()
+            cancelledExp.fulfill()
+        }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        await fulfillment(of: [cancelledExp], timeout: 0.5)
         subscription.cancel()
     }
     
@@ -623,8 +637,6 @@ final class AlbumCellViewModelTests: XCTestCase {
     private func thumbnailContainerUpdates(on sut: AlbumCellViewModel, action: @escaping (any ImageContaining) -> Void) -> AnyCancellable {
         sut.$thumbnailContainer
             .dropFirst()
-            .sink {
-                action($0)
-            }
+            .sink(receiveValue: action)
     }
 }
