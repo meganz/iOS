@@ -11,9 +11,9 @@ extension NodeTableViewCell {
         super.prepareForReuse()
         
         viewModel = nil
-        cancellables = nil
-        thumbnailImageView.image = nil
-        thumbnailImageView.removeBlurFromView()
+        cancellables = []
+        thumbnailImageView?.image = nil
+        thumbnailImageView?.removeBlurFromView()
         [thumbnailContainer, topContainerStackView, bottomContainerStackView]
             .forEach { $0?.alpha = 1 }        
     }
@@ -73,7 +73,9 @@ extension NodeTableViewCell {
               nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo))
+                nodeRepository: NodeRepository.newRepo),
+              thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+              nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared))
     }
     
     @objc func bind(viewModel: NodeTableViewCellViewModel) {
@@ -86,8 +88,11 @@ extension NodeTableViewCell {
             viewModel
                 .$isSensitive
                 .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.configureBlur(isSensitive: $0) }
+                .sink { [weak self] in self?.configureBlur(isSensitive: $0) },
+            viewModel
+                .$thumbnail
+                .removeDuplicates()
+                .sink { [weak thumbnailImageView] in thumbnailImageView?.image = $0 }
         ]
     }
     

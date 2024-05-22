@@ -9,7 +9,10 @@ extension NodeCollectionViewCell {
         super.prepareForReuse()
         
         cancellables = []
-
+        
+        [thumbnailIconView, thumbnailImageView]
+            .forEach { $0?.image = nil }
+        
         [thumbnailImageView, thumbnailIconView, topNodeIconsView, labelsContainerStackView]
             .forEach { $0?.alpha = 1 }
     }
@@ -21,7 +24,9 @@ extension NodeCollectionViewCell {
             nodeUseCase: NodeUseCase(
               nodeDataRepository: NodeDataRepository.newRepo,
               nodeValidationRepository: NodeValidationRepository.newRepo,
-              nodeRepository: NodeRepository.newRepo))
+              nodeRepository: NodeRepository.newRepo),
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared))
     }
     
     @objc  func bind(viewModel: NodeCollectionViewCellViewModel) {
@@ -33,10 +38,16 @@ extension NodeCollectionViewCell {
             viewModel
                 .$isSensitive
                 .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.configureBlur(isSensitive: $0) }
+                .sink { [weak self] in self?.configureBlur(isSensitive: $0) },
+            viewModel
+                .$thumbnail
+                .removeDuplicates()
+                .sink { [weak self] in
+                    guard let self else { return }
+                    thumbnailImageView?.image = viewModel.hasThumbnail ? $0 : nil
+                    thumbnailIconView?.image = viewModel.hasThumbnail ? nil : $0
+                }
         ]
-        
     }
     
     private func configureBlur(isSensitive: Bool) {

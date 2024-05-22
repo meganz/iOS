@@ -57,14 +57,20 @@ import MEGASwift
     @MainActor
     private func loadThumbnail() async {
         
-        self.thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
-        
         guard hasThumbnail else {
+            thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
             return
         }
         
         do {
-            let thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
+            let thumbnailEntity: ThumbnailEntity
+            if let cached = thumbnailUseCase.cachedThumbnail(for: node, type: .thumbnail) {
+                thumbnailEntity = cached
+            } else {
+                thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
+                thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
+            }
+            
             let imagePath = if #available(iOS 16.0, *) {
                 thumbnailEntity.url.path()
             } else {
@@ -77,7 +83,7 @@ import MEGASwift
             
             self.thumbnail = image
         } catch {
-            print("[ItemCollectionViewCellViewModel] Error loading thumbnail: \(error)")
+            MEGALogError("[\(type(of: self))] Error loading thumbnail: \(error)")
         }
     }
     
