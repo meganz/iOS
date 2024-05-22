@@ -225,6 +225,52 @@ final class AccountUseCaseTests: XCTestCase {
         testHasValidProAccount(.proFlexi, isInGracePeriod: true, expectedResult: false)
     }
     
+    func testHasValidProOrUnexpiredBusinessAccount_freeAccount_shouldReturnFalse() {
+        let sut = makeSUT(accountType: .free)
+        
+        XCTAssertFalse(sut.hasValidProOrUnexpiredBusinessAccount())
+    }
+    
+    func testHasValidProOrUnexpiredBusinessAccount_standardProAccount_shouldReturnTrue() {
+        [AccountTypeEntity.lite, .proI, .proII, .proIII]
+            .enumerated()
+            .forEach { (index, accountType) in
+                let sut = makeSUT(accountType: accountType)
+                
+                XCTAssertTrue(sut.hasValidProOrUnexpiredBusinessAccount(),
+                              "failed at index: \(index) for accountType: \(accountType)")
+            }
+    }
+    
+    func testHasValidProOrUnexpiredBusinessAccount_proFlexi_shouldReturnCorrectValue() {
+        [(accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: false, expectedResult: true),
+         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: true, isInGracePeriod: true, expectedResult: false),
+         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: true, isInGracePeriod: false, expectedResult: false),
+         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: true, expectedResult: false)]
+            .enumerated()
+            .forEach { (index, testCase) in
+                let sut = makeSUT(isExpiredAccount: testCase.isExpiredAccount,
+                                  isInGracePeriod: testCase.isInGracePeriod,
+                                  accountType: testCase.accountType)
+                
+                XCTAssertEqual(sut.hasValidProOrUnexpiredBusinessAccount(), testCase.expectedResult,
+                               "failed at index: \(index) for accountType: \(testCase.accountType)")
+            }
+    }
+    
+    func testHasValidProOrUnexpiredBusinessAccount_businessAccountAndStatus_shouldReturnCorrectValue() {
+        [(accountType: AccountTypeEntity.business, isExpiredAccount: false, expectedResult: true),
+         (accountType: AccountTypeEntity.business, isExpiredAccount: true, expectedResult: false)]
+            .enumerated()
+            .forEach { (index, testCase) in
+                let sut = makeSUT(isExpiredAccount: testCase.isExpiredAccount,
+                                  accountType: testCase.accountType)
+                
+                XCTAssertEqual(sut.hasValidProOrUnexpiredBusinessAccount(), testCase.expectedResult,
+                               "failed at index: \(index) for accountType: \(testCase.accountType)")
+            }
+    }
+    
     private func testHasValidProAccount(
         _ accountType: AccountTypeEntity,
         isExpiredAccount: Bool = false,

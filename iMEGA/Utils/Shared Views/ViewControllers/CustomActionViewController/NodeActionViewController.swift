@@ -130,8 +130,9 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsFavourite(displayMode == .photosFavouriteAlbum)
                 .setIsBackupNode(containsABackupNode)
                 .setAreMediaFiles(areMediaFiles)
+                .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
                 .setIsHidden(await viewModel.containsOnlySensitiveNodes(nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem))
-                .setAccountType(viewModel.accountType)
+                .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .multiselectBuild()
             
             update(actions: actions, sender: sender)
@@ -230,8 +231,9 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsInVersionsView(isInVersionsView)
                 .setIsBackupNode(isBackupNode)
                 .setIsExported(node.isExported())
+                .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
                 .setIsHidden(await viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
-                .setAccountType(viewModel.accountType)
+                .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .build()
             
             update(actions: actions, sender: sender)
@@ -418,8 +420,9 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsVerifyContact(isVerifyContact,
                                     sharedFolderReceiverEmail: sharedFolder.user ?? "",
                                     sharedFolderContact: sharedFolderContact)
+                .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
                 .setIsHidden(await viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
-                .setAccountType(viewModel.accountType)
+                .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .build()
             
             update(actions: actions, sender: self.sender)

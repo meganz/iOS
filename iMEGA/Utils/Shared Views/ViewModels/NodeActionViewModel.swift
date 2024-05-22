@@ -7,8 +7,8 @@ struct NodeActionViewModel {
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
-    var accountType: AccountTypeEntity? {
-        accountUseCase.currentAccountDetails?.proLevel
+    var hasValidProOrUnexpiredBusinessAccount: Bool {
+        accountUseCase.hasValidProOrUnexpiredBusinessAccount()
     }
     
     init(accountUseCase: some AccountUseCaseProtocol,
