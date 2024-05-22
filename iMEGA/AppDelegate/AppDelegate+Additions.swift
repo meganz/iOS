@@ -631,6 +631,7 @@ extension AppDelegate {
 extension AppDelegate {
     @objc func initProviderDelegate() {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
+            guard callsCoordinator == nil else { return }
             let callsCoordinator = CallsCoordinatorFactory().makeCallsCoordinator(
                 callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
                 chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
