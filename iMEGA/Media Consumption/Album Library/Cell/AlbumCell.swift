@@ -21,7 +21,7 @@ struct AlbumCell: View {
                     : MEGAAppColor.Gray._EBEBEB.color
                 )
                 /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
-                .overlay(Color.black000000.opacity(viewModel.isSelected ? 0.2 : 0.0))
+                .overlay(Color.black000000.opacity(isDesignTokenEnabled && viewModel.isSelected ? 0.2 : 0.0))
                 .cornerRadius(6)
                 
                 GeometryReader { geo in
