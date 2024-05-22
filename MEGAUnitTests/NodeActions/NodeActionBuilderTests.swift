@@ -172,10 +172,12 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testBuild_cloudDriveHiddenFalse_shouldReturnCorrectActions() {
+    func testBuild_cloudDriveHiddenFalseValidAccountType_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)
             .setAccessLevel(.accessOwner)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(false)
             .build()
         
@@ -183,10 +185,12 @@ class NodeActionBuilderTests: XCTestCase {
                                                 .shareFolder, .rename, .hide, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testBuild_cloudDriveHiddenTrue_shouldReturnCorrectActions() {
+    func testBuild_cloudDriveHiddenTrueValidAccountType_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)
             .setAccessLevel(.accessOwner)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(true)
             .build()
         
@@ -395,18 +399,21 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .setIsFile(true)
             .setVersionCount(2)
+            .setIsHiddenNodesFeatureEnabled(true)
             .setIsHidden(false)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .hide, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testRecentNode_withHiddenNodeTrue_shouldReturnUnhideActions() {
+    func testRecentNode_withHiddenNodeTrueValidAccountType_shouldReturnUnhideActions() {
         actions = NodeActionBuilder()
             .setDisplayMode(.recents)
             .setAccessLevel(.accessOwner)
             .setIsFile(true)
             .setVersionCount(2)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(true)
             .build()
         
@@ -752,20 +759,24 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat]))
     }
     
-    func testTextEditor_hasAccessOwnerAndIsHiddenTrue_returnsNodeActions() {
+    func testTextEditor_hasAccessOwnerAndIsHiddenTrueValidAccountType_returnsNodeActions() {
         actions = NodeActionBuilder()
             .setDisplayMode(.textEditor)
             .setAccessLevel(.accessOwner)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(true)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .unhide]))
     }
     
-    func testTextEditor_hasAccessOwnerAndIsHiddenFalse_returnsNodeActions() {
+    func testTextEditor_hasAccessOwnerAndIsHiddenFalseValidAccountType_returnsNodeActions() {
         actions = NodeActionBuilder()
             .setDisplayMode(.textEditor)
             .setAccessLevel(.accessOwner)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(false)
             .build()
         
@@ -969,17 +980,20 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
+            .setIsHiddenNodesFeatureEnabled(true)
             .setIsHidden(false)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView, .hide]))
     }
     
-    func testPreviewPdf_isHiddenTrue_hiddenAction() {
+    func testPreviewPdf_isHiddenTrueValidAccountType_hiddenAction() {
         actions = NodeActionBuilder()
             .setAccessLevel(.accessOwner)
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(true)
             .build()
         
@@ -1292,7 +1306,7 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin]))
     }
     
-    func testMultiselectMediaFiles_hiddenForPhotosAlbum_shouldReturnCorrrectActions() {
+    func testMultiselectMediaFiles_hiddenForPhotosAlbumValidAccountType_shouldReturnCorrrectActions() {
         let expectations: [(isHidden: Bool?, nodeAction: MegaNodeActionType?)] = [
             (isHidden: true, nodeAction: .unhide),
             (isHidden: false, nodeAction: .hide),
@@ -1303,6 +1317,8 @@ class NodeActionBuilderTests: XCTestCase {
                 .setNodeSelectionType(.files, selectedNodeCount: 4)
                 .setAreMediaFiles(true)
                 .setDisplayMode(.photosAlbum)
+                .setIsHiddenNodesFeatureEnabled(true)
+                .setHasValidProOrUnexpiredBusinessAccount(true)
                 .setIsHidden(isHidden)
                 .multiselectBuild()
             
@@ -1339,6 +1355,8 @@ class NodeActionBuilderTests: XCTestCase {
                 .setIsFavourite(true)
                 .setAreMediaFiles(true)
                 .setDisplayMode(.photosFavouriteAlbum)
+                .setIsHiddenNodesFeatureEnabled(true)
+                .setHasValidProOrUnexpiredBusinessAccount(true)
                 .setIsHidden(isHidden)
                 .multiselectBuild()
             
@@ -1403,6 +1421,7 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.folders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
+            .setIsHiddenNodesFeatureEnabled(true)
             .setIsHidden(false)
             .multiselectBuild()
         
@@ -1410,10 +1429,12 @@ class NodeActionBuilderTests: XCTestCase {
                                                 .hide, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectBuild_cloudDriveContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
+    func testMultiselectBuild_cloudDriveContainsHiddenFileForFileDisplayModeValidAccountType_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(false)
             .multiselectBuild()
         
@@ -1426,6 +1447,8 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(false)
             .multiselectBuild()
         
@@ -1433,11 +1456,13 @@ class NodeActionBuilderTests: XCTestCase {
                                                 .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectBuild_cloudDriveForDisplayModesHiddenValueNil_shouldNotContainHideAction() {
+    func testMultiselectBuild_cloudDriveForDisplayModesHiddenValueNilValidAccountType_shouldNotContainHideAction() {
         [NodeSelectionType.folders, .files, .filesAndFolders].forEach {
             actions = NodeActionBuilder()
                 .setNodeSelectionType($0, selectedNodeCount: 4)
                 .setDisplayMode(.cloudDrive)
+                .setIsHiddenNodesFeatureEnabled(true)
+                .setHasValidProOrUnexpiredBusinessAccount(true)
                 .setIsHidden(nil)
                 .multiselectBuild()
             
@@ -1445,11 +1470,13 @@ class NodeActionBuilderTests: XCTestCase {
         }
     }
     
-    func testMultiselectBuild_photosTimelineContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
+    func testMultiselectBuild_photosTimelineContainsHiddenFileForFileDisplayModeValidAccountType_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.photosTimeline)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(true)
             .multiselectBuild()
         
@@ -1462,6 +1489,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.photosTimeline)
+            .setIsHiddenNodesFeatureEnabled(true)
             .setIsHidden(false)
             .multiselectBuild()
         
@@ -1474,6 +1502,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
             .setDisplayMode(.photosTimeline)
+            .setIsHiddenNodesFeatureEnabled(true)
             .setIsHidden(false)
             .multiselectBuild()
         
@@ -1481,11 +1510,13 @@ class NodeActionBuilderTests: XCTestCase {
                                                 .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectBuild_photosTimelineForDisplayModesHiddenValueNil_shouldNotContainHideAction() {
+    func testMultiselectBuild_photosTimelineForDisplayModesHiddenValueNilValidAccountType_shouldNotContainHideAction() {
         [NodeSelectionType.folders, .files, .filesAndFolders].forEach {
             actions = NodeActionBuilder()
                 .setNodeSelectionType($0, selectedNodeCount: 4)
                 .setDisplayMode(.photosTimeline)
+                .setIsHiddenNodesFeatureEnabled(true)
+                .setHasValidProOrUnexpiredBusinessAccount(true)
                 .setIsHidden(nil)
                 .multiselectBuild()
             
@@ -1493,11 +1524,14 @@ class NodeActionBuilderTests: XCTestCase {
         }
     }
     
-    func testMultiselectBuild_cloudDriveFolderDisplayModeHiddenTrue_shouldReturnCorrectActions() {
+    func testMultiselectBuild_cloudDriveFolderDisplayModeHiddenTrueForValidProAccount_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setAccessLevel(.accessOwner)
+            .setIsHiddenNodesFeatureEnabled(true)
             .setNodeSelectionType(.folders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(true)
             .multiselectBuild()
         
@@ -1505,11 +1539,13 @@ class NodeActionBuilderTests: XCTestCase {
                                                 .unhide, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectBuild_cloudDriveFileDisplayModeHideTrue_shouldReturnCorrectActions() {
+    func testMultiselectBuild_cloudDriveFileDisplayModeHideTrueWithValidAccountType_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(true)
             .multiselectBuild()
         
@@ -1517,15 +1553,42 @@ class NodeActionBuilderTests: XCTestCase {
                                                 .unhide, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectBuild_cloudDriveFileAndFolderDisplayModeHiddenTrue_shouldReturnCorrectActions() {
+    func testMultiselectBuild_cloudDriveFileAndFolderDisplayModeHiddenTrueValidAccountType_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
             .setIsHidden(true)
             .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .unhide,
                                                 .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_hiddenNodesFeatureFlagOff_shouldNotReturnHiddenAction() {
+        actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
+            .setDisplayMode(.cloudDrive)
+            .setIsHiddenNodesFeatureEnabled(false)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
+            .setIsHidden(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(actions.notContains(where: { $0.type == .hide }))
+    }
+    
+    func testMultiselectBuild_hiddenNodesFeatureFlagOnNotValidProAccount_shouldReturnHiddenAction() {
+        actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
+            .setDisplayMode(.cloudDrive)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(actions.contains(where: { $0.type == .hide }))
     }
 }

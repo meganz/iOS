@@ -30,7 +30,8 @@ final class NodeActionBuilder {
     private var sharedFolderReceiverDetail = ""
     private var containsMediaFiles = false
     private var isHidden: Bool?
-    private var accountType: AccountTypeEntity?
+    private var hasValidProOrUnexpiredBusinessAccount: Bool = false
+    private var isHiddenNodesFeatureEnabled: Bool = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -167,8 +168,13 @@ final class NodeActionBuilder {
         return self
     }
     
-    func setAccountType(_ accountType: AccountTypeEntity?) -> NodeActionBuilder {
-        self.accountType = accountType
+    func setHasValidProOrUnexpiredBusinessAccount(_ hasValidProOrUnexpiredBusinessAccount: Bool) -> NodeActionBuilder {
+        self.hasValidProOrUnexpiredBusinessAccount = hasValidProOrUnexpiredBusinessAccount
+        return self
+    }
+    
+    func setIsHiddenNodesFeatureEnabled(_ isHiddenNodesFeatureEnabled: Bool) -> NodeActionBuilder {
+        self.isHiddenNodesFeatureEnabled = isHiddenNodesFeatureEnabled
         return self
     }
     
@@ -806,7 +812,7 @@ final class NodeActionBuilder {
     
     private func hiddenStateAction() -> NodeAction? {
         if shouldAddHiddenAction() {
-            .hideAction(showProTag: accountType == .free)
+            .hideAction(showProTag: !hasValidProOrUnexpiredBusinessAccount)
         } else if shouldAddUnhideAction() {
             .unHideAction()
         } else {
@@ -815,7 +821,8 @@ final class NodeActionBuilder {
     }
     
     private func shouldAddHiddenAction() -> Bool {
-        guard isHidden == false else {
+        guard isHiddenNodesFeatureEnabled,
+              !hasValidProOrUnexpiredBusinessAccount || isHidden == false else {
             return false
         }
         
@@ -825,7 +832,9 @@ final class NodeActionBuilder {
     }
     
     private func shouldAddUnhideAction() -> Bool {
-        guard isHidden == true else {
+        guard isHiddenNodesFeatureEnabled,
+              hasValidProOrUnexpiredBusinessAccount,
+              isHidden == true else {
             return false
         }
         return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage, .recents, .textEditor,

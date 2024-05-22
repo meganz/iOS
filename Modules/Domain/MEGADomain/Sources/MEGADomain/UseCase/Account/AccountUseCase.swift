@@ -22,6 +22,9 @@ public protocol AccountUseCaseProtocol {
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
     func hasValidProAccount() -> Bool
+    /// Check if the current account has a valid pro account or business account thats not expired
+    /// Returns: `true` if the account is standard pro account or pro flexi account thats not expired or in grace period or a business account thats not expired, `false` otherwise
+    func hasValidProOrUnexpiredBusinessAccount() -> Bool
 
     // Account operations
     func contacts() -> [UserEntity]
@@ -112,19 +115,10 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
         isStandardProAccount() || isValidProFlexiAccount()
     }
     
-    private func isStandardProAccount() -> Bool {
-        repository.isAccountType(.lite) ||
-        repository.isAccountType(.proI) ||
-        repository.isAccountType(.proII) ||
-        repository.isAccountType(.proIII)
+    public func hasValidProOrUnexpiredBusinessAccount() -> Bool {
+        hasValidProAccount() || isBusinessAccountNotExpired()
     }
-
-    private func isValidProFlexiAccount() -> Bool {
-        repository.isAccountType(.proFlexi) &&
-        !repository.isExpiredAccount() &&
-        !repository.isInGracePeriod()
-    }
-
+    
     // MARK: - Account operations
     public func contacts() -> [UserEntity] {
         repository.contacts()
@@ -156,5 +150,24 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     
     public func multiFactorAuthCheck(email: String) async throws -> Bool {
         try await repository.multiFactorAuthCheck(email: email)
+    }
+    
+    // MARK: - Private User and session management
+    private func isStandardProAccount() -> Bool {
+        repository.isAccountType(.lite) ||
+        repository.isAccountType(.proI) ||
+        repository.isAccountType(.proII) ||
+        repository.isAccountType(.proIII)
+    }
+
+    private func isValidProFlexiAccount() -> Bool {
+        repository.isAccountType(.proFlexi) &&
+        !repository.isExpiredAccount() &&
+        !repository.isInGracePeriod()
+    }
+    
+    private func isBusinessAccountNotExpired() -> Bool {
+        repository.isAccountType(.business) &&
+        !repository.isExpiredAccount()
     }
 }

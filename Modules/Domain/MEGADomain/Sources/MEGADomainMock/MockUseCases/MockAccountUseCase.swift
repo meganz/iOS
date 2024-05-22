@@ -24,6 +24,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _isMasterBusinessAccount: Bool
     private let _isAchievementsEnabled: Bool
     private let smsState: SMSStateEntity
+    private let _hasValidProOrUnexpiredBusinessAccount: Bool
     
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -47,7 +48,8 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         isAchievementsEnabled: Bool = false,
         smsState: SMSStateEntity = .notAllowed,
         multiFactorAuthCheckResult: Bool = false,
-        multiFactorAuthCheckDelay: TimeInterval = 0
+        multiFactorAuthCheckDelay: TimeInterval = 0,
+        hasValidProOrUnexpiredBusinessAccount: Bool = false
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -71,6 +73,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
         self.multiFactorAuthCheckResult = multiFactorAuthCheckResult
         self.multiFactorAuthCheckDelay = multiFactorAuthCheckDelay
+        _hasValidProOrUnexpiredBusinessAccount = hasValidProOrUnexpiredBusinessAccount
     }
     
     // MARK: - User authentication status and identifiers
@@ -134,6 +137,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public func hasValidProAccount() -> Bool {
         _hasValidProAccount
+    }
+    
+    public func hasValidProOrUnexpiredBusinessAccount() -> Bool {
+        _hasValidProOrUnexpiredBusinessAccount
     }
     
     // MARK: - Account operations

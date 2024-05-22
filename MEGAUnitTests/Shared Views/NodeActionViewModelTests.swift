@@ -95,14 +95,17 @@ final class NodeActionViewModelTests: XCTestCase {
         }
     }
 
-    func testAccountType_shouldReturnCurrentAccountProLevel() {
-        let expectedAccountType = AccountTypeEntity.proI
-        let accountUseCase = MockAccountUseCase(
-            currentAccountDetails: AccountDetailsEntity(proLevel: expectedAccountType))
-        
-        let sut = makeSUT(accountUseCase: accountUseCase)
-        
-        XCTAssertEqual(sut.accountType, expectedAccountType)
+    func testHasValidProOrUnexpiredBusinessAccount_onAccountValidity_shouldReturnCorrectResult() {
+        [true, false]
+            .enumerated()
+            .forEach { (index, isValid) in
+                let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: isValid)
+                
+                let sut = makeSUT(accountUseCase: accountUseCase)
+                
+                XCTAssertEqual(sut.hasValidProOrUnexpiredBusinessAccount, isValid,
+                               "failed at index: \(index) for expected: \(isValid)")
+            }
     }
     
     private func makeSUT(
