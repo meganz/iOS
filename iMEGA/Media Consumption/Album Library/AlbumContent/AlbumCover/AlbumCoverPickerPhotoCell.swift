@@ -24,6 +24,7 @@ struct AlbumCoverPickerPhotoCell: View {
     @ViewBuilder
     private func image() -> some View {
         PhotoCellImage(container: viewModel.thumbnailContainer)
+            .overlay(Color.black000000.opacity(isDesignTokenEnabled && viewModel.isSelected ? 0.2 : 0.0))
     }
 }
 
