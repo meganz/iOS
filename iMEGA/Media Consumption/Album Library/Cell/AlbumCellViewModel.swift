@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Combine
 import MEGADomain
 import MEGAPresentation
@@ -117,10 +118,10 @@ final class AlbumCellViewModel: ObservableObject {
     func monitorCoverPhotoSensitivity() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               let coverNode = album.coverNode else { return }
-        
+        // Wait for initial thumbnail to load with sensitivity before checking inherited sensitivity updates
+        _ = await $thumbnailContainer.values.contains(where: { $0.type != .placeholder })
         do {
-            for try await isInheritingSensitivity in nodeUseCase.monitorInheritedSensitivity(for: coverNode,
-                                                                                             imageType: thumbnailContainer.type) {
+            for try await isInheritingSensitivity in nodeUseCase.inheritedSensitivity(for: coverNode) {
                 let sensitiveImageContaining = thumbnailContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity)
                 guard !thumbnailContainer.isEqual(sensitiveImageContaining) else { continue }
                 thumbnailContainer = sensitiveImageContaining
@@ -189,21 +190,17 @@ final class AlbumCellViewModel: ObservableObject {
 }
 
 private extension NodeUseCaseProtocol {
-    /// Async sequence will yield inherited sensitivity changes
-    /// If image type is not placeholder it will immediately yield the current inherited sensitivity since it could have changed since thumbnail loaded
+    /// Async sequence will immediately yield inherited sensitivity and then any updated changes
+    /// It will immediately yield the current inherited sensitivity since it could have changed since thumbnail loaded
     /// - Parameters:
     ///   - node: NodeEntity to monitor
-    ///   - imageType: ImageType of the current container
     /// - Returns: An `AnyAsyncThrowingSequence<Bool, any Error>` yielding inherited sensitivity changes
-    func monitorInheritedSensitivity(for node: NodeEntity, imageType: ImageType) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        let monitorAsyncSequence = monitorInheritedSensitivity(for: node)
-        guard imageType == .placeholder else {
-            return monitorAsyncSequence
-        }
-        return monitorAsyncSequence
+    func inheritedSensitivity(for coverNode: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
+        monitorInheritedSensitivity(for: coverNode)
             .prepend {
-                try await isInheritingSensitivity(node: node)
+                try await isInheritingSensitivity(node: coverNode)
             }
+            .removeDuplicates()
             .eraseToAnyAsyncThrowingSequence()
     }
 }
