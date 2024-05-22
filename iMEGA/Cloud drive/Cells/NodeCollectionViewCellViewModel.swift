@@ -7,22 +7,30 @@ import MEGASwift
 @objc class NodeCollectionViewCellViewModel: NSObject {
     
     @Published private(set) var isSensitive: Bool = false
+    @Published private(set) var thumbnail: UIImage?
+
     var hasThumbnail: Bool { node?.hasThumbnail ?? false }
     
     private let node: NodeEntity?
     private let isFromSharedItem: Bool
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let nodeIconUseCase: any NodeIconUsecaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var task: Task<Void, Never>?
     
     init(node: NodeEntity?,
          isFromSharedItem: Bool,
          nodeUseCase: some NodeUseCaseProtocol,
+         thumbnailUseCase: some ThumbnailUseCaseProtocol,
+         nodeIconUseCase: some NodeIconUsecaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
         self.node = node
         self.isFromSharedItem = isFromSharedItem
         self.nodeUseCase = nodeUseCase
+        self.thumbnailUseCase = thumbnailUseCase
+        self.nodeIconUseCase = nodeIconUseCase
         self.featureFlagProvider = featureFlagProvider
     }
     
@@ -36,6 +44,7 @@ import MEGASwift
         let task = Task { @MainActor [weak self] in
             guard let self, let node else { return }
             await applySensitiveConfiguration(for: node)
+            await loadThumbnail(for: node)
         }
         self.task = task
         return task
@@ -55,6 +64,35 @@ import MEGASwift
     }
     
     @MainActor
+    private func loadThumbnail(for node: NodeEntity) async {
+                
+        guard hasThumbnail else {
+            thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
+            return
+        }
+        
+        do {
+            let thumbnailEntity: ThumbnailEntity
+            if let cached = thumbnailUseCase.cachedThumbnail(for: node, type: .thumbnail) {
+                thumbnailEntity = cached
+            } else {
+                thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
+                thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
+            }
+            
+            let imagePath = if #available(iOS 16.0, *) {
+                thumbnailEntity.url.path()
+            } else {
+                thumbnailEntity.url.path
+            }
+            
+            thumbnail = UIImage(contentsOfFile: imagePath)
+        } catch {
+            MEGALogError("[\(type(of: self))] Error loading thumbnail: \(error)")
+        }
+    }
+    
+    @MainActor
     private func applySensitiveConfiguration(for node: NodeEntity) async {
         guard !isFromSharedItem,
               featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
@@ -70,7 +108,7 @@ import MEGASwift
         do {
             isSensitive = try await nodeUseCase.isInheritingSensitivity(node: node)
         } catch {
-            MEGALogError("Error checking if node is inheriting sensitivity: \(error)")
+            MEGALogError("[\(type(of: self))] Error checking if node is inheriting sensitivity: \(error)")
         }
     }
 }

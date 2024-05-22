@@ -208,17 +208,56 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         
         subscription.cancel()
     }
+    
+    func testThumbnailLoading_whenNodeHasValidThumbnail_shouldReturnCachedImage() async throws {
+        let imageUrl = try makeImageURL()
+        let node = NodeEntity(handle: 1, hasThumbnail: true, isMarkedSensitive: true)
+
+        let viewModel = sut(
+            node: node,
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            thumbnailUseCase: MockThumbnailUseCase(
+                loadThumbnailResult: .success(.init(url: imageUrl, type: .thumbnail))))
+        
+        await viewModel.configureCell().value
+        
+        let result = viewModel.thumbnail?.pngData()
+        let expected = UIImage(contentsOfFile: imageUrl.path())?.pngData()
+        
+        XCTAssertEqual(result, expected)
+    }
+    
+    func testThumbnailLoading_whenNodeHasThumbnailAndFailsToLoad_shouldReturnFileTypeImage() async throws {
+        let imageData = try XCTUnwrap(UIImage(systemName: "heart.fill")?.pngData())
+        let node = NodeEntity(nodeType: .file, name: "test.txt", handle: 1, hasThumbnail: true, isMarkedSensitive: true)
+        
+        let nodeIconUseCase = MockNodeIconUsecase(stubbedIconData: imageData)
+        let viewModel = sut(
+            node: node,
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            nodeIconUseCase: nodeIconUseCase)
+        
+        await viewModel.configureCell().value
+        
+        let result = viewModel.thumbnail?.pngData()
+        
+        XCTAssertEqual(result?.hashValue, imageData.hashValue)
+    }
 }
 
 extension NodeCollectionViewCellViewModelTests {
     private func sut(node: NodeEntity? = nil,
                      isFromSharedItem: Bool = false,
                      nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+                     nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
+                     thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
                      featureFlagHiddenNodes: Bool = false) -> NodeCollectionViewCellViewModel {
         NodeCollectionViewCellViewModel(
             node: node,
             isFromSharedItem: isFromSharedItem,
             nodeUseCase: nodeUseCase,
+            thumbnailUseCase: thumbnailUseCase,
+            nodeIconUseCase: nodeIconUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
     }
 }

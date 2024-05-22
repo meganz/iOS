@@ -134,13 +134,13 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         let expected = UIImage(contentsOfFile: imageUrl.path())?.pngData()
         
         XCTAssertEqual(result, expected)
-        try cleanUpFile(atPath: imageUrl.path())
     }
     
     func testThumbnailLoading_whenNodeHasThumbnailAndFailsToLoad_shouldReturnFileTypeImage() async throws {
+        let imageData = try XCTUnwrap(UIImage(systemName: "heart.fill")?.pngData())
         let node = NodeEntity(nodeType: .file, name: "test.txt", handle: 1, hasThumbnail: true, isMarkedSensitive: true)
         
-        let nodeIconUseCase = MockNodeIconUsecase(stubbedIconData: try XCTUnwrap(UIImage(systemName: "heart.fill")?.pngData()))
+        let nodeIconUseCase = MockNodeIconUsecase(stubbedIconData: imageData)
         let viewModel = sut(
             node: node,
             nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
@@ -149,9 +149,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         await viewModel.configureCell().value
         
         let result = viewModel.thumbnail?.pngData()
-        let expected = nodeIconUseCase.iconData(for: node)
-        
-        XCTAssertEqual(result?.hashValue, expected.hashValue)
+        XCTAssertEqual(result?.hashValue, imageData.hashValue)
     }
 }
 
@@ -168,17 +166,5 @@ extension ItemCollectionViewCellViewModelTests {
             nodeIconUseCase: nodeIconUseCase,
             featureFlagProvider: MockFeatureFlagProvider(
                 list: [.hiddenNodes: featureFlagHiddenNodes]))
-    }
-    
-    private func makeImageURL(systemImageName: String = "folder") throws -> URL {
-        let localImage = try XCTUnwrap(UIImage(systemName: systemImageName))
-        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
-        XCTAssertTrue(isLocalFileCreated)
-        return localURL
-    }
-    
-    private func cleanUpFile(atPath path: String) throws {
-        try FileManager.default.removeItem(atPath: path)
     }
 }

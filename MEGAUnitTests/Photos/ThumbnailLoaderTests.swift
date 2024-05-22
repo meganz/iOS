@@ -40,8 +40,6 @@ final class ThumbnailLoaderTests: XCTestCase {
             let image = sut.initialImage(for: photo, type: thumbnailType)
             XCTAssertTrue(image.isEqual(URLImageContainer(imageURL: localURL, type: expectedType)))
         }
-        
-        try cleanUpFile(atPath: localURL.path)
     }
     
     func testLoadImageForType_imageCached_shouldReturnCachedImage() async throws {
@@ -67,8 +65,6 @@ final class ThumbnailLoaderTests: XCTestCase {
         }
         
         XCTAssertTrue(result)
-        
-        try cleanUpFile(atPath: localURL.path)
     }
     
     func testLoadImageForThumbnail_notCached_shouldLoadAndReturnImage() async throws {
@@ -82,8 +78,6 @@ final class ThumbnailLoaderTests: XCTestCase {
         let loadedContainer = await iterator.next()
         
         XCTAssertTrue(try XCTUnwrap(loadedContainer).isEqual(URLImageContainer(imageURL: imageURL, type: .thumbnail)))
-        
-        try cleanUpFile(atPath: imageURL.path)
     }
     
     func testLoadImageForPreviewOrOrignal_notCached_shouldYieldThumbnailThenPreviewResults() async throws {
@@ -112,26 +106,11 @@ final class ThumbnailLoaderTests: XCTestCase {
         }
         
         XCTAssertTrue(result)
-        
-        try cleanUpFile(atPath: thumbnailURL.path)
-        try cleanUpFile(atPath: previewURL.path)
     }
     
     private func makeSUT(
         thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase()
     ) -> ThumbnailLoader {
         ThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
-    }
-    
-    private func makeImageURL(systemImageName: String = "folder") throws -> URL {
-        let localImage = try XCTUnwrap(UIImage(systemName: systemImageName))
-        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
-        XCTAssertTrue(isLocalFileCreated)
-        return localURL
-    }
-    
-    private func cleanUpFile(atPath path: String) throws {
-        try FileManager.default.removeItem(atPath: path)
     }
 }

@@ -48,27 +48,7 @@ static NSString *kFileSize = @"kFileSize";
     self.delegate = delegate;
     
     [self bindWithViewModel:[self createViewModelWithNode:node isFromSharedItem:isFromSharedItem]];
-    
-    if (node.hasThumbnail) {
-        NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-            self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-        } else {
-            MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                if (request.nodeHandle == self.node.handle) {
-                    self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
-                }
-            }];
-            [sdk getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
-        }
-        self.thumbnailIconView.hidden = YES;
-    } else {
-        self.thumbnailIconView.hidden = NO;
-        [self.thumbnailIconView setImage:[NodeAssetsManager.shared iconFor:node]];
-        self.thumbnailImageView.image = nil;
-    }
-    
+        
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node attributedTakenDownName];
         self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColorFor: self.traitCollection];
