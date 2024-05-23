@@ -213,6 +213,7 @@ class CloudDriveViewModelTests: XCTestCase {
         for await isMarkedSensitive in [true, false].async {
             let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: isMarkedSensitive)
             let sut = makeSUT(parentNode: parentNode,
+                              accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
                               featureFlagProvider: featureFlagProvider)
             
             let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
@@ -244,6 +245,7 @@ class CloudDriveViewModelTests: XCTestCase {
                 parentNode: parentNode,
                 systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
                     nodesForLocation: [.cameraUpload: parentNode.toNodeEntity()]),
+                accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
                 featureFlagProvider: featureFlagProvider)
             
             let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
@@ -266,6 +268,7 @@ class CloudDriveViewModelTests: XCTestCase {
                 systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
                     nodesForLocation: [.cameraUpload: parentNode.toNodeEntity()],
                     containsSystemGeneratedNodeError: error),
+                accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
                 featureFlagProvider: featureFlagProvider)
             
             let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
@@ -273,10 +276,24 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    func testIsParentMarkedAsSensitiveForDisplayMode_accountNotValid_shouldReturnFalse() async throws {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
+        let sut = makeSUT(
+            parentNode: parentNode,
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            featureFlagProvider: featureFlagProvider)
+        
+        let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
+        
+        XCTAssertFalse(try XCTUnwrap(isHidden))
+    }
+    
     func testAction_updateParentNode_updatesParentNodeAndReloadsNavigationBarItems() async throws {
         let updatedParentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(parentNode: MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false),
+                          accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
                           featureFlagProvider: featureFlagProvider)
         
         test(viewModel: sut, action: .updateParentNode(updatedParentNode),
@@ -307,6 +324,7 @@ class CloudDriveViewModelTests: XCTestCase {
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
         file: StaticString = #file,
@@ -318,6 +336,7 @@ class CloudDriveViewModelTests: XCTestCase {
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             preferenceUseCase: preferenceUseCase, 
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+            accountUseCase: accountUseCase,
             featureFlagProvider: featureFlagProvider,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel
         )

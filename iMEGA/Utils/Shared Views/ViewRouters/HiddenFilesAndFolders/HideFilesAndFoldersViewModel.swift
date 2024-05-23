@@ -25,7 +25,7 @@ final class HideFilesAndFoldersViewModel {
     
     @MainActor
     func hideNodes() async {
-        guard accountUseCase.currentAccountDetails?.proLevel != .free else {
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
             router.showHiddenFilesAndFoldersOnboarding()
             return
         }

@@ -32,6 +32,7 @@ enum CloudDriveAction: ActionType {
     private let shareUseCase: any ShareUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
 
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
@@ -43,6 +44,7 @@ enum CloudDriveAction: ActionType {
          sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol,
          systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     ) {
@@ -50,6 +52,7 @@ enum CloudDriveAction: ActionType {
         self.shareUseCase = shareUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
+        self.accountUseCase = accountUseCase
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
@@ -102,6 +105,9 @@ enum CloudDriveAction: ActionType {
               parentNode.isFolder() == true else {
             return nil
         }
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+            return false // Always show hide regardless of the node sensitivity.
+        }
         
         do {
             return if parentNode.isMarkedSensitive {
@@ -112,9 +118,9 @@ enum CloudDriveAction: ActionType {
                 false // Defaults to allow to hide the parent node.
             }
         } catch is CancellationError {
-            MEGALogError("[\(type(of:self))] loadPublicAlbumContents cancelled")
+            MEGALogError("[\(type(of: self))] loadPublicAlbumContents cancelled")
         } catch {
-            MEGALogError("[\(type(of:self))] Error determining node sensitivity. Error: \(error)")
+            MEGALogError("[\(type(of: self))] Error determining node sensitivity. Error: \(error)")
         }
         return nil
     }

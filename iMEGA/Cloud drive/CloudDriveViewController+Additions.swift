@@ -54,6 +54,7 @@ extension CloudDriveViewController {
             preferenceUseCase: preferenceUseCase, 
             systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
                 systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
     }
