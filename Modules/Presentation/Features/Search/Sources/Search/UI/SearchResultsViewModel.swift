@@ -199,7 +199,14 @@ public class SearchResultsViewModel: ObservableObject {
     func task() async {
         // We need to check if listItems is empty  because after first load of the screen, the listItems will be filled with data,
         // so there is no need for additional query which will only cause flicker when we quickly go in and out of this screen
-        guard !initialLoadDone, listItems.isEmpty else { return }
+        guard !initialLoadDone, listItems.isEmpty else {
+            // perform refreshing search results on appear to get updated one.
+            // because when we from some screen which may trigger changes to the search results
+            // for example: go to settings to toggle the `Show Hidden Nodes` setting,
+            // we expect the search result to show/not show hidden nodes according to the changed setting
+            await refreshSearchResults()
+            return
+        }
         initialLoadDone = true
         await defaultSearchQuery()
     }

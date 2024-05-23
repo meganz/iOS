@@ -115,9 +115,6 @@ public struct SearchResultsView: View {
         }
         .padding(.bottom, viewModel.bottomInset)
         .emptyState(viewModel.emptyViewModel)
-        .task {
-            await viewModel.task()
-        }
     }
     
     @ViewBuilder
