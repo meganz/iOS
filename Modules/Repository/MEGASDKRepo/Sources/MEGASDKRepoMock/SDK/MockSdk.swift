@@ -73,6 +73,7 @@ public final class MockSdk: MEGASdk {
         case publicNodeForMegaFileLink(String)
         case createSetElement(_ sid: MEGAHandle, nodeId: MEGAHandle, name: String?)
         case removeSet(sid: MEGAHandle)
+        case createSet(name: String?, type: MEGASetType)
     }
     
     public var hasGlobalDelegate = false
@@ -369,6 +370,7 @@ public final class MockSdk: MEGASdk {
     }
         
     public override func createSet(_ name: String?, type: MEGASetType, delegate: any MEGARequestDelegate) {
+        messages.append(.createSet(name: name, type: type))
         let mockRequest = MockRequest(handle: 1, set: MockMEGASet(handle: 1, userId: 0, coverId: 1, name: name, type: type))
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())

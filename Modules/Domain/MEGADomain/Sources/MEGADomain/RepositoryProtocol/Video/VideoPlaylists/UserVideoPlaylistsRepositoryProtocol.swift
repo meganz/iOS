@@ -44,4 +44,10 @@ public protocol UserVideoPlaylistsRepositoryProtocol: Sendable {
     ///   - includeElementsInRubbishBin: a boolean flag to include or exclude fetching videos from rubbish bin
     /// - Returns: array of videos in form of `SetElementEntity`
     func videoPlaylistContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity]
+    
+    /// Create user video playlist with specific name
+    /// - Parameter name: Name of the playlist that will be created.
+    /// - Returns: `SetEntity` instance representing created video playlist.
+    /// - throws: Throw `VideoPlaylistErrorEntity` if it failed during adding videos to playlist or `CancellationError` if cancelled.
+    func createVideoPlaylist(_ name: String?) async throws -> SetEntity
 }

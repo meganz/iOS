@@ -27,4 +27,8 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
         $messages.mutate { $0.append(.userVideoPlaylists) }
         return []
     }
+    
+    public func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {
+        throw GenericErrorEntity()
+    }
 }

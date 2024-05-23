@@ -29,6 +29,9 @@ struct PlaylistView: View {
         .task {
             await viewModel.onViewAppeared()
         }
+        .onDisappear {
+            viewModel.onViewDisappear()
+        }
     }
     
     private var newPlaylistView: some View {

@@ -15,6 +15,11 @@ public protocol VideoPlaylistUseCaseProtocol {
     /// - Returns: returns array of user's created video playlists, returns empty if user has not created video playlist yet.
     func userVideoPlaylists() async -> [VideoPlaylistEntity]
     
+    /// Create user video playlist with specific name
+    /// - Parameter name: Name of the playlist that will be created.
+    /// - Returns: `SetEntity` instance representing created video playlist.
+    /// - throws: Throw `VideoPlaylistErrorEntity` if it failed during adding videos to playlist or `CancellationError` if cancelled.
+    func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity
 }
 
 public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
@@ -98,5 +103,10 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
             modificationTime: Date(),
             sharedLinkStatus: .exported(false)
         )
+    }
+    
+    public func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {
+        try await userVideoPlaylistsRepository.createVideoPlaylist(name)
+            .toVideoPlaylistEntity(type: .user, sharedLinkStatus: .exported(false))
     }
 }
