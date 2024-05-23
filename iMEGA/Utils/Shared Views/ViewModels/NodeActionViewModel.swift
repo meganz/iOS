@@ -5,6 +5,7 @@ import MEGAPresentation
 struct NodeActionViewModel {
     private let accountUseCase: any AccountUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     var hasValidProOrUnexpiredBusinessAccount: Bool {
@@ -13,9 +14,11 @@ struct NodeActionViewModel {
     
     init(accountUseCase: some AccountUseCaseProtocol,
          systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
+         nodeUseCase: some NodeUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.accountUseCase = accountUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
+        self.nodeUseCase = nodeUseCase
         self.featureFlagProvider = featureFlagProvider
     }
     
@@ -44,5 +47,11 @@ struct NodeActionViewModel {
             MEGALogError("[\(type(of: self))] Error determining node sensitivity. Error: \(error)")
         }
         return nil
+    }
+    
+    func isSensitive(node: NodeEntity) async -> Bool {
+        if !featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) { false }
+        else if node.isMarkedSensitive { true }
+        else { (try? await nodeUseCase.isInheritingSensitivity(node: node)) ?? false }
     }
 }
