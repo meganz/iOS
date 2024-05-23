@@ -5,11 +5,14 @@ extension VideoConfig {
     
     public struct PlaylistContentAssets: Equatable {
         let headerView: HeaderView
+        let noResultVideoPlaylistImage: UIImage
         
         public init(
-            headerView: HeaderView
+            headerView: HeaderView,
+            noResultVideoPlaylistImage: UIImage
         ) {
             self.headerView = headerView
+            self.noResultVideoPlaylistImage = noResultVideoPlaylistImage
         }
         
         public struct HeaderView: Equatable {

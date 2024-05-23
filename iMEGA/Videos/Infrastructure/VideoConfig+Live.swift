@@ -99,7 +99,8 @@ extension VideoConfig {
                     secondaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.gray848484.swiftUI,
                     buttonTintColor: isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color.videoPlaylistAddButtonBackground
                 )
-            )
+            ),
+            noResultVideoPlaylistImage: UIImage.rectangleVideoStackOutline
         )
     )}
 }

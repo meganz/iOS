@@ -22,7 +22,7 @@ struct PlaylistView: View {
     var body: some View {
         VStack {
             newPlaylistView
-            listView
+            contentView
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .alert(isPresented: $viewModel.shouldShowAddNewPlaylistAlert, viewModel.alertViewModel)
@@ -32,6 +32,21 @@ struct PlaylistView: View {
         .onDisappear {
             viewModel.onViewDisappear()
         }
+    }
+    
+    @ViewBuilder
+    private var contentView: some View {
+        if viewModel.videoPlaylists.isEmpty {
+            emptyView
+        } else {
+            listView
+        }
+    }
+    
+    private var emptyView: some View {
+        VideoPlaylistEmptyView(videoConfig: videoConfig)
+            .padding(.bottom, 60)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
     
     private var newPlaylistView: some View {

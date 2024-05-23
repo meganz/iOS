@@ -8,6 +8,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
+    private let syncModel: VideoRevampSyncModel
     
     @Published var videoPlaylists = [VideoPlaylistEntity]()
     @Published var shouldShowAddNewPlaylistAlert = false
@@ -19,6 +20,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     private(set) var alertViewModel: TextFieldAlertViewModel
     
+    private var subscriptions = Set<AnyCancellable>()
+    private(set) var loadVideoPlaylistsOnSearchTextChangedTask: Task<Void, Never>?
     private var createVideoPlaylistTask: Task<Void, Never>?
     
     init(
@@ -31,6 +34,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
+        self.syncModel = syncModel
         self.alertViewModel = alertViewModel
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
         
@@ -39,6 +43,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         }
         
         assignVideoPlaylistNameValidator()
+        listenSearchTextChange()
     }
     
     private func assignVideoPlaylistNameValidator() {
@@ -88,6 +93,26 @@ final class VideoPlaylistsViewModel: ObservableObject {
                     type: videoPlaylist.type
                 )
             }
+    }
+    
+    private func listenSearchTextChange() {
+        syncModel
+            .$searchText
+            .debounce(for: .seconds(0.3), scheduler: DispatchQueue.main)
+            .sink { [weak self] value in
+                guard let self else { return }
+                if value.isEmpty {
+                    self.loadVideoPlaylistsOnSearchTextChangedTask = Task {
+                        guard !Task.isCancelled else {
+                            return
+                        }
+                        await self.loadVideoPlaylists()
+                    }
+                } else {
+                    self.videoPlaylists = self.videoPlaylists.filter { $0.name.lowercased().contains(value.lowercased()) }
+                }
+            }
+            .store(in: &subscriptions)
     }
     
     private func createUserVideoPlaylist(with name: String?) {

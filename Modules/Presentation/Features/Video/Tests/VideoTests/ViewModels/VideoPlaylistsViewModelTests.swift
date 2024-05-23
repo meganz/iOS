@@ -8,6 +8,8 @@ import XCTest
 
 final class VideoPlaylistsViewModelTests: XCTestCase {
     
+    private var subscriptions = Set<AnyCancellable>()
+    
     func testInit_whenInit_doesNotLoadVideoPlaylists() {
         let (_, videoPlaylistUseCase, _) = makeSUT()
         
@@ -24,7 +26,11 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     func testOnViewAppeared_whenCalled_setVideoPlaylists() async {
-        let (sut, _, _) = makeSUT()
+        let (sut, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
+                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite)
+            ])
+        )
         
         await sut.onViewAppeared()
         
@@ -49,9 +55,65 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowAddNewPlaylistAlert)
     }
     
+    // MARK: - init.listenSearchTextChange
+    
+    @MainActor
+    func testInitListenSearchTextChange_whenSearchTextIsEmpty_loadVideoPlaylists() async {
+        let (sut, videoPlaylistUseCase, syncModel) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
+                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite)
+            ])
+        )
+        let exp = expectation(description: "load video playlists")
+        exp.expectedFulfillmentCount = 2
+        var receivedMessages = [MockVideoPlaylistUseCase.Message]()
+        videoPlaylistUseCase.$publishedMessage
+            .sink { messages in
+                if messages.contains(.systemVideoPlaylists) {
+                    receivedMessages = messages
+                }
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        syncModel.searchText = "hi"
+        syncModel.searchText = ""
+        await sut.loadVideoPlaylistsOnSearchTextChangedTask?.value
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        XCTAssertTrue(receivedMessages.contains(.systemVideoPlaylists))
+        sut.loadVideoPlaylistsOnSearchTextChangedTask?.cancel()
+    }
+    
+    @MainActor
+    func testInitListenSearchTextChange_whenSearchTextIsNotEmpty_filterPlaylists() async {
+        let (sut, _, syncModel) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
+                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite)
+            ])
+        )
+        let exp = expectation(description: "load video playlists")
+        exp.expectedFulfillmentCount = 2
+        var receivedPlaylists = [VideoPlaylistEntity]()
+        sut.$videoPlaylists
+            .sink { videoPlaylists in
+                receivedPlaylists = receivedPlaylists
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        syncModel.searchText = ""
+        syncModel.searchText = "any-search-text"
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        XCTAssertTrue(receivedPlaylists.isEmpty)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
+        videoPlaylistUseCase: MockVideoPlaylistUseCase = MockVideoPlaylistUseCase(),
+        syncModel: VideoRevampSyncModel = VideoRevampSyncModel(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
@@ -59,8 +121,6 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         videoPlaylistUseCase: MockVideoPlaylistUseCase,
         syncModel: VideoRevampSyncModel
     ) {
-        let videoPlaylistUseCase = MockVideoPlaylistUseCase()
-        let syncModel = VideoRevampSyncModel()
         let alertViewModel = TextFieldAlertViewModel(title: "title", affirmativeButtonTitle: "Affirmative", destructiveButtonTitle: "Destructive")
         let sut = VideoPlaylistsViewModel(
             videoPlaylistsUseCase: videoPlaylistUseCase,

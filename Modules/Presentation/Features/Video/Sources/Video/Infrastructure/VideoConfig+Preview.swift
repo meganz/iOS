@@ -101,7 +101,8 @@ extension VideoConfig {
                     secondaryIconColor: TokenColors.Text.secondary.swiftUI,
                     buttonTintColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "videoPlaylistContent_buttonTintColor")
                 )
-            )
+            ),
+            noResultVideoPlaylistImage: MEGAAssetsPreviewImageProvider.image(named: "rectangleVideoStackOutline")!
         )
     )
 }

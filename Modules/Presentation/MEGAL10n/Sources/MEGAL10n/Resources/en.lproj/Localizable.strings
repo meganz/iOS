@@ -3944,6 +3944,8 @@
 "videos.tab.title.playlist"="Playlists";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="No videos";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="No playlists found";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="New playlist";
 /* Videos: video playlist playlist cell title */
