@@ -52,6 +52,7 @@ public final class MockSdk: MEGASdk {
     private let setUserAttributeTypeMegaSetError: (MEGAUserAttribute) -> MEGAErrorType
     private let _outgoingContactRequests: MEGAContactRequestList
     private let createdFolderHandle: MEGAHandle?
+    private let nodeFingerprint: String?
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -68,6 +69,10 @@ public final class MockSdk: MEGASdk {
     public private(set) var searchNonRecursivelyWithFilterCallCount = 0
     public private(set) var isNodeSensitive: Bool?
     public private(set) var megaSetsCallCount = 0
+    public private(set) var copyNodeWithNewNameCallCount = 0
+    public private(set) var copyNodeWithSameNameCallCount = 0
+    public private(set) var moveNodeWithNewNameCallCount = 0
+    public private(set) var moveNodeWithSameNameCallCount = 0
     
     public enum Message: Equatable, Hashable {
         case publicNodeForMegaFileLink(String)
@@ -139,7 +144,8 @@ public final class MockSdk: MEGASdk {
                 setUserAttributeTypeMegaSetError: @escaping (MEGAUserAttribute) -> MEGAErrorType = { _ in .apiOk },
                 outgoingContactRequests: MEGAContactRequestList = MEGAContactRequestList(),
                 createdFolderHandle: MEGAHandle? = nil,
-                shareAccessLevel: MEGAShareType = .accessUnknown
+                shareAccessLevel: MEGAShareType = .accessUnknown,
+                nodeFingerprint: String? = nil
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -191,6 +197,7 @@ public final class MockSdk: MEGASdk {
         _outgoingContactRequests = outgoingContactRequests
         self.createdFolderHandle = createdFolderHandle
         self.shareAccessLevel = shareAccessLevel
+        self.nodeFingerprint = nodeFingerprint
         super.init()
     }
     
@@ -217,6 +224,14 @@ public final class MockSdk: MEGASdk {
     public override func node(forHandle handle: MEGAHandle) -> MEGANode? {
         nodeForHandleCallCount += 1
         return nodes.first { $0.handle == handle }
+    }
+    
+    public override func node(forFingerprint fingerprint: String) -> MEGANode? {
+        nodes.first { $0.fingerprint == fingerprint }
+    }
+    
+    public override func fingerprint(forFilePath filePath: String) -> String? {
+        nodeFingerprint
     }
     
     public override func parentNode(for node: MEGANode) -> MEGANode? {
@@ -288,13 +303,41 @@ public final class MockSdk: MEGASdk {
         removeMEGADelegateCallCount += 1
     }
     
+    public override func copy(_ node: MEGANode, newParent: MEGANode) {
+        copyNodeWithSameNameCallCount += 1
+    }
+    
+    public override func copy(_ node: MEGANode, newParent: MEGANode, newName: String) {
+        copyNodeWithNewNameCallCount += 1
+    }
+    
     public override func copy(_ node: MEGANode, newParent: MEGANode, delegate: any MEGARequestDelegate) {
+        copyNodeWithSameNameCallCount += 1
+        processCopyNodeWithDelegate(delegate, node: node)
+    }
+    
+    public override func copy(_ node: MEGANode, newParent: MEGANode, newName: String, delegate: MEGARequestDelegate) {
+        copyNodeWithNewNameCallCount += 1
+        processCopyNodeWithDelegate(delegate, node: node)
+    }
+    
+    private func processCopyNodeWithDelegate(_ delegate: MEGARequestDelegate, node: MEGANode) {
         let mockRequest = MockRequest(handle: copiedNodeHandles[node.handle] ?? .invalid)
         delegate.onRequestFinish?(self,
                                   request: mockRequest,
                                   error: MockError(errorType: megaSetError))
     }
     
+    public override func move(_ node: MEGANode, newParent: MEGANode, delegate: MEGARequestDelegate) {
+        moveNodeWithSameNameCallCount += 1
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func move(_ node: MEGANode, newParent: MEGANode, newName: String, delegate: MEGARequestDelegate) {
+        moveNodeWithNewNameCallCount += 1
+        processRequestResult(delegate: delegate)
+    }
+
     public override var rootNode: MEGANode? { megaRootNode }
     public override var rubbishNode: MEGANode? { rubbishBinNode }
     
