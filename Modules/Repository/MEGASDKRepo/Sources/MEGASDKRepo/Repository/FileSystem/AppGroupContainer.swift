@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AppGroupContainer {
+public struct AppGroupContainer: Sendable {
     public enum Directory: String, CaseIterable {
         case cache = "Library/Caches"
         case shareExtension = "Share Extension Storage"
