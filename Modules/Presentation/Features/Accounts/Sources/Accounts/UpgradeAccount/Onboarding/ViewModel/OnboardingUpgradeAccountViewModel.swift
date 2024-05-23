@@ -199,7 +199,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         name: Strings.Localizable.Free.Plan.name,
         subscriptionCycle: .none,
         storage: Strings.Localizable.Storage.Limit.capacity(20),
-        transfer: Strings.Localizable.Limited.Transfer.limit,
+        transfer: Strings.Localizable.Limited.Feature.message,
         formattedPrice: Strings.Localizable.Free.Plan.Price.description
     )
     

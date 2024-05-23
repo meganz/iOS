@@ -4082,11 +4082,47 @@
 "free.Plan.Price.description"="Free";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Limited";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Limited";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="Unlimited";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Cancel subscription";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="File cannot be saved";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";
+/* Password protected links title */
+"password.protected.links.title"="Password protected links";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Links with expiry dates";
+/* Transfer sharing title */
+"transfer.sharing.title"="Transfer sharing";
+/* Rewind feature title */
+"rewind.feature.title"="Rewind";
+/* Rewind fro free users */
+"rewind.for.free.users"="Up to 30 days (view only)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Up to 180 days";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Call and meeting duration";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Up to 1 hour";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Up to 24 hours";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Call and meeting participants";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Up to 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="You’ll miss out on these features";
+/* Cancellation Subscription header warning message */
+"cancellation.subscription.header.message"="If you cancel your subscription, you’ll miss out on these great features. You’ll still have access to these features until your MEGA plan expires, then you’ll be moved to a free account.";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="Keep %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Continue cancellation";
+/* Feature title */
+"feature.title"="Feature";
