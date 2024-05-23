@@ -19,7 +19,14 @@ class NodeActionViewController: ActionSheetViewController {
     private let viewModel = NodeActionViewModel(
         accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
         systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
-            systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo))
+            systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
+        ),
+        nodeUseCase: NodeUseCase(
+            nodeDataRepository: NodeDataRepository.newRepo,
+            nodeValidationRepository: NodeValidationRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+    )
     
     var sender: Any
     var delegate: any NodeActionViewControllerDelegate
@@ -323,6 +330,7 @@ class NodeActionViewController: ActionSheetViewController {
             nodeImageView.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor)
         ])
         nodeImageView.mnz_setThumbnail(by: node)
+        Task { await configureSensitivity(for: node.toNodeEntity()) }
         
         headerView?.addSubview(titleLabel)
         NSLayoutConstraint.activate([
@@ -427,5 +435,17 @@ class NodeActionViewController: ActionSheetViewController {
             
             update(actions: actions, sender: self.sender)
         }
+    }
+    
+    private func configureSensitivity(for node: NodeEntity) async {
+        guard await viewModel.isSensitive(node: node) else { return }
+        if node.hasThumbnail {
+            nodeImageView.addBlurToView(style: .systemUltraThinMaterial)
+        } else {
+            nodeImageView.alpha = 0.5
+        }
+        
+        titleLabel.alpha = 0.5
+        subtitleLabel.alpha = 0.5
     }
 }

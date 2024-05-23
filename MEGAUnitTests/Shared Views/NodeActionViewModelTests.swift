@@ -108,14 +108,56 @@ final class NodeActionViewModelTests: XCTestCase {
             }
     }
     
+    func testIsSensitive_whenFeatureFlagDisabled_shouldReturnFalse() async {
+        // given
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
+        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
+        
+        // when
+        let isSenstive = await sut.isSensitive(node: node)
+        
+        // then
+        XCTAssertFalse(isSenstive)
+    }
+    
+    func testIsSensitive_whenFeatureFlagEnabledAndNodeIsSensitive_shouldReturnTrue() async {
+        // given
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
+        
+        // when
+        let isSenstive = await sut.isSensitive(node: node)
+        
+        // then
+        XCTAssertTrue(isSenstive)
+    }
+    
+    func testIsSensitive_whenFeatureFlagEnabledAndParentNodeIsSensitive_shouldReturnTrue() async {
+        // given
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(true))
+        let sut = makeSUT(nodeUseCase: nodeUseCase, featureFlagProvider: featureFlagProvider)
+        let node = NodeEntity(handle: 1, isMarkedSensitive: false)
+        
+        // when
+        let isSenstive = await sut.isSensitive(node: node)
+        
+        // then
+        XCTAssertTrue(isSenstive)
+    }
+    
     private func makeSUT(
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> NodeActionViewModel {
         NodeActionViewModel(
             accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+            nodeUseCase: nodeUseCase,
             featureFlagProvider: featureFlagProvider)
     }
     
