@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol ThumbnailRepositoryProtocol: RepositoryProtocol {
+public protocol ThumbnailRepositoryProtocol: RepositoryProtocol, Sendable {
     func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL?
     func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL
     func generateCachingURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL

@@ -3,7 +3,7 @@ import Foundation
 import MEGASwift
 
 // MARK: - Use case protocol -
-public protocol ThumbnailUseCaseProtocol {
+public protocol ThumbnailUseCaseProtocol: Sendable {
     
     /// Get the cacheced thumbnail
     /// - Parameters:
