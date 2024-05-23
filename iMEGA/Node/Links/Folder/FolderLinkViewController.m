@@ -155,6 +155,8 @@
     [self removeSnackBarPresenter];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    
+    [MEGASdk.shared removeMEGATransferDelegate:self];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
