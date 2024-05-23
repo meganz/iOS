@@ -183,6 +183,53 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         XCTAssert(userVideoPlaylists.allSatisfy { $0.type == .user })
     }
     
+    // MARK: - createVideoPlaylist
+    
+    func testCreateVideoPlaylist_whenCalled_createsVideoPlaylist() async {
+        let videoPlaylistNameToCreate = "any-name"
+        let (sut, _, userVideoPlaylistRepository) = makeSUT()
+        
+        _ = try? await sut.createVideoPlaylist(videoPlaylistNameToCreate)
+        
+        let messages = userVideoPlaylistRepository.messages
+        XCTAssertEqual(messages, [ .createVideoPlaylist(name: videoPlaylistNameToCreate) ])
+    }
+    
+    func testCreateVideoPlaylist_whenHasError_throwsError() async {
+        let videoPlaylistNameToCreate = "any-name"
+        let expectedError = VideoPlaylistErrorEntity.failedToCreatePlaylist(name: videoPlaylistNameToCreate)
+        let (sut, _, _) = makeSUT(createVideoPlaylistResult: .failure(expectedError))
+        
+        do {
+            _ = try await sut.createVideoPlaylist(videoPlaylistNameToCreate)
+            XCTFail("expect to throw error")
+        } catch {
+            XCTAssertEqual(error as? VideoPlaylistErrorEntity, expectedError, "Expect to get error")
+        }
+    }
+    
+    func testCreateVideoPlaylist_whenSuccess_createsVideoPlaylistSuccessfully() async {
+        let videoPlaylistNameToCreate = "any-name"
+        let (sut, _, _) = makeSUT(
+            createVideoPlaylistResult: .success(anySetEntity(id: 1, name: videoPlaylistNameToCreate))
+        )
+        
+        do {
+            let videoPlaylistEntity = try await sut.createVideoPlaylist(videoPlaylistNameToCreate)
+            XCTAssertEqual(videoPlaylistEntity.id, 1)
+            XCTAssertEqual(videoPlaylistEntity.name, videoPlaylistNameToCreate)
+            XCTAssertEqual(videoPlaylistEntity.count, 0)
+            XCTAssertEqual(videoPlaylistEntity.type, .user)
+            XCTAssertEqual(videoPlaylistEntity.isLinkShared, false)
+            XCTAssertEqual(videoPlaylistEntity.sharedLinkStatus, .exported(false))
+            XCTAssertEqual(videoPlaylistEntity.coverNode, nil)
+            XCTAssertNotNil(videoPlaylistEntity.creationTime)
+            XCTAssertNotNil(videoPlaylistEntity.modificationTime)
+        } catch {
+            XCTFail("expect to not throw error, got error instead: \(error)")
+        }
+    }
+    
     // MARK: - videoPlaylistsUpdatedAsyncSequence
     
     func testVideoPlaylistsUpdatedAsyncSequence_whenHasNoFavoriteVideoPlaylistUpdates_doesNotEmitsUpdate() async {
@@ -464,6 +511,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     private func makeSUT(
         filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic)),
         userVideoPlaylistRepositoryResult: [SetEntity] = [],
+        createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) -> (
@@ -475,6 +523,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             videoPlaylistsResult: userVideoPlaylistRepositoryResult,
             addVideosToVideoPlaylistResult: .failure(GenericErrorEntity()),
             deleteVideosResult: .failure(GenericErrorEntity()),
+            createVideoPlaylistResult: createVideoPlaylistResult,
             setsUpdatedAsyncSequence: setsUpdatedAsyncSequence,
             setElementsUpdatedAsyncSequence: setElementsUpdatedAsyncSequence
         )
@@ -483,6 +532,20 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             userVideoPlaylistsRepository: userVideoPlaylistRepository
         )
         return (sut, filesSearchUseCase, userVideoPlaylistRepository)
+    }
+    
+    private func anySetEntity(id: HandleEntity, name: String) -> SetEntity {
+        SetEntity(
+            handle: id,
+            userId: id,
+            coverId: id,
+            creationTime: Date(),
+            modificationTime: Date(),
+            setType: .playlist,
+            name: name,
+            isExported: false,
+            changeTypes: .new
+        )
     }
     
     private func anyPlaylists() -> [SetEntity] {

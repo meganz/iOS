@@ -120,6 +120,17 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         XCTAssertEqual(sdk.messages, [ .removeSet(sid: videoPlaylistToDelete.id) ])
     }
     
+    // MARK: - createVideoPlaylist
+    
+    func testCreateVideoPlaylist_whenCalled_createsVideoPlaylistByName() async {
+        let expectedPlaylistName = "any video playlist name"
+        let (sut, sdk) = makeSUT()
+        
+        _ = try? await sut.createVideoPlaylist(expectedPlaylistName)
+        
+        XCTAssertEqual(sdk.messages, [ .createSet(name: expectedPlaylistName, type: .playlist) ])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

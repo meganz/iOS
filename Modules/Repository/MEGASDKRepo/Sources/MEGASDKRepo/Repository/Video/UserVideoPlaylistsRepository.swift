@@ -123,4 +123,35 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
         sdk.megaSetElements(bySid: id, includeElementsInRubbishBin: includeElementsInRubbishBin)
             .toSetElementsEntities()
     }
+    
+    // MARK: - createVideoPlaylist
+    
+    public func createVideoPlaylist(_ name: String?) async throws -> SetEntity {
+        return try await withCheckedThrowingContinuation { continuation in
+            sdk.createSet(name, type: .playlist, delegate: RequestDelegate { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    log(error: CancellationError())
+                    return
+                }
+                
+                switch result {
+                case .success(let request):
+                    guard let set = request.set else {
+                        continuation.resume(throwing: VideoPlaylistErrorEntity.failedToRetrieveNewlyCreatedPlaylist)
+                        return
+                    }
+                    
+                    continuation.resume(returning: set.toSetEntity())
+                case .failure(let error):
+                    continuation.resume(throwing: VideoPlaylistErrorEntity.failedToCreatePlaylist(name: name))
+                    log(error: error)
+                }
+            })
+        }
+    }
+    
+    private func log(error: Error, file: String = #file, _ line: Int = #line) {
+        MEGASdk.log(with: .error, message: "[iOS] \(error.localizedDescription)", filename: file, line: line)
+    }
 }
