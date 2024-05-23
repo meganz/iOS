@@ -6,15 +6,15 @@ import XCTest
 final class HideFilesAndFoldersViewModelTests: XCTestCase {
     
     func testHideNodes_proLevels_shouldShowOnboardingOnlyForFreeAccount() async {
-        let expectations = [(proLevel: AccountTypeEntity.free, onboardingCalled: 1),
-                            (proLevel: AccountTypeEntity.proI, onboardingCalled: 0)]
+        let expectations = [(validAccount: false, onboardingCalled: 1),
+                            (validAccount: true, onboardingCalled: 0)]
         
         let results = await withTaskGroup(of: Bool.self) { group in
             expectations.forEach { expectation in
                 group.addTask {
                     let router = MockHideFilesAndFoldersRouter()
-                    let accountDetails = AccountDetailsEntity(proLevel: expectation.proLevel)
-                    let accountUseCase = MockAccountUseCase(currentAccountDetails: accountDetails)
+                    let accountUseCase = MockAccountUseCase(
+                        hasValidProOrUnexpiredBusinessAccount: expectation.validAccount)
                     
                     let sut = HideFilesAndFoldersViewModel(nodes: [],
                                                            router: router,
@@ -38,8 +38,7 @@ final class HideFilesAndFoldersViewModelTests: XCTestCase {
     @MainActor
     func testHideNodes_nonFreeAccount_shouldHideNodesAndShowSuccessMessageWithCount() async throws {
         let router = MockHideFilesAndFoldersRouter()
-        let accountDetails = AccountDetailsEntity(proLevel: .proI)
-        let accountUseCase = MockAccountUseCase(currentAccountDetails: accountDetails)
+        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
         let firstSuccessNode = NodeEntity(handle: 5)
         let secondSuccessNode = NodeEntity(handle: 34)
         let failedNode = NodeEntity(handle: 76)
