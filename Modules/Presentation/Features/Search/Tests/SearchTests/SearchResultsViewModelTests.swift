@@ -296,6 +296,23 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(lastQueryAfter.chips, [])
     }
     
+    func testListItems_whenReAppear_shouldRefreshResults() async {
+        // given
+        let harness = Harness(self).withResultsPrepared(count: 5, startingId: 1)
+        await harness.sut.task()
+        harness.resetResultFactory()
+        XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, [1, 2, 3, 4, 5])
+        XCTAssertEqual(harness.sut.listItems.map { $0.result.title }, ["1", "2", "3", "4", "5"])
+        harness.prepareRefreshedResults(startId: 4, endId: 7)
+        
+        // when
+        await harness.sut.task()
+        
+        // then
+        XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, [4, 5, 6, 7])
+        XCTAssertEqual(harness.sut.listItems.map { $0.result.title }, ["refreshed 4", "refreshed 5", "refreshed 6", "refreshed 7"])
+    }
+    
     func testOnSelectionAction_passesSelectedResultViaBridge() async throws {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
