@@ -13,9 +13,10 @@ extension MyAccountHallViewController {
     }
     
     @objc func showProfileView() {
-        let profileViewModel = ProfileViewModel(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
-        let profileRouter = ProfileViewRouter(navigationController: navigationController, viewModel: profileViewModel)
-        profileRouter.start()
+        ProfileViewRouter(
+            navigationController: navigationController,
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+        ).start()
     }
     
     @objc func showUpgradePlanView() {

@@ -1,16 +1,37 @@
-final class ProfileViewRouter {
+import Accounts
+import MEGADomain
+import MEGAPresentation
+
+protocol ProfileViewRouting: Routing {
+    func showCancelSubscriptionFlow(accountDetails: AccountDetailsEntity, assets: CurrentPlanDetailAssets)
+}
+
+final class ProfileViewRouter: ProfileViewRouting {
+    private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
-    private let viewModel: ProfileViewModel
+    private let accountUseCase: any AccountUseCaseProtocol
     
-    init(navigationController: UINavigationController?, viewModel: ProfileViewModel) {
+    init(
+        navigationController: UINavigationController?,
+        accountUseCase: some AccountUseCaseProtocol
+    ) {
         self.navigationController = navigationController
-        self.viewModel = viewModel
+        self.accountUseCase = accountUseCase
     }
     
     func build() -> UIViewController {
-        UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(identifier: "ProfileViewControllerID", creator: { coder in
-            return ProfileViewController(coder: coder, viewModel: self.viewModel)
+        let viewModel = ProfileViewModel(
+            accountUseCase: accountUseCase,
+            router: self
+        )
+        
+        let viewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(identifier: "ProfileViewControllerID", creator: { coder in
+            ProfileViewController(coder: coder, viewModel: viewModel)
         })
+        
+        baseViewController = viewController
+        
+        return viewController
     }
     
     func start() {
@@ -21,5 +42,18 @@ final class ProfileViewRouter {
         }
 
         navigationController.pushViewController(build(), animated: true)
+    }
+    
+    func showCancelSubscriptionFlow(
+        accountDetails: AccountDetailsEntity,
+        assets: CurrentPlanDetailAssets
+    ) {
+        guard let presenter = baseViewController else { return }
+        
+        CurrentPlanDetailRouter(
+            accountDetails: accountDetails,
+            assets: assets,
+            presenter: presenter
+        ).start()
     }
 }
