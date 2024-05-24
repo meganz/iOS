@@ -128,7 +128,6 @@ class ActionSheetViewController: UIViewController {
             tableView.backgroundColor = .mnz_backgroundElevated(traitCollection)
             titleLabel.textColor = UIColor.label
             indicator.backgroundColor = UIColor.mnz_handlebar(for: traitCollection)
-            
         }
     }
     
@@ -197,7 +196,13 @@ class ActionSheetViewController: UIViewController {
         
         self.actions = actions
         configurePresentationStyle(from: sender)
-        layoutViews(to: view.frame.size)
+        
+        if let popoverPresentationController {
+            layoutViews(to: popoverPresentationController.containerView?.frame.size ?? view.frame.size)
+            layoutPopoverPresentation()
+        } else {
+            layoutViews(to: view.frame.size)
+        }
         tableView.reloadData()
         
         UIView.animate(withDuration: 0.2) { [weak self] in
@@ -432,6 +437,10 @@ extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIVi
 
 extension ActionSheetViewController: UIPopoverPresentationControllerDelegate {
     func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
+        layoutPopoverPresentation()
+    }
+    
+    private func layoutPopoverPresentation() {
         let height = CGFloat(actions.count * 60) + (headerView?.bounds.height ?? 0)
         top?.constant = 0.0
         backgroundView.backgroundColor = .clear
