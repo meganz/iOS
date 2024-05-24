@@ -4118,8 +4118,8 @@
 "call.and.meeting.participants.for.free.users"="Up to 100";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="You’ll miss out on these features";
-/* Cancellation Subscription header warning message */
-"cancellation.subscription.header.message"="If you cancel your subscription, you’ll miss out on these great features. You’ll still have access to these features until your MEGA plan expires, then you’ll be moved to a free account.";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="You’ll still have access to these features until your MEGA plan expires, then you’ll be moved to a free account.\n You currently are using %@ of storage, you will be at risk of losing your files";
 /* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
 "cancellation.subscription.keep.pro.plan.button.title"="Keep %@";
 /* Cancellation Subscription flow, continue cancellation button title */

@@ -1262,6 +1262,7 @@
 		940BA4CC2AD7EE2F00C69514 /* SearchMock in Frameworks */ = {isa = PBXBuildFile; productRef = 940BA4CB2AD7EE2F00C69514 /* SearchMock */; };
 		940BA4D42AD80FFC00C69514 /* MEGASwift in Frameworks */ = {isa = PBXBuildFile; productRef = 940BA4D32AD80FFC00C69514 /* MEGASwift */; };
 		940BA4D62AD80FFC00C69514 /* MEGASwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 940BA4D52AD80FFC00C69514 /* MEGASwiftUI */; };
+		940C19A82BFF74A80061BD88 /* MockProfileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940C19A72BFF74A80061BD88 /* MockProfileViewRouter.swift */; };
 		940CEE352A83D8C2007DD202 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63995332898CBEB00EA88F1 /* WarningView.swift */; };
 		940CEE372A83D8F6007DD202 /* WarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63995352898CBEB00EA88F1 /* WarningViewModel.swift */; };
 		940CEE3C2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CEE3B2A83DA5E007DD202 /* WarningViewRouting.swift */; };
@@ -4026,6 +4027,7 @@
 		940BA4B82AD7EE1100C69514 /* SearchDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		940BA4BA2AD7EE1100C69514 /* SearchDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDemoApp.swift; sourceTree = "<group>"; };
 		940BA4C82AD7EE2500C69514 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		940C19A72BFF74A80061BD88 /* MockProfileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProfileViewRouter.swift; sourceTree = "<group>"; };
 		940CEE3B2A83DA5E007DD202 /* WarningViewRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewRouting.swift; sourceTree = "<group>"; };
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		940F41362A9ED39200C2543F /* MEGAIntentDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAIntentDomain; sourceTree = "<group>"; };
@@ -6375,6 +6377,7 @@
 		259FA4002A3A946500C038B2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				940C19A62BFF748F0061BD88 /* Mocks */,
 				259FA4012A3A947800C038B2 /* ViewModel */,
 			);
 			path = Profile;
@@ -9987,6 +9990,14 @@
 				940BA4BA2AD7EE1100C69514 /* SearchDemoApp.swift */,
 			);
 			path = SearchDemo;
+			sourceTree = "<group>";
+		};
+		940C19A62BFF748F0061BD88 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				940C19A72BFF74A80061BD88 /* MockProfileViewRouter.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		940DB9122924D77F004E7349 /* AudioSession */ = {
@@ -16182,6 +16193,7 @@
 				3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */,
 				9D94AF7029653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift in Sources */,
 				3299F054291A20230071FB77 /* AlbumContentViewModelTests.swift in Sources */,
+				940C19A82BFF74A80061BD88 /* MockProfileViewRouter.swift in Sources */,
 				32EC282129BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift in Sources */,
 				32EC280129B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,

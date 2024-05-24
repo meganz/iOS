@@ -1,3 +1,4 @@
+import Accounts
 import Combine
 import Foundation
 import MEGADomain
@@ -16,6 +17,12 @@ enum ProfileAction: ActionType {
     case invalidateSections
     case changeEmail
     case changePassword
+    case cancelSubscription
+}
+
+private struct CancelSubscriptionIconAssets {
+    static let availableIcon = "available"
+    static let unavailableIcon = "unavailable"
 }
 
 final class ProfileViewModel: ViewModelType {
@@ -52,13 +59,16 @@ final class ProfileViewModel: ViewModelType {
     private let twoFactorAuthStatusValueSubject = CurrentValueSubject<TwoFactorAuthStatus, Never>(.unknown)
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
+    private let router: any ProfileViewRouting
     
     init(
         accountUseCase: some AccountUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        router: some ProfileViewRouting
     ) {
         self.accountUseCase = accountUseCase
         self.featureFlagProvider = featureFlagProvider
+        self.router = router
         bindToSubscriptions()
     }
     
@@ -113,6 +123,8 @@ extension ProfileViewModel {
             handleChangeProfileAction(requestedChangeType: .email)
         case .changePassword:
             handleChangeProfileAction(requestedChangeType: .password)
+        case .cancelSubscription:
+            initCancelSubscriptionFlow()
         }
     }
     
@@ -150,6 +162,18 @@ extension ProfileViewModel {
         @unknown default:
             break
         }
+    }
+    
+    private func initCancelSubscriptionFlow() {
+        guard let currentAccountDetails = accountUseCase.currentAccountDetails else { return }
+        
+        router.showCancelSubscriptionFlow(
+            accountDetails: currentAccountDetails,
+            assets: CurrentPlanDetailAssets(
+                availableImageName: CancelSubscriptionIconAssets.availableIcon,
+                unavailableImageName: CancelSubscriptionIconAssets.unavailableIcon
+            )
+        )
     }
 }
 

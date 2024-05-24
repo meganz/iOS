@@ -397,7 +397,7 @@ extension ProfileViewController: UITableViewDelegate {
             }
             
         case .cancelSubscription:
-            break
+            viewModel.dispatch(.cancelSubscription)
         }
     }
     

@@ -16,7 +16,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_onViewDidLoad_defaultValue() {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         let expectedSections = ProfileViewModel.SectionCellDataSource(
             sectionOrder: sectionsOrder(),
@@ -26,7 +26,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testSectionsVisibility_withoutValidProAccount_shouldNotShowSubscriptionSection() {
-        let sut = makeSUT(hasValidProAccount: false)
+        let (sut, _) = makeSUT(hasValidProAccount: false)
         sut.dispatch(.onViewDidLoad)
         
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
@@ -34,7 +34,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_onViewDidLoadWithoutValidProAccount_shouldShowCorrectSectionsAndRows() {
-        let sut = makeSUT(hasValidProAccount: false)
+        let (sut, _) = makeSUT(hasValidProAccount: false)
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         let expectedSections = ProfileViewModel.SectionCellDataSource(
             sectionOrder: sectionsOrder(hasValidProAccount: false),
@@ -44,7 +44,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_onViewDidLoad_whenSmsIsAllowed() {
-        let sut = makeSUT(smsState: .optInAndUnblock)
+        let (sut, _) = makeSUT(smsState: .optInAndUnblock)
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         let expectedResult = ProfileViewModel.SectionCellDataSource(
             sectionOrder: sectionsOrder(),
@@ -103,7 +103,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_changeEmail_emailCellShouldBeLoading() {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         sut.dispatch(.onViewDidLoad)
         
         let expectation = XCTestExpectation(description: "Expected change email cell to be loading in the profile section")
@@ -129,7 +129,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_changePassword_passwordCellShouldBeLoading() {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         sut.dispatch(.onViewDidLoad)
         
         let expectation = XCTestExpectation(description: "Expected change password cell to be loading in the profile section")
@@ -155,7 +155,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_changeEmail_shouldPresentChangeController() {
-        let sut = makeSUT(
+        let (sut, _) = makeSUT(
             multiFactorAuthCheckResult: true,
             multiFactorAuthCheckDelay: 0.5
         )
@@ -169,7 +169,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_changePassword_shouldPresentChangeController() {
-        let sut = makeSUT(
+        let (sut, _) = makeSUT(
             multiFactorAuthCheckResult: true,
             multiFactorAuthCheckDelay: 0.5
         )
@@ -180,6 +180,14 @@ final class ProfileViewModelTests: XCTestCase {
             actions: [ProfileAction.changePassword],
             expectedCommands: [.changeProfile(requestedChangeType: .password, isTwoFactorAuthenticationEnabled: true)]
         )
+    }
+    
+    func testAction_cancelSubscription_shouldPresentCancelSubscriptionFlow() {
+        let (sut, router) = makeSUT(currentAccountDetails: .init(proLevel: .proI))
+        
+        sut.dispatch(.cancelSubscription)
+        
+        XCTAssertEqual(router.showCancelSubscriptionFlow_calledTimes, 1, "Expected showCancelSubscriptionFlow to be called once.")
     }
     
     // MARK: - Helpers
@@ -193,7 +201,7 @@ final class ProfileViewModelTests: XCTestCase {
         multiFactorAuthCheckDelay: TimeInterval = 0,
         hasValidProAccount: Bool = true,
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [.cancelSubscription: true])
-    ) -> ProfileViewModel {
+    ) -> (sut: ProfileViewModel, router: MockProfileViewRouter) {
         
         let accountUseCase = MockAccountUseCase(
             hasValidProAccount: hasValidProAccount,
@@ -205,9 +213,15 @@ final class ProfileViewModelTests: XCTestCase {
             multiFactorAuthCheckDelay: 1.0
         )
         
-        return ProfileViewModel(
-            accountUseCase: accountUseCase,
-            featureFlagProvider: featureFlagProvider
+        let router = MockProfileViewRouter()
+        
+        return (
+            ProfileViewModel(
+                accountUseCase: accountUseCase,
+                featureFlagProvider: featureFlagProvider,
+                router: router
+            ),
+            router
         )
     }
     
@@ -241,7 +255,7 @@ final class ProfileViewModelTests: XCTestCase {
                 sectionOrder: expectedOrder,
                 sectionRows: expectedSectionRows
             )
-            let sut = self.makeSUT(
+            let (sut, _) = self.makeSUT(
                 currentAccountDetails: .init(proLevel: accountType),
                 isMasterBusinessAccount: isMasterBusinessAccount
             )
