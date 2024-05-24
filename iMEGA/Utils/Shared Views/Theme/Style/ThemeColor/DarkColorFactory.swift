@@ -8,7 +8,7 @@ struct DarkColorThemeFactory: ColorFactory {
         case .secondary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.whiteFFFFFF32
         case .tertiary: return MEGAAppColor.Gray._D1D1D1.uiColor
         case .quaternary: return MEGAAppColor.Gray._B5B5B5.uiColor
-        case .warning: return MEGAAppColor.Red._FF453A.uiColor
+        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : MEGAAppColor.Red._FF453A.uiColor
         }
     }
     
@@ -16,7 +16,7 @@ struct DarkColorThemeFactory: ColorFactory {
         switch style {
         case .primary: return UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black1C1C1E
         case .secondary: return UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.gray545A68
-        case .warning: return MEGAAppColor.White._FFFFFF.uiColor
+        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Notifications.notificationWarning : MEGAAppColor.White._FFFFFF.uiColor
         case .enabled: return MEGAAppColor.White._FFD60008.uiColor
         case .disabled: return MEGAAppColor.Gray._999999.uiColor
         case .highlighted: return MEGAAppColor.Green._00A88680.uiColor
@@ -35,7 +35,7 @@ struct DarkColorThemeFactory: ColorFactory {
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
         case .primary: return MEGAAppColor.Black._00000015.uiColor
-        case .warning: return MEGAAppColor.Yellow._FFD600.uiColor
+        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Notifications.notificationWarning : MEGAAppColor.Yellow._FFD600.uiColor
         }
     }
     
