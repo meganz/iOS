@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -11,9 +12,15 @@ struct CameraUploadBannerStatusView: View {
     var body: some View {
         Button(action: onTapHandler, label: content)
             .buttonStyle(.plain)
-            .background(MEGAAppColor.Background.backgroundRegularPrimaryElevated.color)
+            .background(backgroundColor)
     }
-    
+
+    private var backgroundColor: Color {
+        UIColor.isDesignTokenEnabled()
+            ? TokenColors.Background.page.swiftUI
+            : UIColor.backgroundRegularPrimaryElevated.swiftUI
+    }
+
     @ViewBuilder
     private func content() -> some View {
         VStack(spacing: 0) {

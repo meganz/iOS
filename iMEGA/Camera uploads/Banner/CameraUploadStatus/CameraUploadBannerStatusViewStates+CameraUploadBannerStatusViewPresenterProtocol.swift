@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -9,7 +10,21 @@ extension CameraUploadBannerStatusViewStates {
             title: title,
             subheading: subheading,
             textColor: textColor,
-            backgroundColor: backgroundColor)
+            backgroundColor: backgroundColor
+        )
+    }
+}
+
+extension CameraUploadBannerStatusViewStates {
+    // This is so that we can inject the design token value in unit tests
+    static var _isDesignTokenEnabled: Bool?
+
+    static var isDesignTokenEnabled: Bool {
+        if let overriddenIsDesignTokenEnabled = _isDesignTokenEnabled {
+            return overriddenIsDesignTokenEnabled
+        } else {
+            return UIColor.isDesignTokenEnabled()
+        }
     }
 }
 
@@ -41,6 +56,10 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
     func textColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .uploadInProgress, .uploadCompleted:
+            if Self.isDesignTokenEnabled {
+                return TokenColors.Text.primary.swiftUI
+            }
+
             return Color.primary
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
                 .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
@@ -51,7 +70,11 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
     func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .uploadInProgress, .uploadCompleted:
-            return scheme == .dark ? MEGAAppColor.Gray._1D1D1D.color : MEGAAppColor.White._FFFFFF.color
+            if Self.isDesignTokenEnabled {
+                return TokenColors.Background.page.swiftUI
+            }
+
+            return scheme == .dark ? UIColor.gray1D1D1D.swiftUI : UIColor.whiteFFFFFF.swiftUI
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
                 .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
             return reason.backgroundColor(for: scheme)
@@ -82,18 +105,34 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
     func textColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
+            if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
+                return TokenColors.Text.primary.swiftUI
+            }
+
             return .primary
         case .photoLibraryLimitedAccess:
-            return scheme == .dark ? MEGAAppColor.Yellow._FFD60A.color : MEGAAppColor.Yellow._9D8319.color
+            if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
+                return TokenColors.Text.primary.swiftUI
+            }
+
+            return scheme == .dark ? UIColor.yellowFFD60A.swiftUI : UIColor.yellow9D8319.swiftUI
         }
     }
     
     func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
-            return scheme == .dark ? MEGAAppColor.Gray._1D1D1D.color : MEGAAppColor.White._FFFFFF.color
+            if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
+                return TokenColors.Background.page.swiftUI
+            }
+
+            return scheme == .dark ? UIColor.gray1D1D1D.swiftUI : UIColor.whiteFFFFFF.swiftUI
         case .photoLibraryLimitedAccess:
-            return MEGAAppColor.Yellow._FED42926.color
+            if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
+                return TokenColors.Notifications.notificationWarning.swiftUI
+            }
+
+            return UIColor.yellowFED42926.swiftUI
         }
     }
 }
@@ -115,9 +154,19 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
         }
     }
     
-    func textColor(for scheme: ColorScheme) -> Color { .primary }
+    func textColor(for scheme: ColorScheme) -> Color {
+        if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
+            return TokenColors.Text.primary.swiftUI
+        }
+
+        return .primary
+    }
     
     func backgroundColor(for scheme: ColorScheme) -> Color {
-        scheme == .dark ? MEGAAppColor.Gray._1D1D1D.color : MEGAAppColor.White._FFFFFF.color
+        if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
+            return TokenColors.Background.page.swiftUI
+        }
+
+        return scheme == .dark ? UIColor.gray1D1D1D.swiftUI : UIColor.whiteFFFFFF.swiftUI
     }
 }

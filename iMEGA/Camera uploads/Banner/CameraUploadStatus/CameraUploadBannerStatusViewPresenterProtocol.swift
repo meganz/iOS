@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 protocol CameraUploadBannerStatusViewPresenterProtocol {
@@ -9,7 +10,13 @@ protocol CameraUploadBannerStatusViewPresenterProtocol {
 
 extension CameraUploadBannerStatusViewPresenterProtocol {
     func bottomBorder(for scheme: ColorScheme) -> Color {
-        scheme == .dark ? MEGAAppColor.Gray._545458.color.opacity(0.3) : MEGAAppColor.Gray._3C3C43.color.opacity(0.65)
+        if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
+            return TokenColors.Border.subtle.swiftUI
+        }
+
+        return scheme == .dark 
+            ? UIColor.gray545458.swiftUI.opacity(0.3)
+            : UIColor.gray3C3C43.swiftUI.opacity(0.65)
     }
 }
 
