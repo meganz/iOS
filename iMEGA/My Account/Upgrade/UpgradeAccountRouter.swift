@@ -17,15 +17,12 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
     }
     
     private let purchase: MEGAPurchase
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let abTestProvider: any ABTestProviderProtocol
     
     init(purchase: MEGAPurchase = MEGAPurchase.sharedInstance(),
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
     ) {
         self.purchase = purchase
-        self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
     }
     
@@ -49,11 +46,6 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
     
     func presentChooseAccountType() {
         guard let products = purchase.products, products.isNotEmpty else { return }
-
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .onboardingProPlan) else {
-            presentUpgradeAccountChooseAccountType()
-            return
-        }
         
         Task { @MainActor in
             let onboardingVariant = await abTestProvider.abTestVariant(for: .onboardingUpsellingDialog)
