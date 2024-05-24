@@ -1,19 +1,19 @@
 import MEGADomain
-import MEGASDKRepo
+import MEGASdk
 
-struct NodeActionsRepository: NodeActionsRepositoryProtocol {
-    static var newRepo: NodeActionsRepository {
-        NodeActionsRepository(sdk: MEGASdk.shared, sharedFolderSdk: MEGASdk.sharedFolderLinkSdk)
+public struct NodeActionsRepository: NodeActionsRepositoryProtocol {
+    public static var newRepo: NodeActionsRepository {
+        NodeActionsRepository(sdk: MEGASdk.sharedSdk, sharedFolderSdk: MEGASdk.sharedFolderLinkSdk)
     }
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
 
-    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk) {
+    public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
     }
     
-    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: HandleEntity, newName: String?) -> Bool {
+    public func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: HandleEntity, newName: String?) -> Bool {
         guard let fileFingerprint = sdk.fingerprint(forFilePath: path),
               let parentNode = sdk.node(forHandle: parentHandle),
               let node = sdk.node(forFingerprint: fileFingerprint) else {
@@ -31,7 +31,7 @@ struct NodeActionsRepository: NodeActionsRepositoryProtocol {
         return true
     }
     
-    func copyNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?, isFolderLink: Bool) async throws -> HandleEntity {
+    public func copyNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?, isFolderLink: Bool) async throws -> HandleEntity {
         try await withCheckedThrowingContinuation { continuation in
             var megaNode: MEGANode
             guard let parentNode = sdk.node(forHandle: parentHandle) else {
@@ -72,7 +72,7 @@ struct NodeActionsRepository: NodeActionsRepositoryProtocol {
         }
     }
     
-    func moveNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?) async throws -> HandleEntity {
+    public func moveNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?) async throws -> HandleEntity {
         try await withCheckedThrowingContinuation { continuation in
             guard let parentNode = sdk.node(forHandle: parentHandle),
                   let node = sdk.node(forHandle: handle) else {
