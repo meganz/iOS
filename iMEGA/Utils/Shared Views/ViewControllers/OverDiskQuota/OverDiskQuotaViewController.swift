@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAFoundation
 import MEGAL10n
 import MEGAUIKit
@@ -160,13 +161,22 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupScrollView(_ scrollView: UIScrollView, with trait: UITraitCollection) {
         disableAdjustingContentInsets(for: contentScrollView)
-        let backgroundStyler = trait.backgroundStyler(of: .primary)
-        backgroundStyler(scrollView)
+        
+        guard UIColor.isDesignTokenEnabled() else {
+            let backgroundStyler = trait.backgroundStyler(of: .primary)
+            backgroundStyler(scrollView)
+            return
+        }
+        scrollView.backgroundColor = TokenColors.Background.page
     }
     
     private func setupContentView(_ contentView: UIView, with trait: UITraitCollection) {
-        let backgroundStyler = trait.backgroundStyler(of: .primary)
-        backgroundStyler(contentView)
+        guard UIColor.isDesignTokenEnabled() else {
+            let backgroundStyler = trait.backgroundStyler(of: .primary)
+            backgroundStyler(contentView)
+            return
+        }
+        contentView.backgroundColor = TokenColors.Background.page
     }
 
     private func setupWarningView(_ warningView: OverDiskQuotaWarningView, with text: NSAttributedString) {
@@ -175,36 +185,58 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupStorageFullLabel(_ label: UILabel, with trait: UITraitCollection) {
         storageFullLabel.text = Strings.Localizable.storageFull
-        let alwyasBrightTextStyle = trait.alwaysBrightLabelStyler(of: .headline)
-        alwyasBrightTextStyle(storageFullLabel)
-    }
-    
-    private func setupTitleLabel(_ titleLabel: UILabel, withTitle title: NSAttributedString) {
-        titleLabel.attributedText = title
+        
+        guard UIColor.isDesignTokenEnabled() else {
+            let alwyasBrightTextStyle = trait.alwaysBrightLabelStyler(of: .headline)
+            alwyasBrightTextStyle(storageFullLabel)
+            return
+        }
+        storageFullLabel.textColor = TokenColors.Text.onColor
+        storageFullLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
         titleLabel.text = overDiskQuotaAdvicer.titleMessage
-        let style = traitCollection.styler(of: .headline)
-        style(titleLabel)
+        
+        guard UIColor.isDesignTokenEnabled() else {
+            let style = traitCollection.styler(of: .headline)
+            style(titleLabel)
+            return
+        }
+        
+        storageFullLabel.textColor = TokenColors.Text.primary
+        storageFullLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     }
 
     private func setupMessageLabel(_ descriptionLabel: UILabel, withMessage message: NSAttributedString) {
         descriptionLabel.attributedText = message
+        
+        guard UIColor.isDesignTokenEnabled() else { return }
+        descriptionLabel.textColor = TokenColors.Text.secondary
     }
 
     private func setupUpgradeButton(_ button: UIButton, with trait: UITraitCollection) {
-        let style = trait.styler(of: .primary)
-        style(button)
         button.setTitle(Strings.Localizable.upgrade, for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
+        
+        guard UIColor.isDesignTokenEnabled() else {
+            let style = trait.styler(of: .primary)
+            style(button)
+            return
+        }
+        button.mnz_setupPrimary(trait)
     }
 
     private func setupDismissButton(_ button: UIButton, with trait: UITraitCollection) {
-        let style = trait.styler(of: .secondary)
-        style(button)
         button.setTitle(Strings.Localizable.dismiss, for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
+        
+        guard UIColor.isDesignTokenEnabled() else {
+            let style = trait.styler(of: .secondary)
+            style(button)
+            return
+        }
+        button.mnz_setupSecondary(trait)
     }
 
     // MARK: - Button Actions
