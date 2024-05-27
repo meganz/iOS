@@ -5,7 +5,11 @@ public enum FeatureType {
     case storage, transfer, passwordProtectedLinks, linksWithExpiryDate, transferSharing, rewind, vpn, callsAndMeetingsDuration, callsAndMeetingsParticipants
 }
 
-struct FeatureListHelper {
+public protocol FeatureListHelperProtocol {
+    func createCurrentFeatures() -> [FeatureDetails]
+}
+
+struct FeatureListHelper: FeatureListHelperProtocol {
     let account: AccountDetailsEntity
     let assets: CurrentPlanDetailAssets
     

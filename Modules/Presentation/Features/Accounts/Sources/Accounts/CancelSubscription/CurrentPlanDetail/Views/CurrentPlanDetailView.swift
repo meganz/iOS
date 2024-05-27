@@ -4,7 +4,7 @@ import MEGASwiftUI
 import SwiftUI
 
 struct CurrentPlanDetailView: View {
-    var viewModel: CurrentPlanDetailViewModel
+    @ObservedObject var viewModel: CurrentPlanDetailViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -23,6 +23,9 @@ struct CurrentPlanDetailView: View {
         }
         .ignoresSafeArea(edges: [.top, .bottom])
         .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : .clear )
+        .task {
+            viewModel.setupFeatureList()
+        }
     }
     
     @ViewBuilder

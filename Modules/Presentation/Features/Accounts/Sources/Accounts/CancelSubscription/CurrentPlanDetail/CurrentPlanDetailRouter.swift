@@ -32,7 +32,7 @@ public final class CurrentPlanDetailRouter: CurrentPlanDetailRouting {
         let viewModel = CurrentPlanDetailViewModel(
             currentPlanName: accountDetails.proLevel.toAccountTypeDisplayName(),
             currentPlanStorageUsed: String.memoryStyleString(fromByteCount: accountDetails.storageUsed),
-            features: featureListHelper.createCurrentFeatures(),
+            featureListHelper: featureListHelper,
             router: self
         )
         
