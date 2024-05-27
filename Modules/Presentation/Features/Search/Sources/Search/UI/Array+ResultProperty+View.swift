@@ -17,19 +17,20 @@ extension Array where Element == ResultProperty {
     
     @ViewBuilder func propertyViewsFor(
         layout: ResultCellLayout,
-        placement: PropertyPlacement
+        placement: PropertyPlacement, 
+        colorAssets: SearchConfig.ColorAssets
     ) -> some View {
         Group {
             ForEach(propertiesFor(mode: layout, placement: placement)) { resultProperty in
-                propertyView(for: resultProperty).accessibilityLabel(resultProperty.accessibilityLabel)
+                propertyView(for: resultProperty, colorAssets: colorAssets).accessibilityLabel(resultProperty.accessibilityLabel)
             }
         }
     }
     
-    @ViewBuilder func propertyView(for property: ResultProperty) -> some View {
+    @ViewBuilder func propertyView(for property: ResultProperty, colorAssets: SearchConfig.ColorAssets) -> some View {
         switch property.content {
         case let .icon(image: image, scalable: scalable):
-            resultPropertyImage(image: image, scalable: scalable, vibrant: property.vibrancyEnabled)
+            property.resultPropertyImage(image: image, scalable: scalable, colorAssets: colorAssets)
                 .frame(width: 12, height: 12)
 
         case .text(let text):
@@ -41,16 +42,18 @@ extension Array where Element == ResultProperty {
     
 }
 
-// extract as we need to reuse it for special styling case
-@ViewBuilder
-func resultPropertyImage(image: UIImage, scalable: Bool, vibrant: Bool) -> some View {
-    // missing dynamic type scaling?
-    if scalable {
-        Image(uiImage: image)
-            .resizable()
-            .if(vibrant) { $0.renderingMode(.template).foregroundColor(TokenColors.Support.error.swiftUI) }
-            .scaledToFit()
-    } else {
-        Image(uiImage: image)
+extension ResultProperty {
+    @ViewBuilder
+    func resultPropertyImage(image: UIImage, scalable: Bool, colorAssets: SearchConfig.ColorAssets) -> some View {
+        // missing dynamic type scaling?
+        if scalable {
+            Image(uiImage: image)
+                .renderingMode(.template)
+                .resizable()
+                .foregroundStyle(vibrancyEnabled ? colorAssets.vibrantColor : colorAssets.resultPropertyColor)
+                .scaledToFit()
+        } else {
+            Image(uiImage: image)
+        }
     }
 }

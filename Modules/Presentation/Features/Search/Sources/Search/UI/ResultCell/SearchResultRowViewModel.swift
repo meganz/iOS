@@ -29,8 +29,10 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         result.hasThumbnail
     }
     
-    var hasVibrantTitle: Bool {
-        result.properties.first { $0.vibrancyEnabled } != nil
+    private lazy var hasVibrantTitle = result.properties.first { $0.vibrancyEnabled } != nil
+    
+    var titleTextColor: Color {
+        hasVibrantTitle ? colorAssets.vibrantColor : colorAssets.titleTextColor
     }
     
     var selectedCheckmarkImage: UIImage {
@@ -70,7 +72,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     let swipeActions: [SearchResultSwipeAction]
 
     init(
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         result: SearchResult,
         rowAssets: SearchConfig.RowAssets,
         colorAssets: SearchConfig.ColorAssets,

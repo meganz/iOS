@@ -62,6 +62,12 @@ extension SearchConfig.RowAssets {
 
 extension SearchConfig.ColorAssets {
     static let example: Self = .init(
+        unselectedBorderColor: Color("F7F7F7"),
+        selectedBorderColor: Color("00A886"),
+        titleTextColor: Color.primary,
+        subtitleTextColor: Color.secondary,
+        vibrantColor: Color.red, 
+        resultPropertyColor: .gray,
         F7F7F7: Color("F7F7F7"),
         _161616: Color("161616"),
         _545458: Color("545458"),

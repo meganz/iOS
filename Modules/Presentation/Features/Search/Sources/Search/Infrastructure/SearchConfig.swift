@@ -176,6 +176,17 @@ public struct SearchConfig {
     }
 
     public struct ColorAssets {
+        
+        /// Color for the border of the items in thumbnail mode in unselected state
+        public let unselectedBorderColor: Color
+        /// Color for the border of the items in thumbnail mode in selected state
+        public let selectedBorderColor: Color
+        
+        public let titleTextColor: Color
+        public let subtitleTextColor: Color
+        public let vibrantColor: Color
+        public let resultPropertyColor: Color
+        
         public let F7F7F7: Color
         public let _161616: Color
         public let _545458: Color
@@ -189,6 +200,12 @@ public struct SearchConfig {
         public let checkmarkBackgroundTintColor: Color
 
         public init(
+            unselectedBorderColor: Color,
+            selectedBorderColor: Color,
+            titleTextColor: Color,
+            subtitleTextColor: Color,
+            vibrantColor: Color,
+            resultPropertyColor: Color,
             F7F7F7: Color,
             _161616: Color,
             _545458: Color,
@@ -201,6 +218,12 @@ public struct SearchConfig {
             _3C3C43: Color,
             checkmarkBackgroundTintColor: Color
         ) {
+            self.unselectedBorderColor = unselectedBorderColor
+            self.selectedBorderColor = selectedBorderColor
+            self.titleTextColor = titleTextColor
+            self.subtitleTextColor = subtitleTextColor
+            self.vibrantColor = vibrantColor
+            self.resultPropertyColor = resultPropertyColor
             self.F7F7F7 = F7F7F7
             self._161616 = _161616
             self._545458 = _545458
