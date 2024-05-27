@@ -30,15 +30,15 @@ final class CurrentPlanDetailViewModelTests: XCTestCase {
     ) {
         let router = MockCurrentPlanDetailRouter()
         let viewModel = CurrentPlanDetailViewModel(
-            currentPlanName: currentPlanName, 
+            currentPlanName: currentPlanName,
             currentPlanStorageUsed: currentPlanStorageUsed,
-            features: features,
+            featureListHelper: MockFeatureListHelper(features: features),
             router: router
         )
         return (viewModel, router)
     }
     
-    func testInit_shouldSetProperties() {
+    func testInit_shouldSetProperties() async {
         let expectedName = "Pro Plan"
         let expectedStorage = "400 GB"
         let (sut, _) = makeSUT(
@@ -46,6 +46,8 @@ final class CurrentPlanDetailViewModelTests: XCTestCase {
             currentPlanStorageUsed: expectedStorage,
             features: features
         )
+        
+        await sut.setupFeatureList()
         
         XCTAssertEqual(sut.currentPlanName, expectedName, "Expected currentPlanName to be '\(expectedName)'")
         XCTAssertEqual(sut.currentPlanStorageUsed, expectedStorage, "Expected currentPlanStorageUsed to be '\(expectedStorage)'")
