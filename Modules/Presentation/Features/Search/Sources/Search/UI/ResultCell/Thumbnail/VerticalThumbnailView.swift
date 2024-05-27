@@ -83,7 +83,8 @@ struct VerticalThumbnailView: View {
                     .properties
                     .propertyViewsFor(
                         layout: layout,
-                        placement: .secondary(.trailingEdge)
+                        placement: .secondary(.trailingEdge),
+                        colorAssets: viewModel.colorAssets
                     )
             }
             .padding(.vertical, 4)
@@ -110,10 +111,10 @@ struct VerticalThumbnailView: View {
     private var backgroundFooter: some View {
         HStack(spacing: 1) {
             
-            ForEach(viewModel.result.properties.propertiesFor(mode: layout, placement: .secondary(.leading))) { property in
+            ForEach(viewModel.result.properties.propertiesFor(mode: layout, placement: .secondary(.leading)) ) { property in
                 switch property.content {
                 case .icon(image: let image, scalable: let scalable):
-                    resultPropertyImage(image: image, scalable: scalable, vibrant: property.vibrancyEnabled)
+                    property.resultPropertyImage(image: image, scalable: scalable, colorAssets: viewModel.colorAssets)
                         .frame(width: 16, height: 16)
                         .padding(2)
                 case .text(let text):
@@ -174,9 +175,7 @@ struct VerticalThumbnailView: View {
     private var topLine: some View {
         HStack(spacing: 4) {
             Text(viewModel.result.title)
-                .titleTextColor(
-                    hasVibrantTitle: viewModel.hasVibrantTitle
-                )
+                .foregroundStyle(viewModel.titleTextColor)
                 .font(.system(size: 12, weight: .medium))
                 .lineLimit(1)
             
@@ -185,7 +184,8 @@ struct VerticalThumbnailView: View {
                 .properties
                 .propertyViewsFor(
                     layout: layout,
-                    placement: .prominent
+                    placement: .prominent,
+                    colorAssets: viewModel.colorAssets
                 )
         }
     }
@@ -202,7 +202,8 @@ struct VerticalThumbnailView: View {
                 .properties
                 .propertyViewsFor(
                     layout: layout,
-                    placement: .secondary(.trailing)
+                    placement: .secondary(.trailing),
+                    colorAssets: viewModel.colorAssets
                 )
         }
     }

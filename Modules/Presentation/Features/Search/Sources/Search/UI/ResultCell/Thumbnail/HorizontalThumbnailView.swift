@@ -16,7 +16,6 @@ import SwiftUI
 
 struct HorizontalThumbnailView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     
     @ObservedObject var viewModel: SearchResultRowViewModel
     @Binding var selected: Set<ResultId>
@@ -64,14 +63,12 @@ struct HorizontalThumbnailView: View {
         HStack(spacing: 4) {
             Text(viewModel.result.title)
                 .font(.system(size: 12, weight: .medium))
-                .titleTextColor(
-                    hasVibrantTitle: viewModel.hasVibrantTitle
-                )
+                .foregroundStyle(viewModel.titleTextColor)
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(layout: layout, placement: .prominent)
+                .propertyViewsFor(layout: layout, placement: .prominent, colorAssets: viewModel.colorAssets)
         }
         .frame(height: 12)
     }
@@ -80,23 +77,23 @@ struct HorizontalThumbnailView: View {
         HStack(spacing: 4) {
             Text(viewModel.result.description(layout))
                 .font(.caption)
-                .foregroundColor(.primary)
+                .foregroundStyle(viewModel.colorAssets.subtitleTextColor)
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(layout: layout, placement: .secondary(.leading))
+                .propertyViewsFor(layout: layout, placement: .secondary(.leading), colorAssets: viewModel.colorAssets)
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(layout: layout, placement: .secondary(.trailing))
+                .propertyViewsFor(layout: layout, placement: .secondary(.trailing), colorAssets: viewModel.colorAssets)
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(layout: layout, placement: .secondary(.trailingEdge))
-            
+                .propertyViewsFor(layout: layout, placement: .secondary(.trailingEdge), colorAssets: viewModel.colorAssets)
+
         }
     }
     
@@ -130,9 +127,9 @@ struct HorizontalThumbnailView: View {
     
     private var borderColor: Color {
         if selectionEnabled && isSelected {
-            viewModel.colorAssets._00A886
+            viewModel.colorAssets.selectedBorderColor
         } else {
-            colorScheme == .light ? viewModel.colorAssets.F7F7F7 : viewModel.colorAssets._545458
+            viewModel.colorAssets.unselectedBorderColor
         }
     }
 }

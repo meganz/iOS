@@ -235,6 +235,12 @@ final class SearchResultsViewModelTests: XCTestCase {
                     moreGrid: UIImage(systemName: "ellipsis")!
                 ),
                 colorAssets: .init(
+                    unselectedBorderColor: .gray,
+                    selectedBorderColor: .green,
+                    titleTextColor: Color.primary,
+                    subtitleTextColor: Color.secondary,
+                    vibrantColor: .red,
+                    resultPropertyColor: .gray,
                     F7F7F7: Color("F7F7F7"),
                     _161616: Color("161616"),
                     _545458: Color("545458"),

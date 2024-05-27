@@ -5,12 +5,43 @@ import MEGAUIKit
 import Search
 import SwiftUI
 
+// Colors catering for backward-compatibility with non-semantic color system
+extension UIColor {
+    /// Border of cells in thumbnail mode
+    static let cloudDriveThumbnailModeBorder = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor(red: 0.969, green: 0.969, blue: 0.9690, alpha: 1)
+            : UIColor(red: 0.329, green: 0.329, blue: 0.329, alpha: 1)
+        }
+    )
+    
+    /// Color for vibrancy
+    static let cloudDriveVibrance = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor(red: 0.953, green: 0.047, blue: 0.078, alpha: 1)
+            : UIColor(red: 0.969, green: 0.212, blue: 0.239, alpha: 1)
+        }
+    )
+    
+    /// Color for property icons
+    static let cloudDrivePropertyIcon = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor(red: 0.518, green: 0.518, blue: 0.518, alpha: 1)
+            : UIColor(red: 0.710, green: 0.710, blue: 0.710, alpha: 1)
+        }
+    )
+}
+
 extension SearchConfig {
     static func searchConfig(
         contextPreviewFactory: ContextPreviewFactory,
         defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
     ) -> SearchConfig {
-        .init(
+        let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
+        return .init(
             chipAssets: .init(
                 selectionIndicatorImage: UIImage.turquoiseCheckmark,
                 closeIcon: UIImage.miniplayerClose,
@@ -21,7 +52,7 @@ extension SearchConfig {
             ),
             emptyViewAssetFactory: { chip, query in
                 let titleTextColor: (ColorScheme) -> Color = { colorScheme in
-                    guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) else {
+                    guard isDesignTokenEnabled else {
                         return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
                     }
 
@@ -95,14 +126,20 @@ extension SearchConfig {
             },
             rowAssets: .init(
                 contextImage: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
-                itemSelected: UIImage.checkBoxSelected,
+                itemSelected: isDesignTokenEnabled ? UIImage.checkBoxSelectedSemantic : UIImage.checkBoxSelected,
                 itemUnselected: UIImage.checkBoxUnselected,
                 playImage: UIImage.videoList,
                 downloadedImage: UIImage.downloaded,
-                moreList: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
+                moreList: isDesignTokenEnabled ? UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary) : UIImage.moreList.withRenderingMode(.alwaysOriginal),
                 moreGrid: UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
             ),
             colorAssets: .init(
+                unselectedBorderColor: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : UIColor.cloudDriveThumbnailModeBorder.swiftUI,
+                selectedBorderColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : UIColor.turquoise.swiftUI,
+                titleTextColor: UIColor.primaryTextColor().swiftUI,
+                subtitleTextColor: UIColor.secondaryTextColor().swiftUI,
+                vibrantColor: isDesignTokenEnabled ? TokenColors.Text.error.swiftUI : UIColor.cloudDriveVibrance.swiftUI, 
+                resultPropertyColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.cloudDrivePropertyIcon.swiftUI,
                 F7F7F7: UIColor.whiteF7F7F7.swiftUI,
                 _161616: UIColor.black161616.swiftUI,
                 _545458: UIColor.gray545458.swiftUI,
@@ -113,9 +150,7 @@ extension SearchConfig {
                 _1C1C1E: UIColor.black1C1C1E.swiftUI,
                 _00A886: UIColor.green00A886.swiftUI,
                 _3C3C43: UIColor.gray3C3C43.swiftUI,
-                checkmarkBackgroundTintColor: UIColor.isDesignTokenEnabled()
-                ? TokenColors.Support.success.swiftUI
-                : UIColor.turquoise.swiftUI
+                checkmarkBackgroundTintColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : UIColor.turquoise.swiftUI
             ),
             contextPreviewFactory: contextPreviewFactory
         )

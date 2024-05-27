@@ -121,9 +121,7 @@ struct SearchResultRowView: View {
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .lineLimit(1)
-                .titleTextColor(
-                    hasVibrantTitle: viewModel.hasVibrantTitle
-                )
+                .foregroundStyle(viewModel.titleTextColor)
             propertyViewsFor(placement: .prominent)
         }
     }
@@ -139,7 +137,7 @@ struct SearchResultRowView: View {
     }
     
     @ViewBuilder func propertyViewsFor(placement: PropertyPlacement) -> some View {
-        viewModel.result.properties.propertyViewsFor(layout: layout, placement: placement)
+        viewModel.result.properties.propertyViewsFor(layout: layout, placement: placement, colorAssets: viewModel.colorAssets)
     }
     
     private var subtitleLine: some View {
