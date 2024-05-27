@@ -83,19 +83,29 @@ class ChatViewController: MessagesViewController {
     
     lazy var startOrJoinCallButton: UIButton = {
         let button = UIButton()
-        let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.White._FFFFFF.uiColor
-        button.setTitleColor(textColor, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
         button.layer.cornerRadius = 20
-        button.backgroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._00000075.uiColor
+        if UIColor.isDesignTokenEnabled() {
+            button.backgroundColor = TokenColors.Background.inverse
+            button.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
+        } else {
+            button.backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : UIColor.black00000075
+            let textColor = traitCollection.userInterfaceStyle == .dark ? UIColor.black000000 : UIColor.whiteFFFFFF
+            button.setTitleColor(textColor, for: .normal)
+        }
         return button
     }()
     
     lazy var tapToReturnToCallButton: UIButton = {
         let button = MEGAButton(textStyle: "caption1", weight: "bold")
-        button.setTitleColor(MEGAAppColor.White._FFFFFF.uiColor, for: .normal)
         button.setTitle(Strings.Localizable.tapToReturnToCall, for: .normal)
-        button.backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            button.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
+            button.backgroundColor = TokenColors.Button.primary
+        } else {
+            button.setTitleColor(UIColor.whiteFFFFFF, for: .normal)
+            button.backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
+        }
         return button
     }()
     
@@ -401,9 +411,14 @@ class ChatViewController: MessagesViewController {
 
         messagesCollectionView.reloadData()
         
-        let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.White._FFFFFF.uiColor
-        startOrJoinCallButton.setTitleColor(textColor, for: .normal)
-        startOrJoinCallButton.backgroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._00000075.uiColor
+        if UIColor.isDesignTokenEnabled() {
+            startOrJoinCallButton.backgroundColor = TokenColors.Background.inverse
+            startOrJoinCallButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
+        } else {
+            startOrJoinCallButton.backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : UIColor.black00000075
+            let textColor = traitCollection.userInterfaceStyle == .dark ? UIColor.black000000 : UIColor.whiteFFFFFF
+            startOrJoinCallButton.setTitleColor(textColor, for: .normal)
+        }
         
         if let inputbar = inputAccessoryView as? ChatInputBar {
             inputbar.set(keyboardAppearance: traitCollection.userInterfaceStyle == .dark ? .dark : .light)

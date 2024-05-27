@@ -1,4 +1,5 @@
 import CoreGraphics
+import MEGADesignToken
 import MessageKit
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
@@ -154,6 +155,14 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
                 configureLoadedView()
             }
         }
+        
+        if UIColor.isDesignTokenEnabled() {
+            let buttonColor = isFromCurrentSender(message: message) ? TokenColors.Icon.inverse : TokenColors.Icon.primary
+            let playButtonImage = UIImage(resource: .playVoiceClipButton).withTintColor(buttonColor, renderingMode: .alwaysTemplate)
+            let pauseButtonImage = UIImage(resource: .pauseVoiceClip).withTintColor(buttonColor, renderingMode: .alwaysTemplate)
+            playButton.setImage(playButtonImage, for: .normal)
+            playButton.setImage(pauseButtonImage, for: .selected)
+        }
     }
     
     private func configureLoadingView() {
@@ -166,6 +175,10 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         loadingIndicator.stopAnimating()
         loadingIndicator.isHidden = true
         playButton.isHidden = false
+    }
+    
+    private func isFromCurrentSender(message: any MessageType) -> Bool {
+        return UInt64(message.sender.senderId) == MEGAChatSdk.shared.myUserHandle
     }
 }
 
