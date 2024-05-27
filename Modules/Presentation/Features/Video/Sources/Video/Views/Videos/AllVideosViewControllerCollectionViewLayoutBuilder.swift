@@ -2,14 +2,28 @@ import UIKit
 
 struct AllVideosViewControllerCollectionViewLayoutBuilder {
     
+    let viewType: AllVideosCollectionViewRepresenter.ViewType
+    
     func build() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout(
-            sectionProvider: { makeCollectionViewLayoutSection(for: $1) },
+            sectionProvider: { makeCollectionViewLayoutSection(for: $1, viewType: viewType) },
             configuration: UICollectionViewCompositionalLayoutConfiguration()
         )
     }
     
-    private func makeCollectionViewLayoutSection(for layoutEnvironment: some NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+    private func makeCollectionViewLayoutSection(
+        for layoutEnvironment: some NSCollectionLayoutEnvironment,
+        viewType: AllVideosCollectionViewRepresenter.ViewType
+    ) -> NSCollectionLayoutSection {
+        switch viewType {
+        case .allVideos, .playlists:
+            allVideosLayoutSection(layoutEnvironment: layoutEnvironment)
+        case .playlistContent:
+            makeSingleColumnLayout()
+        }
+    }
+    
+    private func allVideosLayoutSection(layoutEnvironment: some NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let horizontalSizeClass = layoutEnvironment.traitCollection.horizontalSizeClass
         let verticalSizeClass = layoutEnvironment.traitCollection.verticalSizeClass
         

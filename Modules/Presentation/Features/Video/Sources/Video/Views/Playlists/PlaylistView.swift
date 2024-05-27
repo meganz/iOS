@@ -106,6 +106,7 @@ struct PlaylistView: View {
     private func videoPlaylistCellViewModel(_ videoPlaylist: VideoPlaylistEntity) -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
             thumbnailUseCase: viewModel.thumbnailUseCase,
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: viewModel.thumbnailUseCase),
             videoPlaylistContentUseCase: viewModel.videoPlaylistContentUseCase,
             videoPlaylistEntity: videoPlaylist,
             onTapMoreOptions: { _ in }

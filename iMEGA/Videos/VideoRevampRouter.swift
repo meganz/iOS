@@ -105,10 +105,29 @@ struct VideoRevampRouter: VideoRevampRouting {
         navigationController.present(viewController, animated: true, completion: nil)
     }
     
-    func openVideoPlaylistContent(for previewEntity: VideoPlaylistCellPreviewEntity) {
+    func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity) {
+        let userVideoPlaylistsRepo = UserVideoPlaylistsRepository.newRepo
+        let fileSearchRepo = FilesSearchRepository.newRepo
+        let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
+        let photoLibraryUseCase = PhotoLibraryUseCase(
+            photosRepository: photoLibraryRepository,
+            searchRepository: fileSearchRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+        )
+        
+        let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
+            userVideoPlaylistRepository: userVideoPlaylistsRepo,
+            photoLibraryUseCase: photoLibraryUseCase,
+            fileSearchRepository: fileSearchRepo
+        )
+        let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let viewController = VideoPlaylistContentViewController(
             videoConfig: videoConfig,
-            previewEntity: previewEntity
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
+            thumbnailUseCase: thumbnailUseCase,
+            router: self
         )
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)

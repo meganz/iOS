@@ -1,17 +1,27 @@
+import MEGADomain
 import UIKit
 import Video
 
 final class VideoPlaylistContentViewController: UIViewController {
     
     private let videoConfig: VideoConfig
-    private let previewEntity: VideoPlaylistCellPreviewEntity
+    private let videoPlaylistEntity: VideoPlaylistEntity
+    private let videoPlaylistContentsUseCase: any VideoPlaylistContentsUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let router: any VideoRevampRouting
     
     init(
         videoConfig: VideoConfig,
-        previewEntity: VideoPlaylistCellPreviewEntity
+        videoPlaylistEntity: VideoPlaylistEntity,
+        videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol,
+        thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        router: some VideoRevampRouting
     ) {
         self.videoConfig = videoConfig
-        self.previewEntity = previewEntity
+        self.videoPlaylistEntity = videoPlaylistEntity
+        self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
+        self.thumbnailUseCase = thumbnailUseCase
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,7 +37,10 @@ final class VideoPlaylistContentViewController: UIViewController {
     private func setupContentView() {
         let contentView = VideoRevampFactory.makeVideoContentContainerView(
             videoConfig: videoConfig,
-            previewEntity: previewEntity
+            previewEntity: videoPlaylistEntity,
+            videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
+            thumbnailUseCase: thumbnailUseCase,
+            router: router
         )
         
         add(contentView, container: view, animate: false)

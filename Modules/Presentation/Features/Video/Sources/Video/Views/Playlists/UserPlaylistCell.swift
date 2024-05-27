@@ -28,7 +28,7 @@ struct UserPlaylistCell: View {
             await viewModel.onViewAppear()
         }
         .onTapGesture {
-            router.openVideoPlaylistContent(for: viewModel.previewEntity)
+            router.openVideoPlaylistContent(for: viewModel.videoPlaylistEntity)
         }
     }
 }

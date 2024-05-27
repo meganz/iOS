@@ -48,7 +48,7 @@ struct FavoritePlaylistCell: View {
             await viewModel.onViewAppear()
         }
         .onTapGesture {
-            router.openVideoPlaylistContent(for: viewModel.previewEntity)
+            router.openVideoPlaylistContent(for: viewModel.videoPlaylistEntity)
         }
     }
     
@@ -122,6 +122,7 @@ struct ThumbnailLayerView: View {
     func makeNullViewModel() -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
             thumbnailUseCase: Preview_ThumbnailUseCase(),
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: Preview_ThumbnailUseCase()),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistEntity: videoPlaylistEntity(),
             onTapMoreOptions: { _ in }

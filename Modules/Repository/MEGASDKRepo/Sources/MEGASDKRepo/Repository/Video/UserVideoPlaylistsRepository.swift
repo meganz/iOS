@@ -4,6 +4,13 @@ import MEGASwift
 
 public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol {
     
+    public static var newRepo: UserVideoPlaylistsRepository {
+        UserVideoPlaylistsRepository(
+            sdk: .sharedSdk,
+            setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: .sharedSdk)
+        )
+    }
+    
     public var setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> {
         setAndElementsUpdatesProvider.setUpdates(filteredBy: [.playlist])
     }

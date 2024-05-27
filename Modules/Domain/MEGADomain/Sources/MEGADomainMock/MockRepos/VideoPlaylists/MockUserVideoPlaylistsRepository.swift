@@ -1,7 +1,11 @@
 import MEGADomain
 import MEGASwift
 
-public class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol, @unchecked Sendable {
+public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol, @unchecked Sendable {
+    
+    public static var newRepo: MockUserVideoPlaylistsRepository {
+        MockUserVideoPlaylistsRepository()
+    }
     
     public enum Message: Sendable, Equatable {
         case userVideoPlaylists

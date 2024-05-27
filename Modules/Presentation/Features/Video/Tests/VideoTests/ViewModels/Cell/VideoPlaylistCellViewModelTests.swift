@@ -20,6 +20,25 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     // MARK: - onViewAppeared
     
+    func testOnViewAppear_whenLoad_loadThumbnailsFromThumbnailLoader() async {
+        let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
+        let mockThumbnailUseCase = MockThumbnailUseCase(
+            cachedThumbnails: [],
+            loadThumbnailResult: .failure(GenericErrorEntity()),
+            loadPreviewResult: .failure(GenericErrorEntity()),
+            loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
+        )
+        let (sut, videoPlaylistThumbnailLoader) = await makeSUT(
+            thumbnailUseCase: mockThumbnailUseCase,
+            videoPlaylistEntity: videoPlaylist,
+            videos: [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ]
+        )
+        
+        await sut.onViewAppear()
+        
+        XCTAssertEqual(videoPlaylistThumbnailLoader.loadThumbnailsCallCount, 1)
+    }
+    
     func testOnViewAppear_whenNoCachedThumbnailsThumbnailAndErrors_deliversPlaceholderImage() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
         let mockThumbnailUseCase = MockThumbnailUseCase(
@@ -28,7 +47,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let sut = await makeSUT(
+        let (sut, _) = await makeSUT(
             thumbnailUseCase: mockThumbnailUseCase,
             videoPlaylistEntity: videoPlaylist,
             videos: [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ]
@@ -52,7 +71,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let sut = await makeSUT(
+        let (sut, _) = await makeSUT(
             thumbnailUseCase: mockThumbnailUseCase,
             videoPlaylistEntity: videoPlaylist,
             videos: [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ]
@@ -74,7 +93,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             cachedThumbnails: [thumbnailEntity],
             loadThumbnailResult: .success(thumbnailEntity)
         )
-        let sut = await makeSUT(
+        let (sut, _) = await makeSUT(
             thumbnailUseCase: mockThumbnailUseCase,
             videoPlaylistEntity: videoPlaylist,
             videos: [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ]
@@ -99,7 +118,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
         var tappedVideoPlaylists = [VideoPlaylistEntity]()
-        let sut = await makeSUT(
+        let (sut, _) = await makeSUT(
             thumbnailUseCase: mockThumbnailUseCase,
             videoPlaylistEntity: videoPlaylist,
             videos: [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ],
@@ -121,7 +140,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             cachedThumbnails: [thumbnailEntity],
             loadThumbnailResult: .success(thumbnailEntity)
         )
-        let sut = await makeSUT(
+        let (sut, _) = await makeSUT(
             thumbnailUseCase: mockThumbnailUseCase,
             videoPlaylistEntity: videoPlaylist,
             videos: [
@@ -139,7 +158,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     func testSecondaryInformationViewType_whenEntityCountZero_showEmptyPlaylistView() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: 0)
-        let sut = await makeSUT(
+        let (sut, _) = await makeSUT(
             thumbnailUseCase: MockThumbnailUseCase(),
             videoPlaylistEntity: videoPlaylist
         )
@@ -153,7 +172,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         let nonZeroRandomCount = Int.random(in: 1...10000)
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: nonZeroRandomCount)
         let videos = (0...nonZeroRandomCount).map { nodeEntity(name: "video-\($0)", handle: HandleEntity($0), hasThumbnail: true) }
-        let sut = await makeSUT(
+        let (sut, _) = await makeSUT(
             thumbnailUseCase: MockThumbnailUseCase(),
             videoPlaylistEntity: videoPlaylist,
             videos: videos
@@ -168,21 +187,26 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(
-        thumbnailUseCase: ThumbnailUseCaseProtocol,
+        thumbnailUseCase: MockThumbnailUseCase,
         videoPlaylistEntity: VideoPlaylistEntity,
         videos: [NodeEntity] = [],
         onTapMoreOptions: @escaping (_ node: VideoPlaylistEntity) -> Void = { _ in },
         file: StaticString = #filePath,
         line: UInt = #line
-    ) async -> VideoPlaylistCellViewModel {
+    ) async -> (
+        sut: VideoPlaylistCellViewModel,
+        videoPlaylistThumbnailLoader: MockVideoPlaylistThumbnailLoader
+    ) {
+        let videoPlaylistThumbnailLoader = MockVideoPlaylistThumbnailLoader()
         let sut = VideoPlaylistCellViewModel(
             thumbnailUseCase: thumbnailUseCase,
+            videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(allVideos: videos),
             videoPlaylistEntity: videoPlaylistEntity,
             onTapMoreOptions: onTapMoreOptions
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return sut
+        return (sut, videoPlaylistThumbnailLoader)
     }
     
     private func videoPlaylistEntity(name: String, handle: HandleEntity, sharedLinkStatus: SharedLinkStatusEntity = .exported(false), type: VideoPlaylistEntityType = .user, count: Int = 0) -> VideoPlaylistEntity {

@@ -100,6 +100,7 @@ extension VideoConfig {
                     buttonTintColor: isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color.videoPlaylistAddButtonBackground
                 )
             ),
+            favouritesEmptyStateImage: UIImage.favouritesEmptyState,
             noResultVideoPlaylistImage: UIImage.rectangleVideoStackOutline
         )
     )}
