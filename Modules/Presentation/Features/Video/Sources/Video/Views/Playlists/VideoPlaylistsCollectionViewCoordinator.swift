@@ -46,6 +46,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
             
             let cellViewModel = VideoPlaylistCellViewModel(
                 thumbnailUseCase: representer.viewModel.thumbnailUseCase,
+                videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: representer.viewModel.thumbnailUseCase),
                 videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase,
                 videoPlaylistEntity: rowItem.videoPlaylist,
                 onTapMoreOptions: { _ in }
@@ -127,6 +128,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
     private func cellViewModel(for rowItem: RowItem) -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
             thumbnailUseCase: representer.viewModel.thumbnailUseCase,
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: representer.viewModel.thumbnailUseCase),
             videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase,
             videoPlaylistEntity: rowItem.videoPlaylist,
             onTapMoreOptions: { _ in }

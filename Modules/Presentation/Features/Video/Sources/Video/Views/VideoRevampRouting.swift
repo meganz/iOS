@@ -4,5 +4,5 @@ import MEGAPresentation
 public protocol VideoRevampRouting: Routing {
     func openMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity])
     func openMoreOptions(for video: NodeEntity, sender: Any)
-    func openVideoPlaylistContent(for previewEntity: VideoPlaylistCellPreviewEntity)
+    func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity)
 }

@@ -22,7 +22,7 @@ struct VideoPlaylistsCollectionViewRepresenter: UIViewRepresentable {
     func makeUIView(context: Context) -> UICollectionView {
         let collectionView = UICollectionView(
             frame: .zero,
-            collectionViewLayout: AllVideosViewControllerCollectionViewLayoutBuilder().build()
+            collectionViewLayout: AllVideosViewControllerCollectionViewLayoutBuilder(viewType: .playlists).build()
         )
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
         collectionView.backgroundColor = UIColor(videoConfig.colorAssets.pageBackgroundColor)

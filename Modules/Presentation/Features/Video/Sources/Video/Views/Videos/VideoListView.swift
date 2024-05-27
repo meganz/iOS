@@ -22,7 +22,7 @@ struct VideoListView: View {
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.videos.isEmpty {
-                VideoListEmptyView(videoConfig: videoConfig)
+                videoEmptyView()
             } else if viewModel.videos.isNotEmpty {
                 listView()
             } else {
@@ -38,31 +38,27 @@ struct VideoListView: View {
         }
     }
     
+    private func videoEmptyView() -> some View {
+        VideoListEmptyView(
+            videoConfig: .preview,
+            image: VideoConfig.preview.videoListAssets.noResultVideoImage,
+            text: Strings.Localizable.Videos.Tab.All.Content.emptyState
+        )
+    }
+    
     private func listView() -> some View {
         AllVideosCollectionViewRepresenter(
             thumbnailUseCase: viewModel.thumbnailUseCase,
             videos: viewModel.videos,
             videoConfig: videoConfig,
             selection: viewModel.selection,
-            router: router
+            router: router,
+            viewType: .allVideos
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .onDisappear {
             viewModel.onViewDissapeared()
         }
-    }
-}
-
-struct VideoListEmptyView: View {
-    
-    let videoConfig: VideoConfig
-    
-    var body: some View {
-        VStack(spacing: 8) {
-            Image(uiImage: videoConfig.videoListAssets.noResultVideoImage)
-            Text(Strings.Localizable.Videos.Tab.All.Content.emptyState)
-        }
-        .background(videoConfig.colorAssets.pageBackgroundColor)
     }
 }
 

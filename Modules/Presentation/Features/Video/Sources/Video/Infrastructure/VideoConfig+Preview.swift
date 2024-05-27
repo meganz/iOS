@@ -102,6 +102,7 @@ extension VideoConfig {
                     buttonTintColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "videoPlaylistContent_buttonTintColor")
                 )
             ),
+            favouritesEmptyStateImage: MEGAAssetsPreviewImageProvider.image(named: "favouritesEmptyState")!,
             noResultVideoPlaylistImage: MEGAAssetsPreviewImageProvider.image(named: "rectangleVideoStackOutline")!
         )
     )

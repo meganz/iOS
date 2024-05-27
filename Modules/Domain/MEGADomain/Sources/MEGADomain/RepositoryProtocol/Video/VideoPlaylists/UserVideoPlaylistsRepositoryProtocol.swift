@@ -1,6 +1,6 @@
 import MEGASwift
 
-public protocol UserVideoPlaylistsRepositoryProtocol: Sendable {
+public protocol UserVideoPlaylistsRepositoryProtocol: Sendable, RepositoryProtocol {
     
     /// Listen to video playlist set update changes.
     /// - Returns: an AsyncSequence that emits video playlist updates.

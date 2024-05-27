@@ -73,13 +73,21 @@ public class VideoRevampFactory {
     
     public static func makeVideoContentContainerView(
         videoConfig: VideoConfig,
-        previewEntity: VideoPlaylistCellPreviewEntity
+        previewEntity: VideoPlaylistEntity,
+        videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
+        thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        router: some VideoRevampRouting
     ) -> UIViewController {
-        let view = PlaylistContentView(
+        let viewModel = VideoPlaylistContentViewModel(
+            videoPlaylistEntity: previewEntity,
+            videoPlaylistContentsUseCase: videoPlaylistContentUseCase,
+            thumbnailUseCase: thumbnailUseCase,
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
+        )
+        let view = PlaylistContentScreen(
+            viewModel: viewModel,
             videoConfig: videoConfig,
-            previewEntity: previewEntity,
-            onTapAddButton: {},
-            onTapPlayButton: {}
+            router: router
         )
         return UIHostingController(rootView: view)
     }
