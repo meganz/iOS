@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGADesignToken
 import UIKit
 
 class ChatBottomNewMessageIndicatorView: UIView {
@@ -21,10 +22,16 @@ class ChatBottomNewMessageIndicatorView: UIView {
     
     lazy var backgroundView: UIButton = {
         let backgroundView = UIButton()
-        backgroundView.backgroundColor = MEGAAppColor.Gray._333333.uiColor.withAlphaComponent(0.9)
         backgroundView.layer.cornerRadius = 22
         backgroundView.clipsToBounds = true
-        backgroundView.setImage(UIImage(resource: .jumpToLatest), for: .normal)
+        if UIColor.isDesignTokenEnabled() {
+            backgroundView.backgroundColor = TokenColors.Icon.primary
+            let jumpToLatestImage = UIImage(resource: .jumpToLatest).withTintColor(TokenColors.Icon.inverseAccent, renderingMode: .alwaysOriginal)
+            backgroundView.setImage(jumpToLatestImage, for: .normal)
+        } else {
+            backgroundView.backgroundColor = UIColor.gray333333.withAlphaComponent(0.9)
+            backgroundView.setImage(UIImage(resource: .jumpToLatest), for: .normal)
+        }
         return backgroundView
     }()
     

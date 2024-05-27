@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ChatRoomActiveCallView: View {
@@ -11,7 +12,11 @@ struct ChatRoomActiveCallView: View {
             Text(viewModel.message)
                 .font(.caption)
                 .bold()
-                .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+                .foregroundColor(
+                    isDesignTokenEnabled ?
+                        TokenColors.Text.inverseAccent.swiftUI :
+                        UIColor.whiteFFFFFF.swiftUI
+                )
             Image(uiImage: viewModel.muted)
             Image(uiImage: viewModel.video)
             Spacer()
@@ -28,7 +33,11 @@ struct ChatRoomActiveCallView: View {
         if isReconnecting {
             return Color(.systemOrange)
         } else {
-            return colorScheme == .dark ? MEGAAppColor.Green._00C29A.color : MEGAAppColor.Green._00A886.color
+            if isDesignTokenEnabled {
+                return TokenColors.Button.primary.swiftUI
+            } else {
+                return colorScheme == .dark ? UIColor.green00C29A.swiftUI : UIColor.green00A886.swiftUI
+            }
         }
     }
 }
