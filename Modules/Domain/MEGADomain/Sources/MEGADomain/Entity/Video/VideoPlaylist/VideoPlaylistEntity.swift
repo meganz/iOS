@@ -6,8 +6,8 @@ public struct VideoPlaylistEntity: Identifiable, Hashable, Sendable {
     public var coverNode: NodeEntity?
     public var count: Int
     public let type: VideoPlaylistEntityType
-    public let creationTime: Date?
-    public let modificationTime: Date?
+    public let creationTime: Date
+    public let modificationTime: Date
     public var sharedLinkStatus: SharedLinkStatusEntity
     
     public init(
@@ -16,8 +16,8 @@ public struct VideoPlaylistEntity: Identifiable, Hashable, Sendable {
         coverNode: NodeEntity? = nil,
         count: Int,
         type: VideoPlaylistEntityType,
-        creationTime: Date? = nil,
-        modificationTime: Date? = nil,
+        creationTime: Date,
+        modificationTime: Date,
         sharedLinkStatus: SharedLinkStatusEntity = .unavailable
     ) {
         self.id = id

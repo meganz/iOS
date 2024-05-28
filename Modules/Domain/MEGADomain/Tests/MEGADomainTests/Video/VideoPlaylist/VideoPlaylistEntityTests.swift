@@ -53,6 +53,8 @@ final class VideoPlaylistEntityTests: XCTestCase {
             name: "any-name",
             count: 1,
             type: type,
+            creationTime: Date(),
+            modificationTime: Date(),
             sharedLinkStatus: sharedLinkStatus
         )
     }

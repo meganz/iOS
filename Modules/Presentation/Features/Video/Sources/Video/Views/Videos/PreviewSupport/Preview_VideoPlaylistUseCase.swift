@@ -1,3 +1,4 @@
+import Foundation
 import MEGADomain
 import MEGASwift
 
@@ -17,6 +18,6 @@ struct Preview_VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     }
     
     func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {
-        VideoPlaylistEntity(id: 1, name: "Preview", count: 0, type: .user)
+        VideoPlaylistEntity(id: 1, name: "Preview", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
     }
 }

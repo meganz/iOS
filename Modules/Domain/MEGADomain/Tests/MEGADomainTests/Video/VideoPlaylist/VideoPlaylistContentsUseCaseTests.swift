@@ -20,7 +20,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     
     func testVideos_favoritePlaylistType_getVideos() async {
         let (sut, _, photoLibraryUseCase, _) = makeSUT()
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorite", count: 0, type: .favourite)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorite", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         
         _ = try? await sut.videos(in: videoPlaylist)
         
@@ -37,7 +37,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
                 NodeEntity(handle: 2, isFavourite: false, mediaType: .video)
             ])
         )
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorite", count: 0, type: .favourite)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorite", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         
         let videos = try await sut.videos(in: videoPlaylist)
         
@@ -45,7 +45,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     }
     
     func testVideos_userPlaylistType_getVideos() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "my custom video playlists", count: 0, type: .user)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "my custom video playlists", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, userVideoPlaylistRepository, _, fileSearchRepository) = makeSUT(
             videoPlaylistContentResult: [ setElementEntity(id: 1) ]
         )
@@ -64,7 +64,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     // MARK: - userVideoPlaylistVideos
     
     func userVideoPlaylistVideos_whenHasVideos_deliversVideos() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "my custom video playlists", count: 0, type: .user)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "my custom video playlists", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT(
             videoPlaylistContentResult: [ setElementEntity(id: 1) ],
             fileSearchRepositoryResult: [ NodeEntity(handle: 1, isFavourite: true, mediaType: .video) ]

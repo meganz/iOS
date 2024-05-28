@@ -9,6 +9,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let syncModel: VideoRevampSyncModel
+    private let monitorSortOrderChangedDispatchQueue: DispatchQueue
     
     @Published var videoPlaylists = [VideoPlaylistEntity]()
     @Published var shouldShowAddNewPlaylistAlert = false
@@ -23,19 +24,22 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private(set) var loadVideoPlaylistsOnSearchTextChangedTask: Task<Void, Never>?
     private var createVideoPlaylistTask: Task<Void, Never>?
+    private(set) var monitorSortOrderChangedTask: Task<Void, Never>?
     
     init(
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
-        alertViewModel: TextFieldAlertViewModel
+        alertViewModel: TextFieldAlertViewModel,
+        monitorSortOrderChangedDispatchQueue: DispatchQueue = DispatchQueue.main
     ) {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.syncModel = syncModel
         self.alertViewModel = alertViewModel
+        self.monitorSortOrderChangedDispatchQueue = monitorSortOrderChangedDispatchQueue
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
         
         self.alertViewModel.action = { [weak self] newVideoPlaylistName in
@@ -44,6 +48,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         
         assignVideoPlaylistNameValidator()
         listenSearchTextChange()
+        monitorSortOrderChanged()
     }
     
     private func assignVideoPlaylistNameValidator() {
@@ -69,11 +74,12 @@ final class VideoPlaylistsViewModel: ObservableObject {
     }
     
     @MainActor
-    private func loadVideoPlaylists() async {
+    private func loadVideoPlaylists(sortOrder: SortOrderEntity? = nil) async {
         async let systemVideoPlaylists = loadSystemVideoPlaylists()
         async let userVideoPlaylists = videoPlaylistsUseCase.userVideoPlaylists()
         
-        videoPlaylists = await systemVideoPlaylists + userVideoPlaylists
+        let playlists = await systemVideoPlaylists + userVideoPlaylists
+        videoPlaylists = VideoPlaylistsSorter.sort(playlists, by: sortOrder ?? syncModel.videoRevampVideoPlaylistsSortOrderType)
     }
     
     private func loadSystemVideoPlaylists() async -> [VideoPlaylistEntity] {
@@ -90,9 +96,28 @@ final class VideoPlaylistsViewModel: ObservableObject {
                     id: videoPlaylist.id,
                     name: Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites,
                     count: videoPlaylist.count,
-                    type: videoPlaylist.type
+                    type: videoPlaylist.type,
+                    creationTime: videoPlaylist.creationTime,
+                    modificationTime: videoPlaylist.modificationTime
                 )
             }
+    }
+    
+    private func monitorSortOrderChanged() {
+        syncModel.$videoRevampVideoPlaylistsSortOrderType
+            .debounce(for: .seconds(0.3), scheduler: monitorSortOrderChangedDispatchQueue)
+            .removeDuplicates()
+            .dropFirst()
+            .sink { [weak self] sortOrderType in
+                guard let self else { return }
+                self.monitorSortOrderChangedTask = Task { @MainActor in
+                    guard !Task.isCancelled else {
+                        return
+                    }
+                    await self.loadVideoPlaylists(sortOrder: sortOrderType)
+                }
+            }
+            .store(in: &subscriptions)
     }
     
     private func listenSearchTextChange() {

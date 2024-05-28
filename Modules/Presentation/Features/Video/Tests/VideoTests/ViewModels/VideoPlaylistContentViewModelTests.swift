@@ -18,7 +18,9 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             id: 1,
             name: "name",
             count: allVideos.count,
-            type: .favourite
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
         )
         let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
@@ -44,7 +46,9 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             id: 1,
             name: "name",
             count: allVideos.count,
-            type: .favourite
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
         )
         let (sut, videoPlaylistThumbnailLoader) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
@@ -70,7 +74,9 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             id: 1,
             name: "name",
             count: allVideos.count,
-            type: .favourite
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
         )
         let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
@@ -105,7 +111,9 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             id: 1,
             name: "name",
             count: allVideos.count,
-            type: .favourite
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
         )
         let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
@@ -138,7 +146,9 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             id: 1,
             name: "name",
             count: allVideos.count,
-            type: .favourite
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
         )
         let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,

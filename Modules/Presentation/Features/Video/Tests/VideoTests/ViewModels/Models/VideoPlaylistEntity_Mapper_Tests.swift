@@ -15,7 +15,7 @@ final class VideoPlaylistEntity_Mapper_Tests: XCTestCase {
             let duration = "02:02:02"
             let name = "A simple playlist"
             let videos: [NodeEntity] = []
-            let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, sharedLinkStatus: .exported(false))
+            let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, creationTime: Date(), modificationTime: Date(), sharedLinkStatus: .exported(false))
             
             let previewEntity = sut.toVideoPlaylistCellPreviewEntity(thumbnailContainers: [], durationText: duration)
             
@@ -31,7 +31,7 @@ final class VideoPlaylistEntity_Mapper_Tests: XCTestCase {
             let name = "A simple playlist"
             let videos = [ nodeEntity(name: "video-1", handle: HandleEntity(1), hasThumbnail: true) ]
             let thumbnailContainers = videos.map { _ in anyImageContainer() }
-            let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, sharedLinkStatus: .exported(false))
+            let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, creationTime: Date(), modificationTime: Date(), sharedLinkStatus: .exported(false))
             
             let previewEntity = sut.toVideoPlaylistCellPreviewEntity(thumbnailContainers: thumbnailContainers, durationText: duration)
             
@@ -47,7 +47,7 @@ final class VideoPlaylistEntity_Mapper_Tests: XCTestCase {
             let name = "A simple playlist"
             let videos = (0...1).map { nodeEntity(name: "video-\($0)", handle: HandleEntity($0), hasThumbnail: true) }
             let thumbnailContainers = videos.map { _ in anyImageContainer() }
-            let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, sharedLinkStatus: .exported(false))
+            let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, creationTime: Date(), modificationTime: Date(), sharedLinkStatus: .exported(false))
             
             let previewEntity = sut.toVideoPlaylistCellPreviewEntity(thumbnailContainers: thumbnailContainers, durationText: duration)
             
