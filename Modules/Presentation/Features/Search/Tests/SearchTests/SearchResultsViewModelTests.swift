@@ -566,9 +566,12 @@ final class SearchResultsViewModelTests: XCTestCase {
             
             harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 1))) // Triggers item update
             await Task.yield()
+            await Task.yield()
             harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 2))) // Triggers item updates
             await Task.yield()
+            await Task.yield()
             harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 100))) // Not triggering item update
+            await Task.yield()
             await Task.yield()
             
             XCTAssertEqual(harness.sut.listItems[0].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
