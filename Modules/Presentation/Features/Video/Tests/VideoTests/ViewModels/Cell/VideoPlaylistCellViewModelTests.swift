@@ -215,6 +215,8 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             name: name,
             count: count,
             type: type,
+            creationTime: Date(),
+            modificationTime: Date(),
             sharedLinkStatus: sharedLinkStatus
         )
     }

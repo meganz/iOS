@@ -134,7 +134,9 @@ struct ThumbnailLayerView: View {
             id: 1,
             name: "Favorites",
             count: 15,
-            type: .favourite
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
         )
     }
     

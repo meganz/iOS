@@ -18,9 +18,14 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     }
     
     private let systemVideoPlaylistsResult: [VideoPlaylistEntity]
+    private let userVideoPlaylistsResult: [VideoPlaylistEntity]
     
-    public init(systemVideoPlaylistsResult: [VideoPlaylistEntity] = []) {
+    public init(
+        systemVideoPlaylistsResult: [VideoPlaylistEntity] = [],
+        userVideoPlaylistsResult: [VideoPlaylistEntity] = []
+    ) {
         self.systemVideoPlaylistsResult = systemVideoPlaylistsResult
+        self.userVideoPlaylistsResult = userVideoPlaylistsResult
     }
     
     public func systemVideoPlaylists() async throws -> [VideoPlaylistEntity] {
@@ -31,7 +36,7 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     public func userVideoPlaylists() async -> [VideoPlaylistEntity] {
         $messages.mutate { $0.append(.userVideoPlaylists) }
-        return []
+        return userVideoPlaylistsResult
     }
     
     public func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {

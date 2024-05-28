@@ -105,7 +105,7 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
         syncModel.videoRevampSortOrderType = sortOrderPreferenceUseCase
             .sortOrder(for: .homeVideos)
         
-        syncModel.videoRevampSortOrderType = sortOrderPreferenceUseCase
+        syncModel.videoRevampVideoPlaylistsSortOrderType = sortOrderPreferenceUseCase
             .sortOrder(for: .homeVideoPlaylists)
     }
     

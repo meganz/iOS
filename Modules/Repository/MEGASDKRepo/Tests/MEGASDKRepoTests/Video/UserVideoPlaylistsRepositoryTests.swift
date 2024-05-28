@@ -176,7 +176,7 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
     }
     
     private func userVideoPlaylist(id: HandleEntity) -> VideoPlaylistEntity {
-        VideoPlaylistEntity(id: id, name: "name: \(id)", count: 0, type: .user)
+        VideoPlaylistEntity(id: id, name: "name: \(id)", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
     }
 }
 

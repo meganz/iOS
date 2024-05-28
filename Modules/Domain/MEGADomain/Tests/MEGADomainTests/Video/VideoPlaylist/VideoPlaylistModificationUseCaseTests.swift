@@ -70,7 +70,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     // MARK: - deleteVideos
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithEmptyIds_shouldNotExecuteRepository() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, userVideoPlaylistsRepository) = makeSUT()
         
         _ = try await sut.deleteVideos(in: videoPlaylist.id, videos: [])
@@ -80,7 +80,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithEmptyIds_shouldReturnZeroVideoPlaylistResultEntity() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _) = makeSUT()
         
         let result = try await sut.deleteVideos(in: videoPlaylist.id, videos: [])
@@ -90,7 +90,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_shouldNotExecuteDeleteVideos() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let videosToRemove = [ VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: nil) ]
         let (sut, userVideoPlaylistsRepository) = makeSUT()
         
@@ -101,7 +101,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_shouldReturnZeroVideoPlaylistResultEntity() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let videosToRemove = [ VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: nil) ]
         let (sut, _) = makeSUT()
         
@@ -112,7 +112,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_executeDeleteVideoPlaylist() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let videosToRemove = [
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: 1),
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 2), videoPlaylistVideoId: 2)
@@ -130,7 +130,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithValidVideoIds_shouldReturnVideoPlaylistResultEntityWithIdCount() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let videosToRemove = [
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: 1),
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 2), videoPlaylistVideoId: 2)
@@ -231,6 +231,6 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     private func userVideoPlaylist(id: HandleEntity) -> VideoPlaylistEntity {
-        VideoPlaylistEntity(id: id, name: "name: \(id)", count: 0, type: .user)
+        VideoPlaylistEntity(id: id, name: "name: \(id)", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
     }
 }
