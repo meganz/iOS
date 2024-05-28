@@ -32,19 +32,22 @@ public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
     }
 
     public func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity] {
-        let photos = try await filesSearchRepository.search(string: searchAllPhotosString,
-                                                            parent: parent,
-                                                            recursive: recursive,
-                                                            supportCancel: false,
-                                                            sortOrderType: .defaultDesc,
-                                                            formatType: .photo)
-        let videos = try await filesSearchRepository.search(string: searchAllPhotosString,
-                                                            parent: parent,
-                                                            recursive: recursive,
-                                                            supportCancel: false,
-                                                            sortOrderType: .defaultDesc,
-                                                            formatType: .video)
-        return photos + videos
+        try await [NodeFormatEntity.photo, .video]
+            .async
+            .map { [weak self] format -> [NodeEntity] in
+                guard let self else { throw  FileSearchResultErrorEntity.noDataAvailable }
+                let items: [NodeEntity] = try await filesSearchRepository.search(filter: SearchFilterEntity(
+                    searchText: searchAllPhotosString,
+                    parentNode: parent,
+                    recursive: recursive,
+                    supportCancel: false,
+                    sortOrderType: .defaultDesc,
+                    formatType: format,
+                    excludeSensitive: false)) // For now we want to include sensitive nodes, CC will address this in another ticket
+                return items
+            }
+            .reduce([NodeEntity]()) { $0 + $1 }
+
     }
     
     public func shouldReload(parentNode: NodeEntity, loadedNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {
