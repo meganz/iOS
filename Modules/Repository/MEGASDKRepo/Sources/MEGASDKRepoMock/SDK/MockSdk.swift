@@ -43,6 +43,7 @@ public final class MockSdk: MEGASdk {
     private let file: String?
     private let copiedNodeHandles: [MEGAHandle: MEGAHandle]
     private let abTestValues: [String: Int]
+    public var remoteFeatureFlagValues: [String: Int] = [:]
     private let requestResult: MockSdkRequestResult
     private let _accountCreationDate: Date?
     private let _enabledNotificationIdList: MEGAIntegerList?
@@ -674,6 +675,11 @@ public final class MockSdk: MEGASdk {
     // MARK: - A/B testing
     public override func getABTestValue(_ flag: String) -> Int {
         abTestValues[flag] ?? 0
+    }
+    
+    // MARK: - Remote feature flag
+    public override func remoteFeatureFlagValue(_ flag: String) -> Int {
+        remoteFeatureFlagValues[flag] ?? 0
     }
     
     public override func authorizeNode(_ node: MEGANode) -> MEGANode? {
