@@ -87,17 +87,24 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         self.swipeActions = swipeActions
     }
 
-    @MainActor
     func loadThumbnail() async {
+        guard !Task.isCancelled else { return }
         let data = await result.thumbnailImageData()
-        if let image = UIImage(data: data) {
-            self.thumbnailImage = image
-        }
+        
+        guard !Task.isCancelled else { return }
+        guard let image = UIImage(data: data) else { return }
+        
+        await update(thumbnailImage: image)
     }
 
-    @MainActor
     func reload(with result: SearchResult) async {
+        guard !Task.isCancelled else { return }
         self.result = result
         await loadThumbnail()
+    }
+    
+    @MainActor
+    private func update(thumbnailImage: UIImage) async {
+        self.thumbnailImage = thumbnailImage
     }
 }
