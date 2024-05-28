@@ -2,7 +2,7 @@ import SwiftUI
 
 // ┌────────────────────────────────────────────────────┐
 // │┌─────────────────────────────────────────────────┐ │
-// ││                       .secondary(.trailingEdge) │ │
+// ││                                    .verticalTop │ │
 // │╠─────────────────────────────────────────────────╣ │
 // │║                                                 ║ │
 // │║                                                 ║ │
@@ -34,7 +34,6 @@ import SwiftUI
 
 struct VerticalThumbnailView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     
     @ObservedObject var viewModel: SearchResultRowViewModel
     @Binding var selected: Set<ResultId>
@@ -72,18 +71,17 @@ struct VerticalThumbnailView: View {
         .clipped()
     }
     
-    // hosts secondary(.trailingEdge) properties
+    // hosts .verticalTop properties
     private var backgroundHeader: some View {
         HStack {
             Spacer()
-            
             HStack(spacing: 4) {
                 viewModel
                     .result
                     .properties
                     .propertyViewsFor(
                         layout: layout,
-                        placement: .secondary(.trailingEdge),
+                        placement: .verticalTop,
                         colorAssets: viewModel.colorAssets
                     )
             }
@@ -102,7 +100,7 @@ struct VerticalThumbnailView: View {
             .properties
             .propertiesFor(
                 mode: layout,
-                placement: .secondary(.trailingEdge)
+                placement: .verticalTop
             ).isNotEmpty
     }
     
@@ -110,19 +108,19 @@ struct VerticalThumbnailView: View {
     // in practice currently play icon and duration
     private var backgroundFooter: some View {
         HStack(spacing: 1) {
-            
-            ForEach(viewModel.result.properties.propertiesFor(mode: layout, placement: .secondary(.leading)) ) { property in
+            let placement = PropertyPlacement.secondary(.leading)
+            ForEach(viewModel.result.properties.propertiesFor(mode: layout, placement: placement) ) { property in
                 switch property.content {
                 case .icon(image: let image, scalable: let scalable):
-                    property.resultPropertyImage(image: image, scalable: scalable, colorAssets: viewModel.colorAssets)
+                    property.resultPropertyImage(image: image, scalable: scalable, colorAssets: viewModel.colorAssets, placement: placement)
                         .frame(width: 16, height: 16)
                         .padding(2)
                 case .text(let text):
                     Text(text)
                         .padding(2)
                         .font(.caption)
-                        .foregroundColor(Color.white.opacity(0.9))
-                        .background(viewModel.colorAssets._161616.opacity(0.5))
+                        .foregroundColor(viewModel.colorAssets.verticalThumbnailFooterText)
+                        .background(viewModel.colorAssets.verticalThumbnailFooterBackground)
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                 case .spacer:
                     Spacer()
@@ -194,7 +192,7 @@ struct VerticalThumbnailView: View {
     private var bottomLine: some View {
         HStack(spacing: 4) {
             Text(viewModel.result.description(layout))
-                .foregroundColor(.primary)
+                .foregroundColor(viewModel.colorAssets.subtitleTextColor)
                 .font(.caption)
             
             viewModel
@@ -218,19 +216,18 @@ struct VerticalThumbnailView: View {
     
     private var borderColor: Color {
         if selectionEnabled && isSelected {
-            viewModel.colorAssets._00A886
+            viewModel.colorAssets.selectedBorderColor
         } else {
-            colorScheme == .light ? viewModel.colorAssets.F7F7F7 : viewModel.colorAssets._545458
+            viewModel.colorAssets.unselectedBorderColor
         }
     }
     
     private var topNodeIconsBackgroundColor: Color {
-        colorScheme == .light ? Color(white: 1, opacity: 0.3)
-        : Color(white: 0, opacity: 0.4)
+        viewModel.colorAssets.verticalThumbnailTopIconsBackground
     }
     
     private var thumbnailBackgroundColor: Color {
-        colorScheme == .light ? viewModel.colorAssets.F7F7F7 : viewModel.colorAssets._1C1C1E
+        viewModel.colorAssets.verticalThumbnailPreviewBackground
     }
 }
 

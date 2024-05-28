@@ -22,15 +22,16 @@ extension Array where Element == ResultProperty {
     ) -> some View {
         Group {
             ForEach(propertiesFor(mode: layout, placement: placement)) { resultProperty in
-                propertyView(for: resultProperty, colorAssets: colorAssets).accessibilityLabel(resultProperty.accessibilityLabel)
+                propertyView(for: resultProperty, colorAssets: colorAssets, placement: placement)
+                    .accessibilityLabel(resultProperty.accessibilityLabel)
             }
         }
     }
     
-    @ViewBuilder func propertyView(for property: ResultProperty, colorAssets: SearchConfig.ColorAssets) -> some View {
+    @ViewBuilder func propertyView(for property: ResultProperty, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
         switch property.content {
         case let .icon(image: image, scalable: scalable):
-            property.resultPropertyImage(image: image, scalable: scalable, colorAssets: colorAssets)
+            property.resultPropertyImage(image: image, scalable: scalable, colorAssets: colorAssets, placement: placement)
                 .frame(width: 12, height: 12)
 
         case .text(let text):
@@ -44,13 +45,20 @@ extension Array where Element == ResultProperty {
 
 extension ResultProperty {
     @ViewBuilder
-    func resultPropertyImage(image: UIImage, scalable: Bool, colorAssets: SearchConfig.ColorAssets) -> some View {
-        // missing dynamic type scaling?
+    func resultPropertyImage(image: UIImage, scalable: Bool, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
         if scalable {
+            let propertyColor: Color = {
+                switch placement {
+                    // Should remove this after Semantic color is fully released . Ticket is [SAO-1482]
+                case .verticalTop: return colorAssets.verticalThumbnailTopPropertyColor
+                default: return colorAssets.resultPropertyColor
+                }
+            }()
+            
             Image(uiImage: image)
                 .renderingMode(.template)
                 .resizable()
-                .foregroundStyle(vibrancyEnabled ? colorAssets.vibrantColor : colorAssets.resultPropertyColor)
+                .foregroundStyle(vibrancyEnabled ? colorAssets.vibrantColor : propertyColor)
                 .scaledToFit()
         } else {
             Image(uiImage: image)

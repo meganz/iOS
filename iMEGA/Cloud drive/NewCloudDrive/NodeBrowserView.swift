@@ -38,7 +38,7 @@ struct NodeBrowserView: View {
                 )
             }
         }
-        .designTokenBackground(true)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: Color(UIColor.systemBackground))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }

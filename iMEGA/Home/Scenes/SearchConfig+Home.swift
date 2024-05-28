@@ -6,6 +6,7 @@ import Search
 import SwiftUI
 
 // Colors catering for backward-compatibility with non-semantic color system
+// To be removed when Semantic Color is fully released . Ticket is [SAO-1482]
 extension UIColor {
     /// Border of cells in thumbnail mode
     static let cloudDriveThumbnailModeBorder = UIColor(
@@ -33,6 +34,41 @@ extension UIColor {
             : UIColor(red: 0.710, green: 0.710, blue: 0.710, alpha: 1)
         }
     )
+    
+    static let cloudDriveVideoDurationText = UIColor.white.withAlphaComponent(90)
+    
+    static let cloudDriveVideoDurationBackground = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 0.5)
+    static let cloudDriveVerticalThumbnailPreviewBackground = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor.mnz_whiteF7F7F7()
+            : UIColor.mnz_black1C1C1E()
+        }
+    )
+    
+    static let cloudDriveVerticalThumbnailTopIconsBackground = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor.init(white: 1, alpha: 0.3)
+            : UIColor.init(white: 0, alpha: 0.4)
+        }
+    )
+    
+    static let cloudDriveVerticalThumbnailTopIcons = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor(red: 0.317, green: 0.317, blue: 0.317, alpha: 1)
+            : UIColor(red: 0.886, green: 0.886, blue: 0.886, alpha: 1)
+        }
+    )
+    
+    static let cloudDriveThumbnailMoreButton = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor(red: 0.733, green: 0.733, blue: 0.733, alpha: 1)
+            : UIColor(red: 0.886, green: 0.886, blue: 0.886, alpha: 1)
+        }
+    )
 }
 
 extension SearchConfig {
@@ -40,6 +76,7 @@ extension SearchConfig {
         contextPreviewFactory: ContextPreviewFactory,
         defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
     ) -> SearchConfig {
+        // To be removed when Semantic Color is fully released . Ticket is [SAO-1482]
         let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
         return .init(
             chipAssets: .init(
@@ -130,8 +167,10 @@ extension SearchConfig {
                 itemUnselected: UIImage.checkBoxUnselected,
                 playImage: UIImage.videoList,
                 downloadedImage: UIImage.downloaded,
-                moreList: isDesignTokenEnabled ? UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary) : UIImage.moreList.withRenderingMode(.alwaysOriginal),
-                moreGrid: UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
+                moreList: isDesignTokenEnabled ? UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary)
+                : UIImage.moreList.withTintColorAsOriginal(.cloudDriveThumbnailMoreButton),
+                moreGrid: isDesignTokenEnabled ? UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary) 
+                : UIImage.moreGrid.withTintColor(.cloudDriveThumbnailMoreButton)
             ),
             colorAssets: .init(
                 unselectedBorderColor: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : UIColor.cloudDriveThumbnailModeBorder.swiftUI,
@@ -140,6 +179,11 @@ extension SearchConfig {
                 subtitleTextColor: UIColor.secondaryTextColor().swiftUI,
                 vibrantColor: isDesignTokenEnabled ? TokenColors.Text.error.swiftUI : UIColor.cloudDriveVibrance.swiftUI, 
                 resultPropertyColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.cloudDrivePropertyIcon.swiftUI,
+                verticalThumbnailFooterText: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.cloudDriveVideoDurationText.swiftUI,
+                verticalThumbnailFooterBackground: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.cloudDriveVideoDurationBackground.swiftUI,
+                verticalThumbnailPreviewBackground: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.cloudDriveVerticalThumbnailPreviewBackground.swiftUI,
+                verticalThumbnailTopIconsBackground: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : UIColor.cloudDriveVerticalThumbnailTopIconsBackground.swiftUI,
+                verticalThumbnailTopPropertyColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.cloudDriveVerticalThumbnailTopIcons.swiftUI,
                 F7F7F7: UIColor.whiteF7F7F7.swiftUI,
                 _161616: UIColor.black161616.swiftUI,
                 _545458: UIColor.gray545458.swiftUI,
