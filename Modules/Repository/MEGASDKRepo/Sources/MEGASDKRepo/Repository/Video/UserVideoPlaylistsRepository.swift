@@ -58,15 +58,10 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
     }
     
     private func createSetElement(videoPlaylistId: HandleEntity, nodeId: HandleEntity) async throws -> (HandleEntity, Result<SetEntity, Error>) {
-        try await withCheckedThrowingContinuation { continuation in
+        try await withAsyncThrowingValue { continuation in
             sdk.createSetElement(videoPlaylistId, nodeId: nodeId, name: "", delegate: RequestDelegate { request, error in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
                 let result = AddVideosToVideoPlaylistResultMapper.map(request: request, error: error)
-                continuation.resume(returning: (nodeId, result))
+                continuation(.success((nodeId, result)))
             })
         }
     }
@@ -92,14 +87,10 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
     }
     
     private func removeSetElement(videoPlaylistId: HandleEntity, elementId: HandleEntity) async throws -> (HandleEntity, Result<SetEntity, Error>) {
-        try await withCheckedThrowingContinuation { continuation in
+        try await withAsyncThrowingValue { continuation in
             sdk.removeSetElement(videoPlaylistId, eid: elementId, delegate: RequestDelegate { request, error in
-                guard Task.isCancelled == false else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
                 let result = DeleteVideoPlaylistElementsMapper.map(request: request, error: error)
-                continuation.resume(returning: (elementId, result))
+                continuation(.success((elementId, result)))
             })
         }
     }
@@ -107,18 +98,13 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
     // MARK: - deleteVideoPlaylist
     
     public func deleteVideoPlaylist(by videoPlaylist: VideoPlaylistEntity) async throws -> VideoPlaylistEntity {
-        try await withCheckedThrowingContinuation { continuation in
+        try await withAsyncThrowingValue { continuation in
             sdk.removeSet(videoPlaylist.id, delegate: RequestDelegate { result in
-                guard Task.isCancelled == false else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
                 switch result {
                 case .success:
-                    continuation.resume(returning: videoPlaylist)
+                    continuation(.success(videoPlaylist))
                 case .failure:
-                    continuation.resume(throwing: GenericErrorEntity())
+                    continuation(.failure(GenericErrorEntity()))
                 }
             })
         }
@@ -134,29 +120,44 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
     // MARK: - createVideoPlaylist
     
     public func createVideoPlaylist(_ name: String?) async throws -> SetEntity {
-        return try await withCheckedThrowingContinuation { continuation in
+        try await withAsyncThrowingValue { continuation in
             sdk.createSet(name, type: .playlist, delegate: RequestDelegate { result in
-                guard Task.isCancelled == false else {
-                    continuation.resume(throwing: CancellationError())
-                    log(error: CancellationError())
-                    return
-                }
-                
                 switch result {
                 case .success(let request):
                     guard let set = request.set else {
-                        continuation.resume(throwing: VideoPlaylistErrorEntity.failedToRetrieveNewlyCreatedPlaylist)
+                        continuation(.failure(VideoPlaylistErrorEntity.failedToRetrieveNewlyCreatedPlaylist))
                         return
                     }
                     
-                    continuation.resume(returning: set.toSetEntity())
+                    continuation(.success(set.toSetEntity()))
                 case .failure(let error):
-                    continuation.resume(throwing: VideoPlaylistErrorEntity.failedToCreatePlaylist(name: name))
+                    continuation(.failure(VideoPlaylistErrorEntity.failedToCreatePlaylist(name: name)))
                     log(error: error)
                 }
             })
         }
     }
+    
+    // MARK: - updateVideoPlaylistName
+    
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws -> SetEntity {
+        try await withAsyncThrowingValue { continuation in
+            sdk.updateSetName(videoPlaylist.id, name: newName, delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    guard let set = request.set else {
+                        continuation(.failure(VideoPlaylistErrorEntity.failedToRetrieveSetFromRequest))
+                        return
+                    }
+                    continuation(.success(set.toSetEntity()))
+                case .failure:
+                    continuation(.failure(VideoPlaylistErrorEntity.failedToUpdateVideoPlaylistName(name: newName)))
+                }
+            })
+        }
+    }
+    
+    // MARK: - Helpers
     
     private func log(error: Error, file: String = #file, _ line: Int = #line) {
         MEGASdk.log(with: .error, message: "[iOS] \(error.localizedDescription)", filename: file, line: line)

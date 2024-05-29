@@ -131,6 +131,18 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         XCTAssertEqual(sdk.messages, [ .createSet(name: expectedPlaylistName, type: .playlist) ])
     }
     
+    // MARK: - updateVideoPlaylistName
+    
+    func testUpdateVideoPlaylistName_whenCalled_updatesVideoPlaylistName() async {
+        let videoPlaylistToBeRenamed = userVideoPlaylist(id: 1)
+        let newName = "new name"
+        let (sut, sdk) = makeSUT()
+        
+        _ = try? await sut.updateVideoPlaylistName(newName, for: videoPlaylistToBeRenamed)
+        
+        XCTAssertEqual(sdk.messages, [ .updateSetName(sid: videoPlaylistToBeRenamed.id, name: newName) ])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

@@ -14,6 +14,7 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
         case deleteVideoPlaylist(id: HandleEntity)
         case videoPlaylistContent(id: HandleEntity, includeElementsInRubbishBin: Bool)
         case createVideoPlaylist(name: String?)
+        case updateVideoPlaylistName(newName: String, videoPlaylistEntity: VideoPlaylistEntity)
     }
     
     public private(set) var messages = [Message]()
@@ -26,6 +27,7 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
     private let deleteVideoPlaylistResult: Result<VideoPlaylistEntity, Error>
     private let videoPlaylistContentResult: [SetElementEntity]
     private let createVideoPlaylistResult: Result<SetEntity, Error>
+    private let updateVideoPlaylistNameResult: Result<SetEntity, Error>
     
     public init(
         videoPlaylistsResult: [SetEntity] = [],
@@ -35,7 +37,8 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
         videoPlaylistContentResult: [SetElementEntity] = [],
         createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        updateVideoPlaylistNameResult: Result<SetEntity, Error> = .failure(GenericErrorEntity())
     ) {
         self.videoPlaylistsResult = videoPlaylistsResult
         self.addVideosToVideoPlaylistResult = addVideosToVideoPlaylistResult
@@ -45,6 +48,7 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
         self.createVideoPlaylistResult = createVideoPlaylistResult
         self.setsUpdatedAsyncSequence = setsUpdatedAsyncSequence
         self.setElementsUpdatedAsyncSequence = setElementsUpdatedAsyncSequence
+        self.updateVideoPlaylistNameResult = updateVideoPlaylistNameResult
     }
     
     public func videoPlaylists() async -> [SetEntity] {
@@ -75,5 +79,10 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
     public func createVideoPlaylist(_ name: String?) async throws -> SetEntity {
         messages.append(.createVideoPlaylist(name: name))
         return try createVideoPlaylistResult.get()
+    }
+    
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws -> SetEntity {
+        messages.append(.updateVideoPlaylistName(newName: newName, videoPlaylistEntity: videoPlaylist))
+        return try updateVideoPlaylistNameResult.get()
     }
 }
