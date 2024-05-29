@@ -393,8 +393,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
 
         let (sut, router) = makeSUT(
             callUseCase: callUseCase,
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
-            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
         )
         viewModel = sut
 
@@ -410,8 +409,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
 
         let (sut, router) = makeSUT(
             callUseCase: callUseCase,
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
-            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
         )
         viewModel = sut
 

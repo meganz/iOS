@@ -25,7 +25,6 @@ class CallLimitations {
     // that dynamically via observing chat rooms own priviledge
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
 
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let _limitsChanged = PassthroughSubject<Void, Never>()
     
     /// will be sent whenever call has changed the callLimits.maxUsers property
@@ -40,10 +39,6 @@ class CallLimitations {
     // we also listen to notifications when this changes
     private var limitOfFreeTierUsers: Int = 100
     
-    private var chatMonetisationEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
-    }
-    
     private var isMyselfModerator: Bool
     private let chatRoom: ChatRoomEntity
     
@@ -51,13 +46,11 @@ class CallLimitations {
         initialLimit: Int,
         chatRoom: ChatRoomEntity,
         callUseCase: some CallUseCaseProtocol,
-        chatRoomUseCase: some ChatRoomUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        chatRoomUseCase: some ChatRoomUseCaseProtocol
     ) {
         self.limitOfFreeTierUsers = initialLimit
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
-        self.featureFlagProvider = featureFlagProvider
         isMyselfModerator = chatRoom.ownPrivilege == .moderator
         self.chatRoom = chatRoom
         
@@ -136,7 +129,6 @@ class CallLimitations {
     
     private var participantsNumberLimitationsEnabled: Bool {
         return Self.participantsNumberLimitationsEnabled(
-            featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: isMyselfModerator,
             currentLimit: limitOfFreeTierUsers
         )
@@ -150,7 +142,6 @@ class CallLimitations {
         _ callParticipantCount: Int
     ) -> Bool {
         Self.callParticipantsLimitReached(
-            featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: isMyselfModerator,
             currentLimit: limitOfFreeTierUsers,
             callParticipantCount: callParticipantCount
@@ -162,7 +153,6 @@ class CallLimitations {
         afterAdding additionalParticipantCount: Int
     ) -> Bool {
         Self.callParticipantsPlusAdditionalUsersLimitPassed(
-            featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: isMyselfModerator,
             currentLimit: limitOfFreeTierUsers,
             callParticipantCount: callParticipantCount,
@@ -171,11 +161,9 @@ class CallLimitations {
     }
     
     static func participantsNumberLimitationsEnabled(
-        featureFlagEnabled: Bool,
         isMyselfModerator: Bool,
         currentLimit: Int
     ) -> Bool {
-        guard featureFlagEnabled else { return false }
         guard isMyselfModerator else { return false }
         // -1 means no limit
         return currentLimit != CallLimitsEntity.noLimits
@@ -193,15 +181,13 @@ class CallLimitations {
     //   * can be safely called from the outside with the same set of parameters
     // It's crucial to keep this logic in sync to trigger it under the same conditions.
     static func callParticipantsLimitReached(
-        featureFlagEnabled: Bool,
         isMyselfModerator: Bool,
         currentLimit: Int,
         callParticipantCount: Int
     ) -> Bool {
-        MEGALogDebug("[CallLimitations] check limits call participants \(callParticipantCount), FF: \(featureFlagEnabled), host: \(isMyselfModerator), limit: \(currentLimit)")
+        MEGALogDebug("[CallLimitations] check limits call participants \(callParticipantCount), host: \(isMyselfModerator), limit: \(currentLimit)")
         
         let shouldActuallyCheckLimits = participantsNumberLimitationsEnabled(
-            featureFlagEnabled: featureFlagEnabled,
             isMyselfModerator: isMyselfModerator,
             currentLimit: currentLimit
         )
@@ -217,16 +203,14 @@ class CallLimitations {
     /// * disabling `Admit all` button in the floating panel in the call UI
     /// * disabling `Admit` and `Admit all` buttons in the alert view shown from `MainTabBarCallsViewModel` when users are joining waiting room
     static func callParticipantsPlusAdditionalUsersLimitPassed(
-        featureFlagEnabled: Bool,
         isMyselfModerator: Bool,
         currentLimit: Int,
         callParticipantCount: Int,
         additionalParticipantCount: Int
     ) -> Bool {
-        MEGALogDebug("[CallLimitations] check limits call participants \(callParticipantCount), FF: \(featureFlagEnabled), host: \(isMyselfModerator), limit: \(currentLimit)")
+        MEGALogDebug("[CallLimitations] check limits call participants \(callParticipantCount), host: \(isMyselfModerator), limit: \(currentLimit)")
         
         let shouldActuallyCheckLimits = participantsNumberLimitationsEnabled(
-            featureFlagEnabled: featureFlagEnabled,
             isMyselfModerator: isMyselfModerator,
             currentLimit: currentLimit
         )
@@ -256,14 +240,12 @@ class CallLimitations {
     ) -> Bool {
         MEGALogDebug("[CallLimitations] contact picker limit checker participants = \(callParticipantCount), selected: \(selectedCount), allowsNonHostToInvite: \(allowsNonHostToInvite)")
         return Self.callParticipantsLimitReached(
-            featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: allowsNonHostToInvite,
             currentLimit: limitOfFreeTierUsers,
             callParticipantCount: callParticipantCount
         )
         ||
         Self.callParticipantsPlusAdditionalUsersLimitPassed(
-            featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: allowsNonHostToInvite,
             currentLimit: limitOfFreeTierUsers,
             callParticipantCount: callParticipantCount,

@@ -43,7 +43,7 @@ public final class MockSdk: MEGASdk {
     private let file: String?
     private let copiedNodeHandles: [MEGAHandle: MEGAHandle]
     private let abTestValues: [String: Int]
-    public var remoteFeatureFlagValues: [String: Int] = [:]
+    private let remoteFeatureFlagValues: [String: Int]
     private let requestResult: MockSdkRequestResult
     private let _accountCreationDate: Date?
     private let _enabledNotificationIdList: MEGAIntegerList?
@@ -136,6 +136,7 @@ public final class MockSdk: MEGASdk {
                 file: String? = nil,
                 copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:],
                 abTestValues: [String: Int] = [:],
+                remoteFeatureFlagValues: [String: Int] = [:],
                 requestResult: MockSdkRequestResult = .failure(MockError.failingError),
                 accountCreationDate: Date? = nil,
                 enabledNotificationIdList: MEGAIntegerList? = nil,
@@ -188,6 +189,7 @@ public final class MockSdk: MEGASdk {
         self.file = file
         self.copiedNodeHandles = copiedNodeHandles
         self.abTestValues = abTestValues
+        self.remoteFeatureFlagValues = remoteFeatureFlagValues
         self.requestResult = requestResult
         self._accountCreationDate = accountCreationDate
         _enabledNotificationIdList = enabledNotificationIdList
