@@ -8,9 +8,12 @@ import XCTest
 
 final class FilesExplorerViewModelTests: XCTestCase {
     
-    func testActionStartSearching_ForAllDocsAndAudio_shouldReturnNodes() {
+    func testActionStartSearching_ForAllExploreTypes_shouldReturnNodes() {
+        // Ensure sort order is set during test
+        Helper.save(.defaultDesc, for: nil)
+        
         for featureFlagActive in [true, false] {
-            for explorerType in [ExplorerTypeEntity.allDocs, .audio] {
+            for explorerType in [ExplorerTypeEntity.allDocs, .audio, .favourites] {
                 
                 let expectedNodes = [
                     MockNode(handle: 1, name: "1", parentHandle: 0),
@@ -27,35 +30,37 @@ final class FilesExplorerViewModelTests: XCTestCase {
                     featureFlagHiddenNodes: featureFlagActive)
                 
                 test(viewModel: sut, action: .startSearching(searchText), expectedCommands: [.reloadNodes(nodes: expectedNodes, searchText: searchText)], expectationValidation: isEquals)
-                XCTAssertEqual(filesSearchUseCase.messages, [.onNodesUpdate] + [featureFlagActive ? .search : .searchLegacy])
+                XCTAssertEqual(filesSearchUseCase.messages, [.onNodesUpdate, .search])
+                XCTAssertEqual(filesSearchUseCase.filters, expectedSearchFilters(for: explorerType, searchText: searchText, excludeSensitive: featureFlagActive))
             }
         }
-    }
-    
-    func testActionStartSearching_ForFavourites_shouldReturnNodes() {
-        
-        let expectedNodes = [
-            MockNode(handle: 1, name: "1", parentHandle: 0),
-            MockNode(handle: 2, name: "2", parentHandle: 0),
-            MockNode(handle: 3, name: "3", parentHandle: 0)
-        ]
-        
-        let searchText: String? = "test"
-        let sut = sut(
-            explorerType: .favourites,
-            favouritesUseCase: MockFavouriteNodesUseCase(
-                getAllFavouriteNodesWithSearchResult: .success(expectedNodes.toNodeEntities())),
-            nodeProvider: MockMEGANodeProvider(nodes: expectedNodes))
-        
-        test(viewModel: sut, action: .startSearching(searchText), expectedCommands: [.reloadNodes(nodes: expectedNodes, searchText: searchText)], expectationValidation: isEquals)
     }
 }
 
 private extension FilesExplorerViewModelTests {
+    func expectedSearchFilters(for explorerType: ExplorerTypeEntity, searchText: String?, excludeSensitive: Bool) -> [SearchFilterEntity] {
+        let nodeFormatType: NodeFormatEntity = switch explorerType {
+        case .allDocs: .allDocs
+        case .audio: .audio
+        case .video: .video
+        case .favourites: .unknown
+        }
+        
+        return switch explorerType {
+        case .audio, .video, .allDocs:
+            [
+                .init(searchText: searchText, recursive: true, supportCancel: true, sortOrderType: .defaultDesc, formatType: nodeFormatType, excludeSensitive: excludeSensitive, favouriteFilterOption: .disabled)
+            ]
+        case .favourites:
+            [
+                .init(searchText: searchText, recursive: true, supportCancel: true, sortOrderType: .defaultDesc, formatType: nodeFormatType, excludeSensitive: excludeSensitive, favouriteFilterOption: .onlyFavourites)
+            ]
+        }
+    }
+    
     func sut(
         explorerType: ExplorerTypeEntity,
         filesSearchUseCase: some FilesSearchUseCaseProtocol = MockFilesSearchUseCase(searchResult: .success([])),
-        favouritesUseCase: some FavouriteNodesUseCaseProtocol = MockFavouriteNodesUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         nodeProvider: some MEGANodeProviderProtocol = MockMEGANodeProvider(),
         featureFlagHiddenNodes: Bool = false) -> FilesExplorerViewModel {
@@ -65,7 +70,6 @@ private extension FilesExplorerViewModelTests {
                 explorerType: explorerType,
                 router: FilesExplorerRouter(navigationController: nil, explorerType: explorerType, featureFlagProvider: featureFlagProvider),
                 useCase: filesSearchUseCase,
-                favouritesUseCase: favouritesUseCase,
                 filesDownloadUseCase: FilesDownloadUseCase(repo: .init(sdk: sdk)),
                 nodeClipboardOperationUseCase: NodeClipboardOperationUseCase(repo: .init(sdk: sdk)),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,

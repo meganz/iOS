@@ -351,7 +351,8 @@ public final class MockSdk: MEGASdk {
                                                       recursive: recursive,
                                                       sortOrderType: orderType,
                                                       formatType: nodeFormatType, 
-                                                      excludeSensitive: false)
+                                                      excludeSensitive: false,
+                                                      favouriteFilter: 0)
         nodeListSearchCallCount += 1
         return MockNodeList(nodes: nodes)
     }
@@ -362,7 +363,8 @@ public final class MockSdk: MEGASdk {
                                                       recursive: true,
                                                       sortOrderType: orderType,
                                                       formatType: MEGANodeFormatType(rawValue: Int(filter.category)) ?? .unknown,
-                                                      excludeSensitive: filter.sensitivity)
+                                                      excludeSensitive: filter.sensitivity, 
+                                                      favouriteFilter: filter.favouriteFilter)
         searchWithFilterCallCount += 1
         return MockNodeList(nodes: nodes)
     }
@@ -373,7 +375,8 @@ public final class MockSdk: MEGASdk {
                                                       recursive: false,
                                                       sortOrderType: orderType,
                                                       formatType: MEGANodeFormatType(rawValue: Int(filter.category)) ?? .unknown,
-                                                      excludeSensitive: filter.sensitivity)
+                                                      excludeSensitive: filter.sensitivity,
+                                                      favouriteFilter: filter.favouriteFilter)
         
         searchNonRecursivelyWithFilterCallCount += 1
         return MockNodeList(nodes: nodes)
@@ -792,19 +795,22 @@ extension MockSdk {
         public let sortOrderType: MEGASortOrderType
         public let formatType: MEGANodeFormatType
         public let excludeSensitive: Bool
+        public let favouriteFilter: Int32
         
         public init(node: MEGANode,
                     searchString: String?,
                     recursive: Bool,
                     sortOrderType: MEGASortOrderType,
                     formatType: MEGANodeFormatType,
-                    excludeSensitive: Bool) {
+                    excludeSensitive: Bool,
+                    favouriteFilter: Int32) {
             self.node = node
             self.searchString = searchString
             self.recursive = recursive
             self.sortOrderType = sortOrderType
             self.formatType = formatType
             self.excludeSensitive = excludeSensitive
+            self.favouriteFilter = favouriteFilter
         }
     }
 }

@@ -34,7 +34,6 @@ final class FilesExplorerViewModel: ViewModelType {
     
     private let router: FilesExplorerRouter
     private let useCase: any FilesSearchUseCaseProtocol
-    private let favouritesUseCase: any FavouriteNodesUseCaseProtocol
     private let filesDownloadUseCase: FilesDownloadUseCase
     private let nodeClipboardOperationUseCase: NodeClipboardOperationUseCase
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
@@ -71,7 +70,6 @@ final class FilesExplorerViewModel: ViewModelType {
     required init(explorerType: ExplorerTypeEntity,
                   router: FilesExplorerRouter,
                   useCase: some FilesSearchUseCaseProtocol,
-                  favouritesUseCase: some FavouriteNodesUseCaseProtocol,
                   filesDownloadUseCase: FilesDownloadUseCase,
                   nodeClipboardOperationUseCase: NodeClipboardOperationUseCase,
                   contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
@@ -81,7 +79,6 @@ final class FilesExplorerViewModel: ViewModelType {
         self.explorerType = explorerType
         self.router = router
         self.useCase = useCase
-        self.favouritesUseCase = favouritesUseCase
         self.nodeClipboardOperationUseCase = nodeClipboardOperationUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
@@ -95,14 +92,7 @@ final class FilesExplorerViewModel: ViewModelType {
                 self.invokeCommand?(.reloadData)
             }
         }
-        
-        self.favouritesUseCase.registerOnNodesUpdate { [weak self] _ in
-            guard let self else { return }
-            self.debouncer.start {
-                self.invokeCommand?(.reloadData)
-            }
-        }
-        
+                
         self.nodeClipboardOperationUseCase.onNodeMove { [weak self] node in
             self?.invokeCommand?(.onNodesUpdate([node]))
         }
@@ -166,12 +156,10 @@ final class FilesExplorerViewModel: ViewModelType {
     @MainActor
     private func startSearching(_ text: String?) async {
         do {
-            let nodes: [NodeEntity] = switch explorerType {
-            case .audio, .video, .allDocs:
-                try await startSearch(text: text, formatType: explorerType.toNodeFormatEntity())
-            case .favourites:
-                try await startSearchingFavouriteNodes(text)
-            }
+            let nodes: [NodeEntity] = try await startSearch(
+                text: text,
+                formatType: explorerType.toNodeFormatEntity(),
+                favouritesOnly: explorerType == .favourites)
             
             let megaNodes = await toMEGANode(from: nodes)
             updateListenerForFilesDownload(withNodes: megaNodes)
@@ -191,41 +179,19 @@ final class FilesExplorerViewModel: ViewModelType {
         }
     }
     
-    private func startSearch(text: String?, formatType: NodeFormatEntity) async throws -> [NodeEntity] {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
-            // We need to maintain legacy version for the release, as there is currently a bug
-            // with sortorder that should be fixed before hidden nodes is release
-            return try await withCheckedThrowingContinuation { [weak self] continuation in
-                self?.useCase.search(string: text,
-                                parent: nil,
-                                recursive: true,
-                                supportCancel: true,
-                                sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
-                                cancelPreviousSearchIfNeeded: true) { nodes, isCancelled in
-                    if isCancelled {
-                        continuation.resume(throwing: CancellationError())
-                    } else {
-                        continuation.resume(returning: nodes ?? [])
-                    }
-                }
-            }
-        }
-        
-        return try await useCase.search(
+    private func startSearch(text: String?, formatType: NodeFormatEntity, favouritesOnly: Bool = false) async throws -> [NodeEntity] {
+        try await useCase.search(
             filter: .init(
                 searchText: text,
                 recursive: true,
                 supportCancel: true,
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                 formatType: explorerType.toNodeFormatEntity(),
-                excludeSensitive: await shouldExcludeHiddenSensitive()),
+                excludeSensitive: await shouldExcludeHiddenSensitive(),
+                favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled),
             cancelPreviousSearchIfNeeded: true)
     }
     	
-    private func startSearchingFavouriteNodes(_ text: String?) async throws -> [NodeEntity] {
-        try await favouritesUseCase.allFavouriteNodes(searchString: text)
-    }
-	
     private func toMEGANode(from nodes: [NodeEntity]) async -> [MEGANode] {
         await withTaskGroup(of: (Int, MEGANode?).self, returning: [MEGANode].self) { taskGroup in
             let nodeProvider = self.nodeProvider
