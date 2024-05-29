@@ -20,6 +20,14 @@ public protocol VideoPlaylistUseCaseProtocol {
     /// - Returns: `SetEntity` instance representing created video playlist.
     /// - throws: Throw `VideoPlaylistErrorEntity` if it failed during adding videos to playlist or `CancellationError` if cancelled.
     func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity
+    
+    /// Rename specific video playlist
+    /// - Parameters:
+    ///   - newName: new name for the video playlist
+    ///   - videoPlaylistEntity: `VideoPlaylistEntity` instance that wants to be renamed
+    /// - Returns: return new instance of renamed `VideoPlaylistEntity`
+    /// - throws: Throw `VideoPlaylistErrorEntity` if it failed during adding videos to playlist or `CancellationError` if cancelled.
+    func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws -> VideoPlaylistEntity
 }
 
 public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
@@ -71,7 +79,7 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
         let playlistSetEntities = await userVideoPlaylistsRepository.videoPlaylists()
         return playlistSetEntities
             .filter { $0.setType == .playlist }
-            .map { $0.toVideoPlaylistEntity(type: .user) }
+            .map { $0.toVideoPlaylistEntity(type: .user, sharedLinkStatus: .exported($0.isExported)) }
     }
     
     private func videos() async throws -> [NodeEntity] {
@@ -107,6 +115,20 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     public func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {
         try await userVideoPlaylistsRepository.createVideoPlaylist(name)
-            .toVideoPlaylistEntity(type: .user, sharedLinkStatus: .exported(false))
+            .toVideoPlaylistEntity(type: .user, sharedLinkStatus: .exported(false), count: 0)
+    }
+    
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws -> VideoPlaylistEntity {
+        guard videoPlaylistEntity.name != newName else {
+            throw VideoPlaylistErrorEntity.invalidOperation
+        }
+        
+        return try await userVideoPlaylistsRepository
+            .updateVideoPlaylistName(newName, for: videoPlaylistEntity)
+            .toVideoPlaylistEntity(
+                type: videoPlaylistEntity.type, 
+                sharedLinkStatus: videoPlaylistEntity.sharedLinkStatus,
+                count: videoPlaylistEntity.count
+            )
     }
 }

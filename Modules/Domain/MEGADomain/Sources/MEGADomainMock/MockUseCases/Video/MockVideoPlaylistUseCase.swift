@@ -15,16 +15,20 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     public enum Message: Equatable {
         case systemVideoPlaylists
         case userVideoPlaylists
+        case updateVideoPlaylistName
     }
     
     private let systemVideoPlaylistsResult: [VideoPlaylistEntity]
+    private let updateVideoPlaylistNameResult: Result<VideoPlaylistEntity, any Error>
     private let userVideoPlaylistsResult: [VideoPlaylistEntity]
     
     public init(
         systemVideoPlaylistsResult: [VideoPlaylistEntity] = [],
+        updateVideoPlaylistNameResult: Result<VideoPlaylistEntity, any Error> = .failure(GenericErrorEntity()),
         userVideoPlaylistsResult: [VideoPlaylistEntity] = []
     ) {
         self.systemVideoPlaylistsResult = systemVideoPlaylistsResult
+        self.updateVideoPlaylistNameResult = updateVideoPlaylistNameResult
         self.userVideoPlaylistsResult = userVideoPlaylistsResult
     }
     
@@ -41,5 +45,10 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     public func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {
         throw GenericErrorEntity()
+    }
+    
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws -> VideoPlaylistEntity {
+        $messages.mutate { $0.append(.updateVideoPlaylistName) }
+        return try updateVideoPlaylistNameResult.get()
     }
 }
