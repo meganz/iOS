@@ -276,8 +276,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             initialLimit: call?.callLimits.maxUsers ?? 100,
             chatRoom: chatRoom,
             callUseCase: callUseCase,
-            chatRoomUseCase: chatRoomUseCase,
-            featureFlagProvider: featureFlagProvider
+            chatRoomUseCase: chatRoomUseCase
         )
         
         limitsChangedSubscription = limitations?

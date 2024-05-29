@@ -1,1 +1,3 @@
-public typealias RemoteFeatureFlagName = String
+public enum RemoteFeatureFlag: String {
+    case chatMonetisation = "chmon"
+}

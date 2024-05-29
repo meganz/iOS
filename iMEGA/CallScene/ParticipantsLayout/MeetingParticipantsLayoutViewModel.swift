@@ -1067,9 +1067,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func onCallUpdate(_ call: CallEntity) {
         switch call.changeType {
         case .callWillEnd:
-            if featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) {
-                manageCallWillEnd(for: call)
-            }
+            manageCallWillEnd(for: call)
         default:
             break
         }

@@ -104,7 +104,6 @@ struct ParticipantsAddingViewFactory {
         // for a organiser, we it will be possible to show upgrade modal sheet from it
         // for a host-non-organiser, it can be dismissed (once per lifetime of the view controller)
         let bannerConfig = bannerConfigFactory(
-            chatMonetisationFeatureEnabled: chatMonetisationFeatureEnabled,
             warningMode: contactPickerConfig.canInviteParticipants ? .dismissible : .noWarning,
             presentUpgrade: presentUpgrade
         )
@@ -124,19 +123,10 @@ struct ParticipantsAddingViewFactory {
         return navigationController
     }
     
-    private var chatMonetisationFeatureEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
-    }
-    
     private func bannerConfigFactory(
-        chatMonetisationFeatureEnabled: Bool,
         warningMode: ParticipantLimitWarningMode,
         presentUpgrade: @escaping () -> Void
     ) -> BannerView.Config? {
-        guard
-            chatMonetisationFeatureEnabled
-        else { return nil }
-        
         switch warningMode {
         case .nonDismissibleWithUpgradeLink:
                 return .init(

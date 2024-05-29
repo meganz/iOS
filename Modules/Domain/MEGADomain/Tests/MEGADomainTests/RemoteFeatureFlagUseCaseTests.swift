@@ -4,17 +4,17 @@ import XCTest
 
 final class RemoteFeatureFlagUseCaseTests: XCTestCase {
     actor MockRemoteFeatureFlagRepository: RemoteFeatureFlagRepositoryProtocol {
-        private var receivedFlags: [RemoteFeatureFlagName] = []
+        private var receivedFlags: [RemoteFeatureFlag] = []
         private let valueToReturn: Int
         init(valueToReturn: Int = 0) {
             self.valueToReturn = valueToReturn
         }
-        func remoteFeatureFlagValue(for flag: RemoteFeatureFlagName) async -> Int {
+        func remoteFeatureFlagValue(for flag: RemoteFeatureFlag) async -> Int {
             receivedFlags.append(flag)
             return valueToReturn
         }
         
-        func capturedReceivedFlags() async -> [RemoteFeatureFlagName] {
+        func capturedReceivedFlags() async -> [RemoteFeatureFlag] {
             receivedFlags
         }
         
@@ -26,15 +26,15 @@ final class RemoteFeatureFlagUseCaseTests: XCTestCase {
     func testRemoteValue_asksRepo() async {
         let repo = MockRemoteFeatureFlagRepository()
         let usecase = RemoteFeatureFlagUseCase(repository: repo)
-        _ = await usecase.remoteFeatureFlagValue(for: "abc")
+        _ = await usecase.isFeatureFlagEnabled(for: .chatMonetisation)
         let flags = await repo.capturedReceivedFlags()
-        XCTAssertEqual(flags, ["abc"])
+        XCTAssertEqual(flags, [.chatMonetisation])
     }
     
     func testRemoteValue_returnsValueFromRepo() async {
         let repo = MockRemoteFeatureFlagRepository(valueToReturn: 123)
         let usecase = RemoteFeatureFlagUseCase(repository: repo)
-        let value = await usecase.remoteFeatureFlagValue(for: "abc")
-        XCTAssertEqual(value, 123)
+        let value = await usecase.isFeatureFlagEnabled(for: .chatMonetisation)
+        XCTAssertTrue(value)
     }
 }

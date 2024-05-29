@@ -276,10 +276,6 @@ class MainTabBarCallsViewModel: ViewModelType {
         }
     }
     
-    private var chatMonetisationFeatureEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
-    }
-    
     private func manageCallStatusChange(for call: CallEntity) {
         switch call.status {
         case .joining:
@@ -316,7 +312,7 @@ class MainTabBarCallsViewModel: ViewModelType {
     }
     
     private func manageCallTerminatedErrorIfNeeded(_ call: CallEntity) {
-        guard !isCallUIVisible, chatMonetisationFeatureEnabled else { return }
+        guard !isCallUIVisible else { return }
         if call.termCodeType == .callDurationLimit {
             if call.isOwnClientCaller { // or is chat room organiser - future implementation
                 guard let accountDetails = accountUseCase.currentAccountDetails else { return }
@@ -370,7 +366,6 @@ class MainTabBarCallsViewModel: ViewModelType {
         //
         // We still allow user to go to waiting room user list and admit participants one by one.
         let shouldBlockAddingUsersToCall = CallLimitations.callParticipantsPlusAdditionalUsersLimitPassed(
-            featureFlagEnabled: chatMonetisationFeatureEnabled,
             isMyselfModerator: chatRoom.ownPrivilege == .moderator,
             currentLimit: call.callLimits.maxUsers,
             callParticipantCount: call.numberOfParticipants,
