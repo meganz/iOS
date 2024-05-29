@@ -2007,7 +2007,7 @@
 /*  */
 "Administrator"="Administrateur";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
-"Transfer"="Transfert";
+"Transfer"="Transferts";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Vous ne pouvez pas supprimer %1$s de vos contacts, car ce contact fait parti de votre compte Pour entreprise.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Voici la dernière étape pour supprimer votre compte. Votre compte et votre abonnement seront tous deux supprimés et vous perdrez irrémédiablement toutes les données stockées dans le compte. Veuillez saisir votre mot de passe ci-dessous.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Téléverser une photo";
+"account.profile.avatar.uploadPhoto"="Changer votre image de profil";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un autre appel est en cours. Veuillez mettre fin à cet appel avant d’en faire un autre.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Hebdomadaire";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensuelle";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Mettre fin";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Micro";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Caméra";
 /* Device Center title */
@@ -3587,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Liens protégés par mot de passe\n\n• Liens avec dates d’expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu’à 90 jours pour les données supprimées avec Pro Lite et jusqu’à 180 jours avec Pro I, II, et III\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Liens protégés par mot de passe\n\n• Liens avec dates d’expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu’à 90 jours pour les données supprimées avec Pro Lite et jusqu’à 180 jours avec Pro I, II, et III\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire\n\n• Sans publicité";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Liens protégés par mot de passe\n\n• Liens avec dates d’expiration\n\n• Partage du quota de transfert\n\n• Pour les données supprimées, retour en arrière jusqu’à 90 jours avec Pro Lite et jusqu’à 180 jours avec Pro I, II, et III\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire\n\n• Sans publicité";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Détails de l’abonnement";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Sécurité supplémentaire lors de partages";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Définissez des mots de passe et des dates d’expiration pour les liens de fichier et de dossier.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Et l’accès à ces avantages intéressants :";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• RPV MEGA VPN\n• Appels et réunions sans restrictions";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• RPV MEGA VPN\n• Appels et réunions sans restrictions\n• Sans publicités";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Passer à un abonnement Pro";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Listes de lecture";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Aucune vidéo";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="Aucune liste de lecture n’a été trouvée";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Nouvelle liste de lecture";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Ignorer";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Votre abonnement gratuit limite les réunions à 60 minutes. Les utilisateurs MEGA Pro bénéficient d’une durée d’appel illimitée et d’un maximum de 1 000 participants. [A]Surclassez votre compte maintenant[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Offre à durée limitée";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Gratuit";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d Go";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Limités";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Limités";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="Illimités";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Annuler l’abonnement";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="Le fichier ne peut pas être enregistré";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="Ce type de fichier n’est pas pris en charge par iOS. Voulez-vous le rendre disponible hors ligne ?";
+/* Password protected links title */
+"password.protected.links.title"="Liens protégés par mot de passe";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Liens avec date d’expiration";
+/* Transfer sharing title */
+"transfer.sharing.title"="Partage des transferts";
+/* Rewind feature title */
+"rewind.feature.title"="Retour en arrière";
+/* Rewind fro free users */
+"rewind.for.free.users"="Jusqu’à 30 jours (visualiser seulement)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Jusqu’à 180 jours";
+/* MEGA VPN title */
+"mega.vpn.title"="RPV MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Durée des appels et réunions";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Jusqu’à 1 heure";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Jusqu’à 24 heures";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Participants aux appels et réunions";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Jusqu’à 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="Vous ne profiterez pas des avantages suivants";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="Vous aurez toujours accès à ces caractéristiques jusqu’à l’expiration de votre abonnement MEGA. Vous serez ensuite transféré vers un compte gratuit.\nVous utilisez actuellement %@ d’espace de stockage, vous risquerez de perdre vos fichiers.";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="Garder %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Poursuivre l’annulation";
+/* Feature title */
+"feature.title"="Caractéristique";

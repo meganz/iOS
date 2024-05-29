@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the account. Please enter your password below.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Upload photo";
+"account.profile.avatar.uploadPhoto"="Change profile image";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3591,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• Ad free";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3881,9 +3881,9 @@
 /* Upgrade account screen content title about pro plan's other benefits */
 "onboarding.upgradeAccount.content.plusBenefits.title"="Plus access to these great benefits:";
 /* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Unrestricted calls and meetings";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free*/
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Unrestricted calls and meetings\n• Ad-free";
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Unrestricted calls and meetings";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Unrestricted calls and meetings\n• No advertisements";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
 /* Camera uploads banner enable state title */
@@ -4011,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Skip";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your free plan has a 60-minute limit on meetings. Pro users have unlimited calls and up to 1000 participants. [A]Upgrade now[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Limited time offer";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4093,7 +4093,7 @@
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";
 /* Password protected links title */
-"password.protected.links.title"="Password protected links";
+"password.protected.links.title"="Password-protected links";
 /* Links with expiry dates title */
 "links.with.expiry.dates.title"="Links with expiry dates";
 /* Transfer sharing title */
@@ -4105,7 +4105,7 @@
 /* Rewind fro pro users */
 "rewind.for.pro.users"="Up to 180 days";
 /* MEGA VPN title */
-"mega.vpn.title"="MEGA VPN";
+"mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
 "call.and.meeting.duration.title"="Call and meeting duration";
 /* Call and meeting duration for free users */

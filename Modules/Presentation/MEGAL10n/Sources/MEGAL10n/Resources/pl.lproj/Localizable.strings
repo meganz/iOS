@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Jest to ostatni krok do usunięcia konta. Zarówno konto, jak i subskrypcja zostaną usunięte, a wszystkie dane przechowywane na koncie zostaną trwale utracone. Wprowadź swoje hasło poniżej.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Prześlij zdjęcie";
+"account.profile.avatar.uploadPhoto"="Zmień zdjęcie profilu";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Trwa inne połączenie. Proszę zakończyć bieżące połączenie przed nawiązaniem kolejnego.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Tygodniowo";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Miesięcznie";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Zakończ";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Mikrofon";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Kamera";
 /* Device Center title */
@@ -3587,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Linki chronione hasłem\n\n• Linki z datami ważności\n\n• Podział kwot transferowych\n\n• Przewiń do 90 dni usuniętych danych w Pro Lite i do 180 dni w Pro I, II i III\n\n• Zachowaj prywatność online dzięki naszej szybkiej sieci VPN\n\n• Zaplanuj Kosz śmieci od 7 dni do 10 lat\n\n• Wsparcie priorytetowe";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Linki chronione hasłem\n\n• Linki z datami ważności\n\n• Podział kwot transferowych\n\n• Przewiń do 90 dni usuniętych danych w Pro Lite i do 180 dni w Pro I, II i III\n\n• Zachowaj prywatność online dzięki naszej szybkiej sieci VPN\n\n• Zaplanuj Kosz śmieci od 7 dni do 10 lat\n\n• Wsparcie priorytetowe\n\n• Bez reklam";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Linki chronione hasłem\n\n• Linki z datami ważności\n\n• Podział kwot transferowych\n\n• Przewiń do 90 dni usuniętych danych w Pro Lite i do 180 dni w Pro I, II i III\n\n• Zachowaj prywatność online dzięki naszej szybkiej sieci VPN\n\n• Opróniaj Kosz śmieci od 7 dni do 10 lat\n\n• Wsparcie priorytetowe\n\n• Brak reklam";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Szczegóły subskrypcji";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Dodatkowe zabezpieczenia podczas udostępniania";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Ustawianie haseł i dat wygaśnięcia dla łączy do plików i katalogów.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Plus dostęp do tych wspaniałych korzyści:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Nieograniczone połączenia i spotkania";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Nieograniczone połączenia i spotkania\n• Brak reklam";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Uaktualnij do Pro już dziś";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Listy odtwarzania";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Brak filmów";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="Nie znaleziono list odtwarzania";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Nowa lista odtwarzania";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Pomiń";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Twój darmowy plan ma 60-minutowy limit spotkań. Użytkownicy Pro mają nieograniczoną liczbę połączeń i do 1000 uczestników. [A]Uaktualnij teraz[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Oferta ograniczona czasowo";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Darmowe";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Ograniczony";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Ograniczony";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="BEZ OGRANICZEŃ";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Anuluj subskrypcję";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="Plik nie może zostać zapisany";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="Ten typ plik nie jest obsługiwany przez system iOS. Czy chciałbyś udostępnić go w trybie offline?";
+/* Password protected links title */
+"password.protected.links.title"="Linki zabezpieczone hasłem";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Linki z datą ważności";
+/* Transfer sharing title */
+"transfer.sharing.title"="Współdzielenie transferu";
+/* Rewind feature title */
+"rewind.feature.title"="Przewiń";
+/* Rewind fro free users */
+"rewind.for.free.users"="Do 30 dni (tylko podgląd)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Do 180 dni";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Czas trwania połączenia i spotkania";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Do 1 godziny";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Do 24 godzin";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Uczestnicy rozmowy i spotkania";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Do 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="Przegapisz następujące funkcje";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="Nadal będziesz mieć dostęp do tych funkcja do czasu wygaśnięcia plan MEGA, a następnie zostaniesz przeniesiony na bezpłatne konto.\n Aktualnie używasz %@ pojemność masowej, będziesz narażony na utratę plik";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="Zatrzymaj %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Kontynuuj anulowanie";
+/* Feature title */
+"feature.title"="Funkcja";

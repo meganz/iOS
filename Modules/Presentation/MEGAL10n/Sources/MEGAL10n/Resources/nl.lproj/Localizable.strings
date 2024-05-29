@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Dit is de laatste stap om uw account te verwijderen. Zowel uw account als uw abonnement worden verwijderd en u verliest permanent alle gegevens die in de cloud zijn opgeslagen. Voer hieronder uw wachtwoord in.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Foto uploaden";
+"account.profile.avatar.uploadPhoto"="Profielafbeelding wijzigen";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Een andere oproep is in behandeling. Beëindig uw huidige oproep voordat u een andere maakt.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Wekelijks";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Maandelijks";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Beëindigen";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Microfoon";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Camera";
 /* Device Center title */
@@ -3587,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Blijf privé online met onze supersnelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Licht en tot 180 dagen op Pro I, II en III\n\n• Blijf privé online met onze supersnelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning\n\n• Reclamevrij";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Met wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Delen van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Blijf privé online met onze supersnelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning\n\n• Geen advertenties";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnement details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Extra veiligheid bij het delen";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Stel wachtwoorden en vervaldata in voor bestands- en mapkoppelingen.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Plus toegang tot deze geweldige voordelen:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Onbeperkt bellen en vergaderen";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Onbeperkt bellen en vergaderen\n• Geen advertenties";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Upgrade vandaag nog naar Pro";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Afspeellijst";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Geen video's";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="Geen afspeellijsten gevonden";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Nieuwe afspeellijst";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Overslaan";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Uw gratis abonnement heeft een limiet van 60 minuten voor vergaderingen. Pro-gebruikers kunnen ongelimiteerd bellen en tot 1000 deelnemers. [A]Upgrade nu[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Tijdelijke aanbieding";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Gratis";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Beperkt";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Beperkt";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="ONBEPERKT";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Abonnement Opzeggen";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="Bestand kan niet worden opgeslagen";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="Dit bestandstype wordt niet ondersteund door iOS. Wilt u het offline beschikbaar maken?";
+/* Password protected links title */
+"password.protected.links.title"="Wachtwoord beveiligde links";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Links met vervaldata";
+/* Transfer sharing title */
+"transfer.sharing.title"="Overdracht deling";
+/* Rewind feature title */
+"rewind.feature.title"="Terugspoelen";
+/* Rewind fro free users */
+"rewind.for.free.users"="Tot op 30 dagen (alleen weergeven)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Tot op 180 dagen";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Duur van het gesprek en de vergadering";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Tot 1 uur";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Tot 24 uur";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Deelnemers aan de oproep en vergadering";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Tot 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="U zult deze functies missen";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="U heeft nog steeds toegang tot deze kenmerken tot uw MEGA-abonnement afloopt, dan word u overgezet naar een gratis account.\n U gebruikt momenteel %@ van de opslag, u loopt  het risico uw bestanden kwijt te raken";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="%@ behouden";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Ga door met annuleren";
+/* Feature title */
+"feature.title"="Functie";

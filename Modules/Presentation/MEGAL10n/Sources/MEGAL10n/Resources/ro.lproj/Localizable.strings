@@ -633,11 +633,11 @@
 /* The text in the button to remove all contacts to a shared folder on one click */
 "Remove Share"="Elimină partajarea";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Sigur vrei să elimini această partajare? (Partajat cu 1 contact)";
+"removeOneShareOneContactMessage"="Sigur vreți să eliminați această partajare? (Partajat cu 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Sigur vrei să elimini această partajare? (Partajată cu %d contacte)";
+"removeOneShareMultipleContactsMessage"="Sigur vreți să eliminați această partajare? (Partajată cu %d contacte)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Sigur vrei să elimini aceste partajări? (Partajate cu %d contacte)";
+"removeMultipleSharesMultipleContactsMessage"="Sigur vreți să eliminați aceste partajări? (Partajate cu %d contacte)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Partajare eliminată";
 /* Message shown when some shares have been removed */
@@ -661,7 +661,7 @@
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Elimină contactul";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Sigur vrei să elimini %d utilizatori din lista de contacte?";
+"removeMultipleUsersMessage"="Sigur vreți să eliminați %d utilizatori din lista de contacte?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contactul %@ a fost eliminat";
 /* Label shown when a contact request is pending */
@@ -669,9 +669,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Părăsește";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Sigur vrei să părăsești această partajare?";
+"leaveShareAlertMessage"="Sigur vreți să părăsiți această partajare?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Sigur vrei să părăsești aceste partajări?";
+"leaveSharesAlertMessage"="Sigur vreți să părăsiți aceste partajări?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Partajează";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -847,7 +847,7 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Șterge contul";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="Vei pierde toate datele asociate cu acest cont. Sigur vrei să continui?";
+"youWillLooseAllData"="Veți pierde toate datele asociate acestui cont. Sigur vreți să continuați?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Dacă nu puteți accesa căsuța de e-mail, contactați support@mega.nz";
 /* During account cancellation (deletion) */
@@ -1177,9 +1177,9 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Fișierul log (MEGAiOS.log) va fi șters din secțiunea Offline.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Sigur vrei să ștergi acest element din Offline?";
+"removeItemFromOffline"="Sigur vreți să ștergeți acest element din Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Sigur vrei să ștergi aceste elemente din Offline?";
+"removeItemsFromOffline"="Sigur vreți să ștergeți aceste elemente din Offline?";
 /* Giphy section header */
 "Send GIF"="Trimite GIF";
 /* This is the placeholder text for GIPHY search */
@@ -1259,7 +1259,7 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Șterge istoricul conversațiilor";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Sigur vrei să ștergi istoricul complet al mesajelor din această conversație?";
+"clearTheFullMessageHistory"="Sigur vreți să ștergeți istoricul complet al mesajelor din această conversație?";
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="Istoricul chatului a fost șters";
 /* Message show when the history of a chat hasn’t been successfully deleted */
@@ -1369,7 +1369,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Folder nou partajat";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Sigur vrei să abandonezi înregistrarea?";
+"areYouSureYouWantToAbortTheRegistration"="Sigur vreți să abandonați înregistrarea?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Dacă ați scris greșit adresa dvs. de e-mail, corectați-o și atingeți „Retrimite”.";
 /* A button to resend the email confirmation. */
@@ -1615,9 +1615,9 @@
 /* Title of archived chats button */
 "archivedChats"="Arhivate";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Sigur vrei să arhivezi această conversație?";
+"archiveChatMessage"="Sigur vreți să arhivați această conversație?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Sigur vrei să dezarhivezi această conversație?";
+"unarchiveChatMessage"="Sigur vreți să dezarhivați această conversație?";
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Dezarhivează";
 /* Title of button to archive chats. */
@@ -1721,7 +1721,7 @@
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activează sau dezactivează versionarea fișierelor pentru întregul cont.\nDezactivarea versionării fișierelor nu împiedică contactele tale să creeze noi versiuni în folderele partajate.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Când versionarea fișierelor este dezactivată, versiunea actuală va fi înlocuită cu noua versiune odată ce fișierul este actualizat (iar modificările aduse fișierului nu vor mai fi înregistrate). Sigur vrei să dezactivezi versionarea fișierelor?";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Când versionarea fișierelor este dezactivată, versiunea actuală va fi înlocuită cu noua versiune odată ce fișierul este actualizat (iar modificările aduse fișierului nu vor mai fi înregistrate). Sigur vreți să dezactivați versionarea fișierelor?";
 /* Settings preference title to show file versions info of the account */
 "File Versions"="Versiuni ale fișierelor";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
@@ -1983,7 +1983,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Schimbi pe un server de test?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sunteți sigur că doriți să treceți la un server de testare? Contul dvs. poate suferi probleme ireversibile.";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vreți să treceți la un server de testare? Contul dvs. poate suferi probleme ireversibile.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Acordă accesul la agenda de adrese";
 /* Text indicating the user to open the device settings for MEGA */
@@ -2409,7 +2409,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Se redă";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Sigur vrei să mutați folderul Încărcări cameră în coșul de gunoi? Dacă da, un folder nou va fi generat automat pentru Încărcări cameră.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Sigur vreți să mutați folderul Încărcări cameră în Coșul de gunoi? Dacă da, un folder nou va fi generat automat pentru Încărcări cameră.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Încarcă fișierul";
 /* Text title for shortcuts, ie in the widget */
@@ -2577,9 +2577,9 @@
 /* Delete the default backup folder warning title. %@ is a folder */
 "dialog.delete.backup.folder.warning.title"="Mută „%@” în Coșul de gunoi";
 /* Delete the default backup folder warning message */
-"dialog.delete.root.backup.folder.warning.message"="Ștergi folderul de backupuri. Acest lucru va elimina toate backupurile pe care le-ai setat. Sigur vrei să faci acest lucru?";
+"dialog.delete.root.backup.folder.warning.message"="Ștergeți folderul backup. Acest lucru va elimina toate backup-urile pe care le-ați setat. Sigur vreți să faceți acest lucru?";
 /* Delete the default backup folder warning message */
-"dialog.delete.backup.folder.warning.message"="Sigur doriți să ștergeți folderul de backup și să dezactivați backupul pe care l-ați setat?";
+"dialog.delete.backup.folder.warning.message"="Sigur vreți să ștergeți folderul de backup și să dezactivați backup-ul pe care l-ați setat?";
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="Adaugă elementul în „%@”";
 /* Add new items to a backup folder warning message */
@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Acesta este ultimul pas pentru a vă șterge contul. Atât contul, cât și abonamentul dvs. vor fi șterse și veți pierde definitiv toate datele stocate în cont. Vă rugăm să introduceți parola mai jos.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Încarcă o fotografie";
+"account.profile.avatar.uploadPhoto"="Schimbați imaginea profilului";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un alt apel în curs. Te rugăm să închei apelul actual înainte de a efectua altul.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2963,7 +2963,7 @@
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.message"="Așteptați și încercați din nou mai târziu sau contactați echipa noastră de asistență prin support@mega.nz dacă problema persistă";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Sigur vrei să anulezi încărcarea problemei raportate?";
+"help.reportIssue.creating.cancel.title"="Sigur vreți să anulați încărcarea problemei raportate?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Această problemă nu va fi raportată dacă anulați încărcarea acesteia.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Săptămânală";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Lunar";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Încheie";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Microfon";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Cameră";
 /* Device Center title */
@@ -3525,7 +3529,7 @@
 /* Message show when the history of a meeting has been successfully deleted */
 "meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Istoricul întâlnirilor a fost șters";
 /* The alert message to delete the history of a meeting. */
-"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Sigur vrei să ștergi istoricul complet al mesajelor din acestei întâlniri?";
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Sigur vreți să ștergeți istoricul complet al mesajelor din acestei întâlniri?";
 /* Text explaining users how the meeting links work. */
 "meetings.info.shareMeetingLink.explainLink"="Oricine cu acest link se poate alătura întâlnirii și poate vedea chatul întâlnirii";
 /* The title of a menu button which allows users to rename a meeting. */
@@ -3703,7 +3707,7 @@
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Află mai multe";
 /* Album saved to cloud drive alert message */
-"albumLink.alert.message.albumSavedToCloudDrive"="„%@” salvat în Unitatea cloud";
+"albumLink.alert.message.albumSavedToCloudDrive"="„%@” a fost salvat în Unitatea cloud";
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="„%@” nu poate fi salvat pe Unitatea cloud. Încercați din nou mai târziu și dacă problema continuă, contactați persoana care a partajat linkul cu dvs.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Securitate suplimentară la partajare";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Setați parolele și datele de expirare pentru linkurile de fișiere și folder.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Și acces la aceste beneficii interesante:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Apeluri și întâlniri nerestricționate";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Apeluri și întâlniri nerestricționate\n• Fără reclame";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Upgradeați la un abonament Pro";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Listuri de redare";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Niciun videoclip";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="Nicio listă de redare găsită";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Listă de redare nouă";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Omite";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Abonamentul dvs. gratuit are o limită de 60 de minute pentru întâlniri. Utilizatorii Pro au apeluri nelimitate și până la 1000 de participanți. [A]Upgradați acum[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Ofertă de timp limitat";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Gratuit";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Limitat";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Limitat";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="NELIMITATĂ";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Anulează abonamentul";
 /* The alert title shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+"saveToPhotos.fallbackAlert.title"="Fișierul nu poate fi salvat";
 /* The alert message shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";
+"saveToPhotos.fallbackAlert.message"="Acest tip de fișier nu este acceptat de iOS. Doriți să îl faceți disponibil offline?";
+/* Password protected links title */
+"password.protected.links.title"="Linkuri protejate prin parolă";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Linkuri cu date de expirare";
+/* Transfer sharing title */
+"transfer.sharing.title"="Partajarea transferurilor";
+/* Rewind feature title */
+"rewind.feature.title"="Derulare înapoi";
+/* Rewind fro free users */
+"rewind.for.free.users"="Până la 30 de zile (numai vizualizare)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Până la 180 de zile";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Durata apelului și întâlnirii";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Până la 1 oră";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Până la 24 de ore";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Participanții la apel și la întâlnire";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Până la 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="Nu veți beneficia de următoarele funcții";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="Veți avea în continuare acces la aceste caracteristici până la expirarea abonamentului MEGA, după care veți fi mutat la un cont gratuit.\nDacă folosiți în prezent %@ de spațiu de stocare, veți risca să vă pierdeți fișiereledvs,";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="Păstrați %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Continua anularea";
+/* Feature title */
+"feature.title"="Caracteristică";

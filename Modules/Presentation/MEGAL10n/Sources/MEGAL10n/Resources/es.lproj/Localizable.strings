@@ -89,7 +89,7 @@
 /* Message on login screen for Create Account */
 "account.login.newToMega"="¿Nuevo en MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="Unirse como invitado";
+"general.joinMeetingAsGuest"="Unirse a una reunión como invitado";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Correo electrónico o contraseña no válidos. Vuelve a intentarlo.";
 /* Error message when to many attempts to login */
@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Este es el último paso para eliminar tu cuenta. Tu suscripción se eliminará junto con tu cuenta y perderás de forma permanente todos los datos almacenados allí. Por favor, introduce tu contraseña a continuación.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Subir foto";
+"account.profile.avatar.uploadPhoto"="Cambiar imagen del perfil";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Hay otra llamada en curso. Termina esa llamada para hacer otra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Semanal";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensual";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Finalizar";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Mic";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Cámara";
 /* Device Center title */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Seguridad adicional al compartir";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Establece contraseñas y fechas de caducidad para los enlaces a carpetas y archivos.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Además de acceso a estos fantásticos beneficios:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Llamadas y reuniones sin restricciones";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Llamadas y reuniones sin restricciones\n• Sin anuncios";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Amplía a Pro hoy mismo";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Listas de reproducción";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="No hay vídeos";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="No se ha encontrado ninguna lista de reproducción";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Nueva lista de reproducción";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Saltar";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Tu plan gratuito tiene un límite de 60 minutos por reunión. Los usuarios Pro tienen llamadas ilimitadas y hasta 1000 participantes. [A]Amplía ahora[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Oferta por tiempo limitado";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Gratis";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Limitado";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Limitado";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="Ilimitado";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Cancelar suscripción";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="No se puede guardar el archivo";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="iOS no admite este tipo de archivo. ¿Quieres que esté disponible sin conexión?";
+/* Password protected links title */
+"password.protected.links.title"="Enlaces con protección por contraseña";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Enlaces con fecha de caducidad";
+/* Transfer sharing title */
+"transfer.sharing.title"="Transferencia compartida";
+/* Rewind feature title */
+"rewind.feature.title"="Rebobinado";
+/* Rewind fro free users */
+"rewind.for.free.users"="Hasta 30 días (solo lectura)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Hasta 180 días";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Llamadas y reuniones";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Hasta 1 hora";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Hasta 24 horas";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Participantes a llamadas y reuniones";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Hasta 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="Te perderás estas características";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="Seguirás teniendo acceso a estas características hasta que caduque tu plan de MEGA y, luego, pasarás a una cuenta gratis.\n Actualmente estás usando %@ de almacenamiento y correrás el riesgo de perder tus archivos";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="Mantener %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Cancelar subscripción";
+/* Feature title */
+"feature.title"="Característica";

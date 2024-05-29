@@ -2681,7 +2681,7 @@
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
 "meetings.reconnecting.failed"="無法重新連線";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="連線品質不良";
+"meetings.poorConnection"="連線品質不佳";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="預覽高解析度圖片";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="這是刪除帳戶的最後一個步驟。您的帳戶和訂閱都將被刪除，而且您將永久遺失帳戶中儲存的所有資料。請在下方輸入您的密碼。";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="上傳照片";
+"account.profile.avatar.uploadPhoto"="更改個人資料相片";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="另一個通話正在進行中。請先結束目前通話才能撥打另一通。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="每週";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="每月";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="結束";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="麥克風";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="相機";
 /* Device Center title */
@@ -3587,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結有到期日期\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天的刪除資料，Pro I、II、和III可回溯最多180天\n\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密碼保護的連結\n\n• 連結有到期日期\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天的刪除資料，Pro I、II、和III可回溯最多180天\n\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服\n\n• 無廣告";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密碼保護的連結\n\n• 可為連結設定到期日期\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天刪除的資料，Pro I、II、和III可回溯最多180天\n\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服\n\n• 無廣告";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="訂閱詳情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="共享時的額外安全性";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="設定檔案和資料夾連結的密碼和到期日期。";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="此外還可獲得這些超棒的好處：";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• 無限制的通話和會議";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• 無限制的通話和會議\n• 無廣告";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="立即升級到Pro";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="播放列表";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="沒有影片";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="未找到播放列表";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="新的播放列表";
 /* Videos: video playlist playlist cell title */
@@ -3951,9 +3963,9 @@
 /* Used in create video playlist popup system video playlist name validation */
 "videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
 /* Used in create video playlist popup video playlist name validation */
-"videos.tab.playlist.create.alert.enterDifferentName"="輸入不同名稱";
+"videos.tab.playlist.create.alert.enterDifferentName"="輸入不同的名稱";
 /* Used in create video playlist popup user video playlist name validation */
-"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="已存在相同名稱的播放列表";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室裡沒有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="略過";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="您的免費方案有60分鐘的會議時間限制。Pro會員的通話時間無限制，而且最多可容納1000名與會者。[A]立即升級[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="限時優惠";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="免費";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="有限制的";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="有限制";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="無限制";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="取消訂閱";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="檔案無法儲存";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="iOS不支援此檔案類型。你想讓它可離線使用嗎？";
+/* Password protected links title */
+"password.protected.links.title"="受密碼保護的連結";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="可為連結設定到期日期";
+/* Transfer sharing title */
+"transfer.sharing.title"="傳輸流量共享";
+/* Rewind feature title */
+"rewind.feature.title"="回溯";
+/* Rewind fro free users */
+"rewind.for.free.users"="最多30天（僅能檢視）";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="長達180天";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="通話和會議時間";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="長達1小時";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="長達24小時";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="通話和會議與會者";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="最多100人 ";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="你會錯過這些功能";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="在您的MEGA方案到期之前，您仍然可以使用這些功能，然後您將轉移到免費帳戶。\n您目前正在使用%@的儲存空間，您將面臨遺失檔案的風險";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="保留%@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="仍要取消";
+/* Feature title */
+"feature.title"="功能";

@@ -3221,7 +3221,7 @@
         <key>many</key>
         <string>%d di contatti</string>
         <key>other</key>
-        <string>%d contatt</string>
+        <string>%d contatti</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>

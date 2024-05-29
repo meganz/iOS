@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="これがアカウント削除の最後のステップです。アカウントとサブスクリプションの両方が削除され、アカウントに保存されているすべてのデータを恒久的に失うことになります。以下にパスワードを入力してください。";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="写真をアップロード";
+"account.profile.avatar.uploadPhoto"="プロファイル画像を変更する";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="別の電話がかかってきました。次の電話をかける前に、現在の通話を終えてください。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="毎週";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="月間";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="終了";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="マイク";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="カメラ";
 /* Device Center title */
@@ -3587,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート\n\n• 広告なし";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート\n\n• 広告なし";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="サブスクリプションの詳細";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="共有時のセキュリティの強化";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="ファイルとフォルダのリンクのパスワードと有効期限を設定できます。";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="さらに、以下の素晴らしい特典もご利用いただけます：";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• 無制限の通話とミーティング";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• 無制限の通話とミーティング\n• 広告なし";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="今すぐProにアップグレード";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="プレイリスト";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="動画がありません";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="プレイリストが見つかりません";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="新しいプレイリスト";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="スキップ";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="無料プランではミーティングに60分の制限があります。Proユーザー様は無制限の通話と、最大1000人の参加者まで可能です。[A]今すぐアップグレード[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="期間限定オファー";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="無料";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="制限付き";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="制限付き";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="無制限";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="定期契約をキャンセル";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="ファイルを保存できません";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="このファイル形式はiOSではサポートされていません。オフラインでも利用できるようにしますか？";
+/* Password protected links title */
+"password.protected.links.title"="パスワードで保護されたリンク";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="有効期限のあるリンク";
+/* Transfer sharing title */
+"transfer.sharing.title"="転送共有";
+/* Rewind feature title */
+"rewind.feature.title"="巻き戻す";
+/* Rewind fro free users */
+"rewind.for.free.users"="最大30日間（閲覧のみ）";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="最大180日";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="通話とミーティングの時間";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="最大1時間";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="最大24時間";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="通話とミーティングの参加者";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="最大100人";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="これらの機能をご利用いただけなくなります";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="MEGAプランの有効期限が切れるまでは、引き続きこれらの機能にアクセスできます。その後、有効期限が切れたら、無料アカウントに移行します。\n現在、ストレージの%@を使用されているため、ファイルが失われる危険があります。";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="%@を維持する";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="キャンセルを続ける";
+/* Feature title */
+"feature.title"="機能";

@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Tất cả dữ liệu bạn đã lưu trên MEGA sẽ bị xóa và gói đăng ký dịch vụ mà quý khách đã mua sẽ bị hủy bỏ hoàn toàn. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Tải lên ảnh đại diện";
+"account.profile.avatar.uploadPhoto"="Đổi ảnh đại diện";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Đang có một cuộc gọi đang giang dở. Xin chấm dứt cuộc gọi đó trước khi tham gia vào cuộc khác.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Hằng tháng";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Hàng tháng";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Gác";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Micrô";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Camêra";
 /* Device Center title */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Lớp bảo mật bổ sung khi chia sẻ";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Đặt mật khẩu và ngày hết hạn cho các đường liên kết tệp tin và thư mục.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Cộng với quyền truy cập vào những lợi ích tuyệt vời sau:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Cuộc gọi và họp không hạn chế";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Cuộc gọi và họp không hạn chế\n• Không có quảng cáo";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Nâng cấp lên Pro ngay hôm nay";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Danh sách phát";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Không có video";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="Không tìm thấy danh[w]sách phát nào";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Tạo danh sách phát mới";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Bỏ qua";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Gói miễn phí của bạn có giới hạn cuộc họp là 60 phút. Người dùng Pro có thời lượng cuộc gọi không giới hạn và có tối đa 1000 người tham gia. [A]Nâng cấp ngay bây giờ[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Ưu đãi có thời gian giới hạn";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Miễn phí";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Bị giới hạn";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Bị giới hạn";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="KHÔNG GIỚI HẠN";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Hủy Gói Đăng Ký Dịch Vụ";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="Không thể lưu tệp tin";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="Loại tệp này không được hỗ trợ bởi iOS. Bạn có muốn lưu sẵn về ngoại tuyến không?";
+/* Password protected links title */
+"password.protected.links.title"="Bảo vệ đường liên kết với mật khẩu";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Đặt thời hạn cho đường liên kết";
+/* Transfer sharing title */
+"transfer.sharing.title"="Chia sẻ lượng truyền tải";
+/* Rewind feature title */
+"rewind.feature.title"="Hồi phục";
+/* Rewind fro free users */
+"rewind.for.free.users"="Lên đến 30 ngày (chỉ được xem)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Lên đến 180 ngày";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Thời lượng cuộc gọi và cuộc họp";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Lên đến 1 tiếng";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Lên đến 24 tiếng";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Người tham gia cuộc gọi và cuộc họp";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Lên đến 100 người";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="Bạn sẽ bỏ lỡ những tính năng này";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="Bạn vẫn sẽ có quyền truy cập vào các tính năng này cho đến khi gói MEGA của bạn hết hạn, sau đó bạn sẽ trở thành tài khoản miễn phí.\n Bạn hiện đang sử dụng %@ của không gian lưu trữ, bạn sẽ có nguy cơ mất các tệp tin của mình";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="Giữ %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Tiếp tục hủy";
+/* Feature title */
+"feature.title"="Tính năng";
