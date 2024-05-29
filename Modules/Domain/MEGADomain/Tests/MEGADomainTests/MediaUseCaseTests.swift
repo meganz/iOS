@@ -70,26 +70,6 @@ final class MediaUseCaseTests: XCTestCase {
         XCTAssertFalse(sut.isGifImage(name))
     }
     
-    func testAllPhotos_shouldReturnAllPhotos() async throws {
-        let photos = photoNodes()
-        let repo = MockFilesSearchRepository(photoNodes: photos)
-        let sut = MediaUseCase(fileSearchRepo: repo)
-        
-        let result = try await sut.allPhotos()
-        
-        XCTAssertEqual(photos, result)
-    }
-    
-    func testAllVideos_shouldReturnAllVideos() async throws {
-        let videos = videoNodes()
-        let repo = MockFilesSearchRepository(videoNodes: videos)
-        let sut = MediaUseCase(fileSearchRepo: repo)
-        
-        let result = try await sut.allVideos()
-        
-        XCTAssertEqual(videos, result)
-    }
-    
     // MARK: - Private
     
     private func photoNodes() -> [NodeEntity] {

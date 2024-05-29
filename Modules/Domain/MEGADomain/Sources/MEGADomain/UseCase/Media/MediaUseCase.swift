@@ -11,9 +11,6 @@ public protocol MediaUseCaseProtocol: Sendable {
     func isMultimedia(_ name: FileNameEntity) -> Bool
     func isMediaFile(_ node: NodeEntity) -> Bool
     func isPlayableMediaFile(_ node: NodeEntity) -> Bool
-    
-    func allPhotos() async throws -> [NodeEntity]
-    func allVideos() async throws -> [NodeEntity]
 }
 
 public struct MediaUseCase: MediaUseCaseProtocol {
@@ -52,23 +49,5 @@ public struct MediaUseCase: MediaUseCaseProtocol {
     
     public func isPlayableMediaFile(_ node: NodeEntity) -> Bool {
         isMediaFile(node) && (videoMediaUseCase?.isPlayable(node) ?? false)
-    }
-    
-    public func allPhotos() async throws -> [NodeEntity] {
-        try await fileSearchRepo.search(string: "",
-                                        parent: nil,
-                                        recursive: true,
-                                        supportCancel: false,
-                                        sortOrderType: .defaultDesc,
-                                        formatType: .photo)
-    }
-    
-    public func allVideos() async throws -> [NodeEntity] {
-        try await fileSearchRepo.search(string: "",
-                                        parent: nil,
-                                        recursive: true,
-                                        supportCancel: false,
-                                        sortOrderType: .defaultDesc,
-                                        formatType: .video)
     }
 }
