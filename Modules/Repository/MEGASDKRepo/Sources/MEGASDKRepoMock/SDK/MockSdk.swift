@@ -80,6 +80,7 @@ public final class MockSdk: MEGASdk {
         case createSetElement(_ sid: MEGAHandle, nodeId: MEGAHandle, name: String?)
         case removeSet(sid: MEGAHandle)
         case createSet(name: String?, type: MEGASetType)
+        case updateSetName(sid: MEGAHandle, name: String)
     }
     
     public var hasGlobalDelegate = false
@@ -423,6 +424,7 @@ public final class MockSdk: MEGASdk {
     }
 
     public override func updateSetName(_ sid: MEGAHandle, name: String, delegate: any MEGARequestDelegate) {
+        messages.append(.updateSetName(sid: sid, name: name))
         let mockRequest = MockRequest(handle: 1, text: name)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())

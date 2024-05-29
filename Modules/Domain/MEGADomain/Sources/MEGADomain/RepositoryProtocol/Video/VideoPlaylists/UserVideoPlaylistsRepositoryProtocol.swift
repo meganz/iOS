@@ -50,4 +50,11 @@ public protocol UserVideoPlaylistsRepositoryProtocol: Sendable, RepositoryProtoc
     /// - Returns: `SetEntity` instance representing created video playlist.
     /// - throws: Throw `VideoPlaylistErrorEntity` if it failed during adding videos to playlist or `CancellationError` if cancelled.
     func createVideoPlaylist(_ name: String?) async throws -> SetEntity
+    
+    /// Rename specific video playlist
+    /// - Parameters:
+    ///   - newName: new name for the target video playlist.
+    ///   - videoPlaylist: `VideoPlaylistEntity` instance that wants to be renamed.
+    /// - Returns: `SetEntity` instance that just renamed.
+    func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws -> SetEntity
 }
