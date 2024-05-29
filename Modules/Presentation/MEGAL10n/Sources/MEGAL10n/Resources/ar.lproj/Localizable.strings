@@ -943,7 +943,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="لقد طلبت بالفعل رابط التأكيد لعنوان البريد الإلكتروني.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Go to your new email address’s inbox and click the link to confirm your new email address.";
+"emailIsChanging_description"="انتقل إلى البريد الوارد لعنوان بريدك الإلكتروني الجديد وانقر على الرابط لتأكيد عنوان بريدك الإلكتروني الجديد.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="أدخل كلمة المرور للتحقق من عنوان بريدك الإلكتروني";
 /* The [X] will be replaced with the e-mail address. */
@@ -2029,7 +2029,7 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="تم إلغاء تفعيل حساب الأعمال Business الخاص بك بسبب فشل الدفع. لن تتمكن من الوصول إلى البيانات المخزنة في حسابك. للقيام بالدفع وإعادة تفعيل اشتراكك، قم بتسجيل الدخول إلى ميغا MEGA من المتصفح.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]deactivated[/B]. You can only browse your data.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="حسابك [B]غير مفعل[/B] حاليًا. يمكنك فقط تصفح البيانات الخاصة بك.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="لا يمكن لميغا MEGA الوصول إلى بياناتك. ومع ذلك، يمكن لمسؤول حساب الأعمال الوصول إلى ترفيعات الكاميرا الخاصة بك.";
 /*  */
@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="هذه هي الخطوة الأخيرة لحذف حسابك. سيتم حذف كل من حسابك واشتراكك وستفقد جميع البيانات المخزنة في الحساب بشكل دائم. الرجاء إدخال كلمة المرور الخاصة بك أدناه.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="ترفيع صورة";
+"account.profile.avatar.uploadPhoto"="تغيير صورة الملف الشخصي";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="مكالمة أخرى جارية. يرجى إنهاء مكالمتك الحالية قبل إجراء أخرى.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="أسبوعياً";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="شهرياً";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="إنهاء";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="ميكروفون";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="الكاميرا";
 /* Device Center title */
@@ -3587,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و IIو III\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و IIو III\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم\n\n• خالية من الإعلانات";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و II و III\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم\n\n• خالية من إعلانات";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="تفاصيل الاشتراك";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3847,21 +3851,21 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="احصل على المزيد مع باقة برو Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan and get more storage and access to Pro features. Plans start from as low as %@ a month";
+"onboarding.upgradeAccount.header.subTitle"="قم بالترقية إلى باقة برو Pro واحصل على المزيد من مساحة التخزين و إمكانية الوصول إلى ميزات برو Pro. تبدأ الباقات من %@ كحد ادنى شهرياً";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="بعض الميزات التي تتطلع إليها هي:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
-"onboarding.upgradeAccount.content.generousStorage.title"="Ultimate storage flexibility";
+"onboarding.upgradeAccount.content.generousStorage.title"="مرونة تخزين فائقة";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Starting from [A] [B], find the perfect fit for your storage needs.";
+"onboarding.upgradeAccount.content.generousStorage.message"="بدءًا من [A] [B]، ابحث عن الحجم المثالي لاحتياجات التخزين الخاصة بك.";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Easy, secure file sharing";
+"onboarding.upgradeAccount.content.transferSharing.title"="مشاركة ملفات سهلة وآمنة";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Share large files thanks to a generous transfer quota and ensure security with password-protected links.";
+"onboarding.upgradeAccount.content.transferSharing.message"="يمكنك مشاركة الملفات الكبيرة بفضل حجم تراسل المعطيات السخي وضمان الأمان باستخدام الروابط المحمية بكلمة مرور.";
 /* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Never lose data again";
+"onboarding.upgradeAccount.content.backupAndRewind.title"="لا تفقد البيانات مرة أخرى";
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Back up and sync your data for complete confidence. Plus, use Rewind to restore folders to any date up to 180 days.";
+"onboarding.upgradeAccount.content.backupAndRewind.message"="قم بعمل نسخة احتياطية من بياناتك ومزامنتها للحصول على الثقة الكاملة. بالإضافة إلى ذلك استخدم الترجيع Rewind لاستعادة المجلدات إلى أي تاريخ يصل حتى 180 يومًا.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="ميغا في بي إن MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3869,13 +3873,19 @@
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="مكالمات واجتماعات غير مقيدة";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.message"="Message, video call, and meet in total privacy with unlimited participants.";
+"onboarding.upgradeAccount.content.callsAndMeetings.message"="أرسل رسالة ومكالمة فيديو واجتمع في خصوصية تامة مع عدد غير محدود من المشاركين.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="أمان إضافي عند المشاركة";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="قم بتعيين كلمات المرور وتواريخ انتهاء الصلاحية لروابط الملفات والمجلدات.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="بالإضافة إلى الوصول إلى هذه المزايا الرائعة:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• ميغا في بي إن MEGA VPN\n• مكالمات واجتماعات غير مقيدة";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• ميغا في بي إن MEGA VPN\n• مكالمات واجتماعات غير مقيدة\n• بدون إعلانات";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Upgrade to Pro today";
+"onboarding.upgradeAccount.button.viewProPlans"="قم بالترقية إلى برو Pro اليوم";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="تمكين ترفيعات الكاميرا";
 /* Camera uploads banner enable state description */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="قائمة تشغيل";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="لا يوجد مقطع فيديو";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="لم يتم العثور على قوائم تشغيل";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="قائمة تشغيل جديدة";
 /* Videos: video playlist playlist cell title */
@@ -3953,7 +3965,7 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="أدخل اسمًا مختلفًا.";
 /* Used in create video playlist popup user video playlist name validation */
-"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="يوجد بالفعل قائمة تشغيل بهذا الاسم";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="لا يوجد أحد في غرفة الانتظار";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="تخطى";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="تحتوي باقتك المجانية على 60 دقيقة كحد أقصى للاجتماعات. يتمتع مستخدمو برو Pro بمكالمات غير محدودة وما يصل إلى 1000 مشارك. [A]قم بالترقية الآن[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="عرض لفترة محدودة";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4069,12 +4081,48 @@
 /* Price description for the free plan */
 "free.Plan.Price.description"="مجاني";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
-"storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="محدود";
+"storage.Limit.capacity"="%d غيغابايت";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="محدود";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="غير محدود";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="إلغاء الاشتراك";
 /* The alert title shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+"saveToPhotos.fallbackAlert.title"="لا يمكن حفظ الملف";
 /* The alert message shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";
+"saveToPhotos.fallbackAlert.message"="هذا النوع من الملفات غير مدعوم من قبل أي أو إس iOS. هل ترغب في جعلها متاحة دون اتصال بالإنترنت؟";
+/* Password protected links title */
+"password.protected.links.title"="روابط محمية بكلمة مرور";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="روابط مع تواريخ انتهاء الصلاحية";
+/* Transfer sharing title */
+"transfer.sharing.title"="تشارك تراسل المعطيات";
+/* Rewind feature title */
+"rewind.feature.title"="ترجيع";
+/* Rewind fro free users */
+"rewind.for.free.users"="حتى 30 يومًا (للعرض فقط)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="ما يصل إلى 180 يوماً";
+/* MEGA VPN title */
+"mega.vpn.title"="ميغا في بي إن MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="مدة المكالمة والاجتماع";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="ما يصل إلى 1 ساعة";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="ما يصل إلى 24 ساعة";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="المشاركون في الاتصال والاجتماع";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="ما يصل إلى 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="سوف تفقدُ هذه الميزات";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="سيظل بإمكانك الوصول إلى هذه الميزات حتى انتهاء صلاحية باقة ميغا MEGA الخاصة بك ثم سيتم نقلك إلى حساب مجاني.\n أنت تستخدم حاليًا %@ من مساحة التخزين ستكون عرضة لخطر فقدان ملفاتك";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="الإبقاء على %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="تابع الإلغاء";
+/* Feature title */
+"feature.title"="ميزة";

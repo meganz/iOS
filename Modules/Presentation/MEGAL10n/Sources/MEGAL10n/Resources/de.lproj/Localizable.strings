@@ -1673,7 +1673,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Suchen";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüsel";
+"You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüssel";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
 "Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Die Sicherheit Ihrer Daten ist unsere Existenzgrundlage. Dank Ende-zu-Ende-Verschlüsselung kontrollieren Sie alleine, wer Zugang zu ihnen erhält.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Dies ist der letzte Schritt zum Löschen Ihres Accounts. Sowohl Ihr Account als auch Ihr Abonnement werden gelöscht und Sie verlieren unwiderruflich alle im Account gespeicherten Daten. Bitte geben Sie unten Ihr Passwort ein.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Foto hochladen";
+"account.profile.avatar.uploadPhoto"="Profilbild ändern";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Ein anderer Anruf ist aktiv. Bitte beenden Sie Ihren aktuellen Anruf, bevor Sie einen neuen Anruf starten.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Wöchentlich";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="monatlich";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Beenden";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Mikrofon";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Kamera";
 /* Device Center title */
@@ -3587,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Wiederherstellung von gelöschten Daten bis zu 90 Tage lang für Pro Lite und bis zu 180 Tage lang für Pro I, II und III\n\n• Unerkannt surfen mit unserem schnellen VPN\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Prioritäts-Kundenservice";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Wiederherstellung von gelöschten Daten bis zu 90 Tage lang für Pro Lite und bis zu 180 Tage lang für Pro I, II und III\n\n• Unerkannt surfen mit unserem schnellen VPN\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Prioritäts-Kundenservice\n\n• Werbefrei";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Wiederherstellung von gelöschten Daten bis zu 90 Tage lang für Pro Lite und bis zu 180 Tage lang für Pro I, II und III\n\n• Unerkannt surfen mit unserem schnellen VPN\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support\n\n• Keine Werbung";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnementdetails";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Mehr Sicherheit beim Teilen";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Schützen Sie Datei- und Ordnerlinks mit Passwort und Ablaufdatum.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Weitere großartige Vorteile:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="MEGA VPN\n• Keine Anruf- und Meeting-Beschränkungen";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Keine Anruf- und Meeting-Beschränkungen\n• Keine Werbung";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Jetzt zu Pro wechseln";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Playlists";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Keine Videos";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="Keine Playlists gefunden";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Neue Playlist";
 /* Videos: video playlist playlist cell title */
@@ -3953,7 +3965,7 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="Bitte anderen Namen eingeben";
 /* Used in create video playlist popup user video playlist name validation */
-"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Eine Playlist mit diesem Namen existiert bereits";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Der Warteraum ist leer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Überspringen";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Bei Ihrem kostenlosen Paket sind Meetings auf 60 Minuten begrenzt. Pro-Pakete unterliegen keinen zeitlichen Begrenzungen und erlauben bis zu 1000 Teilnehmer. [A]Jetzt upgraden[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Zeitlich begrenztes Angebot";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Free";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Begrenzt";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Begrenzt";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="UNBEGRENZT";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Abonnement kündigen";
 /* The alert title shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+"saveToPhotos.fallbackAlert.title"="Die Datei kann nicht gespeichert werden";
 /* The alert message shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";
+"saveToPhotos.fallbackAlert.message"="Dieser Dateityp wird von iOS nicht unterstützt. Möchten Sie die Datei offline bereitstellen?";
+/* Password protected links title */
+"password.protected.links.title"="Passwortgeschützte Links";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Links mit Ablaufdatum";
+/* Transfer sharing title */
+"transfer.sharing.title"="Transfervolumen teilen";
+/* Rewind feature title */
+"rewind.feature.title"="Rewind";
+/* Rewind fro free users */
+"rewind.for.free.users"="Bis zu 30 Tage (nur Ansicht)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Bis zu 180 Tage";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Anruf- und Meeting-Dauer";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Bis zu 1 Stunde";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Bis zu 24 Stunden";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Anruf- und Meeting-Teilnehmer";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Bis zu 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="Du verzichtest auf alle diese Vorteile";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="Bis Ihr MEGA-Paket abläuft, haben Sie weiterhin Zugriff auf diese Funktionen. Danach werden Sie auf einen kostenlosen Account umgestellt.\n Sie belegen derzeit %@ Speicherplatz; es besteht die Gefahr, dass Sie Ihre Dateien verlieren";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="%@ behalten";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Mit Kündigung fortfahren";
+/* Feature title */
+"feature.title"="Funktion";

@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Ini adalah langkah terakhir untuk menghapus akun anda. Akun dan langganan anda akan dihapus dan anda akan kehilangan semua data yang disimpan di akun secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Unggah foto";
+"account.profile.avatar.uploadPhoto"="Ubah gambar profil";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Panggilan lain sedang berlangsung. Harap akhiri panggilan anda saat ini sebelum melakukan panggilan lain.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Mingguan";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Bulanan";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Matikan";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Mikrofon";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Kamera";
 /* Device Center title */
@@ -3587,7 +3591,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Pembagian kuota transfer\n\n• Putar ulang hingga 90 hari data yang dihapus di Pro Lite dan hingga 180 hari di Pro I, II, dan III\n\n• Tetap pribadi online dengan VPN berkecepatan tinggi kami\n\n• Jadwalkan pembersihan tempat sampah antara 7 hari dan 10 tahun\n\n• Dukungan prioritas";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Pembagian kuota transfer\n\n• Putar ulang hingga 90 hari data yang dihapus di Pro Lite dan hingga 180 hari di Pro I, II, dan III\n\n• Tetap pribadi online dengan VPN berkecepatan tinggi kami\n\n• Jadwalkan pembersihan tempat sampah antara 7 hari dan 10 tahun\n\n• Dukungan prioritas\n\n• Bebas iklan";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Pembagian kuota transfer\n\n• Putar ulang hingga 90 hari data yang dihapus di Pro Lite dan hingga 180 hari di Pro I, II, dan III\n\n• Tetap pribadi online dengan VPN berkecepatan tinggi kami\n\n• Jadwalkan pembersihan tempat sampah antara 7 hari dan 10 tahun\n\n• Dukungan prioritas\n\n• Tidak ada iklan";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Detail langganan";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Keamanan tambahan saat berbagi";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Tetapkan kata sandi dan tanggal kedaluwarsa untuk tautan file dan folder.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Ditambah akses ke manfaat besar ini:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Panggilan dan rapat tanpa batas";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Panggilan dan rapat tanpa batas\n• Tidak ada iklan";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Tingkatkan ke Pro hari ini";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Daftar putar";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Tidak ada video";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="Tidak ada daftar putar yang ditemukan";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Daftar putar baru";
 /* Videos: video playlist playlist cell title */
@@ -3953,7 +3965,7 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="Masukkan nama yang berbeda";
 /* Used in create video playlist popup user video playlist name validation */
-"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="Daftar putar dengan nama ini sudah ada";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Tidak ada seorang pun di ruang tunggu";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Lewati";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Paket gratis anda memiliki batas 60 menit untuk rapat. Pengguna pro memiliki panggilan tak terbatas dan hingga 1000 peserta. [A]Tingkatkan sekarang[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Penawaran waktu terbatas";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Gratis";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Terbatas";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Terbatas";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="TAK TERBATAS";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Batalkan Langganan";
 /* The alert title shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+"saveToPhotos.fallbackAlert.title"="File tidak dapat disimpan";
 /* The alert message shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";
+"saveToPhotos.fallbackAlert.message"="Jenis file ini tidak didukung oleh iOS. Apakah anda ingin membuatnya tersedia secara offline?";
+/* Password protected links title */
+"password.protected.links.title"="Tautan yang dilindungi kata sandi";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Tautan dengan tanggal kedaluwarsa";
+/* Transfer sharing title */
+"transfer.sharing.title"="Berbagi transfer";
+/* Rewind feature title */
+"rewind.feature.title"="Putar balik";
+/* Rewind fro free users */
+"rewind.for.free.users"="Hingga 30 hari (hanya lihat)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="Hingga 180 days";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Durasi panggilan dan rapat";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="Up to 1 hour";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="Up to 24 hours";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Peserta panggilan dan rapat";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="Up to 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="Anda akan kehilangan fitur-fitur ini";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="You’ll still have access to these features until your MEGA plan expires, then you’ll be moved to a free account.\n You currently are using %@ of storage, you will be at risk of losing your files";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="Keep %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Lanjutkan pembatalan";
+/* Feature title */
+"feature.title"="Feature";

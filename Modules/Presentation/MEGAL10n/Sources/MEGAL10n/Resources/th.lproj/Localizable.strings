@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="นี่เป็นขั้นตอนสุดท้ายในการลบบัญชีของคุณ ทั้งบัญชีและการสมัครใช้งานของคุณจะถูกลบออก พร้อมทั้งคุณจะสูญเสียข้อมูลทั้งหมดที่เก็บไว้ในบัญชีอย่างถาวร กรุณากรอกรหัสผ่านของคุณด้านล่าง";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="อัปโหลดรูปถ่าย";
+"account.profile.avatar.uploadPhoto"="เปลี่ยนรูปโปรไฟล์";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="อยู่ระหว่างดำเนินการโทรอีก กรุณาวางสายปัจจุบันของคุณก่อนที่จะโทรออกอีกครั้ง";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="รายสัปดาห์";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="รายเดือน";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="จบการประชุม";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="ไมค์";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="กล้อง";
 /* Device Center title */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="เพิ่มความปลอดภัยเมื่อแชร์ข้อมูล";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="ลิงก์ไฟล์และโฟลเดอร์สามารถตั้งรหัสผ่านและวันหมดอายุได้";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="นอกจากนี้ยังมีสิทธิพิเศษอื่น ๆ เพิ่มเติม เช่น:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• โทรและประชุมได้ไม่จำกัด";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• โทรและประชุมได้ไม่จำกัด\n• ไม่มีโฆษณา";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="อัปเกรดเป็นแผน Pro วันนี้เลย";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="เพลย์ลิส";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="ไม่มีวิดีโอ";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="ไม่พบเพลย์ลิสต์";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="เพลย์ลิสต์ใหม่";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="ข้าม";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="แผนฟรีของคุณมีข้อจำกัดเวลาการประชุมอยู่ที่ 60 นาที ผู้ใช้ Pro สามารถโทรได้ไม่จำกัดและผู้เข้าร่วมประชุมสามารถเข้าประชุมได้สูงสุด 1000 คน [A]อัปเกรดตอนนี้เลย[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="ข้อเสนอสุดพิเศษ";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4013,7 +4025,7 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="ไม่สามารถเข้าร่วมได้";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="การโทรนี้รองรับผู้เข้าร่วมได้สูงสุด 100 คน หากต้องการเพิ่มจำนวนผู้เข้าร่วม กรุณาขอให้ผู้จัดการประชุมยกเลิกข้อจำกัดนี้ก่อน";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="การโทรนี้รองรับผู้เข้าร่วมได้สูงสุด 100 คน หากต้องการเพิ่มจำนวนผู้เข้าร่วม กรุณาขอให้ผู้จัดการประชุมยกเลิกข้อจำกัดนี้ก่อน";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="โอเค เข้าใจแล้ว";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="ฟรี";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="ถูกจำกัด";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="ถูกจำกัด";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="ไม่จำกัด";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="ยกเลิกการสมัครใช้งาน";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="ไม่สามารถบันทึกไฟล์ได้";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="ไฟล์ประเภทนี้ไม่สนับสนุนบน iOS ต้องการทำให้ไฟล์นี้พร้อมใช้งานแบบออฟไลน์หรือไม่";
+/* Password protected links title */
+"password.protected.links.title"="ป้องกันลิงก์ด้วยรหัสผ่านได้";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="ตั้งค่าลิงก์ให้หมดอายุได้";
+/* Transfer sharing title */
+"transfer.sharing.title"="แชร์การถ่ายโอนของคุณให้คนอื่นได้";
+/* Rewind feature title */
+"rewind.feature.title"="มีกระบวนการย้อนกลับไฟล์ได้";
+/* Rewind fro free users */
+"rewind.for.free.users"="สูงสุด 30 วัน (ดูอย่างเดียว)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="นานถึง 180 วัน";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="ระยะเวลาในการโทรและการประชุม";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="นานถึง 1 ชั่วโมง";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="นานถึง 24 ชั่วโมง";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="จำนวนผู้เข้าร่วมการโทรและการประชุม";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="มากสุด 100 คน";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="คุณอาจพลาดโอกาสที่จะได้ใช้ฟีเจอร์เหล่านี้";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="You’ll still have access to these features until your MEGA plan expires, then you’ll be moved to a free account.\n You currently are using %@ of storage, you will be at risk of losing your files";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="ใช้งานแผน %@ ต่อไป";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="ดำเนินการยกเลิกต่อไป";
+/* Feature title */
+"feature.title"="ฟีเจอร์";

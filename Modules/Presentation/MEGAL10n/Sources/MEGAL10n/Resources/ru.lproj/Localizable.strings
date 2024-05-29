@@ -2711,7 +2711,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Остался один шаг перед удалением аккаунта. Ваш аккаунт и подписка будут удалены, и вы навсегда потеряете все данные, хранящиеся в аккаунте. Пожалуйста, введите пароль.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Загрузить фото";
+"account.profile.avatar.uploadPhoto"="Изменение изображения профиля";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Идёт ещё один звонок. Пожалуйста, завершите первый звонок, прежде чем сделать следующий.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3386,6 +3386,10 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Еженедельно";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Ежемесячно";
+/* End button title to end a calls. */
+"chat.call.quickAction.endCall"="Закончить";
+/* Mic button title to toggle mic on calls. */
+"chat.call.quickAction.mic"="Микрофон";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Камера";
 /* Device Center title */
@@ -3874,6 +3878,12 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Дополнительная безопасность при обмене";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Устанавливайте пароли и сроки действия для ссылок на файлы и папки.";
+/* Upgrade account screen content title about pro plan's other benefits */
+"onboarding.upgradeAccount.content.plusBenefits.title"="Плюс доступ к этим замечательным преимуществам:";
+/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Неограниченные звонки и встречи";
+/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Неограниченные звонки и встречи\n• Без рекламы";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Перейти на Pro";
 /* Camera uploads banner enable state title */
@@ -3934,6 +3944,8 @@
 "videos.tab.title.playlist"="Плейлисты";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Нет видео";
+/* Videos: video playlist content empty state */
+"videos.tab.playlist.content.emptyState"="Плейлисты не найдены";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Новый плейлист";
 /* Videos: video playlist playlist cell title */
@@ -3999,7 +4011,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Пропустить";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="В бесплатном плане встречи ограничены 60 минутами. У пользователей Pro звонки не ограничены по длительности и могут включать до 1000 участников. [A]Улучшить план[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Предложение ограничено по времени";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4070,11 +4082,47 @@
 "free.Plan.Price.description"="Бесплатный";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d ГБ";
-/* Limited transfer limit title */
-"limited.Transfer.limit"="Ограничено";
+/* Limited feature message. E.g.: Transfer = Limited */
+"limited.feature.message"="Ограничено";
+/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
+"unlimited.feature.message"="НЕОГРАНИЧЕН";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Отменить подписку";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="Невозможно сохранить файл";
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="Этот тип файла не поддерживается iOS. Хотите сделать его доступным оффлайн?";
+/* Password protected links title */
+"password.protected.links.title"="Защищённые паролем ссылки";
+/* Links with expiry dates title */
+"links.with.expiry.dates.title"="Ссылки со сроком действия";
+/* Transfer sharing title */
+"transfer.sharing.title"="Обмен объёмами передач";
+/* Rewind feature title */
+"rewind.feature.title"="Перемотка";
+/* Rewind fro free users */
+"rewind.for.free.users"="До 30 дней (только просмотр)";
+/* Rewind fro pro users */
+"rewind.for.pro.users"="До 180 дней";
+/* MEGA VPN title */
+"mega.vpn.title"="MEGA VPN";
+/* Call and meeting duration title */
+"call.and.meeting.duration.title"="Длительнось звонка и встречи";
+/* Call and meeting duration for free users */
+"call.and.meeting.duration.for.free.users"="До 1 часа";
+/* Call and meeting duration for pro users */
+"call.and.meeting.duration.for.pro.users"="До 24 часов";
+/* Call and meeting participants title */
+"call.and.meeting.participants.title"="Участники звонка и встречи";
+/* Call and meeting participants for free users */
+"call.and.meeting.participants.for.free.users"="До 100";
+/* Cancellation Subscription header warning title */
+"cancellation.subscription.header.title"="Вы потеряете эти функции";
+/* Cancellation Subscription header warning message. %@ is the current storage used by the user */
+"cancellation.subscription.header.message"="Эти функции будут доступны вам до истечения срока действия плана MEGA, а затем вы перейдете на бесплатный аккаунт.\nВ настоящее время вы используете %@ хранилища, вы рискуете потерять свои файлы с уменьшением доступного места.";
+/* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
+"cancellation.subscription.keep.pro.plan.button.title"="Оставить %@";
+/* Cancellation Subscription flow, continue cancellation button title */
+"cancellation.subscription.continue.cancellation.button.title"="Продолжить отмену";
+/* Feature title */
+"feature.title"="Особенность";

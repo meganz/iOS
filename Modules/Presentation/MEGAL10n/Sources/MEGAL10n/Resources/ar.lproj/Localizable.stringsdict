@@ -4284,10 +4284,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d جهة اتصال</string>
         <key>one</key>
-        <string>%d contact</string>
+        <string>%d جهة اتصال</string>
+        <key>two</key>
+        <string>%d جهتي اتصال</string>
+        <key>few</key>
+        <string>%d جهات الاتصال</string>
+        <key>many</key>
+        <string>%d جهة اتصال</string>
         <key>other</key>
-        <string>%d contacts</string>
+        <string>%d جهة اتصال</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
