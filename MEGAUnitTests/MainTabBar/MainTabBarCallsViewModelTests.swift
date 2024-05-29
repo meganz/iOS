@@ -300,8 +300,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
         )
         viewModel.isCallUIVisible = false
         
@@ -318,8 +317,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
         )
         viewModel.isCallUIVisible = true
         
@@ -336,8 +334,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
         )
         viewModel.isCallUIVisible = false
         
@@ -356,8 +353,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            chatRoomUserUseCase: userUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true])
+            chatRoomUserUseCase: userUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
