@@ -91,7 +91,8 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 recursive: recursive,
                                                                 sortOrderType: sortOrderType.toMEGASortOrderType(),
                                                                 formatType: formatType.toMEGANodeFormatType(), 
-                                                                excludeSensitive: false)
+                                                                excludeSensitive: false, 
+                                                                favouriteFilter: 0)
         
         let result = try await repo.search(string: searchString,
                                            parent: parent.toNodeEntity(),
@@ -121,7 +122,8 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 recursive: recursive,
                                                                 sortOrderType: sortOrderType.toMEGASortOrderType(),
                                                                 formatType: formatType.toMEGANodeFormatType(), 
-                                                                excludeSensitive: true)
+                                                                excludeSensitive: true,
+                                                                favouriteFilter: 0)
         
         let result: NodeListEntity = try await repo.search(filter: .init(
             searchText: searchString,
@@ -155,7 +157,8 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 recursive: recursive,
                                                                 sortOrderType: sortOrderType.toMEGASortOrderType(),
                                                                 formatType: formatType.toMEGANodeFormatType(),
-                                                                excludeSensitive: true)
+                                                                excludeSensitive: true, 
+                                                                favouriteFilter: 0)
         
         let result: NodeListEntity = try await repo.search(filter: .init(
             searchText: searchString,
@@ -165,6 +168,43 @@ final class FilesSearchRepositoryTests: XCTestCase {
             sortOrderType: sortOrderType,
             formatType: formatType,
             excludeSensitive: true)
+        )
+        
+        XCTAssertEqual(result.toNodeEntities(), nodes.toNodeEntities())
+        XCTAssertEqual(mockSdk.searchNonRecursivelyWithFilterCallCount, 1)
+        XCTAssertEqual(mockSdk.searchWithFilterCallCount, 0)
+        XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
+    }
+    
+    func testSearch_onSuccessAndFiltersFavourites_shouldCallWithCorrectQueryParameters() async throws {
+        let parent = MockNode(handle: 1)
+        let nodes = [parent,
+                     MockNode(handle: 34),
+                     MockNode(handle: 65)]
+        let mockSdk = MockSdk(nodes: nodes)
+        let repo = FilesSearchRepository(sdk: mockSdk)
+        let searchString = "*"
+        let recursive = false
+        let sortOrderType = SortOrderEntity.defaultAsc
+        let formatType = NodeFormatEntity.photo
+        
+        let expectedSearchQuery = MockSdk.SearchQueryParameters(node: parent,
+                                                                searchString: searchString,
+                                                                recursive: recursive,
+                                                                sortOrderType: sortOrderType.toMEGASortOrderType(),
+                                                                formatType: formatType.toMEGANodeFormatType(),
+                                                                excludeSensitive: true,
+                                                                favouriteFilter: 1)
+        
+        let result: NodeListEntity = try await repo.search(filter: .init(
+            searchText: searchString,
+            parentNode: parent.toNodeEntity(),
+            recursive: recursive,
+            supportCancel: false,
+            sortOrderType: sortOrderType,
+            formatType: formatType,
+            excludeSensitive: true,
+            favouriteFilterOption: .onlyFavourites)
         )
         
         XCTAssertEqual(result.toNodeEntities(), nodes.toNodeEntities())

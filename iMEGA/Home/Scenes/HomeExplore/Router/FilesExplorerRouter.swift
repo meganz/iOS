@@ -40,17 +40,11 @@ struct FilesExplorerRouter {
         let nodeClipboardOperationUseCase = NodeClipboardOperationUseCase(repo: clipboardOperationRepo)
         let fileDownloadUseCase = FilesDownloadUseCase(repo: transferListenerRepo)
         let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
-        let favouritesUseCase = FavouriteNodesUseCase(
-            repo: FavouriteNodesRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         
         let viewModel = FilesExplorerViewModel(
             explorerType: explorerType,
             router: self,
             useCase: useCase,
-            favouritesUseCase: favouritesUseCase,
             filesDownloadUseCase: fileDownloadUseCase,
             nodeClipboardOperationUseCase: nodeClipboardOperationUseCase,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
