@@ -506,6 +506,67 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         task.cancel()
     }
     
+    // MARK: - updateVideoPlaylistName
+    
+    func testUpdateVideoPlaylistName_whenCalled_updatesVideoPlaylist() async {
+        let videoPlaylistNameToUpdate = "new-name"
+        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, userVideoPlaylistRepository) = makeSUT()
+        
+        _ = try? await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
+        
+        let messages = userVideoPlaylistRepository.messages
+        XCTAssertEqual(messages, [ .updateVideoPlaylistName(newName: videoPlaylistNameToUpdate, videoPlaylistEntity: videoPlaylistToUpdate) ])
+    }
+    
+    func testUpdateVideoPlaylistName_whenRenameSystemVideoPlaylist_throwsError() async {
+        let videoPlaylistNameToUpdate = "Old-name"
+        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let expectedError = VideoPlaylistErrorEntity.invalidOperation
+        let (sut, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
+        
+        await simulateUpdateVideoPlaylistNameThenCompleteWithError(expectedError, on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
+    }
+    
+    func testUpdateVideoPlaylistName_whenCalledWithSameName_throwsError() async {
+        let videoPlaylistNameToUpdate = "Old-name"
+        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let expectedError = VideoPlaylistErrorEntity.invalidOperation
+        let (sut, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
+        
+        await simulateUpdateVideoPlaylistNameThenCompleteWithError(expectedError, on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
+    }
+    
+    func testUpdateVideoPlaylistName_whenCalledWithSimilarNameButNotSame_updateVideoPlaylist() async {
+        let videoPlaylistNameToUpdate = "old-name"
+        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, userVideoPlaylistRepository) = makeSUT()
+        
+        _ = try? await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
+        
+        let messages = userVideoPlaylistRepository.messages
+        XCTAssertEqual(messages, [ .updateVideoPlaylistName(newName: videoPlaylistNameToUpdate, videoPlaylistEntity: videoPlaylistToUpdate) ])
+    }
+    
+    func testUpdateVideoPlaylistName_whenHasError_throwsError() async {
+        let videoPlaylistNameToUpdate = "new-name"
+        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let expectedError = VideoPlaylistErrorEntity.failedToUpdateVideoPlaylistName(name: videoPlaylistNameToUpdate)
+        let (sut, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
+        
+        await simulateUpdateVideoPlaylistNameThenCompleteWithError(expectedError, on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
+    }
+    
+    func testUpdateVideoPlaylistName_whenSuccess_updatesVideoPlaylistNameSuccessfully() async {
+        let videoPlaylistNameToUpdate = "new-name"
+        let anyDate = Date()
+        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: anyDate, modificationTime: anyDate, sharedLinkStatus: .exported(false))
+        let expectedSetEntity = anySetEntity(id: 1, name: videoPlaylistNameToUpdate, creationTime: anyDate, modificationTime: anyDate, isExported: false)
+        let (sut, _, _) = makeSUT(updateVideoPlaylistNameResult: .success(expectedSetEntity))
+        
+        await simulateUpdateVideoPlaylistNameCompletedSuccessfullyThenAssert(on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -513,7 +574,8 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         userVideoPlaylistRepositoryResult: [SetEntity] = [],
         createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        updateVideoPlaylistNameResult: Result<SetEntity, any Error> = .failure(GenericErrorEntity())
     ) -> (
         sut: VideoPlaylistUseCase,
         filesSearchUseCase: MockFilesSearchUseCase,
@@ -525,7 +587,8 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             deleteVideosResult: .failure(GenericErrorEntity()),
             createVideoPlaylistResult: createVideoPlaylistResult,
             setsUpdatedAsyncSequence: setsUpdatedAsyncSequence,
-            setElementsUpdatedAsyncSequence: setElementsUpdatedAsyncSequence
+            setElementsUpdatedAsyncSequence: setElementsUpdatedAsyncSequence,
+            updateVideoPlaylistNameResult: updateVideoPlaylistNameResult
         )
         let sut = VideoPlaylistUseCase(
             fileSearchUseCase: filesSearchUseCase,
@@ -534,16 +597,55 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         return (sut, filesSearchUseCase, userVideoPlaylistRepository)
     }
     
-    private func anySetEntity(id: HandleEntity, name: String) -> SetEntity {
+    private func simulateUpdateVideoPlaylistNameThenCompleteWithError(
+        _ expectedError: VideoPlaylistErrorEntity,
+        on sut: VideoPlaylistUseCase,
+        videoPlaylistNameToUpdate: String,
+        videoPlaylistToUpdate: VideoPlaylistEntity,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        do {
+            _ =  try await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
+            XCTFail("expect to throw error", file: file, line: line)
+        } catch {
+            XCTAssertEqual(error as? VideoPlaylistErrorEntity, expectedError, "Expect to get error", file: file, line: line)
+        }
+    }
+    
+    private func simulateUpdateVideoPlaylistNameCompletedSuccessfullyThenAssert(
+        on sut: VideoPlaylistUseCase,
+        videoPlaylistNameToUpdate: String,
+        videoPlaylistToUpdate: VideoPlaylistEntity,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        do {
+            let videoPlaylistEntity = try await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
+            XCTAssertEqual(videoPlaylistEntity.id, 1, file: file, line: line)
+            XCTAssertEqual(videoPlaylistEntity.name, videoPlaylistNameToUpdate, file: file, line: line)
+            XCTAssertEqual(videoPlaylistEntity.count, videoPlaylistToUpdate.count, file: file, line: line)
+            XCTAssertEqual(videoPlaylistEntity.type, videoPlaylistToUpdate.type, file: file, line: line)
+            XCTAssertEqual(videoPlaylistEntity.isLinkShared, videoPlaylistToUpdate.isLinkShared, file: file, line: line)
+            XCTAssertEqual(videoPlaylistEntity.sharedLinkStatus, .exported(videoPlaylistToUpdate.isLinkShared), file: file, line: line)
+            XCTAssertEqual(videoPlaylistEntity.coverNode, videoPlaylistToUpdate.coverNode, file: file, line: line)
+            XCTAssertEqual(videoPlaylistEntity.creationTime, videoPlaylistToUpdate.creationTime, file: file, line: line)
+            XCTAssertEqual(videoPlaylistEntity.modificationTime, videoPlaylistToUpdate.modificationTime, file: file, line: line)
+        } catch {
+            XCTFail("expect to not throw error, got error instead: \(error)", file: file, line: line)
+        }
+    }
+    
+    private func anySetEntity(id: HandleEntity, name: String, creationTime: Date = Date(), modificationTime: Date = Date(), isExported: Bool = false) -> SetEntity {
         SetEntity(
             handle: id,
             userId: id,
             coverId: id,
-            creationTime: Date(),
-            modificationTime: Date(),
+            creationTime: creationTime,
+            modificationTime: modificationTime,
             setType: .playlist,
             name: name,
-            isExported: false,
+            isExported: isExported,
             changeTypes: .new
         )
     }
