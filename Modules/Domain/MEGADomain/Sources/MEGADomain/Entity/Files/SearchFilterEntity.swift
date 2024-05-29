@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SearchFilterEntity: Sendable {
+public struct SearchFilterEntity: Sendable, Equatable {
     public struct TimeFrame: Equatable, Sendable {
         public let startDate: Date
         public let endDate: Date
@@ -9,6 +9,15 @@ public struct SearchFilterEntity: Sendable {
             self.startDate = startDate
             self.endDate = endDate
         }
+    }
+    
+    public enum FavouriteFilterOption: Sendable, Equatable {
+        ///  Both favourites and non favourites are considered
+        case disabled
+        /// Only favourites
+        case onlyFavourites
+        /// Exclude favourite nodes from result
+        case excludeFavourites
     }
     
     /// Set option for filtering by name. Contains a name or an expression using wildcard. If nil set, it will return all results ignoring the name.
@@ -25,6 +34,8 @@ public struct SearchFilterEntity: Sendable {
     public let formatType: NodeFormatEntity
     /// Filter option to decide if search should exclude sensitive nodes from the final result.
     public let excludeSensitive: Bool
+    /// Filter option for filtering out nodes based on if node is marked favourite or not.
+    public let favouriteFilterOption: FavouriteFilterOption
     
     public let nodeTypeEntity: NodeTypeEntity?
     
@@ -38,6 +49,7 @@ public struct SearchFilterEntity: Sendable {
         sortOrderType: SortOrderEntity,
         formatType: NodeFormatEntity,
         excludeSensitive: Bool,
+        favouriteFilterOption: FavouriteFilterOption = .disabled,
         nodeTypeEntity: NodeTypeEntity? = nil,
         modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
     ) {
@@ -48,6 +60,7 @@ public struct SearchFilterEntity: Sendable {
         self.sortOrderType = sortOrderType
         self.formatType = formatType
         self.excludeSensitive = excludeSensitive
+        self.favouriteFilterOption = favouriteFilterOption
         self.nodeTypeEntity = nodeTypeEntity
         self.modificationTimeFrame = modificationTimeFrame
     }
