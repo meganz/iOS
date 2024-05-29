@@ -21,8 +21,7 @@ final class WaitingRoomParticipantsListRouter: WaitingRoomParticipantsListRoutin
             router: self,
             call: call,
             callUseCase: CallUseCase(repository: CallRepository.newRepo), 
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
-            featureFlagProvider: DIContainer.featureFlagProvider
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         )
         
         let waitingRoomListView = WaitingRoomParticipantsListView(viewModel: viewModel)

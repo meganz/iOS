@@ -13,8 +13,7 @@ final class WaitingRoomParticipantsListViewModelTests: XCTestCase {
             router: router,
             call: call,
             callUseCase: callUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(),
-            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+            chatRoomUseCase: MockChatRoomUseCase()
         )
         
         viewModel.admitAllTapped()
@@ -29,8 +28,7 @@ final class WaitingRoomParticipantsListViewModelTests: XCTestCase {
             router: router,
             call: CallEntity(),
             callUseCase: callUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(),
-            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+            chatRoomUseCase: MockChatRoomUseCase()
         )
         
         viewModel.admitAllTapped()
@@ -44,8 +42,7 @@ final class WaitingRoomParticipantsListViewModelTests: XCTestCase {
             router: router,
             call: CallEntity(),
             callUseCase: MockCallUseCase(),
-            chatRoomUseCase: MockChatRoomUseCase(),
-            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+            chatRoomUseCase: MockChatRoomUseCase()
         )
         
         viewModel.closeTapped()

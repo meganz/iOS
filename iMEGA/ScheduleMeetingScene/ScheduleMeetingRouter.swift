@@ -36,7 +36,8 @@ final class ScheduleMeetingRouter {
         let viewModel = ScheduleMeetingViewModel(
             router: self,
             viewConfiguration: viewConfiguration,
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo)
         )
 
         let viewController = ScheduleMeetingViewController(viewModel: viewModel)

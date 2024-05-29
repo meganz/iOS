@@ -5,21 +5,20 @@ import MEGAPresentation
 import MEGAPresentationMock
 
 extension ScheduleMeetingViewModel {
-    convenience init(
+    static func build(
         router: some ScheduleMeetingRouting = MockScheduleMeetingRouter(),
         viewConfiguration: some ScheduleMeetingViewConfigurable = MockScheduleMeetingViewConfiguration(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
-        tracker: some AnalyticsTracking = MockTracker(),
-        isTesting: Bool = true
-    ) {
-        self.init(
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(valueToReturn: false),
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> ScheduleMeetingViewModel {
+        .init(
             router: router,
             viewConfiguration: viewConfiguration,
             accountUseCase: accountUseCase,
             preferenceUseCase: preferenceUseCase,
-            featureFlagProvider: featureFlagProvider,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             tracker: tracker
         )
     }

@@ -441,14 +441,10 @@ final class MeetingContainerViewModel: ViewModelType {
             }
             router.showUsersLimitErrorAlert()
         case .callDurationLimit:
-            if featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) {
-                if call.isOwnClientCaller { // or is chat room organiser - future implementation
-                    hangCall()
-                    guard let accountDetails = accountUseCase.currentAccountDetails else { return }
-                    router.showUpgradeToProDialog(accountDetails)
-                } else {
-                    hangAndDismissCall(completion: nil)
-                }
+            if call.isOwnClientCaller { // or is chat room organiser - future implementation
+                hangCall()
+                guard let accountDetails = accountUseCase.currentAccountDetails else { return }
+                router.showUpgradeToProDialog(accountDetails)
             } else {
                 hangAndDismissCall(completion: nil)
             }

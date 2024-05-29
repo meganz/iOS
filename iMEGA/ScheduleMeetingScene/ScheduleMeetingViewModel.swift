@@ -126,9 +126,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private let router: any ScheduleMeetingRouting
     private let viewConfiguration: any ScheduleMeetingViewConfigurable
     private let accountUseCase: any AccountUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let tracker: any AnalyticsTracking
-        
+    private var chatMonetisationEnabled = false
     private var subscriptions = Set<AnyCancellable>()
 
     init(
@@ -136,13 +136,13 @@ final class ScheduleMeetingViewModel: ObservableObject {
         viewConfiguration: some ScheduleMeetingViewConfigurable,
         accountUseCase: some AccountUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
         self.viewConfiguration = viewConfiguration
         self.accountUseCase = accountUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.tracker = tracker
         self.meetingName = viewConfiguration.meetingName
         self.meetingDescription = viewConfiguration.meetingDescription
@@ -157,6 +157,21 @@ final class ScheduleMeetingViewModel: ObservableObject {
         $waitingRoomWarningBannerDismissed.useCase = preferenceUseCase
         updateMeetingLinkToggle()
         initShowWarningBannerSubscription()
+    }
+    
+    @MainActor
+    func viewAppeared() async {
+        // [MEET-3932] as part of migration from local, synchronous feature flags system,
+        // to server backed, remote async system, we read and cache the value
+        // when view appears to avoid rewriting too much inside the view model itself
+        await loadAndCacheFeatureFlagValue()
+        updateRightBarButtonState()
+        showLimitDurationViewIfNeeded()
+    }
+    
+    @MainActor
+    func loadAndCacheFeatureFlagValue() async {
+        chatMonetisationEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .chatMonetisation)
     }
     
     // MARK: - Public
@@ -281,7 +296,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     func showLimitDurationViewIfNeeded() {
-       showLimitDurationView = shouldShowFreePlanLimit()
+        showLimitDurationView = shouldShowFreePlanLimit()
     }
     
     // MARK: - Private
@@ -458,11 +473,10 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     private func shouldShowFreePlanLimit() -> Bool {
-       let featureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
        let freeAccountUser = accountUseCase.currentAccountDetails?.proLevel == .free
        let meetingLongerThanFreePlanLimit = endDate.timeIntervalSince(startDate) > Constants.freePlanDurationLimit
        
-       return featureEnabled && freeAccountUser && meetingLongerThanFreePlanLimit
+       return chatMonetisationEnabled && freeAccountUser && meetingLongerThanFreePlanLimit
     }
     
     @MainActor

@@ -60,8 +60,9 @@ struct ScheduleMeetingView: View {
                     : (colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color))
         .ignoresSafeArea(.container, edges: [.top, .bottom])
         .onAppear {
-            viewModel.updateRightBarButtonState()
-            viewModel.showLimitDurationViewIfNeeded()
+            Task { @MainActor in
+                await viewModel.viewAppeared()
+            }
         }
         .actionSheet(isPresented: $viewModel.showDiscardAlert) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.title), buttons: discardChangesButtons())

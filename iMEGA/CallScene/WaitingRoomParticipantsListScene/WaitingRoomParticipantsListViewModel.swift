@@ -31,15 +31,14 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
             }
         }
     }
-    private let chatMonetisationEnabled: Bool
+
     private var searchTask: Task<Void, Never>?
     
     init(
         router: some WaitingRoomParticipantsListRouting,
         call: CallEntity,
         callUseCase: some CallUseCaseProtocol,
-        chatRoomUseCase: some ChatRoomUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        chatRoomUseCase: some ChatRoomUseCaseProtocol
     ) {
         self.router = router
         self.call = call
@@ -47,14 +46,12 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
         self.chatRoomUseCase = chatRoomUseCase
         self.searchText = ""
         self.isSearchActive = false
-        self.chatMonetisationEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
         if let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) {
             let limitations = CallLimitations(
                 initialLimit: call.callLimits.maxUsers,
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
-                chatRoomUseCase: chatRoomUseCase,
-                featureFlagProvider: featureFlagProvider
+                chatRoomUseCase: chatRoomUseCase
             )
             
             self.participantLimitReached = limitations.hasReachedInCallFreeUserParticipantLimit(
@@ -161,7 +158,6 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
         // as the CallLimitations does not know current number of call participants
         // this should be added on next iteration
         participantLimitReached = CallLimitations.callParticipantsLimitReached(
-            featureFlagEnabled: chatMonetisationEnabled,
             isMyselfModerator: true,
             currentLimit: call.callLimits.maxUsers,
             callParticipantCount: call.numberOfParticipants

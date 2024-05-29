@@ -8,10 +8,9 @@ import XCTest
 
 final class RemoteFeatureFlagRepositoryTests: XCTestCase {
     func testRemoteFlag_callSDK() async {
-        let sdk = MockSdk()
-        sdk.remoteFeatureFlagValues["name"] = 123
+        let sdk = MockSdk(remoteFeatureFlagValues: [RemoteFeatureFlag.chatMonetisation.rawValue: 1])
         let repo = RemoteFeatureFlagRepository(sdk: sdk)
-        let value = await repo.remoteFeatureFlagValue(for: "name")
-        XCTAssertEqual(value, 123)
+        let value = await repo.remoteFeatureFlagValue(for: .chatMonetisation)
+        XCTAssertEqual(value, 1)
     }
 }
