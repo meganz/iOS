@@ -89,7 +89,7 @@ struct SearchResultRowView: View {
             .resizable()
             .scaledToFit()
             .frame(width: 40, height: 40)
-            .sensitive(viewModel.isSensitive ? (viewModel.hasThumbnail ? .blur : .opacity) : .none)
+            .sensitive(viewModel.isSensitive && viewModel.hasThumbnail ? .blur : .none)
             .clipShape(RoundedRectangle(cornerRadius: 4))
             .overlay(propertyViewsFor(placement: .previewOverlay))
     }
