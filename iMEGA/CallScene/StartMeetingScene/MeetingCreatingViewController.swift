@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAUIKit
@@ -8,28 +9,36 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     private struct AvatarProperties {
         static let initials = "G"
         static let font = UIFont.preferredFont(forTextStyle: .title1).withWeight(.semibold)
-        static let textColor = MEGAAppColor.White._FFFFFF.uiColor
+        static let textColor = UIColor.whiteFFFFFF
         static let size = CGSize(width: 80, height: 80)
-        static let backgroundColor = MEGAAppColor.Chat.callAvatarBackground.uiColor
-        static let backgroundGradientColor = MEGAAppColor.Chat.callAvatarBackgroundGradient.uiColor
+        static let backgroundColor = UIColor.callAvatarBackground
+        static let backgroundGradientColor = UIColor.callAvatarBackgroundGradient
     }
     
     private struct Constants {
         static let bottomBarText = UIFont.preferredFont(style: .title3, weight: .semibold)
         static let bottomBarButtonText = UIFont.preferredFont(forTextStyle: .headline)
-        static let backgroundColor = MEGAAppColor.Gray._332F2F.uiColor
-        static let iconTintColorNormal = MEGAAppColor.White._FFFFFF.uiColor
-        static let iconTintColorSelected = MEGAAppColor.Black._000000.uiColor
-        static let iconBackgroundColorNormal = MEGAAppColor.Black._222222.uiColor
-        static let iconBackgroundColorSelected = MEGAAppColor.White._FFFFFF.uiColor
-        static let meetingNameTextColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.2)
-        static let placeholderTextColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.2)
+        static let backgroundColor = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Background.page :  UIColor.gray332F2F
+        static let iconTintColorNormal = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Icon.primary : UIColor.whiteFFFFFF
+        static let iconTintColorSelected = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Icon.inverse : UIColor.black000000
+        static let iconBackgroundColorNormal = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Button.secondary : UIColor.black222222
+        static let iconBackgroundColorSelected = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Button.primary : UIColor.whiteFFFFFF
+        static let meetingNameTextColor = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Text.placeholder : UIColor.whiteFFFFFF.withAlphaComponent(0.2)
+        static let placeholderTextColor = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Text.placeholder : UIColor.whiteFFFFFF.withAlphaComponent(0.2)
     }
     
     @IBOutlet weak var localUserView: LocalUserView!
     @IBOutlet weak var enableDisableVideoButton: UIButton!
     @IBOutlet weak var muteUnmuteMicrophoneButton: UIButton!
     @IBOutlet weak var speakerQuickActionView: MeetingSpeakerQuickActionView!
+    @IBOutlet weak var bottomPanelView: UIView!
     @IBOutlet weak var firstNameTextfield: UITextField!
     @IBOutlet weak var lastNameTextfield: UITextField!
     @IBOutlet weak var meetingNameInputTextfield: UITextField!
@@ -68,13 +77,13 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             title: Strings.Localizable.close,
             style: .plain,
             target: self,
-            action: #selector(dissmissVC(_:))
+            action: #selector(dismissVC(_:))
         )
 
         configureUI()
                 
         viewModel.invokeCommand = { [weak self] command in
-            self?.excuteCommand(command)
+            self?.executeCommand(command)
         }
 
         viewModel.dispatch(.onViewReady)
@@ -122,20 +131,31 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         meetingNameInputTextfield.addTarget(self, action: #selector(textFieldTextChanged(textField:)), for: .editingChanged)
         
         startMeetingButton.setTitle(Strings.Localizable.Meetings.CreateMeeting.startMeeting, for: .normal)
-        startMeetingButton.mnz_setupPrimary(traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            setupColorForStartMeetingButton()
+            startMeetingButton.layer.cornerRadius = 8
+        } else {
+            startMeetingButton.mnz_setupPrimary(traitCollection)
+        }
         startMeetingButton.titleLabel?.font = Constants.bottomBarButtonText
         
         speakerQuickActionView.properties = MeetingQuickActionView.Properties(
             iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: Constants.iconTintColorNormal, selected: Constants.iconTintColorSelected),
             backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: Constants.iconBackgroundColorNormal, selected: Constants.iconBackgroundColorSelected)
         )
-    }
         
-    @objc private func dissmissVC(_ barButtonItem: UIBarButtonItem) {
+        if UIColor.isDesignTokenEnabled() {
+            bottomPanelView.backgroundColor = TokenColors.Background.surface1
+            localUserView.backgroundColor = TokenColors.Background.page
+            enableDisableVideoButton.setImage(.cameraOffNew, for: .normal)
+        }
+    }
+
+    @objc private func dismissVC(_ barButtonItem: UIBarButtonItem) {
         viewModel.dispatch(.didTapCloseButton)
     }
     
-    private func excuteCommand(_ command: MeetingCreatingViewModel.Command) {
+    private func executeCommand(_ command: MeetingCreatingViewModel.Command) {
         switch command {
         case .configView(let title, let type, let isMicrophoneEnabled):
             self.title = title
@@ -198,7 +218,11 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         let trimmedFirstName = firstName.trimmingCharacters(in: .whitespaces)
         let trimmedLastName = lastname.trimmingCharacters(in: .whitespaces)
         startMeetingButton.isEnabled = !trimmedFirstName.isEmpty && !trimmedLastName.isEmpty
-        startMeetingButton.alpha = startMeetingButton.isEnabled ? 1.0 : 0.5
+        if UIColor.isDesignTokenEnabled() {
+            setupColorForStartMeetingButton()
+        } else {
+            startMeetingButton.alpha = startMeetingButton.isEnabled ? 1.0 : 0.5
+        }
     }
     
     private func showLoadingEndMeeting() {
@@ -235,7 +259,11 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             meetingNameInputTextfield.isHidden = true
             startMeetingButton.setTitle(Strings.Localizable.Meetings.Link.Guest.joinButtonText, for: .normal)
             startMeetingButton.isEnabled = false
-            startMeetingButton.alpha = 0.5
+            if UIColor.isDesignTokenEnabled() {
+                setupColorForStartMeetingButton()
+            } else {
+                startMeetingButton.alpha = 0.5
+            }
             
             firstNameTextfield.attributedPlaceholder = NSAttributedString(
                 string: Strings.Localizable.firstName,
@@ -314,6 +342,16 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         bottomConstraint.constant = 0
         UIView.animate(withDuration: duration) {
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func setupColorForStartMeetingButton() {
+        if startMeetingButton.isEnabled {
+            startMeetingButton.backgroundColor = TokenColors.Button.primary
+            startMeetingButton.setTitleColor(TokenColors.Text.colorInverse, for: UIControl.State.normal)
+        } else {
+            startMeetingButton.backgroundColor = TokenColors.Button.disabled
+            startMeetingButton.setTitleColor(TokenColors.Text.disabled, for: UIControl.State.normal)
         }
     }
 }

@@ -53,7 +53,7 @@ extension UIButton {
     @objc func mnz_setupPrimary(_ traitCollection: UITraitCollection) {
         if UIColor.isDesignTokenEnabled() {
             backgroundColor = TokenColors.Button.primary
-            setTitleColor(TokenColors.Text.inverseAccent, for: UIControl.State.normal)
+            setTitleColor(TokenColors.Text.colorInverse, for: UIControl.State.normal)
         } else {
             backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
             setTitleColor(UIColor.whiteFFFFFF, for: UIControl.State.normal)

@@ -30,7 +30,7 @@ class EncourageGuestUserToJoinMegaViewController: UIViewController {
             title: Strings.Localizable.close,
             style: .plain,
             target: self,
-            action: #selector(dissmissVC(_:))
+            action: #selector(dismissVC(_:))
         )
         
         createAccountButton.setTitle(Strings.Localizable.createAccount, for: .normal)
@@ -43,7 +43,7 @@ class EncourageGuestUserToJoinMegaViewController: UIViewController {
         paragraph2SubtitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph2.description
     }
     
-    @objc private func dissmissVC(_ barButtonItem: UIBarButtonItem) {
+    @objc private func dismissVC(_ barButtonItem: UIBarButtonItem) {
         viewModel.dispatch(.didTapCloseButton)
     }
     

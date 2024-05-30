@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import PanModal
 import UIKit
@@ -26,6 +27,13 @@ class EndMeetingOptionsViewViewController: UIViewController {
         preferredContentSize = Constants.popoverSize
         leaveButton.setTitle(Strings.Localizable.leave, for: .normal)
         cancelButton.setTitle(Strings.Localizable.cancel, for: .normal)
+        if UIColor.isDesignTokenEnabled() {
+            overrideUserInterfaceStyle = .dark
+            leaveButton.backgroundColor = TokenColors.Components.interactive
+            leaveButton.tintColor = TokenColors.Text.primary
+            cancelButton.backgroundColor = TokenColors.Button.secondary
+            cancelButton.tintColor = TokenColors.Text.accent
+        }
     }
     
     @IBAction func leaveButtonTapped(_ sender: UIButton) {
@@ -43,7 +51,7 @@ extension EndMeetingOptionsViewViewController: PanModalPresentable {
     }
     
     var panModalBackgroundColor: UIColor {
-        MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0.3955365646)
+        UIColor.black000000.withAlphaComponent(0.3955365646)
     }
     
     var longFormHeight: PanModalHeight {

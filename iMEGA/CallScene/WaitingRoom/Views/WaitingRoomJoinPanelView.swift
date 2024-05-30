@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -28,22 +29,51 @@ struct WaitingRoomJoinPanelView: View {
                 )
                 .frame(maxWidth: 120)
             }
-            Button {
-                tapJoinAction(firstName, lastName)
-                hideKeyboard()
-            } label: {
-                Text(Strings.Localizable.Meetings.WaitingRoom.Guest.join)
-                    .foregroundColor(MEGAAppColor.White._FFFFFF.color)
-                    .font(.system(size: 17, weight: .bold))
-                    .frame(width: 288, height: 50)
-                    .background(MEGAAppColor.Green._00C29A.color)
+            if isDesignTokenEnabled {
+                Button {
+                    tapJoinAction(firstName, lastName)
+                    hideKeyboard()
+                } label: {
+                    Text(Strings.Localizable.Meetings.WaitingRoom.Guest.join)
+                        .foregroundColor(
+                            disableJoinButton ?
+                                TokenColors.Text.disabled.swiftUI :
+                                TokenColors.Text.colorInverse.swiftUI
+                        )
+                        .font(.system(size: 17, weight: .bold))
+                        .frame(width: 288, height: 50)
+                        .background(
+                            disableJoinButton ?
+                                TokenColors.Button.disabled.swiftUI :
+                                TokenColors.Button.primary.swiftUI
+                        )
+                }
+                .cornerRadius(8)
+                .disabled(disableJoinButton)
+            } else {
+                Button {
+                    tapJoinAction(firstName, lastName)
+                    hideKeyboard()
+                } label: {
+                    Text(Strings.Localizable.Meetings.WaitingRoom.Guest.join)
+                        .foregroundColor(Color(.whiteFFFFFF))
+                        .font(.system(size: 17, weight: .bold))
+                        .frame(width: 288, height: 50)
+                        .background(
+                            Color(.green00C29A)
+                        )
+                }
+                .cornerRadius(8)
+                .disabled(disableJoinButton)
+                .opacity(disableJoinButton ? 0.3 : 1)
             }
-            .cornerRadius(8)
-            .disabled(disableJoinButton)
-            .opacity(disableJoinButton ? 0.3 : 1)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(MEGAAppColor.Black._1C1C1E.color)
+        .background(
+            isDesignTokenEnabled ?
+                TokenColors.Background.surface1.swiftUI :
+                Color(.black1C1C1E)
+        )
     }
     
     struct FocusableNameTextFieldView: View {
@@ -74,5 +104,5 @@ struct WaitingRoomJoinPanelView: View {
         .frame(height: 142)
     }
     .preferredColorScheme(.dark)
-    .background(MEGAAppColor.Black._000000.color)
+    .background(Color(.black000000))
 }
