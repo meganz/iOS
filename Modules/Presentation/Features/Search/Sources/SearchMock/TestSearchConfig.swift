@@ -36,6 +36,7 @@ extension SearchConfig {
                 verticalThumbnailPreviewBackground: .gray,
                 verticalThumbnailTopIconsBackground: .white.opacity(0.4),
                 verticalThumbnailTopPropertyColor: .gray,
+                listRowSeparator: .gray,
                 F7F7F7: Color("F7F7F7"),
                 _161616: Color("161616"),
                 _545458: Color("545458"),

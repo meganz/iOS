@@ -133,7 +133,7 @@ struct SearchResultRowView: View {
         }
         .font(.subheadline)
         .lineLimit(1)
-        .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        .foregroundStyle(viewModel.colorAssets.subtitleTextColor)
     }
     
     @ViewBuilder func propertyViewsFor(placement: PropertyPlacement) -> some View {
@@ -146,7 +146,7 @@ struct SearchResultRowView: View {
             Text(viewModel.result.description(layout))
                 .font(.caption)
                 .lineLimit(1)
-                .foregroundColor(TokenColors.Text.secondary.swiftUI)
+                .foregroundColor(viewModel.colorAssets.subtitleTextColor)
             propertyViewsFor(placement: .secondary(.trailing))
             Spacer()
             propertyViewsFor(placement: .secondary(.trailingEdge))
