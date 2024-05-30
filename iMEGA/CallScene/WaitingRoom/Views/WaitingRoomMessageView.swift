@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct WaitingRoomMessageView: View {
@@ -6,10 +7,18 @@ struct WaitingRoomMessageView: View {
     var body: some View {
         Text(title)
             .font(.subheadline)
-            .foregroundColor(MEGAAppColor.Black._000000.color)
+            .foregroundColor(
+                isDesignTokenEnabled ?
+                    TokenColors.Text.colorInverse.swiftUI :
+                    Color(.black000000)
+            )
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            .background(MEGAAppColor.White._FFFFFF.color)
+            .background(
+                isDesignTokenEnabled ?
+                    TokenColors.Background.inverse.swiftUI :
+                    Color(.whiteFFFFFF)
+            )
             .cornerRadius(44)
     }
 }
@@ -17,6 +26,6 @@ struct WaitingRoomMessageView: View {
 #Preview {
     WaitingRoomMessageView(title: "Wait for host to let you in")
         .padding(20)
-        .background(MEGAAppColor.Black._000000.color)
+        .background(Color(.black000000))
         .previewLayout(.sizeThatFits)
 }

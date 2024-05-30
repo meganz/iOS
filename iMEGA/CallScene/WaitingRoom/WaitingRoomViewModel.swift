@@ -387,7 +387,7 @@ final class WaitingRoomViewModel: ObservableObject {
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
             initials: waitingRoomUseCase.userName().initialForAvatar(),
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
         )
         
         Task { @MainActor in

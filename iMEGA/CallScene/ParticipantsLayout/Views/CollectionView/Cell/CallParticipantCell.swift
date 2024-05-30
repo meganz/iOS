@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 
 class CallParticipantCell: UICollectionViewCell {
@@ -48,13 +49,13 @@ class CallParticipantCell: UICollectionViewCell {
                 nameLabel.superview?.isHidden = true
                 micImageView.superview?.layer.cornerRadius = 12
                 if participant.isSpeakerPinned {
-                    borderColor = MEGAAppColor.White._FFFFFF.uiColor
+                    borderColor = UIColor.whiteFFFFFF
                     borderWidth = 1
                 }
             }
             
             if participant.audioDetected {
-                borderColor = MEGAAppColor.Green._00C29A.uiColor
+                borderColor = UIColor.green00C29A
                 borderWidth = 1
             }
         } else {

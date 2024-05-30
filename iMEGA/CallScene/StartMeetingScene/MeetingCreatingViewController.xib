@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MeetingCreatingViewController" customModule="MEGA" customModuleProvider="target">
             <connections>
                 <outlet property="bottomConstraint" destination="uSD-Ja-bTO" id="Hdh-MJ-1GI"/>
+                <outlet property="bottomPanelView" destination="pwG-Mz-V91" id="OD3-qD-sPh"/>
                 <outlet property="enableDisableVideoButton" destination="eyd-Am-81s" id="kZG-Wn-Fi0"/>
                 <outlet property="firstNameTextfield" destination="f1b-GR-VXZ" id="uB3-HF-MRC"/>
                 <outlet property="lastNameTextfield" destination="qsz-KS-vCH" id="qwR-vo-dVS"/>
