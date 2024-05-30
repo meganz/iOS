@@ -205,6 +205,9 @@ public struct SearchConfig {
         /// // To be removed after Semantic color is fully released . Ticket is [SAO-1482]
         public let verticalThumbnailTopPropertyColor: Color
         
+        // Important note: The correct source of truth for this color in Figma is the "Common UI" page, not "Cloud Drive" page
+        public let listRowSeparator: Color
+        
         public let F7F7F7: Color
         public let _161616: Color
         public let _545458: Color
@@ -229,6 +232,7 @@ public struct SearchConfig {
             verticalThumbnailPreviewBackground: Color,
             verticalThumbnailTopIconsBackground: Color,
             verticalThumbnailTopPropertyColor: Color,
+            listRowSeparator: Color,
             F7F7F7: Color,
             _161616: Color,
             _545458: Color,
@@ -253,6 +257,9 @@ public struct SearchConfig {
             self.verticalThumbnailPreviewBackground = verticalThumbnailPreviewBackground
             self.verticalThumbnailTopIconsBackground = verticalThumbnailTopIconsBackground
             self.verticalThumbnailTopPropertyColor = verticalThumbnailTopPropertyColor
+            
+            self.listRowSeparator = listRowSeparator
+            
             self.F7F7F7 = F7F7F7
             self._161616 = _161616
             self._545458 = _545458

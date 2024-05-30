@@ -69,6 +69,22 @@ extension UIColor {
             : UIColor(red: 0.886, green: 0.886, blue: 0.886, alpha: 1)
         }
     )
+    
+    static let cloudDriveSubtitleText = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor.black00000080
+            : UIColor.whiteFFFFFF80
+        }
+    )
+    
+    static let cloudDriveListRowSeparator = UIColor(
+        dynamicProvider: {
+            $0.userInterfaceStyle == .light
+            ? UIColor.gray3C3C4330
+            : UIColor.gray54545865
+        }
+    )
 }
 
 extension SearchConfig {
@@ -162,9 +178,9 @@ extension SearchConfig {
                 }
             },
             rowAssets: .init(
-                contextImage: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
+                contextImage: isDesignTokenEnabled ? UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary) : UIImage.moreList,
                 itemSelected: isDesignTokenEnabled ? UIImage.checkBoxSelectedSemantic : UIImage.checkBoxSelected,
-                itemUnselected: UIImage.checkBoxUnselected,
+                itemUnselected: isDesignTokenEnabled ? UIImage.checkBoxUnselected.withTintColorAsOriginal(TokenColors.Border.strong)  : UIImage.checkBoxUnselected,
                 playImage: UIImage.videoList,
                 downloadedImage: UIImage.downloaded,
                 moreList: isDesignTokenEnabled ? UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary)
@@ -176,14 +192,15 @@ extension SearchConfig {
                 unselectedBorderColor: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : UIColor.cloudDriveThumbnailModeBorder.swiftUI,
                 selectedBorderColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : UIColor.turquoise.swiftUI,
                 titleTextColor: UIColor.primaryTextColor().swiftUI,
-                subtitleTextColor: UIColor.secondaryTextColor().swiftUI,
-                vibrantColor: isDesignTokenEnabled ? TokenColors.Text.error.swiftUI : UIColor.cloudDriveVibrance.swiftUI, 
+                subtitleTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : UIColor.cloudDriveSubtitleText.swiftUI,
+                vibrantColor: isDesignTokenEnabled ? TokenColors.Text.error.swiftUI : UIColor.cloudDriveVibrance.swiftUI,
                 resultPropertyColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.cloudDrivePropertyIcon.swiftUI,
                 verticalThumbnailFooterText: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.cloudDriveVideoDurationText.swiftUI,
                 verticalThumbnailFooterBackground: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.cloudDriveVideoDurationBackground.swiftUI,
                 verticalThumbnailPreviewBackground: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.cloudDriveVerticalThumbnailPreviewBackground.swiftUI,
                 verticalThumbnailTopIconsBackground: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : UIColor.cloudDriveVerticalThumbnailTopIconsBackground.swiftUI,
                 verticalThumbnailTopPropertyColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.cloudDriveVerticalThumbnailTopIcons.swiftUI,
+                listRowSeparator: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : UIColor.cloudDriveListRowSeparator.swiftUI,
                 F7F7F7: UIColor.whiteF7F7F7.swiftUI,
                 _161616: UIColor.black161616.swiftUI,
                 _545458: UIColor.gray545458.swiftUI,
@@ -194,7 +211,7 @@ extension SearchConfig {
                 _1C1C1E: UIColor.black1C1C1E.swiftUI,
                 _00A886: UIColor.green00A886.swiftUI,
                 _3C3C43: UIColor.gray3C3C43.swiftUI,
-                checkmarkBackgroundTintColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : UIColor.turquoise.swiftUI
+                checkmarkBackgroundTintColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : UIColor.turquoise.swiftUI
             ),
             contextPreviewFactory: contextPreviewFactory
         )
