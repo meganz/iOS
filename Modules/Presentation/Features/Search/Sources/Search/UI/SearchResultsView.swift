@@ -129,8 +129,8 @@ public struct SearchResultsView: View {
     private var listContent: some View {
         List(viewModel.listItems, selection: $viewModel.selectedRowIds) { item in
             SearchResultRowView(viewModel: item)
-                .designTokenListItemBackground(isDesignTokenEnabled)
                 .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)
+                .listRowBackground(Color.clear)
                 .onAppear {
                     Task {
                         await viewModel.onItemAppear(item)
