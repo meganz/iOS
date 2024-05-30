@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 public struct FocusableTextFieldView: View {
@@ -31,13 +32,25 @@ public struct FocusableTextFieldView: View {
         let clearButtonMode: UITextField.ViewMode
 
         var body: some View {
-            TextField(placeholder, text: $text)
-            .focused($focused)
-            .onAppear {
-                if clearButtonMode != .never {
-                    UITextField.appearance().clearButtonMode = clearButtonMode
+            textField
+                .focused($focused)
+                .onAppear {
+                    if clearButtonMode != .never {
+                        UITextField.appearance().clearButtonMode = clearButtonMode
+                    }
+                    focused = appearFocused
                 }
-                focused = appearFocused
+        }
+        
+        @ViewBuilder
+        var textField: some View {
+            if isDesignTokenEnabled {
+                TextField(
+                    "", text: $text, prompt: Text(placeholder).foregroundColor(TokenColors.Text.placeholder.swiftUI)
+                )
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            } else {
+                TextField(placeholder, text: $text)
             }
         }
     }

@@ -440,23 +440,23 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     }
     
     private var iconNormalTintColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary : MEGAAppColor.White._FFFFFF.uiColor
+        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary : UIColor.whiteFFFFFF
     }
     
     private var iconSelectedTintColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.inverse : MEGAAppColor.Black._000000.uiColor
+        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.inverse : UIColor.black000000
     }
     
     private var iconNormalBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.secondary : MEGAAppColor.Gray._474747.uiColor
+        UIColor.isDesignTokenEnabled() ? TokenColors.Button.secondary : UIColor.gray474747
     }
     
     private var iconSelectedBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : MEGAAppColor.White._FFFFFF.uiColor
+        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : UIColor.whiteFFFFFF
     }
     
     private var endCallNormalBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : MEGAAppColor.Red._FF453A.uiColor
+        UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : UIColor.redFF453A
     }
 }
 

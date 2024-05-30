@@ -82,6 +82,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         navigationController?.navigationBar.isTranslucent = true
         overrideUserInterfaceStyle = .dark
         callCollectionView.overrideUserInterfaceStyle = .dark
+
+        if UIColor.isDesignTokenEnabled() {
+            view.backgroundColor = TokenColors.Background.page
+        }
         
         viewModel.invokeCommand = { [weak self] in
             self?.executeCommand($0)

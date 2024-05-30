@@ -51,6 +51,6 @@ struct WaitingRoomControl: View {
                             isSpeakerEnabled: .constant(true),
                             speakerOnIcon: .constant(.speakerOn),
                             isBluetoothAudioRouteAvailable: .constant(false))
-    .background(MEGAAppColor.Black._000000.color)
+    .background(Color(.black000000))
     .previewLayout(.sizeThatFits)
 }
