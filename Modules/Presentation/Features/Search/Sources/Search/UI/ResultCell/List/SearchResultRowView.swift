@@ -21,39 +21,26 @@ struct SearchResultRowView: View {
     @Environment(\.editMode) private var editMode
     
     var body: some View {
-        contentWrapper
+        contentWithInsetsAndSwipeActions
+            .contextMenuWithPreview(
+                actions: viewModel.previewContent.actions.toUIActions,
+                sourcePreview: {
+                    content
+                },
+                contentPreviewProvider: {
+                    switch viewModel.previewContent.previewMode {
+                    case let .preview(contentPreviewProvider):
+                        return contentPreviewProvider()
+                    case .noPreview:
+                        return nil
+                    }
+                },
+                didTapPreview: viewModel.actions.previewTapAction,
+                didSelect: viewModel.actions.selectionAction
+            )
             .task {
                 await viewModel.loadThumbnail()
             }
-    }
-    
-    @ViewBuilder
-    private var contentWrapper: some View {
-        if editMode?.wrappedValue.isEditing == true {
-            contentWithInsetsAndSwipeActions
-                .contextMenu {
-                    viewModel.previewContent.actions.toContentView
-                }
-        } else {
-            contentWithInsetsAndSwipeActions
-                .contextMenuWithPreview(
-                    actions: viewModel.previewContent.actions.toUIActions,
-                    sourcePreview: {
-                        content
-                    },
-                    contentPreviewProvider: {
-                        switch viewModel.previewContent.previewMode {
-                        case let .preview(contentPreviewProvider):
-                            return contentPreviewProvider()
-                        case .noPreview:
-                            return nil
-                        }
-                    },
-                    didTapPreview: viewModel.actions.previewTapAction,
-                    didSelect: viewModel.actions.selectionAction
-                )
-                
-        }
     }
     
     private var contentWithInsetsAndSwipeActions: some View {
