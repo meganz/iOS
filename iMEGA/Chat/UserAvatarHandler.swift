@@ -57,7 +57,7 @@ struct UserAvatarHandler: UserAvatarHandling {
             forInitials: initials,
             size: size,
             backgroundColor: avatarBackgroundColor,
-            textColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : MEGAAppColor.White._FFFFFF.uiColor,
+            textColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.whiteFFFFFF,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage)
     }

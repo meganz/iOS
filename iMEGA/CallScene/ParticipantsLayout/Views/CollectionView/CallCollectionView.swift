@@ -67,7 +67,7 @@ class CallCollectionView: UICollectionView {
         delegate = self
         self.callCollectionViewDelegate = callCollectionViewDelegate
         register(CallParticipantCell.nib, forCellWithReuseIdentifier: CallParticipantCell.reuseIdentifier)
-        backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : MEGAAppColor.Black._000000.uiColor
+        backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black000000
     }
     
     // call this instead of manual calling insert/delete/reload cell
