@@ -52,7 +52,7 @@ struct HorizontalThumbnailView: View {
             .resizable()
             .scaledToFit()
             .frame(width: 24, height: 24)
-            .sensitive(viewModel.isSensitive ? (viewModel.hasThumbnail ? .blur : .opacity) : .none)
+            .sensitive(viewModel.isSensitive && viewModel.hasThumbnail ? .blur : .none)
     }
     
     private var isSelected: Bool {
