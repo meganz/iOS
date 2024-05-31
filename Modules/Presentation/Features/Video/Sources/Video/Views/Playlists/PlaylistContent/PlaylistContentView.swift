@@ -26,8 +26,7 @@ struct PlaylistContentScreen: View {
             thumbnailUseCase: viewModel.thumbnailUseCase,
             videos: viewModel.videos,
             router: router,
-            onTapAddButton: {},
-            onTapPlayButton: {}
+            onTapAddButton: {}
         )
         .task {
             await viewModel.onViewAppeared()
@@ -48,15 +47,13 @@ struct PlaylistContentView: View {
     let videos: [NodeEntity]
     let router: any VideoRevampRouting
     let onTapAddButton: () -> Void
-    let onTapPlayButton: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
             PlaylistContentHeaderView(
                 videoConfig: videoConfig,
                 previewEntity: previewEntity,
-                onTapAddButton: onTapAddButton,
-                onTapPlayButton: onTapPlayButton
+                onTapAddButton: onTapAddButton
             )
             
             if previewEntity.imageContainers.isEmpty {
@@ -124,8 +121,7 @@ struct PlaylistContentView: View {
         thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
-        onTapAddButton: {},
-        onTapPlayButton: {}
+        onTapAddButton: {}
     )
 }
 
@@ -143,8 +139,7 @@ struct PlaylistContentView: View {
         thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
-        onTapAddButton: {},
-        onTapPlayButton: {}
+        onTapAddButton: {}
     )
     .preferredColorScheme(.dark)
 }
@@ -163,8 +158,7 @@ struct PlaylistContentView: View {
         thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
-        onTapAddButton: {},
-        onTapPlayButton: {}
+        onTapAddButton: {}
     )
 }
 
@@ -182,8 +176,7 @@ struct PlaylistContentView: View {
         thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
-        onTapAddButton: {},
-        onTapPlayButton: {}
+        onTapAddButton: {}
     )
     .preferredColorScheme(.dark)
 }
