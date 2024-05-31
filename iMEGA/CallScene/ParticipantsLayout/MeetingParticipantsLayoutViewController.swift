@@ -8,8 +8,8 @@ import MEGAPresentation
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     private enum Constants {
         static let notificationMessageWhiteBackgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.inverse : UIColor(white: 1.0, alpha: 0.95)
-        static let notificationMessageWhiteTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : MEGAAppColor.White._FFFFFF.uiColor
-        static let notificationMessageBlackTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.colorInverse : MEGAAppColor.Black._000000.uiColor
+        static let notificationMessageWhiteTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.whiteFFFFFF
+        static let notificationMessageBlackTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.colorInverse : UIColor.black000000
     }
     
     @IBOutlet private weak var callCollectionView: CallCollectionView!
