@@ -71,7 +71,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
 
-        backgroundView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : MEGAAppColor.Black._2C2C2E.uiColor
+        backgroundView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : .black2C2C2E
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = UIImage(resource: .hangCallMeetingAction)
@@ -81,7 +81,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
         )
         endQuickActionView.name = Strings.Localizable.leave
 
-        shareLinkLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.accent : MEGAAppColor.Green._00C29A.uiColor
+        shareLinkLabel.textColor = UIColor.isDesignTokenEnabled() ? 
+            TokenColors.Text.accent :
+            .green00C29A
         
         registerTableViewCells()
         
@@ -489,7 +491,7 @@ extension MeetingFloatingPanelViewController: PanModalPresentable {
     }
     
     var panModalBackgroundColor: UIColor {
-        MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0)
+        .black000000.withAlphaComponent(0)
     }
 
     var anchorModalToLongForm: Bool {

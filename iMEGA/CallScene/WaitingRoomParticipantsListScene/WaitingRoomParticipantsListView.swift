@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import MEGASwiftUI
@@ -8,7 +9,7 @@ struct WaitingRoomParticipantsListView: View {
     
     var body: some View {
         ZStack {
-            Color(MEGAAppColor.Black._2C2C2E.uiColor).edgesIgnoringSafeArea([.all])
+            Color(.black2C2C2E).edgesIgnoringSafeArea([.all])
             VStack(spacing: 0) {
                 headerView
                 searchBarView()
@@ -34,10 +35,18 @@ struct WaitingRoomParticipantsListView: View {
             VStack {
                 Text(Strings.Localizable.Chat.Call.WaitingRoom.ParticipantsList.title)
                     .font(.subheadline)
-                    .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+                    .foregroundColor(
+                        isDesignTokenEnabled ?
+                            TokenColors.Text.primary.swiftUI :
+                            .whiteFFFFFF
+                    )
                 Text(Strings.Localizable.Chat.Call.WaitingRoom.participantsCount(viewModel.displayWaitingRoomParticipants.count))
                     .font(.caption)
-                    .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+                    .foregroundColor(
+                        isDesignTokenEnabled ?
+                            TokenColors.Text.primary.swiftUI :
+                            .whiteFFFFFF
+                    )
                     .opacity(0.8)
             }
             HStack {
@@ -46,7 +55,7 @@ struct WaitingRoomParticipantsListView: View {
                     viewModel.closeTapped()
                 }
                 .padding(.trailing, 24)
-                .foregroundColor(MEGAAppColor.Gray._D1D1D1.color)
+                .foregroundColor(.grayD1D1D1)
                 .font(.body.bold())
             }
         }
@@ -69,11 +78,15 @@ struct WaitingRoomParticipantsListView: View {
             .opacity(viewModel.admitAllButtonDisabled ? 0.25 : 1.0)
             .disabled(viewModel.admitAllButtonDisabled)
             .font(.body.bold())
-            .foregroundColor(MEGAAppColor.Green._00C29A.color)
+            .foregroundColor(
+                isDesignTokenEnabled ?
+                    TokenColors.Link.primary.swiftUI :
+                    .green00C29A
+            )
             .frame(width: 288, height: 50, alignment: .center)
-            .background(MEGAAppColor.Gray._363638.color)
+            .background(.gray363638)
             .cornerRadius(8)
-            .shadow(color: MEGAAppColor.Black._000000.color.opacity(0.15), radius: 2, x: 0, y: 1)
+            .shadow(color: .black000000.opacity(0.15), radius: 2, x: 0, y: 1)
         }
         .padding(EdgeInsets(top: 8, leading: 32, bottom: 42, trailing: 32))
     }

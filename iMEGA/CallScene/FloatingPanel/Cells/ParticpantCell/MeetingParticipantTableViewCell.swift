@@ -14,15 +14,37 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        moderatorTextLabel.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface3 : MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.1957759226)
+        moderatorTextLabel.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface3 :
+            .whiteFFFFFF.withAlphaComponent(0.1957759226)
         moderatorTextLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .white
         moderatorTextLabel.layer.cornerRadius = 4.0
         moderatorTextLabel.layer.masksToBounds = true
         moderatorTextLabel.text = "  \(Strings.Localizable.Meetings.Participant.moderator)  "
-        nameLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .white
-        micButton.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : .white
-        videoButton.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : .white
-        contextMenuButton.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary : .white
+        if UIColor.isDesignTokenEnabled() {
+            nameLabel.textColor = TokenColors.Text.primary
+            micButton.setImage(
+                .userMicOn.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
+                for: .normal
+            )
+            micButton.setImage(
+                .userMutedMeetings.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
+                for: .selected
+            )
+            videoButton.setImage(
+                .callSlots.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
+                for: .normal
+            )
+            videoButton.setImage(
+                .videoOff.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
+                for: .selected
+            )
+            contextMenuButton.tintColor = TokenColors.Icon.primary
+        } else {
+            nameLabel.textColor = .white
+            micButton.tintColor = .white
+            videoButton.tintColor = .white
+            contextMenuButton.tintColor = .white
+        }
     }
     
     var viewModel: MeetingParticipantViewModel? {

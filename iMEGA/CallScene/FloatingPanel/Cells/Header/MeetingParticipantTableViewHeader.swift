@@ -59,9 +59,9 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         titleLabel.textColor = .white // static color does change when dark/light mode changes
         warningLabel.preferredMaxLayoutWidth = 300
         warningLabel.font  = UIFont.preferredFont(forTextStyle: .caption2).bold()
-        let titleColor = UIColor.isDesignTokenEnabled()
-        ? TokenColors.Link.primary
-        : MEGAAppColor.Green._00A886.uiColor
+        let titleColor = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Link.primary :
+            .green00A886
         actionButton.setTitleColor(titleColor, for: .normal)
         actionButton.setTitleColor(titleColor.withAlphaComponent(0.4), for: .disabled)
         actionButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
