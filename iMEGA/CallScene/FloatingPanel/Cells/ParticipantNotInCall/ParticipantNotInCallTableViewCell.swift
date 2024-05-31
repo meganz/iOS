@@ -21,10 +21,12 @@ class ParticipantNotInCallTableViewCell: UITableViewCell, ViewType {
     override func awakeFromNib() {
         super.awakeFromNib()
         callButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsNotInCall.Participant.call, for: .normal)
-        callButton.setTitleColor(UIColor.isDesignTokenEnabled()
-                                 ? TokenColors.Link.primary
-                                 : MEGAAppColor.Green._00A886.uiColor,
-                                 for: .normal)
+        callButton.setTitleColor(
+            UIColor.isDesignTokenEnabled() ?
+                TokenColors.Link.primary :
+                .green00A886,
+            for: .normal
+        )
     }
     
     var viewModel: ParticipantNotInCallViewModel? {
