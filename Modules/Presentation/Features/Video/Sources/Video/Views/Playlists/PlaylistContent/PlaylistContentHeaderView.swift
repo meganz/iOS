@@ -8,7 +8,6 @@ struct PlaylistContentHeaderView: View {
     let videoConfig: VideoConfig
     let previewEntity: VideoPlaylistCellPreviewEntity
     let onTapAddButton: () -> Void
-    let onTapPlayButton: () -> Void
     
     var body: some View {
         HStack(alignment: .top) {
@@ -24,7 +23,7 @@ struct PlaylistContentHeaderView: View {
                     secondaryInformationView
                 }
                 
-                buttonsContent
+                addButton
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -88,13 +87,6 @@ struct PlaylistContentHeaderView: View {
         }
     }
     
-    private var buttonsContent: some View {
-        HStack(spacing: TokenSpacing._5) {
-            addButton
-            playButton
-        }
-    }
-    
     @ViewBuilder
     private var addButton: some View {
         if isDesignTokenEnabled {
@@ -116,19 +108,6 @@ struct PlaylistContentHeaderView: View {
                 action: { onTapAddButton() }
             )
         }
-    }
-    
-    private var playButton: some View {
-        PillView(
-            viewModel: .init(
-                title: "Play", // CC-6824
-                icon: .leading(Image(uiImage: videoConfig.playlistContentAssets.headerView.image.playButtonImage.withRenderingMode(.alwaysTemplate))),
-                foreground: isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : videoConfig.colorAssets.whiteColor,
-                background: isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : videoConfig.playlistContentAssets.headerView.color.buttonTintColor,
-                shape: .capsule
-            )
-        )
-        .onTapGesture { onTapPlayButton() }
     }
 }
 
@@ -187,8 +166,7 @@ private func view(imageContainers: [any ImageContaining], isExported: Bool, play
             isExported: isExported,
             type: playlistType
         ),
-        onTapAddButton: {},
-        onTapPlayButton: {}
+        onTapAddButton: {}
     )
 }
 
