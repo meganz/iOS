@@ -48,7 +48,7 @@ extension CommonParticipantViewModel {
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
             initials: name.initialForAvatar(),
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? .black000000
         )
         
         return await avatarHandler.avatar(for: base64Handle)

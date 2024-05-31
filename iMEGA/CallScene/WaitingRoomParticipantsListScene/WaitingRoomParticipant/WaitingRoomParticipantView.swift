@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -33,7 +34,11 @@ struct WaitingRoomParticipantView: View {
                 HStack {
                     Text(viewModel.name)
                         .font(.subheadline)
-                        .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+                        .foregroundColor(
+                            isDesignTokenEnabled ?
+                                TokenColors.Text.primary.swiftUI :
+                                .whiteFFFFFF
+                        )
                     Spacer()
                     Button {
                         viewModel.denyTapped()
@@ -51,7 +56,11 @@ struct WaitingRoomParticipantView: View {
                 .padding(.trailing, Constants.viewPadding)
                 Spacer()
                 Divider()
-                    .background(MEGAAppColor.Gray._545458.color.opacity(0.65))
+                    .background(
+                        isDesignTokenEnabled ?
+                            TokenColors.Background.surface1.swiftUI :
+                            .gray545458.opacity(0.65)
+                    )
             }
         }
         .frame(height: Constants.viewHeight)
