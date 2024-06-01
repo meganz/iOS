@@ -3,19 +3,19 @@ import MEGAPresentation
 import MEGASwift
 import SwiftUI
 
-public protocol CurrentPlanDetailRouting: Routing {
+public protocol CancelAccountPlanRouting: Routing {
     func dismiss()
 }
 
-public final class CurrentPlanDetailRouter: CurrentPlanDetailRouting {
+public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     private let accountDetails: AccountDetailsEntity
-    private let assets: CurrentPlanDetailAssets
+    private let assets: CancelAccountPlanAssets
     
     public init(
         accountDetails: AccountDetailsEntity,
-        assets: CurrentPlanDetailAssets,
+        assets: CancelAccountPlanAssets,
         presenter: UIViewController
     ) {
         self.accountDetails = accountDetails
@@ -29,7 +29,7 @@ public final class CurrentPlanDetailRouter: CurrentPlanDetailRouting {
             assets: assets
         )
         
-        let viewModel = CurrentPlanDetailViewModel(
+        let viewModel = CancelAccountPlanViewModel(
             currentPlanName: accountDetails.proLevel.toAccountTypeDisplayName(),
             currentPlanStorageUsed: String.memoryStyleString(fromByteCount: accountDetails.storageUsed),
             featureListHelper: featureListHelper,
@@ -37,7 +37,7 @@ public final class CurrentPlanDetailRouter: CurrentPlanDetailRouting {
         )
         
         let hostingController = UIHostingController(
-            rootView: CurrentPlanDetailView(viewModel: viewModel)
+            rootView: CancelAccountPlanView(viewModel: viewModel)
         )
         baseViewController = hostingController
         return hostingController

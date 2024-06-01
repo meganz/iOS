@@ -1,11 +1,11 @@
 import Foundation
 import MEGADomain
 
-public final class CurrentPlanDetailViewModel: ObservableObject {
+public final class CancelAccountPlanViewModel: ObservableObject {
     let currentPlanName: String
     let currentPlanStorageUsed: String
     let featureListHelper: FeatureListHelperProtocol
-    let router: CurrentPlanDetailRouting
+    let router: CancelAccountPlanRouting
     
     @Published private(set) var features: [FeatureDetails] = []
 
@@ -13,7 +13,7 @@ public final class CurrentPlanDetailViewModel: ObservableObject {
         currentPlanName: String,
         currentPlanStorageUsed: String,
         featureListHelper: FeatureListHelperProtocol,
-        router: CurrentPlanDetailRouting
+        router: CancelAccountPlanRouting
     ) {
         self.currentPlanName = currentPlanName
         self.currentPlanStorageUsed = currentPlanStorageUsed
