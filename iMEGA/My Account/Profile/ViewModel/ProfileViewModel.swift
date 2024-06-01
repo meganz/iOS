@@ -169,7 +169,7 @@ extension ProfileViewModel {
         
         router.showCancelSubscriptionFlow(
             accountDetails: currentAccountDetails,
-            assets: CurrentPlanDetailAssets(
+            assets: CancelAccountPlanAssets(
                 availableImageName: CancelSubscriptionIconAssets.availableIcon,
                 unavailableImageName: CancelSubscriptionIconAssets.unavailableIcon
             )

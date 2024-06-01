@@ -1,7 +1,7 @@
 import Accounts
 import SwiftUI
 
-public class MockCurrentPlanDetailRouter: CurrentPlanDetailRouting {
+public class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
     public var dismiss_calledTimes = 0
     
     public init() {}

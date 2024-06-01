@@ -3,8 +3,8 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-struct CurrentPlanDetailView: View {
-    @ObservedObject var viewModel: CurrentPlanDetailViewModel
+struct CancelAccountPlanView: View {
+    @ObservedObject var viewModel: CancelAccountPlanViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -13,7 +13,7 @@ struct CurrentPlanDetailView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 10) {
                     headerView()
-                    currentPlanDetailBodyView()
+                    cancelAccountPlanBodyView()
                     footerView()
                 }
                 .padding(.bottom, 20.0)
@@ -74,7 +74,7 @@ struct CurrentPlanDetailView: View {
     }
     
     @ViewBuilder
-    private func currentPlanDetailBodyView() -> some View {
+    private func cancelAccountPlanBodyView() -> some View {
         VStack(spacing: 10) {
             featureListHeaderView()
             
