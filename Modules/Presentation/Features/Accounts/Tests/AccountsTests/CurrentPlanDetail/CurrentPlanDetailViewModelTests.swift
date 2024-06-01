@@ -2,7 +2,7 @@
 import AccountsMock
 import XCTest
 
-final class CurrentPlanDetailViewModelTests: XCTestCase {
+final class CancelAccountPlanViewModelTests: XCTestCase {
     let features = [
         FeatureDetails(
             type: .storage,
@@ -25,11 +25,11 @@ final class CurrentPlanDetailViewModelTests: XCTestCase {
         currentPlanStorageUsed: String = "",
         features: [FeatureDetails]
     ) -> (
-        viewModel: CurrentPlanDetailViewModel,
-        router: MockCurrentPlanDetailRouter
+        viewModel: CancelAccountPlanViewModel,
+        router: MockCancelAccountPlanRouter
     ) {
-        let router = MockCurrentPlanDetailRouter()
-        let viewModel = CurrentPlanDetailViewModel(
+        let router = MockCancelAccountPlanRouter()
+        let viewModel = CancelAccountPlanViewModel(
             currentPlanName: currentPlanName,
             currentPlanStorageUsed: currentPlanStorageUsed,
             featureListHelper: MockFeatureListHelper(features: features),

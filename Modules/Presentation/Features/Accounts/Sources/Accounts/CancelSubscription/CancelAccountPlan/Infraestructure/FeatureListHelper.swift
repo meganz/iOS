@@ -11,7 +11,7 @@ public protocol FeatureListHelperProtocol {
 
 struct FeatureListHelper: FeatureListHelperProtocol {
     let account: AccountDetailsEntity
-    let assets: CurrentPlanDetailAssets
+    let assets: CancelAccountPlanAssets
     
     func createCurrentFeatures() -> [FeatureDetails] {
         [

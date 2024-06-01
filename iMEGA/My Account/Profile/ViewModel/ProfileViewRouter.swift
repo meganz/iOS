@@ -3,7 +3,7 @@ import MEGADomain
 import MEGAPresentation
 
 protocol ProfileViewRouting: Routing {
-    func showCancelSubscriptionFlow(accountDetails: AccountDetailsEntity, assets: CurrentPlanDetailAssets)
+    func showCancelSubscriptionFlow(accountDetails: AccountDetailsEntity, assets: CancelAccountPlanAssets)
 }
 
 final class ProfileViewRouter: ProfileViewRouting {
@@ -46,11 +46,11 @@ final class ProfileViewRouter: ProfileViewRouting {
     
     func showCancelSubscriptionFlow(
         accountDetails: AccountDetailsEntity,
-        assets: CurrentPlanDetailAssets
+        assets: CancelAccountPlanAssets
     ) {
         guard let presenter = baseViewController else { return }
         
-        CurrentPlanDetailRouter(
+        CancelAccountPlanRouter(
             accountDetails: accountDetails,
             assets: assets,
             presenter: presenter
