@@ -1,4 +1,4 @@
-public struct CurrentPlanDetailAssets {
+public struct CancelAccountPlanAssets {
     let availableImageName: String
     let unavailableImageName: String
 

@@ -23,7 +23,7 @@ final class FeatureListHelperTests: XCTestCase {
             storageMax: storageMax,
             transferMax: transferMax
         )
-        let assets = CurrentPlanDetailAssets(
+        let assets = CancelAccountPlanAssets(
             availableImageName: availableImageName,
             unavailableImageName: unavailableImageName
         )
