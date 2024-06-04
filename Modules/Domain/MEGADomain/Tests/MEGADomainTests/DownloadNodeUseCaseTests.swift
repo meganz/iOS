@@ -35,7 +35,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
     
     func testDownloadNode_copiedFromTempFolderError() {
         let nodeRepo = MockNodeRepository(node: NodeEntity(name: "nodeName", base64Handle: "base64Handle", isFile: true, size: 10))
-        let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100, fileExists: true, copiedNode: true)
+        let fileSytemRepo = MockFileSystemRepository(fileExists: true, copiedNode: true)
         
         let mockError: TransferErrorEntity = .copiedFromTempFolder
         let sut = DownloadNodeUseCase(
@@ -88,38 +88,10 @@ class DownloadNodeUseCaseTests: XCTestCase {
         } folderUpdate: { _ in }
     }
     
-    func testDownloadNode_notEnoughSpaceError() {
-        let nodeRepo = MockNodeRepository(node: NodeEntity(name: "node", size: 1000))
-        let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100)
-
-        let mockError: TransferErrorEntity = .notEnoughSpace
-        let sut = DownloadNodeUseCase(
-            downloadFileRepository: MockDownloadFileRepository(),
-            offlineFilesRepository: MockOfflineFilesRepository(),
-            fileSystemRepository: fileSytemRepo,
-            nodeRepository: nodeRepo,
-            nodeDataRepository: MockNodeDataRepository.newRepo,
-            fileCacheRepository: MockFileCacheRepository(),
-            mediaUseCase: MockMediaUseCase(),
-            preferenceRepository: EmptyPreferenceRepository.newRepo,
-            offlineFileFetcherRepository: MockOfflineFileFetcherRepository.newRepo,
-            chatNodeRepository: MockChatNodeRepository(),
-            downloadChatRepository: MockDownloadChatRepository()
-        )
-        sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
-            switch result {
-            case .success:
-                XCTFail("Folder nodes named 'Inbox' could not be saved in Documents folder, should return \(mockError) error")
-            case .failure(let error):
-                XCTAssertEqual(error, mockError)
-            }
-        } folderUpdate: { _ in }
-    }
-    
     func testDownloadNode_downloadSuccess() {
         let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle"))
         let nodeDataRepo = MockNodeDataRepository(size: 10)
-        let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100)
+        let fileSytemRepo = MockFileSystemRepository()
         let mockTransferEntity = TransferEntity(type: .download, path: "Documents/")
         let downloadRepo = MockDownloadFileRepository(completionResult: .success(mockTransferEntity))
         let sut = DownloadNodeUseCase(

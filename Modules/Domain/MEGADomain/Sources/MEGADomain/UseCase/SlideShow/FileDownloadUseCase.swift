@@ -38,10 +38,6 @@ extension FileDownloadUseCase: FileDownloadUseCaseProtocol {
                 continuation.resume(returning: url)
                 return
             }
-            if fileSystemRepository.systemVolumeAvailability() < node.size {
-                continuation.resume(throwing: ExportFileErrorEntity.notEnoughSpace)
-                return
-            }
             let url = fileCacheRepository.cachedOriginalImageURL(for: node)
             downloadFileRepository.download(nodeHandle: node.handle, to: url, metaData: .none) { result in
                 switch result {
