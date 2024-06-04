@@ -54,7 +54,7 @@ final class FeatureListHelperTests: XCTestCase {
 
         XCTAssertNotNil(transferFeature, "Transfer feature should not be nil")
         XCTAssertEqual(transferFeature?.title, Strings.Localizable.transfer, "Transfer feature title mismatch")
-        XCTAssertEqual(transferFeature?.freeText, Strings.Localizable.Limited.Feature.message, "Transfer feature free text mismatch")
+        XCTAssertEqual(transferFeature?.freeText, Strings.Localizable.Account.TransferQuota.FreePlan.limited, "Transfer feature free text mismatch")
         XCTAssertEqual(transferFeature?.proText, String.memoryStyleString(fromByteCount: sut.account.transferMax), "Transfer feature pro text mismatch")
     }
 
@@ -119,9 +119,9 @@ final class FeatureListHelperTests: XCTestCase {
         let callsAndMeetingsDurationFeature = features.first { $0.type == .callsAndMeetingsDuration }
 
         XCTAssertNotNil(callsAndMeetingsDurationFeature, "Calls and Meetings Duration feature should not be nil")
-        XCTAssertEqual(callsAndMeetingsDurationFeature?.title, Strings.Localizable.Call.And.Meeting.Duration.title, "Calls and Meetings Duration feature title mismatch")
-        XCTAssertEqual(callsAndMeetingsDurationFeature?.freeText, Strings.Localizable.Call.And.Meeting.Duration.For.Free.users, "Calls and Meetings Duration feature free text mismatch")
-        XCTAssertEqual(callsAndMeetingsDurationFeature?.proText, Strings.Localizable.Call.And.Meeting.Duration.For.Pro.users, "Calls and Meetings Duration feature pro text mismatch")
+        XCTAssertEqual(callsAndMeetingsDurationFeature?.title, Strings.Localizable.CallAndMeeting.Duration.title, "Calls and Meetings Duration feature title mismatch")
+        XCTAssertEqual(callsAndMeetingsDurationFeature?.freeText, Strings.Localizable.CallAndMeeting.Duration.For.Free.users, "Calls and Meetings Duration feature free text mismatch")
+        XCTAssertEqual(callsAndMeetingsDurationFeature?.proText, Strings.Localizable.CallAndMeeting.Duration.Unlimited.For.Pro.users, "Calls and Meetings Duration feature pro text mismatch")
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectCallsAndMeetingsParticipantsFeature() {
@@ -130,8 +130,8 @@ final class FeatureListHelperTests: XCTestCase {
         let callsAndMeetingsParticipantsFeature = features.first { $0.type == .callsAndMeetingsParticipants }
 
         XCTAssertNotNil(callsAndMeetingsParticipantsFeature, "Calls and Meetings Participants feature should not be nil")
-        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.title, Strings.Localizable.Call.And.Meeting.Participants.title, "Calls and Meetings Participants feature title mismatch")
-        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.freeText, Strings.Localizable.Call.And.Meeting.Participants.For.Free.users, "Calls and Meetings Participants feature free text mismatch")
-        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.proText, Strings.Localizable.Unlimited.Feature.message, "Calls and Meetings Participants feature pro text mismatch")
+        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.title, Strings.Localizable.CallAndMeeting.Participants.title, "Calls and Meetings Participants feature title mismatch")
+        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.freeText, Strings.Localizable.CallAndMeeting.Participants.For.Free.users, "Calls and Meetings Participants feature free text mismatch")
+        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.proText, Strings.Localizable.CallAndMeeting.Participants.Unlimited.For.Pro.users, "Calls and Meetings Participants feature pro text mismatch")
     }
 }

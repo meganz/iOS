@@ -24,7 +24,7 @@ struct FeatureListHelper: FeatureListHelperProtocol {
             FeatureDetails(
                 type: .transfer,
                 title: Strings.Localizable.transfer,
-                freeText: Strings.Localizable.Limited.Feature.message,
+                freeText: Strings.Localizable.Account.TransferQuota.FreePlan.limited,
                 proText: String.memoryStyleString(fromByteCount: account.transferMax)
             ),
             FeatureDetails(
@@ -59,15 +59,15 @@ struct FeatureListHelper: FeatureListHelperProtocol {
             ),
             FeatureDetails(
                 type: .callsAndMeetingsDuration,
-                title: Strings.Localizable.Call.And.Meeting.Duration.title,
-                freeText: Strings.Localizable.Call.And.Meeting.Duration.For.Free.users,
-                proText: Strings.Localizable.Call.And.Meeting.Duration.For.Pro.users
+                title: Strings.Localizable.CallAndMeeting.Duration.title,
+                freeText: Strings.Localizable.CallAndMeeting.Duration.For.Free.users,
+                proText: Strings.Localizable.CallAndMeeting.Duration.Unlimited.For.Pro.users
             ),
             FeatureDetails(
                 type: .callsAndMeetingsParticipants,
-                title: Strings.Localizable.Call.And.Meeting.Participants.title,
-                freeText: Strings.Localizable.Call.And.Meeting.Participants.For.Free.users,
-                proText: Strings.Localizable.Unlimited.Feature.message
+                title: Strings.Localizable.CallAndMeeting.Participants.title,
+                freeText: Strings.Localizable.CallAndMeeting.Participants.For.Free.users,
+                proText: Strings.Localizable.CallAndMeeting.Participants.Unlimited.For.Pro.users
             )
         ]
     }
