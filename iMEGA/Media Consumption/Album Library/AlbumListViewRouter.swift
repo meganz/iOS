@@ -85,7 +85,11 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 photoLibraryUseCase: makePhotoLibraryUseCase()),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             userAlbumRepository: userAlbumRepository(),
-            photosRepository: PhotosRepository.sharedRepo)
+            photosRepository: PhotosRepository.sharedRepo,
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo))
     }
     
     private func userAlbumRepository() -> any UserAlbumRepositoryProtocol {

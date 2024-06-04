@@ -417,7 +417,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
 
 private extension MonitorAlbumsUseCaseProtocol {
     func monitorLocalizedSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], any Error>> {
-        await monitorSystemAlbums()
+        await monitorSystemAlbums(excludeSensitives: false)
             .map { systemAlbumResult in
                 systemAlbumResult.map { albums in
                     albums.map { album in
@@ -436,7 +436,7 @@ private extension MonitorAlbumsUseCaseProtocol {
     func monitorSortedUserAlbums(
         by areInIncreasingOrder: @escaping @Sendable (AlbumEntity, AlbumEntity) -> Bool
     ) async -> AnyAsyncSequence<[AlbumEntity]> {
-        await monitorUserAlbums()
+        await monitorUserAlbums(excludeSensitives: false)
             .map { userAlbums in
                 var sortedUserAlbums = userAlbums
                 sortedUserAlbums.sort(by: areInIncreasingOrder)

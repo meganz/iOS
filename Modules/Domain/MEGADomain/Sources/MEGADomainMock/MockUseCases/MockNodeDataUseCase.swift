@@ -18,6 +18,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let createFolderResult: Result<NodeEntity, NodeCreationErrorEntity>
     private let isNodeRestorable: Bool
     private let isInheritingSensitivityResult: Result<Bool, Error>
+    private let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>]
     private let monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error>
 
     public var isMultimediaFileNode_CalledTimes = 0
@@ -37,6 +38,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false },
                 isNodeRestorable: Bool = false,
                 isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
+                isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:],
                 monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
@@ -54,6 +56,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.isNodeInRubbishBin = isNodeInRubbishBin
         self.isNodeRestorable = isNodeRestorable
         self.isInheritingSensitivityResult = isInheritingSensitivityResult
+        self.isInheritingSensitivityResults = isInheritingSensitivityResults
         self.monitorInheritedSensitivityForNode = monitorInheritedSensitivityForNode
     }
     
@@ -139,12 +142,12 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
         try await withCheckedThrowingContinuation {
-            $0.resume(with: isInheritingSensitivityResult)
+            $0.resume(with: isInheritingSensitivityResult(for: node))
         }
     }
     
     public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
-        switch isInheritingSensitivityResult {
+        switch isInheritingSensitivityResult(for: node) {
         case .success(let isSensitive):
            isSensitive
         case .failure(let error):
@@ -154,5 +157,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     
     public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
         monitorInheritedSensitivityForNode
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func isInheritingSensitivityResult(for node: NodeEntity) -> Result<Bool, Error> {
+        isInheritingSensitivityResults[node.handle] ?? isInheritingSensitivityResult
     }
 }

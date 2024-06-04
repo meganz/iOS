@@ -6,22 +6,32 @@ public protocol MonitorAlbumsUseCaseProtocol {
     ///
     /// The async sequence will immediately return system albums then updates when photo updates occur.
     /// The async sequence is infinite and will require cancellation.
-    func monitorSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], Error>>
+    /// - Parameter excludeSensitives: A boolean value indicating whether to exclude sensitive photos from album covers. They will always be included in count.
+    /// - Returns: An asynchronous sequence of results, where each result contains an array of `AlbumEntity` objects or an error.
+    func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], Error>>
     
     /// Infinite `AnyAsyncSequence` returning user created albums
     ///
     /// The async sequence will immediately return user albums then updates when set updates occur.
     /// The async sequence is infinite and will require cancellation.
-    func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]>
+    /// - Parameter excludeSensitives: A boolean value indicating whether to exclude sensitive covers from albums.
+    /// - Returns: An asynchronous sequence of `[AlbumEntity]`.
+    func monitorUserAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<[AlbumEntity]>
     
     /// Infinite `AnyAsyncSequence` returning user album photos.
     ///
     /// The async sequence will immediately return album photos
     /// The async sequence is infinite and will require cancellation.
-    ///
+    /// - Parameters:
+    ///   - album: The album entity for which to monitor the photos.
+    ///   - excludeSensitives: A boolean value indicating whether to exclude sensitive photos from album covers.
+    ///   - includeSensitiveInherited: A boolean value indicating whether to include inherited sensitivity in `AlbumPhotoEntity`.
     /// - Returns: AnyAsyncSequence<[AlbumPhotoEntity]> that will yield photos for a user album
     /// (contains `NodeEntity` and optional link to the `SetEntityElement` handle).
-    func monitorUserAlbumPhotos(for album: AlbumEntity) async -> AnyAsyncSequence<[AlbumPhotoEntity]>
+    /// - Important: If `excludeSensitives` is set to `true`, the sequence will exclude sensitive photos that are marked as sensitive or have inherited sensitivity.
+    /// If `includeSensitiveInherited` is set to `true`, the `AlbumPhotoEntity` objects will include inherited sensitivity information.
+    func monitorUserAlbumPhotos(for album: AlbumEntity, excludeSensitives: Bool,
+                                includeSensitiveInherited: Bool) async -> AnyAsyncSequence<[AlbumPhotoEntity]>
 }
 
 public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
@@ -29,37 +39,48 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
     private let mediaUseCase: any MediaUseCaseProtocol
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let photosRepository: any PhotosRepositoryProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     
     public init(monitorPhotosUseCase: some MonitorPhotosUseCaseProtocol,
                 mediaUseCase: some MediaUseCaseProtocol,
                 userAlbumRepository: some UserAlbumRepositoryProtocol,
-                photosRepository: some PhotosRepositoryProtocol) {
+                photosRepository: some PhotosRepositoryProtocol,
+                nodeUseCase: some NodeUseCaseProtocol) {
         self.monitorPhotosUseCase = monitorPhotosUseCase
         self.mediaUseCase = mediaUseCase
         self.userAlbumRepository = userAlbumRepository
         self.photosRepository = photosRepository
+        self.nodeUseCase = nodeUseCase
     }
     
-    public func monitorSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], Error>> {
+    public func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], Error>> {
         await monitorPhotosUseCase.monitorPhotos(filterOptions: [.allLocations, .allMedia])
             .map {
-                $0.map { makeSystemAlbums($0) }
+                switch $0 {
+                case .success(let photos):
+                        .success(makeSystemAlbums(
+                            photos, coverPhotosSensitiveState: await coverPhotoSensitiveState(photos, excludeSensitives: excludeSensitives)))
+                case .failure(let error):
+                        .failure(error)
+                }
             }
             .eraseToAnyAsyncSequence()
     }
     
-    public func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
+    public func monitorUserAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<[AlbumEntity]> {
         await userAlbumRepository.albumsUpdated()
             .prepend {
                 await userAlbumRepository.albums()
             }
             .map {
-                await makeUserAlbums($0)
+                await makeUserAlbums($0, excludeSensitives: excludeSensitives)
             }
             .eraseToAnyAsyncSequence()
     }
     
-    public func monitorUserAlbumPhotos(for album: AlbumEntity) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
+    public func monitorUserAlbumPhotos(for album: AlbumEntity,
+                                       excludeSensitives: Bool,
+                                       includeSensitiveInherited: Bool) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
         guard album.type == .user else {
             return EmptyAsyncSequence<[AlbumPhotoEntity]>().eraseToAnyAsyncSequence()
         }
@@ -70,14 +91,16 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
                 by: album.id, includeElementsInRubbishBin: false)
         }
         .map {
-            await userAlbumPhotos(forAlbumPhotoIds: $0)
+            await userAlbumPhotos(forAlbumPhotoIds: $0,
+                                  excludeSensitives: excludeSensitives,
+                                  includeSensitiveInherited: includeSensitiveInherited)
         }
         .eraseToAnyAsyncSequence()
     }
     
     // MARK: Private
     
-    private func makeSystemAlbums(_ photos: [NodeEntity]) -> [AlbumEntity] {
+    private func makeSystemAlbums(_ photos: [NodeEntity], coverPhotosSensitiveState: [HandleEntity: Bool]?) -> [AlbumEntity] {
         var favouriteAlbumCover: NodeEntity?
         var gifAlbumCover: NodeEntity?
         var rawAlbumCover: NodeEntity?
@@ -85,24 +108,26 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         var numOfGifPhotos = 0
         var numOfRawPhotos = 0
         
-        photos.forEach { photo in
+        for photo in photos {
+            let shouldShowCoverPhoto = coverPhotosSensitiveState?[photo.handle] ?? true
+            
             if photo.isFavourite {
                 numOfFavouritePhotos += 1
-                if isPhotoModificationTimeLater(currentPhoto: favouriteAlbumCover,
-                                                photo: photo) {
+                if shouldShowCoverPhoto && isPhotoModificationTimeLater(currentPhoto: favouriteAlbumCover,
+                                                                        photo: photo) {
                     favouriteAlbumCover = photo
                 }
             }
             if mediaUseCase.isGifImage(photo.name) {
                 numOfGifPhotos += 1
-                if isPhotoModificationTimeLater(currentPhoto: gifAlbumCover,
-                                                photo: photo) {
+                if shouldShowCoverPhoto && isPhotoModificationTimeLater(currentPhoto: gifAlbumCover,
+                                                                        photo: photo) {
                     gifAlbumCover = photo
                 }
             } else if mediaUseCase.isRawImage(photo.name) {
                 numOfRawPhotos += 1
-                if isPhotoModificationTimeLater(currentPhoto: rawAlbumCover,
-                                                photo: photo) {
+                if shouldShowCoverPhoto && isPhotoModificationTimeLater(currentPhoto: rawAlbumCover,
+                                                                        photo: photo) {
                     rawAlbumCover = photo
                 }
             }
@@ -129,7 +154,7 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         }
         return albums
     }
-        
+    
     private func isPhotoModificationTimeLater(currentPhoto: NodeEntity?, photo: NodeEntity) -> Bool {
         guard let currentPhoto else { return true }
         guard photo.modificationTime != currentPhoto.modificationTime else {
@@ -138,12 +163,12 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         return photo.modificationTime > currentPhoto.modificationTime
     }
     
-    private func makeUserAlbums(_ albumSets: [SetEntity]) async -> [AlbumEntity] {
+    private func makeUserAlbums(_ albumSets: [SetEntity], excludeSensitives: Bool) async -> [AlbumEntity] {
         await withTaskGroup(of: AlbumEntity.self,
                             returning: [AlbumEntity].self) { group in
-            albumSets.forEach { setEntity in
-                group.addTask {
-                    let coverNode = await userAlbumCoverNode(for: setEntity)
+            for setEntity in albumSets {
+                guard group.addTaskUnlessCancelled(operation: {
+                    let coverNode = await userAlbumCoverNode(for: setEntity, excludeSensitives: excludeSensitives)
                     return AlbumEntity(id: setEntity.handle,
                                        name: setEntity.name,
                                        coverNode: coverNode,
@@ -152,7 +177,7 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
                                        creationTime: setEntity.creationTime,
                                        modificationTime: setEntity.modificationTime,
                                        sharedLinkStatus: .exported(setEntity.isExported))
-                }
+                }) else { break }
             }
             return await group.reduce(into: [AlbumEntity]()) {
                 $0.append($1)
@@ -160,25 +185,40 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         }
     }
     
-    private func userAlbumCoverNode(for set: SetEntity) async -> NodeEntity? {
+    private func userAlbumCoverNode(for set: SetEntity, excludeSensitives: Bool) async -> NodeEntity? {
         guard set.coverId != .invalid,
-              let albumCover = await userAlbumRepository.albumElementId(by: set.handle,
-                                                                        elementId: set.coverId) else {
+              let albumCoverElementId = await userAlbumRepository.albumElementId(by: set.handle,
+                                                                                 elementId: set.coverId),
+              let coverPhoto = await photosRepository.photo(forHandle: albumCoverElementId.nodeId),
+              await shouldShowPhoto(coverPhoto, excludeSensitives: excludeSensitives) else {
             return nil
         }
-        return await photosRepository.photo(forHandle: albumCover.nodeId)
+        return coverPhoto
     }
     
-    private func userAlbumPhotos(forAlbumPhotoIds albumPhotoIds: [AlbumPhotoIdEntity]) async -> [AlbumPhotoEntity] {
+    private func userAlbumPhotos(forAlbumPhotoIds albumPhotoIds: [AlbumPhotoIdEntity],
+                                 excludeSensitives: Bool,
+                                 includeSensitiveInherited: Bool) async -> [AlbumPhotoEntity] {
         await withTaskGroup(of: AlbumPhotoEntity?.self) { group in
-            albumPhotoIds.forEach { albumElementId in
-                group.addTask {
+            for albumElementId in albumPhotoIds {
+                guard group.addTaskUnlessCancelled(operation: {
                     guard let photo = await photosRepository.photo(forHandle: albumElementId.nodeId) else {
                         return nil
                     }
+                    guard excludeSensitives || includeSensitiveInherited else {
+                        return AlbumPhotoEntity(photo: photo, albumPhotoId: albumElementId.id)
+                    }
+                    guard !(excludeSensitives && photo.isMarkedSensitive) else {
+                        return nil
+                    }
+                    let isSensitiveInherited = await isInheritingSensitivity(node: photo)
+                    guard !(excludeSensitives && isSensitiveInherited) else {
+                        return nil
+                    }
                     return AlbumPhotoEntity(photo: photo,
-                                            albumPhotoId: albumElementId.id)
-                }
+                                            albumPhotoId: albumElementId.id,
+                                            isSensitiveInherited: includeSensitiveInherited ? isSensitiveInherited : nil)
+                }) else { break }
             }
             
             return await group.reduce(into: [AlbumPhotoEntity](), {
@@ -212,5 +252,38 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
                 return albumPhotoIds
             }
             .eraseToAnyAsyncSequence()
+    }
+    
+    private func coverPhotoSensitiveState(_ photos: [NodeEntity], excludeSensitives: Bool) async -> [HandleEntity: Bool]? {
+        guard excludeSensitives else { return nil }
+        
+        return await withTaskGroup(of: (HandleEntity, Bool).self,
+                                   returning: [HandleEntity: Bool].self) { group in
+            for photo in photos {
+                guard group.addTaskUnlessCancelled(operation: {
+                    (photo.handle, await shouldShowPhoto(photo, excludeSensitives: excludeSensitives))
+                }) else {
+                    break
+                }
+            }
+            
+            return await group.reduce(into: [HandleEntity: Bool]()) {
+                $0[$1.0] = $1.1
+            }
+        }
+    }
+    
+    private func shouldShowPhoto(_ node: NodeEntity, excludeSensitives: Bool) async -> Bool {
+        if !excludeSensitives {
+            true
+        } else if node.isMarkedSensitive {
+            false
+        } else {
+            await !isInheritingSensitivity(node: node)
+        }
+    }
+    
+    private func isInheritingSensitivity(node: NodeEntity) async -> Bool {
+        (try? await nodeUseCase.isInheritingSensitivity(node: node)) ?? false
     }
 }
