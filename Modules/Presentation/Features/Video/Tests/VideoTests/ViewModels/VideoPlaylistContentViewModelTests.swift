@@ -1,170 +1,127 @@
+import AsyncAlgorithms
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 @testable import Video
 import XCTest
 
 final class VideoPlaylistContentViewModelTests: XCTestCase {
     
-    // MARK: - onViewAppeared
+    // MARK: - onViewAppeared.monitorVideoPlaylistContent
     
-    func testOnViewAppeared_onSuccesfullyLoadVideos_loadVideos() async {
+    func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithUpdates_reloadVideoPlaylistContentSuccessfully() async {
         let allVideos = [
             NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
             NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
         ]
-        let videoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(allVideos: allVideos)
-        let thumbnailUseCase = MockThumbnailUseCase()
         let videoPlaylistEntity = VideoPlaylistEntity(
             id: 1,
             name: "name",
             count: allVideos.count,
-            type: .favourite,
+            type: .user,
             creationTime: Date(),
             modificationTime: Date()
         )
-        let (sut, _) = makeSUT(
-            videoPlaylistEntity: videoPlaylistEntity,
-            videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
-            thumbnailUseCase: thumbnailUseCase
+        
+        let mockVideoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(
+            allVideos: allVideos,
+            monitorVideoPlaylistAsyncSequenceResult: SingleItemAsyncSequence(item: videoPlaylistEntity).eraseToAnyAsyncThrowingSequence(),
+            monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
         )
-        
-        await sut.onViewAppeared()
-        
-        XCTAssertEqual(sut.videos, allVideos)
-    }
-    
-    func testOnViewAppeared_whenLoad_loadThumbnailsFromThumbnailLoader() async {
-        let allVideos: [NodeEntity] = []
-        let videoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(allVideos: allVideos)
         let thumbnailUseCase = MockThumbnailUseCase(
             cachedThumbnails: [],
             loadThumbnailResult: .failure(GenericErrorEntity()),
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let videoPlaylistEntity = VideoPlaylistEntity(
-            id: 1,
-            name: "name",
-            count: allVideos.count,
-            type: .favourite,
-            creationTime: Date(),
-            modificationTime: Date()
-        )
-        let (sut, videoPlaylistThumbnailLoader) = makeSUT(
+        let (sut, _, videoPlaylistContentsUseCase) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
-            videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
+            videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
         )
         
         await sut.onViewAppeared()
         
-        XCTAssertEqual(videoPlaylistThumbnailLoader.loadThumbnailsCallCount, 1)
+        XCTAssertTrue(videoPlaylistContentsUseCase.messages.contains(.monitorVideoPlaylist(id: videoPlaylistEntity.id)))
     }
     
-    func testOnViewAppeared_whenNoCachedThumbnailsThumbnailAndErrors_deliversHeaderViewPlaceholderImage() async {
-        let allVideos: [NodeEntity] = []
-        let videoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(allVideos: allVideos)
+    func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithErrorUpdates_reloadVideoPlaylistContentWithError() async {
+        let allVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            id: 1,
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        
+        let videoPlaylistUpdatesStream = AsyncThrowingStream<VideoPlaylistEntity, any Error> { continuation in
+            continuation.yield(with: .failure(GenericErrorEntity()))
+        }.eraseToAnyAsyncThrowingSequence()
+        
+        let mockVideoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(
+            allVideos: allVideos,
+            monitorVideoPlaylistAsyncSequenceResult: videoPlaylistUpdatesStream,
+            monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
+        )
         let thumbnailUseCase = MockThumbnailUseCase(
             cachedThumbnails: [],
             loadThumbnailResult: .failure(GenericErrorEntity()),
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let videoPlaylistEntity = VideoPlaylistEntity(
-            id: 1,
-            name: "name",
-            count: allVideos.count,
-            type: .favourite,
-            creationTime: Date(),
-            modificationTime: Date()
-        )
-        let (sut, _) = makeSUT(
+        let (sut, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
-            videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
+            videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
         )
         
         await sut.onViewAppeared()
         
-        XCTAssertEqual(sut.secondaryInformationViewType, .emptyPlaylist)
-        XCTAssertTrue(sut.headerPreviewEntity.imageContainers.isEmpty)
-        XCTAssertEqual(sut.headerPreviewEntity.count, "Empty playlist")
-        XCTAssertEqual(sut.headerPreviewEntity.duration, "00:00:00")
-        XCTAssertEqual(sut.headerPreviewEntity.title, videoPlaylistEntity.name)
-        XCTAssertEqual(sut.headerPreviewEntity.isExported, false)
-        XCTAssertEqual(sut.headerPreviewEntity.type, videoPlaylistEntity.type)
+        XCTAssertTrue(sut.shouldShowError, "Expect to show error when has any other error during reload")
     }
     
-    func testOnViewAppeared_whenHasCachedThumbnailThumbnailAndErrors_deliversHeaderViewWithImage() async {
-        let allVideos: [NodeEntity] = [
-            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60)
+    func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithVideoPlaylistNotFOundErrorUpdates_popsScreen() async {
+        let allVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
         ]
-        let videoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(allVideos: allVideos)
-        let thumbnailEntity = ThumbnailEntity(url: anyImageURL, type: .thumbnail)
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            id: 1,
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        
+        let videoPlaylistUpdatesStream = AsyncThrowingStream<VideoPlaylistEntity, any Error> { continuation in
+            continuation.yield(with: .failure(VideoPlaylistErrorEntity.videoPlaylistNotFound(id: videoPlaylistEntity.id)))
+        }.eraseToAnyAsyncThrowingSequence()
+        let mockVideoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(
+            allVideos: allVideos,
+            monitorVideoPlaylistAsyncSequenceResult: videoPlaylistUpdatesStream,
+            monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
+        )
         let thumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
+            cachedThumbnails: [],
             loadThumbnailResult: .failure(GenericErrorEntity()),
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let videoPlaylistEntity = VideoPlaylistEntity(
-            id: 1,
-            name: "name",
-            count: allVideos.count,
-            type: .favourite,
-            creationTime: Date(),
-            modificationTime: Date()
-        )
-        let (sut, _) = makeSUT(
+        let (sut, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
-            videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
+            videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
         )
         
         await sut.onViewAppeared()
         
-        XCTAssertEqual(sut.secondaryInformationViewType, .information)
-        XCTAssertFalse(sut.headerPreviewEntity.imageContainers.isEmpty)
-        XCTAssertEqual(sut.headerPreviewEntity.count, "1 Video")
-        XCTAssertEqual(sut.headerPreviewEntity.duration, "00:01:00")
-        XCTAssertEqual(sut.headerPreviewEntity.title, videoPlaylistEntity.name)
-        XCTAssertEqual(sut.headerPreviewEntity.isExported, false)
-        XCTAssertEqual(sut.headerPreviewEntity.type, videoPlaylistEntity.type)
-    }
-    
-    func testOnViewAppeared_whenSucessLoadThumbnail_deliversHeaderViewUsingLoadedImage() async {
-        let allVideos: [NodeEntity] = [
-            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60)
-        ]
-        let videoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(allVideos: allVideos)
-        let thumbnailEntity = ThumbnailEntity(url: anyImageURL, type: .thumbnail)
-        let thumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
-            loadThumbnailResult: .success(thumbnailEntity)
-        )
-        let videoPlaylistEntity = VideoPlaylistEntity(
-            id: 1,
-            name: "name",
-            count: allVideos.count,
-            type: .favourite,
-            creationTime: Date(),
-            modificationTime: Date()
-        )
-        let (sut, _) = makeSUT(
-            videoPlaylistEntity: videoPlaylistEntity,
-            videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
-            thumbnailUseCase: thumbnailUseCase
-        )
-        
-        await sut.onViewAppeared()
-        
-        XCTAssertEqual(sut.secondaryInformationViewType, .information)
-        XCTAssertFalse(sut.headerPreviewEntity.imageContainers.isEmpty)
-        XCTAssertEqual(sut.headerPreviewEntity.count, "1 Video")
-        XCTAssertEqual(sut.headerPreviewEntity.duration, "00:01:00")
-        XCTAssertEqual(sut.headerPreviewEntity.title, videoPlaylistEntity.name)
-        XCTAssertEqual(sut.headerPreviewEntity.isExported, false)
-        XCTAssertEqual(sut.headerPreviewEntity.type, videoPlaylistEntity.type)
+        XCTAssertTrue(sut.shouldPopScreen, "Expect to exit screen")
     }
     
     // MARK: - Helpers
@@ -177,7 +134,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> (
         sut: VideoPlaylistContentViewModel,
-        videoPlaylistThumbnailLoader: MockVideoPlaylistThumbnailLoader
+        videoPlaylistThumbnailLoader: MockVideoPlaylistThumbnailLoader,
+        videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase
     ) {
         let videoPlaylistThumbnailLoader = MockVideoPlaylistThumbnailLoader()
         let sut = VideoPlaylistContentViewModel(
@@ -187,10 +145,6 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, videoPlaylistThumbnailLoader)
-    }
-    
-    private var anyImageURL: URL {
-        URL(string: "any-image-url")!
+        return (sut, videoPlaylistThumbnailLoader, videoPlaylistContentsUseCase)
     }
 }
