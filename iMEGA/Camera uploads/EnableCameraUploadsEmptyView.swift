@@ -28,7 +28,7 @@ struct EnableCameraUploadsEmptyView: View {
             Button(action: action) {
                 Text(Strings.Localizable.enable)
                     .font(.body.weight(.semibold))
-                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.colorInverse.swiftUI : .whiteFFFFFF)
+                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.inverse.swiftUI : .whiteFFFFFF)
                     .frame(width: 288, height: 50)
                     .background(isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : .green00A886)
                     .cornerRadius(8)

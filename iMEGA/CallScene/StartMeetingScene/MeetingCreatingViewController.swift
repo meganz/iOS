@@ -348,7 +348,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     private func setupColorForStartMeetingButton() {
         if startMeetingButton.isEnabled {
             startMeetingButton.backgroundColor = TokenColors.Button.primary
-            startMeetingButton.setTitleColor(TokenColors.Text.colorInverse, for: UIControl.State.normal)
+            startMeetingButton.setTitleColor(TokenColors.Text.inverse, for: UIControl.State.normal)
         } else {
             startMeetingButton.backgroundColor = TokenColors.Button.disabled
             startMeetingButton.setTitleColor(TokenColors.Text.disabled, for: UIControl.State.normal)
