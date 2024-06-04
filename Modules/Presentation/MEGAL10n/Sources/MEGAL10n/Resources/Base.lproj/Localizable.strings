@@ -4082,10 +4082,8 @@
 "free.Plan.Price.description"="Free";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited feature message. E.g.: Transfer = Limited */
-"limited.feature.message"="Limited";
-/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
-"unlimited.feature.message"="Unlimited";
+/* Limited transfer limit title */
+"account.transferQuota.freePlan.limited"="Limited";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Cancel subscription";
 /* The alert title shown when asking user if they want to make media node offline. */
@@ -4107,15 +4105,17 @@
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
-"call.and.meeting.duration.title"="Call and meeting duration";
+"callAndMeeting.duration.title"="Call and meeting duration";
 /* Call and meeting duration for free users */
-"call.and.meeting.duration.for.free.users"="Up to 1 hour";
-/* Call and meeting duration for pro users */
-"call.and.meeting.duration.for.pro.users"="Up to 24 hours";
+"callAndMeeting.duration.for.free.users"="Up to 1 hour";
+/* Call and meeting duration unlimited for pro users */
+"callAndMeeting.duration.unlimited.for.pro.users"="Unlimited";
 /* Call and meeting participants title */
-"call.and.meeting.participants.title"="Call and meeting participants";
+"callAndMeeting.participants.title"="Call and meeting participants";
 /* Call and meeting participants for free users */
-"call.and.meeting.participants.for.free.users"="Up to 100";
+"callAndMeeting.participants.for.free.users"="Up to 100";
+/* Call and meeting participants unlimited for pro users */
+"callAndMeeting.participants.unlimited.for.pro.users"="Unlimited";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="You’ll miss out on these features";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
