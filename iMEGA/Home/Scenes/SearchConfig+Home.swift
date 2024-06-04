@@ -98,7 +98,7 @@ extension SearchConfig {
             chipAssets: .init(
                 selectionIndicatorImage: UIImage.turquoiseCheckmark,
                 closeIcon: UIImage.miniplayerClose,
-                selectedForeground: TokenColors.Text.colorInverse.swiftUI,
+                selectedForeground: TokenColors.Text.inverse.swiftUI,
                 selectedBackground: TokenColors.Components.selectionControl.swiftUI,
                 normalForeground: TokenColors.Text.primary.swiftUI,
                 normalBackground: TokenColors.Button.secondary.swiftUI
