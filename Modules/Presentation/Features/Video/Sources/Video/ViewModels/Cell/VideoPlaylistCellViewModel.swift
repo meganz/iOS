@@ -42,6 +42,7 @@ final class VideoPlaylistCellViewModel: ObservableObject {
         
         previewEntity = videoPlaylistEntity.toVideoPlaylistCellPreviewEntity(
             thumbnailContainers: imageContainers.compactMap { $0 },
+            videosCount: videos.count,
             durationText: durationText(from: videos)
         )
         

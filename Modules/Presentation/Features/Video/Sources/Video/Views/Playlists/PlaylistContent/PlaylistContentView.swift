@@ -32,6 +32,11 @@ struct PlaylistContentScreen: View {
         .task {
             await viewModel.onViewAppeared()
         }
+        .onReceive(viewModel.$shouldPopScreen) { shouldPopScreen in
+            if shouldPopScreen {
+                router.popScreen()
+            }
+        }
     }
 }
 
