@@ -44,10 +44,6 @@
     }
 }
 
-- (BOOL)isStorageFull {
-    return self.usedStorage >= self.maxStorage;
-}
-
 - (void)setUpPieChartView {
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
@@ -59,10 +55,7 @@
 - (void)reloadPieChart:(NSInteger)currentPage {
     [_pieChartMainLabel setAttributedText:[self textForMainLabel:currentPage]];
     
-    self.pieChartMainLabel.textColor = [self storageColorWithIsDesignTokenEnabled:[UIColor isDesignTokenEnabled]
-                                                                  traitCollection:self.traitCollection
-                                                                    isStorageFull:self.isStorageFull
-                                                                      currentPage:self.usagePageControl.currentPage];
+    self.pieChartMainLabel.textColor = [self colorForPage:self.usagePageControl.currentPage isDesignTokenEnabled:[UIColor isDesignTokenEnabled] traitCollection:self.traitCollection];
     
     [self textForSecondaryAndTertiaryLabels:currentPage];
     
@@ -162,40 +155,15 @@
 #pragma mark - IBActions
 
 - (IBAction)leftSwipeGestureRecognizer:(UISwipeGestureRecognizer *)sender {
-    NSInteger page = _usagePageControl.currentPage;
-    if (page == 1 || ![self showTransferQuota]) {
-        return;
-    }
-    
-    NSInteger newPage = page + 1;
-    [self reloadStorageContentViewForPage:newPage];
-    [_usagePageControl setCurrentPage:newPage];
+    [self handleGesture:sender];
 }
 
 - (IBAction)rightSwipeGestureRecognizer:(UISwipeGestureRecognizer *)sender {
-    NSInteger page = _usagePageControl.currentPage;
-    if (page == 0) {
-        return;
-    }
-    
-    NSInteger newPage = page - 1;
-    [self reloadStorageContentViewForPage:newPage];
-    [_usagePageControl setCurrentPage:newPage];
+    [self handleGesture:sender];
 }
 
 - (IBAction)tapGestureRecognizer:(UITapGestureRecognizer *)sender {
-    NSInteger page = _usagePageControl.currentPage;
-    if (page == 1) {
-        page = 0;
-    } else {
-        if (![self showTransferQuota]) {
-            return;
-        }
-        ++page;
-    }
-    
-    [self reloadStorageContentViewForPage:page];
-    [_usagePageControl setCurrentPage:page];
+    [self handleGesture:sender];
 }
 
 #pragma mark - PieChartViewDelegate
@@ -211,17 +179,7 @@
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index {
-    switch (index) {
-        case 0: //Storage / Transfer Quota
-            return [self storageColorWithIsDesignTokenEnabled:[UIColor isDesignTokenEnabled]
-                                              traitCollection:self.traitCollection
-                                           isStorageFull:self.isStorageFull
-                                             currentPage:self.usagePageControl.currentPage];
-        //Available storage/quota or default
-        default:
-            return [self availableStorageColorWithIsDesignTokenEnabled:[UIColor isDesignTokenEnabled]
-                                                       traitCollection:self.traitCollection];
-    }
+    return [self colorForSliceAt:index];
 }
 
 - (double)pieChartView:(PieChartView *)pieChartView valueForSliceAtIndex:(NSUInteger)index {

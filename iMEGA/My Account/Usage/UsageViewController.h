@@ -48,7 +48,6 @@
 @property (nonatomic) long long transferOwnUsed;
 @property (nonatomic) long long transferMax;
 
-- (BOOL)isStorageFull;
 - (NSString * _Nonnull)textForSizeLabels:(long long)number;
 - (void)setUpPieChartView;
 - (void)reloadPieChart:(NSInteger)currentPage;
