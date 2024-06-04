@@ -4,7 +4,6 @@ import MEGADomain
 public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
     public static let newRepo = MockFileSystemRepository()
     
-    private let sizeAvailability: Int64
     private let fileExists: Bool
     private let copiedNode: Bool
     private let movedNode: Bool
@@ -15,15 +14,13 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
     
     public var removeFileURLs = [URL]()
 
-    public init(sizeAvailability: Int64 = 0,
-                fileExists: Bool = false,
+    public init(fileExists: Bool = false,
                 copiedNode: Bool = false,
                 movedNode: Bool = false,
                 containsOriginalsDirectory: Bool = false,
                 fileSize: UInt64 = 0,
                 creationDate: Date = Date(),
                 relativePath: String = "relativePath") {
-        self.sizeAvailability = sizeAvailability
         self.fileExists = fileExists
         self.copiedNode = copiedNode
         self.movedNode = movedNode
@@ -39,10 +36,6 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
 
     public func fileExists(at url: URL) -> Bool {
         fileExists
-    }
-    
-    public func systemVolumeAvailability() -> Int64 {
-        sizeAvailability
     }
     
     public func moveFile(at sourceURL: URL, to destinationURL: URL) -> Bool {

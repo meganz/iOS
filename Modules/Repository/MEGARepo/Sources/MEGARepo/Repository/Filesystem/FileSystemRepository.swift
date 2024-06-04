@@ -32,20 +32,6 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
     public func fileExists(at url: URL) -> Bool {
         fileManager.fileExists(atPath: url.path)
     }
-
-    public func systemVolumeAvailability() -> Int64 {
-        let homeUrl = URL(fileURLWithPath: NSHomeDirectory() as String)
-        do {
-            let values = try homeUrl.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
-            if let capacity = values.volumeAvailableCapacityForImportantUsage {
-                return capacity
-            }
-        } catch {
-            return 0
-        }
-        
-        return 0
-    }
     
     public func moveFile(at sourceURL: URL, to destinationURL: URL) -> Bool {
         do {

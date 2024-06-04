@@ -71,11 +71,6 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
                 }
             }
         }
-        
-        guard let nodeSize = nodeDataRepository.sizeForNode(handle: handle), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
-            completion?(.failure(.notEnoughSpace))
-            return
-        }
 
         downloadFileRepository.downloadFile(forNodeHandle: handle, to: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, start: start, update: update, folderUpdate: folderUpdate) { result in
             switch result {
@@ -110,11 +105,6 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
                 }
             }
         }
-        
-        guard let nodeSize = chatNodeRepository.sizeForChatNode(handle: handle, messageId: messageId, chatId: chatId), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
-            completion?(.failure(.notEnoughSpace))
-            return
-        }
 
         downloadChatRepository.downloadChatFile(forNodeHandle: handle, messageId: messageId, chatId: chatId, to: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, start: start, update: update) { result in
             switch result {
@@ -134,10 +124,6 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         nodeRepository.nodeFor(fileLink: fileLink) { result in
             switch result {
             case .success(let node):
-                guard fileSystemRepository.systemVolumeAvailability() > node.size else {
-                    completion(.failure(.notEnoughSpace))
-                    return
-                }
                 downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileSystemRepository.documentsDirectory(), metaData: metaData, startFirst: true, start: start, update: update, completion: completion)
             case .failure:
                 completion(.failure(.couldNotFindNodeByLink))

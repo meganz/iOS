@@ -8,7 +8,6 @@ public enum TransferErrorEntity: Error, CaseIterable {
     case couldNotFindNodeByLink
     case overquota
     case noInternetConnection
-    case notEnoughSpace
     case inboxFolderNameNotAllowed
     case alreadyDownloaded
     case copiedFromTempFolder
