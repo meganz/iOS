@@ -102,7 +102,7 @@ extension MEGAChatMessage {
     
     @objc func normalTextColor(isFromCurrentSender: Bool) -> UIColor {
         if UIColor.isDesignTokenEnabled() {
-            return isFromCurrentSender ? TokenColors.Text.colorInverse : TokenColors.Text.primary
+            return isFromCurrentSender ? TokenColors.Text.inverse : TokenColors.Text.primary
         } else {
             return isFromCurrentSender ? UIColor.whiteFFFFFF : .label
         }

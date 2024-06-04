@@ -38,7 +38,7 @@ struct WaitingRoomJoinPanelView: View {
                         .foregroundColor(
                             disableJoinButton ?
                                 TokenColors.Text.disabled.swiftUI :
-                                TokenColors.Text.colorInverse.swiftUI
+                                TokenColors.Text.inverse.swiftUI
                         )
                         .font(.system(size: 17, weight: .bold))
                         .frame(width: 288, height: 50)

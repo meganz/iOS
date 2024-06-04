@@ -9,7 +9,7 @@ struct WaitingRoomMessageView: View {
             .font(.subheadline)
             .foregroundColor(
                 isDesignTokenEnabled ?
-                    TokenColors.Text.colorInverse.swiftUI :
+                    TokenColors.Text.inverse.swiftUI :
                     Color(.black000000)
             )
             .padding(.vertical, 12)

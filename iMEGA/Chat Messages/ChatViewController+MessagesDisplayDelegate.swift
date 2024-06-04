@@ -48,7 +48,7 @@ extension ChatViewController: MessagesDisplayDelegate {
 
     func textColor(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         if UIColor.isDesignTokenEnabled() {
-            return isFromCurrentSender(message: message) ? TokenColors.Text.colorInverse : TokenColors.Text.primary
+            return isFromCurrentSender(message: message) ? TokenColors.Text.inverse : TokenColors.Text.primary
         } else {
             return isFromCurrentSender(message: message) ? UIColor.whiteFFFFFF : .label
         }
@@ -193,25 +193,11 @@ extension ChatViewController: MessagesDisplayDelegate {
     
     private func chatBubbleBackgroundColor(for message: any MessageType) -> UIColor {
         if UIColor.isDesignTokenEnabled() {
-
             return isFromCurrentSender(message: message) ?
-                senderBubbleBackgroundColor :
+                TokenColors.Background.surfaceInverseAccent :
                 TokenColors.Background.surface2
         } else {
             return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
-        }
-    }
-    
-    // The new sender chat bubble background: --color-surface-accent is not available
-    // This directly uses the color value from Figma as a temporary solution
-    private var senderBubbleBackgroundColor: UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            UIColor(red: 0.224, green: 0.259, blue: 0.306, alpha: 1.0)
-        case .dark:
-            UIColor(red: 0.741, green: 0.753, blue: 0.769, alpha: 1.0)
-        @unknown default:
-            UIColor(red: 0.224, green: 0.259, blue: 0.306, alpha: 1.0)
         }
     }
 }
