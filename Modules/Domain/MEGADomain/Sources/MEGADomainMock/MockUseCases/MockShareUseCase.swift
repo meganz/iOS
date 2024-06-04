@@ -1,24 +1,31 @@
 import MEGADomain
 
-public struct MockShareUseCase: ShareUseCaseProtocol {
+public class MockShareUseCase: ShareUseCaseProtocol {
     private let nodes: [NodeEntity]
     private let shares: [ShareEntity]
     private let sharedNodeHandles: [HandleEntity]
     private let areUserCredentialsVerified: Bool
     private let user: UserEntity?
+    private let createShareKeysError: Error?
+    
+    public var userFunctionHasBeenCalled = false
+    public var createShareKeyFunctionHasBeenCalled = false
+    public var createShareKeysErrorHappened = false
     
     public init(
         nodes: [NodeEntity] = [],
         shares: [ShareEntity] = [],
         sharedNodeHandles: [HandleEntity] = [],
         areUserCredentialsVerified: Bool = false,
-        user: UserEntity? = nil
+        user: UserEntity? = nil,
+        createShareKeysError: Error? = nil
     ) {
         self.nodes = nodes
         self.shares = shares
         self.sharedNodeHandles = sharedNodeHandles
         self.areUserCredentialsVerified = areUserCredentialsVerified
         self.user = user
+        self.createShareKeysError = createShareKeysError
     }
     
     public func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
@@ -34,10 +41,19 @@ public struct MockShareUseCase: ShareUseCaseProtocol {
     }
 
     public func user(from node: NodeEntity) -> UserEntity? {
-        user
+        userFunctionHasBeenCalled = true
+        
+        return user
     }
     
     public func createShareKeys(forNodes nodes: [NodeEntity]) async throws -> [HandleEntity] {
-        sharedNodeHandles
+        createShareKeyFunctionHasBeenCalled = true
+        
+        if let error = createShareKeysError {
+            createShareKeysErrorHappened = true
+            throw error
+        }
+        
+        return sharedNodeHandles
     }
 }

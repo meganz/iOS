@@ -1,16 +1,15 @@
 @testable import MEGA
 
 import MEGADomain
+import MEGADomainMock
 import MEGASDKRepoMock
 import XCTest
 
 final class NodeInfoViewModelTests: XCTestCase {
     
     func testIsContactVerified_Verified() {
-        let mockShareUseCase = MockShareUseCase()
         let mockUser = MockUser()
-        mockShareUseCase.userResult = mockUser.toUserEntity()
-        mockShareUseCase.areCredentialsVerifedResult = true
+        let mockShareUseCase = MockShareUseCase(areUserCredentialsVerified: true, user: mockUser.toUserEntity())
         
         let sut = makeSUT(shareUseCase: mockShareUseCase)
         
@@ -18,8 +17,7 @@ final class NodeInfoViewModelTests: XCTestCase {
     }
     
     func testIsContactVerified_NotVerified() {
-        let mockShareUseCase = MockShareUseCase()
-        mockShareUseCase.areCredentialsVerifedResult = false
+        let mockShareUseCase = MockShareUseCase(areUserCredentialsVerified: false)
         let sut = makeSUT(shareUseCase: mockShareUseCase)
         
         XCTAssertFalse(sut.isContactVerified())
@@ -74,5 +72,4 @@ final class NodeInfoViewModelTests: XCTestCase {
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
-    
 }

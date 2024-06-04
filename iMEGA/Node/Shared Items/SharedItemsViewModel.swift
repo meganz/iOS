@@ -44,6 +44,7 @@ import UIKit
     
     @objc func saveNodesToPhotos(_ nodes: [MEGANode]) async {
         guard areMediaNodes(nodes) else { return }
+        
         do {
             try await saveMediaToPhotosUseCase.saveToPhotos(nodes: nodes.toNodeEntities())
         } catch {
