@@ -60,25 +60,34 @@ extension UsageViewController {
         usageSizeLabel?.textColor = UIColor.mnz_turquoise(for: traitCollection)
     }
     
-    @objc func storageColor(isDesignTokenEnabled: Bool, traitCollection: UITraitCollection, isStorageFull: Bool, currentPage: Int) -> UIColor {
-        guard currentPage == 0, isStorageFull else {
+    @objc func colorForSlice(at index: Int) -> UIColor {
+        switch index {
+        case 0: // Storage / Transfer Quota
+            colorForPage(usagePageControl?.currentPage ?? 0, isDesignTokenEnabled: UIColor.isDesignTokenEnabled(), traitCollection: traitCollection)
+        default: // Available storage/quota or default
+            availableStorageColor(isDesignTokenEnabled: UIColor.isDesignTokenEnabled(), traitCollection: traitCollection)
+        }
+    }
+    
+    @objc func colorForPage(_ currentPage: Int, isDesignTokenEnabled: Bool, traitCollection: UITraitCollection) -> UIColor {
+        guard isFull(currentPage: currentPage) else {
             return isDesignTokenEnabled ? TokenColors.Support.success : UIColor.mnz_turquoise(for: traitCollection)
         }
         return isDesignTokenEnabled ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
     }
     
-    @objc func availableStorageColor(isDesignTokenEnabled: Bool, traitCollection: UITraitCollection) -> UIColor {
+    private func availableStorageColor(isDesignTokenEnabled: Bool, traitCollection: UITraitCollection) -> UIColor {
         isDesignTokenEnabled ? TokenColors.Border.strong : UIColor.mnz_tertiaryGray(for: traitCollection)
     }
     
     @objc func updateAppearance() {
         UIColor.isDesignTokenEnabled() ? setupTokenColors() : setupColors()
         
-        pieChartMainLabel?.textColor = storageColor(
+        pieChartMainLabel?.textColor = colorForPage(
+            usagePageControl?.currentPage ?? 0,
             isDesignTokenEnabled: UIColor.isDesignTokenEnabled(),
-            traitCollection: traitCollection,
-            isStorageFull: isStorageFull(),
-            currentPage: usagePageControl?.currentPage ?? 0)
+            traitCollection: traitCollection
+        )
         
         pieChartView?.reloadData()
     }
@@ -197,5 +206,53 @@ extension UsageViewController {
             
         default: return
         }
+    }
+    
+    private func isStorageFull() -> Bool {
+        usedStorage >= maxStorage
+    }
+    
+    private func isTransferFull() -> Bool {
+        transferOwnUsed >= transferMax
+    }
+    
+    private func isFull(currentPage: Int) -> Bool {
+        currentPage == 0 ? isStorageFull() : isTransferFull()
+    }
+    
+    private func updatedPage(forGesture gesture: UIGestureRecognizer, currentPage: Int) -> Int? {
+        var page = currentPage
+
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            if (swipeGesture.direction == .left && (page == 1 || !showTransferQuota)) ||
+               (swipeGesture.direction == .right && page == 0) {
+                return nil
+            }
+            
+            switch swipeGesture.direction {
+            case .left: page += 1
+            case .right: page -= 1
+            default: return nil
+            }
+        } else if gesture is UITapGestureRecognizer {
+            if page == 1 {
+                page = 0
+            } else {
+                guard showTransferQuota else {
+                    return nil
+                }
+                page += 1
+            }
+        } else {
+            return nil
+        }
+
+        return page
+    }
+    
+    @objc func handleGesture(_ gesture: UIGestureRecognizer) {
+        guard let updatedPage = updatedPage(forGesture: gesture, currentPage: usagePageControl?.currentPage ?? 0) else { return }
+        usagePageControl?.currentPage = updatedPage
+        reloadStorageContentView(forPage: updatedPage)
     }
 }
