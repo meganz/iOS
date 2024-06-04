@@ -102,7 +102,7 @@ final class AlbumCellViewModel: ObservableObject {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache),
               album.type == .user else { return }
         
-        for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album) {
+        for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album, excludeSensitives: false, includeSensitiveInherited: true) {
             numberOfNodes = albumPhotos.count
             
             guard shouldUseDefaultCover(photos: albumPhotos) else {
