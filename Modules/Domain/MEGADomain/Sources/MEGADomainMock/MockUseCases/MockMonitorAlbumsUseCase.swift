@@ -16,15 +16,16 @@ public struct MockMonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         self.monitorUserAlbumPhotosAsyncSequence = monitorUserAlbumPhotosAsyncSequence
     }
     
-    public func monitorSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], Error>> {
+    public func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], Error>> {
         monitorSystemAlbumsSequence
     }
     
-    public func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
+    public func monitorUserAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<[AlbumEntity]> {
         monitorUserAlbumsSequence
     }
     
-    public func monitorUserAlbumPhotos(for album: AlbumEntity) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
+    public func monitorUserAlbumPhotos(for album: AlbumEntity, excludeSensitives: Bool,
+                                       includeSensitiveInherited: Bool) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
         monitorUserAlbumPhotosAsyncSequence
     }
 }
