@@ -769,7 +769,7 @@
 		6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */; };
 		6D01A3C62C08443B00089BA8 /* HomeLocalisationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */; };
 		6D01A3CA2C084F4400089BA8 /* NodeInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */; };
-		6D01A3CD2C08691500089BA8 /* MockShareUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3CC2C08691500089BA8 /* MockShareUseCase.swift */; };
+		6D01A3D12C097E3200089BA8 /* SharedItemsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */; };
 		6D1272B62B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */; };
 		6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */; };
 		6D3D91DE2B4B59C500210D65 /* MEGAAppColor+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */; };
@@ -3552,7 +3552,7 @@
 		6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Photos.swift"; sourceTree = "<group>"; };
 		6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLocalisationTests.swift; sourceTree = "<group>"; };
 		6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModelTests.swift; sourceTree = "<group>"; };
-		6D01A3CC2C08691500089BA8 /* MockShareUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockShareUseCase.swift; sourceTree = "<group>"; };
+		6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewModelTests.swift; sourceTree = "<group>"; };
 		6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordStrengthIndicatorView+Additions.swift"; sourceTree = "<group>"; };
 		6D18B4D02B44C75600E4ABA8 /* MEGAMacro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAMacro; sourceTree = "<group>"; };
 		6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
@@ -5733,14 +5733,15 @@
 			path = Appearance;
 			sourceTree = "<group>";
 		};
-		0EE5AC142B1E930C00BCDD88 /* Shared Views */ = {
+		0EE5AC142B1E930C00BCDD88 /* SharedViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */,
 				0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */,
 				0EE396F72B87E4B200927E7E /* NodeActionViewModelTests.swift */,
+				6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */,
 			);
-			path = "Shared Views";
+			path = SharedViewModels;
 			sourceTree = "<group>";
 		};
 		0EED79E62A9C0AFF00213201 /* Extensions */ = {
@@ -8593,7 +8594,6 @@
 		6D01A3C82C084F2800089BA8 /* NodeInfo */ = {
 			isa = PBXGroup;
 			children = (
-				6D01A3CC2C08691500089BA8 /* MockShareUseCase.swift */,
 				6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */,
 			);
 			path = NodeInfo;
@@ -11766,7 +11766,7 @@
 				949704B12AB425AC00B2CA3A /* Rename */,
 				A8EE47AB27DFAEF600D37685 /* Report Issue */,
 				5B9FBDE9264925900014B7FD /* Settings */,
-				0EE5AC142B1E930C00BCDD88 /* Shared Views */,
+				0EE5AC142B1E930C00BCDD88 /* SharedViewModels */,
 				32B0723128A4E3CA002BAE34 /* Slideshow */,
 				B63AEB122511F73C000B8517 /* SMSVerification */,
 				0D2E4AFC2623B2CC00F4804A /* TextEditor */,
@@ -16383,7 +16383,6 @@
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
 				BFCA570F2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift in Sources */,
 				94712EFD2A9C9FAD00B5F2C9 /* MockSearchFileUseCase.swift in Sources */,
-				6D01A3CD2C08691500089BA8 /* MockShareUseCase.swift in Sources */,
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
@@ -16486,6 +16485,7 @@
 				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,
 				9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */,
 				249B71DA2ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift in Sources */,
+				6D01A3D12C097E3200089BA8 /* SharedItemsViewModelTests.swift in Sources */,
 				3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */,
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
