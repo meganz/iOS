@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import XCTest
 
 final class VideoPlaylistContentsUseCaseTests: XCTestCase {
@@ -74,13 +75,328 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         
         XCTAssertTrue(videos.isNotEmpty)
     }
+
+    // MARK: - monitorVideoPlaylist - (favorite video playlist)
+    
+    func testMonitorVideoPlaylist_whenNoUpdatesOnFavoriteNodes_emitesValue() async {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _) = makeSUT(
+            nodeRepository: MockNodeRepository(nodeUpdates: EmptyAsyncSequence().eraseToAnyAsyncSequence())
+        )
+        
+        @Atomic var receivedVideoPlaylist: VideoPlaylistEntity?
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for try await videoPlaylist in sut.monitorVideoPlaylist(for: videoPlaylist) {
+                $receivedVideoPlaylist.mutate { $0 = videoPlaylist }
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+        
+        XCTAssertEqual(receivedVideoPlaylist, videoPlaylist)
+    }
+    
+    // MARK: - monitorVideoPlaylistContent - (favorite video playlist)
+    
+    func testMonitorVideoPlaylist_whenNoUpdatesOnFavoriteNodes_doesNotEmitsValue() async {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _) = makeSUT(
+            nodeRepository: MockNodeRepository(nodeUpdates: EmptyAsyncSequence().eraseToAnyAsyncSequence())
+        )
+        
+        @Atomic var receivedVideos: [NodeEntity]?
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for try await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
+                $receivedVideos.mutate { $0 = videos }
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+        
+        XCTAssertTrue(receivedVideos?.isEmpty == true)
+    }
+    
+    func testMonitorUserVideoPlaylistContent_whenHasFavoriteImagePlaylistUpdates_doesNotEmitsUpdate() async {
+        let videoPlaylist = VideoPlaylistEntity(
+            id: 1,
+            name: "Favorites",
+            count: 0,
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let expectedResults = [
+            NodeEntity(name: "node-1.png", handle: 1, mediaType: .image),
+            NodeEntity(name: "node-2.png", handle: 2, mediaType: .image)
+        ]
+        let nodeUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _, _, _) = makeSUT(
+            nodeRepository: MockNodeRepository(nodeUpdates: nodeUpdatesStream)
+        )
+        
+        @Atomic var receivedVideos = [NodeEntity]()
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
+                $receivedVideos.mutate { $0 = videos }
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+        
+        XCTAssertTrue(receivedVideos.isEmpty)
+    }
+    
+    func testMonitorUserVideoPlaylistContent_whenHasFavoriteImagePlaylistUpdates_emitsUpdateOnlyForVideoNodeUpdates() async {
+        let videoPlaylist = VideoPlaylistEntity(
+            id: 1,
+            name: "Favorites",
+            count: 0,
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let expectedResults = [
+            NodeEntity(name: "node-1.mp4", handle: 1, mediaType: .video),
+            NodeEntity(name: "node-2.png", handle: 2, mediaType: .image)
+        ]
+        let nodeUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _, _, _) = makeSUT(
+            nodeRepository: MockNodeRepository(nodeUpdates: nodeUpdatesStream)
+        )
+        
+        @Atomic var receivedVideos = [NodeEntity]()
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = 2
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
+                $receivedVideos.mutate { $0 = videos }
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+        
+        XCTAssertTrue(receivedVideos.allSatisfy { $0.mediaType == .video })
+    }
+    
+    func testMonitorUserVideoPlaylistContent_whenHasFavoriteImagePlaylistUpdates_emitsUpdate() async {
+        let videoPlaylist = VideoPlaylistEntity(
+            id: 1,
+            name: "Favorites",
+            count: 0,
+            type: .favourite,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let expectedResults = [
+            NodeEntity(name: "node-1.mp4", handle: 1, mediaType: .video),
+            NodeEntity(name: "node-2.mp4", handle: 2, mediaType: .video)
+        ]
+        let nodeUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _, _, _) = makeSUT(
+            nodeRepository: MockNodeRepository(nodeUpdates: nodeUpdatesStream)
+        )
+        
+        @Atomic var receivedVideos = [NodeEntity]()
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = 3
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
+                $receivedVideos.mutate { $0 = videos }
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+        
+        XCTAssertTrue(receivedVideos.allSatisfy { $0.mediaType == .video })
+    }
+    
+    // MARK: - monitorVideoPlaylist - User Video Playlist
+    
+    func testMonitorUserVideoPlaylist_whenHasUserVideoPlaylistUpdates_emitsUpdate() async {
+        let videoPlaylist = VideoPlaylistEntity(
+            id: 1,
+            name: "user",
+            count: 0,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let expectedResults = [
+            SetEntity(
+                handle: videoPlaylist.id,
+                userId: 2,
+                coverId: 2,
+                creationTime: Date(),
+                modificationTime: Date(),
+                setType: .playlist,
+                name: "Playlist A",
+                isExported: false,
+                changeTypes: [ .name ]
+            ),
+            SetEntity(
+                handle: videoPlaylist.id + 1,
+                userId: 2,
+                coverId: 3,
+                creationTime: Date(),
+                modificationTime: Date(),
+                setType: .playlist,
+                name: "Playlist B",
+                isExported: false,
+                changeTypes: [ .name ]
+            )
+        ]
+        let setsUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _, _, _) = makeSUT(
+            videoPlaylistsResult: expectedResults,
+            setsUpdatedAsyncSequence: setsUpdatesStream
+        )
+        
+        @Atomic var receivedVideoPlaylist: VideoPlaylistEntity?
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = 2
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for try await videoPlaylist in sut.monitorVideoPlaylist(for: videoPlaylist) {
+                $receivedVideoPlaylist.mutate { $0 = videoPlaylist }
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+        
+        XCTAssertEqual(receivedVideoPlaylist?.id, videoPlaylist.id)
+    }
+    
+    // MARK: - monitorVideoPlaylist - User Video Playlist Content
+    
+    func testMonitorUserVideoPlaylist_whenHasNoUserVideoPlaylistContentUpdates_doesNotEmitsUpdate() async {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _) = makeSUT(
+            setElementsUpdatedAsyncSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        )
+        
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.isInverted = true
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            do {
+                for try await _ in sut.monitorVideoPlaylist(for: videoPlaylist) {
+                    iterated.fulfill()
+                }
+            } catch {
+                finished.fulfill()
+                XCTAssertEqual(error as? VideoPlaylistErrorEntity, .videoPlaylistNotFound(id: videoPlaylist.id))
+            }
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+    }
+    
+    // MARK: - monitorUserVideoPlaylistContent
+    
+    func testMonitorUserVideoPlaylistContent_whenHasUserVideoPlaylistContentUpdates_emitsUpdate() async {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let expectedResults = anyVideoPlaylistContents()
+        let setElementUpdatesStream = AsyncStream { continuation in
+            for expectedResult in expectedResults {
+                continuation.yield([expectedResult])
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _, _, _) = makeSUT(
+            setElementsUpdatedAsyncSequence: setElementUpdatesStream
+        )
+        
+        @Atomic var receivedVideos: [NodeEntity]?
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = 2
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
+                $receivedVideos.mutate { $0 = videos }
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        task.cancel()
+        
+        XCTAssertNotNil(receivedVideos)
+    }
     
     // MARK: - Helpers
     
     private func makeSUT(
         videoPlaylistContentResult: [SetElementEntity] = [],
         photoLibraryUseCase: MockPhotoLibraryUseCase = MockPhotoLibraryUseCase(),
-        fileSearchRepositoryResult: [NodeEntity] = []
+        fileSearchRepositoryResult: [NodeEntity] = [],
+        videoPlaylistsResult: [SetEntity] = [],
+        nodeRepository: MockNodeRepository = MockNodeRepository(),
+        setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) -> (
         sut: VideoPlaylistContentsUseCase,
         userVideoPlaylistRepository: MockUserVideoPlaylistsRepository,
@@ -88,13 +404,17 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         fileSearchRepository: MockFilesSearchRepository
     ) {
         let userVideoPlaylistRepository = MockUserVideoPlaylistsRepository(
-            videoPlaylistContentResult: videoPlaylistContentResult
+            videoPlaylistsResult: videoPlaylistsResult,
+            videoPlaylistContentResult: videoPlaylistContentResult,
+            setsUpdatedAsyncSequence: setsUpdatedAsyncSequence,
+            setElementsUpdatedAsyncSequence: setElementsUpdatedAsyncSequence
         )
         let fileSearchRepository = MockFilesSearchRepository(videoNodes: fileSearchRepositoryResult)
         let sut = VideoPlaylistContentsUseCase(
             userVideoPlaylistRepository: userVideoPlaylistRepository,
             photoLibraryUseCase: photoLibraryUseCase,
-            fileSearchRepository: fileSearchRepository
+            fileSearchRepository: fileSearchRepository,
+            nodeRepository: nodeRepository
         )
         return (sut, userVideoPlaylistRepository, photoLibraryUseCase, fileSearchRepository)
     }
@@ -109,5 +429,46 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
             name: "Video \(1)",
             changeTypes: .name
         )
+    }
+    
+    private func setEntity(handle: HandleEntity, name: String, isExported: Bool) -> SetEntity {
+        SetEntity(
+            handle: handle,
+            userId: 1,
+            coverId: 1,
+            creationTime: Date(),
+            modificationTime: Date(),
+            setType: .playlist,
+            name: name,
+            isExported: isExported,
+            changeTypes: .new
+        )
+    }
+    
+    private func anyPlaylists() -> [SetEntity] {
+        [
+            videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist"),
+            videoPlaylistSetEntity(handle: 2, setType: .playlist, name: "My Video Playlist 2")
+        ]
+    }
+    
+    private func videoPlaylistSetEntity(handle: HandleEntity, setType: SetTypeEntity, name: String) -> SetEntity {
+        SetEntity(
+            handle: 1,
+            userId: 1,
+            coverId: .invalid,
+            creationTime: Date(),
+            modificationTime: Date(),
+            setType: .playlist,
+            name: name,
+            isExported: false,
+            changeTypes: .new
+        )
+    }
+    
+    private func anyVideoPlaylistContents() -> [SetElementEntity] {
+        [
+            SetElementEntity(handle: 1, ownerId: 1, order: 1, nodeId: 1, modificationTime: Date(), name: "name", changeTypes: .name)
+        ]
     }
 }

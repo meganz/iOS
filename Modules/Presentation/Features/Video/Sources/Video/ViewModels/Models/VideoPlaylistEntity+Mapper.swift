@@ -4,10 +4,10 @@ import MEGASwiftUI
 
 extension VideoPlaylistEntity {
     
-    func toVideoPlaylistCellPreviewEntity(thumbnailContainers: [any ImageContaining], durationText: String) -> VideoPlaylistCellPreviewEntity {
+    func toVideoPlaylistCellPreviewEntity(thumbnailContainers: [any ImageContaining], videosCount: Int, durationText: String) -> VideoPlaylistCellPreviewEntity {
         VideoPlaylistCellPreviewEntity(
             imageContainers: thumbnailContainers,
-            count: countText(thumbnailContainers: thumbnailContainers),
+            count: countText(videosCount: videosCount),
             duration: durationText,
             title: name,
             isExported: isLinkShared,
@@ -15,13 +15,13 @@ extension VideoPlaylistEntity {
         )
     }
     
-    private func countText(thumbnailContainers: [any ImageContaining]) -> String {
-        if thumbnailContainers.count == 0 {
+    private func countText(videosCount count: Int) -> String {
+        if count == 0 {
             Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist
-        } else if thumbnailContainers.count == 1 {
-            "\(thumbnailContainers.count)" + " " + Strings.Localizable.video
+        } else if count == 1 {
+            "\(count)" + " " + Strings.Localizable.video
         } else {
-            "\(thumbnailContainers.count)" + " " + Strings.Localizable.videos
+            "\(count)" + " " + Strings.Localizable.videos
         }
     }
 }

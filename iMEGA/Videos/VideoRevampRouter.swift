@@ -44,7 +44,8 @@ struct VideoRevampRouter: VideoRevampRouting {
         let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
             userVideoPlaylistRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase,
-            fileSearchRepository: fileSearchRepo
+            fileSearchRepository: fileSearchRepo,
+            nodeRepository: NodeRepository.newRepo
         )
         let viewController = VideoRevampTabContainerViewController(
             viewModel: viewModel,
@@ -119,7 +120,8 @@ struct VideoRevampRouter: VideoRevampRouting {
         let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
             userVideoPlaylistRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase,
-            fileSearchRepository: fileSearchRepo
+            fileSearchRepository: fileSearchRepo,
+            nodeRepository: NodeRepository.newRepo
         )
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let viewController = VideoPlaylistContentViewController(
@@ -131,5 +133,9 @@ struct VideoRevampRouter: VideoRevampRouting {
         )
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func popScreen() {
+        navigationController?.popViewController(animated: true)
     }
 }
