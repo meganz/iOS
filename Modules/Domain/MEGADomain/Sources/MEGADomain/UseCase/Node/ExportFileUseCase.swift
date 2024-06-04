@@ -105,10 +105,6 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     }
     
     private func downloadNode(_ node: NodeEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
-        if fileSystemRepository.systemVolumeAvailability() < node.size {
-            completion(.failure(.notEnoughSpace))
-            return
-        }
         let url = mediaUseCase.isImage(node.name) ? fileCacheRepository.cachedOriginalImageURL(for: node) : fileCacheRepository.tempFileURL(for: node)
         downloadFileRepository.download(nodeHandle: node.handle, to: url, metaData: .exportFile) { result in
             processDownloadThenShareResult(result: result, completion: completion)
