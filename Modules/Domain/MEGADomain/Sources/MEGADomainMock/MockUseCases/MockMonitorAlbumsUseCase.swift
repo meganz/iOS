@@ -2,6 +2,19 @@ import MEGADomain
 import MEGASwift
 
 public struct MockMonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
+    public actor State {
+        public enum MonitorType: Hashable {
+            case systemAlbum(excludeSensitives: Bool)
+            case userAlbum(excludeSensitives: Bool)
+            case userAlbumPhotos(excludeSensitives: Bool, includeSensitiveInherited: Bool)
+        }
+        public var monitorTypes = [MonitorType]()
+        
+        func insertMonitorType(_ newValue: MonitorType) {
+            monitorTypes.append(newValue)
+        }
+    }
+    public let state = State()
     private let monitorSystemAlbumsSequence: AnyAsyncSequence<Result<[AlbumEntity], Error>>
     private let monitorUserAlbumsSequence: AnyAsyncSequence<[AlbumEntity]>
     private let monitorUserAlbumPhotosAsyncSequence: AnyAsyncSequence<[AlbumPhotoEntity]>
@@ -17,15 +30,20 @@ public struct MockMonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
     }
     
     public func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], Error>> {
-        monitorSystemAlbumsSequence
+        await state.insertMonitorType(.systemAlbum(excludeSensitives: excludeSensitives))
+        return monitorSystemAlbumsSequence
     }
     
     public func monitorUserAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<[AlbumEntity]> {
-        monitorUserAlbumsSequence
+        await state.insertMonitorType(.userAlbum(excludeSensitives: excludeSensitives))
+        return monitorUserAlbumsSequence
     }
     
-    public func monitorUserAlbumPhotos(for album: AlbumEntity, excludeSensitives: Bool,
+    public func monitorUserAlbumPhotos(for album: AlbumEntity,
+                                       excludeSensitives: Bool,
                                        includeSensitiveInherited: Bool) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
-        monitorUserAlbumPhotosAsyncSequence
+        await state.insertMonitorType(.userAlbumPhotos(
+            excludeSensitives: excludeSensitives, includeSensitiveInherited: includeSensitiveInherited))
+        return monitorUserAlbumPhotosAsyncSequence
     }
 }
