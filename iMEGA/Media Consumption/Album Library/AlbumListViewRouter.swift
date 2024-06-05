@@ -22,6 +22,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             album: album,
             selection: selection
         )
@@ -62,6 +63,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
             tracker: DIContainer.tracker,
             monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                     placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                     affirmativeButtonTitle: Strings.Localizable.createFolderButton,

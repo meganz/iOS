@@ -278,75 +278,106 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testMonitorAlbumPhotos_onPhotosReturned_shouldUpdateNodeCount() async {
-        let albumId = HandleEntity(65)
-        let albumPhotos = (1...15).map {
-            AlbumPhotoEntity(photo: NodeEntity(handle: $0),
-                             albumPhotoId: albumId)
-        }
-        let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
-            .eraseToAnyAsyncSequence()
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        let album = AlbumEntity(id: albumId, type: .user)
-        
-        let sut = makeAlbumCellViewModel(album: album,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         featureFlagProvider: featureFlagProvider)
-        
-        let exp = expectation(description: "Should update count")
-        
-        let subscription = sut.$numberOfNodes
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, albumPhotos.count)
-                exp.fulfill()
+        for await hiddenNodesFeatureFlag in [true, false].async {
+            let albumId = HandleEntity(65)
+            let albumPhotos = (1...15).map {
+                AlbumPhotoEntity(photo: NodeEntity(handle: $0),
+                                 albumPhotoId: albumId)
             }
-        
-        let task = Task { await sut.monitorAlbumPhotos() }
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        subscription.cancel()
+            let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
+                .eraseToAnyAsyncSequence()
+            let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true,
+                                                                     .hiddenNodes: hiddenNodesFeatureFlag])
+            let album = AlbumEntity(id: albumId, type: .user)
+            
+            let sut = makeAlbumCellViewModel(album: album,
+                                             monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                             featureFlagProvider: featureFlagProvider)
+            
+            let exp = expectation(description: "Should update count")
+            
+            let subscription = sut.$numberOfNodes
+                .dropFirst()
+                .sink {
+                    XCTAssertEqual($0, albumPhotos.count)
+                    exp.fulfill()
+                }
+            
+            let task = Task { await sut.monitorAlbumPhotos() }
+            
+            await fulfillment(of: [exp], timeout: 1.0)
+            task.cancel()
+            subscription.cancel()
+            
+            let monitorTypes = await monitorAlbumsUseCase.state.monitorTypes
+            XCTAssertEqual(monitorTypes,
+                           [.userAlbumPhotos(excludeSensitives: false, includeSensitiveInherited: hiddenNodesFeatureFlag)])
+        }
     }
     
-    func testMonitorAlbumPhotos_userAlbumCoverNil_shouldSetLatestPhotoAsCover() async throws {
-        let latestCoverHandle = HandleEntity(76)
-        let album = AlbumEntity(id: 65, name: "User",
-                                coverNode: nil, count: 0, type: .user)
-        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: thumbnailContainer)
-        let thumbnailLoader = MockThumbnailLoader(loadImages: [latestCoverHandle: thumbnailAsyncSequence])
-        
-        let albumPhotos = [
-            AlbumPhotoEntity(photo: NodeEntity(handle: 1, modificationTime: try "2024-04-08T22:01:04Z".date),
-                             albumPhotoId: album.id),
-            AlbumPhotoEntity(photo: NodeEntity(handle: latestCoverHandle, modificationTime: try "2024-04-09T10:01:04Z".date),
-                             albumPhotoId: album.id),
-            AlbumPhotoEntity(photo: NodeEntity(handle: 3, modificationTime: try "2024-04-02T22:01:04Z".date),
-                             albumPhotoId: album.id)
-        ]
-        let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
-            .eraseToAnyAsyncSequence()
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        
-        let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailLoader: thumbnailLoader,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         featureFlagProvider: featureFlagProvider)
-        
-        let exp = expectation(description: "Should update thumbnail with latest photo")
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(thumbnailContainer))
-            exp.fulfill()
+    func testMonitorAlbumPhotos_userAlbumCoverNil_shouldSetLatestPhotoAsCover() throws {
+        try [(hiddenNodesFeature: false, showHiddenNodes: false),
+             (hiddenNodesFeature: true, showHiddenNodes: false),
+             (hiddenNodesFeature: true, showHiddenNodes: true)
+        ].forEach { hiddenNodesFeature, showHiddenNodes in
+            let latestCoverHandle = HandleEntity(76)
+            let album = AlbumEntity(id: 65, name: "User",
+                                    coverNode: nil, count: 0, type: .user)
+            let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+            let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: thumbnailContainer)
+            let thumbnailLoader = MockThumbnailLoader(loadImages: [latestCoverHandle: thumbnailAsyncSequence])
+            
+            let albumPhotos = [
+                AlbumPhotoEntity(
+                    photo: NodeEntity(
+                        handle: 1,
+                        isMarkedSensitive: hiddenNodesFeature,
+                        modificationTime: try "2024-05-03T22:01:04Z".date),
+                    albumPhotoId: album.id),
+                AlbumPhotoEntity(
+                    photo: NodeEntity(
+                        handle: !hiddenNodesFeature || showHiddenNodes ? latestCoverHandle : 4,
+                        modificationTime: try "2024-05-04T10:01:04Z".date),
+                    albumPhotoId: album.id,
+                    isSensitiveInherited: hiddenNodesFeature),
+                AlbumPhotoEntity(
+                    photo: NodeEntity(
+                        handle: !showHiddenNodes ? latestCoverHandle: 3,
+                        modificationTime: try "2024-05-02T05:01:04Z".date),
+                    albumPhotoId: album.id)
+            ]
+            let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
+                .eraseToAnyAsyncSequence()
+            let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+            let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
+                sensitiveNodesUserAttributeEntity: .init(onboarded: true, showHiddenNodes: showHiddenNodes))
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true,
+                                                                     .hiddenNodes: hiddenNodesFeature])
+            
+            let sut = makeAlbumCellViewModel(album: album,
+                                             thumbnailLoader: thumbnailLoader,
+                                             monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                             contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
+                                             featureFlagProvider: featureFlagProvider)
+            
+            let exp = expectation(description: "Should update thumbnail with latest photo")
+            
+            let subscription = thumbnailContainerUpdates(on: sut) {
+                XCTAssertTrue($0.isEqual(thumbnailContainer))
+                exp.fulfill()
+            }
+            let cancelled = expectation(description: "Async sequence cancelled")
+            let task = Task { 
+                await sut.monitorAlbumPhotos()
+                cancelled.fulfill()
+            }
+            
+            wait(for: [exp], timeout: 1.0)
+            task.cancel()
+            subscription.cancel()
+            wait(for: [cancelled], timeout: 0.5)
         }
-        
-        let task = Task { await sut.monitorAlbumPhotos() }
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        subscription.cancel()
     }
     
     func testMonitorAlbumPhotos_userAlbumCoverNilNoPhotos_shouldNotUpdateAlbumCover() async throws {
@@ -489,6 +520,33 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    func testMonitorAlbumPhotos_coverSetThenPhotosRemoved_shouldSetToPlaceholder() async {
+        let album = AlbumEntity(id: 65, name: "User",
+                                coverNode: nil, count: 0, type: .user)
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
+   
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        
+        let sut = makeAlbumCellViewModel(album: album,
+                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         featureFlagProvider: featureFlagProvider)
+        sut.thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        
+        let exp = expectation(description: "Should update cover with placeholder")
+        
+        let subscription = thumbnailContainerUpdates(on: sut) {
+            XCTAssertTrue($0.type == .placeholder)
+            exp.fulfill()
+        }
+        
+        let task = Task { await sut.monitorAlbumPhotos() }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        subscription.cancel()
+    }
+    
     func testMonitorCoverPhotoSensitivity_withAlbumCoverSensitivityUpdate_shouldUpdateImageContainerWithInitialResultThenMonitorUpdates() async throws {
         let cover = NodeEntity(handle: 65)
         let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
@@ -610,6 +668,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         selection: AlbumSelection = AlbumSelection(),
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
@@ -619,6 +678,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let sut = AlbumCellViewModel(thumbnailLoader: thumbnailLoader,
                                      monitorAlbumsUseCase: monitorAlbumsUseCase,
                                      nodeUseCase: nodeUseCase,
+                                     contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                                      album: album,
                                      selection: selection,
                                      tracker: tracker,

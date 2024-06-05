@@ -17,3 +17,10 @@ public struct AlbumPhotoEntity: Hashable, Sendable {
 extension AlbumPhotoEntity: Identifiable {
     public var id: HandleEntity { photo.handle }
 }
+
+extension AlbumPhotoEntity {
+    /// Indicates if node is marked sensitive or is inheriting sensitivity through parent
+    public var isSensitive: Bool {
+        photo.isMarkedSensitive || isSensitiveInherited == true
+    }
+}
