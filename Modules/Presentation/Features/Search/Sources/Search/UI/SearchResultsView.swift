@@ -5,14 +5,9 @@ import SwiftUI
 
 public struct SearchResultsView: View {
     @StateObject var viewModel: SearchResultsViewModel
-    @Binding var editMode: EditMode
     
-    public init(
-        viewModel: @autoclosure @escaping () -> SearchResultsViewModel,
-        editMode: Binding<EditMode>
-    ) {
+    public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
-        _editMode = editMode
     }
     
     public var body: some View {
@@ -139,7 +134,6 @@ public struct SearchResultsView: View {
         }
         .listStyle(.plain)
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
-        .environment(\.editMode, $editMode)
     }
     
     private var thumbnailContent: some View {
@@ -224,10 +218,7 @@ public struct SearchResultsView: View {
             viewDisplayMode: .unknown
         )
         var body: some View {
-            SearchResultsView(
-                viewModel: viewModel,
-                editMode: .constant(.inactive)
-            )
+            SearchResultsView(viewModel: viewModel)
             .onChange(of: text, perform: { newValue in
                 viewModel.bridge.queryChanged(newValue)
             })
