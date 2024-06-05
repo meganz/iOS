@@ -44,7 +44,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
-    private let isAlbumPhotoCacheEnabled: Bool
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     
     private lazy var albumsSubject = PassthroughSubject<[AlbumEntity], Never>()
@@ -57,15 +58,17 @@ final class AlbumListViewModel: NSObject, ObservableObject {
          shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
          tracker: some AnalyticsTracking,
          monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
+         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-         featureFlagProvider: any FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
         self.shareAlbumUseCase = shareAlbumUseCase
         self.tracker = tracker
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
-        self.isAlbumPhotoCacheEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache)
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         super.init()
@@ -298,7 +301,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func monitorAlbums() async throws {
-        guard !isAlbumPhotoCacheEnabled else {
+        guard !featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else {
             await newAlbumMonitoring()
             return
         }
@@ -372,8 +375,13 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     private func newAlbumMonitoring() async {
-        for await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(),
-                                                              await monitorUserAlbums()) {
+        let excludeSensitives = if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
+            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        } else {
+            false
+        }
+        for await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(excludeSensitives: excludeSensitives),
+                                                              await monitorUserAlbums(excludeSensitives: excludeSensitives)) {
             updateAlbums(systemAlbums + userAlbums)
         }
     }
@@ -386,8 +394,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         shouldLoad.toggle()
     }
     
-    private func monitorSystemAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
-         await monitorAlbumsUseCase.monitorLocalizedSystemAlbums()
+    private func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<[AlbumEntity]> {
+         await monitorAlbumsUseCase.monitorLocalizedSystemAlbums(excludeSensitives: excludeSensitives)
             .map {
                 switch $0 {
                 case .success(let albums):
@@ -400,14 +408,15 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             .eraseToAnyAsyncSequence()
     }
     
-    private func monitorUserAlbums() async -> AnyAsyncSequence<[AlbumEntity]> {
+    private func monitorUserAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<[AlbumEntity]> {
         await monitorAlbumsUseCase.monitorSortedUserAlbums(
-                by: { $0.creationTime ?? Date.distantPast > $1.creationTime ?? Date.distantPast })
+            excludeSensitives: excludeSensitives,
+            by: { $0.creationTime ?? Date.distantPast > $1.creationTime ?? Date.distantPast })
     }
     
     // Throttle is not available in swift-async-algorithms package and will most likely only be available for iOS 16 and above due to the use of `Clock`.
     private func subscribeToAlbums() {
-        guard isAlbumPhotoCacheEnabled else { return }
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else { return }
         
         albumsSubject
             .debounceImmediate(for: .seconds(0.3), scheduler: DispatchQueue.main)
@@ -416,8 +425,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
 }
 
 private extension MonitorAlbumsUseCaseProtocol {
-    func monitorLocalizedSystemAlbums() async -> AnyAsyncSequence<Result<[AlbumEntity], any Error>> {
-        await monitorSystemAlbums(excludeSensitives: false)
+    func monitorLocalizedSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], any Error>> {
+        await monitorSystemAlbums(excludeSensitives: excludeSensitives)
             .map { systemAlbumResult in
                 systemAlbumResult.map { albums in
                     albums.map { album in
@@ -434,9 +443,10 @@ private extension MonitorAlbumsUseCaseProtocol {
     }
     
     func monitorSortedUserAlbums(
+        excludeSensitives: Bool,
         by areInIncreasingOrder: @escaping @Sendable (AlbumEntity, AlbumEntity) -> Bool
     ) async -> AnyAsyncSequence<[AlbumEntity]> {
-        await monitorUserAlbums(excludeSensitives: false)
+        await monitorUserAlbums(excludeSensitives: excludeSensitives)
             .map { userAlbums in
                 var sortedUserAlbums = userAlbums
                 sortedUserAlbums.sort(by: areInIncreasingOrder)

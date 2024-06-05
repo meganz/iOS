@@ -93,6 +93,7 @@ struct AlbumCell: View {
             thumbnailLoader: Preview_ThumbnailLoader(),
             monitorAlbumsUseCase: Preview_MonitorAlbumsUseCase(),
             nodeUseCase: Preview_NodeUseCase(),
+            contentConsumptionUserAttributeUseCase: Preview_ContentConsumptionUserAttributeUseCase(),
             album: AlbumEntity(
                 id: 1, name: "Album name",
                 coverNode: nil,
