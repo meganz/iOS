@@ -465,6 +465,7 @@ final class SearchResultsViewModelTests: XCTestCase {
     func testSelectAll_whenNoNodesAreSelected_shouldSelectAllNodes() {
         let currentNodes: [ResultId] = [1, 2, 3, 4]
         let harness = Harness(self).withSelectedNodes([], currentResults: currentNodes)
+        harness.sut.listItems = Array(1...4).map { generateRandomSearchResultRowViewModel(id: $0) }
         let exp = expectation(description: "Wait for selection changed")
         var selectionChangeResult: Set<ResultId>?
         harness.bridge.selectionChanged = {
@@ -481,6 +482,7 @@ final class SearchResultsViewModelTests: XCTestCase {
     func testSelectAll_whenSomeNodesAreSelected_shouldSelectAllNodes() {
         let currentNodes: [ResultId] = [1, 2, 3, 4]
         let harness = Harness(self).withSelectedNodes([1, 2], currentResults: currentNodes)
+        harness.sut.listItems = Array(1...4).map { generateRandomSearchResultRowViewModel(id: $0) }
         let exp = expectation(description: "Wait for selection changed")
         var selectionChangeResult: Set<ResultId>?
         harness.bridge.selectionChanged = {
@@ -499,6 +501,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self).withSelectedNodes(currentNodes, currentResults: currentNodes)
         harness.resultsProvider.currentResultIdsToReturn = [1, 2, 3, 4]
         harness.sut.selectedResultIds = [1, 2, 3, 4]
+        harness.sut.selectedRowIds = Set(Array(1...4).map { generateRandomSearchResultRowViewModel(id: $0).id })
         let exp = expectation(description: "Wait for selection changed")
         var selectionChangeResult: Set<ResultId>?
         harness.bridge.selectionChanged = {
