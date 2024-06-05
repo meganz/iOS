@@ -328,10 +328,7 @@ final class HomeScreenFactory: NSObject {
             viewDisplayMode: .home
         )
         return UIHostingController(
-            rootView: SearchResultsView(
-                viewModel: vm,
-                editMode: .constant(.inactive)
-            )
+            rootView: SearchResultsView(viewModel: vm)
         )
     }
 

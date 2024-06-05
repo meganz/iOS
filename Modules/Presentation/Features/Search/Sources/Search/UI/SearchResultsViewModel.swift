@@ -167,6 +167,7 @@ public class SearchResultsViewModel: ObservableObject {
         setupKeyboardVisibilityHandling()
 
         selectedRowsSubscription = $selectedRowIds
+            .removeDuplicates()
             .dropFirst()
             .throttle(for: .seconds(0.4), scheduler: DispatchQueue.main, latest: true)
             .scan((Set<SearchResultRowViewModel.ID>(), Set<SearchResultRowViewModel.ID>())) { previous, current in
