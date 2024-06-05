@@ -709,63 +709,78 @@ final class AlbumListViewModelTests: XCTestCase {
     // MARK: - New Album Monitoring
     
     @MainActor
-    func testMonitorAlbums_onCalled_shouldLoadSystemAndUserAlbumsAndSetShouldLoadToFalse() throws {
-        let favouriteAlbum = AlbumEntity(id: 1, name: Strings.Localizable.CameraUploads.Albums.Favourites.title,
-                                         coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
-        let gifAlbum = AlbumEntity(id: 2, name: Strings.Localizable.CameraUploads.Albums.Gif.title,
-                                   coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
-        let rawAlbum = AlbumEntity(id: 3, name: Strings.Localizable.CameraUploads.Albums.Raw.title,
-                                   coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
+    func testMonitorAlbums_onCalled_shouldLoadSystemAndUserAlbumsAndSetShouldLoadToFalse() async throws {
+        let testCases = [(hiddenNodesFeature: false, showHiddenNodes: false, excludeSensitives: false),
+                         (hiddenNodesFeature: true, showHiddenNodes: false, excludeSensitives: true),
+                         (hiddenNodesFeature: true, showHiddenNodes: true, excludeSensitives: false)]
         
-        let systemAlbums = [favouriteAlbum, gifAlbum, rawAlbum]
-        let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
-                                     count: 0, type: .user, creationTime: try "2024-04-04T22:01:04Z".date)
-        let userAlbum2 = AlbumEntity(id: 5, name: "Album 2", coverNode: NodeEntity(handle: 4),
-                                     count: 0, type: .user, creationTime: try "2024-04-05T10:02:04Z".date)
-        let userAlbums = [userAlbum1, userAlbum2]
-        let systemAsyncSequence = SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
-            item: .success(systemAlbums)).eraseToAnyAsyncSequence()
-        let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums).eraseToAnyAsyncSequence()
-        
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorSystemAlbumsSequence: systemAsyncSequence,
-            monitorUserAlbumsSequence: monitorUserAlbumsAsyncSequence
-        )
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        
-        let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                     featureFlagProvider: featureFlagProvider)
-        
-        var subscriptions = Set<AnyCancellable>()
-        
-        let albumsExp = expectation(description: "Should update albums")
-        sut.$albums
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0,
-                               [favouriteAlbum, gifAlbum, rawAlbum, userAlbum2, userAlbum1])
-                albumsExp.fulfill()
-            }.store(in: &subscriptions)
-        
-        let shouldLoadExp = expectation(description: "Should load albums")
-        sut.$shouldLoad
-            .dropFirst()
-            .filter { !$0 }
-            .sink { _ in
-                shouldLoadExp.fulfill()
-            }.store(in: &subscriptions)
-        
-        let monitoring = Task {
-            do {
-                try await sut.monitorAlbums()
-            } catch {
-                XCTFail("Unexpected error")
+        for await (hiddenNodes, showHiddenNodes, excludeSensitives) in testCases.async {
+            let favouriteAlbum = AlbumEntity(id: 1, name: Strings.Localizable.CameraUploads.Albums.Favourites.title,
+                                             coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
+            let gifAlbum = AlbumEntity(id: 2, name: Strings.Localizable.CameraUploads.Albums.Gif.title,
+                                       coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
+            let rawAlbum = AlbumEntity(id: 3, name: Strings.Localizable.CameraUploads.Albums.Raw.title,
+                                       coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
+            
+            let systemAlbums = [favouriteAlbum, gifAlbum, rawAlbum]
+            let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
+                                         count: 0, type: .user, creationTime: try "2024-04-04T22:01:04Z".date)
+            let userAlbum2 = AlbumEntity(id: 5, name: "Album 2", coverNode: NodeEntity(handle: 4),
+                                         count: 0, type: .user, creationTime: try "2024-04-05T10:02:04Z".date)
+            let userAlbums = [userAlbum1, userAlbum2]
+            let systemAsyncSequence = SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+                item: .success(systemAlbums)).eraseToAnyAsyncSequence()
+            let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums).eraseToAnyAsyncSequence()
+            
+            let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+                monitorSystemAlbumsSequence: systemAsyncSequence,
+                monitorUserAlbumsSequence: monitorUserAlbumsAsyncSequence
+            )
+            let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
+                sensitiveNodesUserAttributeEntity: .init(onboarded: true, showHiddenNodes: showHiddenNodes))
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true,
+                                                                     .hiddenNodes: hiddenNodes])
+            
+            let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
+                                         featureFlagProvider: featureFlagProvider)
+            
+            var subscriptions = Set<AnyCancellable>()
+            
+            let albumsExp = expectation(description: "Should update albums")
+            sut.$albums
+                .dropFirst()
+                .sink {
+                    XCTAssertEqual($0,
+                                   [favouriteAlbum, gifAlbum, rawAlbum, userAlbum2, userAlbum1])
+                    albumsExp.fulfill()
+                }.store(in: &subscriptions)
+            
+            let shouldLoadExp = expectation(description: "Should load albums")
+            sut.$shouldLoad
+                .dropFirst()
+                .filter { !$0 }
+                .sink { _ in
+                    shouldLoadExp.fulfill()
+                }.store(in: &subscriptions)
+            
+            let monitoring = Task {
+                do {
+                    try await sut.monitorAlbums()
+                } catch {
+                    XCTFail("Unexpected error")
+                }
             }
+            
+            await fulfillment(of: [albumsExp, shouldLoadExp], timeout: 1.0)
+            subscriptions.forEach { $0.cancel() }
+            monitoring.cancel()
+            
+            let monitorTypes = await monitorAlbumsUseCase.state.monitorTypes
+            XCTAssertEqual(Set(monitorTypes),
+                           Set([.systemAlbum(excludeSensitives: excludeSensitives),
+                                .userAlbum(excludeSensitives: excludeSensitives)]))
         }
-        
-        wait(for: [albumsExp, shouldLoadExp], timeout: 1.0)
-        subscriptions.forEach { $0.cancel() }
-        monitoring.cancel()
     }
     
     @MainActor
@@ -823,6 +838,7 @@ final class AlbumListViewModelTests: XCTestCase {
         shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
     ) -> AlbumListViewModel {
@@ -832,6 +848,7 @@ final class AlbumListViewModelTests: XCTestCase {
             shareAlbumUseCase: shareAlbumUseCase,
             tracker: tracker,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             alertViewModel: alertViewModel(),
             photoAlbumContainerViewModel: photoAlbumContainerViewModel,
             featureFlagProvider: featureFlagProvider

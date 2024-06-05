@@ -36,6 +36,7 @@ final class AlbumCellViewModel: ObservableObject {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
@@ -50,6 +51,7 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
         tracker: some AnalyticsTracking = DIContainer.tracker,
@@ -58,6 +60,7 @@ final class AlbumCellViewModel: ObservableObject {
         self.thumbnailLoader = thumbnailLoader
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.nodeUseCase = nodeUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.album = album
         self.selection = selection
         self.tracker = tracker
@@ -102,7 +105,9 @@ final class AlbumCellViewModel: ObservableObject {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache),
               album.type == .user else { return }
         
-        for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album, excludeSensitives: false, includeSensitiveInherited: true) {
+        for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album,
+                                                                                   excludeSensitives: false,
+                                                                                   includeSensitiveInherited: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)) {
             numberOfNodes = albumPhotos.count
             
             guard shouldUseDefaultCover(photos: albumPhotos) else {
@@ -135,7 +140,17 @@ final class AlbumCellViewModel: ObservableObject {
     
     @MainActor
     private func setDefaultAlbumCover(_ photos: [AlbumPhotoEntity]) async {
-        guard let latestPhoto = photos.latestModifiedPhoto() else { return }
+        let excludeSensitives = if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
+            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        } else {
+            false
+        }
+        guard let latestPhoto = photos.latestModifiedPhoto(excludeSensitives: excludeSensitives) else {
+            if thumbnailContainer.type != .placeholder {
+                thumbnailContainer = ImageContainer(image: Image(.placeholder), type: .placeholder)
+            }
+            return
+        }
         
         await loadThumbnail(for: latestPhoto)
     }
