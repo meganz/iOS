@@ -48,10 +48,7 @@ struct ContentView: View {
             viewDisplayMode: .unknown
         )
         var body: some View {
-            SearchResultsView(
-                viewModel: viewModel,
-                editMode: .constant(.inactive)
-            )
+            SearchResultsView(viewModel: viewModel)
             .toolbar {
                 Button(
                     action: {
