@@ -8,6 +8,8 @@ struct Preview_VideoRevampRouter: VideoRevampRouting {
     
     func openVideoPlaylistContent(for previewEntity: VideoPlaylistEntity) { }
     
+    func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void) { }
+    
     func popScreen() { }
     
     func build() -> UIViewController { UIViewController() }

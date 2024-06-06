@@ -1,5 +1,7 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
+import MEGASdk
 import MEGAUIKit
 
 extension BrowserViewController {
@@ -125,5 +127,53 @@ extension BrowserViewController {
             button.setTitleColor(UIColor.mnz_red(for: traitCollection), for: .selected)
             lineView.backgroundColor = button.isSelected ? UIColor.mnz_red(for: traitCollection) : nil
         }
+    }
+    
+    @objc func videoPickerNodes(completion: @escaping (MEGANodeList) -> Void) {
+        let sdk = MEGASdk.shared
+        let megaNodeList = MEGANodeList()
+        
+        Task { [weak parentNode] in
+            guard let parentNode = parentNode else {
+                await MainActor.run {
+                    completion(megaNodeList)
+                }
+                return
+            }
+
+            let nodeList = sdk.children(forParent: parentNode)
+            let nodes = nodeList.toNodeEntities()
+            
+            for node in nodes {
+                if node.isFolder || node.fileExtensionGroup.isVideo {
+                    if let megaNode = node.toMEGANode(in: sdk) {
+                        megaNodeList.add(megaNode)
+                    }
+                }
+            }
+            
+            await MainActor.run {
+                completion(megaNodeList)
+            }
+        }
+    }
+    
+    @objc func handleAddNodes(isReachableHUDIfNot: Bool) {
+        guard isReachableHUDIfNot, selectedNodesMutableDictionary.count > 0 else {
+            return
+        }
+        
+        if isParentBrowser {
+            attachNodes()
+        } else {
+            guard let browserVC = navigationController?.viewControllers.first as? BrowserViewController else {
+                return
+            }
+            browserVC.attachNodes()
+        }
+    }
+    
+    @objc var toolBarAddBarButtonItemTitle: String {
+        Strings.Localizable.Videos.Tab.Playlist.Browser.Button.add
     }
 }

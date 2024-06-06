@@ -32,6 +32,13 @@ struct PlaylistView: View {
         .onDisappear {
             viewModel.onViewDisappear()
         }
+        .onReceive(viewModel.$shouldShowVideoPlaylistPicker) { shouldShow in
+            if shouldShow {
+                router.openVideoPicker { selectedVideos in
+                    viewModel.didPickVideosToBeIncludedInNewlyCreatedPlaylist(videos: selectedVideos)
+                }
+            }
+        }
     }
     
     @ViewBuilder
@@ -55,6 +62,7 @@ struct PlaylistView: View {
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.newPlaylist)
                 .font(.system(size: 15, weight: .medium))
                 .foregroundColor(videoConfig.colorAssets.primaryTextColor)
+
         }
         .frame(height: 60)
         .frame(maxWidth: .infinity, alignment: .leading)

@@ -135,6 +135,24 @@ struct VideoRevampRouter: VideoRevampRouting {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
+    func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void) {
+        guard
+            let browserNavigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
+            let browserVC = browserNavigationController.viewControllers.first as? BrowserViewController else {
+            return
+        }
+        browserVC.browserAction = BrowserAction.selectVideo
+        browserVC.selectedNodes = { selectedObjects in
+            guard let selectedNodes = selectedObjects as? [MEGANode] else {
+                completion([])
+                return
+            }
+            completion(selectedNodes.toNodeEntities())
+        }
+        
+        navigationController?.present(browserNavigationController, animated: true)
+    }
+    
     func popScreen() {
         navigationController?.popViewController(animated: true)
     }
