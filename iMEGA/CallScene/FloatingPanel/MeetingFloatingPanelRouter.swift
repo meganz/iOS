@@ -31,6 +31,7 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func showMuteSuccess(for participant: CallParticipantEntity?)
     func showMuteError(for participant: CallParticipantEntity?)
     func showUpgradeFlow(_ accountDetails: AccountDetailsEntity)
+    func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
 }
 
 extension MeetingFloatingPanelRouting {
@@ -275,5 +276,10 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             presenter: baseViewController,
             accountDetails: accountDetails
         ).start()
+    }
+    
+    func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
+        let hangOrEndCallRouter = HangOrEndCallRouter(presenter: UIApplication.mnz_presentingViewController(), meetingContainerViewModel: containerViewModel)
+        hangOrEndCallRouter.start()
     }
 }
