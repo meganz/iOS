@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGADomain
+import MEGASdk
 import MEGASDKRepo
 import UIKit
 
@@ -17,7 +18,7 @@ extension NodeCollectionViewCell {
             .forEach { $0?.alpha = 1 }
     }
     
-    @objc func createViewModel(node: MEGANode?, isFromSharedItem: Bool) -> NodeCollectionViewCellViewModel {
+    @objc func createViewModel(node: MEGANode?, isFromSharedItem: Bool, sdk: MEGASdk) -> NodeCollectionViewCellViewModel {
         NodeCollectionViewCellViewModel(
             node: node?.toNodeEntity(),
             isFromSharedItem: isFromSharedItem,
@@ -25,8 +26,11 @@ extension NodeCollectionViewCell {
               nodeDataRepository: NodeDataRepository.newRepo,
               nodeValidationRepository: NodeValidationRepository.newRepo,
               nodeRepository: NodeRepository.newRepo),
-            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared))
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository(
+                sdk: sdk,
+                fileManager: .default,
+                nodeProvider: DefaultMEGANodeProvider(sdk: sdk))),
+            nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: sdk)))
     }
     
     @objc  func bind(viewModel: NodeCollectionViewCellViewModel) {

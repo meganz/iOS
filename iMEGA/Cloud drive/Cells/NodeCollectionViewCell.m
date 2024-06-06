@@ -47,7 +47,7 @@ static NSString *kFileSize = @"kFileSize";
     self.node = node;
     self.delegate = delegate;
     
-    [self bindWithViewModel:[self createViewModelWithNode:node isFromSharedItem:isFromSharedItem]];
+    [self bindWithViewModel:[self createViewModelWithNode:node isFromSharedItem:isFromSharedItem sdk:sdk]];
         
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node attributedTakenDownName];
@@ -102,7 +102,7 @@ static NSString *kFileSize = @"kFileSize";
 
 - (void)configureCellForOfflineItem:(NSDictionary *)item itemPath:(NSString *)pathForItem allowedMultipleSelection:(BOOL)multipleSelection sdk:(nonnull MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
     
-    [self bindWithViewModel:[self createViewModelWithNode:nil isFromSharedItem:NO]];
+    [self bindWithViewModel:[self createViewModelWithNode:nil isFromSharedItem:NO sdk: sdk]];
 
     self.favouriteView.hidden = self.linkView.hidden = self.versionedView.hidden = self.topNodeIconsView.hidden = YES;
     self.labelView.hidden = self.downloadedImageView.hidden = self.downloadedView.hidden = YES;
@@ -182,7 +182,7 @@ static NSString *kFileSize = @"kFileSize";
 }
 
 - (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(nonnull MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
-    [self configureCellForNode:node allowedMultipleSelection:multipleSelection isFromSharedItem:NO sdk:sdk delegate:delegate];
+    [self configureCellForNode:node allowedMultipleSelection:multipleSelection isFromSharedItem:YES sdk:sdk delegate:delegate];
     
     if (self.downloadedImageView != nil) {
         if ([node isFile] && [MEGAStore.shareInstance offlineNodeWithNode:node] != nil) {
