@@ -16,7 +16,11 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
     }
     
     private func makeViewModel(forAlbums albums: [AlbumEntity]) -> any GetLinkViewModelType {
-        let shareAlbumUseCase = ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo)
+        let shareAlbumUseCase = ShareAlbumUseCase(
+            shareAlbumRepository: ShareAlbumRepository.newRepo,
+            userAlbumRepository: UserAlbumRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo)
+        
         if albums.count == 1,
            let album = albums.first {
             let initialSections = ShareAlbumLinkInitialSections(album: album)
