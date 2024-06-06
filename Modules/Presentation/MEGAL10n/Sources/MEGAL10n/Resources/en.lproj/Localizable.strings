@@ -3966,6 +3966,8 @@
 "videos.tab.playlist.create.alert.enterDifferentName"="Enter a different name";
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
+/* Used for adding videos to video playlist add toolbar button */
+"videos.tab.playlist.browser.button.add"="Add";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */

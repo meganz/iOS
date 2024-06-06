@@ -14,6 +14,9 @@ final class VideoPlaylistsViewModel: ObservableObject {
     @Published var videoPlaylists = [VideoPlaylistEntity]()
     @Published var shouldShowAddNewPlaylistAlert = false
     @Published var playlistName = ""
+    @Published var shouldShowVideoPlaylistPicker = false
+    
+    private(set) var newlyCreatedVideoPlaylist: VideoPlaylistEntity?
     
     private var videoPlaylistNames: [String] {
         videoPlaylists.map(\.name)
@@ -23,7 +26,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     private var subscriptions = Set<AnyCancellable>()
     private(set) var loadVideoPlaylistsOnSearchTextChangedTask: Task<Void, Never>?
-    private var createVideoPlaylistTask: Task<Void, Never>?
+    private(set) var createVideoPlaylistTask: Task<Void, Never>?
     private(set) var monitorSortOrderChangedTask: Task<Void, Never>?
     
     init(
@@ -140,11 +143,12 @@ final class VideoPlaylistsViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func createUserVideoPlaylist(with name: String?) {
+    func createUserVideoPlaylist(with name: String?) {
         createVideoPlaylistTask = Task {
             do {
                 let mappedName = VideoPlaylistNameCreationMapper.videoPlaylistName(from: name, from: videoPlaylistNames)
-                _ = try await videoPlaylistsUseCase.createVideoPlaylist(mappedName)
+                newlyCreatedVideoPlaylist = try await videoPlaylistsUseCase.createVideoPlaylist(mappedName)
+                shouldShowVideoPlaylistPicker = true
             } catch {
                 // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
             }
@@ -158,5 +162,15 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private func cancelCreateVideoPlaylistTask() {
         createVideoPlaylistTask?.cancel()
         createVideoPlaylistTask = nil
+    }
+    
+    @MainActor
+    func didPickVideosToBeIncludedInNewlyCreatedPlaylist(videos: [NodeEntity]) {
+        shouldShowVideoPlaylistPicker = false
+        addVideosToNewlyCreatedVideoPlaylist(videos: videos)
+    }
+    
+    private func addVideosToNewlyCreatedVideoPlaylist(videos: [NodeEntity]) {
+        // will be do on differentt ticket. Out of this ticket scope.
     }
 }
