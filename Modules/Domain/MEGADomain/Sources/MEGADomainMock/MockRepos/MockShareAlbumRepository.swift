@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
+public final class MockShareAlbumRepository: ShareAlbumRepositoryProtocol, @unchecked Sendable {
     public static let newRepo = MockShareAlbumRepository()
     private let shareAlbumResults: [HandleEntity: Result<String?, Error>]
     private let disableAlbumShareResult: Result<Void, Error>

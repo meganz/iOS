@@ -31,7 +31,9 @@ public struct SystemGeneratedNodeUseCase<T: SystemGeneratedNodeRepositoryProtoco
                     break
                 }
             }
-            return try await taskGroup.contains(true)
+            let isSystemGeneratedNode = try await taskGroup.contains(true)
+            taskGroup.cancelAll()
+            return isSystemGeneratedNode
         }
     }
 }

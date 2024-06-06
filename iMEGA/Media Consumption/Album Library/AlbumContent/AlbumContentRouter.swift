@@ -63,7 +63,11 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumContentsUseCase: albumContentsUseCase,
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             photoLibraryUseCase: photoLibraryUseCase,
-            shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
+            shareAlbumUseCase: ShareAlbumUseCase(
+                shareAlbumRepository: ShareAlbumRepository.newRepo,
+                userAlbumRepository: UserAlbumRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
             router: self,
             newAlbumPhotosToAdd: newAlbumPhotos,
             alertViewModel: alertViewModel)
