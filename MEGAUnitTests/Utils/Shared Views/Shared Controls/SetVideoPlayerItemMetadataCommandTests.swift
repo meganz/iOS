@@ -12,7 +12,7 @@ final class SetVideoPlayerItemMetadataCommandTests: XCTestCase {
             node: MockNode(handle: 1),
             fileManager: FileManager(),
             sdk: MockSdk(),
-            nodeAssetManager: NodeAssetsManager()
+            nodeAssetManager: NodeAssetsManager(sdk: MockSdk())
         )
         
         await sut.execute()
