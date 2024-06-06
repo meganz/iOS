@@ -11,4 +11,5 @@ protocol CallsCoordinatorProtocol: AnyObject {
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void)
     func reportEndCall(_ call: CallEntity)
     func disablePassCodeIfNeeded()
+    func configureWebRTCAudioSession()
 }

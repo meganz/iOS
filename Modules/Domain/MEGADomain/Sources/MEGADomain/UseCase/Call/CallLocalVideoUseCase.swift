@@ -1,12 +1,15 @@
 import Foundation
 
 public protocol CallLocalVideoUseCaseProtocol {
+    func enableLocalVideo(for chatId: HandleEntity) async throws
+    func disableLocalVideo(for chatId: HandleEntity) async throws
     func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func disableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol)
     func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol)
     func videoDeviceSelected() -> String?
     func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, any Error>) -> Void)
+    func selectCamera(withLocalizedName localizedName: String) async throws
     func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
 }
@@ -23,6 +26,14 @@ public final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: N
     
     public init(repository: T) {
         self.repository = repository
+    }
+    
+    public func enableLocalVideo(for chatId: HandleEntity) async throws {
+        try await repository.enableLocalVideo(for: chatId)
+    }
+    
+    public func disableLocalVideo(for chatId: HandleEntity) async throws {
+        try await repository.disableLocalVideo(for: chatId)
     }
     
     public func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
@@ -51,6 +62,10 @@ public final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: N
         repository.selectCamera(withLocalizedName: localizedName, completion: completion)
     }
     
+    public func selectCamera(withLocalizedName localizedName: String) async throws {
+        try await repository.selectCamera(withLocalizedName: localizedName)
+    }
+
     public func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.openVideoDevice(completion: completion)
     }
