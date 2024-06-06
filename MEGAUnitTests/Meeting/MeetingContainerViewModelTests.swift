@@ -231,15 +231,6 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(callKitManager.muteUnmute_Calls, [])
     }
     
-    func testAction_showHangOrEndCallDialog() {
-        let chatRoom = ChatRoomEntity(chatType: .meeting)
-        let router = MockMeetingContainerRouter()
-        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
-
-        test(viewModel: viewModel, action: .showHangOrEndCallDialog, expectedCommands: [])
-        XCTAssert(router.showHangOrEndCallDialog_calledTimes == 1)
-    }
-    
     func testAction_endCallForAll() {
         let chatRoom = ChatRoomEntity(chatType: .meeting)
         let router = MockMeetingContainerRouter()

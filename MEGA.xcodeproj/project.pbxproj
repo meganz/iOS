@@ -884,6 +884,7 @@
 		77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
+		830294AF2C11BB1F0002DF63 /* CallControlsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830294AE2C11BB1F0002DF63 /* CallControlsViewModelTests.swift */; };
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
 		830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */; };
 		830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28CC25E68FC200E9B56E /* DetailItemView.swift */; };
@@ -3659,6 +3660,7 @@
 		77F63E7E24C0A95800DEEA66 /* JoinViewState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinViewState.h; sourceTree = "<group>"; };
 		77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareDestinationTableViewController.h; sourceTree = "<group>"; };
 		77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareDestinationTableViewController.m; sourceTree = "<group>"; };
+		830294AE2C11BB1F0002DF63 /* CallControlsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlsViewModelTests.swift; sourceTree = "<group>"; };
 		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
 		830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetView.swift; sourceTree = "<group>"; };
@@ -12686,6 +12688,7 @@
 			children = (
 				BF8895AA2630F1AB002A18CA /* Mocks */,
 				BFC060F428A0C2DB00BA2AD7 /* Utils */,
+				830294AE2C11BB1F0002DF63 /* CallControlsViewModelTests.swift */,
 				941255512BED03C700058C0D /* CallKitCallManagerTests.swift */,
 				94EC99BB2BEA37F10007E30C /* CallKitProviderDelegateTests.swift */,
 				992003572B0C09620058FF5F /* CallParticipantCellTests.swift */,
@@ -16295,6 +16298,7 @@
 				0E43E1462B2F9F860079700A /* AVViewModelTests.swift in Sources */,
 				99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */,
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
+				830294AF2C11BB1F0002DF63 /* CallControlsViewModelTests.swift in Sources */,
 				941255522BED03C700058C0D /* CallKitCallManagerTests.swift in Sources */,
 				94EC99BC2BEA37F10007E30C /* CallKitProviderDelegateTests.swift in Sources */,
 				94C2884E2BC4253B008BBA3C /* CallLimitationsTests.swift in Sources */,

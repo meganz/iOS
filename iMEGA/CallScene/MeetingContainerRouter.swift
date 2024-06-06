@@ -24,7 +24,6 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showEndCallDialog(endCallCompletion: @escaping () -> Void, stayOnCallCompletion: (() -> Void)?)
     func removeEndCallDialog(finishCountDown: Bool, completion: (() -> Void)?)
     func showJoinMegaScreen()
-    func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
     func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel)
     func showScreenShareWarning()
     func showMutedMessage(by name: String)
@@ -43,7 +42,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: (any MeetingFloatingPanelRouting)?
     private var meetingParticipantsRouter: (any MeetingParticipantsLayoutRouting)?
-    private weak var hangOrEndCallRouter: (any HangOrEndCallRouting)?
     private var appDidBecomeActiveSubscription: AnyCancellable?
     private weak var containerViewModel: MeetingContainerViewModel?
     private var endCallDialog: EndCallDialog?
@@ -133,13 +131,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         
         dismissWaitingRoomAlertPresentedIfNeeded { [weak self] in
             guard let self else { return }
-            guard let hangOrEndCallRouter else {
-                dismissCallUI(animated: animated, completion: completion)
-                return
-            }
-            hangOrEndCallRouter.dismiss(animated: true) {
-                self.dismissCallUI(animated: animated, completion: completion)
-            }
+            dismissCallUI(animated: animated, completion: completion)
         }
     }
     
@@ -279,12 +271,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func showJoinMegaScreen() {
         EncourageGuestUserToJoinMegaRouter(presenter: UIApplication.mnz_presentingViewController()).start()
-    }
-    
-    func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
-        let hangOrEndCallRouter = HangOrEndCallRouter(presenter: UIApplication.mnz_presentingViewController(), meetingContainerViewModel: containerViewModel)
-        hangOrEndCallRouter.start()
-        self.hangOrEndCallRouter = hangOrEndCallRouter
     }
     
     func showScreenShareWarning() {

@@ -778,7 +778,8 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var showWaitingRoomParticipantsList_calledTimes = 0
     var showMuteSuccess_calledTimes = 0
     var showMuteError_calledTimes = 0
-    
+    var showHangOrEndCallDialog_calledTimes = 0
+
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
     }
@@ -855,5 +856,9 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showUpgradeFlow(_ accountDetails: AccountDetailsEntity) {
         
+    }
+    
+    func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
+        showHangOrEndCallDialog_calledTimes += 1
     }
 }

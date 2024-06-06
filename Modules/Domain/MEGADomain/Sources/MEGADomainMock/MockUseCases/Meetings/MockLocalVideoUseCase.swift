@@ -5,8 +5,8 @@ public final class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     private let releaseDeviceResult: Result<Void, CallErrorEntity> = .failure(.generic)
     private let selectCameraResult: Result<Void, Error> = .failure(GenericErrorEntity())
     public var videoDeviceSelectedString: String?
-    var enableLocalVideo_CalledTimes = 0
-    var disableLocalVideo_CalledTimes = 0
+    public var enableLocalVideo_CalledTimes = 0
+    public var disableLocalVideo_CalledTimes = 0
     var addLocalVideo_CalledTimes = 0
     var removeLocalVideo_CalledTimes = 0
     public var selectedCamera_calledTimes = 0
