@@ -1108,8 +1108,12 @@
 		83850A4126B2AACD00C62304 /* EnterMeetingLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */; };
 		83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */; };
 		83850A4526B2BC1100C62304 /* MEGAProviderDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */; };
+		8387FC062C108363008EDDC4 /* MockCallControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387FC052C108363008EDDC4 /* MockCallControlsViewModel.swift */; };
+		8387FC082C108396008EDDC4 /* CallControlsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387FC072C108396008EDDC4 /* CallControlsViewModelProtocol.swift */; };
 		838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B6825D5678C00767DB0 /* CallRepository.swift */; };
 		838B274B2BF21DC1005AD3F7 /* outgoingTone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 838B274A2BF21DC1005AD3F7 /* outgoingTone.wav */; };
+		838B27562BF4BE6B005AD3F7 /* CallControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B27552BF4BE6B005AD3F7 /* CallControlsView.swift */; };
+		838B275E2BF60324005AD3F7 /* CallControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B275D2BF60324005AD3F7 /* CallControlsViewModel.swift */; };
 		838CC2652B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */; };
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
 		838D90A02B57FE550031CD62 /* SVProgressHUD+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */; };
@@ -1145,6 +1149,7 @@
 		83A4E47427F49AE000A429F4 /* TransferStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47227F49AE000A429F4 /* TransferStage.swift */; };
 		83A4E47727F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */; };
 		83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */; };
+		83A612EE2C1091BE00116241 /* CallControlView+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A612ED2C1091BE00116241 /* CallControlView+Factory.swift */; };
 		83AE36C22886D033002F1755 /* CallsSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE36C12886D033002F1755 /* CallsSettingsViewModel.swift */; };
 		83AE36C42886DEB2002F1755 /* SettingsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE36C32886DEB2002F1755 /* SettingsTableViewController+Additions.swift */; };
 		83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B0B45C242CC1DB00468191 /* ChatSharedItemTableViewCell.swift */; };
@@ -1186,6 +1191,7 @@
 		83C49BAF2652627500A7764B /* CallTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C49BAD2652627400A7764B /* CallTitleView.xib */; };
 		83C49BB02652627500A7764B /* CallTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C49BAE2652627400A7764B /* CallTitleView.swift */; };
 		83C49BC2265262AD00A7764B /* CallParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C49BC1265262AD00A7764B /* CallParticipantCell.xib */; };
+		83C5D0082C0F4EF3008A282D /* CallControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5D0072C0F4EF3008A282D /* CallControlView.swift */; };
 		83C7C84827EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C7C84727EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift */; };
 		83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */; };
 		83C9CE772A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE762A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift */; };
@@ -3889,8 +3895,12 @@
 		83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewModel.swift; sourceTree = "<group>"; };
 		83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAChatResultDelegate.swift; sourceTree = "<group>"; };
 		83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAProviderDelegate+Additions.swift"; sourceTree = "<group>"; };
+		8387FC052C108363008EDDC4 /* MockCallControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallControlsViewModel.swift; sourceTree = "<group>"; };
+		8387FC072C108396008EDDC4 /* CallControlsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlsViewModelProtocol.swift; sourceTree = "<group>"; };
 		838A7B6825D5678C00767DB0 /* CallRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRepository.swift; sourceTree = "<group>"; };
 		838B274A2BF21DC1005AD3F7 /* outgoingTone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = outgoingTone.wav; sourceTree = "<group>"; };
+		838B27552BF4BE6B005AD3F7 /* CallControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlsView.swift; sourceTree = "<group>"; };
+		838B275D2BF60324005AD3F7 /* CallControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlsViewModel.swift; sourceTree = "<group>"; };
 		838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkPresentationItemSource.swift; sourceTree = "<group>"; };
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
 		838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+Additions.swift"; sourceTree = "<group>"; };
@@ -3919,6 +3929,7 @@
 		83A4E47227F49AE000A429F4 /* TransferStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferStage.swift; sourceTree = "<group>"; };
 		83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferRouter.swift; sourceTree = "<group>"; };
 		83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CancellableTransfer+Shared.swift"; sourceTree = "<group>"; };
+		83A612ED2C1091BE00116241 /* CallControlView+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallControlView+Factory.swift"; sourceTree = "<group>"; };
 		83AB5A8125598CE200A04232 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83AE36C12886D033002F1755 /* CallsSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsViewModel.swift; sourceTree = "<group>"; };
 		83AE36C32886DEB2002F1755 /* SettingsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsTableViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -3957,6 +3968,7 @@
 		83C49BAD2652627400A7764B /* CallTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallTitleView.xib; sourceTree = "<group>"; };
 		83C49BAE2652627400A7764B /* CallTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallTitleView.swift; sourceTree = "<group>"; };
 		83C49BC1265262AD00A7764B /* CallParticipantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallParticipantCell.xib; sourceTree = "<group>"; };
+		83C5D0072C0F4EF3008A282D /* CallControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlView.swift; sourceTree = "<group>"; };
 		83C7C84727EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMediaUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouterOCWrapper.swift; sourceTree = "<group>"; };
 		83C9CE762A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsView.swift; sourceTree = "<group>"; };
@@ -9447,12 +9459,49 @@
 			path = EnterMeetingLinkScene;
 			sourceTree = "<group>";
 		};
+		8387FC032C1082F1008EDDC4 /* CallControls */ = {
+			isa = PBXGroup;
+			children = (
+				8387FC042C1082F7008EDDC4 /* ViewModel */,
+				8387FC092C1083A5008EDDC4 /* Views */,
+			);
+			path = CallControls;
+			sourceTree = "<group>";
+		};
+		8387FC042C1082F7008EDDC4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				838B275D2BF60324005AD3F7 /* CallControlsViewModel.swift */,
+				8387FC072C108396008EDDC4 /* CallControlsViewModelProtocol.swift */,
+				8387FC052C108363008EDDC4 /* MockCallControlsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8387FC092C1083A5008EDDC4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				838B27552BF4BE6B005AD3F7 /* CallControlsView.swift */,
+				83A612ED2C1091BE00116241 /* CallControlView+Factory.swift */,
+				83C5D0072C0F4EF3008A282D /* CallControlView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		838A7B6725D5677500767DB0 /* Calls */ = {
 			isa = PBXGroup;
 			children = (
 				838A7B6825D5678C00767DB0 /* CallRepository.swift */,
 			);
 			path = Calls;
+			sourceTree = "<group>";
+		};
+		838B27542BF4BE55005AD3F7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8387FC032C1082F1008EDDC4 /* CallControls */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		838D909E2B57FE2A0031CD62 /* SVProgressHUD */ = {
@@ -12212,6 +12261,7 @@
 				BFAD5148260C0BE700DFBD1B /* ParticpiantInfo */,
 				BF66DFED2613E7EE00066F35 /* QuickAction */,
 				BFC060F128A0C09900BA2AD7 /* Utils */,
+				838B27542BF4BE55005AD3F7 /* Views */,
 				94C288452BC3F7FA008BBA3C /* CallLimitations.swift */,
 				94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */,
 				94B0C6CB2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift */,
@@ -14341,6 +14391,11 @@
 				BF22BFC9268D366E00460DB3 /* CallActionManager.swift in Sources */,
 				837D0F392BC7E23000C629AE /* CallActionSync.swift in Sources */,
 				8366518726497B3600BC02F0 /* CallCollectionView.swift in Sources */,
+				838B27562BF4BE6B005AD3F7 /* CallControlsView.swift in Sources */,
+				838B275E2BF60324005AD3F7 /* CallControlsViewModel.swift in Sources */,
+				8387FC082C108396008EDDC4 /* CallControlsViewModelProtocol.swift in Sources */,
+				83A612EE2C1091BE00116241 /* CallControlView+Factory.swift in Sources */,
+				83C5D0082C0F4EF3008A282D /* CallControlView.swift in Sources */,
 				BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */,
 				83E8096B2BBEA2F700E1B3FF /* CallKitCallManager.swift in Sources */,
 				8338E0F32666552900D1458B /* CallKitManager.swift in Sources */,
@@ -15107,6 +15162,7 @@
 				B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
+				8387FC062C108363008EDDC4 /* MockCallControlsViewModel.swift in Sources */,
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				832F19EC2091BA970067679E /* MOMediaDestination+CoreDataClass.m in Sources */,

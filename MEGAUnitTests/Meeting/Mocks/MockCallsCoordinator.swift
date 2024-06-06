@@ -13,7 +13,8 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     var answerCallResult_ToReturn = false
     var endCallResult_ToReturn = false
     var muteCallResult_ToReturn = false
-    
+    var configureWebRTCAudioSession_CalledTimes = 0
+
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
         startCall_CalledTimes += 1
         return startCallResult_ToReturn
@@ -44,5 +45,9 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     
     func disablePassCodeIfNeeded() {
         disablePassCodeIfNeeded_CalledTimes += 1
+    }
+    
+    func configureWebRTCAudioSession() {
+        configureWebRTCAudioSession_CalledTimes += 1
     }
 }

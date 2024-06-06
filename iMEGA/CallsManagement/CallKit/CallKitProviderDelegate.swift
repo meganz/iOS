@@ -109,6 +109,7 @@ final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
     
     func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
         MEGALogDebug("[CallKit] Provider did activate audio session")
+        callsCoordinator?.configureWebRTCAudioSession()
     }
     
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
