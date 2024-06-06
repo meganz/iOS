@@ -44,7 +44,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private weak var presenter: UINavigationController?
     private weak var containerViewModel: MeetingContainerViewModel?
     private let chatRoom: ChatRoomEntity
-    private let isSpeakerEnabled: Bool
     private var selectWaitingRoomList: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
     private var inviteToMegaNavigationController: MEGANavigationController?
@@ -55,14 +54,12 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         presenter: UINavigationController,
         containerViewModel: MeetingContainerViewModel,
         chatRoom: ChatRoomEntity,
-        isSpeakerEnabled: Bool,
         permissionHandler: some DevicePermissionsHandling,
         selectWaitingRoomList: Bool
     ) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
-        self.isSpeakerEnabled = isSpeakerEnabled
         self.permissionHandler = permissionHandler
         self.selectWaitingRoomList = selectWaitingRoomList
     }
@@ -98,20 +95,12 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             router: self,
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
-            isSpeakerEnabled: isSpeakerEnabled,
-            callKitManager: CallKitManager(),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
-            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
-            permissionHandler: DevicePermissionsHandler.makeHandler(),
-            captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            megaHandleUseCase: megaHandleUseCase, 
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             selectWaitingRoomList: selectWaitingRoomList,
             headerConfigFactory: MeetingFloatingPanelHeaderConfigFactory(infoBannerFactory: MeetingFloatingPanelBannerFactory()),
-            callManager: CallKitCallManager.shared,
             featureFlags: DIContainer.featureFlagProvider,
             presentUpgradeFlow: showUpgradeFlow
         )
