@@ -1,5 +1,6 @@
 import MEGAChatSdk
 import MEGADomain
+import MEGASwift
 
 public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol {
     public static var newRepo: CallLocalVideoRepository {
@@ -11,6 +12,32 @@ public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryP
 
     public init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
+    }
+    
+    public func enableLocalVideo(for chatId: HandleEntity) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.enableVideo(forChat: chatId, delegate: ChatRequestDelegate(completion: { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }))
+        }
+    }
+    
+    public func disableLocalVideo(for chatId: HandleEntity) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.disableVideo(forChat: chatId, delegate: ChatRequestDelegate(completion: { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }))
+        }
     }
     
     public func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
@@ -49,6 +76,19 @@ public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryP
     
     public func videoDeviceSelected() -> String? {
         chatSdk.videoDeviceSelected()
+    }
+    
+    public func selectCamera(withLocalizedName localizedName: String) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.setChatVideoInDevices(localizedName, delegate: ChatRequestDelegate(completion: { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }))
+        }
     }
     
     public func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, Error>) -> Void) {

@@ -189,17 +189,6 @@ protocol CallsCoordinatorFactoryProtocol {
         return callUUID
     }
     
-    private func configureWebRTCAudioSession() {
-        RTCDispatcher.dispatchAsync(on: .typeAudioSession) {
-            let audioSession = RTCAudioSession.sharedInstance()
-            audioSession.lockForConfiguration()
-            let configuration = RTCAudioSessionConfiguration.webRTC()
-            configuration.categoryOptions = [.allowBluetooth, .allowBluetoothA2DP]
-            try? audioSession.setConfiguration(configuration)
-            audioSession.unlockForConfiguration()
-        }
-    }
-    
     private func updateChatTitleForCall(_ call: CallEntity) {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
               let chatTitle = chatRoom.title,
@@ -310,8 +299,6 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             return
         }
         
-        configureWebRTCAudioSession()
-        
         let incomingCallUUID = uuidFactory()
         
         callManager.addIncomingCall(
@@ -366,5 +353,19 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             passcodeManager.closePasscodeView()
         }
         passcodeManager.disablePasscodeWhenApplicationEntersBackground()
+    }
+    
+    // Callkit abnormal behaviour when trying to enable loudspeaker from the lock screen.
+    // Solution provided in the below link.
+    // https://stackoverflow.com/questions/48023629/abnormal-behavior-of-speaker-button-on-system-provided-call-screen?rq=1
+    func configureWebRTCAudioSession() {
+        RTCDispatcher.dispatchAsync(on: .typeAudioSession) {
+            let audioSession = RTCAudioSession.sharedInstance()
+            audioSession.lockForConfiguration()
+            let configuration = RTCAudioSessionConfiguration.webRTC()
+            configuration.categoryOptions = [.allowBluetooth, .allowBluetoothA2DP]
+            try? audioSession.setConfiguration(configuration)
+            audioSession.unlockForConfiguration()
+        }
     }
 }

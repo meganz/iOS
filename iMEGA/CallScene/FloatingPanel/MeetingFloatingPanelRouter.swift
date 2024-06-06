@@ -6,6 +6,7 @@ import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 import PanModal
+import SwiftUI
 
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)
@@ -74,6 +75,25 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         
+        let callControlsViewModel = CallControlsViewModel(
+            router: self,
+            chatRoom: chatRoom,
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
+            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
+            containerViewModel: containerViewModel, 
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
+            permissionHandler: DevicePermissionsHandler.makeHandler(),
+            callManager: CallKitCallManager.shared,
+            callKitManager: CallKitManager(),
+            notificationCenter: NotificationCenter.default,
+            audioRouteChangeNotificationName: AVAudioSession.routeChangeNotification,
+            featureFlagProvider: DIContainer.featureFlagProvider
+        )
+        
+        let callControlsViewHost = UIHostingController(rootView: CallControlsView(viewModel: callControlsViewModel))
+        callControlsViewHost.view.backgroundColor = .clear
+        
         let viewModel = MeetingFloatingPanelViewModel(
             router: self,
             containerViewModel: containerViewModel,
@@ -110,7 +130,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
             megaHandleUseCase: megaHandleUseCase,
-            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo)
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+            callControlsViewHost: callControlsViewHost
         )
         baseViewController = vc
         self.viewModel = viewModel

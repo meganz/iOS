@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import PanModal
+import SwiftUI
 import UIKit
 
 final class MeetingFloatingPanelViewController: UIViewController {
@@ -42,6 +43,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
 
+    private let callControlsViewHost: UIViewController
+    
     private var isAllowNonHostToAddParticipantsEnabled = false
     private var callParticipantsListView: ParticipantsListView?
     
@@ -51,7 +54,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
          megaHandleUseCase: any MEGAHandleUseCaseProtocol,
-         chatUseCase: some ChatUseCaseProtocol
+         chatUseCase: some ChatUseCaseProtocol,
+         callControlsViewHost: UIViewController
     ) {
         self.viewModel = viewModel
         self.userImageUseCase = userImageUseCase
@@ -60,6 +64,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.chatUseCase = chatUseCase
+        self.callControlsViewHost = callControlsViewHost
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -113,6 +118,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.dispatch(.onViewAppear)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        addCallControlsView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -459,6 +470,21 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     
     private var endCallNormalBackgroundColor: UIColor {
         UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : UIColor.redFF453A
+    }
+    
+    private func addCallControlsView() {
+        guard let swiftUIView = callControlsViewHost.view else { return }
+        
+        addChild(callControlsViewHost)
+        participantsTableView.tableHeaderView?.addSubview(callControlsViewHost.view)
+        
+        callControlsViewHost.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            swiftUIView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            swiftUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            swiftUIView.heightAnchor.constraint(equalToConstant: 105)
+        ])
     }
 }
 

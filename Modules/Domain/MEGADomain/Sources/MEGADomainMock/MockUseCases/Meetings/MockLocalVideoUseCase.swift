@@ -5,6 +5,8 @@ public final class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     private let releaseDeviceResult: Result<Void, CallErrorEntity> = .failure(.generic)
     private let selectCameraResult: Result<Void, Error> = .failure(GenericErrorEntity())
     public var videoDeviceSelectedString: String?
+    var enableLocalVideo_CalledTimes = 0
+    var disableLocalVideo_CalledTimes = 0
     var addLocalVideo_CalledTimes = 0
     var removeLocalVideo_CalledTimes = 0
     public var selectedCamera_calledTimes = 0
@@ -12,6 +14,14 @@ public final class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     var releaseVideoDevice_calledTimes = 0
 
     public init() {}
+    
+    public func enableLocalVideo(for chatId: HandleEntity) async throws {
+        enableLocalVideo_CalledTimes += 1
+    }
+    
+    public func disableLocalVideo(for chatId: HandleEntity) async throws {
+        disableLocalVideo_CalledTimes += 1
+    }
     
     public func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         completion(enableDisableVideoCompletion)
@@ -38,6 +48,10 @@ public final class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
         completion(selectCameraResult)
     }
     
+    public func selectCamera(withLocalizedName localizedName: String) async throws {
+        selectedCamera_calledTimes += 1
+    }
+
     public func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         openDevice_calledTimes += 1
     }
