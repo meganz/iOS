@@ -32,7 +32,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             hiddenNodesFeatureFlagEnabled: { false })
         
-        let photos = try await usecase.media(for: [.allMedia, .allLocations])
+        let photos = try await usecase.media(for: [.allMedia, .allLocations], searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
     }
     
@@ -51,7 +51,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             hiddenNodesFeatureFlagEnabled: { true })
         
-        let photos = try await usecase.media(for: [.allMedia, .allLocations])
+        let photos = try await usecase.media(for: [.allMedia, .allLocations], searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
     }
     
@@ -70,7 +70,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             hiddenNodesFeatureFlagEnabled: { true })
         
-        let photos = try await usecase.media(for: [.allMedia, .allLocations], excludeSensitive: true)
+        let photos = try await usecase.media(for: [.allMedia, .allLocations], excludeSensitive: true, searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
     }
     
@@ -90,7 +90,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         let expectedResult = nodesInCameraUpload + nodesInMediaUpload
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo, contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase, hiddenNodesFeatureFlagEnabled: { false })
 
-        let photos = try await usecase.media(for: [.cameraUploads, .allMedia])
+        let photos = try await usecase.media(for: [.cameraUploads, .allMedia], searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
     }
     
@@ -112,7 +112,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo, contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase, hiddenNodesFeatureFlagEnabled: { true })
 
-        let photos = try await usecase.media(for: [.cameraUploads, .allMedia])
+        let photos = try await usecase.media(for: [.cameraUploads, .allMedia], searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
     }
     
@@ -134,7 +134,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo, contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase, hiddenNodesFeatureFlagEnabled: { true })
 
-        let photos = try await usecase.media(for: [.cameraUploads, .allMedia], excludeSensitive: true)
+        let photos = try await usecase.media(for: [.cameraUploads, .allMedia], excludeSensitive: true, searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
     }
     
@@ -151,7 +151,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             .filter { $0.parentHandle == 1 }
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo, contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase, hiddenNodesFeatureFlagEnabled: { false })
         
-        let photos = try await usecase.media(for: [.cloudDrive, .allMedia])
+        let photos = try await usecase.media(for: [.cloudDrive, .allMedia], searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
     }
     
@@ -168,7 +168,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             .filter { $0.parentHandle == 1 && !$0.isMarkedSensitive}
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo, contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase, hiddenNodesFeatureFlagEnabled: { true })
         
-        let photos = try await usecase.media(for: [.cloudDrive, .allMedia])
+        let photos = try await usecase.media(for: [.cloudDrive, .allMedia], searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
     }
     
@@ -185,8 +185,53 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             .filter { $0.parentHandle == 1 && !$0.isMarkedSensitive}
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo, contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase, hiddenNodesFeatureFlagEnabled: { true })
         
-        let photos = try await usecase.media(for: [.cloudDrive, .allMedia], excludeSensitive: true)
+        let photos = try await usecase.media(for: [.cloudDrive, .allMedia], excludeSensitive: true, searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
+    }
+    
+    func testMedia_withSearchFilterNil_doesNotFilterMedia() async throws {
+        let photosRepo = MockPhotosLibraryRepository(
+            cameraUploadNode: cameraUploadNode,
+            mediaUploadNode: mediaUploadNode
+        )
+        let videoNodes = sampleVideoNodesForCloudDrive()
+        let imageNodes = sampleImageNodesForCloudDrive()
+        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
+        let expectedResult = (videoNodes + imageNodes)
+            .filter { $0.parentHandle == 1 }
+        let sut = PhotoLibraryUseCase(
+            photosRepository: photosRepo,
+            searchRepository: fileSearchRepo,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            hiddenNodesFeatureFlagEnabled: { false }
+        )
+        
+        let photos = try await sut.media(for: [.cloudDrive, .allMedia], searchText: "", sortOrder: .defaultAsc)
+        
+        XCTAssertEqual(Set(photos), Set(expectedResult))
+    }
+    
+    func testMedia_withSearchFilterNil_filterMedia() async throws {
+        let photosRepo = MockPhotosLibraryRepository(
+            cameraUploadNode: cameraUploadNode,
+            mediaUploadNode: mediaUploadNode
+        )
+        let videoNodes = sampleVideoNodesForCloudDrive()
+        let imageNodes = sampleImageNodesForCloudDrive()
+        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
+        let searchText = try XCTUnwrap(videoNodes.first(where: { $0.name == "TestVideo1.mp4" })?.name, "Expect to have searchText of sample video nodes")
+        let sut = PhotoLibraryUseCase(
+            photosRepository: photosRepo,
+            searchRepository: fileSearchRepo,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            hiddenNodesFeatureFlagEnabled: { false }
+        )
+        
+        _ = try await sut.media(for: [.allLocations, .videos], searchText: searchText, sortOrder: .defaultAsc)
+        
+        XCTAssertEqual(fileSearchRepo.messages, [ .search(searchText: searchText, sortOrder: .defaultAsc) ])
     }
     
     // MARK: - Private

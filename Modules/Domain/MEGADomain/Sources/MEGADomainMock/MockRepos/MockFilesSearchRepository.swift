@@ -26,6 +26,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     public enum Message: Equatable {
         case node(id: HandleEntity)
+        case search(searchText: String?, sortOrder: SortOrderEntity)
     }
     
     public init(photoNodes: [NodeEntity] = [],
@@ -58,7 +59,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         }
     }
     
-    public func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void) { 
+    public func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
         searchString = filter.searchText
         searchRecursive = filter.recursive
         let nodes: [NodeEntity] = switch filter.formatType {
@@ -73,6 +74,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
         searchString = filter.searchText
         searchRecursive = filter.recursive
+        
+        messages.append(.search(searchText: searchString, sortOrder: filter.sortOrderType))
         
         let filterCondition = { (node: NodeEntity) -> Bool in
             node.isFile && (filter.excludeSensitive ? !node.isMarkedSensitive : true)
@@ -121,7 +124,7 @@ extension MockFilesSearchRepository {
                        supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity,
-                       completion: @escaping ([NodeEntity]?, Bool) -> Void) { 
+                       completion: @escaping ([NodeEntity]?, Bool) -> Void) {
         
         searchString = string
         searchRecursive = recursive
