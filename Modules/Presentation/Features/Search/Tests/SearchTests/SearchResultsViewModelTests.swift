@@ -17,7 +17,6 @@ fileprivate extension Color {
     static let selectedColor = SearchConfig.testConfig.chipAssets.selectedBackground
 }
 
-@MainActor
 final class SearchResultsViewModelTests: XCTestCase {
     class Harness {
         struct EmptyContent: Equatable {
@@ -337,7 +336,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let item = try XCTUnwrap(harness.sut.listItems.first)
-        item.actions.contextAction(UIButton())
+        await item.actions.contextAction(UIButton())
         XCTAssertEqual(harness.contextTriggeredResults, [.resultWith(id: 1, title: "title")])
     }
     
@@ -568,16 +567,21 @@ final class SearchResultsViewModelTests: XCTestCase {
             let harness = Harness(self).withResultsPrepared(count: 10)
             await harness.sut.task()
             
+            // when
             harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 1))) // Triggers item update
+            await Task.yield()
             await Task.yield()
             await Task.yield()
             harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 2))) // Triggers item updates
             await Task.yield()
             await Task.yield()
+            await Task.yield()
             harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 100))) // Not triggering item update
             await Task.yield()
             await Task.yield()
+            await Task.yield()
             
+            // then
             XCTAssertEqual(harness.sut.listItems[0].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
             XCTAssertEqual(harness.sut.listItems[1].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
             XCTAssertNil(harness.sut.listItems[2].thumbnailImage.pngData())
@@ -606,6 +610,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         selectedResultsSubscription.cancel()
     }
     
+    @MainActor
     func testLoadMore_whenScrollingNearToTheBottomOfTheList_shouldTriggerLoadMoreItems() async {
         // given
         var harness = Harness(self).withResultsPrepared(count: 100) // Initially there are 100 results, id from 1 to 100
@@ -617,6 +622,8 @@ final class SearchResultsViewModelTests: XCTestCase {
         harness = harness.withResultsPrepared(count: 50, startingId: 101) // loading more 50 results, id from 101 to 150
         let item = harness.sut.listItems[80]
         await harness.sut.onItemAppear(item) // loading more should be triggered when item 80th appears
+        
+        await Task.yield()
         
         // then
         XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...150)) // 50 more results loaded, hence 150 in total

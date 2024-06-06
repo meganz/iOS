@@ -7,6 +7,7 @@ import SwiftUI
 /// Dedicated actor to isolate critical data
 @globalActor actor SearchResultsViewModelActor {
     static var shared = SearchResultsViewModelActor()
+    private init() {}
 }
 
 public class SearchResultsViewModel: ObservableObject {
@@ -53,7 +54,7 @@ public class SearchResultsViewModel: ObservableObject {
     // selection was changed but we don't have new results
     private var lastAvailableChips: [SearchChipEntity] = []
 
-    // do not load when coming back from the pushed vc
+    // do not perform initial load when coming back from the pushed vc
     private var initialLoadDone = false
 
     private var miniPlayerBottomInset: CGFloat = 0.0
@@ -71,7 +72,8 @@ public class SearchResultsViewModel: ObservableObject {
     private var debounceTask: Task<Void, any Error>?
 
     // this flag is used to indicate whether the data has been loaded for every triggered search
-    @Atomic var areNewSearchResultsLoaded = false
+    
+    @Atomic private var areNewSearchResultsLoaded = false
 
     // data source for the results (result list, chips)
     private let resultsProvider: any SearchResultsProviding
@@ -196,7 +198,6 @@ public class SearchResultsViewModel: ObservableObject {
 
     /// meant called to be called in the SwiftUI View's .task modifier
     /// which means task is called on the appearance and cancelled on disappearance
-    @MainActor
     func task() async {
         // We need to check if listItems is empty  because after first load of the screen, the listItems will be filled with data,
         // so there is no need for additional query which will only cause flicker when we quickly go in and out of this screen
@@ -276,8 +277,8 @@ public class SearchResultsViewModel: ObservableObject {
     func showLoadingPlaceholderIfNeeded() async {
         Task {
             try await Task.sleep(nanoseconds: UInt64(showLoadingPlaceholderDelay*1_000_000_000))
-            guard !areNewSearchResultsLoaded else { return }
-            updateLoadingPlaceholderVisibility(true)
+            guard !(areNewSearchResultsLoaded) else { return }
+            await updateLoadingPlaceholderVisibility(true)
         }
     }
 
@@ -299,7 +300,6 @@ public class SearchResultsViewModel: ObservableObject {
         searchingTask = nil
     }
     
-    @MainActor
     private func performSearch(
         using query: SearchQuery,
         lastItemIndex: Int? = nil
@@ -317,7 +317,7 @@ public class SearchResultsViewModel: ObservableObject {
         guard let results else { return }
 
         if lastItemIndex == nil {
-            clearSearchResults()
+            await clearSearchResults()
         }
 
         await prepareResults(results, query: query)
@@ -357,14 +357,13 @@ public class SearchResultsViewModel: ObservableObject {
         await loadMoreIfNeeded(item: item)
     }
 
-    @MainActor
-    func prepareResults(_ results: SearchResultsEntity, query: SearchQuery) async {
+    private func prepareResults(_ results: SearchResultsEntity, query: SearchQuery) async {
 
         let items = results.results.map { result in
             mapSearchResultToViewModel(result)
         }
 
-        consume(results, items: items, query: query)
+        await consume(results, items: items, query: query)
     }
 
     private func mapSearchResultToViewModel(_ result: SearchResult) -> SearchResultRowViewModel {
@@ -474,26 +473,29 @@ public class SearchResultsViewModel: ObservableObject {
         _ results: SearchResultsEntity,
         items: [SearchResultRowViewModel],
         query: SearchQuery
-    ) {
+    ) async {
         updateSearchResultsLoaded(true)
-        updateLoadingPlaceholderVisibility(false)
+        await updateLoadingPlaceholderVisibility(false)
 
         lastAvailableChips = results.availableChips
-        updateChipsFrom(appliedChips: results.appliedChips)
-
-        self.listItems.append(contentsOf: items)
-
+        await updateChipsFrom(appliedChips: results.appliedChips)
+        
         let selectedItems = items
             .filter { selectedResultIds.contains($0.result.id) }
-        selectedRowIds.formUnion(selectedItems.map { $0.id })
-
-        withAnimation {
-            emptyViewModel = Self.makeEmptyView(
-                whenListItems: listItems.isEmpty,
-                query: query,
-                appliedChips: results.appliedChips,
-                config: config
-            )
+        
+        Task { @MainActor in
+            self.listItems.append(contentsOf: items)
+            
+            selectedRowIds.formUnion(selectedItems.map { $0.id })
+            
+            withAnimation {
+                emptyViewModel = Self.makeEmptyView(
+                    whenListItems: listItems.isEmpty,
+                    query: query,
+                    appliedChips: results.appliedChips,
+                    config: config
+                )
+            }
         }
     }
     
@@ -522,14 +524,14 @@ public class SearchResultsViewModel: ObservableObject {
     private func tapped(_ chip: SearchChipEntity) async {
         let query = Self.makeQueryAfter(tappedChip: chip, currentQuery: currentQuery)
         // updating chips here as well to make selection visible before results are returned
-        updateChipsFrom(appliedChips: query.chips)
+        await updateChipsFrom(appliedChips: query.chips)
         await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: query)
         bridge.chip(tapped: chip, isSelected: query.chips.contains(chip))
     }
 
-    private func updateChipsFrom(appliedChips: [SearchChipEntity]) {
-        chipsItems = lastAvailableChips.map { chip in
+    private func updateChipsFrom(appliedChips: [SearchChipEntity]) async {
+        let updatedChips = lastAvailableChips.map { chip in
             let subchips = subchipsFrom(appliedChips: appliedChips, allChips: chip.subchips)
             let selected = selected(for: chip, appliedChips: appliedChips)
 
@@ -555,6 +557,8 @@ public class SearchResultsViewModel: ObservableObject {
                 }
             )
         }
+        
+        await updateChipsItems(with: updatedChips)
     }
 
     private func subchipsFrom(
@@ -621,26 +625,41 @@ public class SearchResultsViewModel: ObservableObject {
         presentedChipsPickerViewModel = nil
     }
 
+    @MainActor
     private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
-        Task { @MainActor in
-            isLoadingPlaceholderShown = shown
-        }
-    }
-
-    private func clearSearchResults() {
-        listItems = []
-    }
-
-    private func updateSearchResultsLoaded(_ loaded: Bool) {
-        $areNewSearchResultsLoaded.mutate { currentValue in
-            currentValue = loaded
-        }
+        isLoadingPlaceholderShown = shown
     }
 
     @MainActor
+    private func clearSearchResults() {
+        listItems = []
+    }
+    
     func searchResultUpdated(_ result: SearchResult) async {
         guard let index = listItems.firstIndex(where: { $0.result.id == result.id  }) else { return }
         await listItems[index].reload(with: result)
+    }
+    
+    @MainActor
+    private func updateChipsItems(with chipViewModels: [ChipViewModel]) {
+        chipsItems = chipViewModels
+    }
+
+    private func updateSearchResultsLoaded(_ loaded: Bool) {
+        $areNewSearchResultsLoaded.mutate { $0 = loaded }
+    }
+    
+    @MainActor
+    private func updateListItem(with newItems: [SearchResultRowViewModel]) {
+        self.listItems = newItems
+        withAnimation {
+            emptyViewModel = Self.makeEmptyView(
+                whenListItems: listItems.isEmpty,
+                query: currentQuery,
+                appliedChips: currentQuery.chips,
+                config: config
+            )
+        }
     }
     
     private func refreshSearchResults() async {
@@ -660,23 +679,6 @@ public class SearchResultsViewModel: ObservableObject {
         }
         
         await updateListItem(with: newResultViewModels)
-        // After updating the nodes, there's a chance that user already scrolled to the very bottom of the list,
-        // in that case user will have to manually scroll the list to trigger load more, which is not convenient
-        // Hence we load an additional page here to mitigate that problem.
-        await loadMoreIfNeeded(at: newResultViewModels.count - 1)
-    }
-    
-    @MainActor
-    private func updateListItem(with newItems: [SearchResultRowViewModel]) {
-        self.listItems = newItems
-        withAnimation {
-            emptyViewModel = Self.makeEmptyView(
-                whenListItems: listItems.isEmpty,
-                query: currentQuery,
-                appliedChips: currentQuery.chips,
-                config: config
-            )
-        }
     }
 
     // when keyboard is shown we shouldn't add any additional bottom inset
