@@ -11,8 +11,17 @@ public protocol PhotoLibraryUseCaseProtocol: Sendable {
     /// - Parameters:
     ///   - filterOptions: PhotosFilterOptionsEntity containing location and mediaTypes to load
     ///   - excludeSensitive: Optional Boolean indicator to exclude sensitiveNodes.If value is not set, it will default to using users account level setting for excluding hidden nodes.
+    ///   - searchText: string for media name as search keyword.
+    ///   - sortOrder: Returns the resulting nodes in the order marked in this argument.
     /// - Returns: List of media NodeEntities based on the criteria in the parameters provided.
-    func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?) async throws -> [NodeEntity]
+    /// - Important: requesting media with different filter type can defeat the purpose of sortOrder (e.g, filter options `allMedia, or [ .videos, .photos ]` contains photos and videos and `sortOrder` argument become invalid). At the moment, client needs to do sort itself. See `PhotoLibraryContentView` to do local sorting.
+    func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?, searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity]
+}
+
+extension PhotoLibraryUseCaseProtocol {
+    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool? = nil, searchText: String = "", sortOrder: SortOrderEntity = .defaultDesc) async throws -> [NodeEntity] {
+        try await self.media(for: filterOptions, excludeSensitive: excludeSensitive, searchText: searchText, sortOrder: sortOrder)
+    }
 }
 
 public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepositoryProtocol, V: ContentConsumptionUserAttributeUseCaseProtocol>: PhotoLibraryUseCaseProtocol {
@@ -38,16 +47,16 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         )
     }
 
-    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool? = nil) async throws -> [NodeEntity] {
+    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool? = nil, searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
         
         let shouldExcludeSensitive = await shouldExcludeSensitive(override: excludeSensitive)
   
         return if filterOptions.isSuperset(of: .allLocations) {
-            try await loadAllPhotos(recursive: true, excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats)
+            try await loadAllPhotos(recursive: true, excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats, searchText: searchText, sortOrder: sortOrder)
         } else if filterOptions.contains(.cloudDrive) {
-            try await mediaFromCloudDriveOnly(excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats)
+            try await mediaFromCloudDriveOnly(excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats, searchText: searchText, sortOrder: sortOrder)
         } else if filterOptions.contains(.cameraUploads) {
-            try await mediaFromCameraUpload(excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats)
+            try await mediaFromCameraUpload(excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats, searchText: searchText, sortOrder: sortOrder)
         } else {
             []
         }
@@ -64,27 +73,27 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         return override
     }
     
-    private func mediaFromCloudDriveOnly(excludeSensitive: Bool, includedFormats: [NodeFormatEntity]) async throws -> [NodeEntity] {
+    private func mediaFromCloudDriveOnly(excludeSensitive: Bool, includedFormats: [NodeFormatEntity], searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
         let container = await photoLibraryContainer()
         let exclusionHandles = [container.cameraUploadNode, container.mediaUploadNode]
             .compactMap(\.?.handle)
         
-        return try await loadAllPhotos(recursive: true, excludeSensitive: excludeSensitive, includedFormats: includedFormats)
+        return try await loadAllPhotos(recursive: true, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder)
             .filter { exclusionHandles.notContains($0.parentHandle) }
     }
     
-    private func mediaFromCameraUpload(excludeSensitive: Bool, includedFormats: [NodeFormatEntity]) async throws -> [NodeEntity] {
+    private func mediaFromCameraUpload(excludeSensitive: Bool, includedFormats: [NodeFormatEntity], searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
         
         let container = await photoLibraryContainer()
         
         var nodes: [NodeEntity] = []
         if let cameraUploadNode = container.cameraUploadNode,
-           let photosCameraUpload = try? await loadAllPhotos(parentNode: cameraUploadNode, recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats) {
+           let photosCameraUpload = try? await loadAllPhotos(parentNode: cameraUploadNode, recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder) {
             nodes.append(contentsOf: photosCameraUpload)
         }
         
         if let mediaUploadNode = container.mediaUploadNode,
-           let photosMediaUpload = try? await loadAllPhotos(parentNode: mediaUploadNode, recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats) {
+           let photosMediaUpload = try? await loadAllPhotos(parentNode: mediaUploadNode, recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder) {
             nodes.append(contentsOf: photosMediaUpload)
         }
         
@@ -92,16 +101,16 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
     }
     
     // MARK: - Private
-    private func loadAllPhotos(parentNode: NodeEntity? = nil, recursive: Bool, excludeSensitive: Bool, includedFormats: [NodeFormatEntity]) async throws -> [NodeEntity] {
-        
+    private func loadAllPhotos(parentNode: NodeEntity? = nil, recursive: Bool, excludeSensitive: Bool, includedFormats: [NodeFormatEntity], searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
         await includedFormats
             .async
             .compactMap { format -> [NodeEntity]? in
                 try? await searchRepository.search(filter: .init(
+                    searchText: searchText,
                     parentNode: parentNode,
                     recursive: recursive,
                     supportCancel: false,
-                    sortOrderType: .defaultDesc,
+                    sortOrderType: sortOrder,
                     formatType: format,
                     excludeSensitive: excludeSensitive))
             }

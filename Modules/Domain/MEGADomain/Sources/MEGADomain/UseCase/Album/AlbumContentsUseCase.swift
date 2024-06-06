@@ -104,7 +104,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     
     private func systemAlbumPhotos(forAlbum album: AlbumEntity, showHiddenPhotos: Bool) async throws -> [NodeEntity] {
         let photos = try await photoLibraryUseCase.media(for: [.allLocations, .images],
-                                                               excludeSensitive: !showHiddenPhotos)
+                                                         excludeSensitive: !showHiddenPhotos)
         switch album.type {
         case .favourite:
             let videos = try await photoLibraryUseCase.media(for: [.allLocations, .videos],

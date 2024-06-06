@@ -21,7 +21,7 @@ public struct PhotoLibraryLocalSourceUseCase<T: PhotoLibraryRepositoryProtocol, 
         )
     }
     
-    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?) async throws -> [NodeEntity] {
+    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?, searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
         []
     }
     
