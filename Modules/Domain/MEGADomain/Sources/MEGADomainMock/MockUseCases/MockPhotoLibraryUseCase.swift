@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 
 public actor MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
@@ -8,7 +9,9 @@ public actor MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
     private let allVideos: [NodeEntity]
     private let photoLibraryContainer: PhotoLibraryContainerEntity
     
-    public private(set) var messages = [Message]()
+    private var succesfullyLoadMedia = true
+    
+    @Published public private(set) var messages = [Message]()
     
     public enum Message {
         case media
@@ -19,20 +22,27 @@ public actor MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
         allPhotosFromCloudDriveOnly: [NodeEntity] = [],
         allPhotosFromCameraUpload: [NodeEntity] = [],
         allVideos: [NodeEntity] = [],
-        photoLibraryContainer: PhotoLibraryContainerEntity = PhotoLibraryContainerEntity(cameraUploadNode: nil, mediaUploadNode: nil)
+        photoLibraryContainer: PhotoLibraryContainerEntity = PhotoLibraryContainerEntity(cameraUploadNode: nil, mediaUploadNode: nil),
+        succesfullyLoadMedia: Bool = true
     ) {
         self.allPhotos = allPhotos
         self.allPhotosFromCloudDriveOnly = allPhotosFromCloudDriveOnly
         self.allPhotosFromCameraUpload = allPhotosFromCameraUpload
         self.allVideos = allVideos
         self.photoLibraryContainer = photoLibraryContainer
+        self.succesfullyLoadMedia = succesfullyLoadMedia
     }
     
     public func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
         photoLibraryContainer
     }
     
-    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?) async throws -> [NodeEntity] {
+    public func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?, searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
+        
+        guard succesfullyLoadMedia else {
+            throw GenericErrorEntity()
+        }
+        
         messages.append(.media)
         let media = mediaForLocation(filterOptions)
         
