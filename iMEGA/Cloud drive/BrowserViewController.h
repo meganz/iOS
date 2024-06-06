@@ -12,7 +12,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionSelectFolder,
     BrowserActionNewHomeUpload,
     BrowserActionNewFileSave,
-    BrowserActionSaveToCloudDrive
+    BrowserActionSaveToCloudDrive,
+    BrowserActionSelectVideo // A BrowserAction type specific for video picker selection.
 };
 
 @protocol BrowserViewControllerDelegate <NSObject>
@@ -52,6 +53,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode;
 - (void)updatePromptTitle;
+- (void)attachNodes;
 
 @end
 

@@ -462,6 +462,7 @@
                         <outlet property="selectorViewHeightConstraint" destination="TqY-Mb-sAB" id="ngc-kj-Kl9"/>
                         <outlet property="tableView" destination="7Nx-88-DiR" id="71N-lJ-L7M"/>
                         <outlet property="tableViewTopConstraint" destination="x5t-Oa-91e" id="WWz-oD-RF7"/>
+                        <outlet property="toolBarAddBarButtonItem" destination="sAh-6z-ZvW" id="lLP-oK-adf"/>
                         <outlet property="toolBarCopyBarButtonItem" destination="szH-Sn-BED" id="3cX-Nu-bUy"/>
                         <outlet property="toolBarMoveBarButtonItem" destination="7Sv-uf-KA4" id="g3C-EQ-WoC"/>
                         <outlet property="toolBarNewFolderBarButtonItem" destination="Rgo-oZ-vnm" id="RJE-19-g4s"/>
@@ -499,6 +500,11 @@
                 <barButtonItem title="Send" style="plain" id="o2i-Qg-G0n" userLabel="Send Bar Button Item">
                     <connections>
                         <action selector="sendNodes:" destination="Z2F-Nr-ypX" id="2YC-fK-zah"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Add" id="sAh-6z-ZvW" userLabel="Add Bar Button Item">
+                    <connections>
+                        <action selector="addNodes:" destination="Z2F-Nr-ypX" id="pd2-EA-LQA"/>
                     </connections>
                 </barButtonItem>
             </objects>
