@@ -20,12 +20,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var participantsTableView: UITableView!
 
-    @IBOutlet private weak var cameraQuickActionView: MeetingQuickActionView!
-    @IBOutlet private weak var muteQuickActionView: MeetingQuickActionView!
-    @IBOutlet private weak var endQuickActionView: MeetingQuickActionView!
-    @IBOutlet private weak var speakerQuickActionView: MeetingSpeakerQuickActionView!
-    @IBOutlet private weak var flipQuickActionView: MeetingQuickActionView!
-
     @IBOutlet private weak var optionsStackView: UIStackView!
     @IBOutlet private weak var shareLinkLabel: UILabel!
     
@@ -79,35 +73,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
         backgroundView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : .black2C2C2E
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
-        endQuickActionView.icon = UIImage(resource: .hangCallMeetingAction)
-        endQuickActionView.properties = MeetingQuickActionView.Properties(
-            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: iconNormalTintColor, selected: iconSelectedTintColor),
-            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: endCallNormalBackgroundColor, selected: endCallNormalBackgroundColor)
-        )
-        endQuickActionView.name = Strings.Localizable.leave
 
         shareLinkLabel.textColor = UIColor.isDesignTokenEnabled() ? 
             TokenColors.Text.accent :
             .green00C29A
         
         registerTableViewCells()
-        
-        flipQuickActionView.disabled = true
-        
-        let quickActionProperties = MeetingQuickActionView.Properties(
-            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: iconNormalTintColor, selected: iconSelectedTintColor),
-            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: iconNormalBackgroundColor, selected: iconSelectedBackgroundColor)
-        )
-        let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]
-        quickActions.forEach { $0?.properties = quickActionProperties }
-        
-        [cameraQuickActionView: Strings.Localizable.Chat.Call.QuickAction.camera,
-           muteQuickActionView: Strings.Localizable.mute,
-        speakerQuickActionView: Strings.Localizable.Meetings.QuickAction.speaker,
-           flipQuickActionView: Strings.Localizable.Meetings.QuickAction.flip
-        ].forEach { (view, key) in
-            view?.name = key
-        }
         
         viewModel.invokeCommand = { [weak self] in
             self?.executeCommand($0)
@@ -155,41 +126,28 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .configView(let canInviteParticipants,
                          let isOneToOneCall,
                          let isMeeting,
-                         let isVideoEnabled,
-                         let cameraPosition,
                          let allowNonHostToAddParticipantsEnabled,
                          let isMyselfAModerator):
             updateUI(canInviteParticipants: canInviteParticipants,
                      isOneToOneCall: isOneToOneCall,
                      isMeeting: isMeeting,
-                     isVideoEnabled: isVideoEnabled,
-                     cameraPosition: cameraPosition,
                      allowNonHostToAddParticipantsEnabled: allowNonHostToAddParticipantsEnabled,
                      isMyselfAModerator: isMyselfAModerator)
-        case .enabledLoudSpeaker(let enabled):
-            speakerQuickActionView?.isSelected = enabled
         case .microphoneMuted(let muted):
             if let myHandle = accountUseCase.currentUserHandle,
                let participant = callParticipants.first(where: { $0.participantId == myHandle }) {
                 participant.audio = muted ? .off : .on
                 participantsTableView.reloadData()
             }
-            muteQuickActionView.isSelected = muted
-        case .updatedCameraPosition(let position):
-            updatedCameraPosition(position)
         case .cameraTurnedOn(let on):
             if let myHandle = accountUseCase.currentUserHandle,
                let participant = callParticipants.first(where: { $0.participantId == myHandle }) {
                 participant.video = on ? .on : .off
                 participantsTableView.reloadData()
             }
-            cameraQuickActionView.isSelected = on
-            flipQuickActionView.disabled = !on
         case .reloadParticipantsList(let participants):
             callParticipants = participants
             participantsTableView.reloadData()
-        case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
-            selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
         case .transitionToShortForm:
             panModalSetNeedsLayoutUpdate()
             panModalTransition(to: .shortForm)
@@ -208,59 +166,17 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func hangCall(_ sender: UIButton) {
-        viewModel.dispatch(.hangCall(presenter: self, sender: sender))
-    }
-    
     @IBAction func shareLink(_ sender: UIButton) {
         viewModel.dispatch(.shareLink(presenter: self, sender: sender))
     }
     
-    @IBAction func toggleCameraOnTapped(_ sender: UIButton) {
-        viewModel.dispatch(.turnCamera(on: !cameraQuickActionView.isSelected))
-    }
-    
-    @IBAction func toggleMuteTapped(_ sender: UIButton) {
-        viewModel.dispatch(.muteUnmuteCall(mute: !muteQuickActionView.isSelected))
-    }
-    
-    @IBAction func switchSpeakersTapped(_ sender: UIButton) {
-        speakerQuickActionView.isSelected = !speakerQuickActionView.isSelected
-        viewModel.dispatch(speakerQuickActionView.isSelected ? .enableLoudSpeaker : .disableLoudSpeaker)
-    }
-    
-    @IBAction func switchCameraTapped(_ sender: UIButton) {
-        guard !flipQuickActionView.disabled else { return }
-        viewModel.dispatch(.switchCamera(backCameraOn: !flipQuickActionView.isSelected))
-    }
-    
     // MARK: - Private methods
-    
-    private func updatedCameraPosition(_ position: CameraPositionEntity) {
-        flipQuickActionView.isSelected = position == .back
-    }
-    
-    private func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
-        if isBluetoothRouteAvailable {
-            speakerQuickActionView?.addRoutingView()
-        } else {
-            speakerQuickActionView?.removeRoutingView()
-        }
-        speakerQuickActionView?.selectedAudioPortUpdated(selectedAudioPort, isBluetoothRouteAvailable: isBluetoothRouteAvailable)
-    }
     
     private func updateUI(canInviteParticipants: Bool,
                           isOneToOneCall: Bool,
                           isMeeting: Bool,
-                          isVideoEnabled: Bool,
-                          cameraPosition: CameraPositionEntity?,
                           allowNonHostToAddParticipantsEnabled: Bool,
                           isMyselfAModerator: Bool) {
-        cameraQuickActionView.isSelected = isVideoEnabled
-        if let cameraPosition = cameraPosition {
-            flipQuickActionView.disabled = false
-            flipQuickActionView.isSelected = cameraPosition == .back
-        }
         
         if isOneToOneCall {
             optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })

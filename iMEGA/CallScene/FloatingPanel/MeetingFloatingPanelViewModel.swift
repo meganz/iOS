@@ -7,15 +7,9 @@ import MEGAPresentation
 enum MeetingFloatingPanelAction: ActionType {
     case onViewReady
     case onViewAppear
-    case hangCall(presenter: UIViewController, sender: UIButton)
     case shareLink(presenter: UIViewController, sender: UIButton)
     case inviteParticipants
     case onContextMenuTap(presenter: UIViewController, sender: UIButton, participant: CallParticipantEntity)
-    case muteUnmuteCall(mute: Bool)
-    case turnCamera(on: Bool)
-    case switchCamera(backCameraOn: Bool)
-    case enableLoudSpeaker
-    case disableLoudSpeaker
     case makeModerator(participant: CallParticipantEntity)
     case removeModeratorPrivilege(forParticipant: CallParticipantEntity)
     case removeParticipant(participant: CallParticipantEntity)
@@ -38,16 +32,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case configView(canInviteParticipants: Bool,
                         isOneToOneCall: Bool,
                         isMeeting: Bool,
-                        isVideoEnabled: Bool,
-                        cameraPosition: CameraPositionEntity?,
                         allowNonHostToAddParticipantsEnabled: Bool,
                         isMyselfAModerator: Bool)
-        case enabledLoudSpeaker(enabled: Bool)
         case microphoneMuted(muted: Bool)
-        case updatedCameraPosition(position: CameraPositionEntity)
         case cameraTurnedOn(on: Bool)
         case reloadParticipantsList(participants: [CallParticipantEntity])
-        case updatedAudioPortSelection(audioPort: AudioPort, bluetoothAudioRouteAvailable: Bool)
         case transitionToShortForm
         case transitionToLongForm
         case updateAllowNonHostToAddParticipants(enabled: Bool)
@@ -64,28 +53,16 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var call: CallEntity? {
         return callUseCase.call(for: chatRoom.chatId)
     }
-    private let callKitManager: any CallKitManagerProtocol
     private let callUseCase: any CallUseCaseProtocol
-    private let audioSessionUseCase: any AudioSessionUseCaseProtocol
-    private let permissionHandler: any DevicePermissionsHandling
-    private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
-    private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
-    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
-    private let callManager: any CallManagerProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var callParticipantsNotInCall = [CallParticipantEntity]()
     private var callParticipantsInWaitingRoom = [CallParticipantEntity]()
     private var updateAllowNonHostToAddParticipantsTask: Task<Void, Never>?
     private let presentUpgradeFlow: (AccountDetailsEntity) -> Void
-    private var isSpeakerEnabled: Bool {
-        didSet {
-            containerViewModel?.dispatch(.speakerEnabled(isSpeakerEnabled))
-        }
-    }
     // store state of the fact that user dismissed upsell banner
     // shown to non-organizer host when there's more than max number of meeting participant
     // if organiser-user is free-tier user
@@ -98,10 +75,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var headerConfigFactory: any MeetingFloatingPanelHeaderConfigFactoryProtocol
     // we show upgrade warnings only if .chatMonetisation FF is enabled
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
-    private var isVideoEnabled: Bool? {
-        call?.hasLocalVideo
-    }
     
     private var isMyselfAModerator: Bool {
         chatRoom.ownPrivilege == .moderator
@@ -139,38 +112,22 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     init(router: some MeetingFloatingPanelRouting,
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
-         isSpeakerEnabled: Bool,
-         callKitManager: some CallKitManagerProtocol,
          callUseCase: some CallUseCaseProtocol,
-         audioSessionUseCase: some AudioSessionUseCaseProtocol,
-         permissionHandler: some DevicePermissionsHandling,
-         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          chatUseCase: some ChatUseCaseProtocol,
          selectWaitingRoomList: Bool,
          headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol,
-         callManager: some CallManagerProtocol,
          featureFlags: some FeatureFlagProviderProtocol,
          presentUpgradeFlow: @escaping (AccountDetailsEntity) -> Void
     ) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
-        self.callKitManager = callKitManager
         self.callUseCase = callUseCase
-        self.audioSessionUseCase = audioSessionUseCase
-        self.permissionHandler = permissionHandler
-        self.captureDeviceUseCase = captureDeviceUseCase
-        self.localVideoUseCase = localVideoUseCase
-        self.isSpeakerEnabled = isSpeakerEnabled
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
-        self.megaHandleUseCase = megaHandleUseCase
         self.chatUseCase = chatUseCase
-        self.callManager = callManager
         self.selectWaitingRoomList = selectWaitingRoomList
         self.selectedParticipantsListTab = selectWaitingRoomList ? .waitingRoom : .inCall
         self.headerConfigFactory = headerConfigFactory
@@ -193,8 +150,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 selectWaitingRoomList = false
                 invokeCommand?(.transitionToLongForm)
             }
-        case .hangCall(let presenter, let sender):
-            manageHangCall(presenter, sender)
         case .shareLink(let presenter, let sender):
             containerViewModel?.dispatch(.shareLink(presenter: presenter, sender: sender, completion: nil))
         case .inviteParticipants:
@@ -205,23 +160,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                                    participant: participant,
                                    isMyselfModerator: isMyselfAModerator,
                                    meetingFloatingPanelModel: self)
-            
-        case .muteUnmuteCall(let muted):
-            muteCall(muted)
-        case .turnCamera(let on):
-            checkForVideoPermission {
-                self.turnCamera(on: on) {
-                    if on && self.isBackCameraSelected() {
-                        self.invokeCommand?(.updatedCameraPosition(position: .back))
-                    }
-                }
-            }
-        case .switchCamera(let backCameraOn):
-            switchCamera(backCameraOn: backCameraOn)
-        case .enableLoudSpeaker:
-            enableLoudSpeaker()
-        case .disableLoudSpeaker:
-            disableLoudSpeaker()
         case .makeModerator(let participant):
             guard let call = call else { return }
             participant.isModerator = true
@@ -286,34 +224,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 self?.reloadParticipantsIfNeeded()
             }
         
-        audioSessionUseCase.routeChanged { [weak self] routeChangedReason, previousAudioPort in
-            guard let self else { return }
-            if previousAudioPort == nil,
-               self.chatRoom.chatType == .meeting,
-               self.audioSessionUseCase.currentSelectedAudioPort == .builtInReceiver {
-                self.enableLoudSpeaker()
-            } else {
-                self.sessionRouteChanged(routeChangedReason: routeChangedReason)
-            }
-        }
         callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
         configView()
-        if let call = call, call.hasLocalVideo {
-            checkForVideoPermission {
-                self.turnCamera(on: true) {
-                    if self.isBackCameraSelected() {
-                        self.invokeCommand?(.updatedCameraPosition(position: .back))
-                    }
-                }
-            }
-        }
         
-        muteCall(!(call?.hasLocalAudio ?? true))
-        if isSpeakerEnabled {
-            enableLoudSpeaker()
-        } else {
-            updateSpeakerInfo()
-        }
         addChatRoomParticipantsChangedListener()
         requestPrivilegeChange(forChatRoom: chatRoom)
         requestAllowNonHostToAddParticipantsValueChange(forChatRoom: chatRoom)
@@ -322,20 +235,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     // MARK: - Private methods
-    private func muteCall(_ muted: Bool) {
-        MEGALogDebug("[MeetingFloatingPanelViewModel] mute call \(muted)")
-        guard let call = self.call else { return }
-        checkForAudioPermission { [weak self] granted in
-            guard let self else { return }
-            let microphoneMuted = granted ? muted : true
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                callManager.muteCall(in: chatRoom, muted: microphoneMuted)
-            } else {
-                callKitManager.muteUnmuteCall(call, muted: microphoneMuted)
-            }
-            invokeCommand?(.microphoneMuted(muted: microphoneMuted))
-        }
-    }
     
     private func inviteParticipants() {
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
@@ -414,131 +313,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     @MainActor
     func updateRecentlyAddedHandles(removing peerHandles: [HandleEntity]) {
         recentlyAddedHandles.removeAll(where: peerHandles.contains)
-    }
-    
-    private func enableLoudSpeaker() {
-        audioSessionUseCase.enableLoudSpeaker { [weak self] _ in
-            self?.updateSpeakerInfo()
-        }
-    }
-    
-    private func disableLoudSpeaker() {
-        audioSessionUseCase.disableLoudSpeaker { [weak self] _ in
-            self?.updateSpeakerInfo()
-        }
-    }
-    
-    private func checkForVideoPermission(onSuccess completionBlock: @escaping () -> Void) {
-        permissionHandler.requestVideoPermission { [weak self] granted in
-            self?.videoPermissionGranted(granted, withCompletionBlock: completionBlock)
-        }
-    }
-    
-    private func videoPermissionGranted(_ granted: Bool, withCompletionBlock completionBlock: @escaping () -> Void) {
-        if granted {
-            completionBlock()
-        } else {
-            router.showVideoPermissionError()
-        }
-    }
-    
-    private func checkForAudioPermission(_ completionBlock: @escaping (Bool) -> Void) {
-        permissionHandler.requestAudioPermission { [weak self] granted in
-            self?.audioPermissionGranted(granted, withCompletionBlock: completionBlock)
-        }
-    }
-    
-    private func audioPermissionGranted(_ granted: Bool, withCompletionBlock completionBlock: @escaping (Bool) -> Void) {
-        completionBlock(granted)
-        if !granted {
-            router.showAudioPermissionError()
-        }
-    }
-    
-    private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
-        guard let call = call else { return }
-        MEGALogDebug("Meetings: session route changed with \(routeChangedReason) , current port \(audioSessionUseCase.currentSelectedAudioPort) and call \(call)")
-        isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
-        updateSpeakerInfo()
-    }
-    
-    private func updateSpeakerInfo() {
-        let currentSelectedPort = audioSessionUseCase.currentSelectedAudioPort
-        let isBluetoothAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
-        MEGALogDebug("Meetings: updating speaker info with selected port \(currentSelectedPort) bluetooth available \(isBluetoothAvailable)")
-        self.isSpeakerEnabled = currentSelectedPort == .builtInSpeaker
-        invokeCommand?(
-            .updatedAudioPortSelection(audioPort: currentSelectedPort,
-                                       bluetoothAudioRouteAvailable: isBluetoothAvailable)
-        )
-    }
-    
-    private func switchCamera(backCameraOn: Bool) {
-        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: backCameraOn ? .back : .front),
-              localVideoUseCase.videoDeviceSelected() != selectCameraLocalizedString else {
-            return
-        }
-        localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString) { [weak self] _ in
-            guard let self else { return }
-            let cameraPosition: CameraPositionEntity = backCameraOn ? .back : .front
-            self.invokeCommand?(.updatedCameraPosition(position: cameraPosition))
-        }
-    }
-    
-    private func isBackCameraSelected() -> Bool {
-        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: .back),
-              localVideoUseCase.videoDeviceSelected() == selectCameraLocalizedString else {
-            return false
-        }
-        
-        return true
-    }
-    
-    private func turnCamera(on: Bool, completion: (() -> Void)? = nil) {
-        if on {
-            localVideoUseCase.enableLocalVideo(for: chatRoom.chatId) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success:
-                    self.invokeCommand?(.cameraTurnedOn(on: on))
-                case .failure:
-                    MEGALogDebug("Error enabling local video")
-                }
-                completion?()
-            }
-        } else {
-            localVideoUseCase.disableLocalVideo(for: chatRoom.chatId) { result in
-                switch result {
-                case .success:
-                    self.invokeCommand?(.cameraTurnedOn(on: on))
-                case .failure:
-                    MEGALogDebug("Error disabling local video")
-                }
-                completion?()
-            }
-        }
-    }
-    
-    private func manageHangCall(_ presenter: UIViewController, _ sender: UIButton) {
-        if let call = call {
-            if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
-               let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
-                MEGALogDebug("Meeting: Floating panel - Hang call for call id \(callId) and chat id \(chatId)")
-            } else {
-                MEGALogDebug("Meeting: Floating panel - Hang call - cannot get the call id and chat id string")
-            }
-        } else {
-            MEGALogDebug("Meeting: Hang call - no call found")
-        }
-        if (chatRoom.chatType == .group || chatRoom.chatType == .meeting) && chatRoom.ownPrivilege == .moderator && callParticipants.count > 1 {
-            containerViewModel?.dispatch(.showHangOrEndCallDialog)
-        } else {
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                callManager.endCall(in: chatRoom, endForAll: false)
-            } else {
-                containerViewModel?.dispatch(.hangCall(presenter: presenter, sender: sender))
-            }
-        }
     }
     
     private func requestPrivilegeChange(forChatRoom chatRoom: ChatRoomEntity) {
@@ -1023,14 +797,13 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
         invokeCommand?(.configView(canInviteParticipants: canInviteParticipants,
                                    isOneToOneCall: chatRoom.chatType == .oneToOne,
                                    isMeeting: chatRoom.chatType == .meeting,
-                                   isVideoEnabled: isVideoEnabled ?? false,
-                                   cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil,
                                    allowNonHostToAddParticipantsEnabled: chatRoom.isOpenInviteEnabled,
                                    isMyselfAModerator: isMyselfAModerator))
     }
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {
         invokeCommand?(.microphoneMuted(muted: !audio))
+        invokeCommand?(.cameraTurnedOn(on: video))
     }
     
     func waitingRoomUsersAllow(with handles: [HandleEntity]) {

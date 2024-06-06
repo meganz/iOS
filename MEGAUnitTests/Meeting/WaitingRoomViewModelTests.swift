@@ -461,7 +461,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         onAudioSessionRouteChangeSubject.send(.categoryChange)
         
         evaluate {
-            sut.speakerOnIcon == .speakerOn
+            sut.speakerOnIcon == .callControlSpeakerEnabled
         }
     }
     
@@ -477,7 +477,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         onAudioSessionRouteChangeSubject.send(.categoryChange)
         
         evaluate {
-            sut.speakerOnIcon == .speakerOn
+            sut.speakerOnIcon == .callControlSpeakerEnabled
         }
     }
     
@@ -509,7 +509,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         onAudioSessionRouteChangeSubject.send(.categoryChange)
         
         evaluate {
-            sut.speakerOnIcon == .speakerOn
+            sut.speakerOnIcon == .callControlSpeakerEnabled
         }
     }
     

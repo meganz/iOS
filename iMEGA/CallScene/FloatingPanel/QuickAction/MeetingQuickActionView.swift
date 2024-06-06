@@ -63,15 +63,18 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
         
     func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
         switch selectedAudioPort {
-        case .builtInReceiver, .headphones, .builtInSpeaker:
-            iconImageView.image = UIImage(resource: .speakerMeetingAction)
-            isSelected = !(selectedAudioPort == .builtInReceiver)
+        case .builtInReceiver:
+            iconImageView.image = UIImage(resource: .callControlSpeakerDisabled)
+            isSelected = false
+        case .builtInSpeaker, .headphones:
+            iconImageView.image = UIImage(resource: .callControlSpeakerEnabled)
+            isSelected = true
         default:
             if isBluetoothRouteAvailable {
                 iconImageView.image = UIImage(resource: .audioSourceMeetingAction)
                 isSelected = true
             } else {
-                iconImageView.image = UIImage(resource: .speakerMeetingAction)
+                iconImageView.image = UIImage(resource: .callControlSpeakerDisabled)
                 isSelected = false
             }
         }
