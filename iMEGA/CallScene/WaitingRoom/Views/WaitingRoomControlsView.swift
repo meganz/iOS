@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -10,13 +11,13 @@ struct WaitingRoomControlsView: View {
     
     var body: some View {
         HStack(spacing: 32) {
-            WaitingRoomControl(iconOff: .cameraOff,
-                               iconOn: .cameraOn,
+            WaitingRoomControl(iconOff: .callControlCameraDisabled,
+                               iconOn: .callControlCameraEnabled,
                                enabled: $isVideoEnabled)
-            WaitingRoomControl(iconOff: .micOn,
-                               iconOn: .micOff,
+            WaitingRoomControl(iconOff: .callControlMicDisabled,
+                               iconOn: .callControlMicEnabled,
                                enabled: $isMicrophoneMuted)
-            WaitingRoomControl(iconOff: .speakerOff,
+            WaitingRoomControl(iconOff: .callControlSpeakerDisabled,
                                iconOn: speakerOnIcon,
                                enabled: $isSpeakerEnabled)
             .overlay(
@@ -39,9 +40,19 @@ struct WaitingRoomControl: View {
         } label: {
             Image(enabled ? iconOn : iconOff)
                 .resizable()
-                .frame(width: 56, height: 56)
-                .clipShape(Circle())
+                .frame(width: 24, height: 24)
         }
+        .frame(maxWidth: 56, maxHeight: 56, alignment: .center)
+        .background(enabled ? backgroundEnabledColor : backgroundDisabledColor)
+        .clipShape(Circle())
+    }
+    
+    private var backgroundEnabledColor: Color {
+        isDesignTokenEnabled ? TokenColors.Button.secondary.swiftUI : Color(.gray474747)
+    }
+    
+    private var backgroundDisabledColor: Color {
+        isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : Color(.whiteFFFFFF)
     }
 }
 
@@ -49,7 +60,7 @@ struct WaitingRoomControl: View {
     WaitingRoomControlsView(isVideoEnabled: .constant(false),
                             isMicrophoneMuted: .constant(true),
                             isSpeakerEnabled: .constant(true),
-                            speakerOnIcon: .constant(.speakerOn),
+                            speakerOnIcon: .constant(.callControlSpeakerEnabled),
                             isBluetoothAudioRouteAvailable: .constant(false))
     .background(Color(.black000000))
     .previewLayout(.sizeThatFits)

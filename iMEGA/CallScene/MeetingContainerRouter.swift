@@ -378,7 +378,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             presenter: baseViewController,
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
-            isSpeakerEnabled: isSpeakerEnabled,
             permissionHandler: DevicePermissionsHandler.makeHandler(),
             selectWaitingRoomList: selectWaitingRoomList
         )
