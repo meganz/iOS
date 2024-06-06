@@ -60,7 +60,11 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled
             ),
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
-            shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
+            shareAlbumUseCase: ShareAlbumUseCase(
+                shareAlbumRepository: ShareAlbumRepository.newRepo,
+                userAlbumRepository: UserAlbumRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
             tracker: DIContainer.tracker,
             monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
