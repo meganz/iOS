@@ -118,8 +118,8 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             MEGALogError("Error hanging call, call does not exists")
             return
         }
-        if (chatRoom.chatType == .group || chatRoom.chatType == .meeting) && chatRoom.ownPrivilege == .moderator && call.participants.count > 1 {
-            containerViewModel?.dispatch(.showHangOrEndCallDialog)
+        if (chatRoom.chatType == .group || chatRoom.chatType == .meeting) && chatRoom.ownPrivilege == .moderator && call.numberOfParticipants > 1, let containerViewModel {
+            router.showHangOrEndCallDialog(containerViewModel: containerViewModel)
         } else {
             if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
                 callManager.endCall(in: chatRoom, endForAll: false)
