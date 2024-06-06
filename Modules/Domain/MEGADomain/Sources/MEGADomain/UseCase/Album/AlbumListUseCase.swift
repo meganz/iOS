@@ -107,7 +107,7 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
             .async
             .contains { visualMediaOption in
                 guard let mediaForType = try? await photoLibraryUseCase.media(for: [visualMediaOption, .allLocations],
-                                                                        excludeSensitive: nil) else {
+                                                                              excludeSensitive: nil) else {
                     return true
                 }
                 return mediaForType.contains(where: { $0.hasThumbnail && $0.name.fileExtensionGroup.isVisualMedia })
