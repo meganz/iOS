@@ -118,26 +118,22 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
 
     fileprivate func transformeNode(_ file: NodeEntity) -> HomeSearchResultFileViewModel {
         let ownerFolder = self.nodeDetailUseCase.ownerFolder(of: file.handle)
-        let imageLoadCompletion: ((@escaping (UIImage?) -> Void) -> Void)? = { [weak self] callback in
-            self?.nodeDetailUseCase.loadThumbnail(
-                of: file.handle,
-                completion: callback
-            )
-        }
 
         let moreAction: (HandleEntity, UIButton) -> Void = { _, button in
             self.tracker.trackAnalyticsEvent(with: SearchResultOverflowMenuItemEvent())
             self.router.didTapMoreAction(on: file.handle, button: button)
         }
-
         return HomeSearchResultFileViewModel(
-            handle: file.handle,
-            name: file.name,
-            folder: ownerFolder?.name ?? "",
-            fileType: file.nodeType.debugDescription,
-            thumbnail: imageLoadCompletion,
-            moreAction: moreAction
-        )
+            node: file,
+            ownerFolder: ownerFolder?.name ?? "",
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
+            featureFlagProvider: DIContainer.featureFlagProvider,
+            moreAction: moreAction)
     }
 
     private func triggerUpdate(
