@@ -48,6 +48,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSaveInMegaBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarSendBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSelectBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarAddBarButtonItem;
 
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
@@ -186,12 +187,12 @@
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
             break;
         }
-
+            
         case BrowserActionSendFromCloudDrive: {
             [self setupDefaultElements];
             
             self.toolbarSendBarButtonItem.title = LocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
-             [self setToolbarItems:@[flexibleItem, self.toolbarSendBarButtonItem]];
+            [self setToolbarItems:@[flexibleItem, self.toolbarSendBarButtonItem]];
             
             if (self.isParentBrowser) {
                 self.selectedNodesMutableDictionary = [[NSMutableDictionary alloc] init];
@@ -224,6 +225,20 @@
             self.toolBarSelectBarButtonItem.title = LocalizedString(@"Select Folder", @"");
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSelectBarButtonItem]];
 
+            
+            break;
+            
+        case BrowserActionSelectVideo:
+            [self setupDefaultElements];
+            self.toolBarAddBarButtonItem.title = [self toolBarAddBarButtonItemTitle];
+            [self setToolbarItems:@[flexibleItem, self.toolBarAddBarButtonItem]];
+            
+            if (self.isParentBrowser) {
+                self.selectedNodesMutableDictionary = [[NSMutableDictionary alloc] init];
+            }
+            
+            [self.tableView setEditing:YES];
+            
             break;
 
     }
@@ -232,14 +247,25 @@
 }
 
 - (void)setupDefaultElements {
-    if (self.parentBrowser) {
-        [self updateSelector];
+    
+    if (self.browserAction == BrowserActionSelectVideo) {
         
-        [self.incomingButton setTitle:LocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forState:UIControlStateNormal];
-        [self.cloudDriveButton setTitle:LocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forState:UIControlStateNormal];
-    } else {
         self.selectorView.hidden = YES;
         self.tableViewTopConstraint.constant = -self.selectorView.frame.size.height;
+        
+    } else {
+        
+        if (self.parentBrowser) {
+            [self updateSelector];
+            
+            [self.incomingButton setTitle:LocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forState:UIControlStateNormal];
+            [self.cloudDriveButton setTitle:LocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forState:UIControlStateNormal];
+        } else {
+            self.selectorView.hidden = YES;
+            self.tableViewTopConstraint.constant = -self.selectorView.frame.size.height;
+        }
+        
+        self.toolBarNewFolderBarButtonItem.title = LocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
     }
     
     self.cancelBarButtonItem = [UIBarButtonItem.alloc initWithTitle:LocalizedString(@"cancel", @"")
@@ -247,15 +273,25 @@
                                                              target:self
                                                              action:@selector(cancel:)];
     self.navigationItem.rightBarButtonItem = self.cancelBarButtonItem;
-    self.toolBarNewFolderBarButtonItem.title = LocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
 }
 
 - (void)reloadUI {
     [self setParentNodeForBrowserAction];
     
+    [self reloadNavigationBarUI];
+    [self reloadToolbarItemsUI];
+    [self.tableView reloadData];
+}
+
+- (void)reloadNavigationBarUI {
+    [self setNavigationBarTitle];
+    (self.nodes.size == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchBarIfNotActive] : [self addSearchBar];
+}
+
+- (void)reloadToolbarItemsUI {
     BOOL enableToolbarItems = YES;
     if (self.cloudDriveButton.selected) {
-        if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        if (self.browserAction == BrowserActionSendFromCloudDrive || self.browserAction == BrowserActionSelectVideo) {
             enableToolbarItems = self.selectedNodesMutableDictionary.count > 0;
         } else {
             self.parentShareType = [MEGASdk.shared accessLevelForNode:self.parentNode];
@@ -269,13 +305,7 @@
         }
     }
     
-    [self setNavigationBarTitle];
-    
-    (self.nodes.size == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchBarIfNotActive] : [self addSearchBar];
-
     [self setToolbarItemsEnabled:enableToolbarItems];
-    
-    [self.tableView reloadData];
 }
 
 - (void)setParentNodeForBrowserAction {
@@ -285,7 +315,18 @@
                 self.parentNode = MEGASdk.shared.rootNode;
             }
         }
-        self.nodes = [MEGASdk.shared childrenForParent:self.parentNode];
+        
+        if (self.browserAction == BrowserActionSelectVideo) {
+            [self videoPickerNodesWithCompletion:^(MEGANodeList *nodeList) {
+                self.nodes = nodeList;
+                [self reloadNavigationBarUI];
+                [self reloadToolbarItemsUI];
+                [self.tableView reloadData];
+            }];
+        } else {
+            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode];
+        }
+        
     } else if (self.incomingButton.selected) {
         if (self.isParentBrowser) {
             self.parentNode = nil;
@@ -298,11 +339,14 @@
 }
 
 - (void)updatePromptTitle {
-    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+    if (self.browserAction == BrowserActionSelectVideo) {
+        self.navigationItem.prompt = [self promptForSelectedCount:self.selectedNodesMutableDictionary.count];
+    } else if (self.browserAction == BrowserActionSendFromCloudDrive) {
         self.navigationItem.prompt = [self promptForSelectedCount:self.selectedNodesMutableDictionary.count];
     } else if (self.browserAction != BrowserActionDocumentProvider
                && self.browserAction != BrowserActionShareExtension
                && self.browserAction != BrowserActionSelectFolder
+               && self.browserAction != BrowserActionSelectVideo
                && self.browserAction != BrowserActionNewHomeUpload
                && self.browserAction != BrowserActionNewFileSave) {
         self.navigationItem.prompt = LocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
@@ -378,6 +422,7 @@
     self.toolBarNewFolderBarButtonItem.enabled = boolValue;
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
     self.toolbarSendBarButtonItem.enabled = boolValue;
+    self.toolBarAddBarButtonItem.enabled = boolValue;
 }
 
 - (void)setNodeTableViewCell:(NodeTableViewCell *)cell enabled:(BOOL)boolValue {
@@ -569,6 +614,10 @@
     }
 }
 
+- (IBAction)addNodes:(UIBarButtonItem *)sender {
+    [self handleAddNodesWithIsReachableHUDIfNot:[MEGAReachabilityManager isReachableHUDIfNot]];
+}
+
 - (IBAction)cloudDriveTouchUpInside:(UIButton *)sender {
     if (sender.selected) {
         return;
@@ -638,7 +687,7 @@
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
     
-    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+    if (self.browserAction == BrowserActionSendFromCloudDrive || self.browserAction == BrowserActionSelectVideo) {
         [self.selectedNodesMutableDictionary objectForKey:node.base64Handle] ? [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone] : [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     } else if (self.browserAction != BrowserActionDocumentProvider) {
         if (node.isFile || (self.browserAction == BrowserActionMove && [self.selectedNodesArray containsObject:node])) {
@@ -709,7 +758,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+    if (self.browserAction == BrowserActionSendFromCloudDrive || self.browserAction == BrowserActionSelectVideo) {
         MEGANode *node = [self nodeAtIndexPath:indexPath];
         return node.isFile;
     } else {
@@ -733,6 +782,13 @@
                 return;
             }
                 
+            case BrowserActionSelectVideo: {
+                [self.selectedNodesMutableDictionary setObject:selectedNode forKey:selectedNode.base64Handle];
+                [self updatePromptTitle];
+                [self setToolbarItemsEnabled:YES];
+                return;
+            }
+                
             case BrowserActionDocumentProvider: {
                 [SVProgressHUD setViewForExtension:self.view];
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
@@ -750,7 +806,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+    if (self.browserAction == BrowserActionSendFromCloudDrive || self.browserAction == BrowserActionSelectVideo) {
         MEGANode *deselectedNode = [self nodeAtIndexPath:indexPath];
         if ([self.selectedNodesMutableDictionary objectForKey:deselectedNode.base64Handle]) {
             [self.selectedNodesMutableDictionary removeObjectForKey:deselectedNode.base64Handle];
@@ -761,7 +817,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+    if (self.browserAction == BrowserActionSendFromCloudDrive || self.browserAction == BrowserActionSelectVideo) {
         MEGANode *node = [self nodeAtIndexPath:indexPath];
         return node.isFile;
     } else {
@@ -913,7 +969,7 @@
     switch ([request type]) {
         case MEGARequestTypeCopy: {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            if (self.browserAction != BrowserActionSendFromCloudDrive && self.browserAction != BrowserActionSelectFolder) {
+            if (self.browserAction != BrowserActionSendFromCloudDrive && self.browserAction != BrowserActionSelectFolder && self.browserAction != BrowserActionSelectVideo) {
 
                 [SVProgressHUD show];
             }

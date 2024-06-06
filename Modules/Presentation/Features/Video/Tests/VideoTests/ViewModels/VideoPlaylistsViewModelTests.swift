@@ -109,6 +109,74 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(receivedPlaylists.isEmpty)
     }
     
+    // MARK: - createUserVideoPlaylist
+    
+    func testCreateUserVideoPlaylist_whenCalled_createsVideoPlaylist() async {
+        let videoPlaylistName =  "a video playlist name"
+        let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, videoPlaylistUseCase, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
+        )
+        
+        sut.createUserVideoPlaylist(with: videoPlaylistName)
+        await sut.createVideoPlaylistTask?.value
+        
+        XCTAssertEqual(videoPlaylistUseCase.messages, [ .createVideoPlaylist(name: videoPlaylistName) ])
+    }
+    
+    func testCreateUserVideoPlaylist_whenCreatedSuccessfully_setsNewlyCreatedPlaylist() async {
+        let videoPlaylistName =  "a video playlist name"
+        let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
+        )
+        
+        sut.createUserVideoPlaylist(with: videoPlaylistName)
+        await sut.createVideoPlaylistTask?.value
+        
+        XCTAssertEqual(sut.newlyCreatedVideoPlaylist, createdVideoPlaylist)
+    }
+    
+    func testCreateUserVideoPlaylist_whenCreatedSuccessfully_showsVideoPickerView() async {
+        let videoPlaylistName =  "a video playlist name"
+        let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
+        )
+        XCTAssertFalse(sut.shouldShowVideoPlaylistPicker)
+        
+        sut.createUserVideoPlaylist(with: videoPlaylistName)
+        await sut.createVideoPlaylistTask?.value
+        
+        XCTAssertTrue(sut.shouldShowVideoPlaylistPicker)
+    }
+    
+    func testCreateUserVideoPlaylist_whenFailedToCreate_doesNotshowsVideoPickerView() async {
+        let videoPlaylistName =  "a video playlist name"
+        let (sut, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .failure(GenericErrorEntity()))
+        )
+        
+        sut.createUserVideoPlaylist(with: videoPlaylistName)
+        await sut.createVideoPlaylistTask?.value
+        
+        XCTAssertFalse(sut.shouldShowVideoPlaylistPicker)
+    }
+    
+    // MARK: - didPickVideosToBeIncludedInNewlyCreatedPlaylist
+    
+    @MainActor
+    func testDidPickVideosToBeIncludedInNewlyCreatedPlaylist_whenCalled_resetsPickerViewFlag() {
+        let (sut, _, _) = makeSUT()
+        sut.shouldShowVideoPlaylistPicker = true
+        
+        sut.didPickVideosToBeIncludedInNewlyCreatedPlaylist(videos: [])
+        
+        XCTAssertFalse(sut.shouldShowVideoPlaylistPicker)
+    }
+
+    // MARK: Init.monitorSortOrderChanged
+
     @MainActor
     func testInit_whenValueChanged_loadsVideoPlaylists() async {
         let (sut, videoPlaylistUseCase, syncModel) = makeSUT(
