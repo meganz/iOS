@@ -561,16 +561,16 @@ class HomeSearchProviderTests: XCTestCase {
         XCTAssertNil(resultEntity)
     }
     
-    func testRefreshedSearchResults_whenNotSearchYet_shouldReturnEmpty() async throws {
+    func testRefreshedSearchResults_whenNotSearchYet_shouldReturnMostPossibleResults() async throws {
         // given
-        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 100)
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 200)
         let harness = Harness(self, nodes: nodes)
         
         // when
         let results = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results
         
         // then
-        XCTAssertEqual(results?.count, 0)
+        XCTAssertEqual(results?.count, 100)
     }
     
     func testRefreshedSearchResults_whenThrowError_shouldReturnNil() async throws {
@@ -645,7 +645,7 @@ class HomeSearchProviderTests: XCTestCase {
         let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("node 0", isSearchActive: false)))?.results.map(\.id)
         
         // then
-        XCTAssertEqual(resultIds?.count, 0)
+        XCTAssertEqual(resultIds?.count, 100)
     }
     
     func testRefreshedSearchResults_withUserSuppliedQueryShowRoot_shouldReturnUpdatedResults() async throws {
@@ -655,7 +655,7 @@ class HomeSearchProviderTests: XCTestCase {
         let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("", isSearchActive: false)))?.results.map(\.id)
         
         // then
-        XCTAssertEqual(resultIds?.count, 0)
+        XCTAssertEqual(resultIds?.count, 100)
     }
     
     func testNodeUpdatesListener_whenNodeUpdateIsNotNeeded_shouldNotProcessNodeUpdates() async {
