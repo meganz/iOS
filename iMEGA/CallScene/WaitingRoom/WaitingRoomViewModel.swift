@@ -55,7 +55,7 @@ final class WaitingRoomViewModel: ObservableObject {
     @Published var isVideoEnabled = false
     @Published var isMicrophoneMuted = true
     @Published var isSpeakerEnabled = true
-    @Published var speakerOnIcon: ImageResource = .speakerOn
+    @Published var speakerOnIcon: ImageResource = .callControlSpeakerEnabled
     @Published var isBluetoothAudioRouteAvailable = false
     @Published var screenSize: CGSize = .zero {
         didSet {
@@ -333,10 +333,10 @@ final class WaitingRoomViewModel: ObservableObject {
             isSpeakerEnabled = false
         case .headphones, .builtInSpeaker:
             isSpeakerEnabled = true
-            speakerOnIcon = .speakerOn
+            speakerOnIcon = .callControlSpeakerEnabled
         default:
             isSpeakerEnabled = isBluetoothAudioRouteAvailable
-            speakerOnIcon = isBluetoothAudioRouteAvailable ? .speakerOnBluetooth : .speakerOn
+            speakerOnIcon = isBluetoothAudioRouteAvailable ? .speakerOnBluetooth : .callControlSpeakerEnabled
         }
     }
     
