@@ -3,7 +3,13 @@ import MEGARepo
 import MEGASDKRepo
 
 @objc final class NodeAssetsManager: NSObject {
-    @objc static var shared = NodeAssetsManager()
+    @objc static var shared = NodeAssetsManager(sdk: .shared)
+    
+    private let sdk: MEGASdk
+    
+    init(sdk: MEGASdk) {
+        self.sdk = sdk
+    }
     
     @objc func icon(for node: MEGANode) -> UIImage {
         switch node.type {
@@ -81,9 +87,10 @@ enum FileExtensionType: String {
 
 extension NodeAssetsManager: NodeIconRepositoryProtocol {
     func iconData(for node: MEGADomain.NodeEntity) -> Data {
-        let sdk = MEGASdk.shared
-        guard let megaNode = node.toMEGANode(in: sdk) else { return Data() }
-        
-        return icon(for: megaNode).pngData() ?? Data()
+        guard let megaNode = node.toMEGANode(in: sdk),
+              let icon = icon(for: megaNode).pngData() else {
+            return Data()
+        }
+        return icon
     }
 }
