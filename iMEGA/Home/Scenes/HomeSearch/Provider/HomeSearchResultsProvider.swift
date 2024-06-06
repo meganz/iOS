@@ -110,7 +110,11 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         // After refreshing, the number of nodes can change and we need to update pagination info
         let newNodesCount = refreshedNodeList.nodesCount
         
-        let numOfNodesToReturn = min(filledItemsCount, newNodesCount)
+        // When current filledItemsCount is zero, we don't want to get zero results again,
+        // instead we want to get more result(s) if possible, in this case we'll try to get an amount of `pageSize`
+        // E.g: Initially a folder doesn't contain any children, when user add children to this folder we'll want the
+        // refreshed results to contains the newly added node instead of the old zero `filledItemsCount`
+        let numOfNodesToReturn = min(filledItemsCount != 0 ? filledItemsCount : pageSize, newNodesCount)
         filledItemsCount = numOfNodesToReturn
         
         var results: [SearchResult] = []
