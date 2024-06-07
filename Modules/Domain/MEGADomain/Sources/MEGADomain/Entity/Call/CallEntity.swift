@@ -52,6 +52,7 @@ public struct CallEntity: Sendable {
         case speakRequested
         case callWillEnd
         case callLimitsUpdated
+        case callRaiseHand
     }
     
     public enum ConfigurationType: Sendable {
@@ -95,9 +96,36 @@ public struct CallEntity: Sendable {
     public let waitingRoomStatus: WaitingRoomStatus
     public let waitingRoom: WaitingRoomEntity?
     public let waitingRoomHandleList: [HandleEntity]
+    public let raiseHandsList: [HandleEntity]
     public let uuid: UUID
     
-    public init(status: CallStatusType?, chatId: HandleEntity, callId: HandleEntity, changeType: ChangeType?, duration: Int64, initialTimestamp: Int64, finalTimestamp: Int64, callWillEndTimestamp: Int64, hasLocalAudio: Bool, hasLocalVideo: Bool, termCodeType: TermCodeType?, callLimits: CallLimitsEntity, isRinging: Bool, callCompositionChange: CompositionChangeType?, numberOfParticipants: Int, isOnHold: Bool, isOwnClientCaller: Bool, sessionClientIds: [HandleEntity], clientSessions: [ChatSessionEntity], participants: [HandleEntity], waitingRoomStatus: WaitingRoomStatus, waitingRoom: WaitingRoomEntity?, waitingRoomHandleList: [HandleEntity], uuid: UUID) {
+    public init(
+        status: CallStatusType?,
+        chatId: HandleEntity,
+        callId: HandleEntity,
+        changeType: ChangeType?,
+        duration: Int64,
+        initialTimestamp: Int64,
+        finalTimestamp: Int64,
+        callWillEndTimestamp: Int64,
+        hasLocalAudio: Bool,
+        hasLocalVideo: Bool,
+        termCodeType: TermCodeType?,
+        callLimits: CallLimitsEntity,
+        isRinging: Bool,
+        callCompositionChange: CompositionChangeType?,
+        numberOfParticipants: Int,
+        isOnHold: Bool,
+        isOwnClientCaller: Bool,
+        sessionClientIds: [HandleEntity],
+        clientSessions: [ChatSessionEntity],
+        participants: [HandleEntity],
+        waitingRoomStatus: WaitingRoomStatus,
+        waitingRoom: WaitingRoomEntity?,
+        waitingRoomHandleList: [HandleEntity],
+        raiseHandsList: [HandleEntity],
+        uuid: UUID
+    ) {
         self.status = status
         self.chatId = chatId
         self.callId = callId
@@ -121,6 +149,7 @@ public struct CallEntity: Sendable {
         self.waitingRoomStatus = waitingRoomStatus
         self.waitingRoom = waitingRoom
         self.waitingRoomHandleList = waitingRoomHandleList
+        self.raiseHandsList = raiseHandsList
         self.uuid = uuid
     }
     
