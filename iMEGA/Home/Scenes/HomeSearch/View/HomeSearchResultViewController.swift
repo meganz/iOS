@@ -38,6 +38,11 @@ final class HomeSearchResultViewController: UIViewController {
             }
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.recalculateExcludeSensitivityOnNextSearch()
+    }
 
     // MARK: - Configure TableView
 

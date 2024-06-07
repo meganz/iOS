@@ -441,15 +441,6 @@ final class HomeScreenFactory: NSObject {
         )
     }
     
-    private func makeSearchFileUseCase() -> some SearchFileUseCaseProtocol {
-        SearchFileUseCase(
-            nodeSearchClient: .live,
-            searchFileHistoryUseCase: SearchFileHistoryUseCase(
-                fileSearchHistoryRepository: .live
-            )
-        )
-    }
-    
     private func makeFilesSearchUseCase() -> some FilesSearchUseCaseProtocol {
         FilesSearchUseCase(
             repo: FilesSearchRepository.newRepo,
@@ -480,16 +471,18 @@ final class HomeScreenFactory: NSObject {
         tracker: some AnalyticsTracking
     ) -> UIViewController {
         let searchResultViewModel = HomeSearchResultViewModel(
-            searchFileUseCase: makeSearchFileUseCase(),
+            fileSearchUseCase: makeFilesSearchUseCase(),
             searchFileHistoryUseCase: SearchFileHistoryUseCase(
                 fileSearchHistoryRepository: .live
             ),
             nodeDetailUseCase: makeNodeDetailUseCase(),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             router: makeRouter(
                 navController: navigationController,
                 tracker: tracker
             ),
             tracker: tracker,
+            featureFlagProvider: DIContainer.featureFlagProvider,
             sdk: sdk
         )
         
