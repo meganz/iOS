@@ -12,7 +12,7 @@ enum GetLinkAction: ActionType {
     case didSelectRow(indexPath: IndexPath)
 }
 
-enum GetLinkViewModelCommand: CommandType, Equatable {
+enum GetLinkViewModelCommand: CommandType {
     case configureView(title: String, isMultilink: Bool, shareButtonTitle: String)
     case enableLinkActions
     case reloadSections(IndexSet)
@@ -25,6 +25,8 @@ enum GetLinkViewModelCommand: CommandType, Equatable {
     case addToPasteBoard(String)
     case showShareActivity(sender: UIBarButtonItem, link: String, key: String?)
     case hideMultiLinkDescription
+    case showAlert(AlertModel)
+    case dismiss
     
     enum MessageType: Equatable {
         case status(String)
