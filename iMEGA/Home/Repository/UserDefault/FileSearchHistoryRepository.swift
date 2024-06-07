@@ -1,5 +1,14 @@
 import Foundation
 
+struct SearchFileHistoryEntryDomain: Comparable {
+    let text: String
+    let timeWhenSearchOccur: Date
+
+    static func < (lhs: SearchFileHistoryEntryDomain, rhs: SearchFileHistoryEntryDomain) -> Bool {
+        return lhs.timeWhenSearchOccur > rhs.timeWhenSearchOccur
+    }
+}
+
 struct FileSearchHistoryRepository {
 
     let saveSearchHistory: (
