@@ -7,7 +7,7 @@ struct CallControlsView<ViewModel: CallControlsViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModel
     
     var body: some View {
-        HStack {
+        HStack(spacing: 16) {
             CallControlView(config: .microphone(enabled: viewModel.micEnabled, action: viewModel.toggleMicTapped))
             CallControlView(config: .camera(enabled: viewModel.cameraEnabled, action: viewModel.toggleCameraTapped))
             if viewModel.routeViewVisible {
