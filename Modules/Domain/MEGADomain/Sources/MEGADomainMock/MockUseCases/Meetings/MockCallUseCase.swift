@@ -2,6 +2,7 @@ import Combine
 import MEGADomain
 
 public final class MockCallUseCase: CallUseCaseProtocol {
+    
     public var startListeningForCall_CalledTimes = 0
     var stopListeningForCall_CalledTimes = 0
     public var createActiveSessions_calledTimes = 0
@@ -19,6 +20,8 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     public var muteParticipant_CalledTimes = 0
     public var enableAudioMonitor_CalledTimes = 0
     public var disableAudioMonitor_CalledTimes = 0
+    public var raiseHand_CalledTimes = 0
+    public var lowerHand_CalledTimes = 0
 
     public var call: CallEntity?
     public var callCompletion: Result<CallEntity, CallErrorEntity>
@@ -171,6 +174,14 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     
     public func disableAudioMonitor(forCall call: MEGADomain.CallEntity) {
         disableAudioMonitor_CalledTimes += 1
+    }
+    
+    public func raiseHand(forCall call: MEGADomain.CallEntity) async throws {
+        raiseHand_CalledTimes += 1
+    }
+    
+    public func lowerHand(forCall call: MEGADomain.CallEntity) async throws {
+        lowerHand_CalledTimes += 1
     }
 }
 

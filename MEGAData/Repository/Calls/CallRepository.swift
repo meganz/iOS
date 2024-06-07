@@ -4,7 +4,7 @@ import MEGADomain
 import MEGASwift
 
 final class CallRepository: NSObject, CallRepositoryProtocol {
-
+    
     static var newRepo: CallRepository {
         CallRepository(chatSdk: .shared, callActionManager: .shared)
     }
@@ -12,14 +12,14 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     private let chatSdk: MEGAChatSdk
     private let callActionManager: CallActionManager
     private var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
-
+    
     private var callId: HandleEntity?
     private var call: CallEntity?
     
     private var callUpdateListeners = [CallUpdateListener]()
     private var callWaitingRoomUsersUpdateListener: CallWaitingRoomUsersUpdateListener?
     private var onCallUpdateListener: OnCallUpdateListener?
-
+    
     private let callLimitNoPresent = 0xFFFFFFFF
     
     init(chatSdk: MEGAChatSdk, callActionManager: CallActionManager) {
@@ -32,7 +32,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             self.call = call.toCallEntity()
             self.callId = call.callId
         }
-
+        
         chatSdk.add(self as any MEGAChatCallDelegate)
         chatSdk.add(self as any MEGAChatDelegate)
         self.callbacksDelegate = callbacksDelegate
@@ -181,7 +181,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
         let callWaitingRoomUsersUpdate = CallWaitingRoomUsersUpdateListener(sdk: chatSdk, callId: call.callId)
         callWaitingRoomUsersUpdateListener = callWaitingRoomUsersUpdate
-
+        
         return callWaitingRoomUsersUpdate
             .monitor
     }
@@ -189,7 +189,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
         let onCallUpdate = OnCallUpdateListener(sdk: chatSdk)
         onCallUpdateListener = onCallUpdate
-
+        
         return onCallUpdate
             .monitor
     }
@@ -274,6 +274,38 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         chatSdk.enableAudioMonitor(false, chatId: call.chatId)
     }
     
+    func raiseHand(forCall call: CallEntity) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.raiseHandToSpeak(
+                forCall: call.chatId,
+                delegate: ChatRequestDelegate(completion: { result in
+                    switch result {
+                    case .success:
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            )
+        }
+    }
+    
+    func lowerHand(forCall call: CallEntity) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.lowerHandToStopSpeak(
+                forCall: call.chatId,
+                delegate: ChatRequestDelegate(completion: { result in
+                    switch result {
+                    case .success:
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            )
+        }
+    }
+    
     // MARK: - Private
     private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
         guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {
@@ -281,7 +313,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             callUpdateListeners.append(callUpdateListener)
             return callUpdateListener
         }
-
+        
         return callUpdateListener
     }
     
@@ -344,7 +376,7 @@ extension CallRepository: MEGAChatCallDelegate {
         if self.callId != callId {
             return
         }
-                
+        
         guard let chatRoom = api.chatRoom(forChatId: chatId) else { return }
         
         if session.hasChanged(.status) {
