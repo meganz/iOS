@@ -5,29 +5,30 @@ import MEGAL10n
 import MEGAPresentation
 
 final class GetAlbumsLinkViewModel: GetLinkViewModelType {
+    
+    let isMultiLink: Bool = true
     var invokeCommand: ((GetLinkViewModelCommand) -> Void)?
+    var numberOfSections: Int { sectionViewModels.count }
     
     private let albums: [AlbumEntity]
     private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var sectionViewModels = [GetLinkSectionViewModel]()
     private var albumLinks: [HandleEntity: String]?
     private var loadingTask: Task<Void, Never>?
-    
-    let isMultiLink: Bool = true
-    
-    var numberOfSections: Int {
-        sectionViewModels.count
-    }
-    
+    private typealias Continuation = AsyncStream<SensitiveContentAcknowledgementStatus>.Continuation
+
     init(albums: [AlbumEntity],
          shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
-         tracker: some AnalyticsTracking) {
+         tracker: some AnalyticsTracking,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.albums = albums
         self.shareAlbumUseCase = shareAlbumUseCase
         self.sectionViewModels = sectionViewModels
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
     }
     
     // MARK: - Dispatch action
@@ -37,7 +38,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         case .onViewReady:
             tracker.trackAnalyticsEvent(with: MultipleAlbumLinksScreenEvent())
             updateViewConfiguration()
-            loadLinksForAlbums()
+            loadingTask = Task { await startGetLinksCoordinatorStream() }
         case .onViewWillDisappear:
             cancelLoadingTask()
         case .shareLink(sender: let sender):
@@ -77,18 +78,84 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         invokeCommand?(.hideMultiLinkDescription)
     }
     
-    private func loadLinksForAlbums() {
-        invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
-        loadingTask = Task { [weak self] in
-            guard let self else { return }
-            defer { cancelLoadingTask() }
-            
-            let sharedLinks = await shareAlbumUseCase.shareLink(forAlbums: albums)
-            guard !Task.isCancelled else { return }
-            
-            albumLinks = sharedLinks
-            await updateLinkRows(forAlbumLinks: sharedLinks)
+    @MainActor
+    private func startGetLinksCoordinatorStream() async {
+        
+        let (stream, continuation) = AsyncStream.makeStream(of: SensitiveContentAcknowledgementStatus.self, bufferingPolicy: .bufferingNewest(1))
+        
+        continuation.yield(featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) ? .unknown : .authorized) // Set initial value
+        
+        for await status in stream {
+            switch status {
+            case .unknown:
+                await determineIfAlbumsContainSensitiveNodes(continuation: continuation)
+            case .notDetermined:
+                showContainsSensitiveContentAlert(continuation: continuation)
+            case .noSensitiveContent:
+                await loadLinksForAlbums(continuation: continuation)
+            case .authorized:
+                invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
+                await loadLinksForAlbums(continuation: continuation)
+            case .denied:
+                invokeCommand?(.dismiss)
+            }
         }
+    }
+    
+    @MainActor
+    private func loadLinksForAlbums(continuation: Continuation) async {
+                
+        guard !Task.isCancelled else {
+            return
+        }
+        
+        let sharedLinks = await shareAlbumUseCase.shareLink(forAlbums: albums)
+        
+        guard !Task.isCancelled else {
+            return
+        }
+        
+        albumLinks = sharedLinks
+        updateLinkRows(forAlbumLinks: sharedLinks)
+        continuation.finish()
+    }
+        
+    private func determineIfAlbumsContainSensitiveNodes(continuation: Continuation) async {
+        let excludeExportedAlbums = albums.filter { !$0.isLinkShared }
+                                                   
+        guard excludeExportedAlbums.isNotEmpty else {
+            continuation.yield(.authorized)
+            return
+        }
+
+        invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
+
+        do {
+            let result = try await shareAlbumUseCase.doesAlbumsContainSensitiveElement(for: excludeExportedAlbums)
+            continuation.yield(result ? .notDetermined : .noSensitiveContent)
+        } catch {
+            MEGALogError("[\(type(of: self))]: determineIfAlbumsContainSensitiveNodes returned \(error.localizedDescription)")
+        }
+    }
+    
+    @MainActor
+    private func showContainsSensitiveContentAlert(continuation: Continuation) {
+        
+        invokeCommand?(.dismissHud)
+        
+        let alertModel = AlertModel(
+            title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
+            message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(albums.count),
+            actions: [
+                .init(title: Strings.Localizable.cancel, style: .cancel, handler: {
+                    continuation.yield(.denied)
+                }),
+                .init(title: Strings.Localizable.continue, style: .default, handler: {
+                    continuation.yield(.authorized)
+                })
+            ])
+        
+        invokeCommand?(.showAlert(alertModel))
     }
     
     private func cancelLoadingTask() {

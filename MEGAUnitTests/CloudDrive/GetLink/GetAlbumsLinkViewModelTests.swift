@@ -66,10 +66,200 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     }
     
     func testDispatch_onViewReady_shouldSetTitleToShareLinkAndTrackEvent() throws {
+        for hiddenNodesFeatureFlagActive in [true, false] {
+            let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
+            let tracker = MockTracker()
+            let sut = makeGetAlbumsLinkViewModel(
+                albums: albums,
+                shareAlbumUseCase: MockShareAlbumUseCase(doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                tracker: tracker,
+                hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
+            
+            let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)
+            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+                .configureView(title: expectedTitle,
+                               isMultilink: true,
+                               shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
+                .hideMultiLinkDescription,
+                .showHud(.status(Strings.Localizable.generatingLinks)),
+                .dismissHud
+            ], expectationValidation: ==)
+            
+            assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [
+                    MultipleAlbumLinksScreenEvent()
+                ]
+            )
+        }
+    }
+    
+    func testDispatch_onViewReadyAndAllAlbumsAlreadyExported_shouldSetTitleToShareLinkAndTrackEvent() throws {
+        for hiddenNodesFeatureFlagActive in [true, false] {
+            let albums = [
+                AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)),
+                AlbumEntity(id: 2, type: .user, sharedLinkStatus: .exported(true))
+            ]
+            let tracker = MockTracker()
+            let sut = makeGetAlbumsLinkViewModel(
+                albums: albums,
+                shareAlbumUseCase: MockShareAlbumUseCase(doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                tracker: tracker,
+                hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
+            
+            let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(albums.count)
+            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+                .configureView(title: expectedTitle,
+                               isMultilink: true,
+                               shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
+                .hideMultiLinkDescription,
+                .showHud(.status(Strings.Localizable.generatingLinks)),
+                .dismissHud
+            ], expectationValidation: ==)
+            
+            assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [
+                    MultipleAlbumLinksScreenEvent()
+                ]
+            )
+        }
+    }
+    
+    func testDispatch_onViewReadyLinksLoaded_shouldUpdateLinkCells() throws {
+        for hiddenNodesFeatureFlagActive in [true, false] {
+            
+            let firstAlbum = AlbumEntity(id: 1, type: .user)
+            let secondAlbum = AlbumEntity(id: 2, type: .user)
+            let albums = [firstAlbum, secondAlbum]
+            let sections = albums.map {
+                GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
+                    GetLinkStringCellViewModel(link: "")
+                ], itemHandle: $0.id)
+            }
+            let expectedRowReloads = sections.indices.map {
+                IndexPath(row: 0, section: $0)
+            }
+            let links = [firstAlbum.id: "link1", secondAlbum.id: "link2"]
+            let sut = makeGetAlbumsLinkViewModel(albums: albums,
+                                                 shareAlbumUseCase: MockShareAlbumUseCase(
+                                                    shareAlbumsLinks: links,
+                                                    doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                 sectionViewModels: sections,
+                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
+            
+            expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
+            
+            try expectedRowReloads.forEach { index in
+                let cellViewModel = try XCTUnwrap(sut.cellViewModel(indexPath: index) as? GetLinkStringCellViewModel)
+                XCTAssertEqual(cellViewModel.type, .link)
+            }
+        }
+    }
+    
+    func testDispatch_shareLink_shouldShowShareActivityWithJoinedLinksInNewLine() {
+        for hiddenNodesFeatureFlagActive in [true, false] {
+            
+            let albums = [AlbumEntity(id: 1, type: .user),
+                          AlbumEntity(id: 2, type: .user)]
+            let sections = albums.map {
+                GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
+                    GetLinkStringCellViewModel(link: "")
+                ], itemHandle: $0.id)
+            }
+            let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
+            let sut = makeGetAlbumsLinkViewModel(albums: albums,
+                                                 shareAlbumUseCase: MockShareAlbumUseCase(
+                                                    shareAlbumsLinks: links,
+                                                    doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                 sectionViewModels: sections,
+                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
+            let expectedRowReloads = sections.indices.map {
+                IndexPath(row: 0, section: $0)
+            }
+            expectSuccessfulOnViewReady(sut: sut, albums: albums,
+                                        expectedRowReload: expectedRowReloads)
+            
+            let expectedLink = links.values.joined(separator: "\n")
+            let barButton = UIBarButtonItem()
+            test(viewModel: sut, action: .shareLink(sender: barButton),
+                 expectedCommands: [
+                    .showShareActivity(sender: barButton, link: expectedLink, key: nil)
+                 ], expectationValidation: ==)
+        }
+    }
+    
+    func testDispatch_copyLink_shouldAddSpaceSeparatedLinksToPasteboard() {
+        for hiddenNodesFeatureFlagActive in [true, false] {
+            
+            let albums = [AlbumEntity(id: 1, type: .user),
+                          AlbumEntity(id: 2, type: .user)]
+            let sections = albums.map {
+                GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
+                    GetLinkStringCellViewModel(link: "")
+                ], itemHandle: $0.id)
+            }
+            let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
+            let sut = makeGetAlbumsLinkViewModel(albums: albums,
+                                                 shareAlbumUseCase: MockShareAlbumUseCase(
+                                                    shareAlbumsLinks: links,
+                                                    doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                 sectionViewModels: sections,
+                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
+            
+            let expectedRowReloads = sections.indices.map {
+                IndexPath(row: 0, section: $0)
+            }
+            expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
+            let expectedLink = links.values.joined(separator: " ")
+            test(viewModel: sut, action: .copyLink,
+                 expectedCommands: [
+                    .addToPasteBoard(expectedLink),
+                    .showHud(.custom(UIImage.copy,
+                                     Strings.Localizable.SharedItems.GetLink.linkCopied(links.values.count)))
+                 ], expectationValidation: ==)
+        }
+    }
+    
+    func testDispatch_onDidSelectRowIndexPath_shouldAddSelectedLinkToPasteBoard() {
+        for hiddenNodesFeatureFlagActive in [true, false] {
+            let album = AlbumEntity(id: 1, type: .user)
+            let otherAlbum = AlbumEntity(id: 3, type: .user)
+            let albums = [album, otherAlbum]
+            let sections = albums.map {
+                GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
+                    GetLinkStringCellViewModel(link: "")
+                ], itemHandle: $0.id)
+            }
+            let expectedLink = "link-to-copy"
+            let links = [album.id: expectedLink]
+            let sut = makeGetAlbumsLinkViewModel(albums: albums,
+                                                 shareAlbumUseCase: MockShareAlbumUseCase(
+                                                    shareAlbumsLinks: links,
+                                                    doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                 sectionViewModels: sections,
+                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
+            
+            let linkIndexPath = IndexPath(row: 0, section: 0)
+            expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: [linkIndexPath])
+            
+            test(viewModel: sut, action: .didSelectRow(indexPath: linkIndexPath),
+                 expectedCommands: [
+                    .addToPasteBoard(expectedLink),
+                    .showHud(.custom(UIImage.copy,
+                                     Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
+                 ], expectationValidation: ==)
+        }
+    }
+    
+    func testDispatch_onViewReadyAndAlbumContainsSensitiveElement_shouldShowAlert() throws {
         let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
         let tracker = MockTracker()
-        let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                             tracker: tracker)
+        let sut = makeGetAlbumsLinkViewModel(
+            albums: albums,
+            shareAlbumUseCase: MockShareAlbumUseCase(doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+            tracker: tracker,
+            hiddenNodesFeatureFlagActive: true)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
@@ -78,8 +268,15 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
             .hideMultiLinkDescription,
             .showHud(.status(Strings.Localizable.generatingLinks)),
-            .dismissHud
-        ])
+            .dismissHud,
+            .showAlert(AlertModel(
+                title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
+                message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(albums.count),
+                actions: [
+                    .init(title: Strings.Localizable.cancel, style: .cancel, handler: { }),
+                    .init(title: Strings.Localizable.continue, style: .default, handler: { })
+                ]))
+        ], expectationValidation: ==)
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
@@ -89,107 +286,133 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         )
     }
     
-    func testDispatch_onViewReadyLinksLoaded_shouldUpdateLinkCells() throws {
-        let firstAlbum = AlbumEntity(id: 1, type: .user)
-        let secondAlbum = AlbumEntity(id: 2, type: .user)
-        let albums = [firstAlbum, secondAlbum]
+    func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsContinue_shouldLoadLinks() throws {
+        let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
         let sections = albums.map {
             GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                 GetLinkStringCellViewModel(link: "")
             ], itemHandle: $0.id)
         }
-        let expectedRowReloads = sections.indices.map {
-            IndexPath(row: 0, section: $0)
-        }
-        let links = [firstAlbum.id: "link1", secondAlbum.id: "link2"]
-        let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                             shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
-                                             sectionViewModels: sections)
+        let expectedRowReloads = sections.indices.map { IndexPath(row: 0, section: $0) }
+        let tracker = MockTracker()
+        let sut = makeGetAlbumsLinkViewModel(
+            albums: albums,
+            shareAlbumUseCase: MockShareAlbumUseCase(
+                shareAlbumsLinks: Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") }),
+                doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+            sectionViewModels: sections,
+            tracker: tracker,
+            hiddenNodesFeatureFlagActive: true)
         
-        expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
-        
-        try expectedRowReloads.forEach { index in
-            let cellViewModel = try XCTUnwrap(sut.cellViewModel(indexPath: index) as? GetLinkStringCellViewModel)
-            XCTAssertEqual(cellViewModel.type, .link)
+        let expectation = expectation(description: "Expect sensitive content alert to appear")
+        var continueAction: AlertModel.AlertAction?
+        sut.invokeCommand = {
+            if case let .showAlert(alertModel) = $0,
+               let action = alertModel.actions.first(where: { $0.title ==  Strings.Localizable.continue }) {
+                continueAction = action
+                expectation.fulfill()
+            }
         }
+        
+        sut.dispatch(.onViewReady)
+        
+        wait(for: [expectation], timeout: 1)
+        
+        test(viewModel: sut, trigger: { continueAction?.handler() }, expectedCommands: [
+            .showHud(.status(Strings.Localizable.generatingLinks)),
+            .reloadRows(expectedRowReloads),
+            .enableLinkActions,
+            .dismissHud
+        ], expectationValidation: ==)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                MultipleAlbumLinksScreenEvent()
+            ]
+        )
     }
     
-    func testDispatch_shareLink_shouldShowShareActivityWithJoinedLinksInNewLine() {
-        let albums = [AlbumEntity(id: 1, type: .user),
-                      AlbumEntity(id: 2, type: .user)]
+    func testDispatch_onViewReadyAndOneAlbumContainsSensitiveElementsAndIsNotExported_shouldShowAlert() throws {
+        let albums = [
+            AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)),
+            AlbumEntity(id: 2, type: .user)
+        ]
         let sections = albums.map {
             GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                 GetLinkStringCellViewModel(link: "")
             ], itemHandle: $0.id)
         }
-        let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
-        let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                         shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
-                                         sectionViewModels: sections)
-        let expectedRowReloads = sections.indices.map {
-            IndexPath(row: 0, section: $0)
-        }
-        expectSuccessfulOnViewReady(sut: sut, albums: albums,
-                                    expectedRowReload: expectedRowReloads)
+
+        let tracker = MockTracker()
+        let sut = makeGetAlbumsLinkViewModel(
+            albums: albums,
+            shareAlbumUseCase: MockShareAlbumUseCase(
+                shareAlbumsLinks: Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") }),
+                doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+            sectionViewModels: sections,
+            tracker: tracker,
+            hiddenNodesFeatureFlagActive: true)
         
-        let expectedLink = links.values.joined(separator: "\n")
-        let barButton = UIBarButtonItem()
-        test(viewModel: sut, action: .shareLink(sender: barButton),
-             expectedCommands: [
-                .showShareActivity(sender: barButton, link: expectedLink, key: nil)
-             ])
+        let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(albums.count)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            .configureView(title: expectedTitle,
+                           isMultilink: true,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
+            .hideMultiLinkDescription,
+            .showHud(.status(Strings.Localizable.generatingLinks)),
+            .dismissHud,
+            .showAlert(AlertModel(
+                title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
+                message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(albums.count),
+                actions: [
+                    .init(title: Strings.Localizable.cancel, style: .cancel, handler: { }),
+                    .init(title: Strings.Localizable.continue, style: .default, handler: { })
+                ]))
+        ], expectationValidation: ==)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                MultipleAlbumLinksScreenEvent()
+            ]
+        )
     }
     
-    func testDispatch_copyLink_shouldAddSpaceSeparatedLinksToPasteboard() {
-        let albums = [AlbumEntity(id: 1, type: .user),
-                      AlbumEntity(id: 2, type: .user)]
-        let sections = albums.map {
-            GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
-                GetLinkStringCellViewModel(link: "")
-            ], itemHandle: $0.id)
-        }
-        let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
-        let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                             shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
-                                             sectionViewModels: sections)
+    func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsCancel_shouldDismissView() throws {
+        let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
+        let tracker = MockTracker()
+        let sut = makeGetAlbumsLinkViewModel(
+            albums: albums,
+            shareAlbumUseCase: MockShareAlbumUseCase(
+                doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+            tracker: tracker,
+            hiddenNodesFeatureFlagActive: true)
         
-        let expectedRowReloads = sections.indices.map {
-            IndexPath(row: 0, section: $0)
+        let expectation = expectation(description: "Expect sensitive content alert to appear")
+        var cancelAction: AlertModel.AlertAction?
+        sut.invokeCommand = {
+            if case let .showAlert(alertModel) = $0,
+               let action = alertModel.actions.first(where: { $0.title ==  Strings.Localizable.cancel }) {
+                cancelAction = action
+                expectation.fulfill()
+            }
         }
-        expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
-        let expectedLink = links.values.joined(separator: " ")
-        test(viewModel: sut, action: .copyLink,
-             expectedCommands: [
-                .addToPasteBoard(expectedLink),
-                .showHud(.custom(UIImage.copy,
-                                 Strings.Localizable.SharedItems.GetLink.linkCopied(links.values.count)))
-             ])
-    }
-    
-    func testDispatch_onDidSelectRowIndexPath_shouldAddSelectedLinkToPasteBoard() {
-        let album = AlbumEntity(id: 1, type: .user)
-        let otherAlbum = AlbumEntity(id: 3, type: .user)
-        let albums = [album, otherAlbum]
-        let sections = albums.map {
-            GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
-                GetLinkStringCellViewModel(link: "")
-            ], itemHandle: $0.id)
-        }
-        let expectedLink = "link-to-copy"
-        let links = [album.id: expectedLink]
-        let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                             shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
-                                             sectionViewModels: sections)
         
-        let linkIndexPath = IndexPath(row: 0, section: 0)
-        expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: [linkIndexPath])
+        sut.dispatch(.onViewReady)
         
-        test(viewModel: sut, action: .didSelectRow(indexPath: linkIndexPath),
-             expectedCommands: [
-                .addToPasteBoard(expectedLink),
-                .showHud(.custom(UIImage.copy,
-                                 Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
-             ])
+        wait(for: [expectation], timeout: 1)
+        
+        test(viewModel: sut, trigger: { cancelAction?.handler() }, expectedCommands: [
+            .dismiss
+        ], expectationValidation: ==)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                MultipleAlbumLinksScreenEvent()
+            ]
+        )
     }
     
     private func expectSuccessfulOnViewReady(sut: GetAlbumsLinkViewModel,
@@ -204,18 +427,20 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .reloadRows(expectedRowReload),
             .enableLinkActions,
             .dismissHud
-        ])
+        ], expectationValidation: ==)
     }
     
     private func makeGetAlbumsLinkViewModel(
         albums: [AlbumEntity] = [],
         shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
         sectionViewModels: [GetLinkSectionViewModel] = [],
-        tracker: some AnalyticsTracking = MockTracker()
+        tracker: some AnalyticsTracking = MockTracker(),
+        hiddenNodesFeatureFlagActive: Bool = false
     ) -> GetAlbumsLinkViewModel {
         GetAlbumsLinkViewModel(albums: albums,
                                shareAlbumUseCase: shareAlbumUseCase,
                                sectionViewModels: sectionViewModels,
-                               tracker: tracker)
+                               tracker: tracker,
+                               featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodesFeatureFlagActive]))
     }
 }
