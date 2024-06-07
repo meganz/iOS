@@ -6,16 +6,8 @@ import MEGAPresentation
 
 final class GetAlbumLinkViewModel: GetLinkViewModelType {
     var invokeCommand: ((GetLinkViewModelCommand) -> Void)?
-    
-    private let album: AlbumEntity
-    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
-    private let tracker: any AnalyticsTracking
-    private var sectionViewModels = [GetLinkSectionViewModel]()
-    private var shareLink: String?
-    
     let isMultiLink: Bool = false
     var loadingTask: Task<Void, Never>?
-    
     var numberOfSections: Int {
         sectionViewModels.count
     }
@@ -27,14 +19,26 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         return decryptCellViewModel.isSwitchOn
     }
     
+    private let album: AlbumEntity
+    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
+    private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private var sectionViewModels = [GetLinkSectionViewModel]()
+    private var shareLink: String?
+    
+    private typealias Continuation = AsyncStream<SensitiveContentAcknowledgementStatus>.Continuation
+    
     init(album: AlbumEntity,
          shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
-         tracker: some AnalyticsTracking) {
+         tracker: some AnalyticsTracking,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+        
         self.album = album
         self.shareAlbumUseCase = shareAlbumUseCase
         self.sectionViewModels = sectionViewModels
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
     }
     
     // MARK: - Dispatch action
@@ -44,7 +48,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         case .onViewReady:
             tracker.trackAnalyticsEvent(with: SingleAlbumLinkScreenEvent())
             updateViewConfiguration()
-            loadAlbumLink()
+            loadingTask = Task { await startGetLinksCoordinatorStream() }
         case .onViewWillDisappear:
             cancelLoadingTask()
         case .switchToggled(indexPath: let indexPath, isOn: let isOn):
@@ -84,20 +88,42 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
                                       shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)))
     }
     
-    private func loadAlbumLink() {
-        loadingTask = Task { [weak self] in
-            guard let self else { return }
-            defer { cancelLoadingTask() }
-            do {
-                if let albumLink = try await shareAlbumUseCase.shareAlbumLink(album),
-                   !Task.isCancelled {
-                    shareLink = albumLink
-                    await updateLink(albumLink)
-                }
-            } catch {
-                MEGALogError("Error sharing album link: \(error.localizedDescription)")
+    @MainActor
+    private func startGetLinksCoordinatorStream() async {
+        
+        let (stream, continuation) = AsyncStream.makeStream(of: SensitiveContentAcknowledgementStatus.self, bufferingPolicy: .bufferingNewest(1))
+        
+        continuation.yield(featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) ? .unknown : .authorized) // Set initial value
+
+        for await status in stream {
+            switch status {
+            case .unknown:
+                await determineIfAlbumsContainSensitiveNodes(continuation: continuation)
+            case .notDetermined:
+                showContainsSensitiveContentAlert(continuation: continuation)
+            case .noSensitiveContent:
+                await loadAlbumLink(continuation: continuation)
+            case .authorized:
+                invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
+                await loadAlbumLink(continuation: continuation)
+            case .denied:
+                invokeCommand?(.dismiss)
             }
         }
+    }
+    
+    private func loadAlbumLink(continuation: Continuation) async {
+        do { 
+            if let albumLink = try await shareAlbumUseCase.shareAlbumLink(album),
+               !Task.isCancelled {
+                shareLink = albumLink
+                await updateLink(albumLink)
+            }
+        } catch {
+            MEGALogError("Error sharing album link: \(error.localizedDescription)")
+            invokeCommand?(.dismissHud)
+        }
+        continuation.finish()
     }
     
     private func cancelLoadingTask() {
@@ -105,15 +131,55 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         loadingTask = nil
     }
     
+    private func determineIfAlbumsContainSensitiveNodes(continuation: Continuation) async {
+        
+        guard !album.isLinkShared else {
+            continuation.yield(.authorized)
+            return
+        }
+        
+        invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
+        
+        do {
+            let result = try await shareAlbumUseCase.doesAlbumsContainSensitiveElement(for: [album])
+            continuation.yield(result ? .notDetermined : .noSensitiveContent)
+        } catch {
+            MEGALogError("[\(type(of: self))]: determineIfAlbumsContainSensitiveNodes returned \(error.localizedDescription)")
+            continuation.finish()
+        }
+    }
+    
+    @MainActor
+    private func showContainsSensitiveContentAlert(continuation: Continuation) {
+        
+        invokeCommand?(.dismissHud)
+
+        let alertModel = AlertModel(
+            title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
+            message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(1),
+            actions: [
+                .init(title: Strings.Localizable.cancel, style: .cancel, handler: {
+                    continuation.yield(.denied)
+                }),
+                .init(title: Strings.Localizable.continue, style: .default, handler: {
+                    continuation.yield(.authorized)
+                })
+            ])
+        
+        invokeCommand?(.showAlert(alertModel))
+    }
+    
     @MainActor
     private func updateLink(_ link: String) {
         guard let sectionIndex = sectionViewModels.firstIndex(where: { $0.sectionType == .link }),
               let rowIndex = sectionViewModels[safe: sectionIndex]?.cellViewModels.firstIndex(where: { $0.type == .link }) else {
+            invokeCommand?(.dismissHud)
             return
         }
         sectionViewModels[sectionIndex].cellViewModels[rowIndex] = GetLinkStringCellViewModel(link: link)
         invokeCommand?(.enableLinkActions)
         invokeCommand?(.reloadRows([IndexPath(row: rowIndex, section: sectionIndex)]))
+        invokeCommand?(.dismissHud)
     }
     
     private func handleSwitchToggled(forIndexPath indexPath: IndexPath, isOn: Bool) {

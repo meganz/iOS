@@ -287,11 +287,13 @@
 		25DB82D32A3C07D100207E72 /* ProfileTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DB82D22A3C07D100207E72 /* ProfileTableViewDataSource.swift */; };
 		25E2717D2A3FE96800DDB678 /* AVPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2717C2A3FE96800DDB678 /* AVPlayerManager.swift */; };
 		25E2717F2A40099800DDB678 /* MEGAAVViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2717E2A40099800DDB678 /* MEGAAVViewController+Additions.swift */; };
+		25E319F52C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E319F42C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift */; };
 		25EB2E902B0578E700823B3D /* CameraUploadStatusBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E8F2B0578E700823B3D /* CameraUploadStatusBannerView.swift */; };
 		25EB2E952B05980200823B3D /* CameraUploadBannerStatusViewStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E942B05980200823B3D /* CameraUploadBannerStatusViewStates.swift */; };
 		25EB2E982B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E972B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift */; };
 		25EB2E9A2B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E992B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift */; };
 		25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */; };
+		25F4EC772C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */; };
 		25F932842AF476D500A63E73 /* AppearancePreference+Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F932832AF476D500A63E73 /* AppearancePreference+Entities.swift */; };
 		25F9329F2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9329E2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift */; };
 		271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271FC4202A27EA4400E35924 /* ElementStore.swift */; };
@@ -2997,11 +2999,13 @@
 		25DB82D22A3C07D100207E72 /* ProfileTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewDataSource.swift; sourceTree = "<group>"; };
 		25E2717C2A3FE96800DDB678 /* AVPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManager.swift; sourceTree = "<group>"; };
 		25E2717E2A40099800DDB678 /* MEGAAVViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAVViewController+Additions.swift"; sourceTree = "<group>"; };
+		25E319F42C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GetLinkViewModelCommand+isEqual.swift"; sourceTree = "<group>"; };
 		25EB2E8F2B0578E700823B3D /* CameraUploadStatusBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusBannerView.swift; sourceTree = "<group>"; };
 		25EB2E942B05980200823B3D /* CameraUploadBannerStatusViewStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBannerStatusViewStates.swift; sourceTree = "<group>"; };
 		25EB2E972B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBannerStatusViewPresenterProtocol.swift; sourceTree = "<group>"; };
 		25EB2E992B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift"; sourceTree = "<group>"; };
 		25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferWidgetResponder.swift; sourceTree = "<group>"; };
+		25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveContentAcknowledgementStatus.swift; sourceTree = "<group>"; };
 		25F932832AF476D500A63E73 /* AppearancePreference+Entities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppearancePreference+Entities.swift"; sourceTree = "<group>"; };
 		25F9329E2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrderPreferenceRepository.swift; sourceTree = "<group>"; };
 		271FC4202A27EA4400E35924 /* ElementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStore.swift; sourceTree = "<group>"; };
@@ -5675,6 +5679,7 @@
 				0E3B1A372A1D918300EC5859 /* Cells */,
 				0E3E07A22A1EA6C600A2A71B /* GetAlbumLinkViewModelTests.swift */,
 				0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */,
+				25E319F42C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift */,
 			);
 			path = GetLink;
 			sourceTree = "<group>";
@@ -9437,6 +9442,7 @@
 				94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */,
 				837EE20E253DBABD0083D927 /* GetLinkViewController.swift */,
 				0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */,
+				25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */,
 				837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */,
 				0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */,
 				0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */,
@@ -15660,6 +15666,7 @@
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
 				9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
+				25F4EC772C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift in Sources */,
 				0E02311C2BD779410004637A /* SensitiveThumbnailLoader.swift in Sources */,
 				BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */,
 				2F9F112A2508A43300896DFF /* ServiceConstant.swift in Sources */,
@@ -16374,6 +16381,7 @@
 				0E3B1A392A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift in Sources */,
 				0E3B1A502A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift in Sources */,
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,
+				25E319F52C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
 				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,

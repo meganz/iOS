@@ -524,6 +524,10 @@ class GetLinkViewController: UIViewController {
         tableView.reloadSections([expiryDateSection], with: .automatic)
     }
     
+    private func showAlert(alertModel: AlertModel) {
+        present(UIAlertController(model: alertModel), animated: true)
+    }
+    
     // MARK: - IBActions
     
     @IBAction func switchValueChanged(_ sender: UISwitch) {
@@ -847,6 +851,10 @@ class GetLinkViewController: UIViewController {
             }
         case .hideMultiLinkDescription:
             multilinkDescriptionView.isHidden = true
+        case .showAlert(let alertModel):
+            showAlert(alertModel: alertModel)
+        case .dismiss:
+            dismiss(animated: true, completion: nil)
         }
     }
     
