@@ -3,18 +3,23 @@ import MEGASdk
 public final class MockError: MEGAError {
     var megaErrorType: MEGAErrorType
     private let _name: String
+    private let _value: Int64
     
     public init(
         errorType: MEGAErrorType = .apiOk,
-        name: String = "MockError"
+        name: String = "MockError",
+        value: Int64 = 0
     ) {
         megaErrorType = errorType
         _name = name
+        _value = value
     }
     
     public override var type: MEGAErrorType { megaErrorType }
     
     public override var name: String { _name }
+    
+    public override var value: Int64 { _value }
     
     public static var failingError: MEGAError { MockError(errorType: .anyFailingErrorType) }
 }
