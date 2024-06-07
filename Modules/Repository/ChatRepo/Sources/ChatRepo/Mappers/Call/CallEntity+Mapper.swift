@@ -38,6 +38,7 @@ fileprivate extension CallEntity {
             waitingRoomStatus: call.waitingRoomJoiningStatus.toWaitingRoomStatusEntity(),
             waitingRoom: call.waitingRoom.toWaitingRoomEntity(),
             waitingRoomHandleList: call.waitingRoomHandleList.toHandleEntityArray() ?? [],
+            raiseHandsList: call.raiseHandsList.toHandleEntityArray() ?? [],
             uuid: call.uuid
         )
     }
@@ -152,6 +153,8 @@ public extension MEGAChatCallChangeType {
             .callWillEnd
         case .callLimitsUpdated:
             .callLimitsUpdated
+        case .callRaiseHand:
+            .callRaiseHand
         @unknown default:
             .noChanges
         }

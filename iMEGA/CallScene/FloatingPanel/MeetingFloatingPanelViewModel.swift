@@ -213,7 +213,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         limitations = .init(
             initialLimit: call?.callLimits.maxUsers ?? 100,
             chatRoom: chatRoom,
-            callUseCase: callUseCase,
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase
         )
         

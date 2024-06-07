@@ -29,6 +29,8 @@ public protocol CallRepositoryProtocol {
     func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws
     func enableAudioMonitor(forCall call: CallEntity)
     func disableAudioMonitor(forCall call: CallEntity)
+    func raiseHand(forCall call: CallEntity) async throws
+    func lowerHand(forCall call: CallEntity) async throws
 }
 
 public protocol CallCallbacksRepositoryProtocol {
