@@ -64,6 +64,8 @@ extension ContextMenuModel {
             return dataForQRAction(action: action)
         case .album(let action):
             return dataForAlbumAction(action: action)
+        case .videoPlaylist(let action):
+            return dataForVideoPlaylistAction(action: action)
         default:
             return nil
         }
@@ -249,6 +251,23 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "selectAlbumCover", title: Strings.Localizable.CameraUploads.Albums.selectAlbumCover, image: UIImage.selectAlbumCover)
         case .delete:
             return ContextMenuDataModel(identifier: "delete", title: Strings.Localizable.delete, image: UIImage.deleteAlbum)
+        }
+    }
+    
+    private func dataForVideoPlaylistAction(action: VideoPlaylistActionEntity) -> ContextMenuDataModel {
+        switch action {
+        case .addVideosToVideoPlaylistContent:
+            ContextMenuDataModel(
+                identifier: "addVideosToVideoPlaylist",
+                title: Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Menu.addVideos,
+                image: UIImage.navigationbarAdd
+            )
+        case .delete:
+            ContextMenuDataModel(
+                identifier: "deleteVideoPlaylist",
+                title: Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Menu.deletePlaylist,
+                image: UIImage.deleteVideoPlaylist
+            )
         }
     }
 }

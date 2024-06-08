@@ -113,6 +113,15 @@ final class ContextMenuActionsTests: XCTestCase {
         }
     }
     
+    private func filterVideoPlaylistActions(from menuActions: [CMElementTypeEntity]) -> [VideoPlaylistActionEntity] {
+        menuActions.compactMap {
+            guard case let .videoPlaylist(action) = $0 else {
+                return nil
+            }
+            return action
+        }
+    }
+    
     private func filterFilterActions(from menuActions: [CMElementTypeEntity]) -> [FilterEntity] {
         menuActions.compactMap {
             if case let .filter(action) = $0 {
@@ -706,5 +715,45 @@ final class ContextMenuActionsTests: XCTestCase {
         
         XCTAssertEqual(filterDisplayActions(from: actions), [ .newPlaylist ])
         XCTAssertEqual(filterSortActions(from: actions), [ .modificationDesc, .modificationAsc ])
+    }
+    
+    // MARK: - Video Playlist Content
+    
+    func testVideoPlaylistContentMenu_onVideoPlaylistContentMenuType_shouldShowAllOptions() throws {
+        let menuEntity = try XCTUnwrap(
+            ContextMenuBuilder()
+                .setType(.menu(type: .videoPlaylistContent))
+                .setIsVideoPlaylistContent(true)
+                .setIsEmptyState(false)
+                .build()
+        )
+        
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        
+        XCTAssertEqual(filterQuickActions(from: actions), [ .rename ])
+        XCTAssertEqual(filterDisplayActions(from: actions), [ .select ])
+        XCTAssertEqual(filterSortActions(from: actions), [
+            .defaultAsc,
+            .defaultDesc,
+            .modificationDesc,
+            .modificationAsc
+        ])
+        XCTAssertEqual(filterVideoPlaylistActions(from: actions), [ .addVideosToVideoPlaylistContent, .delete ] )
+    }
+    
+    func testVideoPlaylistContentMenu_onVideoPlaylistContentMenuTypeEmpty_shouldShowAllOptions() throws {
+        let menuEntity = try XCTUnwrap(
+            ContextMenuBuilder()
+                .setType(.menu(type: .videoPlaylistContent))
+                .setIsVideoPlaylistContent(true)
+                .setIsEmptyState(true)
+                .build()
+        )
+        
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        
+        XCTAssertEqual(filterQuickActions(from: actions), [ .rename ])
+        XCTAssertEqual(filterVideoPlaylistActions(from: actions), [ .addVideosToVideoPlaylistContent, .delete ] )
+        XCTAssertTrue(filterSortActions(from: actions).isEmpty, "Expect not to have sort on empty user video playlist content")
     }
 }
