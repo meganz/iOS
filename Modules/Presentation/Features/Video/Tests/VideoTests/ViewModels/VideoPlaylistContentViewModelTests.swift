@@ -34,7 +34,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, videoPlaylistContentsUseCase) = makeSUT(
+        let (sut, _, videoPlaylistContentsUseCase, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -43,6 +43,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         await sut.onViewAppeared()
         
         XCTAssertTrue(videoPlaylistContentsUseCase.messages.contains(.monitorVideoPlaylist(id: videoPlaylistEntity.id)))
+        XCTAssertEqual(sut.videos.count, allVideos.count)
+        XCTAssertEqual(sut.sharedUIState.videosCount, allVideos.count)
     }
     
     func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithErrorUpdates_reloadVideoPlaylistContentWithError() async {
@@ -74,7 +76,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -113,7 +115,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -135,16 +137,19 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     ) -> (
         sut: VideoPlaylistContentViewModel,
         videoPlaylistThumbnailLoader: MockVideoPlaylistThumbnailLoader,
-        videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase
+        videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase,
+        sharedUIState: VideoPlaylistContentSharedUIState
     ) {
+        let sharedUIState = VideoPlaylistContentSharedUIState()
         let videoPlaylistThumbnailLoader = MockVideoPlaylistThumbnailLoader()
         let sut = VideoPlaylistContentViewModel(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
-            videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader
+            videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
+            sharedUIState: sharedUIState
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, videoPlaylistThumbnailLoader, videoPlaylistContentsUseCase)
+        return (sut, videoPlaylistThumbnailLoader, videoPlaylistContentsUseCase, sharedUIState)
     }
 }

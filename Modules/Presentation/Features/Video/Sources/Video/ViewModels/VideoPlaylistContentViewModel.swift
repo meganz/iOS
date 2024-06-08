@@ -10,22 +10,26 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     
-    @Published var videos: [NodeEntity] = []
+    @Published public private(set) var videos: [NodeEntity] = []
     @Published var headerPreviewEntity: VideoPlaylistCellPreviewEntity = .placeholder
     @Published var secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType = .emptyPlaylist
     @Published var shouldPopScreen = false
     @Published var shouldShowError = false
     
+    public private(set) var sharedUIState: VideoPlaylistContentSharedUIState
+    
     init(
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
-        videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol
+        videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol,
+        sharedUIState: VideoPlaylistContentSharedUIState
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistThumbnailLoader = videoPlaylistThumbnailLoader
+        self.sharedUIState = sharedUIState
     }
     
     @MainActor
@@ -47,6 +51,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
                 }
                 self.videoPlaylistEntity = videoPlaylist
                 self.videos = videos
+                self.sharedUIState.videosCount = videos.count
                 await loadThumbnails(for: videos)
             }
         } catch {

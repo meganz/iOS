@@ -425,6 +425,45 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         ])
     }
     
+    func testCreateContextMenu_videoPlaylistContent_shouldDeliverCorrectContextMenu() throws {
+        let configEntity = CMConfigEntity(
+            menuType: .menu(type: .videoPlaylistContent),
+            isVideoPlaylistContent: true,
+            isEmptyState: false
+        )
+        let contextMenuActionEntity = try contextMenuActionEntity(with: configEntity)
+        
+        let menuActions = decomposeMenuIntoActions(menu: contextMenuActionEntity)
+        
+        XCTAssertEqual(menuActions, [
+            .quickActions(actionType: .rename),
+            .display(actionType: .select),
+            .videoPlaylist(actionType: .addVideosToVideoPlaylistContent),
+            .sort(actionType: .defaultAsc),
+            .sort(actionType: .defaultDesc),
+            .sort(actionType: .modificationDesc),
+            .sort(actionType: .modificationAsc),
+            .videoPlaylist(actionType: .delete)
+        ])
+    }
+    
+    func testCreateContextMenu_videoPlaylistContentEmpty_shouldDeliverCorrectContextMenu() throws {
+        let configEntity = CMConfigEntity(
+            menuType: .menu(type: .videoPlaylistContent),
+            isVideoPlaylistContent: true,
+            isEmptyState: true
+        )
+        let contextMenuActionEntity = try contextMenuActionEntity(with: configEntity)
+        
+        let menuActions = decomposeMenuIntoActions(menu: contextMenuActionEntity)
+        
+        XCTAssertEqual(menuActions, [
+            .quickActions(actionType: .rename),
+            .videoPlaylist(actionType: .addVideosToVideoPlaylistContent),
+            .videoPlaylist(actionType: .delete)
+        ])
+    }
+    
     func testCreateContextMenu_Meeting() throws {
         let cmMettingEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .meeting)))
         

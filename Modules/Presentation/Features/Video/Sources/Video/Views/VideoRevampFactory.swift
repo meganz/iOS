@@ -76,13 +76,15 @@ public class VideoRevampFactory {
         previewEntity: VideoPlaylistEntity,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
-        router: some VideoRevampRouting
+        router: some VideoRevampRouting,
+        sharedUIState: VideoPlaylistContentSharedUIState
     ) -> UIViewController {
         let viewModel = VideoPlaylistContentViewModel(
             videoPlaylistEntity: previewEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentUseCase,
             thumbnailUseCase: thumbnailUseCase,
-            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase),
+            sharedUIState: sharedUIState
         )
         let view = PlaylistContentScreen(
             viewModel: viewModel,

@@ -250,4 +250,14 @@ extension ContextMenuBuilder {
     var delete: CMActionEntity {
         CMActionEntity(type: .album(actionType: .delete))
     }
+    
+    // MARK: - Video Playlist
+    
+    var addVideosToVideoPlaylistContent: CMActionEntity {
+        CMActionEntity(type: .videoPlaylist(actionType: .addVideosToVideoPlaylistContent))
+    }
+    
+    var deleteVideoPlaylist: CMActionEntity {
+        CMActionEntity(type: .videoPlaylist(actionType: .delete))
+    }
 }
