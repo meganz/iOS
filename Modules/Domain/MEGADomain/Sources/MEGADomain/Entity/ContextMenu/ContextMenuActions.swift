@@ -27,12 +27,13 @@ public enum CMElementTypeEntity: Equatable, Sendable {
     case qr(actionType: MyQRActionEntity)
     case meeting(actionType: MeetingActionEntity)
     case album(actionType: AlbumActionEntity)
+    case videoPlaylist(actionType: VideoPlaylistActionEntity)
     case unknown
 }
 
 // MARK: - Context Menu types
 public enum ContextMenuTypeEntity: Sendable {
-    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos, homeVideoPlaylists
+    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos, homeVideoPlaylists, videoPlaylistContent
 }
 
 // MARK: - Context Menu grouped actions
@@ -70,4 +71,9 @@ public enum MeetingActionEntity: CaseIterable, Sendable {
 
 public enum AlbumActionEntity: CaseIterable, Sendable {
     case selectAlbumCover, delete
+}
+
+public enum VideoPlaylistActionEntity: CaseIterable, Sendable {
+    case addVideosToVideoPlaylistContent
+    case delete
 }
