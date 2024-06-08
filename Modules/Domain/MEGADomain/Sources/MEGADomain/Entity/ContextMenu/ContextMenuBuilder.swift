@@ -20,6 +20,7 @@ public final class ContextMenuBuilder {
     private var isVideosExplorer: Bool = false
     private var isVideosRevampExplorer: Bool = false
     private var isVideosRevampExplorerVideoPlaylists: Bool = false
+    private var isVideoPlaylistContent: Bool = false
     private var isCameraUploadExplorer: Bool = false
     private var albumType: AlbumEntityType?
     private var isFilterEnabled: Bool = false
@@ -146,6 +147,11 @@ public final class ContextMenuBuilder {
     
     public func setIsVideosRevampExplorerVideoPlaylists(_ isVideosRevampExplorerVideoPlaylists: Bool) -> ContextMenuBuilder {
         self.isVideosRevampExplorerVideoPlaylists = isVideosRevampExplorerVideoPlaylists
+        return self
+    }
+    
+    public func setIsVideoPlaylistContent(_ isVideoPlaylistContent: Bool) -> ContextMenuBuilder {
+        self.isVideoPlaylistContent = isVideoPlaylistContent
         return self
     }
     
@@ -284,6 +290,8 @@ public final class ContextMenuBuilder {
                 return homeVideosMenu()
             case .homeVideoPlaylists:
                 return homeVideoPlaylistsMenu()
+            case .videoPlaylistContent:
+                return videoPlaylistContentMenu()
             default:
                 return nil
             }
@@ -383,6 +391,8 @@ public final class ContextMenuBuilder {
                 return CMEntity(type: .display(actionType: .sort),
                                 currentSortType: sortType,
                                 children: sortMenuActions)
+            } else if isVideoPlaylistContent {
+                sortMenuActions = [ sortNameAscending, sortNameDescending, sortNewest, sortOldest ]
             } else if !isSharedItems {
                 sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest])
                 if !isOfflineFolder {
@@ -673,6 +683,31 @@ public final class ContextMenuBuilder {
         return CMEntity(
             displayInline: true,
             children: displayActionsMenuChildren
+        )
+    }
+    
+    // MARK: - Video Playlist Content
+    
+    private func videoPlaylistContentMenu() -> CMEntity {
+        var displayActionsMenuChildren: [CMElement?] = []
+        let deleteMenu = CMEntity(displayInline: true, children: [deleteVideoPlaylist])
+        
+        if isVideoPlaylistContent {
+            displayActionsMenuChildren.append(CMEntity(
+                displayInline: true,
+                children: [
+                    rename,
+                    isEmptyState ? nil : select,
+                    addVideosToVideoPlaylistContent
+                ].compactMap { $0 }
+            ))
+            displayActionsMenuChildren.append(isEmptyState ? nil : sortMenu())
+            displayActionsMenuChildren.append(deleteMenu)
+        }
+        
+        return CMEntity(
+            displayInline: true,
+            children: displayActionsMenuChildren.compactMap { $0 }
         )
     }
 
