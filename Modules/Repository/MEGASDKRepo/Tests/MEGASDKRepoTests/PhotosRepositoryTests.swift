@@ -21,15 +21,18 @@ final class PhotosRepositoryTests: XCTestCase {
     func testAllPhotos_photoSourceEmpty_shouldRetrievePhotosThroughSearch() async throws {
         let expectedPhotos = [MockNode(handle: 45),
                               MockNode(handle: 65)]
-        let photosRepositoryTaskManager = PhotosRepositoryTaskManager(photoLocalSource: MockPhotoLocalSource(),
+        let localSource = MockPhotoLocalSource()
+        let photosRepositoryTaskManager = PhotosRepositoryTaskManager(photoLocalSource: localSource,
                                                                       photoCacheRepositoryMonitors: MockPhotoCacheRepositoryMonitors())
         let sdk = MockSdk(nodes: expectedPhotos,
                           megaRootNode: MockNode(handle: 1))
         let sut = makeSUT(sdk: sdk,
+                          photoLocalSource: localSource,
                           photosRepositoryTaskManager: photosRepositoryTaskManager)
         
         let photos = try await sut.allPhotos()
         XCTAssertEqual(Set(photos), Set(expectedPhotos.toNodeEntities()))
+        XCTAssertEqual(sdk.searchWithFilterCallCount, 2)
     }
     
     func testAllPhotos_photoSourceContainsPhotos_shouldRetrievePhotos() async throws {
