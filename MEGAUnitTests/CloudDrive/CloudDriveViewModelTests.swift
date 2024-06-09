@@ -318,6 +318,43 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertEqual(updatedNode.handle, 1)
     }
     
+    func testShouldExcludeSensitiveItems_featureFlagOff_shouldReturnFalse() async {
+        let sut = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
+        
+        let shouldExclude = await sut.shouldExcludeSensitiveItems()
+        XCTAssertFalse(shouldExclude)
+    }
+    
+    func testShouldExcludeSensitiveItems_called_shouldReturnInverseOfShowHiddenNodes() async {
+        for await showHiddenNodes in [true, false].async {
+            let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
+                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes))
+            let sut = makeSUT(
+                contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
+                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+            
+            let shouldExclude = await sut.shouldExcludeSensitiveItems()
+            XCTAssertEqual(shouldExclude, !showHiddenNodes)
+        }
+    }
+    
+    func testDispatchAction_updateSensitivitySettingOnNextSearch_shouldRecalculateSensitiveSetting() async throws {
+        let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
+            sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
+        let sut = makeSUT(
+            contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+        
+        let shouldExcludeFirstCall = await sut.shouldExcludeSensitiveItems()
+        XCTAssertTrue(shouldExcludeFirstCall)
+
+        try await contentConsumptionUseCase.saveSensitiveSetting(showHiddenNodes: true)
+        sut.dispatch(.resetSensitivitySetting)
+        
+        let shouldExcludeSecondCall = await sut.shouldExcludeSensitiveItems()
+        XCTAssertFalse(shouldExcludeSecondCall)
+    }
+    
     func makeSUT(
         parentNode: MEGANode = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
@@ -325,6 +362,7 @@ class CloudDriveViewModelTests: XCTestCase {
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
         file: StaticString = #file,
@@ -337,6 +375,7 @@ class CloudDriveViewModelTests: XCTestCase {
             preferenceUseCase: preferenceUseCase, 
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             accountUseCase: accountUseCase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             featureFlagProvider: featureFlagProvider,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel
         )

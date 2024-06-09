@@ -51,10 +51,12 @@ extension CloudDriveViewController {
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: preferenceUseCase,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
-            preferenceUseCase: preferenceUseCase, 
+            preferenceUseCase: preferenceUseCase,
             systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
                 systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
     }
@@ -492,6 +494,40 @@ extension CloudDriveViewController {
             isFromSharedItem: isFromSharedItem,
             warningViewModel: warningViewModel
         )
+    }
+    
+    @objc func makeSearchWithFilterOperation(searchText: String,
+                                             parentHandle: MEGAHandle,
+                                             excludeSensitive: Bool,
+                                             cancelToken: MEGACancelToken,
+                                             completion: @escaping (_ results: MEGANodeList?, _ isCanceled: Bool) -> Void
+    ) -> SearchWithFilterOperation {
+        let filter = makeSearchFilter(searchText: searchText,
+                                      parentHandle: parentHandle,
+                                      excludeSensitive: excludeSensitive)
+        return SearchWithFilterOperation(sdk: .shared,
+                                         filter: filter,
+                                         recursive: true,
+                                         sortOrder: Helper.sortType(for: parentHandle),
+                                         cancelToken: cancelToken,
+                                         completion: completion)
+    }
+    
+    private func makeSearchFilter(searchText: String, parentHandle: MEGAHandle, excludeSensitive: Bool) -> MEGASearchFilter {
+        MEGASearchFilter(
+            term: searchText,
+            parentNodeHandle: parentHandle,
+            nodeType: Int32(MEGANodeType.unknown.rawValue),
+            category: Int32(MEGANodeFormatType.unknown.rawValue),
+            sensitivity: excludeSensitive,
+            favouriteFilter: 0,
+            creationTimeFrame: nil,
+            modificationTimeFrame: nil
+        )
+    }
+    
+    @objc func updateSensitivitySettingOnNextSearch() {
+        viewModel.dispatch(.resetSensitivitySetting)
     }
 }
 
