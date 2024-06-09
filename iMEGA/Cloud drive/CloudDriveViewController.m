@@ -175,6 +175,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [MEGASdk.shared addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
+    [self updateSensitivitySettingOnNextSearch];
     [self reloadUI];
     
     if (self.displayMode != DisplayModeRecents) {
@@ -670,15 +671,26 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         self.cancelToken = MEGACancelToken.alloc.init;
-        SearchOperation* searchOperation = [[SearchOperation alloc] initWithSdk:MEGASdk.shared parentNode:self.parentNode text:text recursive:YES nodeFormat:MEGANodeFormatTypeUnknown sortOrder:[Helper sortTypeFor:self.parentNode] cancelToken:self.cancelToken completion:^(MEGANodeList*nodeList, BOOL isCancelled) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.searchNodesArray = [NSMutableArray arrayWithArray: [nodeList toNodeArray]];
-                [self reloadData];
-                self.cancelToken = nil;
-                [self performSelector:@selector(dismissHUD) withObject:nil afterDelay:kHUDDismissDelay];
-            });
+        __weak typeof(self) weakSelf = self;
+        [self.viewModel shouldExcludeSensitiveItemsWithCompletionHandler:^(BOOL shouldExcludeSharedItems) {
+            __strong __typeof__(weakSelf) strongSelf = weakSelf;
+            if (!strongSelf) {
+                return;
+            }
+            SearchWithFilterOperation *searchOperation = [strongSelf makeSearchWithFilterOperationWithSearchText:text
+                                                                                                    parentHandle:strongSelf.parentNode.handle
+                                                                                                excludeSensitive:shouldExcludeSharedItems
+                                                                                                     cancelToken:strongSelf.cancelToken
+                                                                                                      completion:^(MEGANodeList*nodeList, BOOL isCancelled) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    strongSelf.searchNodesArray = [NSMutableArray arrayWithArray: [nodeList toNodeArray]];
+                    [strongSelf reloadData];
+                    strongSelf.cancelToken = nil;
+                    [strongSelf performSelector:@selector(dismissHUD) withObject:nil afterDelay:kHUDDismissDelay];
+                });
+            }];
+            [strongSelf.searchQueue addOperation:searchOperation];
         }];
-        [self.searchQueue addOperation:searchOperation];
     } else {
         [self reloadData];
     }

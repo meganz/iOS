@@ -8,6 +8,7 @@ enum CloudDriveAction: ActionType {
     case updateSortType(SortOrderType)
     case updateParentNode(MEGANode)
     case moveToRubbishBin([MEGANode])
+    case resetSensitivitySetting
 }
 
 @objc final class CloudDriveViewModel: NSObject, ViewModelType {
@@ -33,11 +34,18 @@ enum CloudDriveAction: ActionType {
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
 
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     private var parentNode: MEGANode?
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
+    
+    private var sensitiveSettingTask: Task<Bool, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
     
     init(parentNode: MEGANode?,
          shareUseCase: some ShareUseCaseProtocol,
@@ -45,6 +53,7 @@ enum CloudDriveAction: ActionType {
          preferenceUseCase: some PreferenceUseCaseProtocol,
          systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
+         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     ) {
@@ -53,6 +62,7 @@ enum CloudDriveAction: ActionType {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.accountUseCase = accountUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
@@ -97,6 +107,21 @@ enum CloudDriveAction: ActionType {
         nodes?.containsVisualMedia() ?? false
     }
     
+    @objc func shouldExcludeSensitiveItems() async -> Bool {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
+            return false
+        }
+        if let sensitiveSettingTask {
+            return await sensitiveSettingTask.value
+        }
+        let sensitiveSettingTask = Task { [weak self] in
+            guard let self else { return false }
+            return await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        }
+        self.sensitiveSettingTask = sensitiveSettingTask
+        return await sensitiveSettingTask.value
+    }
+    
     func isParentMarkedAsSensitive(forDisplayMode displayMode: DisplayMode, isFromSharedItem: Bool) async -> Bool? {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               isFromSharedItem == false,
@@ -136,6 +161,9 @@ enum CloudDriveAction: ActionType {
             invokeCommand?(.reloadNavigationBarItems)
         case .moveToRubbishBin(let nodes):
             moveToRubbishBinViewModel.moveToRubbishBin(nodes: nodes.toNodeEntities())
+        case .resetSensitivitySetting:
+            guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else { return }
+            sensitiveSettingTask = nil
         }
     }
     
