@@ -59,11 +59,11 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     }
     
     private func searchAllPhotos() async throws -> [NodeEntity] {
-        let photos = try await searchAllMedia(formatType: .photo)
-        try Task.checkCancellation()
-        let videos = try await searchAllMedia(formatType: .video)
-        try Task.checkCancellation()
-        return photos + videos
+        try await [NodeFormatEntity.photo, .video].async
+            .map {
+                try await searchAllMedia(formatType: $0)
+            }
+            .reduce([NodeEntity]()) { $0 + $1 }
     }
     
     private func searchAllMedia(formatType: NodeFormatEntity) async throws -> [NodeEntity] {
@@ -71,19 +71,23 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
         
         return try await withTaskCancellationHandler {
             try await withAsyncThrowingValue { completion in
-                guard let rootNode = sdk.rootNode else {
+                guard let rootNode = sdk.rootNode?.toNodeEntity() else {
                     completion(.failure(NodeErrorEntity.nodeNotFound))
                     return
                 }
-                let nodeListFound = sdk.nodeListSearch(for: rootNode,
-                                                       search: "",
-                                                       cancelToken: cancelToken,
-                                                       recursive: true,
-                                                       orderType: .defaultDesc,
-                                                       nodeFormatType: formatType.toMEGANodeFormatType(),
-                                                       folderTargetType: .all)
                 
-                completion(.success(nodeListFound.toNodeEntities()))
+                let filter = SearchFilterEntity(parentNode: rootNode,
+                                                recursive: true,
+                                                supportCancel: true,
+                                                sortOrderType: .defaultDesc,
+                                                formatType: formatType,
+                                                excludeSensitive: false)
+                
+                let nodeList = sdk.search(with: filter.toMEGASearchFilter(defaultParentHandle: rootNode.handle),
+                                          orderType: .defaultDesc,
+                                          cancelToken: cancelToken)
+                
+                completion(.success(nodeList.toNodeEntities()))
             }
         } onCancel: {
             if !cancelToken.isCancelled {
