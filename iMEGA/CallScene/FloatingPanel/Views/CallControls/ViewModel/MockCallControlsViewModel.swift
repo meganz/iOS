@@ -15,7 +15,7 @@ final class MockCallControlsViewModel: CallControlsViewModelProtocol {
     
     var routeViewVisible: Bool
     
-    func endCallTapped() { }
+    func endCallTapped() async { }
     
     func toggleCameraTapped() async { }
     
