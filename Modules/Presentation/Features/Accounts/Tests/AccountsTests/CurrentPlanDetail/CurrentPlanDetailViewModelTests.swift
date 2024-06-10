@@ -62,4 +62,12 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         
         XCTAssertEqual(router.dismiss_calledTimes, 1, "Expected dismiss to be called on router")
     }
+    
+    func testShowCancelSubscriptionSteps_shouldCallRouterShowCancelSubscriptionSteps() {
+        let (sut, router) = makeSUT(features: features)
+        
+        sut.showCancelSubscriptionSteps()
+        
+        XCTAssertEqual(router.showCancellationSteps_calledTimes, 1, "Expected showCancelSubscriptionSteps to be called on router")
+    }
 }

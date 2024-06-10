@@ -5,6 +5,7 @@ import SwiftUI
 
 public protocol CancelAccountPlanRouting: Routing {
     func dismiss()
+    func showCancellationSteps()
 }
 
 public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
@@ -50,5 +51,21 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     
     public func dismiss() {
         presenter?.dismiss(animated: true)
+    }
+    
+    public func showCancellationSteps() {
+        switch accountDetails.subscriptionMethodId {
+        case .itunes:
+            // Apple
+            break
+        case .googleWallet:
+            CancelSubscriptionStepsRouter(
+                type: .google,
+                presenter: baseViewController
+            ).start()
+        default:
+            // Web client
+            break
+        }
     }
 }
