@@ -821,6 +821,55 @@ final class AlbumListViewModelTests: XCTestCase {
         monitoring.cancel()
     }
     
+    @MainActor
+    func testMonitorAlbums_userAlbumUpdates_shouldShowSelectBarButtonCorrectly() async {
+        let containerViewModel = PhotoAlbumContainerViewModel()
+        
+        let (userAlbumStream, userAlbumContinuation) = AsyncStream.makeStream(of: [AlbumEntity].self)
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            monitorSystemAlbumsSequence: SingleItemAsyncSequence(item: .success([])).eraseToAnyAsyncSequence(),
+            monitorUserAlbumsSequence: userAlbumStream.eraseToAnyAsyncSequence()
+        )
+        
+        let sut = albumListViewModel(
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.albumPhotoCache: true]),
+            photoAlbumContainerViewModel: containerViewModel)
+        
+        var expectedUpdates = [true, false, true]
+        let exp = expectation(description: "Should load only user albums")
+        exp.expectedFulfillmentCount = expectedUpdates.count
+        let subscription = containerViewModel.$shouldShowSelectBarButton
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, expectedUpdates.removeFirst())
+                exp.fulfill()
+            }
+        
+        let started = expectation(description: "Task started")
+        let ended = expectation(description: "Task ended")
+        let monitoring = Task {
+            started.fulfill()
+            do {
+                try await sut.monitorAlbums()
+            } catch {
+                XCTFail("Unexpected error")
+            }
+            ended.fulfill()
+        }
+        
+        await fulfillment(of: [started], timeout: 0.25)
+        userAlbumContinuation.yield([AlbumEntity(id: 56, name: "User", type: .user)])
+        userAlbumContinuation.yield([])
+        userAlbumContinuation.yield([])
+        userAlbumContinuation.yield([AlbumEntity(id: 78, name: "User 1", type: .user)])
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        subscription.cancel()
+        monitoring.cancel()
+        await fulfillment(of: [ended], timeout: 0.25)
+    }
+    
     // MARK: - Helpers
     
     private func alertViewModel() -> TextFieldAlertViewModel {
