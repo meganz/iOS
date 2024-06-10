@@ -382,6 +382,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         }
         for await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(excludeSensitives: excludeSensitives),
                                                               await monitorUserAlbums(excludeSensitives: excludeSensitives)) {
+            updateSelectBarButton(shouldShow: userAlbums.isNotEmpty)
             updateAlbums(systemAlbums + userAlbums)
         }
     }
@@ -421,6 +422,12 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         albumsSubject
             .debounceImmediate(for: .seconds(0.3), scheduler: DispatchQueue.main)
             .assign(to: &$albums)
+    }
+    
+    @MainActor
+    private func updateSelectBarButton(shouldShow: Bool) {
+        guard photoAlbumContainerViewModel?.shouldShowSelectBarButton != shouldShow else { return }
+        photoAlbumContainerViewModel?.shouldShowSelectBarButton = shouldShow
     }
 }
 
