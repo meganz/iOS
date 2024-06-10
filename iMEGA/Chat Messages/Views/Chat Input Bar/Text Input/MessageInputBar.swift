@@ -128,6 +128,9 @@ class MessageInputBar: UIView {
         
         calculateAddButtonBotomSpacing()
         updateAppearance()
+        if UIColor.isDesignTokenEnabled() {
+            setSendButtonColor()
+        }
     }
     
     override var intrinsicContentSize: CGSize {
@@ -272,7 +275,11 @@ class MessageInputBar: UIView {
     private func configureEditField() {
         guard let editMessage = editMessage else {
             editViewHeightConstraint.constant = 0
-            sendButton.setImage(UIImage(resource: .sendButton), for: .normal)
+            if UIColor.isDesignTokenEnabled() {
+                setSendButtonColor()
+            } else {
+                sendButton.setImage(UIImage(resource: .sendButton), for: .normal)
+            }
             sendButton.isEnabled = true
             return
         }
@@ -280,6 +287,11 @@ class MessageInputBar: UIView {
         editMessageLabel.text = editMessage.message.content
         sendButton.setImage(UIImage(resource: .confirmEdit), for: .normal)
         sendButton.isEnabled = !(editMessage.message.content?.isEmpty ?? true)
+    }
+    
+    private func setSendButtonColor() {
+        let image = UIImage(resource: .sendButton).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
+        sendButton.setImage(image, for: .normal)
     }
     
     override var keyCommands: [UIKeyCommand]? {
