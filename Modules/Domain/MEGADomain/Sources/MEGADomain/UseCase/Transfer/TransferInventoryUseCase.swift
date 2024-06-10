@@ -64,7 +64,7 @@ public struct TransferInventoryUseCase<T: TransferInventoryRepositoryProtocol, U
     
     private func filterUserTransfers(_ transfers: [TransferEntity]) -> [TransferEntity] {
         transfers.filter {
-            $0.type == .upload || isOfflineTransfer($0) || isExportFileTransfer($0) || isSaveToPhotosAppTransfer($0) || isSaveToPhotosAppTransfer($0)
+            $0.type == .upload || isOfflineTransfer($0) || isExportFileTransfer($0) || isSaveToPhotosAppTransfer($0)
         }
     }
     

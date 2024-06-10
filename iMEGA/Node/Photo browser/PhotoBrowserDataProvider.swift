@@ -175,7 +175,7 @@ extension PhotoBrowserDataProvider {
     func makeSaveMediaToPhotosUseCase(for displayMode: DisplayMode) -> some SaveMediaToPhotosUseCaseProtocol {
         SaveMediaToPhotosUseCase(
             downloadFileRepository: DownloadFileRepository(
-                sdk: sdk,
+                sdk: .shared,
                 sharedFolderSdk: displayMode == .nodeInsideFolderLink ? sdk : nil,
                 nodeProvider: nodeProvider),
             fileCacheRepository: FileCacheRepository.newRepo,
