@@ -9,8 +9,8 @@ public enum VerticalBackgroundViewMode: Sendable {
 /// depending on the mode property
 /// It was refactored out of VerticalThumbnailView as it forms a separate unit and make understanding VerticalThumbnailView easier
 struct BackgroundView<Header: View, Footer: View>: View {
-    
-    @Binding var image: UIImage
+    var image: UIImage
+    var isThumbnailLoaded: Bool
     let mode: VerticalBackgroundViewMode
     let backgroundColor: Color
     let header: Header
@@ -20,7 +20,6 @@ struct BackgroundView<Header: View, Footer: View>: View {
     var body: some View {
         ZStack {
             background
-            
             VStack(spacing: .zero) {
                 header
                 
@@ -45,6 +44,7 @@ struct BackgroundView<Header: View, Footer: View>: View {
                 .aspectRatio(1, contentMode: .fill)
                 .sensitive(isSensitive ? .blur : .none)
                 .frame(height: 174)
+                .animatedAppearance(isContentLoaded: isThumbnailLoaded)
                 .clipped()
         case .icon:
             backgroundColor.opacity(0.9)

@@ -674,6 +674,7 @@ public class SearchResultsViewModel: ObservableObject {
             // For items that already have their thumbnails fetched, we can reuse them
             if let existingItem = listItems.first(where: { $0.result.id == result.id }) {
                 item.thumbnailImage = existingItem.thumbnailImage
+                item.isThumbnailLoadedOnce = existingItem.isThumbnailLoadedOnce
             }
             newResultViewModels.append(item)
         }
