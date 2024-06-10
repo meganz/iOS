@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 
 extension VerifyCredentialsViewController {
@@ -18,5 +19,10 @@ extension VerifyCredentialsViewController {
     @objc func setLabelColors() {
         contactHeaderLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
         myCredentialsHeaderLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
+    }
+    
+    @objc func setResetButtonColor(_ button: UIButton) {
+        button.backgroundColor = TokenColors.Button.secondary
+        button.setTitleColor(TokenColors.Text.accent, for: UIControl.State.normal)
     }
 }
