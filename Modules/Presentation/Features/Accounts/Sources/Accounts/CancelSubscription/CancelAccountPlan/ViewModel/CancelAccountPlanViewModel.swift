@@ -29,4 +29,8 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     func dismiss() {
         router.dismiss()
     }
+    
+    func showCancelSubscriptionSteps() {
+        router.showCancellationSteps()
+    }
 }
