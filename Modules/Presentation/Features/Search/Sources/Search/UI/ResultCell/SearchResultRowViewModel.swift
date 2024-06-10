@@ -16,6 +16,10 @@ extension SearchResultRowViewModel {
 
 class SearchResultRowViewModel: Identifiable, ObservableObject {
     @Published var thumbnailImage: UIImage = UIImage()
+    
+    /// Specify whether  thumbnailImage was successfully loaded once
+    /// This property is needed to animate the thumbnailImage when it is first loaded.
+    @Published var isThumbnailLoadedOnce = false
 
     var title: String {
         result.title
@@ -106,5 +110,8 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     @MainActor
     private func update(thumbnailImage: UIImage) async {
         self.thumbnailImage = thumbnailImage
+        if !isThumbnailLoadedOnce {
+            isThumbnailLoadedOnce = true
+        }
     }
 }
