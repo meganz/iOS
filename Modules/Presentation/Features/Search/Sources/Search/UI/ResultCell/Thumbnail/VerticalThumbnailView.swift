@@ -61,13 +61,15 @@ struct VerticalThumbnailView: View {
     
     private var topInfoView: some View {
         BackgroundView(
-            image: $viewModel.thumbnailImage,
+            image: viewModel.thumbnailImage,
+            isThumbnailLoaded: viewModel.isThumbnailLoadedOnce,
             mode: viewModel.result.backgroundDisplayMode,
             backgroundColor: thumbnailBackgroundColor,
             header: backgroundHeader,
             footer: backgroundFooter,
             isSensitive: viewModel.isSensitive
-        ).sensitive(viewModel.isSensitive ? .opacity : .none)
+        )
+        .sensitive(viewModel.isSensitive ? .opacity : .none)
         .clipped()
     }
     
