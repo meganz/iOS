@@ -4,12 +4,26 @@ import MEGASwiftUI
 import SwiftUI
 
 struct CancelAccountPlanView: View {
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: CancelAccountPlanViewModel
+    
+    private var bodyBackgroundColor: Color {
+        colorScheme == .dark ? Color.black : Color.white
+    }
+    
+    private var navigationBarBackgroundColor: Color {
+        colorScheme == .dark ? Color(red: 0.157, green: 0.157, blue: 0.188) : Color(red: 0.969, green: 0.969, blue: 0.969)
+    }
+    
+    private var featureListHeaderBackgroundColor: Color {
+        colorScheme == .dark ? Color(red: 0.286, green: 0.290, blue: 0.302) : Color(red: 0.847, green: 0.851, blue: 0.859)
+    }
     
     var body: some View {
         VStack(spacing: 0) {
             navigationBar
                 .frame(height: 60)
+                .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : navigationBarBackgroundColor)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 10) {
                     headerView()
@@ -22,7 +36,7 @@ struct CancelAccountPlanView: View {
             Spacer()
         }
         .ignoresSafeArea(edges: [.top, .bottom])
-        .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : .clear )
+        .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : .clear)
         .task {
             viewModel.setupFeatureList()
         }
@@ -40,7 +54,7 @@ struct CancelAccountPlanView: View {
                         .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
                 }
             },
-            backgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : .clear
+            backgroundColor: .clear
         )
     }
     
@@ -70,7 +84,7 @@ struct CancelAccountPlanView: View {
         }
         .padding(.horizontal, 8.0)
         .frame(height: 40)
-        .background(isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : Color(red: 0.847, green: 0.851, blue: 0.859))
+        .background(isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : featureListHeaderBackgroundColor)
     }
     
     @ViewBuilder
@@ -83,7 +97,7 @@ struct CancelAccountPlanView: View {
                 Divider()
             }
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .white)
+        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : bodyBackgroundColor)
         .cornerRadius(8.0)
     }
     
@@ -115,7 +129,7 @@ struct CancelAccountPlanView: View {
             }
             
             SecondaryActionButtonView(title: Strings.Localizable.Cancellation.Subscription.Continue.Cancellation.Button.title) {
-                // Action for continuing with cancellation
+                viewModel.showCancelSubscriptionSteps()
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
