@@ -7,25 +7,25 @@ import MEGAPresentationMock
 import XCTest
 
 final class CallControlsViewModelTests: XCTestCase {
-    func testEndCall_beingModeratorAndMoreThanOneParticipantInGroupCall_shouldShowHangOrEndCallDialog() {
+    @MainActor func testEndCall_beingModeratorAndMoreThanOneParticipantInGroupCall_shouldShowHangOrEndCallDialog() {
         let harness = Harness(chatType: .meeting, numberOfCallParticipants: 2)
         harness.sut.endCallTapped()
         XCTAssertTrue(harness.showHangOrEndCallDialogShown())
     }
     
-    func testEndCall_beingModeratorAndOneParticipantInGroupCall_shouldEndCall() {
+    @MainActor func testEndCall_beingModeratorAndOneParticipantInGroupCall_shouldEndCall() {
         let harness = Harness(chatType: .meeting, numberOfCallParticipants: 1)
         harness.sut.endCallTapped()
         XCTAssertTrue(harness.endCallNotifiedToCallManager())
     }
     
-    func testEndCall_inOneToOne_shouldEndCall() {
+    @MainActor func testEndCall_inOneToOne_shouldEndCall() {
         let harness = Harness(chatType: .oneToOne, numberOfCallParticipants: 1)
         harness.sut.endCallTapped()
         XCTAssertTrue(harness.endCallNotifiedToCallManager())
     }
     
-    func testEndCall_notBeingModeratorAndMoreThanOneParticipantInGroupCall_shouldShowHangOrEndCallDialog() {
+    @MainActor func testEndCall_notBeingModeratorAndMoreThanOneParticipantInGroupCall_shouldShowHangOrEndCallDialog() {
         let harness = Harness(chatType: .meeting, isModerator: false, numberOfCallParticipants: 2)
         harness.sut.endCallTapped()
         XCTAssertTrue(harness.endCallNotifiedToCallManager())
