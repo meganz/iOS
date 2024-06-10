@@ -3,7 +3,7 @@ protocol CallControlsViewModelProtocol: ObservableObject {
     var cameraEnabled: Bool { get }
     var speakerEnabled: Bool { get }
     var routeViewVisible: Bool { get }
-    func endCallTapped()
+    func endCallTapped() async
     func toggleCameraTapped() async
     func toggleMicTapped() async
     func toggleSpeakerTapped()

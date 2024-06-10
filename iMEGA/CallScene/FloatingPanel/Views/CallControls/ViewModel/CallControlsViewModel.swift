@@ -72,7 +72,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     // MARK: - Public
     
-    @MainActor func endCallTapped() {
+    @MainActor func endCallTapped() async {
         manageEndCall()
     }
     
