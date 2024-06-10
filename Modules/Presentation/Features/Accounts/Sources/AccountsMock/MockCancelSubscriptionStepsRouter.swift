@@ -1,9 +1,8 @@
 import Accounts
 import SwiftUI
 
-public class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
+public class MockCancelSubscriptionStepsRouter: CancelSubscriptionStepsRouting {
     public var dismiss_calledTimes = 0
-    public var showCancellationSteps_calledTimes = 0
     
     public init() {}
     
@@ -14,9 +13,5 @@ public class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
     
     public func dismiss() {
         dismiss_calledTimes += 1
-    }
-    
-    public func showCancellationSteps() {
-        showCancellationSteps_calledTimes += 1
     }
 }
