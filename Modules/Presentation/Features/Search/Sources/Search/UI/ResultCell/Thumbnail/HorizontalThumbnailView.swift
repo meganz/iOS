@@ -52,6 +52,7 @@ struct HorizontalThumbnailView: View {
             .resizable()
             .scaledToFit()
             .frame(width: 24, height: 24)
+            .animatedAppearance(isContentLoaded: viewModel.isThumbnailLoadedOnce)
             .sensitive(viewModel.isSensitive && viewModel.hasThumbnail ? .blur : .none)
     }
     
