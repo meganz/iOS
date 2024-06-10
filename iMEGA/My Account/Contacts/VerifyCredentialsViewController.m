@@ -137,7 +137,11 @@
 - (void)updateVerifyOrResetButton {
     if ([MEGASdk.shared areCredentialsVerifiedOfUser:self.user]) {
         [self.verifyOrResetButton setTitle:LocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
-        [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
+        if (UIColor.isDesignTokenEnabled) {
+            [self setResetButtonColor:self.verifyOrResetButton];
+        } else {
+            [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
+        }
     } else {
         [self.verifyOrResetButton setTitle:LocalizedString(@"account.verifyContact.confirmButtonText", @"Mark as verified") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupPrimary:self.traitCollection];
