@@ -93,7 +93,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
 
         func initialise(searchField: UITextField) {
             if isDesignTokenEnabled {
-                searchField.setLeftImage(UIImage.searchBarIcon, tintColor: TokenColors.Text.placeholder)
+                searchField.setLeftImage(UIImage.searchBarIconSemantic, tintColor: TokenColors.Text.placeholder)
                 searchField.attributedPlaceholder = NSAttributedString(
                     string: HomeLocalisation.searchYourFiles.rawValue,
                     attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.placeholder]
