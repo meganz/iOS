@@ -2,8 +2,6 @@
 
 - (NSArray *)mnz_numberOfFilesAndFolders;
 
-- (BOOL)mnz_existsFolderWithName:(NSString *)name;
-
 - (NSArray<MEGANode*> *)mnz_nodesArrayFromNodeList;
 - (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList;
 - (NSMutableArray<MEGANode*> *)mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:(MEGASdk *)sdk;
