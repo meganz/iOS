@@ -92,7 +92,7 @@ struct PlaylistContentHeaderView: View {
         if isDesignTokenEnabled {
             PillView(
                 viewModel: .init(
-                    title: "Add", // CC-6824
+                    title: Strings.Localizable.Videos.Tab.Playlist.Content.Header.Button.Title.add,
                     icon: .leading(Image(uiImage: videoConfig.playlistContentAssets.headerView.image.addButtonImage.withRenderingMode(.alwaysTemplate))),
                     foreground: TokenColors.Text.accent.swiftUI,
                     background: TokenColors.Button.secondary.swiftUI,
@@ -103,7 +103,7 @@ struct PlaylistContentHeaderView: View {
         } else {
             IconButton(
                 image: Image(uiImage: videoConfig.playlistContentAssets.headerView.image.addButtonImage),
-                title: "Add", // CC-6824
+                title: Strings.Localizable.Videos.Tab.Playlist.Content.Header.Button.Title.add,
                 tintColor: videoConfig.playlistContentAssets.headerView.color.buttonTintColor,
                 action: { onTapAddButton() }
             )
