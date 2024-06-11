@@ -154,7 +154,7 @@ extension NodeCollectionViewCell {
     
     @objc func updateSelection() {
         if moreButton?.isHidden ?? false && self.isSelected {
-            selectImageView?.image = UIImage(resource: .thumbnailSelected)
+            selectImageView?.image = UIColor.isDesignTokenEnabled() ? UIImage.checkBoxSelectedSemantic : UIImage(resource: .thumbnailSelected)
             self.contentView.layer.borderColor = UIColor.mnz_green00A886().cgColor
         } else {
             selectImageView?.image = UIImage(resource: .checkBoxUnselected)
