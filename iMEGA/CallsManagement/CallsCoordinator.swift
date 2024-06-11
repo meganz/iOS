@@ -1,3 +1,4 @@
+import CallKit
 import ChatRepo
 import Combine
 import MEGADomain
@@ -136,11 +137,11 @@ protocol CallsCoordinatorFactoryProtocol {
         case .inProgress:
             reportCallConnectedIfNeeded(call)
         case .terminatingUserParticipation:
-            reportCallEndedIfNeeded(call)
+            reportEndCall(call)
             callUseCase.disableAudioMonitor(forCall: call)
             removeCallListeners()
         case .destroyed:
-            reportCallEndedIfNeeded(call)
+            reportEndCall(call)
         default:
             break
         }
@@ -152,35 +153,25 @@ protocol CallsCoordinatorFactoryProtocol {
     }
     
     private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            guard let providerDelegate,
-                  let callUUID = uuidToReportCallConnectChanges(for: call)
-            else { return }
-
-            guard (callManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
-            else { return }
-            
-            providerDelegate.provider.reportOutgoingCall(with: callUUID, startedConnectingAt: nil)
-        }
+        guard let providerDelegate,
+              let callUUID = uuidToReportCallConnectChanges(for: call)
+        else { return }
+        
+        guard (callManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
+        else { return }
+        
+        providerDelegate.provider.reportOutgoingCall(with: callUUID, startedConnectingAt: nil)
     }
     
     private func reportCallConnectedIfNeeded(_ call: CallEntity) {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            guard let providerDelegate,
-                  let callUUID = uuidToReportCallConnectChanges(for: call)
-            else { return }
-
-            guard (callManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
-            else { return }
-            
-            providerDelegate.provider.reportOutgoingCall(with: callUUID, connectedAt: nil)
-        }
-    }
-    
-    private func reportCallEndedIfNeeded(_ call: CallEntity) {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            reportEndCall(call)
-        }
+        guard let providerDelegate,
+              let callUUID = uuidToReportCallConnectChanges(for: call)
+        else { return }
+        
+        guard (callManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
+        else { return }
+        
+        providerDelegate.provider.reportOutgoingCall(with: callUUID, connectedAt: nil)
     }
     
     private func uuidToReportCallConnectChanges(for call: CallEntity) -> UUID? {

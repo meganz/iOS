@@ -661,6 +661,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         callUseCase.chatRoom = chatRoom
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        let callManager = MockCallManager()
         
         let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
@@ -671,12 +672,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoomUseCase: MockChatRoomUseCase(),
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
+            callManager: callManager,
             chatRoom: chatRoom,
             call: call
         )
         callUseCase.callbacksDelegate = viewModel
         callUseCase.outgoingRingingStopReceived()
-        XCTAssert(callUseCase.hangCall_CalledTimes == 1)
+        XCTAssert(callManager.endCall_CalledTimes == 1)
     }
     
     func testCallback_outgoingRingingStop_doNotHangGroupCall() {

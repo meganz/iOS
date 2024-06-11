@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADomainMock
+import PushKit
 import XCTest
 
 final class VoIPPushDelegateTests: XCTestCase {

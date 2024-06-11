@@ -1,3 +1,4 @@
+import CallKit
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -24,19 +25,16 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
     
     func testCallUpdate_onCallUpdateJoining_callSessionListenerExists() {
         let callUseCase = MockCallUseCase()
-        let callKitManager = MockCallKitManager()
         
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
-            callKitManager: callKitManager
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
 
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil  &&
-            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+            viewModel.callSessionUpdateSubscription != nil
         }
     }
     
@@ -45,21 +43,18 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
         let callSessionUseCase = MockCallSessionUseCase()
-        let callKitManager = MockCallKitManager()
         
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase,
-            callKitManager: callKitManager
+            callSessionUseCase: callSessionUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil &&
-            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+            viewModel.callSessionUpdateSubscription != nil
         }
         
         callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(changeType: .onRecording, onRecording: true), CallEntity()))
@@ -72,21 +67,18 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
         let callSessionUseCase = MockCallSessionUseCase()
-        let callKitManager = MockCallKitManager()
 
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase,
-            callKitManager: callKitManager
+            callSessionUseCase: callSessionUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil &&
-            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+            viewModel.callSessionUpdateSubscription != nil
         }
         
         callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: true), CallEntity()))
@@ -99,21 +91,18 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
         let callSessionUseCase = MockCallSessionUseCase()
-        let callKitManager = MockCallKitManager()
 
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase,
-            callKitManager: callKitManager
+            callSessionUseCase: callSessionUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil  &&
-            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+            viewModel.callSessionUpdateSubscription != nil
         }
         
         callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: false), CallEntity()))
@@ -126,21 +115,18 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
         let callSessionUseCase = MockCallSessionUseCase()
-        let callKitManager = MockCallKitManager()
 
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase,
-            callKitManager: callKitManager
+            callSessionUseCase: callSessionUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil  &&
-            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+            viewModel.callSessionUpdateSubscription != nil
         }
         
         callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(changeType: .onRecording, onRecording: false), CallEntity()))
@@ -394,7 +380,6 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-        callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
         callManager: some CallManagerProtocol = MockCallManager(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> MainTabBarCallsViewModel {
@@ -407,8 +392,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callSessionUseCase: callSessionUseCase, 
             accountUseCase: accountUseCase,
             handleUseCase: handleUseCase,
-            callKitManager: callKitManager,
-            callManager: callManager, 
+            callManager: callManager,
             callUpdateFactory: CXCallUpdateFactory(builder: { CXCallUpdate() }),
             featureFlagProvider: featureFlagProvider
         )

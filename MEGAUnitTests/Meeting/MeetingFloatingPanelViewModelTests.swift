@@ -634,7 +634,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase)
         let viewModel = MeetingFloatingPanelViewModel.make(
             router: router,
             containerViewModel: containerViewModel,
@@ -653,7 +653,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase)
         let viewModel = MeetingFloatingPanelViewModel.make(router: router,
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
@@ -674,7 +674,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase)
         let viewModel = MeetingFloatingPanelViewModel.make(router: router,
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
@@ -716,7 +716,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase)
         let viewModel = MeetingFloatingPanelViewModel.make(
             router: router,
             containerViewModel: containerViewModel,
@@ -739,7 +739,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call, muteParticipantCompletion: .failure(GenericErrorEntity()))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase)
         let viewModel = MeetingFloatingPanelViewModel.make(
             router: router,
             containerViewModel: containerViewModel,
