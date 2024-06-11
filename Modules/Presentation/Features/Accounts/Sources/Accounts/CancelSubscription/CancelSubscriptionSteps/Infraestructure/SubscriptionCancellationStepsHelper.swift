@@ -18,14 +18,14 @@ struct CancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol {
     private var title: String {
         switch type {
         case .google: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.title
-        case .webClient: ""
+        case .webClient: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.title
         }
     }
     
     private var message: String {
         switch type {
         case .google: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.message
-        case .webClient: ""
+        case .webClient: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.message
         }
     }
     
@@ -72,6 +72,26 @@ struct CancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol {
     }
     
     private func loadWebClientSteps() -> [StepSection] {
-        []
+        [
+            StepSection(
+                title: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.title,
+                steps: [
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.one),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.two),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.three),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.four),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.five)
+                ]
+            ),
+            StepSection(
+                title: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.title,
+                steps: [
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.one),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.two),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.three),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.four)
+                ]
+            )
+        ]
     }
 }
