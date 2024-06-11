@@ -49,23 +49,23 @@ struct CancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol {
             StepSection(
                 title: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.title,
                 steps: [
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.one),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.two),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.three),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.four),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.five),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.six)
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.one),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.two),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.three),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.four),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.five),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.WebBrowser.Step.six)
                 ]
             ),
             StepSection(
                 title: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.title,
                 steps: [
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.one),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.two),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.three),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.four),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.five),
-                    Step(content: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.six)
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.one),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.two),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.three),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.four),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.five),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.six)
                 ]
             )
         ]

@@ -25,7 +25,7 @@ final class CancelSubscriptionStepsViewModelTests: XCTestCase {
     func testSetupStepList_setsCorrectData() async {
         let expectedTitle = "Test Title"
         let expectedMessage = "Test Message"
-        let expectedStep = Step(content: "Step 1")
+        let expectedStep = Step(text: "Step 1")
         let expectedSection = StepSection(title: "Test Section", steps: [expectedStep])
         let cancelSubscriptionData = CancelSubscriptionData(
             title: expectedTitle,
