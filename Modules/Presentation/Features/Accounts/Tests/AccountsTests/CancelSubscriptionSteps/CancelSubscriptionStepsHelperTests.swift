@@ -4,6 +4,7 @@ import XCTest
 
 final class CancelSubscriptionStepsHelperTests: XCTestCase {
 
+    // MARK: - Google subscription
     func testLoadCancellationData_googleSubscription_returnsCorrectTitle() {
         let data = makeSUTAndLoadData(type: .google)
 
@@ -40,6 +41,43 @@ final class CancelSubscriptionStepsHelperTests: XCTestCase {
         verifyGoogleAndroidDeviceSteps(steps: androidDeviceSection.steps)
     }
     
+    // MARK: - Webclient subscription
+    func testLoadCancellationData_webclientSubscription_returnsCorrectTitle() {
+        let data = makeSUTAndLoadData(type: .webClient)
+
+        XCTAssertEqual(data.title, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.title)
+    }
+    
+    func testLoadCancellationData_webclientSubscription_returnsCorrectMessage() {
+        let data = makeSUTAndLoadData(type: .webClient)
+
+        XCTAssertEqual(data.message, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.message)
+    }
+    
+    func testLoadCancellationData_webclientSubscription_returnsCorrectSectionsCount() {
+        let data = makeSUTAndLoadData(type: .webClient)
+
+        XCTAssertEqual(data.sections.count, 2)
+    }
+    
+    func testLoadCancellationData_webclientSubscription_returnsCorrectComputerSection() {
+        let data = makeSUTAndLoadData(type: .webClient)
+        let computerSection = data.sections[0]
+
+        XCTAssertEqual(computerSection.title, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.title)
+        XCTAssertEqual(computerSection.steps.count, 5)
+        verifyWebclientOnComputerSteps(steps: computerSection.steps)
+    }
+    
+    func testLoadCancellationData_webclientSubscription_returnsCorrectMobileDeviceSection() {
+        let data = makeSUTAndLoadData(type: .webClient)
+        let mobileSection = data.sections[1]
+        
+        XCTAssertEqual(mobileSection.title, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.title)
+        XCTAssertEqual(mobileSection.steps.count, 4)
+        verifyWebclientOnMobileSteps(steps: mobileSection.steps)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUTAndLoadData(type: SubscriptionType) -> CancelSubscriptionData {
@@ -71,5 +109,28 @@ final class CancelSubscriptionStepsHelperTests: XCTestCase {
         XCTAssertEqual(steps[3].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.four, file: file, line: line)
         XCTAssertEqual(steps[4].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.five, file: file, line: line)
         XCTAssertEqual(steps[5].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.GooglePlay.AndroidDevice.Step.six, file: file, line: line)
+    }
+    
+    private func verifyWebclientOnComputerSteps(
+        steps: [Step],
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertEqual(steps[0].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.one, file: file, line: line)
+        XCTAssertEqual(steps[1].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.two, file: file, line: line)
+        XCTAssertEqual(steps[2].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.three, file: file, line: line)
+        XCTAssertEqual(steps[3].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.four, file: file, line: line)
+        XCTAssertEqual(steps[4].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.five, file: file, line: line)
+    }
+    
+    private func verifyWebclientOnMobileSteps(
+        steps: [Step],
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertEqual(steps[0].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.one, file: file, line: line)
+        XCTAssertEqual(steps[1].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.two, file: file, line: line)
+        XCTAssertEqual(steps[2].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.three, file: file, line: line)
+        XCTAssertEqual(steps[3].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.four, file: file, line: line)
     }
 }
