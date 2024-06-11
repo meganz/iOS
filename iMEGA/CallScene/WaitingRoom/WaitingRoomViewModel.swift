@@ -23,7 +23,6 @@ final class WaitingRoomViewModel: ObservableObject {
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
-    private let callKitManager: any CallKitManagerProtocol
     private let callManager: any CallManagerProtocol
     private let meetingUseCase: any MeetingCreatingUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
@@ -96,7 +95,6 @@ final class WaitingRoomViewModel: ObservableObject {
          chatUseCase: some ChatUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
-         callKitManager: some CallKitManagerProtocol,
          callManager: some CallManagerProtocol,
          meetingUseCase: some MeetingCreatingUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
@@ -117,7 +115,6 @@ final class WaitingRoomViewModel: ObservableObject {
         self.chatUseCase = chatUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
-        self.callKitManager = callKitManager
         self.callManager = callManager
         self.meetingUseCase = meetingUseCase
         self.authUseCase = authUseCase
@@ -200,12 +197,8 @@ final class WaitingRoomViewModel: ObservableObject {
     func muteLocalMicrophone(mute: Bool) {
         checkForAudioPermission { [weak self] in
             guard let self, let call else { return }
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
-                callManager.muteCall(in: chatRoom, muted: mute)
-            } else {
-                callKitManager.muteUnmuteCall(call, muted: mute)
-            }
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+            callManager.muteCall(in: chatRoom, muted: mute)
         }
     }
     
@@ -449,34 +442,15 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func answerCall() {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
-            let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
-            callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: isVideoEnabled, notRinging: false, isJoiningActiveCall: true)
-            viewState = .waitForHostToLetIn
-        } else {
-            Task { @MainActor in
-                do {
-                    _ = try await callUseCase.answerCall(for: chatId, enableVideo: isVideoEnabled, enableAudio: true)
-                    viewState = .waitForHostToLetIn
-                    muteLocalMicrophone(mute: isMicrophoneMuted)
-                } catch {
-                    MEGALogDebug("Cannot answer call")
-                }
-            }
-        }
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
+        let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: isVideoEnabled, notRinging: false, isJoiningActiveCall: true)
+        viewState = .waitForHostToLetIn
     }
     
     private func dismissCall() {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
-            callManager.endCall(in: chatRoom, endForAll: false)
-        } else {
-            guard let call else { return }
-            callKitManager.removeCallRemovedHandler()
-            callUseCase.hangCall(for: call.callId)
-            callKitManager.endCall(call)
-        }
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
+        callManager.endCall(in: chatRoom, endForAll: false)
     }
     
     private func createEphemeralAccountAndJoinChat(firstName: String, lastName: String) {

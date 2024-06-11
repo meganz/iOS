@@ -1374,11 +1374,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
         self.call = call
         if chatRoom.chatType == .oneToOne && call.numberOfParticipants == 1 {
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                callManager.endCall(in: chatRoom, endForAll: false)
-            } else {
-                callUseCase.hangCall(for: call.callId)
-            }
+            callManager.endCall(in: chatRoom, endForAll: false)
             self.tonePlayer.play(tone: .callEnded)
         }
     }

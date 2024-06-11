@@ -50,7 +50,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let callEntity = CallEntity(status: .connecting, chatId: 100)
         let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(callEntity), callUpdateSubject: callUpdateSubject)
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, callUseCase: callUseCase)
+        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()), callUseCase: callUseCase)
         
         XCTAssertEqual(sut.viewState, .waitForHostToStart)
         
@@ -179,8 +179,12 @@ final class WaitingRoomViewModelTests: XCTestCase {
     func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingDidStart_shoudBecomeWaitForHostToLetIn() {
         let callUseCase = MockCallUseCase(call: CallEntity(), answerCallCompletion: .success(CallEntity()))
         let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let accountUseCase = MockAccountUseCase(isGuest: true)
-        let sut = WaitingRoomViewModel(callUseCase: callUseCase,
+        let callManager = MockCallManager()
+        let sut = WaitingRoomViewModel(chatRoomUseCase: chatRoomUseCase,
+                                       callUseCase: callUseCase,
+                                       callManager: callManager,
                                        meetingUseCase: meetingUseCase,
                                        accountUseCase: accountUseCase,
                                        chatLink: "Test chatLink")
@@ -190,7 +194,8 @@ final class WaitingRoomViewModelTests: XCTestCase {
         sut.tapJoinAction(firstName: "First", lastName: "Last")
         
         evaluate {
-            sut.viewState == .waitForHostToLetIn
+            sut.viewState == .waitForHostToLetIn &&
+            callManager.startCall_CalledTimes == 1
         }
     }
     

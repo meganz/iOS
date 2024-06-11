@@ -32,7 +32,6 @@ final class ChatContentViewModel: ViewModelType {
         case showTapToReturnToCall(_ title: String)
         case enableAudioVideoButtons(_ enable: Bool)
         case hideStartOrJoinCallButton(_ hide: Bool)
-        case updateNavigationBarButtonsWithAudioVideo(_ enabled: Bool)
     }
     
     struct NavBarRightItems: OptionSet {
@@ -207,36 +206,6 @@ final class ChatContentViewModel: ViewModelType {
         invokeCommand?(.enableAudioVideoButtons(enable))
     }
     
-    private func startCall(enableVideo: Bool, notRinging: Bool) {
-        prepareAudioForCall()
-        invokeCommand?(.updateNavigationBarButtonsWithAudioVideo(true))
-        let isSpeakerEnabled = enableVideo || chatRoom.isMeeting
-        Task {
-            do {
-                let call = try await callUseCase.startCall(for: chatRoom.chatId, enableVideo: enableVideo, enableAudio: true, notRinging: notRinging)
-                invokeCommand?(.updateNavigationBarButtonsWithAudioVideo(false))
-                router.startCallUI(chatRoom: chatRoom, call: call, isSpeakerEnabled: isSpeakerEnabled)
-            } catch {
-                MEGALogDebug("Cannot start call")
-            }
-        }
-    }
-    
-    private func answerCall() {
-        prepareAudioForCall()
-        invokeCommand?(.updateNavigationBarButtonsWithAudioVideo(true))
-        callUseCase.answerCall(for: chatRoom.chatId) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let call):
-                invokeCommand?(.updateNavigationBarButtonsWithAudioVideo(false))
-                router.startCallUI(chatRoom: chatRoom, call: call, isSpeakerEnabled: false)
-            case .failure:
-                MEGALogDebug("Cannot answer call")
-            }
-        }
-    }
-    
     private func prepareAudioForCall() {
         audioSessionUseCase.configureCallAudioSession()
         if chatRoom.isMeeting {
@@ -370,12 +339,7 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     private func endCall(_ call: CallEntity) {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            callManager.endCall(in: chatRoom, endForAll: false)
-        } else {
-            callUseCase.hangCall(for: call.callId)
-            CallKitManager().endCall(call)
-        }
+        callManager.endCall(in: chatRoom, endForAll: false)
     }
     
     private func manageStartOrJoinCall(videoCall: Bool, notRinging: Bool) {
@@ -384,21 +348,13 @@ final class ChatContentViewModel: ViewModelType {
         } else {
             let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
             if callUseCase.call(for: chatRoom.chatId) != nil {
-                if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                    if let incomingCallUUID = uuidForActiveCallKitCall() {
-                        callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
-                    } else {
-                        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: true)
-                    }
+                if let incomingCallUUID = uuidForActiveCallKitCall() {
+                    callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
                 } else {
-                    answerCall()
+                    callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: true)
                 }
             } else {
-                if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                    callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: false)
-                } else {
-                    startCall(enableVideo: videoCall, notRinging: notRinging)
-                }
+                callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: false)
             }
         }
     }

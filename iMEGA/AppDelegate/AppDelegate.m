@@ -39,7 +39,6 @@
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGALoginRequestDelegate.h"
-#import "MEGAProviderDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
@@ -456,77 +455,7 @@
         } else if ([userActivity.activityType isEqualToString:@"INStartCallIntent"]) {
             INInteraction *interaction = userActivity.interaction;
             INStartCallIntent *startCallIntent = (INStartCallIntent *)interaction.intent;
-            INPerson *contact = startCallIntent.contacts.firstObject;
-            INPersonHandle *personHandle = contact.personHandle;
-            
-            if ([self isCallKitRefactorEnabled]) {
-                [self startCallFromIntent:startCallIntent];
-            } else {
-                if (personHandle.type == INPersonHandleTypeEmailAddress) {
-                    self.email = personHandle.value;
-                    self.videoCall = startCallIntent.callCapability == INCallCapabilityVideoCall;
-                    MEGALogDebug(@"Email %@", self.email);
-                    uint64_t userHandle = [MEGAChatSdk.shared userHandleByEmail:self.email];
-                    
-                    if (userHandle == MEGAInvalidHandle) {
-                        MEGALogDebug(@"Can't start a call because %@ is not your contact", self.email);
-                        if (isFetchNodesDone) {
-                            [self presentInviteContactCustomAlertViewController];
-                        } else {
-                            _presentInviteContactVCLater = YES;
-                        }
-                    } else {
-                        self.chatRoom = [MEGAChatSdk.shared chatRoomByUser:userHandle];
-                        if (self.chatRoom) {
-                            MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:self.chatRoom.chatId];
-                            if (call.status == MEGAChatCallStatusInProgress) {
-                                MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                                BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
-                                [self performCallWithPresenter:UIApplication.mnz_presentingViewController
-                                                      chatRoom:self.chatRoom
-                                              isSpeakerEnabled:isSpeakerEnabled];
-                                self.chatRoom = nil;
-                            } else {
-                                MEGAChatConnection chatConnection = [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId];
-                                MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
-                                if (chatConnection == MEGAChatConnectionOnline) {
-                                    [self initiateCallAfterAskingForPermissionsWithVideoCall:self.isVideoCall];
-                                }
-                            }
-                        } else {
-                            MEGALogDebug(@"There is not a chat with %@, create the chat and inmediatelly perform the call", self.email);
-                            [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                                self.chatRoom = chatRoom;
-                                MEGAChatConnection chatConnection = [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId];
-                                MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
-                                if (chatConnection == MEGAChatConnectionOnline) {
-                                    [self performCall];
-                                }
-                            }];
-                        }
-                    }
-                } if (personHandle.type == INPersonHandleTypeUnknown) {
-                    uint64_t handle = [MEGASdk handleForBase64UserHandle:personHandle.value];
-                    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:handle];
-                    self.videoCall = startCallIntent.callCapability == INCallCapabilityVideoCall;
-                    
-                    if (call && call.status == MEGAChatCallStatusInProgress) {
-                        self.chatRoom = [MEGAChatSdk.shared chatRoomForChatId:call.chatId];
-                        MEGALogDebug(@"call id %llu", call.callId);
-                        MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                        BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
-                        [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isSpeakerEnabled:isSpeakerEnabled];
-                        self.chatRoom = nil;
-                    } else {
-                        self.chatRoom = [MEGAChatSdk.shared chatRoomForChatId:handle];
-                        MEGAChatConnection chatConnection = [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId];
-                        MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
-                        if (chatConnection == MEGAChatConnectionOnline) {
-                            [self initiateCallAfterAskingForPermissionsWithVideoCall:self.isVideoCall];
-                        }
-                    }
-                }
-            }
+            [self startCallFromIntent:startCallIntent];
         } else if ([userActivity.activityType isEqualToString:@"NSUserActivityTypeBrowsingWeb"]) {
             NSURL *universalLinkURL = userActivity.webpageURL;
             if (universalLinkURL) {
@@ -1116,45 +1045,6 @@
     [NSNotificationCenter.defaultCenter postNotificationName:MEGAPasscodeViewControllerWillCloseNotification object:nil];
 }
 
-#pragma mark - PKPushRegistryDelegate
-
-- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(NSString *)type {
-    if([credentials.token length] == 0) {
-        MEGALogError(@"VoIP token length is 0");
-        return;
-    }
-    const unsigned char *dataBuffer = (const unsigned char *)credentials.token.bytes;
-    
-    NSUInteger dataLength = credentials.token.length;
-    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
-    
-    for (int i = 0; i < dataLength; ++i) {
-        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
-    }
-    
-    NSString *deviceTokenString = [NSString stringWithString:hexString];
-    MEGALogDebug(@"Device token %@", deviceTokenString);
-    [MEGASdk.shared registeriOSVoIPdeviceToken:deviceTokenString];
-    
-}
-
-- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type withCompletionHandler:(void (^)(void))completion {
-    MEGALogDebug(@"Did receive incoming push with payload: %@ and type: %@", [payload dictionaryPayload], type);
-    
-    // Call
-    if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
-        [self initProviderDelegate];
-        NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
-        NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
-        uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
-        uint64_t callId = [MEGASdk handleForBase64UserHandle:callIdB64];
-        
-        [self.megaProviderDelegate reportIncomingCallWithCallId:callId chatId:chatId completion:^{
-            completion();
-        }];
-    }
-}
-
 #pragma mark - UNUserNotificationCenterDelegate
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
@@ -1557,7 +1447,6 @@
             }
                         
             [self initProviderDelegate];
-            [self registerForVoIPNotifications];
             [self registerForNotifications];
             [MEGASdk.shared fetchNodes];
             [QuickAccessWidgetManager reloadAllWidgetsContent];
@@ -1766,9 +1655,6 @@
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        [self.megaProviderDelegate invalidateProvider];
-        self.megaProviderDelegate = nil;
-        self.megaCallManager = nil;
         [self.mainTBC setBadgeValueForChats];
     }
     

@@ -281,20 +281,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             guard let self else { return }
             switch $0 {
             case .success(let chatRoom):
-                if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                    startCall(inChatRoom: chatRoom)
-                } else {
-                    Task { @MainActor in
-                        do {
-                            let call = try await self.callUseCase.answerCall(for: chatId, enableVideo: self.isVideoEnabled, enableAudio: self.isMicrophoneEnabled)
-                            self.router.dismiss(completion: nil)
-                            self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isSpeakerEnabled: self.isSpeakerEnabled)
-                        } catch {
-                            MEGALogDebug("Cannot answer call")
-                            self.dismiss()
-                        }
-                    }
-                }
+                startCall(inChatRoom: chatRoom)
             case .failure:
                 self.dismiss()
             }
@@ -317,23 +304,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         Task { @MainActor in
             do {
                 let chatRoom = try await meetingUseCase.createMeeting(startCallData)
-                if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                    startCall(inChatRoom: chatRoom)
-                } else {
-                    let call = try await callUseCase.startCall(
-                        for: chatRoom.chatId,
-                        enableVideo: isVideoEnabled,
-                        enableAudio: isMicrophoneEnabled,
-                        notRinging: false
-                    )
-                    meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
-                    dismiss()
-                    router.goToMeetingRoom(
-                        chatRoom: chatRoom,
-                        call: call,
-                        isSpeakerEnabled: isSpeakerEnabled
-                    )
-                }
+                startCall(inChatRoom: chatRoom)
             } catch {
                 self.dismiss()
             }

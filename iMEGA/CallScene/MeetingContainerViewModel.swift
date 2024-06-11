@@ -43,7 +43,6 @@ final class MeetingContainerViewModel: ViewModelType {
     private let router: any MeetingContainerRouting
     private let chatRoom: ChatRoomEntity
     private let callUseCase: any CallUseCaseProtocol
-    private let callKitManager: any CallKitManagerProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
@@ -76,7 +75,6 @@ final class MeetingContainerViewModel: ViewModelType {
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          chatUseCase: some ChatUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
-         callKitManager: some CallKitManagerProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
          noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
@@ -92,7 +90,6 @@ final class MeetingContainerViewModel: ViewModelType {
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
-        self.callKitManager = callKitManager
         self.accountUseCase = accountUseCase
         self.authUseCase = authUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
@@ -102,16 +99,6 @@ final class MeetingContainerViewModel: ViewModelType {
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         
-        if !featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
-            self.callKitManager.addCallRemoved { [weak self] uuid in
-                guard let uuid = uuid, let self = self, callUUID == uuid else { return }
-                self.callKitManager.removeCallRemovedHandler()
-                router.dismiss(animated: false, completion: nil)
-            }
-        }
-        
-        listenToMuteUnmuteFailedNotifications()
         subscribeToSeeWaitingRoomListNotification()
         subscribeToOnCallUpdate()
     }
@@ -208,11 +195,7 @@ final class MeetingContainerViewModel: ViewModelType {
     // MARK: - Private
     private func hangCall(presenter: UIViewController?, sender: UIButton?) {
         if !accountUseCase.isGuest {
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                callManager.endCall(in: chatRoom, endForAll: false)
-            } else {
-                hangAndDismissCall(completion: nil)
-            }
+            callManager.endCall(in: chatRoom, endForAll: false)
         } else {
             guard let presenter = presenter, let sender = sender else {
                 return
@@ -224,43 +207,11 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func endCallForAll() {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            callManager.endCall(in: chatRoom, endForAll: true)
-        } else {
-            if let call = call {
-                if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
-                   let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
-                    MEGALogDebug("Meeting: Container view model - End call for all - for call id \(callId) and chat id \(chatId)")
-                } else {
-                    MEGALogDebug("Meeting: Container view model - End call for all - cannot get the call id and chat id string")
-                }
-                
-                callKitManager.removeCallRemovedHandler()
-                callUseCase.endCall(for: call.callId)
-                callKitManager.endCall(call)
-            }
-            
-            router.dismiss(animated: true, completion: nil)
-        }
+        callManager.endCall(in: chatRoom, endForAll: true)
     }
     
     private func hangCall() {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-            callManager.endCall(in: chatRoom, endForAll: false)
-        } else {
-            if let call {
-                if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
-                   let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
-                    MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
-                } else {
-                    MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")
-                }
-                callKitManager.muteUnmuteCall(call, muted: false)
-                callKitManager.removeCallRemovedHandler()
-                callUseCase.hangCall(for: call.callId)
-                callKitManager.endCall(call)
-            }
-        }
+        callManager.endCall(in: chatRoom, endForAll: false)
     }
     
     private func hangAndDismissCall(completion: (() -> Void)?) {
@@ -273,11 +224,7 @@ final class MeetingContainerViewModel: ViewModelType {
            call.hasLocalAudio,
            isOneToOneChat == false,
            isOnlyMyselfInTheMeeting() {
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                callManager.muteCall(in: chatRoom, muted: true)
-            } else {
-                callKitManager.muteUnmuteCall(call, muted: true)
-            }
+            callManager.muteCall(in: chatRoom, muted: true)
         }
     }
     
@@ -329,23 +276,6 @@ final class MeetingContainerViewModel: ViewModelType {
         } else {
             self.hangAndDismissCall(completion: nil)
         }
-    }
-    
-    private func listenToMuteUnmuteFailedNotifications() {
-        muteUnmuteFailedNotificationsSubscription = NotificationCenter
-            .default
-            .publisher(for: .MEGACallMuteUnmuteOperationFailed)
-            .sink { [weak self] notification in
-                guard let self,
-                        let userInfo = notification.userInfo,
-                        let muted = userInfo["muted"] as? Bool,
-                        let call else {
-                    return
-                }
-                
-                MEGALogError("mute unmute callkit action failure\n failure to set it as muted: \(muted)\n retrying it again with muted: \(!call.hasLocalAudio)")
-                callKitManager.muteUnmuteCall(call, muted: !call.hasLocalAudio)
-            }
     }
     
     private func subscribeToSeeWaitingRoomListNotification() {
@@ -446,15 +376,12 @@ final class MeetingContainerViewModel: ViewModelType {
                 hangAndDismissCall(completion: nil)
             }
         default:
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                router.dismiss(animated: true, completion: nil)
-            }
+            router.dismiss(animated: true, completion: nil)
         }
     }
     
     deinit {
         cancelMuteMicrophoneSubscription()
         cancelNoUserJoinedSubscription()
-        self.callKitManager.removeCallRemovedHandler()
     }
 }
