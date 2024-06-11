@@ -556,8 +556,8 @@
         
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
-            MEGANodeList *childrenNodeList = [MEGASdk.shared nodeListSearchForNode:strongSelf.parentNode searchString:textField.text recursive:NO];
-            if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
+            MEGANode *childrenNode = [MEGASdk.shared childNodeForParent:strongSelf.parentNode name:textField.text];
+            if (childrenNode.isFolder) {
                 [SVProgressHUD showErrorWithStatus:LocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {
                 MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
@@ -843,13 +843,8 @@
         if ([searchString isEqualToString:@""]) {
             self.searchNodesArray = [self.nodes.mnz_nodesArrayFromNodeList mutableCopy];
         } else {
-            if (self.cloudDriveButton.selected) {
-                MEGANodeList *allNodeList = [MEGASdk.shared nodeListSearchForNode:self.parentNode searchString:searchString recursive:NO];
-                self.searchNodesArray = [allNodeList.mnz_nodesArrayFromNodeList mutableCopy];
-            } else if (self.incomingButton.selected) {
-                NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
-                self.searchNodesArray = [[self.nodes.mnz_nodesArrayFromNodeList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
-            }
+            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
+            self.searchNodesArray = [[self.nodes.mnz_nodesArrayFromNodeList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
         }
     }
     
