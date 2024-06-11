@@ -143,7 +143,6 @@
       }
     },
     {
-      "enabled" : false,
       "target" : {
         "containerPath" : "container:Modules\/UI\/MEGAUI",
         "identifier" : "MEGAUITests",
