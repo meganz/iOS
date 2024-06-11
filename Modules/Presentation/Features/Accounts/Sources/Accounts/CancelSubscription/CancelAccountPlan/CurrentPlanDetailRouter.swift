@@ -74,7 +74,10 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     }
 
     private func showWebClientCancellationSteps() {
-        // Implement the steps for web client cancellation
+        CancelSubscriptionStepsRouter(
+            type: .webClient,
+            presenter: baseViewController
+        ).start()
     }
 
     private func showAppleManageSubscriptions() {
