@@ -121,6 +121,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
             createMeetingResult: .success(chatRoom)
         )
         let callUseCase = MockCallUseCase(callCompletion: .success(CallEntity()))
+        let callManager = MockCallManager()
         let viewModel = MeetingCreatingViewModel(
             router: router,
             type: .start,
@@ -133,6 +134,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             megaHandleUseCase: MockMEGAHandleUseCase(),
             callUseCase: callUseCase,
+            callManager: callManager,
             link: nil,
             userHandle: 0
         )
@@ -140,8 +142,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         viewModel.dispatch(.didTapStartMeetingButton)
         
         evaluate {
-            router.dismiss_calledTimes == 1 &&
-            router.goToMeetingRoom_calledTimes == 1
+            router.dismiss_calledTimes == 1
         }
     }
     

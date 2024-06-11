@@ -14,15 +14,12 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_onViewReady() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let callKitManager = MockCallKitManager()
         viewModel = MeetingContainerViewModel(
             router: router,
-            chatRoom: chatRoom,
-            callKitManager: callKitManager
+            chatRoom: chatRoom
         )
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [])
         XCTAssert(router.showMeetingUI_calledTimes == 1)
-        XCTAssert(callKitManager.addCallRemoved_CalledTimes == 1)
     }
     
     func testAction_hangCall_attendeeIsGuest() {
@@ -40,15 +37,12 @@ final class MeetingContainerViewModelTests: XCTestCase {
     
     func testAction_hangCall_attendeeIsParticipantOrModerator() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
-        let router = MockMeetingContainerRouter()
         let callEntity = CallEntity(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)
         let callUseCase = MockCallUseCase(call: callEntity)
-        let callManagerUserCase = MockCallKitManager()
-        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
+        let callManager = MockCallManager()
+        viewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callManager: callManager)
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
-        XCTAssert(router.dismiss_calledTimes == 1)
-        XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
-        XCTAssert(callUseCase.hangCall_CalledTimes == 1)
+        XCTAssert(callManager.endCall_CalledTimes == 1)
     }
     
     func testAction_backButtonTap() {
@@ -185,14 +179,14 @@ final class MeetingContainerViewModelTests: XCTestCase {
 
         let call = CallEntity(hasLocalAudio: true, numberOfParticipants: 1, participants: [100])
         let callUseCase = MockCallUseCase(call: call)
-        let callKitManager = MockCallKitManager()
+        let callManager = MockCallManager()
         viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
                                               chatRoomUseCase: chatRoomUsecase,
-                                              callKitManager: callKitManager,
-                                              accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
+                                              accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                              callManager: callManager)
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssertEqual(callKitManager.muteUnmute_Calls, [true])
+        XCTAssertTrue(callManager.muteCall_CalledTimes == 1)
     }
     
     func testAction_muteMicrophoneForGroupWhenLastParticipantLeft() {
@@ -202,15 +196,14 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let call = CallEntity(hasLocalAudio: true, numberOfParticipants: 1, participants: [100])
         let callUseCase = MockCallUseCase(call: call)
         
-        let callKitManager = MockCallKitManager()
-        
+        let callManager = MockCallManager()
         viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
                                               chatRoomUseCase: chatRoomUsecase,
-                                              callKitManager: callKitManager,
-                                              accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
+                                              accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                              callManager: callManager)
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssertEqual(callKitManager.muteUnmute_Calls, [true])
+        XCTAssertTrue(callManager.muteCall_CalledTimes == 1)
     }
     
     func testAction_donotMuteMicrophoneForOneToOneWhenLastParticipantLeft() {
@@ -220,40 +213,24 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let call = CallEntity(hasLocalAudio: true, numberOfParticipants: 1, participants: [100])
         let callUseCase = MockCallUseCase(call: call)
         
-        let callKitManager = MockCallKitManager()
-        
+        let callManager = MockCallManager()
+
         viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
                                               chatRoomUseCase: chatRoomUsecase,
-                                              callKitManager: callKitManager,
-                                              accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
+                                              accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                              callManager: callManager)
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssertEqual(callKitManager.muteUnmute_Calls, [])
+        XCTAssertTrue(callManager.muteCall_CalledTimes == 0)
     }
     
     func testAction_endCallForAll() {
         let chatRoom = ChatRoomEntity(chatType: .meeting)
-        let router = MockMeetingContainerRouter()
-        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        let callManager = MockCallManager()
+        viewModel = MeetingContainerViewModel(chatRoom: chatRoom, callManager: callManager)
 
         test(viewModel: viewModel, action: .endCallForAll, expectedCommands: [])
-        XCTAssert(router.dismiss_calledTimes == 1)
-    }
-    
-    func testMuteUnmuteOperationFailedNotification_withCallStateMutedAndPreviousMuteOperationFailure_shouldMatch() {
-        assertWhenMuteUnmuteOperationFailed(withMutedValue: true, hasLocalAudio: false, expectsMuteUnmuteCalls: [true])
-    }
-    
-    func testMuteUnmuteOperationFailedNotification_withCallStateUnmutedAndPreviousUnmuteOperationFailure_shouldMatch() {
-        assertWhenMuteUnmuteOperationFailed(withMutedValue: false, hasLocalAudio: true, expectsMuteUnmuteCalls: [false])
-    }
-    
-    func testMuteUnmuteOperationFailedNotification_withCallStateMutedAndPreviousUnmuteOperationFailure_shouldMatch() {
-        assertWhenMuteUnmuteOperationFailed(withMutedValue: false, hasLocalAudio: false, expectsMuteUnmuteCalls: [true])
-    }
-    
-    func testMuteUnmuteOperationFailedNotification_withCallStateUnmutedAndPreviousMuteOperationFailure_shouldMatch() {
-        assertWhenMuteUnmuteOperationFailed(withMutedValue: true, hasLocalAudio: true, expectsMuteUnmuteCalls: [false])
+        XCTAssert(callManager.endCall_CalledTimes == 1)
     }
     
     func testHangCall_forNonGuest_shouldResetCallToUnmute() {
@@ -262,13 +239,13 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callEntity = CallEntity(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)
         let callUseCase = MockCallUseCase(call: callEntity)
         let accountUseCase = MockAccountUseCase(isGuest: false)
-        let callKitManager = MockCallKitManager()
+        let callManager = MockCallManager()
         viewModel = MeetingContainerViewModel(
             router: router,
             chatRoom: chatRoom,
             callUseCase: callUseCase,
-            callKitManager: callKitManager,
-            accountUseCase: accountUseCase
+            accountUseCase: accountUseCase,
+            callManager: callManager
         )
         test(viewModel: viewModel,
              action: .hangCall(
@@ -276,7 +253,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
                 sender: UIButton()
              ),
              expectedCommands: [])
-        XCTAssertEqual(callKitManager.muteUnmute_Calls[0], false)
+        XCTAssertEqual(callManager.muteCall_CalledTimes, 0)
     }
     
     func testAction_mutedByClient_shouldShowMutedMessage() {
@@ -345,31 +322,8 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let expectation = expectation(for: predicate, evaluatedWith: nil)
         wait(for: [expectation], timeout: 5)
     }
-    
-    private func assertWhenMuteUnmuteOperationFailed(
-        withMutedValue muted: Bool,
-        hasLocalAudio: Bool,
-        expectsMuteUnmuteCalls expectedCalls: [Bool],
-        line: UInt = #line
-    ) {
-        let callKitManager = MockCallKitManager()
-        let callUseCase = MockCallUseCase(call: CallEntity(hasLocalAudio: hasLocalAudio))
-        viewModel = MeetingContainerViewModel(
-            callUseCase: callUseCase,
-            callKitManager: callKitManager
-        )
-
-        NotificationCenter.default.post(
-            name: .MEGACallMuteUnmuteOperationFailed,
-            object: nil,
-            userInfo: ["muted": muted]
-        )
-        
-        XCTAssertEqual(callKitManager.muteUnmute_Calls, expectedCalls, line: line)
-    }
 
     func testCallUpdate_callWillEndReceivedUserIsModerator_shouldshowCallWillEndAlert() {
-        
         let (sut, router) = makeSUT(
             chatRoom: ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         )
@@ -418,7 +372,6 @@ final class MeetingContainerViewModelTests: XCTestCase {
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
-        callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
         accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
         authUseCase: some AuthUseCaseProtocol = MockAuthUseCase(),
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
@@ -438,7 +391,6 @@ final class MeetingContainerViewModelTests: XCTestCase {
                 chatRoomUseCase: chatRoomUseCase,
                 chatUseCase: chatUseCase,
                 scheduledMeetingUseCase: scheduledMeetingUseCase,
-                callKitManager: callKitManager,
                 accountUseCase: accountUseCase,
                 authUseCase: authUseCase,
                 noUserJoinedUseCase: noUserJoinedUseCase,

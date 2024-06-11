@@ -13,15 +13,6 @@ import MEGADomain
     private var answerCallRequestDelegate: MEGAChatAnswerCallRequestDelegate?
     private var answerCallChatRequestDelegate: ChatRequestDelegate?
     
-    private var providerDelegate: MEGAProviderDelegate? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-              let megaProviderDelegate = appDelegate.megaProviderDelegate else {
-            return nil
-        }
-        
-        return megaProviderDelegate
-    }
-
     private override init() { super.init() }
 
     @objc func startCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, delegate: MEGAChatStartCallRequestDelegate) {
@@ -33,7 +24,6 @@ import MEGADomain
             self.chatOnlineListener = nil
             MEGALogDebug("1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             
-            self.configureAudioSessionForStartCall(chatId: chatId)
             self.startCallRequestDelegate = MEGAChatStartCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
                     MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
@@ -42,7 +32,6 @@ import MEGADomain
             }
             guard let startCallRequestDelegate = self.startCallRequestDelegate else { return }
             self.chatSdk.setChatVideoInDevices("Front Camera")
-            self.providerDelegate?.isOutgoingCall = self.isOneToOneChatRoom(forChatId: chatId)
             self.chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, delegate: startCallRequestDelegate)
         }
     }
@@ -56,7 +45,6 @@ import MEGADomain
             ) { [weak self] chatId in
                 guard let self else { return }
                 chatOnlineListener = nil
-                configureAudioSessionForStartCall(chatId: chatId)
                 let delegate = ChatRequestDelegate { [weak self] completion in
                     switch completion {
                     case .success:
@@ -107,15 +95,6 @@ import MEGADomain
         }
         
         group.notify(queue: .main) {
-            if let providerDelegate = self.providerDelegate,
-               providerDelegate.isAudioSessionActive {
-                self.configureAudioSessionForStartCall(chatId: chatId)
-            } else {
-                if self.disableRTCAudio() {
-                    self.enableRTCAudioExternally = true
-                    self.enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
-                }
-            }
             self.answerCallRequestDelegate = MEGAChatAnswerCallRequestDelegate { error in
                 delegate.completion(error)
             }
@@ -151,14 +130,6 @@ import MEGADomain
         }
         
         group.notify(queue: .main) { [self] in
-            if let providerDelegate, providerDelegate.isAudioSessionActive {
-                configureAudioSessionForStartCall(chatId: chatId)
-            } else {
-                if disableRTCAudio() {
-                    enableRTCAudioExternally = true
-                    enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
-                }
-            }
             answerCallChatRequestDelegate = ChatRequestDelegate { requestCompletion in
                 switch requestCompletion {
                 case .success(let request):
@@ -170,75 +141,6 @@ import MEGADomain
             guard let answerCallChatRequestDelegate else { return }
             chatSdk.setChatVideoInDevices("Front Camera")
             chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallChatRequestDelegate)
-        }
-    }
-    
-    @objc func enableRTCAudioIfRequired() {
-        MEGALogDebug("CallActionManager: enableRTCAudioIfRequired started")
-        guard enableRTCAudioExternally else {
-            return
-        }
-        
-        MEGALogDebug("CallActionManager: enableRTCAudioIfRequired success")
-        enableRTCAudioExternally = false
-        enableRTCAudio()
-    }
-    
-    @objc func disableRTCAudioSession() {
-        MEGALogDebug("CallActionManager: Disable webrtc audio session")
-        if disableRTCAudio() {
-            RTCAudioSession.sharedInstance().audioSessionDidDeactivate(AVAudioSession.sharedInstance())
-        }
-    }
-        
-    private func configureAudioSessionForStartCall(chatId: UInt64) {
-        Task { @MainActor in
-            guard disableRTCAudio() else { return }
-            guard !isOneToOneChatRoom(forChatId: chatId) else {
-                enableRTCAudioExternally = true
-                return
-            }
-            enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
-        }
-    }
-    
-    @discardableResult
-    private func disableRTCAudio() -> Bool {
-        guard let providerDelegate, providerDelegate.isAudioSessionActive == false else {
-            return false
-        }
-        
-        MEGALogDebug("CallActionManager: Disable webrtc audio")
-        RTCAudioSession.sharedInstance().useManualAudio = true
-        RTCAudioSession.sharedInstance().isAudioEnabled = false
-        return true
-    }
-    
-    private func enableRTCAudio() {
-        MEGALogDebug("CallActionManager: Enable webrtc audio session")
-        RTCAudioSession.sharedInstance().audioSessionDidActivate(AVAudioSession.sharedInstance())
-        RTCAudioSession.sharedInstance().isAudioEnabled = true
-        self.didEnableWebrtcAudioNow = true
-    }
-    
-    private func isOneToOneChatRoom(forChatId chatId: UInt64) -> Bool {
-        guard let megaChatRoom = chatSdk.chatRoom(forChatId: chatId) else { return false }
-        return megaChatRoom.toChatRoomEntity().chatType == .oneToOne
-    }
-    
-    private func enableRTCAudioIfRequiredWhenCallInProgress(chatId: UInt64) {
-        self.callInProgressListener = CallInProgressListener(chatId: chatId, sdk: chatSdk) { [weak self] _, _ in
-            // There is a race condition that sometimes microphone does not seem to work when on a call.
-            // Once the call state changes to inProgress, after one second delay we are checking if the microphone is disabled. Enable it in case it is disabled.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                if !RTCAudioSession.sharedInstance().isAudioEnabled {
-                    self?.enableRTCAudio()
-                    MEGALogDebug("CallActionManager: Enabled webrtc audio session (enableRTCAudioIfRequiredWhenCallInProgress)")
-                } else {
-                    MEGALogDebug("CallActionManager: RTCSession was already enabled")
-                }
-            }
-            self?.callInProgressListener = nil
         }
     }
 }

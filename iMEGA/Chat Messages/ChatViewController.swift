@@ -794,8 +794,6 @@ class ChatViewController: MessagesViewController {
             showTapToReturnToCall(withTitle: title)
         case .enableAudioVideoButtons(let enable):
             shouldEnableAudioVideoButtons(enable)
-        case .updateNavigationBarButtonsWithAudioVideo(let enabled):
-            updateNavigationBarButtonsWithAudioVideo(enabled)
         }
     }
     
@@ -1149,13 +1147,6 @@ class ChatViewController: MessagesViewController {
     
     @objc func cancelSelecting() {
         setEditing(false, animated: true)
-    }
-    
-    private func updateNavigationBarButtonsWithAudioVideo(_ enabled: Bool) {
-        shouldDisableAudioVideoCalling = enabled
-        Task { @MainActor in
-            updateRightBarButtons()
-        }
     }
     
     func scrollToBottom(animated: Bool = true) {

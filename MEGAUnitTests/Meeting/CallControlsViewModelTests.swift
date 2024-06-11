@@ -150,10 +150,9 @@ final class CallControlsViewModelTests: XCTestCase {
                     videoAuthorized: permissionsAuthorised
                 ),
                 callManager: callManager,
-                callKitManager: MockCallKitManager(),
                 notificationCenter: notificationCenter,
                 audioRouteChangeNotificationName: .audioRouteChange,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.callKitRefactor: true])
+                featureFlagProvider: MockFeatureFlagProvider(list: [:])
             )
             
             sut.speakerEnabled = speakerEnabled

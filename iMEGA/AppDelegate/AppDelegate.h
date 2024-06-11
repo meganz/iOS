@@ -1,8 +1,3 @@
-#import <UIKit/UIKit.h>
-#import "MEGACallManager.h"
-#import "MEGAProviderDelegate.h"
-#import <PushKit/PushKit.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, MEGANotificationType) {
@@ -16,11 +11,9 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @class CallsCoordinator;
 @class VoIPPushDelegate;
 
-@interface AppDelegate : UIResponder <PKPushRegistryDelegate>
+@interface AppDelegate : UIResponder
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong, nullable) MEGACallManager *megaCallManager;
-@property (nonatomic, nullable) MEGAProviderDelegate *megaProviderDelegate;
 @property (nonatomic, nullable) CallsCoordinator *callsCoordinator;
 @property (nonatomic, nullable) VoIPPushDelegate *voIPPushDelegate;
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;

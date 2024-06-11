@@ -15,7 +15,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
 
     private let permissionHandler: any DevicePermissionsHandling
     private let callManager: any CallManagerProtocol
-    private let callKitManager: any CallKitManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private let notificationCenter: NotificationCenter
@@ -35,7 +34,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
          audioSessionUseCase: any AudioSessionUseCaseProtocol,
          permissionHandler: any DevicePermissionsHandling,
          callManager: any CallManagerProtocol,
-         callKitManager: some CallKitManagerProtocol,
          notificationCenter: NotificationCenter,
          audioRouteChangeNotificationName: Notification.Name,
          featureFlagProvider: any FeatureFlagProviderProtocol
@@ -49,7 +47,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.permissionHandler = permissionHandler
         self.audioSessionUseCase = audioSessionUseCase
         self.callManager = callManager
-        self.callKitManager = callKitManager
         self.notificationCenter = notificationCenter
         self.audioRouteChangeNotificationName = audioRouteChangeNotificationName
         self.featureFlagProvider = featureFlagProvider
@@ -121,25 +118,13 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         if (chatRoom.chatType == .group || chatRoom.chatType == .meeting) && chatRoom.ownPrivilege == .moderator && call.numberOfParticipants > 1, let containerViewModel {
             router.showHangOrEndCallDialog(containerViewModel: containerViewModel)
         } else {
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                callManager.endCall(in: chatRoom, endForAll: false)
-            } else {
-                containerViewModel?.dispatch(.hangCall(presenter: nil, sender: nil))
-            }
+            callManager.endCall(in: chatRoom, endForAll: false)
         }
     }
     
     @MainActor private func toggleMic() async {
-        guard let call = callUseCase.call(for: chatRoom.chatId) else {
-            MEGALogError("Error muting or unmuting call, call does not exists")
-            return
-        }
         if await permissionHandler.requestPermission(for: .audio) {
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                callManager.muteCall(in: chatRoom, muted: micEnabled)
-            } else {
-                callKitManager.muteUnmuteCall(call, muted: micEnabled)
-            }
+            callManager.muteCall(in: chatRoom, muted: micEnabled)
             micEnabled.toggle()
         } else {
             router.showAudioPermissionError()

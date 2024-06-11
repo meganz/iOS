@@ -54,14 +54,7 @@ extension GroupChatDetailsViewController {
             let statsRepoSitory = AnalyticsRepository(sdk: MEGASdk.shared)
             AnalyticsEventUseCase(repository: statsRepoSitory).sendAnalyticsEvent(.meetings(.endCallForAll))
             
-            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                CallKitCallManager.shared.endCall(in: chatRoom.toChatRoomEntity(), endForAll: true)
-            } else {
-                guard let call = MEGAChatSdk.shared.chatCall(forChatId: self.chatRoom.chatId) else {
-                    return
-                }
-                MEGAChatSdk.shared.endChatCall(call.callId)
-            }
+            CallKitCallManager.shared.endCall(in: chatRoom.toChatRoomEntity(), endForAll: true)
             self.navigationController?.popViewController(animated: true)
         }
         
