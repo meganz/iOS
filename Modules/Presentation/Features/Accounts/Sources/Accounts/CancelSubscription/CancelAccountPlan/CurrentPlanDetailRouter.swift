@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
+import StoreKit
 import SwiftUI
 
 public protocol CancelAccountPlanRouting: Routing {
@@ -13,6 +14,10 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private weak var presenter: UIViewController?
     private let accountDetails: AccountDetailsEntity
     private let assets: CancelAccountPlanAssets
+    
+    private var appleIDSubscriptionsURL: URL? {
+        URL(string: "https://apps.apple.com/account/subscriptions")
+    }
     
     public init(
         accountDetails: AccountDetailsEntity,
@@ -55,17 +60,43 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     
     public func showCancellationSteps() {
         switch accountDetails.subscriptionMethodId {
-        case .itunes:
-            // Apple
-            break
-        case .googleWallet:
-            CancelSubscriptionStepsRouter(
-                type: .google,
-                presenter: baseViewController
-            ).start()
-        default:
-            // Web client
-            break
+        case .itunes: showAppleManageSubscriptions()
+        case .googleWallet: showGoogleCancellationSteps()
+        default: showWebClientCancellationSteps()
         }
+    }
+    
+    private func showGoogleCancellationSteps() {
+        CancelSubscriptionStepsRouter(
+            type: .google,
+            presenter: baseViewController
+        ).start()
+    }
+
+    private func showWebClientCancellationSteps() {
+        // Implement the steps for web client cancellation
+    }
+
+    private func showAppleManageSubscriptions() {
+        guard let scene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first(where: { $0.activationState == .foregroundActive }),
+              !ProcessInfo.processInfo.isiOSAppOnMac else {
+            openAppleIDSubscriptionsPage()
+            return
+        }
+        
+        Task {
+            do {
+                try await AppStore.showManageSubscriptions(in: scene)
+            } catch {
+                openAppleIDSubscriptionsPage()
+            }
+        }
+    }
+    
+    private func openAppleIDSubscriptionsPage() {
+        guard let url = appleIDSubscriptionsURL else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }
