@@ -9,7 +9,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case videoRevamp = "Video Revamp"
     case notificationCenter = "NotificationCenter"
     case hiddenNodes =  "Hidden Nodes"
-    case callKitRefactor =  "Call Kit refactor"
     case cancelSubscription = "Cancel Subscription"
     case raiseToSpeak = "Raise to speak"
 }

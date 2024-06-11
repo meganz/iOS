@@ -1,3 +1,4 @@
+import CallKit
 import Combine
 import Intents
 import MEGADomain
@@ -100,7 +101,6 @@ class MainTabBarCallsViewModel: ViewModelType {
     private var callSessionUseCase: any CallSessionUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
-    private let callKitManager: any CallKitManagerProtocol
     private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
@@ -136,7 +136,6 @@ class MainTabBarCallsViewModel: ViewModelType {
         callSessionUseCase: some CallSessionUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         handleUseCase: some MEGAHandleUseCaseProtocol,
-        callKitManager: some CallKitManagerProtocol,
         callManager: some CallManagerProtocol,
         callUpdateFactory: CXCallUpdateFactory,
         featureFlagProvider: some FeatureFlagProviderProtocol
@@ -149,7 +148,6 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.callSessionUseCase = callSessionUseCase
         self.accountUseCase = accountUseCase
         self.handleUseCase = handleUseCase
-        self.callKitManager = callKitManager
         self.callManager = callManager
         self.callUpdateFactory = callUpdateFactory
         self.featureFlagProvider = featureFlagProvider
@@ -230,16 +228,8 @@ class MainTabBarCallsViewModel: ViewModelType {
             self?.showRecordingAlert(username, call)
         } leaveCallAction: { [weak self] in
             guard let self else { return }
-            if featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
-                callManager.endCall(in: chatRoom, endForAll: false)
-            } else {
-                if isCallUIVisible {
-                    router.dismissCallUI()
-                } else {
-                    callUseCase.hangCall(for: call.callId)
-                }
-            }
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+            callManager.endCall(in: chatRoom, endForAll: false)
         }
     }
     
@@ -281,9 +271,6 @@ class MainTabBarCallsViewModel: ViewModelType {
         case .joining:
             startOutgoingToneIfNeeded(for: call)
             configureCallSessionsListener(forCall: call)
-            if !featureFlagProvider.isFeatureFlagEnabled(for: .callKitRefactor) {
-                callKitManager.notifyStartCallToCallKit(call)
-            }
         case .inProgress:
             invokeCommand?(.showActiveCallIcon)
             guard callWaitingRoomUsersUpdateSubscription == nil, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
