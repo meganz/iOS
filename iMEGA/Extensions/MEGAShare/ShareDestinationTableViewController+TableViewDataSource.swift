@@ -83,6 +83,7 @@ extension ShareDestinationTableViewController {
     private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
         guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+        tableViewHeaderFooterView.textLabel?.textColor = MEGAAppColor.White._FFFFFF80.uiColor
     }
     
     private func titleForHeader(in section: Int) -> String? {
@@ -106,5 +107,6 @@ extension ShareDestinationTableViewController {
         guard ShareDestinationSection(rawValue: section) == .attachments,
               let footer = view as? UITableViewHeaderFooterView else { return }
         footer.textLabel?.textAlignment = .center
+        footer.textLabel?.textColor = MEGAAppColor.White._FFFFFF80.uiColor
     }
 }
