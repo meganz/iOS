@@ -39,6 +39,9 @@ public struct SearchFilterEntity: Sendable, Equatable {
     
     public let nodeTypeEntity: NodeTypeEntity?
     
+    /// Location to which the search will be restricted to. If an ancestor was explicitly set via parentNode, search under that particular ancestor.
+    public let folderTargetEntity: FolderTargetEntity?
+    
     public let modificationTimeFrame: TimeFrame?
     
     public init(
@@ -51,6 +54,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
         excludeSensitive: Bool,
         favouriteFilterOption: FavouriteFilterOption = .disabled,
         nodeTypeEntity: NodeTypeEntity? = nil,
+        folderTargetEntity: FolderTargetEntity? = nil,
         modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
     ) {
         self.searchText = searchText
@@ -62,6 +66,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
         self.excludeSensitive = excludeSensitive
         self.favouriteFilterOption = favouriteFilterOption
         self.nodeTypeEntity = nodeTypeEntity
+        self.folderTargetEntity = folderTargetEntity
         self.modificationTimeFrame = modificationTimeFrame
     }
 }

@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASDKRepo
 
 @objc final class SearchNodeUseCaseOCWrapper: NSObject {
-    let searchUC = SearchNodeUseCase(searchNodeRepository: SearchNodeRepository.newRepo)
+    let searchUC = SearchNodeUseCase(filesSearchRepository: FilesSearchRepository.newRepo)
     
     @objc func searchOnInShares(text: String, sortType: MEGASortOrderType) async throws -> [MEGANode]? {
         try await search(type: .inShares, text: text, sortType: sortType)

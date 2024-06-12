@@ -5,23 +5,40 @@ public protocol SearchNodeUseCaseProtocol {
     func cancelSearch()
 }
 
-public struct SearchNodeUseCase<T: SearchNodeRepositoryProtocol>: SearchNodeUseCaseProtocol {
-    private let searchNodeRepository: T
+public struct SearchNodeUseCase<T: FilesSearchRepositoryProtocol>: SearchNodeUseCaseProtocol {
+    private let filesSearchRepository: T
     private var debouncer: Debouncer = Debouncer(delay: 0.5)
     
-    public init(searchNodeRepository: T) {
-        self.searchNodeRepository = searchNodeRepository
+    public init(filesSearchRepository: T) {
+        self.filesSearchRepository = filesSearchRepository
     }
     
     public func search(type: SearchNodeTypeEntity, text: String, sortType: SortOrderEntity) async throws -> [NodeEntity] {
         cancelSearch()
         
         try await debouncer.debounce()
-        return try await searchNodeRepository.search(type: type, text: text, sortType: sortType)
+        let folderTargetEntity: FolderTargetEntity = switch type {
+        case .inShares:
+            .inShare
+        case .outShares:
+            .outShare
+        case .publicLinks:
+            .publicLink
+        }
+        let searchFilterEntity = SearchFilterEntity(
+            searchText: text,
+            recursive: true,
+            supportCancel: true,
+            sortOrderType: sortType,
+            formatType: .unknown,
+            excludeSensitive: false,
+            folderTargetEntity: folderTargetEntity
+        )
+        return try await filesSearchRepository.search(filter: searchFilterEntity)
     }
     
     public func cancelSearch() {
         debouncer.cancel()
-        searchNodeRepository.cancelSearch()
+        filesSearchRepository.cancelSearch()
     }
 }

@@ -4,56 +4,40 @@ import XCTest
 
 final class SearchNodeUseCaseTests: XCTestCase {
     var searchNodeUC: (any SearchNodeUseCaseProtocol)!
-    var searchNodeRepo: MockSearchNodeRepository!
+    var filesSearchRepo: MockFilesSearchRepository!
     var searchText: String!
-    var searchNodes: [NodeEntity]!
     
     override func setUp() {
         super.setUp()
-        searchNodes = [NodeEntity(name: "Node1", handle: 1), NodeEntity(name: "Node2", handle: 2)]
-        searchNodeRepo = MockSearchNodeRepository(nodes: searchNodes)
-        searchNodeUC = SearchNodeUseCase(searchNodeRepository: searchNodeRepo)
+        let nodesForLocation: [FolderTargetEntity: [NodeEntity]] = [
+            .inShare: [NodeEntity(name: "Node1", handle: 1), NodeEntity(name: "Node2", handle: 2)],
+            .outShare: [NodeEntity(name: "Node3", handle: 3), NodeEntity(name: "Node4", handle: 4)],
+            .publicLink: [NodeEntity(name: "Node5", handle: 5), NodeEntity(name: "Node6", handle: 6)]
+        ]
+        filesSearchRepo = MockFilesSearchRepository(nodesForLocation: nodesForLocation)
+        searchNodeUC = SearchNodeUseCase(filesSearchRepository: filesSearchRepo)
         searchText = ""
     }
     
     override func tearDown() {
-        searchNodeRepo = nil
+        filesSearchRepo = nil
         searchNodeUC = nil
         super.tearDown()
     }
     
     func testSearch_foundResults() async throws {
-        let expectation = XCTestExpectation(description: "Search completion called with results")
-        searchText = "Node"
-        let nodes = try await searchNodeUC.search(type: .inShares, text: searchText, sortType: .defaultAsc)
-        XCTAssertEqual(nodes, self.filteredNodes(by: self.searchText))
-        expectation.fulfill()
-        
-        await fulfillment(of: [expectation], timeout: 2.0)
-    }
-    
-    func testSearch_noResults() async throws {
-        let expectation = XCTestExpectation(description: "Search completion called with no results")
-        searchText = "unexpected node"
-        let nodes = try await searchNodeUC.search(type: .inShares, text: searchText, sortType: .defaultAsc)
-        XCTAssertEqual(nodes, self.filteredNodes(by: self.searchText))
-        expectation.fulfill()
-        
-        await fulfillment(of: [expectation], timeout: 2.0)
+        try await expectResults([1, 2], whenSearchingFor: "Node", searchNodeType: .inShares)
+        try await expectResults([3, 4], whenSearchingFor: "Node", searchNodeType: .outShares)
+        try await expectResults([5, 6], whenSearchingFor: "Node", searchNodeType: .publicLinks)
     }
     
     func testCancelSearch() async throws {
-        let expectation = XCTestExpectation(description: "Cancel search called")
-        
         searchNodeUC.cancelSearch()
-        
-        XCTAssertEqual(searchNodeRepo.cancelSearch_calledTimes, 1)
-        expectation.fulfill()
-        
-        await fulfillment(of: [expectation], timeout: 1.0)
+        XCTAssertTrue(filesSearchRepo.hasCancelSearchCalled)
     }
     
-    private func filteredNodes(by text: String) -> [NodeEntity]? {
-        searchNodes.filter { $0.name.contains(text) }
+    private func expectResults(_ nodeHandles: [HandleEntity], whenSearchingFor searchText: String, searchNodeType: SearchNodeTypeEntity) async throws {
+        let nodes = try await searchNodeUC.search(type: searchNodeType, text: searchText, sortType: .defaultAsc)
+        XCTAssertEqual(nodes.map(\.handle), nodeHandles)
     }
 }
