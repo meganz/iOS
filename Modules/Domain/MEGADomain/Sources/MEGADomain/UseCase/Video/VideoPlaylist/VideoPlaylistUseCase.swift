@@ -34,6 +34,7 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     private let userVideoPlaylistsRepository: any UserVideoPlaylistsRepositoryProtocol
+    private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     
     public var videoPlaylistsUpdatedAsyncSequence: AnyAsyncSequence<Void> {
         merge(favoriteVideoPlaylistUpdates, userVideoPlaylistUpdates)
@@ -64,10 +65,12 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     public init(
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
-        userVideoPlaylistsRepository: some UserVideoPlaylistsRepositoryProtocol
+        userVideoPlaylistsRepository: some UserVideoPlaylistsRepositoryProtocol,
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.userVideoPlaylistsRepository = userVideoPlaylistsRepository
+        self.photoLibraryUseCase = photoLibraryUseCase
     }
     
     public func systemVideoPlaylists() async throws -> [VideoPlaylistEntity] {
@@ -83,22 +86,12 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     }
     
     private func videos() async throws -> [NodeEntity] {
-        try await withAsyncThrowingValue { result in
-            fileSearchUseCase.search(
-                string: "",
-                parent: nil,
-                recursive: true,
-                supportCancel: false,
-                sortOrderType: .defaultAsc,
-                cancelPreviousSearchIfNeeded: true
-            ) { videos, isFail in
-                guard !isFail else {
-                    result(.failure(GenericErrorEntity()))
-                    return
-                }
-                result(.success(videos ?? []))
-            }
-        }
+        try await photoLibraryUseCase.media(
+            for: [ .videos, .allLocations ],
+            excludeSensitive: nil,
+            searchText: "",
+            sortOrder: .defaultAsc
+        )
     }
     
     private func createFavouriteSystemPlyalist(videos: [NodeEntity]) -> VideoPlaylistEntity {

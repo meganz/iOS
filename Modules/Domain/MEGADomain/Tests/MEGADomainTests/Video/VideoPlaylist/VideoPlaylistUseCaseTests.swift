@@ -7,33 +7,36 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     // MARK: - Init
     
-    func testInit_whenCalled_doesNotTriggerFilesSearchUseCase() {
-        let (_, filesSearchUseCase, _) = makeSUT()
+    func testInit_whenCalled_doesNotTriggerFilesSearchUseCase() async {
+        let (_, _, _, photoLibraryUseCase) = makeSUT()
         
-        XCTAssertTrue(filesSearchUseCase.messages.isEmpty)
+        let messages = await photoLibraryUseCase.messages
+        XCTAssertTrue(messages.isEmpty)
     }
     
     // MARK: - systemVideoPlaylists
     
     func testSystemVideoPlaylists_whenCalled_TriggerFilesSearchUseCase() async {
-        let (sut, filesSearchUseCase, _) = makeSUT()
+        let (sut, _, _, photoLibraryUseCase) = makeSUT()
         
         _ = try? await sut.systemVideoPlaylists()
         
-        XCTAssertEqual(filesSearchUseCase.messages, [ .searchLegacy ])
+        let messages = await photoLibraryUseCase.messages
+        XCTAssertEqual(messages, [ .media ])
     }
     
     func testSystemVideoPlaylists_whenCalledTwice_TriggerFilesSearchUseCaseTwice() async {
-        let (sut, filesSearchUseCase, _) = makeSUT()
+        let (sut, _, _, photoLibraryUseCase) = makeSUT()
         
         _ = try? await sut.systemVideoPlaylists()
         _ = try? await sut.systemVideoPlaylists()
         
-        XCTAssertEqual(filesSearchUseCase.messages, [ .searchLegacy, .searchLegacy ])
+        let messages = await photoLibraryUseCase.messages
+        XCTAssertEqual(messages, [ .media, .media ])
     }
     
     func testSystemVideoPlaylists_whenError_returnsError() async {
-        let (sut, _, _) = makeSUT()
+        let (sut, _, _, _) = makeSUT(photoLibrarayUseCase: MockPhotoLibraryUseCase(succesfullyLoadMedia: false))
         
         do {
             _ = try await sut.systemVideoPlaylists()
@@ -45,8 +48,8 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testSystemVideoPlaylists_whenSuccessfullyLoadPlaylistWithEmptyVideos_returnsEmptySystemVideoPlaylists() async throws {
         let emptyVideos = [NodeEntity]()
-        let (sut, _, _) = makeSUT(
-            filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(emptyVideos))
+        let (sut, _, _, _) = makeSUT(
+            photoLibrarayUseCase: MockPhotoLibraryUseCase(allVideos: emptyVideos)
         )
         
         let resultVideoPlaylists = try await sut.systemVideoPlaylists()
@@ -59,8 +62,8 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             anyNode(id: 1, isFavorite: false),
             anyNode(id: 2, isFavorite: false)
         ]
-        let (sut, _, _) = makeSUT(
-            filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nonFavoriteVideos))
+        let (sut, _, _, _) = makeSUT(
+            photoLibrarayUseCase: MockPhotoLibraryUseCase(allVideos: nonFavoriteVideos)
         )
         
         let resultVideoPlaylists = try await sut.systemVideoPlaylists()
@@ -73,8 +76,8 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             anyNode(id: 1, isFavorite: false),
             anyNode(id: 2, isFavorite: true)
         ]
-        let (sut, _, _) = makeSUT(
-            filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(videos))
+        let (sut, _, _, _) = makeSUT(
+            photoLibrarayUseCase: MockPhotoLibraryUseCase(allVideos: videos)
         )
         
         let resultVideoPlaylists = try await sut.systemVideoPlaylists()
@@ -87,8 +90,8 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             anyNode(id: 1, isFavorite: true),
             anyNode(id: 2, isFavorite: true)
         ]
-        let (sut, _, _) = makeSUT(
-            filesSearchUseCase: MockFilesSearchUseCase(searchResult: .success(favoriteVideos))
+        let (sut, _, _, _) = makeSUT(
+            photoLibrarayUseCase: MockPhotoLibraryUseCase(allVideos: favoriteVideos)
         )
         
         let resultVideoPlaylists = try await sut.systemVideoPlaylists()
@@ -99,7 +102,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     // MARK: - userVideoPlaylists
     
     func testUserVideoPlaylists_whenCalled_getUserVideoPlaylists() async {
-        let (sut, _, userVideoPlaylistsRepository) = makeSUT(
+        let (sut, _, userVideoPlaylistsRepository, _) = makeSUT(
             userVideoPlaylistRepositoryResult: []
         )
         
@@ -110,7 +113,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     }
     
     func testUserVideoPlaylists_whenCalledTwice_getUserVideoPlaylistsTwice() async {
-        let (sut, _, userVideoPlaylistsRepository) = makeSUT(
+        let (sut, _, userVideoPlaylistsRepository, _) = makeSUT(
             userVideoPlaylistRepositoryResult: []
         )
         
@@ -122,7 +125,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     }
     
     func testUserVideoPlaylists_whenCalled_returnsEmpty() async {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             userVideoPlaylistRepositoryResult: []
         )
         
@@ -135,7 +138,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         let videoPlaylistSetEntities = [
             videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist")
         ]
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             userVideoPlaylistRepositoryResult: videoPlaylistSetEntities
         )
         
@@ -153,7 +156,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             videoPlaylistSetEntity(handle: 1, setType: .playlist, name: "My Video Playlist"),
             videoPlaylistSetEntity(handle: 2, setType: .playlist, name: "My Video Playlist 2")
         ]
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             userVideoPlaylistRepositoryResult: videoPlaylistSetEntities
         )
         
@@ -173,7 +176,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         let userVideoPlaylistSetEntityCount = videoPlaylistSetEntities
             .filter { $0.setType == .playlist }
             .count
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             userVideoPlaylistRepositoryResult: videoPlaylistSetEntities
         )
         
@@ -187,7 +190,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testCreateVideoPlaylist_whenCalled_createsVideoPlaylist() async {
         let videoPlaylistNameToCreate = "any-name"
-        let (sut, _, userVideoPlaylistRepository) = makeSUT()
+        let (sut, _, userVideoPlaylistRepository, _) = makeSUT()
         
         _ = try? await sut.createVideoPlaylist(videoPlaylistNameToCreate)
         
@@ -198,7 +201,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     func testCreateVideoPlaylist_whenHasError_throwsError() async {
         let videoPlaylistNameToCreate = "any-name"
         let expectedError = VideoPlaylistErrorEntity.failedToCreatePlaylist(name: videoPlaylistNameToCreate)
-        let (sut, _, _) = makeSUT(createVideoPlaylistResult: .failure(expectedError))
+        let (sut, _, _, _) = makeSUT(createVideoPlaylistResult: .failure(expectedError))
         
         do {
             _ = try await sut.createVideoPlaylist(videoPlaylistNameToCreate)
@@ -210,7 +213,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testCreateVideoPlaylist_whenSuccess_createsVideoPlaylistSuccessfully() async {
         let videoPlaylistNameToCreate = "any-name"
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             createVideoPlaylistResult: .success(anySetEntity(id: 1, name: videoPlaylistNameToCreate))
         )
         
@@ -234,7 +237,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testVideoPlaylistsUpdatedAsyncSequence_whenHasNoFavoriteVideoPlaylistUpdates_doesNotEmitsUpdate() async {
         let initialPlaylists = anyPlaylists()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: EmptyAsyncSequence().eraseToAnyAsyncSequence()),
             userVideoPlaylistRepositoryResult: initialPlaylists
         )
@@ -266,7 +269,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             }
             continuation.finish()
         }.eraseToAnyAsyncSequence()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: nodeUpdatesStream)
         )
         
@@ -297,7 +300,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             }
             continuation.finish()
         }.eraseToAnyAsyncSequence()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: nodeUpdatesStream)
         )
         
@@ -328,7 +331,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             }
             continuation.finish()
         }.eraseToAnyAsyncSequence()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: nodeUpdatesStream)
         )
         
@@ -350,7 +353,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testVideoPlaylistsUpdatedAsyncSequence_whenHasNoUserVideoPlaylistUpdates_doesNotEmitsUpdate() async {
         let initialPlaylists = anyPlaylists()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             userVideoPlaylistRepositoryResult: initialPlaylists,
             setsUpdatedAsyncSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
         )
@@ -380,7 +383,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             continuation.finish()
         }.eraseToAnyAsyncSequence()
         let initialPlaylists = anyPlaylists()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             userVideoPlaylistRepositoryResult: initialPlaylists,
             setsUpdatedAsyncSequence: setsUpdatesStream
         )
@@ -403,7 +406,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testVideoPlaylistsUpdatedAsyncSequence_whenHasNoUserVideoPlaylistContentUpdates_doesNotEmitsUpdate() async {
         let initialPlaylists = anyPlaylists()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             userVideoPlaylistRepositoryResult: initialPlaylists,
             setElementsUpdatedAsyncSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
         )
@@ -433,7 +436,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             continuation.finish()
         }.eraseToAnyAsyncSequence()
         let initialPlaylists = anyPlaylists()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             userVideoPlaylistRepositoryResult: initialPlaylists,
             setElementsUpdatedAsyncSequence: setElementUpdatesStream
         )
@@ -483,7 +486,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
             continuation.finish()
         }.eraseToAnyAsyncSequence()
         
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             filesSearchUseCase: MockFilesSearchUseCase(nodeUpdates: nodeUpdatesStream),
             userVideoPlaylistRepositoryResult: initialPlaylists,
             setsUpdatedAsyncSequence: setsUpdatesStream,
@@ -511,7 +514,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     func testUpdateVideoPlaylistName_whenCalled_updatesVideoPlaylist() async {
         let videoPlaylistNameToUpdate = "new-name"
         let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
-        let (sut, _, userVideoPlaylistRepository) = makeSUT()
+        let (sut, _, userVideoPlaylistRepository, _) = makeSUT()
         
         _ = try? await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
         
@@ -523,7 +526,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         let videoPlaylistNameToUpdate = "Old-name"
         let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.invalidOperation
-        let (sut, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
+        let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
         await simulateUpdateVideoPlaylistNameThenCompleteWithError(expectedError, on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
     }
@@ -532,7 +535,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         let videoPlaylistNameToUpdate = "Old-name"
         let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.invalidOperation
-        let (sut, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
+        let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
         await simulateUpdateVideoPlaylistNameThenCompleteWithError(expectedError, on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
     }
@@ -540,7 +543,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     func testUpdateVideoPlaylistName_whenCalledWithSimilarNameButNotSame_updateVideoPlaylist() async {
         let videoPlaylistNameToUpdate = "old-name"
         let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
-        let (sut, _, userVideoPlaylistRepository) = makeSUT()
+        let (sut, _, userVideoPlaylistRepository, _) = makeSUT()
         
         _ = try? await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
         
@@ -552,7 +555,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         let videoPlaylistNameToUpdate = "new-name"
         let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.failedToUpdateVideoPlaylistName(name: videoPlaylistNameToUpdate)
-        let (sut, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
+        let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
         await simulateUpdateVideoPlaylistNameThenCompleteWithError(expectedError, on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
     }
@@ -562,7 +565,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         let anyDate = Date()
         let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: anyDate, modificationTime: anyDate, sharedLinkStatus: .exported(false))
         let expectedSetEntity = anySetEntity(id: 1, name: videoPlaylistNameToUpdate, creationTime: anyDate, modificationTime: anyDate, isExported: false)
-        let (sut, _, _) = makeSUT(updateVideoPlaylistNameResult: .success(expectedSetEntity))
+        let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .success(expectedSetEntity))
         
         await simulateUpdateVideoPlaylistNameCompletedSuccessfullyThenAssert(on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
     }
@@ -572,6 +575,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     private func makeSUT(
         filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic)),
         userVideoPlaylistRepositoryResult: [SetEntity] = [],
+        photoLibrarayUseCase: MockPhotoLibraryUseCase = MockPhotoLibraryUseCase(),
         createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
@@ -579,7 +583,8 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     ) -> (
         sut: VideoPlaylistUseCase,
         filesSearchUseCase: MockFilesSearchUseCase,
-        userVideoPlaylistRepository: MockUserVideoPlaylistsRepository
+        userVideoPlaylistRepository: MockUserVideoPlaylistsRepository,
+        PhotoLibraryUseCase: MockPhotoLibraryUseCase
     ) {
         let userVideoPlaylistRepository = MockUserVideoPlaylistsRepository(
             videoPlaylistsResult: userVideoPlaylistRepositoryResult,
@@ -592,9 +597,10 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         )
         let sut = VideoPlaylistUseCase(
             fileSearchUseCase: filesSearchUseCase,
-            userVideoPlaylistsRepository: userVideoPlaylistRepository
+            userVideoPlaylistsRepository: userVideoPlaylistRepository, 
+            photoLibraryUseCase: photoLibrarayUseCase
         )
-        return (sut, filesSearchUseCase, userVideoPlaylistRepository)
+        return (sut, filesSearchUseCase, userVideoPlaylistRepository, photoLibrarayUseCase)
     }
     
     private func simulateUpdateVideoPlaylistNameThenCompleteWithError(
@@ -667,7 +673,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         NodeEntity(
             changeTypes: .favourite,
             nodeType: .file,
-            name: "name: \(id.description)",
+            name: "name: \(id.description).mp4",
             handle: id,
             isFile: true,
             hasThumbnail: true,
