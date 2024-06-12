@@ -16,7 +16,7 @@ struct ShareAttachmentCellView: View {
                         TextField("", text: $viewModel.fileName)
                             .font(.system(size: 15))
                             .autocorrectionDisabled()
-                            .foregroundColor(MEGAAppColor.View.textForeground.color)
+                            .foregroundColor(MEGAAppColor.Black._000000.color)
                             .fixedSize()
                             .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification),
                                        perform: { notif in
@@ -31,7 +31,7 @@ struct ShareAttachmentCellView: View {
                         
                         Text(viewModel.fileExtension)
                             .font(.system(size: 15))
-                            .foregroundColor(MEGAAppColor.Gray._8E8E93.color)
+                            .foregroundColor(MEGAAppColor.Black._000000.color)
                             .fixedSize()
                     }
                 }
@@ -43,6 +43,6 @@ struct ShareAttachmentCellView: View {
             .padding(.horizontal, 10)
         }
         .frame(height: 60)
-        .background(MEGAAppColor.View.cellBackground.color)
+        .background(MEGAAppColor.White._FFFFFF_pageBackground.color)
     }
 }
