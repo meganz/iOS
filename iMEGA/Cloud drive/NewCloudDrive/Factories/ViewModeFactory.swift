@@ -1,11 +1,11 @@
 import MEGADomain
 
-// Extracted logic that makes decision what view mode will be used when new CloudDrive (NodeBrowserView) is created
-struct InitialViewModeFactory {
+// Extracted logic that makes decision what view mode will be used for new CloudDrive (NodeBrowserView).
+struct ViewModeFactory {
     
     let viewModeStore: any ViewModeStoring
     
-    func determineInitialViewMode(
+    func determineViewMode(
         nodeSource: NodeSource,
         config: NodeBrowserConfig,
         hasOnlyMediaNodesChecker: () -> Bool

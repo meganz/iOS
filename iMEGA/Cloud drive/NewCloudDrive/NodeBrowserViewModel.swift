@@ -62,6 +62,8 @@ class NodeBrowserViewModel: ObservableObject {
     private let updateTransferWidgetHandler: () -> Void
     private let sortOrderProvider: () -> MEGADomain.SortOrderEntity
     private let onNodeStructureChanged: () -> Void
+    private var viewModePreferenceChangeNotificationTask: Task<Void, Never>?
+    private var cloudDriveViewModeMonitoringService: any CloudDriveViewModeMonitoring
 
     init(
         viewMode: ViewModePreferenceEntity,
@@ -76,6 +78,7 @@ class NodeBrowserViewModel: ObservableObject {
         noInternetViewModel: NoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodesUpdateListener: some NodesUpdateListenerProtocol,
+        cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
         // - context menu can be reconstructed
@@ -111,11 +114,12 @@ class NodeBrowserViewModel: ObservableObject {
         self.updateTransferWidgetHandler = updateTransferWidgetHandler
         self.nodeSourceUpdatesListener = nodeSourceUpdatesListener
         self.nodesUpdateListener = nodesUpdateListener
+        self.cloudDriveViewModeMonitoringService = cloudDriveViewModeMonitoringService
         self.onNodeStructureChanged = onNodeStructureChanged
 
         $viewMode
             .removeDuplicates()
-            .sink { viewMode in
+            .sink { [weak self] viewMode in
                 if viewMode == .list {
                     searchResultsViewModel.layout = .list
                 }
@@ -127,13 +131,15 @@ class NodeBrowserViewModel: ObservableObject {
                 viewModeSaver(viewMode)
                 // hide search bar if we are showing media disovery
                 onUpdateSearchBarVisibility(viewMode != .mediaDiscovery)
+                self?.cloudDriveViewModeMonitoringService.currentViewMode = viewMode
             }
             .store(in: &subscriptions)
         
-        $nodeSource.sink { [weak self] _ in
+        $nodeSource.sink { [weak self] updatedNodeSource in
             // When $nodeSource changes, SwiftUI will update the UI of the view (including the navigation bar items) accordingly,
             // however since we rely on `titleBuilder` to display the title of the navigation bar, we need to refresh the title manually
             self?.refreshTitle()
+            self?.cloudDriveViewModeMonitoringService.nodeSource = updatedNodeSource
         }
         .store(in: &subscriptions)
         
@@ -202,8 +208,13 @@ class NodeBrowserViewModel: ObservableObject {
         }
 
         addNodesUpdateHandler()
+        subscribeToViewModePreferenceChangeNotification()
     }
-    
+
+    deinit {
+        cancelViewModePreferenceChangeNotification()
+    }
+
     var viewModeAwareMediaDiscoveryViewModel: MediaDiscoveryContentViewModel? {
         if viewMode == .mediaDiscovery, let viewModel = mediaDiscoveryViewModel {
             return viewModel
@@ -381,6 +392,23 @@ class NodeBrowserViewModel: ObservableObject {
     private func refreshAndReloadResults() async {
         refresh()
         await searchResultsViewModel.reloadResults()
+    }
+
+    private func subscribeToViewModePreferenceChangeNotification() {
+        viewModePreferenceChangeNotificationTask = Task { [weak self] in
+            guard let viewModes = self?.cloudDriveViewModeMonitoringService.viewModes else { return }
+
+            for await updatedViewMode in viewModes {
+                await MainActor.run { [weak self] in
+                    self?.changeViewMode(updatedViewMode)
+                }
+            }
+        }
+    }
+
+    private func cancelViewModePreferenceChangeNotification() {
+        viewModePreferenceChangeNotificationTask?.cancel()
+        viewModePreferenceChangeNotificationTask = nil
     }
 }
 

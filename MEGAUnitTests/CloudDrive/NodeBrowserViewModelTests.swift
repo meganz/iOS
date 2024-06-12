@@ -1,4 +1,5 @@
 import Combine
+import ConcurrencyExtras
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -33,6 +34,23 @@ struct MockMEGAAvatarGeneratingUseCaseProtocol: MEGAAvatarGeneratingUseCaseProto
     func avatarBackgroundColorHex() -> String? { nil }
 }
 
+final class MockCloudDriveViewModeMonitoringService: CloudDriveViewModeMonitoring {
+    lazy var viewModes: AsyncStream<ViewModePreferenceEntity> = {
+        AsyncStream(bufferingPolicy: .bufferingNewest(1)) { continuation in
+            self.continuation = continuation
+        }
+    }()
+
+    var continuation: AsyncStream<ViewModePreferenceEntity>.Continuation?
+    var nodeSource: NodeSource
+    var currentViewMode: ViewModePreferenceEntity
+
+    init(nodeSource: NodeSource, currentViewMode: ViewModePreferenceEntity) {
+        self.nodeSource = nodeSource
+        self.currentViewMode = currentViewMode
+    }
+}
+
 class NodeBrowserViewModelTests: XCTestCase {
     
     class Harness {
@@ -44,6 +62,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         var updateTransferWidgetHandler: () -> Void
 
         let nodesUpdateListener: any NodesUpdateListenerProtocol
+        let cloudDriveViewModeMonitoringService: MockCloudDriveViewModeMonitoringService
 
         init(
             // this may appear strange but view mode is a "bigger" enum that has mediaDiscovery/list/thumbnail
@@ -71,6 +90,10 @@ class NodeBrowserViewModelTests: XCTestCase {
             
             self.updateTransferWidgetHandler = updateTransferWidgetHandler
             self.nodesUpdateListener = MockSDKNodesUpdateListenerRepository.newRepo
+            self.cloudDriveViewModeMonitoringService = MockCloudDriveViewModeMonitoringService(
+                nodeSource: nodeSource,
+                currentViewMode: defaultViewMode
+            )
 
             sut = NodeBrowserViewModel(
                 viewMode: defaultViewMode,
@@ -117,7 +140,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     originalNodeSource: .testNode,
                     nodeUpdatesListener: nodesUpdateListener
                 ),
-                nodesUpdateListener: nodesUpdateListener,
+                nodesUpdateListener: nodesUpdateListener, 
+                cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
                 viewModeSaver: { saver($0) },
                 storageFullAlertViewModel: .init(router: MockStorageFullAlertViewRouting()),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
@@ -312,6 +336,40 @@ class NodeBrowserViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 100)
         let harness = Harness(node: node)
         XCTAssertTrue(harness.sut.parentNodeMatches(node: node))
+    }
+
+    func testUpdateViewModeIfNeeded_whenViewModeIsNotChanged_shouldReturnOriginalValue() async {
+        let harness = Harness(defaultViewMode: .list, node: NodeEntity(handle: 100))
+        await assertViewMode(with: harness, expectedOrder: [.list, .list])
+    }
+
+    func testUpdateViewModeIfNeeded_whenViewModeIsChanged_shouldReturnUpdatedValue() async {
+        let harness = Harness(
+            defaultViewMode: .list,
+            node: NodeEntity(handle: 100)
+        )
+        await assertViewMode(with: harness, expectedOrder: [.list, .thumbnail])
+    }
+
+    private func assertViewMode(with harness: Harness, expectedOrder: [ViewModePreferenceEntity]) async {
+        await withMainSerialExecutor {
+            let expectation = expectation(description: "wait for the view mode to update")
+            var viewModes: [ViewModePreferenceEntity] = []
+            let cancellable = harness
+                .sut
+                .$viewMode
+                .sink { updatedViewMode in
+                    viewModes.append(updatedViewMode)
+                    if viewModes == expectedOrder {
+                        expectation.fulfill()
+                    }
+                }
+
+            await Task.megaYield()
+            harness.cloudDriveViewModeMonitoringService.continuation?.yield(expectedOrder[1])
+            await fulfillment(of: [expectation], timeout: 1.0)
+            cancellable.cancel()
+        }
     }
 
     private func assertChangeSortOrder(
