@@ -6,17 +6,20 @@ struct VideoPlaylistsCollectionViewRepresenter: UIViewRepresentable {
     @StateObject var viewModel: VideoPlaylistsViewModel
     let videoConfig: VideoConfig
     let router: any VideoRevampRouting
+    let didSelectMoreOptionForItem: (VideoPlaylistEntity) -> Void
     
     init(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         viewModel: @autoclosure @escaping () -> VideoPlaylistsViewModel,
         videoConfig: VideoConfig,
-        router: some VideoRevampRouting
+        router: some VideoRevampRouting,
+        didSelectMoreOptionForItem: @escaping (VideoPlaylistEntity) -> Void
     ) {
         self.thumbnailUseCase = thumbnailUseCase
         _viewModel = StateObject(wrappedValue: viewModel())
         self.videoConfig = videoConfig
         self.router = router
+        self.didSelectMoreOptionForItem = didSelectMoreOptionForItem
     }
     
     func makeUIView(context: Context) -> UICollectionView {

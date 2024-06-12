@@ -3,6 +3,11 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
+    let userVideoPlaylists: [VideoPlaylistEntity]
+    
+    init(userVideoPlaylists: [VideoPlaylistEntity] = []) {
+        self.userVideoPlaylists = userVideoPlaylists
+    }
     
     var videoPlaylistsUpdatedAsyncSequence: AnyAsyncSequence<Void> {
         EmptyAsyncSequence()
@@ -14,7 +19,7 @@ struct Preview_VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     }
     
     func userVideoPlaylists() async -> [VideoPlaylistEntity] {
-        []
+        userVideoPlaylists
     }
     
     func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {

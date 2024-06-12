@@ -244,6 +244,20 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         sut.monitorSortOrderChangedTask?.cancel()
     }
     
+    // MARK: - didSelectMoreOptionForItem
+    
+    func testDidSelectMoreOptionForItem_selectedVideoPlaylist_setsSelectedsVideoPlaylistEntity() {
+        let selectedVideoPlaylist = VideoPlaylistEntity(id: 1, name: "video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _) = makeSUT()
+        XCTAssertNil(sut.selectedVideoPlaylistEntity)
+        XCTAssertFalse(sut.isSheetPresented)
+        
+        sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
+        
+        XCTAssertEqual(sut.selectedVideoPlaylistEntity, selectedVideoPlaylist)
+        XCTAssertTrue(sut.isSheetPresented)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

@@ -3,8 +3,14 @@ import SwiftUI
 
 public struct ActionSheetContentView<HeaderView: View>: View {
     @Environment(\.colorScheme) private var colorScheme
+    var style: Style = .default
     var actionButtons: [ActionSheetButton]
     var headerView: HeaderView
+    
+    public enum Style {
+        case `default`
+        case plainIgnoreHeaderIgnoreScrolling
+    }
     
     private var headerBackgroundColor: Color {
         guard isDesignTokenEnabled else {
@@ -22,12 +28,26 @@ public struct ActionSheetContentView<HeaderView: View>: View {
         return TokenColors.Background.surface1.swiftUI
     }
 
-    public init(headerView: HeaderView, actionButtons: [ActionSheetButton]) {
+    public init(
+        style: ActionSheetContentView.Style = .default,
+        headerView: HeaderView,
+        actionButtons: [ActionSheetButton]
+    ) {
+        self.style = style
         self.headerView = headerView
         self.actionButtons = actionButtons
     }
 
     public var body: some View {
+        switch style {
+        case .default:
+            defaultContent
+        case .plainIgnoreHeaderIgnoreScrolling:
+            plainIgnoreHeaderIgnoreScrolling
+        }
+    }
+    
+    private var defaultContent: some View {
         ScrollView {
             VStack(spacing: 0) {
                 VStack(spacing: 0) {
@@ -50,6 +70,19 @@ public struct ActionSheetContentView<HeaderView: View>: View {
             }
             .padding([.bottom], 30)
         }
+        .background(bodyBackgroundColor)
+    }
+    
+    private var plainIgnoreHeaderIgnoreScrolling: some View {
+        VStack(spacing: 0) {
+            Spacer()
+                .frame(height: 16)
+            ForEach(actionButtons, id: \.self) { button in
+                button
+            }
+            Spacer()
+        }
+        .padding([.bottom, .top], 30)
         .background(bodyBackgroundColor)
     }
 }
