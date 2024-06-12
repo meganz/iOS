@@ -29,17 +29,18 @@ struct VideoRevampRouter: VideoRevampRouting {
         )
         
         let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection())
-        let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
-        let videoPlaylistUseCase = VideoPlaylistUseCase(
-            fileSearchUseCase: fileSearchUseCase,
-            userVideoPlaylistsRepository: userVideoPlaylistsRepo
-        )
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+        )
+        let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        let videoPlaylistUseCase = VideoPlaylistUseCase(
+            fileSearchUseCase: fileSearchUseCase,
+            userVideoPlaylistsRepository: userVideoPlaylistsRepo, 
+            photoLibraryUseCase: photoLibraryUseCase
         )
         let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
             userVideoPlaylistRepository: userVideoPlaylistsRepo,
