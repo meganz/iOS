@@ -18,8 +18,11 @@ extension ItemListViewController {
             guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: item.handle) else { return }
             cell.avatarView.setup(for: chatRoom)
         } else {
-            Task {
-                cell.avatarView.avatarImageView.image = await fetchUserAvatar(for: item)
+            Task { [weak cell] in
+                let avatar = await fetchUserAvatar(for: item)
+                await MainActor.run {
+                    cell?.avatarView.avatarImageView.image = avatar
+                }
             }
             
             cell.avatarView.configure(mode: .single)
