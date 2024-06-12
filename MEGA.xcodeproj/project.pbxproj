@@ -1330,7 +1330,7 @@
 		9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */; };
 		94389C682A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */; };
 		9439F10D2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */; };
-		9439F1252B838F6F00B3633D /* InitialViewModeFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F1242B838F6F00B3633D /* InitialViewModeFactoryTests.swift */; };
+		9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */; };
 		943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */; };
 		943E4AFF28D1C09800903A78 /* ContextMenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943E4AFE28D1C09800903A78 /* ContextMenuDataModel.swift */; };
 		943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -1445,7 +1445,7 @@
 		94B09E5F2B84CC87007D6B84 /* BrowserViewControllerDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */; };
 		94B09E602B84CC87007D6B84 /* UploadAddMenuDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E482B84CC86007D6B84 /* UploadAddMenuDelegateHandler.swift */; };
 		94B09E612B84CC87007D6B84 /* CloudDriveContextMenuConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E492B84CC86007D6B84 /* CloudDriveContextMenuConfigFactory.swift */; };
-		94B09E622B84CC87007D6B84 /* InitialViewModeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4A2B84CC86007D6B84 /* InitialViewModeFactory.swift */; };
+		94B09E622B84CC87007D6B84 /* ViewModeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4A2B84CC86007D6B84 /* ViewModeFactory.swift */; };
 		94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */; };
 		94B09E642B84CC87007D6B84 /* StorageFullAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4D2B84CC86007D6B84 /* StorageFullAlertViewModel.swift */; };
 		94B09E652B84CC87007D6B84 /* QuickActionsMenuDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4E2B84CC86007D6B84 /* QuickActionsMenuDelegateHandler.swift */; };
@@ -2228,6 +2228,8 @@
 		BF6149682A9FF38400AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149672A9FF38400AB051A /* MEGAL10nObjc */; };
 		BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149692A9FF39500AB051A /* MEGAL10n */; };
 		BF61496C2A9FF39500AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF61496B2A9FF39500AB051A /* MEGAL10nObjc */; };
+		BF65423C2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */; };
+		BF6542432C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */; };
 		BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */; };
 		BF66DFC82613E6AC00066F35 /* MeetingFloatingPanelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */; };
 		BF66DFD22613E6DC00066F35 /* MeetingFloatingPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66DFD12613E6DC00066F35 /* MeetingFloatingPanelViewModel.swift */; };
@@ -4094,7 +4096,7 @@
 		9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAPasswordLinkRequestDelegate.m; path = API/Requests/MEGAPasswordLinkRequestDelegate.m; sourceTree = "<group>"; };
 		94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCloudDriveViewControllerFactory.swift; sourceTree = "<group>"; };
-		9439F1242B838F6F00B3633D /* InitialViewModeFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewModeFactoryTests.swift; sourceTree = "<group>"; };
+		9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeFactoryTests.swift; sourceTree = "<group>"; };
 		943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		943E4AFE28D1C09800903A78 /* ContextMenuDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuDataModel.swift; sourceTree = "<group>"; };
 		943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4205,7 +4207,7 @@
 		94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewControllerDelegateHandler.swift; sourceTree = "<group>"; };
 		94B09E482B84CC86007D6B84 /* UploadAddMenuDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadAddMenuDelegateHandler.swift; sourceTree = "<group>"; };
 		94B09E492B84CC86007D6B84 /* CloudDriveContextMenuConfigFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuConfigFactory.swift; sourceTree = "<group>"; };
-		94B09E4A2B84CC86007D6B84 /* InitialViewModeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewModeFactory.swift; sourceTree = "<group>"; };
+		94B09E4A2B84CC86007D6B84 /* ViewModeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModeFactory.swift; sourceTree = "<group>"; };
 		94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveNavigationTitleBuilder.swift; sourceTree = "<group>"; };
 		94B09E4D2B84CC86007D6B84 /* StorageFullAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModel.swift; sourceTree = "<group>"; };
 		94B09E4E2B84CC86007D6B84 /* QuickActionsMenuDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickActionsMenuDelegateHandler.swift; sourceTree = "<group>"; };
@@ -5012,6 +5014,8 @@
 		BF5E345E255A2E1A0055395E /* FilesExplorerGridSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerGridSource.swift; sourceTree = "<group>"; };
 		BF5E3494255C8FD10055395E /* FilesExplorerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewController.swift; sourceTree = "<group>"; };
 		BF61494F2A9FF30000AB051A /* MEGAL10n */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAL10n; sourceTree = "<group>"; };
+		BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModeMonitoringService.swift; sourceTree = "<group>"; };
+		BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModeMonitoringServiceTests.swift; sourceTree = "<group>"; };
 		BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallViewModelTests.swift; sourceTree = "<group>"; };
 		BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelRouter.swift; sourceTree = "<group>"; };
 		BF66DFD12613E6DC00066F35 /* MeetingFloatingPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewModel.swift; sourceTree = "<group>"; };
@@ -5860,10 +5864,10 @@
 				BFDAC17D2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift */,
 				24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */,
 				25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */,
+				BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */,
 				BF67D77E2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift */,
 				9422636D2B445FF60010B667 /* DisplayModeTests.swift */,
 				2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */,
-				9439F1242B838F6F00B3633D /* InitialViewModeFactoryTests.swift */,
 				9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */,
 				B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */,
 				B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */,
@@ -5871,6 +5875,7 @@
 				947CA1FA2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift */,
 				BFFD20E62BC784AD009885F0 /* SearchResultMapperTests.swift */,
 				9402EF512B70DE69002F7714 /* ToolbarActionFactoryTests.swift */,
+				9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */,
 			);
 			path = CloudDrive;
 			sourceTree = "<group>";
@@ -10311,6 +10316,7 @@
 				94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */,
 				94B09E462B84CC86007D6B84 /* CloudDriveNodeInsertionRouter.swift */,
 				94B09E422B84CC86007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift */,
+				BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */,
 				94B09E442B84CC86007D6B84 /* ContextMenuManager+ActionHandlersArray.swift */,
 				94B09E402B84CC86007D6B84 /* DisplayMenuDelegateHandler.swift */,
 				94B09E4F2B84CC86007D6B84 /* MediaContentDelegateHandler.swift */,
@@ -12942,10 +12948,10 @@
 				94B09E492B84CC86007D6B84 /* CloudDriveContextMenuConfigFactory.swift */,
 				94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */,
 				BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */,
-				94B09E4A2B84CC86007D6B84 /* InitialViewModeFactory.swift */,
 				9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */,
 				BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */,
 				94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */,
+				94B09E4A2B84CC86007D6B84 /* ViewModeFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -14549,6 +14555,7 @@
 				94B09E5A2B84CC87007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift in Sources */,
 				BFDAC1722B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift in Sources */,
 				B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */,
+				BF65423C2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift in Sources */,
 				5D1B23F524AF34EE00ACE1C5 /* ColorFactory.swift in Sources */,
 				5D64660624890BBE006030A5 /* ColorProviding.swift in Sources */,
 				5DD6B17624D7C34700F14515 /* ColorStyle.swift in Sources */,
@@ -14858,7 +14865,6 @@
 				328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
-				94B09E622B84CC87007D6B84 /* InitialViewModeFactory.swift in Sources */,
 				C4B4B1692B27CAF900F78710 /* InputView+Additions.swift in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
@@ -15836,6 +15842,7 @@
 				B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */,
 				94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
+				94B09E622B84CC87007D6B84 /* ViewModeFactory.swift in Sources */,
 				94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */,
 				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,
 				83E3443C2BCE9F45006A2E3D /* VoIPPushDelegate.swift in Sources */,
@@ -16287,6 +16294,7 @@
 				BFDAC17E2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift in Sources */,
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
 				25BE0B092AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift in Sources */,
+				BF6542432C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift in Sources */,
 				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* ContentConsumptionUserAttributeUseCaseAdditionsTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
@@ -16333,7 +16341,6 @@
 				0EE4D9ED2C11312A0026F60C /* HomeSearchResultViewModelTests.swift in Sources */,
 				943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
-				9439F1252B838F6F00B3633D /* InitialViewModeFactoryTests.swift in Sources */,
 				25CF5EC82BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift in Sources */,
 				B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */,
 				835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */,
@@ -16527,6 +16534,7 @@
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
 				9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */,
 				244CEFC12B2319F400147302 /* VideoRevampTabContainerViewModelTests.swift in Sources */,
+				9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */,
 				9474F23F2B0F8F4700C5F63B /* ViewModeStoreTests.swift in Sources */,
 				83F58E952BD29D7A001DB6EC /* VoIPPushDelegateTests.swift in Sources */,
 				8396E2A32ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift in Sources */,

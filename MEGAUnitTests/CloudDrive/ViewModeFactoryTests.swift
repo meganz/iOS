@@ -9,7 +9,7 @@ extension NodeSource {
     }
 }
 
-final class InitialViewModeFactoryTests: XCTestCase {
+final class ViewModeFactoryTests: XCTestCase {
     
     class MockViewModeStore: ViewModeStoring {
         
@@ -33,7 +33,7 @@ final class InitialViewModeFactoryTests: XCTestCase {
     }
     
     class Harness {
-        let sut: InitialViewModeFactory
+        let sut: ViewModeFactory
         let nodeSource: NodeSource
         var onlyMediaValueToReturn = false
         var config: NodeBrowserConfig = .default
@@ -41,13 +41,13 @@ final class InitialViewModeFactoryTests: XCTestCase {
         
         init(nodeSource: NodeSource) {
             self.nodeSource = nodeSource
-            sut = InitialViewModeFactory(
+            sut = ViewModeFactory(
                 viewModeStore: store
             )
         }
         
         func determineResult() -> ViewModePreferenceEntity {
-            sut.determineInitialViewMode(
+            sut.determineViewMode(
                 nodeSource: nodeSource,
                 config: config,
                 hasOnlyMediaNodesChecker: { onlyMediaValueToReturn }

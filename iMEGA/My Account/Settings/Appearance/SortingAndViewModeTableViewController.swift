@@ -115,12 +115,14 @@ class SortingAndViewModeTableViewController: UITableViewController {
     }
     
     @objc func processViewModePreferenceNotification(_ notification: Notification) {
+        let updatedViewModePreference = UserDefaults.standard.integer(forKey: MEGAViewModePreference)
+        guard updatedViewModePreference != viewModePreference else { return }
+
         let previousSelectedViewModePreferenceCell = tableView.cellForRow(at: IndexPath.init(row: viewModePreference, section: SortingAndViewSection.viewModePreference.rawValue)) as! SelectableTableViewCell
         previousSelectedViewModePreferenceCell.redCheckmarkImageView.isHidden = true
         
-        if let preference = notification.userInfo?[MEGAViewModePreference] as? ViewModePreferenceEntity {
-            viewModePreference = preference.rawValue
-        }
+        viewModePreference = updatedViewModePreference
+
         let selectedViewModePreferenceCell = tableView.cellForRow(at: IndexPath.init(row: viewModePreference, section: SortingAndViewSection.viewModePreference.rawValue)) as! SelectableTableViewCell
         selectedViewModePreferenceCell.redCheckmarkImageView.isHidden = false
     }

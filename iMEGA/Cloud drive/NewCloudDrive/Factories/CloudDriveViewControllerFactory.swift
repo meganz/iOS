@@ -32,7 +32,7 @@ struct CloudDriveViewControllerFactory {
     private let rubbishBinUseCase: any RubbishBinUseCaseProtocol
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let nodeActions: NodeActions
-    private let viewModeFactory: InitialViewModeFactory
+    private let viewModeFactory: ViewModeFactory
     
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
@@ -98,7 +98,7 @@ struct CloudDriveViewControllerFactory {
         
         self.avatarViewModel.inputs.viewIsReady()
         
-        viewModeFactory = InitialViewModeFactory(viewModeStore: viewModeStore)
+        viewModeFactory = ViewModeFactory(viewModeStore: viewModeStore)
     }
     
     static func make(nc: UINavigationController? = nil) -> CloudDriveViewControllerFactory {
@@ -262,6 +262,7 @@ struct CloudDriveViewControllerFactory {
         noInternetViewModel: NoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodesUpdateListener: some NodesUpdateListenerProtocol,
+        cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
         config: NodeBrowserConfig,
         nodeActions: NodeActions,
         navigationController: UINavigationController,
@@ -294,7 +295,8 @@ struct CloudDriveViewControllerFactory {
             avatarViewModel: avatarViewModel, 
             noInternetViewModel: noInternetViewModel,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
-            nodesUpdateListener: nodesUpdateListener,
+            nodesUpdateListener: nodesUpdateListener, 
+            cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
@@ -473,14 +475,39 @@ struct CloudDriveViewControllerFactory {
                     onActionCompleted: toolbarActionCompleted
                 )
         }
-        
-        let initialViewMode = viewModeFactory.determineInitialViewMode(
-            nodeSource: nodeSource,
-            config: overriddenConfig,
-            hasOnlyMediaNodesChecker: CloudDriveViewControllerMediaCheckerMode.containsExclusivelyMedia.makeVisualMediaPresenceChecker(
+
+        let viewModeProvider = { nodeSource, hasOnlyMediaNodes in
+            viewModeFactory.determineViewMode(
                 nodeSource: nodeSource,
-                nodeUseCase: nodeUseCase
+                config: makeOverriddenConfigIfNeeded(
+                    nodeSource: nodeSource,
+                    config: config
+                ),
+                hasOnlyMediaNodesChecker: { hasOnlyMediaNodes }
             )
+        }
+
+        let viewModeAsyncProvider: (NodeSource) async -> ViewModePreferenceEntity = { nodeSource in
+            let hasOnlyMediaNodes = CloudDriveViewControllerMediaCheckerMode
+                .containsExclusivelyMedia
+                .makeVisualMediaPresenceChecker(
+                    nodeSource: nodeSource,
+                    nodeUseCase: nodeUseCase
+                )()
+
+            return await Task { @MainActor in
+                viewModeProvider(nodeSource, hasOnlyMediaNodes)
+            }.value
+        }
+
+        let initialViewMode = viewModeProvider(
+            nodeSource,
+            CloudDriveViewControllerMediaCheckerMode
+                .containsExclusivelyMedia
+                .makeVisualMediaPresenceChecker(
+                    nodeSource: nodeSource,
+                    nodeUseCase: nodeUseCase
+                )()
         )
 
         let searchResultsVM = makeSearchResultsViewModel(
@@ -546,6 +573,12 @@ struct CloudDriveViewControllerFactory {
             nodeUpdatesListener: nodesUpdateListener
         )
 
+        let cloudDriveViewModeMonitoringService = CloudDriveViewModeMonitoringService(
+            nodeSource: nodeSource,
+            currentViewMode: initialViewMode,
+            viewModeProvider: viewModeAsyncProvider
+        )
+
         let mediaContentDelegate = MediaContentDelegateHandler()
         let nodeBrowserViewModel = makeNodeBrowserViewModel(
             initialViewMode: initialViewMode,
@@ -553,7 +586,8 @@ struct CloudDriveViewControllerFactory {
             searchResultsViewModel: searchResultsVM,
             noInternetViewModel: noInternetViewModel, 
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
-            nodesUpdateListener: nodesUpdateListener,
+            nodesUpdateListener: nodesUpdateListener, 
+            cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
             config: overriddenConfig,
             nodeActions: nodeActions,
             navigationController: navigationController,
