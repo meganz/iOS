@@ -22,7 +22,8 @@ struct UserPlaylistCell: View {
         UserPlaylistCellContent(
             videoConfig: videoConfig,
             previewEntity: viewModel.previewEntity,
-            secondaryInformationViewType: viewModel.secondaryInformationViewType
+            secondaryInformationViewType: viewModel.secondaryInformationViewType,
+            onTappedMoreOptions: { viewModel.onTappedMoreOptions() }
         )
         .task {
             await viewModel.onViewAppear()
@@ -38,6 +39,7 @@ struct UserPlaylistCellContent: View {
     let videoConfig: VideoConfig
     let previewEntity: VideoPlaylistCellPreviewEntity
     let secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType
+    let onTappedMoreOptions: () -> Void
     
     var body: some View {
         HStack {
@@ -61,6 +63,7 @@ struct UserPlaylistCellContent: View {
             
             Image(uiImage: videoConfig.rowAssets.moreImage)
                 .foregroundStyle(videoConfig.colorAssets.secondaryIconColor)
+                .onTapGesture { onTappedMoreOptions() }
         }
         .padding(0)
         .background(videoConfig.colorAssets.pageBackgroundColor)
@@ -88,7 +91,8 @@ struct UserPlaylistCellContent: View {
     UserPlaylistCellContent(
         videoConfig: .preview,
         previewEntity: .preview(isExported: false),
-        secondaryInformationViewType: .emptyPlaylist
+        secondaryInformationViewType: .emptyPlaylist,
+        onTappedMoreOptions: {}
     )
     .frame(height: 80, alignment: .center)
 }
@@ -97,7 +101,8 @@ struct UserPlaylistCellContent: View {
     UserPlaylistCellContent(
         videoConfig: .preview,
         previewEntity: .preview(isExported: true),
-        secondaryInformationViewType: .emptyPlaylist
+        secondaryInformationViewType: .emptyPlaylist,
+        onTappedMoreOptions: {}
     )
     .preferredColorScheme(.dark)
     .frame(height: 80, alignment: .center)
@@ -115,7 +120,8 @@ struct UserPlaylistCellContent: View {
                 ImageContainer(image: sampleImage, type: .thumbnail)
             ]
         ),
-        secondaryInformationViewType: .information
+        secondaryInformationViewType: .information,
+        onTappedMoreOptions: {}
     )
     .frame(height: 80, alignment: .center)
 }

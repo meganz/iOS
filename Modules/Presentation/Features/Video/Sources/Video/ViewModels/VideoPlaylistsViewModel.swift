@@ -16,6 +16,9 @@ final class VideoPlaylistsViewModel: ObservableObject {
     @Published var playlistName = ""
     @Published var shouldShowVideoPlaylistPicker = false
     
+    var selectedVideoPlaylistEntity: VideoPlaylistEntity?
+    @Published var isSheetPresented = false
+    
     private(set) var newlyCreatedVideoPlaylist: VideoPlaylistEntity?
     
     private var videoPlaylistNames: [String] {
@@ -172,5 +175,19 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     private func addVideosToNewlyCreatedVideoPlaylist(videos: [NodeEntity]) {
         // will be do on differentt ticket. Out of this ticket scope.
+    }
+    
+    func didSelectMoreOptionForItem(_ selectedVideoPlaylistEntity: VideoPlaylistEntity) {
+        self.selectedVideoPlaylistEntity = selectedVideoPlaylistEntity
+        isSheetPresented = true
+    }
+    
+    func didSelectActionSheetMenuAction(_ contextAction: ContextAction) {
+        switch contextAction.type {
+        case .rename:
+            break // CC-7328
+        case .deletePlaylist:
+            break // CC-7278
+        }
     }
 }
