@@ -12,6 +12,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     private let videoNodes: [NodeEntity]
     private let nodesForHandle: [HandleEntity: [NodeEntity]]
     private let nodeListEntityForHandle: [HandleEntity: NodeListEntity]
+    private let nodesForLocation: [FolderTargetEntity: [NodeEntity]]
     
     public var callback: (([NodeEntity]) -> Void)?
     
@@ -33,12 +34,14 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                 videoNodes: [NodeEntity] = [],
                 nodesForHandle: [HandleEntity: [NodeEntity]] = [:],
                 nodeListEntityForHandle: [HandleEntity: NodeListEntity] = [:],
+                nodesForLocation: [FolderTargetEntity: [NodeEntity]] = [:],
                 nodesUpdatePublisher: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher()
     ) {
         self.photoNodes = photoNodes
         self.videoNodes = videoNodes
         self.nodesForHandle = nodesForHandle
         self.nodeListEntityForHandle = nodeListEntityForHandle
+        self.nodesForLocation = nodesForLocation
         self.nodeUpdatesPublisher = nodesUpdatePublisher
     }
     
@@ -92,6 +95,10 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                     default: false
                     }
                 }
+        }
+        
+        if let folderTargetEntity = filter.folderTargetEntity, let nodes = nodesForLocation[folderTargetEntity] {
+            return nodes
         }
         
         return switch filter.formatType {
