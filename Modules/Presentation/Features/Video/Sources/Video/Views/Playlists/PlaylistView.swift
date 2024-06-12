@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -39,6 +40,73 @@ struct PlaylistView: View {
                 }
             }
         }
+        .sheet(isPresented: $viewModel.isSheetPresented) {
+            bottomView()
+        }
+    }
+    
+    @ViewBuilder
+    private func bottomView() -> some View {
+        if #available(iOS 16.4, *) {
+            iOS16SupportBottomSheetView()
+                .presentationCornerRadius(16)
+        } else if #available(iOS 16, *) {
+            iOS16SupportBottomSheetView()
+        } else {
+            bottomSheetView()
+        }
+    }
+    
+    @available(iOS 16.0, *)
+    private func iOS16SupportBottomSheetView() -> some View {
+        bottomSheetView()
+            .presentationDetents([ .height(presentationDetentsHeight) ])
+            .presentationDragIndicator(.hidden)
+    }
+    
+    private func bottomSheetView() -> some View {
+        ActionSheetContentView(
+            style: .plainIgnoreHeaderIgnoreScrolling,
+            headerView: EmptyView(),
+            actionButtons: {
+                actionButtons()
+            }()
+        )
+    }
+    
+    private var presentationDetentsHeight: CGFloat {
+        let estimatedContentHeight: () -> CGFloat = {
+            let textHeight = UIFont.preferredFont(forTextStyle: .body).lineHeight
+            let dividerHeight: CGFloat = 1
+            let cellHeight = textHeight + dividerHeight
+            let extraHeight: CGFloat = 75
+            return (cellHeight * CGFloat(actionButtons().count)) + extraHeight
+        }
+        return estimatedContentHeight()
+    }
+    
+    private func actionButtons() -> [ActionSheetButton] {
+        let items = [
+            ContextAction(
+                type: .rename,
+                icon: "rename",
+                title: Strings.Localizable.rename
+            ),
+            ContextAction(
+                type: .deletePlaylist,
+                icon: "rubbishBin",
+                title: Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Menu.deletePlaylist
+            )
+        ]
+        
+        return items
+            .map { contextAction in
+                ActionSheetButton(
+                    icon: contextAction.icon,
+                    title: contextAction.title,
+                    action: { viewModel.didSelectActionSheetMenuAction(contextAction) }
+                )
+            }
     }
     
     @ViewBuilder
@@ -98,17 +166,11 @@ struct PlaylistView: View {
             thumbnailUseCase: viewModel.thumbnailUseCase,
             viewModel: viewModel,
             videoConfig: videoConfig,
-            router: router
+            router: router,
+            didSelectMoreOptionForItem: { viewModel.didSelectMoreOptionForItem($0) }
         )
         .listStyle(PlainListStyle())
         .padding(.horizontal, 8)
-    }
-    
-    private func favoritePlaylistCell(videoPlaylist: VideoPlaylistEntity) -> some View {
-        let cellViewModel = videoPlaylistCellViewModel(videoPlaylist)
-        return FavoritePlaylistCell(viewModel: cellViewModel, videoConfig: videoConfig, router: router)
-            .listRowSeparator(.hidden)
-            .listRowInsets(.init())
     }
     
     private func videoPlaylistCellViewModel(_ videoPlaylist: VideoPlaylistEntity) -> VideoPlaylistCellViewModel {
@@ -125,7 +187,7 @@ struct PlaylistView: View {
 #Preview {
     PlaylistView(
         viewModel: VideoPlaylistsViewModel(
-            videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
+            videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(userVideoPlaylists: [.preview]),
             thumbnailUseCase: Preview_ThumbnailUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             syncModel: VideoRevampSyncModel(),
