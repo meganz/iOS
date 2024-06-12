@@ -49,7 +49,9 @@ final class VideoPlaylistsCollectionViewCoordinator {
                 videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: representer.viewModel.thumbnailUseCase),
                 videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase,
                 videoPlaylistEntity: rowItem.videoPlaylist,
-                onTapMoreOptions: { _ in }
+                onTapMoreOptions: { [weak self] in
+                    self?.representer.didSelectMoreOptionForItem($0)
+                }
             )
             configureCell(cell, cellViewModel: cellViewModel, rowItem: rowItem)
         }
@@ -131,7 +133,9 @@ final class VideoPlaylistsCollectionViewCoordinator {
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: representer.viewModel.thumbnailUseCase),
             videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase,
             videoPlaylistEntity: rowItem.videoPlaylist,
-            onTapMoreOptions: { _ in }
+            onTapMoreOptions: { [weak self] in
+                self?.representer.didSelectMoreOptionForItem($0)
+            }
         )
     }
 }
