@@ -21,7 +21,7 @@ struct EnforceCopyrightWarningView<T: View>: View {
                     EmptyView()
                 }
                 ProgressView()
-                    .scaleEffect(1.5)
+                    .controlSize(.large)
                     .opacity(viewModel.viewStatus == .unknown ? 1.0 : 0.0)
             }
             .task {
