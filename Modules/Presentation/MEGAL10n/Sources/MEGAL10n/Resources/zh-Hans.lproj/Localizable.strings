@@ -480,22 +480,6 @@
 "rename.fileWithoutExtension"="文件缺少扩展名 .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="替换";
-/* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1个文件已移至回收站";
-/* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d个文件已移至回收站";
-/* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1个文件夹已移至回收站";
-/* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d个文件夹已移至回收站";
-/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1个文件和1个文件夹已移至回收站";
-/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1个文件和%d个文件夹已移至回收站";
-/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d个文件和1个文件夹已移至回收站";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A]个文件和[B]个文件夹已移至回收站";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="权限错误";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -564,6 +548,8 @@
 "cameraUploads.albums.selectAlbumCover"="设为相册封面";
 /* Used as a hud message in album content screen. */
 "cameraUploads.albums.albumCoverUpdated"="相册封面已更新";
+/* Alert presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.title"="隐藏的项目";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="过滤";
 /* Choose type headline within filter UI */
@@ -624,10 +610,6 @@
 "sharedWithXContacts"="已与%d位联系人共享";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="权限已更改";
-/* Message shown when a share has been left */
-"shareLeft"="已离开共享";
-/* Message shown when some shares have been left */
-"sharesLeft"="已离开共享";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="移除共享";
 /* The text in the button to remove all contacts to a shared folder on one click */
@@ -862,22 +844,6 @@
 "remove"="移除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="确认删除";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="1个文件将被永久移除。您想继续吗？（您无法撤消此操作。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="%d个文件将被永久移除。您要继续吗？ （该操作无法撤销。）";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="1个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="%d个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="1个文件和1个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="1个文件和%d个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="%d个文件和1个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="[A]个文件和[B]个文件夹将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
 "sharedItems.rubbish.warning.message"="%@将被永久移除。您想继续吗？（您无法撤消此操作。）";
 /* Success message shown when 1 file has been removed from MEGA */
@@ -3589,9 +3555,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案的功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密码保护的链接\n\n• 具有到期日期的链接\n\n• 传输流量共享\n\n• Pro Lite可还原最多90天的已删除数据，Pro I、II和III则可还原最多180天\n\n• 使用我们的高速VPN保持在线隐私\n\n• 可安排7天到10年之间回收站定期清理\n\n• 优先客服";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密码保护的链接\n\n• 为链接设置到期日期\n\n• 传输流量共享\n\n• Pro Lite可还原最多90天的已删除数据，Pro I、II和III则可还原最多180天\n\n• 使用我们的高速VPN保持在线隐私\n\n• 可安排7天到10年之间回收站定期清理\n\n• 优先客服\n\n• 无广告";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="订阅详情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3966,6 +3932,14 @@
 "videos.tab.playlist.create.alert.enterDifferentName"="输入一个不同的名称";
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="已经存在该名称的播放列表";
+/* Used in video playlist content to add videos to video playlist */
+"videos.tab.playlist.playlistContent.menu.addVideos"="添加视频";
+/* Used in video playlist content to delete playlist */
+"videos.tab.playlist.playlistContent.menu.deletePlaylist"="删除播放列表";
+/* Used for adding videos to video playlist add toolbar button */
+"videos.tab.playlist.browser.button.add"="添加";
+/* Used for adding videos to video playlist add button in video playlist content */
+"videos.tab.playlist.content.header.button.title.add"="添加";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室里没有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4082,10 +4056,8 @@
 "free.Plan.Price.description"="免费";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited feature message. E.g.: Transfer = Limited */
-"limited.feature.message"="有限制";
-/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
-"unlimited.feature.message"="无限制";
+/* Limited transfer limit title */
+"account.transferQuota.freePlan.limited"="有限制";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="取消订阅";
 /* The alert title shown when asking user if they want to make media node offline. */
@@ -4107,15 +4079,17 @@
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
-"call.and.meeting.duration.title"="通话和会议时长";
+"callAndMeeting.duration.title"="通话和会议时长";
 /* Call and meeting duration for free users */
-"call.and.meeting.duration.for.free.users"="长达1小时";
-/* Call and meeting duration for pro users */
-"call.and.meeting.duration.for.pro.users"="长达24小时";
+"callAndMeeting.duration.for.free.users"="长达1小时";
+/* Call and meeting duration unlimited for pro users */
+"callAndMeeting.duration.unlimited.for.pro.users"="无限制";
 /* Call and meeting participants title */
-"call.and.meeting.participants.title"="通话和会议参与者";
+"callAndMeeting.participants.title"="通话和会议参与者";
 /* Call and meeting participants for free users */
-"call.and.meeting.participants.for.free.users"="最多100人";
+"callAndMeeting.participants.for.free.users"="最多100人";
+/* Call and meeting participants unlimited for pro users */
+"callAndMeeting.participants.unlimited.for.pro.users"="无限制";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="您将会错过这些功能";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
@@ -4126,3 +4100,71 @@
 "cancellation.subscription.continue.cancellation.button.title"="继续取消";
 /* Feature title */
 "feature.title"="功能";
+/* Cancellation Subscription manage by Google Play title */
+"accounts.cancelSubscriptionSteps.googlePlay.title"="您的订阅不由Apple管理。";
+/* Cancellation Subscription manage by Google Play message */
+"accounts.cancelSubscriptionSteps.googlePlay.message"="这是因为您通过Google Play订阅的MEGA。若要取消订阅，您需要：";
+/* Cancellation Section Google Play Web Browser title: In a web browser */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="在网页浏览器中";
+/* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. 访问play.google.com";
+/* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. 使用您的Google Play帐户登入。";
+/* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. 点击您的头像。";
+/* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. 点击<b>付款&订阅。</b>";
+/* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. 点击<b>订阅。</b>";
+/* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. 在您的MEGA订阅下，点击<b>取消订阅。</b>";
+/* Cancellation Section Google Play Android Device title: On an Android device */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="在Android设备上";
+/* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. 打开Play商店应用程序。";
+/* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. 使用您的Google Play帐户登入（如果需要）。";
+/* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. 点按您的头像。";
+/* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. 点按<b>付款&订阅。</b>";
+/* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. 点按<b>订阅</b>";
+/* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. 在您的MEGA订阅下，点按<b>取消订阅。</b>";
+/* More button in Call UI that shows context menu. */
+"chat.call.quickAction.more"="更多";
+/* Context menu item to switch layout to main speaker (Call UI) */
+"chat.call.contextMenu.switchToMainView"="切换到主视图";
+/* Context menu item to switch layout to grid mode (Call UI) */
+"chat.call.contextMenu.switchToGrid"="切换到网格视图";
+/* Context menu item to lower a raised hand (Call UI) */
+"chat.call.contextMenu.lowerHand"="放手";
+/* Context menu item to signal a raised hand (Call UI) */
+"chat.call.contextMenu.raiseHand"="举手";
+/* Cancellation Subscription manage by Webclient title */
+"accounts.cancelSubscriptionSteps.webClient.title"="您需要使用网络浏览器取消您的订阅";
+/* Cancellation Subscription manage by Webclient message */
+"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+/* Cancellation Section Webclient on a computer title: On a computer */
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+/* Cancellation Section Webclient on mobile device title: On a mobile device */
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+/* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+/* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";

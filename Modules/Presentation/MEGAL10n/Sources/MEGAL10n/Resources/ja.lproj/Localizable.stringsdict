@@ -2564,5 +2564,19 @@
         <string>無料通話は%d分後に終了します</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.albumLink.sensitive.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string></string>
+      </dict>
+    </dict>
   </dict>
 </plist>
