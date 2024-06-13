@@ -8,6 +8,7 @@ class BaseAction: NSObject {
     var accessoryView: UIView?
     var image: UIImage?
     var style: UIAlertAction.Style = .default
+    var enabled: Bool = true
     
     override var hash: Int {
         var hasher = Hasher()
@@ -16,6 +17,7 @@ class BaseAction: NSObject {
         hasher.combine(accessoryView?.hash)
         hasher.combine(image?.hash)
         hasher.combine(style.hashValue)
+        hasher.combine(enabled)
         return hasher.finalize()
     }
     
@@ -26,22 +28,55 @@ class BaseAction: NSObject {
             && accessoryView == otherObject.accessoryView
             && image == otherObject.image
             && style == otherObject.style
+            && enabled == otherObject.enabled
     }
 }
 
 class ActionSheetAction: BaseAction {
     var actionHandler: () -> Void
 
-    @objc init(title: String?, detail: String?, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
+    @objc init(
+        title: String?,
+        detail: String?,
+        image: UIImage?,
+        enabled: Bool = true,
+        style: UIAlertAction.Style,
+        actionHandler: @escaping () -> Void
+    ) {
         self.actionHandler = actionHandler
         super.init()
         self.title = title
         self.detail = detail
         self.image = image
+        self.enabled = enabled
         self.style = style
     }
     
-    @objc init(title: String?, detail: String?, accessoryView: UIView?, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
+    @objc convenience init(
+        title: String?,
+        detail: String?,
+        image: UIImage?,
+        style: UIAlertAction.Style,
+        actionHandler: @escaping () -> Void
+    ) {
+        self.init(
+            title: title,
+            detail: detail,
+            image: image,
+            enabled: true,
+            style: style,
+            actionHandler: actionHandler
+        )
+    }
+    
+    @objc init(
+        title: String?,
+        detail: String?,
+        accessoryView: UIView?,
+        image: UIImage?,
+        style: UIAlertAction.Style,
+        actionHandler: @escaping () -> Void
+    ) {
         self.actionHandler = actionHandler
         super.init()
         self.title = title
@@ -56,7 +91,14 @@ class ActionSheetSwitchAction: ActionSheetAction {
     var switchView: UISwitch?
     
     @objc init(title: String?, detail: String?, switchView: UISwitch, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
-        super.init(title: title, detail: detail, image: image, style: style, actionHandler: actionHandler)
+        super.init(
+            title: title,
+            detail: detail,
+            image: image,
+            enabled: true,
+            style: style,
+            actionHandler: actionHandler
+        )
         self.switchView = switchView
     }
     

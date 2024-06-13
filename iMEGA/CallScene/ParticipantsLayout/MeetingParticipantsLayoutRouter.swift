@@ -20,12 +20,20 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
     
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
-
-    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, call: CallEntity) {
+    private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
+    
+    init(
+        presenter: UINavigationController,
+        containerViewModel: MeetingContainerViewModel,
+        chatRoom: ChatRoomEntity,
+        call: CallEntity,
+        layoutUpdateChannel: ParticipantLayoutUpdateChannel
+    ) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
         self.call = call
+        self.layoutUpdateChannel = layoutUpdateChannel
         super.init()
     }
     
@@ -58,7 +66,8 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             callManager: CallKitCallManager.shared,
             chatRoom: chatRoom,
-            call: call
+            call: call,
+            layoutUpdateChannel: layoutUpdateChannel
         )
         
         let vc = MeetingParticipantsLayoutViewController(viewModel: vm)

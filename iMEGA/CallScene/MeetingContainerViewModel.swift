@@ -32,6 +32,20 @@ enum MeetingContainerAction: ActionType {
     case showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void))
 }
 
+
+/**
+ layout is set CallCollectionView and stored on the MeetingParticipantsLayoutViewModel
+ it can be changed via nav bar in the MeetingParticipantLayoutViewController
+ or via CallControlsView -> Action Sheet menu
+ class below is used for exchange information between MeetingsFloatingPanel and MeetingsParticipantLayout
+ about the state of the layout toggle
+ */
+class ParticipantLayoutUpdateChannel {
+    var updateLayout: ((ParticipantsLayoutMode) -> Void)?
+    var getCurrentLayout: (() -> ParticipantsLayoutMode)?
+    var layoutSwitchingEnabled: (() -> Bool)?
+}
+
 final class MeetingContainerViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
     }

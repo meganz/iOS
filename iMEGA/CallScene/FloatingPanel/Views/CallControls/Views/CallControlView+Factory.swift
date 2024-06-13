@@ -79,4 +79,16 @@ extension CallControlView.Config {
             action: action
         )
     }
+    
+    static func moreButton(action: @escaping () async -> Void) -> Self {
+        .init(
+            title: Strings.Localizable.Chat.Call.QuickAction.more,
+            icon: Image(.callContextMenu),
+            colors: .init(
+                background: backgroundEnabledColor(),
+                foreground: TokenColors.Text.primary.swiftUI
+            ),
+            action: action
+        )
+    }
 }

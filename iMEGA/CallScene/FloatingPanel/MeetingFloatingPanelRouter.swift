@@ -50,19 +50,24 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private var inviteToMegaNavigationController: MEGANavigationController?
     private let permissionHandler: any DevicePermissionsHandling
     private lazy var callWaitingRoomDialog = CallWaitingRoomUsersDialog()
-
+    private let actionsViewController: ([ActionSheetAction]) -> UIViewController
+    private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
     init(
         presenter: UINavigationController,
         containerViewModel: MeetingContainerViewModel,
         chatRoom: ChatRoomEntity,
         permissionHandler: some DevicePermissionsHandling,
-        selectWaitingRoomList: Bool
+        layoutUpdateChannel: ParticipantLayoutUpdateChannel,
+        selectWaitingRoomList: Bool,
+        actionsViewController: @escaping ([ActionSheetAction]) -> UIViewController
     ) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
         self.permissionHandler = permissionHandler
         self.selectWaitingRoomList = selectWaitingRoomList
+        self.layoutUpdateChannel = layoutUpdateChannel
+        self.actionsViewController = actionsViewController
     }
     
     func build() -> UIViewController {
@@ -75,6 +80,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         
         let callControlsViewModel = CallControlsViewModel(
             router: self,
+            menuPresenter: presentMenu,
             chatRoom: chatRoom,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
@@ -85,7 +91,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             callManager: CallKitCallManager.shared,
             notificationCenter: NotificationCenter.default,
             audioRouteChangeNotificationName: AVAudioSession.routeChangeNotification,
-            featureFlagProvider: DIContainer.featureFlagProvider
+            featureFlagProvider: DIContainer.featureFlagProvider,
+            layoutUpdateChannel: layoutUpdateChannel
         )
         
         let callControlsViewHost = UIHostingController(rootView: CallControlsView(viewModel: callControlsViewModel))
@@ -151,6 +158,10 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         
         contactsNavigationController.overrideUserInterfaceStyle = .dark
         baseViewController?.present(contactsNavigationController, animated: true)
+    }
+    
+    func presentMenu(_ actions: [ActionSheetAction]) {
+        baseViewController?.present(actionsViewController(actions), animated: true)
     }
     
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {

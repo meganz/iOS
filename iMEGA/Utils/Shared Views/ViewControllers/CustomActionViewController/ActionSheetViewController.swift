@@ -373,9 +373,15 @@ extension ActionSheetViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let action = actions[indexPath.row]
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if let action = actions[indexPath.row] as? ActionSheetAction {
+        if !action.enabled {
+            return
+        }
+        
+        if let action = action as? ActionSheetAction {
             if action.isKind(of: ActionSheetSwitchAction.self) {
                 action.actionHandler()
             } else {
@@ -383,7 +389,7 @@ extension ActionSheetViewController: UITableViewDataSource {
                     action.actionHandler()
                 })
             }
-        } else if let action = actions[indexPath.row] as? ContextActionSheetAction {
+        } else if let action = action as? ContextActionSheetAction {
             dismiss(animated: true, completion: {
                 action.actionHandler(action)
             })
