@@ -480,22 +480,6 @@
 "rename.fileWithoutExtension"="Файл без расширения .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Заменить";
-/* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 файл перемещён в Корзину";
-/* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="Файлы (%d) перемещены в Корзину";
-/* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 папка перемещена в Корзину";
-/* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d папки(ок) перемещено в Корзину";
-/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 файл и 1 папка были перемещены в Корзину";
-/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 файл и %d папок(и) перемещены в Корзину";
-/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="Файлы (%d) и 1 папка перемещены в Корзину";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="Файлы ([A]) и папки ([B]) были перемещены в Корзину";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Недостаточно прав доступа";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -564,6 +548,8 @@
 "cameraUploads.albums.selectAlbumCover"="Выбрать обложку альбома";
 /* Used as a hud message in album content screen. */
 "cameraUploads.albums.albumCoverUpdated"="Обложка альбома обновлена";
+/* Alert presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.title"="Скрытые элементы";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Фильтр";
 /* Choose type headline within filter UI */
@@ -624,10 +610,6 @@
 "sharedWithXContacts"="Общая с %d контактами";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Права изменены";
-/* Message shown when a share has been left */
-"shareLeft"="Остался общий элемент";
-/* Message shown when some shares have been left */
-"sharesLeft"="Остались общие элементы";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Убрать из общих";
 /* The text in the button to remove all contacts to a shared folder on one click */
@@ -862,22 +844,6 @@
 "remove"="Удалить";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Подтвердите удаление";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="Вы собираетесь навсегда удалить 1 файл. Продолжить? (Вы не сможете отменить это действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Вы собираетесь навсегда удалить %d файлов(а). Продолжить? (Вы не сможете отменить это действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="Вы собираетесь навсегда удалить 1 папку. Продолжить? (Вы не сможете отменить это действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Вы собираетесь навсегда удалить %d папок(и). Продолжить? (Вы не сможете отменить это действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Вы собираетесь навсегда удалить 1 файл и 1 папку. Продолжить? (Вы не сможете отменить это действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Вы собираетесь навсегда удалить 1 файл и %d папок(и). Продолжить? (Вы не сможете отменить это действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Вы собираетесь навсегда удалить %d файлов(а) и 1 папку. Продолжить? (Вы не сможете отменить это действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Файлы ([A]) и папки ([B]) будут необратимо удалены. Продолжить? (Это действие нельзя отменить.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
 "sharedItems.rubbish.warning.message"="Вы собираетесь навсегда удалить %@. Продолжить? (Вы не сможете отменить это действие.)";
 /* Success message shown when 1 file has been removed from MEGA */
@@ -3589,9 +3555,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Особенности планов Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Перемотка удалённых данных на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III\n\n• Сохраняйте конфиденциальность в Интернете с нашим высокоскоростным VPN\n\n• Срок очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Перемотка удалённых данных на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III\n\n• Сохраняйте конфиденциальность в Интернете с нашим высокоскоростным VPN\n\n• Срок очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка\n\n• Без рекламы";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Подробная информация о подписке";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3966,6 +3932,14 @@
 "videos.tab.playlist.create.alert.enterDifferentName"="Введите другое название";
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="Плейлист с таким названием уже существует";
+/* Used in video playlist content to add videos to video playlist */
+"videos.tab.playlist.playlistContent.menu.addVideos"="Все видео";
+/* Used in video playlist content to delete playlist */
+"videos.tab.playlist.playlistContent.menu.deletePlaylist"="Удалить плейлист";
+/* Used for adding videos to video playlist add toolbar button */
+"videos.tab.playlist.browser.button.add"="Добавить";
+/* Used for adding videos to video playlist add button in video playlist content */
+"videos.tab.playlist.content.header.button.title.add"="Добавить";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="В комнате ожидания никого нет";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4082,10 +4056,8 @@
 "free.Plan.Price.description"="Бесплатный";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d ГБ";
-/* Limited feature message. E.g.: Transfer = Limited */
-"limited.feature.message"="Ограничено";
-/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
-"unlimited.feature.message"="НЕОГРАНИЧЕН";
+/* Limited transfer limit title */
+"account.transferQuota.freePlan.limited"="Ограничено";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Отменить подписку";
 /* The alert title shown when asking user if they want to make media node offline. */
@@ -4107,15 +4079,17 @@
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
-"call.and.meeting.duration.title"="Длительнось звонка и встречи";
+"callAndMeeting.duration.title"="Длительнось звонка и встречи";
 /* Call and meeting duration for free users */
-"call.and.meeting.duration.for.free.users"="До 1 часа";
-/* Call and meeting duration for pro users */
-"call.and.meeting.duration.for.pro.users"="До 24 часов";
+"callAndMeeting.duration.for.free.users"="До 1 часа";
+/* Call and meeting duration unlimited for pro users */
+"callAndMeeting.duration.unlimited.for.pro.users"="НЕОГРАНИЧЕН";
 /* Call and meeting participants title */
-"call.and.meeting.participants.title"="Участники звонка и встречи";
+"callAndMeeting.participants.title"="Участники звонка и встречи";
 /* Call and meeting participants for free users */
-"call.and.meeting.participants.for.free.users"="До 100";
+"callAndMeeting.participants.for.free.users"="До 100";
+/* Call and meeting participants unlimited for pro users */
+"callAndMeeting.participants.unlimited.for.pro.users"="НЕОГРАНИЧЕН";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="Вы потеряете эти функции";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
@@ -4126,3 +4100,71 @@
 "cancellation.subscription.continue.cancellation.button.title"="Продолжить отмену";
 /* Feature title */
 "feature.title"="Особенность";
+/* Cancellation Subscription manage by Google Play title */
+"accounts.cancelSubscriptionSteps.googlePlay.title"="Ваша подписка не управляется Apple.";
+/* Cancellation Subscription manage by Google Play message */
+"accounts.cancelSubscriptionSteps.googlePlay.message"="Это связано с тем, что вы подписались на MEGA через Google Play. Чтобы отменить подписку, выполните следующие шаги:";
+/* Cancellation Section Google Play Web Browser title: In a web browser */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="В браузере";
+/* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Посетите play.google.com";
+/* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Войдите в свой аккаунт Google Play.";
+/* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Нажмите на свой аватар.";
+/* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Нажмите <b>«Платежи и подписки»</b>.";
+/* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Нажмите <b>«Подписки»</b>.";
+/* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Под подпиской MEGA нажмите <b>«Отменить подписку»</b>.";
+/* Cancellation Section Google Play Android Device title: On an Android device */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="На устройстве Android";
+/* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Откройте приложение Play Store.";
+/* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Войдите в свой аккаунт Google Play (если требуется).";
+/* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Нажмите на свой аватар.";
+/* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Нажмите <b>«Платежи и подписки»</b>.";
+/* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Нажмите <b>«Подписки»</b>.";
+/* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Под подпиской MEGA нажмите <b>«Отменить подписку»</b>.";
+/* More button in Call UI that shows context menu. */
+"chat.call.quickAction.more"="Ещё";
+/* Context menu item to switch layout to main speaker (Call UI) */
+"chat.call.contextMenu.switchToMainView"="Переключить на основной вид";
+/* Context menu item to switch layout to grid mode (Call UI) */
+"chat.call.contextMenu.switchToGrid"="Переключить на вид сетки";
+/* Context menu item to lower a raised hand (Call UI) */
+"chat.call.contextMenu.lowerHand"="Опустить руку";
+/* Context menu item to signal a raised hand (Call UI) */
+"chat.call.contextMenu.raiseHand"="Поднять руку";
+/* Cancellation Subscription manage by Webclient title */
+"accounts.cancelSubscriptionSteps.webClient.title"="Вам нужно отменить подписку через веб-браузер";
+/* Cancellation Subscription manage by Webclient message */
+"accounts.cancelSubscriptionSteps.webClient.message"="Это связано с тем, что вы подписались на MEGA в браузере. Чтобы отменить подписку, выполните следующие шаги:";
+/* Cancellation Section Webclient on a computer title: On a computer */
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="На компьютере";
+/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Войдите в свой аккаунт MEGA.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Нажмите <b>«Настройки»</b>.";
+/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Нажмите на вкладку <b>«План»</b>.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Нажмите <b>«Отменить подписку»</b>.";
+/* Cancellation Section Webclient on mobile device title: On a mobile device */
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="На мобильном устройстве";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Войдите в свой аккаунт MEGA.";
+/* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Нажмите на свой аватар.";
+/* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Нажмите <b>«Отменить подписку»</b>.";

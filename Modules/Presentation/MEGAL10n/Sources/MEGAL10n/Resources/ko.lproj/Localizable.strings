@@ -480,22 +480,6 @@
 "rename.fileWithoutExtension"="확장자가 없는 파일 .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="바꾸기";
-/* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="파일 1개가 휴지통으로 이동됨";
-/* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="파일 %d개가 휴지통으로 이동됨";
-/* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="폴더 1개가 휴지통으로 이동됨";
-/* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="폴더 %d개가 휴지통으로 이동됨";
-/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="파일 1개와 폴더 1개가 휴지통으로 이동됨";
-/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="파일 1개와 폴더 %d개가 휴지통으로 이동됨";
-/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="파일 %d개와 폴더 1개가 휴지통으로 이동됨";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="파일 [A]개와 폴더 [B]개를 휴지통으로 이동하였습니다";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="권한 오류";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -564,6 +548,8 @@
 "cameraUploads.albums.selectAlbumCover"="사진첩 표지 선택";
 /* Used as a hud message in album content screen. */
 "cameraUploads.albums.albumCoverUpdated"="사진첩 표지 업데이트됨";
+/* Alert presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.title"="숨겨진 항목";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="필터";
 /* Choose type headline within filter UI */
@@ -624,10 +610,6 @@
 "sharedWithXContacts"="%d명의 연락처와 공유됨";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="권한이 변경됨";
-/* Message shown when a share has been left */
-"shareLeft"="공유 떠남";
-/* Message shown when some shares have been left */
-"sharesLeft"="공유 떠남";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="공유 제거";
 /* The text in the button to remove all contacts to a shared folder on one click */
@@ -862,22 +844,6 @@
 "remove"="제거";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="삭제 승인";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="파일 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="파일 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="폴더 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 취소할 수 없습니다)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="파일 1개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="파일 1개와 폴더 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="파일 %d개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="파일 [A]개와 폴더 [B]개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
 "sharedItems.rubbish.warning.message"="%@을/를 완전히 삭제하려고 합니다. 진행 하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Success message shown when 1 file has been removed from MEGA */
@@ -3589,9 +3555,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro 요금제의 기능";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• Pro Lite는 최대 90일 그리고 Pro I, II, III는 최대 180일의 삭제한 데이터 되돌리기\n\n• 고속 VPN으로 온라인에서도 비공개 유지\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="구독 세부정보";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3879,11 +3845,11 @@
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="파일과 폴더 링크에 암호와 만료일을 설정";
 /* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="Plus access to these great benefits:";
+"onboarding.upgradeAccount.content.plusBenefits.title"="추가로 이러한 훌륭한 혜택이 있습니다:";
 /* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Unrestricted calls and meetings";
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• 제한 없는 통화와 회의";
 /* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Unrestricted calls and meetings\n• No advertisements";
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• 제한 없는 통화와 회의\n• 광고 없음";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="오늘 Pro로 업그레이드";
 /* Camera uploads banner enable state title */
@@ -3965,7 +3931,15 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="다른 이름을 입력하세요";
 /* Used in create video playlist popup user video playlist name validation */
-"videos.tab.playlist.create.alert.userVideoPlaylistExists"="A playlist with this name already exists";
+"videos.tab.playlist.create.alert.userVideoPlaylistExists"="이 이름을 가진 재생목록이 이미 존재합니다";
+/* Used in video playlist content to add videos to video playlist */
+"videos.tab.playlist.playlistContent.menu.addVideos"="동영상 추가";
+/* Used in video playlist content to delete playlist */
+"videos.tab.playlist.playlistContent.menu.deletePlaylist"="재생목록 삭제";
+/* Used for adding videos to video playlist add toolbar button */
+"videos.tab.playlist.browser.button.add"="추가";
+/* Used for adding videos to video playlist add button in video playlist content */
+"videos.tab.playlist.content.header.button.title.add"="추가";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="대기실에 아무도 없습니다";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4011,7 +3985,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="건너뛰기";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your free plan has a 60-minute limit on meetings. Pro users have unlimited calls and up to 1000 participants. [A]Upgrade now[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="무료 요금제는 회의에 60분 제한이 있습니다. Pro 이용자는 무제한 통화와 최대 1,000명의 참여자가 가능합니다. [A]지금 업그레이드[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="시간 제한이 있는 제안";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4082,16 +4056,14 @@
 "free.Plan.Price.description"="무료";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%dGB";
-/* Limited feature message. E.g.: Transfer = Limited */
-"limited.feature.message"="제한됨";
-/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
-"unlimited.feature.message"="무제한";
+/* Limited transfer limit title */
+"account.transferQuota.freePlan.limited"="제한됨";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="구독 취소";
 /* The alert title shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.title"="File cannot be saved";
+"saveToPhotos.fallbackAlert.title"="파일을 저장할 수 없습니다";
 /* The alert message shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.message"="This file type is not supported by iOS. Would you like to make it available offline?";
+"saveToPhotos.fallbackAlert.message"="이 파일 형식은 iOS에서 지원되지 않습니다. 오프라인에서 이용 가능하게 만드시겠습니까?";
 /* Password protected links title */
 "password.protected.links.title"="비밀번호로 보호된 링크";
 /* Links with expiry dates title */
@@ -4107,22 +4079,92 @@
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
-"call.and.meeting.duration.title"="통화와 회의 길이";
+"callAndMeeting.duration.title"="통화와 회의 길이";
 /* Call and meeting duration for free users */
-"call.and.meeting.duration.for.free.users"="Up to 1 hour";
-/* Call and meeting duration for pro users */
-"call.and.meeting.duration.for.pro.users"="Up to 24 hours";
+"callAndMeeting.duration.for.free.users"="Up to 1 hour";
+/* Call and meeting duration unlimited for pro users */
+"callAndMeeting.duration.unlimited.for.pro.users"="무제한";
 /* Call and meeting participants title */
-"call.and.meeting.participants.title"="통화와 회의 참여자";
+"callAndMeeting.participants.title"="통화와 회의 참여자";
 /* Call and meeting participants for free users */
-"call.and.meeting.participants.for.free.users"="Up to 100";
+"callAndMeeting.participants.for.free.users"="Up to 100";
+/* Call and meeting participants unlimited for pro users */
+"callAndMeeting.participants.unlimited.for.pro.users"="무제한";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="이러한 기능들을 잃게 됩니다";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
-"cancellation.subscription.header.message"="You’ll still have access to these features until your MEGA plan expires, then you’ll be moved to a free account.\n You currently are using %@ of storage, you will be at risk of losing your files";
+"cancellation.subscription.header.message"="MEGA 요금제가 만료될 때까지 이러한 기능들에 접근할 수 있지만, 이후에는 무료 계정으로 옮겨집니다.\n 현재 저장소의 %@를 사용 중이며, 파일 손실의 위험이 있습니다";
 /* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
-"cancellation.subscription.keep.pro.plan.button.title"="Keep %@";
+"cancellation.subscription.keep.pro.plan.button.title"="%@ 유지";
 /* Cancellation Subscription flow, continue cancellation button title */
 "cancellation.subscription.continue.cancellation.button.title"="취소 진행";
 /* Feature title */
-"feature.title"="Feature";
+"feature.title"="기능";
+/* Cancellation Subscription manage by Google Play title */
+"accounts.cancelSubscriptionSteps.googlePlay.title"="Your subscription is not managed by Apple.";
+/* Cancellation Subscription manage by Google Play message */
+"accounts.cancelSubscriptionSteps.googlePlay.message"="This is because you subscribed to MEGA via Google Play. To cancel your subscription, you will need to:";
+/* Cancellation Section Google Play Web Browser title: In a web browser */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="In a web browser";
+/* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visit play.google.com";
+/* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Sign in with your Google Play account.";
+/* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Click your avatar.";
+/* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Click <b>Payments & subscriptions.</b>";
+/* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Click <b>Subscriptions.</b>";
+/* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Under your MEGA subscription, click <b>Cancel subscription.</b>";
+/* Cancellation Section Google Play Android Device title: On an Android device */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="On an Android device";
+/* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Open the Play Store app.";
+/* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Sign in with your Google Play account (if required).";
+/* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tap your avatar.";
+/* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tap <b>Payments & subscriptions.</b>";
+/* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tap <b>Subscriptions</b>";
+/* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Under your MEGA subscription, tap <b>Cancel subscription.</b>";
+/* More button in Call UI that shows context menu. */
+"chat.call.quickAction.more"="더 보기";
+/* Context menu item to switch layout to main speaker (Call UI) */
+"chat.call.contextMenu.switchToMainView"="Switch to main view";
+/* Context menu item to switch layout to grid mode (Call UI) */
+"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+/* Context menu item to lower a raised hand (Call UI) */
+"chat.call.contextMenu.lowerHand"="손 내리기";
+/* Context menu item to signal a raised hand (Call UI) */
+"chat.call.contextMenu.raiseHand"="손을 드세요";
+/* Cancellation Subscription manage by Webclient title */
+"accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
+/* Cancellation Subscription manage by Webclient message */
+"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+/* Cancellation Section Webclient on a computer title: On a computer */
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+/* Cancellation Section Webclient on mobile device title: On a mobile device */
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+/* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+/* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
