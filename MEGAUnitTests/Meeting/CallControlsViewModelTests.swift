@@ -1,3 +1,4 @@
+import ConcurrencyExtras
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -105,7 +106,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertFalse(harness.sut.speakerEnabled)
         XCTAssertFalse(harness.sut.routeViewVisible)
     }
-    
+                
     func testMoreButtonShow_NotShown__FFOffAnd1on1Call() {
         let harness = Harness(chatType: .oneToOne, raiseToSpeakFeatureEnabled: false)
         XCTAssertFalse(harness.sut.showMoreButton)
@@ -126,12 +127,50 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertTrue(harness.sut.showMoreButton)
     }
     
-    func testMoreButtonTapped_HasCorrectActions() async {
-        let harness = Harness.withMoreButtonEnabled()
+    func testMoreButtonTapped_HasCorrectActions_handRaised() async {
+        let harness = Harness.withMoreButtonEnabled().raisedHand(true)
         await harness.sut.moreButtonTapped()
         let expected: [String] = [
             Strings.Localizable.Chat.Call.ContextMenu.switchToMainView,
             Strings.Localizable.Chat.Call.ContextMenu.lowerHand
+        ]
+        XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
+    }
+    
+    func testMoreButtonTapped_HasCorrectActions_handLowered() async {
+        let harness = Harness.withMoreButtonEnabled().raisedHand(false)
+        await harness.sut.moreButtonTapped()
+        let expected: [String] = [
+            Strings.Localizable.Chat.Call.ContextMenu.switchToMainView,
+            Strings.Localizable.Chat.Call.ContextMenu.raiseHand
+        ]
+        XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
+    }
+    
+    func testMoreButtonTapped_HasCorrectActions_grid() async {
+        let harness = Harness
+            .withMoreButtonEnabled()
+            .raisedHand(false)
+            .currentLayout(.grid)
+        await harness.sut.moreButtonTapped()
+        
+        let expected: [String] = [
+            Strings.Localizable.Chat.Call.ContextMenu.switchToMainView,
+            Strings.Localizable.Chat.Call.ContextMenu.raiseHand
+        ]
+        XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
+    }
+    
+    func testMoreButtonTapped_HasCorrectActions_speakerView() async {
+        let harness = Harness
+            .withMoreButtonEnabled()
+            .raisedHand(false)
+            .currentLayout(.speaker)
+        await harness.sut.moreButtonTapped()
+        
+        let expected: [String] = [
+            Strings.Localizable.Chat.Call.ContextMenu.switchToGrid,
+            Strings.Localizable.Chat.Call.ContextMenu.raiseHand
         ]
         XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
     }
@@ -147,17 +186,35 @@ final class CallControlsViewModelTests: XCTestCase {
     func testSwitchLayoutAction_Disabled_WhenLayoutChannelReturnFalse() async throws {
         let harness = Harness.withMoreButtonEnabled()
         harness.layoutUpdateChannel.layoutSwitchingEnabled = { false }
-        let firstAction = await harness.moreActions().first
-        let switchAction = try XCTUnwrap(firstAction)
+        let switchAction = await harness.moreAction(button: .switchLayout)
         XCTAssertFalse(switchAction.enabled)
     }
     
     func testSwitchLayoutAction_Enabled_WhenLayoutChannelReturnTrue() async throws {
         let harness = Harness.withMoreButtonEnabled()
         harness.layoutUpdateChannel.layoutSwitchingEnabled = { true }
-        let firstAction = await harness.moreActions().first
-        let switchAction = try XCTUnwrap(firstAction)
+        let switchAction = await harness.moreAction(button: .switchLayout)
         XCTAssertTrue(switchAction.enabled)
+    }
+    
+    func testRaiseHandAction_TriggersCallUseCase() async throws {
+        await withMainSerialExecutor {
+            let harness = Harness.withMoreButtonEnabled().raisedHand(false)
+            let raiseHandAction = await harness.moreAction(button: .raiseHand)
+            raiseHandAction.actionHandler()
+            await Task.yield()
+            XCTAssertEqual(harness.callUseCase.raiseHand_CalledTimes, 1)
+        }
+    }
+    
+    func testLowerHandAction_TriggersCallUseCase() async throws {
+        await withMainSerialExecutor {
+            let harness = Harness.withMoreButtonEnabled().raisedHand(true)
+            let raiseHandAction = await harness.moreAction(button: .raiseHand)
+            raiseHandAction.actionHandler()
+            await Task.yield()
+            XCTAssertEqual(harness.callUseCase.lowerHand_CalledTimes, 1)
+        }
     }
     
     class Harness {
@@ -214,6 +271,7 @@ final class CallControlsViewModelTests: XCTestCase {
                 notificationCenter: notificationCenter,
                 audioRouteChangeNotificationName: .audioRouteChange,
                 featureFlagProvider: MockFeatureFlagProvider(list: [.raiseToSpeak: raiseToSpeakFeatureEnabled]),
+                accountUseCase: MockAccountUseCase(currentUser: .testUser),
                 layoutUpdateChannel: layoutUpdateChannel
             )
             
@@ -289,9 +347,36 @@ final class CallControlsViewModelTests: XCTestCase {
             Harness(chatType: .meeting, raiseToSpeakFeatureEnabled: true)
         }
         
+        func raisedHand(_ raised: Bool) -> Self {
+            let list: [HandleEntity] = raised ? [123]: []
+            callUseCase.call = CallEntity(raiseHandsList: list)
+            return self
+        }
+        
+        func currentLayout(_ layout: ParticipantsLayoutMode) -> Self {
+            layoutUpdateChannel.getCurrentLayout = { layout }
+            return self
+        }
+        
         func moreActions() async -> [ActionSheetAction] {
             await sut.moreButtonTapped()
             return presentedMenuActions
+        }
+        
+        enum  MoreButton {
+            case switchLayout
+            case raiseHand
+        }
+        
+        func moreAction(button: MoreButton) async -> ActionSheetAction {
+            await sut.moreButtonTapped()
+            switch button {
+            case .switchLayout:
+                return presentedMenuActions[0]
+            case .raiseHand:
+                return presentedMenuActions[1]
+                
+            }
         }
     }
 }
@@ -304,4 +389,15 @@ class MockNotificationCenter: NotificationCenter {
 
 extension Notification.Name {
     static let audioRouteChange = Notification.Name("audioRouteChange")
+}
+
+extension UserEntity? {
+    static var testUser: UserEntity? = UserEntity(
+        email: "email",
+        handle: 123,
+        visibility: .unknown,
+        changes: .firstname,
+        changeSource: .implicitRequest,
+        addedDate: .now
+    )
 }
