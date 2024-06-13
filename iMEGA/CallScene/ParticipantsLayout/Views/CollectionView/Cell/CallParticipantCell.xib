@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -65,6 +67,32 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </stackView>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="562-ft-Udn">
+                        <rect key="frame" x="122" y="4" width="24" height="24"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raisedHand" translatesAutoresizingMaskIntoConstraints="NO" id="dep-jm-HPF">
+                                <rect key="frame" x="4" y="4" width="16" height="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="16" id="8vx-hQ-Vqx"/>
+                                    <constraint firstAttribute="height" constant="16" id="hkP-VZ-Qye"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="AJ1-Lb-jG7"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dep-jm-HPF" firstAttribute="centerX" secondItem="562-ft-Udn" secondAttribute="centerX" id="4SO-Zk-t26"/>
+                            <constraint firstAttribute="height" constant="24" id="GOf-Wh-Xlm"/>
+                            <constraint firstAttribute="width" constant="24" id="HnI-Yj-MBt"/>
+                            <constraint firstItem="dep-jm-HPF" firstAttribute="centerY" secondItem="562-ft-Udn" secondAttribute="centerY" id="fNo-H2-lGf"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
             </view>
             <color key="backgroundColor" red="0.20000000000000001" green="0.1843137255" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,7 +104,9 @@
                 <constraint firstAttribute="bottom" secondItem="VDk-hn-xkP" secondAttribute="bottom" id="cJp-cr-NSZ"/>
                 <constraint firstAttribute="bottom" secondItem="ebm-Rq-7x0" secondAttribute="bottom" constant="8" id="e3A-4E-xEW"/>
                 <constraint firstItem="ebm-Rq-7x0" firstAttribute="leading" secondItem="4hu-ES-CAu" secondAttribute="leading" constant="8" id="ifq-Et-hAZ"/>
+                <constraint firstItem="562-ft-Udn" firstAttribute="top" secondItem="4hu-ES-CAu" secondAttribute="top" constant="4" id="n84-vp-c8w"/>
                 <constraint firstAttribute="trailing" secondItem="VDk-hn-xkP" secondAttribute="trailing" id="qY2-QP-PDv"/>
+                <constraint firstAttribute="trailing" secondItem="562-ft-Udn" secondAttribute="trailing" constant="4" id="rf4-6h-M5P"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ebm-Rq-7x0" secondAttribute="trailing" constant="8" id="yoO-vt-Kzy"/>
             </constraints>
             <size key="customSize" width="150" height="150"/>
@@ -84,6 +114,7 @@
                 <outlet property="avatarImageView" destination="FsE-o6-edj" id="qdk-My-vjn"/>
                 <outlet property="micImageView" destination="SYT-6T-OgV" id="POB-wL-Jtb"/>
                 <outlet property="nameLabel" destination="MyB-ef-dCd" id="yAX-Ra-S8p"/>
+                <outlet property="raisedHandView" destination="562-ft-Udn" id="hgC-kK-YIZ"/>
                 <outlet property="videoImageView" destination="VDk-hn-xkP" id="6Qo-rT-3Uv"/>
             </connections>
             <point key="canvasLocation" x="-291" y="6"/>
@@ -91,5 +122,6 @@
     </objects>
     <resources>
         <image name="micMuted" width="24" height="24"/>
+        <image name="raisedHand" width="24" height="24"/>
     </resources>
 </document>

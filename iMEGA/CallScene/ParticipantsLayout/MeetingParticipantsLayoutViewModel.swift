@@ -67,6 +67,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updatePageControl(Int)
         case updateParticipants([CallParticipantEntity])
         case reloadParticipantAt(Int, [CallParticipantEntity])
+        case reloadParticipantRaisedHandAt(Int, [CallParticipantEntity])
         case updateSpeakerViewFor(CallParticipantEntity)
         case localVideoFrame(Int, Int, Data)
         case participantsStatusChanged(addedParticipantCount: Int,
@@ -84,6 +85,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case showWaitingForOthersMessage
         case hideEmptyRoomMessage
         case updateHasLocalAudio(Bool)
+        case updateLocalRaisedHandHidden(Bool)
         case shouldHideSpeakerView(Bool)
         case ownPrivilegeChangedToModerator
         case showBadNetworkQuality
@@ -579,6 +581,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             
             requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
             invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
+            invokeCommand?(.updateLocalRaisedHandHidden(call.raiseHandsList.notContains(chatUseCase.myUserHandle())))
             showCallWillEndNotificationIfNeeded()
         case .tapOnView(let onParticipantsView):
             if onParticipantsView && layoutMode == .speaker && !callParticipants.isEmpty {
@@ -1097,8 +1100,32 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         switch call.changeType {
         case .callWillEnd:
             manageCallWillEnd(for: call)
+        case .callRaiseHand:
+            self.call = call
+            updateRemoteRaisedHandChanges()
+            invokeCommand?(.updateLocalRaisedHandHidden(call.raiseHandsList.notContains(chatUseCase.myUserHandle())))
         default:
             break
+        }
+    }
+    
+    private func updateRemoteRaisedHandChanges() {
+        callParticipants.forEach { participant in
+            if participantHasJustRaisedHand(participant, in: call) || participantHasJustLoweredHand(participant, in: call) {
+                participant.raisedHand = call.raiseHandsList.contains(participant.participantId)
+                guard let index = callParticipants.firstIndex(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell }) else {
+                    MEGALogError("Error getting participant in with raise hand change to updated")
+                    return }
+                invokeCommand?(.reloadParticipantRaisedHandAt(index, callParticipants))
+            }
+        }
+        
+        func participantHasJustRaisedHand(_ participant: CallParticipantEntity, in call: CallEntity) -> Bool {
+            participant.raisedHand == false && call.raiseHandsList.contains(participant.participantId)
+        }
+        
+        func participantHasJustLoweredHand(_ participant: CallParticipantEntity, in call: CallEntity) -> Bool {
+            participant.raisedHand == true && call.raiseHandsList.notContains(participant.participantId)
         }
     }
     
@@ -1156,8 +1183,14 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
         configScreenShareAndCameraFeedParticipants()
         participantName(for: participant.participantId) { [weak self] in
-            guard let self else { return }
+            guard let self,
+                  let call = callUseCase.call(for: chatRoom.chatId)
+            else {
+                MEGALogDebug("Error getting call when participant joined")
+                return
+            }
             participant.name = $0
+            participant.raisedHand = call.raiseHandsList.contains(participant.participantId)
             updateParticipant(participant)
             invokeCommand?(.updateParticipants(callParticipants))
             if callParticipants.count == 1 && layoutMode == .speaker {
@@ -1233,6 +1266,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             callParticipant.isLowResScreenShare = participant.isLowResScreenShare
             callParticipant.isHiResScreenShare = participant.isHiResScreenShare
             callParticipant.audioDetected = participant.audioDetected
+            callParticipant.raisedHand = participantToUpdate.raisedHand
         }
         
         if onStartScreenShare {
