@@ -1,44 +1,51 @@
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 
 final class CallControlsViewModel: CallControlsViewModelProtocol {
+    
     private let router: any MeetingFloatingPanelRouting
-
+    private let menuPresenter: ([ActionSheetAction]) -> Void
     private var chatRoom: ChatRoomEntity
-
+    
     private let callUseCase: any CallUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
-
+    
     private let permissionHandler: any DevicePermissionsHandling
     private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-
+    
     private let notificationCenter: NotificationCenter
     private let audioRouteChangeNotificationName: Notification.Name
-
+    private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
+    
     @Published var micEnabled: Bool = false
     @Published var cameraEnabled: Bool = false
     @Published var speakerEnabled: Bool = false
     @Published var routeViewVisible: Bool = false
     
-    init(router: any MeetingFloatingPanelRouting,
-         chatRoom: ChatRoomEntity,
-         callUseCase: any CallUseCaseProtocol,
-         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: any CallLocalVideoUseCaseProtocol,
-         containerViewModel: MeetingContainerViewModel? = nil,
-         audioSessionUseCase: any AudioSessionUseCaseProtocol,
-         permissionHandler: any DevicePermissionsHandling,
-         callManager: any CallManagerProtocol,
-         notificationCenter: NotificationCenter,
-         audioRouteChangeNotificationName: Notification.Name,
-         featureFlagProvider: any FeatureFlagProviderProtocol
+    init(
+        router: any MeetingFloatingPanelRouting,
+        menuPresenter: @escaping ([ActionSheetAction]) -> Void,
+        chatRoom: ChatRoomEntity,
+        callUseCase: any CallUseCaseProtocol,
+        captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
+        localVideoUseCase: any CallLocalVideoUseCaseProtocol,
+        containerViewModel: MeetingContainerViewModel? = nil,
+        audioSessionUseCase: any AudioSessionUseCaseProtocol,
+        permissionHandler: any DevicePermissionsHandling,
+        callManager: any CallManagerProtocol,
+        notificationCenter: NotificationCenter,
+        audioRouteChangeNotificationName: Notification.Name,
+        featureFlagProvider: any FeatureFlagProviderProtocol,
+        layoutUpdateChannel: ParticipantLayoutUpdateChannel
     ) {
         self.router = router
+        self.menuPresenter = menuPresenter
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
@@ -50,6 +57,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.notificationCenter = notificationCenter
         self.audioRouteChangeNotificationName = audioRouteChangeNotificationName
         self.featureFlagProvider = featureFlagProvider
+        self.layoutUpdateChannel = layoutUpdateChannel
         
         guard let call = callUseCase.call(for: chatRoom.chatId) else {
             MEGALogError("Error initialising call actions, call does not exists")
@@ -61,10 +69,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         
         registerForAudioRouteChanges()
         checkRouteViewAvailability()
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Public
@@ -108,6 +112,67 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         case .builtInSpeaker, .headphones:
             true
         }
+    }
+    
+    private var isNotOneToOneCall: Bool {
+        chatRoom.chatType != .oneToOne
+    }
+    
+    // we do not show raise hand functionality in one-to-one calls
+    var showMoreButton: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak) && isNotOneToOneCall
+    }
+    
+    private func switchLayout(
+        gallery: Bool,
+        enabled: Bool
+    ) -> ActionSheetAction {
+        .init(
+            title: gallery ? Strings.Localizable.Chat.Call.ContextMenu.switchToMainView : Strings.Localizable.Chat.Call.ContextMenu.switchToGrid,
+            detail: nil,
+            image: gallery ? UIImage(resource: .speakerView) : UIImage(resource: .galleryView),
+            enabled: layoutSwitchingEnabled,
+            style: .default,
+            actionHandler: toggleLayoutAction
+        )
+    }
+    
+    private var layoutSwitchingEnabled: Bool {
+        layoutUpdateChannel.layoutSwitchingEnabled?() ?? false
+    }
+    
+    private var currentLayout: ParticipantsLayoutMode {
+        layoutUpdateChannel.getCurrentLayout?() ?? .grid
+    }
+    
+    private func toggleLayoutAction() {
+        var layout = currentLayout
+        layout.toggle()
+        layoutUpdateChannel.updateLayout?(layout)
+    }
+    
+    private func raiseOrLowerHand(raised: Bool) -> ActionSheetAction {
+        .init(
+            title: raised ? Strings.Localizable.Chat.Call.ContextMenu.lowerHand : Strings.Localizable.Chat.Call.ContextMenu.raiseHand,
+            detail: nil,
+            image: UIImage(resource: .callRaiseHand),
+            style: .default,
+            actionHandler: {
+                // raise or lower hand
+            }
+        )
+    }
+    
+    private var moreMenuActions: [ActionSheetAction] {
+        [
+            switchLayout(gallery: currentLayout == .grid, enabled: layoutSwitchingEnabled),
+            raiseOrLowerHand(raised: true)
+        ]
+    }
+    
+    @MainActor
+    func moreButtonTapped() async {
+        menuPresenter(moreMenuActions)
     }
     
     private func manageEndCall() {

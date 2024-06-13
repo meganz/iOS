@@ -1191,7 +1191,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             featureFlagProvider: featureFlagProvider,
             chatRoom: chatRoom,
             call: call,
-            preferenceUseCase: preferenceUseCase
+            preferenceUseCase: preferenceUseCase, 
+            layoutUpdateChannel: .init()
         )
     }
     

@@ -24,7 +24,11 @@ struct CallControlsView<ViewModel: CallControlsViewModelProtocol>: View {
                 CallControlView(config: .speaker(enabled: viewModel.speakerEnabled, action: viewModel.toggleSpeakerTapped))
             }
             
-            CallControlView(config: .switchCamera(enabled: viewModel.cameraEnabled, action: viewModel.switchCameraTapped))
+            if viewModel.showMoreButton {
+                CallControlView(config: .moreButton(action: viewModel.moreButtonTapped))
+            } else {
+                CallControlView(config: .switchCamera(enabled: viewModel.cameraEnabled, action: viewModel.switchCameraTapped))
+            }
             CallControlView(config: .endCall(action: viewModel.endCallTapped))
         }
         .frame(maxWidth: .infinity, maxHeight: 100)
@@ -91,6 +95,19 @@ struct CallControlsView<ViewModel: CallControlsViewModelProtocol>: View {
                 cameraEnabled: true,
                 speakerEnabled: false,
                 routeViewVisible: true
+            )
+    )
+}
+
+#Preview("Call controls with more button") {
+    CallControlsView(
+        viewModel:
+            MockCallControlsViewModel(
+                micEnabled: false,
+                cameraEnabled: true,
+                speakerEnabled: false,
+                routeViewVisible: false,
+                showMoreButton: true
             )
     )
 }

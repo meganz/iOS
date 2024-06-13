@@ -4168,6 +4168,16 @@
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tap <b>Subscriptions.</b>";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Under your MEGA subscription, tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Under your MEGA subscription, tap <b>Cancel subscription.</b>";
+/* More button in Call UI that shows context menu. */
+"chat.call.quickAction.more"="More";
+/* Context menu item to switch layout to main speaker (Call UI) */
+"chat.call.contextMenu.switchToMainView"="Switch to main view";
+/* Context menu item to switch layout to grid mode (Call UI) */
+"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+/* Context menu item to lower a raised hand (Call UI) */
+"chat.call.contextMenu.lowerHand"="Lower hand";
+/* Context menu item to signal a raised hand (Call UI) */
+"chat.call.contextMenu.raiseHand"="Raise hand";
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
 /* Cancellation Subscription manage by Webclient message */

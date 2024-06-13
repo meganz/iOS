@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPresentationMock
@@ -105,6 +106,60 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertFalse(harness.sut.routeViewVisible)
     }
     
+    func testMoreButtonShow_NotShown__FFOffAnd1on1Call() {
+        let harness = Harness(chatType: .oneToOne, raiseToSpeakFeatureEnabled: false)
+        XCTAssertFalse(harness.sut.showMoreButton)
+    }
+    
+    func testMoreButtonShow_NotShown__FFOnAnd1on1Call() {
+        let harness = Harness(chatType: .oneToOne, raiseToSpeakFeatureEnabled: true)
+        XCTAssertFalse(harness.sut.showMoreButton)
+    }
+    
+    func testMoreButtonShow_NotShown_FFOffAndNot1on1Call() {
+        let harness = Harness(chatType: .meeting, raiseToSpeakFeatureEnabled: false)
+        XCTAssertFalse(harness.sut.showMoreButton)
+    }
+    
+    func testMoreButtonShow_Shown_FFOnAndNot1on1Call() {
+        let harness = Harness.withMoreButtonEnabled()
+        XCTAssertTrue(harness.sut.showMoreButton)
+    }
+    
+    func testMoreButtonTapped_HasCorrectActions() async {
+        let harness = Harness.withMoreButtonEnabled()
+        await harness.sut.moreButtonTapped()
+        let expected: [String] = [
+            Strings.Localizable.Chat.Call.ContextMenu.switchToMainView,
+            Strings.Localizable.Chat.Call.ContextMenu.lowerHand
+        ]
+        XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
+    }
+    
+    func testMoreButtonActionSwitchLayout_LayoutChannelUsed() async throws {
+        let harness = Harness.withMoreButtonEnabled()
+        await harness.sut.moreButtonTapped()
+        let firstAction = try XCTUnwrap(harness.presentedMenuActions.first)
+        firstAction.actionHandler()
+        XCTAssertTrue(harness.layoutUpdates.isNotEmpty)
+    }
+    
+    func testSwitchLayoutAction_Disabled_WhenLayoutChannelReturnFalse() async throws {
+        let harness = Harness.withMoreButtonEnabled()
+        harness.layoutUpdateChannel.layoutSwitchingEnabled = { false }
+        let firstAction = await harness.moreActions().first
+        let switchAction = try XCTUnwrap(firstAction)
+        XCTAssertFalse(switchAction.enabled)
+    }
+    
+    func testSwitchLayoutAction_Enabled_WhenLayoutChannelReturnTrue() async throws {
+        let harness = Harness.withMoreButtonEnabled()
+        harness.layoutUpdateChannel.layoutSwitchingEnabled = { true }
+        let firstAction = await harness.moreActions().first
+        let switchAction = try XCTUnwrap(firstAction)
+        XCTAssertTrue(switchAction.enabled)
+    }
+    
     class Harness {
         let sut: CallControlsViewModel
         let chatRoom: ChatRoomEntity
@@ -115,7 +170,9 @@ final class CallControlsViewModelTests: XCTestCase {
         let callManager: MockCallManager
         let localVideoUseCase: MockCallLocalVideoUseCase
         let notificationCenter: MockNotificationCenter
-        
+        let layoutUpdateChannel = ParticipantLayoutUpdateChannel()
+        var presentedMenuActions: [ActionSheetAction] = []
+        var layoutUpdates: [ParticipantsLayoutMode] = []
         init(
             chatType: ChatRoomEntity.ChatType = .meeting,
             isModerator: Bool = true,
@@ -124,7 +181,8 @@ final class CallControlsViewModelTests: XCTestCase {
             speakerEnabled: Bool = false,
             cameraEnabled: Bool = false,
             audioPortOutput: AudioPort = .builtInReceiver,
-            bluetoothAudioDeviceAvailable: Bool = false
+            bluetoothAudioDeviceAvailable: Bool = false,
+            raiseToSpeakFeatureEnabled: Bool = false
         ) {
             self.chatRoom = ChatRoomEntity(ownPrivilege: isModerator ? .moderator : .standard, chatType: chatType)
             self.callUseCase = MockCallUseCase(call: CallEntity(numberOfParticipants: numberOfCallParticipants))
@@ -136,8 +194,11 @@ final class CallControlsViewModelTests: XCTestCase {
             self.localVideoUseCase = MockCallLocalVideoUseCase()
             self.notificationCenter = MockNotificationCenter()
             
+            var menuPresenter: ([ActionSheetAction]) -> Void = { _ in }
+            
             sut = CallControlsViewModel(
                 router: router,
+                menuPresenter: { actions in menuPresenter(actions) },
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
                 captureDeviceUseCase: MockCaptureDeviceUseCase(cameraPositionName: "back"),
@@ -152,8 +213,17 @@ final class CallControlsViewModelTests: XCTestCase {
                 callManager: callManager,
                 notificationCenter: notificationCenter,
                 audioRouteChangeNotificationName: .audioRouteChange,
-                featureFlagProvider: MockFeatureFlagProvider(list: [:])
+                featureFlagProvider: MockFeatureFlagProvider(list: [.raiseToSpeak: raiseToSpeakFeatureEnabled]),
+                layoutUpdateChannel: layoutUpdateChannel
             )
+            
+            menuPresenter = { [weak self] in
+                self?.presentedMenuActions = $0
+            }
+            
+            layoutUpdateChannel.updateLayout = { [weak self] in
+                self?.layoutUpdates.append($0)
+            }
             
             sut.speakerEnabled = speakerEnabled
             sut.cameraEnabled = cameraEnabled
@@ -213,6 +283,15 @@ final class CallControlsViewModelTests: XCTestCase {
         
         func postAudioRouteChangeNotification() {
             notificationCenter.postAudioRouteChangeNotification()
+        }
+        
+        static func withMoreButtonEnabled() -> Harness {
+            Harness(chatType: .meeting, raiseToSpeakFeatureEnabled: true)
+        }
+        
+        func moreActions() async -> [ActionSheetAction] {
+            await sut.moreButtonTapped()
+            return presentedMenuActions
         }
     }
 }
