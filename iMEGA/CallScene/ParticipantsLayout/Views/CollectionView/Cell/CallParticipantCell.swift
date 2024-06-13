@@ -6,6 +6,7 @@ class CallParticipantCell: UICollectionViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var micImageView: UIImageView!
+    @IBOutlet weak var raisedHandView: UIView!
     
     private(set) var participant: CallParticipantEntity? {
         willSet {
@@ -58,6 +59,7 @@ class CallParticipantCell: UICollectionViewCell {
                 borderColor = UIColor.green00C29A
                 borderWidth = 1
             }
+            raisedHandView.isHidden = !participant.raisedHand
         } else {
             nameLabel.isHidden = true
             nameLabel.superview?.isHidden = true

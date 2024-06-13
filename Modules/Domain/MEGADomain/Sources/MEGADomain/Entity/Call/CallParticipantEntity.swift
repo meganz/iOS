@@ -49,6 +49,7 @@ public final class CallParticipantEntity {
     public var isReceivingLowResVideo: Bool = false
     public var isRecording: Bool = false
     public var absentParticipantState: AbsentParticipantState = .notInCall
+    public var raisedHand: Bool = false
 
     public init(
         chatId: HandleEntity,
@@ -72,7 +73,8 @@ public final class CallParticipantEntity {
         isHiResScreenShare: Bool,
         audioDetected: Bool,
         isRecording: Bool,
-        absentParticipantState: AbsentParticipantState
+        absentParticipantState: AbsentParticipantState,
+        raisedHand: Bool
     ) {
         self.chatId = chatId
         self.participantId = participantId
@@ -96,6 +98,7 @@ public final class CallParticipantEntity {
         self.audioDetected = audioDetected
         self.isRecording = isRecording
         self.absentParticipantState = absentParticipantState
+        self.raisedHand = raisedHand
     }
     
     public func remoteVideoFrame(width: Int, height: Int, buffer: Data!, isHiRes: Bool) {

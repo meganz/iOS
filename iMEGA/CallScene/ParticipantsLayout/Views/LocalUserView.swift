@@ -13,6 +13,7 @@ class LocalUserView: UIView {
     @IBOutlet private weak var videoImageView: UIImageView!
     @IBOutlet private weak var mutedImageView: UIImageView!
     @IBOutlet private weak var expandImageView: UIImageView!
+    @IBOutlet private weak var raisedHandView: UIView!
 
     private enum Constants {
         static let fixedMargin: CGFloat = 16.0
@@ -142,6 +143,10 @@ class LocalUserView: UIView {
             return
         }
         blurEffectView.removeFromSuperview()
+    }
+    
+    func raisedHandHidden(_ hidden: Bool) {
+        raisedHandView.isHidden = hidden
     }
     
     // MARK: - Private
