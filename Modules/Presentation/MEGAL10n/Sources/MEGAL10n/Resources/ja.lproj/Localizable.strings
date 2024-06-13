@@ -480,22 +480,6 @@
 "rename.fileWithoutExtension"="ファイルに拡張子.%@がありません";
 /* Title for the action that allows you to replace a file. */
 "replace"="置き換える";
-/* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1個のファイルをごみ箱に移動しました";
-/* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d個のファイルをごみ箱に移動しました";
-/* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1個のフォルダをごみ箱に移動しました";
-/* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d個のフォルダをごみ箱に移動しました";
-/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1個のファイルと1個のフォルダをごみ箱に移動しました";
-/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1個のファイルと%d個のフォルダをごみ箱に移動しました";
-/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d個のファイルと 1個のフォルダをごみ箱に移動しました";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A]個のファイルと[B]個のフォルダをごみ箱に移動しました";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="権限エラー";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -564,6 +548,8 @@
 "cameraUploads.albums.selectAlbumCover"="アルバムの表紙を選択";
 /* Used as a hud message in album content screen. */
 "cameraUploads.albums.albumCoverUpdated"="アルバムの表紙を更新しました";
+/* Alert presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.title"="非表示項目";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="絞り込み";
 /* Choose type headline within filter UI */
@@ -624,10 +610,6 @@
 "sharedWithXContacts"="%d人の連絡先と共有しました";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="権限を変更しました";
-/* Message shown when a share has been left */
-"shareLeft"="共有から出ました";
-/* Message shown when some shares have been left */
-"sharesLeft"="共有から出ました";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="共有を削除";
 /* The text in the button to remove all contacts to a shared folder on one click */
@@ -862,22 +844,6 @@
 "remove"="削除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="削除を確認";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="1個のファイルを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="%d個のファイルを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="1個のフォルダを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="%d個のフォルダを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="1個のファイルと1個のフォルダを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="1個のファイルと%d個のフォルダを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="%d個のファイルと1個のフォルダを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
-/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="[A]個のファイルと[B]個のフォルダを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
 "sharedItems.rubbish.warning.message"="%@を恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
 /* Success message shown when 1 file has been removed from MEGA */
@@ -3589,9 +3555,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Proプランの各機能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート\n\n• 広告なし";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="サブスクリプションの詳細";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3966,6 +3932,14 @@
 "videos.tab.playlist.create.alert.enterDifferentName"="別の名前を入力してください";
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="この名前のプレイリストはすでに存在します";
+/* Used in video playlist content to add videos to video playlist */
+"videos.tab.playlist.playlistContent.menu.addVideos"="動画を追加";
+/* Used in video playlist content to delete playlist */
+"videos.tab.playlist.playlistContent.menu.deletePlaylist"="プレイリストを削除";
+/* Used for adding videos to video playlist add toolbar button */
+"videos.tab.playlist.browser.button.add"="追加";
+/* Used for adding videos to video playlist add button in video playlist content */
+"videos.tab.playlist.content.header.button.title.add"="追加";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="待合室に誰もいません";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4082,10 +4056,8 @@
 "free.Plan.Price.description"="無料";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited feature message. E.g.: Transfer = Limited */
-"limited.feature.message"="制限付き";
-/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
-"unlimited.feature.message"="無制限";
+/* Limited transfer limit title */
+"account.transferQuota.freePlan.limited"="制限付き";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="定期契約をキャンセル";
 /* The alert title shown when asking user if they want to make media node offline. */
@@ -4107,15 +4079,17 @@
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
-"call.and.meeting.duration.title"="通話とミーティングの時間";
+"callAndMeeting.duration.title"="通話とミーティングの時間";
 /* Call and meeting duration for free users */
-"call.and.meeting.duration.for.free.users"="最大1時間";
-/* Call and meeting duration for pro users */
-"call.and.meeting.duration.for.pro.users"="最大24時間";
+"callAndMeeting.duration.for.free.users"="最大1時間";
+/* Call and meeting duration unlimited for pro users */
+"callAndMeeting.duration.unlimited.for.pro.users"="無制限";
 /* Call and meeting participants title */
-"call.and.meeting.participants.title"="通話とミーティングの参加者";
+"callAndMeeting.participants.title"="通話とミーティングの参加者";
 /* Call and meeting participants for free users */
-"call.and.meeting.participants.for.free.users"="最大100人";
+"callAndMeeting.participants.for.free.users"="最大100人";
+/* Call and meeting participants unlimited for pro users */
+"callAndMeeting.participants.unlimited.for.pro.users"="無制限";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="これらの機能をご利用いただけなくなります";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
@@ -4126,3 +4100,71 @@
 "cancellation.subscription.continue.cancellation.button.title"="キャンセルを続ける";
 /* Feature title */
 "feature.title"="機能";
+/* Cancellation Subscription manage by Google Play title */
+"accounts.cancelSubscriptionSteps.googlePlay.title"="お客様のサブスクリプションはAppleによって管理されていません。";
+/* Cancellation Subscription manage by Google Play message */
+"accounts.cancelSubscriptionSteps.googlePlay.message"="これは、Google Play経由でMEGAのサブスクリプション契約をされたためです。サブスクリプションをキャンセルするには、次のことを行う必要があります：";
+/* Cancellation Section Google Play Web Browser title: In a web browser */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="ウェブブラウザの場合";
+/* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. play.google.comにアクセスする。";
+/* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Google Playアカウントでサインインする。";
+/* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. アバターをクリックする。";
+/* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4.<b>お支払いと定期購入</b>をクリックする。";
+/* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5.<b>定期購入</b>をクリックする。";
+/* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. MEGAサブスクリプション（定期購入）の下で、<b>定期購入をキャンセル</b>をクリックする。";
+/* Cancellation Section Google Play Android Device title: On an Android device */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Androidデバイスの場合";
+/* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Playストアアプリを開く。";
+/* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Google Playアカウントでサインインする（必要な場合）。";
+/* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. アバターをタップする。";
+/* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4.<b>お支払いと定期購入</b>をタップする。";
+/* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5.<b>定期購入</b>をタップする。";
+/* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. MEGAサブスクリプション（定期購入）の下で、<b>定期購入をキャンセル</b>をタップする。";
+/* More button in Call UI that shows context menu. */
+"chat.call.quickAction.more"="その他";
+/* Context menu item to switch layout to main speaker (Call UI) */
+"chat.call.contextMenu.switchToMainView"="メイン表示に切り替える";
+/* Context menu item to switch layout to grid mode (Call UI) */
+"chat.call.contextMenu.switchToGrid"="グリッド表示に切り替える";
+/* Context menu item to lower a raised hand (Call UI) */
+"chat.call.contextMenu.lowerHand"="手を下げる";
+/* Context menu item to signal a raised hand (Call UI) */
+"chat.call.contextMenu.raiseHand"="挙手";
+/* Cancellation Subscription manage by Webclient title */
+"accounts.cancelSubscriptionSteps.webClient.title"="ウェブブラウザを使用してサブスクリプションをキャンセルする必要があります";
+/* Cancellation Subscription manage by Webclient message */
+"accounts.cancelSubscriptionSteps.webClient.message"="これは、ブラウザ経由でMEGAのサブスクリプション契約をされたためです。サブスクリプションをキャンセルするには、次のことを行う必要があります：";
+/* Cancellation Section Webclient on a computer title: On a computer */
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="コンピューターの場合";
+/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. MEGAアカウントにログインする。";
+/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3.「<b>設定</b>」をクリックする。";
+/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4.「<b>プラン</b>」タブをクリックする。";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5.「<b>サブスクリプションをキャンセル</b>」をクリックする。";
+/* Cancellation Section Webclient on mobile device title: On a mobile device */
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="モバイルデバイスの場合";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. MEGAアカウントにログインする。";
+/* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. アバターをタップする。";
+/* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4.「<b>サブスクリプションをキャンセル</b>」をタップする。";
