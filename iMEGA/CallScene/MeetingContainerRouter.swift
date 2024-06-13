@@ -46,7 +46,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var containerViewModel: MeetingContainerViewModel?
     private var endCallDialog: EndCallDialog?
     private lazy var chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
-    
+    private let layoutUpdateChannel = ParticipantLayoutUpdateChannel()
     private var createCallUseCase: CallUseCase<CallRepository> {
         let callRepository = CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)
         return CallUseCase(repository: callRepository)
@@ -117,8 +117,13 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
-        showCallViewRouter(containerViewModel: containerViewModel)
-        showFloatingPanel(containerViewModel: containerViewModel)
+        
+        showCallViewRouter(
+            containerViewModel: containerViewModel
+        )
+        showFloatingPanel(
+            containerViewModel: containerViewModel
+        )
         isCallUIVisible = true
         UIApplication.shared.isIdleTimerDisabled = true
     }
@@ -343,17 +348,24 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     // MARK: - Private methods.
-    private func showCallViewRouter(containerViewModel: MeetingContainerViewModel) {
+    private func showCallViewRouter(
+        containerViewModel: MeetingContainerViewModel
+    ) {
         guard let baseViewController = baseViewController else { return }
-        let callViewRouter = MeetingParticipantsLayoutRouter(presenter: baseViewController,
-                                            containerViewModel: containerViewModel,
-                                            chatRoom: chatRoom,
-                                            call: call)
+        let callViewRouter = MeetingParticipantsLayoutRouter(
+            presenter: baseViewController,
+            containerViewModel: containerViewModel,
+            chatRoom: chatRoom,
+            call: call,
+            layoutUpdateChannel: layoutUpdateChannel
+        )
         callViewRouter.start()
         self.meetingParticipantsRouter = callViewRouter
     }
     
-    private func showFloatingPanel(containerViewModel: MeetingContainerViewModel) {
+    private func showFloatingPanel(
+        containerViewModel: MeetingContainerViewModel
+    ) {
         // When toggling the chatroom instance might be outdated. So fetching it again.
         guard let baseViewController = baseViewController,
               let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatRoom.chatId) else {
@@ -364,7 +376,16 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
             permissionHandler: DevicePermissionsHandler.makeHandler(),
-            selectWaitingRoomList: selectWaitingRoomList
+            layoutUpdateChannel: layoutUpdateChannel,
+            selectWaitingRoomList: selectWaitingRoomList,
+            actionsViewController: {
+                ActionSheetViewController(
+                    actions: $0,
+                    headerTitle: nil,
+                    dismissCompletion: nil,
+                    sender: nil
+                )
+            }
         )
         selectWaitingRoomList = false
         floatingPanelRouter.start()

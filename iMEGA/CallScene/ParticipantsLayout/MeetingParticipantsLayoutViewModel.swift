@@ -35,6 +35,14 @@ enum CallViewAction: ActionType {
 enum ParticipantsLayoutMode {
     case grid
     case speaker
+    
+    mutating func toggle() {
+        if self == .grid {
+            self = .speaker
+        } else {
+            self = .grid
+        }
+    }
 }
 
 enum DeviceOrientation {
@@ -191,6 +199,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
+    private var layoutUpdateChannel: ParticipantLayoutUpdateChannel
     
     init(
         containerViewModel: MeetingContainerViewModel,
@@ -210,7 +219,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         chatRoom: ChatRoomEntity,
         call: CallEntity,
-        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        layoutUpdateChannel: ParticipantLayoutUpdateChannel
     ) {
         self.chatUseCase = chatUseCase
         self.containerViewModel = containerViewModel
@@ -229,10 +239,25 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.featureFlagProvider = featureFlagProvider
         self.chatRoom = chatRoom
         self.call = call
-
+        self.layoutUpdateChannel = layoutUpdateChannel
         super.init()
         self.$callsSoundNotificationPreference.useCase = preferenceUseCase
         onCallUpdateListener()
+        
+        self.layoutUpdateChannel.getCurrentLayout = { [weak self] in
+            guard let self else { return .grid }
+            return layoutMode
+        }
+        
+        self.layoutUpdateChannel.layoutSwitchingEnabled = { [weak self] in
+            guard let self else { return false }
+            return !hasScreenSharingParticipant
+        }
+        
+        self.layoutUpdateChannel.updateLayout = { [weak self] in
+            guard let self else { return  }
+            updateLayout(to: $0)
+        }
     }
     
     deinit {
@@ -266,10 +291,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         MEGALogDebug("Switch meetings layout from \(layoutMode == .grid ? "grid" : "speaker") to \(layoutMode == .grid ? "speaker" : "grid")")
         callParticipants.forEach { $0.videoDataDelegate = nil }
         if layoutMode == .grid {
-            layoutMode = .speaker
+            updateLayout(to: .speaker)
         } else {
-            layoutMode = .grid
+            updateLayout(to: .grid)
         }
+    }
+    
+    private func updateLayout(to layout: ParticipantsLayoutMode) {
+        self.layoutMode = layout
         
         invokeCommand?(.switchLayoutMode(layout: layoutMode, participantsCount: callParticipants.count))
     }
