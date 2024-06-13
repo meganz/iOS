@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Anulează";
 /* Button title to accept something */
-"ok"="OK";
+"ok"="Bine";
 /* Button title to clear something */
 "clear"="Șterge";
 /*  */
@@ -187,7 +187,7 @@
 /* Alert message for invalid album link */
 "albumLink.invalidAlbum.alert.message"="Link-ul către album a fost eliminat sau albumul a fost șters. Contactați persoana care a partajat linkul cu dvs.";
 /* Alert dismiss button title for invalid album link */
-"albumLink.invalidAlbum.alert.dissmissButtonTitle"="OK, am înțeles";
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Bine, am înțeles";
 /* Importing albums Failed modal because storage quota would exceed alert title */
 "albumLink.importFailed.storageQuotaWillExceed.alert.title"="Nu se poate salva albumul";
 /* Importing albums Failed modal because storage quota would exceed alert detail */
@@ -480,22 +480,6 @@
 "rename.fileWithoutExtension"="Fișier fără extensie. %@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Înlocuiește";
-/* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 fișier mutat în Coșul de gunoi";
-/* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d fișiere mutate în Coșul de gunoi";
-/* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 folder mutat în Coșul de gunoi";
-/* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d foldere mutate în Coșul de gunoi";
-/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 fișier și 1 folder mutate în Coșul de gunoi";
-/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 fișier și %d foldere mutate în Coșul de gunoi";
-/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d fișiere și 1 folder mutate în Coșul de gunoi";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] fișiere și [B] foldere mutate în Coșul de gunoi";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Eroare privind permisiunile";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -564,6 +548,8 @@
 "cameraUploads.albums.selectAlbumCover"="Selectează coperta de album";
 /* Used as a hud message in album content screen. */
 "cameraUploads.albums.albumCoverUpdated"="Copertă de album actualizată";
+/* Alert presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.title"="Elemente ascunse";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtrează";
 /* Choose type headline within filter UI */
@@ -624,10 +610,6 @@
 "sharedWithXContacts"="Partajat cu %d contacte";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permisiuni modificate";
-/* Message shown when a share has been left */
-"shareLeft"="Partajare părăsită";
-/* Message shown when some shares have been left */
-"sharesLeft"="Partajări părăsite";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Elimină partajarea";
 /* The text in the button to remove all contacts to a shared folder on one click */
@@ -862,22 +844,6 @@
 "remove"="Elimină";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmă eliminarea";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="Ești pe cale să ștergi definitiv 1 fișier. Dorești să continui? (Nu poți anula această acțiune)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Ești pe cale să ștergi definitiv %d fișiere. Dorești să continui? (Nu poți anula această acțiune.)";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="Ești pe cale să ștergi definitiv 1 folder. Dorești să continui? (Nu poți anula această acțiune.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Ești pe cale să ștergi definitiv %d foldere. Dorești să continui? (Nu poți anula această acțiune.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Ești pe cale să ștergi definitiv 1 fișier și 1 folder. Dorești să continui? (Nu poți anula această acțiune.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Ești pe cale să ștergi definitiv 1 fișier și %d foldere. Dorești să continui? (Nu poți anula această acțiune.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Ești pe cale să ștergi definitiv %d fișiere și 1 folder. Dorești să continui? (Nu poți anula această acțiune.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Ești pe cale să ștergi definitiv [A] fișiere și [B] foldere. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
 "sharedItems.rubbish.warning.message"="Sunteți pe cale să eliminați definitiv %@. Doriți să continuați? (Nu puteți anula această acțiune.)";
 /* Success message shown when 1 file has been removed from MEGA */
@@ -2697,17 +2663,17 @@
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Abonament activ";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="Aveți un abonament MEGA activ la Apple. Trebuie să îl anulați separat la Abonamente, deoarece MEGA nu îl poate anula pentru dvs. Vizitați Centrul nostru de ajutor pentru mai multe informații.";
+"account.delete.subscription.itunes"="Aveți un abonament MEGA activ la Apple. Trebuie să îl anulați separat la Abonamente, deoarece MEGA nu îl poate anula pentru dvs. Accesați Centrul nostru de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="Gestionează abonamentele";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="Aveți un abonament MEGA activ la Google. Trebuie să îl anulați separat în Google Play, deoarece MEGA nu îl poate anula pentru dvs. Vizitați Centrul nostru de ajutor pentru mai multe informații.";
+"account.delete.subscription.googlePlay"="Aveți un abonament MEGA activ la Google. Trebuie să îl anulați separat în Google Play, deoarece MEGA nu îl poate anula pentru dvs. Accesați Centrul nostru de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit Google play */
-"account.delete.subscription.googlePlay.visit"="Vizitează Google Play";
+"account.delete.subscription.googlePlay.visit"="Accesați Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="Aveți un abonament MEGA activ cu Huawei. Trebuie să îl anulați separat la Huawei AppGallery, deoarece MEGA nu îl poate anula pentru dvs. Vizitați Centrul nostru de ajutor pentru mai multe informații.";
+"account.delete.subscription.huaweiAppGallery"="Aveți un abonament MEGA activ cu Huawei. Trebuie să îl anulați separat la Huawei AppGallery, deoarece MEGA nu îl poate anula pentru dvs. Accesați Centrul nostru de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
-"account.delete.subscription.huaweiAppGallery.visit"="Vizitează AppGallery";
+"account.delete.subscription.huaweiAppGallery.visit"="Accesați AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Acesta este ultimul pas pentru a vă șterge contul. Atât contul, cât și abonamentul dvs. vor fi șterse și veți pierde definitiv toate datele stocate în cont. Vă rugăm să introduceți parola mai jos.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
@@ -3159,7 +3125,7 @@
 /* HUD message to inform user that the link is in the clipboard */
 "meetings.info.shareOptions.shareLink.linkCopied"="Link copiat în clipboard";
 /* Chat Meetings tab - Section header title for the chat listing screen */
-"chat.listing.sectionHeader.pastMeetings.title"="Întâlniri din trecut";
+"chat.listing.sectionHeader.pastMeetings.title"="Întâlniri anterioare";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Verifică %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
@@ -3263,7 +3229,7 @@
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="Îți actualizăm securitatea contului. Ar trebui să vedeți acest mesaj o singură dată. Dacă l-ați mai văzut înainte, asigurați-vă mai întâi că a fost pentru acest cont și nu pentru un alt cont MEGA pe care îl aveți.\n\nDacă sunteți sigur și este a doua oară când vedeți acest mesaj pentru acest cont, nu mai utilizați acest cont.";
 /* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.button.title"="OK, am înțeles";
+"account.upgradeSecurity.button.title"="Bine, am înțeles";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Descriere";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3589,9 +3555,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Caracteristicile abonamentelor Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Derulează înapoi până la 90 de zile de date șterse pe Pro Lite și până la 180 de zile pe Pro I, II și III\n\n• Rămâneți privat online cu VPN-ul nostru de mare viteză\n\n• Programați curățarea Coșului de gunoi între 7 zile și 10 ani\n\n• Asistență prioritară";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Derulează înapoi până la 90 de zile de date șterse pe Pro Lite și până la 180 de zile pe Pro I, II și III\n\n• Rămâneți privat online cu VPN-ul nostru de mare viteză\n\n• Programați curățarea Coșului de gunoi între 7 zile și 10 ani\n\n• Asistență prioritară\n\n• Fara publicitate";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Detaliile abonamentului";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3617,7 +3583,7 @@
 /* Title for alert cancelling an scheduled meeting */
 "meetings.scheduled.cancelAlert.title"="Anulați %@?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
-"meetings.scheduled.cancelAlert.description.withMessages"="Această întâlnire va fi plasată în cadrul Întâlnirilor din trecut și toți participanții vor fi anunțați.";
+"meetings.scheduled.cancelAlert.description.withMessages"="Această întâlnire va fi plasată sub Întâlniri anterioare și toți participanții vor fi anunțați.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withoutMessages"="Această întâlnire va fi arhivată și toți participanții vor fi anunțați.";
 /* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
@@ -3641,7 +3607,7 @@
 /* Description for alert cancelling last occurrence without messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Aceasta este singura ocurență a întâlnirii recurente. Anularea acestei ocurențe va anula întâlnirea. Dacă este anulată, întâlnirea va fi arhivată și toți participanții vor fi anunțați.";
 /* Description for alert cancelling last occurrence with messages in chat room */
-"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Aceasta este singura ocurență a întâlnirii recurente. Anularea acestei ocurențe va anula întâlnirea. Dacă este anulată, întâlnirea va fi plasată sub Întâlniri din trecut și toți participanții vor fi anunțați.";
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Aceasta este singura ocurență a întâlnirii recurente. Anularea acestei ocurențe va anula întâlnirea. Dacă este anulată, întâlnirea va fi plasată sub Întâlniri anterioare și toți participanții vor fi anunțați.";
 /* Title for alert cancelling an occurrence */
 "meetings.scheduled.cancelAlert.occurrence.title"="Anulați ocurență din %@?";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
@@ -3765,7 +3731,7 @@
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
 "meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Nu a existat niciun răspuns la solicitarea dvs. de a vă alătura întâlnirii. Veți părăsi sala de așteptare. Încercați să vă alăturați din nou mai târziu.";
 /* Meeting waiting room alert action of ok got it */
-"meetings.waitingRoom.alert.okGotIt"="OK, am înțeles";
+"meetings.waitingRoom.alert.okGotIt"="Bine, am înțeles";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
 "chat.call.waitingRoom.alert.message.one"="%@ așteaptă să se alăture apelului";
 /* Call waiting room alert button to deny access */
@@ -3903,7 +3869,7 @@
 /* Alert button for user not accepting call screen recording and therefor leaving the call */
 "calls.screenRecording.alert.action.leave"="Părăsește apelul";
 /* Alert button for user accepting call screen recording */
-"calls.screenRecording.alert.action.accept"="OK, am înțeles";
+"calls.screenRecording.alert.action.accept"="Bine, am înțeles";
 /* Alert button for user accepting call screen recording */
 "calls.screenRecording.alert.action.learnMore"="Află mai multe";
 /* Notification message about someone started to record call screen */
@@ -3966,6 +3932,14 @@
 "videos.tab.playlist.create.alert.enterDifferentName"="Introduceți un alt nume";
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="Există deja o listă de redare cu acest nume";
+/* Used in video playlist content to add videos to video playlist */
+"videos.tab.playlist.playlistContent.menu.addVideos"="Adăugați videoclipuri";
+/* Used in video playlist content to delete playlist */
+"videos.tab.playlist.playlistContent.menu.deletePlaylist"="Ștergeți lista de redare";
+/* Used for adding videos to video playlist add toolbar button */
+"videos.tab.playlist.browser.button.add"="Adaugă";
+/* Used for adding videos to video playlist add button in video playlist content */
+"videos.tab.playlist.content.header.button.title.add"="Adaugă";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Nu este nimeni în sala de așteptare";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4027,7 +4001,7 @@
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="La acest apel pot participa maximum 100 de persoane. Cereți persoanei care a organizat-o să ridice această limită.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.button"="OK, am înțeles";
+"calls.freePlanLimitWarning.usersLimitAlert.button"="Bine, am înțeles";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Doar 100 de participanții se pot alătura apelului. Orice participanți suplimentari vor putea trimite și citi doar chat-uri. Trebuie să adăugați mai mulți participanți? [A]Upgradați acum[/A]";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
@@ -4082,10 +4056,8 @@
 "free.Plan.Price.description"="Gratuit";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
-/* Limited feature message. E.g.: Transfer = Limited */
-"limited.feature.message"="Limitat";
-/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
-"unlimited.feature.message"="NELIMITATĂ";
+/* Limited transfer limit title */
+"account.transferQuota.freePlan.limited"="Limitat";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="Anulează abonamentul";
 /* The alert title shown when asking user if they want to make media node offline. */
@@ -4107,15 +4079,17 @@
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
-"call.and.meeting.duration.title"="Durata apelului și întâlnirii";
+"callAndMeeting.duration.title"="Durata apelului și întâlnirii";
 /* Call and meeting duration for free users */
-"call.and.meeting.duration.for.free.users"="Până la 1 oră";
-/* Call and meeting duration for pro users */
-"call.and.meeting.duration.for.pro.users"="Până la 24 de ore";
+"callAndMeeting.duration.for.free.users"="Până la 1 oră";
+/* Call and meeting duration unlimited for pro users */
+"callAndMeeting.duration.unlimited.for.pro.users"="NELIMITATĂ";
 /* Call and meeting participants title */
-"call.and.meeting.participants.title"="Participanții la apel și la întâlnire";
+"callAndMeeting.participants.title"="Participanții la apel și la întâlnire";
 /* Call and meeting participants for free users */
-"call.and.meeting.participants.for.free.users"="Până la 100";
+"callAndMeeting.participants.for.free.users"="Până la 100";
+/* Call and meeting participants unlimited for pro users */
+"callAndMeeting.participants.unlimited.for.pro.users"="NELIMITATĂ";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="Nu veți beneficia de următoarele funcții";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
@@ -4126,3 +4100,71 @@
 "cancellation.subscription.continue.cancellation.button.title"="Continua anularea";
 /* Feature title */
 "feature.title"="Caracteristică";
+/* Cancellation Subscription manage by Google Play title */
+"accounts.cancelSubscriptionSteps.googlePlay.title"="Abonamentul dvs. nu este gestionat de Apple.";
+/* Cancellation Subscription manage by Google Play message */
+"accounts.cancelSubscriptionSteps.googlePlay.message"="V-ați abonat la MEGA cu Google Play. Pentru a vă anula abonamentul, trebuie să:";
+/* Cancellation Section Google Play Web Browser title: In a web browser */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="Într-un browser web";
+/* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Accesați play.google.com";
+/* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Conectați-vă cu contul dvs. Google Play.";
+/* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Dați clic pe avatarul dvs.";
+/* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Dați clic pe <b>Plăți și abonamente</b>.";
+/* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Dați clic pe <b>Abonamente.</b>";
+/* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Sub abonamentul dvs. MEGA, dați clic pe <b>Anulați abonamentul.</b>";
+/* Cancellation Section Google Play Android Device title: On an Android device */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Pe un dispozitiv Android";
+/* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Deschideți aplicația Play Store.";
+/* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Conectați-vă cu contul dvs. Google Play (dacă este necesar).";
+/* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Atingeți avatarul dvs..";
+/* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Atingeți <b>Plăți și abonamente</b>.";
+/* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Atingeți <b>Abonamente.</b>";
+/* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Sub abonamentul dvs. MEGA, atingeți <b>Anulați abonamentul.</b>";
+/* More button in Call UI that shows context menu. */
+"chat.call.quickAction.more"="Mai multe";
+/* Context menu item to switch layout to main speaker (Call UI) */
+"chat.call.contextMenu.switchToMainView"="Comutați la vizualizarea principalăh";
+/* Context menu item to switch layout to grid mode (Call UI) */
+"chat.call.contextMenu.switchToGrid"="Comutați la modul grilă";
+/* Context menu item to lower a raised hand (Call UI) */
+"chat.call.contextMenu.lowerHand"="Coborâți mâna";
+/* Context menu item to signal a raised hand (Call UI) */
+"chat.call.contextMenu.raiseHand"="Ridicați mâna";
+/* Cancellation Subscription manage by Webclient title */
+"accounts.cancelSubscriptionSteps.webClient.title"="Trebuie să vă anulați abonamentul folosind un browser web";
+/* Cancellation Subscription manage by Webclient message */
+"accounts.cancelSubscriptionSteps.webClient.message"="V-ați abonat la MEGA în browserul dvs. web. Pentru a vă anula abonamentul, va trebui să:";
+/* Cancellation Section Webclient on a computer title: On a computer */
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="Pe un calculator";
+/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Accesați www.mega.io în browserul dvs. web.";
+/* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Conectați-vă la contul MEGA.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Dați clic pe <b>Setări</b>.";
+/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Dați clic pe fila <b>Abonament</b>.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Dați clic pe <b>Anulează abonamentul</b>.";
+/* Cancellation Section Webclient on mobile device title: On a mobile device */
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="Pe un dispozitiv mobil";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Accesați www.mega.io în browserul dvs. web.";
+/* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Conectați-vă la contul MEGA.";
+/* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Atingeți avatarul dvs.";
+/* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="5. Atingeți <b>Anulează abonamentul</b>.";

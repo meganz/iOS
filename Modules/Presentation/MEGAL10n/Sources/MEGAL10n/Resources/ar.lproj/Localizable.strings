@@ -480,22 +480,6 @@
 "rename.fileWithoutExtension"="ملف بدون لاحقة.%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="استبدال";
-/* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 ملف تم نقله لسلة المحذوفات";
-/* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="تم نقل %d ملف إلى سلة المحذوفات";
-/* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="تم نقل 1 مجلد إلى سلة المحذوفات";
-/* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="تم نقل %d مجلد إلى سلة المحذوفات";
-/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="تم نقل 1 ملف و 1 مجلد إلى سلة المحذوفات";
-/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="تم نقل 1 ملف و %d مجلد إلى سلة المحذوفات";
-/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="تم نقل %d ملف و 1 مجلد إلى سلة المحذوفات";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="تم نقل [A] ملف و [B] مجلد إلى سلة المحذوفات";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="خطأ في الإذن";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -564,6 +548,8 @@
 "cameraUploads.albums.selectAlbumCover"="اختر غلاف الألبوم ";
 /* Used as a hud message in album content screen. */
 "cameraUploads.albums.albumCoverUpdated"="تم تحديث غلاف الألبوم";
+/* Alert presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.title"="عناصر مخفية";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="فلتر";
 /* Choose type headline within filter UI */
@@ -624,10 +610,6 @@
 "sharedWithXContacts"="مشاركة مع %d جهات اتصال";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="تم تغيير الإذونات";
-/* Message shown when a share has been left */
-"shareLeft"="تم مغادرة المشاركة";
-/* Message shown when some shares have been left */
-"sharesLeft"="تم مغادرة المشاركات";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="حذف المشاركة";
 /* The text in the button to remove all contacts to a shared folder on one click */
@@ -862,22 +844,6 @@
 "remove"="حذف";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="تأكيد الإزالة";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="أنت على وشك حذف 1 ملف نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="أنت على وشك حذف %d ملف نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
-/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="أنت على وشك حذف 1 مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="أنت على وشك حذف %d مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="أنت على وشك حذف 1 ملف و 1 مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="أنت على وشك حذف 1 ملف و %d مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="أنت على وشك حذف %d ملف و 1 مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
-/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="أنت على وشك حذف [A] ملف و [B]مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
 "sharedItems.rubbish.warning.message"="أنت على وشك إزالة %@ بشكل دائم. هل ترغب في المتابعة؟ (لا يمكنك التراجع عن هذا الإجراء.)";
 /* Success message shown when 1 file has been removed from MEGA */
@@ -3589,9 +3555,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="ميزات باقات برو Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و IIو III\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و II و III\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم\n\n• خالية من إعلانات";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="تفاصيل الاشتراك";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3966,6 +3932,14 @@
 "videos.tab.playlist.create.alert.enterDifferentName"="أدخل اسمًا مختلفًا.";
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="يوجد بالفعل قائمة تشغيل بهذا الاسم";
+/* Used in video playlist content to add videos to video playlist */
+"videos.tab.playlist.playlistContent.menu.addVideos"="Add videos";
+/* Used in video playlist content to delete playlist */
+"videos.tab.playlist.playlistContent.menu.deletePlaylist"="حذف قائمة التشغيل";
+/* Used for adding videos to video playlist add toolbar button */
+"videos.tab.playlist.browser.button.add"="إضافة";
+/* Used for adding videos to video playlist add button in video playlist content */
+"videos.tab.playlist.content.header.button.title.add"="إضافة";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="لا يوجد أحد في غرفة الانتظار";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4082,10 +4056,8 @@
 "free.Plan.Price.description"="مجاني";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d غيغابايت";
-/* Limited feature message. E.g.: Transfer = Limited */
-"limited.feature.message"="محدود";
-/* Unlimited feature message. E.g.: Call and meeting participants = Unlimited */
-"unlimited.feature.message"="غير محدود";
+/* Limited transfer limit title */
+"account.transferQuota.freePlan.limited"="محدود";
 /* Cancel account subscription title */
 "account.subscription.cancel.title"="إلغاء الاشتراك";
 /* The alert title shown when asking user if they want to make media node offline. */
@@ -4107,15 +4079,17 @@
 /* MEGA VPN title */
 "mega.vpn.title"="ميغا في بي إن MEGA VPN";
 /* Call and meeting duration title */
-"call.and.meeting.duration.title"="مدة المكالمة والاجتماع";
+"callAndMeeting.duration.title"="مدة المكالمة والاجتماع";
 /* Call and meeting duration for free users */
-"call.and.meeting.duration.for.free.users"="ما يصل إلى 1 ساعة";
-/* Call and meeting duration for pro users */
-"call.and.meeting.duration.for.pro.users"="ما يصل إلى 24 ساعة";
+"callAndMeeting.duration.for.free.users"="ما يصل إلى 1 ساعة";
+/* Call and meeting duration unlimited for pro users */
+"callAndMeeting.duration.unlimited.for.pro.users"="غير محدود";
 /* Call and meeting participants title */
-"call.and.meeting.participants.title"="المشاركون في الاتصال والاجتماع";
+"callAndMeeting.participants.title"="المشاركون في الاتصال والاجتماع";
 /* Call and meeting participants for free users */
-"call.and.meeting.participants.for.free.users"="ما يصل إلى 100";
+"callAndMeeting.participants.for.free.users"="ما يصل إلى 100";
+/* Call and meeting participants unlimited for pro users */
+"callAndMeeting.participants.unlimited.for.pro.users"="غير محدود";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="سوف تفقدُ هذه الميزات";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
@@ -4126,3 +4100,71 @@
 "cancellation.subscription.continue.cancellation.button.title"="تابع الإلغاء";
 /* Feature title */
 "feature.title"="ميزة";
+/* Cancellation Subscription manage by Google Play title */
+"accounts.cancelSubscriptionSteps.googlePlay.title"="Your subscription is not managed by Apple.";
+/* Cancellation Subscription manage by Google Play message */
+"accounts.cancelSubscriptionSteps.googlePlay.message"="This is because you subscribed to MEGA via Google Play. To cancel your subscription, you will need to:";
+/* Cancellation Section Google Play Web Browser title: In a web browser */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="في متصفح الويب";
+/* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visit play.google.com";
+/* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Sign in with your Google Play account.";
+/* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Click your avatar.";
+/* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Click <b>Payments & subscriptions.</b>";
+/* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Click <b>Subscriptions.</b>";
+/* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Under your MEGA subscription, click <b>Cancel subscription.</b>";
+/* Cancellation Section Google Play Android Device title: On an Android device */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="On an Android device";
+/* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Open the Play Store app.";
+/* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Sign in with your Google Play account (if required).";
+/* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tap your avatar.";
+/* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tap <b>Payments & subscriptions.</b>";
+/* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tap <b>Subscriptions</b>";
+/* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Under your MEGA subscription, tap <b>Cancel subscription.</b>";
+/* More button in Call UI that shows context menu. */
+"chat.call.quickAction.more"="المزيد";
+/* Context menu item to switch layout to main speaker (Call UI) */
+"chat.call.contextMenu.switchToMainView"="Switch to main view";
+/* Context menu item to switch layout to grid mode (Call UI) */
+"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+/* Context menu item to lower a raised hand (Call UI) */
+"chat.call.contextMenu.lowerHand"="انزل يدك";
+/* Context menu item to signal a raised hand (Call UI) */
+"chat.call.contextMenu.raiseHand"="ارفع يدك";
+/* Cancellation Subscription manage by Webclient title */
+"accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
+/* Cancellation Subscription manage by Webclient message */
+"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+/* Cancellation Section Webclient on a computer title: On a computer */
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+/* Cancellation Section Webclient on mobile device title: On a mobile device */
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+/* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+/* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+/* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
