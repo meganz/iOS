@@ -25,6 +25,7 @@ public extension CallParticipantEntity {
         audioDetected: Bool = false,
         isRecording: Bool = false,
         absentParticipantState: AbsentParticipantState = .notInCall,
+        raisedHand: Bool = false,
         isTesting: Bool = true
     ) {
         self.init(
@@ -49,7 +50,8 @@ public extension CallParticipantEntity {
             isHiResScreenShare: isHiResScreenShare,
             audioDetected: audioDetected,
             isRecording: isRecording,
-            absentParticipantState: absentParticipantState
+            absentParticipantState: absentParticipantState,
+            raisedHand: raisedHand
         )
     }
 }

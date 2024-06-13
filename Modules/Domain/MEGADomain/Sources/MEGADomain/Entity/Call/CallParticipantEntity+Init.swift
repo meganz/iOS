@@ -26,7 +26,8 @@ public extension CallParticipantEntity {
             isHiResScreenShare: session.isHiResScreenShare,
             audioDetected: session.audioDetected,
             isRecording: session.onRecording, 
-            absentParticipantState: .notInCall
+            absentParticipantState: .notInCall, 
+            raisedHand: false
         )
     }
     
@@ -57,7 +58,8 @@ public extension CallParticipantEntity {
             isHiResScreenShare: false,
             audioDetected: false,
             isRecording: false, 
-            absentParticipantState: .notInCall
+            absentParticipantState: .notInCall,
+            raisedHand: false
         )
     }
     
@@ -88,7 +90,8 @@ public extension CallParticipantEntity {
             isHiResScreenShare: false,
             audioDetected: false,
             isRecording: false,
-            absentParticipantState: .notInCall
+            absentParticipantState: .notInCall,
+            raisedHand: false
         )
     }
     
@@ -117,7 +120,8 @@ public extension CallParticipantEntity {
             isHiResScreenShare: participant.isHiResScreenShare,
             audioDetected: false,
             isRecording: false,
-            absentParticipantState: .notInCall
+            absentParticipantState: .notInCall,
+            raisedHand: false
         )
         callParticipant.name = participant.name
         callParticipant.isScreenShareCell = true

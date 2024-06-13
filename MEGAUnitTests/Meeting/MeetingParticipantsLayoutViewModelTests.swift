@@ -73,16 +73,17 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_onViewReady() {
+    func testAction_onViewReady_localUserHasRaisedHand() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
-        let call = CallEntity()
+        let call = CallEntity(raiseHandsList: [100])
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
-            callUseCase: callUseCase,
+            callUseCase: callUseCase, 
+            chatUseCase: MockChatUseCase(myUserHandle: 100),
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
@@ -96,7 +97,37 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configLocalUserView(position: .front)
+                .configLocalUserView(position: .front),
+                .updateLocalRaisedHandHidden(false)
+             ])
+    }
+    
+    func testAction_onViewReady_localUserHasNotRaisedHand() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
+            containerViewModel: containerViewModel,
+            callUseCase: callUseCase,
+            chatUseCase: MockChatUseCase(myUserHandle: 100),
+            captureDeviceUseCase: MockCaptureDeviceUseCase(),
+            localVideoUseCase: MockCallLocalVideoUseCase(),
+            remoteVideoUseCase: remoteVideoUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(),
+            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            userImageUseCase: MockUserImageUseCase(),
+            chatRoom: chatRoom,
+            call: call
+        )
+        
+        test(viewModel: viewModel,
+             action: .onViewReady,
+             expectedCommands: [
+                .configLocalUserView(position: .front),
+                .updateLocalRaisedHandHidden(true)
              ])
     }
     
@@ -1149,6 +1180,112 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(sut.speakerParticipant, thirdParticipant)
         XCTAssertEqual(sut.callParticipants[0], firstParticipant)
         XCTAssertTrue(sut.callParticipants[0].isScreenShareCell)
+    }
+    
+    func testCallUpdate_localUserRaiseHand() {
+        let callUseCase = MockCallUseCase()
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            callUseCase: callUseCase,
+            chatUseCase: MockChatUseCase(myUserHandle: 100)
+        )
+        
+        let exp = expectation(description: "local user raise hand icon visible after onChatCallUpdate with local user handle in the raise hands list")
+        
+        sut.invokeCommand = { command in
+            switch command {
+            case .updateLocalRaisedHandHidden(let hidden):
+                XCTAssertEqual(hidden, false)
+                exp.fulfill()
+            default:
+                XCTFail("Unexpected command")
+            }
+        }
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [100]))
+
+        wait(for: [exp])
+    }
+    
+    func testCallUpdate_localUserNotRaiseHand() {
+        let callUseCase = MockCallUseCase()
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            callUseCase: callUseCase,
+            chatUseCase: MockChatUseCase(myUserHandle: 100)
+        )
+        
+        let exp = expectation(description: "local user raise hand icon NOT visible after onChatCallUpdate without local user handle in the raise hands list")
+        
+        sut.invokeCommand = { command in
+            switch command {
+            case .updateLocalRaisedHandHidden(let hidden):
+                XCTAssertEqual(hidden, true)
+                exp.fulfill()
+            default:
+                XCTFail("Unexpected command")
+            }
+        }
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101, 32]))
+
+        wait(for: [exp])
+    }
+    
+    func testCallUpdate_remoteUserRaiseHand() {
+        let callUseCase = MockCallUseCase()
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            callUseCase: callUseCase
+        )
+        
+        let remoteUserRaiseHandExpectation = expectation(description: "remote user raise hand icon visible after onChatCallUpdate with remote user handle in the raise hands list")
+
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, raisedHand: false)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, raisedHand: false)
+        
+        sut.invokeCommand = { command in
+            switch command {
+            case .reloadParticipantRaisedHandAt(let index, let participants):
+                XCTAssertTrue(participants[index].raisedHand)
+                remoteUserRaiseHandExpectation.fulfill()
+            default:
+                break
+            }
+        }
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        
+        XCTAssertFalse(sut.callParticipants[0].raisedHand)
+
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
+
+        wait(for: [remoteUserRaiseHandExpectation], timeout: 3)
+    }
+    
+    func testCallUpdate_remoteUserLowHand() {
+        let callUseCase = MockCallUseCase()
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            callUseCase: callUseCase
+        )
+        
+        let remoteUserLowHandExpectation = expectation(description: "remote user raise hand icon NOT visible after onChatCallUpdate without remote user handle in the raise hands list")
+
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, raisedHand: true)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, raisedHand: false)
+        
+        sut.invokeCommand = { command in
+            switch command {
+            case .reloadParticipantRaisedHandAt(let index, let participants):
+                XCTAssertFalse(participants[index].raisedHand)
+                remoteUserLowHandExpectation.fulfill()
+            default:
+                break
+            }
+        }
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        
+        XCTAssertTrue(sut.callParticipants[0].raisedHand)
+
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: []))
+
+        wait(for: [remoteUserLowHandExpectation], timeout: 3)
     }
     
     // MARK: - Private functions

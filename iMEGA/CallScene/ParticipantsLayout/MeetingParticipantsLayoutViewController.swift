@@ -181,6 +181,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             callCollectionView.update(participants: participants)
         case .reloadParticipantAt(let index, let participants):
             callCollectionView.reloadParticipant(in: participants, at: index)
+        case .reloadParticipantRaisedHandAt(let index, let participants):
+            callCollectionView.reloadParticipant(in: participants, at: index)
         case .updateSpeakerViewFor(let participant):
             updateSpeaker(participant)
         case .localVideoFrame(let width, let height, let buffer):
@@ -230,6 +232,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             removeWaitingForOthersMessageViewIfNeeded()
         case .updateHasLocalAudio(let audio):
             localUserView.localAudio(enabled: audio)
+        case .updateLocalRaisedHandHidden(let hidden):
+            localUserView.raisedHandHidden(hidden)
         case .shouldHideSpeakerView(let hidden):
             speakerViews.forEach { $0.isHidden = hidden }
         case .ownPrivilegeChangedToModerator:
