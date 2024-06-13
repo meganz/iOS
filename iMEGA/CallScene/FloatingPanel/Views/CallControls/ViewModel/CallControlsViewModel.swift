@@ -18,7 +18,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private let permissionHandler: any DevicePermissionsHandling
     private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
+    private let accountUseCase: any AccountUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let audioRouteChangeNotificationName: Notification.Name
     private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
@@ -29,19 +29,20 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     @Published var routeViewVisible: Bool = false
     
     init(
-        router: any MeetingFloatingPanelRouting,
+        router: some MeetingFloatingPanelRouting,
         menuPresenter: @escaping ([ActionSheetAction]) -> Void,
         chatRoom: ChatRoomEntity,
-        callUseCase: any CallUseCaseProtocol,
-        captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
-        localVideoUseCase: any CallLocalVideoUseCaseProtocol,
+        callUseCase: some CallUseCaseProtocol,
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+        localVideoUseCase: some CallLocalVideoUseCaseProtocol,
         containerViewModel: MeetingContainerViewModel? = nil,
-        audioSessionUseCase: any AudioSessionUseCaseProtocol,
-        permissionHandler: any DevicePermissionsHandling,
-        callManager: any CallManagerProtocol,
+        audioSessionUseCase: some AudioSessionUseCaseProtocol,
+        permissionHandler: some DevicePermissionsHandling,
+        callManager: some CallManagerProtocol,
         notificationCenter: NotificationCenter,
         audioRouteChangeNotificationName: Notification.Name,
-        featureFlagProvider: any FeatureFlagProviderProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         layoutUpdateChannel: ParticipantLayoutUpdateChannel
     ) {
         self.router = router
@@ -57,6 +58,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.notificationCenter = notificationCenter
         self.audioRouteChangeNotificationName = audioRouteChangeNotificationName
         self.featureFlagProvider = featureFlagProvider
+        self.accountUseCase = accountUseCase
         self.layoutUpdateChannel = layoutUpdateChannel
         
         guard let call = callUseCase.call(for: chatRoom.chatId) else {
@@ -157,16 +159,46 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             detail: nil,
             image: UIImage(resource: .callRaiseHand),
             style: .default,
-            actionHandler: {
-                // raise or lower hand
+            actionHandler: { [weak self] in
+                self?.signalHandAction(!raised)
             }
         )
+    }
+    
+    private func signalHandAction(_ raise: Bool) {
+        guard
+            let call = callUseCase.call(for: chatRoom.chatId)
+        else { return }
+        
+        Task {
+            MEGALogDebug("[CallControls] \(raise ? "raising" : "lowering") hand begin")
+            do {
+                if raise {
+                    try await self.callUseCase.raiseHand(forCall: call)
+                } else {
+                    try await self.callUseCase.lowerHand(forCall: call)
+                }
+                MEGALogDebug("[CallControls] \(raise ? "raised" : "lowered") hand successfully")
+            } catch {
+                MEGALogDebug("[CallControls] \(raise ? "raising" : "lowering") hand failed \(error)")
+            }
+        }
+    }
+    
+    private var localUserHandIsRaiseCurrently: Bool {
+        guard
+            let call = callUseCase.call(for: chatRoom.chatId),
+            let userId = accountUseCase.currentUserHandle
+        else { return false }
+        let raised = Set(call.raiseHandsList).contains(userId)
+        MEGALogDebug("[CallControls] local user has raised hand: \(raised)")
+        return raised
     }
     
     private var moreMenuActions: [ActionSheetAction] {
         [
             switchLayout(gallery: currentLayout == .grid, enabled: layoutSwitchingEnabled),
-            raiseOrLowerHand(raised: true)
+            raiseOrLowerHand(raised: localUserHandIsRaiseCurrently)
         ]
     }
     
