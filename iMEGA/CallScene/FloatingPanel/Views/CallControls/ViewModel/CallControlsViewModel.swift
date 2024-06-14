@@ -134,6 +134,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             detail: nil,
             image: gallery ? UIImage(resource: .speakerView) : UIImage(resource: .galleryView),
             enabled: layoutSwitchingEnabled,
+            syncIconAndTextColor: true,
             style: .default,
             actionHandler: toggleLayoutAction
         )
@@ -158,6 +159,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             title: raised ? Strings.Localizable.Chat.Call.ContextMenu.lowerHand : Strings.Localizable.Chat.Call.ContextMenu.raiseHand,
             detail: nil,
             image: UIImage(resource: .callRaiseHand),
+            syncIconAndTextColor: true,
             style: .default,
             actionHandler: { [weak self] in
                 self?.signalHandAction(!raised)
