@@ -34,7 +34,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, videoPlaylistContentsUseCase, _) = makeSUT(
+        let (sut, _, videoPlaylistContentsUseCase, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -76,7 +76,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _, _) = makeSUT(
+        let (sut, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -115,7 +115,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _, _) = makeSUT(
+        let (sut, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -130,14 +130,16 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     
     private func makeSUT(
         videoPlaylistEntity: VideoPlaylistEntity,
-        videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase,
-        thumbnailUseCase: MockThumbnailUseCase,
+        videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase = MockVideoPlaylistContentUseCase(),
+        thumbnailUseCase: MockThumbnailUseCase = MockThumbnailUseCase(),
+        sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
         sut: VideoPlaylistContentViewModel,
         videoPlaylistThumbnailLoader: MockVideoPlaylistThumbnailLoader,
         videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase,
+        sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase,
         sharedUIState: VideoPlaylistContentSharedUIState
     ) {
         let sharedUIState = VideoPlaylistContentSharedUIState()
@@ -147,9 +149,16 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             sharedUIState: sharedUIState
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, videoPlaylistThumbnailLoader, videoPlaylistContentsUseCase, sharedUIState)
+        return (
+            sut,
+            videoPlaylistThumbnailLoader,
+            videoPlaylistContentsUseCase,
+            sortOrderPreferenceUseCase,
+            sharedUIState
+        )
     }
 }

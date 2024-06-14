@@ -130,6 +130,10 @@ struct VideoRevampRouter: VideoRevampRouting {
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
+            sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
+                preferenceUseCase: PreferenceUseCase.default,
+                sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+            ),
             router: self
         )
         viewController.hidesBottomBarWhenPushed = true

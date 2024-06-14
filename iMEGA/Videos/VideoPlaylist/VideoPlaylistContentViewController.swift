@@ -11,6 +11,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let videoPlaylistEntity: VideoPlaylistEntity
     private let videoPlaylistContentsUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let router: any VideoRevampRouting
     
     private let moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar, style: .plain, target: nil, action: nil)
@@ -28,12 +29,14 @@ final class VideoPlaylistContentViewController: UIViewController {
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         router: some VideoRevampRouting
     ) {
         self.videoConfig = videoConfig
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
         self.thumbnailUseCase = thumbnailUseCase
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.router = router
         super.init(nibName: nil, bundle: nil)
     }
@@ -54,6 +57,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             previewEntity: videoPlaylistEntity,
             videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             router: router,
             sharedUIState: sharedUIState
         )
@@ -79,27 +83,45 @@ final class VideoPlaylistContentViewController: UIViewController {
 
 extension VideoPlaylistContentViewController {
     
-    func setupContextMenuBarButton() {
+    private func setupContextMenuBarButton() {
         guard videoPlaylistEntity.type == .user else {
             return
         }
         
-        sharedUIState.$videosCount
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] count in
-                self?.setupMoreBarButtonItem(from: count)
-            }
-            .store(in: &subscriptions)
+        Publishers.CombineLatest(
+            sharedUIState.$videosCount.map { $0 == 0 }.removeDuplicates(),
+            sortOrderChangedSequence()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] isEmptyVideos, sortOrder in
+            self?.setupMoreBarButtonItem(isEmptyState: isEmptyVideos, sortOrder: sortOrder)
+        }
+        .store(in: &subscriptions)
     }
     
-    private func setupMoreBarButtonItem(from videosCount: Int) {
+    private func sortOrderChangedSequence() -> AnyPublisher<SortOrderEntity, Never> {
+        sortOrderPreferenceUseCase.monitorSortOrder(for: . videoPlaylistContent)
+            .map { [weak self] sortOrder in
+                guard let self else {
+                    return SortOrderEntity.defaultAsc
+                }
+                return doesSupport(sortOrder) ? sortOrder : .defaultAsc
+            }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+    
+    private func doesSupport(_ sortOrder: SortOrderEntity) -> Bool {
+        [.defaultAsc, .defaultDesc, .modificationAsc, .modificationDesc].contains(sortOrder)
+    }
+    
+    private func setupMoreBarButtonItem(isEmptyState: Bool, sortOrder: SortOrderEntity) {
         let contextMenuConfiguration = CMConfigEntity(
             menuType: .menu(type: .videoPlaylistContent),
-            sortType: SortOrderEntity.creationAsc,
+            sortType: sortOrder,
             isVideoPlaylistContent: true,
             isSelectHidden: false,
-            isEmptyState: videosCount == 0
+            isEmptyState: isEmptyState
         )
         
         moreBarButtonItem.menu = contextMenuManager.contextMenu(with: contextMenuConfiguration)
@@ -115,6 +137,9 @@ extension VideoPlaylistContentViewController: DisplayMenuDelegate {
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
-        sharedUIState.selectedSortOrderEntity = sortType.toSortOrderEntity()
+        guard doesSupport(sortType.toSortOrderEntity()) else {
+            return
+        }
+        sortOrderPreferenceUseCase.save(sortOrder: sortType.toSortOrderEntity(), for: .videoPlaylistContent)
     }
 }
