@@ -63,3 +63,17 @@ struct SnackBarView: View {
         .padding(Constants.padding)
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    SnackBarView(
+        viewModel: SnackBarViewModel(
+            snackBar: SnackBar(
+                message: "Message",
+                title: "Title",
+                action: nil
+            )
+        )
+    )
+}

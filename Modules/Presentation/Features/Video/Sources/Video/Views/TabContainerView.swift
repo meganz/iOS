@@ -165,6 +165,7 @@ struct TabBarItem: View {
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
             thumbnailUseCase: Preview_ThumbnailUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview
         )

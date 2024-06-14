@@ -48,12 +48,16 @@ struct VideoRevampRouter: VideoRevampRouting {
             fileSearchRepository: fileSearchRepo,
             nodeRepository: NodeRepository.newRepo
         )
+        let videoPlaylistModificationUseCase = VideoPlaylistModificationUseCase(
+            userVideoPlaylistsRepository: userVideoPlaylistsRepo
+        )
         let viewController = VideoRevampTabContainerViewController(
             viewModel: viewModel,
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled),
             router: self
         )
@@ -107,7 +111,7 @@ struct VideoRevampRouter: VideoRevampRouting {
         navigationController.present(viewController, animated: true, completion: nil)
     }
     
-    func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity) {
+    func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity, presentationConfig: VideoPlaylistContentSnackBarPresentationConfig) {
         let userVideoPlaylistsRepo = UserVideoPlaylistsRepository.newRepo
         let fileSearchRepo = FilesSearchRepository.newRepo
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
@@ -130,11 +134,12 @@ struct VideoRevampRouter: VideoRevampRouting {
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
+            router: self, 
+            presentationConfig: presentationConfig,
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: PreferenceUseCase.default,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
-            ),
-            router: self
+            )
         )
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)

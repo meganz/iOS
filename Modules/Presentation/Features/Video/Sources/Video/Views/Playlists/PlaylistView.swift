@@ -36,8 +36,22 @@ struct PlaylistView: View {
         .onReceive(viewModel.$shouldShowVideoPlaylistPicker) { shouldShow in
             if shouldShow {
                 router.openVideoPicker { selectedVideos in
-                    viewModel.didPickVideosToBeIncludedInNewlyCreatedPlaylist(videos: selectedVideos)
+                    viewModel.shouldShowVideoPlaylistPicker = false
+                    Task {
+                        await viewModel.addVideosToNewlyCreatedVideoPlaylist(videos: selectedVideos)
+                    }
                 }
+            }
+        }
+        .onReceive(viewModel.$shouldOpenVideoPlaylistContent) { shouldOpen in
+            if let newlyCreatedVideoPlaylist = viewModel.newlyCreatedVideoPlaylist, shouldOpen {
+                router.openVideoPlaylistContent(
+                    for: newlyCreatedVideoPlaylist,
+                    presentationConfig: VideoPlaylistContentSnackBarPresentationConfig(
+                        shouldShowSnackBar: true,
+                        text: viewModel.newlyAddedVideosToPlaylistSnackBarMessage
+                    )
+                )
             }
         }
         .sheet(isPresented: $viewModel.isSheetPresented) {
@@ -190,6 +204,7 @@ struct PlaylistView: View {
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(userVideoPlaylists: [.preview]),
             thumbnailUseCase: Preview_ThumbnailUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview
         ),
@@ -204,6 +219,7 @@ struct PlaylistView: View {
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
             thumbnailUseCase: Preview_ThumbnailUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview
         ),

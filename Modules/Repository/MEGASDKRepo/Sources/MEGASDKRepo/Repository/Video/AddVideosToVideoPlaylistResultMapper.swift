@@ -1,23 +1,15 @@
 import MEGADomain
 import MEGASdk
 
-struct AddVideosToVideoPlaylistResultMapper {
+enum AddVideosToVideoPlaylistResultMapper {
     
-    private init() {}
-    
-    static func map(request: MEGARequest?, error: MEGAError?) ->  Result<SetEntity, any Error> {
-        guard let error else {
+    static func map(request: MEGARequest?, error: MEGAError?) -> Result<Void, any Error> {
+        if request == nil && error == nil {
             return .failure(VideoPlaylistErrorEntity.invalidOperation)
-        }
-        
-        guard error.type == .apiOk else {
+        } else if error != nil {
             return .failure(VideoPlaylistErrorEntity.failedToAddVideoToPlaylist)
+        } else {
+            return .success(())
         }
-        
-        guard let setEntity = request?.set?.toSetEntity() else {
-            return .failure(VideoPlaylistErrorEntity.failedToRetrieveSetFromRequest)
-        }
-        return .success(setEntity)
-        
     }
 }

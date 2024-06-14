@@ -1,4 +1,4 @@
-public typealias VideoPlaylistCreateSetElementsResultEntity = [HandleEntity: Result<SetEntity, any Error>]
+public typealias VideoPlaylistCreateSetElementsResultEntity = [HandleEntity: Result<Void, any Error>]
 
 extension VideoPlaylistCreateSetElementsResultEntity {
     
@@ -10,7 +10,7 @@ extension VideoPlaylistCreateSetElementsResultEntity {
         UInt(filter { isFailure($0.value) }.count)
     }
     
-    private func isSuccess(_ result: Result<SetEntity, any Error>) -> Bool {
+    private func isSuccess(_ result: Result<Void, any Error>) -> Bool {
         switch result {
         case .success:
             return true
@@ -19,7 +19,7 @@ extension VideoPlaylistCreateSetElementsResultEntity {
         }
     }
     
-    private func isFailure(_ result: Result<SetEntity, any Error>) -> Bool {
+    private func isFailure(_ result: Result<Void, any Error>) -> Bool {
         switch result {
         case .success:
             return false

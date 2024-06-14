@@ -1,23 +1,15 @@
 import MEGADomain
 import MEGASdk
 
-struct DeleteVideoPlaylistElementsMapper {
+enum DeleteVideoPlaylistElementsMapper {
     
-    private init() {}
-    
-    static func map(request: MEGARequest?, error: MEGAError?) -> Result<SetEntity, any Error> {
-        guard let error else {
-            return .failure(VideoPlaylistErrorEntity.invalidOperation)
+    static func map(request: MEGARequest?, error: MEGAError?) -> Result<Void, any Error> {
+        if request == nil && error == nil {
+            .failure(VideoPlaylistErrorEntity.invalidOperation)
+        } else if error != nil {
+            .failure(VideoPlaylistErrorEntity.failedToDeleteVideoPlaylistElements)
+        } else {
+           .success(())
         }
-        
-        guard error.type == .apiOk else {
-            return .failure(VideoPlaylistErrorEntity.failedToDeleteVideoPlaylistElements)
-        }
-        
-        guard let setEntity = request?.set?.toSetEntity() else {
-            return .failure(VideoPlaylistErrorEntity.failedToRetrieveSetFromRequest)
-        }
-        
-        return .success(setEntity)
     }
 }

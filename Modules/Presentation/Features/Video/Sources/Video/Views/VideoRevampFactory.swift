@@ -38,6 +38,7 @@ public class VideoRevampFactory {
         videoSelection: VideoSelection,
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
@@ -51,6 +52,7 @@ public class VideoRevampFactory {
             videoPlaylistsUseCase: videoPlaylistUseCase,
             thumbnailUseCase: thumbnailUseCase, 
             videoPlaylistContentUseCase: videoPlaylistContentUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             syncModel: syncModel,
             alertViewModel: TextFieldAlertViewModel(
                 title: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.title,
@@ -78,15 +80,17 @@ public class VideoRevampFactory {
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         router: some VideoRevampRouting,
-        sharedUIState: VideoPlaylistContentSharedUIState
+        sharedUIState: VideoPlaylistContentSharedUIState,
+        presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
     ) -> UIViewController {
         let viewModel = VideoPlaylistContentViewModel(
             videoPlaylistEntity: previewEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentUseCase,
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase),
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-            sharedUIState: sharedUIState
+            sharedUIState: sharedUIState,
+            presentationConfig: presentationConfig,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
         )
         let view = PlaylistContentScreen(
             viewModel: viewModel,
