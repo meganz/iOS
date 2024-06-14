@@ -30,4 +30,16 @@ extension XCTestCase {
             modificationTime: modificationDate
         )
     }
+    
+    var yesterdayDate: Date {
+        Date.now.daysAgo(1, timeZone: timeZone)!
+    }
+    
+    var aWeekAgoDate: Date {
+        Date.now.daysAgo(7, timeZone: timeZone)!
+    }
+    
+    var aMonthAgoDate: Date {
+        Date.now.daysAgo(10, timeZone: timeZone)!
+    }
 }

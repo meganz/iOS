@@ -9,6 +9,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private let videoPlaylistContentsUseCase: any VideoPlaylistContentsUseCaseProtocol
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     
     @Published public private(set) var videos: [NodeEntity] = []
     @Published var headerPreviewEntity: VideoPlaylistCellPreviewEntity = .placeholder
@@ -23,12 +24,14 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         sharedUIState: VideoPlaylistContentSharedUIState
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistThumbnailLoader = videoPlaylistThumbnailLoader
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.sharedUIState = sharedUIState
     }
     
@@ -40,17 +43,28 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     @MainActor
     private func monitorUserVideoPlaylist() async {
         do {
+            let sortOrderChangedSequence = sortOrderPreferenceUseCase.monitorSortOrder(for: . videoPlaylistContent)
+                .compactMap {  [weak self] (sortOrder: SortOrderEntity) -> SortOrderEntity? in
+                    guard let self else {
+                        return nil
+                    }
+                    return doesSupport(sortOrder) ? sortOrder : .defaultAsc
+                }
+                .removeDuplicates()
+                .values
+            
             let anyVideoPlaylistUpdateSequence = combineLatest(
                 videoPlaylistContentsUseCase.monitorVideoPlaylist(for: videoPlaylistEntity),
-                videoPlaylistContentsUseCase.monitorUserVideoPlaylistContent(for: videoPlaylistEntity)
+                videoPlaylistContentsUseCase.monitorUserVideoPlaylistContent(for: videoPlaylistEntity),
+                sortOrderChangedSequence
             )
             
-            for try await (videoPlaylist, videos) in anyVideoPlaylistUpdateSequence {
+            for try await (videoPlaylist, videos, sortOrder) in anyVideoPlaylistUpdateSequence {
                 guard !Task.isCancelled else {
                     break
                 }
                 self.videoPlaylistEntity = videoPlaylist
-                self.videos = videos
+                self.videos = VideoPlaylistContentSorter.sort(videos, by: sortOrder)
                 self.sharedUIState.videosCount = videos.count
                 await loadThumbnails(for: videos)
             }
@@ -95,4 +109,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             shouldShowError = true
         }
     }
+    
+    private func doesSupport(_ sortOrder: SortOrderEntity) -> Bool {
+         [.defaultAsc, .defaultDesc, .modificationAsc, .modificationDesc].contains(sortOrder)
+     }
 }
