@@ -13,4 +13,5 @@ public enum NodeFormatEntity: Sendable {
     case misc
     case spreadsheet
     case allDocs
+    case others
 }

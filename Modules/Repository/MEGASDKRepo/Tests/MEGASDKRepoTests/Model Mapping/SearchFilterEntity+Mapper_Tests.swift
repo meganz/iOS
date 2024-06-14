@@ -4,17 +4,32 @@ import XCTest
 
 final class SearchFilterEntity_Mapper_Tests: XCTestCase {
     
-    func testToInt32_forSearchEntityFavouriteFilterOptions_shouldReturnCorrectInt32Value() {
+    func testtoMEGASearchFilterFavouriteOption_forSearchEntityFavouriteFilterOptions_shouldReturnCorrectMEGASearchFilterFavouriteOption() {
         let options = [SearchFilterEntity.FavouriteFilterOption.disabled, .excludeFavourites, .onlyFavourites]
         
         for option in options {
             switch option {
             case .disabled:
-                XCTAssertEqual(option.toInt32(), 0)
+                XCTAssertEqual(option.toMEGASearchFilterFavouriteOption(), .disabled)
             case .onlyFavourites:
-                XCTAssertEqual(option.toInt32(), 1)
+                XCTAssertEqual(option.toMEGASearchFilterFavouriteOption(), .favouritesOnly)
             case .excludeFavourites:
-                XCTAssertEqual(option.toInt32(), 2)
+                XCTAssertEqual(option.toMEGASearchFilterFavouriteOption(), .nonFavouritesOnly)
+            }
+        }
+    }
+    
+    func toMEGASearchFilterSensitiveOption_forSearchEntityFavouriteFilterOptions_shouldReturnCorrectMEGASearchFilterSensitiveOption() {
+        let options = [SearchFilterEntity.SensitiveFilterOption.nonSensitiveOnly, .nonSensitiveOnly, .sensitiveOnly]
+        
+        for option in options {
+            switch option {
+            case .disabled:
+                XCTAssertEqual(option.toMEGASearchFilterSensitiveOption(), .disabled)
+            case .nonSensitiveOnly:
+                XCTAssertEqual(option.toMEGASearchFilterSensitiveOption(), .nonSensitiveOnly)
+            case .sensitiveOnly:
+                XCTAssertEqual(option.toMEGASearchFilterSensitiveOption(), .sensitiveOnly)
             }
         }
     }

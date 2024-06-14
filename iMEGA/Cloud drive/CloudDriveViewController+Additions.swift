@@ -517,10 +517,10 @@ extension CloudDriveViewController {
         MEGASearchFilter(
             term: searchText,
             parentNodeHandle: parentHandle,
-            nodeType: Int32(MEGANodeType.unknown.rawValue),
-            category: Int32(MEGANodeFormatType.unknown.rawValue),
-            sensitivity: excludeSensitive,
-            favouriteFilter: 0,
+            nodeType: .unknown,
+            category: .unknown,
+            sensitiveFilter: excludeSensitive ? MEGASearchFilterSensitiveOption.nonSensitiveOnly : .disabled,
+            favouriteFilter: .disabled,
             creationTimeFrame: nil,
             modificationTimeFrame: nil
         )

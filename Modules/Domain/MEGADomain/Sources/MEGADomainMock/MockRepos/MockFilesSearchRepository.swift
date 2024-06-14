@@ -10,6 +10,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     private let photoNodes: [NodeEntity]
     private let videoNodes: [NodeEntity]
+    
     private let nodesForHandle: [HandleEntity: [NodeEntity]]
     private let nodeListEntityForHandle: [HandleEntity: NodeListEntity]
     private let nodesForLocation: [FolderTargetEntity: [NodeEntity]]
@@ -57,21 +58,20 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
 
     public func node(by id: HandleEntity) async -> NodeEntity? {
         messages.append(.node(id: id))
-        return (photoNodes + videoNodes).first { node in
-            node.handle == id
-        }
+        return nodesForHandle
+            .flatMap { $0.value }
+            .first { node in node.handle == id }
     }
     
     public func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
-        searchString = filter.searchText
-        searchRecursive = filter.recursive
-        let nodes: [NodeEntity] = switch filter.formatType {
-        case .photo: photoNodes.filter { !$0.isFolder }
-        case .video: videoNodes.filter { !$0.isFolder }
-        default: []
+        Task {
+            do {
+                let nodes: [NodeEntity] = try await search(filter: filter)
+                completion(nodes, false)
+            } catch {
+                completion(nil, true)
+            }
         }
-        
-        completion(nodes, false)
     }
     
     public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
@@ -81,39 +81,39 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         messages.append(.search(searchText: searchString, sortOrder: filter.sortOrderType))
         
         let filterCondition = { (node: NodeEntity) -> Bool in
-            node.isFile && (filter.excludeSensitive ? !node.isMarkedSensitive : true)
+            node.isFile && (filter.sensitiveFilterOption == .nonSensitiveOnly ? !node.isMarkedSensitive : true)
         }
         
-        if let parentHandle = filter.parentNode?.handle,
-           let nodes = nodesForHandle[parentHandle] {
-            return nodes
-                .filter(filterCondition)
-                .filter {
-                    switch filter.formatType {
-                    case .photo: $0.name.fileExtensionGroup.isImage
-                    case .video: $0.name.fileExtensionGroup.isVideo
-                    default: false
-                    }
+        let nodes = switch filter.searchTargetLocation {
+        case .parentNode(let nodeEntity):
+            nodesForHandle[nodeEntity.handle] ?? []
+        case .folderTarget(let folderTargetEntity):
+            nodesForLocation[folderTargetEntity] ?? []
+        }
+        
+        return nodes
+            .filter(filterCondition)
+            .filter {
+                switch filter.formatType {
+                case .photo: $0.name.fileExtensionGroup.isImage
+                case .video: $0.name.fileExtensionGroup.isVideo
+                default: true
                 }
-        }
-        
-        if let folderTargetEntity = filter.folderTargetEntity, let nodes = nodesForLocation[folderTargetEntity] {
-            return nodes
-        }
-        
-        return switch filter.formatType {
-        case .photo: photoNodes.filter(filterCondition)
-        case .video: videoNodes.filter(filterCondition)
-        default: []
-        }
+            }
     }
     
     public func search(filter: SearchFilterEntity) async throws -> NodeListEntity {
         searchString = filter.searchText
         searchRecursive = filter.recursive
-        if let parentNodeHandle = filter.parentNode?.handle, let nodeListEntity = nodeListEntityForHandle[parentNodeHandle] {
-            return nodeListEntity
+        switch filter.searchTargetLocation {
+        case .parentNode(let nodeEntity):
+            if let nodeListEntity = nodeListEntityForHandle[nodeEntity.handle] {
+                return nodeListEntity
+            }
+        case .folderTarget:
+            break
         }
+        
         throw NodeSearchResultErrorEntity.noDataAvailable
     }
         

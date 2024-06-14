@@ -6,17 +6,6 @@ import MEGASwift
 import XCTest
 
 final class PhotosRepositoryTests: XCTestCase {
-    func testAllPhotos_rootNodeNotFound_shouldThrowError() async {
-        let photosRepositoryTaskManager = PhotosRepositoryTaskManager(photoLocalSource: MockPhotoLocalSource(),
-                                                                      photoCacheRepositoryMonitors: MockPhotoCacheRepositoryMonitors())
-        let sut = makeSUT(photosRepositoryTaskManager: photosRepositoryTaskManager)
-        do {
-            _ = try await sut.allPhotos()
-            XCTFail("Should have thrown error")
-        } catch {
-            XCTAssertEqual(error as? NodeErrorEntity, NodeErrorEntity.nodeNotFound)
-        }
-    }
     
     func testAllPhotos_photoSourceEmpty_shouldRetrievePhotosThroughSearch() async throws {
         let expectedPhotos = [MockNode(handle: 45),

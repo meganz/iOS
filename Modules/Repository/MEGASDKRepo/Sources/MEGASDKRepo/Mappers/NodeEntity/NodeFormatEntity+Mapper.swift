@@ -4,22 +4,19 @@ import MEGASdk
 extension NodeFormatEntity {
     public func toMEGANodeFormatType() -> MEGANodeFormatType {
         switch self {
-        case .photo: return .photo
-        case .audio: return .audio
-        case .video: return .video
-        case .document: return .document
-        case .pdf: return .pdf
-        case .presentation: return .presentation
-        case .archive: return .archive
-        case .program: return .program
-        case .misc: return .misc
-        case .spreadsheet: return .spreadsheet
-        case .allDocs: return .allDocs
-        default: return .unknown
+        case .photo: .photo
+        case .audio: .audio
+        case .video: .video
+        case .document: .document
+        case .pdf: .pdf
+        case .presentation: .presentation
+        case .archive: .archive
+        case .program: .program
+        case .misc: .misc
+        case .spreadsheet: .spreadsheet
+        case .allDocs: .allDocs
+        case .others: .others
+        default: .unknown
         }
-    }
-    
-    func toInt32() -> Int32 {
-        Int32(toMEGANodeFormatType().rawValue)
     }
 }

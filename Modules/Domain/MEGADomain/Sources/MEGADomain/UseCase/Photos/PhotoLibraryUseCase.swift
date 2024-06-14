@@ -52,7 +52,7 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         let shouldExcludeSensitive = await shouldExcludeSensitive(override: excludeSensitive)
   
         return if filterOptions.isSuperset(of: .allLocations) {
-            try await loadAllPhotos(recursive: true, excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats, searchText: searchText, sortOrder: sortOrder)
+            try await loadAllPhotos(searchTargetLocation: .folderTarget(.rootNode), recursive: true, excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats, searchText: searchText, sortOrder: sortOrder)
         } else if filterOptions.contains(.cloudDrive) {
             try await mediaFromCloudDriveOnly(excludeSensitive: shouldExcludeSensitive, includedFormats: filterOptions.requestedNodeFormats, searchText: searchText, sortOrder: sortOrder)
         } else if filterOptions.contains(.cameraUploads) {
@@ -78,7 +78,7 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         let exclusionHandles = [container.cameraUploadNode, container.mediaUploadNode]
             .compactMap(\.?.handle)
         
-        return try await loadAllPhotos(recursive: true, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder)
+        return try await loadAllPhotos(searchTargetLocation: .folderTarget(.rootNode), recursive: true, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder)
             .filter { exclusionHandles.notContains($0.parentHandle) }
     }
     
@@ -88,12 +88,12 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         
         var nodes: [NodeEntity] = []
         if let cameraUploadNode = container.cameraUploadNode,
-           let photosCameraUpload = try? await loadAllPhotos(parentNode: cameraUploadNode, recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder) {
+           let photosCameraUpload = try? await loadAllPhotos(searchTargetLocation: .parentNode(cameraUploadNode), recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder) {
             nodes.append(contentsOf: photosCameraUpload)
         }
         
         if let mediaUploadNode = container.mediaUploadNode,
-           let photosMediaUpload = try? await loadAllPhotos(parentNode: mediaUploadNode, recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder) {
+           let photosMediaUpload = try? await loadAllPhotos(searchTargetLocation: .parentNode(mediaUploadNode), recursive: false, excludeSensitive: excludeSensitive, includedFormats: includedFormats, searchText: searchText, sortOrder: sortOrder) {
             nodes.append(contentsOf: photosMediaUpload)
         }
         
@@ -101,18 +101,18 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
     }
     
     // MARK: - Private
-    private func loadAllPhotos(parentNode: NodeEntity? = nil, recursive: Bool, excludeSensitive: Bool, includedFormats: [NodeFormatEntity], searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
+    private func loadAllPhotos(searchTargetLocation: SearchFilterEntity.SearchTargetLocation, recursive: Bool, excludeSensitive: Bool, includedFormats: [NodeFormatEntity], searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
         await includedFormats
             .async
             .compactMap { format -> [NodeEntity]? in
                 try? await searchRepository.search(filter: .init(
                     searchText: searchText,
-                    parentNode: parentNode,
+                    searchTargetLocation: searchTargetLocation,
                     recursive: recursive,
                     supportCancel: false,
                     sortOrderType: sortOrder,
                     formatType: format,
-                    excludeSensitive: excludeSensitive))
+                    sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled))
             }
             .reduce([NodeEntity]()) { $0 + $1 }
     }

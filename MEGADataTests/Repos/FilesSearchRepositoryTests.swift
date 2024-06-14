@@ -91,8 +91,8 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 recursive: recursive,
                                                                 sortOrderType: sortOrderType.toMEGASortOrderType(),
                                                                 formatType: formatType.toMEGANodeFormatType(), 
-                                                                excludeSensitive: false, 
-                                                                favouriteFilter: 0)
+                                                                sensitiveFilter: .disabled,
+                                                                favouriteFilter: .disabled)
         
         let result = try await repo.search(string: searchString,
                                            parent: parent.toNodeEntity(),
@@ -116,23 +116,24 @@ final class FilesSearchRepositoryTests: XCTestCase {
         let recursive = true
         let sortOrderType = SortOrderEntity.defaultAsc
         let formatType = NodeFormatEntity.photo
-        
+        let sensitiveFilter = SearchFilterEntity.SensitiveFilterOption.nonSensitiveOnly
+
         let expectedSearchQuery = MockSdk.SearchQueryParameters(node: parent,
                                                                 searchString: searchString,
                                                                 recursive: recursive,
                                                                 sortOrderType: sortOrderType.toMEGASortOrderType(),
                                                                 formatType: formatType.toMEGANodeFormatType(), 
-                                                                excludeSensitive: true,
-                                                                favouriteFilter: 0)
+                                                                sensitiveFilter: sensitiveFilter.toMEGASearchFilterSensitiveOption(),
+                                                                favouriteFilter: .disabled)
         
         let result: NodeListEntity = try await repo.search(filter: .init(
             searchText: searchString,
-            parentNode: parent.toNodeEntity(),
+            searchTargetLocation: .parentNode(parent.toNodeEntity()),
             recursive: recursive,
             supportCancel: false,
             sortOrderType: sortOrderType,
             formatType: formatType,
-            excludeSensitive: true))
+            sensitiveFilterOption: sensitiveFilter))
         
         XCTAssertEqual(result.toNodeEntities(), nodes.toNodeEntities())
         XCTAssertEqual(mockSdk.searchNonRecursivelyWithFilterCallCount, 0)
@@ -151,23 +152,24 @@ final class FilesSearchRepositoryTests: XCTestCase {
         let recursive = false
         let sortOrderType = SortOrderEntity.defaultAsc
         let formatType = NodeFormatEntity.photo
+        let sensitiveFilter = SearchFilterEntity.SensitiveFilterOption.nonSensitiveOnly
         
         let expectedSearchQuery = MockSdk.SearchQueryParameters(node: parent,
                                                                 searchString: searchString,
                                                                 recursive: recursive,
                                                                 sortOrderType: sortOrderType.toMEGASortOrderType(),
                                                                 formatType: formatType.toMEGANodeFormatType(),
-                                                                excludeSensitive: true, 
-                                                                favouriteFilter: 0)
+                                                                sensitiveFilter: sensitiveFilter.toMEGASearchFilterSensitiveOption(),
+                                                                favouriteFilter: .disabled)
         
         let result: NodeListEntity = try await repo.search(filter: .init(
             searchText: searchString,
-            parentNode: parent.toNodeEntity(),
+            searchTargetLocation: .parentNode(parent.toNodeEntity()),
             recursive: recursive,
             supportCancel: false,
             sortOrderType: sortOrderType,
             formatType: formatType,
-            excludeSensitive: true)
+            sensitiveFilterOption: sensitiveFilter)
         )
         
         XCTAssertEqual(result.toNodeEntities(), nodes.toNodeEntities())
@@ -187,23 +189,24 @@ final class FilesSearchRepositoryTests: XCTestCase {
         let recursive = false
         let sortOrderType = SortOrderEntity.defaultAsc
         let formatType = NodeFormatEntity.photo
-        
+        let sensitiveFilter = SearchFilterEntity.SensitiveFilterOption.nonSensitiveOnly
+
         let expectedSearchQuery = MockSdk.SearchQueryParameters(node: parent,
                                                                 searchString: searchString,
                                                                 recursive: recursive,
                                                                 sortOrderType: sortOrderType.toMEGASortOrderType(),
                                                                 formatType: formatType.toMEGANodeFormatType(),
-                                                                excludeSensitive: true,
-                                                                favouriteFilter: 1)
+                                                                sensitiveFilter: sensitiveFilter.toMEGASearchFilterSensitiveOption(),
+                                                                favouriteFilter: .favouritesOnly)
         
         let result: NodeListEntity = try await repo.search(filter: .init(
             searchText: searchString,
-            parentNode: parent.toNodeEntity(),
+            searchTargetLocation: .parentNode(parent.toNodeEntity()),
             recursive: recursive,
             supportCancel: false,
             sortOrderType: sortOrderType,
             formatType: formatType,
-            excludeSensitive: true,
+            sensitiveFilterOption: sensitiveFilter,
             favouriteFilterOption: .onlyFavourites)
         )
         

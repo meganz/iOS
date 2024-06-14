@@ -41,11 +41,11 @@ final class FilesSearchUseCaseTests: XCTestCase {
         ]
         
         let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(photoNodes: nodes),
+            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: nodes]),
             nodeFormat: NodeFormatEntity.photo,
             nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
         )
-        sut.search(filter: .init(searchText: "", parentNode: nil, recursive: true, supportCancel: false, sortOrderType: .none, formatType: .photo, excludeSensitive: false), cancelPreviousSearchIfNeeded: false) { results, _ in
+        sut.search(filter: .init(searchText: "", searchTargetLocation: .folderTarget(.rootNode), recursive: true, supportCancel: false, sortOrderType: .none, formatType: .photo, sensitiveFilterOption: .disabled), cancelPreviousSearchIfNeeded: false) { results, _ in
             guard let results else { XCTFail("Search results shouldn't be nil"); return }
             
             XCTAssertEqual(results, nodes)
@@ -64,23 +64,23 @@ final class FilesSearchUseCaseTests: XCTestCase {
         ]
         
         let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(photoNodes: nodes),
+            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: nodes]),
             nodeFormat: NodeFormatEntity.photo,
             nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
         )
         let results: [NodeEntity] = try await sut.search(
             filter: .init(
                 searchText: "",
-                parentNode: nil,
+                searchTargetLocation: .folderTarget(.rootNode),
                 recursive: true,
                 supportCancel: false,
                 sortOrderType: .none,
                 formatType: .photo,
-                excludeSensitive: false)
+                sensitiveFilterOption: .disabled)
             ,
             cancelPreviousSearchIfNeeded: false
         )
-        XCTAssertEqual(results, nodes)
+        XCTAssertEqual(results, nodes.filter(\.name.fileExtensionGroup.isImage))
     }
     
     func testOnNodeUpdate_updatedNodesShouldBeTheSame() {

@@ -351,8 +351,8 @@ public final class MockSdk: MEGASdk {
                                                       recursive: recursive,
                                                       sortOrderType: orderType,
                                                       formatType: nodeFormatType, 
-                                                      excludeSensitive: false,
-                                                      favouriteFilter: 0)
+                                                      sensitiveFilter: .disabled,
+                                                      favouriteFilter: .disabled)
         nodeListSearchCallCount += 1
         return MockNodeList(nodes: nodes)
     }
@@ -362,8 +362,8 @@ public final class MockSdk: MEGASdk {
                                                       searchString: filter.term,
                                                       recursive: true,
                                                       sortOrderType: orderType,
-                                                      formatType: MEGANodeFormatType(rawValue: Int(filter.category)) ?? .unknown,
-                                                      excludeSensitive: filter.sensitivity, 
+                                                      formatType: filter.category,
+                                                      sensitiveFilter: filter.sensitiveFilter,
                                                       favouriteFilter: filter.favouriteFilter)
         searchWithFilterCallCount += 1
         return MockNodeList(nodes: nodes)
@@ -374,8 +374,8 @@ public final class MockSdk: MEGASdk {
                                                       searchString: filter.term,
                                                       recursive: false,
                                                       sortOrderType: orderType,
-                                                      formatType: MEGANodeFormatType(rawValue: Int(filter.category)) ?? .unknown,
-                                                      excludeSensitive: filter.sensitivity,
+                                                      formatType: filter.category,
+                                                      sensitiveFilter: filter.sensitiveFilter,
                                                       favouriteFilter: filter.favouriteFilter)
         
         searchNonRecursivelyWithFilterCallCount += 1
@@ -794,22 +794,22 @@ extension MockSdk {
         public let recursive: Bool
         public let sortOrderType: MEGASortOrderType
         public let formatType: MEGANodeFormatType
-        public let excludeSensitive: Bool
-        public let favouriteFilter: Int32
+        public let sensitiveFilter: MEGASearchFilterSensitiveOption
+        public let favouriteFilter: MEGASearchFilterFavouriteOption
         
         public init(node: MEGANode,
                     searchString: String?,
                     recursive: Bool,
                     sortOrderType: MEGASortOrderType,
                     formatType: MEGANodeFormatType,
-                    excludeSensitive: Bool,
-                    favouriteFilter: Int32) {
+                    sensitiveFilter: MEGASearchFilterSensitiveOption,
+                    favouriteFilter: MEGASearchFilterFavouriteOption) {
             self.node = node
             self.searchString = searchString
             self.recursive = recursive
             self.sortOrderType = sortOrderType
             self.formatType = formatType
-            self.excludeSensitive = excludeSensitive
+            self.sensitiveFilter = sensitiveFilter
             self.favouriteFilter = favouriteFilter
         }
     }

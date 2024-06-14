@@ -75,15 +75,11 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
     
     private func search(filter: SearchFilterEntity, completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
         
-        guard let parentHandle = filter.parentNode?.handle ?? sdk.rootNode?.handle else {
-            return completion(.failure(NodeSearchResultErrorEntity.noDataAvailable))
-        }
-        
         cancelToken = MEGACancelToken()
                 
         let searchOperation = SearchWithFilterOperation(
             sdk: sdk,
-            filter: filter.toMEGASearchFilter(defaultParentHandle: parentHandle),
+            filter: filter.toMEGASearchFilter(),
             recursive: filter.recursive,
             sortOrder: filter.sortOrderType.toMEGASortOrderType(),
             cancelToken: filter.supportCancel ? cancelToken : MEGACancelToken(),

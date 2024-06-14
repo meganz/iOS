@@ -20,10 +20,26 @@ public struct SearchFilterEntity: Sendable, Equatable {
         case excludeFavourites
     }
     
+    public enum SensitiveFilterOption: Sendable, Equatable {
+        ///  No filtering is applied based on sensitivity of nodes and ancestral hierarchy
+        case disabled
+        /// Include non-sensitive nodes in search result, this excludes inherited sensitive nodes as well.
+        case nonSensitiveOnly
+        /// Include sensitive nodes in search result, this includes inherited sensitive nodes
+        case sensitiveOnly
+    }
+    
+    public enum SearchTargetLocation: Sendable, Equatable {
+        /// Node target for retrieving nodes below this directory
+        case parentNode(NodeEntity)
+        /// Folder target for retrieving nodes below the directory
+        case folderTarget(FolderTargetEntity)
+    }
+    
     /// Set option for filtering by name. Contains a name or an expression using wildcard. If nil set, it will return all results ignoring the name.
     public let searchText: String?
-    /// Parent for retrieving nodes below the given  ancestor. If not set, nodes will not be restricted to a particular ancestor.
-    public let parentNode: NodeEntity?
+    /// Location to which the search will be restricted to. If an ancestor was explicitly set via parentNode, search under that particular ancestor.
+    public let searchTargetLocation: SearchTargetLocation
     /// Indicates if results should be found recursively through child nodes or focus only at the top level location of passed parent node or root.
     public let recursive: Bool
     /// Indicates if cancellation token should be stored to be cancelled at a later time, via cancelSearch()
@@ -32,41 +48,40 @@ public struct SearchFilterEntity: Sendable, Equatable {
     public let sortOrderType: SortOrderEntity
     /// Filter option to return nodes that only match the given format.
     public let formatType: NodeFormatEntity
-    /// Filter option to decide if search should exclude sensitive nodes from the final result.
-    public let excludeSensitive: Bool
+    /// Filter option to determine node inclusion based on sensitive criteria.
+    public let sensitiveFilterOption: SensitiveFilterOption
     /// Filter option for filtering out nodes based on if node is marked favourite or not.
     public let favouriteFilterOption: FavouriteFilterOption
     
-    public let nodeTypeEntity: NodeTypeEntity?
-    
-    /// Location to which the search will be restricted to. If an ancestor was explicitly set via parentNode, search under that particular ancestor.
-    public let folderTargetEntity: FolderTargetEntity?
+    /// Filter out results by node type.
+    ///
+    /// Note:
+    /// - .unknown represents all node types
+    public let nodeTypeEntity: NodeTypeEntity
     
     public let modificationTimeFrame: TimeFrame?
     
     public init(
         searchText: String? = nil,
-        parentNode: NodeEntity? = nil,
+        searchTargetLocation: SearchTargetLocation,
         recursive: Bool,
         supportCancel: Bool,
         sortOrderType: SortOrderEntity,
         formatType: NodeFormatEntity,
-        excludeSensitive: Bool,
+        sensitiveFilterOption: SensitiveFilterOption = .disabled,
         favouriteFilterOption: FavouriteFilterOption = .disabled,
-        nodeTypeEntity: NodeTypeEntity? = nil,
-        folderTargetEntity: FolderTargetEntity? = nil,
+        nodeTypeEntity: NodeTypeEntity = .unknown,
         modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
     ) {
         self.searchText = searchText
-        self.parentNode = parentNode
+        self.searchTargetLocation = searchTargetLocation
         self.recursive = recursive
         self.supportCancel = supportCancel
         self.sortOrderType = sortOrderType
         self.formatType = formatType
-        self.excludeSensitive = excludeSensitive
+        self.sensitiveFilterOption = sensitiveFilterOption
         self.favouriteFilterOption = favouriteFilterOption
         self.nodeTypeEntity = nodeTypeEntity
-        self.folderTargetEntity = folderTargetEntity
         self.modificationTimeFrame = modificationTimeFrame
     }
 }
