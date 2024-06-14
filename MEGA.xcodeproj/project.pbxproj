@@ -496,6 +496,7 @@
 		41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */; };
 		5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */; };
 		5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B00B6E7210745BF0076D5BB /* FileManagementTableViewController.m */; };
 		5B0343D925822867005307A6 /* UIApplication+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0343D825822867005307A6 /* UIApplication+Additions.swift */; };
@@ -3252,6 +3253,7 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTypeTests.swift; sourceTree = "<group>"; };
 		5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallTableViewCell.h; sourceTree = "<group>"; };
 		5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallTableViewCell.m; sourceTree = "<group>"; };
 		5B00B6E6210745BF0076D5BB /* FileManagementTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManagementTableViewController.h; sourceTree = "<group>"; };
@@ -8578,6 +8580,7 @@
 				2599D0C22BE202E8003DC13C /* FileExplorer */,
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
 				9961E7242A282FBA004FB05F /* Videos */,
+				534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */,
 				6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */,
 				943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */,
 				5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */,
@@ -16327,6 +16330,7 @@
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,
+				534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */,
 				C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
