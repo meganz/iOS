@@ -7,7 +7,13 @@ class ActionSheetCell: UITableViewCell {
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
         accessoryView = action.accessoryView
-        imageView?.image = action.image?.withRenderingMode(.alwaysTemplate)
+        if action.syncIconAndTextColor {
+            imageView?.image = action.image?.withRenderingMode(.alwaysTemplate)
+            // [MEET-3972] adjust and sync image tint to text color for iPad
+            imageView?.tintColor = textLabel?.textColor
+        } else {
+            imageView?.image = action.image
+        }
         // [MEET-3972] action item to toggle call layout is disabled
         // when user is sharing his/her screen
         contentView.alpha = action.enabled ? 1.0 : 0.5
@@ -17,8 +23,6 @@ class ActionSheetCell: UITableViewCell {
             backgroundColor = TokenColors.Background.surface1
         }
         
-        // [MEET-3972] adjust and sync image tint to text color for iPad    
-        imageView?.tintColor = textLabel?.textColor
         switch action.style {
         case .cancel, .destructive:
             textLabel?.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : .mnz_red(for: traitCollection)
