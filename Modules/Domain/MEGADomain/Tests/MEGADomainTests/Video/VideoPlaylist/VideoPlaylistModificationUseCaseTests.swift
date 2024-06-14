@@ -56,7 +56,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testAddVideoToPlaylist_whenCalledWithSuccessResult_addVideosToPlaylist() async throws {
-        let expectedResultEntity: VideoPlaylistCreateSetElementsResultEntity = [ 1 : .success(anySetEntity(handle: 1)) ]
+        let expectedResultEntity: VideoPlaylistCreateSetElementsResultEntity = [ 1: .success(()) ]
         let (sut, _) = makeSUT(
             addVideosToVideoPlaylistResult: .success(expectedResultEntity)
         )
@@ -118,8 +118,8 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 2), videoPlaylistVideoId: 2)
         ]
         let expectedVideoPlaylistResult: VideoPlaylistCreateSetElementsResultEntity = [
-            1: .success(anySetEntity(handle: videosToRemove.first?.id ?? 1)),
-            2: .success(anySetEntity(handle: videosToRemove.first?.id ?? 2)),
+            1: .success(()),
+            2: .success(())
         ]
         let (sut, userVideoPlaylistsRepository) = makeSUT(deleteVideosResult: .success(expectedVideoPlaylistResult))
         
@@ -136,8 +136,8 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 2), videoPlaylistVideoId: 2)
         ]
         let expectedVideoPlaylistResult: VideoPlaylistCreateSetElementsResultEntity = [
-            1: .success(anySetEntity(handle: videosToRemove.first?.id ?? 1)),
-            2: .success(anySetEntity(handle: videosToRemove.first?.id ?? 2)),
+            1: .success(()),
+            2: .success(())
         ]
         let (sut, _) = makeSUT(deleteVideosResult: .success(expectedVideoPlaylistResult))
         
@@ -206,11 +206,6 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
         )
         let sut = VideoPlaylistModificationUseCase(userVideoPlaylistsRepository: userVideoPlaylistsRepository)
         return (sut, userVideoPlaylistsRepository)
-    }
-    
-    private func anySetEntity(handle: HandleEntity) -> SetEntity {
-        SetEntity(handle: handle, setType: .playlist)
-        
     }
     
     private func anyNode(id: HandleEntity) -> NodeEntity {

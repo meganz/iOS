@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGASwiftUI
 import MEGATest
 @testable import Video
@@ -11,13 +12,13 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     func testInit_whenInit_doesNotLoadVideoPlaylists() {
-        let (_, videoPlaylistUseCase, _) = makeSUT()
+        let (_, videoPlaylistUseCase, _, _) = makeSUT()
         
         XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty)
     }
     
     func testOnViewAppeared_whenCalled_loadVideoPlaylists() async {
-        let (sut, videoPlaylistUseCase, _) = makeSUT()
+        let (sut, videoPlaylistUseCase, _, _) = makeSUT()
         
         await sut.onViewAppeared()
         
@@ -26,7 +27,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     func testOnViewAppeared_whenCalled_setVideoPlaylists() async {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
                 VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
@@ -39,14 +40,14 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     func testInit_inInitialState() {
-        let (sut, _, _) = makeSUT()
+        let (sut, _, _, _) = makeSUT()
         
         XCTAssertFalse(sut.shouldShowAddNewPlaylistAlert)
         XCTAssertEqual(sut.playlistName, "")
     }
     
     func testInit_whenShouldShowAddNewPlaylistAlertChanged_shouldReflectChanges() {
-        let (sut, _, syncModel) = makeSUT()
+        let (sut, _, syncModel, _) = makeSUT()
         
         XCTAssertFalse(sut.shouldShowAddNewPlaylistAlert)
         
@@ -59,7 +60,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     @MainActor
     func testInitListenSearchTextChange_whenSearchTextIsEmpty_loadVideoPlaylists() async {
-        let (sut, videoPlaylistUseCase, syncModel) = makeSUT(
+        let (sut, videoPlaylistUseCase, syncModel, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
                 VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
@@ -87,7 +88,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     @MainActor
     func testInitListenSearchTextChange_whenSearchTextIsNotEmpty_filterPlaylists() async {
-        let (sut, _, syncModel) = makeSUT(
+        let (sut, _, syncModel, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
                 VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
@@ -114,7 +115,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     func testCreateUserVideoPlaylist_whenCalled_createsVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
-        let (sut, videoPlaylistUseCase, _) = makeSUT(
+        let (sut, videoPlaylistUseCase, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
         )
         
@@ -127,7 +128,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     func testCreateUserVideoPlaylist_whenCreatedSuccessfully_setsNewlyCreatedPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
         )
         
@@ -140,7 +141,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     func testCreateUserVideoPlaylist_whenCreatedSuccessfully_showsVideoPickerView() async {
         let videoPlaylistName =  "a video playlist name"
         let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
         )
         XCTAssertFalse(sut.shouldShowVideoPlaylistPicker)
@@ -153,7 +154,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     func testCreateUserVideoPlaylist_whenFailedToCreate_doesNotshowsVideoPickerView() async {
         let videoPlaylistName =  "a video playlist name"
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .failure(GenericErrorEntity()))
         )
         
@@ -162,24 +163,12 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         XCTAssertFalse(sut.shouldShowVideoPlaylistPicker)
     }
-    
-    // MARK: - didPickVideosToBeIncludedInNewlyCreatedPlaylist
-    
-    @MainActor
-    func testDidPickVideosToBeIncludedInNewlyCreatedPlaylist_whenCalled_resetsPickerViewFlag() {
-        let (sut, _, _) = makeSUT()
-        sut.shouldShowVideoPlaylistPicker = true
-        
-        sut.didPickVideosToBeIncludedInNewlyCreatedPlaylist(videos: [])
-        
-        XCTAssertFalse(sut.shouldShowVideoPlaylistPicker)
-    }
 
     // MARK: Init.monitorSortOrderChanged
 
     @MainActor
     func testInit_whenValueChanged_loadsVideoPlaylists() async {
-        let (sut, videoPlaylistUseCase, syncModel) = makeSUT(
+        let (sut, videoPlaylistUseCase, syncModel, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
                 VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
@@ -213,7 +202,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             aMonthAgoPlaylist,
             aWeekAgoPlaylist
         ]
-        let (sut, _, syncModel) = makeSUT(
+        let (sut, _, syncModel, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(userVideoPlaylistsResult: unsortedVideoPlaylists)
         )
         
@@ -244,11 +233,81 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         sut.monitorSortOrderChangedTask?.cancel()
     }
     
+    @MainActor
+    func testAddVideosToNewlyCreatedVideoPlaylist_emptyVideos_shouldNotAddVideosToPlaylist() async {
+        let (sut, _, _, videoPlaylistModificationUseCase) = makeSUT()
+        
+        await sut.addVideosToNewlyCreatedVideoPlaylist(videos: [])
+        
+        XCTAssertTrue(videoPlaylistModificationUseCase.messages.isEmpty)
+    }
+    
+    @MainActor
+    func testAddVideosToNewlyCreatedVideoPlaylist_whenNewlyPlaylistNotCreated_shouldNotAddVideoToPlaylist() async throws {
+        let videosToAdd: [NodeEntity] = [
+            NodeEntity(
+                nodeType: .file,
+                name: "name-1",
+                handle: 1,
+                publicHandle: 1,
+                mediaType: .video
+            )
+        ]
+        let (sut, _, _, videoPlaylistModificationUseCase) = makeSUT(
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(addToVideoPlaylistResult: .failure(GenericErrorEntity()))
+        )
+        
+        await sut.addVideosToNewlyCreatedVideoPlaylist(videos: videosToAdd)
+        
+        XCTAssertTrue(videoPlaylistModificationUseCase.messages.isEmpty)
+    }
+    
+    @MainActor
+    func testAddVideosToNewlyCreatedVideoPlaylist_whenNewlyPlaylistIsCreated_shouldAddVideoToPlaylist() async throws {
+        let videosToAdd: [NodeEntity] = [
+            NodeEntity(
+                nodeType: .file,
+                name: "name-1",
+                handle: 1,
+                publicHandle: 1,
+                mediaType: .video
+            )
+        ]
+        let videoPlaylistName =  "a video playlist name"
+        let createdVideoPlaylist = VideoPlaylistEntity(
+            id: 1,
+            name: videoPlaylistName,
+            count: 0,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let (sut, _, _, videoPlaylistModificationUseCase) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist)),
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(
+                addToVideoPlaylistResult: .success(VideoPlaylistElementsResultEntity(
+                    success: UInt(videosToAdd.count),
+                    failure: 0
+                ))
+            )
+        )
+        sut.createUserVideoPlaylist(with: videoPlaylistName)
+        await sut.createVideoPlaylistTask?.value
+        
+        await sut.addVideosToNewlyCreatedVideoPlaylist(videos: videosToAdd)
+        
+        XCTAssertEqual(videoPlaylistModificationUseCase.messages, [ .addVideoToPlaylist ])
+        XCTAssertTrue(sut.shouldOpenVideoPlaylistContent)
+        XCTAssertEqual(sut.newlyCreatedVideoPlaylist, createdVideoPlaylist)
+        let message = Strings.Localizable.Videos.Tab.Playlist.Snackbar.videoCount(videosToAdd.count).replacingOccurrences(of: "[A]", with: videoPlaylistName)
+        XCTAssertEqual(sut.newlyAddedVideosToPlaylistSnackBarMessage, message)
+    }
+    
     // MARK: - didSelectMoreOptionForItem
     
     func testDidSelectMoreOptionForItem_selectedVideoPlaylist_setsSelectedsVideoPlaylistEntity() {
         let selectedVideoPlaylist = VideoPlaylistEntity(id: 1, name: "video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
-        let (sut, _, _) = makeSUT()
+        let (sut, _, _, _) = makeSUT()
         XCTAssertNil(sut.selectedVideoPlaylistEntity)
         XCTAssertFalse(sut.isSheetPresented)
         
@@ -258,30 +317,77 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isSheetPresented)
     }
     
+    // MARK: - onViewDissapear
+    
+    func testOnViewDissapear_whenFinishedAddingVideosToVideoPlaylistShowsVideoPlaylistContent_setsNewlyCreatedVideoPlaylistToNil() async {
+        let videosToAdd: [NodeEntity] = [
+            NodeEntity(
+                nodeType: .file,
+                name: "name-1",
+                handle: 1,
+                publicHandle: 1,
+                mediaType: .video
+            )
+        ]
+        let videoPlaylistName =  "a video playlist name"
+        let createdVideoPlaylist = VideoPlaylistEntity(
+            id: 1,
+            name: videoPlaylistName,
+            count: 0,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let (sut, _, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist)),
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(
+                addToVideoPlaylistResult: .success(VideoPlaylistElementsResultEntity(
+                    success: UInt(videosToAdd.count),
+                    failure: 0
+                ))
+            )
+        )
+        sut.createUserVideoPlaylist(with: videoPlaylistName)
+        await sut.createVideoPlaylistTask?.value
+        
+        await sut.addVideosToNewlyCreatedVideoPlaylist(videos: videosToAdd)
+        
+        XCTAssertTrue(sut.shouldOpenVideoPlaylistContent)
+        XCTAssertEqual(sut.newlyCreatedVideoPlaylist, createdVideoPlaylist)
+        
+        sut.onViewDisappear()
+        
+        XCTAssertNil(sut.newlyCreatedVideoPlaylist)
+        XCTAssertNil(sut.createVideoPlaylistTask)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
         videoPlaylistUseCase: MockVideoPlaylistUseCase = MockVideoPlaylistUseCase(),
         syncModel: VideoRevampSyncModel = VideoRevampSyncModel(),
+        videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase = MockVideoPlaylistModificationUseCase(addToVideoPlaylistResult: .failure(GenericErrorEntity())),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
         sut: VideoPlaylistsViewModel,
         videoPlaylistUseCase: MockVideoPlaylistUseCase,
-        syncModel: VideoRevampSyncModel
+        syncModel: VideoRevampSyncModel,
+        videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase
     ) {
         let alertViewModel = TextFieldAlertViewModel(title: "title", affirmativeButtonTitle: "Affirmative", destructiveButtonTitle: "Destructive")
         let sut = VideoPlaylistsViewModel(
             videoPlaylistsUseCase: videoPlaylistUseCase,
             thumbnailUseCase: MockThumbnailUseCase(), 
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(),
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             syncModel: syncModel,
             alertViewModel: alertViewModel,
             monitorSortOrderChangedDispatchQueue: DispatchQueue.main
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         trackForMemoryLeaks(on: videoPlaylistUseCase, file: file, line: line)
-        return (sut, videoPlaylistUseCase, syncModel)
+        return (sut, videoPlaylistUseCase, syncModel, videoPlaylistModificationUseCase)
     }
     
     private func videoPlaylist(id: HandleEntity, creationTime: Date, modificationTime: Date) -> VideoPlaylistEntity {

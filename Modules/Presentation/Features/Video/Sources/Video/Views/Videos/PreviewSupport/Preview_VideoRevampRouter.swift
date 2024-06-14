@@ -6,7 +6,7 @@ struct Preview_VideoRevampRouter: VideoRevampRouting {
     
     func openMoreOptions(for video: NodeEntity, sender: Any) { }
     
-    func openVideoPlaylistContent(for previewEntity: VideoPlaylistEntity) { }
+    func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity, presentationConfig: VideoPlaylistContentSnackBarPresentationConfig) { }
     
     func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void) { }
     

@@ -2,6 +2,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGATest
+import Video
 import XCTest
 
 final class VideoPlaylistContentViewControllerTests: XCTestCase {
@@ -44,8 +45,9 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
             videoPlaylistEntity: anyVideoPlaylist(),
             videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase(),
             thumbnailUseCase: MockThumbnailUseCase(),
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-            router: MockVideoRevampRouter()
+            router: MockVideoRevampRouter(),
+            presentationConfig: VideoPlaylistContentSnackBarPresentationConfig(shouldShowSnackBar: false, text: nil),
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, sortOrderPreferenceUseCase)

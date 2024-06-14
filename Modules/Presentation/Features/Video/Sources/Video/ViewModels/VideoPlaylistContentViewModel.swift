@@ -19,13 +19,16 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     public private(set) var sharedUIState: VideoPlaylistContentSharedUIState
     
+    private(set) var presentationConfig: VideoPlaylistContentSnackBarPresentationConfig?
+    
     init(
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol,
-        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
-        sharedUIState: VideoPlaylistContentSharedUIState
+        sharedUIState: VideoPlaylistContentSharedUIState,
+        presentationConfig: VideoPlaylistContentSnackBarPresentationConfig? = nil,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
@@ -33,11 +36,18 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.videoPlaylistThumbnailLoader = videoPlaylistThumbnailLoader
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.sharedUIState = sharedUIState
+        self.presentationConfig = presentationConfig
     }
     
     @MainActor
     func onViewAppeared() async {
+        configureSnackBar()
         await monitorUserVideoPlaylist()
+    }
+    
+    private func configureSnackBar() {
+        sharedUIState.shouldShowSnackBar = presentationConfig?.shouldShowSnackBar ?? false
+        sharedUIState.snackBarText = presentationConfig?.text ?? ""
     }
     
     @MainActor

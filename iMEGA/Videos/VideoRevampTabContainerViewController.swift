@@ -41,6 +41,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
+    private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let videoConfig: VideoConfig
     let router: any VideoRevampRouting
     
@@ -52,6 +53,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) {
@@ -60,6 +62,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistUseCase = videoPlaylistUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
+        self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.videoConfig = videoConfig
         self.router = router
         self.videoToolbarViewModel = VideoToolbarViewModel()
@@ -99,7 +102,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
             syncModel: viewModel.syncModel,
             videoSelection: viewModel.videoSelection,
             videoPlaylistUseCase: videoPlaylistUseCase,
-            videoPlaylistContentUseCase: videoPlaylistContentUseCase,
+            videoPlaylistContentUseCase: videoPlaylistContentUseCase, 
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             videoConfig: videoConfig,
             router: router
         )

@@ -149,8 +149,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-            sharedUIState: sharedUIState
+            sharedUIState: sharedUIState, 
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (

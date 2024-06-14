@@ -8,6 +8,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
+    private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let syncModel: VideoRevampSyncModel
     private let monitorSortOrderChangedDispatchQueue: DispatchQueue
     
@@ -15,6 +16,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
     @Published var shouldShowAddNewPlaylistAlert = false
     @Published var playlistName = ""
     @Published var shouldShowVideoPlaylistPicker = false
+    @Published var shouldOpenVideoPlaylistContent = false
+    var newlyAddedVideosToPlaylistSnackBarMessage = ""
     
     var selectedVideoPlaylistEntity: VideoPlaylistEntity?
     @Published var isSheetPresented = false
@@ -36,6 +39,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
         alertViewModel: TextFieldAlertViewModel,
         monitorSortOrderChangedDispatchQueue: DispatchQueue = DispatchQueue.main
@@ -43,6 +47,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
+        self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.syncModel = syncModel
         self.alertViewModel = alertViewModel
         self.monitorSortOrderChangedDispatchQueue = monitorSortOrderChangedDispatchQueue
@@ -160,6 +165,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     func onViewDisappear() {
         cancelCreateVideoPlaylistTask()
+        newlyCreatedVideoPlaylist = nil
     }
     
     private func cancelCreateVideoPlaylistTask() {
@@ -168,13 +174,28 @@ final class VideoPlaylistsViewModel: ObservableObject {
     }
     
     @MainActor
-    func didPickVideosToBeIncludedInNewlyCreatedPlaylist(videos: [NodeEntity]) {
-        shouldShowVideoPlaylistPicker = false
-        addVideosToNewlyCreatedVideoPlaylist(videos: videos)
+    func addVideosToNewlyCreatedVideoPlaylist(videos: [NodeEntity]) async {
+        do {
+            guard let newlyCreatedVideoPlaylist else {
+                return
+            }
+            let resultEntity = try await videoPlaylistModificationUseCase.addVideoToPlaylist(
+                by: newlyCreatedVideoPlaylist.id,
+                nodes: videos
+            )
+            let successfullVideoCount = Int(resultEntity.success)
+            if resultEntity.failure == 0 && successfullVideoCount != 0 {
+                newlyAddedVideosToPlaylistSnackBarMessage = addVideosToVideoPlaylistSucessfulMessage(videosCount: successfullVideoCount, videoPlaylistName: newlyCreatedVideoPlaylist.name)
+                shouldOpenVideoPlaylistContent = true
+            }
+        } catch {
+            // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
+        }
     }
     
-    private func addVideosToNewlyCreatedVideoPlaylist(videos: [NodeEntity]) {
-        // will be do on differentt ticket. Out of this ticket scope.
+    private func addVideosToVideoPlaylistSucessfulMessage(videosCount: Int, videoPlaylistName: String) -> String {
+        let message = Strings.Localizable.Videos.Tab.Playlist.Snackbar.videoCount(videosCount)
+        return message.replacingOccurrences(of: "[A]", with: videoPlaylistName)
     }
     
     func didSelectMoreOptionForItem(_ selectedVideoPlaylistEntity: VideoPlaylistEntity) {

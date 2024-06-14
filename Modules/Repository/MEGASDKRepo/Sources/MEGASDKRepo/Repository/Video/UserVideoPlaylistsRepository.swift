@@ -44,21 +44,21 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
             throw VideoPlaylistErrorEntity.invalidOperation
         }
         
-        return try await withThrowingTaskGroup(of: (HandleEntity, Result<SetEntity, Error>).self, body: { group in
+        return try await withThrowingTaskGroup(of: (HandleEntity, Result<Void, Error>).self, body: { group in
             for node in nodes {
                 group.addTask {
-                    try await self.createSetElement(videoPlaylistId: id, nodeId: node.id)
+                    await self.createSetElement(videoPlaylistId: id, nodeId: node.id)
                 }
             }
-            
-            return try await group.reduce(into: [HandleEntity: Result<SetEntity, Error>](), { result, next in
+
+            return try await group.reduce(into: [HandleEntity: Result<Void, Error>](), { result, next in
                 result[next.0] = next.1
             })
         })
     }
     
-    private func createSetElement(videoPlaylistId: HandleEntity, nodeId: HandleEntity) async throws -> (HandleEntity, Result<SetEntity, Error>) {
-        try await withAsyncThrowingValue { continuation in
+    private func createSetElement(videoPlaylistId: HandleEntity, nodeId: HandleEntity) async -> (HandleEntity, Result<Void, Error>) {
+        await withAsyncValue { continuation in
             sdk.createSetElement(videoPlaylistId, nodeId: nodeId, name: "", delegate: RequestDelegate { request, error in
                 let result = AddVideosToVideoPlaylistResultMapper.map(request: request, error: error)
                 continuation(.success((nodeId, result)))
@@ -73,20 +73,20 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
             throw VideoPlaylistErrorEntity.invalidOperation
         }
         
-        return try await withThrowingTaskGroup(of: (HandleEntity, Result<SetEntity, Error>).self, body: { group in
+        return try await withThrowingTaskGroup(of: (HandleEntity, Result<Void, Error>).self, body: { group in
             for eid in elementIds {
                 group.addTask {
                     try await self.removeSetElement(videoPlaylistId: videoPlaylistId, elementId: eid)
                 }
             }
             
-            return try await group.reduce(into: [HandleEntity: Result<SetEntity, Error>](), { result, next in
+            return try await group.reduce(into: [HandleEntity: Result<Void, Error>](), { result, next in
                 result[next.0] = next.1
             })
         })
     }
     
-    private func removeSetElement(videoPlaylistId: HandleEntity, elementId: HandleEntity) async throws -> (HandleEntity, Result<SetEntity, Error>) {
+    private func removeSetElement(videoPlaylistId: HandleEntity, elementId: HandleEntity) async throws -> (HandleEntity, Result<Void, Error>) {
         try await withAsyncThrowingValue { continuation in
             sdk.removeSetElement(videoPlaylistId, eid: elementId, delegate: RequestDelegate { request, error in
                 let result = DeleteVideoPlaylistElementsMapper.map(request: request, error: error)
