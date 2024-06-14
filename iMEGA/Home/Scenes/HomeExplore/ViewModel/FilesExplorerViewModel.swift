@@ -182,12 +182,13 @@ final class FilesExplorerViewModel: ViewModelType {
     private func startSearch(text: String?, formatType: NodeFormatEntity, favouritesOnly: Bool = false) async throws -> [NodeEntity] {
         try await useCase.search(
             filter: .init(
-                searchText: text,
+                searchText: text, 
+                searchTargetLocation: .folderTarget(.rootNode),
                 recursive: true,
                 supportCancel: true,
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                 formatType: explorerType.toNodeFormatEntity(),
-                excludeSensitive: await shouldExcludeHiddenSensitive(),
+                sensitiveFilterOption: await shouldExcludeHiddenSensitive() ? .nonSensitiveOnly : .disabled,
                 favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled),
             cancelPreviousSearchIfNeeded: true)
     }

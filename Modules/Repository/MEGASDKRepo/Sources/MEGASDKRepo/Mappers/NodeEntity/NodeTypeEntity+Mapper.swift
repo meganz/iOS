@@ -39,8 +39,4 @@ extension NodeTypeEntity {
             .rubbish
         }
     }
-    
-    func toInt32() -> Int32 {
-        Int32(toMEGANodeType().rawValue)
-    }
 }

@@ -26,13 +26,12 @@ public struct SearchNodeUseCase<T: FilesSearchRepositoryProtocol>: SearchNodeUse
             .publicLink
         }
         let searchFilterEntity = SearchFilterEntity(
-            searchText: text,
+            searchText: text, 
+            searchTargetLocation: .folderTarget(folderTargetEntity),
             recursive: true,
             supportCancel: true,
             sortOrderType: sortType,
-            formatType: .unknown,
-            excludeSensitive: false,
-            folderTargetEntity: folderTargetEntity
+            formatType: .unknown
         )
         return try await filesSearchRepository.search(filter: searchFilterEntity)
     }

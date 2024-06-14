@@ -71,19 +71,14 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
         
         return try await withTaskCancellationHandler {
             try await withAsyncThrowingValue { completion in
-                guard let rootNode = sdk.rootNode?.toNodeEntity() else {
-                    completion(.failure(NodeErrorEntity.nodeNotFound))
-                    return
-                }
-                
-                let filter = SearchFilterEntity(parentNode: rootNode,
+                let filter = SearchFilterEntity(searchTargetLocation: .folderTarget(.rootNode),
                                                 recursive: true,
                                                 supportCancel: true,
                                                 sortOrderType: .defaultDesc,
                                                 formatType: formatType,
-                                                excludeSensitive: false)
+                                                sensitiveFilterOption: .disabled)
                 
-                let nodeList = sdk.search(with: filter.toMEGASearchFilter(defaultParentHandle: rootNode.handle),
+                let nodeList = sdk.search(with: filter.toMEGASearchFilter(),
                                           orderType: .defaultDesc,
                                           cancelToken: cancelToken)
                 

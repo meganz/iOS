@@ -10,9 +10,9 @@ final class SearchNodeUseCaseTests: XCTestCase {
     override func setUp() {
         super.setUp()
         let nodesForLocation: [FolderTargetEntity: [NodeEntity]] = [
-            .inShare: [NodeEntity(name: "Node1", handle: 1), NodeEntity(name: "Node2", handle: 2)],
-            .outShare: [NodeEntity(name: "Node3", handle: 3), NodeEntity(name: "Node4", handle: 4)],
-            .publicLink: [NodeEntity(name: "Node5", handle: 5), NodeEntity(name: "Node6", handle: 6)]
+            .inShare: [NodeEntity(name: "Node1", handle: 1, isFile: true), NodeEntity(name: "Node2", handle: 2, isFile: true)],
+            .outShare: [NodeEntity(name: "Node3", handle: 3, isFile: true), NodeEntity(name: "Node4", handle: 4, isFile: true)],
+            .publicLink: [NodeEntity(name: "Node5", handle: 5, isFile: true), NodeEntity(name: "Node6", handle: 6, isFile: true)]
         ]
         filesSearchRepo = MockFilesSearchRepository(nodesForLocation: nodesForLocation)
         searchNodeUC = SearchNodeUseCase(filesSearchRepository: filesSearchRepo)

@@ -46,14 +46,16 @@ private extension FilesExplorerViewModelTests {
         case .favourites: .unknown
         }
         
+        let sensitiveFilterOption = excludeSensitive ? SearchFilterEntity.SensitiveFilterOption.nonSensitiveOnly : .disabled
+        
         return switch explorerType {
         case .audio, .video, .allDocs:
             [
-                .init(searchText: searchText, recursive: true, supportCancel: true, sortOrderType: .defaultDesc, formatType: nodeFormatType, excludeSensitive: excludeSensitive, favouriteFilterOption: .disabled)
+                .init(searchText: searchText, searchTargetLocation: .folderTarget(.rootNode), recursive: true, supportCancel: true, sortOrderType: .defaultDesc, formatType: nodeFormatType, sensitiveFilterOption: sensitiveFilterOption, favouriteFilterOption: .disabled)
             ]
         case .favourites:
             [
-                .init(searchText: searchText, recursive: true, supportCancel: true, sortOrderType: .defaultDesc, formatType: nodeFormatType, excludeSensitive: excludeSensitive, favouriteFilterOption: .onlyFavourites)
+                .init(searchText: searchText, searchTargetLocation: .folderTarget(.rootNode), recursive: true, supportCancel: true, sortOrderType: .defaultDesc, formatType: nodeFormatType, sensitiveFilterOption: sensitiveFilterOption, favouriteFilterOption: .onlyFavourites)
             ]
         }
     }

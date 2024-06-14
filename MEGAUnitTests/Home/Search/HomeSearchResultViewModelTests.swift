@@ -154,11 +154,12 @@ final class HomeSearchResultViewModelTests: XCTestCase {
     private func makeSearchFilter(inputText: String, excludeSensitive: Bool) -> SearchFilterEntity {
         SearchFilterEntity(
             searchText: inputText,
+            searchTargetLocation: .folderTarget(.rootNode),
             recursive: true,
             supportCancel: true,
             sortOrderType: .creationAsc,
             formatType: .unknown,
-            excludeSensitive: excludeSensitive,
+            sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled,
             nodeTypeEntity: .unknown)
     }
 }

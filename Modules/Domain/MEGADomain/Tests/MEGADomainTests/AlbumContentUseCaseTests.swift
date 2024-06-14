@@ -92,7 +92,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
                                                     albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2]])
         
         let sut = makeSUT(
-            fileSearchRepo: MockFilesSearchRepository(photoNodes: [node1, node2]),
+            fileSearchRepo: MockFilesSearchRepository(nodesForHandle: [1: [node1, node2]]),
             userAlbumRepo: userAlbumRepo
         )
         
@@ -139,7 +139,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
                                                                  showHiddenNodes: testCase.showHiddenNodes))
                     
                     let sut = makeSUT(
-                        fileSearchRepo: MockFilesSearchRepository(photoNodes: [hiddenNode, visibleNode]),
+                        fileSearchRepo: MockFilesSearchRepository(nodesForHandle: [1: [hiddenNode, visibleNode]]),
                         userAlbumRepo: userAlbumRepo,
                         contentConsumptionUserAttributeUseCase: ccUserAttributes,
                         hiddenNodesFeatureFlagEnabled: { true }
@@ -224,7 +224,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
                 let userAlbumRepo = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2]])
                 
                 let sut = makeSUT(
-                    fileSearchRepo: MockFilesSearchRepository(photoNodes: [imageNode, videoNode]),
+                    fileSearchRepo: MockFilesSearchRepository(nodesForHandle: [1: [imageNode, videoNode]]),
                     userAlbumRepo: userAlbumRepo,
                     hiddenNodesFeatureFlagEnabled: { isHiddenNodesFeatureOn }
                 )
@@ -259,7 +259,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let userAlbumRepo = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2]])
         
         let sut = makeSUT(
-            fileSearchRepo: MockFilesSearchRepository(photoNodes: [hiddenNode, visibleNode]),
+            fileSearchRepo: MockFilesSearchRepository(nodesForHandle: [1: [hiddenNode, visibleNode]]),
             userAlbumRepo: userAlbumRepo,
             hiddenNodesFeatureFlagEnabled: { true }
         )
@@ -325,7 +325,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
                                                order: 1, nodeId: expectedCoverPhoto.handle)
         
         let sut = makeSUT(
-            fileSearchRepo: MockFilesSearchRepository(photoNodes: [expectedCoverPhoto]),
+            fileSearchRepo: MockFilesSearchRepository(nodesForHandle: [1: [expectedCoverPhoto]]),
             userAlbumRepo: MockUserAlbumRepository(albumElement: coverSetElement)
         )
         

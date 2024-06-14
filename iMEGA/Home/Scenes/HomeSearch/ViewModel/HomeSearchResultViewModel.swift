@@ -125,12 +125,13 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
             try await Task.sleep(nanoseconds: debounceTimeInNanoseconds)
             
             let filter = SearchFilterEntity(
-                searchText: text,
+                searchText: text, 
+                searchTargetLocation: .folderTarget(.rootNode),
                 recursive: true,
                 supportCancel: true,
                 sortOrderType: .creationAsc,
                 formatType: .unknown,
-                excludeSensitive: await shouldExcludeSensitive(),
+                sensitiveFilterOption: await shouldExcludeSensitive() ? .nonSensitiveOnly : .disabled,
                 nodeTypeEntity: .unknown)
             
             let results: [NodeEntity] = try await fileSearchUseCase.search(

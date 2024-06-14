@@ -22,7 +22,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
         let photosRepo = MockPhotosLibraryRepository.newRepo
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
         let expectedResult = videoNodes + imageNodes
         
@@ -40,7 +40,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
         let photosRepo = MockPhotosLibraryRepository.newRepo
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
         let expectedResult = (videoNodes + imageNodes)
             .filter { !$0.isMarkedSensitive }
@@ -59,7 +59,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
         let photosRepo = MockPhotosLibraryRepository.newRepo
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: true))
         let expectedResult = (videoNodes + imageNodes)
             .filter { !$0.isMarkedSensitive }
@@ -144,7 +144,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
 
         let expectedResult = (videoNodes + imageNodes)
@@ -161,7 +161,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
 
         let expectedResult = (videoNodes + imageNodes)
@@ -178,7 +178,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
 
         let expectedResult = (videoNodes + imageNodes)
@@ -196,7 +196,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         )
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
         let expectedResult = (videoNodes + imageNodes)
             .filter { $0.parentHandle == 1 }

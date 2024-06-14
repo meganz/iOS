@@ -194,14 +194,20 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             !shouldShowRoot(for: searchQueryEntity)
         }
         
+        let searchTargetLocation: SearchFilterEntity.SearchTargetLocation = if let parentNode {
+            .parentNode(parentNode)
+        } else {
+            .folderTarget(.rootNode)
+        }
+        
         return SearchFilterEntity(
             searchText: searchQuery.query,
-            parentNode: parentNode,
+            searchTargetLocation: searchTargetLocation,
             recursive: recursive,
             supportCancel: true,
             sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
             formatType: searchQuery.selectedNodeFormat?.toNodeFormatEntity() ?? .unknown,
-            excludeSensitive: await shouldExcludeSensitive(),
+            sensitiveFilterOption: await shouldExcludeSensitive() ? .nonSensitiveOnly : .disabled,
             nodeTypeEntity: searchQuery.selectedNodeType?.toNodeTypeEntity() ?? .unknown,
             modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame()
         )

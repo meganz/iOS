@@ -10,10 +10,11 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         let photoNodes = [NodeEntity(name: "0.jpg", handle: 1, isFile: true)]
         let videoNodes = [NodeEntity(name: "1.mp4", handle: 2, isFile: true)]
         let expectedNodes = photoNodes + videoNodes
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: photoNodes, videoNodes: videoNodes)
+        let parentNode = NodeEntity(name: "parent", handle: 0)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForHandle: [parentNode.handle: photoNodes + videoNodes])
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
         do {
-            let nodes = try await useCase.nodes(forParent: NodeEntity(name: "parent", handle: 0), recursive: false)
+            let nodes = try await useCase.nodes(forParent: parentNode, recursive: false)
             XCTAssertEqual(Set(nodes), Set(expectedNodes))
         } catch {
             XCTFail("Unexpected failure")
@@ -33,11 +34,12 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         let photoNodes = [photoNode1, nodePhotoParent, photoNode2]
         let videoNodes = [videoNode1, nodeVideoParent, videoNode2]
         let expectedNodes = [photoNode1, photoNode2, videoNode1, videoNode2]
-        let fileSearchRepo = MockFilesSearchRepository(photoNodes: photoNodes, videoNodes: videoNodes)
+        let parentNode = NodeEntity(name: "parent", handle: 0)
+        let fileSearchRepo = MockFilesSearchRepository(nodesForHandle: [parentNode.handle: photoNodes + videoNodes])
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
         
         do {
-            let nodes = try await useCase.nodes(forParent: NodeEntity(name: "parent", handle: 0), recursive: true)
+            let nodes = try await useCase.nodes(forParent: parentNode, recursive: true)
             XCTAssertEqual(Set(nodes), Set(expectedNodes))
         } catch {
             XCTFail("Unexpected failure")

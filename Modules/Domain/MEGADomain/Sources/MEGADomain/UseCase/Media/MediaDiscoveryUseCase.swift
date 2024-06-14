@@ -38,16 +38,15 @@ public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
                 guard let self else { throw  FileSearchResultErrorEntity.noDataAvailable }
                 let items: [NodeEntity] = try await filesSearchRepository.search(filter: SearchFilterEntity(
                     searchText: searchAllPhotosString,
-                    parentNode: parent,
+                    searchTargetLocation: .parentNode(parent),
                     recursive: recursive,
                     supportCancel: false,
                     sortOrderType: .defaultDesc,
                     formatType: format,
-                    excludeSensitive: false)) // For now we want to include sensitive nodes, CC will address this in another ticket
+                    sensitiveFilterOption: .disabled)) // For now we want to include sensitive nodes, CC will address this in another ticket
                 return items
             }
             .reduce([NodeEntity]()) { $0 + $1 }
-
     }
     
     public func shouldReload(parentNode: NodeEntity, loadedNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {

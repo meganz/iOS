@@ -220,7 +220,7 @@ class HomeSearchProviderTests: XCTestCase {
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
-        XCTAssertFalse(filter.excludeSensitive)
+        XCTAssertEqual(filter.sensitiveFilterOption, .disabled)
     }
     
     func testSearch_whenHiddenNodesFeatureEnabledAndShowHiddenNodesSettingIsOff_shouldExcludeHiddenNodes() async throws {
@@ -233,7 +233,7 @@ class HomeSearchProviderTests: XCTestCase {
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
-        XCTAssertTrue(filter.excludeSensitive)
+        XCTAssertEqual(filter.sensitiveFilterOption, .nonSensitiveOnly)
     }
     
     func testSearch_whenHiddenNodesFeatureNotEnabledAndShowHiddenNodesSettingIsOn_shouldNotExcludeHiddenNodes() async throws {
@@ -246,7 +246,7 @@ class HomeSearchProviderTests: XCTestCase {
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
-        XCTAssertFalse(filter.excludeSensitive)
+        XCTAssertEqual(filter.sensitiveFilterOption, .disabled)
     }
     
     func testSearch_nodeType_shouldMatchChipIfSelected() async throws {
