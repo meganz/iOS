@@ -9,6 +9,7 @@ class BaseAction: NSObject {
     var image: UIImage?
     var style: UIAlertAction.Style = .default
     var enabled: Bool = true
+    var syncIconAndTextColor: Bool = false
     
     override var hash: Int {
         var hasher = Hasher()
@@ -18,6 +19,7 @@ class BaseAction: NSObject {
         hasher.combine(image?.hash)
         hasher.combine(style.hashValue)
         hasher.combine(enabled)
+        hasher.combine(syncIconAndTextColor)
         return hasher.finalize()
     }
     
@@ -29,6 +31,7 @@ class BaseAction: NSObject {
             && image == otherObject.image
             && style == otherObject.style
             && enabled == otherObject.enabled
+            && syncIconAndTextColor == otherObject.syncIconAndTextColor
     }
 }
 
@@ -40,6 +43,7 @@ class ActionSheetAction: BaseAction {
         detail: String?,
         image: UIImage?,
         enabled: Bool = true,
+        syncIconAndTextColor: Bool = false,
         style: UIAlertAction.Style,
         actionHandler: @escaping () -> Void
     ) {
@@ -49,6 +53,7 @@ class ActionSheetAction: BaseAction {
         self.detail = detail
         self.image = image
         self.enabled = enabled
+        self.syncIconAndTextColor = syncIconAndTextColor
         self.style = style
     }
     
@@ -90,7 +95,14 @@ class ActionSheetAction: BaseAction {
 class ActionSheetSwitchAction: ActionSheetAction {
     var switchView: UISwitch?
     
-    @objc init(title: String?, detail: String?, switchView: UISwitch, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
+    @objc init(
+        title: String?,
+        detail: String?,
+        switchView: UISwitch,
+        image: UIImage?,
+        style: UIAlertAction.Style,
+        actionHandler: @escaping () -> Void
+    ) {
         super.init(
             title: title,
             detail: detail,
