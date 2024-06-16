@@ -52,7 +52,9 @@ final class RegionListViewController: UIViewController, ViewType {
         
         viewModel.dispatch(.onViewReady)
         
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
+                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               traitCollection: traitCollection)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +70,9 @@ final class RegionListViewController: UIViewController, ViewType {
             if let nav = navigationController {
                 AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
             }
-            AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+            AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
+                                                   backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                                   traitCollection: traitCollection)
             
             updateAppearance()
         }

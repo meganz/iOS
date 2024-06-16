@@ -49,7 +49,9 @@ class GiphySelectionViewController: UIViewController {
                         giphyIconItem,
                         UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)]
         
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: self.traitCollection)
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
+                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               traitCollection: self.traitCollection)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
@@ -66,6 +68,8 @@ extension GiphySelectionViewController: TraitEnvironmentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: currentTrait)
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
+                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               traitCollection: currentTrait)
     }
 }

@@ -151,7 +151,9 @@
         self.tableView.sectionHeaderTopPadding = 0.0f;
     }
     
-    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
+       backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+                            traitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -213,7 +215,9 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar
+           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+                                traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
         [self updateAppearance];

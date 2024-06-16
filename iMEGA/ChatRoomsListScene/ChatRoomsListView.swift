@@ -81,6 +81,7 @@ struct ChatRoomsListView: View {
             cancelTitle: Strings.Localizable.cancel,
             isDesignTokenEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken))
         .listRowSeparator(.hidden)
+        .listRowBackground(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
     }
     
     @ViewBuilder

@@ -250,7 +250,9 @@ final class VideoRevampTabContainerViewController: UIViewController {
         if navigationItem.searchController == nil {
             navigationItem.searchController = searchController
         }
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
+                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               traitCollection: traitCollection)
     }
     
     private func hideSearchBar() {
@@ -426,7 +428,9 @@ extension VideoRevampTabContainerViewController: TraitEnvironmentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
+                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               traitCollection: traitCollection)
     }
 }
 
