@@ -103,8 +103,6 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"NodeTableViewCell" bundle:nil] forCellReuseIdentifier:@"nodeCell"];
     
     [self configureButtons];
-    
-    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -166,7 +164,9 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
+           backgroundColorWhenDesignTokenEnable:[UIColor searchBarPageBackgroundColor]
+                                traitCollection:self.traitCollection];
         
         [self updateAppearance];
     }
@@ -183,6 +183,11 @@
 - (void)configSearchController {
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
+    
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
+       backgroundColorWhenDesignTokenEnable:[UIColor searchBarPageBackgroundColor]
+                            traitCollection:self.traitCollection];
+    
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     dispatch_async(dispatch_get_main_queue(), ^{

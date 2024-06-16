@@ -118,7 +118,9 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
                 AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: self.traitCollection)
             }
             if let searchBar = self.wrapper?.searchController.searchBar {
-                AppearanceManager.forceSearchBarUpdate(searchBar, traitCollection: self.traitCollection)
+                AppearanceManager.forceSearchBarUpdate(searchBar, 
+                                                       backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                                       traitCollection: self.traitCollection)
             }
         }
     }

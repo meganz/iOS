@@ -104,10 +104,12 @@ class AppearanceManager: NSObject {
         navigationBar.scrollEdgeAppearance?.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarTitle(for: traitCollection)]
     }
     
-    @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar, traitCollection: UITraitCollection) {
+    @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar,
+                                          backgroundColorWhenDesignTokenEnable: UIColor,
+                                          traitCollection: UITraitCollection) {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
             searchBar.tintColor = TokenColors.Text.placeholder
-            searchBar.backgroundColor = TokenColors.Background.surface1
+            searchBar.backgroundColor = backgroundColorWhenDesignTokenEnable
             searchBar.searchTextField.backgroundColor = TokenColors.Background.surface2
             searchBar.searchTextField.leftView?.tintColor = TokenColors.Text.placeholder
             searchBar.searchTextField.textColor = TokenColors.Text.primary
@@ -152,7 +154,7 @@ class AppearanceManager: NSObject {
         appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
         
         tabBar.standardAppearance = appearance
-
+        
         if ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
             tabBar.scrollEdgeAppearance = appearance
         }
@@ -203,12 +205,12 @@ class AppearanceManager: NSObject {
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {
         let toolbarAppearance = makeUIToolbarAppearance(traitCollection)
-
+        
         UIToolbar.appearance().standardAppearance = toolbarAppearance
         UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
         UIToolbar.appearance().tintColor = UIColor.mnz_toolbarTint(for: traitCollection)
     }
-
+    
     private class func makeUIToolbarAppearance(_ traitCollection: UITraitCollection) -> UIToolbarAppearance {
         let toolbarAppearance = UIToolbarAppearance()
         

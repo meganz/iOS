@@ -86,7 +86,9 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.offlineTableView.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
-    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
+       backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+                            traitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -164,7 +166,9 @@ static NSString *kisDirectory = @"kisDirectory";
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
+           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+                                traitCollection:self.traitCollection];
         if (self.flavor == HomeScreen) {
             self.view.backgroundColor = [UIColor isDesignTokenEnabled] ? [UIColor pageBackgroundForTraitCollection:self.traitCollection] : UIColor.mnz_black1C1C1E;
         }

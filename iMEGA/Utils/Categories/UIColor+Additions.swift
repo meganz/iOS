@@ -187,6 +187,14 @@ extension UIColor {
         }
     }
     
+    @objc class func searchBarSurface1BackgroundColor() -> UIColor {
+        TokenColors.Background.surface1
+    }
+    
+    @objc class func searchBarPageBackgroundColor() -> UIColor {
+        TokenColors.Background.page
+    }
+    
     // MARK: Cell related colors
     
     @objc class func cellTitleColor(

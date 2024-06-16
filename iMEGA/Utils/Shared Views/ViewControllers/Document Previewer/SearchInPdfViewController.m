@@ -31,7 +31,9 @@
         self.navigationItem.rightBarButtonItem = cancel;
     }
     
-    [AppearanceManager forceSearchBarUpdate:self.searchBar traitCollection:self.traitCollection];
+    [AppearanceManager forceSearchBarUpdate:self.searchBar 
+       backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+                            traitCollection:self.traitCollection];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -55,7 +57,9 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchBar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchBar 
+           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+                                traitCollection:self.traitCollection];
     }
 }
 

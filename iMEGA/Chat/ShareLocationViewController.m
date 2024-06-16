@@ -90,7 +90,9 @@
     self.navigationItem.title = LocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
     [self updateAppearance];
     
-    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
+       backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+                            traitCollection:self.traitCollection];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -102,7 +104,9 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
+           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+                                traitCollection:self.traitCollection];
         [self updateAppearance];
     }
 }
