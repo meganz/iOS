@@ -1,3 +1,5 @@
+import Combine
+import CombineSchedulers
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -6,6 +8,7 @@ import MEGAPresentation
 final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     private let router: any MeetingFloatingPanelRouting
+    private let scheduler: AnySchedulerOf<DispatchQueue>
     private let menuPresenter: ([ActionSheetAction]) -> Void
     private var chatRoom: ChatRoomEntity
     
@@ -23,13 +26,16 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private let audioRouteChangeNotificationName: Notification.Name
     private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
     
+    private var subscriptions = Set<AnyCancellable>()
+
     @Published var micEnabled: Bool = false
     @Published var cameraEnabled: Bool = false
     @Published var speakerEnabled: Bool = false
     @Published var routeViewVisible: Bool = false
     
     init(
-        router: any MeetingFloatingPanelRouting,
+        router: some MeetingFloatingPanelRouting,
+        scheduler: AnySchedulerOf<DispatchQueue>,
         menuPresenter: @escaping ([ActionSheetAction]) -> Void,
         chatRoom: ChatRoomEntity,
         callUseCase: any CallUseCaseProtocol,
@@ -45,6 +51,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         layoutUpdateChannel: ParticipantLayoutUpdateChannel
     ) {
         self.router = router
+        self.scheduler = scheduler
         self.menuPresenter = menuPresenter
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
@@ -69,6 +76,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         
         registerForAudioRouteChanges()
         checkRouteViewAvailability()
+        listenToCallUpdates()
     }
     
     // MARK: - Public
@@ -253,5 +261,23 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     private func checkRouteViewAvailability() {
         routeViewVisible = audioSessionUseCase.isBluetoothAudioRouteAvailable
+    }
+    
+    private func listenToCallUpdates() {
+        callUseCase.onCallUpdate()
+            .receive(on: scheduler)
+            .sink { [weak self] call in
+                self?.onCallUpdate(call)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func onCallUpdate(_ call: CallEntity) {
+        switch call.changeType {
+        case .localAVFlags:
+            micEnabled = call.hasLocalAudio
+        default:
+            break
+        }
     }
 }
