@@ -1,3 +1,4 @@
+import CombineSchedulers
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -159,6 +160,18 @@ final class CallControlsViewModelTests: XCTestCase {
         let switchAction = try XCTUnwrap(firstAction)
         XCTAssertTrue(switchAction.enabled)
     }
+
+    func testLocalAudioFlagUpdatedToMuted_shouldShowDisabledMicUI() {
+        let harness = Harness()
+        harness.localAudioFlagUpdated(enabled: false)
+        XCTAssertFalse(harness.sut.micEnabled)
+    }
+    
+    func testLocalAudioFlagUpdatedToUnmuted_shouldShowEnabledMicUI() {
+        let harness = Harness()
+        harness.localAudioFlagUpdated(enabled: true)
+        XCTAssertTrue(harness.sut.micEnabled)
+    }
     
     class Harness {
         let sut: CallControlsViewModel
@@ -198,6 +211,7 @@ final class CallControlsViewModelTests: XCTestCase {
             
             sut = CallControlsViewModel(
                 router: router,
+                scheduler: .immediate,
                 menuPresenter: { actions in menuPresenter(actions) },
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
@@ -293,6 +307,12 @@ final class CallControlsViewModelTests: XCTestCase {
             await sut.moreButtonTapped()
             return presentedMenuActions
         }
+
+        func localAudioFlagUpdated(enabled: Bool) {
+            callUseCase
+                .callUpdateSubject
+                .send(.localCameraEnabled(enabled))
+        }
     }
 }
 
@@ -304,4 +324,14 @@ class MockNotificationCenter: NotificationCenter {
 
 extension Notification.Name {
     static let audioRouteChange = Notification.Name("audioRouteChange")
+}
+
+extension CallEntity {
+    static func localCameraEnabled(_ enabled: Bool) -> CallEntity {
+        .init(
+            status: .inProgress,
+            changeType: .localAVFlags,
+            hasLocalAudio: enabled
+        )
+    }
 }

@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class MainTabBarCallsViewModelTests: XCTestCase {
