@@ -80,6 +80,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         
         let callControlsViewModel = CallControlsViewModel(
             router: self,
+            scheduler: .main,
             menuPresenter: presentMenu,
             chatRoom: chatRoom,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),

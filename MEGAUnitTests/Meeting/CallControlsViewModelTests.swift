@@ -1,3 +1,4 @@
+import CombineSchedulers
 import ConcurrencyExtras
 @testable import MEGA
 import MEGADomain
@@ -217,6 +218,18 @@ final class CallControlsViewModelTests: XCTestCase {
         }
     }
     
+    func testLocalAudioFlagUpdatedToMuted_shouldShowDisabledMicUI() {
+        let harness = Harness()
+        harness.localAudioFlagUpdated(enabled: false)
+        XCTAssertFalse(harness.sut.micEnabled)
+    }
+    
+    func testLocalAudioFlagUpdatedToUnmuted_shouldShowEnabledMicUI() {
+        let harness = Harness()
+        harness.localAudioFlagUpdated(enabled: true)
+        XCTAssertTrue(harness.sut.micEnabled)
+    }
+    
     class Harness {
         let sut: CallControlsViewModel
         let chatRoom: ChatRoomEntity
@@ -255,6 +268,7 @@ final class CallControlsViewModelTests: XCTestCase {
             
             sut = CallControlsViewModel(
                 router: router,
+                scheduler: .immediate,
                 menuPresenter: { actions in menuPresenter(actions) },
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
@@ -378,6 +392,12 @@ final class CallControlsViewModelTests: XCTestCase {
                 
             }
         }
+        
+        func localAudioFlagUpdated(enabled: Bool) {
+            callUseCase
+                .callUpdateSubject
+                .send(.localCameraEnabled(enabled))
+        }
     }
 }
 
@@ -400,4 +420,14 @@ extension UserEntity? {
         changeSource: .implicitRequest,
         addedDate: .now
     )
+}
+
+extension CallEntity {
+    static func localCameraEnabled(_ enabled: Bool) -> CallEntity {
+        .init(
+            status: .inProgress,
+            changeType: .localAVFlags,
+            hasLocalAudio: enabled
+        )
+    }
 }
