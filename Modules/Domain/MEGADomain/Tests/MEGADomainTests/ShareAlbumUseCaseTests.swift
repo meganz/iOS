@@ -115,7 +115,7 @@ class ShareAlbumUseCaseTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    func testDoesAlbumsContainSensitiveElement_whenNoAlbumsProvidede_shouldReturnFalse() async throws {
+    func testDoesAlbumsContainSensitiveElement_whenNoAlbumsProvided_shouldReturnFalse() async throws {
         let sut = sut()
         let result = try await sut.doesAlbumsContainSensitiveElement(for: [])
         XCTAssertFalse(result)

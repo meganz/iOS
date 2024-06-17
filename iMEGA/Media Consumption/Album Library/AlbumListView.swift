@@ -97,7 +97,8 @@ struct AlbumListView: View {
             preferenceUseCase: PreferenceUseCase.default,
             copyrightUseCase: CopyrightUseCase(
                 shareUseCase: ShareUseCase(
-                    repo: ShareRepository.newRepo),
+                    repo: ShareRepository.newRepo,
+                    filesSearchRepository: FilesSearchRepository.newRepo),
                 userAlbumRepository: UserAlbumRepository.newRepo)),
                                     termsAgreedView: {
             GetAlbumsLinksViewWrapper(albums: albums)

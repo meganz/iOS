@@ -81,7 +81,20 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         messages.append(.search(searchText: searchString, sortOrder: filter.sortOrderType))
         
         let filterCondition = { (node: NodeEntity) -> Bool in
-            node.isFile && (filter.sensitiveFilterOption == .nonSensitiveOnly ? !node.isMarkedSensitive : true)
+            let sensitiveCondition = switch filter.sensitiveFilterOption {
+            case .disabled: true
+            case .nonSensitiveOnly: !node.isMarkedSensitive
+            case .sensitiveOnly: node.isMarkedSensitive
+            }
+            
+            let typeCondition = switch filter.formatType {
+            case .photo: node.isFile && node.name.fileExtensionGroup.isImage
+            case .video: node.isFile && node.name.fileExtensionGroup.isVideo
+            case .unknown: true
+            default: false
+            }
+            
+            return [sensitiveCondition, typeCondition].allSatisfy { $0 }
         }
         
         let nodes = switch filter.searchTargetLocation {

@@ -4,12 +4,20 @@ public protocol ShareUseCaseProtocol {
     func areCredentialsVerifed(of user: UserEntity) -> Bool
     func user(from node: NodeEntity) -> UserEntity?
     func createShareKeys(forNodes nodes: [NodeEntity]) async throws -> [HandleEntity]
+    
+    ///  Determines if the given sequence of Node Entities contains any sensitive elements or there descending children nodes are sensitive.
+    /// - Parameter nodes: Sequence of NodeEntities to iterate over and determine if are sensitive or if its descendant nodes are sensitive
+    /// - Returns: True, if any node contains descendant sensitive nodes, else false.
+    func doesContainSensitiveDescendants(in nodes: some Sequence<NodeEntity>) async throws -> Bool
 }
 
-public struct ShareUseCase<T: ShareRepositoryProtocol>: ShareUseCaseProtocol {
+public struct ShareUseCase<T: ShareRepositoryProtocol, S: FilesSearchRepositoryProtocol>: ShareUseCaseProtocol {
     private let repo: T
-    public init(repo: T) {
+    private let filesSearchRepository: S
+
+    public init(repo: T, filesSearchRepository: S) {
         self.repo = repo
+        self.filesSearchRepository = filesSearchRepository
     }
     
     public func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
@@ -39,6 +47,24 @@ public struct ShareUseCase<T: ShareRepositoryProtocol>: ShareUseCaseProtocol {
             return try await group.reduce(into: [HandleEntity](), { result, handle in
                 result.append(handle)
             })
+        }
+    }
+    
+    public func doesContainSensitiveDescendants(in nodes: some Sequence<NodeEntity>) async throws -> Bool {
+        try await withThrowingTaskGroup(of: Bool.self) { taskGroup in
+            taskGroup.addTasksUnlessCancelled(for: nodes) { node in
+                try await filesSearchRepository.search(filter: .init(
+                    searchTargetLocation: .parentNode(node),
+                    recursive: true,
+                    supportCancel: false,
+                    sortOrderType: .defaultAsc,
+                    formatType: .unknown,
+                    sensitiveFilterOption: .sensitiveOnly)).isNotEmpty
+            }
+            
+            let doesNodeContainSensitiveChildren = try await taskGroup.contains(true)
+            taskGroup.cancelAll()
+            return doesNodeContainSensitiveChildren
         }
     }
 }

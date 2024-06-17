@@ -34,13 +34,29 @@ final class SearchWithFilterOperation: AsyncOperation {
         } else {
             sdk.searchNonRecursively(with: filter, orderType: sortOrder, cancelToken: cancelToken)
         }
-
+        
         guard !isCancelled, !cancelToken.isCancelled else {
             completion(nil, true)
+            cancelOperation()
             return
         }
 
         completion(nodeList, false)
         finishOperation()
+    }
+    
+    override func cancel() {
+        
+        guard !isCancelled else {
+            return
+        }
+        
+        super.cancel()
+        
+        if !cancelToken.isCancelled {
+            cancelToken.cancel()
+        }
+        
+        cancelOperation()
     }
 }

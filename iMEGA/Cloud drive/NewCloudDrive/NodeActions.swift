@@ -189,7 +189,7 @@ extension NodeActions {
                 MyAccountHallRouter(
                     myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
                     purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-                    shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+                    shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
                     networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
                     notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
                     navigationController: navigationController
@@ -235,7 +235,7 @@ extension NodeActions {
             shareFolders: { nodes in
                 
                 let sharedItemsRouter = SharedItemsViewRouter()
-                let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo)
+                let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo)
                 
                 Task { @MainActor [shareUseCase] in
                     do {
