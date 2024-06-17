@@ -550,6 +550,9 @@
 "cameraUploads.albums.albumCoverUpdated"="Album cover updated";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Hidden items";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="There are hidden items in this album. Sharing the album will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="There are hidden items in one or more of these albums. Sharing the albums will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */

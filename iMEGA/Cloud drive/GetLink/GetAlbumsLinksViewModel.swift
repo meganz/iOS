@@ -142,10 +142,14 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     private func showContainsSensitiveContentAlert(continuation: Continuation) {
         
         invokeCommand?(.dismissHud)
-        
+        let message = if albums.count > 1 {
+            Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.multi
+        } else {
+            Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.single
+        }
         let alertModel = AlertModel(
             title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
-            message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(albums.count),
+            message: message,
             actions: [
                 .init(title: Strings.Localizable.cancel, style: .cancel, handler: {
                     continuation.yield(.denied)
