@@ -83,7 +83,7 @@ public struct NodeRepository: NodeRepositoryProtocol {
         return sdk.childNode(
             forParent: parent,
             name: name,
-            type: type.toMEGANodeType().rawValue
+            type: type.toMEGANodeType()
         )?.toNodeEntity()
     }
     
@@ -161,7 +161,7 @@ public struct NodeRepository: NodeRepositoryProtocol {
             throw NodeCreationErrorEntity.nodeNotFound
         }
 
-        guard sdk.childNode(forParent: node, name: name, type: MEGANodeType.folder.rawValue) == nil else {
+        guard sdk.childNode(forParent: node, name: name, type: .folder) == nil else {
             throw NodeCreationErrorEntity.nodeAlreadyExists
         }
 

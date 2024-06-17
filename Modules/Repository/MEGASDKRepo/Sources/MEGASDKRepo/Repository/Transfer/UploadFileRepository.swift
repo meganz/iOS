@@ -11,8 +11,8 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
     
     public func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool {
         guard let parent = sdk.node(forHandle: parentHandle) else { return false }
-        let nodeList = sdk.nodeListSearch(for: parent, search: name, recursive: false)
-        return nodeList.existsFileWithName(name)
+        let node = sdk.childNode(forParent: parent, name: name, type: .file)
+        return (node != nil)
     }
     
     public func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {

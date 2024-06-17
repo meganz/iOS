@@ -256,8 +256,8 @@ public final class MockSdk: MEGASdk {
         return MockNodeList(nodes: children)
     }
     
-    public override func childNode(forParent parent: MEGANode, name: String, type: Int) -> MEGANode? {
-        nodes.first(where: { $0.name == name && $0.type.rawValue == type })
+    public override func childNode(forParent parent: MEGANode, name: String, type: MEGANodeType) -> MEGANode? {
+        nodes.first(where: { $0.name == name && $0.type == type })
     }
     
     public override func childNode(forParent parent: MEGANode, name: String) -> MEGANode? {
