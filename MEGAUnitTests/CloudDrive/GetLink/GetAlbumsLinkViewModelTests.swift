@@ -271,7 +271,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .dismissHud,
             .showAlert(AlertModel(
                 title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
-                message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(albums.count),
+                message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.multi,
                 actions: [
                     .init(title: Strings.Localizable.cancel, style: .cancel, handler: { }),
                     .init(title: Strings.Localizable.continue, style: .default, handler: { })
@@ -364,7 +364,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .dismissHud,
             .showAlert(AlertModel(
                 title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
-                message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(albums.count),
+                message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.multi,
                 actions: [
                     .init(title: Strings.Localizable.cancel, style: .cancel, handler: { }),
                     .init(title: Strings.Localizable.continue, style: .default, handler: { })

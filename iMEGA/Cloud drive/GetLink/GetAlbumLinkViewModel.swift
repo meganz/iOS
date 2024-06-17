@@ -156,7 +156,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
 
         let alertModel = AlertModel(
             title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
-            message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(1),
+            message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.single,
             actions: [
                 .init(title: Strings.Localizable.cancel, style: .cancel, handler: {
                     continuation.yield(.denied)

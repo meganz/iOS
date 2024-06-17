@@ -414,7 +414,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             .dismissHud,
             .showAlert(AlertModel(
                 title: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.title,
-                message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.message(1),
+                message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.single,
                 actions: [
                     .init(title: Strings.Localizable.cancel, style: .cancel, handler: { }),
                     .init(title: Strings.Localizable.continue, style: .default, handler: { })
