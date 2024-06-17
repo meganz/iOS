@@ -17,7 +17,7 @@ extension SharedItemsViewController: ContactsViewControllerDelegate {
 // MARK: - Unverified outgoing and incoming nodes
 extension SharedItemsViewController {
     @objc func createSharedItemsViewModel() -> SharedItemsViewModel {
-        SharedItemsViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+        SharedItemsViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
                              mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo,
                                                         videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo)),
                              saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository.newRepo,
@@ -33,7 +33,7 @@ extension SharedItemsViewController {
                                        isNodeUndecryptedFolder: Bool) -> NodeInfoViewModel {
         return NodeInfoViewModel(
             withNode: node,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
             isNodeUndecryptedFolder: isNodeUndecryptedFolder,
             shouldDisplayContactVerificationInfo: isContactVerificationEnabled() && incomingButton?.isSelected == true,
             completion: { [weak self] in

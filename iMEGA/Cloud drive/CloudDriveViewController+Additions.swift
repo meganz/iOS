@@ -47,7 +47,7 @@ extension CloudDriveViewController {
         let preferenceUseCase = PreferenceUseCase.default
         return CloudDriveViewModel(
             parentNode: parentNode,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: preferenceUseCase,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),

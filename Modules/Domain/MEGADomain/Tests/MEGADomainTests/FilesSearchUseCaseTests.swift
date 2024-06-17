@@ -21,53 +21,65 @@ final class FilesSearchUseCaseTests: XCTestCase {
             nodeFormat: NodeFormatEntity.photo,
             nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
         )
-        
+        let expectation = expectation(description: "search triggers completion block")
         sut.search(string: "", parent: nil, recursive: true, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: false) { results, _ in
             guard let results else { XCTFail("Search results shouldn't be nil"); return }
             
             XCTAssertEqual(results, nodes)
+            expectation.fulfill()
         }
+        wait(for: [expectation], timeout: 1)
     }
     
     func testSearchWithFilter_shouldReturnAllPhotosNodes() {
-        let nodes = [
-            NodeEntity(name: "sample1.raw", handle: 1, hasThumbnail: true),
-            NodeEntity(name: "sample2.raw", handle: 6, hasThumbnail: false),
-            NodeEntity(name: "test2.jpg", handle: 3, hasThumbnail: true),
-            NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true),
-            NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true),
-            NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true),
-            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true)
-        ]
-        
-        let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: nodes]),
-            nodeFormat: NodeFormatEntity.photo,
-            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
-        )
-        sut.search(filter: .init(searchText: "", searchTargetLocation: .folderTarget(.rootNode), recursive: true, supportCancel: false, sortOrderType: .none, formatType: .photo, sensitiveFilterOption: .disabled), cancelPreviousSearchIfNeeded: false) { results, _ in
-            guard let results else { XCTFail("Search results shouldn't be nil"); return }
-            
-            XCTAssertEqual(results, nodes)
-        }
-    }
-    
-    func testSearchWithFilterAsync_shouldReturnAllPhotosNodes() async throws {
-        let nodes = [
+        let expectedNodes = [
             NodeEntity(name: "sample1.raw", handle: 1, isFile: true, hasThumbnail: true),
             NodeEntity(name: "sample2.raw", handle: 6, isFile: true, hasThumbnail: false),
             NodeEntity(name: "test2.jpg", handle: 3, isFile: true, hasThumbnail: true),
             NodeEntity(name: "test3.png", handle: 4, isFile: true, hasThumbnail: true),
             NodeEntity(name: "sample3.raw", handle: 7, isFile: true, hasThumbnail: true),
-            NodeEntity(name: "test.gif", handle: 2, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "test.gif", handle: 2, isFile: true, hasThumbnail: true)
+        ]
+        
+        let allNodes = expectedNodes + [
             NodeEntity(name: "test3.mp4", handle: 5, isFile: true, hasThumbnail: true)
         ]
         
         let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: nodes]),
+            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes]),
             nodeFormat: NodeFormatEntity.photo,
             nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
         )
+        let expectation = expectation(description: "search triggers completion block")
+        sut.search(filter: .init(searchText: "", searchTargetLocation: .folderTarget(.rootNode), recursive: true, supportCancel: false, sortOrderType: .none, formatType: .photo, sensitiveFilterOption: .disabled), cancelPreviousSearchIfNeeded: false) { results, _ in
+            guard let results else { XCTFail("Search results shouldn't be nil"); return }
+            
+            XCTAssertEqual(results, expectedNodes)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testSearchWithFilterAsync_shouldReturnAllPhotosNodes() async throws {
+        let expectedNodes = [
+            NodeEntity(name: "sample1.raw", handle: 1, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "sample2.raw", handle: 6, isFile: true, hasThumbnail: false),
+            NodeEntity(name: "test2.jpg", handle: 3, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "test3.png", handle: 4, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "sample3.raw", handle: 7, isFile: true, hasThumbnail: true),
+            NodeEntity(name: "test.gif", handle: 2, isFile: true, hasThumbnail: true)
+        ]
+        
+        let allNodes = expectedNodes + [
+            NodeEntity(name: "test3.mp4", handle: 5, isFile: true, hasThumbnail: true)
+        ]
+        
+        let sut = makeSUT(
+            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes]),
+            nodeFormat: NodeFormatEntity.photo,
+            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
+        
         let results: [NodeEntity] = try await sut.search(
             filter: .init(
                 searchText: "",
@@ -80,7 +92,7 @@ final class FilesSearchUseCaseTests: XCTestCase {
             ,
             cancelPreviousSearchIfNeeded: false
         )
-        XCTAssertEqual(results, nodes.filter(\.name.fileExtensionGroup.isImage))
+        XCTAssertEqual(results, expectedNodes)
     }
     
     func testOnNodeUpdate_updatedNodesShouldBeTheSame() {
@@ -95,11 +107,14 @@ final class FilesSearchUseCaseTests: XCTestCase {
             nodesUpdateListenerRepo: mockNodeUpdateListenerRepo
         )
         
+        let expectation = expectation(description: "onNodesUpdate triggers completion block")
         sut.onNodesUpdate { results in
             XCTAssertEqual(results, nodesUpdated)
+            expectation.fulfill()
         }
         
         mockNodeUpdateListenerRepo.onNodesUpdateHandler?(nodesUpdated)
+        wait(for: [expectation], timeout: 1)
     }
     
     func testSearchPhotosCancelled_CancelSearchShouldReturnTrue() {

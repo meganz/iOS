@@ -58,7 +58,7 @@ import MEGASDKRepo
         MyAccountHallRouter(
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
             navigationController: navigationController

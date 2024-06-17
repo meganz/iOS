@@ -13,7 +13,6 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
     private let updater: PassthroughSubject<[NodeEntity], Never>
     private let sdk: MEGASdk
     private var callback: (([NodeEntity]) -> Void)?
-    private var cancelToken = MEGACancelToken()
     
     private lazy var searchOperationQueue: OperationQueue = {
         let operationQueue = OperationQueue()
@@ -51,14 +50,28 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
     }
     
     public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
-        try await withAsyncThrowingValue { completion in
-            search(filter: filter) { completion($0) }
+        let cancelToken = MEGACancelToken()
+        return try await withTaskCancellationHandler<[NodeEntity]> {
+            try await withAsyncThrowingValue { completion in
+                search(filter: filter, cancelToken: cancelToken) { completion($0) }
+            }
+        } onCancel: {
+            if !cancelToken.isCancelled {
+                cancelToken.cancel()
+            }
         }
     }
     
     public func search(filter: SearchFilterEntity) async throws -> NodeListEntity {
-        try await withAsyncThrowingValue { completion in
-            search(filter: filter) { completion($0) }
+        let cancelToken = MEGACancelToken()
+        return try await withTaskCancellationHandler<NodeListEntity> {
+            try await withAsyncThrowingValue { completion in
+                search(filter: filter, cancelToken: cancelToken) { completion($0) }
+            }
+        } onCancel: {
+            if !cancelToken.isCancelled {
+                cancelToken.cancel()
+            }
         }
     }
         
@@ -69,20 +82,17 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
     public func cancelSearch() {
         guard searchOperationQueue.operationCount > 0 else { return }
         
-        cancelToken.cancel()
         searchOperationQueue.cancelAllOperations()
     }
     
-    private func search(filter: SearchFilterEntity, completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
-        
-        cancelToken = MEGACancelToken()
-                
+    private func search(filter: SearchFilterEntity, cancelToken: MEGACancelToken, completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
+                        
         let searchOperation = SearchWithFilterOperation(
             sdk: sdk,
             filter: filter.toMEGASearchFilter(),
             recursive: filter.recursive,
             sortOrder: filter.sortOrderType.toMEGASortOrderType(),
-            cancelToken: filter.supportCancel ? cancelToken : MEGACancelToken(),
+            cancelToken: cancelToken,
             completion: { nodeList, isCanceled in
                 guard !isCanceled else {
                     completion(.failure(NodeSearchResultErrorEntity.cancelled))
@@ -99,8 +109,8 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
         searchOperationQueue.addOperation(searchOperation)
     }
     
-    private func search(filter: SearchFilterEntity, completion: @escaping (Result<[NodeEntity], any Error>) -> Void) {
-        search(filter: filter) { result in
+    private func search(filter: SearchFilterEntity, cancelToken: MEGACancelToken = MEGACancelToken(), completion: @escaping (Result<[NodeEntity], any Error>) -> Void) {
+        search(filter: filter, cancelToken: cancelToken) { result in
             completion(result.map { $0.toNodeEntities() })
         }
     }
@@ -184,7 +194,6 @@ extension FilesSearchRepository {
                                     sortOrderType: SortOrderEntity,
                                     formatType: NodeFormatEntity,
                                     completion: @escaping ([MEGANode]?, Bool) -> Void) {
-        cancelToken = MEGACancelToken()
         
         let searchOperation = SearchOperation(
             sdk: sdk,
@@ -193,7 +202,7 @@ extension FilesSearchRepository {
             recursive: recursive,
             nodeFormat: formatType.toMEGANodeFormatType(),
             sortOrder: sortOrderType.toMEGASortOrderType(),
-            cancelToken: supportCancel ? cancelToken : MEGACancelToken(),
+            cancelToken: MEGACancelToken(),
             completion: { nodeList, isCanceled in
                 completion(nodeList?.toNodeArray(), isCanceled)
             }

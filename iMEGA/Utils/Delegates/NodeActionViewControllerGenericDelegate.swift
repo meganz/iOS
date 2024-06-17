@@ -275,7 +275,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     private func openShareFolderDialog(_ node: MEGANode, viewController: UIViewController) {
         Task { @MainActor in
             do {
-                let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo)
+                let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo)
                 _ = try await shareUseCase.createShareKeys(forNodes: [node.toNodeEntity()])
                 showContactListForShareFolderNode(node, viewController: viewController)
             } catch {

@@ -7,6 +7,7 @@ public class MockShareUseCase: ShareUseCaseProtocol {
     private let areUserCredentialsVerified: Bool
     private let user: UserEntity?
     private let createShareKeysError: Error?
+    private let doesContainSensitiveDescendants: [HandleEntity: Bool]
     
     public var userFunctionHasBeenCalled = false
     public var createShareKeyFunctionHasBeenCalled = false
@@ -18,7 +19,8 @@ public class MockShareUseCase: ShareUseCaseProtocol {
         sharedNodeHandles: [HandleEntity] = [],
         areUserCredentialsVerified: Bool = false,
         user: UserEntity? = nil,
-        createShareKeysError: Error? = nil
+        createShareKeysError: Error? = nil,
+        doesContainSensitiveDescendants: [HandleEntity: Bool] = [:]
     ) {
         self.nodes = nodes
         self.shares = shares
@@ -26,6 +28,7 @@ public class MockShareUseCase: ShareUseCaseProtocol {
         self.areUserCredentialsVerified = areUserCredentialsVerified
         self.user = user
         self.createShareKeysError = createShareKeysError
+        self.doesContainSensitiveDescendants = doesContainSensitiveDescendants
     }
     
     public func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
@@ -55,5 +58,11 @@ public class MockShareUseCase: ShareUseCaseProtocol {
         }
         
         return sharedNodeHandles
+    }
+    
+    public func doesContainSensitiveDescendants(in nodes: some Sequence<NodeEntity>) async throws -> Bool {
+        nodes.contains { node in
+            doesContainSensitiveDescendants[node.handle] ?? false
+        }
     }
 }

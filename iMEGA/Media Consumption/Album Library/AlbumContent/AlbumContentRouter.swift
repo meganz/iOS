@@ -141,7 +141,8 @@ struct AlbumContentRouter: AlbumContentRouting {
         let viewModel = EnforceCopyrightWarningViewModel(preferenceUseCase: PreferenceUseCase.default,
                                                          copyrightUseCase: CopyrightUseCase(
                                                             shareUseCase: ShareUseCase(
-                                                                repo: ShareRepository.newRepo),
+                                                                repo: ShareRepository.newRepo,
+                                                                filesSearchRepository: FilesSearchRepository.newRepo),
                                                             userAlbumRepository: UserAlbumRepository.newRepo))
         let view = EnforceCopyrightWarningView(viewModel: viewModel) {
             GetAlbumsLinksViewWrapper(albums: [album])

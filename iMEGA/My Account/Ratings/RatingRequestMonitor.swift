@@ -13,7 +13,9 @@ import StoreKit
         = RatingRequestBaseConditionsUseCase(preferenceUserCase: PreferenceUseCase.default,
                                              accountRepo: AccountRepository(sdk: sdk, myChatFilesFolderNodeAccess: .shared),
                                              currentAppVersion: currentAppVersion)
-    private lazy var shareUseCase: any ShareUseCaseProtocol = ShareUseCase(repo: ShareRepository(sdk: sdk))
+    private lazy var shareUseCase: some ShareUseCaseProtocol = ShareUseCase(
+        repo: ShareRepository(sdk: sdk),
+        filesSearchRepository: FilesSearchRepository(sdk: sdk))
     
     @objc init(sdk: MEGASdk) {
         self.sdk = sdk
