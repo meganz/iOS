@@ -7,6 +7,7 @@ import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class ChatRoomsListViewModelTests: XCTestCase {
