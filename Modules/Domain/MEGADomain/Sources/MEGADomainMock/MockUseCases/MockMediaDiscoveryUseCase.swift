@@ -7,6 +7,7 @@ public final class MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
     private let shouldReload: Bool
     
     public var discoverRecursively: Bool?
+    public var discoverWithExcludeSensitive: Bool?
     
     public init(
         nodeUpdates: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher(),
@@ -18,8 +19,9 @@ public final class MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
         self.shouldReload = shouldReload
     }
     
-    public func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity] {
+    public func nodes(forParent parent: NodeEntity, recursive: Bool, excludeSensitive: Bool) async throws -> [NodeEntity] {
         discoverRecursively = recursive
+        discoverWithExcludeSensitive = excludeSensitive
         return nodes
     }
     

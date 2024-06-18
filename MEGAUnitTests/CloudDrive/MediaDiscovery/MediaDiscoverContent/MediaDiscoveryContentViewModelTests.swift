@@ -2,6 +2,7 @@ import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
@@ -30,6 +31,30 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         
         // Assert
         XCTAssertTrue(analyticsUseCase.hasPageStayCalled)
+    }
+    
+    func testLoadPhotosExcludeSensitiveNodes_whenContentModeIsMediaDiscoveryAndShowHiddenNodesOff_shouldExcludeTrue() async {
+        
+        for await showHiddenNodes in [false, true].async {
+            
+            // Arrange
+            let expectedNodes = [
+                NodeEntity(name: "test1.png", handle: 1),
+                NodeEntity(name: "test2.png", handle: 2),
+                NodeEntity(name: "test3.png", handle: 3)
+            ]
+            let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expectedNodes)
+            let sut = makeSUT(
+                mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+                contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes)),
+                featureFlagHiddenNodes: true)
+            
+            // Act
+            await sut.loadPhotos()
+            
+            // Assert
+            XCTAssertEqual(mediaDiscoveryUseCase.discoverWithExcludeSensitive, !showHiddenNodes)
+        }
     }
     
     func testSubscribeToNodeChanges_whenChangeOccursToNodes_shouldReloadPhotos() async {
@@ -419,7 +444,9 @@ extension MediaDiscoveryContentViewModelTests {
         delegate: some MediaDiscoveryContentDelegate = MockMediaDiscoveryContentDelegate(),
         analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol = MockMediaDiscoveryAnalyticsUseCase(),
         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol = MockMediaDiscoveryUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
+        featureFlagHiddenNodes: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line) -> MediaDiscoveryContentViewModel {
             let viewModel = MediaDiscoveryContentViewModel(
@@ -430,7 +457,9 @@ extension MediaDiscoveryContentViewModelTests {
                 delegate: delegate,
                 analyticsUseCase: analyticsUseCase,
                 mediaDiscoveryUseCase: mediaDiscoveryUseCase,
-                preferenceUseCase: preferenceUseCase)
+                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                preferenceUseCase: preferenceUseCase,
+                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
             
             trackForMemoryLeaks(on: viewModel, file: file, line: line)
             

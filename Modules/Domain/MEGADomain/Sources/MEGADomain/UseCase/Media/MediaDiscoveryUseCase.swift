@@ -3,7 +3,13 @@ import Foundation
 
 public protocol MediaDiscoveryUseCaseProtocol {
     var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> { get }
-    func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity]
+    /// Fetch all nodes directly under the given parent node
+    /// - Parameters:
+    ///   - parent: Location of nodes to be fetched from.
+    ///   - recursive: Determine if the request should fetch nodes from further descendants than the parent node
+    ///   - excludeSensitive: Determines if sensitive nodes should be excluded from the result
+    /// - Returns: List of NodeEntities located directly under the parent node.
+    func nodes(forParent parent: NodeEntity, recursive: Bool, excludeSensitive: Bool) async throws -> [NodeEntity]
     func shouldReload(parentNode: NodeEntity, loadedNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool
 }
 
@@ -31,7 +37,7 @@ public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
         self.nodeUpdateRepository = nodeUpdateRepository
     }
 
-    public func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity] {
+    public func nodes(forParent parent: NodeEntity, recursive: Bool, excludeSensitive: Bool) async throws -> [NodeEntity] {
         try await [NodeFormatEntity.photo, .video]
             .async
             .map { [weak self] format -> [NodeEntity] in
@@ -43,7 +49,7 @@ public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
                     supportCancel: false,
                     sortOrderType: .defaultDesc,
                     formatType: format,
-                    sensitiveFilterOption: .disabled)) // For now we want to include sensitive nodes, CC will address this in another ticket
+                    sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled))
                 return items
             }
             .reduce([NodeEntity]()) { $0 + $1 }
