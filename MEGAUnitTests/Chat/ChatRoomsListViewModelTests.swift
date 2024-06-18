@@ -1,5 +1,6 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -435,6 +436,23 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         evaluate {
             sut.shouldDisplayUnreadBadgeForMeetings == true
         }
+    }
+    
+    func test_addChatButtonTapped_tracksAnalyticsEvent() {
+        let mockTracker = MockTracker()
+        let viewModel = makeChatRoomsListViewModel(
+            router: MockChatRoomsListRouter(),
+            tracker: mockTracker
+        )
+        
+        viewModel.addChatButtonTapped()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [
+                ChatRoomsStartConversationMenuEvent()
+            ]
+        )
     }
     
     // MARK: - Private methods

@@ -73,6 +73,7 @@ final class HomeScreenFactory: NSObject {
             permissionHandler: permissionHandler,
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
+            tracker: tracker,
             router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController)
         )
         

@@ -228,6 +228,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     func addChatButtonTapped() {
+        tracker.trackAnalyticsEvent(with: ChatRoomsStartConversationMenuEvent())
         router.presentStartConversation()
     }
     

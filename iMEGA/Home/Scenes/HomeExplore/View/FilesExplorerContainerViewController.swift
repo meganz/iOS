@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPresentation
 import MEGASDKRepo
 import MEGAUIKit
 
@@ -175,6 +176,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
                 permissionHandler: DevicePermissionsHandler.makeHandler(),
                 networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
+                tracker: DIContainer.tracker,
                 router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
             )
             self.uploadViewModel = uploadViewModel
