@@ -15,6 +15,7 @@ struct AlertModel {
     struct AlertAction {
         var title: String
         var style: UIAlertAction.Style
+        var isPreferredAction: Bool = false
         var handler: () -> Void
     }
 }
