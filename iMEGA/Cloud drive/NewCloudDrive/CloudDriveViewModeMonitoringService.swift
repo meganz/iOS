@@ -40,9 +40,15 @@ final class CloudDriveViewModeMonitoringService: CloudDriveViewModeMonitoring {
     private func subscribeToViewModePreferenceChangeNotification() {
         viewModePreferenceChangeNotificationTask = Task { [weak self] in
             for await _ in NotificationCenter.default.notifications(named: .MEGAViewModePreferenceDidChange) {
+
+                // One can enable or disable media discovery in the user interface settings.
+                // This setting does not affect screens that are already displayed.
+                // Media discovery view mode is not global; it only affects the current screen.
+                // Therefore, there is no need to push notifications for media discovery view mode changes.
                 if let self,
                    case let updatedViewMode = await viewModeProvider(nodeSource),
-                   updatedViewMode != currentViewMode {
+                   updatedViewMode != currentViewMode,
+                   updatedViewMode != .mediaDiscovery {
                     continuation?.yield(updatedViewMode)
                 }
             }

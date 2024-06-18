@@ -5,25 +5,34 @@ import XCTest
 
 final class CloudDriveViewModeMonitoringServiceTests: XCTestCase {
 
-    func testListenToViewModesUpdate_whenTheViewModeChangesFromListToThumbnail_shouldTriggerAsyncStreamUpdate() async {
+    func testListenToViewModesUpdate_fromListToThumbnail_shouldTriggerAsyncStreamUpdate() async {
         let sut = makeSUT(node: NodeEntity(), currentViewMode: .list, viewModeProvider: { _ in .thumbnail })
         await assertListenToViewModesUpdate(for: sut, expectedViewMode: .thumbnail)
     }
 
-    func testListenToViewModesUpdate_whenTheViewModeChangesFromThumbnailToList_shouldTriggerAsyncStreamUpdate() async {
+    func testListenToViewModesUpdate_fromThumbnailToList_shouldTriggerAsyncStreamUpdate() async {
         let sut = makeSUT(node: NodeEntity(), currentViewMode: .thumbnail, viewModeProvider: { _ in .list })
         await assertListenToViewModesUpdate(for: sut, expectedViewMode: .list)
     }
 
-    func testListenToViewModesUpdate_whenTheViewModeChangesFromListToList_shouldNotTriggerAsyncStreamUpdate() async {
+    func testListenToViewModesUpdate_fromListToList_shouldNotTriggerAsyncStreamUpdate() async {
         let sut = makeSUT(node: NodeEntity(), currentViewMode: .list, viewModeProvider: { _ in .list })
         await assertListenToViewModesUpdate(for: sut)
     }
 
-    func testListenToViewModesUpdate_whenTheViewModeChangesFromThumbnailToThumbnail_shouldNotTriggerAsyncStreamUpdate() async {
+    func testListenToViewModesUpdate_fromThumbnailToThumbnail_shouldNotTriggerAsyncStreamUpdate() async {
         let sut = makeSUT(node: NodeEntity(), currentViewMode: .thumbnail, viewModeProvider: { _ in .thumbnail })
         await assertListenToViewModesUpdate(for: sut)
+    }
 
+    func testListenToViewModesUpdate_fromThumbnailToMediaDiscovery_shouldNotTriggerAsyncStreamUpdate() async {
+        let sut = makeSUT(node: NodeEntity(), currentViewMode: .thumbnail, viewModeProvider: { _ in .mediaDiscovery })
+        await assertListenToViewModesUpdate(for: sut)
+    }
+
+    func testListenToViewModesUpdate_fromListToMediaDiscovery_shouldNotTriggerAsyncStreamUpdate() async {
+        let sut = makeSUT(node: NodeEntity(), currentViewMode: .list, viewModeProvider: { _ in .mediaDiscovery })
+        await assertListenToViewModesUpdate(for: sut)
     }
 
     // MARK: - Private
