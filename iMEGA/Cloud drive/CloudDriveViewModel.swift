@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -9,6 +10,9 @@ enum CloudDriveAction: ActionType {
     case updateParentNode(MEGANode)
     case moveToRubbishBin([MEGANode])
     case resetSensitivitySetting
+    case didTapChooseFromPhotos
+    case didTapImportFromFiles
+    case didOpenAddMenu
 }
 
 @objc final class CloudDriveViewModel: NSObject, ViewModelType {
@@ -41,6 +45,8 @@ enum CloudDriveAction: ActionType {
     private var parentNode: MEGANode?
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     
+    private let tracker: any AnalyticsTracking
+    
     private var sensitiveSettingTask: Task<Bool, Never>? {
         didSet {
             oldValue?.cancel()
@@ -54,6 +60,7 @@ enum CloudDriveAction: ActionType {
          systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+         tracker: some AnalyticsTracking,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     ) {
@@ -63,6 +70,7 @@ enum CloudDriveAction: ActionType {
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.accountUseCase = accountUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
@@ -164,7 +172,25 @@ enum CloudDriveAction: ActionType {
         case .resetSensitivitySetting:
             guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else { return }
             sensitiveSettingTask = nil
+        case .didTapChooseFromPhotos:
+            trackChooseFromPhotosEvent()
+        case .didTapImportFromFiles:
+            trackImportFromFilesEvent()
+        case .didOpenAddMenu:
+            trackOpenAddMenuEvent()
         }
+    }
+    
+    private func trackChooseFromPhotosEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveChooseFromPhotosMenuToolbarEvent())
+    }
+    
+    private func trackImportFromFilesEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveImportFromFilesMenuToolbarEvent())
+    }
+    
+    private func trackOpenAddMenuEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveAddMenuEvent())
     }
     
     private func update(sortType: SortOrderType) {

@@ -1,5 +1,6 @@
 import AsyncAlgorithms
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
@@ -355,6 +356,27 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertFalse(shouldExcludeSecondCall)
     }
     
+    func test_didTapChooseFromPhotos_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapChooseFromPhotos,
+            expectedEvent: CloudDriveChooseFromPhotosMenuToolbarEvent()
+        )
+    }
+
+    func test_didTapImportFromFiles_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapImportFromFiles,
+            expectedEvent: CloudDriveImportFromFilesMenuToolbarEvent()
+        )
+    }
+
+    func test_didOpenAddMenu_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didOpenAddMenu,
+            expectedEvent: CloudDriveAddMenuEvent()
+        )
+    }
+    
     func makeSUT(
         parentNode: MEGANode = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
@@ -363,6 +385,7 @@ class CloudDriveViewModelTests: XCTestCase {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
         file: StaticString = #file,
@@ -376,10 +399,26 @@ class CloudDriveViewModelTests: XCTestCase {
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             accountUseCase: accountUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            tracker: tracker,
             featureFlagProvider: featureFlagProvider,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
+    }
+    
+    private func trackAnalyticsEventTest(
+        action: CloudDriveAction,
+        expectedEvent: EventIdentifier
+    ) {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(tracker: mockTracker)
+        
+        sut.dispatch(action)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [expectedEvent]
+        )
     }
 }

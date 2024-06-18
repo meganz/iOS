@@ -57,6 +57,7 @@ extension CloudDriveViewController {
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
+            tracker: DIContainer.tracker,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
     }

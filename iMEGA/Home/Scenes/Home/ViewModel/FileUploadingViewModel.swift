@@ -1,6 +1,8 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPermissions
+import MEGAPresentation
 
 protocol HomeUploadingViewModelInputs {
 
@@ -40,6 +42,8 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     func didTapUploadFromPhotoAlbum() {
+        tracker.trackAnalyticsEvent(with: HomeChooseFromPhotosMenuToolbarEvent())
+        
         permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
             guard let self else { return }
             if granted {
@@ -72,6 +76,8 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     func didTapUploadFromImports() {
+        tracker.trackAnalyticsEvent(with: HomeImportFromFilesMenuToolbarEvent())
+        
         router.upload(from: .imports)
     }
 
@@ -138,6 +144,8 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     
+    private let tracker: any AnalyticsTracking
+    
     private var contextMenuManager: ContextMenuManager?
 
     init(
@@ -145,12 +153,14 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
         permissionHandler: some DevicePermissionsHandling,
         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
         createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
+        tracker: some AnalyticsTracking,
         router: FileUploadingRouter
     ) {
         self.uploadPhotoAssetsUseCase = uploadFilesUseCase
         self.permissionHandler = permissionHandler
         self.networkMonitorUseCase = networkMonitorUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
+        self.tracker = tracker
         self.router = router
     }
 

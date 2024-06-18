@@ -223,14 +223,17 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .newTextFile:
             createTextFileAlert()
         case .chooseFromPhotos:
+            viewModel.dispatch(.didTapChooseFromPhotos)
             showImagePickerFor(sourceType: .photoLibrary)
         case .capture:
             showMediaCapture()
         case .importFrom:
+            viewModel.dispatch(.didTapImportFromFiles)
             showDocumentImporter()
         default:
             break
         }
+        viewModel.dispatch(.didOpenAddMenu)
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
