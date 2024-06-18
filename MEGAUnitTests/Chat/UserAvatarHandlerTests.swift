@@ -1,5 +1,5 @@
 @testable import MEGA
-import MEGADomain
+import MEGADomainMock
 import XCTest
 
 class UserAvatarHandlerTests: XCTestCase {
