@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 import MEGASwiftUI
 
 enum ShareDestinationSection: Int, CaseIterable {
@@ -83,7 +85,7 @@ extension ShareDestinationTableViewController {
     private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
         guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
-        tableViewHeaderFooterView.textLabel?.textColor = MEGAAppColor.White._FFFFFF80.uiColor
+        tableViewHeaderFooterView.textLabel?.textColor = secondaryTextColor
     }
     
     private func titleForHeader(in section: Int) -> String? {
@@ -107,6 +109,14 @@ extension ShareDestinationTableViewController {
         guard ShareDestinationSection(rawValue: section) == .attachments,
               let footer = view as? UITableViewHeaderFooterView else { return }
         footer.textLabel?.textAlignment = .center
-        footer.textLabel?.textColor = MEGAAppColor.White._FFFFFF80.uiColor
+        footer.textLabel?.textColor = secondaryTextColor
+    }
+    
+    private var secondaryTextColor: UIColor {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            TokenColors.Text.secondary
+        } else {
+            UIColor.secondaryLabel
+        }
     }
 }
