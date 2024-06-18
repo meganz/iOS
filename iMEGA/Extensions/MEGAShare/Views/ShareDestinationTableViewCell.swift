@@ -1,9 +1,11 @@
+import MEGADesignToken
+import MEGAPresentation
 import UIKit
 
 class ShareDestinationTableViewCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    
+    var showActivityIndicator = false
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -12,24 +14,17 @@ class ShareDestinationTableViewCell: UITableViewCell {
              image: UIImage,
              isEnabled: Bool = true,
              showActivityIndicator: Bool = false) {
-        
+        self.showActivityIndicator = showActivityIndicator
         nameLabel.text = name
         iconImageView.image = image
         isUserInteractionEnabled = isEnabled
         
-        let color = MEGAAppColor.Black._000000.uiColor
-        
         if showActivityIndicator {
-            nameLabel.textColor = color.withAlphaComponent(0.5)
-            tintColor = color.withAlphaComponent(0.5)
-            
             let activityIndicator = UIActivityIndicatorView.mnz_init()
             activityIndicator.startAnimating()
             accessoryView = activityIndicator
             accessoryType = .none
         } else {
-            nameLabel.textColor = color
-            tintColor = color
             accessoryView = nil
             accessoryType = .disclosureIndicator
         }
@@ -45,6 +40,34 @@ class ShareDestinationTableViewCell: UITableViewCell {
     }
     
     private func updateAppearance() {
-        backgroundColor = MEGAAppColor.White._FFFFFF_pageBackground.uiColor
+        backgroundColor = dynamicBackgroundColor
+        
+        if showActivityIndicator {
+            nameLabel.textColor = textColor.withAlphaComponent(0.5)
+            tintColor = textColor.withAlphaComponent(0.5)
+        } else {
+            nameLabel.textColor = textColor
+            tintColor = textColor
+        }
+    }
+    
+    private var designTokenEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+    }
+    
+    private var dynamicBackgroundColor: UIColor {
+        if designTokenEnabled {
+            TokenColors.Background.page
+        } else {
+            UIColor.cellBackground
+        }
+    }
+    
+    private var textColor: UIColor {
+        if designTokenEnabled {
+            TokenColors.Text.primary
+        } else {
+            UIColor.label
+        }
     }
 }

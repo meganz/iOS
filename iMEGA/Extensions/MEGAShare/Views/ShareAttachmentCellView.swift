@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ShareAttachmentCellView: View {
@@ -16,7 +17,7 @@ struct ShareAttachmentCellView: View {
                         TextField("", text: $viewModel.fileName)
                             .font(.system(size: 15))
                             .autocorrectionDisabled()
-                            .foregroundColor(MEGAAppColor.Black._000000.color)
+                            .foregroundColor(foregroundColor)
                             .fixedSize()
                             .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification),
                                        perform: { notif in
@@ -31,7 +32,7 @@ struct ShareAttachmentCellView: View {
                         
                         Text(viewModel.fileExtension)
                             .font(.system(size: 15))
-                            .foregroundColor(MEGAAppColor.Black._000000.color)
+                            .foregroundColor(foregroundColor)
                             .fixedSize()
                     }
                 }
@@ -43,6 +44,22 @@ struct ShareAttachmentCellView: View {
             .padding(.horizontal, 10)
         }
         .frame(height: 60)
-        .background(MEGAAppColor.White._FFFFFF_pageBackground.color)
+        .background(backgroundColor)
+    }
+    
+    var foregroundColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.primary.swiftUI
+        } else {
+            Color(UIColor.label)
+        }
+    }
+    
+    var backgroundColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Background.page.swiftUI
+        } else {
+            Color(UIColor.cellBackground)
+        }
     }
 }
