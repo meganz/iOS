@@ -97,7 +97,10 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     private func loadNodes() {
         loadingTask = Task { @MainActor in
             do {
-                nodes = try await mediaDiscoveryUseCase.nodes(forParent: parentNode, recursive: true)
+                nodes = try await mediaDiscoveryUseCase.nodes(
+                    forParent: parentNode,
+                    recursive: true,
+                    excludeSensitive: false)
                 invokeCommand?(.loadMedia(nodes: nodes))
             } catch {
                 MEGALogError("Error loading nodes: \(error.localizedDescription)")

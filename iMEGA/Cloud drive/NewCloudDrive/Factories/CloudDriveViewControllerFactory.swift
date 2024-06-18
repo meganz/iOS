@@ -19,6 +19,7 @@ struct CloudDriveViewControllerFactory {
     private let tracker: any AnalyticsTracking
     private let mediaAnalyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let homeScreenFactory: HomeScreenFactory
     private let nodeUseCase: any NodeUseCaseProtocol
     private let preferences: any PreferenceUseCaseProtocol
@@ -54,6 +55,7 @@ struct CloudDriveViewControllerFactory {
         backupsUseCase: some BackupsUseCaseProtocol,
         rubbishBinUseCase: some RubbishBinUseCaseProtocol,
         createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         nodeActions: NodeActions
     ) {
         self.featureFlagProvider = featureFlagProvider
@@ -75,6 +77,7 @@ struct CloudDriveViewControllerFactory {
         self.backupsUseCase = backupsUseCase
         self.rubbishBinUseCase = rubbishBinUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.nodeActions = nodeActions
         
         self.avatarViewModel = MyAvatarViewModel(
@@ -179,6 +182,7 @@ struct CloudDriveViewControllerFactory {
             backupsUseCase: backupsUseCase,
             rubbishBinUseCase: DIContainer.rubbishBinUseCase,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             nodeActions: nodeActions
         )
     }
@@ -942,7 +946,8 @@ struct CloudDriveViewControllerFactory {
             isAutomaticallyShown: isShowingAutomatically,
             delegate: mediaContentDelegate,
             analyticsUseCase: mediaAnalyticsUseCase,
-            mediaDiscoveryUseCase: mediaDiscoveryUseCase
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase, 
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase
         )
     }
     

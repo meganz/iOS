@@ -54,7 +54,8 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
             isAutomaticallyShown: isShowingAutomatically,
             delegate: self,
             analyticsUseCase: analyticsUseCase,
-            mediaDiscoveryUseCase: mediaDiscoveryUseCase)
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase, 
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo))
         
         let viewController = MediaDiscoveryContentViewController(viewModel: viewModel)
         

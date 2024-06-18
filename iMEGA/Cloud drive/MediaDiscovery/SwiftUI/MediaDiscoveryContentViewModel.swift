@@ -49,10 +49,13 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     private var sortOrder: SortOrderType
     private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private lazy var pageStayTimeTracker = PageStayTimeTracker()
     private var subscriptions = Set<AnyCancellable>()
     private weak var delegate: (any MediaDiscoveryContentDelegate)?
-    private let shouldIncludeSubfolderMedia: Bool
+    @PreferenceWrapper(key: .mediaDiscoveryShouldIncludeSubfolderMedia, defaultValue: true)
+    private var shouldIncludeSubfolderMedia: Bool
     
     init(contentMode: PhotoLibraryContentMode,
          parentNodeProvider: @escaping () -> NodeEntity?,
@@ -61,7 +64,9 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
          delegate: (some MediaDiscoveryContentDelegate)?,
          analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
          mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: contentMode)
         photoLibraryContentViewRouter = PhotoLibraryContentViewRouter(contentMode: contentMode)
@@ -70,8 +75,10 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         self.delegate = delegate
         self.analyticsUseCase = analyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.sortOrder = sortOrder
-        shouldIncludeSubfolderMedia = preferenceUseCase[.mediaDiscoveryShouldIncludeSubfolderMedia] ?? true
+        self.featureFlagProvider = featureFlagProvider
+        $shouldIncludeSubfolderMedia.useCase = preferenceUseCase
         $autoMediaDiscoveryBannerDismissed.useCase = preferenceUseCase
         
         if isAutomaticallyShown {
@@ -88,8 +95,10 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         do {
             viewState = .normal
             try Task.checkCancellation()
-            let nodes = try await mediaDiscoveryUseCase.nodes(forParent: parentNode,
-                                                              recursive: shouldIncludeSubfolderMedia)
+            let nodes = try await mediaDiscoveryUseCase.nodes(
+                forParent: parentNode,
+                recursive: shouldIncludeSubfolderMedia,
+                excludeSensitive: await shouldExcludeSensitiveItems())
             try Task.checkCancellation()
             photoLibraryContentViewModel.library = await sortIntoPhotoLibrary(nodes: nodes, sortOrder: sortOrder)
             try Task.checkCancellation()
@@ -98,7 +107,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
             MEGALogError("Error loading nodes: \(error.localizedDescription)")
         }
     }
-    
+        
     @MainActor
     func update(sortOrder updatedSortOrder: SortOrderType) async {
         guard updatedSortOrder != sortOrder else {
@@ -195,5 +204,14 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
                 
                 Task { await self.loadPhotos() }
             }.store(in: &subscriptions)
+    }
+    
+    private func shouldExcludeSensitiveItems() async -> Bool {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes), 
+            [.mediaDiscovery].contains(photoLibraryContentViewModel.contentMode) {
+            await contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes == false
+        } else {
+            false
+        }
     }
 }

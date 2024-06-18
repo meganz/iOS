@@ -120,7 +120,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     isAutomaticallyShown: false,
                     delegate: MockMediaDiscoveryContentDelegate(),
                     analyticsUseCase: MockMediaDiscoveryAnalyticsUseCase(),
-                    mediaDiscoveryUseCase: mediaDiscoveryUseCase
+                    mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+                    contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase()
                 ),
                 warningViewModel: nil,
                 upgradeEncouragementViewModel: nil,
