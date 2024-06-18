@@ -811,7 +811,18 @@ static NSString* const B = @"[B]";
             nameWithoutExtension = [self.stringByDeletingPathExtension stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
         }
         
-        MEGANodeList *nameNodeList = [MEGASdk.shared nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        NSString *nameWithExtension = [nameWithoutExtension stringByAppendingPathExtension:extension];
+        
+        MEGASearchFilter *filter = [[MEGASearchFilter alloc]
+                                    initWithTerm:nameWithExtension
+                                    parentNodeHandle:parentNode.handle
+                                    nodeType:MEGANodeTypeFile
+                                    category:MEGANodeFormatTypeUnknown
+                                    sensitiveFilter:MEGASearchFilterSensitiveOptionDisabled
+                                    favouriteFilter:MEGASearchFilterFavouriteOptionDisabled
+                                    creationTimeFrame:nil
+                                    modificationTimeFrame:nil];
+        MEGANodeList *nameNodeList = [MEGASdk.shared searchNonRecursivelyWith:filter orderType:MEGASortOrderTypeNone cancelToken:[MEGACancelToken new]];
         listSize = (int)nameNodeList.size;
         index++;
     } while (listSize != 0);
