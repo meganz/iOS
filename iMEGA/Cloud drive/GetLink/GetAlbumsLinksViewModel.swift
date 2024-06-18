@@ -154,7 +154,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
                 .init(title: Strings.Localizable.cancel, style: .cancel, handler: {
                     continuation.yield(.denied)
                 }),
-                .init(title: Strings.Localizable.continue, style: .default, handler: {
+                .init(title: Strings.Localizable.continue, style: .default, isPreferredAction: true, handler: {
                     continuation.yield(.authorized)
                 })
             ])

@@ -2,6 +2,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 import UIKit
 
@@ -35,83 +36,6 @@ enum KeySectionRow {
     case key
 }
 
-struct GetNodeLinkViewModel {
-    var link: String = ""
-    var separateKey: Bool = false {
-        didSet {
-            if let nodeType = nodeTypes.first, separateKey {
-                getLinkAnalyticsUseCase.sendDecriptionKey(nodeType: nodeType)
-            }
-        }
-    }
-    var linkWithoutKey: String {
-        if link.contains("file") || link.contains("folder") {
-            return link.components(separatedBy: "#")[0]
-        } else {
-            return link.components(separatedBy: "!")[0] + "!" + link.components(separatedBy: "!")[1]
-        }
-    }
-    var key: String {
-        if link.contains("file") || link.contains("folder") {
-            return link.components(separatedBy: "#")[1]
-        } else {
-            return link.components(separatedBy: "!")[2]
-        }
-    }
-    var expiryDate: Bool = false
-    var date: Date? {
-        didSet {
-            if let nodeType = nodeTypes.first, date != nil {
-                getLinkAnalyticsUseCase.setExpiryDate(nodeType: nodeType)
-            }
-        }
-    }
-    var selectDate: Bool = false
-    var passwordProtect: Bool = false
-    var password: String?
-    var multilink: Bool = false
-    var nodeTypes: [NodeTypeEntity] = []
-    
-    private let getLinkAnalyticsUseCase = GetLinkAnalyticsUseCase(repository: AnalyticsRepository.newRepo)
-    
-    func trackSetPassword() {
-        guard let nodeType = nodeTypes.first else { return }
-        
-        if password == nil {
-            getLinkAnalyticsUseCase.setPassword(nodeType: nodeType)
-        } else {
-            getLinkAnalyticsUseCase.resetPassword(nodeType: nodeType)
-        }
-    }
-    
-    func trackConfirmPassword() {
-        guard let nodeType = nodeTypes.first else { return }
-        getLinkAnalyticsUseCase.confirmPassword(nodeType: nodeType)
-    }
-    func trackRemovePassword() {
-        guard let nodeType = nodeTypes.first else { return }
-        getLinkAnalyticsUseCase.removePassword(nodeType: nodeType)
-    }
-    
-    func trackShareLink() {
-        getLinkAnalyticsUseCase.shareLink(nodeTypes: nodeTypes)
-    }
-    
-    func trackGetLink() {
-        getLinkAnalyticsUseCase.getLink(nodeTypes: nodeTypes)
-    }
-    
-    func trackProFeatureSeePlans() {
-        guard let nodeType = nodeTypes.first else { return }
-        getLinkAnalyticsUseCase.proFeatureSeePlans(nodeType: nodeType)
-    }
-    
-    func trackProFeatureNotNow() {
-        guard let nodeType = nodeTypes.first else { return }
-        getLinkAnalyticsUseCase.proFeatureNotNow(nodeType: nodeType)
-    }
-}
-
 class GetLinkViewController: UIViewController {
     
     private lazy var dateFormatter: some DateFormatting = DateFormatter.dateMedium()
@@ -127,8 +51,10 @@ class GetLinkViewController: UIViewController {
     let flexibleBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     
     var snackBarContainer: UIView?
-    private var nodes = [MEGANode]()
-    private var getLinkVM = GetNodeLinkViewModel()
+    
+    private var getLinkVM = GetNodeLinkViewModel(shareUseCase: ShareUseCase(
+        repo: ShareRepository.newRepo,
+        filesSearchRepository: FilesSearchRepository.newRepo))
     private var nodesToExportCount = 0
     private var justUpgradedToProAccount = false
     private var isLinkAlreadyCreated = false
@@ -141,9 +67,7 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not instantiate GetLinkViewController")
         }
         
-        getLinkVC.nodes = nodes
-        getLinkVC.getLinkVM.multilink = nodes.count > 1
-        getLinkVC.getLinkVM.nodeTypes = nodes.map { $0.toNodeEntity().nodeType ?? .unknown }
+        getLinkVC.getLinkVM.nodes = nodes
         
         return MEGANavigationController(rootViewController: getLinkVC)
     }
@@ -166,8 +90,6 @@ class GetLinkViewController: UIViewController {
         
         configureSnackBarPresenter()
         
-        nodes.notContains { !$0.isExported() } ? getLinkVM.trackGetLink() : getLinkVM.trackShareLink()
-        
         if var getLinkViewModel {
             let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
             navigationItem.rightBarButtonItem = doneBarButtonItem
@@ -181,6 +103,7 @@ class GetLinkViewController: UIViewController {
             loadNodes()
         }
         
+        configureNavigation()
         updateAppearance()
         tableView.sectionHeaderTopPadding = 0
     }
@@ -193,12 +116,9 @@ class GetLinkViewController: UIViewController {
             MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.add(self)
         }
         
-        configureNavigation()
-        configureMultiLink(isMultiLink: getLinkVM.multilink)
+        getLinkVM.invokeCommand = executeCommand(_:)
         
-        processNodes()
-        
-        shareBarButton.title = Strings.Localizable.General.MenuAction.ShareLink.title(nodesToExportCount)
+        getLinkVM.dispatch(.onViewReady)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -229,13 +149,6 @@ class GetLinkViewController: UIViewController {
     // MARK: - Private
     
     private func configureNavigation() {
-        navigationController?.setToolbarHidden(false, animated: true)
-        
-        title = nodes.notContains { !$0.isExported() } ?
-        Strings.Localizable.General.MenuAction.ManageLink.title(nodes.count) :
-        Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
-        
-        setToolbarItems([shareBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
         let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
         navigationItem.rightBarButtonItem = doneBarButtonItem
     }
@@ -263,7 +176,7 @@ class GetLinkViewController: UIViewController {
         getLinkVM.expiryDate = isOn
         if !getLinkVM.expiryDate && getLinkVM.date != nil {
             nodesToExportCount = 1
-            exportNode(node: nodes[0])
+            exportNode(node: getLinkVM.nodes[0])
         }
         getLinkVM.date = nil
         getLinkVM.selectDate = false
@@ -280,7 +193,10 @@ class GetLinkViewController: UIViewController {
         atIndex index: Int? = nil,
         isFromLinkCellTap: Bool = false
     ) {
-        if getLinkVM.multilink {
+        
+        let nodes = getLinkVM.nodes
+        
+        if getLinkVM.isMultiLink {
             if let index = index, let link = nodes[safe: index]?.publicLink {
                 UIPasteboard.general.string = link
             } else {
@@ -312,9 +228,9 @@ class GetLinkViewController: UIViewController {
     }
     
     private func updateModel(forNode node: MEGANode) {
-        guard let index = nodes.firstIndex(where: { $0.handle == node.handle }) else { return }
-        nodes[index] = node
-        if getLinkVM.multilink {
+        guard let index = getLinkVM.nodes.firstIndex(where: { $0.handle == node.handle }) else { return }
+        getLinkVM.nodes[index] = node
+        if getLinkVM.isMultiLink {
             tableView.reloadSections([index+1], with: .automatic)
         } else {
             var sectionsToReload = IndexSet()
@@ -346,9 +262,9 @@ class GetLinkViewController: UIViewController {
     }
     
     private func processNodes() {
-        nodesToExportCount = nodes.filter { !$0.isExported() }.count
+        nodesToExportCount = getLinkVM.nodes.filter { !$0.isExported() }.count
         isLinkAlreadyCreated = nodesToExportCount == 0
-        nodes.forEach { (node) in
+        getLinkVM.nodes.forEach { (node) in
             if node.isExported() {
                 updateModel(forNode: node)
                 copyLinkToPasteboard()
@@ -360,13 +276,15 @@ class GetLinkViewController: UIViewController {
     
     private func exportNode(node: MEGANode) {
         MEGASdk.shared.export(node, delegate: MEGAExportRequestDelegate.init(completion: { [weak self] _ in
-            (self?.nodesToExportCount -= 1)
-            guard let nodeUpdated = MEGASdk.shared.node(forHandle: node.handle) else {
+            guard let self,
+                let nodeUpdated = MEGASdk.shared.node(forHandle: node.handle) else {
                 return
             }
-            self?.updateModel(forNode: nodeUpdated)
-            if self?.nodesToExportCount == 0 {
-                self?.copyLinkToPasteboard()
+            nodesToExportCount -= 1
+            
+            updateModel(forNode: nodeUpdated)
+            if nodesToExportCount <= 0 {
+                copyLinkToPasteboard()
                 SVProgressHUD.dismiss()
             }
         }, multipleLinks: nodesToExportCount > 1))
@@ -451,7 +369,7 @@ class GetLinkViewController: UIViewController {
     }
     
     private func setExpiryDate() {
-        MEGASdk.shared.export(nodes[0], expireTime: getLinkVM.date ?? Date(timeInterval: 24*60*60, since: Date()), delegate: MEGAExportRequestDelegate.init(completion: { [weak self] request in
+        MEGASdk.shared.export(getLinkVM.nodes[0], expireTime: getLinkVM.date ?? Date(timeInterval: 24*60*60, since: Date()), delegate: MEGAExportRequestDelegate.init(completion: { [weak self] request in
             guard let nodeHandle = request?.nodeHandle, let nodeUpdated = MEGASdk.shared.node(forHandle: nodeHandle) else {
                 return
             }
@@ -586,7 +504,7 @@ class GetLinkViewController: UIViewController {
             getLinkViewModel.dispatch(.shareLink(sender: sender))
             return
         }
-        let textToShare = getLinkVM.multilink ? nodes.compactMap { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
+        let textToShare = getLinkVM.isMultiLink ? getLinkVM.nodes.compactMap { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
         
         showShareActivity(sender, textToShare: textToShare) { [weak self] in
             if self?.getLinkVM.separateKey ?? false {
@@ -641,8 +559,8 @@ class GetLinkViewController: UIViewController {
         if let cellViewModel {
             cell.viewModel = cellViewModel
         } else {
-            let sectionIndex = getLinkVM.multilink ? indexPath.section - 1 : indexPath.section
-            cell.configure(forNode: nodes[sectionIndex])
+            let sectionIndex = getLinkVM.isMultiLink ? indexPath.section - 1 : indexPath.section
+            cell.configure(forNode: getLinkVM.nodes[sectionIndex])
         }
         
         setBackgroundColorWithDesignToken(on: cell)
@@ -655,7 +573,9 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkAccessInfoTableViewCell")
         }
         
-        cell.configure(nodesCount: nodes.count, isPasswordSet: getLinkVM.passwordProtect)
+        cell.configure(
+            nodesCount: getLinkVM.nodes.count,
+            isPasswordSet: getLinkVM.passwordProtect)
         
         setBackgroundColorWithDesignToken(on: cell)
         
@@ -730,8 +650,8 @@ class GetLinkViewController: UIViewController {
             return cell
         }
         
-        if getLinkVM.multilink {
-            let node = nodes[indexPath.section-1]
+        if getLinkVM.isMultiLink {
+            let node = getLinkVM.nodes[indexPath.section-1]
             let publicLink = node.publicLink ?? ""
             cell.configureLinkCell(link: node.isExported() ? publicLink : "")
         } else {
@@ -807,6 +727,8 @@ class GetLinkViewController: UIViewController {
     @MainActor
     private func executeCommand(_ command: GetLinkViewModelCommand) {
         switch command {
+        case .processNodes:
+            processNodes()
         case .configureView(let newTitle, let isMultiLink, let shareButtonTitle):
             title = newTitle
             configureMultiLink(isMultiLink: isMultiLink)
@@ -956,8 +878,8 @@ extension GetLinkViewController: UITableViewDataSource {
         if let getLinkViewModel {
             return getLinkViewModel.numberOfSections
         }
-        if getLinkVM.multilink {
-            return nodes.count + 1
+        if getLinkVM.isMultiLink {
+            return getLinkVM.nodes.count + 1
         } else {
             return sections().count
         }
@@ -967,7 +889,7 @@ extension GetLinkViewController: UITableViewDataSource {
         if let getLinkViewModel {
             return getLinkViewModel.numberOfRowsInSection(section)
         }
-        if getLinkVM.multilink {
+        if getLinkVM.isMultiLink {
             return section == 0 ? 1 : 2
         } else {
             switch sections()[section] {
@@ -999,7 +921,7 @@ extension GetLinkViewController: UITableViewDataSource {
             }
         }
         
-        if getLinkVM.multilink {
+        if getLinkVM.isMultiLink {
             if indexPath.section == 0 && indexPath.row == 0 {
                 return linkAccessInfoCell(forIndexPath: indexPath)
             } else {
@@ -1059,7 +981,7 @@ extension GetLinkViewController: UITableViewDelegate {
         
         if getLinkViewModel != nil {
             updateHeaderViewForAlbum(forHeader: &header, forSection: section)
-        } else if getLinkVM.multilink {
+        } else if getLinkVM.isMultiLink {
             guard section > 0 else {
                 return nil
             }
@@ -1086,7 +1008,7 @@ extension GetLinkViewController: UITableViewDelegate {
         
         if getLinkViewModel != nil {
             updateFooterViewForAlbum(forFooter: &footer, forSection: section)
-        } else if getLinkVM.multilink {
+        } else if getLinkVM.isMultiLink {
             guard section > 0 else {
                 return nil
             }
@@ -1104,7 +1026,7 @@ extension GetLinkViewController: UITableViewDelegate {
             getLinkViewModel.dispatch(.didSelectRow(indexPath: indexPath))
             return
         }
-        if getLinkVM.multilink {
+        if getLinkVM.isMultiLink {
             if indexPath.row == 1 {
                 copyLinkToPasteboard(atIndex: indexPath.section-1, isFromLinkCellTap: true)
             }
@@ -1145,7 +1067,7 @@ extension GetLinkViewController: UITableViewDelegate {
                 case .removePassword:
                     getLinkVM.passwordProtect = false
                     getLinkVM.password = nil
-                    getLinkVM.link = nodes[0].publicLink ?? ""
+                    getLinkVM.link = getLinkVM.nodes[0].publicLink ?? ""
                     getLinkVM.trackRemovePassword()
                     tableView.reloadData()
                 }
@@ -1182,7 +1104,7 @@ extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
     func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String) {
         setLinkPassword.dismissView()
         showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.Link.linkUpdated)
-        if let publicLink = nodes[0].publicLink {
+        if let publicLink = getLinkVM.nodes[0].publicLink {
             getLinkVM.trackConfirmPassword()
             encrypt(link: publicLink, with: password)
         }

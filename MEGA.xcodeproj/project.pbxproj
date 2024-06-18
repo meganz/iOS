@@ -236,6 +236,8 @@
 		24F583B62B46E18C00AA0562 /* MEGAAppColor+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */; };
 		251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */; };
 		251B07BB2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */; };
+		2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */; };
+		2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */; };
 		2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */; };
 		2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */; };
 		25484F782B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */; };
@@ -2949,6 +2951,8 @@
 		24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Videos.swift"; sourceTree = "<group>"; };
 		251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+ViewMode.swift"; sourceTree = "<group>"; };
 		251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoZoomControlPositionTracker.swift; sourceTree = "<group>"; };
+		2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeLinkViewModel.swift; sourceTree = "<group>"; };
+		2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeLinkViewModelTests.swift; sourceTree = "<group>"; };
 		2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertView.swift; sourceTree = "<group>"; };
 		2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManagerTests.swift; sourceTree = "<group>"; };
 		25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadBannerStatusProviderTests.swift; sourceTree = "<group>"; };
@@ -5667,6 +5671,7 @@
 				0E3E07A22A1EA6C600A2A71B /* GetAlbumLinkViewModelTests.swift */,
 				0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */,
 				25E319F42C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift */,
+				2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */,
 			);
 			path = GetLink;
 			sourceTree = "<group>";
@@ -9429,6 +9434,7 @@
 				94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */,
 				837EE20E253DBABD0083D927 /* GetLinkViewController.swift */,
 				0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */,
+				2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */,
 				25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */,
 				837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */,
 				0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */,
@@ -14818,6 +14824,7 @@
 				94361BB72A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift in Sources */,
 				837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */,
 				0E3E07AD2A1EBEDF00A2A71B /* GetLinkViewModelType.swift in Sources */,
+				2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */,
 				A81C658B254B2D3000105BF4 /* GiphyCategoryView.swift in Sources */,
 				2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */,
 				A81C6593254B2EC900105BF4 /* GiphyPreviewViewController.swift in Sources */,
@@ -16342,6 +16349,7 @@
 				0E3B1A502A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift in Sources */,
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,
 				25E319F52C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift in Sources */,
+				2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
 				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,

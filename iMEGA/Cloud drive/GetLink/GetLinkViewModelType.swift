@@ -27,6 +27,7 @@ enum GetLinkViewModelCommand: CommandType {
     case hideMultiLinkDescription
     case showAlert(AlertModel)
     case dismiss
+    case processNodes
     
     enum MessageType: Equatable {
         case status(String)

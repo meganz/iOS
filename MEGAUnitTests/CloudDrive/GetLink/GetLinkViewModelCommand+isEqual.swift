@@ -26,7 +26,8 @@ extension GetLinkViewModelCommand {
             (.enableLinkActions, .enableLinkActions),
             (.hideMultiLinkDescription, .hideMultiLinkDescription),
             (.dismissHud, .dismissHud),
-            (.dismiss, .dismiss):
+            (.dismiss, .dismiss),
+            (.processNodes, .processNodes):
             [true]
         case let (.showAlert(lhs), .showAlert(rhs)):
             [lhs.title == rhs.title, lhs.message == rhs.message, lhs.actions == rhs.actions]

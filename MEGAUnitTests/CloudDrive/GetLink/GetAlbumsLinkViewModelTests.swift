@@ -274,7 +274,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                 message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.multi,
                 actions: [
                     .init(title: Strings.Localizable.cancel, style: .cancel, handler: { }),
-                    .init(title: Strings.Localizable.continue, style: .default, handler: { })
+                    .init(title: Strings.Localizable.continue, style: .default, isPreferredAction: true, handler: { })
                 ]))
         ], expectationValidation: ==)
         
@@ -367,7 +367,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                 message: Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.multi,
                 actions: [
                     .init(title: Strings.Localizable.cancel, style: .cancel, handler: { }),
-                    .init(title: Strings.Localizable.continue, style: .default, handler: { })
+                    .init(title: Strings.Localizable.continue, style: .default, isPreferredAction: true, handler: { })
                 ]))
         ], expectationValidation: ==)
         
