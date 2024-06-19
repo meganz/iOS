@@ -112,11 +112,50 @@ extension ShareDestinationTableViewController {
         footer.textLabel?.textColor = secondaryTextColor
     }
     
+    private var designTokenEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+    }
+    
     private var secondaryTextColor: UIColor {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+        if designTokenEnabled {
             TokenColors.Text.secondary
         } else {
             UIColor.secondaryLabel
         }
+    }
+    
+    private func separatorColor(for traitCollection: UITraitCollection) -> UIColor {
+        if designTokenEnabled {
+            return TokenColors.Border.strong
+        } else {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return UIColor.gray3C3C4330
+            case .dark:
+                return UIColor.gray54545865
+            @unknown default:
+                return UIColor.gray3C3C4330
+            }
+        }
+    }
+    
+    private func secondaryBackground(for traitCollection: UITraitCollection) -> UIColor {
+        if designTokenEnabled {
+            return TokenColors.Background.page
+        } else {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return UIColor.whiteF7F7F7
+            case .dark:
+                return UIColor.black1C1C1E
+            @unknown default:
+                return UIColor.black1C1C1E
+            }
+        }
+    }
+    
+    @objc func updateAppearance() {
+        tableView.separatorColor = separatorColor(for: traitCollection)
+        tableView.backgroundColor = secondaryBackground(for: traitCollection)
     }
 }

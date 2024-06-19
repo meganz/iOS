@@ -32,7 +32,7 @@ struct ShareAttachmentCellView: View {
                         
                         Text(viewModel.fileExtension)
                             .font(.system(size: 15))
-                            .foregroundColor(foregroundColor)
+                            .foregroundColor(foregroundColorFileExtension)
                             .fixedSize()
                     }
                 }
@@ -53,6 +53,12 @@ struct ShareAttachmentCellView: View {
         } else {
             Color(UIColor.label)
         }
+    }
+    
+    var foregroundColorFileExtension: Color {
+        isDesignTokenEnabled
+        ? TokenColors.Text.secondary.swiftUI
+        : Color(UIColor.gray8E8E93)
     }
     
     var backgroundColor: Color {
