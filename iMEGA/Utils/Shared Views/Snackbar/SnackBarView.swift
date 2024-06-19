@@ -37,7 +37,7 @@ struct SnackBarView: View {
             HStack {
                 Text(viewModel.snackBar.message)
                     .font(.footnote)
-                    .foregroundColor(foregroundColor)
+                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.inverse.swiftUI : foregroundColor)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     .padding(viewModel.snackBar.isActionable ? [.leading, .top] : [.leading, .top, .trailing, .bottom], Constants.padding)
@@ -51,15 +51,15 @@ struct SnackBarView: View {
                     }, label: {
                         Text(viewModel.snackBar.title ?? "")
                             .font(.footnote).bold()
-                            .foregroundColor(MEGAAppColor.Green._00A886.color)
+                            .foregroundColor(isDesignTokenEnabled ? TokenColors.Link.inverse.swiftUI : MEGAAppColor.Green._00A886.color)
                     })
                     .padding([.trailing, .bottom], Constants.padding)
                 }
             }
         }
-        .background(backgroundColor)
+        .background(isDesignTokenEnabled ? TokenColors.Components.toastBackground.swiftUI : backgroundColor)
         .cornerRadius(Constants.cornerRadius)
-        .shadow(color: MEGAAppColor.Black._000000.color.opacity(0.1), radius: 4, x: 0, y: 1)
+        .shadow(color: isDesignTokenEnabled ? .clear : MEGAAppColor.Black._000000.color.opacity(0.1), radius: 4, x: 0, y: 1) // This line should be removed when design token is permanently applied. SnackBar won't have a shadow on design token UI.
         .padding(Constants.padding)
     }
 }
