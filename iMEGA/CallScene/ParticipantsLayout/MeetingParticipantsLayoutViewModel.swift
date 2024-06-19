@@ -13,6 +13,8 @@ enum CallViewAction: ActionType {
     case tapOnOptionsMenuButton(presenter: UIViewController, sender: UIBarButtonItem)
     case tapOnBackButton
     case showRenameChatAlert
+    case switchCamera
+    case shareLink(NSObject)
     case setNewTitle(String)
     case discardChangeTitle
     case renameTitleDidChange(String)
@@ -105,6 +107,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case showCallWillEnd(String)
         case updateCallWillEnd(String)
         case hideCallWillEnd
+        case enableSwitchCameraButton
     }
     
     private var chatRoom: ChatRoomEntity
@@ -202,6 +205,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     private var layoutUpdateChannel: ParticipantLayoutUpdateChannel
+    let cameraSwitcher: any CameraSwitching
     
     init(
         containerViewModel: MeetingContainerViewModel,
@@ -222,7 +226,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         chatRoom: ChatRoomEntity,
         call: CallEntity,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-        layoutUpdateChannel: ParticipantLayoutUpdateChannel
+        layoutUpdateChannel: ParticipantLayoutUpdateChannel,
+        cameraSwitcher: some CameraSwitching
     ) {
         self.chatUseCase = chatUseCase
         self.containerViewModel = containerViewModel
@@ -242,6 +247,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.chatRoom = chatRoom
         self.call = call
         self.layoutUpdateChannel = layoutUpdateChannel
+        self.cameraSwitcher = cameraSwitcher
+        self.cameraEnabled = call.hasLocalVideo
         super.init()
         self.$callsSoundNotificationPreference.useCase = preferenceUseCase
         onCallUpdateListener()
@@ -553,7 +560,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: initialSubtitle(),
                                 isUserAGuest: accountUseCase.isGuest,
-                                isOneToOne: chatRoom.chatType == .oneToOne)
+                                isOneToOne: isOneToOne)
                 )
             }
             callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
@@ -569,7 +576,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
-            if chatRoom.chatType != .oneToOne {
+            if !isOneToOne {
                 addMeetingParticipantStatusPipelineSubscription()
             }
             hasBeenInProgress = call.status == .inProgress
@@ -691,6 +698,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
         case .onOrientationChanged:
             updateLayoutModeAccordingScreenSharingParticipant()
+        case .switchCamera:
+            Task {
+                await cameraSwitcher.switchCamera()
+            }
+        case .shareLink(let sender):
+            containerViewModel?.dispatch(.shareLink(presenter: nil, sender: sender, completion: {[weak self] _, _, _, _ in
+                self?.containerViewModel?.dispatch(.hideOptionsMenu)
+            }))
         }
     }
     
@@ -1104,6 +1119,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             self.call = call
             updateRemoteRaisedHandChanges()
             invokeCommand?(.updateLocalRaisedHandHidden(call.raiseHandsList.notContains(chatUseCase.myUserHandle())))
+        case .localAVFlags:
+            cameraEnabled = call.hasLocalVideo
         default:
             break
         }
@@ -1160,6 +1177,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             showCallWillEndNotification(timeToEndCall: timeToEndCall)
         }
     }
+    
+    var cameraEnabled: Bool {
+        didSet {
+            invokeCommand?(.enableSwitchCameraButton)
+        }
+    }
 }
 
 struct CallDurationInfo {
@@ -1172,7 +1195,7 @@ struct CallDurationInfo {
 extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
         self.hasParticipantJoinedBefore = true
-        if chatRoom.chatType == .oneToOne && reconnecting1on1Subscription != nil {
+        if isOneToOne && reconnecting1on1Subscription != nil {
             cancelReconnecting1on1Subscription()
         }
         initTimerIfNeeded(with: Int(call.duration))
@@ -1214,7 +1237,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         if callUseCase.call(for: call.chatId) == nil {
             callTerminated(call)
         } else if callParticipants.contains(where: { $0 == participant }) {
-            if chatRoom.chatType == .oneToOne && participant.sessionRecoverable {
+            if isOneToOne && participant.sessionRecoverable {
                 waitForRecoverable1on1Call()
             }
             callParticipants.removeAll { $0 == participant}
@@ -1436,7 +1459,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func outgoingRingingStopReceived() {
         guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
         self.call = call
-        if chatRoom.chatType == .oneToOne && call.numberOfParticipants == 1 {
+        if isOneToOne && call.numberOfParticipants == 1 {
             callManager.endCall(in: chatRoom, endForAll: false)
             self.tonePlayer.play(tone: .callEnded)
         }
@@ -1447,6 +1470,21 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             return
         }
         containerViewModel?.dispatch(.showMutedBy(name))
+    }
+
+    var cameraAndShareButtonsInNavBar: Bool {
+        moreButtonVisibleInCallControls(
+            isOneToOne: isOneToOne,
+            raiseHandFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak)
+        )
+    }
+    
+    var isOneToOne: Bool {
+        chatRoom.chatType == .oneToOne
+    }
+    
+    var showRightNavBarItems: Bool {
+        !isOneToOne
     }
 }
 
@@ -1480,4 +1518,17 @@ extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProt
             participant.remoteVideoFrame(width: width, height: height, buffer: buffer, isHiRes: isHiRes)
         }
     }
+}
+
+/// This function is shared logic and it controls the UI layout
+/// It's related to Raise hand feature (which is available only for not 1:1 calls)  [MEET-2491]
+/// When feature is active, CallControls has more button (instead of Switch Camera button)
+/// For this reason, switch camera button has to go to the nav bar (together with share meeting link button)
+/// Rename meeting [change it's title] button is NOT shown in call UI when Raise Hand feature is active.
+/// Logic to decide this layout was refactored into the function below, so that it's always in sync, in all the places, it's taken into account.
+func moreButtonVisibleInCallControls(
+    isOneToOne: Bool,
+    raiseHandFeatureEnabled: Bool
+) -> Bool {
+    !isOneToOne && raiseHandFeatureEnabled
 }

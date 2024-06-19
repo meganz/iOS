@@ -32,7 +32,6 @@ enum MeetingContainerAction: ActionType {
     case showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void))
 }
 
-
 /**
  layout is set CallCollectionView and stored on the MeetingParticipantsLayoutViewModel
  it can be changed via nav bar in the MeetingParticipantLayoutViewController
@@ -304,6 +303,7 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func shareLink(_ presenter: UIViewController?, _ sender: AnyObject, _ completion: UIActivityViewController.CompletionWithItemsHandler?) {
         chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
+            assert(Thread.isMainThread)
             guard let self else { return }
             switch result {
             case .success(let link):

@@ -14,7 +14,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -27,7 +27,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        test(viewModel: viewModel,
+        test(viewModel: harness.sut,
              action: .onViewLoaded,
              expectedCommands: [
                 .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false, isOneToOne: false),
@@ -45,7 +45,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -58,7 +58,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        test(viewModel: viewModel,
+        test(viewModel: harness.sut,
              action: .onViewLoaded,
              expectedCommands: [
                 .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false, isOneToOne: false),
@@ -80,7 +80,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase, 
             chatUseCase: MockChatUseCase(myUserHandle: 100),
@@ -94,7 +94,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        test(viewModel: viewModel,
+        test(viewModel: harness.sut,
              action: .onViewReady,
              expectedCommands: [
                 .configLocalUserView(position: .front),
@@ -109,7 +109,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             chatUseCase: MockChatUseCase(myUserHandle: 100),
@@ -123,7 +123,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        test(viewModel: viewModel,
+        test(viewModel: harness.sut,
              action: .onViewReady,
              expectedCommands: [
                 .configLocalUserView(position: .front),
@@ -138,7 +138,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -151,7 +151,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        test(viewModel: viewModel, action: .tapOnView(onParticipantsView: false), expectedCommands: [.switchMenusVisibility])
+        test(
+            viewModel: harness.sut,
+            action: .tapOnView(onParticipantsView: false),
+            expectedCommands: [.switchMenusVisibility]
+        )
     }
     
     func testAction_tapOnLayoutButton() {
@@ -160,7 +164,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -172,12 +176,14 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        viewModel.layoutMode = .grid
-        test(viewModel: viewModel,
+        harness.sut.layoutMode = .grid
+        test(
+            viewModel: harness.sut,
              action: .tapOnLayoutModeButton,
              expectedCommands: [
                 .switchLayoutMode(layout: .speaker, participantsCount: 0)
-             ])
+             ]
+        )
     }
     
     func testAction_tapOnBackButton() {
@@ -187,7 +193,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -199,10 +205,12 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        viewModel.layoutMode = .grid
-        test(viewModel: viewModel,
+        harness.sut.layoutMode = .grid
+        test(
+            viewModel: harness.sut,
              action: .tapOnBackButton,
-             expectedCommands: [])
+             expectedCommands: []
+        )
         XCTAssert(remoteVideoUseCase.disableAllRemoteVideos_CalledTimes == 1)
     }
     
@@ -213,7 +221,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -225,7 +233,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        test(viewModel: viewModel,
+        test(
+            viewModel: harness.sut,
              action: .orientationOrModeChange(isIPhoneLandscape: true, isSpeakerMode: true),
              expectedCommands: [
                 .configureSpeakerView(
@@ -245,7 +254,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -257,7 +266,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        test(viewModel: viewModel,
+        test(
+            viewModel: harness.sut,
              action: .orientationOrModeChange(isIPhoneLandscape: false, isSpeakerMode: true),
              expectedCommands: [
                 .configureSpeakerView(
@@ -277,7 +287,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -289,7 +299,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        test(viewModel: viewModel,
+        test(
+            viewModel: harness.sut,
              action: .orientationOrModeChange(isIPhoneLandscape: false, isSpeakerMode: false),
              expectedCommands: [
                 .configureSpeakerView(
@@ -309,7 +320,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -321,7 +332,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        test(viewModel: viewModel,
+        test(
+            viewModel: harness.sut,
              action: .orientationOrModeChange(isIPhoneLandscape: true, isSpeakerMode: false),
              expectedCommands: [
                 .configureSpeakerView(
@@ -344,7 +356,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -358,9 +370,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: handleNamePairArray.count,
@@ -382,7 +394,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -396,9 +408,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: handleNamePairArray.count,
@@ -420,7 +432,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -434,9 +446,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: handleNamePairArray.count,
@@ -458,7 +470,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -472,9 +484,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: 0,
@@ -496,7 +508,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -510,9 +522,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: 0,
@@ -534,7 +546,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -548,9 +560,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: 0,
@@ -573,7 +585,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -587,11 +599,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         let addActions = addedHandleNamePairArray.map { CallViewAction.addParticipant(withHandle: $0.handle) }
         let removeActions = removedHandleNamePairArray.map { CallViewAction.removeParticipant(withHandle: $0.handle) }
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: addActions + removeActions,
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: 1,
@@ -614,7 +626,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -628,11 +640,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         let addActions = addedHandleNamePairArray.map { CallViewAction.addParticipant(withHandle: $0.handle) }
         let removeActions = removedHandleNamePairArray.map { CallViewAction.removeParticipant(withHandle: $0.handle) }
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: addActions + removeActions,
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: addedHandleNamePairArray.count,
@@ -655,7 +667,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -669,11 +681,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         
-        viewModel.dispatch(.onViewLoaded)
+        harness.sut.dispatch(.onViewLoaded)
         let addActions = addedHandleNamePairArray.map { CallViewAction.addParticipant(withHandle: $0.handle) }
         let removeActions = removedHandleNamePairArray.map { CallViewAction.removeParticipant(withHandle: $0.handle) }
         await verifyParticipantsStatus(
-            viewModel: viewModel,
+            viewModel: harness.sut,
             actions: addActions + removeActions,
             relaysCommand: .participantsStatusChanged(
                 addedParticipantCount: addedHandleNamePairArray.count,
@@ -694,7 +706,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         let callManager = MockCallManager()
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -707,7 +719,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        callUseCase.callbacksDelegate = viewModel
+        callUseCase.callbacksDelegate = harness.sut
         callUseCase.outgoingRingingStopReceived()
         XCTAssert(callManager.endCall_CalledTimes == 1)
     }
@@ -720,7 +732,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -732,7 +744,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        callUseCase.callbacksDelegate = viewModel
+        callUseCase.callbacksDelegate = harness.sut
         callUseCase.outgoingRingingStopReceived()
         XCTAssert(callUseCase.hangCall_CalledTimes == 0)
     }
@@ -745,7 +757,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -757,7 +769,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        callUseCase.callbacksDelegate = viewModel
+        callUseCase.callbacksDelegate = harness.sut
         callUseCase.outgoingRingingStopReceived()
         XCTAssert(callUseCase.hangCall_CalledTimes == 0)
     }
@@ -777,7 +789,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             expectation.fulfill()
         })
         
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -791,89 +803,89 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoom: chatRoom,
             call: call
         )
-        viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
+        harness.sut.participantJoined(participant: CallParticipantEntity(participantId: 100))
         userUseCase.avatarChangePublisher.send([100])
         waitForExpectations(timeout: 20)
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onUpdateParticipantAndHasScreenSharingParticipant_shouldSwitchToSpeakerLayoutModeAndDisableSwitchLayoutModeButton() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
         
-        sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
-        sut.updateParticipant(CallParticipantEntity(participantId: 100, hasScreenShare: true))
+        harness.sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
+        harness.sut.updateParticipant(CallParticipantEntity(participantId: 100, hasScreenShare: true))
         
-        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(harness.sut.layoutMode, .speaker)
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onParticipantJoinedAndHasScreenSharingParticipant_shouldSwitchToSpeakerLayoutModeAndDisableSwitchLayoutModeButton() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
         
-        sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: true))
+        harness.sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: true))
         
-        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(harness.sut.layoutMode, .speaker)
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onUpdateParticipantAndHasNoScreenSharingParticipant_shouldKeepCurrentLayoutModeAndEnableSwitchLayoutModeButton() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
         
-        sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
-        sut.updateParticipant(CallParticipantEntity(participantId: 100, hasScreenShare: false))
+        harness.sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
+        harness.sut.updateParticipant(CallParticipantEntity(participantId: 100, hasScreenShare: false))
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onParticipantJoinedndHasScreenSharingParticipant_shouldKeepCurrentLayoutModeAndEnableSwitchLayoutModeButton() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
         
-        sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
+        harness.sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onHasScreenShareAndThenUpdateToHasNoScreenShareParticipant_shouldSwitchToGridMode() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
         
         let participant = CallParticipantEntity(participantId: 100, hasScreenShare: true)
-        sut.participantJoined(participant: participant)
+        harness.sut.participantJoined(participant: participant)
         
-        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(harness.sut.layoutMode, .speaker)
         
         participant.hasScreenShare = false
-        sut.updateParticipant(participant)
+        harness.sut.updateParticipant(participant)
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_forTwoParticipantsAndOneHasScreenShareAndThenLeft_shouldSwitchToGridMode() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
         
         let participant1 = CallParticipantEntity(participantId: 101, hasScreenShare: false)
         let participant2 = CallParticipantEntity(participantId: 102, hasScreenShare: true)
-        sut.participantJoined(participant: participant1)
-        sut.participantJoined(participant: participant2)
+        harness.sut.participantJoined(participant: participant1)
+        harness.sut.participantJoined(participant: participant2)
         
-        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(harness.sut.layoutMode, .speaker)
         
-        sut.participantLeft(participant: participant2)
+        harness.sut.participantLeft(participant: participant2)
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
     }
     
     func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInHighResolutionAndHasCamera_shouldCallEnabledRemoteVideoWithHighResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
@@ -884,16 +896,16 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             hasCamera: true,
             hasScreenShare: true
         )
-        sut.participantJoined(participant: participant)
+        harness.sut.participantJoined(participant: participant)
         participant.canReceiveVideoHiRes = true
-        sut.highResolutionChanged(for: participant)
+        harness.sut.highResolutionChanged(for: participant)
         
         XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 1)
     }
     
     func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInHighResolutionAndHasCameraAndIsReceivingHiResVideo_shouldNotCallEnabledRemoteVideoWithHighResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
@@ -904,43 +916,43 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             hasCamera: true,
             hasScreenShare: true
         )
-        sut.participantJoined(participant: participant)
+        harness.sut.participantJoined(participant: participant)
         participant.canReceiveVideoHiRes = true
         participant.isReceivingHiResVideo = true
-        sut.highResolutionChanged(for: participant)
+        harness.sut.highResolutionChanged(for: participant)
         
         XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 0)
     }
     
     func testRequestRemoteScreenShareVideo_forParticipantHasScreenShareAndHasHighResVideo_shouldCallRequestHighResolutionVideo() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
         let participant = CallParticipantEntity(participantId: 100, video: .on, isVideoHiRes: true, hasScreenShare: true)
-        sut.dispatch(.participantIsVisible(participant, index: 0))
+        harness.sut.dispatch(.participantIsVisible(participant, index: 0))
         
         XCTAssertEqual(remoteVideoUseCase.requestHighResolutionVideo_calledTimes, 1)
     }
     
     func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInLowResolution_shouldCallEnabledRemoteVideoWithLowResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
         let participant = CallParticipantEntity(participantId: 100, isVideoLowRes: true, canReceiveVideoLowRes: false, hasCamera: true, hasScreenShare: true)
-        sut.participantJoined(participant: participant)
+        harness.sut.participantJoined(participant: participant)
         participant.canReceiveVideoLowRes = true
-        sut.lowResolutionChanged(for: participant)
+        harness.sut.lowResolutionChanged(for: participant)
         
         XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 1)
     }
     
     func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInLowResolutionAndIsReceivingLowResVideo_shouldNotCallEnabledRemoteVideoWithLowResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
@@ -951,22 +963,22 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             hasCamera: true,
             hasScreenShare: true
         )
-        sut.participantJoined(participant: participant)
+        harness.sut.participantJoined(participant: participant)
         participant.canReceiveVideoLowRes = true
         participant.isReceivingLowResVideo = true
-        sut.lowResolutionChanged(for: participant)
+        harness.sut.lowResolutionChanged(for: participant)
         
         XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 0)
     }
     
     func testRequestRemoteScreenShareVideo_forParticipantHasScreenShareAndHasLowResVideoAndHasCamera_shouldCallRequestLowResolutionVideo() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
         let participant = CallParticipantEntity(participantId: 100, video: .on, isVideoLowRes: true, hasCamera: true, hasScreenShare: true)
-        sut.dispatch(.participantIsVisible(participant, index: 0))
+        harness.sut.dispatch(.participantIsVisible(participant, index: 0))
         
         XCTAssertEqual(remoteVideoUseCase.requestLowResolutionVideo_calledTimes, 1)
     }
@@ -976,222 +988,222 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             stopLowResolutionVideoCompletion: .success,
             isOnlyReceivingLowResVideo: true
         )
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
         let participant1 = CallParticipantEntity(participantId: 101, hasScreenShare: true)
         let participant2 = CallParticipantEntity(participantId: 102, hasScreenShare: true)
-        sut.participantJoined(participant: participant1)
-        sut.participantJoined(participant: participant2)
+        harness.sut.participantJoined(participant: participant1)
+        harness.sut.participantJoined(participant: participant2)
         
         let newParticipant = CallParticipantEntity(participantId: 102, video: .on, hasScreenShare: true)
-        sut.dispatch(.tapParticipantToPinAsSpeaker(newParticipant))
+        harness.sut.dispatch(.tapParticipantToPinAsSpeaker(newParticipant))
         
         XCTAssertEqual(remoteVideoUseCase.stopLowResolutionVideo_calledTimes, 1)
         XCTAssertEqual(remoteVideoUseCase.requestHighResolutionVideo_calledTimes, 1)
     }
     
     func testAction_switchToSpeakerView_shouldPinFirstParticipantAsSpeaker() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
-        sut.participantJoined(participant: firstParticipant)
-        sut.layoutMode = .speaker
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.layoutMode = .speaker
         
-        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(harness.sut.layoutMode, .speaker)
         XCTAssertEqual(firstParticipant.isSpeakerPinned, true)
-        XCTAssertEqual(sut.isSpeakerParticipantPinned, true)
-        XCTAssertEqual(sut.speakerParticipant, firstParticipant)
+        XCTAssertEqual(harness.sut.isSpeakerParticipantPinned, true)
+        XCTAssertEqual(harness.sut.speakerParticipant, firstParticipant)
     }
     
     func testAction_switchToGridView_shouldUnpinSpeaker() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
-        sut.participantJoined(participant: firstParticipant)
-        sut.layoutMode = .speaker
-        sut.layoutMode = .grid
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.layoutMode = .speaker
+        harness.sut.layoutMode = .grid
 
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
         XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
-        XCTAssertEqual(sut.isSpeakerParticipantPinned, false)
-        XCTAssertEqual(sut.speakerParticipant, nil)
+        XCTAssertEqual(harness.sut.isSpeakerParticipantPinned, false)
+        XCTAssertEqual(harness.sut.speakerParticipant, nil)
     }
     
     func testCallBack_participantAudioLevelDetectedInGridMode_shouldUpdateAudioDetectedAndNoSetAsSpeakerPartipant() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
-        sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: firstParticipant)
         firstParticipant.audioDetected = true
-        sut.audioLevel(for: firstParticipant)
+        harness.sut.audioLevel(for: firstParticipant)
         
-        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(harness.sut.layoutMode, .grid)
         XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
         XCTAssertEqual(firstParticipant.audioDetected, true)
-        XCTAssertEqual(sut.speakerParticipant, nil)
+        XCTAssertEqual(harness.sut.speakerParticipant, nil)
     }
     
     func testCallBack_participantAudioLevelDetectedInSpeakerModeAndOtherParticipantPinned_shouldUpdateAudioDetectedAndNoSetAsSpeakerPartipant() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2)
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
-        sut.layoutMode = .speaker
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
+        harness.sut.layoutMode = .speaker
         secondParticipant.audioDetected = true
-        sut.audioLevel(for: secondParticipant)
+        harness.sut.audioLevel(for: secondParticipant)
         
-        XCTAssertEqual(sut.layoutMode, .speaker)
-        XCTAssertEqual(sut.isSpeakerParticipantPinned, true)
+        XCTAssertEqual(harness.sut.layoutMode, .speaker)
+        XCTAssertEqual(harness.sut.isSpeakerParticipantPinned, true)
         XCTAssertEqual(firstParticipant.isSpeakerPinned, true)
         XCTAssertEqual(secondParticipant.isSpeakerPinned, false)
         XCTAssertEqual(secondParticipant.audioDetected, true)
-        XCTAssertEqual(sut.speakerParticipant, firstParticipant)
+        XCTAssertEqual(harness.sut.speakerParticipant, firstParticipant)
     }
     
     func testCallBack_participantAudioLevelDetectedInSpeakerModeAndNoOtherParticipantPinned_shouldUpdateAudioDetectedAndSetAsSpeakerPartipant() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2)
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
-        sut.layoutMode = .speaker
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
+        harness.sut.layoutMode = .speaker
         
-        sut.tappedParticipant(firstParticipant)
+        harness.sut.tappedParticipant(firstParticipant)
 
-        XCTAssertEqual(sut.isSpeakerParticipantPinned, false)
-        XCTAssertEqual(sut.speakerParticipant, nil)
+        XCTAssertEqual(harness.sut.isSpeakerParticipantPinned, false)
+        XCTAssertEqual(harness.sut.speakerParticipant, nil)
         XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
 
         secondParticipant.audioDetected = true
-        sut.audioLevel(for: secondParticipant)
+        harness.sut.audioLevel(for: secondParticipant)
         
-        XCTAssertEqual(sut.layoutMode, .speaker)
-        XCTAssertEqual(sut.isSpeakerParticipantPinned, false)
+        XCTAssertEqual(harness.sut.layoutMode, .speaker)
+        XCTAssertEqual(harness.sut.isSpeakerParticipantPinned, false)
         XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
         XCTAssertEqual(secondParticipant.isSpeakerPinned, false)
         XCTAssertEqual(secondParticipant.audioDetected, true)
-        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+        XCTAssertEqual(harness.sut.speakerParticipant, secondParticipant)
     }
 
     func testCallBack_participantPinnedAndAudioLevelDetectedInSpeakerMode_shouldUpdateAudioDetectedAndKeepAsSpeakerPartipant() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2)
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
-        sut.layoutMode = .speaker
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
+        harness.sut.layoutMode = .speaker
         
-        sut.tappedParticipant(secondParticipant)
+        harness.sut.tappedParticipant(secondParticipant)
 
         secondParticipant.audioDetected = true
-        sut.audioLevel(for: secondParticipant)
+        harness.sut.audioLevel(for: secondParticipant)
         
-        XCTAssertEqual(sut.layoutMode, .speaker)
-        XCTAssertEqual(sut.isSpeakerParticipantPinned, true)
+        XCTAssertEqual(harness.sut.layoutMode, .speaker)
+        XCTAssertEqual(harness.sut.isSpeakerParticipantPinned, true)
         XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
         XCTAssertEqual(secondParticipant.isSpeakerPinned, true)
         XCTAssertEqual(secondParticipant.audioDetected, true)
-        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+        XCTAssertEqual(harness.sut.speakerParticipant, secondParticipant)
     }
     
     func testConfigScreenShareParticipants_forFirstParticipantIsSharingScreenAndSecondParticipantIsSpeakerAndNotSharingScreen_shouldCreateScreenShareParticipantForTheFirstParticipantBeforePresenterView() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
-        sut.layoutMode = .speaker
-        sut.tappedParticipant(secondParticipant)
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
+        harness.sut.layoutMode = .speaker
+        harness.sut.tappedParticipant(secondParticipant)
         
-        XCTAssertEqual(sut.callParticipants.count, 3)
-        XCTAssertEqual(sut.callParticipants[0], firstParticipant)
-        XCTAssertTrue(sut.callParticipants[0].isScreenShareCell)
-        XCTAssertEqual(sut.callParticipants[1], firstParticipant)
-        XCTAssertFalse(sut.callParticipants[1].isScreenShareCell)
+        XCTAssertEqual(harness.sut.callParticipants.count, 3)
+        XCTAssertEqual(harness.sut.callParticipants[0], firstParticipant)
+        XCTAssertTrue(harness.sut.callParticipants[0].isScreenShareCell)
+        XCTAssertEqual(harness.sut.callParticipants[1], firstParticipant)
+        XCTAssertFalse(harness.sut.callParticipants[1].isScreenShareCell)
     }
     
     func testConfigScreenShareParticipants_forFirstParticipantIsSharingScreenAndSecondParticipantIsSpeakerAndIsSharingScreen_shouldCreateScreenShareParticipantForTheFirstParticipantBeforePresenterView() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: true)
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
-        sut.layoutMode = .speaker
-        sut.tappedParticipant(secondParticipant)
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
+        harness.sut.layoutMode = .speaker
+        harness.sut.tappedParticipant(secondParticipant)
         
-        XCTAssertEqual(sut.callParticipants.count, 3)
-        XCTAssertEqual(sut.callParticipants[1], firstParticipant)
-        XCTAssertTrue(sut.callParticipants[1].isScreenShareCell)
-        XCTAssertEqual(sut.callParticipants[2], firstParticipant)
-        XCTAssertFalse(sut.callParticipants[2].isScreenShareCell)
+        XCTAssertEqual(harness.sut.callParticipants.count, 3)
+        XCTAssertEqual(harness.sut.callParticipants[1], firstParticipant)
+        XCTAssertTrue(harness.sut.callParticipants[1].isScreenShareCell)
+        XCTAssertEqual(harness.sut.callParticipants[2], firstParticipant)
+        XCTAssertFalse(harness.sut.callParticipants[2].isScreenShareCell)
     }
     
     func testUpdateParticipant_onStopScreenShareAndThereIsScreenSharingParticipent_theNextScreenSharingParticipantShouldBecomeSpeaker() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: true)
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
-        sut.layoutMode = .speaker
-        sut.tappedParticipant(secondParticipant)
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
+        harness.sut.layoutMode = .speaker
+        harness.sut.tappedParticipant(secondParticipant)
         
-        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+        XCTAssertEqual(harness.sut.speakerParticipant, secondParticipant)
         
         let updatedParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
-        sut.updateParticipant(updatedParticipant)
+        harness.sut.updateParticipant(updatedParticipant)
         
-        XCTAssertEqual(sut.speakerParticipant, firstParticipant)
+        XCTAssertEqual(harness.sut.speakerParticipant, firstParticipant)
     }
     
     func testUpdateParticipant_onStopScreenShareAndThereIsNoScreenSharingParticipent_theSpeakerShouldBeNil() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: false)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: true)
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
-        sut.layoutMode = .speaker
-        sut.tappedParticipant(secondParticipant)
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
+        harness.sut.layoutMode = .speaker
+        harness.sut.tappedParticipant(secondParticipant)
         
-        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+        XCTAssertEqual(harness.sut.speakerParticipant, secondParticipant)
         
         let updatedParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
-        sut.updateParticipant(updatedParticipant)
+        harness.sut.updateParticipant(updatedParticipant)
         
-        XCTAssertNil(sut.speakerParticipant)
+        XCTAssertNil(harness.sut.speakerParticipant)
     }
     
     func testTappedParticipant_onFirstScreenShareParticipantAndTapSecondAndThirdNonScreenSareParticipant_shouldNotUpdateFirstScreenShareParticipant() {
-        let sut = makeMeetingParticipantsLayoutViewModel()
+        let harness = Harness()
         let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
         let thirdParticipant = CallParticipantEntity(participantId: 103, clientId: 3, hasScreenShare: false)
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
-        sut.participantJoined(participant: thirdParticipant)
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
+        harness.sut.participantJoined(participant: thirdParticipant)
         
-        sut.tappedParticipant(secondParticipant)
+        harness.sut.tappedParticipant(secondParticipant)
         
-        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
-        XCTAssertEqual(sut.callParticipants[0], firstParticipant)
-        XCTAssertTrue(sut.callParticipants[0].isScreenShareCell)
+        XCTAssertEqual(harness.sut.speakerParticipant, secondParticipant)
+        XCTAssertEqual(harness.sut.callParticipants[0], firstParticipant)
+        XCTAssertTrue(harness.sut.callParticipants[0].isScreenShareCell)
         
-        sut.tappedParticipant(thirdParticipant)
+        harness.sut.tappedParticipant(thirdParticipant)
         
-        XCTAssertEqual(sut.speakerParticipant, thirdParticipant)
-        XCTAssertEqual(sut.callParticipants[0], firstParticipant)
-        XCTAssertTrue(sut.callParticipants[0].isScreenShareCell)
+        XCTAssertEqual(harness.sut.speakerParticipant, thirdParticipant)
+        XCTAssertEqual(harness.sut.callParticipants[0], firstParticipant)
+        XCTAssertTrue(harness.sut.callParticipants[0].isScreenShareCell)
     }
     
     func testCallUpdate_localUserRaiseHand() {
         let callUseCase = MockCallUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             callUseCase: callUseCase,
             chatUseCase: MockChatUseCase(myUserHandle: 100)
         )
         
         let exp = expectation(description: "local user raise hand icon visible after onChatCallUpdate with local user handle in the raise hands list")
         
-        sut.invokeCommand = { command in
+        harness.sut.invokeCommand = { command in
             switch command {
             case .updateLocalRaisedHandHidden(let hidden):
                 XCTAssertEqual(hidden, false)
@@ -1207,14 +1219,14 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
     func testCallUpdate_localUserNotRaiseHand() {
         let callUseCase = MockCallUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             callUseCase: callUseCase,
             chatUseCase: MockChatUseCase(myUserHandle: 100)
         )
         
         let exp = expectation(description: "local user raise hand icon NOT visible after onChatCallUpdate without local user handle in the raise hands list")
         
-        sut.invokeCommand = { command in
+        harness.sut.invokeCommand = { command in
             switch command {
             case .updateLocalRaisedHandHidden(let hidden):
                 XCTAssertEqual(hidden, true)
@@ -1230,7 +1242,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
     func testCallUpdate_remoteUserRaiseHand() {
         let callUseCase = MockCallUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             callUseCase: callUseCase
         )
         
@@ -1239,7 +1251,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, raisedHand: false)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, raisedHand: false)
         
-        sut.invokeCommand = { command in
+        harness.sut.invokeCommand = { command in
             switch command {
             case .reloadParticipantRaisedHandAt(let index, let participants):
                 XCTAssertTrue(participants[index].raisedHand)
@@ -1248,10 +1260,10 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 break
             }
         }
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
         
-        XCTAssertFalse(sut.callParticipants[0].raisedHand)
+        XCTAssertFalse(harness.sut.callParticipants[0].raisedHand)
 
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
 
@@ -1260,7 +1272,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
     func testCallUpdate_remoteUserLowHand() {
         let callUseCase = MockCallUseCase()
-        let sut = makeMeetingParticipantsLayoutViewModel(
+        let harness = Harness(
             callUseCase: callUseCase
         )
         
@@ -1269,7 +1281,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, raisedHand: true)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, raisedHand: false)
         
-        sut.invokeCommand = { command in
+        harness.sut.invokeCommand = { command in
             switch command {
             case .reloadParticipantRaisedHandAt(let index, let participants):
                 XCTAssertFalse(participants[index].raisedHand)
@@ -1278,59 +1290,62 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 break
             }
         }
-        sut.participantJoined(participant: firstParticipant)
-        sut.participantJoined(participant: secondParticipant)
+        harness.sut.participantJoined(participant: firstParticipant)
+        harness.sut.participantJoined(participant: secondParticipant)
         
-        XCTAssertTrue(sut.callParticipants[0].raisedHand)
+        XCTAssertTrue(harness.sut.callParticipants[0].raisedHand)
 
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: []))
 
         wait(for: [remoteUserLowHandExpectation], timeout: 3)
     }
     
-    // MARK: - Private functions
-    
-    private func makeMeetingParticipantsLayoutViewModel(
-        containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
-        callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
-        chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
-        callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
-        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
-        localVideoUseCase: some CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
-        remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol = MockCallRemoteVideoUseCase(),
-        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
-        userImageUseCase: some UserImageUseCaseProtocol = MockUserImageUseCase(),
-        analyticsEventUseCase: some AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
-        megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-        callManager: some CallManagerProtocol = MockCallManager(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
-        chatRoom: ChatRoomEntity = ChatRoomEntity(),
-        call: CallEntity = CallEntity(),
-        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
-    ) -> MeetingParticipantsLayoutViewModel {
-        MeetingParticipantsLayoutViewModel(
-            containerViewModel: containerViewModel, 
-            chatUseCase: chatUseCase,
-            callUseCase: callUseCase,
-            callSessionUseCase: callSessionUseCase,
-            captureDeviceUseCase: captureDeviceUseCase,
-            localVideoUseCase: localVideoUseCase,
-            remoteVideoUseCase: remoteVideoUseCase,
-            chatRoomUseCase: chatRoomUseCase,
-            chatRoomUserUseCase: chatRoomUserUseCase,
-            accountUseCase: accountUseCase,
-            userImageUseCase: userImageUseCase,
-            analyticsEventUseCase: analyticsEventUseCase,
-            megaHandleUseCase: megaHandleUseCase,
-            callManager: callManager,
-            featureFlagProvider: featureFlagProvider,
-            chatRoom: chatRoom,
-            call: call,
-            preferenceUseCase: preferenceUseCase, 
-            layoutUpdateChannel: .init()
-        )
+    class Harness {
+        let sut: MeetingParticipantsLayoutViewModel
+        init(
+            containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
+            callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+            chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
+            callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
+            captureDeviceUseCase: some CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
+            localVideoUseCase: some CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
+            remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol = MockCallRemoteVideoUseCase(),
+            chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+            chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
+            accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+            userImageUseCase: some UserImageUseCaseProtocol = MockUserImageUseCase(),
+            analyticsEventUseCase: some AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
+            megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+            callManager: some CallManagerProtocol = MockCallManager(),
+            featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+            chatRoom: ChatRoomEntity = ChatRoomEntity(),
+            call: CallEntity = CallEntity(),
+            preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+            cameraSwitcher: some CameraSwitching = MockCameraSwitcher()
+        ) {
+            self.sut = .init(
+                containerViewModel: containerViewModel,
+                chatUseCase: chatUseCase,
+                callUseCase: callUseCase,
+                callSessionUseCase: callSessionUseCase,
+                captureDeviceUseCase: captureDeviceUseCase,
+                localVideoUseCase: localVideoUseCase,
+                remoteVideoUseCase: remoteVideoUseCase,
+                chatRoomUseCase: chatRoomUseCase,
+                chatRoomUserUseCase: chatRoomUserUseCase,
+                accountUseCase: accountUseCase,
+                userImageUseCase: userImageUseCase,
+                analyticsEventUseCase: analyticsEventUseCase,
+                megaHandleUseCase: megaHandleUseCase,
+                callManager: callManager,
+                featureFlagProvider: featureFlagProvider,
+                chatRoom: chatRoom,
+                call: call,
+                preferenceUseCase: preferenceUseCase,
+                layoutUpdateChannel: .init(),
+                cameraSwitcher: cameraSwitcher
+            )
+        }
     }
     
     private func verifyParticipantsStatus(viewModel: MeetingParticipantsLayoutViewModel, actions: [CallViewAction], relaysCommand: MeetingParticipantsLayoutViewModel.Command) async {

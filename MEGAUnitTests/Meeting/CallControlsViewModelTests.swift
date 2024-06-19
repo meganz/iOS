@@ -77,7 +77,7 @@ final class CallControlsViewModelTests: XCTestCase {
     }
     
     func testSwitchCamera_cameraNotEnabled_shouldNotSwitchCamera() async {
-        let harness = Harness()
+        let harness = Harness(permissionsAuthorised: true, cameraEnabled: false)
         await harness.switchCameraTapped()
         XCTAssertFalse(harness.switchCameraCalled())
     }
@@ -243,6 +243,8 @@ final class CallControlsViewModelTests: XCTestCase {
         let layoutUpdateChannel = ParticipantLayoutUpdateChannel()
         var presentedMenuActions: [ActionSheetAction] = []
         var layoutUpdates: [ParticipantsLayoutMode] = []
+        let cameraSwitcher = MockCameraSwitcher()
+        
         init(
             chatType: ChatRoomEntity.ChatType = .meeting,
             isModerator: Bool = true,
@@ -272,7 +274,6 @@ final class CallControlsViewModelTests: XCTestCase {
                 menuPresenter: { actions in menuPresenter(actions) },
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
-                captureDeviceUseCase: MockCaptureDeviceUseCase(cameraPositionName: "back"),
                 localVideoUseCase: localVideoUseCase,
                 containerViewModel: containerViewModel,
                 audioSessionUseCase: audioSessionUseCase,
@@ -286,7 +287,8 @@ final class CallControlsViewModelTests: XCTestCase {
                 audioRouteChangeNotificationName: .audioRouteChange,
                 featureFlagProvider: MockFeatureFlagProvider(list: [.raiseToSpeak: raiseToSpeakFeatureEnabled]),
                 accountUseCase: MockAccountUseCase(currentUser: .testUser),
-                layoutUpdateChannel: layoutUpdateChannel
+                layoutUpdateChannel: layoutUpdateChannel,
+                cameraSwitcher: cameraSwitcher
             )
             
             menuPresenter = { [weak self] in
@@ -350,7 +352,7 @@ final class CallControlsViewModelTests: XCTestCase {
         }
         
         func switchCameraCalled() -> Bool {
-            localVideoUseCase.selectedCamera_calledTimes == 1
+            cameraSwitcher.switchCamera_CallCount == 1
         }
         
         func postAudioRouteChangeNotification() {

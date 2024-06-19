@@ -34,7 +34,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private var waitingForOthersNotificationView: CallNotificationView?
     private var callEndTimerNotificationView: CallNotificationView?
     private var callWillEndTimerNotificationView: CallNotificationView?
-
+    
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
@@ -51,10 +51,28 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         action: #selector(MeetingParticipantsLayoutViewController.didTapOptionsButton)
     )
     
+    private func switchCameraModeBarButton(enabled: Bool) -> UIBarButtonItem {
+        let item = UIBarButtonItem(
+            image: enabled ? UIImage(resource: .callControlSwitchCameraEnabled) : UIImage(resource: .callControlSwitchCameraDisabled),
+            primaryAction: .init(handler: {[weak self] _ in
+                self?.viewModel.dispatch(.switchCamera)
+            })
+        )
+        item.isEnabled = enabled
+        return item
+    }
+    
+    lazy private var shareLinkButton = UIBarButtonItem(
+        image: UIImage(resource: .shareCallLink),
+        style: .plain,
+        target: self,
+        action: #selector(MeetingParticipantsLayoutViewController.shareLinkButtonTapped)
+    )
+    
     private var statusBarHidden = false {
-      didSet(newValue) {
-        setNeedsStatusBarAppearanceUpdate()
-      }
+        didSet(newValue) {
+            setNeedsStatusBarAppearanceUpdate()
+        }
     }
     private var isIPhoneLandscape: Bool {
         UIDevice.current.iPhoneDevice &&
@@ -82,7 +100,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         navigationController?.navigationBar.isTranslucent = true
         overrideUserInterfaceStyle = .dark
         callCollectionView.overrideUserInterfaceStyle = .dark
-
+        
         if UIColor.isDesignTokenEnabled() {
             view.backgroundColor = TokenColors.Background.page
         }
@@ -151,11 +169,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         switch command {
         case .configView(let title, let subtitle, let isUserAGuest, let isOneToOne):
             self.isUserAGuest = isUserAGuest
-            configureNavigationBar(title, subtitle)
+            configureNavigationBar(
+                title: title,
+                subtitle: subtitle,
+                isOneToOne: isOneToOne
+            )
             callCollectionView.configure(with: self)
-            if isOneToOne {
-                navigationItem.rightBarButtonItems = nil
-            }
             configureLayout(mode: .grid, participantsCount: 0)
         case .configLocalUserView(let position):
             localUserView.configure(for: position)
@@ -171,6 +190,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             disableSwitchLayoutModeButton(disable)
         case .switchLocalVideo(let isVideoEnabled):
             localUserView.switchVideo(to: isVideoEnabled)
+            updateRightBarItems()
         case .updateName(let name):
             titleView.configure(title: name, subtitle: nil)
         case .updateDuration(let duration):
@@ -278,6 +298,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             updateCallWillEndNotification(remainingTime: remainingTime)
         case .hideCallWillEnd:
             removeCallWillEndNotificationView()
+        case .enableSwitchCameraButton:
+            updateRightBarItems()
         }
     }
     
@@ -285,13 +307,17 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @objc func didTapBackButton() {
         viewModel.dispatch(.tapOnBackButton)
     }
-
+    
     @objc func didTapLayoutModeButton() {
         viewModel.dispatch(.tapOnLayoutModeButton)
     }
     
     @objc func didTapOptionsButton() {
         viewModel.dispatch(.tapOnOptionsMenuButton(presenter: navigationController ?? self, sender: optionsMenuButton))
+    }
+    
+    @objc func shareLinkButtonTapped() {
+        viewModel.dispatch(.shareLink(shareLinkButton))
     }
     
     @IBAction func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
@@ -366,11 +392,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func updateCallEndDurationRemaining(string: String) {
         let displayString = Strings.Localizable.Meetings.Notification.endCallTimerDuration(string)
-                
+        
         guard let notification = callEndTimerNotificationView else {
             let notification = CallNotificationView.instanceFromNib
             view.addSubview(notification)
-
+            
             notification.show(message: displayString,
                               backgroundColor: Constants.notificationMessageWhiteBackgroundColor,
                               textColor: Constants.notificationMessageBlackTextColor)
@@ -389,14 +415,14 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     func showRenameAlert(title: String, isMeeting: Bool) {
         let actionTitle = isMeeting ? Strings.Localizable.Meetings.Action.rename : Strings.Localizable.renameGroup
         let renameAlertController = UIAlertController(title: actionTitle, message: Strings.Localizable.renameNodeMessage, preferredStyle: .alert)
-
+        
         renameAlertController.addTextField { textField in
             textField.text = title
             textField.returnKeyType = .done
             textField.enablesReturnKeyAutomatically = true
             textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         }
-
+        
         renameAlertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: { [weak self] _ in
             self?.viewModel.dispatch(.discardChangeTitle)
         }))
@@ -410,25 +436,45 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         
         present(renameAlertController, animated: true, completion: nil)
     }
-
+    
     @objc func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text else {
             return
         }
         viewModel.dispatch(.renameTitleDidChange(text))
     }
-
+    
     private func updateNavigationBarAppearance() {
         guard let navigationBar = navigationController?.navigationBar else { return }
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
     
-    private func configureNavigationBar(_ title: String, _ subtitle: String) {
+    private func configureNavigationBar(
+        title: String,
+        subtitle: String,
+        isOneToOne: Bool
+    ) {
         titleView.configure(title: title, subtitle: subtitle)
         if !(isUserAGuest ?? false) {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(resource: .backArrow), style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
-        navigationItem.rightBarButtonItems = [optionsMenuButton, layoutModeBarButton]
+        updateRightBarItems()
+    }
+    
+    private func updateRightBarItems() {
+        navigationItem.rightBarButtonItems = rightBarButtons()
+    }
+    
+    private func rightBarButtons() -> [UIBarButtonItem] {
+        guard viewModel.showRightNavBarItems else {
+            return []
+        }
+        
+        if viewModel.cameraAndShareButtonsInNavBar {
+            return [switchCameraModeBarButton(enabled: viewModel.cameraEnabled), shareLinkButton]
+        } else {
+            return [optionsMenuButton, layoutModeBarButton]
+        }
     }
     
     private func showReconnectingNotification() {
@@ -521,7 +567,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         
         emptyMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         emptyMessage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-
+        
         emptyMeetingMessageView = emptyMessage
     }
     

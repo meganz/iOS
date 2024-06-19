@@ -216,7 +216,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         if let presenter = presenter {
             presenter.present(activityViewController, animated: true)
         } else {
-            baseViewController?.present(activityViewController, animated: true)
+            UIApplication.mnz_presentingViewController()
+                .present(activityViewController, animated: true)
         }
     }
     

@@ -13,7 +13,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private var chatRoom: ChatRoomEntity
     
     private let callUseCase: any CallUseCaseProtocol
-    private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
@@ -25,6 +24,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private let notificationCenter: NotificationCenter
     private let audioRouteChangeNotificationName: Notification.Name
     private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
+    private let cameraSwitcher: any CameraSwitching
     
     private var subscriptions = Set<AnyCancellable>()
 
@@ -39,7 +39,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         menuPresenter: @escaping ([ActionSheetAction]) -> Void,
         chatRoom: ChatRoomEntity,
         callUseCase: some CallUseCaseProtocol,
-        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
         containerViewModel: MeetingContainerViewModel? = nil,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
@@ -49,14 +48,14 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         audioRouteChangeNotificationName: Notification.Name,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         accountUseCase: some AccountUseCaseProtocol,
-        layoutUpdateChannel: ParticipantLayoutUpdateChannel
+        layoutUpdateChannel: ParticipantLayoutUpdateChannel,
+        cameraSwitcher: some CameraSwitching
     ) {
         self.router = router
         self.scheduler = scheduler
         self.menuPresenter = menuPresenter
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
-        self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.containerViewModel = containerViewModel
         self.permissionHandler = permissionHandler
@@ -67,6 +66,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.featureFlagProvider = featureFlagProvider
         self.accountUseCase = accountUseCase
         self.layoutUpdateChannel = layoutUpdateChannel
+        self.cameraSwitcher = cameraSwitcher
         
         guard let call = callUseCase.call(for: chatRoom.chatId) else {
             MEGALogError("Error initialising call actions, call does not exists")
@@ -130,7 +130,10 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     // we do not show raise hand functionality in one-to-one calls
     var showMoreButton: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak) && isNotOneToOneCall
+        moreButtonVisibleInCallControls(
+            isOneToOne: !isNotOneToOneCall, 
+            raiseHandFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak)
+        )
     }
     
     private func switchLayout(
@@ -219,7 +222,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     private func manageEndCall() {
         guard let call = callUseCase.call(for: chatRoom.chatId) else {
-            MEGALogError("Error hanging call, call does not exists")
+            MEGALogError("[CallControls] Error hanging call, call does not exists")
             return
         }
         if (chatRoom.chatType == .group || chatRoom.chatType == .meeting) && chatRoom.ownPrivilege == .moderator && call.numberOfParticipants > 1, let containerViewModel {
@@ -248,7 +251,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
                 }
                 cameraEnabled.toggle()
             } catch {
-                MEGALogDebug("Error enabling or disabling local video")
+                MEGALogDebug("[CallControls] Error enabling or disabling local video")
             }
         } else {
             router.showVideoPermissionError()
@@ -256,25 +259,9 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     }
     
     @MainActor private func switchCamera() async {
-        guard cameraEnabled else { return }
-        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: isBackCameraSelected() ? .front : .back) else {
-            MEGALogError("[cma] Error getting camera localised name")
-            return
+        if cameraEnabled {
+            await cameraSwitcher.switchCamera()
         }
-        do {
-            try await localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
-        } catch {
-            MEGALogError("Error selecting camera: \(error.localizedDescription)")
-        }
-    }
-    
-    private func isBackCameraSelected() -> Bool {
-        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: .back),
-              localVideoUseCase.videoDeviceSelected() == selectCameraLocalizedString else {
-            return false
-        }
-        
-        return true
     }
     
     private func registerForAudioRouteChanges() {
