@@ -84,7 +84,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             menuPresenter: presentMenu,
             chatRoom: chatRoom,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
-            captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
             containerViewModel: containerViewModel, 
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
@@ -94,7 +93,11 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             audioRouteChangeNotificationName: AVAudioSession.routeChangeNotification,
             featureFlagProvider: DIContainer.featureFlagProvider, 
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            layoutUpdateChannel: layoutUpdateChannel
+            layoutUpdateChannel: layoutUpdateChannel,
+            cameraSwitcher: CameraSwitcher(
+                captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
+                localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared))
+            )
         )
         
         let callControlsViewHost = UIHostingController(rootView: CallControlsView(viewModel: callControlsViewModel))

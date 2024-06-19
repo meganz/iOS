@@ -1372,6 +1372,7 @@
 		94614C752910554200503174 /* TransferNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94614C742910554200503174 /* TransferNodeTableViewCell.xib */; };
 		94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
+		9462D4B22C203A090049B3CA /* CameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9462D4B12C203A090049B3CA /* CameraSwitcher.swift */; };
 		9462D4BC2C204A9D0049B3CA /* CombineSchedulers in Frameworks */ = {isa = PBXBuildFile; productRef = 9462D4BB2C204A9D0049B3CA /* CombineSchedulers */; };
 		9463EEDB2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9463EEDA2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift */; };
 		946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */; };
@@ -1416,6 +1417,9 @@
 		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
+		948BCDFF2C20683200B719B2 /* RaiseHandFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */; };
+		948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */; };
+		948BCE062C20704D00B719B2 /* CameraSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */; };
 		949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */; };
 		9495DBB12A4086BF00FA22EE /* PermissionModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB02A4086BF00FA22EE /* PermissionModalModel.swift */; };
 		9495DBB32A4086DD00FA22EE /* UIAlertController+AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB22A4086DD00FA22EE /* UIAlertController+AlertModel.swift */; };
@@ -4145,6 +4149,7 @@
 		94614C742910554200503174 /* TransferNodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferNodeTableViewCell.xib; sourceTree = "<group>"; };
 		94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAExportRequestDelegate.h; path = API/Requests/MEGAExportRequestDelegate.h; sourceTree = "<group>"; };
 		94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAExportRequestDelegate.m; path = API/Requests/MEGAExportRequestDelegate.m; sourceTree = "<group>"; };
+		9462D4B12C203A090049B3CA /* CameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSwitcher.swift; sourceTree = "<group>"; };
 		9463EEDA2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatRoomPrivilegeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouterTests.swift; sourceTree = "<group>"; };
 		9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeEntityMappingTests.swift; sourceTree = "<group>"; };
@@ -4179,6 +4184,9 @@
 		948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManagerTests.swift; sourceTree = "<group>"; };
 		9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserViewModelTests.swift; sourceTree = "<group>"; };
 		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
+		948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandFeatureTests.swift; sourceTree = "<group>"; };
+		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
+		948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSwitcherTests.swift; sourceTree = "<group>"; };
 		948D92672B2373CE0020E894 /* DisplayMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
@@ -9936,6 +9944,7 @@
 				9911BA892A8B209F00B88F28 /* WaitingRoom */,
 				83CB60EB2AC58EC600042EBD /* WaitingRoomParticipantsListScene */,
 				831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */,
+				9462D4B12C203A090049B3CA /* CameraSwitcher.swift */,
 				BF66E00826140BE900066F35 /* MeetingContainerRouter.swift */,
 				BF66DFFE26140B3D00066F35 /* MeetingContainerViewController.swift */,
 				BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */,
@@ -12337,6 +12346,8 @@
 				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
 				837D0F362BC7D3B000C629AE /* MockCallManager.swift */,
 				830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */,
+				948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */,
+				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
 				8326E68B2BE50A5400481711 /* MockPasscodeManager.swift */,
 				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
 				83669E8B2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift */,
@@ -12669,6 +12680,7 @@
 				94EC99BB2BEA37F10007E30C /* CallKitProviderDelegateTests.swift */,
 				992003572B0C09620058FF5F /* CallParticipantCellTests.swift */,
 				838116232BA32565001A2937 /* CallWillEndAlertViewModelTests.swift */,
+				948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */,
 				990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */,
 				998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */,
 				998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */,
@@ -12688,6 +12700,7 @@
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
 				833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */,
 				83DAF93B2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift */,
+				948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */,
 				BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */,
 				83522FC92A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift */,
 				BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */,
@@ -14396,6 +14409,7 @@
 				838F27C72BA1E68700F267BC /* CallWillEndAlertRouter.swift in Sources */,
 				8331D8672BA32E5D0071BAD0 /* CallWillEndAlertViewModel.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
+				9462D4B22C203A090049B3CA /* CameraSwitcher.swift in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				6D90A68F2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
@@ -16277,6 +16291,7 @@
 				992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				838116242BA32565001A2937 /* CallWillEndAlertViewModelTests.swift in Sources */,
+				948BCE062C20704D00B719B2 /* CameraSwitcherTests.swift in Sources */,
 				25A58F902B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
 				25B774C42B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift in Sources */,
@@ -16396,6 +16411,7 @@
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,
 				837D0F372BC7D3B000C629AE /* MockCallManager.swift in Sources */,
 				830F60F12BD16BE600A1DA60 /* MockCallsCoordinator.swift in Sources */,
+				948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
@@ -16488,6 +16504,7 @@
 				247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */,
 				24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */,
 				948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */,
+				948BCDFF2C20683200B719B2 /* RaiseHandFeatureTests.swift in Sources */,
 				C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */,
 				24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,

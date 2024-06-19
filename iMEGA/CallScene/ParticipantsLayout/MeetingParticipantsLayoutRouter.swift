@@ -21,7 +21,6 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
     private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
-    
     init(
         presenter: UINavigationController,
         containerViewModel: MeetingContainerViewModel,
@@ -67,7 +66,11 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             callManager: CallKitCallManager.shared,
             chatRoom: chatRoom,
             call: call,
-            layoutUpdateChannel: layoutUpdateChannel
+            layoutUpdateChannel: layoutUpdateChannel,
+            cameraSwitcher: CameraSwitcher(
+                captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
+                localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .sharedChatSdk))
+            )
         )
         
         let vc = MeetingParticipantsLayoutViewController(viewModel: vm)

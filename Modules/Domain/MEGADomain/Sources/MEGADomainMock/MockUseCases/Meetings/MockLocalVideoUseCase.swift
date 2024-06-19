@@ -9,7 +9,7 @@ public final class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     public var disableLocalVideo_CalledTimes = 0
     var addLocalVideo_CalledTimes = 0
     var removeLocalVideo_CalledTimes = 0
-    public var selectedCamera_calledTimes = 0
+    public var selectedCameras = [String]()
     var openDevice_calledTimes = 0
     var releaseVideoDevice_calledTimes = 0
 
@@ -44,12 +44,12 @@ public final class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     }
     
     public func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        selectedCamera_calledTimes += 1
+        selectedCameras.append(localizedName)
         completion(selectCameraResult)
     }
     
     public func selectCamera(withLocalizedName localizedName: String) async throws {
-        selectedCamera_calledTimes += 1
+        selectedCameras.append(localizedName)
     }
 
     public func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
