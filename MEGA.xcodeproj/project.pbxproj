@@ -1045,7 +1045,6 @@
 		8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366518126497B3600BC02F0 /* CallParticipantCell.swift */; };
 		8366518A26497B3600BC02F0 /* CallNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366518426497B3600BC02F0 /* CallNotificationView.swift */; };
 		8366518B26497B3600BC02F0 /* CallNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8366518526497B3600BC02F0 /* CallNotificationView.xib */; };
-		83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83669E8B2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift */; };
 		83669E972987F9BC003E8F74 /* ScheduledMeetingOccurrencesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83669E962987F9BC003E8F74 /* ScheduledMeetingOccurrencesRouter.swift */; };
 		83669E992987F9D7003E8F74 /* ScheduledMeetingOccurrencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83669E982987F9D7003E8F74 /* ScheduledMeetingOccurrencesViewModel.swift */; };
 		83669E9B2987F9F1003E8F74 /* ScheduledMeetingOccurrencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83669E9A2987F9F1003E8F74 /* ScheduledMeetingOccurrencesViewController.swift */; };
@@ -3828,7 +3827,6 @@
 		8366518126497B3600BC02F0 /* CallParticipantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallParticipantCell.swift; sourceTree = "<group>"; };
 		8366518426497B3600BC02F0 /* CallNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallNotificationView.swift; sourceTree = "<group>"; };
 		8366518526497B3600BC02F0 /* CallNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallNotificationView.xib; sourceTree = "<group>"; };
-		83669E8B2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockScheduledMeetingUseCase.swift; sourceTree = "<group>"; };
 		83669E962987F9BC003E8F74 /* ScheduledMeetingOccurrencesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingOccurrencesRouter.swift; sourceTree = "<group>"; };
 		83669E982987F9D7003E8F74 /* ScheduledMeetingOccurrencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingOccurrencesViewModel.swift; sourceTree = "<group>"; };
 		83669E9A2987F9F1003E8F74 /* ScheduledMeetingOccurrencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingOccurrencesViewController.swift; sourceTree = "<group>"; };
@@ -12347,10 +12345,8 @@
 				837D0F362BC7D3B000C629AE /* MockCallManager.swift */,
 				830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */,
 				948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */,
-				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
 				8326E68B2BE50A5400481711 /* MockPasscodeManager.swift */,
 				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
-				83669E8B2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift */,
 				BFCA570E2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift */,
 				949CCB0B2C04F9A300C2782D /* ScheduleMeetingViewModel.swift */,
 				BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */,
@@ -16432,7 +16428,6 @@
 				9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */,
 				C4A016BD2B674DE100492185 /* MockRandomNumberGenerator.swift in Sources */,
 				949704B72AB427BE00B2CA3A /* MockRenameViewRouter.swift in Sources */,
-				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
 				BFCA570F2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift in Sources */,
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
