@@ -219,8 +219,10 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .scanDocument:
             presentScanDocument()
         case .newFolder:
+            viewModel.dispatch(.didTapNewFolder)
             createNewFolderAction()
         case .newTextFile:
+            viewModel.dispatch(.didTapNewTextFile)
             createTextFileAlert()
         case .chooseFromPhotos:
             viewModel.dispatch(.didTapChooseFromPhotos)

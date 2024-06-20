@@ -385,6 +385,20 @@ class CloudDriveViewModelTests: XCTestCase {
             expectedEvent: CloudDriveImportFromFilesMenuToolbarEvent()
         )
     }
+    
+    func test_didTapNewFolder_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapNewFolder,
+            expectedEvent: CloudDriveNewFolderMenuToolbarEvent()
+        )
+    }
+    
+    func test_didTapNewTextFile_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapNewTextFile,
+            expectedEvent: CloudDriveNewTextFileMenuToolbarEvent()
+        )
+    }
 
     func test_didOpenAddMenu_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(

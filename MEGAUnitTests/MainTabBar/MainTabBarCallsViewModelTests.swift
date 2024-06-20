@@ -1,5 +1,6 @@
 import CallKit
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
@@ -365,6 +366,20 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    func test_didTapCloudDriveTab_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapCloudDriveTab,
+            expectedEvent: CloudDriveBottomNavigationItemEvent()
+        )
+    }
+    
+    func test_didTapChatRoomsTab_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapChatRoomsTab,
+            expectedEvent: ChatRoomsBottomNavigationItemEvent()
+        )
+    }
+    
     // MARK: - Private methods
     
     private func evaluate(expression: @escaping () -> Bool) {
@@ -382,7 +397,8 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callManager: some CallManagerProtocol = MockCallManager(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        tracker: some AnalyticsTracking = MockTracker()
     ) -> MainTabBarCallsViewModel {
         MainTabBarCallsViewModel(
             router: router,
@@ -395,7 +411,23 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             handleUseCase: handleUseCase,
             callManager: callManager,
             callUpdateFactory: CXCallUpdateFactory(builder: { CXCallUpdate() }),
-            featureFlagProvider: featureFlagProvider
+            featureFlagProvider: featureFlagProvider,
+            tracker: tracker
+        )
+    }
+    
+    private func trackAnalyticsEventTest(
+        action: MainTabBarCallsAction,
+        expectedEvent: EventIdentifier
+    ) {
+        let mockTracker = MockTracker()
+        let sut = makeMainTabBarCallsViewModel(tracker: mockTracker)
+        
+        sut.dispatch(action)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [expectedEvent]
         )
     }
 }

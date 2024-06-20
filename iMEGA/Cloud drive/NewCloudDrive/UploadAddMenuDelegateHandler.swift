@@ -42,8 +42,10 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
         case .scanDocument:
             nodeInsertionRouter.scanDocument(for: node)
         case .newFolder:
+            trackNewFolderEvent()
             nodeInsertionRouter.createNewFolder(for: node)
         case .newTextFile:
+            trackNewTextFileEvent()
             nodeInsertionRouter.createTextFileAlert(for: node)
         case .importFolderLink:
             break
@@ -58,6 +60,14 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
     
     private func trackImportFromFilesEvent() {
         tracker.trackAnalyticsEvent(with: CloudDriveImportFromFilesMenuToolbarEvent())
+    }
+    
+    private func trackNewFolderEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveNewFolderMenuToolbarEvent())
+    }
+    
+    private func trackNewTextFileEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveNewTextFileMenuToolbarEvent())
     }
     
     private func trackOpenAddMenuEvent() {

@@ -68,6 +68,26 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
             ]
         )
     }
+    
+    func test_didTapNewFolder_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .newFolder,
+            expectedEvents: [
+                CloudDriveNewFolderMenuToolbarEvent(),
+                CloudDriveAddMenuEvent()
+            ]
+        )
+    }
+    
+    func test_didTapNewTextFile_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .newTextFile,
+            expectedEvents: [
+                CloudDriveNewTextFileMenuToolbarEvent(),
+                CloudDriveAddMenuEvent()
+            ]
+        )
+    }
 
     // MARK: - Private methods.
 
