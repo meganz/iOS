@@ -54,6 +54,10 @@ final class GetNodeLinkViewModel: ViewModelType {
     private var loadingTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
+    
+    deinit {
+        loadingTask?.cancel()
+    }
 
     init(shareUseCase: some ShareUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
@@ -94,8 +98,8 @@ final class GetNodeLinkViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             onViewReady()
-        case .onViewWillDisappear:
-            cancelLoadingTask()
+        case .onViewDidAppear where loadingTask == nil:
+            loadingTask = Task { await startGetLinksCoordinatorStream() }
         default:
             break
         }
@@ -106,7 +110,6 @@ final class GetNodeLinkViewModel: ViewModelType {
         nodeTypes = nodes.map { $0.toNodeEntity().nodeType ?? .unknown }
         nodes.notContains { !$0.isExported() } ? trackGetLink() : trackShareLink()
         updateViewConfiguration()
-        loadingTask = Task { await startGetLinksCoordinatorStream() }
     }
     
     private func trackShareLink() {
@@ -124,11 +127,7 @@ final class GetNodeLinkViewModel: ViewModelType {
                                       isMultilink: isMultiLink,
                                       shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)))
     }
-    
-    private func cancelLoadingTask() {
-        loadingTask = nil
-    }
-    
+        
     @MainActor
     private func startGetLinksCoordinatorStream() async {
         

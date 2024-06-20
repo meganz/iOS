@@ -4,6 +4,7 @@ import MEGAPresentation
 
 enum GetLinkAction: ActionType {
     case onViewReady
+    case onViewDidAppear
     case onViewWillDisappear
     case switchToggled(indexPath: IndexPath, isOn: Bool)
     case shareLink(sender: UIBarButtonItem)
