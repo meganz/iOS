@@ -138,7 +138,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsBackupNode(containsABackupNode)
                 .setAreMediaFiles(areMediaFiles)
                 .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
-                .setIsHidden(await viewModel.containsOnlySensitiveNodes(nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem))
+                .setIsHidden(await viewModel.isHidden(nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .multiselectBuild()
             
@@ -239,7 +239,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsBackupNode(isBackupNode)
                 .setIsExported(node.isExported())
                 .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
-                .setIsHidden(await viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
+                .setIsHidden(await viewModel.isHidden([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .build()
             
@@ -429,7 +429,7 @@ class NodeActionViewController: ActionSheetViewController {
                                     sharedFolderReceiverEmail: sharedFolder.user ?? "",
                                     sharedFolderContact: sharedFolderContact)
                 .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
-                .setIsHidden(await viewModel.containsOnlySensitiveNodes([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
+                .setIsHidden(await viewModel.isHidden([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .build()
             

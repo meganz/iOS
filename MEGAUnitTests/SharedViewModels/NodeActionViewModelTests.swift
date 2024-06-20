@@ -7,70 +7,62 @@ import XCTest
 
 final class NodeActionViewModelTests: XCTestCase {
 
-    func testContainsOnlySensitiveNodes_hiddenNodeFeatureOff_shouldReturnNil() async {
+    func testIsHidden_hiddenNodeFeatureOff_shouldReturnNil() async {
         let node = NodeEntity(handle: 65, isMarkedSensitive: true)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-        let result = await sut.containsOnlySensitiveNodes([node], isFromSharedItem: false)
+        let result = await sut.isHidden([node], isFromSharedItem: false)
         XCTAssertNil(result)
     }
     
-    func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnTrue() async throws {
-        let nodes = makeSensitiveNodes()
+    func testIsHidden_nodesContainsOnlySensitiveNodes_shouldReturnTrue() async throws {
+        let nodes = makeSensitiveNodes(count: 100)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let containsOnlySensitiveNodes = await sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false)
+        let result = await sut.isHidden(nodes, isFromSharedItem: false)
         
-        XCTAssertTrue(try XCTUnwrap(containsOnlySensitiveNodes))
+        XCTAssertTrue(try XCTUnwrap(result))
     }
     
-    func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnFalse() async throws {
-        var nodes = makeSensitiveNodes()
+    func testIsHidden_nodesContainsNodeNotMarkedAsSensitive_shouldReturnFalse() async throws {
+        var nodes = makeSensitiveNodes(count: 100)
         nodes.append(NodeEntity(handle: HandleEntity(nodes.count + 1), isMarkedSensitive: false))
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let containsOnlySensitiveNodes = await sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false)
+        let result = await sut.isHidden(nodes, isFromSharedItem: false)
         
-        XCTAssertFalse(try XCTUnwrap(containsOnlySensitiveNodes))
+        XCTAssertFalse(try XCTUnwrap(result))
     }
     
-    func testContainsOnlySensitiveNodes_isFromSharedItemIsTrue_shouldReturnNil() async throws {
+    func testIsHidden_isFromSharedItemIsTrue_shouldReturnNil() async throws {
         for await isMarkedSensitive in [true, false].async {
             let node = NodeEntity(handle: 65, isMarkedSensitive: isMarkedSensitive)
             let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
             let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-            let result = await sut.containsOnlySensitiveNodes([node], isFromSharedItem: true)
+            let result = await sut.isHidden([node], isFromSharedItem: true)
             XCTAssertNil(result)
         }
     }
     
-    func testContainsOnlySensitiveNodes_nodeIsSystemManaged_shouldReturnExpectedResult() async throws {
-        
-        let situationResult: [(Bool, Bool?)] = [
-            (true, true),
-            (false, nil)
+    func testIsHidden_nodeIsSystemManaged_shouldReturnNil() async throws {
+        let systemNode = NodeEntity(handle: 65)
+        let nodes = [
+            systemNode,
+            NodeEntity(handle: 66, isMarkedSensitive: true)
         ]
-        
-        for await (isMarkedSensitive, expectedResult) in situationResult.async {
-            let systemNode = NodeEntity(handle: 65)
-            let nodes = [
-                systemNode,
-                NodeEntity(handle: 66, isMarkedSensitive: isMarkedSensitive)
-            ]
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
-            let sut = makeSUT(
-                systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
-                    nodesForLocation: [.cameraUpload: systemNode]),
-                featureFlagProvider: featureFlagProvider
-            )
-            let result = await sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false)
-            XCTAssertEqual(result, expectedResult)
-        }
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(
+            systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
+                nodesForLocation: [.cameraUpload: systemNode]),
+            featureFlagProvider: featureFlagProvider
+        )
+        let result = await sut.isHidden(nodes, isFromSharedItem: false)
+        XCTAssertNil(result)
     }
     
-    func testContainsOnlySensitiveNodes_nodeIsSystemManagedAndErrorWasThrown_shouldReturnNil() async throws {
+    func testIsHidden_nodeIsSystemManagedAndErrorWasThrown_shouldReturnNil() async throws {
         
         let errors: [any Error] = [
             GenericErrorEntity(),
@@ -90,9 +82,38 @@ final class NodeActionViewModelTests: XCTestCase {
                     containsSystemGeneratedNodeError: error),
                 featureFlagProvider: featureFlagProvider
             )
-            let result = await sut.containsOnlySensitiveNodes(nodes, isFromSharedItem: false)
+            let result = await sut.isHidden(nodes, isFromSharedItem: false)
             XCTAssertNil(result)
         }
+    }
+    
+    func testIsHidden_nodesEmpty_shouldReturnNil() async throws {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(
+            featureFlagProvider: featureFlagProvider
+        )
+        let result = await sut.isHidden([], isFromSharedItem: false)
+        XCTAssertNil(result)
+    }
+    
+    func testIsHidden_nodesContainNodeThatInheritSensitivity_shouldReturnNil() async throws {
+        let nodeNotSensitive = NodeEntity(handle: 1, isMarkedSensitive: false)
+        let nodeInheritingSensitivity = NodeEntity(handle: 2, isMarkedSensitive: false)
+        let nodes = [nodeNotSensitive, nodeInheritingSensitivity]
+        let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
+            nodeNotSensitive.handle: .success(false),
+            nodeInheritingSensitivity.handle: .success(true)
+        ]
+        let nodeUseCase = MockNodeDataUseCase(
+            isInheritingSensitivityResults: isInheritingSensitivityResults)
+        
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: featureFlagProvider
+        )
+        let result = await sut.isHidden(nodes, isFromSharedItem: false)
+        XCTAssertNil(result)
     }
 
     func testHasValidProOrUnexpiredBusinessAccount_onAccountValidity_shouldReturnCorrectResult() {
@@ -152,18 +173,20 @@ final class NodeActionViewModelTests: XCTestCase {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+        maxDetermineSensitivityTasks: Int = 10,
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> NodeActionViewModel {
         NodeActionViewModel(
             accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             nodeUseCase: nodeUseCase,
+            maxDetermineSensitivityTasks: maxDetermineSensitivityTasks,
             featureFlagProvider: featureFlagProvider)
     }
     
-    private func makeSensitiveNodes() -> [NodeEntity] {
-        (0..<5).map {
-            NodeEntity(handle: $0, isMarkedSensitive: true)
+    private func makeSensitiveNodes(count: Int = 5) -> [NodeEntity] {
+        (0..<count).map {
+            NodeEntity(handle: HandleEntity($0), isMarkedSensitive: true)
         }
     }
 }

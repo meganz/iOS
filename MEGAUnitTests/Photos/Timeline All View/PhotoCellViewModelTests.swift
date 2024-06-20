@@ -713,8 +713,8 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldApplyContentOpacity)
     }
     
-    func testMonitorPhotoSensitivityChanges_photoAndNodeUseCaseProvided_shouldUpdateImageContainerWithInitialResultFirst() async throws {
-        let photo = NodeEntity(handle: 65, isMarkedSensitive: true)
+    func testMonitorPhotoSensitivityChanges_photoNotSensitiveAndNodeUseCaseProvided_shouldUpdateImageContainerWithInitialResultFirst() async throws {
+        let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
         
         let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let isInheritedSensitivity = false
@@ -752,7 +752,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
     
     func testMonitorPhotoSensitivityChanges_inheritedSensitivityChange_shouldNotUpdateIfImageContainerTheSame() async throws {
-        let photo = NodeEntity(handle: 65, isMarkedSensitive: true)
+        let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
         let imageContainer = SensitiveImageContainer(image: Image("folder"), type: .thumbnail, isSensitive: photo.isMarkedSensitive)
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
@@ -780,6 +780,38 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
     
     func testMonitorPhotoSensitivityChanges_thumbnailContainerPlaceholder_shouldNotUpdateImageContainer() async throws {
+        let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
+        let imageContainer = ImageContainer(image: Image("folder"), type: .placeholder)
+        
+        let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: !photo.isMarkedSensitive)
+            .eraseToAnyAsyncThrowingSequence()
+        let nodeUseCase = MockNodeDataUseCase(
+            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+        
+        let sut = makeSUT(photo: photo,
+                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+                          nodeUseCase: nodeUseCase,
+                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+        
+        let exp = expectation(description: "Should not update image container")
+        exp.isInverted = true
+        
+        let subscription = thumbnailContainerUpdates(on: sut) { _ in
+            exp.fulfill()
+        }
+        let cancelledExp = expectation(description: "cancelled")
+        let task = Task {
+            await sut.monitorSensitivityChanges()
+            cancelledExp.fulfill()
+        }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        await fulfillment(of: [cancelledExp], timeout: 0.5)
+        subscription.cancel()
+    }
+    
+    func testMonitorPhotoSensitivityChanges_photoMarkedSensitive_shouldNotUpdateImageContainer() async throws {
         let photo = NodeEntity(handle: 65, isMarkedSensitive: true)
         let imageContainer = ImageContainer(image: Image("folder"), type: .placeholder)
         
