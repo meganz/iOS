@@ -19,6 +19,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
     @Published var shouldOpenVideoPlaylistContent = false
     var newlyAddedVideosToPlaylistSnackBarMessage = ""
     
+    @Published var shouldShowRenamePlaylistAlert = false
+    
     var selectedVideoPlaylistEntity: VideoPlaylistEntity?
     @Published var isSheetPresented = false
     
@@ -29,11 +31,13 @@ final class VideoPlaylistsViewModel: ObservableObject {
     }
     
     private(set) var alertViewModel: TextFieldAlertViewModel
+    private(set) var renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel
     
     private var subscriptions = Set<AnyCancellable>()
     private(set) var loadVideoPlaylistsOnSearchTextChangedTask: Task<Void, Never>?
     private(set) var createVideoPlaylistTask: Task<Void, Never>?
     private(set) var monitorSortOrderChangedTask: Task<Void, Never>?
+    private(set) var renameVideoPlaylistTask: Task<Void, Never>?
     
     init(
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
@@ -42,6 +46,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
         alertViewModel: TextFieldAlertViewModel,
+        renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
         monitorSortOrderChangedDispatchQueue: DispatchQueue = DispatchQueue.main
     ) {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
@@ -50,6 +55,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.syncModel = syncModel
         self.alertViewModel = alertViewModel
+        self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
         self.monitorSortOrderChangedDispatchQueue = monitorSortOrderChangedDispatchQueue
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
         
@@ -57,7 +63,12 @@ final class VideoPlaylistsViewModel: ObservableObject {
             self?.createUserVideoPlaylist(with: newVideoPlaylistName)
         }
         
+        self.renameVideoPlaylistAlertViewModel.action = { [weak self] newVideoPlaylistName in
+            self?.renameVideoPlaylist(with: newVideoPlaylistName)
+        }
+        
         assignVideoPlaylistNameValidator()
+        assignVideoPlaylistRenameValidator()
         listenSearchTextChange()
         monitorSortOrderChanged()
     }
@@ -67,6 +78,13 @@ final class VideoPlaylistsViewModel: ObservableObject {
             self?.videoPlaylistNames ?? []
         })
         alertViewModel.validator = { try? validator.validateWhenCreated(with: $0) }
+    }
+    
+    private func assignVideoPlaylistRenameValidator() {
+        let validator = VideoPlaylistNameValidator(existingVideoPlaylistNames: { [weak self] in
+            self?.videoPlaylistNames ?? []
+        })
+        renameVideoPlaylistAlertViewModel.validator = { validator.validateWhenRenamed(into: $0) }
     }
     
     @MainActor
@@ -165,12 +183,18 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     func onViewDisappear() {
         cancelCreateVideoPlaylistTask()
+        cancelRenameVideoPlaylistTask()
         newlyCreatedVideoPlaylist = nil
     }
     
     private func cancelCreateVideoPlaylistTask() {
         createVideoPlaylistTask?.cancel()
         createVideoPlaylistTask = nil
+    }
+    
+    private func cancelRenameVideoPlaylistTask() {
+        renameVideoPlaylistTask?.cancel()
+        renameVideoPlaylistTask = nil
     }
     
     @MainActor
@@ -199,6 +223,9 @@ final class VideoPlaylistsViewModel: ObservableObject {
     }
     
     func didSelectMoreOptionForItem(_ selectedVideoPlaylistEntity: VideoPlaylistEntity) {
+        guard selectedVideoPlaylistEntity.type == .user else {
+            return
+        }
         self.selectedVideoPlaylistEntity = selectedVideoPlaylistEntity
         isSheetPresented = true
     }
@@ -206,9 +233,50 @@ final class VideoPlaylistsViewModel: ObservableObject {
     func didSelectActionSheetMenuAction(_ contextAction: ContextAction) {
         switch contextAction.type {
         case .rename:
-            break // CC-7328
+            shouldShowRenamePlaylistAlert = true
         case .deletePlaylist:
             break // CC-7278
         }
+    }
+    
+    func renameVideoPlaylist(with newName: String?) {
+        guard newName != nil || (newName?.isNotEmpty == true) else {
+            return
+        }
+        
+        renameVideoPlaylistTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                guard let selectedVideoPlaylistEntity, selectedVideoPlaylistEntity.type == .user else {
+                    return
+                }
+                let mappedName = VideoPlaylistNameCreationMapper.videoPlaylistName(from: newName, from: videoPlaylistNames)
+                try await videoPlaylistsUseCase.updateVideoPlaylistName(mappedName, for: selectedVideoPlaylistEntity)
+                
+                guard let foundIndex = videoPlaylists.firstIndex(where: { $0.id == selectedVideoPlaylistEntity.id }) else {
+                    return
+                }
+                videoPlaylists[foundIndex] = newlyRenamedVideoPlaylist(newName: mappedName, oldVideoPlaylist: selectedVideoPlaylistEntity)
+            } catch {
+                // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
+                syncModel.snackBarErrorMessage = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed
+                syncModel.shouldShowSnackBar = true
+            }
+            
+            selectedVideoPlaylistEntity = nil
+        }
+    }
+    
+    private func newlyRenamedVideoPlaylist(newName: String, oldVideoPlaylist: VideoPlaylistEntity) -> VideoPlaylistEntity {
+        VideoPlaylistEntity(
+            id: oldVideoPlaylist.id,
+            name: newName,
+            coverNode: oldVideoPlaylist.coverNode,
+            count: oldVideoPlaylist.count,
+            type: oldVideoPlaylist.type,
+            creationTime: oldVideoPlaylist.creationTime,
+            modificationTime: oldVideoPlaylist.modificationTime,
+            sharedLinkStatus: oldVideoPlaylist.sharedLinkStatus
+        )
     }
 }

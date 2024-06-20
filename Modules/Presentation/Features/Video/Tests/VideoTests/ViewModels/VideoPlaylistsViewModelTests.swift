@@ -305,6 +305,16 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     // MARK: - didSelectMoreOptionForItem
     
+    func testDidSelectMoreOptionForItem_whenSelectInvalidVideoPlaylist_doNotShowSheet() async {
+        let invalidVideoPlaylist = VideoPlaylistEntity(id: 1, name: "new name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _) = makeSUT()
+        
+        sut.didSelectMoreOptionForItem(invalidVideoPlaylist)
+        
+        XCTAssertNil(sut.selectedVideoPlaylistEntity)
+        XCTAssertFalse(sut.isSheetPresented)
+    }
+    
     func testDidSelectMoreOptionForItem_selectedVideoPlaylist_setsSelectedsVideoPlaylistEntity() {
         let selectedVideoPlaylist = VideoPlaylistEntity(id: 1, name: "video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT()
@@ -315,6 +325,110 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.selectedVideoPlaylistEntity, selectedVideoPlaylist)
         XCTAssertTrue(sut.isSheetPresented)
+    }
+    
+    // MARK: - didSelectActionSheetMenuAction
+    
+    func testDidSelectActionSheetMenuAction_renameContextAction_showsRenameAlert() {
+        let renamePlaylistContextAction = ContextAction(type: .rename, icon: "any", title: "any")
+        let (sut, _, _, _) = makeSUT()
+        
+        sut.didSelectActionSheetMenuAction(renamePlaylistContextAction)
+        
+        XCTAssertTrue(sut.shouldShowRenamePlaylistAlert)
+    }
+    
+    // MARK: - renameVideoPlaylist
+    
+    func testRenameVideoPlaylist_emptyOrNil_doesNotRenameVideoPlaylist() async {
+        let invalidNames: [String?] = [nil, ""]
+        
+        for (index, invalidName) in invalidNames.enumerated() {
+            let (sut, videoPlaylistUseCase, _, _) = makeSUT()
+            
+            sut.renameVideoPlaylist(with: invalidName)
+            await sut.renameVideoPlaylistTask?.value
+            
+            XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty, "failed at index: \(index)")
+        }
+    }
+    
+    func testRenameVideoPlaylist_whenNoSelectedVideoPlaylist_doesNotRenameVideoPlaylist() async {
+        let videoPlaylistName =  "a video playlist name"
+        let (sut, videoPlaylistUseCase, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(updateVideoPlaylistNameResult: .success(()))
+        )
+        
+        sut.renameVideoPlaylist(with: videoPlaylistName)
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty)
+    }
+    
+    func testRenameVideoPlaylist_whenCalled_renameVideoPlaylist() async {
+        let videoPlaylistName =  "a video playlist name"
+        let selectedVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, videoPlaylistUseCase, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(updateVideoPlaylistNameResult: .success(()))
+        )
+        sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
+        
+        sut.renameVideoPlaylist(with: videoPlaylistName)
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertEqual(videoPlaylistUseCase.messages, [ .updateVideoPlaylistName ])
+    }
+    
+    func testRenameVideoPlaylist_whenRenameSuccessfully_renameActualSelectedPlaylist() async {
+        let creationTime = Date()
+        let modificationTime = Date()
+        let initialUserVideoPlaylists = [
+            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime),
+            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        ]
+        let selectedVideoPlaylist = initialUserVideoPlaylists[0]
+        var updatedVideoPlaylist = selectedVideoPlaylist
+        updatedVideoPlaylist.name = "renamed"
+        let (sut, _, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(
+                updateVideoPlaylistNameResult: .success(()),
+                userVideoPlaylistsResult: initialUserVideoPlaylists
+            )
+        )
+        await sut.onViewAppeared()
+        sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
+        
+        sut.renameVideoPlaylist(with: "renamed")
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertTrue(sut.videoPlaylists.contains(updatedVideoPlaylist))
+        XCTAssertNil(sut.selectedVideoPlaylistEntity)
+        assertThatCleanUpTemporaryVariablesAfterRenaming(on: sut)
+    }
+    
+    func testRenameVideoPlaylist_whenRenameFailed_showsRenameError() async {
+        let videoPlaylistName =  "a video playlist name"
+        let selectedVideoPlaylist = VideoPlaylistEntity(id: 2, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let updatedVideoPlaylist = VideoPlaylistEntity(id: 2, name: "new name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, syncModel, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(
+                updateVideoPlaylistNameResult: .failure(GenericErrorEntity()),
+                userVideoPlaylistsResult: [
+                    VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
+                    VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+                ]
+            )
+        )
+        await sut.onViewAppeared()
+        sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
+        
+        sut.renameVideoPlaylist(with: videoPlaylistName)
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertTrue(sut.videoPlaylists.notContains(updatedVideoPlaylist))
+        XCTAssertEqual(syncModel.snackBarErrorMessage, Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed)
+        XCTAssertTrue(syncModel.shouldShowSnackBar)
+        assertThatCleanUpTemporaryVariablesAfterRenaming(on: sut)
     }
     
     // MARK: - onViewDissapear
@@ -383,11 +497,16 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             syncModel: syncModel,
             alertViewModel: alertViewModel,
+            renameVideoPlaylistAlertViewModel: alertViewModel,
             monitorSortOrderChangedDispatchQueue: DispatchQueue.main
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         trackForMemoryLeaks(on: videoPlaylistUseCase, file: file, line: line)
         return (sut, videoPlaylistUseCase, syncModel, videoPlaylistModificationUseCase)
+    }
+    
+    private func assertThatCleanUpTemporaryVariablesAfterRenaming(on sut: VideoPlaylistsViewModel, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertNil(sut.selectedVideoPlaylistEntity, file: file, line: line)
     }
     
     private func videoPlaylist(id: HandleEntity, creationTime: Date, modificationTime: Date) -> VideoPlaylistEntity {

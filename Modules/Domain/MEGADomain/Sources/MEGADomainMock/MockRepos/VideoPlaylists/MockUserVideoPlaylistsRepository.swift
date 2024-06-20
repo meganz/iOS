@@ -27,7 +27,7 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
     private let deleteVideoPlaylistResult: Result<VideoPlaylistEntity, Error>
     private let videoPlaylistContentResult: [SetElementEntity]
     private let createVideoPlaylistResult: Result<SetEntity, Error>
-    private let updateVideoPlaylistNameResult: Result<SetEntity, Error>
+    private let updateVideoPlaylistNameResult: Result<Void, Error>
     
     public init(
         videoPlaylistsResult: [SetEntity] = [],
@@ -38,7 +38,7 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
         createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        updateVideoPlaylistNameResult: Result<SetEntity, Error> = .failure(GenericErrorEntity())
+        updateVideoPlaylistNameResult: Result<Void, Error> = .failure(GenericErrorEntity())
     ) {
         self.videoPlaylistsResult = videoPlaylistsResult
         self.addVideosToVideoPlaylistResult = addVideosToVideoPlaylistResult
@@ -81,7 +81,7 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
         return try createVideoPlaylistResult.get()
     }
     
-    public func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws -> SetEntity {
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws {
         messages.append(.updateVideoPlaylistName(newName: newName, videoPlaylistEntity: videoPlaylist))
         return try updateVideoPlaylistNameResult.get()
     }

@@ -26,7 +26,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         let testName = "* adkd"
         let targetError = TextFieldAlertError(
             title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay),
-            description:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterNewName
+            description: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterNewName
         )
         
         let result = try sut.validateWhenCreated(with: testName)
@@ -36,10 +36,10 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
     
     func testValidateWhenCreated_whenNameHasReservedVideoPlaylistNames_shouldReturnRightErrorObject() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
-        let testName =  Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites
+        let testName = Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites
         let targetError = TextFieldAlertError(
-            title:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.videoPlaylistNameNotAllowed,
-            description:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterDifferentName
+            title: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.videoPlaylistNameNotAllowed,
+            description: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterDifferentName
         )
         
         let result = try sut.validateWhenCreated(with: testName)
@@ -51,8 +51,8 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
         let testName = "aaa"
         let targetError = TextFieldAlertError(
-            title:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.userVideoPlaylistExists,
-            description:  Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterDifferentName
+            title: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.userVideoPlaylistExists,
+            description: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterDifferentName
         )
         
         let result = try sut.validateWhenCreated(with: testName)
@@ -75,12 +75,71 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = ""
         
-        do {
-            _ = try sut.validateWhenRenamed(into: testName)
-            XCTFail("Should catch error")
-        } catch {
-            XCTAssertEqual(error as? VideoPlaylistNameValidator.ValidatorError, .emptyName)
-        }
+        let result = sut.validateWhenRenamed(into: testName)
+        
+        XCTAssertEqual(result, TextFieldAlertError(title: "", description: ""), "Expect to have error object with empty title and description")
+    }
+    
+    func testValidateWhenRenamed_whenNameIsEmpty_shouldReturnNil() {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName = ""
+        
+        assertRenameByCatchingError(on: sut, name: testName, expectedError: TextFieldAlertError(title: "", description: ""))
+    }
+    
+    func testValidateWhenRenamed_whenNameHasEmptySpaces_shouldThrowError() {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName = "       "
+        
+        assertRenameByCatchingError(on: sut, name: testName, expectedError: TextFieldAlertError(title: "", description: ""))
+    }
+    
+    func testValidateWhenRenamed_whenNameHasInvalidChars_shouldReturnRightErrorObject() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName = "* adkd"
+        let targetError = TextFieldAlertError(
+            title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay),
+            description: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterNewName
+        )
+        
+        let result = sut.validateWhenRenamed(into: testName)
+        
+        XCTAssertEqual(result, targetError)
+    }
+    
+    func testValidateWhenRenamed_whenNameHasReservedVideoPlaylistNames_shouldReturnRightErrorObject() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
+        let testName = Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites
+        let targetError = TextFieldAlertError(
+            title: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.videoPlaylistNameNotAllowed,
+            description: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterDifferentName
+        )
+        
+        let result = sut.validateWhenRenamed(into: testName)
+        
+        XCTAssertEqual(result, targetError)
+    }
+    
+    func testValidateWhenRenamed_whenNameHasExistingVideoPlaylistNames_shouldReturnRightErrorObject() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
+        let testName = "aaa"
+        let targetError = TextFieldAlertError(
+            title: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.userVideoPlaylistExists,
+            description: Strings.Localizable.Videos.Tab.Playlist.Create.Alert.enterDifferentName
+        )
+        
+        let result = sut.validateWhenRenamed(into: testName)
+        
+        XCTAssertEqual(result, targetError)
+    }
+    
+    func testValidateWhenRenamed_whenNameHasValidName_shouldReturnNil() throws {
+        let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
+        let testName = "Hey there this is a new video playlist"
+        
+        let result = sut.validateWhenRenamed(into: testName)
+        
+        XCTAssertNil(result)
     }
     
     // MARK: - Helpers
@@ -98,5 +157,17 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         } catch {
             XCTAssertEqual(error as? VideoPlaylistNameValidator.ValidatorError, expectedError, file: file, line: line)
         }
+    }
+    
+    private func assertRenameByCatchingError(
+        on sut: VideoPlaylistNameValidator,
+        name testName: String,
+        expectedError: TextFieldAlertError,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let result = sut.validateWhenRenamed(into: testName)
+        
+        XCTAssertEqual(result, expectedError, file: file, line: line)
     }
 }

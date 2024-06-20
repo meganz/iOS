@@ -47,6 +47,10 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     private let videoToolbarViewModel: VideoToolbarViewModel
     
+    private var snackBarViewModel: SnackBarViewModel?
+    private var showSnackBarSubscription: AnyCancellable?
+    private var snackBarContainer: UIView?
+    
     init(
         viewModel: VideoRevampTabContainerViewModel,
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
@@ -67,9 +71,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.router = router
         self.videoToolbarViewModel = VideoToolbarViewModel()
         super.init(nibName: nil, bundle: nil)
-        
-        subscribeToCurrentTabChanged()
-        subscribeToVideoSelection()
     }
     
     required init?(coder: NSCoder) {
@@ -84,6 +85,25 @@ final class VideoRevampTabContainerViewController: UIViewController {
         setupNavigationBar()
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
+        configureSnackBarPresenter()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeSnackBarPresenter()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        subscribeToCurrentTabChanged()
+        configureToolbarAppearance()
+        subscribeToVideoSelection()
+        listenToSnackBarPresentation()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        cancellables.removeAll()
     }
     
     private func setupNavigationBar() {
@@ -161,8 +181,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
             UIBarButtonItem.flexibleSpace(),
             UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
         ]
-        
-        configureToolbarAppearance()
     }
     
     private func configureToolbarAppearance() {
@@ -440,5 +458,73 @@ extension VideoRevampTabContainerViewController: BrowserViewControllerDelegate {
  
     public func nodeEditCompleted(_ complete: Bool) {
         resetNavigationBar()
+    }
+}
+
+// MARK: - SnackBarPresenting
+
+extension VideoRevampTabContainerViewController: SnackBarPresenting {
+    
+    private func listenToSnackBarPresentation() {
+        viewModel.syncModel.$shouldShowSnackBar
+            .filter { $0 == true }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                snackBarViewModel = makeSnackBarViewModel(message: viewModel.syncModel.snackBarErrorMessage)
+                self.snackBarViewModel?.update(snackBar: SnackBar(message: viewModel.syncModel.snackBarErrorMessage))
+                guard let snackBar = self.snackBarViewModel?.snackBar else { return }
+                SnackBarRouter.shared.present(snackBar: snackBar)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func makeSnackBarViewModel(message: String) -> SnackBarViewModel {
+        showSnackBarSubscription?.cancel()
+        
+        let snackBar = SnackBar(message: message)
+        let viewModel = SnackBarViewModel(snackBar: snackBar)
+        
+        showSnackBarSubscription = viewModel.$isShowSnackBar
+            .filter { !$0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                snackBarViewModel = nil
+            }
+        return viewModel
+    }
+    
+    @MainActor
+    func layout(snackBarView: UIView?) {
+        snackBarContainer?.removeFromSuperview()
+        snackBarContainer = snackBarView
+        snackBarContainer?.backgroundColor = .clear
+        
+        guard let snackBarView else {
+            return
+        }
+        
+        snackBarView.translatesAutoresizingMaskIntoConstraints = false
+        let toolbarHeight = navigationController?.toolbar.frame.height ?? 0
+        let bottomOffset: CGFloat = view.safeAreaInsets.bottom
+        
+        [
+            snackBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            snackBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            snackBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(toolbarHeight + bottomOffset) * 0.25)
+        ].activate()
+    }
+    
+    func snackBarContainerView() -> UIView? {
+        snackBarContainer
+    }
+    
+    private func configureSnackBarPresenter() {
+        SnackBarRouter.shared.configurePresenter(self)
+    }
+    
+    private func removeSnackBarPresenter() {
+        SnackBarRouter.shared.removePresenter()
     }
 }

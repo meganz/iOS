@@ -140,16 +140,12 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
     
     // MARK: - updateVideoPlaylistName
     
-    public func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws -> SetEntity {
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws {
         try await withAsyncThrowingValue { continuation in
             sdk.updateSetName(videoPlaylist.id, name: newName, delegate: RequestDelegate { result in
                 switch result {
-                case .success(let request):
-                    guard let set = request.set else {
-                        continuation(.failure(VideoPlaylistErrorEntity.failedToRetrieveSetFromRequest))
-                        return
-                    }
-                    continuation(.success(set.toSetEntity()))
+                case .success:
+                    continuation(.success(()))
                 case .failure:
                     continuation(.failure(VideoPlaylistErrorEntity.failedToUpdateVideoPlaylistName(name: newName)))
                 }

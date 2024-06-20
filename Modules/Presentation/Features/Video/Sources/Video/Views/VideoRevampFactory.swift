@@ -19,6 +19,9 @@ public final class VideoRevampSyncModel: ObservableObject {
     @Published public var shouldShowAddNewPlaylistAlert = false
     @Published public var isSearchActive = false
     
+    @Published public var shouldShowSnackBar = false
+    public var snackBarErrorMessage = ""
+    
     private var subscriptions = Set<AnyCancellable>()
     
     public init() {
@@ -60,6 +63,14 @@ public class VideoRevampFactory {
                 affirmativeButtonTitle: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Button.create,
                 destructiveButtonTitle: Strings.Localizable.cancel,
                 message: nil
+            ),
+            renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel(
+                title: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Title.rename,
+                placeholderText: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.placeholder,
+                affirmativeButtonTitle: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Button.rename,
+                affirmativeButtonInitiallyEnabled: false,
+                destructiveButtonTitle: Strings.Localizable.cancel,
+                message: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.enterTheNewName
             )
         )
         let view = TabContainerView(

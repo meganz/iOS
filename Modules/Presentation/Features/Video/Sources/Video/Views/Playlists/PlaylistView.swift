@@ -27,6 +27,7 @@ struct PlaylistView: View {
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .alert(isPresented: $viewModel.shouldShowAddNewPlaylistAlert, viewModel.alertViewModel)
+        .alert(isPresented: $viewModel.shouldShowRenamePlaylistAlert, viewModel.renameVideoPlaylistAlertViewModel)
         .task {
             await viewModel.onViewAppeared()
         }
@@ -206,7 +207,8 @@ struct PlaylistView: View {
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             syncModel: VideoRevampSyncModel(),
-            alertViewModel: .preview
+            alertViewModel: .preview,
+            renameVideoPlaylistAlertViewModel: .preview
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()
@@ -221,7 +223,8 @@ struct PlaylistView: View {
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             syncModel: VideoRevampSyncModel(),
-            alertViewModel: .preview
+            alertViewModel: .preview,
+            renameVideoPlaylistAlertViewModel: .preview
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()
