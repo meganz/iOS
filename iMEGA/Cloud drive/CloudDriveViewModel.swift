@@ -39,6 +39,7 @@ enum CloudDriveAction: ActionType {
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
 
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
@@ -60,6 +61,7 @@ enum CloudDriveAction: ActionType {
          systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+         nodeUseCase: some NodeUseCaseProtocol,
          tracker: some AnalyticsTracking,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
@@ -70,6 +72,7 @@ enum CloudDriveAction: ActionType {
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.accountUseCase = accountUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.nodeUseCase = nodeUseCase
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
@@ -135,6 +138,7 @@ enum CloudDriveAction: ActionType {
               isFromSharedItem == false,
               displayMode == .cloudDrive,
               let parentNode,
+              parentNode.type != .root,
               parentNode.isFolder() == true else {
             return nil
         }
@@ -143,15 +147,14 @@ enum CloudDriveAction: ActionType {
         }
         
         do {
-            return if parentNode.isMarkedSensitive {
-                true // Always allow a node to be unhidden, if it is currently hidden.
-            } else if try await systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode].toNodeEntities()) {
-                nil // System generated nodes should not be able to be hidden.
-            } else {
-                false // Defaults to allow to hide the parent node.
+            // System generated nodes and parent inheriting sensitivity should not be able to be hide or unhide.
+            guard try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode].toNodeEntities()),
+                  try await !nodeUseCase.isInheritingSensitivity(node: parentNode.toNodeEntity()) else {
+                return nil
             }
+            return parentNode.isMarkedSensitive
         } catch is CancellationError {
-            MEGALogError("[\(type(of: self))] loadPublicAlbumContents cancelled")
+            MEGALogError("[\(type(of: self))] isParentMarkedAsSensitive cancelled")
         } catch {
             MEGALogError("[\(type(of: self))] Error determining node sensitivity. Error: \(error)")
         }

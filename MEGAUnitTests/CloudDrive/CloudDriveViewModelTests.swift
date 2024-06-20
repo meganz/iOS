@@ -209,12 +209,34 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertNil(isHidden)
     }
     
+    func testIsParentMarkedAsSensitiveForDisplayMode_rootNode_shouldReturnNil() async {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let parentNode = MockNode(handle: 1, nodeType: .root)
+        let sut = makeSUT(parentNode: parentNode,
+                          featureFlagProvider: featureFlagProvider)
+        
+        let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
+        XCTAssertNil(isHidden)
+    }
+    
+    func testIsParentMarkedAsSensitiveForDisplayMode_parentInheritsSensitivity_shouldReturnNil() async {
+        let parentNode = MockNode(handle: 1, nodeType: .folder)
+        let sut = makeSUT(parentNode: parentNode,
+                          accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+                          nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+        
+        let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
+        XCTAssertNil(isHidden)
+    }
+    
     func testIsParentMarkedAsSensitiveForDisplayMode_displayModeCloudDriveIsFolder_shouldMatchSensitiveState() async throws {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         for await isMarkedSensitive in [true, false].async {
             let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: isMarkedSensitive)
             let sut = makeSUT(parentNode: parentNode,
                               accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+                              nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
                               featureFlagProvider: featureFlagProvider)
             
             let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
@@ -234,24 +256,17 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
-    func testIsParentMarkedAsSensitiveForDisplayMode_whenSystemNodeCheckApplied_shouldReturnExpectedResult() async throws {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
-        let situationResult: [(Bool, Bool?)] = [
-            (true, true),
-            (false, nil)
-        ]
-        for await (isMarkedSensitive, expectedResult) in situationResult.async {
-            let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: isMarkedSensitive)
-            let sut = makeSUT(
-                parentNode: parentNode,
-                systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
-                    nodesForLocation: [.cameraUpload: parentNode.toNodeEntity()]),
-                accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                featureFlagProvider: featureFlagProvider)
-            
-            let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
-            XCTAssertEqual(isHidden, expectedResult)
-        }
+    func testIsParentMarkedAsSensitiveForDisplayMode_systemNode_shouldReturnNil() async throws {
+        let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false)
+        let sut = makeSUT(
+            parentNode: parentNode,
+            systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
+                nodesForLocation: [.cameraUpload: parentNode.toNodeEntity()]),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+        
+        let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
+        XCTAssertNil(isHidden)
     }
     
     func testIsParentMarkedAsSensitiveForDisplayMode_whenParentIsASystemNodeAndErrorsAreThrown_shouldReturnNil() async throws {
@@ -295,6 +310,7 @@ class CloudDriveViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(parentNode: MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false),
                           accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+                          nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
                           featureFlagProvider: featureFlagProvider)
         
         test(viewModel: sut, action: .updateParentNode(updatedParentNode),
@@ -385,6 +401,7 @@ class CloudDriveViewModelTests: XCTestCase {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
@@ -399,6 +416,7 @@ class CloudDriveViewModelTests: XCTestCase {
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             accountUseCase: accountUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            nodeUseCase: nodeUseCase,
             tracker: tracker,
             featureFlagProvider: featureFlagProvider,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel
