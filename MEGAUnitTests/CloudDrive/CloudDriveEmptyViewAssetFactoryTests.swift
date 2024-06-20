@@ -3,6 +3,8 @@ import MEGADesignToken
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentation
+import MEGAPresentationMock
 import Search
 import SearchMock
 import SwiftUI
@@ -104,10 +106,12 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
     typealias SUT = CloudDriveEmptyViewAssetFactory
 
     private func makeSUT(
+        tracker: some AnalyticsTracking = MockTracker(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         isDesignTokenEnabled: Bool = true
     ) -> SUT {
         .init(
+            tracker: tracker,
             nodeInsertionRouter: MockNodeInsertionRouter(),
             nodeUseCase: nodeUseCase,
             isDesignTokenEnabled: isDesignTokenEnabled

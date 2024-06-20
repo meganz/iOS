@@ -1,4 +1,6 @@
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
 
 /// This is the handler for handling plus (+) button in cloud  drive to implement way of adding items to Cloud Drive
 /// Could be used to  handle actions:
@@ -8,10 +10,16 @@ import MEGADomain
 /// 4. [SAO-839] Handle document import flow
 /// 5. [SAO-841] Handle document scanning
 final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
+    private let tracker: any AnalyticsTracking
     private let nodeInsertionRouter: any NodeInsertionRouting
     private let nodeSource: NodeSource
 
-    init(nodeInsertionRouter: some NodeInsertionRouting, nodeSource: NodeSource) {
+    init(
+        tracker: some AnalyticsTracking,
+        nodeInsertionRouter: some NodeInsertionRouting,
+        nodeSource: NodeSource
+    ) {
+        self.tracker = tracker
         self.nodeInsertionRouter = nodeInsertionRouter
         self.nodeSource = nodeSource
     }
@@ -24,10 +32,12 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
 
         switch action {
         case .chooseFromPhotos:
+            trackChooseFromPhotosEvent()
             nodeInsertionRouter.choosePhotoVideo(for: node)
         case .capture:
             nodeInsertionRouter.capturePhotoVideo(for: node)
         case .importFrom:
+            trackImportFromFilesEvent()
             nodeInsertionRouter.importFromFiles(for: node)
         case .scanDocument:
             nodeInsertionRouter.scanDocument(for: node)
@@ -38,5 +48,19 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
         case .importFolderLink:
             break
         }
+        
+        trackOpenAddMenuEvent()
+    }
+    
+    private func trackChooseFromPhotosEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveChooseFromPhotosMenuToolbarEvent())
+    }
+    
+    private func trackImportFromFilesEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveImportFromFilesMenuToolbarEvent())
+    }
+    
+    private func trackOpenAddMenuEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveAddMenuEvent())
     }
 }

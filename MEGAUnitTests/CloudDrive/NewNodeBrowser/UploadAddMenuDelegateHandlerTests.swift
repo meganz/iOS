@@ -1,6 +1,10 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class UploadAddMenuDelegateHandlerTests: XCTestCase {
@@ -44,25 +48,54 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
             expectedAction: .createTextFileAlert( NodeEntity())
         )
     }
+    
+    func test_didTapChooseFromPhotos_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .chooseFromPhotos,
+            expectedEvents: [
+                CloudDriveChooseFromPhotosMenuToolbarEvent(),
+                CloudDriveAddMenuEvent()
+            ]
+        )
+    }
+
+    func test_didTapImportFromFiles_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .importFrom,
+            expectedEvents: [
+                CloudDriveImportFromFilesMenuToolbarEvent(),
+                CloudDriveAddMenuEvent()
+            ]
+        )
+    }
 
     // MARK: - Private methods.
 
     typealias SUT = UploadAddMenuDelegateHandler
 
     private func makeSUT(
+        tracker: some AnalyticsTracking = MockTracker(),
         nodeInsertionRouter: some NodeInsertionRouting = MockNodeInsertionRouter(),
         nodeSource: NodeSource,
         file: StaticString = #file,
         line: UInt = #line
     ) -> SUT {
-        let sut = SUT(nodeInsertionRouter: nodeInsertionRouter, nodeSource: nodeSource)
+        let sut = SUT(
+            tracker: tracker,
+            nodeInsertionRouter: nodeInsertionRouter,
+            nodeSource: nodeSource
+        )
+        
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
 
     private func assertEmptyActions(with nodeSource: NodeSource, file: StaticString = #file, line: UInt = #line) {
         let router = MockNodeInsertionRouter()
-        let sut = makeSUT(nodeInsertionRouter: router, nodeSource: .recentActionBucket(MEGARecentActionBucket()))
+        let sut = makeSUT(
+            nodeInsertionRouter: router,
+            nodeSource: .recentActionBucket(MEGARecentActionBucket())
+        )
         sut.uploadAddMenu(didSelect: .chooseFromPhotos)
         sut.uploadAddMenu(didSelect: .capture)
         sut.uploadAddMenu(didSelect: .importFrom)
@@ -82,7 +115,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
     ) async {
         let router = MockNodeInsertionRouter()
         let sut = makeSUT(nodeInsertionRouter: router, nodeSource: .node({ node }))
-
+        
         let actionExpectation = expectation(description: "Waiting for the action to be called")
         let cancellable = router.$actions
             .sink { actions in
@@ -90,11 +123,29 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
                     actionExpectation.fulfill()
                 }
             }
-
+        
         sut.uploadAddMenu(didSelect: action)
         await fulfillment(of: [actionExpectation], timeout: 0.5)
         cancellable.cancel()
-
+        
         router.shouldMatch(expectedAction: expectedAction, file: file, line: line)
+    }
+    
+    private func trackAnalyticsEventTest(
+        action: UploadAddActionEntity,
+        expectedEvents: [EventIdentifier]
+    ) {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(
+            tracker: mockTracker,
+            nodeSource: .node({ NodeEntity() })
+        )
+        
+        sut.uploadAddMenu(didSelect: action)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: expectedEvents
+        )
     }
 }
