@@ -55,6 +55,6 @@ public protocol UserVideoPlaylistsRepositoryProtocol: Sendable, RepositoryProtoc
     /// - Parameters:
     ///   - newName: new name for the target video playlist.
     ///   - videoPlaylist: `VideoPlaylistEntity` instance that wants to be renamed.
-    /// - Returns: `SetEntity` instance that just renamed.
-    func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws -> SetEntity
+    /// - Throws: `VideoPlaylistErrorEntity` if failed to update video playlist name.
+    func updateVideoPlaylistName(_ newName: String, for videoPlaylist: VideoPlaylistEntity) async throws
 }

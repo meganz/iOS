@@ -564,8 +564,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         let videoPlaylistNameToUpdate = "new-name"
         let anyDate = Date()
         let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: anyDate, modificationTime: anyDate, sharedLinkStatus: .exported(false))
-        let expectedSetEntity = anySetEntity(id: 1, name: videoPlaylistNameToUpdate, creationTime: anyDate, modificationTime: anyDate, isExported: false)
-        let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .success(expectedSetEntity))
+        let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .success(()))
         
         await simulateUpdateVideoPlaylistNameCompletedSuccessfullyThenAssert(on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
     }
@@ -579,7 +578,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        updateVideoPlaylistNameResult: Result<SetEntity, any Error> = .failure(GenericErrorEntity())
+        updateVideoPlaylistNameResult: Result<Void, any Error> = .failure(GenericErrorEntity())
     ) -> (
         sut: VideoPlaylistUseCase,
         filesSearchUseCase: MockFilesSearchUseCase,
@@ -627,16 +626,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         line: UInt = #line
     ) async {
         do {
-            let videoPlaylistEntity = try await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
-            XCTAssertEqual(videoPlaylistEntity.id, 1, file: file, line: line)
-            XCTAssertEqual(videoPlaylistEntity.name, videoPlaylistNameToUpdate, file: file, line: line)
-            XCTAssertEqual(videoPlaylistEntity.count, videoPlaylistToUpdate.count, file: file, line: line)
-            XCTAssertEqual(videoPlaylistEntity.type, videoPlaylistToUpdate.type, file: file, line: line)
-            XCTAssertEqual(videoPlaylistEntity.isLinkShared, videoPlaylistToUpdate.isLinkShared, file: file, line: line)
-            XCTAssertEqual(videoPlaylistEntity.sharedLinkStatus, .exported(videoPlaylistToUpdate.isLinkShared), file: file, line: line)
-            XCTAssertEqual(videoPlaylistEntity.coverNode, videoPlaylistToUpdate.coverNode, file: file, line: line)
-            XCTAssertEqual(videoPlaylistEntity.creationTime, videoPlaylistToUpdate.creationTime, file: file, line: line)
-            XCTAssertEqual(videoPlaylistEntity.modificationTime, videoPlaylistToUpdate.modificationTime, file: file, line: line)
+            try await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
         } catch {
             XCTFail("expect to not throw error, got error instead: \(error)", file: file, line: line)
         }

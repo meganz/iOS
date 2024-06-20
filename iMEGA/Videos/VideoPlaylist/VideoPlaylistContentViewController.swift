@@ -158,6 +158,8 @@ extension VideoPlaylistContentViewController: DisplayMenuDelegate {
     }
 }
 
+// MARK: - SnackBarPresenting
+
 extension VideoPlaylistContentViewController: SnackBarPresenting {
     
     private func listenToSnackBarPresentation() {

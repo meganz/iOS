@@ -11,18 +11,20 @@ struct VideoPlaylistNameValidator {
     }
     
     func validateWhenCreated(with name: String?) throws -> TextFieldAlertError? {
-        try validate(name ?? "")
-    }
-    
-    func validateWhenRenamed(into name: String?) throws -> TextFieldAlertError? {
-        try validate(name ?? "")
-    }
-    
-    private func validate(_ name: String) throws -> TextFieldAlertError? {
-        guard let name = name.trim, name.isNotEmpty else {
+        guard let name = name?.trim, name.isNotEmpty else {
             throw ValidatorError.emptyName
         }
-        
+        return validate(name)
+    }
+    
+    func validateWhenRenamed(into name: String?) -> TextFieldAlertError? {
+        guard let name = name?.trim, name.isNotEmpty else {
+            return TextFieldAlertError(title: "", description: "")
+        }
+        return validate(name)
+    }
+    
+    private func validate(_ name: String) -> TextFieldAlertError? {
         if name.containsInvalidFileFolderNameCharacters {
             return TextFieldAlertError(
                 title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay),

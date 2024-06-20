@@ -21,13 +21,13 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     private let systemVideoPlaylistsResult: [VideoPlaylistEntity]
     private let createVideoPlaylistResult: Result<VideoPlaylistEntity, any Error>
-    private let updateVideoPlaylistNameResult: Result<VideoPlaylistEntity, any Error>
+    private let updateVideoPlaylistNameResult: Result<Void, any Error>
     private let userVideoPlaylistsResult: [VideoPlaylistEntity]
     
     public init(
         systemVideoPlaylistsResult: [VideoPlaylistEntity] = [],
         createVideoPlaylistResult: Result<VideoPlaylistEntity, any Error> = .failure(GenericErrorEntity()),
-        updateVideoPlaylistNameResult: Result<VideoPlaylistEntity, any Error> = .failure(GenericErrorEntity()),
+        updateVideoPlaylistNameResult: Result<Void, any Error> = .failure(GenericErrorEntity()),
         userVideoPlaylistsResult: [VideoPlaylistEntity] = []
         
     ) {
@@ -53,8 +53,8 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
         return try createVideoPlaylistResult.get()
     }
     
-    public func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws -> VideoPlaylistEntity {
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws {
         $messages.mutate { $0.append(.updateVideoPlaylistName) }
-        return try updateVideoPlaylistNameResult.get()
+        try updateVideoPlaylistNameResult.get()
     }
 }

@@ -3943,6 +3943,14 @@
 "videos.tab.playlist.browser.button.add"="Add";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Add";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="Rename";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Enter the new name";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="Rename";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="Renaming failed";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
