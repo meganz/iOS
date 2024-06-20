@@ -11,7 +11,7 @@ final public class BackupRootNodeAccess: NodeAccess {
             )
     )
     
-    override init(configuration: NodeAccessConfiguration) {
+    public override init(configuration: NodeAccessConfiguration) {
         super.init(configuration: configuration)
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNodesCurrentNotification), name: .MEGANodesCurrent, object: nil)

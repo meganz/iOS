@@ -45,4 +45,23 @@ public protocol AccountRepositoryProtocol {
     func registerMEGAGlobalDelegate() async
     func deRegisterMEGAGlobalDelegate() async
     func multiFactorAuthCheck(email: String) async throws -> Bool
+    
+    // Node sizes
+    
+    /// Retrieves the storage used for the root node.
+    /// - Returns: The storage used for the root node in bytes.
+    func rootStorageUsed() -> Int64
+    
+    /// Retrieves the storage used for the rubbish bin.
+    /// - Returns: The storage used for the rubbish bin in bytes.
+    func rubbishBinStorageUsed() -> Int64
+    
+    /// Retrieves the storage used for incoming shared nodes.
+    /// - Returns: The storage used for incoming shares in bytes.
+    func incomingSharesStorageUsed() -> Int64
+    
+    /// Retrieves the storage used for backups.
+    /// - Returns: The storage used for backups in bytes.
+    /// - Throws: FolderInfoErrorEntity.notFound if the backup root node or its folder info cannot be found.
+    func backupStorageUsed() async throws -> Int64
 }

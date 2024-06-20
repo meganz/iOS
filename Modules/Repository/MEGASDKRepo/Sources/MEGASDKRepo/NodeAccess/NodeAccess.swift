@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASdk
 
-struct NodeAccessConfiguration {
+public struct NodeAccessConfiguration {
     var autoCreate: (() -> Bool)?
     let updateInMemoryNotificationName: Notification.Name?
     let updateInRemoteNotificationName: Notification.Name?

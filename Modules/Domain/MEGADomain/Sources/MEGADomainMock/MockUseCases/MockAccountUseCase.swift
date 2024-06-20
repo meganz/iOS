@@ -25,6 +25,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _isAchievementsEnabled: Bool
     private let smsState: SMSStateEntity
     private let _hasValidProOrUnexpiredBusinessAccount: Bool
+    private let _rootStorage: Int64
+    private let _rubbishBinStorage: Int64
+    private let _incomingSharesStorage: Int64
+    private let _backupStorage: Int64
     
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -49,7 +53,11 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         smsState: SMSStateEntity = .notAllowed,
         multiFactorAuthCheckResult: Bool = false,
         multiFactorAuthCheckDelay: TimeInterval = 0,
-        hasValidProOrUnexpiredBusinessAccount: Bool = false
+        hasValidProOrUnexpiredBusinessAccount: Bool = false,
+        rootStorage: Int64 = 0,
+        rubbishBinStorage: Int64 = 0,
+        incomingSharesStorage: Int64 = 0,
+        backupStorage: Int64 = 0
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -74,6 +82,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         self.multiFactorAuthCheckResult = multiFactorAuthCheckResult
         self.multiFactorAuthCheckDelay = multiFactorAuthCheckDelay
         _hasValidProOrUnexpiredBusinessAccount = hasValidProOrUnexpiredBusinessAccount
+        _rootStorage = rootStorage
+        _rubbishBinStorage = rubbishBinStorage
+        _incomingSharesStorage = incomingSharesStorage
+        _backupStorage = backupStorage
     }
     
     // MARK: - User authentication status and identifiers
@@ -186,5 +198,21 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         }
         
         return multiFactorAuthCheckResult
+    }
+    
+    public func rootStorageUsed() -> Int64 {
+        _rootStorage
+    }
+    
+    public func rubbishBinStorageUsed() -> Int64 {
+        _rubbishBinStorage
+    }
+    
+    public func incomingSharesStorageUsed() -> Int64 {
+        _incomingSharesStorage
+    }
+    
+    public func backupStorageUsed() async throws -> Int64 {
+        _backupStorage
     }
 }

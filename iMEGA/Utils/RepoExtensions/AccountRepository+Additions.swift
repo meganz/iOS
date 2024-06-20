@@ -3,6 +3,9 @@ import MEGASDKRepo
 
 extension AccountRepository: RepositoryProtocol {
     public static var newRepo: AccountRepository {
-        AccountRepository(myChatFilesFolderNodeAccess: .shared)
+        AccountRepository(
+            myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess.shared,
+            backupsRootFolderNodeAccess: BackupRootNodeAccess.shared
+        )
     }
 }
