@@ -74,7 +74,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
             let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(1)
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: expectedTitle,
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)),
@@ -99,7 +99,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
 
             let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(1)
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: expectedTitle,
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)),
@@ -129,7 +129,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
             let updatedIndexPath = IndexPath(row: 0, section: 0)
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)),
@@ -167,7 +167,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 shareAlbumUseCase: shareAlbumUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -219,7 +219,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -257,7 +257,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -293,7 +293,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -335,7 +335,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, action: .onViewReady,
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear],
                  expectedCommands: [
                     .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                    isMultilink: false,
@@ -378,7 +378,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -406,7 +406,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                             hiddenNodesFeatureFlagActive: true)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(1)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+        test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
             .configureView(title: expectedTitle,
                            isMultilink: false,
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)),
@@ -450,7 +450,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             }
         }
         
-        sut.dispatch(.onViewReady)
+        sut.dispatch(.onViewDidAppear)
         
         wait(for: [expectation], timeout: 1)
         
@@ -460,13 +460,6 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             .reloadRows(expectedRowReloads),
             .dismissHud
         ], expectationValidation: ==)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [
-                SingleAlbumLinkScreenEvent()
-            ]
-        )
     }
     
     func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsCancel_shouldDismissView() throws {
@@ -489,20 +482,13 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             }
         }
         
-        sut.dispatch(.onViewReady)
+        sut.dispatch(.onViewDidAppear)
         
         wait(for: [expectation], timeout: 1)
         
         test(viewModel: sut, trigger: { cancelAction?.handler() }, expectedCommands: [
             .dismiss
         ], expectationValidation: ==)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [
-                SingleAlbumLinkScreenEvent()
-            ]
-        )
     }
     
     // MARK: - Helpers

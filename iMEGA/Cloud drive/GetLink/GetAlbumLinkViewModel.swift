@@ -28,6 +28,10 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     
     private typealias Continuation = AsyncStream<SensitiveContentAcknowledgementStatus>.Continuation
     
+    deinit {
+        loadingTask?.cancel()
+    }
+    
     init(album: AlbumEntity,
          shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
@@ -48,9 +52,8 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         case .onViewReady:
             tracker.trackAnalyticsEvent(with: SingleAlbumLinkScreenEvent())
             updateViewConfiguration()
+        case .onViewDidAppear where loadingTask == nil:
             loadingTask = Task { await startGetLinksCoordinatorStream() }
-        case .onViewWillDisappear:
-            cancelLoadingTask()
         case .switchToggled(indexPath: let indexPath, isOn: let isOn):
             handleSwitchToggled(forIndexPath: indexPath, isOn: isOn)
         case .shareLink(let sender):
@@ -116,7 +119,6 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         do { 
             if let albumLink = try await shareAlbumUseCase.shareAlbumLink(album),
                !Task.isCancelled {
-                shareLink = albumLink
                 await updateLink(albumLink)
             }
         } catch {
@@ -125,12 +127,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         }
         continuation.finish()
     }
-    
-    private func cancelLoadingTask() {
-        loadingTask?.cancel()
-        loadingTask = nil
-    }
-    
+        
     private func determineIfAlbumsContainSensitiveNodes(continuation: Continuation) async {
         
         guard !album.isLinkShared else {
@@ -171,11 +168,14 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     
     @MainActor
     private func updateLink(_ link: String) {
+        shareLink = link
+        
         guard let sectionIndex = sectionViewModels.firstIndex(where: { $0.sectionType == .link }),
               let rowIndex = sectionViewModels[safe: sectionIndex]?.cellViewModels.firstIndex(where: { $0.type == .link }) else {
             invokeCommand?(.dismissHud)
             return
         }
+        
         sectionViewModels[sectionIndex].cellViewModels[rowIndex] = GetLinkStringCellViewModel(link: link)
         invokeCommand?(.enableLinkActions)
         invokeCommand?(.reloadRows([IndexPath(row: rowIndex, section: sectionIndex)]))

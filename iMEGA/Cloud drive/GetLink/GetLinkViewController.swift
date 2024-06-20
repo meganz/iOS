@@ -108,6 +108,15 @@ class GetLinkViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let getLinkViewModel {
+            getLinkViewModel.dispatch(.onViewDidAppear)
+        } else {
+            getLinkVM.dispatch(.onViewDidAppear)
+        }
+    }
+    
     private func loadNodes() {
         if !MEGASdk.shared.mnz_isProAccount {
             MEGASdk.shared.add(self as any MEGARequestDelegate)

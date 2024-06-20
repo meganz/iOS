@@ -22,7 +22,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
             
             let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(nodes.count)
             
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(
                     title: expectedTitle,
                     isMultilink: false,
@@ -47,7 +47,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
             
             let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
             
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(
                     title: expectedTitle,
                     isMultilink: true,
@@ -74,7 +74,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
 
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+        test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
             .configureView(
                 title: expectedTitle,
                 isMultilink: true,
@@ -113,7 +113,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
             }
         }
         
-        sut.dispatch(.onViewReady)
+        sut.dispatch(.onViewDidAppear)
         
         wait(for: [expectation], timeout: 1)
         
@@ -147,8 +147,8 @@ final class GetNodeLinkViewModelTests: XCTestCase {
             }
         }
         
-        sut.dispatch(.onViewReady)
-        
+        sut.dispatch(.onViewDidAppear)
+
         wait(for: [expectation], timeout: 1)
         
         test(viewModel: sut, trigger: { cancelAction?.handler() }, expectedCommands: [

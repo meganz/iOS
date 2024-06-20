@@ -76,7 +76,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
             let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: expectedTitle,
                                isMultilink: true,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
@@ -108,7 +108,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
             let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(albums.count)
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: expectedTitle,
                                isMultilink: true,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
@@ -262,7 +262,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             hiddenNodesFeatureFlagActive: true)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+        test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
             .configureView(title: expectedTitle,
                            isMultilink: true,
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
@@ -314,7 +314,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             }
         }
         
-        sut.dispatch(.onViewReady)
+        sut.dispatch(.onViewDidAppear)
         
         wait(for: [expectation], timeout: 1)
         
@@ -324,13 +324,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .enableLinkActions,
             .dismissHud
         ], expectationValidation: ==)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [
-                MultipleAlbumLinksScreenEvent()
-            ]
-        )
+
     }
     
     func testDispatch_onViewReadyAndOneAlbumContainsSensitiveElementsAndIsNotExported_shouldShowAlert() throws {
@@ -355,7 +349,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             hiddenNodesFeatureFlagActive: true)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(albums.count)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+        test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
             .configureView(title: expectedTitle,
                            isMultilink: true,
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
@@ -370,13 +364,6 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                     .init(title: Strings.Localizable.continue, style: .default, isPreferredAction: true, handler: { })
                 ]))
         ], expectationValidation: ==)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [
-                MultipleAlbumLinksScreenEvent()
-            ]
-        )
     }
     
     func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsCancel_shouldDismissView() throws {
@@ -399,26 +386,19 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             }
         }
         
-        sut.dispatch(.onViewReady)
+        sut.dispatch(.onViewDidAppear)
         
         wait(for: [expectation], timeout: 1)
         
         test(viewModel: sut, trigger: { cancelAction?.handler() }, expectedCommands: [
             .dismiss
         ], expectationValidation: ==)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [
-                MultipleAlbumLinksScreenEvent()
-            ]
-        )
     }
     
     private func expectSuccessfulOnViewReady(sut: GetAlbumsLinkViewModel,
                                              albums: [AlbumEntity],
                                              expectedRowReload: [IndexPath]) {
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+        test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count),
                            isMultilink: true,
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),

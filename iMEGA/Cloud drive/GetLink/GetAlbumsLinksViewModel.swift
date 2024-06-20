@@ -18,6 +18,10 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     private var albumLinks: [HandleEntity: String]?
     private var loadingTask: Task<Void, Never>?
     private typealias Continuation = AsyncStream<SensitiveContentAcknowledgementStatus>.Continuation
+    
+    deinit {
+        loadingTask?.cancel()
+    }
 
     init(albums: [AlbumEntity],
          shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
@@ -38,9 +42,8 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         case .onViewReady:
             tracker.trackAnalyticsEvent(with: MultipleAlbumLinksScreenEvent())
             updateViewConfiguration()
+        case .onViewDidAppear where loadingTask == nil:
             loadingTask = Task { await startGetLinksCoordinatorStream() }
-        case .onViewWillDisappear:
-            cancelLoadingTask()
         case .shareLink(sender: let sender):
             shareLink(sender: sender)
         case .copyLink:
@@ -115,7 +118,6 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
             return
         }
         
-        albumLinks = sharedLinks
         updateLinkRows(forAlbumLinks: sharedLinks)
         continuation.finish()
     }
@@ -161,12 +163,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         
         invokeCommand?(.showAlert(alertModel))
     }
-    
-    private func cancelLoadingTask() {
-        loadingTask?.cancel()
-        loadingTask = nil
-    }
-    
+
     @MainActor
     private func updateLinkRows(forAlbumLinks sharedLinks: [HandleEntity: String]) {
         let rowsToReload = sharedLinks.compactMap { albumId, link in
@@ -176,6 +173,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
             invokeCommand?(.dismissHud)
             return
         }
+        albumLinks = sharedLinks
         invokeCommand?(.reloadRows(rowsToReload))
         invokeCommand?(.enableLinkActions)
         invokeCommand?(.dismissHud)
