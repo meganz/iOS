@@ -45,6 +45,12 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     public let requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never>
     public let contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never>
     public let userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never>
+    
+    // MARK: - Node Sizes
+    public let rootStorage: Int64
+    public let rubbishBinStorage: Int64
+    public let incomingSharesStorage: Int64
+    public let backupStorage: Int64
 
     // MARK: - Initializer
     public init(
@@ -74,7 +80,11 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> = Empty().eraseToAnyPublisher(),
         isUpgradeSecuritySuccess: Bool = false,
         bandwidthOverquotaDelay: Int64 = 0,
-        accountType: AccountTypeEntity = .free
+        accountType: AccountTypeEntity = .free,
+        rootStorage: Int64 = 0,
+        rubbishBinStorage: Int64 = 0,
+        incomingSharesStorage: Int64 = 0,
+        backupStorage: Int64 = 0
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -103,6 +113,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         self.contactRequestPublisher = contactRequestPublisher
         self.userAlertUpdatePublisher = userAlertUpdatePublisher
         self.accountType = accountType
+        self.rootStorage = rootStorage
+        self.rubbishBinStorage = rubbishBinStorage
+        self.incomingSharesStorage = incomingSharesStorage
+        self.backupStorage = backupStorage
     }
 
     // MARK: - AccountRepositoryProtocol Implementation
@@ -228,5 +242,21 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
 
     public func deRegisterMEGAGlobalDelegate() async {
         deRegisterMEGAGlobalDelegateCalled += 1
+    }
+
+    public func rootStorageUsed() -> Int64 {
+        rootStorage
+    }
+    
+    public func rubbishBinStorageUsed() -> Int64 {
+        rubbishBinStorage
+    }
+    
+    public func incomingSharesStorageUsed() -> Int64 {
+        incomingSharesStorage
+    }
+    
+    public func backupStorageUsed() async throws -> Int64 {
+        backupStorage
     }
 }

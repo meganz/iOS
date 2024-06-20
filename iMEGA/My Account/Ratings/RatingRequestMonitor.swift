@@ -10,12 +10,19 @@ import StoreKit
     
     private lazy var currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     private lazy var baseConditionUseCase: any RatingRequestBaseConditionsUseCaseProtocol
-        = RatingRequestBaseConditionsUseCase(preferenceUserCase: PreferenceUseCase.default,
-                                             accountRepo: AccountRepository(sdk: sdk, myChatFilesFolderNodeAccess: .shared),
-                                             currentAppVersion: currentAppVersion)
+    = RatingRequestBaseConditionsUseCase(
+        preferenceUserCase: PreferenceUseCase.default,
+        accountRepo: AccountRepository(
+            sdk: sdk,
+            myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess.shared,
+            backupsRootFolderNodeAccess: BackupRootNodeAccess.shared
+        ),
+        currentAppVersion: currentAppVersion
+    )
     private lazy var shareUseCase: some ShareUseCaseProtocol = ShareUseCase(
         repo: ShareRepository(sdk: sdk),
-        filesSearchRepository: FilesSearchRepository(sdk: sdk))
+        filesSearchRepository: FilesSearchRepository(sdk: sdk)
+    )
     
     @objc init(sdk: MEGASdk) {
         self.sdk = sdk

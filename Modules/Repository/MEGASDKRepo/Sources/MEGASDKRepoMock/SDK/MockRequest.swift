@@ -19,6 +19,7 @@ public final class MockRequest: MEGARequest {
     private let _notifications: MEGANotificationList?
     private let _recentActionsBuckets: [MEGARecentActionBucket]?
     private let _name: String?
+    private let _folderInfo: MEGAFolderInfo?
     
     public init(handle: MEGAHandle,
                 set: MEGASet? = nil,
@@ -36,7 +37,8 @@ public final class MockRequest: MEGARequest {
                 numDetails: Int = 0,
                 notifications: MEGANotificationList? = nil,
                 recentActionsBuckets: [MEGARecentActionBucket] = [],
-                name: String? = nil
+                name: String? = nil,
+                folderInfo: MEGAFolderInfo? = nil
                 
     ) {
         self.handle = handle
@@ -56,6 +58,7 @@ public final class MockRequest: MEGARequest {
         _notifications = notifications
         _recentActionsBuckets = recentActionsBuckets
         _name = name
+        _folderInfo = folderInfo
         super.init()
     }
     
@@ -76,4 +79,5 @@ public final class MockRequest: MEGARequest {
     public override var megaNotifications: MEGANotificationList? { _notifications }
     public override var recentActionsBuckets: [MEGARecentActionBucket]? { _recentActionsBuckets }
     public override var name: String? { _name }
+    public override var megaFolderInfo: MEGAFolderInfo? { _folderInfo }
 }

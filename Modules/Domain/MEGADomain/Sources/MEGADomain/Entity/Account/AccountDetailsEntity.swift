@@ -68,8 +68,24 @@ public struct AccountDetailsEntity: Sendable {
     public let subscriptionMethodId: PaymentMethodEntity
     public let subscriptionCycle: SubscriptionCycleEntity
     public let numberUsageItems: Int
+    public let storageUsedForHandle: @Sendable (_ handle: HandleEntity) -> Int64
     
-    public init(storageUsed: Int64, versionsStorageUsed: Int64, storageMax: Int64, transferOwnUsed: Int64, transferMax: Int64, proLevel: AccountTypeEntity, proExpiration: Int, subscriptionStatus: SubscriptionStatusEntity, subscriptionRenewTime: Int, subscriptionMethod: String?, subscriptionMethodId: PaymentMethodEntity, subscriptionCycle: SubscriptionCycleEntity, numberUsageItems: Int) {
+    public init(
+        storageUsed: Int64,
+        versionsStorageUsed: Int64,
+        storageMax: Int64,
+        transferOwnUsed: Int64,
+        transferMax: Int64,
+        proLevel: AccountTypeEntity,
+        proExpiration: Int,
+        subscriptionStatus: SubscriptionStatusEntity,
+        subscriptionRenewTime: Int,
+        subscriptionMethod: String?,
+        subscriptionMethodId: PaymentMethodEntity,
+        subscriptionCycle: SubscriptionCycleEntity,
+        numberUsageItems: Int,
+        storageUsedForHandle: @escaping @Sendable (_ handle: HandleEntity) -> Int64
+    ) {
         self.storageUsed = storageUsed
         self.versionsStorageUsed = versionsStorageUsed
         self.storageMax = storageMax
@@ -83,6 +99,7 @@ public struct AccountDetailsEntity: Sendable {
         self.subscriptionMethodId = subscriptionMethodId
         self.subscriptionCycle = subscriptionCycle
         self.numberUsageItems = numberUsageItems
+        self.storageUsedForHandle = storageUsedForHandle
     }
 }
 

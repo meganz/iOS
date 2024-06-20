@@ -7,7 +7,8 @@ import MEGASwift
 public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
-    private let myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess
+    private let myChatFilesFolderNodeAccess: NodeAccessProtocol
+    private let backupsRootFolderNodeAccess: NodeAccessProtocol
     
     private let requestResultSourcePublisher = PassthroughSubject<Result<AccountRequestEntity, any Error>, Never>()
     public var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, any Error>, Never> {
@@ -27,11 +28,13 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public init(
         sdk: MEGASdk = MEGASdk.sharedSdk,
         currentUserSource: CurrentUserSource = .shared,
-        myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess
+        myChatFilesFolderNodeAccess: NodeAccessProtocol,
+        backupsRootFolderNodeAccess: NodeAccessProtocol
     ) {
         self.sdk = sdk
         self.currentUserSource = currentUserSource
         self.myChatFilesFolderNodeAccess = myChatFilesFolderNodeAccess
+        self.backupsRootFolderNodeAccess = backupsRootFolderNodeAccess
     }
 
     // MARK: - User authentication status and identifiers
@@ -228,6 +231,66 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
                 }
             })
         }
+    }
+    
+// MARK: - Node Sizes
+    public func rootStorageUsed() -> Int64 {
+        storageUsed(for: sdk.rootNode?.handle)
+    }
+    
+    public func rubbishBinStorageUsed() -> Int64 {
+        storageUsed(for: sdk.rubbishNode?.handle)
+    }
+    
+    public func incomingSharesStorageUsed() -> Int64 {
+        sdk.inShares()
+            .toNodeArray()
+            .reduce(0) { sum, node in
+                sum + sdk.size(for: node).int64Value
+            }
+    }
+    
+    public func backupStorageUsed() async throws -> Int64 {
+        guard let node = try await backupRootNode().toMEGANode(in: sdk) else { return 0 }
+        let nodeInfo = try await folderInfo(node: node)
+        return nodeInfo.currentSize
+    }
+    
+    private func storageUsed(for handle: HandleEntity?) -> Int64 {
+        guard let handle,
+             let currentAccountDetails else { return 0 }
+
+        return currentAccountDetails.storageUsedForHandle(handle)
+    }
+    
+    private func backupRootNode() async throws -> NodeEntity {
+        try await withAsyncThrowingValue(in: { completion in
+            backupsRootFolderNodeAccess.loadNode { node, _ in
+                guard let node = node else {
+                    completion(.failure(FolderInfoErrorEntity.notFound))
+                    return
+                }
+                
+                completion(.success(node.toNodeEntity()))
+            }
+        })
+    }
+    
+    private func folderInfo(node: MEGANode) async throws -> FolderInfoEntity {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.getFolderInfo(for: node, delegate: RequestDelegate { result in
+                switch result {
+                case .failure:
+                    completion(.failure(FolderInfoErrorEntity.notFound))
+                case .success(let request):
+                    guard let megaFolderInfo = request.megaFolderInfo else {
+                        completion(.failure(FolderInfoErrorEntity.notFound))
+                        return
+                    }
+                    completion(.success(megaFolderInfo.toFolderInfoEntity()))
+                }
+            })
+        })
     }
 }
 

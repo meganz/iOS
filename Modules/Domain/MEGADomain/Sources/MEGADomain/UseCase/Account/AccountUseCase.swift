@@ -35,6 +35,12 @@ public protocol AccountUseCaseProtocol {
     func getMiscFlags() async throws
     func sessionTransferURL(path: String) async throws -> URL
     func multiFactorAuthCheck(email: String) async throws -> Bool
+    
+    // Node sizes
+    func rootStorageUsed() -> Int64
+    func rubbishBinStorageUsed() -> Int64
+    func incomingSharesStorageUsed() -> Int64
+    func backupStorageUsed() async throws -> Int64
 }
 
 extension AccountUseCaseProtocol {
@@ -44,7 +50,7 @@ extension AccountUseCaseProtocol {
 }
 
 // MARK: - Use case implementation
-public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtocol {
+public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtocol {
     private let repository: T
     
     public init(repository: T) {
@@ -152,12 +158,33 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
         try await repository.multiFactorAuthCheck(email: email)
     }
     
+    // MARK: - Node sizes
+    public func rootStorageUsed() -> Int64 {
+        repository.rootStorageUsed()
+    }
+    
+    public func rubbishBinStorageUsed() -> Int64 {
+        repository.rubbishBinStorageUsed()
+    }
+    
+    public func incomingSharesStorageUsed() -> Int64 {
+        repository.incomingSharesStorageUsed()
+    }
+    
+    public func backupStorageUsed() async throws -> Int64 {
+        try await repository.backupStorageUsed()
+    }
+
     // MARK: - Private User and session management
     private func isStandardProAccount() -> Bool {
         repository.isAccountType(.lite) ||
         repository.isAccountType(.proI) ||
         repository.isAccountType(.proII) ||
-        repository.isAccountType(.proIII)
+        repository.isAccountType(.proIII) ||
+        repository.isAccountType(.starter) ||
+        repository.isAccountType(.basic) ||
+        repository.isAccountType(.essential)
+
     }
 
     private func isValidProFlexiAccount() -> Bool {

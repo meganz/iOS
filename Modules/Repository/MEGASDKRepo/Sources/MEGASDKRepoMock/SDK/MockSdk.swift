@@ -54,6 +54,8 @@ public final class MockSdk: MEGASdk {
     private let _outgoingContactRequests: MEGAContactRequestList
     private let createdFolderHandle: MEGAHandle?
     private let nodeFingerprint: String?
+    private let nodeSizes: [MEGAHandle: Int64]
+    private let folderInfo: MEGAFolderInfo?
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -148,7 +150,9 @@ public final class MockSdk: MEGASdk {
                 outgoingContactRequests: MEGAContactRequestList = MEGAContactRequestList(),
                 createdFolderHandle: MEGAHandle? = nil,
                 shareAccessLevel: MEGAShareType = .accessUnknown,
-                nodeFingerprint: String? = nil
+                nodeFingerprint: String? = nil,
+                nodeSizes: [MEGAHandle: Int64] = [:],
+                folderInfo: MEGAFolderInfo? = nil
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -202,6 +206,8 @@ public final class MockSdk: MEGASdk {
         self.createdFolderHandle = createdFolderHandle
         self.shareAccessLevel = shareAccessLevel
         self.nodeFingerprint = nodeFingerprint
+        self.nodeSizes = nodeSizes
+        self.folderInfo = folderInfo
         super.init()
     }
     
@@ -773,6 +779,19 @@ public final class MockSdk: MEGASdk {
             name: name
         )
         
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
+    }
+    
+    public override func size(for node: MEGANode) -> NSNumber {
+        NSNumber(value: nodeSizes[node.handle] ?? 0)
+    }
+    
+    public override func inShares() -> MEGANodeList {
+        incomingNodes
+    }
+    
+    public override func getFolderInfo(for node: MEGANode, delegate: any MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: node.handle, folderInfo: folderInfo)
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
     

@@ -9,12 +9,13 @@ import XCTest
 @testable import MEGA
 
 final class AccountRepositoryTests: XCTestCase {
+    private let urlPath = "https://mega.nz"
     private var subscriptions = Set<AnyCancellable>()
     
     func testCurrentUserHandle() {
         let expectedHandle = HandleEntity.random()
         
-        let sut = makeSUT(sdk: MockSdk(myUser: MockUser(handle: expectedHandle)))
+        let (sut, _) = makeSUT(user: MockUser(handle: expectedHandle))
         
         XCTAssertEqual(sut.currentUserHandle, expectedHandle)
     }
@@ -22,7 +23,7 @@ final class AccountRepositoryTests: XCTestCase {
     func testCurrentUser() async {
         let expectedUser = MockUser(handle: .random())
         
-        let sut = makeSUT(sdk: MockSdk(myUser: expectedUser))
+        let (sut, _) = makeSUT(user: expectedUser)
         
         let currentUser = await sut.currentUser()
         XCTAssertEqual(currentUser, expectedUser.toUserEntity())
@@ -34,7 +35,7 @@ final class AccountRepositoryTests: XCTestCase {
             isGuestShouldBe expectedIsGuest: Bool,
             line: UInt = #line
         ) {
-            let sut = makeSUT(sdk: MockSdk(myUser: MockUser(email: email)))
+            let (sut, _) = makeSUT(user: MockUser(email: email))
             
             XCTAssertEqual(sut.isGuest, expectedIsGuest, line: line)
         }
@@ -44,49 +45,55 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testIsLoggedIn() {
-        XCTAssertTrue(makeSUT(sdk: MockSdk(isLoggedIn: 1)).isLoggedIn())
-        XCTAssertFalse(makeSUT(sdk: MockSdk(isLoggedIn: 0)).isLoggedIn())
+        let (sut, _) = makeSUT(isLoggedIn: 1)
+        XCTAssertTrue(sut.isLoggedIn())
+        let (sut2, _) = makeSUT(isLoggedIn: 0)
+        XCTAssertFalse(sut2.isLoggedIn())
     }
     
     func testIsMasterBusinessAccount() {
-        XCTAssertTrue(makeSUT(sdk: MockSdk(isMasterBusinessAccount: true)).isMasterBusinessAccount)
-        XCTAssertFalse(makeSUT(sdk: MockSdk(isMasterBusinessAccount: false)).isMasterBusinessAccount)
+        let (sut, _) = makeSUT(isMasterBusinessAccount: true)
+        XCTAssertTrue(sut.isMasterBusinessAccount)
+        let (sut2, _) = makeSUT()
+        XCTAssertFalse(sut2.isMasterBusinessAccount)
     }
     
     func testIsAchievementsEnabled() {
-        XCTAssertTrue(makeSUT(sdk: MockSdk(isAchievementsEnabled: true)).isAchievementsEnabled)
-        XCTAssertFalse(makeSUT(sdk: MockSdk(isAchievementsEnabled: false)).isAchievementsEnabled)
+        let (sut, _) = makeSUT(isAchievementsEnabled: true)
+        XCTAssertTrue(sut.isAchievementsEnabled)
+        let (sut2, _) = makeSUT()
+        XCTAssertFalse(sut2.isAchievementsEnabled)
     }
     
     func testIsNewAccount() {
-        XCTAssertTrue(makeSUT(sdk: MockSdk(isNewAccount: true)).isNewAccount)
-        XCTAssertFalse(makeSUT(sdk: MockSdk(isNewAccount: false)).isNewAccount)
+        let (sut, _) = makeSUT(isNewAccount: true)
+        XCTAssertTrue(sut.isNewAccount)
+        let (sut2, _) = makeSUT()
+        XCTAssertFalse(sut2.isNewAccount)
     }
     
     func testAccountCreationDate_whenNil_shouldReturnNil() {
-        let sut = makeSUT(sdk: MockSdk(accountCreationDate: nil))
+        let (sut, _) = makeSUT()
         XCTAssertNil(sut.accountCreationDate)
     }
     
     func testAccountCreationDate_whenNotNil_shouldReturnValue() {
         let stubbedDate = Date()
-        let sut = makeSUT(sdk: MockSdk(accountCreationDate: stubbedDate))
+        let (sut, _) = makeSUT(accountCreationDate: stubbedDate)
         XCTAssertEqual(sut.accountCreationDate, stubbedDate)
     }
     
     func testContacts_shouldMapSdkContacts() {
         let userStubOne = MockUser()
         let userStubTwo = MockUser()
-        let sut = makeSUT(sdk: MockSdk(
-            myContacts: MockUserList(users: [userStubOne, userStubTwo])
-        ))
+        let (sut, _) = makeSUT(myContacts: MockUserList(users: [userStubOne, userStubTwo]))
         
         XCTAssertEqual(sut.contacts(), [userStubOne.toUserEntity(), userStubTwo.toUserEntity()])
     }
     
     func testBandwidthOverquotaDelay_returnBandwidth() {
         let expectedBandwidth: Int64 = 100
-        let sut = makeSUT(sdk: MockSdk(bandwidthOverquotaDelay: expectedBandwidth))
+        let (sut, _) = makeSUT(bandwidthOverquotaDelay: expectedBandwidth)
         XCTAssertEqual(sut.bandwidthOverquotaDelay, expectedBandwidth)
     }
     
@@ -95,11 +102,10 @@ final class AccountRepositoryTests: XCTestCase {
             whenContactRequestCount expectedCount: Int,
             line: UInt = #line
         ) {
-            let sut = makeSUT(sdk: MockSdk(
-                incomingContactRequestList: MockContactRequestList(
+            let (sut, _) = makeSUT(incomingContactRequestList: MockContactRequestList(
                     contactRequests: Array(repeating: MockContactRequest(), count: expectedCount)
                 )
-            ))
+            )
             
             XCTAssertEqual(sut.incomingContactsRequestsCount(), expectedCount, line: line)
         }
@@ -116,9 +122,7 @@ final class AccountRepositoryTests: XCTestCase {
             relevantUnseenUserAlertsCount expectedCount: UInt,
             line: UInt = #line
         ) {
-            let sut = makeSUT(sdk: MockSdk(
-                userAlertList: MockUserAlertList(alerts: alerts)
-            ))
+            let (sut, _) = makeSUT(userAlertList: MockUserAlertList(alerts: alerts))
             
             XCTAssertEqual(sut.relevantUnseenUserAlertsCount(), expectedCount, line: line)
         }
@@ -161,9 +165,7 @@ final class AccountRepositoryTests: XCTestCase {
             whenNodesCount expectedCount: Int,
             line: UInt = #line
         ) {
-            let sut = makeSUT(sdk: MockSdk(
-                nodes: Array(repeating: MockNode(handle: .invalidHandle), count: expectedCount)
-            ))
+            let (sut, _) = makeSUT(nodes: Array(repeating: MockNode(handle: .invalidHandle), count: expectedCount))
             
             XCTAssertEqual(sut.totalNodesCount(), UInt64(expectedCount), line: line)
         }
@@ -175,20 +177,17 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testCurrentAccountDetails_shouldReturnCurrentAccountDetails() async {
-        let expectedAccountDetails = randomAccountDetails().toAccountDetailsEntity()
-        let userSource = CurrentUserSource(sdk: MockSdk())
-        let sut = AccountRepository(sdk: MockSdk(), currentUserSource: userSource, myChatFilesFolderNodeAccess: .shared)
+        let expectedAccountDetails = randomAccountDetails()
+        let (sut, _) = makeSUT(accountDetails: expectedAccountDetails)
         
-        userSource.setAccountDetails(expectedAccountDetails)
-        XCTAssertEqual(sut.currentAccountDetails, expectedAccountDetails)
+        XCTAssertEqual(sut.currentAccountDetails, expectedAccountDetails.toAccountDetailsEntity())
     }
     
     func testRefreshCurrentAccountDetails_whenFails_shouldThrowGenericError() async {
         let expectedError = MockError.failingError
-        let sut = makeSUT(
-            sdk: MockSdk(accountDetails: { sdk, delegate in
+        let (sut, _) = makeSUT(accountDetailsClosure: { sdk, delegate in
                 delegate.onRequestFinish?(sdk, request: MockRequest(handle: 1), error: expectedError)
-            })
+            }
         )
         
         await XCTAsyncAssertThrowsError(try await sut.refreshCurrentAccountDetails()) { errorThrown in
@@ -198,13 +197,12 @@ final class AccountRepositoryTests: XCTestCase {
     
     func testRefreshCurrentAccountDetails_whenSuccess_shouldReturnAccountDetails() async throws {
         let expectedAccountDetails = randomAccountDetails()
-        let sut = makeSUT(
-            sdk: MockSdk(accountDetails: { sdk, delegate in
+        let (sut, _) = makeSUT(accountDetailsClosure: { sdk, delegate in
                 delegate.onRequestFinish?(
                     sdk,
                     request: MockRequest(handle: 1, accountDetails: expectedAccountDetails),
                     error: MockError(errorType: .apiOk))
-            })
+            }
         )
         
         let accountDetails = try await sut.refreshCurrentAccountDetails()
@@ -214,10 +212,9 @@ final class AccountRepositoryTests: XCTestCase {
     
     func testUpgradeSecurity_whenApiOk_shouldNotThrow() async {
         let apiOk = MockError(errorType: .apiOk)
-        let sut = makeSUT(
-            sdk: MockSdk(upgradeSecurity: { sdk, delegate in
+        let (sut, _) = makeSUT(upgradeSecurityClosure: { sdk, delegate in
                 delegate.onRequestFinish?(sdk, request: MockRequest(handle: 1), error: apiOk)
-            })
+            }
         )
         
         await XCTAsyncAssertNoThrow(try await sut.upgradeSecurity())
@@ -225,10 +222,9 @@ final class AccountRepositoryTests: XCTestCase {
     
     func testUpgradeSecurity_whenFails_shouldThrowGenericError() async {
         let expectedError = MockError.failingError
-        let sut = makeSUT(
-            sdk: MockSdk(upgradeSecurity: { sdk, delegate in
+        let (sut, _) = makeSUT(upgradeSecurityClosure: { sdk, delegate in
                 delegate.onRequestFinish?(sdk, request: MockRequest(handle: 1), error: expectedError)
-            })
+            }
         )
         
         await XCTAsyncAssertThrowsError(try await sut.upgradeSecurity()) { errorThrown in
@@ -238,8 +234,7 @@ final class AccountRepositoryTests: XCTestCase {
     
     func testRequestResultPublisher_onRequestFinish_whenApiOk_sendsSuccessResult() {
         let apiOk = MockError(errorType: .apiOk)
-        let mockSdk = MockSdk()
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, mockSdk) = makeSUT()
         
         let exp = expectation(description: "Should receive success AccountRequestEntity")
         let megaRequest = MEGARequest()
@@ -259,8 +254,7 @@ final class AccountRepositoryTests: XCTestCase {
     
     func testRequestResultPublisher_onRequestFinish_withError_sendsError() {
         let apiError = MockError.failingError
-        let mockSdk = MockSdk()
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, mockSdk) = makeSUT()
         
         let exp = expectation(description: "Should receive success AccountRequestEntity")
         sut.requestResultPublisher
@@ -282,8 +276,7 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testContactRequestPublisher_onContactRequestsUpdate_sendsContactRequestList() {
-        let mockSdk = MockSdk()
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, mockSdk) = makeSUT()
         
         let exp = expectation(description: "Should receive ContactRequestEntity list")
         let expectedContactRequest = ContactRequestEntity.random
@@ -299,8 +292,7 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testUserAlertPublisher_onUserAlertsUpdate_sendsUserAlertList() {
-        let mockSdk = MockSdk()
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, mockSdk) = makeSUT()
         
         let exp = expectation(description: "Should receive UserAlertEntity list")
         let expectedUserAlert = UserAlertEntity.random
@@ -316,33 +308,30 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testOnRequestResultFinish_addDelegate_delegateShouldExist() async {
-        let sdk = MockSdk()
-        let repo = AccountRepository(sdk: sdk, myChatFilesFolderNodeAccess: .shared)
-        await repo.registerMEGARequestDelegate()
+        let (sut, mockSdk) = makeSUT()
+        await sut.registerMEGARequestDelegate()
         
-        XCTAssertTrue(sdk.hasRequestDelegate)
+        XCTAssertTrue(mockSdk.hasRequestDelegate)
     }
     
     func testOnRequestResultFinish_removeDelegate_delegateShouldNotExist() async {
-        let sdk = MockSdk()
-        sdk.hasRequestDelegate = true
+        let (sut, mockSdk) = makeSUT()
         
-        let repo = AccountRepository(sdk: sdk, myChatFilesFolderNodeAccess: .shared)
-        await repo.deRegisterMEGARequestDelegate()
+        mockSdk.hasRequestDelegate = true
         
-        XCTAssertFalse(sdk.hasRequestDelegate)
+        await sut.deRegisterMEGARequestDelegate()
+        
+        XCTAssertFalse(mockSdk.hasRequestDelegate)
     }
 
     func testGetMiscFlag_whenApiOk_shouldNotThrow() async {
-        let mockSdk = MockSdk(requestResult: .success(MockRequest(handle: 1)))
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, _) = makeSUT(requestResult: .success(MockRequest(handle: 1)))
 
         await XCTAsyncAssertNoThrow(try await sut.getMiscFlags())
     }
     
     func testGetMiscFlag_whenFail_shouldThrowGenericError() async {
-        let mockSdk = MockSdk(requestResult: .failure(MockError.failingError))
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, _) = makeSUT(requestResult: .failure(MockError.failingError))
         
         await XCTAsyncAssertThrowsError(try await sut.getMiscFlags()) { errorThrown in
             XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
@@ -350,10 +339,8 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testSessionTransferURL_whenApiOk_shouldReturnURL() async throws {
-        let urlPath = "https://mega.nz"
         let expectedURL = try XCTUnwrap(URL(string: urlPath))
-        let mockSdk = MockSdk(requestResult: .success(MockRequest(handle: 1, link: urlPath)))
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, _) = makeSUT(requestResult: .success(MockRequest(handle: 1, link: urlPath)))
         
         let urlResult = try await sut.sessionTransferURL(path: urlPath)
         
@@ -361,9 +348,7 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testSessionTransferURL_whenFail_shouldThrowGenericError() async throws {
-        let urlPath = "https://mega.nz"
-        let mockSdk = MockSdk(requestResult: .failure(MockError.failingError))
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, _) = makeSUT(requestResult: .failure(MockError.failingError))
         
         await XCTAsyncAssertThrowsError(try await sut.sessionTransferURL(path: urlPath)) { errorThrown in
             XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
@@ -371,21 +356,154 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testSessionTransferURL_whenApiOkButInvalidURLLink_shouldThrowGenericError() async throws {
-        let urlPath = "https://mega.nz"
-        let mockSdk = MockSdk(requestResult: .success(MockRequest(handle: 1, link: nil)))
-        let sut = makeSUT(sdk: mockSdk)
+        let (sut, _) = makeSUT(requestResult: .success(MockRequest(handle: 1, link: nil)))
         
         await XCTAsyncAssertThrowsError(try await sut.sessionTransferURL(path: urlPath)) { errorThrown in
             XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
         }
     }
+    
+    func testRootStorageUsed_withValidHandle_shouldReturnCorrectStorage() {
+        let rootNodeHandle: UInt64 = 1
+        let expectedSize: Int64 = 100
 
+        let (sut, _) = makeSUT(
+            rootNodeHandle: rootNodeHandle,
+            nodeSizes: [rootNodeHandle: expectedSize]
+        )
+
+        let usedStorage = sut.rootStorageUsed()
+        XCTAssertEqual(usedStorage, expectedSize)
+    }
+    
+    func testRubbishBinStorageUsed_withValidHandle_shouldReturnCorrectStorage() {
+        let rubbishNodeHandle: UInt64 = 2
+        let expectedSize: Int64 = 50
+        
+        let (sut, _) = makeSUT(
+            rubbishNodeHandle: rubbishNodeHandle,
+            nodeSizes: [rubbishNodeHandle: expectedSize]
+        )
+        
+        let usedStorage = sut.rubbishBinStorageUsed()
+        XCTAssertEqual(usedStorage, expectedSize)
+    }
+    
+    func testIncomingSharesStorageUsed_withValidNodes_shouldReturnCorrectStorage() {
+        let incomingNode1Handle: UInt64 = 1
+        let incomingNode1Size: Int64 = 10
+        let incomingNode2Handle: UInt64 = 2
+        let incomingNode2Size: Int64 = 20
+        let (sut, _) = makeSUT(
+            nodeSizes: [
+                incomingNode1Handle: incomingNode1Size,
+                incomingNode2Handle: incomingNode2Size
+            ],
+            incomingNodes: [
+                MockNode(handle: incomingNode1Handle),
+                MockNode(handle: incomingNode2Handle)
+            ]
+        )
+        
+        let usedStorage = sut.incomingSharesStorageUsed()
+        XCTAssertEqual(usedStorage, incomingNode1Size + incomingNode2Size)
+    }
+    
+    func testBackupStorageUsed_withValidNode_shouldReturnCorrectStorage() async throws {
+        let backupNodeHandle: UInt64 = 4
+        let expectedSize: Int64 = 25
+        
+        let (sut, _) = makeSUT(
+            nodes: [MockNode(handle: backupNodeHandle)],
+            backupRootNodeHandle: backupNodeHandle,
+            currentSize: expectedSize
+        )
+        
+        let usedStorage = try await sut.backupStorageUsed()
+        XCTAssertEqual(usedStorage, expectedSize)
+    }
     // MARK: - Helpers
     
-    private func makeSUT(sdk: MEGASdk) -> AccountRepository {
-        AccountRepository(
-            sdk: sdk,
-            currentUserSource: CurrentUserSource(sdk: sdk), myChatFilesFolderNodeAccess: .shared
+    private func makeSUT(
+        nodes: [MockNode] = [],
+        user: MockUser? = nil,
+        isLoggedIn: Int = 0,
+        isMasterBusinessAccount: Bool = false,
+        isAchievementsEnabled: Bool = false,
+        isNewAccount: Bool = false,
+        accountCreationDate: Date? = nil,
+        myContacts: MockUserList = MockUserList(users: []),
+        bandwidthOverquotaDelay: Int64 = 0,
+        incomingContactRequestList: MockContactRequestList = MockContactRequestList(contactRequests: []),
+        userAlertList: MockUserAlertList = MockUserAlertList(alerts: []),
+        rootNodeHandle: UInt64 = 0,
+        rubbishNodeHandle: UInt64 = 0,
+        myChatFilesNodeHandle: UInt64 = 0,
+        backupRootNodeHandle: UInt64 = 0,
+        nodeSizes: [UInt64: Int64] = [:],
+        incomingNodes: [MockNode] = [],
+        currentSize: Int64 = 0,
+        accountDetails: MockMEGAAccountDetails? = nil,
+        upgradeSecurityClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
+        accountDetailsClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
+        requestResult: MockSdkRequestResult = .failure(MockError.failingError)
+    ) -> (AccountRepository, MockSdk) {
+        let incomingNodes = MockNodeList(nodes: incomingNodes)
+        let myChatFilesRootNodeAccess = nodeAccess(for: myChatFilesNodeHandle)
+        let backupsRootNodeAccess = nodeAccess(for: backupRootNodeHandle)
+        
+        let mockSdk = MockSdk(
+            nodes: nodes,
+            incomingNodes: incomingNodes,
+            myContacts: myContacts,
+            myUser: user,
+            isLoggedIn: isLoggedIn,
+            isMasterBusinessAccount: isMasterBusinessAccount,
+            isAchievementsEnabled: isAchievementsEnabled,
+            isNewAccount: isNewAccount,
+            bandwidthOverquotaDelay: bandwidthOverquotaDelay,
+            megaRootNode: rootNodeHandle > 0 ? MockNode(handle: rootNodeHandle): nil,
+            rubbishBinNode: rubbishNodeHandle > 0 ? MockNode(handle: rubbishNodeHandle): nil,
+            incomingContactRequestList: incomingContactRequestList,
+            userAlertList: userAlertList,
+            upgradeSecurity: upgradeSecurityClosure,
+            accountDetails: accountDetailsClosure,
+            requestResult: requestResult,
+            accountCreationDate: accountCreationDate,
+            nodeSizes: nodeSizes,
+            folderInfo: MockFolderInfo(currentSize: currentSize)
+        )
+        
+        let currentUserSource = CurrentUserSource(sdk: mockSdk)
+        
+        currentUserSource.setAccountDetails(
+            (accountDetails ?? defaultAccountDetails(type: .free, nodeSizes: nodeSizes))
+                .toAccountDetailsEntity()
+        )
+        
+        return (AccountRepository(
+            sdk: mockSdk,
+            currentUserSource: currentUserSource,
+            myChatFilesFolderNodeAccess: myChatFilesRootNodeAccess,
+            backupsRootFolderNodeAccess: backupsRootNodeAccess
+        ), mockSdk)
+    }
+    
+    private func nodeAccess(for nodeHandle: UInt64) -> NodeAccessProtocol {
+        MockNodeAccess(
+           result: nodeHandle > 0 ?
+               .success(MockNode(handle: nodeHandle)) :
+               .failure(GenericErrorEntity())
+       )
+    }
+    
+    private func defaultAccountDetails(
+        type: AccountTypeEntity,
+        nodeSizes: [UInt64: Int64]
+    ) -> MockMEGAAccountDetails {
+        MockMEGAAccountDetails(
+            type: .free,
+            nodeSizes: nodeSizes
         )
     }
     
