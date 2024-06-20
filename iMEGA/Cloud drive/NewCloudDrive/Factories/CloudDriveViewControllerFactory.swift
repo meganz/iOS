@@ -408,6 +408,7 @@ struct CloudDriveViewControllerFactory {
         )
 
         let uploadAddMenuDelegate = UploadAddMenuDelegateHandler(
+            tracker: tracker,
             nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
             nodeSource: nodeSource
         )
@@ -834,6 +835,7 @@ struct CloudDriveViewControllerFactory {
         config: NodeBrowserConfig
     ) -> SearchConfig.EmptyViewAssets {
         CloudDriveEmptyViewAssetFactory(
+            tracker: tracker,
             nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,

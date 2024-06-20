@@ -42,6 +42,7 @@ extension AppDelegate {
         })
         
         let uploadAddMenuDelegateHandler = UploadAddMenuDelegateHandler(
+            tracker: DIContainer.tracker,
             nodeInsertionRouter: nodeInsertionRouter,
             nodeSource: .node({
                 nodeRepository.rootNode() // Per existing logic, we only upload to the root folder of CD.

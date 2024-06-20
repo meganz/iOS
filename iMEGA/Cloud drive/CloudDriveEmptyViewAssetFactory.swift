@@ -7,16 +7,19 @@ import SwiftUI
 import UIKit
 
 struct CloudDriveEmptyViewAssetFactory {
+    private let tracker: any AnalyticsTracking
     private let nodeInsertionRouter: any NodeInsertionRouting
     private let nodeUseCase: any NodeUseCaseProtocol
     private let isDesignTokenEnabled: Bool
     private let titleTextColor: (ColorScheme) -> Color
 
     init(
+        tracker: some AnalyticsTracking,
         nodeInsertionRouter: some NodeInsertionRouting,
         nodeUseCase: some NodeUseCaseProtocol,
         isDesignTokenEnabled: Bool = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
     ) {
+        self.tracker = tracker
         self.nodeUseCase = nodeUseCase
         self.isDesignTokenEnabled = isDesignTokenEnabled
         self.titleTextColor = { colorScheme in
@@ -191,6 +194,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func perform(action: UploadAddActionEntity, for nodeEntity: NodeEntity) {
         let menuDelegate = UploadAddMenuDelegateHandler(
+            tracker: tracker,
             nodeInsertionRouter: nodeInsertionRouter,
             nodeSource: .node { nodeEntity }
         )
