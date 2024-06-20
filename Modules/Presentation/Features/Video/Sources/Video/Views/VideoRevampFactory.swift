@@ -92,6 +92,8 @@ public class VideoRevampFactory {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
+        videoSelection: VideoSelection,
+        selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
     ) -> UIViewController {
         let viewModel = VideoPlaylistContentViewModel(
@@ -101,11 +103,14 @@ public class VideoRevampFactory {
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase),
             sharedUIState: sharedUIState,
             presentationConfig: presentationConfig,
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            selectionDelegate: selectionAdapter
         )
+        
         let view = PlaylistContentScreen(
             viewModel: viewModel,
             videoConfig: videoConfig,
+            videoSelection: videoSelection,
             router: router
         )
         return UIHostingController(rootView: view)

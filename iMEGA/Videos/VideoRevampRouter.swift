@@ -129,6 +129,7 @@ struct VideoRevampRouter: VideoRevampRouting {
             nodeRepository: NodeRepository.newRepo
         )
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        let videoSelection = VideoSelection()
         let viewController = VideoPlaylistContentViewController(
             videoConfig: videoConfig,
             videoPlaylistEntity: videoPlaylistEntity,
@@ -139,7 +140,9 @@ struct VideoRevampRouter: VideoRevampRouting {
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: PreferenceUseCase.default,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
-            )
+            ),
+            videoSelection: videoSelection,
+            selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection)
         )
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)

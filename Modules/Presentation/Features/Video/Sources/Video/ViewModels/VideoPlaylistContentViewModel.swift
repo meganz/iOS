@@ -3,6 +3,15 @@ import Combine
 import MEGADomain
 import MEGASwiftUI
 
+public protocol VideoPlaylistContentViewModelSelectionDelegate: AnyObject {
+    
+    /// A delegate method to handle all selected button triggered. Implement this to get the event of all selected button alongside the corresponding varaibles.
+    /// - Parameters:
+    ///   - allSelected: A boolean that indicates all selected state, either all selected active, or inactive.
+    ///   - videos: Collection of videos that displayed as the target of all selected state changed.
+    func didChangeAllSelectedValue(allSelected: Bool, videos: [NodeEntity])
+}
+
 final class VideoPlaylistContentViewModel: ObservableObject {
     
     private var videoPlaylistEntity: VideoPlaylistEntity
@@ -10,6 +19,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private weak var selectionDelegate: VideoPlaylistContentViewModelSelectionDelegate?
     
     @Published public private(set) var videos: [NodeEntity] = []
     @Published var headerPreviewEntity: VideoPlaylistCellPreviewEntity = .placeholder
@@ -28,7 +38,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol,
         sharedUIState: VideoPlaylistContentSharedUIState,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig? = nil,
-        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        selectionDelegate: some VideoPlaylistContentViewModelSelectionDelegate
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
@@ -37,6 +48,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.sharedUIState = sharedUIState
         self.presentationConfig = presentationConfig
+        self.selectionDelegate = selectionDelegate
     }
     
     @MainActor
@@ -123,4 +135,11 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private func doesSupport(_ sortOrder: SortOrderEntity) -> Bool {
          [.defaultAsc, .defaultDesc, .modificationAsc, .modificationDesc].contains(sortOrder)
      }
+    
+    @MainActor
+    func subscribeToAllSelected() async {
+        for await value in sharedUIState.$isAllSelected.values {
+            selectionDelegate?.didChangeAllSelectedValue(allSelected: value, videos: videos)
+        }
+    }
 }

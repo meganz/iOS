@@ -1,11 +1,14 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGATest
 import Video
 import XCTest
 
 final class VideoPlaylistContentViewControllerTests: XCTestCase {
+    
+    // MARK: - sortMenu
     
     func testSortMenu_whenHasInValidSortOrderType_doesNotSaveSortOrder() {
         let invalidSortOrders: [SortOrderEntity] = SortOrderEntity.allCases
@@ -40,6 +43,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: VideoPlaylistContentViewController, sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase) {
         let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc)
+        let videoSelection = VideoSelection()
         let sut = VideoPlaylistContentViewController(
             videoConfig: .live(isDesignTokenEnabled: true),
             videoPlaylistEntity: anyVideoPlaylist(),
@@ -47,7 +51,9 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
             thumbnailUseCase: MockThumbnailUseCase(),
             router: MockVideoRevampRouter(),
             presentationConfig: VideoPlaylistContentSnackBarPresentationConfig(shouldShowSnackBar: false, text: nil),
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase, 
+            videoSelection: videoSelection,
+            selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection)
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, sortOrderPreferenceUseCase)

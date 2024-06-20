@@ -7,15 +7,18 @@ struct PlaylistContentScreen: View {
     @StateObject private var viewModel: VideoPlaylistContentViewModel
     
     private let videoConfig: VideoConfig
+    @StateObject private var videoSelection: VideoSelection
     private let router: any VideoRevampRouting
     
     init(
         viewModel: @autoclosure @escaping () -> VideoPlaylistContentViewModel,
         videoConfig: VideoConfig,
+        videoSelection: @autoclosure @escaping () -> VideoSelection,
         router: some VideoRevampRouting
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
         self.videoConfig = videoConfig
+        _videoSelection = StateObject(wrappedValue: videoSelection())
         self.router = router
     }
     
@@ -26,10 +29,14 @@ struct PlaylistContentScreen: View {
             thumbnailUseCase: viewModel.thumbnailUseCase,
             videos: viewModel.videos,
             router: router,
+            videoSelection: videoSelection,
             onTapAddButton: {}
         )
         .task {
             await viewModel.onViewAppeared()
+        }
+        .task {
+            await viewModel.subscribeToAllSelected()
         }
         .onReceive(viewModel.$shouldPopScreen) { shouldPopScreen in
             if shouldPopScreen {
@@ -46,15 +53,37 @@ struct PlaylistContentView: View {
     let thumbnailUseCase: any ThumbnailUseCaseProtocol
     let videos: [NodeEntity]
     let router: any VideoRevampRouting
+    @StateObject private var videoSelection: VideoSelection
     let onTapAddButton: () -> Void
+    
+    init(
+        videoConfig: VideoConfig,
+        previewEntity: VideoPlaylistCellPreviewEntity,
+        thumbnailUseCase: any ThumbnailUseCaseProtocol,
+        videos: [NodeEntity],
+        router: any VideoRevampRouting,
+        videoSelection: @autoclosure @escaping () -> VideoSelection,
+        onTapAddButton: @escaping () -> Void
+    ) {
+        self.videoConfig = videoConfig
+        self.previewEntity = previewEntity
+        self.thumbnailUseCase = thumbnailUseCase
+        self.videos = videos
+        self.router = router
+        _videoSelection = StateObject(wrappedValue: videoSelection())
+        self.onTapAddButton = onTapAddButton
+    }
     
     var body: some View {
         VStack(spacing: 0) {
-            PlaylistContentHeaderView(
-                videoConfig: videoConfig,
-                previewEntity: previewEntity,
-                onTapAddButton: onTapAddButton
-            )
+            
+            if !videoSelection.editMode.isEditing {
+                PlaylistContentHeaderView(
+                    videoConfig: videoConfig,
+                    previewEntity: previewEntity,
+                    onTapAddButton: onTapAddButton
+                )
+            }
             
             if previewEntity.imageContainers.isEmpty {
                 Spacer()
@@ -98,7 +127,7 @@ struct PlaylistContentView: View {
             thumbnailUseCase: thumbnailUseCase,
             videos: videos,
             videoConfig: videoConfig,
-            selection: VideoSelection(),
+            selection: videoSelection,
             router: router,
             viewType: .playlistContent
         )
@@ -121,6 +150,7 @@ struct PlaylistContentView: View {
         thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
+        videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
 }
@@ -139,6 +169,7 @@ struct PlaylistContentView: View {
         thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
+        videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
     .preferredColorScheme(.dark)
@@ -158,6 +189,7 @@ struct PlaylistContentView: View {
         thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
+        videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
 }
@@ -176,6 +208,7 @@ struct PlaylistContentView: View {
         thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
+        videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
     .preferredColorScheme(.dark)

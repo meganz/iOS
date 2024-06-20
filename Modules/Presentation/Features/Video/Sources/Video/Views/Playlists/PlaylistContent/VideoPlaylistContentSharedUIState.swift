@@ -7,6 +7,7 @@ public final class VideoPlaylistContentSharedUIState {
     @Published public var selectedSortOrderEntity: SortOrderEntity?
     @Published public var shouldShowSnackBar = false
     @Published public var snackBarText = ""
+    @Published public var isAllSelected = false
     
     public init() {}
 }

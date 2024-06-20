@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGASDKRepo
 import SwiftUI
 import UIKit
@@ -29,6 +30,11 @@ final class VideoPlaylistContentViewController: UIViewController {
     private var snackBarViewModel: SnackBarViewModel?
     private var showSnackBarSubscription: AnyCancellable?
     
+    private let videoSelection: VideoSelection
+    private let selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter
+    private let videoToolbarViewModel = VideoToolbarViewModel()
+    private var toolbar = UIToolbar()
+    
     init(
         videoConfig: VideoConfig,
         videoPlaylistEntity: VideoPlaylistEntity,
@@ -36,7 +42,9 @@ final class VideoPlaylistContentViewController: UIViewController {
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         router: some VideoRevampRouting,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
-        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        videoSelection: VideoSelection,
+        selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter
     ) {
         self.videoConfig = videoConfig
         self.videoPlaylistEntity = videoPlaylistEntity
@@ -45,6 +53,8 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.router = router
         self.presentationConfig = presentationConfig
+        self.videoSelection = videoSelection
+        self.selectionAdapter = selectionAdapter
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,6 +67,10 @@ final class VideoPlaylistContentViewController: UIViewController {
         setupContentView()
         configureSnackBarPresenter()
         listenToSnackBarPresentation()
+        setupNavigationBar()
+        subscribeToVideoSelection()
+        listenToSelectedDisplayActionChanged()
+        listenToVideoSelectionForTitle()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -73,6 +87,8 @@ final class VideoPlaylistContentViewController: UIViewController {
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             router: router,
             sharedUIState: sharedUIState,
+            videoSelection: videoSelection,
+            selectionAdapter: selectionAdapter,
             presentationConfig: presentationConfig
         )
         
@@ -90,6 +106,182 @@ final class VideoPlaylistContentViewController: UIViewController {
         if let navigationBar = navigationController?.navigationBar {
             AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
         }
+    }
+    
+    // MARK: - Toolbar
+    
+    private func subscribeToVideoSelection() {
+        videoSelection.$videos
+            .map { $0.isNotEmpty }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] hasSelectedItem in
+                self?.videoToolbarViewModel.isDisabled = !hasSelectedItem
+            }
+            .store(in: &subscriptions)
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        setupToolbar(editing: editing)
+    }
+    
+    private func setupToolbar(editing: Bool) {
+        if editing {
+            showToolbar()
+        } else {
+            hideToolbar()
+        }
+    }
+    
+    private func showToolbar() {
+        toolbar.alpha = 0
+        configureToolbar()
+        
+        tabBarController?.view.addSubview(toolbar)
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        
+        if let tabBar = tabBarController?.tabBar {
+            NSLayoutConstraint.activate([
+                toolbar.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: 0),
+                toolbar.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor, constant: 0),
+                toolbar.trailingAnchor.constraint(equalTo: tabBar.trailingAnchor, constant: 0),
+                toolbar.bottomAnchor.constraint(equalTo: tabBar.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+            ])
+        }
+        
+        UIView.animate(
+            withDuration: 0.33,
+            animations: { [weak self] in
+                self?.toolbar.alpha = 1
+            }
+        )
+    }
+    
+    private func configureToolbar() {
+        toolbar.items = [
+            UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: #selector(downloadAction(_:))),
+            UIBarButtonItem.flexibleSpace(),
+            UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: #selector(linkAction(_:))),
+            UIBarButtonItem.flexibleSpace(),
+            UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: #selector(saveToPhotosAction(_:))),
+            UIBarButtonItem.flexibleSpace(),
+            UIBarButtonItem(image: UIImage.hudMinus, style: .plain, target: self, action: #selector(removeVideoFromPlaylistAction(_:))),
+            UIBarButtonItem.flexibleSpace(),
+            UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
+        ]
+        
+        configureToolbarAppearance()
+    }
+    
+    private func configureToolbarAppearance() {
+        videoToolbarViewModel.$isDisabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isDisabled in
+                self?.toolbar.items?.forEach { $0.isEnabled = !isDisabled }
+            }
+            .store(in: &subscriptions)
+        
+        if UIColor.isDesignTokenEnabled() {
+            toolbar.items?.forEach { $0.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor) }
+        }
+        toolbar.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
+    }
+    
+    private func hideToolbar() {
+        UIView.animate(
+            withDuration: 0.33,
+            animations: { [weak self] in
+                self?.toolbar.alpha = 0
+            },
+            completion: {  [weak self] _ in
+                self?.toolbar.removeFromSuperview()
+            }
+        )
+    }
+    
+    @objc private func downloadAction(_ sender: UIBarButtonItem) {
+        // CC-7280
+    }
+    
+    @objc private func linkAction(_ sender: UIBarButtonItem) {
+        // CC-7280
+    }
+    
+    @objc private func saveToPhotosAction(_ sender: UIBarButtonItem) {
+        // CC-7280
+    }
+    
+    @objc private func removeVideoFromPlaylistAction(_ sender: UIBarButtonItem) {
+        // CC-7280
+    }
+    
+    @objc private func moreAction(_ sender: UIBarButtonItem) {
+        // CC-7280
+    }
+    
+    func resetNavigationBar() {
+        setEditing(false, animated: true)
+        videoSelection.editMode = .inactive
+        setupNavigationBarButtons()
+    }
+    
+    private func listenToSelectedDisplayActionChanged() {
+        sharedUIState.$selectedDisplayActionEntity
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] selectedDisplayActionEntity in
+                guard let self else { return }
+                switch selectedDisplayActionEntity {
+                case .select:
+                    toggleEditing()
+                default:
+                    break
+                }
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func toggleEditing() {
+        setEditing(!isEditing, animated: true)
+        setupNavigationBarButtons()
+        videoSelection.editMode = isEditing ? .active : .inactive
+    }
+    
+    private func setupNavigationBarButtons() {
+        setupLeftNavigationBarButtons()
+        setupRightNavigationBarButtons()
+    }
+    
+    private func setupLeftNavigationBarButtons() {
+        navigationItem.setLeftBarButtonItems(isEditing ? [selectAllBarButtonItem] : nil, animated: true)
+    }
+    
+    private func setupRightNavigationBarButtons() {
+        navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : [moreBarButtonItem], animated: true)
+    }
+    
+    private lazy var selectAllBarButtonItem = {
+        UIBarButtonItem(image: UIImage.selectAllItems, style: .plain, target: self, action: #selector(selectAllBarButtonItemTapped))
+    }()
+    
+    @objc private func selectAllBarButtonItemTapped() {
+        sharedUIState.isAllSelected = !sharedUIState.isAllSelected
+    }
+    
+    private lazy var cancelBarButtonItem = {
+        UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelBarButtonItemTapped))
+    }()
+    
+    @objc private func cancelBarButtonItemTapped() {
+        resetNavigationBar()
+    }
+    
+    private func listenToVideoSelectionForTitle() {
+        videoSelection.videoPlaylistContentTitlePublisher()
+            .receive(on: DispatchQueue.main)
+            .sink {  [weak self] navigationItemTitle in
+                self?.navigationItem.title = navigationItemTitle
+            }
+            .store(in: &subscriptions)
     }
 }
 
@@ -222,7 +414,7 @@ extension VideoPlaylistContentViewController: SnackBarPresenting {
     private func configureSnackBarPresenter() {
         SnackBarRouter.shared.configurePresenter(self)
     }
-
+    
     private func removeSnackBarPresenter() {
         SnackBarRouter.shared.removePresenter()
     }
