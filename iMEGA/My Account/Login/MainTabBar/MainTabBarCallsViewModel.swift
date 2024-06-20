@@ -1,6 +1,7 @@
 import CallKit
 import Combine
 import Intents
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -81,6 +82,8 @@ struct CXCallUpdateFactory {
 
 enum MainTabBarCallsAction: ActionType { 
     case startCallIntent(INStartCallIntent)
+    case didTapCloudDriveTab
+    case didTapChatRoomsTab
 }
 
 class MainTabBarCallsViewModel: ViewModelType {
@@ -126,6 +129,8 @@ class MainTabBarCallsViewModel: ViewModelType {
     private let callUpdateFactory: CXCallUpdateFactory
     
     private let tonePlayer = TonePlayer()
+    
+    private let tracker: any AnalyticsTracking
 
     init(
         router: some MainTabBarCallsRouting,
@@ -138,7 +143,8 @@ class MainTabBarCallsViewModel: ViewModelType {
         handleUseCase: some MEGAHandleUseCaseProtocol,
         callManager: some CallManagerProtocol,
         callUpdateFactory: CXCallUpdateFactory,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        tracker: some AnalyticsTracking
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -151,6 +157,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.callManager = callManager
         self.callUpdateFactory = callUpdateFactory
         self.featureFlagProvider = featureFlagProvider
+        self.tracker = tracker
         
         onCallUpdateListener()
     }
@@ -161,6 +168,10 @@ class MainTabBarCallsViewModel: ViewModelType {
         switch action {
         case .startCallIntent(let intent):
            startCall(fromIntent: intent)
+        case .didTapCloudDriveTab:
+            trackCloudDriveTabEvent()
+        case .didTapChatRoomsTab:
+            trackChatRoomsTabEvent()
         }
     }
     
@@ -508,5 +519,13 @@ class MainTabBarCallsViewModel: ViewModelType {
               chatRoom.chatType == .oneToOne,
               session.termCode == .nonRecoverable else { return }
         tonePlayer.play(tone: .callEnded)
+    }
+    
+    private func trackCloudDriveTabEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveBottomNavigationItemEvent())
+    }
+    
+    private func trackChatRoomsTabEvent() {
+        tracker.trackAnalyticsEvent(with: ChatRoomsBottomNavigationItemEvent())
     }
 }

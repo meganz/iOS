@@ -193,7 +193,8 @@ extension MainTabBarController {
             handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             callManager: CallKitCallManager.shared, 
             callUpdateFactory: .defaultFactory,
-            featureFlagProvider: DIContainer.featureFlagProvider
+            featureFlagProvider: DIContainer.featureFlagProvider,
+            tracker: DIContainer.tracker
         )
         
         mainTabBarCallsViewModel.invokeCommand = { [weak self] command in
@@ -218,6 +219,16 @@ extension MainTabBarController {
             phoneBadgeImageView?.isHidden = true
         case .navigateToChatTab:
             selectedIndex = TabType.chat.rawValue
+        }
+    }
+    
+    private func trackEventForSelectedTabIndex() {
+        switch selectedIndex {
+        case TabType.cloudDrive.rawValue:
+            mainTabBarViewModel.dispatch(.didTapCloudDriveTab)
+        case TabType.chat.rawValue:
+            mainTabBarViewModel.dispatch(.didTapChatRoomsTab)
+        default: break
         }
     }
     
@@ -255,6 +266,8 @@ extension MainTabBarController: UITabBarControllerDelegate {
         showPSAViewIfNeeded()
         
         configureAdsVisibility()
+        
+        trackEventForSelectedTabIndex()
     }
 }
 

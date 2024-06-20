@@ -12,6 +12,8 @@ enum CloudDriveAction: ActionType {
     case resetSensitivitySetting
     case didTapChooseFromPhotos
     case didTapImportFromFiles
+    case didTapNewFolder
+    case didTapNewTextFile
     case didOpenAddMenu
 }
 
@@ -179,6 +181,10 @@ enum CloudDriveAction: ActionType {
             trackChooseFromPhotosEvent()
         case .didTapImportFromFiles:
             trackImportFromFilesEvent()
+        case .didTapNewFolder:
+            trackNewFolderEvent()
+        case .didTapNewTextFile:
+            trackNewTextFileEvent()
         case .didOpenAddMenu:
             trackOpenAddMenuEvent()
         }
@@ -190,6 +196,14 @@ enum CloudDriveAction: ActionType {
     
     private func trackImportFromFilesEvent() {
         tracker.trackAnalyticsEvent(with: CloudDriveImportFromFilesMenuToolbarEvent())
+    }
+    
+    private func trackNewFolderEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveNewFolderMenuToolbarEvent())
+    }
+    
+    private func trackNewTextFileEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveNewTextFileMenuToolbarEvent())
     }
     
     private func trackOpenAddMenuEvent() {
