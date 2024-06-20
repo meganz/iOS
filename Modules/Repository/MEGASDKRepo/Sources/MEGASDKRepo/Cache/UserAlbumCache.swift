@@ -72,7 +72,7 @@ public actor UserAlbumCache: UserAlbumCacheProtocol {
             let albumId = $0.albumId
             if albumElementIdsCache[albumId] == nil {
                 albumElementIdsCache[albumId] = [$0]
-            } else {
+            } else if albumElementIdsCache[albumId]?.notContains($0) == true {
                 albumElementIdsCache[albumId]?.append($0)
             }
         }
