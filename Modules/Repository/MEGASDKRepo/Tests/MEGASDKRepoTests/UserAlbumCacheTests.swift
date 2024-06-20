@@ -106,6 +106,20 @@ final class UserAlbumCacheTests: XCTestCase {
         XCTAssertEqual(result, [insertedElement])
     }
     
+    func testInsertAlbumPhotoIdEntity_insertingDuplicateItems_shouldNotAddItemToCache() async {
+        let albumId = HandleEntity(54)
+        let albumElements = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 56, nodeId: 65),
+                             AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 665, nodeId: 976)]
+        
+        let sut = UserAlbumCache.shared
+        await sut.setAlbumElementIds(forAlbumId: albumId, elementIds: albumElements)
+        
+        await sut.insert(elements: albumElements)
+        
+        let result = await sut.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(result, albumElements)
+    }
+    
     func testRemoveAlbumPhotoIdEntity_shouldRemoveFromCache() async {
         let albumId = HandleEntity(54)
         let albumElements = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 56, nodeId: 65),
