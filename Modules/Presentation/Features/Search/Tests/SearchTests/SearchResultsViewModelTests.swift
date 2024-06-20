@@ -629,6 +629,33 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...150)) // 50 more results loaded, hence 150 in total
     }
 
+    func testSelectedRowsCount_whenSelectedAll_shouldMatchTheResult() {
+        let harness = makeHarnessWithAllItemsSelected(listItemCount: 10)
+        XCTAssertEqual(harness.sut.selectedResultsCount, 10)
+    }
+
+    func testClearSelection_whenInvoked_shouldClearSelection() async {
+        let harness = makeHarnessWithAllItemsSelected(listItemCount: 10)
+        XCTAssertEqual(harness.sut.selectedResultsCount, 10)
+
+        // There is a throttle that is setup for the "selectedRowIds" of 0.4 seconds
+        // This throttle might effect results of `clearSelection` (triggered by "toggleSelectAll()" - previous call)
+        // Hence waiting for 0.6 seconds before triggering
+        try? await Task.sleep(nanoseconds: 600_000_000)
+
+        harness.sut.clearSelection()
+        XCTAssertEqual(harness.sut.selectedResultsCount, 0)
+    }
+
+    private func makeHarnessWithAllItemsSelected(listItemCount count: Int) -> Harness {
+        let harness = Harness(self)
+        let listItems = Array(1...count).map { generateRandomSearchResultRowViewModel(id: $0) }
+        harness.resultsProvider.currentResultIdsToReturn = listItems.map { $0.result.id }
+        harness.sut.listItems = listItems
+        harness.sut.toggleSelectAll()
+        return harness
+    }
+
     private func generateRandomSearchResultRowViewModel(id: Int) -> SearchResultRowViewModel {
         .init(
             result: .init(
