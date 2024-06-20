@@ -1,4 +1,5 @@
 import AsyncAlgorithms
+import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
@@ -34,7 +35,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, videoPlaylistContentsUseCase, _, _) = makeSUT(
+        let (sut, _, videoPlaylistContentsUseCase, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -76,7 +77,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -115,7 +116,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -124,6 +125,56 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         await sut.onViewAppeared()
         
         XCTAssertTrue(sut.shouldPopScreen, "Expect to exit screen")
+    }
+    
+    func testSubscribeToAllSelected_whenIsAllSelectedChanged_triggerSelectionDelegate() async throws {
+        let allVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            id: 1,
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        
+        let videoPlaylistUpdatesStream = AsyncThrowingStream<VideoPlaylistEntity, any Error> { continuation in
+            continuation.yield(with: .failure(VideoPlaylistErrorEntity.videoPlaylistNotFound(id: videoPlaylistEntity.id)))
+        }.eraseToAnyAsyncThrowingSequence()
+        let mockVideoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(
+            allVideos: allVideos,
+            monitorVideoPlaylistAsyncSequenceResult: videoPlaylistUpdatesStream,
+            monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
+        )
+        let (sut, _, _, _, sharedUIState, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase
+        )
+        
+        let task = Task {
+            await sut.subscribeToAllSelected()
+        }
+        
+        let isCalledExpectation = expectation(description: "isAllSelected is called")
+        let cancellable = sharedUIState.$isAllSelected
+            .filter { $0 }
+            .sink { _ in
+                isCalledExpectation.fulfill()
+            }
+        
+        XCTAssertFalse(sharedUIState.isAllSelected)
+        
+        // act
+        sharedUIState.isAllSelected = true
+        
+        // assert
+        await fulfillment(of: [isCalledExpectation], timeout: 1.0)
+        
+        task.cancel()
+        cancellable.cancel()
     }
     
     // MARK: - Helpers
@@ -140,17 +191,20 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         videoPlaylistThumbnailLoader: MockVideoPlaylistThumbnailLoader,
         videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase,
         sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase,
-        sharedUIState: VideoPlaylistContentSharedUIState
+        sharedUIState: VideoPlaylistContentSharedUIState,
+        selectionAdapter: MockVideoPlaylistContentViewModelSelectionAdapter
     ) {
         let sharedUIState = VideoPlaylistContentSharedUIState()
         let videoPlaylistThumbnailLoader = MockVideoPlaylistThumbnailLoader()
+        let selectionAdapter = MockVideoPlaylistContentViewModelSelectionAdapter()
         let sut = VideoPlaylistContentViewModel(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
             sharedUIState: sharedUIState, 
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            selectionDelegate: selectionAdapter
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (
@@ -158,7 +212,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistThumbnailLoader,
             videoPlaylistContentsUseCase,
             sortOrderPreferenceUseCase,
-            sharedUIState
+            sharedUIState,
+            selectionAdapter
         )
     }
 }
