@@ -160,7 +160,7 @@ class NodeBrowserViewModel: ObservableObject {
                 searchResultsViewModel.editing = editing
                 mediaDiscoveryViewModel?.editMode = editing ? .active : .inactive
                 if !editing {
-                    searchResultsViewModel.selectedResultIds.removeAll()
+                    searchResultsViewModel.clearSelection()
                     // need to deselect all here to reset selected items
                     // ticket for this is [FM-1464]
                 }
@@ -300,7 +300,7 @@ class NodeBrowserViewModel: ObservableObject {
         if let mediaDiscoveryViewModel = viewModeAwareMediaDiscoveryViewModel {
             return mediaDiscoveryViewModel.photoLibraryContentViewModel.selection.photos.count
         } else {
-            return searchResultsViewModel.selectedResultIds.count
+            return searchResultsViewModel.selectedResultsCount
         }
     }
     

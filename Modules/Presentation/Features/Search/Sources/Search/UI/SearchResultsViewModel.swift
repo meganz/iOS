@@ -17,7 +17,7 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var isLoadingPlaceholderShown = false
 
     // this will need to be to exposed outside when parent will need to know exactly what is selected
-    @Published public var selectedResultIds: Set<ResultId> = []
+    @Published var selectedResultIds: Set<ResultId> = []
 
     @Published public var layout: PageLayout
 
@@ -786,6 +786,10 @@ fileprivate extension SearchConfig.EmptyViewAssets.MenuOption {
 }
 
 public extension SearchResultsViewModel {
+    var selectedResultsCount: Int {
+        selectedResultIds.count
+    }
+
     func toggleSelectAll() {
         let currentResultsIds = resultsProvider.currentResultIds()
         if Set(currentResultsIds) == selectedResultIds {
@@ -810,5 +814,10 @@ public extension SearchResultsViewModel {
     func reloadResults() async {
         await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: currentQuery)
+    }
+
+    func clearSelection() {
+        selectedResultIds.removeAll()
+        selectedRowIds.removeAll()
     }
 }
