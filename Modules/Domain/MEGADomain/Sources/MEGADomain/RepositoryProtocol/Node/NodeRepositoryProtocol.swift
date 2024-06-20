@@ -26,11 +26,15 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
     func childrenNames(of node: NodeEntity) -> [String]?
     func isInRubbishBin(node: NodeEntity) -> Bool
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
-    /// Ascertain if the node is marked as sensitive or a descendent of such node
+    /// Ascertain if the node's ancestor is marked as sensitive
     ///  - Parameters: node - the node to check
-    ///  - Returns: true if the node is marked as sensitive or a descendent of such node
-    ///  - Throws: `NodeError.nodeNotFound` if the node cant be found
+    ///  - Returns: true if the node's ancestor is marked as sensitive
+    ///  - Throws: `NodeError.nodeNotFound` if the parent node cant be found
     func isInheritingSensitivity(node: NodeEntity) async throws -> Bool
-    /// This could possibly block the calling thread, make sure not to call it on main thread.
+    /// Ascertain if the node's ancestor is marked as sensitive
+    ///  - Parameters: node - the node to check
+    ///  - Returns: true if the node's ancestor is marked as sensitive
+    ///  - Throws: `NodeError.nodeNotFound` if the parent node cant be found
+    /// - Important: This could possibly block the calling thread, make sure not to call it on main thread.
     func isInheritingSensitivity(node: NodeEntity) throws -> Bool
 }

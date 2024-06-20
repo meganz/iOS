@@ -105,6 +105,7 @@ class PhotoCellViewModel: ObservableObject {
     func monitorSensitivityChanges() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               nodeUseCase != nil,
+              !photo.isMarkedSensitive,
               await $thumbnailContainer.values.contains(where: { $0.type != .placeholder }) else { return }
         
         do {

@@ -34,10 +34,11 @@ final class NodeRepositoryTests: XCTestCase {
     let defaultNodeName = "testNode"
     
     // MARK: - Helper functions
-    private func defaultNode() -> MockNode {
+    private func defaultNode(parentHandle: MEGAHandle? = nil) -> MockNode {
         MockNode(
             handle: defaultHandle,
-            name: defaultNodeName
+            name: defaultNodeName,
+            parentHandle: parentHandle ?? defaultParentNode().handle
         )
     }
     
@@ -732,7 +733,7 @@ final class NodeRepositoryTests: XCTestCase {
     }
     
     // MARK: - Is inheriting sensitivity
-    func testIsInheritingSensitivity_nodeNotFound_shouldThrowNodeNotFoundError() async {
+    func testIsInheritingSensitivity_parentNodeNotFound_shouldThrowNodeNotFoundError() async {
         let harness = Harness()
         
         do {
@@ -748,8 +749,8 @@ final class NodeRepositoryTests: XCTestCase {
     
     func testIsInheritingSensitivity_nodeFound_shouldReturn() async throws {
         let isNodeInheritingSensitivity = true
-        let node = MockNode(handle: 24)
-        let harness = Harness(nodes: [node],
+        let node = defaultNode()
+        let harness = Harness(nodes: [node, defaultParentNode()],
                               isNodeInheritingSensitivity: isNodeInheritingSensitivity)
         
         let isSensitive = try await harness.sut.isInheritingSensitivity(node: node.toNodeEntity())
@@ -759,7 +760,7 @@ final class NodeRepositoryTests: XCTestCase {
     func testIsInheritingSensitivity_nodeFound_inheritsSettings() async throws {
         let node = defaultNode()
         let sut = makeSUT(
-            sdkNodes: [node],
+            sdkNodes: [node, defaultParentNode()],
             isNodeInheritingSensitivity: true
         )
         
@@ -775,7 +776,7 @@ final class NodeRepositoryTests: XCTestCase {
     func testIsInheritingSensitivity_nodeFound_doesNotInheritSettings() async throws {
         let node = defaultNode()
         let sut = makeSUT(
-            sdkNodes: [node],
+            sdkNodes: [node, defaultParentNode()],
             isNodeInheritingSensitivity: false
         )
         
