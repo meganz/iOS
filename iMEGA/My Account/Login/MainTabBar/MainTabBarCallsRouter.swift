@@ -1,5 +1,7 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 
 final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     
@@ -7,9 +9,14 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     private var screenRecordingAlert: UIAlertController?
     private var baseViewController: UIViewController
     private var shouldCheckPendingWaitingRoomNotification: Bool = false
-
-    init(baseViewController: UIViewController) {
+    private let tracker: any AnalyticsTracking
+    
+    init(
+        baseViewController: UIViewController,
+        tracker: some AnalyticsTracking = DIContainer.tracker
+    ) {
         self.baseViewController = baseViewController
+        self.tracker = tracker
     }
     
     func showOneUserWaitingRoomDialog(
@@ -27,7 +34,7 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         }
         
         guard screenRecordingAlert == nil, let presenter = baseViewController.presenterViewController() else { return }
-
+        
         callWaitingRoomDialog.showAlertForOneUser(
             isCallUIVisible: isCallUIVisible,
             named: username,
@@ -57,7 +64,7 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         }
         
         guard screenRecordingAlert == nil, let presenter = baseViewController.presenterViewController() else { return }
-                        
+        
         callWaitingRoomDialog.showAlertForSeveralUsers(
             isCallUIVisible: isCallUIVisible,
             count: participantsCount,
@@ -78,7 +85,7 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void) {
         guard screenRecordingAlert == nil, let presenter = baseViewController.presenterViewController() else { return }
-
+        
         callWaitingRoomDialog.showAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: username, presenterViewController: presenter, confirmAction: confirmDenyAction, cancelAction: cancelDenyAction)
     }
     
@@ -88,11 +95,14 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity) {
         let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
-        MeetingContainerRouter(presenter: baseViewController,
-                               chatRoom: chatRoom,
-                               call: call,
-                               isSpeakerEnabled: isSpeakerEnabled,
-                               selectWaitingRoomList: true)
+        MeetingContainerRouter(
+            presenter: baseViewController,
+            chatRoom: chatRoom,
+            call: call,
+            isSpeakerEnabled: isSpeakerEnabled,
+            selectWaitingRoomList: true,
+            tracker: tracker
+        )
         .start()
     }
     
@@ -110,7 +120,7 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping (Bool) -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void) {
         guard let presenter = baseViewController.presenterViewController() else { return }
-
+        
         dismissAlertController { [weak self] in
             let alert = UIAlertController(
                 title: Strings.Localizable.Calls.ScreenRecording.Alert.title,
@@ -155,7 +165,7 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
             if isCallUIVisible {
                 alert.overrideUserInterfaceStyle = .dark
             }
-
+            
             self?.screenRecordingAlert = alert
             
             presenter.present(alert, animated: true)
@@ -204,12 +214,19 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         }
     }
     
+    func trackUpgradeButtonTapped() {
+        tracker.trackAnalyticsEvent(with: MaxCallDurationReachedModalEvent())
+    }
+    
     func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
         Task { @MainActor in
-            MeetingContainerRouter(presenter: baseViewController,
-                                   chatRoom: chatRoom,
-                                   call: call,
-                                   isSpeakerEnabled: isSpeakerEnabled).start()
+            MeetingContainerRouter(
+                presenter: baseViewController,
+                chatRoom: chatRoom,
+                call: call,
+                isSpeakerEnabled: isSpeakerEnabled,
+                tracker: tracker
+            ).start()
         }
     }
 }

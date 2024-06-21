@@ -17,15 +17,17 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
     public var registerMEGAGlobalDelegateCalled = 0
     public var deRegisterMEGAGlobalDelegateCalled = 0
     
-    public init(contactRequestsCount: Int = 0,
-                unseenUserAlertsCount: UInt = 0,
-                currentAccountDetails: AccountDetailsEntity = AccountDetailsEntity(),
-                isMasterBusinessAccount: Bool = false,
-                isAchievementsEnabled: Bool = false,
-                currentUserHandle: HandleEntity? = nil,
-                requestResultPublisher: PassthroughSubject<Result<AccountRequestEntity, Error>, Never> = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>(),
-                contactRequestPublisher: PassthroughSubject<[ContactRequestEntity], Never> = PassthroughSubject<[ContactRequestEntity], Never>(),
-                userAlertUpdatePublisher: PassthroughSubject<[UserAlertEntity], Never> = PassthroughSubject<[UserAlertEntity], Never>()) {
+    public init(
+        contactRequestsCount: Int = 0,
+        unseenUserAlertsCount: UInt = 0,
+        currentAccountDetails: AccountDetailsEntity = AccountDetailsEntity.build(),
+        isMasterBusinessAccount: Bool = false,
+        isAchievementsEnabled: Bool = false,
+        currentUserHandle: HandleEntity? = nil,
+        requestResultPublisher: PassthroughSubject<Result<AccountRequestEntity, Error>, Never> = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>(),
+        contactRequestPublisher: PassthroughSubject<[ContactRequestEntity], Never> = PassthroughSubject<[ContactRequestEntity], Never>(),
+        userAlertUpdatePublisher: PassthroughSubject<[UserAlertEntity], Never> = PassthroughSubject<[UserAlertEntity], Never>()
+    ) {
         self.contactRequestsCount = contactRequestsCount
         self.unseenUserAlertsCount = unseenUserAlertsCount
         _currentAccountDetails = currentAccountDetails
@@ -76,7 +78,7 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
     public var isAchievementsEnabled: Bool {
         _isAchievementsEnabled
     }
-
+    
     public func registerMEGARequestDelegate() async {
         registerMEGARequestDelegateCalled += 1
     }

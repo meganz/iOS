@@ -248,6 +248,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     func upgradePlansViewTapped() {
         guard let accountDetails = accountUseCase.currentAccountDetails else { return }
         router.showUpgradeAccount(accountDetails)
+        tracker.trackAnalyticsEvent(with: viewConfiguration.upgradeButtonTappedEvent)
     }
     
     func selectedFrequencyDetails() -> String {

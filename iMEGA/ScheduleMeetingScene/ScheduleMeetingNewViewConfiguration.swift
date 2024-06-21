@@ -1,7 +1,12 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 
 final class ScheduleMeetingNewViewConfiguration: ScheduleMeetingViewConfigurable {
+    
+    var upgradeButtonTappedEvent: any EventIdentifier {
+        CreateMeetingMaxDurationReachedEvent()
+    }
     
     var title: String { Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting }
     var type: ScheduleMeetingViewConfigurationType { .new }

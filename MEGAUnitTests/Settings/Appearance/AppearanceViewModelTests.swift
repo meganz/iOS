@@ -69,7 +69,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForFreeUserAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(currentAccountDetails: .init(proLevel: .free)),
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .free)),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -90,7 +90,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForFreeUserAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(currentAccountDetails: .init(proLevel: .free)),
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .free)),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -111,7 +111,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForPaidUserAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(currentAccountDetails: .init(proLevel: .lite)),
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .lite)),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -132,7 +132,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForPaidUserAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(currentAccountDetails: .init(proLevel: .lite)),
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .lite)),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [

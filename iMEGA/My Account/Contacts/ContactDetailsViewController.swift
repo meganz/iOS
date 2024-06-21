@@ -21,10 +21,12 @@ extension ContactDetailsViewController {
     @objc func joinMeeting(withChatRoom chatRoom: MEGAChatRoom) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
         let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
-        MeetingContainerRouter(presenter: self,
-                               chatRoom: chatRoom.toChatRoomEntity(),
-                               call: call.toCallEntity(),
-                               isSpeakerEnabled: isSpeakerEnabled).start()
+        MeetingContainerRouter(
+            presenter: self,
+            chatRoom: chatRoom.toChatRoomEntity(),
+            call: call.toCallEntity(),
+            isSpeakerEnabled: isSpeakerEnabled
+        ).start()
     }
     
     @objc func openChatRoom(chatId: HandleEntity, delegate: any MEGAChatRoomDelegate) {

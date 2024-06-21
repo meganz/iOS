@@ -7,7 +7,7 @@ final class ReportIssueMessageViewModelTests: XCTestCase {
     
     func testGenerateReportIssueMessage_whenInjected_FormatMessageWithFileName() async {
         let filename: String? = "any-file-name"
-        let sut = ReportIssueMessageViewModel(accountUseCase: mockaccountUseCase(), appMetaData: mockAppMetaData(), deviceMetaData: mockDeviceMetaData())
+        let sut = ReportIssueMessageViewModel(accountUseCase: mockAccountUseCase(), appMetaData: mockAppMetaData(), deviceMetaData: mockDeviceMetaData())
         
         let result = await sut.generateReportIssueMessage(message: anyMessageDetail(), filename: filename)
         
@@ -16,7 +16,7 @@ final class ReportIssueMessageViewModelTests: XCTestCase {
     
     func testGenerateReportIssueMessage_whenInjected_FormatMessageWithoutFilename() async {
         let noFileName: String? = nil
-        let sut = ReportIssueMessageViewModel(accountUseCase: mockaccountUseCase(), appMetaData: mockAppMetaData(), deviceMetaData: mockDeviceMetaData())
+        let sut = ReportIssueMessageViewModel(accountUseCase: mockAccountUseCase(), appMetaData: mockAppMetaData(), deviceMetaData: mockDeviceMetaData())
         
         let result = await sut.generateReportIssueMessage(message: anyMessageDetail(), filename: noFileName)
         
@@ -25,13 +25,15 @@ final class ReportIssueMessageViewModelTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func mockaccountUseCase() -> any AccountUseCaseProtocol {
-        MockAccountUseCase(currentUser: UserEntity(email: anyEmail()),
-                           currentAccountDetails: accountDetailsEntity(accountType: .free))
+    private func mockAccountUseCase() -> any AccountUseCaseProtocol {
+        MockAccountUseCase(
+            currentUser: UserEntity(email: anyEmail()),
+            currentAccountDetails: AccountDetailsEntity.build(proLevel: .free)
+        )
     }
     
     private func accountDetailsEntity(accountType: AccountTypeEntity) -> AccountDetailsEntity {
-        AccountDetailsEntity(storageUsed: 0, versionsStorageUsed: 0, storageMax: 0, transferOwnUsed: 0, transferMax: 0, proLevel: accountType, proExpiration: 0, subscriptionStatus: .none, subscriptionRenewTime: 0, subscriptionMethod: nil, subscriptionCycle: .none, numberUsageItems: 0)
+        AccountDetailsEntity.build(storageUsed: 0, versionsStorageUsed: 0, storageMax: 0, transferOwnUsed: 0, transferMax: 0, proLevel: accountType, proExpiration: 0, subscriptionStatus: .none, subscriptionRenewTime: 0, subscriptionMethod: nil, subscriptionCycle: .none, numberUsageItems: 0)
     }
     
     private func mockAppMetaData() -> AppMetaData {

@@ -338,7 +338,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
 
         let (sut, router) = makeSUT(
             callUseCase: callUseCase,
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build())
         )
         viewModel = sut
 
@@ -354,7 +354,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
 
         let (sut, router) = makeSUT(
             callUseCase: callUseCase,
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build())
         )
         viewModel = sut
 

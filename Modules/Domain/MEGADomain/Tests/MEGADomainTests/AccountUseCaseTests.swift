@@ -293,14 +293,14 @@ final class AccountUseCaseTests: XCTestCase {
 
 final class AccountUserCaseProtocolTests: XCTestCase {
     func testFreeTierTrue_WhenProLevelFree() {
-        let useCaseFree = MockAccountUseCase(currentAccountDetails: AccountDetailsEntity(proLevel: .free))
+        let useCaseFree = MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .free))
         XCTAssertTrue(useCaseFree.isFreeTierUser)
     }
     
     func testFreeTierFalse_WhenProLevelNonFree() {
         let nonFreeProLevels = AccountTypeEntity.allCases.filter { $0 != .free }
         for level in nonFreeProLevels {
-            let useCase = MockAccountUseCase(currentAccountDetails: AccountDetailsEntity(proLevel: level))
+            let useCase = MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: level))
             XCTAssertFalse(useCase.isFreeTierUser)
         }
     }

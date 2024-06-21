@@ -12,19 +12,23 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     private weak var baseViewController: UIViewController?
     private let chatLink: String?
     private let requestUserHandle: HandleEntity
-
+    private let tracker: any AnalyticsTracking
     private var permissionRouter: PermissionAlertRouter {
         .makeRouter(deviceHandler: DevicePermissionsHandler.makeHandler())
     }
-
-    init(presenter: UIViewController?,
-         scheduledMeeting: ScheduledMeetingEntity,
-         chatLink: String? = nil,
-         requestUserHandle: HandleEntity = 0) {
+    
+    init(
+        presenter: UIViewController?,
+        scheduledMeeting: ScheduledMeetingEntity,
+        chatLink: String? = nil,
+        requestUserHandle: HandleEntity = 0,
+        tracker: some AnalyticsTracking = DIContainer.tracker
+    ) {
         self.presenter = presenter
         self.scheduledMeeting = scheduledMeeting
         self.chatLink = chatLink
         self.requestUserHandle = requestUserHandle
+        self.tracker = tracker
     }
     
     // MARK: - Public
@@ -135,17 +139,22 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         }
     }
     
-    func openCallUI(for call: CallEntity,
-                    in chatRoom: ChatRoomEntity,
-                    isSpeakerEnabled: Bool) {
+    func openCallUI(
+        for call: CallEntity,
+        in chatRoom: ChatRoomEntity,
+        isSpeakerEnabled: Bool
+    ) {
         guard let presenter else { return }
         dismissAlertController { [weak self] in
             guard let self else { return }
             baseViewController?.dismiss(animated: true)
-            MeetingContainerRouter(presenter: presenter,
-                                   chatRoom: chatRoom,
-                                   call: call,
-                                   isSpeakerEnabled: isSpeakerEnabled)
+            MeetingContainerRouter(
+                presenter: presenter,
+                chatRoom: chatRoom,
+                call: call,
+                isSpeakerEnabled: isSpeakerEnabled,
+                tracker: tracker
+            )
             .start()
         }
     }

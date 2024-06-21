@@ -1437,7 +1437,6 @@
 		949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B86E52BBC205D00CB8ADF /* MockImageLoader.swift */; };
 		949CC1552B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CC1542B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift */; };
 		949CC15D2B0FD5230047D581 /* MockMyAccountHallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */; };
-		949CCB0C2C04F9A300C2782D /* ScheduleMeetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CCB0B2C04F9A300C2782D /* ScheduleMeetingViewModel.swift */; };
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
 		94A1A2782A83B29000669C41 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
 		94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94A220172A696502004130C4 /* MEGAAnalyticsiOS */; };
@@ -4210,7 +4209,6 @@
 		949B86E52BBC205D00CB8ADF /* MockImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockImageLoader.swift; sourceTree = "<group>"; };
 		949CC1542B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewModel+DeviceCenter.swift"; sourceTree = "<group>"; };
 		949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMyAccountHallRouter.swift; sourceTree = "<group>"; };
-		949CCB0B2C04F9A300C2782D /* ScheduleMeetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingViewModel.swift; sourceTree = "<group>"; };
 		949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenAppRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.h; sourceTree = SOURCE_ROOT; };
 		949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenAppRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTests.swift; sourceTree = "<group>"; };
@@ -12359,7 +12357,6 @@
 				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
 				83F388EE2C246B0D000AF96F /* MockRaiseHandBadgeStore.swift */,
 				BFCA570E2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift */,
-				949CCB0B2C04F9A300C2782D /* ScheduleMeetingViewModel.swift */,
 				BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */,
 			);
 			path = Mocks;
@@ -16537,7 +16534,6 @@
 				BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */,
 				838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */,
 				BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */,
-				949CCB0C2C04F9A300C2782D /* ScheduleMeetingViewModel.swift in Sources */,
 				83751C5429E572DC0030310B /* ScheduleMeetingViewModelTests.swift in Sources */,
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,
 				0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */,

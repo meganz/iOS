@@ -9,7 +9,7 @@ import MEGAPermissionsMock
 import MEGAPresentationMock
 import XCTest
 
-final class CameraSwitchTests: XCTestCase {
+final class CameraSwitcherTests: XCTestCase {
     class Harness {
         let sut: CameraSwitcher
         var captureDeviceUseCase = MockCaptureDeviceUseCase()

@@ -184,7 +184,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_cancelSubscription_shouldPresentCancelSubscriptionFlow() {
-        let (sut, router) = makeSUT(currentAccountDetails: .init(proLevel: .proI))
+        let (sut, router) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: .proI))
         
         sut.dispatch(.cancelSubscription)
         
@@ -271,7 +271,7 @@ final class ProfileViewModelTests: XCTestCase {
                 sectionRows: expectedSectionRows
             )
             let (sut, _) = self.makeSUT(
-                currentAccountDetails: .init(proLevel: accountType),
+                currentAccountDetails: AccountDetailsEntity.build(proLevel: accountType),
                 isMasterBusinessAccount: isMasterBusinessAccount
             )
             let result = self.receivedSectionDataSource(from: sut, after: .onViewDidLoad)

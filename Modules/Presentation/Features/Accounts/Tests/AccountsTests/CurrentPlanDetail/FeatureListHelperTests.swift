@@ -19,7 +19,7 @@ final class FeatureListHelperTests: XCTestCase {
         unavailableImageName: String = "unavailable",
         availableImageName: String = "available"
     ) -> FeatureListHelper {
-        let account = AccountDetailsEntity(
+        let account = AccountDetailsEntity.build(
             storageMax: storageMax,
             transferMax: transferMax
         )

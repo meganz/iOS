@@ -16,7 +16,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     private let proIII_yearly = AccountPlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .yearly)
     
     func testCreateAccountPlanViewModel_withSelectedPlanType_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .free)
+        let details = AccountDetailsEntity.build(proLevel: .free)
         let planList = [proI_monthly, proIII_monthly]
         
         let exp = expectation(description: "Setting Current plan")
@@ -38,7 +38,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     }
 
     func testCreateAccountPlanViewModel_noSelectedPlan_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .free)
+        let details = AccountDetailsEntity.build(proLevel: .free)
         let planList = [proI_monthly, proII_yearly]
 
         let exp = expectation(description: "Setting Current plan")
@@ -59,7 +59,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     }
 
     func testCreateAccountPlanViewModel_recurringPlanMonthly_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList = [proI_monthly, proII_yearly]
 
         let exp = expectation(description: "Setting Current plan Tag for recurring monthly plan")
@@ -85,7 +85,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     }
 
     func testCreateAccountPlanViewModel_recurringPlanYearly_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .yearly)
+        let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .yearly)
         let planList = [proI_monthly, proI_yearly]
 
         let exp = expectation(description: "Setting Current plan Tag for recurring yearly plan")
@@ -111,7 +111,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     }
 
     func testCreateAccountPlanViewModel_oneTimePlanPurchase_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .none)
+        let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .none)
         let planList = [proI_monthly, proI_yearly, proII_yearly]
 
         let exp = expectation(description: "Setting Current plan Tag for one time purchase of plan")
@@ -137,7 +137,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     }
     
     func testCreateAccountPlanViewModel_withRecommendedPlanType_onRecommendedPlan_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .free)
+        let details = AccountDetailsEntity.build(proLevel: .free)
         let planList = [proI_monthly, proI_yearly, proII_yearly]
         
         let exp = expectation(description: "Setting Current plan")
@@ -163,7 +163,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     }
     
     func testCreateAccountPlanViewModel_withRecommendedPlanType_onNotRecommendedPlan_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .free)
+        let details = AccountDetailsEntity.build(proLevel: .free)
         let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
         
         let exp = expectation(description: "Setting Current plan")
@@ -189,7 +189,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     }
     
     func testCreateAccountPlanViewModel_withNoRecommendedPlanType_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .proIII)
+        let details = AccountDetailsEntity.build(proLevel: .proIII)
         let planList = [proIII_monthly, proIII_yearly]
         
         let exp = expectation(description: "Setting Current plan")

@@ -19,8 +19,14 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     private let type: MeetingConfigurationType
     private let link: String?
     private let userHandle: UInt64
+    private let tracker: some AnalyticsTracking = DIContainer.tracker
     
-    @objc init(viewControllerToPresent: UIViewController, type: MeetingConfigurationType, link: String?, userhandle: UInt64) {
+    @objc init(
+        viewControllerToPresent: UIViewController,
+        type: MeetingConfigurationType,
+        link: String?,
+        userhandle: UInt64
+    ) {
         self.viewControllerToPresent = viewControllerToPresent
         self.type = type
         self.link = link
@@ -35,7 +41,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
         )
-
+        
         let vm = MeetingCreatingViewModel(
             router: self,
             type: type,
@@ -52,7 +58,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             callManager: CallKitCallManager.shared,
-            featureFlagProvider: DIContainer.featureFlagProvider, 
+            featureFlagProvider: DIContainer.featureFlagProvider,
             link: link,
             userHandle: userHandle)
         let vc = MeetingCreatingViewController(viewModel: vm)
@@ -74,15 +80,18 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     func dismiss(completion: (() -> Void)?) {
         baseViewController?.dismiss(animated: true, completion: completion)
     }
-
+    
     func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
-     guard let viewControllerToPresent = viewControllerToPresent else {
+        guard let viewControllerToPresent = viewControllerToPresent else {
             return
         }
-        MeetingContainerRouter(presenter: viewControllerToPresent,
-                               chatRoom: chatRoom,
-                               call: call,
-                               isSpeakerEnabled: isSpeakerEnabled).start()
+        MeetingContainerRouter(
+            presenter: viewControllerToPresent,
+            chatRoom: chatRoom,
+            call: call,
+            isSpeakerEnabled: isSpeakerEnabled,
+            tracker: tracker
+        ).start()
     }
     
     var permissionRouter: PermissionAlertRouter {

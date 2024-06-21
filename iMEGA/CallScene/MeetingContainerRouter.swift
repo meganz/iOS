@@ -1,5 +1,6 @@
 import ChatRepo
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -51,7 +52,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let callRepository = CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)
         return CallUseCase(repository: callRepository)
     }
-    
+    private let tracker: any AnalyticsTracking
     static var isAlreadyPresented: Bool {
         MeetingContainerViewController.isAlreadyPresented
     }
@@ -59,18 +60,20 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
     
-    init(presenter: UIViewController,
-         chatRoom: ChatRoomEntity,
-         call: CallEntity,
-         isSpeakerEnabled: Bool,
-         selectWaitingRoomList: Bool = false
+    init(
+        presenter: UIViewController,
+        chatRoom: ChatRoomEntity,
+        call: CallEntity,
+        isSpeakerEnabled: Bool,
+        selectWaitingRoomList: Bool = false,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
         self.isSpeakerEnabled = isSpeakerEnabled
         self.selectWaitingRoomList = selectWaitingRoomList
-        
+        self.tracker = tracker
         if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
             MEGALogDebug("Adding notifications for the call \(callId)")
         }
@@ -331,8 +334,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func showUpgradeToProDialog(_ account: AccountDetailsEntity) {
         guard let presenter else { return }
-
+        let tracker = tracker // get strong instance
         let dialogView = SimpleDialogView.upgradePlanDialog {
+            tracker.trackAnalyticsEvent(with: MaxCallDurationReachedModalEvent())
             presenter.dismiss(animated: true) {
                 UpgradeAccountPlanRouter(presenter: presenter, accountDetails: account).start()
             }
