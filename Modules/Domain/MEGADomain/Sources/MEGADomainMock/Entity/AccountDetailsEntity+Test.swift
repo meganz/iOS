@@ -1,7 +1,7 @@
 import MEGADomain
 
 public extension AccountDetailsEntity {
-    init(
+    static func build(
         storageUsed: Int64 = 0,
         versionsStorageUsed: Int64 = 0,
         storageMax: Int64 = 0,
@@ -15,10 +15,9 @@ public extension AccountDetailsEntity {
         subscriptionMethodId: PaymentMethodEntity = .none,
         subscriptionCycle: SubscriptionCycleEntity = .none,
         numberUsageItems: Int = 0,
-        storageUsedForHandle: @escaping (@Sendable (_ handle: HandleEntity) -> Int64) = { _ in 0 },
-        isTesting: Bool = true
-    ) {
-        self.init(
+        storageUsedForHandle: @escaping @Sendable (_ handle: HandleEntity) -> Int64 = { _ in 0 }
+    ) -> AccountDetailsEntity {
+        .init(
             storageUsed: storageUsed,
             versionsStorageUsed: versionsStorageUsed,
             storageMax: storageMax,
@@ -37,7 +36,7 @@ public extension AccountDetailsEntity {
     }
     
     static var random: Self {
-        .init(
+        AccountDetailsEntity.build(
             proLevel: AccountTypeEntity.allCases.randomElement() ?? .free
         )
     }

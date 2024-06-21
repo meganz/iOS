@@ -224,13 +224,13 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     func testShowPlanRow_businessAccount_shouldBeFalse() {
-        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: .business))
+        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: .business))
         
         XCTAssertFalse(sut.showPlanRow)
     }
     
     func testShowPlanRow_proFlexiAccount_shouldBeFalse() {
-        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: .proFlexi))
+        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: .proFlexi))
         
         XCTAssertFalse(sut.showPlanRow)
     }
@@ -238,7 +238,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     func testShowPlanRow_freeOrProAccount_shouldBeTrue() {
         let accountTypes: [AccountTypeEntity] = [.free, .proI, .proII, .proIII]
         accountTypes.enumerated().forEach { (index, accountType) in
-            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: accountType))
+            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: accountType))
             
             XCTAssertTrue(sut.showPlanRow, "failed at index: \(index) for accountType: \(accountType)")
         }
@@ -250,7 +250,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
                                   section: MyAccountSection.mega.rawValue)
         
         accountTypes.enumerated().forEach { (index, accountType) in
-            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: accountType))
+            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: accountType))
             
             XCTAssertNotEqual(sut.calculateCellHeight(at: indexPath), 0, "failed at index: \(index) for accountType: \(accountType)")
         }
@@ -262,7 +262,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
                                   section: MyAccountSection.mega.rawValue)
 
         accountTypes.enumerated().forEach { (index, accountType) in
-            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity(proLevel: accountType))
+            let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: accountType))
             
             XCTAssertEqual(sut.calculateCellHeight(at: indexPath), 0, "failed at index: \(index) for accountType: \(accountType)")
         }

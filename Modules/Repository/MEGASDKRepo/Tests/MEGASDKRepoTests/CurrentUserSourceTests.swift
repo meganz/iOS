@@ -141,7 +141,7 @@ final class CurrentUserSourceTests: XCTestCase {
     
     func testAccountDetails_fetchAccountDetailsNotif_shouldUpdate() {
         let source = CurrentUserSource(sdk: MockSdk())
-        let accountDetails = AccountDetailsEntity(proLevel: .proI)
+        let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
         NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: accountDetails)
         let exp = expectation(description: "accountDetails from notif")
         _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
@@ -150,7 +150,7 @@ final class CurrentUserSourceTests: XCTestCase {
     
     func testAccountDetails_fetchAccountDetails_shouldUpdate() {
         let source = CurrentUserSource(sdk: MockSdk())
-        let accountDetails = AccountDetailsEntity(proLevel: .proI)
+        let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
         source.setAccountDetails(accountDetails)
         XCTAssertEqual(accountDetails, source.accountDetails)
     }

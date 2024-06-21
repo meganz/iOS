@@ -23,6 +23,15 @@ public extension XCTestCase {
             )
         }
     }
+    
+    func XTAssertTrackedAnalyticsEventsEqual(
+        _ events: [EventIdentifier],
+        _ expected: [EventIdentifier],
+        message: String = "",
+        file: StaticString = #file, line: UInt = #line
+    ) {
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: events, with: expected, message: message)
+    }
 }
 
 private extension EventIdentifier {

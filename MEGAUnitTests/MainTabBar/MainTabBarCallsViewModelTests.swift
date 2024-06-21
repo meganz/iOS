@@ -288,7 +288,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build())
         )
         viewModel.isCallUIVisible = false
         
@@ -305,7 +305,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build())
         )
         viewModel.isCallUIVisible = true
         
@@ -322,7 +322,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity())
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build())
         )
         viewModel.isCallUIVisible = false
         

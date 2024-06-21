@@ -1,7 +1,14 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 
 final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurable {
+    
+    class Event: EventIdentifier {
+        var eventName: String = "event"
+        var uniqueIdentifier: Int32 = 1
+    }
+
     var title: String
     var type: ScheduleMeetingViewConfigurationType
     var meetingName: String
@@ -25,6 +32,10 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
     var shouldAllowEditingMeetingDescription: Bool
     var completion: ScheduleMeetingViewConfigurationCompletion
     var updateMeetingLinkEnabled_calledTimes = 0
+    var upgradeButtonTappedEvent: any EventIdentifier {
+        
+        return Event()
+    }
     
     init(
         title: String = "",

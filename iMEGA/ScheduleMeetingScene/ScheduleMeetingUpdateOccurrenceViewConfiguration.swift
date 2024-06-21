@@ -1,8 +1,14 @@
 import ChatRepo
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 
 final class ScheduleMeetingUpdateOccurrenceViewConfiguration: ScheduleMeetingUpdateViewConfiguration {
+    
+    override var upgradeButtonTappedEvent: any EventIdentifier {
+        EditSingleOccurrenceMeetingMaxDurationReachedEvent()
+    }
+    
     let occurrence: ScheduledMeetingOccurrenceEntity
     
     override var startDate: Date { occurrence.startDate }

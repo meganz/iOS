@@ -17,27 +17,47 @@ enum ChatContentRoutingStyle {
     private let chatRoom: ChatRoomEntity
     private let publicLink: String?
     private let showShareLinkViewAfterOpenChat: Bool
-
     private var endCallDialog: EndCallDialog?
+    private let tracker: any AnalyticsTracking
 
-    init(chatRoom: ChatRoomEntity, presenter: UIViewController?, publicLink: String? = nil, showShareLinkViewAfterOpenChat: Bool = false, chatContentRoutingStyle: ChatContentRoutingStyle = .push) {
+    init(
+        chatRoom: ChatRoomEntity,
+        presenter: UIViewController?,
+        publicLink: String? = nil,
+        showShareLinkViewAfterOpenChat: Bool = false,
+        chatContentRoutingStyle: ChatContentRoutingStyle = .push,
+        tracker: some AnalyticsTracking = DIContainer.tracker
+    ) {
         self.chatRoom = chatRoom
         self.presenter = presenter
         self.publicLink = publicLink
         self.showShareLinkViewAfterOpenChat = showShareLinkViewAfterOpenChat
         self.chatContentRoutingStyle = chatContentRoutingStyle
+        self.tracker = tracker
     }
     
-    @objc init(chatRoom: MEGAChatRoom, presenter: UIViewController?, publicLink: String?, showShareLinkViewAfterOpenChat: Bool) {
+    @objc init(
+        chatRoom: MEGAChatRoom,
+        presenter: UIViewController?,
+        publicLink: String?,
+        showShareLinkViewAfterOpenChat: Bool
+    ) {
         self.chatRoom = chatRoom.toChatRoomEntity()
         self.presenter = presenter
         self.publicLink = publicLink
         self.showShareLinkViewAfterOpenChat = showShareLinkViewAfterOpenChat
         self.chatContentRoutingStyle = .push
+        self.tracker = DIContainer.tracker
     }
     
-    @objc static func chatViewController(for chatRoom: MEGAChatRoom) -> ChatViewController? {
-        guard let chatViewController = ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity(), presenter: nil).build() as? ChatViewController else { return nil }
+    @objc static func chatViewController(
+        for chatRoom: MEGAChatRoom
+    ) -> ChatViewController? {
+        guard let chatViewController = ChatContentRouter(
+            chatRoom: chatRoom.toChatRoomEntity(),
+            presenter: nil,
+            tracker: DIContainer.tracker
+        ).build() as? ChatViewController else { return nil }
         return chatViewController
     }
     
@@ -85,10 +105,13 @@ enum ChatContentRoutingStyle {
     func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
         guard let baseViewController else { return }
         Task { @MainActor in
-            MeetingContainerRouter(presenter: baseViewController,
-                                   chatRoom: chatRoom,
-                                   call: call,
-                                   isSpeakerEnabled: isSpeakerEnabled).start()
+            MeetingContainerRouter(
+                presenter: baseViewController,
+                chatRoom: chatRoom,
+                call: call,
+                isSpeakerEnabled: isSpeakerEnabled,
+                tracker: tracker
+            ).start()
         }
     }
     

@@ -8,7 +8,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
     func testWillStorageQuotaExceed_IfUserHasAlreadyReachedQuota_shouldReturnTrue() {
         
         // Arrange
-        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity(storageUsed: 1000, storageMax: 1000))
+        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity.build(storageUsed: 1000, storageMax: 1000))
         let sut = AccountStorageUseCase(accountRepository: accountRepository)
         
         // Act
@@ -21,7 +21,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
     func testWillStorageQuotaExceed_IfUserHasBelowQuotaAndImportWitllGoOverQouta_shouldReturnTrue() {
         
         // Arrange
-        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity(storageUsed: 1000, storageMax: 1000))
+        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity.build(storageUsed: 1000, storageMax: 1000))
         let sut = AccountStorageUseCase(accountRepository: accountRepository)
         
         // Act
@@ -33,7 +33,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
     
     func testWillStorageQuotaExceed_IfUserHasBelowQuotaAndImportWitllEqualQouta_shouldReturnFalse() {
         // Arrange
-        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity(storageUsed: 600, storageMax: 1000))
+        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity.build(storageUsed: 600, storageMax: 1000))
         let sut = AccountStorageUseCase(accountRepository: accountRepository)
         
         // Act
@@ -45,7 +45,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
     
     func testWillStorageQuotaExceed_IfUserHasBelowQuotaAndImportWitllEqualBelowQoutaLimit_shouldReturnFalse() {
         // Arrange
-        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity(storageUsed: 400, storageMax: 1000))
+        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity.build(storageUsed: 400, storageMax: 1000))
         let sut = AccountStorageUseCase(accountRepository: accountRepository)
                 
         // Act

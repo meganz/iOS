@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 
 enum ScheduleMeetingViewConfigurationType {
@@ -37,4 +38,7 @@ protocol ScheduleMeetingViewConfigurable {
     
     func updateMeetingLinkEnabled() async
     func submit(meeting: ScheduleMeetingProxyEntity) async throws -> ScheduleMeetingViewConfigurationCompletion
+    // event to be sent when user taps Upgrade button , different for various mode of presentations of
+    // schedule meeting view [MEET-4025]
+    var upgradeButtonTappedEvent: any EventIdentifier { get }
 }
