@@ -498,6 +498,7 @@
 		41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */; };
 		530C524C2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C524B2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift */; };
 		534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */; };
 		5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */; };
@@ -3259,6 +3260,7 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModelTests.swift; sourceTree = "<group>"; };
 		530C524B2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionBuilderTests.swift; sourceTree = "<group>"; };
 		534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTypeTests.swift; sourceTree = "<group>"; };
 		5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallTableViewCell.h; sourceTree = "<group>"; };
@@ -12064,6 +12066,7 @@
 				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
 				94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */,
 				6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */,
+				530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */,
 				B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */,
 			);
 			path = Account;
@@ -16461,6 +16464,7 @@
 				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
+				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
 				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
 				833041912AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift in Sources */,
