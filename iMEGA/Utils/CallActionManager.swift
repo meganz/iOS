@@ -25,9 +25,6 @@ import MEGADomain
             MEGALogDebug("1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             
             self.startCallRequestDelegate = MEGAChatStartCallRequestDelegate { error in
-                if error.type == .MEGAChatErrorTypeOk {
-                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
-                }
                 delegate.completion(error)
             }
             guard let startCallRequestDelegate = self.startCallRequestDelegate else { return }
@@ -52,7 +49,6 @@ import MEGADomain
                             continuation.resume(with: .failure(CallErrorEntity.generic))
                             return
                         }
-                        MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
                         continuation.resume(with: .success(call.toCallEntity()))
                     case .failure(let error):
                         switch error.type {

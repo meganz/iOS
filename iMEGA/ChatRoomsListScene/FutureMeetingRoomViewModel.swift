@@ -16,6 +16,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private let callUseCase: any CallUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private let handleUseCase: any MEGAHandleUseCaseProtocol
+    private let callManager: any CallManagerProtocol
     private let permissionAlertRouter: any PermissionAlertRouting
     private let tracker: any AnalyticsTracking
     
@@ -90,6 +92,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        callManager: some CallManagerProtocol,
         permissionAlertRouter: some PermissionAlertRouting,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         chatNotificationControl: ChatNotificationControl,
@@ -106,6 +109,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
+        self.handleUseCase = megaHandleUseCase
+        self.callManager = callManager
         self.permissionAlertRouter = permissionAlertRouter
         self.chatNotificationControl = chatNotificationControl
         self.tracker = tracker
@@ -341,19 +346,11 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private func joinCall(in chatRoom: ChatRoomEntity) {
         guard let call = callUseCase.call(for: scheduledMeeting.chatId) else { return }
         if call.status == .userNoPresent {
-            callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: false, enableAudio: true, notRinging: false) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.prepareAndShowCallUI(for: call, in: chatRoom)
-                case .failure(let error):
-                    switch error {
-                    case .tooManyParticipants:
-                        self?.router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-                    default:
-                        self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                        MEGALogError("Not able to join scheduled meeting call")
-                    }
-                }
+            if let incomingCallUUID = callManager.callUUID(forChatRoom: chatRoom) {
+                callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
+            } else {
+                let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+                callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: false, isJoiningActiveCall: true)
             }
         } else {
             prepareAndShowCallUI(for: call, in: chatRoom)
@@ -361,20 +358,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     }
     
     private func startCall(in chatRoom: ChatRoomEntity) {
-        callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: false, enableAudio: true, notRinging: true) { [weak self] result in
-            switch result {
-            case .success(let call):
-                self?.prepareAndShowCallUI(for: call, in: chatRoom)
-            case .failure(let error):
-                switch error {
-                case .tooManyParticipants:
-                    self?.router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-                default:
-                    self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                    MEGALogError("Not able to start scheduled meeting call")
-                }
-            }
-        }
+        let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: true, isJoiningActiveCall: false)
     }
     
     private func prepareAndShowCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity) {

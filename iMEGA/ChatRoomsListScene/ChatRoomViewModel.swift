@@ -17,6 +17,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private let callUseCase: any CallUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private let handleUseCase: any MEGAHandleUseCaseProtocol
+    private let callManager: any CallManagerProtocol
     private var chatNotificationControl: ChatNotificationControl
     private let permissionRouter: any PermissionAlertRouting
     private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
@@ -55,6 +57,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         chatUseCase: some ChatUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        callManager: some CallManagerProtocol,
         callUseCase: some CallUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
@@ -70,6 +73,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.chatUseCase = chatUseCase
         self.accountUseCase = accountUseCase
+        self.handleUseCase = megaHandleUseCase
+        self.callManager = callManager
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
@@ -777,20 +782,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     }
     
     private func startCall(in chatRoom: ChatRoomEntity) {
-        callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true, notRinging: true) { [weak self] result in
-            switch result {
-            case .success(let call):
-                self?.prepareAndShowCallUI(for: call, in: chatRoom)
-            case .failure(let error):
-                switch error {
-                case .tooManyParticipants:
-                    self?.router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-                default:
-                    self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                    MEGALogError("Not able to start scheduled meeting call")
-                }
-            }
-        }
+        let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: true, isJoiningActiveCall: false)
     }
     
     private func prepareAndShowCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity) {
