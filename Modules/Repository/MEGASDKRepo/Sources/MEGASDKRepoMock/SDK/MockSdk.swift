@@ -413,6 +413,10 @@ public final class MockSdk: MEGASdk {
         return sets
     }
     
+    public override func setBySid(_ sid: MEGAHandle) -> MEGASet? {
+        sets.first { $0.handle == sid }
+    }
+    
     public override func megaSetElements(bySid sid: MEGAHandle, includeElementsInRubbishBin: Bool) -> [MEGASetElement] {
         setElements
     }

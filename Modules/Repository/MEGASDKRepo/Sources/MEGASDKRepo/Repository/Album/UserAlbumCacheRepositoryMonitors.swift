@@ -1,6 +1,7 @@
 @preconcurrency import Combine
 import Foundation
 import MEGADomain
+import MEGASdk
 import MEGASwift
 
 public protocol UserAlbumCacheRepositoryMonitorsProtocol: Sendable {
@@ -38,6 +39,7 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
         setElementsUpdatedSourcePublisher.eraseToAnyPublisher()
     }
     
+    private let sdk: MEGASdk
     private let setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol
     private let userAlbumCache: any UserAlbumCacheProtocol
     private let cacheInvalidationTrigger: CacheInvalidationTrigger
@@ -47,9 +49,11 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
     private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
     private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     
-    public init(setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol,
+    public init(sdk: MEGASdk,
+                setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol,
                 userAlbumCache: any UserAlbumCacheProtocol,
                 cacheInvalidationTrigger: CacheInvalidationTrigger) {
+        self.sdk = sdk
         self.setAndElementsUpdatesProvider = setAndElementsUpdatesProvider
         self.userAlbumCache = userAlbumCache
         self.cacheInvalidationTrigger = cacheInvalidationTrigger
@@ -100,7 +104,7 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
             let updatedAlbums = await withTaskGroup(of: SetEntity?.self, returning: [SetEntity].self) { taskGroup in
                 setElementUpdate
                     .forEach { set in
-                        taskGroup.addTask { await userAlbumCache.album(forHandle: set.ownerId) }
+                        taskGroup.addTask { await album(for: set.ownerId) }
                     }
                 
                 return await taskGroup.reduce(into: [SetEntity](), { if let set = $1 { $0.append(set) } })
@@ -119,6 +123,10 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
             }
             await userAlbumCache.removeAllCachedValues(forced: true)
         }
+    }
+    
+    private func album(for handle: HandleEntity) async -> SetEntity? {
+        sdk.setBySid(handle)?.toSetEntity()
     }
 }
 
