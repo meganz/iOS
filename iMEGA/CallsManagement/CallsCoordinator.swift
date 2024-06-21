@@ -11,6 +11,7 @@ protocol CallsCoordinatorFactoryProtocol {
         chatUseCase: some ChatUseCaseProtocol,
         callSessionUseCase: some CallSessionUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+        noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         callManager: some CallManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID,
@@ -20,13 +21,14 @@ protocol CallsCoordinatorFactoryProtocol {
 }
 
 @objc class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
-    func makeCallsCoordinator(callUseCase: some CallUseCaseProtocol, chatRoomUseCase: some ChatRoomUseCaseProtocol, chatUseCase: some ChatUseCaseProtocol, callSessionUseCase: some CallSessionUseCaseProtocol, scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol, callManager: some CallManagerProtocol, passcodeManager: some PasscodeManagerProtocol, uuidFactory: @escaping () -> UUID, callUpdateFactory: CXCallUpdateFactory, featureFlagProvider: some FeatureFlagProviderProtocol) -> CallsCoordinator {
+    func makeCallsCoordinator(callUseCase: some CallUseCaseProtocol, chatRoomUseCase: some ChatRoomUseCaseProtocol, chatUseCase: some ChatUseCaseProtocol, callSessionUseCase: some CallSessionUseCaseProtocol, scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol, noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol, callManager: some CallManagerProtocol, passcodeManager: some PasscodeManagerProtocol, uuidFactory: @escaping () -> UUID, callUpdateFactory: CXCallUpdateFactory, featureFlagProvider: some FeatureFlagProviderProtocol) -> CallsCoordinator {
         CallsCoordinator(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: chatUseCase,
             callSessionUseCase: callSessionUseCase,
-            scheduledMeetingUseCase: scheduledMeetingUseCase,
+            scheduledMeetingUseCase: scheduledMeetingUseCase, 
+            noUserJoinedUseCase: noUserJoinedUseCase,
             callManager: callManager,
             passcodeManager: passcodeManager,
             uuidFactory: uuidFactory,
@@ -42,6 +44,7 @@ protocol CallsCoordinatorFactoryProtocol {
     private let chatUseCase: any ChatUseCaseProtocol
     private var callSessionUseCase: any CallSessionUseCaseProtocol
     private var scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
 
     private let callManager: any CallManagerProtocol
     private var providerDelegate: CallKitProviderDelegate?
@@ -64,6 +67,7 @@ protocol CallsCoordinatorFactoryProtocol {
          chatUseCase: some ChatUseCaseProtocol,
          callSessionUseCase: some CallSessionUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
          callManager: some CallManagerProtocol,
          passcodeManager: some PasscodeManagerProtocol,
          uuidFactory: @escaping () -> UUID,
@@ -75,6 +79,7 @@ protocol CallsCoordinatorFactoryProtocol {
         self.chatUseCase = chatUseCase
         self.callSessionUseCase = callSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
+        self.noUserJoinedUseCase = noUserJoinedUseCase
         self.callManager = callManager
         self.passcodeManager = passcodeManager
         self.uuidFactory = uuidFactory
@@ -232,6 +237,7 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         let isSpeakerEnabled = callActionSync.videoEnabled || callActionSync.chatRoom.isMeeting
         do {
             let call = try await callUseCase.startCall(for: callActionSync.chatRoom.chatId, enableVideo: callActionSync.videoEnabled, enableAudio: callActionSync.audioEnabled, notRinging: callActionSync.notRinging)
+            noUserJoinedUseCase.start(timerDuration: 60*5, chatId: callActionSync.chatRoom.chatId)
             if !isWaitingRoomOpened(inChatRoom: callActionSync.chatRoom) {
                 startCallUI(chatRoom: callActionSync.chatRoom, call: call, isSpeakerEnabled: isSpeakerEnabled)
             }

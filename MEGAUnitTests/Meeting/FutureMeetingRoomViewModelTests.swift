@@ -118,91 +118,50 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     }
     
     func testStartOrJoinCallActionTapped_startCall() {
-        chatUseCase.isCallActive = false
-        callUseCase.callCompletion = .success(callUseCase.call ?? CallEntity())
+        chatUseCase.isCallInProgress = false
+        let callManager = MockCallManager()
         
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callManager: callManager)
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(router.openCallView_calledTimes == 1)
+        XCTAssertTrue(callManager.startCall_CalledTimes == 1)
     }
     
-    func testStartOrJoinCallActionTapped_startCallError() {
-        chatUseCase.isCallActive = false
-        callUseCase.callCompletion = .failure(.generic)
-        
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+    func testStartOrJoinCallActionTapped_joinCallUserNoPresentCallKitNoRinging_startCallCalled() {
+        chatUseCase.isCallInProgress = true
+        callUseCase.call = CallEntity(status: .userNoPresent)
+        let callManager = MockCallManager()
+
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callManager: callManager)
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
+        XCTAssertTrue(callManager.startCall_CalledTimes == 1)
     }
     
-    func testStartOrJoinCallActionTapped_startCallTooManyParticipants() {
-        chatUseCase.isCallActive = false
-        callUseCase.callCompletion = .failure(.tooManyParticipants)
-        
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+    func testStartOrJoinCallActionTapped_joinCallUserNoPresentCallKitRinging_answerCallCalled() {
+        chatUseCase.isCallInProgress = true
+        callUseCase.call = CallEntity(status: .userNoPresent)
+        let callManager = MockCallManager()
+        callManager.callUUID = UUID()
+
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callManager: callManager)
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
+        XCTAssertTrue(callManager.answerCall_CalledTimes == 1)
     }
     
-    func testStartOrJoinCallActionTapped_joinCall() {
-        chatUseCase.isCallActive = true
-        callUseCase.callCompletion = .success(callUseCase.call ?? CallEntity())
-        
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+    func testStartOrJoinCallActionTapped_joinCallCallAlreadyParticipating_showCallUI() {
+        chatUseCase.isCallInProgress = true
+        callUseCase.call = CallEntity(status: .inProgress)
+        let callManager = MockCallManager()
+        callManager.callUUID = UUID()
+
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callManager: callManager)
 
         viewModel.startOrJoinCall()
-        
-        XCTAssertTrue(router.openCallView_calledTimes == 1)
-    }
-    
-    func testStartOrJoinCallActionTapped_joinCallError() {
-        chatUseCase.isCallActive = true
-        callUseCase.callCompletion = .failure(.generic)
-        
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
-
-        viewModel.startOrJoinCall()
-        
-        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
-    }
-    
-    func testStartOrJoinCallActionTapped_joinCallTooManyParticipants() {
-        chatUseCase.isCallActive = true
-        callUseCase.callCompletion = .failure(.tooManyParticipants)
-        
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
-
-        viewModel.startOrJoinCall()
-        
-        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
-    }
-    
-    func testStartOrJoinCall_isModeratorAndWaitingRoomEnabledAndCallNotActive_shouldStartCall() {
-        chatUseCase.isCallActive = false
-        callUseCase.callCompletion = .success(callUseCase.call ?? CallEntity())
-        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator))
-
-        let sut = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
-
-        sut.startOrJoinCall()
-        
-        XCTAssertTrue(router.openCallView_calledTimes == 1)
-    }
-    
-    func testStartOrJoinCall_isModeratorAndWaitingRoomEnabledAndCallActive_shouldJoinCall() {
-        chatUseCase.isCallActive = true
-        callUseCase.callCompletion = .success(callUseCase.call ?? CallEntity())
-        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator))
-
-        let sut = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
-
-        sut.startOrJoinCall()
         
         XCTAssertTrue(router.openCallView_calledTimes == 1)
     }
