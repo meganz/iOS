@@ -1,5 +1,8 @@
 @testable import Accounts
 import AccountsMock
+import MEGAAnalyticsiOS
+import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
 final class CancelAccountPlanViewModelTests: XCTestCase {
@@ -12,30 +15,16 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         )
     ]
 
-    override func setUp() {
-        super.setUp()
+    func testDismiss_shouldTrackAnalyticsEvent() {
+        performAnalyticsTest(action: { sut in
+            sut.dismiss()
+        }, expectedEvent: CancelSubscriptionKeepPlanButtonPressedEvent())
     }
 
-    override func tearDown() {
-        super.tearDown()
-    }
-    
-    func makeSUT(
-        currentPlanName: String = "",
-        currentPlanStorageUsed: String = "",
-        features: [FeatureDetails]
-    ) -> (
-        viewModel: CancelAccountPlanViewModel,
-        router: MockCancelAccountPlanRouter
-    ) {
-        let router = MockCancelAccountPlanRouter()
-        let viewModel = CancelAccountPlanViewModel(
-            currentPlanName: currentPlanName,
-            currentPlanStorageUsed: currentPlanStorageUsed,
-            featureListHelper: MockFeatureListHelper(features: features),
-            router: router
-        )
-        return (viewModel, router)
+    func testShowCancelSubscriptionSteps_shouldTrackAnalyticsEvent() {
+        performAnalyticsTest(action: { sut in
+            sut.showCancelSubscriptionSteps()
+        }, expectedEvent: CancelSubscriptionContinueCancellationButtonPressedEvent())
     }
     
     func testInit_shouldSetProperties() async {
@@ -69,5 +58,42 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         sut.showCancelSubscriptionSteps()
         
         XCTAssertEqual(router.showCancellationSteps_calledTimes, 1, "Expected showCancelSubscriptionSteps to be called on router")
+    }
+    
+    // MARK: - Private methods
+    
+    private func makeSUT(
+        currentPlanName: String = "",
+        currentPlanStorageUsed: String = "",
+        features: [FeatureDetails] = [],
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> (
+        viewModel: CancelAccountPlanViewModel,
+        router: MockCancelAccountPlanRouter
+    ) {
+        let router = MockCancelAccountPlanRouter()
+        let viewModel = CancelAccountPlanViewModel(
+            currentPlanName: currentPlanName,
+            currentPlanStorageUsed: currentPlanStorageUsed,
+            featureListHelper: MockFeatureListHelper(features: features),
+            tracker: tracker,
+            router: router
+        )
+        return (viewModel, router)
+    }
+    
+    private func performAnalyticsTest(
+        action: (CancelAccountPlanViewModel) -> Void,
+        expectedEvent: EventIdentifier
+    ) {
+        let mockTracker = MockTracker()
+        let (sut, _) = makeSUT(tracker: mockTracker)
+        
+        action(sut)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [expectedEvent]
+        )
     }
 }

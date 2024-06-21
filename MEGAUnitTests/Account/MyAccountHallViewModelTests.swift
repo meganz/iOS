@@ -1,8 +1,10 @@
 import DeviceCenter
 import DeviceCenterMocks
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
@@ -302,13 +304,35 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.calculateCellHeight(at: indexPath), 0)
     }
     
+    func test_didTapMyAccountButton_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapMyAccountButton,
+            expectedEvent: MyAccountProfileNavigationItemEvent()
+        )
+    }
+    
+    func test_didTapAccountHeader_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapAccountHeader,
+            expectedEvent: AccountScreenHeaderTappedEvent()
+        )
+    }
+    
+    func test_viewDidLoad_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .viewDidLoad,
+            expectedEvent: AccountScreenEvent()
+        )
+    }
+    
     private func makeSUT(
         isMasterBusinessAccount: Bool = false,
         isAchievementsEnabled: Bool = false,
         enabledNotifications: [NotificationIDEntity] = [],
         currentAccountDetails: AccountDetailsEntity? = nil,
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [:]),
-        deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge()
+        deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge(),
+        tracker: some AnalyticsTracking = MockTracker()
     ) -> (MyAccountHallViewModel, MockMyAccountHallRouter) {
         let myAccountHallUseCase = MockMyAccountHallUseCase(
             currentAccountDetails: currentAccountDetails ?? AccountDetailsEntity.random,
@@ -329,8 +353,24 @@ final class MyAccountHallViewModelTests: XCTestCase {
                 notificationsUseCase: notificationUseCase,
                 featureFlagProvider: featureFlagProvider,
                 deviceCenterBridge: deviceCenterBridge,
+                tracker: tracker,
                 router: router
             ), router
+        )
+    }
+    
+    private func trackAnalyticsEventTest(
+        action: MyAccountHallAction,
+        expectedEvent: EventIdentifier
+    ) {
+        let mockTracker = MockTracker()
+        let (sut, _) = makeSUT(tracker: mockTracker)
+        
+        sut.dispatch(action)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [expectedEvent]
         )
     }
 }

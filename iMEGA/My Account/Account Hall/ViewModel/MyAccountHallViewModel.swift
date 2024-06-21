@@ -1,6 +1,7 @@
 import Combine
 import DeviceCenter
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -23,12 +24,15 @@ enum MyAccountHallLoadTarget {
 }
 
 enum MyAccountHallAction: ActionType {
+    case viewDidLoad
     case reloadUI
     case load(_ target: MyAccountHallLoadTarget)
     case didTapUpgradeButton
     case addSubscriptions
     case removeSubscriptions
     case didTapDeviceCenterButton
+    case didTapMyAccountButton
+    case didTapAccountHeader
 }
 
 final class MyAccountHallViewModel: ViewModelType, ObservableObject {
@@ -54,6 +58,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let notificationsUseCase: any NotificationsUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     let shareUseCase: any ShareUseCaseProtocol
     let deviceCenterBridge: DeviceCenterBridge
     let router: any MyAccountHallRouting
@@ -73,6 +78,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
          notificationsUseCase: some NotificationsUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          deviceCenterBridge: DeviceCenterBridge,
+         tracker: some AnalyticsTracking,
          router: some MyAccountHallRouting) {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -80,6 +86,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         self.notificationsUseCase = notificationsUseCase
         self.featureFlagProvider = featureFlagProvider
         self.deviceCenterBridge = deviceCenterBridge
+        self.tracker = tracker
         self.router = router
         
         setAccountDetails(myAccountHallUseCase.currentAccountDetails)
@@ -101,6 +108,8 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     func dispatch(_ action: MyAccountHallAction) {
         switch action {
+        case .viewDidLoad:
+            trackAccountScreenEvent()
         case .reloadUI:
             invokeCommand?(.reloadUIContent)
         case .load(let target):
@@ -119,7 +128,23 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
                 deviceCenterBridge: deviceCenterBridge,
                 deviceCenterAssets: makeDeviceCenterAssetData()
             )
+        case .didTapMyAccountButton:
+            trackMyAccountEvent()
+        case .didTapAccountHeader:
+            trackAccountHeaderEvent()
         }
+    }
+    
+    private func trackAccountScreenEvent() {
+        tracker.trackAnalyticsEvent(with: AccountScreenEvent())
+    }
+    
+    private func trackMyAccountEvent() {
+        tracker.trackAnalyticsEvent(with: MyAccountProfileNavigationItemEvent())
+    }
+    
+    private func trackAccountHeaderEvent() {
+        tracker.trackAnalyticsEvent(with: AccountScreenHeaderTappedEvent())
     }
     
     private func showUpgradeAccountPlanView() {

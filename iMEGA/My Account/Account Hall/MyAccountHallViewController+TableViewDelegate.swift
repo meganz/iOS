@@ -30,6 +30,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
             }
             
         case MyAccountMegaSection.myAccount.rawValue:
+            viewModel.dispatch(.didTapMyAccountButton)
             showProfileView()
             
         case MyAccountMegaSection.notifications.rawValue:

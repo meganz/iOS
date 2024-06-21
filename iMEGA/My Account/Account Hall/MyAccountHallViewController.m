@@ -60,6 +60,8 @@
     [self updateAppearance];
     
     [self setUpInvokeCommands];
+    
+    [self notifyViewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
