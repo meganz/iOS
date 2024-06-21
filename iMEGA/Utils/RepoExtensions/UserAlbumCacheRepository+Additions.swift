@@ -5,6 +5,7 @@ extension UserAlbumCacheRepository: RepositoryProtocol {
     public static let newRepo: UserAlbumCacheRepository = {
         let userAlbumCache = UserAlbumCache.shared
         let userAlbumCacheRepositoryMonitors = UserAlbumCacheRepositoryMonitors(
+            sdk: .sharedSdk,
             setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: .sharedSdk),
             userAlbumCache: userAlbumCache,
             cacheInvalidationTrigger: .init(
