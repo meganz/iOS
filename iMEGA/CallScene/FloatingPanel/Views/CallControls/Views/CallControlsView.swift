@@ -26,6 +26,11 @@ struct CallControlsView<ViewModel: CallControlsViewModelProtocol>: View {
             
             if viewModel.showMoreButton {
                 CallControlView(config: .moreButton(action: viewModel.moreButtonTapped))
+                    .onAppear {
+                        Task {
+                            await viewModel.checkRaiseHandBadge()
+                        }
+                    }
             } else {
                 CallControlView(config: .switchCamera(enabled: viewModel.cameraEnabled, action: viewModel.switchCameraTapped))
             }

@@ -395,12 +395,15 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         participantsTableView.tableHeaderView?.addSubview(callControlsViewHost.view)
         
         callControlsViewHost.view.translatesAutoresizingMaskIntoConstraints = false
+        callControlsViewHost.didMove(toParent: self)
         
         NSLayoutConstraint.activate([
             swiftUIView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             swiftUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             swiftUIView.heightAnchor.constraint(equalToConstant: 105)
         ])
+        
+        view.bringSubviewToFront(swiftUIView)
     }
 }
 

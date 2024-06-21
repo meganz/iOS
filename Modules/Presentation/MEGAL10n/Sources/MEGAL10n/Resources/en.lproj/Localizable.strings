@@ -4153,6 +4153,8 @@
 "chat.call.contextMenu.lowerHand"="Lower hand";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="Raise hand";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="NEW";
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
 /* Cancellation Subscription manage by Webclient message */

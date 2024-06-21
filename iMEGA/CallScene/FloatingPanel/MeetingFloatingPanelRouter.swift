@@ -97,7 +97,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             cameraSwitcher: CameraSwitcher(
                 captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
                 localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared))
-            )
+            ),
+            raiseHandBadgeStoring: RaiseHandBadgeStore(userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo))
         )
         
         let callControlsViewHost = UIHostingController(rootView: CallControlsView(viewModel: callControlsViewModel))

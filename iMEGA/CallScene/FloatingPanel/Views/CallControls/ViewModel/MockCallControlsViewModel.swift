@@ -23,7 +23,7 @@ final class MockCallControlsViewModel: CallControlsViewModelProtocol {
     var routeViewVisible: Bool
     
     var showMoreButton: Bool
-    
+        
     func moreButtonTapped() async {}
     
     func endCallTapped() async { }
@@ -35,4 +35,6 @@ final class MockCallControlsViewModel: CallControlsViewModelProtocol {
     func toggleSpeakerTapped() { }
     
     func switchCameraTapped() async { }
+    
+    func checkRaiseHandBadge() async { }
 }

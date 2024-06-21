@@ -6,6 +6,8 @@ public protocol UserAttributeUseCaseProtocol {
     func userAttribute(for attribute: UserAttributeEntity) async throws -> [String: String]?
     func retrieveScheduledMeetingOnBoardingAttrubute() async throws -> ScheduledMeetingOnboardingEntity?
     func saveScheduledMeetingOnBoardingRecord(key: String, record: ScheduledMeetingOnboardingRecord) async throws
+    func retrieveRaiseHandAttribute() async throws -> RaiseHandNewFeatureBadgeEntity?
+    func saveRaiseHandNewFeatureBadge(presentedTimes: Int) async throws
 }
 
 public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttributeUseCaseProtocol {
@@ -91,5 +93,37 @@ public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttr
         } else {
             return iosJsonString
         }
+    }
+    
+    // MARK: - Scheduled meeting onboarding
+    
+    public func retrieveRaiseHandAttribute() async throws -> RaiseHandNewFeatureBadgeEntity? {
+        guard let jsonData = try await retrieveRaiseHandJSONData() else { return nil }
+        return try JSONDecoder().decode(RaiseHandNewFeatureBadgeEntity.self, from: jsonData)
+    }
+    
+    public func saveRaiseHandNewFeatureBadge(presentedTimes: Int) async throws {
+        let resultJson = try jsonStringForRaiseHandShowedPreference(presentedTimes: presentedTimes)
+        
+        guard resultJson.isNotEmpty else { throw JSONCodingErrorEntity.encoding }
+        try await updateUserAttribute(.appsPreferences, key: RaiseHandNewFeatureBadgeKeyEntity.key, value: resultJson)
+    }
+    
+    private func retrieveRaiseHandJSONData() async throws -> Data? {
+        let appsPreference = try? await userAttribute(for: .appsPreferences)
+        
+        guard let encodedString = appsPreference?[RaiseHandNewFeatureBadgeKeyEntity.key] as? String,
+              encodedString.isNotEmpty,
+              let jsonData = encodedString.base64DecodedData else { return nil }
+        
+        return jsonData
+    }
+    
+    private func jsonStringForRaiseHandShowedPreference(presentedTimes: Int) throws -> String {
+        let raiseHandNewFeatureBadgeEntity = RaiseHandNewFeatureBadgeEntity(presentedCount: presentedTimes)
+        
+        guard let raiseHandTipIosData = try? JSONEncoder().encode(raiseHandNewFeatureBadgeEntity) else { throw JSONCodingErrorEntity.encoding }
+        
+        return String(decoding: raiseHandTipIosData, as: UTF8.self)
     }
 }

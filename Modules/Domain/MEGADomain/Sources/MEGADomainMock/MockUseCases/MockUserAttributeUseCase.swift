@@ -6,17 +6,21 @@ public final class MockUserAttributeUseCase: UserAttributeUseCaseProtocol {
     public var userAttributeContainer: [UserAttributeEntity: [String: String]]
     public var contentConsumption: ContentConsumptionEntity?
     public var scheduleMeetingOnboarding: ScheduledMeetingOnboardingEntity?
-    
+    public var raiseHandNewFeatureBadge: RaiseHandNewFeatureBadgeEntity?
+
     public init(
         userAttribute: [UserAttributeEntity: String] = [:],
         userAttributeContainer: [UserAttributeEntity: [String: String]] = [:],
         contentConsumption: ContentConsumptionEntity? = nil,
-        scheduleMeetingOnboarding: ScheduledMeetingOnboardingEntity? = nil
+        scheduleMeetingOnboarding: ScheduledMeetingOnboardingEntity? = nil,
+        raiseHandNewFeatureBadge: RaiseHandNewFeatureBadgeEntity? = nil
+
     ) {
         self.userAttribute = userAttribute
         self.userAttributeContainer = userAttributeContainer
         self.contentConsumption = contentConsumption
         self.scheduleMeetingOnboarding = scheduleMeetingOnboarding
+        self.raiseHandNewFeatureBadge = raiseHandNewFeatureBadge
     }
     
     public func updateUserAttribute(_ attribute: UserAttributeEntity, value: String) async throws {
@@ -41,5 +45,13 @@ public final class MockUserAttributeUseCase: UserAttributeUseCaseProtocol {
     
     public func retrieveScheduledMeetingOnBoardingAttrubute() async throws -> ScheduledMeetingOnboardingEntity? {
         scheduleMeetingOnboarding
+    }
+    
+    public func saveRaiseHandNewFeatureBadge(presentedTimes: Int) async throws {
+        userAttributeContainer[.appsPreferences] = [RaiseHandNewFeatureBadgeKeyEntity.key: "\(presentedTimes)"]
+    }
+    
+    public func retrieveRaiseHandAttribute() async throws -> RaiseHandNewFeatureBadgeEntity? {
+        raiseHandNewFeatureBadge
     }
 }
