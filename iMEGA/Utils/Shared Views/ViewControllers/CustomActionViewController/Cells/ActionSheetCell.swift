@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 
 class ActionSheetCell: UITableViewCell {
 
@@ -6,7 +7,11 @@ class ActionSheetCell: UITableViewCell {
         NSLayoutConstraint.activate([heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0)])
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
-        accessoryView = action.accessoryView
+        if let badge = action.badgeModel {
+            accessoryView = newFeatureBadgeView(badge)
+        } else {
+            accessoryView = action.accessoryView
+        }
         if action.syncIconAndTextColor {
             imageView?.image = action.image?.withRenderingMode(.alwaysTemplate)
             // [MEET-3972] adjust and sync image tint to text color for iPad
@@ -29,5 +34,22 @@ class ActionSheetCell: UITableViewCell {
             imageView?.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : .mnz_red(for: traitCollection)
         default: break
         }
+    }
+    
+    func newFeatureBadgeView(_ badge: Badge) -> UIView {
+        let badgeView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
+        badgeView.backgroundColor = badge.backgroundColor
+        badgeView.layer.cornerRadius = 10
+        
+        let badgeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 15))
+        badgeLabel.textColor = badge.foregroundColor
+        badgeLabel.font = UIFont.preferredFont(style: .caption2, weight: .medium)
+        badgeLabel.text = badge.title
+        badgeLabel.textAlignment = .center
+        
+        badgeView.addSubview(badgeLabel)
+        badgeLabel.center = badgeView.center
+        
+        return badgeView
     }
 }

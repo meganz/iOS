@@ -9,5 +9,6 @@ protocol CallControlsViewModelProtocol: ObservableObject {
     func toggleMicTapped() async
     func toggleSpeakerTapped()
     func switchCameraTapped() async
-    func moreButtonTapped() async 
+    func moreButtonTapped() async
+    func checkRaiseHandBadge() async
 }

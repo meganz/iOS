@@ -230,6 +230,50 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertTrue(harness.sut.micEnabled)
     }
     
+    func testViewAppear_raiseHandBadgeNeverPresented_badgeMustBeShown() async {
+        let harness = Harness().raiseHandBadge(presented: true)
+        await harness.sut.checkRaiseHandBadge()
+        XCTAssertTrue(harness.sut.showRaiseHandBadge)
+    }
+    
+    func testViewAppear_raiseHandBadgeReachedMaxTimesPresented_badgeMustNotBeShown() async {
+        let harness = Harness().raiseHandBadge(presented: false)
+        await harness.sut.checkRaiseHandBadge()
+        XCTAssertFalse(harness.sut.showRaiseHandBadge)
+    }
+    
+    func testMoreButtonTapped_raiseHandBadgeNotReachedMaxTimesPresented_badgeMustBeShownAndIncrementCalled() async {
+        let harness = Harness().raiseHandBadge(presented: true)
+        await harness.sut.checkRaiseHandBadge()
+        await harness.sut.moreButtonTapped()
+        XCTAssertTrue(harness.sut.showRaiseHandBadge)
+        XCTAssertTrue(harness.raiseHandBadgeStore.incrementRaiseHandBadgePresented_CallCount == 1)
+    }
+    
+    func testMoreButtonTapped_raiseHandBadgeReachedMaxTimesPresented_badgeMustNotBeShownAndSaveRaiseHandPresentedNotCalled() async {
+        await withMainSerialExecutor {
+            let harness = Harness.withMoreButtonEnabled().raiseHandBadge(presented: false)
+            await harness.sut.checkRaiseHandBadge()
+            let raiseHandAction = await harness.moreAction(button: .raiseHand)
+            raiseHandAction.actionHandler()
+            await Task.yield()
+            XCTAssertFalse(harness.sut.showRaiseHandBadge)
+            XCTAssertTrue(harness.raiseHandBadgeStore.saveRaiseHandBadgeAsPresented_CallCount == 0)
+        }
+    }
+    
+    func testRaiseHandSignal_raiseHandBadgeNotReachedMaxTimesPresented_badgeMustBeShownAndSaveRaiseHandPresentedCalled() async {
+        await withMainSerialExecutor {
+            let harness = Harness.withMoreButtonEnabled().raiseHandBadge(presented: true)
+            await harness.sut.checkRaiseHandBadge()
+            let raiseHandAction = await harness.moreAction(button: .raiseHand)
+            raiseHandAction.actionHandler()
+            await Task.yield()
+            XCTAssertTrue(harness.sut.showRaiseHandBadge)
+            XCTAssertTrue(harness.raiseHandBadgeStore.saveRaiseHandBadgeAsPresented_CallCount == 1)
+        }
+    }
+    
     class Harness {
         let sut: CallControlsViewModel
         let chatRoom: ChatRoomEntity
@@ -244,7 +288,8 @@ final class CallControlsViewModelTests: XCTestCase {
         var presentedMenuActions: [ActionSheetAction] = []
         var layoutUpdates: [ParticipantsLayoutMode] = []
         let cameraSwitcher = MockCameraSwitcher()
-        
+        let raiseHandBadgeStore = MockRaiseHandBadgeStore()
+
         init(
             chatType: ChatRoomEntity.ChatType = .meeting,
             isModerator: Bool = true,
@@ -276,7 +321,7 @@ final class CallControlsViewModelTests: XCTestCase {
                 callUseCase: callUseCase,
                 localVideoUseCase: localVideoUseCase,
                 containerViewModel: containerViewModel,
-                audioSessionUseCase: audioSessionUseCase,
+                audioSessionUseCase: audioSessionUseCase, 
                 permissionHandler: MockDevicePermissionHandler(
                     photoAuthorization: .authorized,
                     audioAuthorized: permissionsAuthorised,
@@ -288,7 +333,8 @@ final class CallControlsViewModelTests: XCTestCase {
                 featureFlagProvider: MockFeatureFlagProvider(list: [.raiseToSpeak: raiseToSpeakFeatureEnabled]),
                 accountUseCase: MockAccountUseCase(currentUser: .testUser),
                 layoutUpdateChannel: layoutUpdateChannel,
-                cameraSwitcher: cameraSwitcher
+                cameraSwitcher: cameraSwitcher,
+                raiseHandBadgeStoring: raiseHandBadgeStore
             )
             
             menuPresenter = { [weak self] in
@@ -369,6 +415,11 @@ final class CallControlsViewModelTests: XCTestCase {
             return self
         }
         
+        func raiseHandBadge(presented: Bool) -> Self {
+            raiseHandBadgeStore.shouldPresentRaiseHandBadge = presented
+            return self
+        }
+        
         func currentLayout(_ layout: ParticipantsLayoutMode) -> Self {
             layoutUpdateChannel.getCurrentLayout = { layout }
             return self
@@ -379,7 +430,7 @@ final class CallControlsViewModelTests: XCTestCase {
             return presentedMenuActions
         }
         
-        enum  MoreButton {
+        enum MoreButton {
             case switchLayout
             case raiseHand
         }
@@ -391,7 +442,6 @@ final class CallControlsViewModelTests: XCTestCase {
                 return presentedMenuActions[0]
             case .raiseHand:
                 return presentedMenuActions[1]
-                
             }
         }
         

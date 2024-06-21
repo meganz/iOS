@@ -2,13 +2,13 @@ import Foundation
 
 public struct Tip {
     let title: String
-    let message: String
+    let message: String?
     let boldMessage: String?
     let buttonTitle: String
     let buttonAction: (() -> Void)?
     
     public init(title: String,
-                message: String,
+                message: String? = nil,
                 boldMessage: String? = nil,
                 buttonTitle: String,
                 buttonAction: (() -> Void)?) {

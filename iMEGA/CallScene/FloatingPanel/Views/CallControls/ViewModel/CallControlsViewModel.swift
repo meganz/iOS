@@ -25,6 +25,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private let audioRouteChangeNotificationName: Notification.Name
     private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
     private let cameraSwitcher: any CameraSwitching
+    private let raiseHandBadgeStoring: any RaiseHandBadgeStoring
     
     private var subscriptions = Set<AnyCancellable>()
 
@@ -32,6 +33,8 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     @Published var cameraEnabled: Bool = false
     @Published var speakerEnabled: Bool = false
     @Published var routeViewVisible: Bool = false
+
+    var showRaiseHandBadge: Bool = false
     
     init(
         router: some MeetingFloatingPanelRouting,
@@ -49,7 +52,8 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         featureFlagProvider: some FeatureFlagProviderProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         layoutUpdateChannel: ParticipantLayoutUpdateChannel,
-        cameraSwitcher: some CameraSwitching
+        cameraSwitcher: some CameraSwitching,
+        raiseHandBadgeStoring: some RaiseHandBadgeStoring
     ) {
         self.router = router
         self.scheduler = scheduler
@@ -67,6 +71,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.accountUseCase = accountUseCase
         self.layoutUpdateChannel = layoutUpdateChannel
         self.cameraSwitcher = cameraSwitcher
+        self.raiseHandBadgeStoring = raiseHandBadgeStoring
         
         guard let call = callUseCase.call(for: chatRoom.chatId) else {
             MEGALogError("Error initialising call actions, call does not exists")
@@ -101,6 +106,19 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     func switchCameraTapped() async {
         await switchCamera()
+    }
+    
+    func checkRaiseHandBadge() async {
+        showRaiseHandBadge = await raiseHandBadgeStoring.shouldPresentRaiseHandBadge()
+    }
+    
+    @MainActor
+    func moreButtonTapped() async {
+        menuPresenter(moreMenuActions)
+        if showRaiseHandBadge {
+            await raiseHandBadgeStoring.incrementRaiseHandBadgePresented()
+            await checkRaiseHandBadge()
+        }
     }
     
     // MARK: - Private
@@ -171,6 +189,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             detail: nil,
             image: UIImage(resource: .callRaiseHand),
             syncIconAndTextColor: true,
+            badgeModel: showRaiseHandBadge ? Badge.raiseHandFeature : nil,
             style: .default,
             actionHandler: { [weak self] in
                 self?.signalHandAction(!raised)
@@ -183,13 +202,17 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             let call = callUseCase.call(for: chatRoom.chatId)
         else { return }
         
-        Task {
+        Task { @MainActor in 
             MEGALogDebug("[CallControls] \(raise ? "raising" : "lowering") hand begin")
             do {
                 if raise {
                     try await self.callUseCase.raiseHand(forCall: call)
                 } else {
                     try await self.callUseCase.lowerHand(forCall: call)
+                }
+                if showRaiseHandBadge {
+                    await raiseHandBadgeStoring.saveRaiseHandBadgeAsPresented()
+                    await checkRaiseHandBadge()
                 }
                 MEGALogDebug("[CallControls] \(raise ? "raised" : "lowered") hand successfully")
             } catch {
@@ -213,11 +236,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             switchLayout(gallery: currentLayout == .grid, enabled: layoutSwitchingEnabled),
             raiseOrLowerHand(raised: localUserHandIsRaiseCurrently)
         ]
-    }
-    
-    @MainActor
-    func moreButtonTapped() async {
-        menuPresenter(moreMenuActions)
     }
     
     private func manageEndCall() {
