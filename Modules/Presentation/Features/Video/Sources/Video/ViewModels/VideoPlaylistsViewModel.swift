@@ -156,8 +156,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
             .sink { [weak self] value in
                 guard let self else { return }
                 if value.isEmpty {
-                    self.loadVideoPlaylistsOnSearchTextChangedTask = Task {
-                        guard !Task.isCancelled else {
+                    self.loadVideoPlaylistsOnSearchTextChangedTask = Task { [weak self] in
+                        guard !Task.isCancelled, let self else {
                             return
                         }
                         await self.loadVideoPlaylists()

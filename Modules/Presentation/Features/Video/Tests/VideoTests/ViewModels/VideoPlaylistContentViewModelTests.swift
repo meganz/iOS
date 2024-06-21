@@ -127,7 +127,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldPopScreen, "Expect to exit screen")
     }
     
-    func testSubscribeToAllSelected_whenIsAllSelectedChanged_triggerSelectionDelegate() async throws {
+    func testSubscribeToAllSelected_whenIsAllSelectedChanged_triggerSelectionDelegate() async {
         let allVideos = [
             NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
             NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
@@ -154,8 +154,10 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase
         )
         
+        let taskExpectation = expectation(description: "wait for task complete")
         let task = Task {
             await sut.subscribeToAllSelected()
+            taskExpectation.fulfill()
         }
         
         let isCalledExpectation = expectation(description: "isAllSelected is called")
@@ -175,6 +177,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         
         task.cancel()
         cancellable.cancel()
+        
+        await fulfillment(of: [taskExpectation], timeout: 1.0)
     }
     
     // MARK: - Helpers

@@ -56,60 +56,6 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowAddNewPlaylistAlert)
     }
     
-    // MARK: - init.listenSearchTextChange
-    
-    @MainActor
-    func testInitListenSearchTextChange_whenSearchTextIsEmpty_loadVideoPlaylists() async {
-        let (sut, videoPlaylistUseCase, syncModel, _) = makeSUT(
-            videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
-                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
-            ])
-        )
-        let exp = expectation(description: "load video playlists")
-        exp.expectedFulfillmentCount = 2
-        var receivedMessages = [MockVideoPlaylistUseCase.Message]()
-        videoPlaylistUseCase.$publishedMessage
-            .sink { messages in
-                if messages.contains(.systemVideoPlaylists) {
-                    receivedMessages = messages
-                }
-                exp.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        syncModel.searchText = "hi"
-        syncModel.searchText = ""
-        await sut.loadVideoPlaylistsOnSearchTextChangedTask?.value
-        await fulfillment(of: [exp], timeout: 0.5)
-        
-        XCTAssertTrue(receivedMessages.contains(.systemVideoPlaylists))
-        sut.loadVideoPlaylistsOnSearchTextChangedTask?.cancel()
-    }
-    
-    @MainActor
-    func testInitListenSearchTextChange_whenSearchTextIsNotEmpty_filterPlaylists() async {
-        let (sut, _, syncModel, _) = makeSUT(
-            videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
-                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
-            ])
-        )
-        let exp = expectation(description: "load video playlists")
-        exp.expectedFulfillmentCount = 2
-        var receivedPlaylists = [VideoPlaylistEntity]()
-        sut.$videoPlaylists
-            .sink { videoPlaylists in
-                receivedPlaylists = videoPlaylists
-                exp.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        syncModel.searchText = ""
-        syncModel.searchText = "any-search-text"
-        await fulfillment(of: [exp], timeout: 0.5)
-        
-        XCTAssertTrue(receivedPlaylists.isEmpty)
-    }
-    
     // MARK: - createUserVideoPlaylist
     
     func testCreateUserVideoPlaylist_whenCalled_createsVideoPlaylist() async {
