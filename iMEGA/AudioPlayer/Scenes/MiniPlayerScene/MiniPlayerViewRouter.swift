@@ -1,5 +1,7 @@
 import Foundation
+import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import UIKit
 
 final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {

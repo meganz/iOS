@@ -176,8 +176,6 @@
 		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
 		241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */; };
-		242A14082ABC920A009E4788 /* AudioPlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242A14072ABC920A009E4788 /* AudioPlayerRepository.swift */; };
-		242A140A2ABC9252009E4788 /* AudioPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242A14092ABC9252009E4788 /* AudioPlayerUseCase.swift */; };
 		24352DE42ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */; };
 		2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */; };
 		24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */; };
@@ -217,7 +215,6 @@
 		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
 		24C4150A2B8492D400804D8D /* Preview_ThumbnailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C415092B8492D400804D8D /* Preview_ThumbnailUseCase.swift */; };
 		24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C577F52AC1872F00302849 /* MockAudioPlayerRepository.swift */; };
-		24C577F82AC1876200302849 /* AudioPlayerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C577F72AC1876200302849 /* AudioPlayerRepositoryTests.swift */; };
 		24C577FB2AC187F600302849 /* AudioPlayerUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C577FA2AC187F600302849 /* AudioPlayerUseCaseTests.swift */; };
 		24C577FF2AC18A9F00302849 /* MockAudioPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C577FE2AC18A9F00302849 /* MockAudioPlayerUseCase.swift */; };
 		24CCAC482B1363BD00BE4726 /* DownloadFileRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCAC472B1363BD00BE4726 /* DownloadFileRepositoryTests.swift */; };
@@ -498,8 +495,8 @@
 		41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
-		530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */; };
 		530C524C2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C524B2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift */; };
+		530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */; };
 		534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */; };
 		5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */; };
 		5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B00B6E7210745BF0076D5BB /* FileManagementTableViewController.m */; };
@@ -2896,8 +2893,6 @@
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
 		241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampRouter.swift; sourceTree = "<group>"; };
-		242A14072ABC920A009E4788 /* AudioPlayerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerRepository.swift; sourceTree = "<group>"; };
-		242A14092ABC9252009E4788 /* AudioPlayerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerUseCase.swift; sourceTree = "<group>"; };
 		24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVideoPlayerItemMetadataCommand.swift; sourceTree = "<group>"; };
 		2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewControllerTests.swift; sourceTree = "<group>"; };
 		24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentViewController.swift; sourceTree = "<group>"; };
@@ -2937,7 +2932,6 @@
 		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
 		24C415092B8492D400804D8D /* Preview_ThumbnailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_ThumbnailUseCase.swift; sourceTree = "<group>"; };
 		24C577F52AC1872F00302849 /* MockAudioPlayerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlayerRepository.swift; sourceTree = "<group>"; };
-		24C577F72AC1876200302849 /* AudioPlayerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerRepositoryTests.swift; sourceTree = "<group>"; };
 		24C577FA2AC187F600302849 /* AudioPlayerUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerUseCaseTests.swift; sourceTree = "<group>"; };
 		24C577FE2AC18A9F00302849 /* MockAudioPlayerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlayerUseCase.swift; sourceTree = "<group>"; };
 		24CCAC472B1363BD00BE4726 /* DownloadFileRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFileRepositoryTests.swift; sourceTree = "<group>"; };
@@ -3262,8 +3256,8 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModelTests.swift; sourceTree = "<group>"; };
 		530C524B2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionBuilderTests.swift; sourceTree = "<group>"; };
+		530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModelTests.swift; sourceTree = "<group>"; };
 		534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTypeTests.swift; sourceTree = "<group>"; };
 		5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallTableViewCell.h; sourceTree = "<group>"; };
 		5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallTableViewCell.m; sourceTree = "<group>"; };
@@ -12787,7 +12781,6 @@
 		C453AB73256E5F9E005E4E1B /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				242A14072ABC920A009E4788 /* AudioPlayerRepository.swift */,
 				9DAC1B622951589E00562475 /* NodeInfoRepository.swift */,
 				C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */,
 				C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */,
@@ -12799,7 +12792,6 @@
 			isa = PBXGroup;
 			children = (
 				C4CBDD4E256EC8F800835CF5 /* Domain */,
-				242A14092ABC9252009E4788 /* AudioPlayerUseCase.swift */,
 				C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */,
 				C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */,
 				C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */,
@@ -12946,7 +12938,6 @@
 			isa = PBXGroup;
 			children = (
 				24D59EDC2A8CD52900503F43 /* Mocks */,
-				24C577F72AC1876200302849 /* AudioPlayerRepositoryTests.swift */,
 				2461E7032A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift */,
 			);
 			path = Repository;
@@ -14331,8 +14322,6 @@
 				2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */,
 				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,
 				24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */,
-				242A14082ABC920A009E4788 /* AudioPlayerRepository.swift in Sources */,
-				242A140A2ABC9252009E4788 /* AudioPlayerUseCase.swift in Sources */,
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */,
@@ -16280,7 +16269,6 @@
 				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				24A6ADDC2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift in Sources */,
-				24C577F82AC1876200302849 /* AudioPlayerRepositoryTests.swift in Sources */,
 				24C577FB2AC187F600302849 /* AudioPlayerUseCaseTests.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
 				246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */,
