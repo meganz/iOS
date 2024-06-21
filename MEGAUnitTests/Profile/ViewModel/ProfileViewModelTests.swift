@@ -1,5 +1,6 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
@@ -190,6 +191,18 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(router.showCancelSubscriptionFlow_calledTimes, 1, "Expected showCancelSubscriptionFlow to be called once.")
     }
     
+    func test_cancelSubscription_tracksAnalyticsEvent() {
+        let mockTracker = MockTracker()
+        let (sut, _) = makeSUT(tracker: mockTracker)
+        
+        sut.dispatch(.cancelSubscription)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [CancelSubscriptionButtonPressedEvent()]
+        )
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -200,6 +213,7 @@ final class ProfileViewModelTests: XCTestCase {
         multiFactorAuthCheckResult: Bool = false,
         multiFactorAuthCheckDelay: TimeInterval = 0,
         hasValidProAccount: Bool = true,
+        tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [.cancelSubscription: true])
     ) -> (sut: ProfileViewModel, router: MockProfileViewRouter) {
         
@@ -219,6 +233,7 @@ final class ProfileViewModelTests: XCTestCase {
             ProfileViewModel(
                 accountUseCase: accountUseCase,
                 featureFlagProvider: featureFlagProvider,
+                tracker: tracker,
                 router: router
             ),
             router

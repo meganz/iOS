@@ -1,6 +1,7 @@
 import Accounts
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -60,14 +61,17 @@ final class ProfileViewModel: ViewModelType {
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     private let router: any ProfileViewRouting
+    private let tracker: any AnalyticsTracking
     
     init(
         accountUseCase: some AccountUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        tracker: some AnalyticsTracking,
         router: some ProfileViewRouting
     ) {
         self.accountUseCase = accountUseCase
         self.featureFlagProvider = featureFlagProvider
+        self.tracker = tracker
         self.router = router
         bindToSubscriptions()
     }
@@ -124,6 +128,7 @@ extension ProfileViewModel {
         case .changePassword:
             handleChangeProfileAction(requestedChangeType: .password)
         case .cancelSubscription:
+            trackCancelSubscriptionButtonEvent()
             initCancelSubscriptionFlow()
         }
     }
@@ -174,6 +179,10 @@ extension ProfileViewModel {
                 unavailableImageName: CancelSubscriptionIconAssets.unavailableIcon
             )
         )
+    }
+    
+    private func trackCancelSubscriptionButtonEvent() {
+        tracker.trackAnalyticsEvent(with: CancelSubscriptionButtonPressedEvent())
     }
 }
 

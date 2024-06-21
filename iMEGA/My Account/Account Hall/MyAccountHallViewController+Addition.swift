@@ -7,9 +7,21 @@ import MEGASwiftUI
 
 extension MyAccountHallViewController {
     
+    @objc func notifyViewDidLoad() {
+        viewModel.dispatch(.viewDidLoad)
+    }
+    
     @objc func showSettings() {
         let settingRouter = SettingViewRouter(presenter: navigationController)
         settingRouter.start()
+    }
+    
+    @objc func didTapProfileView() {
+        if !viewModel.isCancelSubscriptionFeatureFlagEnabled {
+            showProfileView()
+        }
+        
+        viewModel.dispatch(.didTapAccountHeader)
     }
     
     @objc func showProfileView() {
@@ -148,7 +160,7 @@ extension MyAccountHallViewController {
         viewAndEditProfileButton?.isHidden = isCancelSubscriptionFeatureFlagEnabled
         viewAndEditProfileImageView?.isHidden = isCancelSubscriptionFeatureFlagEnabled
         
-        let profileTapGesture = UITapGestureRecognizer(target: self, action: #selector(showProfileView))
-        profileView?.gestureRecognizers = isCancelSubscriptionFeatureFlagEnabled ? nil : [profileTapGesture]
+        let profileTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfileView))
+        profileView?.gestureRecognizers = [profileTapGesture]
     }
 }

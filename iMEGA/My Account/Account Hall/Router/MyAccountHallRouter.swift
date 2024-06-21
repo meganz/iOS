@@ -154,6 +154,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
             shareUseCase: shareUseCase, 
             notificationsUseCase: notificationsUseCase,
             deviceCenterBridge: DeviceCenterBridge(),
+            tracker: DIContainer.tracker,
             router: self
         )
         

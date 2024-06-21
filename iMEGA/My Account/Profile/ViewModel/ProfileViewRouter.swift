@@ -22,6 +22,7 @@ final class ProfileViewRouter: ProfileViewRouting {
     func build() -> UIViewController {
         let viewModel = ProfileViewModel(
             accountUseCase: accountUseCase,
+            tracker: DIContainer.tracker,
             router: self
         )
         

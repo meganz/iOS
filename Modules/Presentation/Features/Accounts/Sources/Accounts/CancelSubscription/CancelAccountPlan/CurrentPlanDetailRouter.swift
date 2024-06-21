@@ -38,7 +38,8 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         let viewModel = CancelAccountPlanViewModel(
             currentPlanName: accountDetails.proLevel.toAccountTypeDisplayName(),
             currentPlanStorageUsed: String.memoryStyleString(fromByteCount: accountDetails.storageUsed),
-            featureListHelper: featureListHelper,
+            featureListHelper: featureListHelper, 
+            tracker: DIContainer.tracker,
             router: self
         )
         
