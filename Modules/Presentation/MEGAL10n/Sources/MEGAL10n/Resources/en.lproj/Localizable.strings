@@ -3807,6 +3807,8 @@
 "home.search.empty.no-pdfs"="No PDFs";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="No presentations";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="No spreadsheets";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="No archives";
 /* A title label for waiting room participants list view. */
