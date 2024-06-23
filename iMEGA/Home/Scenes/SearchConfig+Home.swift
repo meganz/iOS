@@ -173,6 +173,12 @@ extension SearchConfig {
                         title: Strings.Localizable.Home.Search.Empty.noArchives,
                         titleTextColor: titleTextColor
                     )
+                case SearchChipEntity.spreadsheets.id:
+                    return .init(
+                        image: Image(.noResultsDocuments),
+                        title: Strings.Localizable.Home.Search.Empty.noSpreadsheets,
+                        titleTextColor: titleTextColor
+                    )
                 default:
                     return defaultEmptyViewAsset()
                 }

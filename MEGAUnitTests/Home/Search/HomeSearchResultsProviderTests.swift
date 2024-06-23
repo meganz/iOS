@@ -495,6 +495,14 @@ class HomeSearchProviderTests: XCTestCase {
         )
     }
 
+    func testSearchConfig_whenChipIsSpreadsheets_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noSpreadsheets),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.spreadsheets
+        )
+    }
+
     func testSearchConfig_whenChipIsDefault_shouldMatch() {
         let emptyAsset = makeEmptyAsset(with: "Title")
         assertSearchConfig(
