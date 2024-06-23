@@ -1,6 +1,6 @@
 import Combine
 
-public protocol AlbumContentsUseCaseProtocol {
+public protocol AlbumContentsUseCaseProtocol: Sendable {
     func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never>
     func photos(in album: AlbumEntity) async throws -> [AlbumPhotoEntity]
     func userAlbumPhotos(by id: HandleEntity, showHidden: Bool) async -> [AlbumPhotoEntity]

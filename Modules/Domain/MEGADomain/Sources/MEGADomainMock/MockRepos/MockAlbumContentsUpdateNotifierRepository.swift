@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 
 public final class MockAlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRepositoryProtocol {
@@ -6,7 +6,7 @@ public final class MockAlbumContentsUpdateNotifierRepository: AlbumContentsUpdat
         MockAlbumContentsUpdateNotifierRepository()
     }
     
-    public var albumReloadPublisher: AnyPublisher<Void, Never>
+    public let albumReloadPublisher: AnyPublisher<Void, Never>
     
     public init(albumReloadPublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()) {
         self.albumReloadPublisher = albumReloadPublisher

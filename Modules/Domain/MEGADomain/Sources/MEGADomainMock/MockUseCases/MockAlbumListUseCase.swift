@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import Foundation
 import MEGADomain
 
@@ -6,7 +6,7 @@ public struct MockAlbumListUseCase: AlbumListUseCaseProtocol {
     private let cameraUploadNode: NodeEntity?
     private let albums: [AlbumEntity]
     private let createdUserAlbums: [String: AlbumEntity]
-    public var albumsUpdatedPublisher: AnyPublisher<Void, Never>
+    public let albumsUpdatedPublisher: AnyPublisher<Void, Never>
     
     public static func sampleUserAlbum(name: String) -> AlbumEntity {
         AlbumEntity(id: 4, name: name, coverNode: NodeEntity(handle: 4), count: 0, type: .user)

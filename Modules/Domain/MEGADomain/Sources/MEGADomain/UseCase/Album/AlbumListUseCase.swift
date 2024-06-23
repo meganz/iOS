@@ -2,7 +2,7 @@ import AsyncAlgorithms
 import Combine
 import Foundation
 
-public protocol AlbumListUseCaseProtocol {
+public protocol AlbumListUseCaseProtocol: Sendable {
     var albumsUpdatedPublisher: AnyPublisher<Void, Never> { get }
     func systemAlbums() async throws -> [AlbumEntity]
     func userAlbums() async -> [AlbumEntity]
