@@ -154,6 +154,7 @@ struct TabBarItem: View {
     func makeNullViewModel() -> VideoListViewModel {
         VideoListViewModel(
             fileSearchUseCase: Preview_FilesSearchUseCase(),
+            photoLibraryUseCase: Preview_PhotoLibraryUseCase(),
             thumbnailUseCase: Preview_ThumbnailUseCase(),
             syncModel: VideoRevampSyncModel(),
             selection: VideoSelection()

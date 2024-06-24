@@ -6,7 +6,9 @@ extension VideoConfig {
     
     static func live(isDesignTokenEnabled: Bool) -> VideoConfig { VideoConfig(
         videoListAssets: VideoConfig.VideoListAssets(
-            noResultVideoImage: UIImage.noResultsVideo
+            noResultVideoImage: UIImage.noResultsVideo,
+            checkmarkImage: UIImage.turquoiseCheckmark,
+            chipDownArrowImage: UIImage.filterChipDownArrow
         ),
         rowAssets: VideoConfig.RowAssets(
             favoriteImage: UIImage.favouriteThumbnail,
@@ -45,7 +47,15 @@ extension VideoConfig {
             emptyFavoriteThumbnaillImageForegroundColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.videoPlaylistEmptyFavoriteThumbnaillImageForeground,
             videoThumbnailImageViewPlaceholderBackgroundColor: MEGAAppColor.Videos.videoThumbnailImageViewPlaceholderBackgroundColor.color,
             videoThumbnailDurationTextBackgroundColor: MEGAAppColor.Videos.videoThumbnailDurationTextBackgroundColor.color,
-            disabledColor: isDesignTokenEnabled ? TokenColors.Text.disabled.swiftUI : Color.videoToolbarIconDisabled
+            disabledColor: isDesignTokenEnabled ? TokenColors.Text.disabled.swiftUI : Color.videoToolbarIconDisabled,
+            checkmarkColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : Color.turquoise,
+            bottomSheetBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.backgroundRegularPrimaryElevated,
+            bottomSheetHeaderBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.backgroundRegularPrimaryElevated,
+            bottomSheetCellSelectedBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.backgroundRegularPrimaryElevated,
+            videoFilterChipActiveForegroundColor: isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : Color.white,
+            videoFilterChipInactiveForegroundColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.videoFilterChipInactiveForeground,
+            videoFilterChipActiveBackgroundColor: isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : Color.turquoise,
+            videoFilterChipInactiveBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : Color.videoFilterChipInactiveBackground
         ),
         toolbarAssets: VideoConfig.ToolbarAssets(
             offlineImage: UIImage.offline,

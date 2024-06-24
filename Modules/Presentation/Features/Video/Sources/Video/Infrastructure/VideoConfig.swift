@@ -37,9 +37,17 @@ public struct VideoConfig: Equatable {
     public struct VideoListAssets: Equatable {
         
         public let noResultVideoImage: UIImage
+        public let checkmarkImage: UIImage
+        public let chipDownArrowImage: UIImage
         
-        public init(noResultVideoImage: UIImage) {
+        public init(
+            noResultVideoImage: UIImage,
+            checkmarkImage: UIImage,
+            chipDownArrowImage: UIImage
+        ) {
             self.noResultVideoImage = noResultVideoImage
+            self.checkmarkImage = checkmarkImage
+            self.chipDownArrowImage = chipDownArrowImage
         }
     }
     
@@ -167,6 +175,14 @@ public struct VideoConfig: Equatable {
         public let videoThumbnailImageViewPlaceholderBackgroundColor: Color
         public let videoThumbnailDurationTextBackgroundColor: Color
         public let disabledColor: Color
+        public let checkmarkColor: Color
+        public let bottomSheetBackgroundColor: Color
+        public let bottomSheetHeaderBackgroundColor: Color
+        public let bottomSheetCellSelectedBackgroundColor: Color
+        public let videoFilterChipActiveForegroundColor: Color
+        public let videoFilterChipInactiveForegroundColor: Color
+        public let videoFilterChipActiveBackgroundColor: Color
+        public let videoFilterChipInactiveBackgroundColor: Color
         
         /// Specify colors that needs to be injected from Main module.
         public init(
@@ -188,7 +204,15 @@ public struct VideoConfig: Equatable {
             emptyFavoriteThumbnaillImageForegroundColor: Color,
             videoThumbnailImageViewPlaceholderBackgroundColor: Color,
             videoThumbnailDurationTextBackgroundColor: Color,
-            disabledColor: Color
+            disabledColor: Color,
+            checkmarkColor: Color,
+            bottomSheetBackgroundColor: Color,
+            bottomSheetHeaderBackgroundColor: Color,
+            bottomSheetCellSelectedBackgroundColor: Color,
+            videoFilterChipActiveForegroundColor: Color,
+            videoFilterChipInactiveForegroundColor: Color,
+            videoFilterChipActiveBackgroundColor: Color,
+            videoFilterChipInactiveBackgroundColor: Color
         ) {
             self.primaryTextColor = primaryTextColor
             self.secondaryTextColor = secondaryTextColor
@@ -209,6 +233,14 @@ public struct VideoConfig: Equatable {
             self.videoThumbnailImageViewPlaceholderBackgroundColor = videoThumbnailImageViewPlaceholderBackgroundColor
             self.videoThumbnailDurationTextBackgroundColor = videoThumbnailDurationTextBackgroundColor
             self.disabledColor = disabledColor
+            self.checkmarkColor = checkmarkColor
+            self.bottomSheetBackgroundColor = bottomSheetBackgroundColor
+            self.bottomSheetHeaderBackgroundColor = bottomSheetHeaderBackgroundColor
+            self.bottomSheetCellSelectedBackgroundColor = bottomSheetCellSelectedBackgroundColor
+            self.videoFilterChipActiveForegroundColor = videoFilterChipActiveForegroundColor
+            self.videoFilterChipInactiveForegroundColor = videoFilterChipInactiveForegroundColor
+            self.videoFilterChipActiveBackgroundColor = videoFilterChipActiveBackgroundColor
+            self.videoFilterChipInactiveBackgroundColor = videoFilterChipInactiveBackgroundColor
         }
     }
 }

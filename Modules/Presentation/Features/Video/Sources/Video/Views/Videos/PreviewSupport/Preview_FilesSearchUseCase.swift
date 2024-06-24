@@ -39,3 +39,14 @@ extension Preview_FilesSearchUseCase {
         []
     }
 }
+
+struct Preview_PhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
+    
+    func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
+        PhotoLibraryContainerEntity(cameraUploadNode: NodeEntity.preview, mediaUploadNode: NodeEntity.preview)
+    }
+    
+    func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?, searchText: String?, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
+        []
+    }
+}

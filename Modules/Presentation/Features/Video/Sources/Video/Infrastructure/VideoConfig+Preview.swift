@@ -8,7 +8,9 @@ extension VideoConfig {
     /// Internal Video SPM module Dependencies helper for SwiftUI
     static let preview = VideoConfig(
         videoListAssets: VideoListAssets(
-            noResultVideoImage: MEGAAssetsPreviewImageProvider.image(named: "noResultsVideo")!
+            noResultVideoImage: MEGAAssetsPreviewImageProvider.image(named: "noResultsVideo")!,
+            checkmarkImage: MEGAAssetsPreviewImageProvider.image(named: "turquoise_checkmark")!,
+            chipDownArrowImage: MEGAAssetsPreviewImageProvider.image(named: "filterChipDownArrow")!
         ),
         rowAssets: RowAssets(
             favoriteImage: MEGAAssetsPreviewImageProvider.image(named: "favouriteThumbnail")!,
@@ -47,7 +49,16 @@ extension VideoConfig {
             emptyFavoriteThumbnaillImageForegroundColor: TokenColors.Icon.secondary.swiftUI,
             videoThumbnailImageViewPlaceholderBackgroundColor: Color.black,
             videoThumbnailDurationTextBackgroundColor: Color.black.opacity(0.2),
-            disabledColor: TokenColors.Text.disabled.swiftUI
+            disabledColor: TokenColors.Text.disabled.swiftUI,
+            checkmarkColor: TokenColors.Support.success.swiftUI,
+            bottomSheetBackgroundColor: TokenColors.Background.surface1.swiftUI, 
+            bottomSheetHeaderBackgroundColor: TokenColors.Background.surface1.swiftUI,
+            bottomSheetCellSelectedBackgroundColor: TokenColors.Background.surface1.swiftUI,
+            videoFilterChipActiveForegroundColor: TokenColors.Text.inverseAccent.swiftUI,
+            videoFilterChipInactiveForegroundColor: TokenColors.Text.primary.swiftUI,
+            videoFilterChipActiveBackgroundColor: TokenColors.Button.primary.swiftUI,
+            videoFilterChipInactiveBackgroundColor: TokenColors.Background.surface2.swiftUI
+            
         ),
         toolbarAssets: ToolbarAssets(
             offlineImage: MEGAAssetsPreviewImageProvider.image(named: "offline")!,

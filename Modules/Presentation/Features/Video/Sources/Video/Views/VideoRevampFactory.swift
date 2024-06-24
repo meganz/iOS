@@ -36,6 +36,7 @@ public final class VideoRevampSyncModel: ObservableObject {
 public class VideoRevampFactory {
     public static func makeTabContainerView(
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
         videoSelection: VideoSelection,
@@ -47,6 +48,7 @@ public class VideoRevampFactory {
     ) -> UIViewController {
         let videoListViewModel = VideoListViewModel(
             fileSearchUseCase: fileSearchUseCase,
+            photoLibraryUseCase: photoLibraryUseCase,
             thumbnailUseCase: thumbnailUseCase,
             syncModel: syncModel,
             selection: videoSelection

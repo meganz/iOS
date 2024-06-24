@@ -1,6 +1,8 @@
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct VideoListView: View {
@@ -21,8 +23,11 @@ struct VideoListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            chipsView()
+                .frame(maxHeight: 60, alignment: .top)
             if viewModel.videos.isEmpty {
                 videoEmptyView()
+                    .frame(maxHeight: .infinity, alignment: .center)
             } else if viewModel.videos.isNotEmpty {
                 listView()
             } else {
@@ -35,6 +40,53 @@ struct VideoListView: View {
         }
         .task {
             await viewModel.listenSearchTextChange()
+        }
+        .task {
+            await viewModel.listenNodesUpdate()
+        }
+        .sheet(isPresented: $viewModel.isSheetPresented) {
+            bottomView()
+                .onDisappear {
+                    guard let newlySelectedChip = viewModel.newlySelectedChip else {
+                        return
+                    }
+                    viewModel.didFinishSelectFilterOption(newlySelectedChip)
+                }
+        }
+    }
+    
+    @ViewBuilder
+    private func bottomView() -> some View {
+        if #available(iOS 16.4, *) {
+            iOS16SupportBottomSheetView()
+                .presentationCornerRadius(16)
+        } else if #available(iOS 16, *) {
+            iOS16SupportBottomSheetView()
+        } else {
+            bottomSheetView()
+        }
+    }
+    
+    @available(iOS 16.0, *)
+    private func iOS16SupportBottomSheetView() -> some View {
+        bottomSheetView()
+            .presentationDetents([ .height(presentationDetentsHeight) ])
+            .presentationDragIndicator(.visible)
+    }
+    
+    @ViewBuilder
+    private func bottomSheetView() -> some View {
+        if let newlySelectedChip = viewModel.newlySelectedChip {
+            SingleSelectionBottomSheetView(
+                videoConfig: videoConfig,
+                title: viewModel.actionSheetTitle,
+                options: viewModel.filterOptions,
+                selectedOption: newlySelectedChip.type == .location
+                ? $viewModel.selectedLocationFilterOption
+                : $viewModel.selectedDurationFilterOption
+            )
+        } else {
+            EmptyView()
         }
     }
     
@@ -60,12 +112,53 @@ struct VideoListView: View {
             viewModel.onViewDissapeared()
         }
     }
+    
+    private func chipsView() -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(viewModel.chips, id: \.title) { item in
+                    PillView(viewModel: PillViewModel(
+                        title: item.title,
+                        icon: .trailing(Image(uiImage: videoConfig.videoListAssets.chipDownArrowImage.withRenderingMode(.alwaysTemplate))),
+                        foreground: item.isActive ? videoConfig.colorAssets.videoFilterChipActiveForegroundColor : videoConfig.colorAssets.videoFilterChipInactiveForegroundColor,
+                        background: item.isActive ? videoConfig.colorAssets.videoFilterChipActiveBackgroundColor : videoConfig.colorAssets.videoFilterChipInactiveBackgroundColor
+                    ))
+                    .onTapGesture {
+                        viewModel.newlySelectedChip = item
+                        viewModel.isSheetPresented = true
+                    }
+                }
+            }
+            .padding([.leading, .trailing], 6)
+            .padding([.top, .bottom], 12)
+        }
+    }
+    
+    private var presentationDetentsHeight: CGFloat {
+        let estimatedHeaderHeight: () -> CGFloat = {
+            let titleHeight: CGFloat = UIFont.preferredFont(forTextStyle: .body).lineHeight
+            return titleHeight + 40
+        }
+        
+        let estimatedContentHeight: () -> CGFloat = {
+            let cellHeight: CGFloat = 50
+            let itemCount = if viewModel.newlySelectedChip?.type == .location {
+                LocationChipFilterOptionType.allCases.count
+            } else {
+                DurationChipFilterOptionType.allCases.count
+            }
+            let contentHeight = cellHeight * CGFloat(itemCount)
+            return contentHeight + 100
+        }
+        return estimatedHeaderHeight() + estimatedContentHeight()
+    }
 }
 
 #Preview {
     VideoListView(
         viewModel: VideoListViewModel(
             fileSearchUseCase: Preview_FilesSearchUseCase(),
+            photoLibraryUseCase: Preview_PhotoLibraryUseCase(),
             thumbnailUseCase: Preview_ThumbnailUseCase(),
             syncModel: VideoRevampSyncModel(),
             selection: VideoSelection()

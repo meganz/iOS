@@ -103,6 +103,7 @@ final class VideoCellViewModelTests: XCTestCase {
         
         let videoListViewModel = VideoListViewModel(
             fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success([nodeEntity])),
+            photoLibraryUseCase: MockPhotoLibraryUseCase(),
             thumbnailUseCase: thumbnailUseCase,
             syncModel: VideoRevampSyncModel(),
             selection: VideoSelection()
