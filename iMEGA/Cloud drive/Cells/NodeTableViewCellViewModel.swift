@@ -27,7 +27,6 @@ import MEGASwift
         
         self.nodes = nodes
         self.hasThumbnail = [
-            [.flavorCloudDrive].contains(flavour),
             nodes.count == 1,
             nodes.first?.hasThumbnail ?? false
         ].allSatisfy { $0 }
