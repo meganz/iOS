@@ -74,37 +74,6 @@ final class FilesSearchRepositoryTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func testSearch_onSuccess_shouldCallWithCorrectQueryParameters() async throws {
-        let parent = MockNode(handle: 1)
-        let nodes = [parent,
-                     MockNode(handle: 34),
-                     MockNode(handle: 65)]
-        let mockSdk = MockSdk(nodes: nodes)
-        let repo = FilesSearchRepository(sdk: mockSdk)
-        let searchString = "*"
-        let recursive = false
-        let sortOrderType = SortOrderEntity.defaultAsc
-        let formatType = NodeFormatEntity.photo
-        
-        let expectedSearchQuery = MockSdk.SearchQueryParameters(node: parent,
-                                                                searchString: searchString,
-                                                                recursive: recursive,
-                                                                sortOrderType: sortOrderType.toMEGASortOrderType(),
-                                                                formatType: formatType.toMEGANodeFormatType(), 
-                                                                sensitiveFilter: .disabled,
-                                                                favouriteFilter: .disabled)
-        
-        let result = try await repo.search(string: searchString,
-                                           parent: parent.toNodeEntity(),
-                                           recursive: recursive,
-                                           supportCancel: false,
-                                           sortOrderType: sortOrderType,
-                                           formatType: formatType)
-        
-        XCTAssertEqual(result, nodes.toNodeEntities())
-        XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
-    }
-    
     func testSearch_onSuccessAndExcludeSensitveEqualTrue_shouldCallWithCorrectQueryParameters() async throws {
         let parent = MockNode(handle: 1)
         let nodes = [parent,

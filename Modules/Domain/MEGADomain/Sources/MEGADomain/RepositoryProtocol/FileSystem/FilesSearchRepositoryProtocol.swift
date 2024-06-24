@@ -27,23 +27,4 @@ public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
     
     /// Cancel last search that had set `supportCancel` to true.
     func cancelSearch()
-   
-    /// This function is deprecated and we should begin to use:
-    /// -  `func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void)`
-    func search(string: String?,
-                parent node: NodeEntity?,
-                recursive: Bool,
-                supportCancel: Bool,
-                sortOrderType: SortOrderEntity,
-                formatType: NodeFormatEntity,
-                completion: @escaping ([NodeEntity]?, Bool) -> Void)
-    
-    /// This function is deprecated and we should begin to use:
-    /// -  `func search(filter: SearchFilterEntity) async throws -> [NodeEntity]`
-    func search(string: String?,
-                parent node: NodeEntity?,
-                recursive: Bool,
-                supportCancel: Bool,
-                sortOrderType: SortOrderEntity,
-                formatType: NodeFormatEntity) async throws -> [NodeEntity]
 }

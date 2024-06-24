@@ -5,32 +5,6 @@ import XCTest
 
 final class FilesSearchUseCaseTests: XCTestCase {
     
-    func testSearchAllPhotos_shouldReturnAllPhotosNodes() {
-        let nodes = [
-            NodeEntity(name: "sample1.raw", handle: 1, hasThumbnail: true),
-            NodeEntity(name: "sample2.raw", handle: 6, hasThumbnail: false),
-            NodeEntity(name: "test2.jpg", handle: 3, hasThumbnail: true),
-            NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true),
-            NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true),
-            NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true),
-            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true)
-        ]
-        
-        let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(photoNodes: nodes),
-            nodeFormat: NodeFormatEntity.photo,
-            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
-        )
-        let expectation = expectation(description: "search triggers completion block")
-        sut.search(string: "", parent: nil, recursive: true, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: false) { results, _ in
-            guard let results else { XCTFail("Search results shouldn't be nil"); return }
-            
-            XCTAssertEqual(results, nodes)
-            expectation.fulfill()
-        }
-        wait(for: [expectation], timeout: 1)
-    }
-    
     func testSearchWithFilter_shouldReturnAllPhotosNodes() {
         let expectedNodes = [
             NodeEntity(name: "sample1.raw", handle: 1, isFile: true, hasThumbnail: true),
@@ -115,19 +89,6 @@ final class FilesSearchUseCaseTests: XCTestCase {
         
         mockNodeUpdateListenerRepo.onNodesUpdateHandler?(nodesUpdated)
         wait(for: [expectation], timeout: 1)
-    }
-    
-    func testSearchPhotosCancelled_CancelSearchShouldReturnTrue() {
-        let repo = MockFilesSearchRepository.newRepo
-        let sut = makeSUT(
-            filesSearchRepository: repo,
-            nodeFormat: NodeFormatEntity.photo,
-            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
-        )
-        
-        sut.search(string: "", parent: nil, recursive: true, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: true) { _, _ in
-            XCTAssertTrue(repo.hasCancelSearchCalled)
-        }
     }
     
     // MARK: - nodeUpdates
