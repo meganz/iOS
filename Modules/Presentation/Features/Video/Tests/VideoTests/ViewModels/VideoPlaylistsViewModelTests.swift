@@ -284,6 +284,15 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowRenamePlaylistAlert)
     }
     
+    func testDidSelectActionSheetMenuAction_deletePlaylistContextAction_showsRenameAlert() {
+        let deletePlaylistPlaylistContextAction = ContextAction(type: .deletePlaylist, icon: "any", title: "any")
+        let (sut, _, _, _) = makeSUT()
+        
+        sut.didSelectActionSheetMenuAction(deletePlaylistPlaylistContextAction)
+        
+        XCTAssertTrue(sut.shouldShowDeletePlaylistAlert)
+    }
+    
     // MARK: - renameVideoPlaylist
     
     func testRenameVideoPlaylist_emptyOrNil_doesNotRenameVideoPlaylist() async {
@@ -372,9 +381,54 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         await sut.renameVideoPlaylistTask?.value
         
         XCTAssertTrue(sut.videoPlaylists.notContains(updatedVideoPlaylist))
-        XCTAssertEqual(syncModel.snackBarErrorMessage, Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed)
+        XCTAssertEqual(syncModel.snackBarMessage, Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed)
         XCTAssertTrue(syncModel.shouldShowSnackBar)
         assertThatCleanUpTemporaryVariablesAfterRenaming(on: sut)
+    }
+    
+    // MARK: - deleteVideoPlaylist
+    
+    func testDeleteVideoPlaylist_whenCalled_deletesVideoPlaylist() async {
+        let videoPlaylists =  [
+            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
+            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        ]
+        let videoPlaylistToDelete = videoPlaylists[0]
+        let (sut, _, _, videoPlaylistModificationUseCase) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(
+                userVideoPlaylistsResult: videoPlaylists
+            ),
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(
+                deleteVideoPlaylistResult: videoPlaylists.filter { $0.id != videoPlaylistToDelete.id }
+            )
+        )
+        
+        await sut.deleteVideoPlaylist(videoPlaylistToDelete)
+        
+        XCTAssertEqual(videoPlaylistModificationUseCase.messages, [ .deleteVideoPlaylist ])
+    }
+    
+    func testDeleteVideoPlaylist_whenSuccessfullyDelete_showsMessage() async {
+        let videoPlaylists =  [
+            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
+            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        ]
+        let videoPlaylistToDelete = videoPlaylists[0]
+        let (sut, _, syncModel, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(
+                userVideoPlaylistsResult: videoPlaylists
+            ),
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(
+                deleteVideoPlaylistResult: videoPlaylists.filter { $0.id != videoPlaylistToDelete.id }
+            )
+        )
+        
+        await sut.deleteVideoPlaylist(videoPlaylistToDelete)
+        
+        let message = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.playlistNameDeleted
+        let snackBarMessage = message.replacingOccurrences(of: "[A]", with: videoPlaylistToDelete.name)
+        XCTAssertEqual(syncModel.snackBarMessage, snackBarMessage)
+        XCTAssertEqual(syncModel.shouldShowSnackBar, true)
     }
     
     // MARK: - onViewDissapear

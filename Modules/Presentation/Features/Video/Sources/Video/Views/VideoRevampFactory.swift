@@ -20,7 +20,7 @@ public final class VideoRevampSyncModel: ObservableObject {
     @Published public var isSearchActive = false
     
     @Published public var shouldShowSnackBar = false
-    public var snackBarErrorMessage = ""
+    public var snackBarMessage = ""
     
     private var subscriptions = Set<AnyCancellable>()
     

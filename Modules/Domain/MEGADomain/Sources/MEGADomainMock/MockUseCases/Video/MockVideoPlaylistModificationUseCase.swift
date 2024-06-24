@@ -4,17 +4,21 @@ import MEGASwift
 public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificationUseCaseProtocol {
     
     private let addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error>
+    private let deleteVideoPlaylistResult: [VideoPlaylistEntity]
     
     public enum Message: Equatable {
         case addVideoToPlaylist
+        case deleteVideoPlaylist
     }
     
     public private(set) var messages = [Message]()
     
     public init(
-        addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error>
+        addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
+        deleteVideoPlaylistResult: [VideoPlaylistEntity] = []
     ) {
         self.addToVideoPlaylistResult = addToVideoPlaylistResult
+        self.deleteVideoPlaylistResult = deleteVideoPlaylistResult
     }
     
     public func addVideoToPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity {
@@ -27,6 +31,7 @@ public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificati
     }
     
     public func delete(videoPlaylists: [VideoPlaylistEntity]) async -> [VideoPlaylistEntity] {
-        []
+        messages.append(.deleteVideoPlaylist)
+        return deleteVideoPlaylistResult
     }
 }
