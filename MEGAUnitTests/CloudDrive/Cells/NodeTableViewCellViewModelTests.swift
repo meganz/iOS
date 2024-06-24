@@ -8,36 +8,26 @@ import XCTest
 
 final class NodeTableViewCellViewModelTests: XCTestCase {
     
-    func testHasThumbnail_whenNodeCountIsOneAndFlavourIsCD_shouldReturnNodeHasThumbnailValue() {
-        let nodes = [
-            NodeEntity(handle: 1, hasThumbnail: true)
-        ]
-        let viewModel = sut(nodes: nodes, flavour: .flavorCloudDrive)
-        
-        XCTAssertTrue(viewModel.hasThumbnail)
+    func testHasThumbnail_whenNodeCountIsOne_shouldReturnNodeHasThumbnailValue() {
+        for hasThumbnail in [true, false] {
+            let nodes = [
+                NodeEntity(handle: 1, hasThumbnail: hasThumbnail)
+            ]
+            
+            let viewModel = sut(nodes: nodes)
+            
+            XCTAssertEqual(viewModel.hasThumbnail, hasThumbnail)
+        }
     }
     
-    func testHasThumbnail_whenNodeCountIsGreaterThanOneAndFlavourIsCD_shouldReturnFalse() {
+    func testHasThumbnail_whenNodeCountIsGreaterThanOne_shouldReturnFalse() {
         let nodes = [
             NodeEntity(handle: 1, hasThumbnail: true),
             NodeEntity(handle: 2, hasThumbnail: true)
         ]
-        let viewModel = sut(nodes: nodes, flavour: .flavorCloudDrive)
+        let viewModel = sut(nodes: nodes)
         
         XCTAssertFalse(viewModel.hasThumbnail)
-    }
-    
-    func testHasThumbnail_whenFlavourIsNotSupported_shouldReturnFalse() {
-        
-        [NodeTableViewCellFlavor.explorerView, .flavorRecentAction, .flavorSharedLink, .flavorVersions]
-            .forEach { flavour in
-                let nodes = [
-                    NodeEntity(handle: 1, hasThumbnail: true)
-                ]
-                let viewModel = sut(nodes: nodes, flavour: flavour)
-                
-                XCTAssertFalse(viewModel.hasThumbnail)
-            }
     }
     
     func testConfigureCell_whenFeatureFlagOnAndNodeIsSensitive_shouldSetIsSensitiveTrue() async {
