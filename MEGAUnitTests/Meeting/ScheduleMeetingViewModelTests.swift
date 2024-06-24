@@ -831,7 +831,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testUpgradeAccount_ButtonTapped_IsTracked() {
         let harness = Harness(accountUseCase: .free)
         harness.sut.upgradePlansViewTapped()
-        XTAssertTrackedAnalyticsEventsEqual(harness.tracker.trackedEventIdentifiers, [MockScheduleMeetingViewConfiguration.Event()])
+        XCTAssertTrackedAnalyticsEventsEqual(harness.tracker.trackedEventIdentifiers, [MockScheduleMeetingViewConfiguration.Event()])
     }
     
     // MARK: - Private methods.

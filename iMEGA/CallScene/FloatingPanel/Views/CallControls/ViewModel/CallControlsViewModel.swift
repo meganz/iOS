@@ -1,5 +1,6 @@
 import Combine
 import CombineSchedulers
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -26,7 +27,8 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
     private let cameraSwitcher: any CameraSwitching
     private let raiseHandBadgeStoring: any RaiseHandBadgeStoring
-    
+    private let tracker: any AnalyticsTracking
+
     private var subscriptions = Set<AnyCancellable>()
 
     @Published var micEnabled: Bool = false
@@ -53,7 +55,8 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         accountUseCase: some AccountUseCaseProtocol,
         layoutUpdateChannel: ParticipantLayoutUpdateChannel,
         cameraSwitcher: some CameraSwitching,
-        raiseHandBadgeStoring: some RaiseHandBadgeStoring
+        raiseHandBadgeStoring: some RaiseHandBadgeStoring,
+        tracker: some AnalyticsTracking
     ) {
         self.router = router
         self.scheduler = scheduler
@@ -72,6 +75,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.layoutUpdateChannel = layoutUpdateChannel
         self.cameraSwitcher = cameraSwitcher
         self.raiseHandBadgeStoring = raiseHandBadgeStoring
+        self.tracker = tracker
         
         guard let call = callUseCase.call(for: chatRoom.chatId) else {
             MEGALogError("Error initialising call actions, call does not exists")
@@ -207,8 +211,10 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             do {
                 if raise {
                     try await self.callUseCase.raiseHand(forCall: call)
+                    tracker.trackAnalyticsEvent(with: CallRaiseHandEvent())
                 } else {
                     try await self.callUseCase.lowerHand(forCall: call)
+                    tracker.trackAnalyticsEvent(with: CallLowerHandEvent())
                 }
                 if showRaiseHandBadge {
                     await raiseHandBadgeStoring.saveRaiseHandBadgeAsPresented()
