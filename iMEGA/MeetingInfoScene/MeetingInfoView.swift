@@ -88,6 +88,7 @@ struct MeetingInfoView: View {
                     
                     if case let description = viewModel.scheduledMeeting.description, !description.isEmpty {
                         MeetingDescriptionView(description: description)
+                            .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
                     }
                     
                     if viewModel.isUserInChat {

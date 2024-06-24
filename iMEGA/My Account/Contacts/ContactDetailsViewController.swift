@@ -3,6 +3,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAUI
 
 extension ContactDetailsViewController {
     
@@ -94,10 +95,13 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
         if UIColor.isDesignTokenEnabled() {
             let message = MEGAAssetsPreviewImageProvider.image(named: "sendMessageRound_token")
             messageButton.setImage(message, for: .normal)
+            messageButton.setImage(message?.applying(alpha: 0.5), for: .disabled)
             let call = MEGAAssetsPreviewImageProvider.image(named: "makeCallRound_token")
             callButton.setImage(call, for: .normal)
+            callButton.setImage(message?.applying(alpha: 0.5), for: .disabled)
             let videoCall = MEGAAssetsPreviewImageProvider.image(named: "callVideoRound_token")
             videoCallButton.setImage(videoCall, for: .normal)
+            videoCallButton.setImage(videoCall?.applying(alpha: 0.5), for: .disabled)
         }
     }
     

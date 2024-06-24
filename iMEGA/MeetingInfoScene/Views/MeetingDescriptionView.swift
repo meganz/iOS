@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -14,10 +15,21 @@ struct MeetingDescriptionView: View {
                 .padding(.horizontal)
             Text(description)
                 .font(.body)
-                .foregroundColor(Color(colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.uiColor : MEGAAppColor.Gray._3C3C43.uiColor).opacity(0.6))
+                .foregroundColor(foregroundColor)
                 .padding(.horizontal)
             Divider()
         }
-        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+    }
+    
+    private var foregroundColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.secondary.swiftUI
+        } else {
+            Color(
+                colorScheme == .dark ? 
+                UIColor.grayEBEBF5 :
+                UIColor.gray3C3C43).opacity(0.6
+            )
+        }
     }
 }
