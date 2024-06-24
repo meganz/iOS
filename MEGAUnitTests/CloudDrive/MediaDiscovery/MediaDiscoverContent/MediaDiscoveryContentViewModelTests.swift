@@ -53,7 +53,8 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
             await sut.loadPhotos()
             
             // Assert
-            XCTAssertEqual(mediaDiscoveryUseCase.discoverWithExcludeSensitive, !showHiddenNodes)
+            let discoverWithExcludeSensitive = await mediaDiscoveryUseCase.state.discoverWithExcludeSensitive
+            XCTAssertEqual(discoverWithExcludeSensitive, !showHiddenNodes)
         }
     }
     
@@ -349,7 +350,8 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         
         await sut.loadPhotos()
         
-        XCTAssertTrue(mediaDiscoveryUseCase.discoverRecursively ?? false)
+        let discoverRecursively = await mediaDiscoveryUseCase.state.discoverRecursively
+        XCTAssertTrue(discoverRecursively ?? false)
     }
     
     func testLoadPhotos_mediaDiscoveryShouldIncludeSubfolderMediaOff_shouldNotSearchMediaRecuirsively() async {
@@ -365,7 +367,8 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         
         await sut.loadPhotos()
         
-        XCTAssertFalse(mediaDiscoveryUseCase.discoverRecursively ?? true)
+        let discoverRecursively = await mediaDiscoveryUseCase.state.discoverRecursively
+        XCTAssertFalse(discoverRecursively ?? true)
     }
     
     func testUpdateSortOrder_existingOrderEqualsNewestAndUpdatesToOldest_shouldReturnNodesinOrderOfOldest() async {

@@ -1,13 +1,22 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 
 public final class MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
     public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
+    public let state = State()
+
     private let nodes: [NodeEntity]
     private let shouldReload: Bool
     
-    public var discoverRecursively: Bool?
-    public var discoverWithExcludeSensitive: Bool?
+    public actor State {
+        public var discoverRecursively: Bool?
+        public var discoverWithExcludeSensitive: Bool?
+        
+        func update(discoverRecursively: Bool, discoverWithExcludeSensitive: Bool) {
+            self.discoverRecursively = discoverRecursively
+            self.discoverWithExcludeSensitive = discoverWithExcludeSensitive
+        }
+    }
     
     public init(
         nodeUpdates: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher(),
@@ -20,8 +29,8 @@ public final class MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
     }
     
     public func nodes(forParent parent: NodeEntity, recursive: Bool, excludeSensitive: Bool) async throws -> [NodeEntity] {
-        discoverRecursively = recursive
-        discoverWithExcludeSensitive = excludeSensitive
+        await state.update(discoverRecursively: recursive,
+                     discoverWithExcludeSensitive: excludeSensitive)
         return nodes
     }
     

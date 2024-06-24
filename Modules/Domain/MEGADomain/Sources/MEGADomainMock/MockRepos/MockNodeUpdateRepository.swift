@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockNodeUpdateRepository: NodeUpdateRepositoryProtocol {
+public final class MockNodeUpdateRepository: NodeUpdateRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: MockNodeUpdateRepository { MockNodeUpdateRepository() }
     
     public var shouldProcessOnNodesUpdateCalled = false
