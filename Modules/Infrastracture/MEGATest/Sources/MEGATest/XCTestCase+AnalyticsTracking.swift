@@ -24,7 +24,7 @@ public extension XCTestCase {
         }
     }
     
-    func XTAssertTrackedAnalyticsEventsEqual(
+    func XCTAssertTrackedAnalyticsEventsEqual(
         _ events: [EventIdentifier],
         _ expected: [EventIdentifier],
         message: String = "",

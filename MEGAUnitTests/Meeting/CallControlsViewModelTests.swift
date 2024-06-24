@@ -1,6 +1,7 @@
 import CombineSchedulers
 import ConcurrencyExtras
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -218,6 +219,32 @@ final class CallControlsViewModelTests: XCTestCase {
         }
     }
     
+    func testRaiseHandAction_TriggersRaiseHandEvent() async throws {
+        await withMainSerialExecutor {
+            let harness = Harness.withMoreButtonEnabled().raisedHand(false)
+            let raiseHandAction = await harness.moreAction(button: .raiseHand)
+            raiseHandAction.actionHandler()
+            await Task.yield()
+            XCTAssertTrackedAnalyticsEventsEqual(
+                harness.mockTracker.trackedEventIdentifiers,
+                [CallRaiseHandEvent()]
+            )
+        }
+    }
+    
+    func testLowerHandAction_TriggersLowerHandEvent() async throws {
+        await withMainSerialExecutor {
+            let harness = Harness.withMoreButtonEnabled().raisedHand(true)
+            let raiseHandAction = await harness.moreAction(button: .raiseHand)
+            raiseHandAction.actionHandler()
+            await Task.yield()
+            XCTAssertTrackedAnalyticsEventsEqual(
+                harness.mockTracker.trackedEventIdentifiers,
+                [CallLowerHandEvent()]
+            )
+        }
+    }
+    
     func testLocalAudioFlagUpdatedToMuted_shouldShowDisabledMicUI() {
         let harness = Harness()
         harness.localAudioFlagUpdated(enabled: false)
@@ -289,7 +316,8 @@ final class CallControlsViewModelTests: XCTestCase {
         var layoutUpdates: [ParticipantsLayoutMode] = []
         let cameraSwitcher = MockCameraSwitcher()
         let raiseHandBadgeStore = MockRaiseHandBadgeStore()
-
+        let mockTracker = MockTracker()
+        
         init(
             chatType: ChatRoomEntity.ChatType = .meeting,
             isModerator: Bool = true,
@@ -334,7 +362,8 @@ final class CallControlsViewModelTests: XCTestCase {
                 accountUseCase: MockAccountUseCase(currentUser: .testUser),
                 layoutUpdateChannel: layoutUpdateChannel,
                 cameraSwitcher: cameraSwitcher,
-                raiseHandBadgeStoring: raiseHandBadgeStore
+                raiseHandBadgeStoring: raiseHandBadgeStore,
+                tracker: mockTracker
             )
             
             menuPresenter = { [weak self] in
