@@ -1,7 +1,7 @@
-import Combine
+@preconcurrency import Combine
 import Foundation
 
-public protocol MediaDiscoveryUseCaseProtocol {
+public protocol MediaDiscoveryUseCaseProtocol: Sendable {
     var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> { get }
     /// Fetch all nodes directly under the given parent node
     /// - Parameters:
@@ -13,28 +13,26 @@ public protocol MediaDiscoveryUseCaseProtocol {
     func shouldReload(parentNode: NodeEntity, loadedNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool
 }
 
-public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
+public final class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
                                    U: NodeUpdateRepositoryProtocol>: MediaDiscoveryUseCaseProtocol {
     private let filesSearchRepository: T
     private let nodeUpdateRepository: U
     
     private let searchAllPhotosString = "*"
     
-    public lazy var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> = {
-        filesSearchRepository.nodeUpdatesPublisher.handleEvents(receiveSubscription: { [weak self] _ in
-            self?.filesSearchRepository.startMonitoringNodesUpdate(callback: nil)
-        }, receiveCompletion: { [weak self] _ in
-            self?.filesSearchRepository.stopMonitoringNodesUpdate()
-        }, receiveCancel: { [weak self] in
-            self?.filesSearchRepository.stopMonitoringNodesUpdate()
-        })
-        .share()
-        .eraseToAnyPublisher()
-    }()
-
+    public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
+    
     public init(filesSearchRepository: T, nodeUpdateRepository: U) {
         self.filesSearchRepository = filesSearchRepository
         self.nodeUpdateRepository = nodeUpdateRepository
+        
+        nodeUpdatesPublisher = filesSearchRepository
+            .nodeUpdatesPublisher
+            .handleEvents(receiveSubscription: { _ in filesSearchRepository.startMonitoringNodesUpdate(callback: nil) },
+                          receiveCompletion: { _ in filesSearchRepository.stopMonitoringNodesUpdate() },
+                          receiveCancel: { filesSearchRepository.stopMonitoringNodesUpdate() })
+            .share()
+            .eraseToAnyPublisher()
     }
 
     public func nodes(forParent parent: NodeEntity, recursive: Bool, excludeSensitive: Bool) async throws -> [NodeEntity] {
