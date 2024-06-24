@@ -20,6 +20,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     var newlyAddedVideosToPlaylistSnackBarMessage = ""
     
     @Published var shouldShowRenamePlaylistAlert = false
+    @Published var shouldShowDeletePlaylistAlert = false
     
     var selectedVideoPlaylistEntity: VideoPlaylistEntity?
     @Published var isSheetPresented = false
@@ -235,7 +236,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         case .rename:
             shouldShowRenamePlaylistAlert = true
         case .deletePlaylist:
-            break // CC-7278
+            shouldShowDeletePlaylistAlert = true
         }
     }
     
@@ -259,7 +260,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
                 videoPlaylists[foundIndex] = newlyRenamedVideoPlaylist(newName: mappedName, oldVideoPlaylist: selectedVideoPlaylistEntity)
             } catch {
                 // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
-                syncModel.snackBarErrorMessage = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed
+                syncModel.snackBarMessage = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed
                 syncModel.shouldShowSnackBar = true
             }
             
@@ -278,5 +279,15 @@ final class VideoPlaylistsViewModel: ObservableObject {
             modificationTime: oldVideoPlaylist.modificationTime,
             sharedLinkStatus: oldVideoPlaylist.sharedLinkStatus
         )
+    }
+    
+    func deleteVideoPlaylist(_ videoPlaylist: VideoPlaylistEntity) async {
+        let deletedVideoPlaylists = await videoPlaylistModificationUseCase.delete(videoPlaylists: [ videoPlaylist ])
+        guard deletedVideoPlaylists.isNotEmpty else {
+            return
+        }
+        let message = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.playlistNameDeleted
+        syncModel.snackBarMessage = message.replacingOccurrences(of: "[A]", with: videoPlaylist.name)
+        syncModel.shouldShowSnackBar = true
     }
 }

@@ -28,6 +28,14 @@ struct PlaylistView: View {
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .alert(isPresented: $viewModel.shouldShowAddNewPlaylistAlert, viewModel.alertViewModel)
         .alert(isPresented: $viewModel.shouldShowRenamePlaylistAlert, viewModel.renameVideoPlaylistAlertViewModel)
+        .alert(
+            Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Title.deletePlaylist,
+            isPresented: $viewModel.shouldShowDeletePlaylistAlert
+        ) {
+            deleteVideoPlaylistAlertView
+        } message: {
+            Text(Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline)
+        }
         .task {
             await viewModel.onViewAppeared()
         }
@@ -57,6 +65,20 @@ struct PlaylistView: View {
         }
         .sheet(isPresented: $viewModel.isSheetPresented) {
             bottomView()
+        }
+    }
+    
+    private var deleteVideoPlaylistAlertView: some View {
+        HStack {
+            Button(Strings.Localizable.cancel) { }
+            Button(Strings.Localizable.delete) {
+                if let selectedVideoPlaylist = viewModel.selectedVideoPlaylistEntity {
+                    Task {
+                        await viewModel.deleteVideoPlaylist(selectedVideoPlaylist)
+                    }
+                }
+            }
+            .keyboardShortcut(.defaultAction)
         }
     }
     

@@ -471,8 +471,8 @@ extension VideoRevampTabContainerViewController: SnackBarPresenting {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
-                snackBarViewModel = makeSnackBarViewModel(message: viewModel.syncModel.snackBarErrorMessage)
-                self.snackBarViewModel?.update(snackBar: SnackBar(message: viewModel.syncModel.snackBarErrorMessage))
+                snackBarViewModel = makeSnackBarViewModel(message: viewModel.syncModel.snackBarMessage)
+                self.snackBarViewModel?.update(snackBar: SnackBar(message: viewModel.syncModel.snackBarMessage))
                 guard let snackBar = self.snackBarViewModel?.snackBar else { return }
                 SnackBarRouter.shared.present(snackBar: snackBar)
             }
