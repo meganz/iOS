@@ -27,26 +27,6 @@ public protocol FilesSearchUseCaseProtocol {
     /// - Returns: NodeListEntity that matches the criteria provided.
     func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> NodeListEntity
     
-    /// This function is deprecated and we should begin to use:
-    /// -  `func search(string: String?, parent node: NodeEntity?, recursive: Bool, sensitiveIncluded: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void)`
-    func search(string: String?,
-                parent node: NodeEntity?,
-                recursive: Bool,
-                supportCancel: Bool,
-                sortOrderType: SortOrderEntity,
-                cancelPreviousSearchIfNeeded: Bool,
-                completion: @escaping ([NodeEntity]?, Bool) -> Void)
-    
-    /// This function is deprecated and we should begin to use:
-    /// -  `func search(string: String?, parent node: NodeEntity?, recursive: Bool, sensitiveIncluded: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity]`
-    func search(string: String?,
-                parent node: NodeEntity?,
-                recursive: Bool,
-                supportCancel: Bool,
-                sortOrderType: SortOrderEntity,
-                formatType: NodeFormatEntity,
-                cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity]
-    
     func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void)
     func stopNodesUpdateListener()
     func startNodesUpdateListener()
@@ -123,54 +103,5 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
             guard let self else { return }
             self.nodesUpdateHandler?(nodes)
         }
-    }
-}
-
-// MARK: - Deprecated searchApi usage
-extension FilesSearchUseCase {
-    public func search(
-        string: String?,
-        parent node: NodeEntity?,
-        recursive: Bool,
-        supportCancel: Bool,
-        sortOrderType: SortOrderEntity,
-        cancelPreviousSearchIfNeeded: Bool,
-        completion: @escaping ([NodeEntity]?, Bool) -> Void
-    ) {
-        if cancelPreviousSearchIfNeeded {
-            repo.cancelSearch()
-        }
-        
-        repo.search(string: string,
-                    parent: node,
-                    recursive: recursive,
-                    supportCancel: supportCancel,
-                    sortOrderType: sortOrderType,
-                    formatType: nodeFormat,
-                    completion: completion)
-    }
-    
-    public func search(
-        string: String?,
-        parent node: NodeEntity?,
-        recursive: Bool,
-        supportCancel: Bool,
-        sortOrderType: SortOrderEntity,
-        formatType: NodeFormatEntity,
-        cancelPreviousSearchIfNeeded: Bool
-    ) async throws -> [NodeEntity] {
-        
-        if cancelPreviousSearchIfNeeded {
-            repo.cancelSearch()
-        }
-        
-        return try await repo.search(
-            string: string,
-            parent: node,
-            recursive: recursive,
-            supportCancel: supportCancel,
-            sortOrderType: sortOrderType,
-            formatType: formatType
-        )
     }
 }
