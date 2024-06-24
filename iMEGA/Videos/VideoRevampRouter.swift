@@ -54,6 +54,7 @@ struct VideoRevampRouter: VideoRevampRouting {
         let viewController = VideoRevampTabContainerViewController(
             viewModel: viewModel,
             fileSearchUseCase: fileSearchUseCase,
+            photoLibraryUseCase: photoLibraryUseCase,
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistContentUseCase: videoPlaylistContentsUseCase,

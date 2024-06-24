@@ -1,5 +1,4 @@
 import Foundation
-import MEGAL10n
 import UIKit
 
 public extension UIAlertController {
