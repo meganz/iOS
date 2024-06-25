@@ -22,12 +22,11 @@ extension MyAccountHallViewController: UITableViewDelegate {
         
         switch indexPath.row {
         case MyAccountMegaSection.storage.rawValue:
-            if MEGASdk.shared.mnz_accountDetails != nil {
-                let usageVC = UIStoryboard(name: "Usage", bundle: nil).instantiateViewController(withIdentifier: "UsageViewControllerID")
-                navigationController?.pushViewController(usageVC, animated: true)
-            } else {
-                MEGALogError("Account details unavailable")
+            guard viewModel.accountDetails != nil else {
+                MEGALogError("[Account Hall] Account details unavailable")
+                return
             }
+            showUsageView()
             
         case MyAccountMegaSection.myAccount.rawValue:
             viewModel.dispatch(.didTapMyAccountButton)
