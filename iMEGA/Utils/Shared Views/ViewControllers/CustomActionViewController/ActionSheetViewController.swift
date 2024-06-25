@@ -60,6 +60,24 @@ class ActionSheetViewController: UIViewController {
         configurePresentationStyle(from: sender as Any)
     }
     
+    convenience init(
+        actions: [BaseAction],
+        forceDarkMode: Bool = false,
+        headerTitle: String?,
+        dismissCompletion: (() -> Void)?,
+        sender: Any?
+    ) {
+        self.init(nibName: nil, bundle: nil)
+        
+        self.actions = actions
+        self.headerTitle = headerTitle
+        self.dismissCompletion = dismissCompletion
+        if forceDarkMode {
+            self.overrideUserInterfaceStyle = .dark
+        }
+        configurePresentationStyle(from: sender as Any)
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }

@@ -471,7 +471,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         
         if viewModel.cameraAndShareButtonsInNavBar {
-            return [switchCameraModeBarButton(enabled: viewModel.cameraEnabled), shareLinkButton]
+            return [shareLinkButton, switchCameraModeBarButton(enabled: viewModel.cameraEnabled)]
         } else {
             return [optionsMenuButton, layoutModeBarButton]
         }

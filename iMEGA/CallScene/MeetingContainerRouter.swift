@@ -386,6 +386,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             actionsViewController: {
                 ActionSheetViewController(
                     actions: $0,
+                    forceDarkMode: true,
                     headerTitle: nil,
                     dismissCompletion: nil,
                     sender: nil
