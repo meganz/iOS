@@ -121,12 +121,11 @@ class ActionSheetViewController: UIViewController {
         guard UIDevice.current.iPhoneDevice else {
             return
         }
-        layoutViews(to: size)
-        UIView.animate(withDuration: 0.2,
-                       animations: { [weak self] in
-                        self?.view.layoutIfNeeded()
-            },
-                       completion: nil)
+        
+        coordinator.animate(alongsideTransition: {[weak self] _ in
+            self?.layoutViews(to: size)
+            self?.view.layoutIfNeeded()
+        }, completion: nil)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -152,25 +151,31 @@ class ActionSheetViewController: UIViewController {
     func layoutViews(to size: CGSize) {
         let headerHeight: CGFloat = headerView?.bounds.height ?? CGFloat.zero
         configViews(withSize: size, height: actionHeight() + headerHeight)
+        view.setNeedsUpdateConstraints()
+        
     }
     
     private func actionHeight() -> CGFloat {
-        let bottomHeight: CGFloat = view.safeAreaInsets.bottom * CGFloat(2.0)
+        let bottomHeight: CGFloat = view.safeAreaInsets.bottom
         let actionCount: CGFloat = CGFloat(actions.count) * CGFloat(60.0)
-        return actionCount + bottomHeight + CGFloat(20.0)
+        let total = actionCount + bottomHeight + CGFloat(20.0)
+        return total
     }
     
     private func configViews(withSize size: CGSize, height: CGFloat) {
         let threshold = size.height * CGFloat(0.3)
-        if height < size.height - threshold {
-            top?.constant = size.height - height
-            tableView.isScrollEnabled = false
-            indicator.isHidden = true
+        
+        let compactMode = height < size.height - threshold
+        
+        let topConstant = if compactMode {
+            size.height - height - view.safeAreaInsets.top
         } else {
-            top?.constant = threshold
-            tableView.isScrollEnabled = true
-            indicator.isHidden = false
+            threshold
         }
+        
+        top?.constant = topConstant
+        tableView.isScrollEnabled = !compactMode
+        indicator.isHidden = compactMode
     }
     
     @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {

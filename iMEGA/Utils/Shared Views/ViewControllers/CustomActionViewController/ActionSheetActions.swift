@@ -40,6 +40,7 @@ class BaseAction: NSObject {
 }
 
 class ActionSheetAction: BaseAction {
+    
     var actionHandler: () -> Void
 
     @objc init(
@@ -95,6 +96,19 @@ class ActionSheetAction: BaseAction {
         self.accessoryView = accessoryView
         self.image = image
         self.style = style
+    }
+    
+    // method used to add additional action
+    // when given action is triggered such as:
+    // 1. execute a comment action after each menu action, such as re-appear
+    //    a view that was dismissed temporarily to present ActionSheetMenu
+    func attachingAction(_ action: @escaping () -> Void) -> Self {
+        let oldAction = self.actionHandler
+        self.actionHandler = {
+            oldAction()
+            action()
+        }
+        return self
     }
 }
 

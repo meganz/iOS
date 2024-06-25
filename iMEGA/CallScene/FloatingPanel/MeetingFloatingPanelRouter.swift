@@ -50,7 +50,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private var inviteToMegaNavigationController: MEGANavigationController?
     private let permissionHandler: any DevicePermissionsHandling
     private lazy var callWaitingRoomDialog = CallWaitingRoomUsersDialog()
-    private let actionsViewController: ([ActionSheetAction]) -> UIViewController
+    private let actionsViewController: (ActionSheetModel) -> UIViewController
     private let layoutUpdateChannel: ParticipantLayoutUpdateChannel
     init(
         presenter: UINavigationController,
@@ -59,7 +59,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         permissionHandler: some DevicePermissionsHandling,
         layoutUpdateChannel: ParticipantLayoutUpdateChannel,
         selectWaitingRoomList: Bool,
-        actionsViewController: @escaping ([ActionSheetAction]) -> UIViewController
+        actionsViewController: @escaping (ActionSheetModel) -> UIViewController
     ) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
@@ -168,7 +168,20 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func presentMenu(_ actions: [ActionSheetAction]) {
-        baseViewController?.present(actionsViewController(actions), animated: true)
+        // when bottom menu is shown, we hide drawer, then when it's dismissed (via action or otherwise)
+        // we show it again
+        let toggleMenuVisibility: () -> Void = { [weak self] in
+            self?.containerViewModel?.dispatch(.changeMenuVisibility)
+        }
+        
+        toggleMenuVisibility()
+        let actionSheetModel = ActionSheetModel(
+            actions: actions.map { action in
+                action.attachingAction(toggleMenuVisibility)
+            },
+            dismissHandler: toggleMenuVisibility
+        )
+        presenter?.present(actionsViewController(actionSheetModel), animated: true)
     }
     
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
