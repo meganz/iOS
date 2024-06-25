@@ -1,16 +1,17 @@
 import Foundation
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
-public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol {
+public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol, @unchecked Sendable {
     
     public static var newRepo: FavouriteNodesRepository {
         FavouriteNodesRepository(sdk: MEGASdk.sharedSdk)
     }
     
     private let sdk: MEGASdk
-    private var onNodesUpdate: (([NodeEntity]) -> Void)?
-    private var favouritesNodesEntityArray: [NodeEntity]?
+    @Atomic private var onNodesUpdate: (([NodeEntity]) -> Void)?
+    @Atomic private var favouritesNodesEntityArray: [NodeEntity]?
     
     init(sdk: MEGASdk) {
         self.sdk = sdk
@@ -45,7 +46,7 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
                     return node.toNodeEntity()
                 }
                 
-                self.favouritesNodesEntityArray = favouritesNodesArray
+                self.$favouritesNodesEntityArray.mutate { $0 = favouritesNodesArray }
                 
                 completion(.success(favouritesNodesArray))
                 
@@ -79,13 +80,13 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
     public func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
         sdk.add(self)
         
-        onNodesUpdate = callback
+        $onNodesUpdate.mutate { $0 = callback }
     }
     
     public func unregisterOnNodesUpdate() {
         sdk.remove(self)
         
-        onNodesUpdate = nil
+        $onNodesUpdate.mutate { $0 = nil }
     }
 }
 

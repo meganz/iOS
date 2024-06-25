@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol FavouriteNodesRepositoryProtocol: RepositoryProtocol {
+public protocol FavouriteNodesRepositoryProtocol: RepositoryProtocol, Sendable {
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
