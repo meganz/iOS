@@ -101,6 +101,15 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         )
     }
 
+    func testDefaultAsset_forBackup_shouldMatch() {
+        assert(
+            nodeEntity: NodeEntity(nodeType: .folder),
+            displayMode: .backup,
+            expectedImage: Image(.folderEmptyState),
+            expectedTitle: Strings.Localizable.emptyFolder
+        )
+    }
+
     // MARK: - Private methods.
 
     typealias SUT = CloudDriveEmptyViewAssetFactory

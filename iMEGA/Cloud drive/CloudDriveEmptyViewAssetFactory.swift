@@ -74,7 +74,9 @@ struct CloudDriveEmptyViewAssetFactory {
         case .rubbishBin where nodeUseCase.isARubbishBinRootNode(nodeHandle: parentNode.handle):
             emptyViewAssets = defaultAssetForRubbishBinRootFolder()
         default:
-            emptyViewAssets = defaultAssetForEmptyFolder(for: config.displayMode != .rubbishBin ? parentNode : nil)
+            emptyViewAssets = defaultAssetForEmptyFolder(
+                for: config.displayMode != .rubbishBin && config.displayMode != .backup ? parentNode : nil
+            )
         }
 
         return emptyViewAssets
