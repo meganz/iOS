@@ -31,6 +31,9 @@ enum MyAccountHallAction: ActionType {
     case addSubscriptions
     case removeSubscriptions
     case didTapDeviceCenterButton
+    case navigateToProfile
+    case navigateToUsage
+    case navigateToSettings
     case didTapMyAccountButton
     case didTapAccountHeader
 }
@@ -128,6 +131,9 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
                 deviceCenterBridge: deviceCenterBridge,
                 deviceCenterAssets: makeDeviceCenterAssetData()
             )
+        case .navigateToProfile: router.navigateToProfile()
+        case .navigateToUsage: router.navigateToUsage()
+        case .navigateToSettings: router.navigateToSettings()
         case .didTapMyAccountButton:
             trackMyAccountEvent()
         case .didTapAccountHeader:

@@ -1,11 +1,13 @@
 #import <UIKit/UIKit.h>
 
 @import PieChart;
+@class UsageViewModel, AccountUseCase;
 
 @interface UsageViewController: UIViewController
 @property (weak, nonatomic) IBOutlet UIView * _Nullable cloudDriveView;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable cloudDriveLabel;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable cloudDriveSizeLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView * _Nullable cloudDriveActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIView * _Nullable cloudDriveBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet UIView * _Nullable backupsView;
@@ -17,11 +19,13 @@
 @property (weak, nonatomic) IBOutlet UIView * _Nullable rubbishBinView;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable rubbishBinLabel;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable rubbishBinSizeLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView * _Nullable rubbishBinActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIView * _Nullable rubbishBinBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet UIView * _Nullable incomingSharesView;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable incomingSharesLabel;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable incomingSharesSizeLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView * _Nullable incomingSharesActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIView * _Nullable incomingSharesBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet PieChartView * _Nullable pieChartView;
@@ -47,6 +51,8 @@
 
 @property (nonatomic) long long transferOwnUsed;
 @property (nonatomic) long long transferMax;
+
+@property (nonatomic, strong, nullable) UsageViewModel *viewModel;
 
 - (NSString * _Nonnull)textForSizeLabels:(long long)number;
 - (void)setUpPieChartView;

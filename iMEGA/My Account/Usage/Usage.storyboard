@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -150,6 +150,9 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="J9M-Hq-qgY">
+                                                <rect key="frame" x="338" y="22" width="20" height="20"/>
+                                            </activityIndicatorView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FvS-gr-Fbb">
                                                 <rect key="frame" x="0.0" y="63.333333333333314" width="375" height="0.3333333333333357"/>
                                                 <constraints>
@@ -166,14 +169,16 @@
                                             <constraint firstItem="Zxl-iO-f3i" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9M7-Oo-4Pc" secondAttribute="trailing" constant="17" id="TTP-uk-OmR"/>
                                             <constraint firstAttribute="trailing" secondItem="Zxl-iO-f3i" secondAttribute="trailing" constant="17" id="gc5-oK-YNm"/>
                                             <constraint firstAttribute="trailing" secondItem="FvS-gr-Fbb" secondAttribute="trailing" id="n8k-Y4-j2d"/>
+                                            <constraint firstAttribute="trailing" secondItem="J9M-Hq-qgY" secondAttribute="trailing" constant="17" id="nXa-vH-GfH"/>
                                             <constraint firstItem="9M7-Oo-4Pc" firstAttribute="leading" secondItem="eQd-BK-Wmg" secondAttribute="leading" constant="17" id="o8t-l1-DIC"/>
+                                            <constraint firstItem="J9M-Hq-qgY" firstAttribute="centerY" secondItem="9M7-Oo-4Pc" secondAttribute="centerY" id="ypX-YH-R6D"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zB6-Fd-XCQ">
                                         <rect key="frame" x="0.0" y="63.666666666666686" width="375" height="63.666666666666657"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Cloud Drive" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQc-WS-bCQ">
-                                                <rect key="frame" x="17" y="21.666666666666629" width="88.666666666666671" height="20.333333333333329"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Backups" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQc-WS-bCQ">
+                                                <rect key="frame" x="17" y="21.666666666666629" width="65.666666666666671" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -223,6 +228,9 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Lhf-Cv-OyY">
+                                                <rect key="frame" x="338" y="22" width="20" height="20"/>
+                                            </activityIndicatorView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0oe-n0-pPz">
                                                 <rect key="frame" x="0.0" y="63.333333333333258" width="375" height="0.3333333333333357"/>
                                                 <constraints>
@@ -231,6 +239,7 @@
                                             </view>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="Lhf-Cv-OyY" firstAttribute="centerY" secondItem="1S9-l5-ded" secondAttribute="centerY" id="028-k1-ymD"/>
                                             <constraint firstItem="1S9-l5-ded" firstAttribute="top" secondItem="z4I-NZ-AaF" secondAttribute="top" constant="21.666666666666686" id="6j2-3j-98v"/>
                                             <constraint firstItem="0oe-n0-pPz" firstAttribute="leading" secondItem="z4I-NZ-AaF" secondAttribute="leading" id="ACH-pc-Ptw"/>
                                             <constraint firstAttribute="bottom" secondItem="0oe-n0-pPz" secondAttribute="bottom" id="F1P-Dk-Mh2"/>
@@ -238,6 +247,7 @@
                                             <constraint firstAttribute="trailing" secondItem="cpN-qA-9y6" secondAttribute="trailing" constant="17" id="SKD-Lu-g3i"/>
                                             <constraint firstItem="cpN-qA-9y6" firstAttribute="centerY" secondItem="1S9-l5-ded" secondAttribute="centerY" id="VV2-FY-g08"/>
                                             <constraint firstAttribute="trailing" secondItem="0oe-n0-pPz" secondAttribute="trailing" id="VYF-6J-9ab"/>
+                                            <constraint firstAttribute="trailing" secondItem="Lhf-Cv-OyY" secondAttribute="trailing" constant="17" id="jFV-eg-KrA"/>
                                             <constraint firstItem="1S9-l5-ded" firstAttribute="leading" secondItem="z4I-NZ-AaF" secondAttribute="leading" constant="17" id="qCf-0l-snz"/>
                                             <constraint firstAttribute="bottom" secondItem="1S9-l5-ded" secondAttribute="bottom" constant="21.666666666666643" id="vjw-zd-Pkb"/>
                                         </constraints>
@@ -257,6 +267,9 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Jug-IV-qfq">
+                                                <rect key="frame" x="338" y="22" width="20" height="20"/>
+                                            </activityIndicatorView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X67-TT-M0Y">
                                                 <rect key="frame" x="0.0" y="63.333333333333371" width="375" height="0.3333333333333357"/>
                                                 <constraints>
@@ -266,6 +279,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="z7H-RR-CYG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="l35-xF-0oG" secondAttribute="trailing" constant="17" id="AUw-u7-Ibj"/>
+                                            <constraint firstAttribute="trailing" secondItem="Jug-IV-qfq" secondAttribute="trailing" constant="17" id="AZw-bd-Rp2"/>
                                             <constraint firstItem="X67-TT-M0Y" firstAttribute="leading" secondItem="gJQ-Gk-gNC" secondAttribute="leading" id="BlB-TR-IQL"/>
                                             <constraint firstAttribute="trailing" secondItem="z7H-RR-CYG" secondAttribute="trailing" constant="17" id="BnK-Af-X2V"/>
                                             <constraint firstAttribute="trailing" secondItem="X67-TT-M0Y" secondAttribute="trailing" id="LPK-RB-QKU"/>
@@ -274,6 +288,7 @@
                                             <constraint firstItem="z7H-RR-CYG" firstAttribute="centerY" secondItem="l35-xF-0oG" secondAttribute="centerY" id="pL1-8c-qeV"/>
                                             <constraint firstItem="l35-xF-0oG" firstAttribute="top" secondItem="gJQ-Gk-gNC" secondAttribute="top" constant="21.666666666666629" id="pyH-MU-Ge8"/>
                                             <constraint firstAttribute="bottom" secondItem="X67-TT-M0Y" secondAttribute="bottom" id="sFp-KZ-cFc"/>
+                                            <constraint firstItem="Jug-IV-qfq" firstAttribute="centerY" secondItem="l35-xF-0oG" secondAttribute="centerY" id="vhd-d7-zp1"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -333,10 +348,12 @@
                         <outlet property="backupsLabel" destination="PQc-WS-bCQ" id="JQj-GH-Q4r"/>
                         <outlet property="backupsSizeLabel" destination="h2t-mR-0Cf" id="xvS-wG-NqD"/>
                         <outlet property="backupsView" destination="zB6-Fd-XCQ" id="zeO-T4-hXw"/>
+                        <outlet property="cloudDriveActivityIndicator" destination="J9M-Hq-qgY" id="Xec-8N-U35"/>
                         <outlet property="cloudDriveBottomSeparatorView" destination="FvS-gr-Fbb" id="UzG-mk-ld6"/>
                         <outlet property="cloudDriveLabel" destination="9M7-Oo-4Pc" id="49e-Up-ICc"/>
                         <outlet property="cloudDriveSizeLabel" destination="Zxl-iO-f3i" id="vEp-vT-4uD"/>
                         <outlet property="cloudDriveView" destination="eQd-BK-Wmg" id="U9h-on-IEp"/>
+                        <outlet property="incomingSharesActivityIndicator" destination="Jug-IV-qfq" id="e8z-o1-t9i"/>
                         <outlet property="incomingSharesBottomSeparatorView" destination="X67-TT-M0Y" id="2ja-Gp-Pqm"/>
                         <outlet property="incomingSharesLabel" destination="l35-xF-0oG" id="5lK-gI-eTA"/>
                         <outlet property="incomingSharesSizeLabel" destination="z7H-RR-CYG" id="hao-Zj-Ojb"/>
@@ -345,6 +362,7 @@
                         <outlet property="pieChartSecondaryLabel" destination="nZV-Ur-THg" id="Pna-5u-sh5"/>
                         <outlet property="pieChartTertiaryLabel" destination="p9G-Zb-Vj4" id="eQA-DU-hdw"/>
                         <outlet property="pieChartView" destination="SOe-IV-UrU" id="O7j-E2-Q2L"/>
+                        <outlet property="rubbishBinActivityIndicator" destination="Lhf-Cv-OyY" id="Vkj-AF-9Kr"/>
                         <outlet property="rubbishBinBottomSeparatorView" destination="0oe-n0-pPz" id="FA6-IA-Gx2"/>
                         <outlet property="rubbishBinLabel" destination="1S9-l5-ded" id="JgI-8s-Tau"/>
                         <outlet property="rubbishBinSizeLabel" destination="cpN-qA-9y6" id="V58-iE-eO1"/>
@@ -382,7 +400,7 @@
             <color red="0.0" green="0.6588235294117647" blue="0.52549019607843139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

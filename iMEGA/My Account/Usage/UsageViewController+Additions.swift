@@ -92,44 +92,23 @@ extension UsageViewController {
         pieChartView?.reloadData()
     }
     
-    @objc func initializeStorageInfo() {
-        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else { return }
-        
-        if let rootNode = MEGASdk.shared.rootNode {
-            cloudDriveSize = accountDetails.storageUsed(forHandle: rootNode.handle)
-        }
-        
-        cloudDriveSizeLabel?.text = text(forSizeLabels: cloudDriveSize)
-        
-        backupsActivityIndicator?.isHidden = false
-        backupsActivityIndicator?.startAnimating()
-        
-        Task {
-            let backupSize = await BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).backupsRootNodeSize()
-            backupsSizeLabel?.text = self.text(forSizeLabels: Int64(backupSize))
-            backupsActivityIndicator?.stopAnimating()
-            backupsActivityIndicator?.isHidden = true
-        }
-        
-        if let rubbishNode = MEGASdk.shared.rubbishNode {
-            rubbishBinSize = accountDetails.storageUsed(forHandle: rubbishNode.handle)
-        }
-        
-        rubbishBinSizeLabel?.text = text(forSizeLabels: rubbishBinSize)
-        
-        var incomingSharedSizeSum: Int64 = 0
-        
-        MEGASdk.shared.inShares().toNodeArray().forEach { node in
-            incomingSharedSizeSum += MEGASdk.shared.size(for: node).int64Value
-        }
-        
-        incomingSharesSizeLabel?.text = text(forSizeLabels: incomingSharedSizeSum)
-        
-        usedStorage = accountDetails.storageUsed
-        maxStorage = accountDetails.storageMax
-        
-        transferOwnUsed = accountDetails.transferOwnUsed
-        transferMax = accountDetails.transferMax
+    private func startAnimating(_ activityIndicator: UIActivityIndicatorView?) {
+        activityIndicator?.isHidden = false
+        activityIndicator?.startAnimating()
+    }
+    
+    private func stopAnimating(_ activityIndicator: UIActivityIndicatorView?) {
+        activityIndicator?.stopAnimating()
+        activityIndicator?.isHidden = true
+    }
+    
+    @objc func initialiseStorageInfo() {
+        viewModel?.dispatch(.loadRootNodeStorage)
+        viewModel?.dispatch(.loadBackupStorage)
+        viewModel?.dispatch(.loadRubbishBinStorage)
+        viewModel?.dispatch(.loadIncomingSharedStorage)
+        viewModel?.dispatch(.loadStorageDetails)
+        viewModel?.dispatch(.loadTransferDetails)
     }
     
     @objc func configView() {
@@ -147,23 +126,15 @@ extension UsageViewController {
     }
     
     var isShowPieChartView: Bool {
-        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
-            return true
-        }
-        return !(accountDetails.type == .business || accountDetails.type == .proFlexi)
+        guard let viewModel else { return true }
+        return !(viewModel.isBusinessAccount || viewModel.isProFlexiAccount)
     }
     
     @objc var showTransferQuota: Bool {
-        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
-            return false
-        }
-        return Self.shouldShowTransferQuota(accountType: accountDetails.type.toAccountTypeEntity())
-    }
-    
-    static func shouldShowTransferQuota(accountType: AccountTypeEntity) -> Bool {
+        guard let viewModel else { return false }
         // Transfer Quota should be hidden on free accounts due to
         // different transfer limits in different countries and also it is subject to change.
-        accountType != .free
+        return viewModel.hasValidProAccount
     }
     
     @objc func configStorageContentView() {
@@ -171,19 +142,11 @@ extension UsageViewController {
         pieChartView?.isHidden = !isShowPieChartView
         usageStorageView?.isHidden = isShowPieChartView
 
-        if isShowPieChartView {
-            setUpPieChartView()
-        } else {
-            setUsageViewContent()
-        }
+        isShowPieChartView ? setUpPieChartView() : setUsageViewContent()
     }
     
     @objc func reloadStorageContentView(forPage page: Int) {
-        if isShowPieChartView {
-            reloadPieChart(page)
-        } else {
-            setUsageViewContent(forPage: page)
-        }
+        isShowPieChartView ? reloadPieChart(page): setUsageViewContent(forPage: page)
     }
     
     @objc func setUsageViewContent(forPage page: Int = 0) {
@@ -254,5 +217,55 @@ extension UsageViewController {
         guard let updatedPage = updatedPage(forGesture: gesture, currentPage: usagePageControl?.currentPage ?? 0) else { return }
         usagePageControl?.currentPage = updatedPage
         reloadStorageContentView(forPage: updatedPage)
+    }
+    
+    @objc func setUpInvokeCommands() {
+        viewModel?.invokeCommand = { [weak self] in
+            self?.executeCommand($0)
+        }
+    }
+    
+    private func executeCommand(_ command: UsageViewModel.Command) {
+        switch command {
+        case .loaded(let storageType, let size):
+            switch storageType {
+            case .cloud:
+                cloudDriveSizeLabel?.text = text(forSizeLabels: size)
+                stopAnimating(cloudDriveActivityIndicator)
+            case .backups:
+                backupsSizeLabel?.text = text(forSizeLabels: size)
+                stopAnimating(backupsActivityIndicator)
+            case .rubbishBin:
+                rubbishBinSizeLabel?.text = text(forSizeLabels: size)
+                stopAnimating(rubbishBinActivityIndicator)
+            case .incomingShares:
+                incomingSharesSizeLabel?.text = text(forSizeLabels: size)
+                stopAnimating(incomingSharesActivityIndicator)
+            }
+            reloadCurrentPage()
+            
+        case .loadedStorage(let used, let max):
+            usedStorage = used
+            maxStorage = max
+            reloadCurrentPage()
+            
+        case .loadedTransfer(let used, let max):
+            transferOwnUsed = used
+            transferMax = max
+            reloadCurrentPage()
+            
+        case .startLoading(let storageType):
+            switch storageType {
+            case .cloud: startAnimating(cloudDriveActivityIndicator)
+            case .backups: startAnimating(backupsActivityIndicator)
+            case .rubbishBin: startAnimating(rubbishBinActivityIndicator)
+            case .incomingShares: startAnimating(incomingSharesActivityIndicator)
+            }
+        }
+    }
+    
+    private func reloadCurrentPage() {
+        guard let currentPage = usagePageControl?.currentPage else { return }
+        reloadStorageContentView(forPage: currentPage)
     }
 }

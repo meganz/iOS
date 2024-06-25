@@ -12,8 +12,7 @@ extension MyAccountHallViewController {
     }
     
     @objc func showSettings() {
-        let settingRouter = SettingViewRouter(presenter: navigationController)
-        settingRouter.start()
+        viewModel.dispatch(.navigateToSettings)
     }
     
     @objc func didTapProfileView() {
@@ -25,10 +24,11 @@ extension MyAccountHallViewController {
     }
     
     @objc func showProfileView() {
-        ProfileViewRouter(
-            navigationController: navigationController,
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
-        ).start()
+        viewModel.dispatch(.navigateToUsage)
+    }
+    
+    @objc func showUsageView() {
+        viewModel.dispatch(.navigateToUsage)
     }
     
     @objc func showUpgradePlanView() {

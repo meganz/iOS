@@ -28,4 +28,8 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
     func didTapInfoAction(_ infoModel: ResourceInfoModel) {
         didTapInfoAction_calledTimes += 1
     }
+    
+    func navigateToProfile() {}
+    func navigateToUsage() {}
+    func navigateToSettings() {}
 }

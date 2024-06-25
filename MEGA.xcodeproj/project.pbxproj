@@ -1392,6 +1392,7 @@
 		9474F23F2B0F8F4700C5F63B /* ViewModeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */; };
 		947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */; };
 		947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */; };
+		94779D9B2C075860008A5198 /* UsageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94779D9A2C075860008A5198 /* UsageViewModel.swift */; };
 		9478CB052B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */; };
 		9478CB072B8E70EA00401B2E /* ContactTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */; };
 		9479F02528BF93CA008578BE /* DNDTurnOnOptionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */; };
@@ -1415,6 +1416,7 @@
 		948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */; };
 		9482F73C2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */; };
 		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
+		94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94872E942C08886600DC76E6 /* UsageViewRouter.swift */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		948BCDFF2C20683200B719B2 /* RaiseHandFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */; };
@@ -1808,7 +1810,6 @@
 		B5AD33C529D136A600707496 /* UpgradeAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */; };
 		B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */; };
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
-		B5C3ABAF2A71232B008C3708 /* UsageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */; };
 		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
 		B5C640822B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */; };
@@ -4164,6 +4165,7 @@
 		9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStoreTests.swift; sourceTree = "<group>"; };
 		947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisabler.swift; sourceTree = "<group>"; };
 		947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisablerTests.swift; sourceTree = "<group>"; };
+		94779D9A2C075860008A5198 /* UsageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewModel.swift; sourceTree = "<group>"; };
 		9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DNDTurnOnOptionEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9479F02628BFA4C3008578BE /* ContextMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuModel.swift; sourceTree = "<group>"; };
@@ -4183,6 +4185,7 @@
 		948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManagerTests.swift; sourceTree = "<group>"; };
 		9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserViewModelTests.swift; sourceTree = "<group>"; };
 		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
+		94872E942C08886600DC76E6 /* UsageViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewRouter.swift; sourceTree = "<group>"; };
 		948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandFeatureTests.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
 		948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSwitcherTests.swift; sourceTree = "<group>"; };
@@ -4575,7 +4578,6 @@
 		B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountViewModel.swift; sourceTree = "<group>"; };
 		B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewModelTests.swift; sourceTree = "<group>"; };
 		B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
-		B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewControllerTests.swift; sourceTree = "<group>"; };
 		B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBannerViewProvider.swift; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
 		B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CookieSettingsTableViewController+SnackBar.swift"; sourceTree = "<group>"; };
@@ -7844,6 +7846,8 @@
 		5BB8A851243DF3DA009FE957 /* Usage */ = {
 			isa = PBXGroup;
 			children = (
+				94872E932C08885400DC76E6 /* Router */,
+				94779D992C07584E008A5198 /* ViewModel */,
 				5BB8A852243DF42D009FE957 /* Usage.storyboard */,
 				B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */,
 				E889C9E71B566EC400ECEFDF /* UsageViewController.h */,
@@ -10249,6 +10253,14 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
+		94779D992C07584E008A5198 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				94779D9A2C075860008A5198 /* UsageViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		948028382B6C272E002B4EB4 /* Info */ = {
 			isa = PBXGroup;
 			children = (
@@ -10265,6 +10277,14 @@
 				948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */,
 			);
 			path = Widget;
+			sourceTree = "<group>";
+		};
+		94872E932C08885400DC76E6 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				94872E942C08886600DC76E6 /* UsageViewRouter.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		9495818C2A43295F0071573B /* Permissions */ = {
@@ -15677,6 +15697,7 @@
 				83A4DF472BAC564C0012FE25 /* SimpleDialogView.swift in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				32A4350829C155FE00DB8581 /* SingleSelectionCheckmarkView.swift in Sources */,
+				94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */,
 				BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */,
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */,
@@ -15808,6 +15829,7 @@
 				5D31674224FC9A1B0032492F /* UIResponder+ErrorHandling.swift in Sources */,
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				5B0CD42A2188D71100F97A2C /* UITextField+MNZCategory.m in Sources */,
+				94779D9B2C075860008A5198 /* UsageViewModel.swift in Sources */,
 				8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */,
 				B65D17D3289A1A8600D5AD33 /* UIView+RoundCornerShadow.swift in Sources */,
 				83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */,
@@ -16556,7 +16578,6 @@
 				C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */,
 				C4A016BA2B67338C00492185 /* UpgradeEncouragementViewModelTests.swift in Sources */,
 				94B09E6F2B84D0B6007D6B84 /* UploadAddMenuDelegateHandlerTests.swift in Sources */,
-				B5C3ABAF2A71232B008C3708 /* UsageViewControllerTests.swift in Sources */,
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
 				A894E7A32B8F6396006AC2C5 /* UserAvatarHandlerTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,

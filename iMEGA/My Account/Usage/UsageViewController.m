@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initializeStorageInfo];
+    [self initialiseStorageInfo];
     [self configView];
     [self configStorageContentView];
     
@@ -28,6 +28,8 @@
     self.incomingSharesSizeLabel.text = [self textForSizeLabels:self.incomingSharesSize];
     
     [self updateAppearance];
+    
+    [self setUpInvokeCommands];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

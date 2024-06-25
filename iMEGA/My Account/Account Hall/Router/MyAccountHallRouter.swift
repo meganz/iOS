@@ -6,6 +6,9 @@ import MEGASDKRepo
 
 public protocol MyAccountHallRouting: Routing {
     func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterAssets: DeviceCenterAssets)
+    func navigateToProfile()
+    func navigateToUsage()
+    func navigateToSettings()
     func didTapCameraUploadsAction(statusChanged: @escaping () -> Void)
     func didTapRenameAction(_ renameEntity: RenameActionEntity)
     func didTapInfoAction(_ infoModel: ResourceInfoModel)
@@ -15,6 +18,7 @@ public protocol MyAccountHallRouting: Routing {
 final class MyAccountHallRouter: MyAccountHallRouting {
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let shareUseCase: any ShareUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let notificationsUseCase: any NotificationsUseCaseProtocol
@@ -29,6 +33,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     init(
         myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         shareUseCase: some ShareUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         notificationsUseCase: some NotificationsUseCaseProtocol,
@@ -41,6 +46,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     ) {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.purchaseUseCase = purchaseUseCase
+        self.accountUseCase = accountUseCase
         self.shareUseCase = shareUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.notificationsUseCase = notificationsUseCase
@@ -199,6 +205,24 @@ final class MyAccountHallRouter: MyAccountHallRouting {
             notificationCenter: NotificationCenter.default,
             deviceCenterAssets: deviceCenterAssets
         ).start()
+    }
+    
+    func navigateToProfile() {
+        ProfileViewRouter(
+            navigationController: navigationController,
+            accountUseCase: accountUseCase
+        ).start()
+    }
+    
+    func navigateToUsage() {
+        UsageViewRouter(
+            accountUseCase: accountUseCase,
+            navigationController: navigationController
+        ).start()
+    }
+    
+    func navigateToSettings() {
+        SettingViewRouter(presenter: navigationController).start()
     }
     
     func didTapCameraUploadsAction(
