@@ -1440,6 +1440,7 @@
 		94A1A2782A83B29000669C41 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
 		94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94A220172A696502004130C4 /* MEGAAnalyticsiOS */; };
 		94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */; };
+		94A54A972C2B0B940062D8E3 /* ActionSheetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */; };
 		94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */; };
 		94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */; };
 		94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */; };
@@ -4209,6 +4210,7 @@
 		949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenAppRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.h; sourceTree = SOURCE_ROOT; };
 		949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenAppRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTests.swift; sourceTree = "<group>"; };
+		94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetModel.swift; sourceTree = "<group>"; };
 		94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeUploadingViewModelTests.swift; sourceTree = "<group>"; };
 		94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTests.swift; sourceTree = "<group>"; };
 		94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManagementTableViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -8946,6 +8948,7 @@
 			children = (
 				832E1021202B099800BDD30F /* Cells */,
 				837B9BFA246D38E800D409B4 /* ActionSheetActions.swift */,
+				94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */,
 				2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */,
 				837B9C06247817F000D409B4 /* NodeActionBuilder.swift */,
 				2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */,
@@ -14226,6 +14229,7 @@
 				837B9BFB246D38E900D409B4 /* ActionSheetActions.swift in Sources */,
 				2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */,
 				5D6092AE255D6ABD005FA3E4 /* ActionSheetFactory.swift in Sources */,
+				94A54A972C2B0B940062D8E3 /* ActionSheetModel.swift in Sources */,
 				C46157B72538A48D00F3970D /* ActionSheetSwitchCell.swift in Sources */,
 				2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */,
 				8340CAF7284E48F8007C3B39 /* ActionsView.swift in Sources */,
@@ -15697,7 +15701,6 @@
 				83A4DF472BAC564C0012FE25 /* SimpleDialogView.swift in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				32A4350829C155FE00DB8581 /* SingleSelectionCheckmarkView.swift in Sources */,
-				94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */,
 				BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */,
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */,
@@ -15829,7 +15832,6 @@
 				5D31674224FC9A1B0032492F /* UIResponder+ErrorHandling.swift in Sources */,
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				5B0CD42A2188D71100F97A2C /* UITextField+MNZCategory.m in Sources */,
-				94779D9B2C075860008A5198 /* UsageViewModel.swift in Sources */,
 				8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */,
 				B65D17D3289A1A8600D5AD33 /* UIView+RoundCornerShadow.swift in Sources */,
 				83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */,
@@ -15861,6 +15863,8 @@
 				2407FDA62B05C73C00F26248 /* URL+MNZCategory.swift in Sources */,
 				B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
+				94779D9B2C075860008A5198 /* UsageViewModel.swift in Sources */,
+				94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */,
 				25D360B32BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift in Sources */,
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCaseAdditions+Additions.swift in Sources */,
 				A87BDB352B8CD3BC0074EE4C /* UserAvatarHandler.swift in Sources */,

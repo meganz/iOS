@@ -385,10 +385,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             selectWaitingRoomList: selectWaitingRoomList,
             actionsViewController: {
                 ActionSheetViewController(
-                    actions: $0,
+                    actions: $0.actions,
                     forceDarkMode: true,
                     headerTitle: nil,
-                    dismissCompletion: nil,
+                    dismissCompletion: $0.dismissHandler,
                     sender: nil
                 )
             }
