@@ -41,12 +41,6 @@ struct BackupsRepository: BackupsRepositoryProtocol {
         return BackupRootNodeAccess.shared.isTargetNode(for: parentNode)
     }
     
-    func backupRootNodeSize() async throws -> UInt64 {
-        guard let node = try await backupRootNode().toMEGANode(in: sdk) else { return 0 }
-        let nodeInfo = try await folderInfo(node: node)
-        return UInt64(nodeInfo.currentSize)
-    }
-    
     func backupRootNode() async throws -> NodeEntity {
         try await withAsyncThrowingValue(in: { completion in
             BackupRootNodeAccess.shared.loadNode { node, _ in

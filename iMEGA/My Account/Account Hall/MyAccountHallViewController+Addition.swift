@@ -24,7 +24,7 @@ extension MyAccountHallViewController {
     }
     
     @objc func showProfileView() {
-        viewModel.dispatch(.navigateToUsage)
+        viewModel.dispatch(.navigateToProfile)
     }
     
     @objc func showUsageView() {

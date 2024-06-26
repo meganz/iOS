@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 
 @import PieChart;
-@class UsageViewModel, AccountUseCase;
+@class UsageViewModel;
 
 @interface UsageViewController: UIViewController
 @property (weak, nonatomic) IBOutlet UIView * _Nullable cloudDriveView;
