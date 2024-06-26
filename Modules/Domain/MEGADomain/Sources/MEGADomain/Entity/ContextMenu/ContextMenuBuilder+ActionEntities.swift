@@ -13,7 +13,7 @@ extension ContextMenuBuilder {
     var importFromFiles: CMActionEntity {
         CMActionEntity(type: .uploadAdd(actionType: .importFrom))
     }
-
+    
     var importFolderLink: CMActionEntity {
         CMActionEntity(type: .uploadAdd(actionType: .importFolderLink))
     }
@@ -42,7 +42,7 @@ extension ContextMenuBuilder {
     }
     
     var listView: CMActionEntity {
-            CMActionEntity(type: .display(actionType: .listView),
+        CMActionEntity(type: .display(actionType: .listView),
                        state: currentViewMode() == .list ? .on : .off)
     }
     
@@ -167,11 +167,11 @@ extension ContextMenuBuilder {
     var rename: CMActionEntity {
         CMActionEntity(type: .quickActions(actionType: .rename))
     }
-
+    
     var sendToChat: CMActionEntity {
         CMActionEntity(type: .quickActions(actionType: .sendToChat))
     }
-
+    
     var saveToPhotos: CMActionEntity {
         CMActionEntity(type: .quickActions(actionType: .saveToPhotos))
     }
@@ -182,6 +182,10 @@ extension ContextMenuBuilder {
     
     var unhide: CMActionEntity {
         CMActionEntity(type: .quickActions(actionType: .unhide))
+    }
+    
+    var settings: CMActionEntity {
+        CMActionEntity(type: .quickActions(actionType: .settings))
     }
     
     // MARK: - Rubbish Bin Actions
@@ -219,8 +223,8 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .qr(actionType: .share))
     }
     
-    var settings: CMActionEntity {
-        CMActionEntity(type: .qr(actionType: .settings))
+    var qrSettings: CMActionEntity {
+        CMActionEntity(type: .qr(actionType: .qrSettings))
     }
     
     var resetQR: CMActionEntity {

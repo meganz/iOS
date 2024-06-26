@@ -481,7 +481,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         let menuActions = decomposeMenuIntoActions(menu: cmMettingEntity)
         menuActionsArray = [.qr(actionType: .share),
-                            .qr(actionType: .settings),
+                            .qr(actionType: .qrSettings),
                             .qr(actionType: .resetQR)
         ]
         
@@ -555,5 +555,22 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                       .filter(actionType: .allMedia),
                                       .filter(actionType: .images),
                                       .filter(actionType: .videos)])
+    }
+    func testCreateContextMenu_whenUsedOnTimelineAndIsCameraUploadsEnabledIsSet_shouldReturnRightAlbumMenu() throws {
+        
+        for isCameraUploadsEnabled in [true, false] {
+            let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(
+                menuType: .menu(type: .timeline),
+                isCameraUploadExplorer: true,
+                isCameraUploadsEnabled: isCameraUploadsEnabled
+            ))
+            let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+            XCTAssertEqual(menuActions, [
+                .display(actionType: .select),
+                .sort(actionType: .modificationDesc),
+                .sort(actionType: .modificationAsc),
+                isCameraUploadsEnabled ? .quickActions(actionType: .settings) : nil
+            ].compactMap { $0 })
+        }
     }
 }

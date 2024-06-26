@@ -45,6 +45,7 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
             .setIsArchivedChatsVisible(config.isArchivedChatsVisible)
             .setIsMediaFile(config.isMediaFile)
             .setIsHidden(config.isHidden)
+            .setIsCameraUploadsEnabled(config.isCameraUploadsEnabled)
             .build()
     }
 }

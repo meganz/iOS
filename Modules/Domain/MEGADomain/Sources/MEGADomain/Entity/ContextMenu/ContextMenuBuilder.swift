@@ -42,6 +42,7 @@ public final class ContextMenuBuilder {
     private var isMediaFile: Bool = false
     private var isFilterActive: Bool = false
     private var isHidden: Bool?
+    private var isCameraUploadsEnabled: Bool = false
 
     public init() {}
     
@@ -257,6 +258,11 @@ public final class ContextMenuBuilder {
     
     public func setIsHidden(_ isHidden: Bool?) -> ContextMenuBuilder {
         self.isHidden = isHidden
+        return self
+    }
+    
+    public func setIsCameraUploadsEnabled(_ isCameraUploadsEnabled: Bool) -> ContextMenuBuilder {
+        self.isCameraUploadsEnabled = isCameraUploadsEnabled
         return self
     }
     
@@ -581,7 +587,7 @@ public final class ContextMenuBuilder {
             myQRCodeActions.append(share)
         }
         
-        myQRCodeActions.append(contentsOf: [settings, resetQR])
+        myQRCodeActions.append(contentsOf: [qrSettings, resetQR])
         
         return CMEntity(displayInline: true,
                         children: myQRCodeActions)
@@ -652,6 +658,10 @@ public final class ContextMenuBuilder {
             if isFilterEnabled {
                 displayActionsMenuChildren.append(filterMenu())
             }
+        }
+        
+        if isCameraUploadsEnabled {
+            displayActionsMenuChildren.append(settings)
         }
         
         return CMEntity(displayInline: true,

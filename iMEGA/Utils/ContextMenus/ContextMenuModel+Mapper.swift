@@ -122,6 +122,12 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "hide", title: Strings.Localizable.General.MenuAction.Hide.title, image: UIImage.eyeOff)
         case .unhide:
             return ContextMenuDataModel(identifier: "unhide", title: Strings.Localizable.General.MenuAction.Unhide.title, image: UIImage.eyeOn)
+        case .settings:
+            return ContextMenuDataModel(
+                identifier: "settings",
+                title: Strings.Localizable.settingsTitle,
+                image: .iconSettings
+            )
         }
     }
 
@@ -238,8 +244,12 @@ extension ContextMenuModel {
         switch action {
         case .share:
             return ContextMenuDataModel(identifier: "share", title: Strings.Localizable.General.share)
-        case .settings:
-            return ContextMenuDataModel(identifier: "settings", title: Strings.Localizable.settingsTitle)
+        case .qrSettings:
+            return ContextMenuDataModel(
+                identifier: "qrSettings",
+                title: Strings.Localizable.settingsTitle,
+                image: .iconSettings
+            )
         case .resetQR:
             return ContextMenuDataModel(identifier: "resetQR", title: Strings.Localizable.resetQrCode)
         }

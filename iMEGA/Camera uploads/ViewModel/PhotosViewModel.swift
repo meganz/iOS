@@ -26,7 +26,7 @@ final class PhotosViewModel: NSObject {
     @Published private(set) var cameraUploadExplorerSortOrderType: SortOrderType = .newest
     
     @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
-    private var isCameraUploadsEnabled: Bool
+    private(set) var isCameraUploadsEnabled: Bool
     
     private var filterOptions: PhotosFilterOptions = [.allMedia, .allLocations]
     

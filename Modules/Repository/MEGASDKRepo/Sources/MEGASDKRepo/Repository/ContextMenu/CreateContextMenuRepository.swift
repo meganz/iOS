@@ -50,6 +50,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsMediaFile(config.isMediaFile)
                         .setIsFilterActive(config.isFilterActive)
                         .setIsHidden(config.isHidden)
+                        .setIsCameraUploadsEnabled(config.isCameraUploadsEnabled)
                         .build()
     }
 }
