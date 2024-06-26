@@ -130,6 +130,9 @@ struct VideoRevampRouter: VideoRevampRouting {
             nodeRepository: NodeRepository.newRepo
         )
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        let videoPlaylistModificationUseCase = VideoPlaylistModificationUseCase(
+            userVideoPlaylistsRepository: userVideoPlaylistsRepo
+        )
         let videoSelection = VideoSelection()
         let viewController = VideoPlaylistContentViewController(
             videoConfig: videoConfig,
@@ -142,6 +145,7 @@ struct VideoRevampRouter: VideoRevampRouting {
                 preferenceUseCase: PreferenceUseCase.default,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             videoSelection: videoSelection,
             selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection)
         )

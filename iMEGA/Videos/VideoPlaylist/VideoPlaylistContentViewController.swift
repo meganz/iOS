@@ -13,6 +13,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let videoPlaylistContentsUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let router: any VideoRevampRouting
     private let presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
     
@@ -43,6 +44,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         router: some VideoRevampRouting,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         videoSelection: VideoSelection,
         selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter
     ) {
@@ -51,6 +53,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.router = router
         self.presentationConfig = presentationConfig
         self.videoSelection = videoSelection
@@ -85,6 +88,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             router: router,
             sharedUIState: sharedUIState,
             videoSelection: videoSelection,
@@ -355,14 +359,13 @@ extension VideoPlaylistContentViewController: DisplayMenuDelegate {
 extension VideoPlaylistContentViewController: SnackBarPresenting {
     
     private func listenToSnackBarPresentation() {
-        snackBarViewModel = makeSnackBarViewModel(message: sharedUIState.snackBarText)
-        
         sharedUIState.$shouldShowSnackBar
             .removeDuplicates()
             .filter { $0 == true }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
+                snackBarViewModel = makeSnackBarViewModel(message: sharedUIState.snackBarText)
                 self.snackBarViewModel?.update(snackBar: SnackBar(message: self.sharedUIState.snackBarText))
                 guard let snackBar = self.snackBarViewModel?.snackBar else { return }
                 SnackBarRouter.shared.present(snackBar: snackBar)
