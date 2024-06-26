@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="사진첩 표지 업데이트됨";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="숨겨진 항목";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="이 사진첩에 숨겨진 항목이 있습니다. 사진첩을 공유하는 것은 숨겨진 항목이 공유하고자 하는 사람들에게 보인다는 것입니다. 항목은 클라우드 드라이브에서 숨긴 상태로 유지됩니다.";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="There are hidden items in one or more of these albums. Sharing the albums will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="필터";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro 요금제의 기능";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• Pro Lite는 최대 90일 그리고 Pro I, II, III는 최대 180일의 삭제한 데이터 되돌리기\n\n• 제한 없는 참여자 수와 시간 제한 없는 통화와 회의 주최\n\n• 고속 VPN으로 온라인에서도 비공개 유지\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• Pro Lite는 최대 90일 그리고 Pro I, II, III는 최대 180일의 삭제한 데이터 되돌리기\n\n• 제한 없는 참여자 수와 시간 제한 없는 통화와 회의 주최\n\n• 고속 VPN으로 온라인에서도 비공개 유지\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원\n\n• 광고 없음";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="구독 세부정보";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ 님이 이 회의를 취소했습니다";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ 님이 이 회의와 모든 되풀이 항목을 취소하였습니다";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ 님이 %@에 예정된 되풀이 항목을 취소하였습니다";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="%@ 님이 이 회의를 만들었습니다";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="PDF 없음";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="프레젠테이션 없음";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="No spreadsheets";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="압축 파일 없음";
 /* A title label for waiting room participants list view. */
@@ -3940,6 +3944,14 @@
 "videos.tab.playlist.browser.button.add"="추가";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="추가";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="이름 바꾸기";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="새 이름을 입력하세요";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="이름 바꾸기";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="이름 변경 실패";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="대기실에 아무도 없습니다";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4142,6 +4154,8 @@
 "chat.call.contextMenu.lowerHand"="손 내리기";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="손을 드세요";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="신규";
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
 /* Cancellation Subscription manage by Webclient message */
@@ -4168,3 +4182,9 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="숨겨진 항목";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="이 항목은 숨김으로 설정되었습니다. 공유하면, 링크를 가진 누구나 볼 수 있습니다. 클라우드 드라이브에서는 숨김 상태가 유지됩니다.";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="한개 이상의 항목이 숨김으로 설정되었습니다. 숨긴 항목을 공유하면, 링크를 가진 누구나 볼 수 있습니다. 클라우드 드라이브에서는 숨김 상태가 유지됩니다.";

@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="Обложка альбома обновлена";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Скрытые элементы";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="В этом альбоме есть скрытые элементы. Если вы поделитесь альбомом, скрытые элементы будут видны тем, с кем вы делитесь. Эти элементы по-прежнему будут скрыты на вашем Облачном диске.";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="В одном или нескольких из этих альбомов есть скрытые элементы. Если вы поделитесь альбомами, скрытые элементы будут видны тем, с кем вы делитесь. Эти элементы по-прежнему будут скрыты на вашем Облачном диске.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Фильтр";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Особенности планов Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Перемотка удалённых данных на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III\n\n• Проводите звонки и встречи с неограниченным количеством участников и без ограничений по времени\n\n• Сохраняйте конфиденциальность в Интернете с нашим высокоскоростным VPN\n\n• Срок очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Перемотка удалённых данных на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III\n\n• Проводите звонки и встречи с неограниченным количеством участников и без ограничений по времени\n\n• Сохраняйте конфиденциальность в Интернете с нашим высокоскоростным VPN\n\n• Срок очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка\n\n• Без рекламы";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Подробная информация о подписке";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="Пользователь %@ отменил встречу";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="Пользователь %@ отменил эту встречу и все её повторения";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="Пользователь %@ отменил повторение, назначенное на %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="Пользователь %@ создал эту встречу";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="Нет файлов PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="Нет презентаций";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="Нет таблиц";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="Нет архивов";
 /* A title label for waiting room participants list view. */
@@ -3940,6 +3944,14 @@
 "videos.tab.playlist.browser.button.add"="Добавить";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Добавить";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="Переименовать";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Введите новое название";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="Переименовать";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="Не удалось переименовать";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="В комнате ожидания никого нет";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4142,6 +4154,8 @@
 "chat.call.contextMenu.lowerHand"="Опустить руку";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="Поднять руку";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="Создать";
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="Вам нужно отменить подписку через веб-браузер";
 /* Cancellation Subscription manage by Webclient message */
@@ -4149,7 +4163,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="На компьютере";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Откройте сайт www.mega.io в веб-браузере.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Войдите в свой аккаунт MEGA.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
@@ -4161,10 +4175,16 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="На мобильном устройстве";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Откройте сайт www.mega.io в веб-браузере.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Войдите в свой аккаунт MEGA.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Нажмите на свой аватар.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Нажмите <b>«Отменить подписку»</b>.";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="Скрытые элементы";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="Этот элемент скрыт. Как только вы поделитесь элементом, его сможет увидеть любой пользователь, у которого есть ссылка. Он по-прежнему будет скрыт на вашем Облачном диске.";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="Один или несколько из этих элементов скрыты. Как только вы поделитесь скрытыми элементами, их сможет увидеть любой пользователь, у которого есть ссылка. Эти элементы по-прежнему будут скрыты на вашем Облачном диске.";

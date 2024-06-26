@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="อัปเดตปกอัลบั้มแล้ว";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="รายการที่ถูกซ่อน";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="อัลบั้มนี้มีรายการบางอย่างที่ซ่อนอยู่ หากคุณแชร์อัลบั้ม ผู้ที่ได้รับลิงก์จะสามารถเห็นสิ่งที่ซ่อนไว้ได้ อย่างไรก็ตาม สิ่งเหล่านี้จะยังคงถูกซ่อนอยู่ในคลาวด์ไดร์ฟของคุณ";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="อัลบั้มเหล่านี้มีรายการบางอย่างที่ซ่อนอยู่ หากคุณแชร์อัลบั้ม ผู้ที่ได้รับลิงก์จะสามารถเห็นสิ่งที่ซ่อนไว้ได้ อย่างไรก็ตาม สิ่งเหล่านี้จะยังคงถูกซ่อนอยู่ในคลาวด์ไดร์ฟของคุณ";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="ตัวกรอง";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="ฟีเจอร์สำหรับแผน Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน สำหรับ Pro Lite หรือ 180 วัน สำหรับ Pro I, II, III\n\n• จัดการประชุมออนไลน์ รองรับผู้เข้าร่วมไม่จำกัด และไม่มีข้อจำกัดด้านเวลา\n\n• VPN ความเร็วสูง ปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน สำหรับ Pro Lite หรือ 180 วัน สำหรับ Pro I, II, III\n\n• จัดการประชุมออนไลน์ รองรับผู้เข้าร่วมไม่จำกัด และไม่มีข้อจำกัดด้านเวลา\n\n• VPN ความเร็วสูง ปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ\n\n• ไม่มีโฆษณา";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="รายละเอียดการสมัครใช้งาน";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ ยกเลิกการประชุมนี้แล้ว";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ ยกเลิกการประชุมนี้และเหตุการณ์อื่น ๆ ทั้งหมดแล้ว";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ ยกเลิกเหตุการณ์ตามเวลาที่กำหนดไว้เป็น %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="%@ สร้างการประชุมนี้";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="ไม่มีไฟล์ PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="ไม่มีไฟล์นำเสนอ";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="ไม่มีสเปรดชีต";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="ไม่มีไฟล์บีบอัด";
 /* A title label for waiting room participants list view. */
@@ -3933,13 +3937,21 @@
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="มีชื่อเพลย์ลิสต์นี้อยู่แล้ว";
 /* Used in video playlist content to add videos to video playlist */
-"videos.tab.playlist.playlistContent.menu.addVideos"="Add videos";
+"videos.tab.playlist.playlistContent.menu.addVideos"="เพิ่มวิดีโอ";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="ลบเพลย์ลิสต์ออก";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="เพิ่ม";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="เพิ่ม";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="เปลี่ยนชื่อ";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="กรอกชื่อใหม่";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="เปลี่ยนชื่อ";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="เปลี่ยนชื่อไม่สำเร็จ";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="ไม่มีใครอยู่ในห้องนั่งรอ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4101,70 +4113,78 @@
 /* Feature title */
 "feature.title"="ฟีเจอร์";
 /* Cancellation Subscription manage by Google Play title */
-"accounts.cancelSubscriptionSteps.googlePlay.title"="Your subscription is not managed by Apple.";
+"accounts.cancelSubscriptionSteps.googlePlay.title"="การสมัครใช้งานของคุณไม่ได้จัดการโดย Apple";
 /* Cancellation Subscription manage by Google Play message */
-"accounts.cancelSubscriptionSteps.googlePlay.message"="This is because you subscribed to MEGA via Google Play. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.googlePlay.message"="เนื่องจากคุณสมัครใช้งาน MEGA ผ่าน Google Play หากต้องการยกเลิกการสมัครใช้งาน คุณต้อง:";
 /* Cancellation Section Google Play Web Browser title: In a web browser */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="In a web browser";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="ในเว็บเบราว์เซอร์";
 /* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visit play.google.com";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. ไปที่ play.google.com";
 /* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Sign in with your Google Play account.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. ลงชื่อเข้าใช้ด้วยบัญชี Google Play ของคุณ";
 /* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Click your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. คลิกที่รูปประจำตัวของคุณ";
 /* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Click <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. คลิก<b>การชำระเงินและการสมัครใช้งาน</b>";
 /* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Click <b>Subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. คลิก<b>การสมัครใช้งาน</b>";
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Under your MEGA subscription, click <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. คลิก <b>ยกเลิกการสมัครใช้งาน</b>ที่ปรากฎอยู่ใต้การสมัครใช้งาน MEGA ของคุณ";
 /* Cancellation Section Google Play Android Device title: On an Android device */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="On an Android device";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="บนอุปกรณ์ Android";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Open the Play Store app.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. เปิดแอป Play Store";
 /* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Sign in with your Google Play account (if required).";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. ลงชื่อเข้าใช้ด้วยบัญชี Google Play ของคุณ (หากระบบถาม)";
 /* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tap your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. แตะที่รูปประจำตัวของคุณ";
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tap <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. แตะ<b>การชำระเงินและการสมัครใช้งาน</b>";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tap <b>Subscriptions</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. แตะ<b>การสมัครใช้งาน</b>";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Under your MEGA subscription, tap <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. แตะ<b>ยกเลิกการสมัครใช้งาน</b>ที่ปรากฎอยู่ใต้การสมัครใช้งาน MEGA ของคุณ";
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="เพิ่มเติม";
 /* Context menu item to switch layout to main speaker (Call UI) */
-"chat.call.contextMenu.switchToMainView"="Switch to main view";
+"chat.call.contextMenu.switchToMainView"="เปลี่ยนเป็นมุมมองหลัก";
 /* Context menu item to switch layout to grid mode (Call UI) */
-"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+"chat.call.contextMenu.switchToGrid"="เปลี่ยนเป็นมุมมองตาราง";
 /* Context menu item to lower a raised hand (Call UI) */
 "chat.call.contextMenu.lowerHand"="เอามือลง";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="ยกมือ";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="ใหม่";
 /* Cancellation Subscription manage by Webclient title */
-"accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
+"accounts.cancelSubscriptionSteps.webClient.title"="คุณต้องใช้เว็บเบราว์เซอร์เพื่อยกเลิกการสมัครใช้งานของคุณ";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.webClient.message"="เนื่องจากคุณสมัครใช้งาน MEGA ในเว็บเบราว์เซอร์ หากต้องการยกเลิกการสมัครใช้งาน คุณต้อง:";
 /* Cancellation Section Webclient on a computer title: On a computer */
-"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="บนคอมพิวเตอร์";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. ไปที่ www.mega.io ในเว็บเบราว์เซอร์ของคุณ";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. เข้าสู่ระบบบัญชี MEGA ของคุณ";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3.. คลิก<b>การตั้งค่า</b>";
 /* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. คลิกที่แท็บ<b>แผน</b>";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. คลิก<b>ยกเลิกการสมัครใช้งาน</b>";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
-"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="บนอุปกรณ์มือถือ";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. ไปที่ www.mega.io ในเว็บเบราว์เซอร์ของคุณ";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. เข้าสู่ระบบบัญชี MEGA ของคุณ";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. แตะที่รูปประจำตัวของคุณ";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. แตะ<b>ยกเลิกการสมัครใช้งาน</b>";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="รายการที่ถูกซ่อน";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="รายการนี้ถูกตั้งค่าเป็นซ่อนอยู่ หากคุณทำการแชร์ลิงก์ ทุกคนที่มีลิงก์จะสามารถเห็นรายการที่ซ่อนไว้ได้ แต่ถึงอย่างนั้น รายการก็จะยังซ่อนอยู่ในคลาวด์ไดร์ฟของคุณเช่นเดิม";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="มีบางรายการที่คุณเลือกถูกตั้งค่าเป็นซ่อนอยู่ หากคุณทำการแชร์ลิงก์ ทุกคนที่มีลิงก์จะสามารถเห็นรายการที่ซ่อนไว้ได้ แต่ถึงอย่างนั้น รายการก็จะยังซ่อนอยู่ในคลาวด์ไดร์ฟของคุณเช่นเดิม";

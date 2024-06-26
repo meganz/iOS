@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="Albumcover aktualisiert";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Verborgene Elemente";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="Dieses Album enthält verborgene Inhalte. Durch die Freigabe des Albums werden die verborgenen Inhalte für die Personen sichtbar, für die Sie das Album freigeben. Die Inhalte bleiben in Ihrem Cloud Drive weiterhin verborgen.";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Es gibt verborgene Elemente in einem oder mehreren dieser Alben. Durch die Freigabe eines Albums werden die verborgenen Inhalte für die Personen sichtbar, für die Sie das Album freigeben. Die Inhalte bleiben in Ihrem Cloud Drive weiterhin verborgen.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Leistungsmerkmale der Pro-Pakete";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Wiederherstellung von gelöschten Daten bis zu 90 Tage lang für Pro Lite und bis zu 180 Tage lang für Pro I, II und III\n\n• Anrufe und Meetings mit beliebig vielen Teilnehmern und ohne Zeitbeschränkung\n\n• Unerkannt surfen mit unserem schnellen VPN\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Wiederherstellung von gelöschten Daten bis zu 90 Tage lang für Pro Lite und bis zu 180 Tage lang für Pro I, II und III\n\n• Anrufe und Meetings mit beliebig vielen Teilnehmern und ohne Zeitbeschränkung\n\n• Unerkannt surfen mit unserem schnellen VPN\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support\n\n• Keine Werbung";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnementdetails";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ hat dieses Meeting abgesagt";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ hat alle Termine dieses wiederkehrenden Meetings abgesagt";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ hat den Termin am %@ abgesagt";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="%@ hat dieses Meeting erstellt";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="Keine PDFs";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="Keine Präsentationen";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="No spreadsheets";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="Keine Archive";
 /* A title label for waiting room participants list view. */
@@ -3940,6 +3944,14 @@
 "videos.tab.playlist.browser.button.add"="Hinzufügen";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Hinzufügen";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="Umbenennen";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Neuen Namen eingeben";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="Umbenennen";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="Umbenennen fehlgeschlagen";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Der Warteraum ist leer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4135,36 +4147,44 @@
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="Weitere";
 /* Context menu item to switch layout to main speaker (Call UI) */
-"chat.call.contextMenu.switchToMainView"="Switch to main view";
+"chat.call.contextMenu.switchToMainView"="Zu Hauptansicht wechseln";
 /* Context menu item to switch layout to grid mode (Call UI) */
-"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+"chat.call.contextMenu.switchToGrid"="Zu Rasteransicht wechseln";
 /* Context menu item to lower a raised hand (Call UI) */
 "chat.call.contextMenu.lowerHand"="Hand senken";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="Hand heben";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="Neu";
 /* Cancellation Subscription manage by Webclient title */
-"accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
+"accounts.cancelSubscriptionSteps.webClient.title"="Sie müssen Ihr Abonnement in einem Webbrowser kündigen";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.webClient.message"="Der Grund hierfür ist, dass Sie MEGA in Ihrem Webbrowser abonniert haben. Um Ihr Abonnement zu kündigen, gehen Sie wie folgt vor:";
 /* Cancellation Section Webclient on a computer title: On a computer */
-"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="Auf einem Computer";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Öffnen Sie www.mega.io in Ihrem Webbrowser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Loggen Sie sich in Ihren MEGA-Account ein.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Klicken Sie auf <b>Einstellungen</b>.";
 /* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Klicken Sie auf den Reiter <b>Paket</b>.";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Klicken Sie auf <b>Abonnement kündigen</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
-"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="Auf einem Mobilgerät";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Öffnen Sie www.mega.io in Ihrem Webbrowser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Loggen Sie sich in Ihren MEGA-Account ein.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tippen Sie auf Ihr Profilbild.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tippen Sie auf <b>Abonnement kündigen</b>.";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="Verborgene Elemente";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="Dieser Inhalt ist verborgen. Wenn Sie ihn freigeben, wird jeder ihn einsehen können, der über den Link verfügt. Der Inhalt bleiben in Ihrem Cloud Drive weiterhin verborgen.";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="Einer oder mehrere dieser Inhalte sind verborgen. Wenn Sie sie freigeben, wird jeder sie einsehen können, der über den Link verfügt. Die Inhalte bleiben in Ihrem Cloud Drive weiterhin verborgen.";

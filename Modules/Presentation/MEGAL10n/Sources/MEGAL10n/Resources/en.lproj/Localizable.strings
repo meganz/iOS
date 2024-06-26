@@ -552,6 +552,7 @@
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Hidden items";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.message.single"="There are hidden items in this album. Sharing the album will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.message.multi"="There are hidden items in one or more of these albums. Sharing the albums will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
@@ -3617,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ cancelled this meeting";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ cancelled this meeting and all its occurrences";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ cancelled the occurrence scheduled for %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="%@ created this meeting";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -4162,7 +4161,7 @@
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="Raise hand";
 /* Context menu item label to indicate a new feature (Call UI) */
-"chat.call.contextMenu.newFeature"="NEW";
+"chat.call.contextMenu.newFeature"="New";
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
 /* Cancellation Subscription manage by Webclient message */
@@ -4193,4 +4192,5 @@
 "getNodeLink.sensitive.alert.title"="Hidden items";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.single"="This item is set to hidden. Once you share the item, anyone with the link will be able to see it. It will still be hidden in your Cloud drive.";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="One or more of these items is set to hidden. Once you share the hidden items, anyone with the link will be able to see them. The items will still be hidden in your Cloud drive.";

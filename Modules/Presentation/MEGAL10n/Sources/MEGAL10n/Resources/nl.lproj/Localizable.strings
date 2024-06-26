@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="Album omslag bijgewerkt";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Verborgen items";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="Er zijn verborgen items in dit album. Als u het album deelt, zijn de verborgen items zichtbaar voor degenen met wie u deelt. De items blijven verborgen op uw Cloud-schijf.";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Er zijn verborgen items in een of meer van deze albums. Als u de albums deelt, zijn de verborgen items zichtbaar voor degenen met wie u ze deelt. De items blijven verborgen op uw Cloud-schijf.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Kenmerken van Pro abonnementen";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Host gesprekken en vergaderingen met ongelimiteerde deelnemers en zonder tijdslimieten\n\n• Blijf privé online met onze snelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Host gesprekken en vergaderingen met ongelimiteerde deelnemers en zonder tijdslimieten\n\n• Blijf privé online met onze snelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning\n\n• Geen advertenties";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnement details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ annuleerde deze vergadering";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ annuleerde deze vergadering en alle gebeurtenissen";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ annuleerde de gebeurtenis gepland voor %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="%@ creëerde deze vergadering";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="Geen PDFs";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="Geen presentaties";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="No spreadsheets";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="Geen archiven";
 /* A title label for waiting room participants list view. */
@@ -3940,6 +3944,14 @@
 "videos.tab.playlist.browser.button.add"="Toevoegen";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Toevoegen";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="Hernoemen";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Vul de nieuwe naam in";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="Hernoemen";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="Hernoemen is mislukt";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Er is niemand in de wachtkamer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4142,6 +4154,8 @@
 "chat.call.contextMenu.lowerHand"="Hand omlaag doen";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="Hand opsteken";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="Nieuw";
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="U moet uw abonnement opzeggen via een webbrowser";
 /* Cancellation Subscription manage by Webclient message */
@@ -4168,3 +4182,9 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tik op uw avatar.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tik <b>Abonnement opzeggen</b>.";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="Verborgen items";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="Dit item is ingesteld op verborgen. Zodra u het item hebt gedeeld, kan iedereen met de link het zien. Het zal nog steeds verborgen zijn op uw Cloud-schijf.";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="Één of meer van deze items zijn ingesteld op verborgen. Zodra u de verborgen items hebt gedeeld, kan iedereen met de link ze zien. De items blijven verborgen op uw Cloud-schijf.";

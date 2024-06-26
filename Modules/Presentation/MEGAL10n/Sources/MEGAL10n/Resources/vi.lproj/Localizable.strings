@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="Đã cập nhật ảnh bìa album";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Các mục ẩn";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="Có các mục ẩn trong album này. Việc thực[w]hiện chia[w]sẻ album sẽ làm các mục ẩn hiển[w]thị cho những người bạn chia[w]sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ[w]Mây của bạn.";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Có các mục ẩn nằm trong một hoặc nhiều album này. Việc thực hiện chia sẻ album sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Lọc";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Các tính năng của gói Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Đường liên kết được bảo vệ bằng mật khẩu\n\n• Đường liên kết có ngày hết hạn\n\n• Chia sẻ băng thông truyền tải\n\n• Tua lại tối đa 90 ngày cho dữ liệu đã xóa với Pro Lite và lên đến 180 ngày với Pro I, II và III\n\n• Tổ chức cuộc gọi và cuộc họp với thời gian và lượng người tham gia không giới hạn\n\n• Giữ an ninh trực tuyến với VPN tốc độ cao của chúng tôi \n\n• Lên lịch dọn Thùng Rác từ 7 ngày đến 10 năm\n\n• Nhận hỗ trợ ưu tiên";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Đường liên kết được bảo vệ bằng mật khẩu\n\n• Đường liên kết có ngày hết hạn\n\n• Chia sẻ băng thông truyền tải\n\n• Tua lại tối đa 90 ngày cho dữ liệu đã xóa với Pro Lite và lên đến 180 ngày với Pro I, II và III\n\n• Tổ chức cuộc gọi và cuộc họp với thời gian và lượng người tham gia không giới hạn\n\n• Giữ an ninh trực tuyến với VPN tốc độ cao của chúng tôi\n\n• Lên lịch dọn Thùng Rác từ 7 ngày đến 10 năm\n\n• Nhận hỗ trợ ưu tiên\n\n• Không có quảng cáo";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Chi tiết gói đăng ký";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ đã hủy bỏ cuộc họp này";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ đã hủy bỏ cuộc họp đình kỳ này và tất cả các thời điểm tái diễn có liên quan";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ đã hủy một thời điểm tái diễn của cuộc họp được lên lịch vào %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="%@ đã tạo cuộc họp này";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="Không có tệp PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="Không có tệp trình chiếu";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="Không có bảng tính nào";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="Không có tệp nén";
 /* A title label for waiting room participants list view. */
@@ -3940,6 +3944,14 @@
 "videos.tab.playlist.browser.button.add"="Thêm";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Thêm";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="Đổi tên";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Nhập tên mới";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="Đổi tên";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="Đổi tên không thành[w]công";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Không có ai ở trong phòng chờ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4107,64 +4119,72 @@
 /* Cancellation Section Google Play Web Browser title: In a web browser */
 "accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="Dùng một trình duyệt web";
 /* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visit play.google.com";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Truy cập play.google.com";
 /* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Sign in with your Google Play account.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Đăng nhập với tài khoản Google Play của bạn.";
 /* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Click your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Nhấp vào ảnh đại diện của bạn.";
 /* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Click <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Nhấp vào <b>Thanh toán và gói thuê bao.</b>";
 /* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Click <b>Subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Nhấp vào <b>Gói thuê bao.</b>";
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Under your MEGA subscription, click <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Trong phần gói đăng ký MEGA của bạn, nhấp vào <b>Hủy đăng ký.</b>";
 /* Cancellation Section Google Play Android Device title: On an Android device */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Trên thiết bị Android";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Open the Play Store app.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Mở ứng dụng Cửa hàng Play.";
 /* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Sign in with your Google Play account (if required).";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Đăng nhập với tài khoản Google Play của bạn (nếu cần).";
 /* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tap your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Chạm vào ảnh đại diện của bạn.";
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tap <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Chạm vào <b>Thanh toán và gói thuê bao.</b>";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tap <b>Subscriptions</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Chạm vào <b>Gói thuê bao.</b>";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Under your MEGA subscription, tap <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Trong phần gói đăng ký MEGA của bạn, chạm vào <b>Hủy đăng ký.</b>";
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="Hiện thêm";
 /* Context menu item to switch layout to main speaker (Call UI) */
-"chat.call.contextMenu.switchToMainView"="Switch to main view";
+"chat.call.contextMenu.switchToMainView"="Chuyển sang chế độ xem chính";
 /* Context menu item to switch layout to grid mode (Call UI) */
-"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+"chat.call.contextMenu.switchToGrid"="Chuyển sang chế độ xem ô vuông";
 /* Context menu item to lower a raised hand (Call UI) */
 "chat.call.contextMenu.lowerHand"="Bỏ tay xuống";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="Giơ tay lên";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="Mới";
 /* Cancellation Subscription manage by Webclient title */
-"accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
+"accounts.cancelSubscriptionSteps.webClient.title"="Bạn cần phải hủy gói đăng ký của mình bằng trình duyệt web";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.webClient.message"="Điều này là do bạn đã đăng ký gói MEGA trong trình duyệt web của mình. Để hủy gói đăng ký, bạn sẽ cần:";
 /* Cancellation Section Webclient on a computer title: On a computer */
-"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="Trên máy tính";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Truy cập www.mega.io với trình duyệt web.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Đăng nhập vào tài khoản MEGA của bạn.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Nhấp vào <b>Thiết Đặt</b>.";
 /* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Nhấp vào thẻ <b>Gói</b>.";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Nhấp vào <b>Hủy đăng ký</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
-"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="Trên thiết bị di động";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Truy cập www.mega.io với trình duyệt web.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Đăng nhập vào tài khoản MEGA của bạn.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Chạm vào ảnh đại diện của bạn.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Chạm vào <b>Hủy đăng ký</b>.";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="Các mục ẩn";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="Mục này được đặt ẩn đi. Khi bạn chia sẻ mục này, bất kỳ ai có đường liên kết sẽ có thể xem thấy nó nhưng vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="Một hay nhiều mục này được đặt ẩn đi. Khi bạn chia sẻ các mục này, bất kỳ ai có đường liên kết sẽ có thể xem thấy hết nhưng các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";

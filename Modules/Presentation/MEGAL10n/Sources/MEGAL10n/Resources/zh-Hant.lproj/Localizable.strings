@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="相簿封面已更新";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="隱藏的項目";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="此相簿包含隱藏的項目。共享相簿意味著與您共享的人可以看到隱藏的項目。這些項目仍會在您的雲端硬碟中隱藏。";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="其中一個或多個相簿中有隱藏的項目。共享相簿意味著與您共享的人可以看見隱藏的項目。這些項目仍將隱藏在您的雲端硬碟中。";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="篩選";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 可為連結設定到期日期\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天的刪除資料，Pro I、II、和III可回溯最多180天\n\n\n• 主持通話和會議，與會人數和時間不受限制\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密碼保護的連結\n\n• 具有到期日的連結\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天的刪除資料，在Pro I、II和III可回溯最多180天\n\n• 主持通話和會議，與會人數和通話時間不受限制\n\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服\n\n• 無廣告";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="訂閱詳情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@已取消此會議";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@已取消這次會議及其所有事件";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@已取消以下排定時間的事件%@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="%@已建立此會議";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="沒有PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="沒有簡報";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="無試算表";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="沒有封存檔案";
 /* A title label for waiting room participants list view. */
@@ -3940,6 +3944,14 @@
 "videos.tab.playlist.browser.button.add"="新增";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="新增";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="重新命名";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="輸入新名稱";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="重新命名";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="重新命名失敗";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室裡沒有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4142,6 +4154,8 @@
 "chat.call.contextMenu.lowerHand"="放下手";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="舉手";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="新功能";
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="您需要使用網頁瀏覽器取消訂閱";
 /* Cancellation Subscription manage by Webclient message */
@@ -4168,3 +4182,9 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. 點選您的大頭貼。";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. 點選<b>取消訂閱</b>。";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="隱藏的項目";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="此項目設定為隱藏。一旦您共享該項目，任何知道連結的人都可以看到它。它在您的雲端硬碟中仍是隱藏的。";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="其中一個或多個項目被設定為隱藏。一旦您共享項目，任何知道連結的人都可以看到它們。這些項目在您的雲端硬碟中仍是隱藏的。";

@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="相册封面已更新";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="隐藏的项目";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="此相册包含隐藏的项目。共享相册意味着与您共享的人可以看到隐藏的项目。这些项目仍将隐藏在您的云盘中。";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="其中一个或多个相册包含隐藏的项目。共享相册意味着与您共享的人可以看到隐藏的项目。这些项目仍将隐藏在您的云盘中。";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="过滤";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案的功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密码保护的链接\n\n• 具有到期日期的链接\n\n• 传输流量共享\n\n• Pro Lite可还原最多90天的已删除数据，Pro I、II和III则可还原最多180天\n\n• 主持通话和会议，参与者人数和时间不受限制\n\n• 使用我们的高速VPN保持在线隐私\n\n• 可安排在7天到10年之间定期清理回收站\n\n• 优先客服";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密码保护的链接\n\n• 具有到期日期的链接\n\n• 传输流量共享\n\n• Pro Lite可还原最多90天的已删除数据，Pro I、II和III则可还原最多180天\n\n• 主持通话和会议，参与者人数和时间不受限制\n\n• 使用我们的高速VPN保持在线隐私\n\n• 可安排在7天到10年之间定期清理回收站\n\n• 优先客服\n\n• 无广告";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="订阅详情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@已取消此会议";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@已取消此会议及其所有事件";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@已取消预定于以下时间的事件%@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="%@已创建此会议";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="没有PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="没有演示文稿";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="No spreadsheets";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="没有封存档案";
 /* A title label for waiting room participants list view. */
@@ -3940,6 +3944,14 @@
 "videos.tab.playlist.browser.button.add"="添加";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="添加";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="重命名";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="输入新名称";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="重命名";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="重命名失败";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室里没有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4142,29 +4154,37 @@
 "chat.call.contextMenu.lowerHand"="放手";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="举手";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="新消息";
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="您需要使用网络浏览器取消您的订阅";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.webClient.message"="这是因为您在网页浏览器中订阅了MEGA。若要取消订阅，您需要：";
 /* Cancellation Section Webclient on a computer title: On a computer */
-"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="在计算机上";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 在网页浏览器中访问www.mega.io";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. 登入您的MEGA帐户。";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. 点击<b>设置</b>。";
 /* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. 点击<b>方案</b>选项卡。";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. 点击<b>取消订阅</b>。";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
-"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="在移动设备上";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 在网页浏览器中访问www.mega.io";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. 登入您的MEGA帐户。";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. 点按您的头像。";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. 点按<b>取消订阅</b>。";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="隐藏的项目";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="此项目被设置为隐藏。一旦您共享该项目，任何拥有该链接的人都可以看到它。它仍将隐藏在您的云盘中。";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="其中一个或多个项目被设置为隐藏。一旦您共享该隐藏项目，任何拥有链接的人都可以看到它们。这些项目仍将隐藏在您的云盘中。";
