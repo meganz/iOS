@@ -17,7 +17,15 @@ final class VideoPlaylistsCollectionViewCoordinator {
         }
         
         static func == (lhs: RowItem, rhs: RowItem) -> Bool {
-            lhs.videoPlaylist.id == rhs.videoPlaylist.id
+            lhs.videoPlaylist.id == rhs.videoPlaylist.id &&
+            lhs.videoPlaylist.name == rhs.videoPlaylist.name &&
+            lhs.videoPlaylist.sharedLinkStatus == rhs.videoPlaylist.sharedLinkStatus
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(videoPlaylist.id)
+            hasher.combine(videoPlaylist.name)
+            hasher.combine(videoPlaylist.sharedLinkStatus)
         }
     }
     
@@ -65,7 +73,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
         var snapshot = DiffableDataSourceSnapshot()
         snapshot.appendSections([.videoPlaylists])
         snapshot.appendItems(videoPlaylists.map(RowItem.init(videoPlaylist:)), toSection: .videoPlaylists)
-        dataSource?.applySnapshotUsingReloadData(snapshot)
+        dataSource?.apply(snapshot)
     }
     
     // MARK: - Cell setup
