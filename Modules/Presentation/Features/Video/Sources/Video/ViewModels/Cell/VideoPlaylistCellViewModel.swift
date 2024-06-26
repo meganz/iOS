@@ -30,15 +30,14 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     
     @MainActor
     func onViewAppear() async {
-        let videos = await videos(for: videoPlaylistEntity)
-        try? Task.checkCancellation()
-        
-        await loadThumbnails(for: videos)
+        for await videos in videoPlaylistContentUseCase.monitorUserVideoPlaylistContent(for: videoPlaylistEntity) {
+            await loadThumbnails(for: videos)
+        }
     }
     
     @MainActor
     private func loadThumbnails(for videos: [NodeEntity]) async {
-        let imageContainers = await videoPlaylistThumbnailLoader.loadThumbnails(for: videos)
+        let imageContainers = await videoPlaylistThumbnailLoader.loadThumbnails(for: videos.sorted(by: { $0.modificationTime > $1.modificationTime }))
         
         previewEntity = videoPlaylistEntity.toVideoPlaylistCellPreviewEntity(
             thumbnailContainers: imageContainers.compactMap { $0 },
@@ -47,14 +46,6 @@ final class VideoPlaylistCellViewModel: ObservableObject {
         )
         
         secondaryInformationViewType = videos.count == 0 ? .emptyPlaylist : .information
-    }
-    
-    private func videos(for videoPlaylist: VideoPlaylistEntity) async -> [NodeEntity] {
-        guard let videos = try? await videoPlaylistContentUseCase.videos(in: videoPlaylistEntity) else {
-            // Better to log in future MR. Currently MEGALogger is from main module.
-            return []
-        }
-        return videos
     }
     
     private func durationText(from videos: [NodeEntity]) -> String {
