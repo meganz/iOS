@@ -2,6 +2,7 @@ import AsyncAlgorithms
 import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGASwift
 @testable import Video
 import XCTest
@@ -35,7 +36,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, videoPlaylistContentsUseCase, _, _, _) = makeSUT(
+        let (sut, _, videoPlaylistContentsUseCase, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -77,7 +78,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -116,7 +117,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -126,6 +127,74 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         
         XCTAssertTrue(sut.shouldPopScreen, "Expect to exit screen")
     }
+    
+    // MARK: - addVideosToVideoPlaylist
+    
+    func testAddVideosToVideoPlaylist_emptyVideos_shouldNotAddVideosToPlaylist() async {
+        let allVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            id: 1,
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let (sut, _, _, _, _, videoPlaylistModificationUseCase, _) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
+        
+        await sut.addVideosToVideoPlaylist(videos: [])
+        
+        XCTAssertTrue(videoPlaylistModificationUseCase.messages.isEmpty)
+    }
+    
+    func testAddVideosToVideoPlaylist_addVideosFailed_shouldNotShowSnackBar() async {
+        let allVideos: [NodeEntity] = []
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            id: 1,
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let (sut, _, _, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(addToVideoPlaylistResult: .failure(GenericErrorEntity()))
+        )
+        
+        await sut.addVideosToVideoPlaylist(videos: [ NodeEntity(name: "video 2", handle: 2, hasThumbnail: true) ])
+        
+        XCTAssertTrue(sut.sharedUIState.snackBarText.isEmpty)
+        XCTAssertFalse(sut.sharedUIState.shouldShowSnackBar)
+    }
+    
+    func testAddVideosToVideoPlaylist_addVideosSuccess_shouldShowSnackBar() async {
+        let videosToAdd = [ NodeEntity(name: "video 2", handle: 2, hasThumbnail: true) ]
+        let allVideos: [NodeEntity] = []
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            id: 1,
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error> = .success(VideoPlaylistElementsResultEntity(success: UInt(videosToAdd.count), failure: 0))
+        let (sut, _, _, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: .init(addToVideoPlaylistResult: addToVideoPlaylistResult)
+        )
+        
+        await sut.addVideosToVideoPlaylist(videos: videosToAdd)
+        
+        XCTAssertEqual(sut.sharedUIState.snackBarText, addVideosToVideoPlaylistSucessfulMessage(videosCount: videosToAdd.count, videoPlaylistName: videoPlaylistEntity.name))
+        XCTAssertTrue(sut.sharedUIState.shouldShowSnackBar)
+    }
+    
+    // MARK: - subscribeToAllSelected
     
     func testSubscribeToAllSelected_whenIsAllSelectedChanged_triggerSelectionDelegate() async {
         let allVideos = [
@@ -149,7 +218,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             monitorVideoPlaylistAsyncSequenceResult: videoPlaylistUpdatesStream,
             monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
         )
-        let (sut, _, _, _, sharedUIState, _) = makeSUT(
+        let (sut, _, _, _, sharedUIState, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase
         )
@@ -180,6 +249,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         
         await fulfillment(of: [taskExpectation], timeout: 1.0)
     }
+
     
     // MARK: - Helpers
     
@@ -188,6 +258,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase = MockVideoPlaylistContentUseCase(),
         thumbnailUseCase: MockThumbnailUseCase = MockThumbnailUseCase(),
         sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+        videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase = MockVideoPlaylistModificationUseCase(addToVideoPlaylistResult: .failure(GenericErrorEntity())),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
@@ -196,6 +267,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase,
         sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase,
         sharedUIState: VideoPlaylistContentSharedUIState,
+        videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase,
         selectionAdapter: MockVideoPlaylistContentViewModelSelectionAdapter
     ) {
         let sharedUIState = VideoPlaylistContentSharedUIState()
@@ -207,7 +279,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
             sharedUIState: sharedUIState, 
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase, 
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             selectionDelegate: selectionAdapter
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
@@ -217,7 +290,13 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistContentsUseCase,
             sortOrderPreferenceUseCase,
             sharedUIState,
+            videoPlaylistModificationUseCase,
             selectionAdapter
         )
+    }
+    
+    private func addVideosToVideoPlaylistSucessfulMessage(videosCount: Int, videoPlaylistName: String) -> String {
+        let message = Strings.Localizable.Videos.Tab.Playlist.Snackbar.videoCount(videosCount)
+        return message.replacingOccurrences(of: "[A]", with: videoPlaylistName)
     }
 }

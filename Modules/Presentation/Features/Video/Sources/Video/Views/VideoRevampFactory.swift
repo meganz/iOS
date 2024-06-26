@@ -92,6 +92,7 @@ public class VideoRevampFactory {
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
         videoSelection: VideoSelection,
@@ -105,7 +106,8 @@ public class VideoRevampFactory {
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase),
             sharedUIState: sharedUIState,
             presentationConfig: presentationConfig,
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase, 
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             selectionDelegate: selectionAdapter
         )
         

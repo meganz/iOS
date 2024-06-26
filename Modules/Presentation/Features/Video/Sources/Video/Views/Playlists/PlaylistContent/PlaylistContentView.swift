@@ -30,7 +30,7 @@ struct PlaylistContentScreen: View {
             videos: viewModel.videos,
             router: router,
             videoSelection: videoSelection,
-            onTapAddButton: {}
+            onTapAddButton: { viewModel.shouldShowVideoPlaylistPicker = true }
         )
         .task {
             await viewModel.onViewAppeared()
@@ -41,6 +41,16 @@ struct PlaylistContentScreen: View {
         .onReceive(viewModel.$shouldPopScreen) { shouldPopScreen in
             if shouldPopScreen {
                 router.popScreen()
+            }
+        }
+        .onReceive(viewModel.$shouldShowVideoPlaylistPicker) { shouldShow in
+            if shouldShow {
+                router.openVideoPicker { selectedVideos in
+                    viewModel.shouldShowVideoPlaylistPicker = false
+                    Task {
+                        await viewModel.addVideosToVideoPlaylist(videos: selectedVideos)
+                    }
+                }
             }
         }
     }
