@@ -550,6 +550,10 @@
 "cameraUploads.albums.albumCoverUpdated"="تم تحديث غلاف الألبوم";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="عناصر مخفية";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="هناك عناصر مخفية في هذا الألبوم. تعني مشاركة الألبوم أن العناصر المخفية مرئية لأولئك الذين تشاركهم معهم. ستظل العناصر مخفية في السواقة السحابية الخاص بك.";
+/* Alert message presented when generating shared links for an album that contains sensitive content */
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="هناك عناصر مخفية في واحد أو أكثر من هذه الألبومات. تعني مشاركة الألبومات أن العناصر المخفية مرئية لأولئك الذين تشاركهم معهم. ستظل العناصر مخفية في السواقة السحابية الخاص بك.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="فلتر";
 /* Choose type headline within filter UI */
@@ -3555,9 +3559,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="ميزات باقات برو Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و II و III\n\n• استضافة المكالمات والاجتماعات مع عدد غير محدود من المشاركين وبدون قيود زمنية\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• No advertisements";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و II و III\n\n• استضافة المكالمات والاجتماعات مع عدد غير محدود من المشاركين وبدون قيود زمنية\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم\n\n• خالية من إعلانات";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="تفاصيل الاشتراك";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3614,8 +3618,6 @@
 "meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@قام بإلغاء هذا الاجتماع";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
 "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ قام بإلغاء الاجتماع المتكرر وجميع تكراراته";
-/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="قام %@ بإلغاء التكرار المجدول بتاريخ %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
 "meetings.scheduled.managementMessages.created"="قام %@ بإنشاء هذا الاجتماع";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
@@ -3804,6 +3806,8 @@
 "home.search.empty.no-pdfs"="لا يوجد PDFs";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="لا يوجد العروض التقديمية";
+/* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
+"home.search.empty.no-spreadsheets"="No spreadsheets";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="ات يوجد ملفات مؤرشفة";
 /* A title label for waiting room participants list view. */
@@ -3933,13 +3937,21 @@
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="يوجد بالفعل قائمة تشغيل بهذا الاسم";
 /* Used in video playlist content to add videos to video playlist */
-"videos.tab.playlist.playlistContent.menu.addVideos"="Add videos";
+"videos.tab.playlist.playlistContent.menu.addVideos"="إضافة مقاطع فيديو";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="حذف قائمة التشغيل";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="إضافة";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="إضافة";
+/* Videos: video playlist rename alert title */
+"videos.tab.playlist.content.alert.title.rename"="إعادة التسمية";
+/* Videos: video playlist rename alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.enterTheNewName"="أدخل الاسم الجديد";
+/* Videos: video playlist rename alert button title */
+"videos.tab.playlist.content.alert.button.rename"="إعادة التسمية";
+/* Videos: video playlist rename error message */
+"videos.tab.playlist.content.snackbar.renamingFailed"="فشلت عملية إعادة التسمية";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="لا يوجد أحد في غرفة الانتظار";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4101,70 +4113,78 @@
 /* Feature title */
 "feature.title"="ميزة";
 /* Cancellation Subscription manage by Google Play title */
-"accounts.cancelSubscriptionSteps.googlePlay.title"="Your subscription is not managed by Apple.";
+"accounts.cancelSubscriptionSteps.googlePlay.title"="لا تتم إدارة اشتراكك من قبل آبل Apple.";
 /* Cancellation Subscription manage by Google Play message */
-"accounts.cancelSubscriptionSteps.googlePlay.message"="This is because you subscribed to MEGA via Google Play. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.googlePlay.message"="هذا لأنك اشتركت في ميغا MEGA عبر غوغل بلاي Google Play. لإلغاء اشتراكك، ستحتاج إلى:";
 /* Cancellation Section Google Play Web Browser title: In a web browser */
 "accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="في متصفح الويب";
 /* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visit play.google.com";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. قم بزيارة play.google.com";
 /* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Sign in with your Google Play account.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. قم بتسجيل الدخول باستخدام حساب غوغل بلاي Google Play الخاص بك.";
 /* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Click your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. انقر فوق الصورة الرمزية avatar الخاصة بك.";
 /* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Click <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. انقر على <b>الدفعات والاشتراكات.</b>";
 /* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Click <b>Subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. انقر على <b>الإشتراكات.</b>";
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Under your MEGA subscription, click <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. ضمن اشتراك ميغا MEGA الخاص بك، انقر على <b>إلغاء الاشتراك.</b>";
 /* Cancellation Section Google Play Android Device title: On an Android device */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="On an Android device";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="على جهاز أندرويد Android";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Open the Play Store app.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. افتح تطبيق متجر بلاي Play Store.";
 /* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Sign in with your Google Play account (if required).";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. قم بتسجيل الدخول باستخدام حساب غوغل بلاي Google Play الخاص بك (إذا لزم الأمر).";
 /* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tap your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. انقر فوق الصورة الرمزية avatar الخاصة بك.";
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tap <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. انقر على <b>الدفعات والاشتراكات.</b>";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tap <b>Subscriptions</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. انقر على <b>الإشتراكات.</b>";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Under your MEGA subscription, tap <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. ضمن اشتراك ميغا MEGA الخاص بك، انقر على <b>إلغاء الاشتراك.</b>";
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="المزيد";
 /* Context menu item to switch layout to main speaker (Call UI) */
-"chat.call.contextMenu.switchToMainView"="Switch to main view";
+"chat.call.contextMenu.switchToMainView"="قم بالتبديل إلى العرض الرئيسي";
 /* Context menu item to switch layout to grid mode (Call UI) */
-"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+"chat.call.contextMenu.switchToGrid"="قم بالتبديل إلى عرض الشبكة";
 /* Context menu item to lower a raised hand (Call UI) */
 "chat.call.contextMenu.lowerHand"="انزل يدك";
 /* Context menu item to signal a raised hand (Call UI) */
 "chat.call.contextMenu.raiseHand"="ارفع يدك";
+/* Context menu item label to indicate a new feature (Call UI) */
+"chat.call.contextMenu.newFeature"="جديد";
 /* Cancellation Subscription manage by Webclient title */
-"accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
+"accounts.cancelSubscriptionSteps.webClient.title"="تحتاج إلى إلغاء اشتراكك باستخدام متصفح الويب";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.webClient.message"="هذا لأنك اشتركت في ميغا MEGA في متصفح الويب الخاص بك. لإلغاء اشتراكك، ستحتاج إلى:";
 /* Cancellation Section Webclient on a computer title: On a computer */
-"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="على الحاسوب";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. قم بزيارة www.mega.io في متصفح الويب الخاص بك.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. قم بتسجيل الدخول إلى حساب ميغا MEGA الخاص بك.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. انقر على <b>إعدادات</b>.";
 /* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. انقر على صفحة <b>الباقة</b>.";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. انقر على <b>إلغاء الاشتراك</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
-"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="على هاتف محمول";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.io in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. قم بزيارة www.mega.io في متصفح الويب الخاص بك.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. قم بتسجيل الدخول إلى حساب ميغا MEGA الخاص بك.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. انقر على الصورة الرمزية avatar الخاصة بك.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. انقر على <b>إلغاء الاشتراك</b>.";
+/* Alert presented when generating shared links for an nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.title"="عناصر مخفية";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.single"="تم تعيين هذا العنصر ليكون مخفيًا. بمجرد مشاركة العنصر، سيتمكن أي شخص لديه الرابط من رؤيته. ستظل مخفية في السواقة السحابية الخاص بك.";
+/* Alert message presented when generating shared links for nodes that contains sensitive content */
+"getNodeLink.sensitive.alert.message.multi"="تم تعيين عنصر واحد أو أكثر من هذه العناصر ليكون مخفيًا. بمجرد مشاركة العناصر المخفية، سيتمكن أي شخص لديه الرابط من رؤيتها. ستظل العناصر مخفية في السواقة السحابية الخاص بك.";
