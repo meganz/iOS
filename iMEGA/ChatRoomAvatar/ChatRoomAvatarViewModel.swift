@@ -1,4 +1,5 @@
 import Combine
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
@@ -169,13 +170,13 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
         
         let initials = chatTitle.initialForAvatar()
-        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
         
         return UIImage.drawImage(
             forInitials: initials,
             size: size,
             backgroundColor: avatarBackgroundColor,
-            textColor: MEGAAppColor.White._FFFFFF.uiColor,
+            textColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.whiteFFFFFF,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage)
     }
@@ -186,9 +187,9 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         return UIImage.drawImage(
             forInitials: initials,
             size: size,
-            backgroundColor: MEGAAppColor.Chat.chatAvatarBackground.uiColor,
-            backgroundGradientColor: MEGAAppColor.Gray._DBDBDB.uiColor,
-            textColor: MEGAAppColor.White._FFFFFF.uiColor,
+            backgroundColor: UIColor.chatAvatarBackground,
+            backgroundGradientColor: UIColor.grayDBDBDB,
+            textColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor: UIColor.whiteFFFFFF,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage
         )

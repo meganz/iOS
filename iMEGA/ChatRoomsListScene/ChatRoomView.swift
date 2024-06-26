@@ -14,7 +14,11 @@ struct ChatRoomView: View {
                     ForEach(swipeActionLabels()) { label in
                         if let image = UIImage(named: label.imageName)?
                             .withRenderingMode(.alwaysTemplate)
-                            .withTintColor(MEGAAppColor.White._FFFFFF.uiColor) {
+                            .withTintColor(
+                                isDesignTokenEnabled ?
+                                    TokenColors.Icon.onColor :
+                                    UIColor.whiteFFFFFF
+                            ) {
                             Button {
                                 label.action()
                             } label: {
