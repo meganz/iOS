@@ -45,13 +45,12 @@
     self.awayLabel.text = LocalizedString(@"away", @"");
     self.busyLabel.text = LocalizedString(@"busy", @"");
     self.offlineLabel.text = LocalizedString(@"offline", @"Title of the Offline section");
-    
+    self.lastActiveLabel.text = LocalizedString(@"settings.calls.status.showLastSeen.title", @"");
+
     self.autoAwayLabel.text = LocalizedString(@"autoAway", @"");
     
     self.statusPersistenceLabel.text = LocalizedString(@"statusPersistence", @"");
     [self.autoAwayTimeSaveButton setTitle:LocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
-    
-    [self setLastActiveLabelAttributedText];
     
     [self updateAppearance];
 }
@@ -82,10 +81,6 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
-    }
-    
-    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self setLastActiveLabelAttributedText];
     }
 }
 
@@ -121,16 +116,6 @@
     self.lastActiveSwitch.on = self.presenceConfig.isLastGreenVisible;
     
     [self.tableView reloadData];
-}
-
-- (void)setLastActiveLabelAttributedText {
-    UIFont *font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightRegular].italic;
-    
-    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:LocalizedString(@"Last seen %s", @""), "..."] attributes:@{NSFontAttributeName: font}];
-    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", LocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
-    [showLastSeenAttributedString appendAttributedString:lastSeenString];
-    
-    self.lastActiveLabel.attributedText = showLastSeenAttributedString;
 }
 
 - (void)deselectRowWithPreviousStatus {
