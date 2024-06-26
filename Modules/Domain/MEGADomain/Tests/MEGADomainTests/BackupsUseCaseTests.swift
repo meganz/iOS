@@ -21,15 +21,6 @@ final class BackupsUseCaseTests: XCTestCase {
         XCTAssertFalse(isNotBackupsRootNode)
     }
     
-    func testBackupsRootNodeSize_backupPresent_returnsSize() async {
-        let backupsRepo = MockBackupsRepository(currentBackupNode: backupNodeEntity)
-        let sut = BackupsUseCase(backupsRepository: backupsRepo, nodeRepository: MockNodeRepository.newRepo)
-        
-        let backupSize = await sut.backupsRootNodeSize()
-        
-        XCTAssertEqual(backupSize, backupNodeEntity.size)
-    }
-    
     func testIsBackupDeviceFolder_validDeviceFolder_returnsTrue() {
         let backupsRepo = MockBackupsRepository(currentBackupNode: backupNodeEntity)
         let sut = BackupsUseCase(backupsRepository: backupsRepo, nodeRepository: MockNodeRepository.newRepo)

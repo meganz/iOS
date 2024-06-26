@@ -5,7 +5,6 @@ public protocol BackupsUseCaseProtocol {
     func isBackupNodeHandle(_ nodeHandle: HandleEntity) -> Bool
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool
     func isBackupsRootNodeEmpty() async -> Bool
-    func backupsRootNodeSize() async -> UInt64
     func backupsRootNode() async throws -> NodeEntity
     func parentsForBackupHandle(_ handle: HandleEntity) async -> [NodeEntity]?
 }
@@ -44,14 +43,6 @@ public struct BackupsUseCase<T: BackupsRepositoryProtocol, U: NodeRepositoryProt
     
     public func isBackupsRootNodeEmpty() async -> Bool {
         await backupsRepository.isBackupRootNodeEmpty()
-    }
-    
-    public func backupsRootNodeSize() async -> UInt64 {
-        do {
-            return try await backupsRepository.backupRootNodeSize()
-        } catch {
-            return 0
-        }
     }
     
     public func backupsRootNode() async throws -> NodeEntity {

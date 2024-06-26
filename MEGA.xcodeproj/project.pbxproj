@@ -1279,6 +1279,7 @@
 		940BA4D42AD80FFC00C69514 /* MEGASwift in Frameworks */ = {isa = PBXBuildFile; productRef = 940BA4D32AD80FFC00C69514 /* MEGASwift */; };
 		940BA4D62AD80FFC00C69514 /* MEGASwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 940BA4D52AD80FFC00C69514 /* MEGASwiftUI */; };
 		940C19A82BFF74A80061BD88 /* MockProfileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940C19A72BFF74A80061BD88 /* MockProfileViewRouter.swift */; };
+		940CE3CC2C255EDA0083068E /* UsageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CE3CB2C255EDA0083068E /* UsageViewModelTests.swift */; };
 		940CEE352A83D8C2007DD202 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63995332898CBEB00EA88F1 /* WarningView.swift */; };
 		940CEE372A83D8F6007DD202 /* WarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63995352898CBEB00EA88F1 /* WarningViewModel.swift */; };
 		940CEE3C2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CEE3B2A83DA5E007DD202 /* WarningViewRouting.swift */; };
@@ -4055,6 +4056,7 @@
 		940BA4BA2AD7EE1100C69514 /* SearchDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDemoApp.swift; sourceTree = "<group>"; };
 		940BA4C82AD7EE2500C69514 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		940C19A72BFF74A80061BD88 /* MockProfileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProfileViewRouter.swift; sourceTree = "<group>"; };
+		940CE3CB2C255EDA0083068E /* UsageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewModelTests.swift; sourceTree = "<group>"; };
 		940CEE3B2A83DA5E007DD202 /* WarningViewRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewRouting.swift; sourceTree = "<group>"; };
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		940F41362A9ED39200C2543F /* MEGAIntentDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAIntentDomain; sourceTree = "<group>"; };
@@ -10065,6 +10067,14 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		940CE3CA2C255EC60083068E /* Usage */ = {
+			isa = PBXGroup;
+			children = (
+				940CE3CB2C255EDA0083068E /* UsageViewModelTests.swift */,
+			);
+			path = Usage;
+			sourceTree = "<group>";
+		};
 		940DB9122924D77F004E7349 /* AudioSession */ = {
 			isa = PBXGroup;
 			children = (
@@ -12085,6 +12095,7 @@
 		B6D5482E283E2AF000D7302F /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				940CE3CA2C255EC60083068E /* Usage */,
 				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
 				94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */,
 				6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */,
@@ -16457,6 +16468,7 @@
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
+				940CE3CC2C255EDA0083068E /* UsageViewModelTests.swift in Sources */,
 				24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */,
 				0E4120542BD65D3C00249BE3 /* MockThumbnailLoader.swift in Sources */,
 				25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */,
