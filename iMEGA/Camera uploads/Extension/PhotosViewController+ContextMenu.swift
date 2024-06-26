@@ -15,13 +15,15 @@ extension PhotosViewController {
             isFilterEnabled: true,
             isSelectHidden: viewModel.isSelectHidden,
             isEmptyState: viewModel.mediaNodes.isEmpty,
-            isFilterActive: viewModel.isFilterActive
+            isFilterActive: viewModel.isFilterActive,
+            isCameraUploadsEnabled: viewModel.isCameraUploadsEnabled
         )
     }
     
     @objc func configureContextMenuManager() {
         contextMenuManager = ContextMenuManager(
             displayMenuDelegate: self,
+            quickActionsMenuDelegate: self,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         )
     }
@@ -112,5 +114,16 @@ extension PhotosViewController: DisplayMenuDelegate {
     func sortMenu(didSelect sortType: SortOrderType) {
         viewModel.update(sortOrderType: sortType)
         setupNavigationBarButtons()
+    }
+}
+
+extension PhotosViewController: QuickActionsMenuDelegate {
+    func quickActionsMenu(didSelect action: MEGADomain.QuickActionEntity, needToRefreshMenu: Bool) {
+        switch action {
+        case .settings:
+            viewModel.navigateToCameraUploadSettings()
+        default:
+            break
+        }
     }
 }

@@ -28,7 +28,7 @@ extension ContactLinkQRViewController: QRMenuDelegate {
             }
             
             present(activityVC, animated: true)
-        case .settings:
+        case .qrSettings:
             let navigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "QRSettingsNavigationControllerID")
             present(navigationController, animated: true)
         case .resetQR:
