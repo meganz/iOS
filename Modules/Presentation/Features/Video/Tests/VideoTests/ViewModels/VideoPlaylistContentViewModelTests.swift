@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGASwift
+import MEGASwiftUI
 @testable import Video
 import XCTest
 
@@ -36,7 +37,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, videoPlaylistContentsUseCase, _, _, _, _) = makeSUT(
+        let (sut, _, videoPlaylistContentsUseCase, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -78,7 +79,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -117,7 +118,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let (sut, _, _, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase
@@ -143,7 +144,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             creationTime: Date(),
             modificationTime: Date()
         )
-        let (sut, _, _, _, _, videoPlaylistModificationUseCase, _) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
+        let (sut, _, _, _, _, _, _, videoPlaylistModificationUseCase) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
         
         await sut.addVideosToVideoPlaylist(videos: [])
         
@@ -160,7 +161,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             creationTime: Date(),
             modificationTime: Date()
         )
-        let (sut, _, _, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(addToVideoPlaylistResult: .failure(GenericErrorEntity()))
         )
@@ -183,7 +184,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             modificationTime: Date()
         )
         let addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error> = .success(VideoPlaylistElementsResultEntity(success: UInt(videosToAdd.count), failure: 0))
-        let (sut, _, _, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistModificationUseCase: .init(addToVideoPlaylistResult: addToVideoPlaylistResult)
         )
@@ -218,7 +219,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             monitorVideoPlaylistAsyncSequenceResult: videoPlaylistUpdatesStream,
             monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
         )
-        let (sut, _, _, _, sharedUIState, _, _) = makeSUT(
+        let (sut, _, _, _, sharedUIState, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase
         )
@@ -249,7 +250,184 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         
         await fulfillment(of: [taskExpectation], timeout: 1.0)
     }
-
+    
+    // MARK: - subscribeToSelectedDisplayActionChanged
+    
+    @MainActor
+    func testSubscribeToSelectedDisplayActionChanged_whenSelectedQuickActionEntityChangedToRename_shouldShowRenamePlaylistAlert() async {
+        // Arrange
+        let allVideos: [NodeEntity] = []
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            id: 1,
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let (sut, _, _, _, sharedUIState, _, _, _) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
+        var receivedShouldShowAlertValue: Bool?
+        let shouldShowExp = expectation(description: "Wait for alert subscription")
+        shouldShowExp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowRenamePlaylistAlert
+            .dropFirst()
+            .sink { shouldShow in
+                receivedShouldShowAlertValue = shouldShow
+                shouldShowExp.fulfill()
+            }
+        let backgroundTaskExp = expectation(description: "Wait for background task finished")
+        let task = Task {
+            await sut.subscribeToSelectedDisplayActionChanged()
+            backgroundTaskExp.fulfill()
+        }
+        
+        // Act
+        sharedUIState.selectedQuickActionEntity = .rename
+        await fulfillment(of: [shouldShowExp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertEqual(receivedShouldShowAlertValue, true)
+        
+        task.cancel()
+        cancellable.cancel()
+        await fulfillment(of: [backgroundTaskExp], timeout: 1.0)
+    }
+    
+    @MainActor
+    func testSubscribeToSelectedDisplayActionChanged_whenSelectedQuickActionEntityChangedToOtherThanRename_shouldNotShowRenamePlaylistAlert() async throws {
+        // Arrange
+        let allVideos: [NodeEntity] = []
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            id: 1,
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let (sut, _, _, _, sharedUIState, _, _, _) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
+        var receivedShouldShowAlertValue: Bool?
+        let shouldShowExp = expectation(description: "Wait for alert subscription")
+        shouldShowExp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowRenamePlaylistAlert
+            .sink { shouldShow in
+                receivedShouldShowAlertValue = shouldShow
+                shouldShowExp.fulfill()
+            }
+        let backgroundTaskExp = expectation(description: "Wait for background task finished")
+        let task = Task {
+            await sut.subscribeToSelectedDisplayActionChanged()
+            backgroundTaskExp.fulfill()
+        }
+        
+        // Act
+        sharedUIState.selectedQuickActionEntity = try anyInvalidActionForRename()
+        await fulfillment(of: [shouldShowExp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertEqual(receivedShouldShowAlertValue, false)
+        
+        cancellable.cancel()
+        task.cancel()
+        await fulfillment(of: [backgroundTaskExp], timeout: 1.0)
+    }
+    
+    // MARK: - monitorVideoPlaylists
+    
+    func testMonitorVideoPlaylists_whenCalled_loadsVideoPlaylists() async {
+        let videoPlaylistEntity = videoPlaylist(id: 1, type: .user)
+        let userVideoPlaylists = [
+            videoPlaylistEntity,
+            videoPlaylist(id: 2, type: .user)
+        ]
+        let (sut, _, _, _, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistsUseCase: MockVideoPlaylistUseCase(userVideoPlaylistsResult: userVideoPlaylists)
+        )
+        
+        await sut.monitorVideoPlaylists()
+        
+        let expectedPlaylistNames = userVideoPlaylists.map(\.name) + [Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites]
+        XCTAssertEqual(Set(sut.videoPlaylistNames), Set(expectedPlaylistNames))
+    }
+    
+    // MARK: - renameVideoPlaylist
+    
+    func testRenameVideoPlaylist_emptyOrNil_doesNotRenameVideoPlaylist() async {
+        let videoPlaylistEntity = videoPlaylist(id: 1, type: .user)
+        let invalidNames: [String?] = [nil, ""]
+        
+        for (index, invalidName) in invalidNames.enumerated() {
+            let (sut, _, _, _, _, _, _, videoPlaylistModificationUseCase) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
+            
+            sut.renameVideoPlaylist(with: invalidName)
+            await sut.renameVideoPlaylistTask?.value
+            
+            XCTAssertTrue(videoPlaylistModificationUseCase.messages.isEmpty, "failed at index: \(index)")
+            XCTAssertTrue(videoPlaylistModificationUseCase.messages.notContains(.updateVideoPlaylistName), "failed at index: \(index)")
+        }
+    }
+    
+    func testRenameVideoPlaylist_whenRenameInvalidPlaylist_doesNotRenameVideoPlaylist() async {
+        let videoPlaylistName =  "a video playlist name"
+        let invalidPlaylistType = VideoPlaylistEntityType.favourite
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: invalidPlaylistType, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, _, _, _, videoPlaylistModificationUseCase) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(updateVideoPlaylistNameResult: .success(()))
+        )
+        
+        sut.renameVideoPlaylist(with: videoPlaylistName)
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertTrue(videoPlaylistModificationUseCase.messages.notContains(.updateVideoPlaylistName))
+    }
+    
+    func testRenameVideoPlaylist_whenCalled_renameVideoPlaylist() async {
+        let videoPlaylistName =  "a video playlist name"
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, _, _, _, videoPlaylistModificationUseCase) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(updateVideoPlaylistNameResult: .success(()))
+        )
+        
+        sut.renameVideoPlaylist(with: videoPlaylistName)
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertEqual(videoPlaylistModificationUseCase.messages, [ .updateVideoPlaylistName ])
+    }
+    
+    func testRenameVideoPlaylist_whenRenameSuccessfully_renameActualPlaylist() async {
+        let videoPlaylistName =  "a video playlist name"
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(updateVideoPlaylistNameResult: .success(()))
+        )
+        
+        sut.renameVideoPlaylist(with: videoPlaylistName)
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertEqual(sut.videoPlaylistEntity.name, videoPlaylistName)
+        XCTAssertEqual(sut.headerPreviewEntity.title, videoPlaylistName)
+    }
+    
+    func testRenameVideoPlaylist_whenRenameFailed_showsRenameError() async {
+        let newName =  "new name"
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "old name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, sharedUIState, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(updateVideoPlaylistNameResult: .failure(GenericErrorEntity()))
+        )
+        
+        sut.renameVideoPlaylist(with: newName)
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertNotEqual(sut.videoPlaylistEntity.name, newName)
+        XCTAssertEqual(sut.videoPlaylistEntity.name, videoPlaylistEntity.name)
+        XCTAssertEqual(sharedUIState.snackBarText, Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed)
+        XCTAssertTrue(sharedUIState.shouldShowSnackBar)
+    }
     
     // MARK: - Helpers
     
@@ -258,7 +436,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase = MockVideoPlaylistContentUseCase(),
         thumbnailUseCase: MockThumbnailUseCase = MockThumbnailUseCase(),
         sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
-        videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase = MockVideoPlaylistModificationUseCase(addToVideoPlaylistResult: .failure(GenericErrorEntity())),
+        videoPlaylistsUseCase: MockVideoPlaylistUseCase = MockVideoPlaylistUseCase(),
+        videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase = MockVideoPlaylistModificationUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
@@ -267,8 +446,9 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase,
         sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase,
         sharedUIState: VideoPlaylistContentSharedUIState,
-        videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase,
-        selectionAdapter: MockVideoPlaylistContentViewModelSelectionAdapter
+        selectionAdapter: MockVideoPlaylistContentViewModelSelectionAdapter,
+        videoPlaylistUseCase: MockVideoPlaylistUseCase,
+        videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase
     ) {
         let sharedUIState = VideoPlaylistContentSharedUIState()
         let videoPlaylistThumbnailLoader = MockVideoPlaylistThumbnailLoader()
@@ -278,10 +458,16 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
-            sharedUIState: sharedUIState, 
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase, 
-            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
-            selectionDelegate: selectionAdapter
+            sharedUIState: sharedUIState,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            selectionDelegate: selectionAdapter,
+            renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel(
+                title: "Title",
+                affirmativeButtonTitle: "Affirmative",
+                destructiveButtonTitle: "Destructive"
+            ),
+            videoPlaylistsUseCase: videoPlaylistsUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (
@@ -290,8 +476,29 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistContentsUseCase,
             sortOrderPreferenceUseCase,
             sharedUIState,
-            videoPlaylistModificationUseCase,
-            selectionAdapter
+            selectionAdapter,
+            videoPlaylistsUseCase,
+            videoPlaylistModificationUseCase
+        )
+    }
+    
+    private func anyInvalidActionForRename() throws -> QuickActionEntity {
+        try XCTUnwrap(
+            QuickActionEntity.allCases
+                .filter { $0 != .rename }
+                .randomElement(),
+            "Fail to unwrap QuickActionEntity"
+        )
+    }
+    
+    private func videoPlaylist(id: HandleEntity, type: VideoPlaylistEntityType) -> VideoPlaylistEntity {
+        VideoPlaylistEntity(
+            id: id,
+            name: "name-\(id)",
+            count: 0,
+            type: type,
+            creationTime: Date(),
+            modificationTime: Date()
         )
     }
     

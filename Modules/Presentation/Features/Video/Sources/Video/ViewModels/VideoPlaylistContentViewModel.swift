@@ -15,25 +15,32 @@ public protocol VideoPlaylistContentViewModelSelectionDelegate: AnyObject {
 
 final class VideoPlaylistContentViewModel: ObservableObject {
     
-    private var videoPlaylistEntity: VideoPlaylistEntity
+    private(set) var videoPlaylistEntity: VideoPlaylistEntity
     private let videoPlaylistContentsUseCase: any VideoPlaylistContentsUseCaseProtocol
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
-    private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private weak var selectionDelegate: VideoPlaylistContentViewModelSelectionDelegate?
+    private(set) var renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel
+    private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
+    private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     
     @Published public private(set) var videos: [NodeEntity] = []
     @Published var headerPreviewEntity: VideoPlaylistCellPreviewEntity = .placeholder
     @Published var secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType = .emptyPlaylist
     @Published var shouldPopScreen = false
     @Published var shouldShowError = false
+    @Published var shouldShowRenamePlaylistAlert = false
     
     @Published var shouldShowVideoPlaylistPicker = false
     
     public private(set) var sharedUIState: VideoPlaylistContentSharedUIState
     
     private(set) var presentationConfig: VideoPlaylistContentSnackBarPresentationConfig?
+    
+    private(set) var videoPlaylistNames: [String] = []
+    
+    private(set) var renameVideoPlaylistTask: Task<Void, Never>?
     
     init(
         videoPlaylistEntity: VideoPlaylistEntity,
@@ -43,18 +50,28 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         sharedUIState: VideoPlaylistContentSharedUIState,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig? = nil,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
-        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
-        selectionDelegate: some VideoPlaylistContentViewModelSelectionDelegate
+        selectionDelegate: some VideoPlaylistContentViewModelSelectionDelegate,
+        renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
+        videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistThumbnailLoader = videoPlaylistThumbnailLoader
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
-        self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.sharedUIState = sharedUIState
         self.presentationConfig = presentationConfig
         self.selectionDelegate = selectionDelegate
+        self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
+        self.videoPlaylistsUseCase = videoPlaylistsUseCase
+        self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
+        
+        assignVideoPlaylistRenameValidator()
+        
+        self.renameVideoPlaylistAlertViewModel.action = { [weak self] newVideoPlaylistName in
+            self?.renameVideoPlaylist(with: newVideoPlaylistName)
+        }
     }
     
     @MainActor
@@ -172,6 +189,66 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     func subscribeToAllSelected() async {
         for await value in sharedUIState.$isAllSelected.values {
             selectionDelegate?.didChangeAllSelectedValue(allSelected: value, videos: videos)
+        }
+    }
+    
+    @MainActor
+    func subscribeToSelectedDisplayActionChanged() async {
+        for await action in sharedUIState.$selectedQuickActionEntity.values {
+            switch action {
+            case .rename:
+                shouldShowRenamePlaylistAlert = true
+            default:
+                break
+            }
+        }
+    }
+    
+    private func assignVideoPlaylistRenameValidator() {
+        let validator = VideoPlaylistNameValidator(existingVideoPlaylistNames: { [weak self] in
+            self?.videoPlaylistNames ?? []
+        })
+        renameVideoPlaylistAlertViewModel.validator = { validator.validateWhenRenamed(into: $0) }
+    }
+    
+    func monitorVideoPlaylists() async {
+        await loadVideoPlaylists()
+        
+        for await _ in videoPlaylistsUseCase.videoPlaylistsUpdatedAsyncSequence {
+            guard !Task.isCancelled else {
+                break
+            }
+            await loadVideoPlaylists()
+        }
+    }
+    
+    @MainActor
+    private func loadVideoPlaylists(sortOrder: SortOrderEntity? = nil) async {
+        let systemVideoPlaylistNames = [Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites]
+        let userVideoPlaylistNames = await videoPlaylistsUseCase.userVideoPlaylists().map(\.name)
+        videoPlaylistNames = systemVideoPlaylistNames + userVideoPlaylistNames
+    }
+    
+    func renameVideoPlaylist(with newName: String?) {
+        if newName == nil || newName == "" || newName?.isEmpty == true {
+            return
+        }
+        
+        renameVideoPlaylistTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                guard videoPlaylistEntity.type == .user else {
+                    return
+                }
+                let mappedName = VideoPlaylistNameCreationMapper.videoPlaylistName(from: newName, from: videoPlaylistNames)
+                try await videoPlaylistModificationUseCase.updateVideoPlaylistName(mappedName, for: videoPlaylistEntity)
+                videoPlaylistEntity.name = mappedName
+                headerPreviewEntity.title = videoPlaylistEntity.name
+            } catch {
+                // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
+                sharedUIState.snackBarText = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed
+                sharedUIState.shouldShowSnackBar = true
+            }
         }
     }
 }

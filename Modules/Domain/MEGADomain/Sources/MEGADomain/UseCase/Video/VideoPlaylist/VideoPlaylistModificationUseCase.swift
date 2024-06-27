@@ -2,6 +2,13 @@ public protocol VideoPlaylistModificationUseCaseProtocol {
     func addVideoToPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity
     func deleteVideos(in videoPlaylistId: HandleEntity, videos: [VideoPlaylistVideoEntity]) async throws -> VideoPlaylistElementsResultEntity
     func delete(videoPlaylists: [VideoPlaylistEntity]) async -> [VideoPlaylistEntity]
+    
+    /// Rename specific video playlist
+    /// - Parameters:
+    ///   - newName: new name for the video playlist
+    ///   - videoPlaylistEntity: `VideoPlaylistEntity` instance that wants to be renamed
+    /// - throws: Throw `VideoPlaylistErrorEntity` if it failed during adding videos to playlist or `CancellationError` if cancelled.
+    func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws
 }
 
 public struct VideoPlaylistModificationUseCase: VideoPlaylistModificationUseCaseProtocol {
@@ -46,5 +53,14 @@ public struct VideoPlaylistModificationUseCase: VideoPlaylistModificationUseCase
                 if let id = $1 { $0.append(id) }
             })
         }
+    }
+    
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws {
+        guard videoPlaylistEntity.name != newName else {
+            throw VideoPlaylistErrorEntity.noChangeWasNeeded
+        }
+        
+        try await userVideoPlaylistsRepository
+            .updateVideoPlaylistName(newName, for: videoPlaylistEntity)
     }
 }

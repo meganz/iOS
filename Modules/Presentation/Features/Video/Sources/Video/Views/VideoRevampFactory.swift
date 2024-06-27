@@ -92,6 +92,7 @@ public class VideoRevampFactory {
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
@@ -106,9 +107,18 @@ public class VideoRevampFactory {
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase),
             sharedUIState: sharedUIState,
             presentationConfig: presentationConfig,
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase, 
-            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
-            selectionDelegate: selectionAdapter
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            selectionDelegate: selectionAdapter,
+            renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel(
+                title: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Title.rename,
+                placeholderText: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.placeholder,
+                affirmativeButtonTitle: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Button.rename,
+                affirmativeButtonInitiallyEnabled: false,
+                destructiveButtonTitle: Strings.Localizable.cancel,
+                message: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.enterTheNewName
+            ),
+            videoPlaylistsUseCase: videoPlaylistUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase
         )
         
         let view = PlaylistContentScreen(

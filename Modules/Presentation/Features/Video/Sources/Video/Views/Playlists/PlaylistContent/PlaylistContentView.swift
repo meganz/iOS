@@ -43,6 +43,13 @@ struct PlaylistContentScreen: View {
                 router.popScreen()
             }
         }
+        .task {
+            await viewModel.subscribeToSelectedDisplayActionChanged()
+        }
+        .alert(isPresented: $viewModel.shouldShowRenamePlaylistAlert, viewModel.renameVideoPlaylistAlertViewModel)
+        .task {
+            await viewModel.monitorVideoPlaylists()
+        }
         .onReceive(viewModel.$shouldShowVideoPlaylistPicker) { shouldShow in
             if shouldShow {
                 router.openVideoPicker { selectedVideos in
