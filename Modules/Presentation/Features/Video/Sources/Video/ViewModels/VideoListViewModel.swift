@@ -4,22 +4,6 @@ import MEGADomain
 import MEGAPresentation
 import MEGASwift
 
-enum LocationChipFilterOptionType: String, CaseIterable {
-    case allLocation = "All location"
-    case cloudDrive = "Cloud drive"
-    case cameraUploads =  "Camera uploads"
-    case sharedItems = "Shared items"
-}
-
-enum DurationChipFilterOptionType: String, CaseIterable {
-    case allDurations = "All durations"
-    case lessThan10Seconds = "Less than 10 seconds"
-    case between10And60Seconds =  "Between 10 and 60 seconds"
-    case between1And4Minutes = "Between 1 and 4 minutes"
-    case between4And20Minutes = "Between 4 and 20 minutes"
-    case moreThan20Minutes = "More than 20 minutes"
-}
-
 public final class VideoListViewModel: ObservableObject {
     
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
@@ -37,26 +21,16 @@ public final class VideoListViewModel: ObservableObject {
     @Published private(set) var videos = [NodeEntity]()
     @Published private(set) var shouldShowError = false
     
-    @Published private(set) var chips: [ChipContainerViewModel] = [
-        ChipContainerViewModel(title: "Location", type: .location, isActive: false),
-        ChipContainerViewModel(title: "Duration", type: .duration, isActive: false)
-    ]
+    @Published private(set) var chips: [ChipContainerViewModel] = [ FilterChipType.location, .duration ]
+        .map { ChipContainerViewModel(title: $0.description, type: $0, isActive: false) }
     
     var actionSheetTitle: String {
-        guard let type = newlySelectedChip?.type else {
-            return ""
-        }
-        switch type {
-        case .location:
-            return "Location"
-        case .duration:
-            return "Duration"
-        }
+        newlySelectedChip?.type.description ?? ""
     }
     
     @Published var isSheetPresented = false
-    @Published var selectedLocationFilterOption: String = LocationChipFilterOptionType.allLocation.rawValue
-    @Published var selectedDurationFilterOption: String = DurationChipFilterOptionType.allDurations.rawValue
+    @Published var selectedLocationFilterOption: String = LocationChipFilterOptionType.allLocation.stringValue
+    @Published var selectedDurationFilterOption: String = DurationChipFilterOptionType.allDurations.stringValue
     
     private(set) var selectedLocationFilterOptionType: LocationChipFilterOptionType = .allLocation
     private(set) var selectedDurationFilterOptionType: DurationChipFilterOptionType = .allDurations
@@ -257,25 +231,16 @@ public final class VideoListViewModel: ObservableObject {
     }
     
     private func title(for chip: ChipContainerViewModel) -> String {
-        let defaultTitle: (_ chipType: FilterChipType) -> String = { chipType in
-            switch chipType {
-            case .location:
-                "Location"
-            case .duration:
-                "Duration"
-            }
-        }
-        
         switch chip.type {
         case .location:
             if selectedLocationFilterOptionType == .allLocation {
-                return defaultTitle(chip.type)
+                return chip.type.description
             } else {
                 return selectedLocationFilterOption
             }
         case .duration:
             if selectedDurationFilterOptionType == .allDurations {
-                return defaultTitle(chip.type)
+                return chip.type.description
             } else {
                 return selectedDurationFilterOption
             }
@@ -326,21 +291,10 @@ public final class VideoListViewModel: ObservableObject {
         
         switch type {
         case .location:
-            return LocationChipFilterOptionType.allCases.map(\.rawValue)
+            return LocationChipFilterOptionType.allCases.map(\.stringValue)
         case .duration:
-            return DurationChipFilterOptionType.allCases.map(\.rawValue)
+            return DurationChipFilterOptionType.allCases.map(\.stringValue)
         }
     }
     
-}
-
-struct ChipContainerViewModel {
-    let title: String
-    let type: FilterChipType
-    var isActive: Bool
-}
-
-enum FilterChipType {
-    case location
-    case duration
 }
