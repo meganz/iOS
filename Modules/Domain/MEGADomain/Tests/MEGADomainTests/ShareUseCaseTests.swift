@@ -63,4 +63,34 @@ final class ShareUseCaseTests: XCTestCase {
         let result = try await sut.doesContainSensitiveDescendants(in: [parentNode])
         XCTAssertFalse(result)
     }
+    
+    func testDoesContainSensitiveDescendants_whenNodeIsSensitive_shouldReturnTrue() async throws {
+        
+        let parentNode = NodeEntity(handle: 10, isMarkedSensitive: true)
+        let nodes: [NodeEntity] = [
+            NodeEntity(handle: 2, parentHandle: parentNode.handle, isMarkedSensitive: false),
+            NodeEntity(handle: 3, parentHandle: parentNode.handle, isMarkedSensitive: false)
+        ]
+        
+        let sut = ShareUseCase(
+            repo: MockShareRepository.newRepo,
+            filesSearchRepository: MockFilesSearchRepository(nodesForHandle: [
+                10: nodes
+            ]))
+        
+        let result = try await sut.doesContainSensitiveDescendants(in: [parentNode])
+        XCTAssertTrue(result)
+    }
+    
+    func testDoesContainSensitiveDescendants_whenNodeIsNotSensitiveAndIsFile_shouldReturnFalse() async throws {
+        
+        let parentNode = NodeEntity(handle: 10, isFile: true, isMarkedSensitive: false)
+        
+        let sut = ShareUseCase(
+            repo: MockShareRepository.newRepo,
+            filesSearchRepository: MockFilesSearchRepository(nodesForHandle: [:]))
+        
+        let result = try await sut.doesContainSensitiveDescendants(in: [parentNode])
+        XCTAssertFalse(result)
+    }
 }

@@ -53,13 +53,19 @@ public struct ShareUseCase<T: ShareRepositoryProtocol, S: FilesSearchRepositoryP
     public func doesContainSensitiveDescendants(in nodes: some Sequence<NodeEntity>) async throws -> Bool {
         try await withThrowingTaskGroup(of: Bool.self) { taskGroup in
             taskGroup.addTasksUnlessCancelled(for: nodes) { node in
-                try await filesSearchRepository.search(filter: .init(
-                    searchTargetLocation: .parentNode(node),
-                    recursive: true,
-                    supportCancel: false,
-                    sortOrderType: .defaultAsc,
-                    formatType: .unknown,
-                    sensitiveFilterOption: .sensitiveOnly)).isNotEmpty
+                if node.isMarkedSensitive {
+                    true
+                } else if node.isFile {
+                    false
+                } else {
+                    try await filesSearchRepository.search(filter: .init(
+                        searchTargetLocation: .parentNode(node),
+                        recursive: true,
+                        supportCancel: false,
+                        sortOrderType: .defaultAsc,
+                        formatType: .unknown,
+                        sensitiveFilterOption: .sensitiveOnly)).isNotEmpty
+                }
             }
             
             let doesNodeContainSensitiveChildren = try await taskGroup.contains(true)
