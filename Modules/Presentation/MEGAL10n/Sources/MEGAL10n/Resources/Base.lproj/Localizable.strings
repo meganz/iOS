@@ -3910,6 +3910,30 @@
 "videos.tab.title.playlist"="Playlists";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="No videos";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="Location";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="All locations";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="Cloud drive";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="Camera uploads";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="Shared items";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="Duration";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="All durations";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="Less than 10 seconds";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="Between 10 and 60 seconds";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="Between 1 and 4 minutes";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="Between 4 and 20 minutes";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="More than 20 minutes";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="No playlists found";
 /* Videos: video playlist add new playlist button text description */
