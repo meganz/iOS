@@ -47,7 +47,11 @@ struct AllVideosViewControllerCollectionViewLayoutBuilder {
         
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 16
-        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
+        let trailing: CGFloat = switch viewType {
+        case .allVideos, .playlistContent: 12
+        case .playlists: 2
+        }
+        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 8, bottom: 16, trailing: trailing)
         
         return section
     }
