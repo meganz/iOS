@@ -4,6 +4,7 @@ import MEGADomain
 public final class VideoPlaylistContentSharedUIState {
     @Published public var videosCount = 0
     @Published public var selectedDisplayActionEntity: DisplayActionEntity?
+    @Published public var selectedQuickActionEntity: QuickActionEntity?
     @Published public var selectedSortOrderEntity: SortOrderEntity?
     @Published public var shouldShowSnackBar = false
     @Published public var snackBarText = ""

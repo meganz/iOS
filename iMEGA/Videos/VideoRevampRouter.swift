@@ -130,22 +130,35 @@ struct VideoRevampRouter: VideoRevampRouting {
             nodeRepository: NodeRepository.newRepo
         )
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        let videoSelection = VideoSelection()
+        let nodesUpdateListenerRepo = SDKNodesUpdateListenerRepository(sdk: .shared)
+        let fileSearchUseCase = FilesSearchUseCase(
+            repo: fileSearchRepo,
+            nodeFormat: explorerType.toNodeFormatEntity(),
+            nodesUpdateListenerRepo: nodesUpdateListenerRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+        let videoPlaylistUseCase = VideoPlaylistUseCase(
+            fileSearchUseCase: fileSearchUseCase,
+            userVideoPlaylistsRepository: userVideoPlaylistsRepo,
+            photoLibraryUseCase: photoLibraryUseCase
+        )
         let videoPlaylistModificationUseCase = VideoPlaylistModificationUseCase(
             userVideoPlaylistsRepository: userVideoPlaylistsRepo
         )
-        let videoSelection = VideoSelection()
         let viewController = VideoPlaylistContentViewController(
             videoConfig: videoConfig,
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
-            router: self, 
+            videoPlaylistUseCase: videoPlaylistUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            router: self,
             presentationConfig: presentationConfig,
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: PreferenceUseCase.default,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
-            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             videoSelection: videoSelection,
             selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection)
         )

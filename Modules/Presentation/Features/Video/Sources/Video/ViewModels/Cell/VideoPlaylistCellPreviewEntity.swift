@@ -5,7 +5,7 @@ public struct VideoPlaylistCellPreviewEntity {
     let imageContainers: [any ImageContaining]
     let count: String
     let duration: String
-    let title: String
+    var title: String
     let isExported: Bool
     let type: VideoPlaylistEntityType
 }

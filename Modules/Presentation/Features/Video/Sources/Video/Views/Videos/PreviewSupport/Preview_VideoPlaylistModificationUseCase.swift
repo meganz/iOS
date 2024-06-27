@@ -13,4 +13,8 @@ public final class Preview_VideoPlaylistModificationUseCase: VideoPlaylistModifi
     public func delete(videoPlaylists: [VideoPlaylistEntity]) async -> [VideoPlaylistEntity] {
         []
     }
+    
+    public func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws {
+        
+    }
 }

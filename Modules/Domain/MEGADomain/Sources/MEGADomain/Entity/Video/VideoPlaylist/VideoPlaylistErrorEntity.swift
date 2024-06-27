@@ -7,4 +7,5 @@ public enum VideoPlaylistErrorEntity: Error, Equatable {
     case failedToCreatePlaylist(name: String?)
     case videoPlaylistNotFound(id: HandleEntity)
     case failedToUpdateVideoPlaylistName(name: String)
+    case noChangeWasNeeded
 }

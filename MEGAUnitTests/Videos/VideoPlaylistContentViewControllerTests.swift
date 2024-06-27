@@ -39,6 +39,16 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
         }
     }
     
+    // MARK: - quickActionsMenu
+    
+    func testQuickAction_whenCalled_setActionInSharedUIState() {
+        let (sut, _) = makeSUT()
+        
+        sut.quickActionsMenu(didSelect: .rename, needToRefreshMenu: .random())
+        
+        XCTAssertEqual(sut.sharedUIState.selectedQuickActionEntity, .rename)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: VideoPlaylistContentViewController, sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase) {
@@ -49,10 +59,11 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
             videoPlaylistEntity: anyVideoPlaylist(),
             videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase(),
             thumbnailUseCase: MockThumbnailUseCase(),
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(),
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(),
             router: MockVideoRevampRouter(),
             presentationConfig: VideoPlaylistContentSnackBarPresentationConfig(shouldShowSnackBar: false, text: nil),
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(),
             videoSelection: videoSelection,
             selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection)
         )

@@ -13,6 +13,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let videoPlaylistContentsUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let router: any VideoRevampRouting
     private let presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
@@ -23,10 +24,11 @@ final class VideoPlaylistContentViewController: UIViewController {
     
     private lazy var contextMenuManager = ContextMenuManager(
         displayMenuDelegate: self,
+        quickActionsMenuDelegate: self,
         createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
     )
     
-    private let sharedUIState = VideoPlaylistContentSharedUIState()
+    private(set) var sharedUIState = VideoPlaylistContentSharedUIState()
     private var subscriptions = Set<AnyCancellable>()
     private var snackBarViewModel: SnackBarViewModel?
     private var showSnackBarSubscription: AnyCancellable?
@@ -41,10 +43,11 @@ final class VideoPlaylistContentViewController: UIViewController {
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         router: some VideoRevampRouting,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
-        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         videoSelection: VideoSelection,
         selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter
     ) {
@@ -53,6 +56,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.videoPlaylistUseCase = videoPlaylistUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.router = router
         self.presentationConfig = presentationConfig
@@ -88,6 +92,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
             thumbnailUseCase: thumbnailUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             router: router,
             sharedUIState: sharedUIState,
@@ -351,6 +356,15 @@ extension VideoPlaylistContentViewController: DisplayMenuDelegate {
             return
         }
         sortOrderPreferenceUseCase.save(sortOrder: sortType.toSortOrderEntity(), for: .videoPlaylistContent)
+    }
+}
+
+// MARK: - TabContainerViewController+QuickActionsMenuDelegate
+
+extension VideoPlaylistContentViewController: QuickActionsMenuDelegate {
+    
+    func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
+        sharedUIState.selectedQuickActionEntity = action
     }
 }
 
