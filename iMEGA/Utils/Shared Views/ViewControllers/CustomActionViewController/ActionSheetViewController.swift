@@ -50,7 +50,12 @@ class ActionSheetViewController: UIViewController {
 
     // MARK: - ActionController initializers
 
-    @objc convenience init(actions: [BaseAction], headerTitle: String?, dismissCompletion: (() -> Void)?, sender: Any?) {
+    @objc convenience init(
+        actions: [BaseAction],
+        headerTitle: String?,
+        dismissCompletion: (() -> Void)?,
+        sender: Any?
+    ) {
         self.init(nibName: nil, bundle: nil)
         
         self.actions = actions
@@ -118,7 +123,8 @@ class ActionSheetViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        guard UIDevice.current.iPhoneDevice else {
+        // we want to relayout only when NOT presenting in the popover
+        if popoverPresentationController != nil {
             return
         }
         
@@ -152,13 +158,12 @@ class ActionSheetViewController: UIViewController {
         let headerHeight: CGFloat = headerView?.bounds.height ?? CGFloat.zero
         configViews(withSize: size, height: actionHeight() + headerHeight)
         view.setNeedsUpdateConstraints()
-        
     }
     
     private func actionHeight() -> CGFloat {
-        let bottomHeight: CGFloat = view.safeAreaInsets.bottom
-        let actionCount: CGFloat = CGFloat(actions.count) * CGFloat(60.0)
-        let total = actionCount + bottomHeight + CGFloat(20.0)
+        let bottomSafeArea: CGFloat = view.safeAreaInsets.bottom
+        let totalActionCellsHeight: CGFloat = CGFloat(actions.count) * CGFloat(60.0)
+        let total = totalActionCellsHeight + bottomSafeArea + CGFloat(20.0)
         return total
     }
     
