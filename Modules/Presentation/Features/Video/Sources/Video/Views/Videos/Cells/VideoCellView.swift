@@ -95,16 +95,16 @@ struct VideoCellViewContent: View {
                 
                 Text(previewEntity.size)
                     .font(.caption)
-                    .foregroundColor(videoConfig.colorAssets.secondaryTextColor)
+                    .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
                 
                 Image(systemName: "circle.fill")
                     .font(.system(size: 4))
-                    .foregroundColor(videoConfig.colorAssets.secondaryTextColor)
+                    .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
                     .opacity(previewEntity.shouldShowCircleImage ? 1 : 0)
                 
                 Image(uiImage: videoConfig.rowAssets.publicLinkImage)
                     .font(.system(size: 12))
-                    .foregroundColor(videoConfig.colorAssets.secondaryTextColor)
+                    .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
                     .opacity(previewEntity.isExported ? 1 : 0)
                 
             }
@@ -119,7 +119,7 @@ struct VideoCellViewContent: View {
     @ViewBuilder
     private var trailingContent: some View {
         Image(uiImage: videoConfig.rowAssets.moreImage)
-            .foregroundColor(videoConfig.colorAssets.secondaryIconColor)
+            .foregroundStyle(videoConfig.colorAssets.secondaryIconColor)
             .onTapGesture { onTappedMoreOptions() }
     }
     
