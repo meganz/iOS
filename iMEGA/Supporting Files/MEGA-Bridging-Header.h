@@ -79,6 +79,7 @@
 #import "DisplayMode.h"
 #import "EmptyStateView.h"
 #import "EnablingTwoFactorAuthenticationViewController.h"
+#import "EnabledTwoFactorAuthenticationViewController.h"
 #import "GradientView.h"
 #import "GroupChatDetailsViewTableViewCell.h"
 #import "InitialLaunchViewController.h"

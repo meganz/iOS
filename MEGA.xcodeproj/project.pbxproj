@@ -1796,6 +1796,7 @@
 		B58050BE2A8237C600D377D1 /* ProfileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
+		B584FA702C2D1D5300E56305 /* EnabledTwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B584FA6F2C2D1D5300E56305 /* EnabledTwoFactorAuthenticationViewController+Additions.swift */; };
 		B58723D42BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58723D32BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift */; };
 		B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */; };
 		B590F8BF2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B590F8BE2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift */; };
@@ -4566,6 +4567,7 @@
 		B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRouter.swift; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
+		B584FA6F2C2D1D5300E56305 /* EnabledTwoFactorAuthenticationViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnabledTwoFactorAuthenticationViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58723D32BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+SortOrder.swift"; sourceTree = "<group>"; };
 		B590F8BE2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatAttachedContactsViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -7893,6 +7895,7 @@
 		5BF4B3B120AB05FD00A6E6D7 /* Two Factor Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				B584FA6F2C2D1D5300E56305 /* EnabledTwoFactorAuthenticationViewController+Additions.swift */,
 				5B64D4EC2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.h */,
 				5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */,
 				16009FA32BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift */,
@@ -12100,7 +12103,6 @@
 				94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */,
 				6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */,
 				530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */,
-				B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -14741,6 +14743,7 @@
 				12FF88E82846EE2800D99BED /* EmptyStateView.m in Sources */,
 				25B529412AE765B8004503FD /* EnableCameraUploadsBannerButtonView.swift in Sources */,
 				0E9301E02B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift in Sources */,
+				B584FA702C2D1D5300E56305 /* EnabledTwoFactorAuthenticationViewController+Additions.swift in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
 				16009FA42BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,

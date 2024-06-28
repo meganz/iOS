@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -520,7 +520,7 @@ opqr stuv wxyz</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="2FASetup" translatesAutoresizingMaskIntoConstraints="NO" id="doM-ND-eYT">
-                                        <rect key="frame" x="123.5" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="123.5" y="20" width="128" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="129" id="JD4-FC-aAc"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="NTs-KD-VVG"/>
@@ -530,7 +530,7 @@ opqr stuv wxyz</string>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="achievementsCheck" translatesAutoresizingMaskIntoConstraints="NO" id="CVq-DV-DyN">
-                                        <rect key="frame" x="123.5" y="0.0" width="32" height="32"/>
+                                        <rect key="frame" x="123.5" y="20" width="32" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="32" id="BLQ-be-NqQ"/>
                                             <constraint firstAttribute="width" secondItem="CVq-DV-DyN" secondAttribute="height" multiplier="1:1" id="T5n-aD-rPS"/>
@@ -538,7 +538,7 @@ opqr stuv wxyz</string>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Two-Factor Authentication Enabled" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4g7-EC-3dP" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="56.5" y="144" width="262" height="19.5"/>
+                                        <rect key="frame" x="56.5" y="164" width="262" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -548,13 +548,13 @@ opqr stuv wxyz</string>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XRi-Uo-bUM">
-                                        <rect key="frame" x="20" y="179.5" width="335" height="58"/>
+                                        <rect key="frame" x="20" y="199.5" width="335" height="58"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4P-aS-ggI">
-                                        <rect key="frame" x="20" y="253.5" width="335" height="78"/>
+                                        <rect key="frame" x="20" y="273.5" width="335" height="78"/>
                                         <string key="text">If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can’t help you gain access to it again.
 Back up your recovery key.</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
@@ -562,9 +562,9 @@ Back up your recovery key.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qmf-eY-doL">
-                                        <rect key="frame" x="20" y="347.5" width="335" height="60"/>
+                                        <rect key="frame" x="20" y="367.5" width="335" height="60"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text" translatesAutoresizingMaskIntoConstraints="NO" id="zEZ-8l-5mn">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filetype_text" translatesAutoresizingMaskIntoConstraints="NO" id="zEZ-8l-5mn">
                                                 <rect key="frame" x="10" y="10" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="GeB-5b-agz"/>
@@ -595,7 +595,7 @@ Back up your recovery key.</string>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2UG-fV-LZb" userLabel="Export Recovery Key Button" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="43.5" y="447.5" width="288" height="50"/>
+                                        <rect key="frame" x="43.5" y="467.5" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="FGd-uy-iUV"/>
                                             <constraint firstAttribute="height" constant="50" id="z2b-k2-kXP"/>
@@ -611,7 +611,7 @@ Back up your recovery key.</string>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSy-RT-s5a" userLabel="Close Button" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="43.5" y="513.5" width="288" height="50"/>
+                                        <rect key="frame" x="43.5" y="533.5" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="2Ah-VI-okf"/>
                                             <constraint firstAttribute="width" constant="288" id="OrB-dr-1Ls"/>
@@ -636,7 +636,7 @@ Back up your recovery key.</string>
                                     <constraint firstItem="lSy-RT-s5a" firstAttribute="top" secondItem="2UG-fV-LZb" secondAttribute="bottom" constant="16" id="6DU-AD-eNi"/>
                                     <constraint firstItem="XRi-Uo-bUM" firstAttribute="centerX" secondItem="4g7-EC-3dP" secondAttribute="centerX" id="7Lh-Zg-zJR"/>
                                     <constraint firstItem="4g7-EC-3dP" firstAttribute="top" secondItem="doM-ND-eYT" secondAttribute="bottom" constant="16" id="9ty-XR-koa"/>
-                                    <constraint firstItem="doM-ND-eYT" firstAttribute="top" secondItem="GrC-8N-WOI" secondAttribute="top" id="EaC-sV-1iY"/>
+                                    <constraint firstItem="doM-ND-eYT" firstAttribute="top" secondItem="GrC-8N-WOI" secondAttribute="top" constant="20" id="EaC-sV-1iY"/>
                                     <constraint firstItem="Qmf-eY-doL" firstAttribute="top" secondItem="e4P-aS-ggI" secondAttribute="bottom" constant="16" id="Flc-LF-pTQ"/>
                                     <constraint firstItem="XRi-Uo-bUM" firstAttribute="top" secondItem="4g7-EC-3dP" secondAttribute="bottom" constant="16" id="NKh-mk-e7H"/>
                                     <constraint firstItem="Qmf-eY-doL" firstAttribute="width" secondItem="e4P-aS-ggI" secondAttribute="width" id="Rmr-b9-OnX"/>
@@ -717,13 +717,13 @@ Back up your recovery key.</string>
         <image name="2FASetup" width="128" height="128"/>
         <image name="achievementsCheck" width="32" height="32"/>
         <image name="contact_request_deny" width="28" height="28"/>
+        <image name="filetype_text" width="72" height="72"/>
         <image name="littleQuestionMark" width="12" height="12"/>
-        <image name="text" width="110" height="110"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tableCellGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
