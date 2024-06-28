@@ -62,7 +62,7 @@ final class UsageViewModel: ViewModelType {
         Task {
             await loadDetails(
                 commandType: .loadedTransfer(
-                    used: accountUseCase.currentAccountDetails?.transferOwnUsed ?? 0,
+                    used: accountUseCase.currentAccountDetails?.transferUsed ?? 0,
                     max: accountUseCase.currentAccountDetails?.transferMax ?? 0
                 )
             )

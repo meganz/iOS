@@ -155,8 +155,9 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         }
         
         let viewModel = MyAccountHallViewModel(
-            myAccountHallUseCase: myAccountHallUseCase,
-            purchaseUseCase: purchaseUseCase, 
+            myAccountHallUseCase: myAccountHallUseCase, 
+            accountUseCase: accountUseCase,
+            purchaseUseCase: purchaseUseCase,
             shareUseCase: shareUseCase, 
             notificationsUseCase: notificationsUseCase,
             deviceCenterBridge: DeviceCenterBridge(),

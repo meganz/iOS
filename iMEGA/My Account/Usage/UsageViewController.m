@@ -68,7 +68,7 @@
     NSNumber *usedStorageNumber = [NSNumber numberWithInteger:self.usedStorage];
     NSNumber *maxStorageNumber = [NSNumber numberWithInteger:self.maxStorage];
     
-    NSNumber *transferOwnUsedNumber = [NSNumber numberWithInteger:self.transferOwnUsed];
+    NSNumber *transferUsedNumber = [NSNumber numberWithInteger:self.transferUsed];
     NSNumber *transferMaxNumber = [NSNumber numberWithInteger:self.transferMax];
     
     NSNumber *number;
@@ -79,7 +79,7 @@
         }
             
         case 1: {
-            number = [NSNumber numberWithFloat:(transferOwnUsedNumber.floatValue / transferMaxNumber.floatValue) * 100];
+            number = [NSNumber numberWithFloat:(transferUsedNumber.floatValue / transferMaxNumber.floatValue) * 100];
             break;
         }
     }
@@ -122,7 +122,7 @@
         }
             
         case 1: {
-            firstNumber = self.transferOwnUsed;
+            firstNumber = self.transferUsed;
             secondNumber = self.transferMax;
             
             tertiaryTextString = LocalizedString(@"Transfer", @"Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible).");
@@ -191,7 +191,7 @@
             if (self.usagePageControl.currentPage == 0) {
                 valueForSlice = ((double)self.cloudDriveSize / (double)self.maxStorage);
             } else {
-                valueForSlice = ((double)self.transferOwnUsed / (double)self.transferMax);
+                valueForSlice = ((double)self.transferUsed / (double)self.transferMax);
             }
             break;
         }
@@ -200,7 +200,7 @@
             if (self.usagePageControl.currentPage == 0) {
                 valueForSlice = (((double)self.maxStorage - (double)self.usedStorage) / (double)self.maxStorage);
             } else {
-                valueForSlice = (((double)self.transferMax - (double)self.transferOwnUsed) / (double)self.transferMax);
+                valueForSlice = (((double)self.transferMax - (double)self.transferUsed) / (double)self.transferMax);
             }
             
             if (isnan(valueForSlice)) {

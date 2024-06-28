@@ -59,6 +59,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     private(set) var planList: [AccountPlanEntity] = []
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private let tracker: any AnalyticsTracking
@@ -76,6 +77,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     // MARK: - Init
     
     init(myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
          purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
          shareUseCase: some ShareUseCaseProtocol,
          notificationsUseCase: some NotificationsUseCaseProtocol,
@@ -84,6 +86,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
          tracker: some AnalyticsTracking,
          router: some MyAccountHallRouting) {
         self.myAccountHallUseCase = myAccountHallUseCase
+        self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
         self.shareUseCase = shareUseCase
         self.notificationsUseCase = notificationsUseCase
@@ -177,8 +180,36 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     var showPlanRow: Bool {
-        guard let accountDetails else { return false }
-        return accountDetails.proLevel != .business && accountDetails.proLevel != .proFlexi
+        !isBusinessAccount && !isProFlexiAccount
+    }
+    
+    var transferUsed: Int64 {
+        accountDetails?.transferUsed ?? 0
+    }
+    
+    var transferMax: Int64 {
+        accountDetails?.transferMax ?? 0
+    }
+    
+    var storageUsed: Int64 {
+        accountDetails?.storageUsed ?? 0
+    }
+    
+    var storageMax: Int64 {
+        accountDetails?.storageMax ?? 0
+    }
+    
+    var isBusinessAccount: Bool {
+        accountDetails?.proLevel == .business
+    }
+    
+    var isProFlexiAccount: Bool {
+        accountDetails?.proLevel == .proFlexi
+    }
+    
+    var rubbishBinFormattedStorageUsed: String {
+        let rubbishBinStorageUsed = accountUseCase.rubbishBinStorageUsed()
+        return String.memoryStyleString(fromByteCount: rubbishBinStorageUsed)
     }
     
     func calculateCellHeight(at indexPath: IndexPath) -> CGFloat {
