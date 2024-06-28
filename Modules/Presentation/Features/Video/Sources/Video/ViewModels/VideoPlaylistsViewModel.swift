@@ -171,6 +171,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     }
     
     func createUserVideoPlaylist(with name: String?) {
+        guard let name else { return }
         createVideoPlaylistTask = Task {
             do {
                 let mappedName = VideoPlaylistNameCreationMapper.videoPlaylistName(from: name, from: videoPlaylistNames)

@@ -320,6 +320,17 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty)
     }
     
+    func testRenameVideoPlaylist_nameIsNil_doesNotRenameVideoPlaylist() async {
+        let (sut, videoPlaylistUseCase, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(updateVideoPlaylistNameResult: .success(()))
+        )
+        
+        sut.renameVideoPlaylist(with: nil)
+        await sut.renameVideoPlaylistTask?.value
+        
+        XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty)
+    }
+    
     func testRenameVideoPlaylist_whenCalled_renameVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let selectedVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
