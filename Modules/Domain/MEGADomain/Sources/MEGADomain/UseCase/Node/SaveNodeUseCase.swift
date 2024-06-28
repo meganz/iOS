@@ -71,8 +71,12 @@ public struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRep
                 }
                 
                 Task { @MainActor in
-                    guard await saveMediaToPhotoFailureHandler.shouldFallbackToMakingOffline() else { return }
+                    guard await saveMediaToPhotoFailureHandler.shouldFallbackToMakingOffline() else {
+                        completion(.success(false))
+                        return
+                    }
                     moveFileToOffline(name: name, transferUrl: transferUrl, nodeHandle: transfer.nodeHandle)
+                    completion(.success(false))
                 }
             }
         } else {
