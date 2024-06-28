@@ -58,7 +58,7 @@ public struct AccountDetailsEntity: Sendable {
     public let storageUsed: Int64
     public let versionsStorageUsed: Int64
     public let storageMax: Int64
-    public let transferOwnUsed: Int64
+    public let transferUsed: Int64
     public let transferMax: Int64
     public let proLevel: AccountTypeEntity
     public let proExpiration: Int
@@ -74,7 +74,7 @@ public struct AccountDetailsEntity: Sendable {
         storageUsed: Int64,
         versionsStorageUsed: Int64,
         storageMax: Int64,
-        transferOwnUsed: Int64,
+        transferUsed: Int64,
         transferMax: Int64,
         proLevel: AccountTypeEntity,
         proExpiration: Int,
@@ -89,7 +89,7 @@ public struct AccountDetailsEntity: Sendable {
         self.storageUsed = storageUsed
         self.versionsStorageUsed = versionsStorageUsed
         self.storageMax = storageMax
-        self.transferOwnUsed = transferOwnUsed
+        self.transferUsed = transferUsed
         self.transferMax = transferMax
         self.proLevel = proLevel
         self.proExpiration = proExpiration

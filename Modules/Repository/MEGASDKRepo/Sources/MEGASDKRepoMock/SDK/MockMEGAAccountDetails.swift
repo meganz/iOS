@@ -5,7 +5,7 @@ public final class MockMEGAAccountDetails: MEGAAccountDetails {
     private var _storageUsed: Int64
     private var _versionsStorageUsed: Int64
     private var _storageMax: Int64
-    private var _transferOwnUsed: Int64
+    private var _transferUsed: Int64
     private var _transferMax: Int64
     private var _type: MEGAAccountType
     private var _proExpiration: Int
@@ -19,7 +19,7 @@ public final class MockMEGAAccountDetails: MEGAAccountDetails {
     public init(storageUsed: Int64 = 0,
                 versionsStorageUsed: Int64 = 0,
                 storageMax: Int64 = 0,
-                transferOwnUsed: Int64 = 0,
+                transferUsed: Int64 = 0,
                 transferMax: Int64 = 0,
                 type: MEGAAccountType = .free,
                 proExpiration: Int = 0,
@@ -33,7 +33,7 @@ public final class MockMEGAAccountDetails: MEGAAccountDetails {
         _storageUsed = storageUsed
         _versionsStorageUsed = versionsStorageUsed
         _storageMax = storageMax
-        _transferOwnUsed = transferOwnUsed
+        _transferUsed = transferUsed
         _transferMax = transferMax
         _type = type
         _proExpiration = proExpiration
@@ -48,7 +48,7 @@ public final class MockMEGAAccountDetails: MEGAAccountDetails {
     public override var storageUsed: Int64 { _storageUsed }
     public override var versionStorageUsed: Int64 { _versionsStorageUsed }
     public override var storageMax: Int64 { _storageMax }
-    public override var transferOwnUsed: Int64 { _transferOwnUsed }
+    public override var transferUsed: Int64 { _transferUsed }
     public override var transferMax: Int64 { _transferMax }
     public override var type: MEGAAccountType { _type }
     public override var proExpiration: Int { _proExpiration }

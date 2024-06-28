@@ -133,7 +133,7 @@ final class UsageViewModelTests: XCTestCase {
 
     func testLoadTransferDetails_shouldInvokeLoadedTransferCommand() {
         let accountDetails = AccountDetailsEntity.build(
-            transferOwnUsed: expectedUsedTransfer,
+            transferUsed: expectedUsedTransfer,
             transferMax: expectedMaxTransfer
         )
         let sut = makeSUT(currentAccountDetails: accountDetails)

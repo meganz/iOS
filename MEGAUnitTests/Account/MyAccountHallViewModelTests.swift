@@ -325,6 +325,99 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    func testTransferUsed_shouldReturnCorrectValue() {
+        let expectedTransferUsed: Int64 = 5000
+        let accountDetails = AccountDetailsEntity.build(transferUsed: expectedTransferUsed)
+        let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
+        
+        XCTAssertEqual(sut.transferUsed, expectedTransferUsed)
+    }
+    
+    func testTransferUsed_whenAccountDetailsNil_shouldReturnZero() {
+        let (sut, _) = makeSUT(currentAccountDetails: nil)
+        
+        XCTAssertEqual(sut.transferUsed, 0)
+    }
+    
+    func testTransferMax_shouldReturnCorrectValue() {
+        let expectedTransferMax: Int64 = 10000
+        let accountDetails = AccountDetailsEntity.build(transferMax: expectedTransferMax)
+        let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
+        
+        XCTAssertEqual(sut.transferMax, expectedTransferMax)
+    }
+    
+    func testTransferMax_whenAccountDetailsNil_shouldReturnZero() {
+        let (sut, _) = makeSUT(currentAccountDetails: nil)
+        
+        XCTAssertEqual(sut.transferMax, 0)
+    }
+    
+    func testStorageUsed_shouldReturnCorrectValue() {
+        let expectedStorageUsed: Int64 = 7500
+        let accountDetails = AccountDetailsEntity.build(storageUsed: expectedStorageUsed)
+        let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
+        
+        XCTAssertEqual(sut.storageUsed, expectedStorageUsed)
+    }
+    
+    func testStorageUsed_whenAccountDetailsNil_shouldReturnZero() {
+        let (sut, _) = makeSUT(currentAccountDetails: nil)
+        
+        XCTAssertEqual(sut.storageUsed, 0)
+    }
+    
+    func testStorageMax_shouldReturnCorrectValue() {
+        let expectedStorageMax: Int64 = 20000
+        let accountDetails = AccountDetailsEntity.build(storageMax: expectedStorageMax)
+        let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
+        
+        XCTAssertEqual(sut.storageMax, expectedStorageMax)
+    }
+    
+    func testStorageMax_whenAccountDetailsNil_shouldReturnZero() {
+        let (sut, _) = makeSUT(currentAccountDetails: nil)
+        
+        XCTAssertEqual(sut.storageMax, 0)
+    }
+    
+    func testIsBusinessAccount_shouldBeTrue() {
+        let accountDetails = AccountDetailsEntity.build(proLevel: .business)
+        let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
+        
+        XCTAssertTrue(sut.isBusinessAccount)
+    }
+    
+    func testIsBusinessAccount_shouldBeFalse() {
+        let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
+        let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
+        
+        XCTAssertFalse(sut.isBusinessAccount)
+    }
+    
+    func testIsProFlexiAccount_shouldBeTrue() {
+        let accountDetails = AccountDetailsEntity.build(proLevel: .proFlexi)
+        let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
+        
+        XCTAssertTrue(sut.isProFlexiAccount)
+    }
+    
+    func testIsProFlexiAccount_shouldBeFalse() {
+        let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
+        let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
+        
+        XCTAssertFalse(sut.isProFlexiAccount)
+    }
+    
+    func testRubbishBinFormattedStorageUsed_shouldReturnFormattedString() {
+        let expectedRubbishBinStorageUsed: Int64 = 2048
+        let expectedFormattedString = "2 KB"
+        
+        let (sut, _) = makeSUT(rubbishBinStorage: expectedRubbishBinStorageUsed)
+        
+        XCTAssertEqual(sut.rubbishBinFormattedStorageUsed, expectedFormattedString)
+    }
+    
     private func makeSUT(
         isMasterBusinessAccount: Bool = false,
         isAchievementsEnabled: Bool = false,
@@ -332,7 +425,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
         currentAccountDetails: AccountDetailsEntity? = nil,
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [:]),
         deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge(),
-        tracker: some AnalyticsTracking = MockTracker()
+        tracker: some AnalyticsTracking = MockTracker(),
+        rubbishBinStorage: Int64 = 0
     ) -> (MyAccountHallViewModel, MockMyAccountHallRouter) {
         let myAccountHallUseCase = MockMyAccountHallUseCase(
             currentAccountDetails: currentAccountDetails ?? AccountDetailsEntity.random,
@@ -340,6 +434,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
             isAchievementsEnabled: isAchievementsEnabled
         )
         
+        let accountUseCase = MockAccountUseCase(rubbishBinStorage: rubbishBinStorage)
         let purchaseUseCase = MockAccountPlanPurchaseUseCase()
         let shareUseCase = MockShareUseCase()
         let notificationUseCase = MockNotificationUseCase(enabledNotifications: enabledNotifications)
@@ -348,7 +443,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
         return (
             MyAccountHallViewModel(
                 myAccountHallUseCase: myAccountHallUseCase,
-                purchaseUseCase: purchaseUseCase, 
+                accountUseCase: accountUseCase,
+                purchaseUseCase: purchaseUseCase,
                 shareUseCase: shareUseCase,
                 notificationsUseCase: notificationUseCase,
                 featureFlagProvider: featureFlagProvider,

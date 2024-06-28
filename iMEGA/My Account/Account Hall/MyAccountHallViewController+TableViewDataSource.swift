@@ -12,20 +12,26 @@ extension MyAccountHallViewController: UITableViewDataSource {
     
     // MARK: - Storage row setup data for Business and Pro Flexi accounts
     private func storageBusinessAccountSetupData() -> MyAccountHallCellData {
-        let accountDetails = MEGASdk.shared.mnz_accountDetails
-        return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
-                                     storageText: Strings.Localizable.storage,
-                                     transferText: Strings.Localizable.transfer,
-                                     storageUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.storageUsed ?? 0)),
-                                     transferUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.transferOwnUsed ?? 0)))
+        MyAccountHallCellData(
+            sectionText: Strings.Localizable.storage,
+            storageText: Strings.Localizable.storage,
+            transferText: Strings.Localizable.transfer,
+            storageUsedText: NSString.mnz_formatString(
+                fromByteCountFormatter: String.memoryStyleString(
+                    fromByteCount: viewModel.storageUsed
+                )
+            ),
+            transferUsedText: NSString.mnz_formatString(
+                fromByteCountFormatter: String.memoryStyleString(fromByteCount: viewModel.transferUsed)
+            )
+        )
     }
     
     // MARK: - Storage row setup data
     private func storageSetupData() -> MyAccountHallCellData {
-        let accountDetails = MEGASdk.shared.mnz_accountDetails
         let detailText = String(format: "%@ / %@",
-                                NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.storageUsed ?? 0)),
-                                NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.storageMax ?? 0)))
+                                NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: viewModel.storageUsed)),
+                                NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: viewModel.storageMax)))
         
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
                                      detailText: detailText,
@@ -119,15 +125,12 @@ extension MyAccountHallViewController: UITableViewDataSource {
     
     // MARK: - Rubbish Bin row setup data
     private func rubbishBinSetupData() -> MyAccountHallCellData {
-        var rubbishBinSize = ""
-        if let rubbishBinNode = MEGASdk.shared.rubbishNode {
-            rubbishBinSize = NSString.mnz_formatString(fromByteCountFormatter: Helper.size(for: rubbishBinNode, api: MEGASdk.shared))
-        }
-        
-        return MyAccountHallCellData(sectionText: Strings.Localizable.rubbishBinLabel,
-                                     detailText: rubbishBinSize,
-                                     icon: UIImage.rubbishBin.imageFlippedForRightToLeftLayoutDirection(),
-                                     isPendingViewVisible: true)
+        MyAccountHallCellData(
+            sectionText: Strings.Localizable.rubbishBinLabel,
+            detailText: viewModel.rubbishBinFormattedStorageUsed,
+            icon: UIImage.rubbishBin.imageFlippedForRightToLeftLayoutDirection(),
+            isPendingViewVisible: true
+        )
     }
     
     // MARK: - Upgrade Plan row setup
@@ -165,8 +168,8 @@ extension MyAccountHallViewController: UITableViewDataSource {
             }
         }
         
-        let isShowStorageUsageCell = (MEGASdk.shared.isAccountType(.business) ||
-                                      MEGASdk.shared.isAccountType(.proFlexi)) &&
+        let isShowStorageUsageCell = (viewModel.isBusinessAccount ||
+                                      viewModel.isProFlexiAccount) &&
                                     indexPath.row == MyAccountMegaSection.storage.rawValue &&
                                     indexPath.section == MyAccountSection.mega.rawValue
         

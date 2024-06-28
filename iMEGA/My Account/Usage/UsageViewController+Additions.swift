@@ -161,11 +161,11 @@ extension UsageViewController {
             
         case 1:
             usageTitleLabel?.text = Strings.Localizable.Account.Storage.TransferUsed.title
-            guard transferOwnUsed != 0 else {
+            guard transferUsed != 0 else {
                 usageSizeLabel?.text = "-"
                 return
             }
-            usageSizeLabel?.text = String.memoryStyleString(fromByteCount: transferOwnUsed)
+            usageSizeLabel?.text = String.memoryStyleString(fromByteCount: transferUsed)
             
         default: return
         }
@@ -176,7 +176,7 @@ extension UsageViewController {
     }
     
     private func isTransferFull() -> Bool {
-        transferOwnUsed >= transferMax
+        transferUsed >= transferMax
     }
     
     private func isFull(currentPage: Int) -> Bool {
@@ -250,7 +250,7 @@ extension UsageViewController {
             reloadCurrentPage()
             
         case .loadedTransfer(let used, let max):
-            transferOwnUsed = used
+            transferUsed = used
             transferMax = max
             reloadCurrentPage()
             

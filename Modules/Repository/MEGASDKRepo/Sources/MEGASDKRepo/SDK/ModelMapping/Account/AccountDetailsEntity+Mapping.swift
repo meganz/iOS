@@ -7,7 +7,7 @@ extension MEGAAccountDetails {
             storageUsed: self.storageUsed,
             versionsStorageUsed: self.versionStorageUsed,
             storageMax: self.storageMax,
-            transferOwnUsed: self.transferOwnUsed,
+            transferUsed: self.transferUsed,
             transferMax: self.transferMax,
             proLevel: self.type.toAccountTypeEntity(),
             proExpiration: self.proExpiration,

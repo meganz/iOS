@@ -49,7 +49,7 @@
 @property (nonatomic) long long usedStorage;
 @property (nonatomic) long long maxStorage;
 
-@property (nonatomic) long long transferOwnUsed;
+@property (nonatomic) long long transferUsed;
 @property (nonatomic) long long transferMax;
 
 @property (nonatomic, strong, nullable) UsageViewModel *viewModel;
