@@ -34,12 +34,9 @@
     self.firstLabel.text = LocalizedString(@"twoFactorAuthenticationEnabledDescription", @"A message on the dialog shown after 2FA was successfully enabled.");
     self.secondLabel.text = LocalizedString(@"twoFactorAuthenticationEnabledWarning", @"An informational message on the Backup Recovery Key dialog.");
     self.recoveryKeyTextField.text = [NSString stringWithFormat:@"%@.txt", LocalizedString(@"general.security.recoveryKeyFile", @"Name for the recovery key file")];
-
-    self.recoveryKeyView.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
     [self.exportRecoveryButton setTitle:LocalizedString(@"exportRecoveryKey", @"A dialog title to export the Recovery Key for the current user.") forState:UIControlStateNormal];
     [self.closeButton setTitle:LocalizedString(@"close", @"A button label. The button allows the user to close the conversation.") forState:UIControlStateNormal];
-    self.closeButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
     [MEGASdk.shared isMasterKeyExportedWithDelegate:self];
     
@@ -50,6 +47,7 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         [self updateAppearance];
     }
 }
@@ -57,15 +55,28 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    
-    self.firstLabel.textColor = self.secondLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    
-    self.recoveryKeyView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-    self.recoveryKeyView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
-    
-    [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
-    [self.closeButton mnz_setupBasic:self.traitCollection];
+    if (UIColor.isDesignTokenEnabled) {
+        self.view.backgroundColor = [UIColor searchBarPageBackgroundColor];
+        self.titleLabel.textColor = [self primaryTextColor];
+        self.firstLabel.textColor = self.secondLabel.textColor = [self secondaryTextColor];
+        self.recoveryKeyView.backgroundColor = [UIColor searchBarSurface1BackgroundColor];
+        self.recoveryKeyView.layer.borderWidth = 0;
+        self.recoveryKeyTextField.textColor = [self primaryTextColor];
+        [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
+        [self.closeButton mnz_setupSecondary:self.traitCollection];  
+    } else {
+        self.view.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+        
+        self.firstLabel.textColor = self.secondLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        
+        self.recoveryKeyView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+        self.recoveryKeyView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
+        
+        self.closeButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
+        
+        [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
+        [self.closeButton mnz_setupBasic:self.traitCollection];
+    }
 }
 
 - (void)showSaveYourRecoveryKeyAlert {
