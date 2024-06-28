@@ -1,24 +1,18 @@
 import Foundation
 import MEGADomain
 
-public struct MockPhotosLibraryRepository: PhotoLibraryRepositoryProtocol {
+public struct MockPhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
     public static var newRepo: MockPhotosLibraryRepository {
         MockPhotosLibraryRepository()
     }
     
-    private var cloudDriveNode: NodeEntity?
-    private var cameraUploadNode: NodeEntity?
-    private var mediaUploadNode: NodeEntity?
-    
-    public init(cloudDriveNode: NodeEntity? = nil,
-                cameraUploadNode: NodeEntity? = nil,
-                mediaUploadNode: NodeEntity? = nil) {
-        self.cloudDriveNode = cloudDriveNode
-        self.cameraUploadNode = cameraUploadNode
-        self.mediaUploadNode = mediaUploadNode
+    private let error: SaveMediaToPhotosErrorEntity?
+
+    public init(error: SaveMediaToPhotosErrorEntity? = nil) {
+        self.error = error
     }
     
-    public func photoSourceNode(for source: PhotoSourceEntity) async throws -> NodeEntity? {
-        source == .camera ? cameraUploadNode : mediaUploadNode
+    public func copyMediaFileToPhotos(at url: URL, completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?) {
+        completion?(error)
     }
 }

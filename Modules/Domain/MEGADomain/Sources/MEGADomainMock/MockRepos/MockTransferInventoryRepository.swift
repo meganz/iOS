@@ -22,11 +22,11 @@ public struct MockTransferInventoryRepository: TransferInventoryRepositoryProtoc
          TransferEntity(type: .download, path: "/Documents"), TransferEntity(type: .download, path: "tmp")]
     }
     
-    public func isExportFileTransfer(_ transfer: MEGADomain.TransferEntity) -> Bool {
+    public func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
         transfer.appData?.contains(">exportFile") ?? false
     }
     
-    public func isSaveToPhotosAppTransfer(_ transfer: MEGADomain.TransferEntity) -> Bool {
+    public func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
         transfer.appData?.contains(">SaveInPhotosApp") ?? false
     }
 }

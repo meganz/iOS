@@ -10,7 +10,7 @@ final class PhotoLibraryLocalSourceUseCaseTests: XCTestCase {
                                           NodeEntity(handle: 22, parentHandle: cameraUploadNode.handle)]
     
     func testPhotoLibraryContainer_cameraAndMediaSourceNode_shouldReturnCorrectNodes() async {
-        let photoLibraryRepository = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode, mediaUploadNode: mediaUploadNode)
+        let photoLibraryRepository = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode, mediaUploadNode: mediaUploadNode)
         let sut = makeSUT(photoLibraryRepository: photoLibraryRepository)
         
         let container = await sut.photoLibraryContainer()
@@ -36,7 +36,7 @@ final class PhotoLibraryLocalSourceUseCaseTests: XCTestCase {
                                NodeEntity(handle: 5, parentHandle: 87)]
         let allPhotos = cameraUploadNodes + cloudDriveNodes
         
-        let photoLibraryRepository = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode)
+        let photoLibraryRepository = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode)
         let photosRepository = MockPhotosRepository(photos: allPhotos)
         let sut = makeSUT(photoLibraryRepository: photoLibraryRepository,
                           photosRepository: photosRepository)
@@ -51,7 +51,7 @@ final class PhotoLibraryLocalSourceUseCaseTests: XCTestCase {
         let otherCloudDriveNodes = [NodeEntity(handle: 5, parentHandle: 77)]
         let allPhotos = cameraUploadNodes + mediaUploadNodes + otherCloudDriveNodes
         
-        let photoLibraryRepository = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+        let photoLibraryRepository = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode,
                                                                  mediaUploadNode: mediaUploadNode)
         let photosRepository = MockPhotosRepository(photos: allPhotos)
         let sut = makeSUT(photoLibraryRepository: photoLibraryRepository,
@@ -62,9 +62,9 @@ final class PhotoLibraryLocalSourceUseCaseTests: XCTestCase {
         XCTAssertEqual(photos, cameraUploadNodes + mediaUploadNodes)
     }
     
-    private func makeSUT(photoLibraryRepository: MockPhotosLibraryRepository = MockPhotosLibraryRepository(),
+    private func makeSUT(photoLibraryRepository: MockPhotoLibraryRepository = MockPhotoLibraryRepository(),
                          photosRepository: MockPhotosRepository = MockPhotosRepository())
-    -> PhotoLibraryLocalSourceUseCase<MockPhotosLibraryRepository, MockPhotosRepository> {
+    -> PhotoLibraryLocalSourceUseCase<MockPhotoLibraryRepository, MockPhotosRepository> {
         PhotoLibraryLocalSourceUseCase(photoLibraryRepository: photoLibraryRepository,
                      photosRepository: photosRepository)
     }

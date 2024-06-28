@@ -21,7 +21,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     func testMedia_withCloudDrive_shouldReturnTrue() async throws {
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
-        let photosRepo = MockPhotosLibraryRepository.newRepo
+        let photosRepo = MockPhotoLibraryRepository.newRepo
         let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
         let expectedResult = videoNodes + imageNodes
@@ -39,7 +39,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     func testMedia_withCloudDriveAndExcludeSensitiveTrueViaUserSetting_shouldReturnTrue() async throws {
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
-        let photosRepo = MockPhotosLibraryRepository.newRepo
+        let photosRepo = MockPhotoLibraryRepository.newRepo
         let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
         let expectedResult = (videoNodes + imageNodes)
@@ -58,7 +58,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     func testMediaExcludeSensitive_withCloudDrive_shouldReturnTrue() async throws {
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
-        let photosRepo = MockPhotosLibraryRepository.newRepo
+        let photosRepo = MockPhotoLibraryRepository.newRepo
         let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: true))
         let expectedResult = (videoNodes + imageNodes)
@@ -83,7 +83,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             mediaUploadNode.handle: nodesInMediaUpload
         ])
         
-        let photosRepo = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+        let photosRepo = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode,
                                                      mediaUploadNode: mediaUploadNode)
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase()
         
@@ -103,7 +103,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             mediaUploadNode.handle: nodesInMediaUpload
         ])
         
-        let photosRepo = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+        let photosRepo = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode,
                                                      mediaUploadNode: mediaUploadNode)
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
 
@@ -125,7 +125,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             mediaUploadNode.handle: nodesInMediaUpload
         ])
         
-        let photosRepo = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+        let photosRepo = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode,
                                                      mediaUploadNode: mediaUploadNode)
         let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
 
@@ -139,7 +139,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     }
     
     func testMedia_withCloudDriveOnly_shouldReturnTrue() async throws {
-        let photosRepo = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+        let photosRepo = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode,
                                                      mediaUploadNode: mediaUploadNode)
         
         let videoNodes = sampleVideoNodesForCloudDrive()
@@ -156,7 +156,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     }
     
     func testMedia_withCloudDriveOnlyAndExcludeSensitiveTrueViaUserSetting_shouldReturnTrue() async throws {
-        let photosRepo = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+        let photosRepo = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode,
                                                      mediaUploadNode: mediaUploadNode)
         
         let videoNodes = sampleVideoNodesForCloudDrive()
@@ -173,7 +173,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     }
     
     func testMediaExcludeSensitive_withCloudDriveOnly_shouldReturnTrue() async throws {
-        let photosRepo = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+        let photosRepo = MockPhotoLibraryRepository(cameraUploadNode: cameraUploadNode,
                                                      mediaUploadNode: mediaUploadNode)
         
         let videoNodes = sampleVideoNodesForCloudDrive()
@@ -190,7 +190,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     }
     
     func testMedia_withSearchFilterNil_doesNotFilterMedia() async throws {
-        let photosRepo = MockPhotosLibraryRepository(
+        let photosRepo = MockPhotoLibraryRepository(
             cameraUploadNode: cameraUploadNode,
             mediaUploadNode: mediaUploadNode
         )
@@ -213,7 +213,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     }
     
     func testMedia_withSearchFilterNil_filterMedia() async throws {
-        let photosRepo = MockPhotosLibraryRepository(
+        let photosRepo = MockPhotoLibraryRepository(
             cameraUploadNode: cameraUploadNode,
             mediaUploadNode: mediaUploadNode
         )
