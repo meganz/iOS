@@ -96,7 +96,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
 }
 
-private extension PhotoLibraryContentMode {
+extension PhotoLibraryContentMode {
     var displayMode: DisplayMode {
         switch self {
         case .library, .album, .mediaDiscovery:

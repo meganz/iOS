@@ -20,6 +20,8 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     var configuration: (any FilesExplorerViewConfiguration)?
     weak var delegate: (any FilesExplorerViewControllerDelegate)?
     
+    override var displayMode: DisplayMode { .cloudDrive }
+    
     init(viewModel: FilesExplorerViewModel,
          delegate: some FilesExplorerViewControllerDelegate) {
         self.viewModel = viewModel

@@ -8,6 +8,8 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private let folderName: String
     private let contentMode: PhotoLibraryContentMode
     
+    override var displayMode: DisplayMode { contentMode.displayMode }
+    
     lazy var rightBarButtonItem = UIBarButtonItem(
         image: UIImage.selectAllItems,
         style: .plain,

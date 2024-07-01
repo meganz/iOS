@@ -949,7 +949,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     BOOL shouldProcessOnNodesUpdate = [self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodes.mnz_nodesArrayFromNodeList parentNode:self.parentNode];
 
-    [self updateParentNodeIfNeeded:nodeList];
+    BOOL didParentNodeUpdate = [self updateParentNodeIfNeeded:nodeList];
     
     [self updateControllersStackIfNeeded:nodeList];
 
@@ -960,6 +960,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         if (self.searchController.isActive) {
             [self search];
         }
+    } else if (didParentNodeUpdate) {
+        [self reloadUI: nil];
     }
 }
 

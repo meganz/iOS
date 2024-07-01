@@ -12,6 +12,8 @@ class ExplorerBaseViewController: UIViewController {
         return toolbar.superview != nil
     }
     
+    var displayMode: DisplayMode { .unknown }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -202,7 +204,7 @@ class ExplorerBaseViewController: UIViewController {
         
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let containsABackupNode = backupsUC.hasBackupNode(in: selectedNodes.toNodeEntities())
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: isKind(of: MediaDiscoveryViewController.self) ? .mediaDiscovery : .unknown, containsABackupNode: containsABackupNode, sender: button)
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: displayMode, containsABackupNode: containsABackupNode, sender: button)
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     
@@ -246,6 +248,26 @@ class ExplorerBaseViewController: UIViewController {
             }
         })
         router.start()
+    }
+    
+    private func hide() {
+        guard let nodes = selectedNodes()?.toNodeEntities() else {
+            return
+        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .hideNodes(nodes)
+        endEditingMode()
+    }
+    
+    private func unhide() {
+        guard let nodes = selectedNodes()?.toNodeEntities() else {
+            return
+        }
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+        Task {
+            _ = await nodeActionUseCase.unhide(nodes: nodes)
+        }
+        endEditingMode()
     }
     
     // MARK: - Methods needs to be overriden by the subclass
@@ -307,6 +329,10 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
             handleRemoveLinks(for: nodes)
         case .saveToPhotos:
             saveToPhotosButtonPressed(sender)
+        case .hide:
+            hide()
+        case .unhide:
+            unhide()
         default:
             break
         }
