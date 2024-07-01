@@ -342,66 +342,78 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 #pragma mark - Private
 
 - (void)reloadUI {
-    [self prepareForReloadUI];
-    [self reloadData];
+    __weak typeof(self) weakSelf = self;
+    [self prepareForReloadUIWithCompletion:^{
+        [weakSelf reloadData];
+    }];
 }
 
 - (void)reloadUI:(MEGANodeList *)updatedNodes {
-    [self prepareForReloadUI];
-    
-    if (updatedNodes) {
-        if (self.displayMode == DisplayModeCloudDrive && updatedNodes.size == 1 && self.viewModePreference_ObjC == ViewModePreferenceEntityThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
-            MEGANode *updatedNode = [updatedNodes nodeAtIndex:0];
-            NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
-            [self reloadDataAtIndexPaths:@[indexPath]];
-            
-            self.wasSelectingFavoriteUnfavoriteNodeActionOption = false;
-        } else if (self.displayMode == DisplayModeRecents) {
-            [self reloadRecentActionBucketAfterNodeUpdatesUsing:MEGASdk.shared];
-        } else {
-            [self reloadData];
+    __weak typeof(self) weakSelf = self;
+    [self prepareForReloadUIWithCompletion:^{
+        __strong __typeof__(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) {
+            return;
         }
-    } else {
-        [self reloadData];
-    }
+        if (updatedNodes) {
+            if (strongSelf.displayMode == DisplayModeCloudDrive && updatedNodes.size == 1 && strongSelf.viewModePreference_ObjC == ViewModePreferenceEntityThumbnail && strongSelf.wasSelectingFavoriteUnfavoriteNodeActionOption) {
+                MEGANode *updatedNode = [updatedNodes nodeAtIndex:0];
+                NSIndexPath *indexPath = [strongSelf findIndexPathFor:updatedNode source:strongSelf.nodesArray];
+                [strongSelf reloadDataAtIndexPaths:@[indexPath]];
+                
+                strongSelf.wasSelectingFavoriteUnfavoriteNodeActionOption = false;
+            } else if (strongSelf.displayMode == DisplayModeRecents) {
+                [strongSelf reloadRecentActionBucketAfterNodeUpdatesUsing:MEGASdk.shared];
+            } else {
+                [strongSelf reloadData];
+            }
+        } else {
+            [strongSelf reloadData];
+        }
+    }];
 }
 
-- (void)prepareForReloadUI {
-    [self prepareNodesAndNavigationBarForDisplayMode:self.displayMode];
-    self.nodesArray = [self mapNodeListToArray:self.nodes];
-    
-    if (self.displayMode == DisplayModeCloudDrive &&
-        self.parentNode.type != MEGANodeTypeRoot &&
-        !self.isFromSharedItem &&
-        !self.didShowMediaDiscoveryAutomatically &&
-        [self.viewModel shouldShowMediaDiscoveryAutomaticallyForNodes:self.nodes]) 
-    {
-        self.didShowMediaDiscoveryAutomatically = YES;
-        self.viewModePreference_ObjC = ViewModePreferenceEntityMediaDiscovery;
-        [self configureMediaDiscoveryViewModeWithIsShowingAutomatically:YES];
-        self.shouldDetermineViewMode = NO;
-        return;
-    }
-    
-    if(self.nodes.size > 0
-       && self.viewModePreference_ObjC == ViewModePreferenceEntityMediaDiscovery
-       && !self.hasMediaFiles) {
-        self.shouldDetermineViewMode = YES;
-    }
-    
-    if (self.shouldDetermineViewMode) {
-        [self determineViewMode];
-    }
+- (void)prepareForReloadUIWithCompletion:(void (^)(void))completion {
+    __weak typeof(self) weakSelf = self;
+    [self nodesForDisplayModeWithCompletionHandler:^(MEGANodeList * _Nullable nodes) {
+        __strong __typeof__(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) {
+            completion();
+            return;
+        }
+        strongSelf.nodes = nodes;
+        [strongSelf prepareNodesAndNavigationBarForDisplayMode:strongSelf.displayMode];
+        strongSelf.nodesArray = [strongSelf mapNodeListToArray:strongSelf.nodes];
+        
+        if (strongSelf.displayMode == DisplayModeCloudDrive &&
+            strongSelf.parentNode.type != MEGANodeTypeRoot &&
+            !strongSelf.isFromSharedItem &&
+            !strongSelf.didShowMediaDiscoveryAutomatically &&
+            [strongSelf.viewModel shouldShowMediaDiscoveryAutomaticallyForNodes:strongSelf.nodes]) {
+            strongSelf.didShowMediaDiscoveryAutomatically = YES;
+            strongSelf.viewModePreference_ObjC = ViewModePreferenceEntityMediaDiscovery;
+            [strongSelf configureMediaDiscoveryViewModeWithIsShowingAutomatically:YES];
+            strongSelf.shouldDetermineViewMode = NO;
+            return;
+        }
+        
+        if(strongSelf.nodes.size > 0
+           && strongSelf.viewModePreference_ObjC == ViewModePreferenceEntityMediaDiscovery
+           && !strongSelf.hasMediaFiles) {
+            strongSelf.shouldDetermineViewMode = YES;
+        }
+        
+        if (strongSelf.shouldDetermineViewMode) {
+            [strongSelf determineViewMode];
+        }
+        completion();
+    }];
 }
 
 - (void)prepareNodesAndNavigationBarForDisplayMode:(DisplayMode)displayMode {
     switch (displayMode) {
         case DisplayModeCloudDrive: {
-            if (!self.parentNode) {
-                self.parentNode = [MEGASdk.shared rootNode];
-            }
             [self updateNavigationBarTitle];
-            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.hasMediaFiles = [self.viewModel hasMediaFilesWithNodes:self.nodes];
             [self updateSearchAppearanceFor:self.viewModePreference_ObjC];
             break;
@@ -409,14 +421,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case DisplayModeRubbishBin: {
             [self updateNavigationBarTitle];
-            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.moreMinimizedBarButtonItem.enabled = self.nodes.size > 0;
             self.navigationItem.searchController = self.searchController;
             break;
         }
             
         case DisplayModeRecents: {
-            self.nodes = self.recentActionBucket.nodesList;
             [self updateNavigationBarTitle];
             self.navigationItem.searchController = self.searchController;
             break;
@@ -424,7 +434,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case DisplayModeBackup: {
             [self updateNavigationBarTitle];
-            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.navigationItem.searchController = self.searchController;
             break;
         }

@@ -42,6 +42,7 @@ enum CloudDriveAction: ActionType {
     private let accountUseCase: any AccountUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let sdk: MEGASdk
 
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
@@ -66,7 +67,8 @@ enum CloudDriveAction: ActionType {
          nodeUseCase: some NodeUseCaseProtocol,
          tracker: some AnalyticsTracking,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-         moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
+         moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol,
+         sdk: MEGASdk = MEGASdk.shared
     ) {
         self.parentNode = parentNode
         self.shareUseCase = shareUseCase
@@ -78,6 +80,7 @@ enum CloudDriveAction: ActionType {
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
+        self.sdk = sdk
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
     }
     
@@ -163,6 +166,20 @@ enum CloudDriveAction: ActionType {
         return nil
     }
     
+    func nodesForDisplayMode(_ displayMode: DisplayMode, sortOrder: MEGASortOrderType) async -> MEGANodeList? {
+        guard let parentNode else { return nil }
+        
+        return switch displayMode {
+        case .cloudDrive:
+            nodesForParent(parentNode: parentNode, sortOrder: sortOrder,
+                           shouldExcludeSensitive: await shouldExcludeSensitiveItems())
+        case .rubbishBin, .backup:
+            nodesForParent(parentNode: parentNode, sortOrder: sortOrder, shouldExcludeSensitive: false)
+        default:
+            nil
+        }
+    }
+    
     func dispatch(_ action: CloudDriveAction) {
         switch action {
         case .updateEditModeActive(let isActive):
@@ -236,6 +253,29 @@ enum CloudDriveAction: ActionType {
         }
         self.editModeActive = editModeActive
         invokeCommand?(editModeActive ? .enterSelectionMode : .exitSelectionMode)
+    }
+    
+    // MARK: Node Retrieval
+    
+    private func nodesForParent(parentNode: MEGANode, sortOrder: MEGASortOrderType, shouldExcludeSensitive: Bool) -> MEGANodeList {
+        let filter = makeSearchFilter(parentNodeHandle: parentNode.handle, excludeSensitive: shouldExcludeSensitive)
+        let cancelToken = MEGACancelToken()
+        return sdk.searchNonRecursively(with: filter,
+                                        orderType: sortOrder,
+                                        cancelToken: cancelToken)
+    }
+    
+    private func makeSearchFilter(parentNodeHandle: MEGAHandle, excludeSensitive: Bool) -> MEGASearchFilter {
+        MEGASearchFilter(
+            term: "",
+            parentNodeHandle: parentNodeHandle,
+            nodeType: .unknown,
+            category: .unknown,
+            sensitiveFilter: excludeSensitive ? MEGASearchFilterSensitiveOption.nonSensitiveOnly : .disabled,
+            favouriteFilter: .disabled,
+            creationTimeFrame: nil,
+            modificationTimeFrame: nil
+        )
     }
 }
 

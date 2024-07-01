@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -34,9 +35,19 @@ final class CloudDriveViewControllerTests: XCTestCase {
         setNoEditingState(on: sut)
         sut.viewModeStore = viewModeStore
         sut.simulateUserSelectFavorite(mockNodeActionViewController, selectedNode)
+        
+        let exp = expectation(description: "reload data at called")
+        let subscription = sut.collectionView().$messages
+            .dropFirst()
+            .sink { messages in
+                XCTAssertEqual(messages, [.reloadDataAt([IndexPath(item: 0, section: 0)])])
+                exp.fulfill()
+            }
+        
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
-        XCTAssertEqual(sut.collectionView().messages, [ .reloadDataAt([ IndexPath(item: 0, section: 0) ]) ])
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
     }
     
     func testNodeAction_whenSelectFavoriteOnViewModePreferenceEntityThumbnailAndHasFileTypeOnly_reloadCollectionAtIndexPath() {
@@ -49,9 +60,19 @@ final class CloudDriveViewControllerTests: XCTestCase {
         sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
         setNoEditingState(on: sut)
         sut.simulateUserSelectFavorite(mockNodeActionViewController, selectedNode)
+        
+        let exp = expectation(description: "reload data at called")
+        let subscription = sut.collectionView().$messages
+            .dropFirst()
+            .sink { messages in
+                XCTAssertEqual(messages, [.reloadDataAt([IndexPath(item: 0, section: 1)])])
+                exp.fulfill()
+            }
+        
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
-        XCTAssertEqual(sut.collectionView().messages, [ .reloadDataAt([ IndexPath(item: 0, section: 1) ]) ])
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
     }
     
     // MARK: - NodeAction Remove
@@ -65,9 +86,18 @@ final class CloudDriveViewControllerTests: XCTestCase {
         let sut = makeSUT(nodes: [selectedNode], displayMode: displayMode, viewModeStore: viewModeStore)
         setNoEditingState(on: sut)
         sut.simulateUserSelectDelete(mockNodeActionViewController, selectedNode)
+        let exp = expectation(description: "reload data called")
+        let subscription = sut.collectionView().$messages
+            .dropFirst()
+            .sink { messages in
+                XCTAssertEqual(messages, [.reloadData])
+                exp.fulfill()
+            }
+        
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
-        XCTAssertEqual(sut.collectionView().messages, [ .reloadData ])
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
     }
     
     // MARK: - ReloadUI
@@ -81,9 +111,19 @@ final class CloudDriveViewControllerTests: XCTestCase {
         setNoEditingState(on: sut)
         sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
         sut.wasSelectingFavoriteUnfavoriteNodeActionOption = true
+        
+        let exp = expectation(description: "reload data at called")
+        let subscription = sut.collectionView().$messages
+            .dropFirst()
+            .sink { messages in
+                XCTAssertEqual(messages, [.reloadDataAt([IndexPath(item: 0, section: 1) ])])
+                exp.fulfill()
+            }
+        
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
-        XCTAssertEqual(sut.collectionView().messages, [ .reloadDataAt([ IndexPath(item: 0, section: 1) ]) ])
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
     }
     
     func testReloadUI_whenUpdatesMoreThanOneNodeOnViewModePreferenceEntityThumbnail_reloadCollection() {
@@ -95,9 +135,18 @@ final class CloudDriveViewControllerTests: XCTestCase {
         let thirdNode = anyNode(handle: anyHandle() + 2, nodeType: .file)
         let sut = makeSUT(nodes: [firstNode, secondNode, thirdNode], displayMode: displayMode, viewModeStore: viewModeStore)
         setNoEditingState(on: sut)
+        let exp = expectation(description: "reload data called")
+        let subscription = sut.collectionView().$messages
+            .dropFirst()
+            .sink { messages in
+                XCTAssertEqual(messages, [.reloadData])
+                exp.fulfill()
+            }
+        
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
-        XCTAssertEqual(sut.collectionView().messages, [ .reloadData ])
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
     }
     
     // MARK: - findIndexPathForNode
@@ -284,12 +333,24 @@ final class CloudDriveViewControllerTests: XCTestCase {
         let displayMode = rubbishBinDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .file)
         let sut = makeSUT(nodes: [selectedNode], displayMode: displayMode, viewModeStore: viewModeStore)
+        
+        let exp = expectation(description: "reload data called")
+        
+        let subscription = sut.collectionView().$messages
+            .dropFirst()
+            .sink { messages in
+                XCTAssertEqual(messages, [.reloadData])
+                exp.fulfill()
+            }
+        
         sut.viewWillAppear(true)
-        SortOrderType.allCases.enumerated().forEach { (index, sortOption) in
-            sut.simulateUserOpenContextMenuThen(select: sortOption)
-            
-            XCTAssertTrue(sut.collectionView().messages.contains(.reloadData), "Expect to reload data safely or without crash, but fail instead at index: \(index), with option: \(sortOption)")
+        
+        SortOrderType.allCases.forEach {
+            sut.simulateUserOpenContextMenuThen(select: $0)
         }
+        
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
     }
     
     func testMapNodeListToArray_whenHasNoItem_sucessfullyMapItems() {
@@ -440,10 +501,20 @@ final class CloudDriveViewControllerTests: XCTestCase {
         
         let sut = makeSUT(nodes: [], displayMode: .recents, recentActionsBucket: originalBucket)
         sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
+        
+        let exp = expectation(description: "reload data called")
+        let subscription = sut.collectionView().$messages
+            .dropFirst()
+            .sink { messages in
+                XCTAssertEqual(messages, [.reloadData])
+                exp.fulfill()
+            }
+        
         sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
         
         XCTAssertTrue(sdk.getRecentActionsAsyncCalled)
-        XCTAssertEqual(sut.collectionView().messages, [.reloadData])
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
     }
     
     func testShouldDisplayAdsSlot_withDisplayModeCloudDrive_shouldReturnTrue() {
@@ -565,7 +636,7 @@ private final class MockCloudDriveCollectionViewController: CloudDriveCollection
         }
     }
     
-    private(set) var messages = [Message]()
+    @Published private(set) var messages = [Message]()
     
     override func setCollectionViewEditing(_ editing: Bool, animated: Bool) {
         messages.append(.setCollectionViewEditing)
