@@ -4163,7 +4163,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="على الحاسوب";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. قم بزيارة www.mega.io في متصفح الويب الخاص بك.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. قم بزيارة www.mega.nz في متصفح الويب الخاص بك.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. قم بتسجيل الدخول إلى حساب ميغا MEGA الخاص بك.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
@@ -4175,7 +4175,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="على هاتف محمول";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. قم بزيارة www.mega.io في متصفح الويب الخاص بك.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. قم بزيارة www.mega.nz في متصفح الويب الخاص بك.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. قم بتسجيل الدخول إلى حساب ميغا MEGA الخاص بك.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */

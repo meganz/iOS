@@ -4163,7 +4163,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Auf einem Computer";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Öffnen Sie www.mega.io in Ihrem Webbrowser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Öffnen Sie www.mega.nz in Ihrem Webbrowser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Loggen Sie sich in Ihren MEGA-Account ein.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
@@ -4175,7 +4175,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Auf einem Mobilgerät";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Öffnen Sie www.mega.io in Ihrem Webbrowser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Öffnen Sie www.mega.nz in Ihrem Webbrowser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Loggen Sie sich in Ihren MEGA-Account ein.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
