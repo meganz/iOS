@@ -12,7 +12,9 @@ struct ChatRoomLinkView: View {
             ToggleView(
                 image: nil,
                 text: Strings.Localizable.Meetings.Info.meetingLink,
-                isOn: $viewModel.isMeetingLinkOn
+                isOn: $viewModel.isMeetingLinkOn.onChange { isMeetingLinkOn in
+                    viewModel.update(enableMeetingLinkTo: isMeetingLinkOn)
+                }
             )
             .disabled(!viewModel.isMeetingLinkUIEnabled)
             

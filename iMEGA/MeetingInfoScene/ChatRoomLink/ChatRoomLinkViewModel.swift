@@ -40,19 +40,6 @@ final class ChatRoomLinkViewModel: ObservableObject {
         
         initSubscriptions()
         fetchInitialValues()
-        if chatRoom.ownPrivilege == .moderator {
-            listenToMeetingLinkToggleChange()
-        }
-    }
-    
-    private func listenToMeetingLinkToggleChange() {
-        $isMeetingLinkOn
-            .dropFirst()
-            .sink { [weak self] newValue in
-                guard let self, isMeetingLinkUIEnabled else { return }
-                update(enableMeetingLinkTo: newValue)
-            }
-            .store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
@@ -80,7 +67,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func update(enableMeetingLinkTo isEnabled: Bool) {
+    func update(enableMeetingLinkTo isEnabled: Bool) {
         if isEnabled {
             if chatRoom.hasCustomTitle {
                 chatLinkUseCase.createChatLink(for: chatRoom)
