@@ -4163,7 +4163,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Trên máy tính";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Truy cập www.mega.io với trình duyệt web.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Truy cập www.mega.nz với trình duyệt web.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Đăng nhập vào tài khoản MEGA của bạn.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
@@ -4175,7 +4175,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Trên thiết bị di động";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Truy cập www.mega.io với trình duyệt web.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Truy cập www.mega.nz với trình duyệt web.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Đăng nhập vào tài khoản MEGA của bạn.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */

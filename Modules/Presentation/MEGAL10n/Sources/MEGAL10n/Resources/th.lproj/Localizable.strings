@@ -4163,7 +4163,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="บนคอมพิวเตอร์";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. ไปที่ www.mega.io ในเว็บเบราว์เซอร์ของคุณ";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. ไปที่ www.mega.nz ในเว็บเบราว์เซอร์ของคุณ";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. เข้าสู่ระบบบัญชี MEGA ของคุณ";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
@@ -4175,7 +4175,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="บนอุปกรณ์มือถือ";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. ไปที่ www.mega.io ในเว็บเบราว์เซอร์ของคุณ";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. ไปที่ www.mega.nz ในเว็บเบราว์เซอร์ของคุณ";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. เข้าสู่ระบบบัญชี MEGA ของคุณ";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */

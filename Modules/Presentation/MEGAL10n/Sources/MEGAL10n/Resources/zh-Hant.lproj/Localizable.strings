@@ -4163,7 +4163,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="在電腦上";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 在網頁瀏覽器中造訪www.mega.io";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 在網頁瀏覽器中造訪www.mega.nz";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. 登入您的MEGA帳戶。";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
@@ -4175,7 +4175,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="在行動裝置上";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 在網頁瀏覽器中造訪www.mega.io";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 在網頁瀏覽器中造訪www.mega.nz";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. 登入您的MEGA帳戶。";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
