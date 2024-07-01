@@ -84,19 +84,12 @@ struct CloudDriveViewControllerFactory {
             megaNotificationUseCase: MEGANotificationUseCase(
                 userAlertsClient: .live,
                 notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
-            ),
-            megaAvatarUseCase: MEGAavatarUseCase(
-                megaAvatarClient: .live,
-                avatarFileSystemClient: .live,
-                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            ), userImageUseCase: UserImageUseCase(
+                userImageRepo: UserImageRepository.newRepo,
+                userStoreRepo: UserStoreRepository.newRepo,
                 thumbnailRepo: ThumbnailRepository.newRepo,
-                handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
-            ),
-            megaAvatarGeneratingUseCase: MEGAAavatarGeneratingUseCase(
-                storeUserClient: .live,
-                megaAvatarClient: .live,
-                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
-            )
+                fileSystemRepo: FileSystemRepository.newRepo
+            ), megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         )
         
         self.avatarViewModel.inputs.viewIsReady()
