@@ -29,16 +29,10 @@ final class FavouriteExplorerToolbarConfigurator: ExplorerToolbarConfigurator {
     
     override func buttonPressed(_ barButtonItem: UIBarButtonItem) {
         switch barButtonItem {
-        case downloadItem:
-            super.downloadAction(barButtonItem)
         case favouriteItem:
             favouriteAction(barButtonItem)
-        case shareLinkItem:
-            super.shareLinkAction(barButtonItem)
-        case deleteItem:
-            super.deleteAction(barButtonItem)
         default:
-            break
+            super.buttonPressed(barButtonItem)
         }
     }
     
@@ -50,7 +44,9 @@ final class FavouriteExplorerToolbarConfigurator: ExplorerToolbarConfigurator {
             flexibleItem,
             shareLinkItem,
             flexibleItem,
-            deleteItem
+            deleteItem,
+            flexibleItem,
+            moreItem
         ]
         
         let hasDisputedNodes = (nodes ?? []).filter { $0.isTakenDown() }.count > 0

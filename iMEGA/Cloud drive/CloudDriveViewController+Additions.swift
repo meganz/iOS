@@ -167,11 +167,14 @@ extension CloudDriveViewController {
         toolbarActions(for: shareType, isBackupNode: isBackupNode)
     }
     
-    @objc func updateParentNodeIfNeeded(_ updatedNodeList: MEGANodeList) {
-        guard let updatedParentNode = updatedParentNodeIfBelongs(updatedNodeList) else { return }
-        
+    /// Update the local version of parent node, and return true if the parents
+    /// - Parameter updatedNodeList: List of updated nodes
+    /// - Returns: True, if the parent node has changed, else false
+    @objc func updateParentNodeIfNeeded(_ updatedNodeList: MEGANodeList) -> Bool {
+        guard let updatedParentNode = updatedParentNodeIfBelongs(updatedNodeList) else { return false}
         self.parentNode = updatedParentNode
         viewModel.dispatch(.updateParentNode(updatedParentNode))
+        return true
     }
     
     @objc func sortNodes(_ nodes: [MEGANode], sortBy order: MEGASortOrderType) -> [MEGANode] {
