@@ -537,6 +537,17 @@ extension CloudDriveViewController {
     @objc func updateSensitivitySettingOnNextSearch() {
         viewModel.dispatch(.resetSensitivitySetting)
     }
+    
+    @objc func nodesForDisplayMode() async -> MEGANodeList? {
+        switch displayMode {
+        case .cloudDrive, .rubbishBin, .backup:
+            await viewModel.nodesForDisplayMode(displayMode, sortOrder: Helper.sortType(for: parentNode))
+        case .recents:
+            recentActionBucket?.nodesList
+        default:
+            nil
+        }
+    }
 }
 
 // MARK: - Ads

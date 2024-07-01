@@ -407,8 +407,89 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
     
+    func testNodesForDisplayMode_cloudDrive_shouldUseCorrectFilterForNonRecursiveSearch() async {
+        let parentNode = MockNode(handle: 89)
+        let expectedNodes = [MockNode(handle: 1), MockNode(handle: 3)]
+        let rootNode = MockNode(handle: 1)
+        let sdk = MockSdk(nodes: expectedNodes, megaRootNode: rootNode)
+        let sut = makeSUT(parentNode: parentNode,
+                          sdk: sdk)
+        
+        let nodes = await sut.nodesForDisplayMode(.cloudDrive, sortOrder: .none)
+        
+        XCTAssertEqual(nodes?.toNodeArray(), expectedNodes)
+        let searchQuery = sdk.searchQueryParameters
+        XCTAssertEqual(searchQuery?.node.handle, parentNode.handle)
+        XCTAssertEqual(searchQuery?.sensitiveFilter, .disabled)
+    }
+    
+    func testNodesForDisplayMode_nilParent_shouldReturnNil() async {
+        let sut = makeSUT(parentNode: nil)
+        
+        let nodes = await sut.nodesForDisplayMode(.cloudDrive, sortOrder: .none)
+        
+        XCTAssertNil(nodes)
+    }
+    
+    func testNodesForDisplayMode_cloudDriveParentProvidedSensitiveSettinOn_shouldUseCorrectFilterForNonRecursiveSearch() async {
+        let expectedNodes = [MockNode(handle: 1), MockNode(handle: 3)]
+        let sdk = MockSdk(nodes: expectedNodes)
+        
+        let testCases = [(showHiddenNodes: false, expectedSensitiveFilter: MEGASearchFilterSensitiveOption.nonSensitiveOnly),
+                         (showHiddenNodes: true, expectedSensitiveFilter: MEGASearchFilterSensitiveOption.disabled)]
+        
+        for testCase in testCases {
+            let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
+                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: testCase.showHiddenNodes))
+            
+            let parentNode = MockNode(handle: 89)
+            let sut = makeSUT(parentNode: parentNode,
+                              contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
+                              featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
+                              sdk: sdk)
+            
+            let nodes = await sut.nodesForDisplayMode(.cloudDrive, sortOrder: .none)
+            
+            XCTAssertEqual(nodes?.toNodeArray(), expectedNodes)
+            let searchQuery = sdk.searchQueryParameters
+            XCTAssertEqual(searchQuery?.node.handle, parentNode.handle)
+            XCTAssertEqual(searchQuery?.sensitiveFilter, testCase.expectedSensitiveFilter)
+        }
+    }
+    
+    func testNodesForDisplayMode_rubbishBinAndBackup_shouldDisableSensitiveSearch() async {
+        let expectedNodes = [MockNode(handle: 1), MockNode(handle: 3)]
+        let sdk = MockSdk(nodes: expectedNodes)
+        
+        for displayMode in [DisplayMode.rubbishBin, .backup] {
+            let parentNode = MockNode(handle: 89)
+            let sut = makeSUT(parentNode: parentNode,
+                              sdk: sdk)
+            
+            let nodes = await sut.nodesForDisplayMode(displayMode, sortOrder: .none)
+            
+            XCTAssertEqual(nodes?.toNodeArray(), expectedNodes)
+            let searchQuery = sdk.searchQueryParameters
+            XCTAssertEqual(searchQuery?.node.handle, parentNode.handle)
+            XCTAssertEqual(searchQuery?.sensitiveFilter, .disabled)
+        }
+    }
+    
+    func testNodesForDisplayMode_invalidDisplayMode_returnsNil() async {
+        for displayMode in [DisplayMode.sharedItem, .nodeInfo, .nodeVersions, .folderLink, .fileLink, .nodeInsideFolderLink,
+                            .recents, .publicLinkTransfers, .transfers, .transfersFailed, .chatAttachment, .chatSharedFiles,
+                            .previewDocument, .textEditor, .mediaDiscovery, .photosFavouriteAlbum, .photosAlbum,
+                            .photosTimeline, .previewPdfPage, .albumLink] {
+            let sut = makeSUT(parentNode: MockNode(handle: 89))
+            
+            let nodes = await sut.nodesForDisplayMode(displayMode, sortOrder: .none)
+            
+            XCTAssertNil(nodes, "Expected nil nodes for display mode \(displayMode)")
+        }
+    }
+    
     func makeSUT(
-        parentNode: MEGANode = MockNode(handle: 1),
+        parentNode: MEGANode? = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
@@ -419,6 +500,7 @@ class CloudDriveViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
+        sdk: MEGASdk = MockSdk(),
         file: StaticString = #file,
         line: UInt = #line
     ) -> CloudDriveViewModel {
@@ -433,7 +515,8 @@ class CloudDriveViewModelTests: XCTestCase {
             nodeUseCase: nodeUseCase,
             tracker: tracker,
             featureFlagProvider: featureFlagProvider,
-            moveToRubbishBinViewModel: moveToRubbishBinViewModel
+            moveToRubbishBinViewModel: moveToRubbishBinViewModel,
+            sdk: sdk
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
@@ -451,6 +534,19 @@ class CloudDriveViewModelTests: XCTestCase {
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
             with: [expectedEvent]
+        )
+    }
+    
+    private func makeSearchFilter(parentNodeHandle: MEGAHandle, excludeSensitive: Bool) -> MEGASearchFilter {
+        MEGASearchFilter(
+            term: "",
+            parentNodeHandle: parentNodeHandle,
+            nodeType: .unknown,
+            category: .unknown,
+            sensitiveFilter: excludeSensitive ? MEGASearchFilterSensitiveOption.nonSensitiveOnly : .disabled,
+            favouriteFilter: .disabled,
+            creationTimeFrame: nil,
+            modificationTimeFrame: nil
         )
     }
 }
