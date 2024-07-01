@@ -4,8 +4,7 @@ import MEGADomain
 protocol UserAvatarHandling {
     /// Retrieves the avatar image for a given user handle.
     /// - Parameter userHandle: The Base64HandleEntity representing the user handle.
-    /// - Returns: An optional UIImage object representing the avatar image, or nil if the avatar is not available.
-    /// - Throws: An error if there is an issue retrieving the avatar image.
+    /// - Returns: UIImage object representing the avatar image for an user
     /// - Note: Tries to get the avatar from cache or server, if the avatar is not cache and user doesn't have avatar
     /// this function creates (and caches) an avatar with the user's initials.
     func avatar(for userHandle: Base64HandleEntity) async -> UIImage
@@ -38,7 +37,7 @@ struct UserAvatarHandler: UserAvatarHandling {
             
             guard let image = UIImage(contentsOfFile: avatarPath) else {
                 if let image = drawImage() {
-                    writeImage(image.jpegData(compressionQuality: 1.0), to: URL(string: avatarPath))
+                    writeImage(image.jpegData(compressionQuality: 1.0), to: URL(fileURLWithPath: avatarPath))
                     return image
                 }
                 return UIImage.iconContacts

@@ -1,5 +1,8 @@
 import Foundation
+import MEGADomain
 import MEGAPresentation
+import MEGARepo
+import MEGASDKRepo
 
 protocol MyAvatarViewModelInputs {
 
@@ -35,7 +38,7 @@ final class MyAvatarViewModel: NSObject {
 
     // MARK: - View States
 
-    var avatarImage: Result<UIImage, any Error>?
+    var avatarImage: UIImage = UIImage()
 
     var userAlertCount: Int = 0
     
@@ -48,23 +51,17 @@ final class MyAvatarViewModel: NSObject {
     // MARK: - Dependencies
 
     private let megaNotificationUseCase: any MEGANotificationUseCaseProtocol
-
-    private let megaAvatarUseCase: any MEGAAvatarUseCaseProtocol
-
-    private let megaAvatarGeneratingUseCase: any MEGAAvatarGeneratingUseCaseProtocol
-    
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let userImageUseCase: any UserImageUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
          
     init(
         megaNotificationUseCase: some MEGANotificationUseCaseProtocol,
-        megaAvatarUseCase: some MEGAAvatarUseCaseProtocol,
-        megaAvatarGeneratingUseCase: some MEGAAvatarGeneratingUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        userImageUseCase: some UserImageUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol
     ) {
         self.megaNotificationUseCase = megaNotificationUseCase
-        self.megaAvatarUseCase = megaAvatarUseCase
-        self.megaAvatarGeneratingUseCase = megaAvatarGeneratingUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.userImageUseCase = userImageUseCase
+        self.megaHandleUseCase = megaHandleUseCase
     }
     
     deinit {
@@ -81,8 +78,6 @@ extension MyAvatarViewModel: MyAvatarViewModelInputs {
         observeUserAlertsAndContactRequests()
         
         refreshUnreadNotificationCount()
-        
-        refreshAvatarWhenCached()
     }
 
     func viewIsAppearing() {
@@ -95,64 +90,24 @@ extension MyAvatarViewModel: MyAvatarViewModelInputs {
 // MARK: - Load Avatar Image
 
 extension MyAvatarViewModel {
-    private func refreshAvatarWhenCached() {
-        guard cachedAvatarImage() != nil else { return }
-        loadRemoteAvatarImage()
-    }
-
-    private func cachedAvatarImage() -> UIImage? {
-        return megaAvatarUseCase.getCachedAvatarImage()
-    }
-
     private func loadAvatarImage() {
-        if let cachedAvatarImage = cachedAvatarImage() {
-            self.avatarImage = .success(cachedAvatarImage)
-            self.notifyUpdate?(self.outputs)
+        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: MEGAChatSdk.shared.myUserHandle),
+              let avatarBackgroundHexColor = userImageUseCase.avatarColorHex(forBase64UserHandle: base64Handle) else {
+            MEGALogDebug("Base64 handle not found for handle")
             return
         }
-
-        if let generatedAvatarImage = generatedAvatarImage(withAvatarSize: CGSize(width: 28, height: 28)) {
-            self.avatarImage = .success(generatedAvatarImage)
-            self.notifyUpdate?(self.outputs)
-        }
         
-        loadRemoteAvatarImage()
-    }
-    
-    private func loadRemoteAvatarImage() {
-        megaAvatarUseCase.loadRemoteAvatarImage { [weak self] image in
-            guard let self = self, let image = image else { return }
-            self.avatarImage = .success(image)
+        let avatarHandler = UserAvatarHandler(
+            userImageUseCase: userImageUseCase,
+            initials: MEGAChatSdk.shared.myFullname?.initialForAvatar() ?? "M",
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor,
+            size: CGSize(width: 28, height: 28)
+        )
+        
+        Task {
+            self.avatarImage = await avatarHandler.avatar(for: base64Handle)
             self.notifyUpdate?(self.outputs)
         }
-    }
-
-    private func generatedAvatarImage(withAvatarSize avatarSize: CGSize) -> UIImage? {
-        guard let avatarName = megaAvatarGeneratingUseCase.avatarName(),
-              let avatarBackgroundColorHex = megaAvatarGeneratingUseCase.avatarBackgroundColorHex(),
-              !avatarName.isEmpty
-        else {
-            return nil
-        }
-        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundColorHex)
-        return UIImage(
-            forName: avatarName,
-            size: avatarSize,
-            backgroundColor: avatarBackgroundColor,
-            textColor: MEGAAppColor.White._FFFFFF.uiColor,
-            font: UIFont.systemFont(ofSize: avatarSize.width / 2)
-        )
-    }
-
-    private func generatedAvatarPlaceholder() -> UIImage {
-        let avatarSize = CGSize(width: 28, height: 28)
-        return UIImage(
-            forName: "M",
-            size: avatarSize,
-            backgroundColor: UIColor.systemGray,
-            textColor: MEGAAppColor.White._FFFFFF.uiColor,
-            font: UIFont.systemFont(ofSize: avatarSize.width / 2)
-        )
     }
 }
 
@@ -213,12 +168,7 @@ extension MyAvatarViewModel: MyAvatarViewModelType {
     // MARK: - MyAvatarViewModelOutputs
 
     private var resizedAvartarImage: UIImage {
-        switch avatarImage {
-        case .success(let avatarImage):
-            return avatarImage.resize(to: CGSize(width: 28, height: 28)).withRoundedCorners()
-        case .failure, .none:
-            return generatedAvatarPlaceholder().withRoundedCorners()
-        }
+        avatarImage.resize(to: CGSize(width: 28, height: 28)).withRoundedCorners()
     }
 
     private var notificationNumber: String {

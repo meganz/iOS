@@ -20,20 +20,6 @@ struct MockMEGANotificationUseCaseProtocol: MEGANotificationUseCaseProtocol {
     func unreadNotificationIDs() async -> [NotificationIDEntity] { [] }
 }
 
-struct MockMEGAAvatarUseCaseProtocol: MEGAAvatarUseCaseProtocol {
-    func loadRemoteAvatarImage(completion: @escaping (UIImage?) -> Void) {}
-    
-    func getCachedAvatarImage() -> UIImage? { nil }
-    
-    func loadCachedAvatarImage(completion: @escaping (UIImage?) -> Void) { }
-}
-
-struct MockMEGAAvatarGeneratingUseCaseProtocol: MEGAAvatarGeneratingUseCaseProtocol {
-    func avatarName() -> String? { nil }
-    
-    func avatarBackgroundColorHex() -> String? { nil }
-}
-
 final class MockCloudDriveViewModeMonitoringService: CloudDriveViewModeMonitoring {
     lazy var viewModes: AsyncStream<ViewModePreferenceEntity> = {
         AsyncStream(bufferingPolicy: .bufferingNewest(1)) { continuation in
@@ -130,8 +116,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 nodeSource: nodeSource,
                 avatarViewModel: MyAvatarViewModel(
                     megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
-                    megaAvatarUseCase: MockMEGAAvatarUseCaseProtocol(),
-                    megaAvatarGeneratingUseCase: MockMEGAAvatarGeneratingUseCaseProtocol()
+                    userImageUseCase: MockUserImageUseCase(),
+                    megaHandleUseCase: MockMEGAHandleUseCase()
                 ),
                 noInternetViewModel: NoInternetViewModel(
                     networkMonitorUseCase: MockNetworkMonitorUseCase(),
