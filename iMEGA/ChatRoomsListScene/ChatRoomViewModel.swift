@@ -415,12 +415,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         let senderString = chatListItem.group ? try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: true) : nil
         guard let lastMessage = chatListItem.lastMessage else { return }
         let components = lastMessage.components(separatedBy: "\\x01")
-        let message: String
-        if components.count == 1 {
-            message = Strings.Localizable.attachedFile(lastMessage)
-        } else {
-            message = Strings.Localizable.attachedXFiles(String(format: "%tu", components.count))
-        }
+        
+        let message = components.count == 1 ? 
+        Strings.Localizable.attachedFile(lastMessage) :
+        Strings.Localizable.Chat.Message.numberOfAttachments(components.count)
+
         if let senderString {
             await updateDescription(withMessage: "\(senderString): \(message)")
         } else {

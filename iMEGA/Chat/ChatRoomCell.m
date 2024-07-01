@@ -273,8 +273,8 @@
                 NSString *attachedFileString = LocalizedString(@"attachedFile", @"A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file.");
                 lastMessageString = [attachedFileString stringByReplacingOccurrencesOfString:@"%@" withString:lastMessageString];
             } else {
-                lastMessageString = LocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
-                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
+                lastMessageString = LocalizedString(@"chat.message.numberOfAttachments", @"A summary message when a user has attached many files at once into the chat. %d will be replaced at runtime with the number of files.");
+                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%d" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
             }
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             break;

@@ -104,10 +104,7 @@
 
 - (void)setNavigationBarTitle {
     [self updatePromptTitle];
-    
-    NSString *navigationTitle = LocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
-    navigationTitle = [navigationTitle stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.message.nodeList.size]];
-    self.navigationItem.title = navigationTitle;
+    [self setNavigationItemTitleWithAttachmentCount:self.message.nodeList.size];
 }
 
 - (void)updatePromptTitle {
