@@ -1,8 +1,4 @@
 #import "TransferTableViewCell.h"
-
-#import <Photos/Photos.h>
-
-#import "Helper.h"
 #import "MEGAPauseTransferRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
@@ -15,9 +11,6 @@
 @import MEGAUIKit;
 
 @interface TransferTableViewCell ()
-
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (nonatomic, getter=isThumbnailSet) BOOL thumbnailSet;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
@@ -67,23 +60,14 @@
             } else {
                 [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
             }
-            self.thumbnailSet = YES;
             break;
         }
             
         case MEGATransferTypeUpload: {
             if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:transfer.fileName]) {
-                NSString *transferThumbnailAbsolutePath = [[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByDeletingPathExtension] stringByAppendingString:@"_thumbnail"];
-                if ([[NSFileManager defaultManager] fileExistsAtPath:transferThumbnailAbsolutePath]) {
-                    self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
-                    self.thumbnailSet = YES;
-                } else {
-                    [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
-                    self.thumbnailSet = NO;
-                }
+                [self setImageForTransfer:transfer];
             } else {
                 [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
-                self.thumbnailSet = YES;
             }
             break;
         }
@@ -153,13 +137,6 @@
     }];
     
     [self queuedStateLayout];
-}
-
-- (void)reloadThumbnailImage {
-    if (!self.isThumbnailSet) {
-        NSString *transferThumbnailAbsolutePath = [[[NSHomeDirectory() stringByAppendingPathComponent:self.transfer.path] stringByDeletingPathExtension] stringByAppendingString:@"_thumbnail"];
-        self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
-    }
 }
 
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {

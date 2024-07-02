@@ -1703,14 +1703,6 @@
 
 #pragma mark - MEGATransferDelegate
 
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.type == MEGATransferTypeUpload) {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-            [transfer mnz_createThumbnailAndPreview];
-        });
-    }
-}
-
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if (transfer.state == MEGATransferStatePaused) {
         [Helper startPendingUploadTransferIfNeeded];
@@ -1730,7 +1722,6 @@
     }
     
     if (transfer.type == MEGATransferTypeUpload) {
-        [transfer mnz_renameOrRemoveThumbnailAndPreview];
         
         if ([transfer.appData containsString:@"attachToChatID"] || [transfer.appData containsString:@"attachVoiceClipToChatID"]) {
             if (error.type == MEGAErrorTypeApiEExist) {

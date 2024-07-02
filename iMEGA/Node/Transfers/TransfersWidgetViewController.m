@@ -919,7 +919,6 @@ static TransfersWidgetViewController* instance = nil;
         TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         if ([[self.tableView indexPathsForVisibleRows] containsObject:indexPath] && [cell isKindOfClass:TransferTableViewCell.class]) {
             if (transfer.state == MEGATransferStateActive && !self.areTransfersPaused) {
-                [cell reloadThumbnailImage];
                 [cell updatePercentAndSpeedLabelsForTransfer:transfer];
             }
             [cell updateTransferIfNewState:transfer];

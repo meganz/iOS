@@ -1,80 +1,10 @@
 #import "MEGATransfer+MNZCategory.h"
-#import <Photos/Photos.h>
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
-#import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
-#import "NSString+MNZCategory.h"
 #import "MEGA-Swift.h"
 
 @implementation MEGATransfer (MNZCategory)
-
-#pragma mark - Thumbnails and previews
-
-- (void)mnz_createThumbnailAndPreview {
-    NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:self.path];
-    NSString *imageFilePath;
-    
-    if ([FileExtensionGroupOCWrapper verifyIsImage:self.fileName]) {
-        imageFilePath = transferAbsolutePath;
-    } else if ([FileExtensionGroupOCWrapper verifyIsVideo:self.fileName]) {
-        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:transferAbsolutePath] options:nil];
-        AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-        generator.appliesPreferredTrackTransform = YES;
-        CMTime requestedTime = CMTimeMake(1, 60);
-        CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
-        UIImage *image = [[UIImage alloc] initWithCGImage:imgRef];
-        
-        imageFilePath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingPathExtension:@"jpg"];
-        
-        [UIImageJPEGRepresentation(image, 1) writeToFile:imageFilePath atomically:YES];
-        
-        CGImageRelease(imgRef);
-    } else {
-        return;
-    }
-    
-    NSString *thumbnailFilePath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_thumbnail"];
-    NSString *previewFilePath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_preview"];
-    
-    [MEGASdk.shared createThumbnail:imageFilePath destinatioPath:thumbnailFilePath];
-    [MEGASdk.shared createPreview:imageFilePath destinatioPath:previewFilePath];
-    
-    if ([FileExtensionGroupOCWrapper verifyIsVideo:self.fileName]) {
-        [NSFileManager.defaultManager mnz_removeItemAtPath:imageFilePath];
-    }
-}
-
-- (void)mnz_renameOrRemoveThumbnailAndPreview {
-    if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:self.fileName]) {
-        NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:self.path];
-        NSString *thumbnailPath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_thumbnail"];
-        NSString *previewPath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_preview"];
-        
-        switch (self.state) {
-            case MEGATransferStateComplete: {
-                MEGANode *node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
-                NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                NSString *previewsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"previewsV3"];
-
-                [NSFileManager.defaultManager mnz_moveItemAtPath:thumbnailPath toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle]];
-                [NSFileManager.defaultManager mnz_moveItemAtPath:previewPath toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle]];
-
-                break;
-            }
-                
-            case MEGATransferStateCancelled:
-            case MEGATransferStateFailed: {
-                [NSFileManager.defaultManager mnz_removeItemAtPath:thumbnailPath];
-                [NSFileManager.defaultManager mnz_removeItemAtPath:previewPath];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
-}
 
 #pragma mark - App data
 
