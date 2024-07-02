@@ -45,7 +45,7 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     
     var isSelectHidden = false
     
-    private(set) var syncModel = VideoRevampSyncModel()
+    private(set) var syncModel: VideoRevampSyncModel
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -54,10 +54,12 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     
     init(
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = SortOrderPreferenceUseCase(preferenceUseCase: PreferenceUseCase.default, sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
-        videoSelection: VideoSelection
+        videoSelection: VideoSelection,
+        syncModel: VideoRevampSyncModel
     ) {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.videoSelection = videoSelection
+        self.syncModel = syncModel
         
         listenToEditingMode()
         listenToVideoSelection()

@@ -370,7 +370,8 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc)
         let sut = VideoRevampTabContainerViewModel(
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-            videoSelection: videoSelection
+            videoSelection: videoSelection,
+            syncModel: VideoRevampSyncModel()
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, sortOrderPreferenceUseCase, videoSelection)

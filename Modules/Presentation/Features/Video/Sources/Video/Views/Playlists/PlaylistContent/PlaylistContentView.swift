@@ -60,6 +60,27 @@ struct PlaylistContentScreen: View {
                 }
             }
         }
+        .task {
+            await viewModel.subscribeToSelectedVideoPlaylistActionChanged()
+        }
+        .alert(
+            Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Title.deletePlaylist,
+            isPresented: $viewModel.shouldShowDeletePlaylistAlert
+        ) {
+            deleteVideoPlaylistAlertView
+        } message: {
+            Text(Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline)
+        }
+    }
+    
+    private var deleteVideoPlaylistAlertView: some View {
+        HStack {
+            Button(Strings.Localizable.cancel) { }
+            Button(Strings.Localizable.delete) {
+                viewModel.deleteVideoPlaylist()
+            }
+            .keyboardShortcut(.defaultAction)
+        }
     }
 }
 

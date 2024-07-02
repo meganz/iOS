@@ -98,7 +98,8 @@ public class VideoRevampFactory {
         sharedUIState: VideoPlaylistContentSharedUIState,
         videoSelection: VideoSelection,
         selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter,
-        presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
+        presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
+        syncModel: VideoRevampSyncModel
     ) -> UIViewController {
         let viewModel = VideoPlaylistContentViewModel(
             videoPlaylistEntity: previewEntity,
@@ -118,7 +119,8 @@ public class VideoRevampFactory {
                 message: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.enterTheNewName
             ),
             videoPlaylistsUseCase: videoPlaylistUseCase,
-            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            syncModel: syncModel
         )
         
         let view = PlaylistContentScreen(

@@ -6,6 +6,7 @@ public final class VideoPlaylistContentSharedUIState {
     @Published public var selectedDisplayActionEntity: DisplayActionEntity?
     @Published public var selectedQuickActionEntity: QuickActionEntity?
     @Published public var selectedSortOrderEntity: SortOrderEntity?
+    @Published public var selectedVideoPlaylistActionEntity: VideoPlaylistActionEntity?
     @Published public var shouldShowSnackBar = false
     @Published public var snackBarText = ""
     @Published public var isAllSelected = false
