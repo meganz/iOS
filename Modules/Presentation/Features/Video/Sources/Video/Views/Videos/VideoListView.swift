@@ -25,17 +25,11 @@ struct VideoListView: View {
         VStack(spacing: 0) {
             chipsView()
                 .frame(maxHeight: 60, alignment: .top)
-            if viewModel.videos.isEmpty {
-                videoEmptyView()
-                    .frame(maxHeight: .infinity, alignment: .center)
-            } else if viewModel.videos.isNotEmpty {
-                listView()
-            } else {
-                EmptyView()
-            }
+            content
+                .overlay(placeholder)
         }
         .task {
-            await viewModel.onViewAppeared()
+            await viewModel.onViewAppear()
             await viewModel.monitorSortOrderChanged()
         }
         .task {
@@ -52,6 +46,23 @@ struct VideoListView: View {
                     }
                     viewModel.didFinishSelectFilterOption(newlySelectedChip)
                 }
+        }
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        GeometryReader { proxy in
+            Group {
+                if viewModel.shouldShowVideosEmptyView {
+                    videoEmptyView()
+                        .frame(maxHeight: .infinity, alignment: .center)
+                } else if viewModel.videos.isNotEmpty {
+                    listView()
+                } else {
+                    EmptyView()
+                }
+            }
+            .frame(width: proxy.size.width)
         }
     }
     
@@ -151,6 +162,10 @@ struct VideoListView: View {
             return contentHeight + 100
         }
         return estimatedHeaderHeight() + estimatedContentHeight()
+    }
+    
+    private var placeholder: some View {
+        VideoListPlaceholderView(videoConfig: videoConfig, isActive: viewModel.shouldShowPlaceHolderView)
     }
 }
 

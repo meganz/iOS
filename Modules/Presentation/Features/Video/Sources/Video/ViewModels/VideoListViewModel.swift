@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Combine
 import Foundation
 import MEGADomain
@@ -23,6 +24,9 @@ public final class VideoListViewModel: ObservableObject {
     
     @Published private(set) var chips: [ChipContainerViewModel] = [ FilterChipType.location, .duration ]
         .map { ChipContainerViewModel(title: $0.description, type: $0, isActive: false) }
+    
+    @Published private(set) var shouldShowPlaceHolderView = false
+    @Published private(set) var shouldShowVideosEmptyView = false
     
     var actionSheetTitle: String {
         newlySelectedChip?.type.description ?? ""
@@ -53,10 +57,13 @@ public final class VideoListViewModel: ObservableObject {
         subscribeToEditingMode()
         subscribeToAllSelected()
         subscribeToChipFilterOptions()
+        subscribeToItemsStateForEmptyState()
     }
     
-    func onViewAppeared() async {
+    @MainActor
+    func onViewAppear() async {
         do {
+            shouldShowPlaceHolderView = videos.isEmpty
             try await loadVideos(sortOrderType: syncModel.videoRevampSortOrderType)
             try Task.checkCancellation()
         } catch is CancellationError {
@@ -64,6 +71,7 @@ public final class VideoListViewModel: ObservableObject {
         } catch {
             shouldShowError = true
         }
+        shouldShowPlaceHolderView = false
     }
     
     func monitorSortOrderChanged() async {
@@ -77,6 +85,7 @@ public final class VideoListViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func listenSearchTextChange() async {
         let sequence = syncModel
             .$searchText
@@ -190,7 +199,7 @@ public final class VideoListViewModel: ObservableObject {
     }
     
     private func updateVideos(with updatedVideos: [NodeEntity]) {
-        reloadVideosTask = Task {
+        reloadVideosTask = Task { @MainActor in
             do {
                 try await loadVideos(sortOrderType: syncModel.videoRevampSortOrderType)
             } catch {
@@ -297,4 +306,13 @@ public final class VideoListViewModel: ObservableObject {
         }
     }
     
+    private func subscribeToItemsStateForEmptyState() {
+        let videosStream = $videos.map(\.isEmpty).dropFirst().removeDuplicates()
+        let isLoadingStream = $shouldShowPlaceHolderView.dropFirst().removeDuplicates()
+        
+        Publishers.CombineLatest(videosStream, isLoadingStream)
+            .map { $0 && !$1 }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$shouldShowVideosEmptyView)
+    }
 }
