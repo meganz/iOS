@@ -663,8 +663,9 @@ final class ChatRoomsListViewModel: ObservableObject {
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase, 
             callManager: CallKitCallManager.shared,
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
-            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)), scheduledMeetingUseCase: scheduledMeetingUseCase,
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession())),
+            scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl,
             permissionRouter: permissionAlertRouter,
             chatListItemCacheUseCase: chatListItemCacheUseCase,
@@ -702,8 +703,8 @@ final class ChatRoomsListViewModel: ObservableObject {
             userImageUseCase: userImageUseCase,
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
-            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession())),
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             megaHandleUseCase: megaHandleUseCase, 
             callManager: CallKitCallManager.shared,
@@ -812,7 +813,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             activeCallViewModel = ActiveCallViewModel(
                 call: call,
                 router: router,
-                activeCallUseCase: ActiveCallUseCase(callRepository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
+                activeCallUseCase: ActiveCallUseCase(callRepository: CallRepository.newRepo),
                 chatRoomUseCase: chatRoomUseCase
             )
         } else {

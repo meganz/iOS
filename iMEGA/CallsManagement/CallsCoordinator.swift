@@ -12,6 +12,7 @@ protocol CallsCoordinatorFactoryProtocol {
         callSessionUseCase: some CallSessionUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         callManager: some CallManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID,
@@ -21,7 +22,20 @@ protocol CallsCoordinatorFactoryProtocol {
 }
 
 @objc class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
-    func makeCallsCoordinator(callUseCase: some CallUseCaseProtocol, chatRoomUseCase: some ChatRoomUseCaseProtocol, chatUseCase: some ChatUseCaseProtocol, callSessionUseCase: some CallSessionUseCaseProtocol, scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol, noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol, callManager: some CallManagerProtocol, passcodeManager: some PasscodeManagerProtocol, uuidFactory: @escaping () -> UUID, callUpdateFactory: CXCallUpdateFactory, featureFlagProvider: some FeatureFlagProviderProtocol) -> CallsCoordinator {
+    func makeCallsCoordinator(
+        callUseCase: some CallUseCaseProtocol,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
+        callSessionUseCase: some CallSessionUseCaseProtocol,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+        noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+        callManager: some CallManagerProtocol,
+        passcodeManager: some PasscodeManagerProtocol,
+        uuidFactory: @escaping () -> UUID,
+        callUpdateFactory: CXCallUpdateFactory,
+        featureFlagProvider: some FeatureFlagProviderProtocol
+    ) -> CallsCoordinator {
         CallsCoordinator(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
@@ -29,6 +43,7 @@ protocol CallsCoordinatorFactoryProtocol {
             callSessionUseCase: callSessionUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase, 
             noUserJoinedUseCase: noUserJoinedUseCase,
+            captureDeviceUseCase: captureDeviceUseCase,
             callManager: callManager,
             passcodeManager: passcodeManager,
             uuidFactory: uuidFactory,
@@ -45,6 +60,7 @@ protocol CallsCoordinatorFactoryProtocol {
     private var callSessionUseCase: any CallSessionUseCaseProtocol
     private var scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
+    private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
 
     private let callManager: any CallManagerProtocol
     private var providerDelegate: CallKitProviderDelegate?
@@ -68,6 +84,7 @@ protocol CallsCoordinatorFactoryProtocol {
          callSessionUseCase: some CallSessionUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
          noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
+         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
          callManager: some CallManagerProtocol,
          passcodeManager: some PasscodeManagerProtocol,
          uuidFactory: @escaping () -> UUID,
@@ -80,6 +97,7 @@ protocol CallsCoordinatorFactoryProtocol {
         self.callSessionUseCase = callSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
+        self.captureDeviceUseCase = captureDeviceUseCase
         self.callManager = callManager
         self.passcodeManager = passcodeManager
         self.uuidFactory = uuidFactory
@@ -230,13 +248,23 @@ protocol CallsCoordinatorFactoryProtocol {
         guard chatRoom.isWaitingRoomEnabled else { return false }
         return chatRoom.ownPrivilege != .moderator
     }
+    
+    private var localizedCameraName: String? {
+        captureDeviceUseCase.wideAngleCameraLocalizedName(position: .front)
+     }
 }
 
 extension CallsCoordinator: CallsCoordinatorProtocol {
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
         let isSpeakerEnabled = callActionSync.videoEnabled || callActionSync.chatRoom.isMeeting
         do {
-            let call = try await callUseCase.startCall(for: callActionSync.chatRoom.chatId, enableVideo: callActionSync.videoEnabled, enableAudio: callActionSync.audioEnabled, notRinging: callActionSync.notRinging)
+            let call = try await callUseCase.startCall(
+                for: callActionSync.chatRoom.chatId,
+                enableVideo: callActionSync.videoEnabled,
+                enableAudio: callActionSync.audioEnabled,
+                notRinging: callActionSync.notRinging,
+                localizedCameraName: localizedCameraName
+            )
             noUserJoinedUseCase.start(timerDuration: 60*5, chatId: callActionSync.chatRoom.chatId)
             if !isWaitingRoomOpened(inChatRoom: callActionSync.chatRoom) {
                 startCallUI(chatRoom: callActionSync.chatRoom, call: call, isSpeakerEnabled: isSpeakerEnabled)
@@ -250,7 +278,12 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
     
     func answerCall(_ callActionSync: CallActionSync) async -> Bool {
         do {
-            let call = try await callUseCase.answerCall(for: callActionSync.chatRoom.chatId, enableVideo: callActionSync.videoEnabled, enableAudio: callActionSync.audioEnabled)
+            let call = try await callUseCase.answerCall(
+                for: callActionSync.chatRoom.chatId,
+                enableVideo: callActionSync.videoEnabled,
+                enableAudio: callActionSync.audioEnabled,
+                localizedCameraName: localizedCameraName
+            )
             if !isWaitingRoomOpened(inChatRoom: callActionSync.chatRoom) {
                 startCallUI(chatRoom: callActionSync.chatRoom, call: call, isSpeakerEnabled: callActionSync.chatRoom.isMeeting)
             }

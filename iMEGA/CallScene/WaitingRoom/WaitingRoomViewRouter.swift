@@ -34,7 +34,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     // MARK: - Public
     
     func build() -> UIViewController {
-        let audioSessionRepository = AudioSessionRepository(audioSession: .sharedInstance(), callActionManager: .shared)
+        let audioSessionRepository = AudioSessionRepository(audioSession: .sharedInstance())
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: .shared),
             userStoreRepo: UserStoreRepository(store: .shareInstance()),

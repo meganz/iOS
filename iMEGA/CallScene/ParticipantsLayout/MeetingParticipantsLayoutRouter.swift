@@ -50,7 +50,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
         let vm = MeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel, 
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .sharedChatSdk, callActionManager: CallActionManager.shared)),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .sharedChatSdk)),
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .sharedChatSdk)),

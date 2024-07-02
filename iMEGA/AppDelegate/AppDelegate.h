@@ -24,7 +24,6 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @property (strong, nonatomic) CloudDriveQuickUploadActionRouter* quickUploadActionRouter;
 
 - (void)showMainTabBar;
-- (void)performCall;
 - (void)showOnboardingWithCompletion:(nullable void (^)(void))completion;
 - (void)presentAccountExpiredAlertIfNeeded;
 - (void)showLink:(NSURL *)url;

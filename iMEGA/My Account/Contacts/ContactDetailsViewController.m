@@ -576,19 +576,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (active) {
         [self joinMeetingWithChatRoom:chatRoom];
     } else {
-        MEGAChatStartCallRequestDelegate *startCallDelegate = [MEGAChatStartCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
-            if (error.type == MEGAErrorTypeApiOk) {
-                [self joinMeetingWithChatRoom:chatRoom];
-            }
-        }];
-        
-        [AudioSessionUseCaseOCWrapper.alloc.init configureCallAudioSession];
-        [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:chatRoom.isMeeting || videoCall];
-        [[CallActionManager shared] startCallWithChatId:chatRoom.chatId
-                                            enableVideo:videoCall
-                                            enableAudio:!chatRoom.isMeeting
-                                             notRinging:NO
-                                               delegate:startCallDelegate];
+        [self startCallInChatRoom:chatRoom video:videoCall];
     }
 }
 

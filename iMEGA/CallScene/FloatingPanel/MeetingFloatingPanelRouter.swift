@@ -72,7 +72,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func build() -> UIViewController {
         guard let containerViewModel = containerViewModel else { return UIViewController() }
-        let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance(), callActionManager: CallActionManager.shared)
+        let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance())
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))

@@ -8,6 +8,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
+import MEGARepo
 import MEGASDKRepo
 import PushKit
 import SafariServices
@@ -112,10 +113,10 @@ extension AppDelegate {
         return isAdsEnabled && isExternalAdsEnabled
     }
     
-    @objc func performCall(presenter: UIViewController, chatRoom: MEGAChatRoom, isSpeakerEnabled: Bool) {
+    func openCallUIForInProgressCall(presenter: UIViewController, chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
         MeetingContainerRouter(presenter: presenter,
-                               chatRoom: chatRoom.toChatRoomEntity(),
+                               chatRoom: chatRoom,
                                call: call.toCallEntity(),
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
@@ -381,45 +382,23 @@ extension AppDelegate {
     @objc func joinScheduleMeeting(forChatId chatId: ChatIdEntity, retry: Bool = true) {
         DIContainer.tracker.trackAnalyticsEvent(with: ScheduledMeetingReminderNotificationJoinButtonEvent())
         
-        guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId) else {
-            guard retry else { return }
-            
-            Task {
-                do {
-                    try await waitUntilChatStatusComesOnline(forChatId: chatId)
-                    joinScheduleMeeting(forChatId: chatId, retry: false)
-                } catch {
-                    MEGALogDebug("Unable to wait until the status is online error \(error)")
-                }
-            }
-            
+        guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId)?.toChatRoomEntity() else {
             return
         }
         
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatId), call.status == .inProgress else {
-            if MEGAChatSdk.shared.chatConnectionState(chatId) == .online {
-                Task {
-                    do {
-                        try await startCallWithNoRinging(forChatRoom: chatRoom)
-                    } catch {
-                        MEGALogDebug("Unable to start call for chat id \(chatId) with error \(error)")
-                    }
-                }
-            } else {
-                Task {
-                    do {
-                        try await waitUntilChatStatusComesOnline(forChatId: chatId)
-                        try await startCallWithNoRinging(forChatRoom: chatRoom)
-                    } catch {
-                        MEGALogDebug("Unable to wait until the chat status is online and start call for chat id \(chatId) with error \(error)")
-                    }
+            Task {
+                do {
+                    try await openWaitingRoomOrStartCallWithNoRinging(forChatRoom: chatRoom)
+                } catch {
+                    MEGALogDebug("Unable to start call for chat id \(chatId) with error \(error)")
                 }
             }
             
             return
         }
         
-        performCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, isSpeakerEnabled: AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker))
+        openCallUIForInProgressCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, isSpeakerEnabled: AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker))
     }
     
     @objc func registerCustomActionsForStartScheduledMeetingNotification() {
@@ -431,30 +410,30 @@ extension AppDelegate {
     }
     
     @MainActor
-    private func startCallWithNoRinging(forChatRoom chatRoom: MEGAChatRoom) async throws {
-        let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
-        audioSessionUC.configureCallAudioSession()
-        audioSessionUC.enableLoudSpeaker()
-        
+    private func openWaitingRoomOrStartCallWithNoRinging(forChatRoom chatRoom: ChatRoomEntity) async throws {
         let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
-        let callUseCase = CallUseCase(repository: CallRepository.newRepo)
 
-        if let scheduleMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
-            if shouldOpenWaitingRoom(for: chatRoom.toChatRoomEntity()) {
-                openWaitingRoom(for: scheduleMeeting)
-            } else {
-                let callEntity = try await callUseCase.startCall(for: scheduleMeeting.chatId, enableVideo: false, enableAudio: true, notRinging: true)
-                join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
-            }
+        if let scheduleMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first,
+           shouldOpenWaitingRoom(for: chatRoom) {
+            openWaitingRoom(for: scheduleMeeting)
         } else {
-            let callEntity = try await callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true, notRinging: false)
-            join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
+            startCallWithNoRinging(inChatRoom: chatRoom)
         }
     }
     
-    @MainActor
-    private func join(call: CallEntity, chatRoom: ChatRoomEntity) {
-        MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, call: call, isSpeakerEnabled: true).start()
+    private func startCallWithNoRinging(inChatRoom chatRoom: ChatRoomEntity) {
+        let callManager = CallKitCallManager.shared
+        let callUseCase = CallUseCase(repository: CallRepository.newRepo)
+        let chatIdBase64Handle = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo).base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+        if callUseCase.call(for: chatRoom.chatId) != nil {
+            if let incomingCallUUID = callManager.callUUID(forChatRoom: chatRoom) {
+                callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
+            } else {
+                callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: true, isJoiningActiveCall: true)
+            }
+        } else {
+            callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: true, isJoiningActiveCall: false)
+        }
     }
     
     private func shouldOpenWaitingRoom(for chatRoom: ChatRoomEntity) -> Bool {
@@ -482,13 +461,6 @@ extension AppDelegate {
     
     private var permissionAlertRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
-    }
-    
-    @objc
-    func initiateCallAfterAskingForPermissions(videoCall: Bool) {
-        permissionAlertRouter.requestPermissionsFor(videoCall: videoCall) { [weak self] in
-            self?.performCall()
-        }
     }
 
     // MARK: - Show upgrade Screen
@@ -632,12 +604,13 @@ extension AppDelegate {
     @objc func initProviderDelegate() {
         guard callsCoordinator == nil else { return }
         let callsCoordinator = CallsCoordinatorFactory().makeCallsCoordinator(
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo), 
             noUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo),
+            captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             callManager: CallKitCallManager.shared,
             passcodeManager: PasscodeManager(),
             uuidFactory: { UUID() },

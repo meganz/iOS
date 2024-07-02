@@ -1,7 +1,7 @@
 import MEGADomain
 
 @objc final class AudioSessionUseCaseOCWrapper: NSObject {
-    let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession.sharedInstance(), callActionManager: CallActionManager.shared))
+    let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession.sharedInstance()))
     
     @objc func configureCallAudioSession() {
         audioSessionUseCase.configureCallAudioSession()

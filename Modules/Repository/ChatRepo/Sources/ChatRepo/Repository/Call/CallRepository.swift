@@ -1,16 +1,15 @@
-import ChatRepo
 import Combine
+import MEGAChatSdk
 import MEGADomain
 import MEGASwift
 
-final class CallRepository: NSObject, CallRepositoryProtocol {
+public final class CallRepository: NSObject, CallRepositoryProtocol {
     
-    static var newRepo: CallRepository {
-        CallRepository(chatSdk: .shared, callActionManager: .shared)
+    public static var newRepo: CallRepository {
+        CallRepository(chatSdk: .sharedChatSdk)
     }
     
     private let chatSdk: MEGAChatSdk
-    private let callActionManager: CallActionManager
     private var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
     
     private var callId: HandleEntity?
@@ -20,14 +19,16 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     private var callWaitingRoomUsersUpdateListener: CallWaitingRoomUsersUpdateListener?
     private var onCallUpdateListener: OnCallUpdateListener?
     
+    private var callAvailabilityListener: CallAvailabilityListener?
+    private var chatOnlineListener: ChatOnlineListener?
+    
     private let callLimitNoPresent = 0xFFFFFFFF
     
-    init(chatSdk: MEGAChatSdk, callActionManager: CallActionManager) {
+    public init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
-        self.callActionManager = callActionManager
     }
-    
-    func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol) {
+
+    public func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
             self.call = call.toCallEntity()
             self.callId = call.callId
@@ -38,46 +39,32 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         self.callbacksDelegate = callbacksDelegate
     }
     
-    func stopListeningForCall() {
+    public func stopListeningForCall() {
         chatSdk.remove(self as any MEGAChatCallDelegate)
         chatSdk.remove(self as any MEGAChatDelegate)
         self.call = nil
-        self.callId = MEGAInvalidHandle
+        self.callId = .invalid
         self.callbacksDelegate = nil
     }
     
-    func call(for chatId: HandleEntity) -> CallEntity? {
+    public func call(for chatId: HandleEntity) -> CallEntity? {
         guard let chatCall = chatSdk.chatCall(forChatId: chatId) else { return nil }
         return chatCall.toCallEntity()
     }
     
-    func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        let delegate = MEGAChatAnswerCallRequestDelegate { [weak self] (error)  in
-            if error.type == .MEGAChatErrorTypeOk {
-                guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
-                    completion(.failure(.generic))
-                    return
-                }
-                let callEntity = call.toCallEntity()
-                self?.call = callEntity
-                self?.callId = callEntity.callId
-                completion(.success(callEntity))
-            } else {
-                switch error.type {
-                case .MEGAChatErrorTooMany:
-                    completion(.failure(.tooManyParticipants))
-                default:
-                    completion(.failure(.generic))
-                }
-            }
-        }
-        
-        callActionManager.answerCall(chatId: chatId, enableVideo: false, enableAudio: true, delegate: delegate)
-    }
-    
-    func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+    public func answerCall(
+        for chatId: HandleEntity,
+        enableVideo: Bool,
+        enableAudio: Bool,
+        localizedCameraName: String?
+    ) async throws -> CallEntity {
         return try await withAsyncThrowingValue { completion in
-            callActionManager.answerCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio) { [weak self] result in
+            answerCall(
+                chatId: chatId,
+                enableVideo: enableVideo,
+                enableAudio: enableAudio,
+                localizedCameraName: localizedCameraName
+            ) { [weak self] result in
                 switch result {
                 case .success:
                     guard let self,
@@ -101,27 +88,23 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        let delegate = createStartMeetingRequestDelegate(for: chatId, completion: completion)
-        
-        callActionManager.startCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, delegate: delegate)
+    public func startCall(
+        for chatId: HandleEntity,
+        enableVideo: Bool,
+        enableAudio: Bool,
+        notRinging: Bool,
+        localizedCameraName: String?
+    ) async throws -> CallEntity {
+        try await startCall(
+            chatId: chatId,
+            enableVideo: enableVideo,
+            enableAudio: enableAudio,
+            notRinging: notRinging,
+            localizedCameraName: localizedCameraName
+        )
     }
     
-    @MainActor
-    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool) async throws -> CallEntity {
-        try await withCheckedThrowingContinuation { continuation in
-            startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging) { result in
-                switch result {
-                case .success(let callEntity):
-                    continuation.resume(returning: callEntity)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
-    }
-    
-    func createActiveSessions() {
+    public func createActiveSessions() {
         guard let call, !call.clientSessions.isEmpty, let chatRoom = chatSdk.chatRoom(forChatId: call.chatId) else {
             return
         }
@@ -130,55 +113,55 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func hangCall(for callId: HandleEntity) {
+    public func hangCall(for callId: HandleEntity) {
         chatSdk.hangChatCall(callId)
     }
     
-    func endCall(for callId: HandleEntity) {
+    public func endCall(for callId: HandleEntity) {
         chatSdk.endChatCall(callId)
     }
     
-    func addPeer(toCall call: CallEntity, peerId: UInt64) {
+    public func addPeer(toCall call: CallEntity, peerId: UInt64) {
         chatSdk.invite(toChat: call.chatId, user: peerId, privilege: MEGAChatRoomPrivilege.standard.rawValue)
     }
     
-    func removePeer(fromCall call: CallEntity, peerId: UInt64) {
+    public func removePeer(fromCall call: CallEntity, peerId: UInt64) {
         chatSdk.remove(fromChat: call.chatId, userHandle: peerId)
     }
     
-    func allowUsersJoinCall(_ call: CallEntity, users: [UInt64]) {
+    public func allowUsersJoinCall(_ call: CallEntity, users: [UInt64]) {
         chatSdk.allowUsersJoinCall(call.chatId, usersHandles: users.map(NSNumber.init(value:)))
     }
     
-    func kickUsersFromCall(_ call: CallEntity, users: [UInt64]) {
+    public func kickUsersFromCall(_ call: CallEntity, users: [UInt64]) {
         chatSdk.kickUsers(fromCall: call.chatId, usersHandles: users.map(NSNumber.init(value:)))
     }
     
-    func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [UInt64]) {
+    public func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [UInt64]) {
         chatSdk.pushUsers(intoWaitingRoom: scheduledMeeting.chatId, usersHandles: users.map(NSNumber.init(value:)))
     }
     
-    func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
+    public func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
         chatSdk.updateChatPermissions(call.chatId, userHandle: peerId, privilege: MEGAChatRoomPrivilege.moderator.rawValue)
     }
     
-    func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
+    public func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
         chatSdk.updateChatPermissions(call.chatId, userHandle: peerId, privilege: MEGAChatRoomPrivilege.standard.rawValue)
     }
     
-    func localAvFlagsChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never> {
+    public func localAvFlagsChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never> {
         callUpdateListener(forCallId: callId, change: .localAVFlags)
             .monitor
             .eraseToAnyPublisher()
     }
     
-    func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never> {
+    public func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never> {
         callUpdateListener(forCallId: callId, change: .status)
             .monitor
             .eraseToAnyPublisher()
     }
     
-    func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
+    public func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
         let callWaitingRoomUsersUpdate = CallWaitingRoomUsersUpdateListener(sdk: chatSdk, callId: call.callId)
         callWaitingRoomUsersUpdateListener = callWaitingRoomUsersUpdate
         
@@ -186,7 +169,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             .monitor
     }
     
-    func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
+    public func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
         let onCallUpdate = OnCallUpdateListener(sdk: chatSdk)
         onCallUpdateListener = onCallUpdate
         
@@ -194,11 +177,11 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             .monitor
     }
     
-    func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
+    public func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
         chatSdk.ringIndividual(inACall: chatId, userId: userId, timeout: timeout)
     }
     
-    func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws {
+    public func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws {
         try await withAsyncThrowingValue { completion in
             chatSdk.mutePeers(chatRoom.chatId, client: clientId, delegate: ChatRequestDelegate(completion: { result in
                 switch result {
@@ -211,7 +194,14 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int? = nil, maxUsers: Int? = nil, maxClientPerUser: Int? = nil, maxClients: Int? = nil, divider: Int? = nil) async throws {
+    public func setCallLimit(
+        inChat chatRoom: ChatRoomEntity,
+        duration: Int? = nil,
+        maxUsers: Int? = nil,
+        maxClientPerUser: Int? = nil,
+        maxClients: Int? = nil,
+        divider: Int? = nil
+    ) async throws {
         try await withAsyncThrowingValue { completion in
             chatSdk.setLimitsInCall(
                 chatRoom.chatId,
@@ -232,7 +222,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func enableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
+    public func enableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
         try await withAsyncThrowingValue { completion in
             chatSdk.enableAudio(
                 forChat: chatRoom.chatId,
@@ -248,7 +238,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
+    public func disableAudioForCall(in chatRoom: ChatRoomEntity) async throws {
         try await withAsyncThrowingValue { completion in
             chatSdk.disableAudio(
                 forChat: chatRoom.chatId,
@@ -264,17 +254,17 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func enableAudioMonitor(forCall call: CallEntity) {
+    public func enableAudioMonitor(forCall call: CallEntity) {
         guard !chatSdk.isAudioLevelMonitorEnabled(forChatId: call.chatId) else { return }
         chatSdk.enableAudioMonitor(true, chatId: call.chatId)
     }
     
-    func disableAudioMonitor(forCall call: CallEntity) {
+    public func disableAudioMonitor(forCall call: CallEntity) {
         guard chatSdk.isAudioLevelMonitorEnabled(forChatId: call.chatId) else { return }
         chatSdk.enableAudioMonitor(false, chatId: call.chatId)
     }
     
-    func raiseHand(forCall call: CallEntity) async throws {
+    public func raiseHand(forCall call: CallEntity) async throws {
         try await withAsyncThrowingValue { completion in
             chatSdk.raiseHandToSpeak(
                 forCall: call.chatId,
@@ -290,7 +280,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func lowerHand(forCall call: CallEntity) async throws {
+    public func lowerHand(forCall call: CallEntity) async throws {
         try await withAsyncThrowingValue { completion in
             chatSdk.lowerHandToStopSpeak(
                 forCall: call.chatId,
@@ -315,27 +305,6 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
         
         return callUpdateListener
-    }
-    
-    private func createStartMeetingRequestDelegate(for chatId: ChatIdEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) -> MEGAChatStartCallRequestDelegate {
-        return MEGAChatStartCallRequestDelegate { [weak self] (error) in
-            if error.type == .MEGAChatErrorTypeOk {
-                guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
-                    completion(.failure(.generic))
-                    return
-                }
-                self?.call = call.toCallEntity()
-                self?.callId = call.callId
-                completion(.success(call.toCallEntity()))
-            } else {
-                switch error.type {
-                case .MEGAChatErrorTooMany:
-                    completion(.failure(.tooManyParticipants))
-                default:
-                    completion(.failure(.generic))
-                }
-            }
-        }
     }
 }
 
@@ -372,7 +341,7 @@ private final class CallUpdateListener: NSObject, MEGAChatCallDelegate {
 
 extension CallRepository: MEGAChatCallDelegate {
     
-    func onChatSessionUpdate(_ api: MEGAChatSdk, chatId: UInt64, callId: UInt64, session: MEGAChatSession) {
+    public func onChatSessionUpdate(_ api: MEGAChatSdk, chatId: UInt64, callId: UInt64, session: MEGAChatSession) {
         if self.callId != callId {
             return
         }
@@ -409,7 +378,7 @@ extension CallRepository: MEGAChatCallDelegate {
         }
     }
     
-    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+    public func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         guard callId == call.callId else {
             return
         }
@@ -430,7 +399,7 @@ extension CallRepository: MEGAChatCallDelegate {
             case .good:
                 callbacksDelegate?.networkQualityChanged(.good)
             @unknown default:
-                MEGALogDebug("Call network quality has an unkown status")
+                break
             }
         }
         
@@ -483,7 +452,7 @@ extension CallRepository: MEGAChatCallDelegate {
 }
 
 extension CallRepository: MEGAChatDelegate {
-    func onChatListItemUpdate(_ api: MEGAChatSdk, item: MEGAChatListItem) {
+    public func onChatListItemUpdate(_ api: MEGAChatSdk, item: MEGAChatListItem) {
         guard let chatId = call?.chatId,
               item.chatId == chatId else {
             return
@@ -560,5 +529,166 @@ private final class OnCallUpdateListener: NSObject, MEGAChatCallDelegate {
     
     func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         source.send(call.toCallEntity())
+    }
+}
+
+extension CallRepository {
+    private func startCall(chatId: ChatIdEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            chatOnlineListener = ChatOnlineListener(
+                chatId: chatId,
+                sdk: chatSdk
+            ) { [weak self] chatId in
+                guard let self else { return }
+                chatOnlineListener = nil
+                let delegate = ChatRequestDelegate { [weak self] completion in
+                    switch completion {
+                    case .success:
+                        guard let self, let call = chatSdk.chatCall(forChatId: chatId) else {
+                            continuation.resume(with: .failure(CallErrorEntity.generic))
+                            return
+                        }
+                        continuation.resume(with: .success(call.toCallEntity()))
+                    case .failure(let error):
+                        switch error.type {
+                        case .MEGAChatErrorTooMany:
+                            continuation.resume(with: .failure(CallErrorEntity.tooManyParticipants))
+                        default:
+                            continuation.resume(with: .failure(CallErrorEntity.generic))
+                        }
+                    }
+                }
+                if let localizedCameraName {
+                    chatSdk.setChatVideoInDevices(localizedCameraName)
+                }
+                chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, delegate: delegate)
+            }
+        }
+    }
+    
+    private func answerCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, localizedCameraName: String?, completion: @escaping MEGAChatRequestCompletion) {
+        let group = DispatchGroup()
+        
+        group.enter()
+        chatOnlineListener = ChatOnlineListener(
+            chatId: chatId,
+            sdk: chatSdk
+        ) { [weak self] _ in
+            guard let self else { return }
+            chatOnlineListener = nil
+            group.leave()
+        }
+        
+        group.enter()
+        callAvailabilityListener = CallAvailabilityListener(
+            chatId: chatId,
+            sdk: self.chatSdk
+        ) { [weak self] _, _ in
+            guard let self else { return }
+            callAvailabilityListener = nil
+            group.leave()
+        }
+        
+        group.notify(queue: .main) { [self] in
+            let answerCallChatRequestDelegate = ChatRequestDelegate { requestCompletion in
+                switch requestCompletion {
+                case .success(let request):
+                    completion(.success(request))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+            if let localizedCameraName {
+                chatSdk.setChatVideoInDevices(localizedCameraName)
+            }
+            chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallChatRequestDelegate)
+        }
+    }
+}
+
+/// ChatOnlineListener is a helper class to listen for the chat online status.
+/// It will notify to the listener when the chat is online.
+private final class ChatOnlineListener: NSObject {
+    private let chatId: UInt64
+    typealias Completion = (_ chatId: UInt64) -> Void
+    private var completion: Completion?
+    private let sdk: MEGAChatSdk
+
+    init(chatId: UInt64,
+         sdk: MEGAChatSdk,
+         completion: @escaping Completion) {
+        self.chatId = chatId
+        self.sdk = sdk
+        self.completion = completion
+        super.init()
+        
+        if sdk.chatConnectionState(chatId) == .online {
+            completion(chatId)
+            self.completion = nil
+        } else {
+            addListener()
+        }
+    }
+    
+    private func addListener() {
+        sdk.add(self as (any MEGAChatDelegate))
+    }
+    
+    private func removeListener() {
+        sdk.remove(self as (any MEGAChatDelegate))
+    }
+}
+
+extension ChatOnlineListener: MEGAChatDelegate {
+    func onChatConnectionStateUpdate(_ api: MEGAChatSdk, chatId: UInt64, newState: Int32) {
+        if self.chatId == chatId,
+           newState == MEGAChatConnection.online.rawValue {
+            removeListener()
+            completion?(chatId)
+            self.completion = nil
+        }
+    }
+}
+
+/// CallAvailabilityListener is a helper class to listen for the call availability.
+/// It will notify to the listener when the call is available.
+private final class CallAvailabilityListener: NSObject {
+    private let chatId: UInt64
+    typealias Completion = (_ chatId: UInt64, _ call: MEGAChatCall) -> Void
+    private var completion: Completion?
+    private let sdk: MEGAChatSdk
+
+    init(chatId: UInt64,
+         sdk: MEGAChatSdk,
+         completion: @escaping Completion) {
+        self.chatId = chatId
+        self.sdk = sdk
+        self.completion = completion
+        super.init()
+        
+        if let call = sdk.chatCall(forChatId: chatId) {
+            completion(chatId, call)
+            self.completion = nil
+        } else {
+            addListener()
+        }
+    }
+    
+    private func addListener() {
+        sdk.add(self as (any MEGAChatCallDelegate))
+    }
+    
+    private func removeListener() {
+        sdk.remove(self as (any MEGAChatCallDelegate))
+    }
+}
+
+extension CallAvailabilityListener: MEGAChatCallDelegate {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        if call.chatId == chatId {
+            removeListener()
+            completion?(chatId, call)
+            self.completion = nil
+        }
     }
 }

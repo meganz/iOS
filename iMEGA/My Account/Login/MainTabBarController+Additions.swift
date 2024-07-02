@@ -185,7 +185,7 @@ extension MainTabBarController {
         let mainTabBarCallsViewModel = MainTabBarCallsViewModel(
             router: router,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo),
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
