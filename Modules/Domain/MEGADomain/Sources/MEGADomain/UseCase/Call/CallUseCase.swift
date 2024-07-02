@@ -4,10 +4,8 @@ public protocol CallUseCaseProtocol {
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T)
     func stopListeningForCall()
     func call(for chatId: HandleEntity) -> CallEntity?
-    func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
-    func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity
-    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
-    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool) async throws -> CallEntity
+    func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, localizedCameraName: String?) async throws -> CallEntity
+    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity
     func createActiveSessions()
     func hangCall(for callId: HandleEntity)
     func endCall(for callId: HandleEntity)
@@ -73,6 +71,7 @@ public extension CallCallbacksUseCaseProtocol {
 public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
     
     private let repository: T
+    
     private weak var callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
 
     public init(repository: T) {
@@ -92,21 +91,12 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
     public func call(for chatId: HandleEntity) -> CallEntity? {
         repository.call(for: chatId)
     }
-    
-    public func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        repository.answerCall(for: chatId, completion: completion)
+    public func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, localizedCameraName: String?) async throws -> CallEntity {
+        try await repository.answerCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, localizedCameraName: localizedCameraName)
     }
     
-    public func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
-        try await repository.answerCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio)
-    }
-    
-    public func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        repository.startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, completion: completion)
-    }
-    
-    public func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool) async throws -> CallEntity {
-        try await repository.startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging)
+    public func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity {
+        try await repository.startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, localizedCameraName: localizedCameraName)
     }
 
     public func createActiveSessions() {

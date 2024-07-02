@@ -3,7 +3,6 @@ import MEGADomain
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     private let audioSession: AVAudioSession
-    private let callActionManager: CallActionManager?
     
     var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?
     
@@ -30,9 +29,8 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         currentSelectedAudioPort
     }
     
-    init(audioSession: AVAudioSession, callActionManager: CallActionManager? = nil) {
+    init(audioSession: AVAudioSession) {
         self.audioSession = audioSession
-        self.callActionManager = callActionManager
         addObservers()
     }
     
@@ -185,34 +183,12 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             previousAudioPort = nil
         }
         
-        let notificationDescription = String(describing: notification)
-        
-        Task { @MainActor in
-            // Enabling webrtc audio changes the audio output from speaker to inbuilt receiver.
-            // So we need to revert back to original settings.
-            
-            // run the getter to check current port async so that it's not blocking main thread
-            let currentAudioPort = await asyncCurrentSelectedAudioPort()
-            MEGALogDebug("AudioSession: session route changed \(notificationDescription) with current selected port \(currentAudioPort)")
-            if let previousAudioPort,
-               callActionManager?.didEnableWebrtcAudioNow ?? false,
-               previousAudioPort == .builtInSpeaker,
-               currentAudioPort != .builtInSpeaker {
-                MEGALogDebug("AudioSession: The route is changed is because of the webrtc audio")
-                callActionManager?.didEnableWebrtcAudioNow = false
-                enableLoudSpeaker { _ in }
-                return
-            } else if callActionManager?.didEnableWebrtcAudioNow ?? false {
-                callActionManager?.didEnableWebrtcAudioNow = false
-            }
-            
-            if let handler = routeChanged,
-               let previousAudioPort,
-               let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {
-                handler(audioSessionRouteChangeReason, previousAudioPort)
-            } else {
-                MEGALogDebug("AudioSession: Either the handler is nil or the audioSessionRouteChangeReason is nil")
-            }
+        if let handler = routeChanged,
+           let previousAudioPort,
+           let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {
+            handler(audioSessionRouteChangeReason, previousAudioPort)
+        } else {
+            MEGALogDebug("AudioSession: Either the handler is nil or the audioSessionRouteChangeReason is nil")
         }
     }
 }

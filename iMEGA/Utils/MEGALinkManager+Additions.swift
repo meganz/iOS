@@ -222,18 +222,10 @@ extension MEGALinkManager {
             return
         }
         let chatRoom = megaChatRoom.toChatRoomEntity()
-        let callUseCase = CallUseCase(repository: CallRepository.newRepo)
         Task { @MainActor in
-            guard let callEntity = try? await callUseCase.answerCall(for: chatId, enableVideo: false, enableAudio: true) else {
-                return
-            }
-            openCallUI(call: callEntity, chatRoom: chatRoom)
+            let chatIdBase64Handle = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo).base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+            CallKitCallManager.shared.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: false, isJoiningActiveCall: true)
         }
-    }
-    
-    @MainActor
-    private class func openCallUI(call: CallEntity, chatRoom: ChatRoomEntity) {
-        MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, call: call, isSpeakerEnabled: true).start()
     }
 
     @objc class func openDefaultLink(_ url: NSURL) {

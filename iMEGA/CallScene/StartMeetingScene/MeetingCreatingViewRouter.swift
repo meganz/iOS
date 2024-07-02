@@ -34,7 +34,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     }
     
     @objc func build() -> UIViewController {
-        let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance(), callActionManager: CallActionManager.shared)
+        let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance())
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: .shared),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),

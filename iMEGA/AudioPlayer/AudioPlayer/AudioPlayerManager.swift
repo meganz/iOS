@@ -13,7 +13,7 @@ import MEGASDKRepo
     private var nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
         DIContainer.playbackContinuationUseCase
-    private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
+    private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession()))
     
     override private init() {
         super.init()

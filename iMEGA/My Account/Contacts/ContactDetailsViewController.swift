@@ -3,6 +3,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 import MEGAUI
 
 extension ContactDetailsViewController {
@@ -44,6 +45,12 @@ extension ContactDetailsViewController {
         super.viewDidLayoutSubviews()
         
         tableView.sizeHeaderToFit()
+    }
+    
+    @objc func startCall(inChatRoom chatRoom: MEGAChatRoom, video: Bool) {
+        let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+        let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
+        CallKitCallManager.shared.startCall(in: chatRoom.toChatRoomEntity(), chatIdBase64Handle: chatIdBase64Handle, hasVideo: video, notRinging: false, isJoiningActiveCall: false)
     }
 }
 

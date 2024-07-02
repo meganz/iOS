@@ -67,9 +67,6 @@
 
 @property (nonatomic) MEGANotificationType megatype; //1 share folder, 2 new message, 3 contact request
 
-@property (strong, nonatomic) MEGAChatRoom *chatRoom;
-@property (nonatomic, getter=isVideoCall) BOOL videoCall;
-
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
 
@@ -836,25 +833,6 @@
             }
         }
     });
-}
-
-- (void)performCall {
-    MEGAChatStartCallRequestDelegate *requestDelegate = [MEGAChatStartCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
-        if (error.type == MEGAErrorTypeApiOk) {
-            [self performCallWithPresenter:self.mainTBC
-                                  chatRoom:self.chatRoom
-                          isSpeakerEnabled:self.chatRoom.isMeeting || self.videoCall];
-        }
-        self.chatRoom = nil;
-    }];
-    
-    [AudioSessionUseCaseOCWrapper.alloc.init configureCallAudioSession];
-    [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:self.chatRoom.isMeeting];
-    [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId
-                                        enableVideo:self.videoCall
-                                        enableAudio:!self.chatRoom.isMeeting
-                                         notRinging:NO
-                                           delegate:requestDelegate];
 }
 
 - (void)presentInviteContactCustomAlertViewController {
@@ -1678,12 +1656,6 @@
     }
     if (newState == MEGAChatInitOnlineSession) {
         [self copyDatabasesForExtensions];
-    }
-}
-
-- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
-        [self performCall];
     }
 }
 

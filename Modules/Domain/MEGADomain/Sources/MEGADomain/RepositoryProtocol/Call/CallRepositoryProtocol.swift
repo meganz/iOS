@@ -4,10 +4,8 @@ public protocol CallRepositoryProtocol {
     func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol)
     func stopListeningForCall()
     func call(for chatId: HandleEntity) -> CallEntity?
-    func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
-    func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity
-    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
-    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool) async throws -> CallEntity
+    func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, localizedCameraName: String?) async throws -> CallEntity
+    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity
     func hangCall(for callId: HandleEntity)
     func endCall(for callId: HandleEntity)
     func addPeer(toCall call: CallEntity, peerId: UInt64)

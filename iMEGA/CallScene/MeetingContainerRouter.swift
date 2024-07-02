@@ -49,7 +49,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private lazy var chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
     private let layoutUpdateChannel = ParticipantLayoutUpdateChannel()
     private var createCallUseCase: CallUseCase<CallRepository> {
-        let callRepository = CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)
+        let callRepository = CallRepository.newRepo
         return CallUseCase(repository: callRepository)
     }
     private let tracker: any AnalyticsTracking

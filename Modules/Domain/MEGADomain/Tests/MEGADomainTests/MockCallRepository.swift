@@ -18,19 +18,11 @@ class MockCallRepository: CallRepositoryProtocol {
         nil
     }
     
-    func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        
-    }
-    
-    func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+    func answerCall(for chatId: MEGADomain.HandleEntity, enableVideo: Bool, enableAudio: Bool, localizedCameraName: String?) async throws -> MEGADomain.CallEntity {
         CallEntity()
     }
     
-    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        
-    }
-    
-    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool) async throws -> CallEntity {
+    func startCall(for chatId: MEGADomain.HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> MEGADomain.CallEntity {
         CallEntity()
     }
     
