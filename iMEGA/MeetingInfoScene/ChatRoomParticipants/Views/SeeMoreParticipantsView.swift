@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct SeeMoreParticipantsView: View {
@@ -14,15 +16,15 @@ struct SeeMoreParticipantsView: View {
         static let disclosureOpacity: CGFloat = 0.6
     }
     
-    private let discolureIndicator = "chevron.right"
+    private let disclosureIndicator = "chevron.right"
     
     let isExpanded: Bool
 
     var body: some View {
         VStack(spacing: Constants.spacing) {
             HStack {
-                Image(systemName: discolureIndicator)
-                    .foregroundColor(MEGAAppColor.Gray._8E8E93.color.opacity(Constants.disclosureOpacity))
+                Image(systemName: disclosureIndicator)
+                    .foregroundColor(foregroundColor)
                     .rotationEffect(.degrees(isExpanded ? Constants.rotationLeft : Constants.rotationRight))
                     .padding(.horizontal)
                 Text(isExpanded ? Strings.Localizable.Meetings.Info.Participants.seeLess : Strings.Localizable.Meetings.Info.Participants.seeMore)
@@ -32,8 +34,20 @@ struct SeeMoreParticipantsView: View {
             .padding(.trailing, Constants.viewPadding)
             .frame(height: Constants.viewHeight)
             .contentShape(Rectangle())
-            .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+            .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyBackgroundColor)
             Divider()
         }
+    }
+    
+    private var foregroundColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.secondary.swiftUI
+        } else {
+            Color(UIColor.gray8E8E93).opacity(Constants.disclosureOpacity)
+        }
+    }
+    
+    private var legacyBackgroundColor: Color {
+        colorScheme == .dark ? Color(UIColor.black1C1C1E) : Color(UIColor.whiteFFFFFF)
     }
 }
