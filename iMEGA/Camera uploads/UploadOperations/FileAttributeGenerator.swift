@@ -55,23 +55,25 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
             MEGALogError("[Camera Uploads] create thumbnail fails for \(sourceURL.lastPathComponent) with error \(error)")
             return false
         }
+        MEGALogDebug("[Camera Uploads] create thumbnail correctly at \(destinationURL)")
         return true
     }
     
     func createPreview(at destinationURL: URL) async -> Bool {
         let size = CGSize(width: Constants.previewSize, height: Constants.previewSize)
-            let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
-                                                       size: size,
-                                                       scale: 1.0,
-                                                       representationTypes: .thumbnail)
-            
-            do {
-                try await qlThumbnailGenerator.saveBestRepresentation(for: request, to: destinationURL, contentType: UTType.jpeg.identifier)
-            } catch let error {
-                MEGALogError("[Camera Uploads] create preview fails for \(sourceURL.lastPathComponent) with error \(error)")
-                return false
-            }
-            return true
+        let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
+                                                   size: size,
+                                                   scale: 1.0,
+                                                   representationTypes: .thumbnail)
+        
+        do {
+            try await qlThumbnailGenerator.saveBestRepresentation(for: request, to: destinationURL, contentType: UTType.jpeg.identifier)
+        } catch let error {
+            MEGALogError("[Camera Uploads] create preview fails for \(sourceURL.lastPathComponent) with error \(error)")
+            return false
+        }
+        MEGALogDebug("[Camera Uploads] create preview correctly at \(destinationURL)")
+        return true
     }
     
     func requestThumbnail() async -> UIImage? {

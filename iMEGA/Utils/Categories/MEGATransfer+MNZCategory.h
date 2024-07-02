@@ -5,8 +5,6 @@
 
 #pragma mark - Thumbnails and previews
 
-- (void)mnz_createThumbnailAndPreview;
-- (void)mnz_renameOrRemoveThumbnailAndPreview;
 - (MEGAChatMessageType)transferChatMessageType;
 
 #pragma mark - App data
