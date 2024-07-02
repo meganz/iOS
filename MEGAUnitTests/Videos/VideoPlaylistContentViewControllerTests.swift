@@ -49,6 +49,16 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.sharedUIState.selectedQuickActionEntity, .rename)
     }
     
+    // MARK: - videoPlaylistMenuDelegate
+    
+    func testVideoPlaylistMenuDelegate_whenCalled_setActionInSharedUIState() {
+        let (sut, _) = makeSUT()
+        
+        sut.videoPlaylistMenu(didSelect: .delete)
+        
+        XCTAssertEqual(sut.sharedUIState.selectedVideoPlaylistActionEntity, .delete)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: VideoPlaylistContentViewController, sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase) {
@@ -65,7 +75,8 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
             presentationConfig: VideoPlaylistContentSnackBarPresentationConfig(shouldShowSnackBar: false, text: nil),
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             videoSelection: videoSelection,
-            selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection)
+            selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection),
+            syncModel: VideoRevampSyncModel()
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, sortOrderPreferenceUseCase)

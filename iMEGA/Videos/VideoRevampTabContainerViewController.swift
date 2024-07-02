@@ -88,6 +88,10 @@ final class VideoRevampTabContainerViewController: UIViewController {
         setupNavigationBar()
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         configureSnackBarPresenter()
     }
     

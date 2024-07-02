@@ -17,6 +17,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let router: any VideoRevampRouting
     private let presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
+    private let syncModel: VideoRevampSyncModel
     
     private var snackBarContainer: UIView?
     
@@ -25,7 +26,8 @@ final class VideoPlaylistContentViewController: UIViewController {
     private lazy var contextMenuManager = ContextMenuManager(
         displayMenuDelegate: self,
         quickActionsMenuDelegate: self,
-        createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
+        createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo), 
+        videoPlaylistMenuDelegate: self
     )
     
     private(set) var sharedUIState = VideoPlaylistContentSharedUIState()
@@ -49,7 +51,8 @@ final class VideoPlaylistContentViewController: UIViewController {
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         videoSelection: VideoSelection,
-        selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter
+        selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter,
+        syncModel: VideoRevampSyncModel
     ) {
         self.videoConfig = videoConfig
         self.videoPlaylistEntity = videoPlaylistEntity
@@ -62,6 +65,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.presentationConfig = presentationConfig
         self.videoSelection = videoSelection
         self.selectionAdapter = selectionAdapter
+        self.syncModel = syncModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -98,7 +102,8 @@ final class VideoPlaylistContentViewController: UIViewController {
             sharedUIState: sharedUIState,
             videoSelection: videoSelection,
             selectionAdapter: selectionAdapter,
-            presentationConfig: presentationConfig
+            presentationConfig: presentationConfig,
+            syncModel: syncModel
         )
         
         add(contentView, container: view, animate: false)
@@ -365,6 +370,15 @@ extension VideoPlaylistContentViewController: QuickActionsMenuDelegate {
     
     func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
         sharedUIState.selectedQuickActionEntity = action
+    }
+}
+
+// MARK: - TabContainerViewController+VideoPlaylistMenuDelegate
+
+extension VideoPlaylistContentViewController: VideoPlaylistMenuDelegate {
+    
+    func videoPlaylistMenu(didSelect action: VideoPlaylistActionEntity) {
+        sharedUIState.selectedVideoPlaylistActionEntity = action
     }
 }
 

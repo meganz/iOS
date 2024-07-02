@@ -48,6 +48,10 @@ protocol AlbumMenuDelegate: AnyObject {
     func albumMenu(didSelect action: AlbumActionEntity)
 }
 
+protocol VideoPlaylistMenuDelegate: AnyObject {
+    func videoPlaylistMenu(didSelect action: VideoPlaylistActionEntity)
+}
+
 final class ContextMenuManager: NSObject {
     weak var displayMenuDelegate: (any DisplayMenuDelegate)?
     weak var quickActionsMenuDelegate: (any QuickActionsMenuDelegate)?
@@ -58,6 +62,7 @@ final class ContextMenuManager: NSObject {
     weak var meetingContextMenuDelegate: (any MeetingContextMenuDelegate)?
     weak var filterMenuDelegate: (any FilterMenuDelegate)?
     weak var albumMenuDelegate: (any AlbumMenuDelegate)?
+    weak var videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)?
     
     private let createContextMenuUC: any CreateContextMenuUseCaseProtocol
     
@@ -70,7 +75,9 @@ final class ContextMenuManager: NSObject {
          meetingContextMenuDelegate: (any MeetingContextMenuDelegate)? = nil,
          filterMenuDelegate: (any FilterMenuDelegate)? = nil,
          createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
-         albumMenuDelegate: (any AlbumMenuDelegate)? = nil) {
+         albumMenuDelegate: (any AlbumMenuDelegate)? = nil,
+         videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)? = nil
+    ) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickActionsMenuDelegate = quickActionsMenuDelegate
         self.uploadAddMenuDelegate = uploadAddMenuDelegate
@@ -81,6 +88,7 @@ final class ContextMenuManager: NSObject {
         self.filterMenuDelegate = filterMenuDelegate
         self.createContextMenuUC = createContextMenuUseCase
         self.albumMenuDelegate = albumMenuDelegate
+        self.videoPlaylistMenuDelegate = videoPlaylistMenuDelegate
     }
     
     // MARK: - Configure functions
@@ -140,6 +148,8 @@ final class ContextMenuManager: NSObject {
             if action == .archivedChats {
                 chatMenuDelegate?.archivedChatsTapped()
             }
+        case .videoPlaylist(let action):
+            videoPlaylistMenuDelegate?.videoPlaylistMenu(didSelect: action)
             
         default:
             break

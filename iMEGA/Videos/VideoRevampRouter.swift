@@ -9,6 +9,8 @@ struct VideoRevampRouter: VideoRevampRouting {
     let navigationController: UINavigationController?
     let isDesignTokenEnabled: Bool
     
+    private let syncModel = VideoRevampSyncModel()
+    
     private var videoConfig: VideoConfig {
         .live(isDesignTokenEnabled: isDesignTokenEnabled)
     }
@@ -28,7 +30,7 @@ struct VideoRevampRouter: VideoRevampRouting {
             setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: sdk)
         )
         
-        let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection())
+        let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection(), syncModel: syncModel)
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
@@ -160,7 +162,8 @@ struct VideoRevampRouter: VideoRevampRouting {
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
             videoSelection: videoSelection,
-            selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection)
+            selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection),
+            syncModel: syncModel
         )
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)

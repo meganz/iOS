@@ -24,6 +24,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
+    private let syncModel: VideoRevampSyncModel
     
     @Published public private(set) var videos: [NodeEntity] = []
     @Published var headerPreviewEntity: VideoPlaylistCellPreviewEntity = .placeholder
@@ -31,6 +32,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     @Published var shouldPopScreen = false
     @Published var shouldShowError = false
     @Published var shouldShowRenamePlaylistAlert = false
+    @Published var shouldShowDeletePlaylistAlert = false
     
     @Published var shouldShowVideoPlaylistPicker = false
     
@@ -41,6 +43,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var videoPlaylistNames: [String] = []
     
     private(set) var renameVideoPlaylistTask: Task<Void, Never>?
+    private(set) var deleteVideoPlaylistTask: Task<Void, Never>?
     
     init(
         videoPlaylistEntity: VideoPlaylistEntity,
@@ -53,7 +56,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         selectionDelegate: some VideoPlaylistContentViewModelSelectionDelegate,
         renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
-        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
+        syncModel: VideoRevampSyncModel
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
@@ -66,6 +70,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
+        self.syncModel = syncModel
         
         assignVideoPlaylistRenameValidator()
         
@@ -139,7 +144,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         return VideoDurationFormatter.formatDuration(seconds: UInt(max(playlistDuration, 0)))
     }
     
-    // Later when handling delete video playlist, we will handle this in detail wether it should pop screen or show error depending on error case.
     @MainActor
     private func handle(_ error: any Error) {
         guard let videoPlaylistError = error as? VideoPlaylistErrorEntity else {
@@ -150,6 +154,9 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         switch videoPlaylistError {
         case .videoPlaylistNotFound:
             shouldPopScreen = true
+            syncModel.snackBarMessage = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.playlistNameDeleted
+                .replacingOccurrences(of: "[A]", with: videoPlaylistEntity.name)
+            syncModel.shouldShowSnackBar = true
         default:
             shouldShowError = true
         }
@@ -204,6 +211,18 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         }
     }
     
+    @MainActor
+    func subscribeToSelectedVideoPlaylistActionChanged() async {
+        for await action in sharedUIState.$selectedVideoPlaylistActionEntity.values {
+            switch action {
+            case .delete:
+                shouldShowDeletePlaylistAlert = true
+            default:
+                break
+            }
+        }
+    }
+    
     private func assignVideoPlaylistRenameValidator() {
         let validator = VideoPlaylistNameValidator(existingVideoPlaylistNames: { [weak self] in
             self?.videoPlaylistNames ?? []
@@ -249,6 +268,17 @@ final class VideoPlaylistContentViewModel: ObservableObject {
                 sharedUIState.snackBarText = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed
                 sharedUIState.shouldShowSnackBar = true
             }
+        }
+    }
+    
+    func deleteVideoPlaylist() {
+        guard videoPlaylistEntity.type == .user else {
+            return
+        }
+        
+        deleteVideoPlaylistTask = Task { [weak self] in
+            guard let self else { return }
+            _ = await videoPlaylistModificationUseCase.delete(videoPlaylists: [videoPlaylistEntity])
         }
     }
 }
