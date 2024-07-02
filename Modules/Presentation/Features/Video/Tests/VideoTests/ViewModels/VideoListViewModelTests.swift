@@ -22,57 +22,99 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(fileSearchUseCase.messages.isEmpty, "Expect to not listen nodes update")
     }
     
-    func testOnViewAppeared_whenCalled_executeSearchUseCase() async {
+    // MARK: - onViewAppear
+    
+    func testOnViewAppear_whenCalled_executeSearchUseCase() async {
         let (sut, _, photoLibraryUseCase) = makeSUT()
         
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         let messages = await photoLibraryUseCase.messages
         XCTAssertTrue(messages.contains(.media), "Expect to search")
     }
     
-    func testOnViewAppeared_whenCalledOnFailedLoadVideos_executesSearchUseCaseInOrder() async {
+    func testOnViewAppear_whenCalledOnFailedLoadVideos_executesSearchUseCaseInOrder() async {
         let (sut, _, photoLibraryUseCase) = makeSUT()
         
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
     }
     
-    func testOnViewAppeared_whenCalledOnSuccessfullyLoadVideos_executesSearchUseCaseInOrder() async {
+    func testOnViewAppear_whenCalledOnSuccessfullyLoadVideos_executesSearchUseCaseInOrder() async {
         let (sut, _, photoLibraryUseCase) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
         
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
     }
     
-    func testOnViewAppeared_whenError_showsErrorView() async {
+    func testOnViewAppear_whenError_showsErrorView() async {
         let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
         
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         XCTAssertEqual(sut.shouldShowError, true)
     }
     
-    func testOnViewAppeared_whenNoErrors_showsEmptyItemView() async {
+    func testOnViewAppear_whenNoErrors_showsEmptyItemView() async {
         let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: []))
         
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         XCTAssertEqual(sut.videos.isEmpty, true)
     }
     
-    func testOnViewAppeared_whenNoErrors_showsVideoItems() async {
+    func testOnViewAppear_whenNoErrors_showsVideoItems() async {
         let foundVideos = [ anyNode(id: 1, mediaType: .video), anyNode(id: 2, mediaType: .video) ]
         let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: foundVideos))
         
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         XCTAssertEqual(sut.videos, foundVideos)
     }
+    
+    func testOnViewAppear_whenLoadVideosSuccessfully_showsCorrectLoadingState() async {
+        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
+        var loadingStates: [Bool] = []
+        let exp = expectation(description: "loading state subscription")
+        exp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowPlaceHolderView
+            .sink { isLoading in
+                loadingStates.append(isLoading)
+                exp.fulfill()
+            }
+        
+        await sut.onViewAppear()
+        
+        XCTAssertEqual(loadingStates, [ false, true, false ])
+        
+        cancellable.cancel()
+        await fulfillment(of: [exp], timeout: 0.5)
+    }
+    
+    func testOnViewAppear_whenLoadVideosFailed_showsCorrectLoadingState() async {
+        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
+        var loadingStates: [Bool] = []
+        let exp = expectation(description: "loading state subscription")
+        exp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowPlaceHolderView
+            .sink { isLoading in
+                loadingStates.append(isLoading)
+                exp.fulfill()
+            }
+        
+        await sut.onViewAppear()
+        
+        XCTAssertEqual(loadingStates, [ false, true, false ])
+        
+        cancellable.cancel()
+        await fulfillment(of: [exp], timeout: 0.5)
+    }
+    
+    // MARK: - listenNodesUpdate
     
     func testOnNodesUpdate_whenHasNodeUpdatesOnNonVideoNodes_doesNotUpdateUI() async throws {
         let videoNodes = [
@@ -89,7 +131,7 @@ final class VideoListViewModelTests: XCTestCase {
             ),
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         var receivedVideos: [NodeEntity] = []
         let exp = expectation(description: "wait for subscription")
@@ -124,7 +166,7 @@ final class VideoListViewModelTests: XCTestCase {
             ),
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: initialVideoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         var receivedVideos: [NodeEntity] = []
         let exp = expectation(description: "wait for subscription")
@@ -164,7 +206,7 @@ final class VideoListViewModelTests: XCTestCase {
             ),
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: initialVideoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         var receivedVideos: [NodeEntity] = []
         let exp = expectation(description: "wait for subscription")
@@ -268,7 +310,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         
         sut.toggleSelectAllVideos()
         
@@ -536,7 +578,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
@@ -558,7 +600,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
@@ -580,7 +622,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
@@ -602,7 +644,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
@@ -624,7 +666,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
@@ -646,7 +688,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
@@ -668,7 +710,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
@@ -689,7 +731,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppeared()
+        await sut.onViewAppear()
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
@@ -749,6 +791,58 @@ final class VideoListViewModelTests: XCTestCase {
         try await Task.sleep(nanoseconds: 1_000_000)
         
         XCTAssertEqual(sut.selectedDurationFilterOptionType, .allDurations)
+    }
+    
+    // MARK: - subscribeToItemsStateForEmptyState
+    
+    func testSubscribeToItemsStateForEmptyState_whenConditionNotMet_shouldNotShowEmptyView() async {
+        // Arrange
+        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
+        
+        var receivedValue = false
+        let exp = expectation(description: "should not show empty view")
+        exp.isInverted = true
+        let cancellable = sut.$shouldShowVideosEmptyView
+            .dropFirst()
+            .sink { shouldShow in
+                receivedValue = shouldShow
+                exp.fulfill()
+            }
+        
+        await sut.onViewAppear()
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertFalse(receivedValue)
+        
+        cancellable.cancel()
+    }
+    
+    func testSubscribeToItemsStateForEmptyState_whenConditionMet_shouldShowEmptyView() async {
+        // Arrange
+        let videoNodes = [
+            anyNode(id: 1, mediaType: .video),
+            anyNode(id: 2, mediaType: .video)
+        ]
+        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes, succesfullyLoadMedia: true))
+        
+        var receivedValue = false
+        let exp = expectation(description: "should show empty view")
+        exp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowVideosEmptyView
+            .dropFirst()
+            .sink { shouldShow in
+                receivedValue = shouldShow
+                exp.fulfill()
+            }
+        
+        await sut.onViewAppear()
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertFalse(receivedValue)
+        
+        cancellable.cancel()
     }
     
     // MARK: - Helpers
