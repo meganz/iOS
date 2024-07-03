@@ -20,6 +20,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let isInheritingSensitivityResult: Result<Bool, Error>
     private let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>]
     private let monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error>
+    private let sensitivityChangesForNode: AnyAsyncSequence<Bool>
 
     public var isMultimediaFileNode_CalledTimes = 0
     
@@ -39,7 +40,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 isNodeRestorable: Bool = false,
                 isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
                 isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:],
-                monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+                monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence(),
+                sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
@@ -58,6 +60,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.isInheritingSensitivityResult = isInheritingSensitivityResult
         self.isInheritingSensitivityResults = isInheritingSensitivityResults
         self.monitorInheritedSensitivityForNode = monitorInheritedSensitivityForNode
+        self.sensitivityChangesForNode = sensitivityChangesForNode
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -157,6 +160,10 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     
     public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
         monitorInheritedSensitivityForNode
+    }
+    
+    public func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
+        sensitivityChangesForNode
     }
     
     // MARK: - Private Helpers
