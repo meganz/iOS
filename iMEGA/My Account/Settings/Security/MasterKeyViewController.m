@@ -10,13 +10,6 @@
 @import MEGAL10nObjc;
 
 @interface MasterKeyViewController ()
-
-@property (weak, nonatomic) IBOutlet UIView *illustrationView;
-@property (weak, nonatomic) IBOutlet UIButton *carbonCopyMasterKeyButton;
-@property (weak, nonatomic) IBOutlet UIButton *saveMasterKey;
-
-@property (weak, nonatomic) IBOutlet UIButton *whyDoINeedARecoveryKeyButton;
-
 @end
 
 @implementation MasterKeyViewController
@@ -43,18 +36,6 @@
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
     }
-}
-
-#pragma mark - Private
-
-- (void)updateAppearance {
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
-    
-    self.illustrationView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    [self.carbonCopyMasterKeyButton mnz_setupBasic:self.traitCollection];
-    [self.saveMasterKey mnz_setupPrimary:self.traitCollection];
-    
-    self.whyDoINeedARecoveryKeyButton.titleLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBActions
