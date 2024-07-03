@@ -1,4 +1,4 @@
-public enum TransferStateEntity: Int {
+public enum TransferStateEntity: Int, Sendable {
     case none
     case queued
     case active

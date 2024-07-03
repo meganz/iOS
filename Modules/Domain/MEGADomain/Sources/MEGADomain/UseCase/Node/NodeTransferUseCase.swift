@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-public protocol NodeTransferUseCaseProtocol {
+public protocol NodeTransferUseCaseProtocol: Sendable {
     func transferResultPublisher() -> AnyPublisher<Result<TransferEntity, TransferErrorEntity>, Never>
     func registerMEGATransferDelegate() async
     func deRegisterMEGATransferDelegate() async
