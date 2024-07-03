@@ -1,4 +1,5 @@
 import Combine
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
@@ -98,13 +99,13 @@ final class UserAvatarViewModel: ObservableObject {
         }
         
         let initials = chatTitle.initialForAvatar()
-        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
         
         return UIImage.drawImage(
             forInitials: initials,
             size: size,
             backgroundColor: avatarBackgroundColor,
-            textColor: MEGAAppColor.White._FFFFFF.uiColor,
+            textColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor: UIColor.whiteFFFFFF,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage)
     }
