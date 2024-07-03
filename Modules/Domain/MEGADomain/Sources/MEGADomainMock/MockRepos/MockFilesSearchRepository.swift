@@ -3,7 +3,7 @@ import Foundation
 import MEGADomain
 
 final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
-    
+        
     public static let newRepo = MockFilesSearchRepository()
     
     public var hasCancelSearchCalled = false
@@ -72,6 +72,17 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                 completion(nil, true)
             }
         }
+    }
+    
+    public func search(filter: SearchFilterEntity, page: SearchPageEntity) async throws -> [NodeEntity] {
+        let results: [NodeEntity] = try await search(filter: filter)
+        guard page.startingOffset >= 0, page.pageSize > 0 else {
+            return results
+        }
+        // simulate sdk ability to page results
+        let start = page.startingOffset * page.pageSize
+        let end = start + page.pageSize
+        return Array(results[start..<end])
     }
     
     public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {

@@ -822,7 +822,7 @@ static NSString* const B = @"[B]";
                                     favouriteFilter:MEGASearchFilterFavouriteOptionDisabled
                                     creationTimeFrame:nil
                                     modificationTimeFrame:nil];
-        MEGANodeList *nameNodeList = [MEGASdk.shared searchNonRecursivelyWith:filter orderType:MEGASortOrderTypeNone cancelToken:[MEGACancelToken new]];
+        MEGANodeList *nameNodeList = [MEGASdk.shared searchNonRecursivelyWith:filter orderType:MEGASortOrderTypeNone page:nil cancelToken:[MEGACancelToken new]];
         listSize = (int)nameNodeList.size;
         index++;
     } while (listSize != 0);

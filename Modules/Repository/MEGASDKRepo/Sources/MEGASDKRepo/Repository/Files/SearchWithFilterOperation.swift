@@ -4,6 +4,7 @@ import MEGASdk
 final class SearchWithFilterOperation: AsyncOperation {
     let sdk: MEGASdk
     let filter: MEGASearchFilter
+    let page: MEGASearchPage?
     let recursive: Bool
     let sortOrder: MEGASortOrderType
     let cancelToken: MEGACancelToken
@@ -13,6 +14,7 @@ final class SearchWithFilterOperation: AsyncOperation {
     init(
         sdk: MEGASdk,
         filter: MEGASearchFilter,
+        page: MEGASearchPage?,
         recursive: Bool,
         sortOrder: MEGASortOrderType,
         cancelToken: MEGACancelToken,
@@ -20,6 +22,7 @@ final class SearchWithFilterOperation: AsyncOperation {
     ) {
         self.sdk = sdk
         self.filter = filter
+        self.page = page
         self.recursive = recursive
         self.sortOrder = sortOrder
         self.cancelToken = cancelToken
@@ -30,9 +33,9 @@ final class SearchWithFilterOperation: AsyncOperation {
         startExecuting()
         
         let nodeList = if recursive {
-            sdk.search(with: filter, orderType: sortOrder, cancelToken: cancelToken)
+            sdk.search(with: filter, orderType: sortOrder, page: page, cancelToken: cancelToken)
         } else {
-            sdk.searchNonRecursively(with: filter, orderType: sortOrder, cancelToken: cancelToken)
+            sdk.searchNonRecursively(with: filter, orderType: sortOrder, page: page, cancelToken: cancelToken)
         }
         
         guard !isCancelled, !cancelToken.isCancelled else {

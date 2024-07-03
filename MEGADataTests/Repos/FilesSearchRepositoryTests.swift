@@ -185,6 +185,48 @@ final class FilesSearchRepositoryTests: XCTestCase {
         XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
     }
     
+    func testSearch_onSuccessWithPaged_shouldCallWithCorrectQueryParameters() async throws {
+        let parent = MockNode(handle: 1)
+        let nodes = [parent,
+                     MockNode(handle: 34),
+                     MockNode(handle: 65)]
+        let mockSdk = MockSdk(nodes: nodes)
+        let repo = FilesSearchRepository(sdk: mockSdk)
+        let searchString = "*"
+        let recursive = false
+        let sortOrderType = SortOrderEntity.defaultAsc
+        let formatType = NodeFormatEntity.photo
+        let sensitiveFilter = SearchFilterEntity.SensitiveFilterOption.nonSensitiveOnly
+        
+        let expectedSearchQuery = MockSdk.SearchQueryParameters(node: parent,
+                                                                searchString: searchString,
+                                                                recursive: recursive,
+                                                                sortOrderType: sortOrderType.toMEGASortOrderType(),
+                                                                formatType: formatType.toMEGANodeFormatType(),
+                                                                sensitiveFilter: sensitiveFilter.toMEGASearchFilterSensitiveOption(),
+                                                                favouriteFilter: .favouritesOnly,
+                                                                pageOffset: 0,
+                                                                pageSize: 2)
+        
+        let result: NodeListEntity = try await repo.search(
+            filter: .init(
+                searchText: searchString,
+                searchTargetLocation: .parentNode(parent.toNodeEntity()),
+                recursive: recursive,
+                supportCancel: false,
+                sortOrderType: sortOrderType,
+                formatType: formatType,
+                sensitiveFilterOption: sensitiveFilter,
+                favouriteFilterOption: .onlyFavourites),
+            page: .init(startingOffset: 0, pageSize: 2)
+        )
+        
+        XCTAssertEqual(result.toNodeEntities(), nodes.toNodeEntities())
+        XCTAssertEqual(mockSdk.searchNonRecursivelyWithFilterCallCount, 1)
+        XCTAssertEqual(mockSdk.searchWithFilterCallCount, 0)
+        XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
+    }
+    
     // MARK: Private
     
     private func photoNodes() -> [MockNode] {

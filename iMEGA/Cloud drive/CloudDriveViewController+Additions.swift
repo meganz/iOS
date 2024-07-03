@@ -515,6 +515,7 @@ extension CloudDriveViewController {
                                       excludeSensitive: excludeSensitive)
         return SearchWithFilterOperation(sdk: .shared,
                                          filter: filter,
+                                         page: nil,
                                          recursive: true,
                                          sortOrder: Helper.sortType(for: parentHandle),
                                          cancelToken: cancelToken,

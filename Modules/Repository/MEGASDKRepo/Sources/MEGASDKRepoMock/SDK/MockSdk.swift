@@ -363,26 +363,30 @@ public final class MockSdk: MEGASdk {
         return MockNodeList(nodes: nodes)
     }
     
-    public override func search(with filter: MEGASearchFilter, orderType: MEGASortOrderType, cancelToken: MEGACancelToken) -> MEGANodeList {
+    public override func search(with filter: MEGASearchFilter, orderType: MEGASortOrderType, page: MEGASearchPage?, cancelToken: MEGACancelToken) -> MEGANodeList {
         searchQueryParameters = SearchQueryParameters(node: MockNode(handle: filter.parentNodeHandle),
                                                       searchString: filter.term,
                                                       recursive: true,
                                                       sortOrderType: orderType,
                                                       formatType: filter.category,
                                                       sensitiveFilter: filter.sensitiveFilter,
-                                                      favouriteFilter: filter.favouriteFilter)
+                                                      favouriteFilter: filter.favouriteFilter,
+                                                      pageOffset: page?.startingOffset,
+                                                      pageSize: page?.pageSize)
         searchWithFilterCallCount += 1
         return MockNodeList(nodes: nodes)
     }
     
-    public override func searchNonRecursively(with filter: MEGASearchFilter, orderType: MEGASortOrderType, cancelToken: MEGACancelToken) -> MEGANodeList {
+    public override func searchNonRecursively(with filter: MEGASearchFilter, orderType: MEGASortOrderType, page: MEGASearchPage?, cancelToken: MEGACancelToken) -> MEGANodeList {
         searchQueryParameters = SearchQueryParameters(node: MockNode(handle: filter.parentNodeHandle),
                                                       searchString: filter.term,
                                                       recursive: false,
                                                       sortOrderType: orderType,
                                                       formatType: filter.category,
                                                       sensitiveFilter: filter.sensitiveFilter,
-                                                      favouriteFilter: filter.favouriteFilter)
+                                                      favouriteFilter: filter.favouriteFilter,
+                                                      pageOffset: page?.startingOffset,
+                                                      pageSize: page?.pageSize)
         
         searchNonRecursivelyWithFilterCallCount += 1
         return MockNodeList(nodes: nodes)
@@ -819,6 +823,8 @@ extension MockSdk {
         public let formatType: MEGANodeFormatType
         public let sensitiveFilter: MEGASearchFilterSensitiveOption
         public let favouriteFilter: MEGASearchFilterFavouriteOption
+        public let pageOffset: Int?
+        public let pageSize: Int?
         
         public init(node: MEGANode,
                     searchString: String?,
@@ -826,7 +832,9 @@ extension MockSdk {
                     sortOrderType: MEGASortOrderType,
                     formatType: MEGANodeFormatType,
                     sensitiveFilter: MEGASearchFilterSensitiveOption,
-                    favouriteFilter: MEGASearchFilterFavouriteOption) {
+                    favouriteFilter: MEGASearchFilterFavouriteOption,
+                    pageOffset: Int? = nil,
+                    pageSize: Int? = nil) {
             self.node = node
             self.searchString = searchString
             self.recursive = recursive
@@ -834,6 +842,8 @@ extension MockSdk {
             self.formatType = formatType
             self.sensitiveFilter = sensitiveFilter
             self.favouriteFilter = favouriteFilter
+            self.pageOffset = pageOffset
+            self.pageSize = pageSize
         }
     }
 }

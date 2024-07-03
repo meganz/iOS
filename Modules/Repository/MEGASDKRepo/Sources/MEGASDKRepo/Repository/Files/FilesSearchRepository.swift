@@ -39,42 +39,33 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
     }
     
     public func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
-        search(filter: filter) { result in
+        search(with: filter) { result in
             switch result {
             case .success(let nodes):
-                completion(nodes, false)
+                completion(nodes.toNodeEntities(), false)
             case .failure:
                 completion(nil, true)
             }
         }
     }
     
+    public func search(filter: SearchFilterEntity, page: SearchPageEntity) async throws -> [NodeEntity] {
+        let nodeList: NodeListEntity = try await search(with: filter, page: page)
+        return nodeList.toNodeEntities()
+    }
+    
     public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
-        let cancelToken = MEGACancelToken()
-        return try await withTaskCancellationHandler<[NodeEntity]> {
-            try await withAsyncThrowingValue { completion in
-                search(filter: filter, cancelToken: cancelToken) { completion($0) }
-            }
-        } onCancel: {
-            if !cancelToken.isCancelled {
-                cancelToken.cancel()
-            }
-        }
+        try await search(with: filter).toNodeEntities()
+    }
+    
+    public func search(filter: SearchFilterEntity, page: SearchPageEntity) async throws -> NodeListEntity {
+        try await search(with: filter, page: page)
     }
     
     public func search(filter: SearchFilterEntity) async throws -> NodeListEntity {
-        let cancelToken = MEGACancelToken()
-        return try await withTaskCancellationHandler<NodeListEntity> {
-            try await withAsyncThrowingValue { completion in
-                search(filter: filter, cancelToken: cancelToken) { completion($0) }
-            }
-        } onCancel: {
-            if !cancelToken.isCancelled {
-                cancelToken.cancel()
-            }
-        }
+        try await search(with: filter)
     }
-        
+    
     public func node(by handle: HandleEntity) async -> NodeEntity? {
         sdk.node(forHandle: handle)?.toNodeEntity()
     }
@@ -84,12 +75,16 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
         
         searchOperationQueue.cancelAllOperations()
     }
+}
+
+extension FilesSearchRepository {
     
-    private func search(filter: SearchFilterEntity, cancelToken: MEGACancelToken, completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
+    private func search(with filter: SearchFilterEntity, page: SearchPageEntity? = nil, cancelToken: MEGACancelToken = MEGACancelToken(), completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
                         
         let searchOperation = SearchWithFilterOperation(
             sdk: sdk,
             filter: filter.toMEGASearchFilter(),
+            page: page?.toMEGASearchPage(),
             recursive: filter.recursive,
             sortOrder: filter.sortOrderType.toMEGASortOrderType(),
             cancelToken: cancelToken,
@@ -109,9 +104,16 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
         searchOperationQueue.addOperation(searchOperation)
     }
     
-    private func search(filter: SearchFilterEntity, cancelToken: MEGACancelToken = MEGACancelToken(), completion: @escaping (Result<[NodeEntity], any Error>) -> Void) {
-        search(filter: filter, cancelToken: cancelToken) { result in
-            completion(result.map { $0.toNodeEntities() })
+    private func search(with filter: SearchFilterEntity, page: SearchPageEntity? = nil) async throws -> NodeListEntity {
+        let cancelToken = MEGACancelToken()
+        return try await withTaskCancellationHandler<NodeListEntity> {
+            try await withAsyncThrowingValue { completion in
+                search(with: filter, page: page, cancelToken: cancelToken) { completion($0) }
+            }
+        } onCancel: {
+            if !cancelToken.isCancelled {
+                cancelToken.cancel()
+            }
         }
     }
 }

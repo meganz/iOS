@@ -3,7 +3,7 @@ import MEGADomain
 import MEGASwift
 
 public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, ObservableObject {
-    
+        
     public enum Message: Equatable {
         case searchLegacy
         case search
@@ -56,6 +56,17 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, Observabl
         case .failure(let error):
             throw error
         }
+    }
+    
+    public func search(filter: SearchFilterEntity, page: SearchPageEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {
+        let results: [NodeEntity] = try await search(filter: filter, cancelPreviousSearchIfNeeded: cancelPreviousSearchIfNeeded)
+        guard page.startingOffset >= 0, page.pageSize > 0 else {
+            return results
+        }
+        // simulate sdk ability to page results
+        let start = page.startingOffset * page.pageSize
+        let end = start + page.pageSize
+        return Array(results[start..<end])
     }
     
     public func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> NodeListEntity {

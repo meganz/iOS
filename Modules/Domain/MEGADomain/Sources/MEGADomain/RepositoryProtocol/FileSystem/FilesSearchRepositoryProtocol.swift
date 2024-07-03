@@ -22,6 +22,13 @@ public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
     /// Search files and folders by name. It will return a list of nodes based on the criteria provided in the params.
     /// - Parameters:
     ///   - filter: SearchFilterEntity contains all necessary information to build search query.
+    ///   - page:SearchPageEntity contains details for retrieving a paged result for the search query.
+    /// - Returns: List of NodeEntities that match the criteria provided.
+    func search(filter: SearchFilterEntity, page: SearchPageEntity) async throws -> [NodeEntity]
+    
+    /// Search files and folders by name. It will return a list of nodes based on the criteria provided in the params.
+    /// - Parameters:
+    ///   - filter: SearchFilterEntity contains all necessary information to build search query.
     /// - Returns: NodeListEntity that match the criteria provided.
     func search(filter: SearchFilterEntity) async throws -> NodeListEntity
     

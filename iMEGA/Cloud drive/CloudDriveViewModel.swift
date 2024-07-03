@@ -262,6 +262,7 @@ enum CloudDriveAction: ActionType {
         let cancelToken = MEGACancelToken()
         return sdk.searchNonRecursively(with: filter,
                                         orderType: sortOrder,
+                                        page: nil,
                                         cancelToken: cancelToken)
     }
     
