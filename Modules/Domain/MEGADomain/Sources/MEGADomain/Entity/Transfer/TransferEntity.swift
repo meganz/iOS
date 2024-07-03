@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TransferEntity {
+public struct TransferEntity: Sendable {
     
     // MARK: - Types
     

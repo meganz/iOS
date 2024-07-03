@@ -1,4 +1,4 @@
-public enum TransferStageEntity: UInt {
+public enum TransferStageEntity: UInt, Sendable {
     case none
     case scan
     case createTree
