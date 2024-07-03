@@ -401,7 +401,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 self.parentNode = [MEGASdk.shared rootNode];
             }
             [self updateNavigationBarTitle];
+            MEGALogDebug(@"[Search] children for parent %@", [MEGASdk base64HandleForHandle:self.parentNode.handle]);
             self.nodes = [MEGASdk.shared childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+            MEGALogDebug(@"[Search] children loaded %ld", (long)self.nodes.size);
             self.hasMediaFiles = [self.viewModel hasMediaFilesWithNodes:self.nodes];
             [self updateSearchAppearanceFor:self.viewModePreference_ObjC];
             break;
