@@ -67,7 +67,7 @@ struct BannerView: View {
                 },
                 link: { colorScheme in
                     isDesignTokenEnabled
-                    ? TokenColors.Text.primary
+                    ? TokenColors.Link.primary
                     : colorScheme == .dark ? MEGAAppColor.Yellow._FFD60A.uiColor: MEGAAppColor.Yellow._9D8319.uiColor
                 }
             )
@@ -90,7 +90,7 @@ struct BannerView: View {
                 },
                 link: { _ in
                     isDesignTokenEnabled
-                    ? TokenColors.Support.success
+                    ? TokenColors.Link.primary
                     : MEGAAppColor.Green._00A886.uiColor
                 }
             )
