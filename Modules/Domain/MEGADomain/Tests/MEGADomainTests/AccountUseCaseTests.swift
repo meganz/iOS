@@ -217,12 +217,12 @@ final class AccountUseCaseTests: XCTestCase {
         testHasValidProAccount(.proII, expectedResult: true)
         testHasValidProAccount(.proIII, expectedResult: true)
         testHasValidProAccount(.proFlexi, expectedResult: true)
+        testHasValidProAccount(.proFlexi, isInGracePeriod: true, expectedResult: true)
     }
     
     func testHasValidProAccount_whenAccountIsNotAValidProAccount_returnsFalse() {
         testHasValidProAccount(.free, expectedResult: false)
         testHasValidProAccount(.proFlexi, isExpiredAccount: true, expectedResult: false)
-        testHasValidProAccount(.proFlexi, isInGracePeriod: true, expectedResult: false)
     }
     
     func testHasValidProOrUnexpiredBusinessAccount_freeAccount_shouldReturnFalse() {
@@ -246,7 +246,7 @@ final class AccountUseCaseTests: XCTestCase {
         [(accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: false, expectedResult: true),
          (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: true, isInGracePeriod: true, expectedResult: false),
          (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: true, isInGracePeriod: false, expectedResult: false),
-         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: true, expectedResult: false)]
+         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: true, expectedResult: true)]
             .enumerated()
             .forEach { (index, testCase) in
                 let sut = makeSUT(isExpiredAccount: testCase.isExpiredAccount,

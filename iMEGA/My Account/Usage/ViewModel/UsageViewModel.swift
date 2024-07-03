@@ -132,8 +132,10 @@ final class UsageViewModel: ViewModelType {
     }
     
     var hasValidProAccount: Bool {
-        guard accountUseCase.currentAccountDetails != nil else { return false }
-        
-        return accountUseCase.hasValidProAccount()
+        accountUseCase.hasValidProAccount()
+    }
+    
+    var isFreeAccount: Bool {
+        accountUseCase.isAccountType(.free)
     }
 }

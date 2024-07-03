@@ -189,8 +189,7 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
 
     private func isValidProFlexiAccount() -> Bool {
         repository.isAccountType(.proFlexi) &&
-        !repository.isExpiredAccount() &&
-        !repository.isInGracePeriod()
+        !repository.isExpiredAccount()
     }
     
     private func isBusinessAccountNotExpired() -> Bool {
