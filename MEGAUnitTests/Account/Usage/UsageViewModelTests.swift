@@ -112,8 +112,16 @@ final class UsageViewModelTests: XCTestCase {
             hasValidProAccount: true,
             currentAccountDetails: AccountDetailsEntity.build(proLevel: .proI)
         )
-        let result = sut.hasValidProAccount
-        XCTAssertTrue(result)
+            
+        XCTAssertTrue(sut.hasValidProAccount)
+    }
+    
+    func testIsFreeAccount_whenFreeAccount_shouldReturnTrue() {
+        let sut = makeSUT(
+            currentAccountDetails: AccountDetailsEntity.build(proLevel: .free)
+        )
+        
+        XCTAssertTrue(sut.isFreeAccount)
     }
 
     func testLoadStorageDetails_shouldInvokeLoadedStorageCommand() {

@@ -134,7 +134,7 @@ extension UsageViewController {
         guard let viewModel else { return false }
         // Transfer Quota should be hidden on free accounts due to
         // different transfer limits in different countries and also it is subject to change.
-        return viewModel.hasValidProAccount
+        return !viewModel.isFreeAccount
     }
     
     @objc func configStorageContentView() {
