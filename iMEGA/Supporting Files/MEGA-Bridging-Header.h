@@ -196,5 +196,5 @@
 
 #import "PasswordReminderViewController.h"
 #import "QRSettingsTableViewController.h"
-
 #import "SecurityOptionsTableViewController.h"
+#import "MasterKeyViewController.h"

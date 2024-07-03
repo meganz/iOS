@@ -2616,6 +2616,7 @@
 		C4F6387A2BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E79B62912B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */; };
+		E7D794D12C352D0D005C46F0 /* MasterKeyViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */; };
 		E7E114142B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */; };
 		E7E114192B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114182B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift */; };
 		E7EE7CCF2AC6DCDB00DBABCD /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */; };
@@ -5376,6 +5377,7 @@
 		C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsVisibilityViewModelTests.swift; sourceTree = "<group>"; };
 		E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewViewController+Additions.swift"; sourceTree = "<group>"; };
+		E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MasterKeyViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactLinkQRViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7E114182B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QRSettingsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
@@ -7231,6 +7233,7 @@
 			children = (
 				41B3B82D1AD591A80093A88D /* Passcode */,
 				5BF4B3B120AB05FD00A6E6D7 /* Two Factor Authentication */,
+				E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */,
 				E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */,
 				E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */,
 				E7E114182B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift */,
@@ -14946,6 +14949,7 @@
 				B69AF66228A1E5190022B094 /* ManageChatHistoryViewRouter.swift in Sources */,
 				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,
 				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
+				E7D794D12C352D0D005C46F0 /* MasterKeyViewController+Additions.swift in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				94B09E662B84CC87007D6B84 /* MediaContentDelegateHandler.swift in Sources */,
 				12647CD627D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift in Sources */,
