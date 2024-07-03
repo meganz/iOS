@@ -138,6 +138,7 @@
     if (![self.confirmButton.titleLabel.text isEqualToString:LocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.")]) {
         [self.confirmButton mnz_setupBasic:self.traitCollection];
     }
+    [self.confirmButton mnz_setupSecondary:self.traitCollection];
     [self.backupKeyButton mnz_setupPrimary:self.traitCollection];
     
     [self.logoutButton mnz_setupCancel:self.traitCollection];
