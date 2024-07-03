@@ -155,6 +155,41 @@ final class GetNodeLinkViewModelTests: XCTestCase {
             .dismiss
         ], expectationValidation: ==)
     }
+    
+    func testLinkWithoutKey_shouldReturnExpectedLink() {
+        
+        let scenarios = [
+            ("https://mega.nz/file/link#key", "https://mega.nz/file/link"),
+            ("https://mega.nz/folder/link#key", "https://mega.nz/folder/link"),
+            ("https://mega.nz/file/link%key", "https://mega.nz/file/link%key"),
+            ("https://mega.nz/unknown/link!link2!key", "https://mega.nz/unknown/link!link2"),
+            ("#", "#")
+        ]
+        
+        for (link, expectedValue) in scenarios {
+            let sut = sut()
+            sut.link = link
+            XCTAssertEqual(sut.linkWithoutKey, expectedValue)
+        }
+    }
+    
+    func testKey_shouldReturnExpectedKey() {
+        
+        let scenarios = [
+            ("https://mega.nz/file/link#key", "key"),
+            ("https://mega.nz/folder/link#key", "key"),
+            ("https://mega.nz/file/link%key", ""),
+            ("https://mega.nz/unknown/link!link2!key", "key"),
+            ("https://mega.nz/unknown/link!key", ""),
+            ("!", "")
+        ]
+        
+        for (link, expectedValue) in scenarios {
+            let sut = sut()
+            sut.link = link
+            XCTAssertEqual(sut.key, expectedValue)
+        }
+    }
 }
 
 extension GetNodeLinkViewModelTests {
