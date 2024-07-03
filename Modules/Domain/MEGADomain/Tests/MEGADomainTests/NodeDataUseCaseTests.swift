@@ -248,6 +248,36 @@ final class NodeUseCaseTests: XCTestCase {
         task.cancel()
     }
     
+    func testSensitivityChanges_nodeUpdatesWithSensitivityChanges_shouldYieldValues() async throws {
+        let nodeToMonitorHandle = HandleEntity(65)
+        let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
+        let sut = makeSUT(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        
+        let startedExp = expectation(description: "Task started")
+        let yieldedExp = expectation(description: "Task yielded")
+        yieldedExp.expectedFulfillmentCount = 2
+        let cancelledExp = expectation(description: "Async Sequence stopped")
+        let task = Task {
+            startedExp.fulfill()
+            var expectedResults = [true, false]
+            for try await isSensitive in sut.sensitivityChanges(for: NodeEntity(handle: nodeToMonitorHandle)) {
+                XCTAssertEqual(isSensitive, expectedResults.removeFirst())
+                yieldedExp.fulfill()
+            }
+            cancelledExp.fulfill()
+        }
+        await fulfillment(of: [startedExp], timeout: 0.25)
+        
+        continuation.yield([NodeEntity(changeTypes: .sensitive, handle: nodeToMonitorHandle, isMarkedSensitive: true)])
+        continuation.yield([NodeEntity(changeTypes: .sensitive, handle: 654, isMarkedSensitive: true)])
+        continuation.yield([NodeEntity(changeTypes: .new, handle: 32)])
+        continuation.yield([NodeEntity(changeTypes: .sensitive, handle: nodeToMonitorHandle, isMarkedSensitive: false)])
+        continuation.finish()
+        
+        await fulfillment(of: [yieldedExp, cancelledExp], timeout: 1.0)
+        task.cancel()
+    }
+    
     private func makeSUT(
         accessLevel: NodeAccessTypeEntity = .unknown,
         label: String = "",

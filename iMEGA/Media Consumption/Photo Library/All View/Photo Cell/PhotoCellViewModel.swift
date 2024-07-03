@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Combine
 import Foundation
 import MEGADomain
@@ -102,7 +103,7 @@ class PhotoCellViewModel: ObservableObject {
     }
     
     @MainActor
-    func monitorSensitivityChanges() async {
+    func monitorInheritedSensitivityChanges() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               nodeUseCase != nil,
               !photo.isMarkedSensitive,
@@ -111,6 +112,24 @@ class PhotoCellViewModel: ObservableObject {
         do {
             for try await isInheritingSensitivity in monitorInheritedSensitivity(for: photo) {
                 await updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity))
+            }
+        } catch {
+            MEGALogError("[\(type(of: self))] failed to retrieve inherited sensitivity for photo: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Monitor photo node and inherited sensitivity changes
+    /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
+    @MainActor
+    func monitorPhotoSensitivityChanges() async {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        nodeUseCase != nil else { return }
+        // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder
+        _ = await $thumbnailContainer.values.contains(where: { $0.type != .placeholder })
+        
+        do {
+            for try await isSensitive in photoSensitivityChanges(for: photo) {
+                await updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isSensitive))
             }
         } catch {
             MEGALogError("[\(type(of: self))] failed to retrieve inherited sensitivity for photo: \(error.localizedDescription)")
@@ -211,5 +230,26 @@ class PhotoCellViewModel: ObservableObject {
                 try await nodeUseCase.isInheritingSensitivity(node: photo)
             }
             .eraseToAnyAsyncThrowingSequence()
+    }
+    
+    /// Async sequence will yield photo sensitivity and inherited sensitivity changes. It will immediately yield the current photo sensitivity if true otherwise the  inherited sensitivity since it could have changed since thumbnail loaded
+    /// - Parameters:
+    ///   - photo: Photo NodeEntity to monitor
+    private func photoSensitivityChanges(for photo: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
+        guard let nodeUseCase else { return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence() }
+        
+        return combineLatest(
+            nodeUseCase.sensitivityChanges(for: photo).prepend(photo.isMarkedSensitive),
+            monitorInheritedSensitivity(for: photo)
+        )
+        .map { isPhotoSensitive, isInheritingSensitive in
+            if isPhotoSensitive {
+                true
+            } else {
+                isInheritingSensitive
+            }
+        }
+        .removeDuplicates()
+        .eraseToAnyAsyncThrowingSequence()
     }
 }

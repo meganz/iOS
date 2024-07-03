@@ -34,8 +34,12 @@ public protocol NodeUseCaseProtocol {
     func isInheritingSensitivity(node: NodeEntity) throws -> Bool
     /// On a folder sensitivity change it will recalculate the inherited sensitivity of the ancestor of the node.
     /// - Parameter node: The node check for inherited sensitivity changes
-    /// - Returns: An `AnyAsyncSequence<Bool>` indicating inherited sensitivity changes
+    /// - Returns: An `AnyAsyncThrowingSequence<Bool>` indicating inherited sensitivity changes
     func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error>
+    /// On node update it will yield the sensitivity changes of the node
+    /// - Parameter node: The node check for sensitive change types
+    /// - Returns: An `AnyAsyncSequence<Bool>` indicating node sensitivity changes
+    func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool>
 }
 
 // MARK: - Use case implementation -
@@ -149,5 +153,15 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
             }
             .removeDuplicates()
             .eraseToAnyAsyncThrowingSequence()
+    }
+    
+    public func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
+        nodeRepository.nodeUpdates
+            .compactMap {
+                $0.first(where: {
+                    $0.handle == node.handle && $0.changeTypes.contains(.sensitive)
+                })?.isMarkedSensitive
+            }
+            .eraseToAnyAsyncSequence()
     }
 }
