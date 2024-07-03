@@ -217,8 +217,7 @@ public final class VideoListViewModel: ObservableObject {
     private func subscribeToAllSelected() {
         syncModel.$isAllSelected
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.selection.allSelected = $0
+            .sink { [weak self] _ in
                 self?.toggleSelectAllVideos()
             }
             .store(in: &subscriptions)
