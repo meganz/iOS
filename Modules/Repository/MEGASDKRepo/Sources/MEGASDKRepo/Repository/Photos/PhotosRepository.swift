@@ -79,7 +79,8 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
                                                 sensitiveFilterOption: .disabled)
                 
                 let nodeList = sdk.search(with: filter.toMEGASearchFilter(),
-                                          orderType: .defaultDesc,
+                                          orderType: .defaultDesc, 
+                                          page: nil,
                                           cancelToken: cancelToken)
                 
                 completion(.success(nodeList.toNodeEntities()))

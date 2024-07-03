@@ -2,11 +2,15 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_FilesSearchUseCase: FilesSearchUseCaseProtocol {
-    
+        
     func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
         completion([ NodeEntity.preview ], false)
     }
     
+    func search(filter: SearchFilterEntity, page: SearchPageEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {
+        try await search(filter: filter, cancelPreviousSearchIfNeeded: cancelPreviousSearchIfNeeded)
+    }
+
     func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {
         []
     }

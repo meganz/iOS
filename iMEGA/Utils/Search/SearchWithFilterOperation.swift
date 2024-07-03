@@ -1,6 +1,7 @@
 class SearchWithFilterOperation: MEGAOperation {
     let sdk: MEGASdk
     let filter: MEGASearchFilter
+    let page: MEGASearchPage?
     let recursive: Bool
     let sortOrder: MEGASortOrderType
     let cancelToken: MEGACancelToken
@@ -10,6 +11,7 @@ class SearchWithFilterOperation: MEGAOperation {
     @objc init(
         sdk: MEGASdk,
         filter: MEGASearchFilter,
+        page: MEGASearchPage?,
         recursive: Bool,
         sortOrder: MEGASortOrderType,
         cancelToken: MEGACancelToken,
@@ -17,6 +19,7 @@ class SearchWithFilterOperation: MEGAOperation {
     ) {
         self.sdk = sdk
         self.filter = filter
+        self.page = page
         self.recursive = recursive
         self.sortOrder = sortOrder
         self.cancelToken = cancelToken
@@ -27,7 +30,8 @@ class SearchWithFilterOperation: MEGAOperation {
         startExecuting()
         let nodeList = sdk.search(
             with: filter,
-            orderType: sortOrder,
+            orderType: sortOrder, 
+            page: page,
             cancelToken: cancelToken
         )
 
