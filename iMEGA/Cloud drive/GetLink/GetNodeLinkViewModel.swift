@@ -19,16 +19,18 @@ final class GetNodeLinkViewModel: ViewModelType {
     }
     var linkWithoutKey: String {
         if link.contains("file") || link.contains("folder") {
-            return link.components(separatedBy: "#")[0]
+            link.components(separatedBy: "#").first ?? ""
         } else {
-            return link.components(separatedBy: "!")[0] + "!" + link.components(separatedBy: "!")[1]
+            link.components(separatedBy: "!")
+                .prefix(2)
+                .joined(separator: "!")
         }
     }
     var key: String {
         if link.contains("file") || link.contains("folder") {
-            return link.components(separatedBy: "#")[1]
+            link.components(separatedBy: "#")[safe: 1] ?? ""
         } else {
-            return link.components(separatedBy: "!")[2]
+            link.components(separatedBy: "!")[safe: 2] ?? ""
         }
     }
     var expiryDate: Bool = false
