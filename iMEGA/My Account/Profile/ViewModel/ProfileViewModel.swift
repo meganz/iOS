@@ -170,9 +170,17 @@ extension ProfileViewModel {
     }
     
     private func initCancelSubscriptionFlow() {
+        if accountUseCase.isAccountType(.proFlexi) {
+            router.showCancellationSteps()
+        } else {
+            showCancelAccountPlan()
+        }
+    }
+    
+    private func showCancelAccountPlan() {
         guard let currentAccountDetails = accountUseCase.currentAccountDetails else { return }
         
-        router.showCancelSubscriptionFlow(
+        router.showCancelAccountPlan(
             accountDetails: currentAccountDetails,
             assets: CancelAccountPlanAssets(
                 availableImageName: CancelSubscriptionIconAssets.availableIcon,

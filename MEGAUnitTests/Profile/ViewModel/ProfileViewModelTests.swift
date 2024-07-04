@@ -183,12 +183,22 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_cancelSubscription_shouldPresentCancelSubscriptionFlow() {
-        let (sut, router) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: .proI))
+    func testAction_cancelSubscription_shouldPresentCancelAccountPlan() async {
+        let planType: AccountTypeEntity = .proI
+        let (sut, router) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: planType))
         
         sut.dispatch(.cancelSubscription)
+
+        XCTAssertEqual(router.showCancelAccountPlan_calledTimes, 1, "Expected showCancelAccountPlan to be called once.")
+    }
+    
+    func testAction_cancelSubscription_shouldPresentCancellationSteps() async {
+        let planType: AccountTypeEntity = .proFlexi
+        let (sut, router) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: planType))
         
-        XCTAssertEqual(router.showCancelSubscriptionFlow_calledTimes, 1, "Expected showCancelSubscriptionFlow to be called once.")
+        sut.dispatch(.cancelSubscription)
+
+        XCTAssertEqual(router.showCancellationSteps_calledTimes, 1, "Expected showCancellationSteps to be called once.")
     }
     
     func test_cancelSubscription_tracksAnalyticsEvent() {

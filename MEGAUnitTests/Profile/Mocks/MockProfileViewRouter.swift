@@ -3,9 +3,14 @@ import Accounts
 import MEGADomain
 
 final class MockProfileViewRouter: ProfileViewRouting {
-    var showCancelSubscriptionFlow_calledTimes = 0
+    var showCancelAccountPlan_calledTimes = 0
+    var showCancellationSteps_calledTimes = 0
     
-    func showCancelSubscriptionFlow(accountDetails: AccountDetailsEntity, assets: CancelAccountPlanAssets) {
-        showCancelSubscriptionFlow_calledTimes += 1
+    func showCancelAccountPlan(accountDetails: AccountDetailsEntity, assets: CancelAccountPlanAssets) {
+        showCancelAccountPlan_calledTimes += 1
+    }
+    
+    func showCancellationSteps() {
+        showCancellationSteps_calledTimes += 1
     }
 }
