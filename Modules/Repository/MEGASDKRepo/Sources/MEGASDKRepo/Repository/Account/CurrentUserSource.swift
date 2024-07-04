@@ -1,29 +1,44 @@
 import Combine
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
-public final class CurrentUserSource {
+public final class CurrentUserSource: @unchecked Sendable {
     public static let shared = CurrentUserSource(sdk: MEGASdk.sharedSdk)
     
     private let sdk: MEGASdk
     private var subscriptions = Set<AnyCancellable>()
+    private var _currentUserHandle: Atomic<HandleEntity?>
+    private var _currentUserEmail: Atomic<String?>
+    private var _isLoggedIn: Atomic<Bool>
+    @Atomic private var _shouldRefreshAccountDetails: Bool = false
+    @Atomic private var _accountDetails: AccountDetailsEntity?
     
     public init(sdk: MEGASdk) {
         self.sdk = sdk
         let user = sdk.myUser
-        currentUserHandle = user?.handle
-        currentUserEmail = user?.email
-        isLoggedIn = sdk.isLoggedIn() > 0
+        _currentUserHandle = Atomic(wrappedValue: user?.handle)
+        _currentUserEmail = Atomic(wrappedValue: user?.email)
+        _isLoggedIn = Atomic(wrappedValue: sdk.isLoggedIn() > 0)
         
         registerAccountNotifications()
     }
     
-    public private(set) var currentUserHandle: HandleEntity?
-    public private(set) var currentUserEmail: String?
-    public private(set) var isLoggedIn: Bool
-    
-    public private(set) var shouldRefreshAccountDetails: Bool = false
-    public private(set) var accountDetails: AccountDetailsEntity?
+    public var currentUserHandle: HandleEntity? {
+        _currentUserHandle.wrappedValue
+    }
+    public var currentUserEmail: String? {
+        _currentUserEmail.wrappedValue
+    }
+    public var isLoggedIn: Bool {
+        _isLoggedIn.wrappedValue
+    }
+    public var shouldRefreshAccountDetails: Bool {
+        _shouldRefreshAccountDetails
+    }
+    public var accountDetails: AccountDetailsEntity? {
+        _accountDetails
+    }
     
     public var isGuest: Bool {
         currentUserEmail?.isEmpty != false
@@ -41,8 +56,8 @@ public final class CurrentUserSource {
             .publisher(for: .accountDidLogin)
             .sink { [weak self] _ in
                 guard let self else { return }
-                currentUserHandle = sdk.myUser?.handle
-                isLoggedIn = true
+                _currentUserHandle.mutate { $0 = self.sdk.myUser?.handle }
+                _isLoggedIn.mutate { $0 = true }
             }
             .store(in: &subscriptions)
         
@@ -51,11 +66,11 @@ public final class CurrentUserSource {
             .publisher(for: .accountDidLogout)
             .sink { [weak self] _ in
                 guard let self else { return }
-                currentUserHandle = nil
-                currentUserEmail = nil
-                isLoggedIn = false
-                shouldRefreshAccountDetails = false
-                accountDetails = nil
+                _currentUserHandle.mutate { $0 = nil }
+                _currentUserEmail.mutate { $0 = nil }
+                _isLoggedIn.mutate { $0 = false }
+                $_shouldRefreshAccountDetails.mutate { $0 = false }
+                $_accountDetails.mutate { $0 = nil }
             }
             .store(in: &subscriptions)
         
@@ -63,7 +78,7 @@ public final class CurrentUserSource {
             .default
             .publisher(for: .accountDidFinishFetchNodes)
             .sink { [weak self] _ in
-                self?.currentUserEmail = self?.sdk.myUser?.email
+                self?._currentUserEmail.mutate { $0 = self?.sdk.myUser?.email }
             }
             .store(in: &subscriptions)
         
@@ -76,8 +91,8 @@ public final class CurrentUserSource {
             .filter { [weak self] in
                 $0.handle == self?.currentUserHandle
             }
-            .sink { [weak self] in
-                self?.currentUserEmail = $0.email
+            .sink { [weak self] user in
+                self?._currentUserEmail.mutate { $0 = user.email }
             }
             .store(in: &subscriptions)
         
@@ -101,10 +116,10 @@ public final class CurrentUserSource {
     }
     
     public func setShouldRefreshAccountDetails(_ shouldRefresh: Bool) {
-        shouldRefreshAccountDetails = shouldRefresh
+        $_shouldRefreshAccountDetails.mutate { $0 = shouldRefresh }
     }
     
     public func setAccountDetails(_ userAccountDetails: AccountDetailsEntity?) {
-        accountDetails = userAccountDetails
+        $_accountDetails.mutate { $0 = userAccountDetails }
     }
 }
