@@ -7,7 +7,9 @@ public func releaseInput() throws -> ReleaseInput {
     let version = if let version = readFromCache(key: .version) {
         version
     } else {
-        try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
+        try majorMinorOrMajorMinorPatchInput(
+            "Enter the version number you're releasing (format: '[major].[minor]' or '[major].[minor].[patch]')"
+        )
     }
 
     let message = if let message = readFromCache(key: .releaseNotes) {
