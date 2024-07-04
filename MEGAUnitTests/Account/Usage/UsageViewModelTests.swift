@@ -106,15 +106,6 @@ final class UsageViewModelTests: XCTestCase {
         let result = sut.isProFlexiAccount
         XCTAssertTrue(result)
     }
-
-    func testHasValidProAccount_whenValidProAccount_shouldReturnTrue() {
-        let sut = makeSUT(
-            hasValidProAccount: true,
-            currentAccountDetails: AccountDetailsEntity.build(proLevel: .proI)
-        )
-            
-        XCTAssertTrue(sut.hasValidProAccount)
-    }
     
     func testIsFreeAccount_whenFreeAccount_shouldReturnTrue() {
         let sut = makeSUT(

@@ -21,6 +21,8 @@ public protocol AccountUseCaseProtocol {
     func currentUser() async -> UserEntity?
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
+    /// Check if the current account has a Pro plan or Pro Flexi plan that is not expired
+    /// Returns: `true` if the account is subscribed to a valid standard Pro plan or Pro Flexi that is not expired, `false` otherwise
     func hasValidProAccount() -> Bool
     /// Check if the current account has a valid pro account or business account thats not expired
     /// Returns: `true` if the account is standard pro account or pro flexi account thats not expired or in grace period or a business account thats not expired, `false` otherwise
@@ -180,11 +182,7 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
         repository.isAccountType(.lite) ||
         repository.isAccountType(.proI) ||
         repository.isAccountType(.proII) ||
-        repository.isAccountType(.proIII) ||
-        repository.isAccountType(.starter) ||
-        repository.isAccountType(.basic) ||
-        repository.isAccountType(.essential)
-
+        repository.isAccountType(.proIII)
     }
 
     private func isValidProFlexiAccount() -> Bool {
