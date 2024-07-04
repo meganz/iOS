@@ -1075,11 +1075,12 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="iif-ej-krY" secondAttribute="trailing" constant="20" id="1EV-Ac-bEm"/>
+                                    <constraint firstAttribute="trailing" secondItem="jTL-gV-SRV" secondAttribute="trailing" constant="16" id="Lmf-5X-58u"/>
                                     <constraint firstItem="iif-ej-krY" firstAttribute="top" secondItem="F87-ds-YBG" secondAttribute="top" constant="20" id="PCV-8f-cBQ"/>
-                                    <constraint firstItem="iif-ej-krY" firstAttribute="centerX" secondItem="jTL-gV-SRV" secondAttribute="centerX" id="T36-WB-Gag"/>
                                     <constraint firstAttribute="bottom" secondItem="jTL-gV-SRV" secondAttribute="bottom" constant="306" id="Tgv-Hv-X7r"/>
                                     <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" constant="30" id="rwl-bY-U4Q"/>
                                     <constraint firstItem="iif-ej-krY" firstAttribute="centerX" secondItem="F87-ds-YBG" secondAttribute="centerX" id="v6V-SW-ht6"/>
+                                    <constraint firstItem="jTL-gV-SRV" firstAttribute="leading" secondItem="F87-ds-YBG" secondAttribute="leading" constant="16" id="xtj-9I-Amf"/>
                                     <constraint firstItem="iif-ej-krY" firstAttribute="leading" secondItem="F87-ds-YBG" secondAttribute="leading" constant="20" id="zF1-9I-dn5"/>
                                 </constraints>
                             </scrollView>
