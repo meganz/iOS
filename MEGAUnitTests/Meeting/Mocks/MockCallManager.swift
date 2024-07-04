@@ -2,6 +2,12 @@
 import MEGADomain
 
 final class MockCallManager: CallManagerProtocol {
+    
+    struct Incoming: Equatable {
+        var uuid: UUID
+        var chatRoom: ChatRoomEntity
+    }
+    
     var startCall_CalledTimes = 0
     var answerCall_CalledTimes = 0
     var endCall_CalledTimes = 0
@@ -10,7 +16,7 @@ final class MockCallManager: CallManagerProtocol {
     var callForUUID_CalledTimes = 0
     var removeCall_CalledTimes = 0
     var removeAllCalls_CalledTimes = 0
-    var addIncomingCall_CalledTimes = 0
+    var incomingCalls = [Incoming]()
     var callForUUIDToReturn: CallActionSync?
     var updateCallMuted_CalledTimes = 0
     var callUUID: UUID?
@@ -50,7 +56,9 @@ final class MockCallManager: CallManagerProtocol {
     }
     
     func addIncomingCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
-        addIncomingCall_CalledTimes += 1
+        incomingCalls.append(
+            Incoming(uuid: uuid, chatRoom: chatRoom)
+        )
     }
     
     func updateCall(withUUID uuid: UUID, muted: Bool) {

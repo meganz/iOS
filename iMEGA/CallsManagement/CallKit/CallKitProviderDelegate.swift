@@ -15,7 +15,11 @@ struct DefaultCXProviderFactory {
     }
 }
 
-final class CallKitProviderDelegate: NSObject, CXProviderDelegate {
+protocol CallKitProviderDelegateProtocol {
+    var provider: CXProvider { get }
+}
+
+final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, CXProviderDelegate {
     private weak var callsCoordinator: (any CallsCoordinatorProtocol)?
     private weak var callManager: (any CallManagerProtocol)?
     let provider: CXProvider
