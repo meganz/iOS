@@ -40,7 +40,6 @@ final class SearchWithFilterOperation: AsyncOperation {
         
         guard !isCancelled, !cancelToken.isCancelled else {
             completion(nil, true)
-            cancelOperation()
             return
         }
 
@@ -54,12 +53,10 @@ final class SearchWithFilterOperation: AsyncOperation {
             return
         }
         
-        super.cancel()
-        
         if !cancelToken.isCancelled {
             cancelToken.cancel()
         }
         
-        cancelOperation()
+        super.cancel()
     }
 }
