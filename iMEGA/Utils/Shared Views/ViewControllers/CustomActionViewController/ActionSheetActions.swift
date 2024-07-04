@@ -259,6 +259,7 @@ extension NodeAction {
     class func clearAction() -> NodeAction {
         let action = NodeAction(title: Strings.Localizable.clear, image: UIImage.cancelTransfers, type: .clear)
         action.style = .destructive
+        action.syncIconAndTextColor = true
         return action
     }
     

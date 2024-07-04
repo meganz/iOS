@@ -262,6 +262,7 @@ class NodeActionViewController: ActionSheetViewController {
         configureNodeHeaderView()
         tableView.register(NodeActionTableViewCell.self,
                            forCellReuseIdentifier: String(describing: NodeActionTableViewCell.self))
+        updateAppearance()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
