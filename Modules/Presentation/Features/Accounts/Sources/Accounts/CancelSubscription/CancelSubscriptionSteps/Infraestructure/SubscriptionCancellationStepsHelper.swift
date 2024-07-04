@@ -4,7 +4,7 @@ public protocol CancelSubscriptionStepsHelperProtocol {
     func loadCancellationData() -> CancelSubscriptionData
 }
 
-enum SubscriptionType {
+public enum SubscriptionType {
     case google, webClient
 }
 

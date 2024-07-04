@@ -11,7 +11,7 @@ public final class CancelSubscriptionStepsRouter: CancelSubscriptionStepsRouting
     
     private let type: SubscriptionType
     
-    init(
+    public init(
         type: SubscriptionType,
         presenter: UIViewController? = nil
     ) {

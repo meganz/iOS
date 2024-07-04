@@ -3,7 +3,8 @@ import MEGADomain
 import MEGAPresentation
 
 protocol ProfileViewRouting: Routing {
-    func showCancelSubscriptionFlow(accountDetails: AccountDetailsEntity, assets: CancelAccountPlanAssets)
+    func showCancelAccountPlan(accountDetails: AccountDetailsEntity, assets: CancelAccountPlanAssets)
+    func showCancellationSteps()
 }
 
 final class ProfileViewRouter: ProfileViewRouting {
@@ -45,7 +46,7 @@ final class ProfileViewRouter: ProfileViewRouting {
         navigationController.pushViewController(build(), animated: true)
     }
     
-    func showCancelSubscriptionFlow(
+    public func showCancelAccountPlan(
         accountDetails: AccountDetailsEntity,
         assets: CancelAccountPlanAssets
     ) {
@@ -54,6 +55,15 @@ final class ProfileViewRouter: ProfileViewRouting {
         CancelAccountPlanRouter(
             accountDetails: accountDetails,
             assets: assets,
+            presenter: presenter
+        ).start()
+    }
+    
+    public func showCancellationSteps() {
+        guard let presenter = baseViewController else { return }
+        // Assuming that we are only going to show the cancellation steps for accounts with Pro Flexi subscriptions and that these subscriptions can only be purchased from the web client.
+        CancelSubscriptionStepsRouter(
+            type: .webClient,
             presenter: presenter
         ).start()
     }
