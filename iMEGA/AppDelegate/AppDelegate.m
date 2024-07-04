@@ -409,32 +409,6 @@
     return YES;
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    if([deviceToken length] == 0) {
-        MEGALogError(@"[App Lifecycle] Application did register for remote notifications with device token length 0");
-        return;
-    }
-    
-    const unsigned char *dataBuffer = (const unsigned char *)deviceToken.bytes;
-    
-    NSUInteger dataLength = deviceToken.length;
-    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
-    
-    for (int i = 0; i < dataLength; ++i) {
-        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
-    }
-    
-    NSString *deviceTokenString = [NSString stringWithString:hexString];
-    MEGALogDebug(@"[App Lifecycle] Application did register for remote notifications with device token %@", deviceTokenString);
-    [MEGASdk.shared registeriOSdeviceToken:deviceTokenString];
-    
-    [self registerCustomActionsForStartScheduledMeetingNotification];
-}
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    MEGALogError(@"[App Lifecycle] Application did fail to register for remote notifications with error %@", error);
-}
-
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
     MEGALogDebug(@"[App Lifecycle] Application continue user activity %@", userActivity.activityType);
     
@@ -498,6 +472,42 @@
     
     [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
     [CameraUploadManager.shared startCameraUploadIfNeeded];
+}
+
+#pragma mark - Remote Notification
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    if([deviceToken length] == 0) {
+        MEGALogError(@"[App Lifecycle] Application did register for remote notifications with device token length 0");
+        return;
+    }
+    
+    const unsigned char *dataBuffer = (const unsigned char *)deviceToken.bytes;
+    
+    NSUInteger dataLength = deviceToken.length;
+    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
+    
+    for (int i = 0; i < dataLength; ++i) {
+        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+    }
+    
+    NSString *deviceTokenString = [NSString stringWithString:hexString];
+    MEGALogDebug(@"[App Lifecycle] Application did register for remote notifications with device token %@", deviceTokenString);
+    [MEGASdk.shared registeriOSdeviceToken:deviceTokenString];
+    
+    [self registerCustomActionsForStartScheduledMeetingNotification];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    MEGALogError(@"[App Lifecycle] Application did fail to register for remote notifications with error %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    MEGALogDebug(@"[App Lifecycle] Application did receive a remote notifications in app state %ld", (long)application.applicationState);
+    
+    [self handleReceivedRemoteNotificationWithUserInfo:userInfo];
+    
+    completionHandler(UIBackgroundFetchResultNoData);
 }
 
 #pragma mark - Properties
@@ -1041,7 +1051,11 @@
         }
         
     } else if (self.megatype) {
-        [self openTabBasedOnNotificationMegatype];
+        if (self.megatype == MEGANotificationTypeGeneric) {
+            [self handleGenericAppPushNotificationTap];
+        } else {
+            [self openTabBasedOnNotificationMegatype];
+        }
     } else {
         if (self.mainTBC) {
             [self.mainTBC openChatRoomNumber:response.notification.request.content.userInfo[@"chatId"]];

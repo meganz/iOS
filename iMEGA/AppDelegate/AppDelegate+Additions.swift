@@ -337,6 +337,21 @@ extension AppDelegate {
     }
 }
 
+// MARK: - Generic App push notifications
+ extension AppDelegate {
+    @objc func handleReceivedRemoteNotification(userInfo: [String: Any]) {
+        guard let notificationType = userInfo["megatype"] as? Int else { return }
+        
+        if case MEGANotificationType.generic.rawValue = notificationType {
+            DIContainer.tracker.trackAnalyticsEvent(with: GenericAppPushNotificationReceivedEvent())
+        }
+    }
+    
+    @objc func handleGenericAppPushNotificationTap() {
+        DIContainer.tracker.trackAnalyticsEvent(with: GenericAppPushNotificationTappedEvent())
+    }
+ }
+
 // MARK: - Actionable notification for Scheduled meetings
 
 extension AppDelegate {
