@@ -3,7 +3,8 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, MEGANotificationType) {
     MEGANotificationTypeShareFolder = 1,
     MEGANotificationTypeChatMessage = 2,
-    MEGANotificationTypeContactRequest = 3
+    MEGANotificationTypeContactRequest = 3,
+    MEGANotificationTypeGeneric = 8
 };
 
 @class MainTabBarController;
