@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -117,5 +118,15 @@ extension ChangeNameViewController: UITextFieldDelegate {
         saveButton.isEnabled = shouldSaveButtonBeEnabled
         
         return text?.count ?? 0 <= Constants.maxNumOfCharacters
+    }
+    
+    // MARK: Appearance
+    
+    @objc func defaultBackgroundColor() -> UIColor {
+        TokenColors.Background.page
+    }
+    
+    @objc func primaryTextcolor() -> UIColor {
+        TokenColors.Text.primary
     }
 }
