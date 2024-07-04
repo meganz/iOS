@@ -131,10 +131,6 @@ final class UsageViewModel: ViewModelType {
         accountUseCase.isAccountType(.proFlexi)
     }
     
-    var hasValidProAccount: Bool {
-        accountUseCase.hasValidProAccount()
-    }
-    
     var isFreeAccount: Bool {
         accountUseCase.isAccountType(.free)
     }
