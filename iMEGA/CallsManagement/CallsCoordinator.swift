@@ -10,14 +10,12 @@ protocol CallsCoordinatorFactoryProtocol {
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
         callSessionUseCase: some CallSessionUseCaseProtocol,
-        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         callManager: some CallManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID,
-        callUpdateFactory: CXCallUpdateFactory,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        callUpdateFactory: CXCallUpdateFactory
     ) -> CallsCoordinator
 }
 
@@ -27,28 +25,44 @@ protocol CallsCoordinatorFactoryProtocol {
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
         callSessionUseCase: some CallSessionUseCaseProtocol,
-        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         callManager: some CallManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID,
-        callUpdateFactory: CXCallUpdateFactory,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        callUpdateFactory: CXCallUpdateFactory
     ) -> CallsCoordinator {
         CallsCoordinator(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: chatUseCase,
             callSessionUseCase: callSessionUseCase,
-            scheduledMeetingUseCase: scheduledMeetingUseCase, 
             noUserJoinedUseCase: noUserJoinedUseCase,
             captureDeviceUseCase: captureDeviceUseCase,
             callManager: callManager,
             passcodeManager: passcodeManager,
             uuidFactory: uuidFactory,
             callUpdateFactory: callUpdateFactory,
-            featureFlagProvider: featureFlagProvider
+            callKitProviderDelegateFactory: CallKitProviderDelegateProvider()
+        )
+    }
+}
+
+protocol CallKitProviderDelegateProviding {
+    func build(
+        callCoordinator: any CallsCoordinatorProtocol,
+        callManager: any CallManagerProtocol
+    ) -> any CallKitProviderDelegateProtocol
+}
+
+struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
+    func build(
+        callCoordinator: any CallsCoordinatorProtocol,
+        callManager: any CallManagerProtocol
+    ) -> any CallKitProviderDelegateProtocol {
+        CallKitProviderDelegate(
+            callCoordinator: callCoordinator,
+            callManager: callManager
         )
     }
 }
@@ -58,61 +72,59 @@ protocol CallsCoordinatorFactoryProtocol {
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
     private var callSessionUseCase: any CallSessionUseCaseProtocol
-    private var scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
-
+    
     private let callManager: any CallManagerProtocol
-    private var providerDelegate: CallKitProviderDelegate?
+    private var providerDelegate: (any CallKitProviderDelegateProtocol)?
     
     private let passcodeManager: any PasscodeManagerProtocol
-
+    
     private let uuidFactory: () -> UUID
     private let callUpdateFactory: CXCallUpdateFactory
     
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
-
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callSessionUpdateSubscription: AnyCancellable?
-
+    
     @PreferenceWrapper(key: .presentPasscodeLater, defaultValue: false, useCase: PreferenceUseCase.default)
     var presentPasscodeLater: Bool
     
-    init(callUseCase: some CallUseCaseProtocol,
-         chatRoomUseCase: some ChatRoomUseCaseProtocol,
-         chatUseCase: some ChatUseCaseProtocol,
-         callSessionUseCase: some CallSessionUseCaseProtocol,
-         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
-         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
-         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
-         callManager: some CallManagerProtocol,
-         passcodeManager: some PasscodeManagerProtocol,
-         uuidFactory: @escaping () -> UUID,
-         callUpdateFactory: CXCallUpdateFactory,
-         featureFlagProvider: some FeatureFlagProviderProtocol
+    init(
+        callUseCase: some CallUseCaseProtocol,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
+        callSessionUseCase: some CallSessionUseCaseProtocol,
+        noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+        callManager: some CallManagerProtocol,
+        passcodeManager: some PasscodeManagerProtocol,
+        uuidFactory: @escaping () -> UUID,
+        callUpdateFactory: CXCallUpdateFactory,
+        callKitProviderDelegateFactory: some CallKitProviderDelegateProviding
     ) {
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
         self.callSessionUseCase = callSessionUseCase
-        self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.callManager = callManager
         self.passcodeManager = passcodeManager
         self.uuidFactory = uuidFactory
         self.callUpdateFactory = callUpdateFactory
-        self.featureFlagProvider = featureFlagProvider
         
         super.init()
-
-        self.providerDelegate = CallKitProviderDelegate(callCoordinator: self, callManager: callManager)
-
+        
+        self.providerDelegate = callKitProviderDelegateFactory.build(
+            callCoordinator: self,
+            callManager: callManager
+        )
+        
         onCallUpdateListener()
     }
     
     // MARK: - Private
-
+    
     private func onCallUpdateListener() {
         callUpdateSubscription = callUseCase.onCallUpdate()
             .receive(on: DispatchQueue.main)
@@ -120,7 +132,7 @@ protocol CallsCoordinatorFactoryProtocol {
                 self?.onCallUpdate(call)
             }
     }
-
+    
     private func onCallUpdate(_ call: CallEntity) {
         switch call.changeType {
         case .status:
@@ -216,7 +228,7 @@ protocol CallsCoordinatorFactoryProtocol {
               let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
         
         var video = call.hasLocalVideo
-    
+        
         for session in call.clientSessions where session.hasVideo == true {
             video = true
             break
@@ -251,7 +263,7 @@ protocol CallsCoordinatorFactoryProtocol {
     
     private var localizedCameraName: String? {
         captureDeviceUseCase.wideAngleCameraLocalizedName(position: .front)
-     }
+    }
 }
 
 extension CallsCoordinator: CallsCoordinatorProtocol {
@@ -329,16 +341,22 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             return
         }
         
-        let incomingCallUUID = uuidFactory()
+        var incomingCallUUID: UUID
         
-        callManager.addIncomingCall(
-            withUUID: incomingCallUUID,
-            chatRoom: chatRoom
-        )
-
+        if let callInProgressUUID = callManager.callUUID(forChatRoom: chatRoom) {
+            MEGALogDebug("[CallKit] Provider report new incoming call that already exists")
+            incomingCallUUID = callInProgressUUID
+        } else {
+            MEGALogDebug("[CallKit] Provider report new incoming call")
+            incomingCallUUID = uuidFactory()
+            callManager.addIncomingCall(
+                withUUID: incomingCallUUID,
+                chatRoom: chatRoom
+            )
+        }
+        
         let update = callUpdateFactory.createCallUpdate(title: chatRoom.title ?? "Unknown")
         
-        MEGALogDebug("[CallKit] Provider report new incoming call")
         providerDelegate?.provider.reportNewIncomingCall(with: incomingCallUUID, update: update) { error in
             guard error == nil else {
                 MEGALogError("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
@@ -350,7 +368,7 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
     
     func reportEndCall(_ call: CallEntity) {
         MEGALogDebug("[CallKit] Report end call \(call)")
-
+        
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
               let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
         

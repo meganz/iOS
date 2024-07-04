@@ -623,14 +623,12 @@ extension AppDelegate {
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
-            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo), 
             noUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             callManager: CallKitCallManager.shared,
             passcodeManager: PasscodeManager(),
             uuidFactory: { UUID() },
-            callUpdateFactory: .defaultFactory,
-            featureFlagProvider: DIContainer.featureFlagProvider
+            callUpdateFactory: .defaultFactory
         )
         self.callsCoordinator = callsCoordinator
         voIPPushDelegate = VoIPPushDelegate(
