@@ -10,7 +10,8 @@ final class SupportUseCaseTests: XCTestCase {
         
         _ = try? await sut.createSupportTicket(withMessage: sampleMessage)
         
-        XCTAssertEqual(repositorySpy.messages, [ .createSupportTicket(message: sampleMessage) ])
+        let messages = await repositorySpy.state.messages
+        XCTAssertEqual(messages, [ .createSupportTicket(message: sampleMessage) ])
     }
     
     // MARK: - Helpers

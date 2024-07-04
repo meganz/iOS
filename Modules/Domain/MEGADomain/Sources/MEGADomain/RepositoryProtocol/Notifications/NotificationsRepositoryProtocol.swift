@@ -1,5 +1,5 @@
 /// Repository that provides the domain access to the remote notifications including Promos available to the user for Notification Center.
-public protocol NotificationsRepositoryProtocol: RepositoryProtocol {
+public protocol NotificationsRepositoryProtocol: RepositoryProtocol, Sendable {
     
     /// Fetch the last read notification ID
     /// - Returns: Last read notification ID. When the ID returned here was `0` it means that no ID was set as last read.

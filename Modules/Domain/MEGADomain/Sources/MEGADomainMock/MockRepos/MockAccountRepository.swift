@@ -1,8 +1,9 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGASwift
 
-public final class MockAccountRepository: AccountRepositoryProtocol {
+public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked Sendable {
     // MARK: - User Authentication Details
     let currentUser: UserEntity?
     public let isGuest: Bool
@@ -36,10 +37,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     private let unseenUserAlertsCount: UInt
 
     // MARK: - Delegate Management Counters
-    public var registerMEGARequestDelegateCalled = 0
-    public var deRegisterMEGARequestDelegateCalled = 0
-    public var registerMEGAGlobalDelegateCalled = 0
-    public var deRegisterMEGAGlobalDelegateCalled = 0
+    @Atomic public var registerMEGARequestDelegateCalled = 0
+    @Atomic public var deRegisterMEGARequestDelegateCalled = 0
+    @Atomic public var registerMEGAGlobalDelegateCalled = 0
+    @Atomic public var deRegisterMEGAGlobalDelegateCalled = 0
 
     // MARK: - Publishers
     public let requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never>
@@ -229,19 +230,19 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     }
 
     public func registerMEGARequestDelegate() async {
-        registerMEGARequestDelegateCalled += 1
+        $registerMEGARequestDelegateCalled.mutate { $0 += 1 }
     }
 
     public func deRegisterMEGARequestDelegate() {
-        deRegisterMEGARequestDelegateCalled += 1
+        $deRegisterMEGARequestDelegateCalled.mutate { $0 += 1 }
     }
 
     public func registerMEGAGlobalDelegate() async {
-        registerMEGAGlobalDelegateCalled += 1
+        $registerMEGAGlobalDelegateCalled.mutate { $0  += 1 }
     }
 
     public func deRegisterMEGAGlobalDelegate() async {
-        deRegisterMEGAGlobalDelegateCalled += 1
+        $deRegisterMEGAGlobalDelegateCalled.mutate { $0 += 1 }
     }
 
     public func rootStorageUsed() -> Int64 {

@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-public protocol AccountRepositoryProtocol {
+public protocol AccountRepositoryProtocol: Sendable {
     // User authentication status and identifiers
     var currentUserHandle: HandleEntity? { get }
     var isGuest: Bool { get }

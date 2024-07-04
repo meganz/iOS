@@ -1,3 +1,3 @@
-public protocol SupportRepositoryProtocol: RepositoryProtocol {
-    func createSupportTicket(withMessage message: String) async throws 
+public protocol SupportRepositoryProtocol: RepositoryProtocol, Sendable {
+    func createSupportTicket(withMessage message: String) async throws
 }

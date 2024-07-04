@@ -1,17 +1,23 @@
 import MEGADomain
 
-public final class MockSupportRepository: SupportRepositoryProtocol {
-    
-    public var messages = [Message]()
-    
+public struct MockSupportRepository: SupportRepositoryProtocol {
+    public actor State {
+        public var messages = [Message]()
+        
+        func insertMessage(_ message: Message) {
+            messages.append(message)
+        }
+    }
     public enum Message: Equatable {
         case createSupportTicket(message: String)
     }
     
+    public let state = State()
+    
     public init() {}
     
     public func createSupportTicket(withMessage message: String) async throws {
-        messages.append(.createSupportTicket(message: message))
+        await state.insertMessage(.createSupportTicket(message: message))
     }
     
     public static var newRepo: MockSupportRepository {

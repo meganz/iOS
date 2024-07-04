@@ -1,7 +1,18 @@
 import MEGADomain
 
-public final class MockNotificationsRepository: NotificationsRepositoryProtocol {
-    private var lastReadNotification: NotificationIDEntity
+public struct MockNotificationsRepository: NotificationsRepositoryProtocol {
+    public actor State {
+        public var lastReadNotification: NotificationIDEntity
+        
+        public init(lastReadNotification: NotificationIDEntity) {
+            self.lastReadNotification = lastReadNotification
+        }
+        
+        func updateLastReadNotification(notificationId: NotificationIDEntity) {
+            self.lastReadNotification = notificationId
+        }
+    }
+    private let state: State
     private let enabledNotifications: [NotificationIDEntity]
     private let notificationsResult: Result<[NotificationEntity], Error>
     private let unreadNotificationIDs: [NotificationIDEntity]
@@ -16,18 +27,18 @@ public final class MockNotificationsRepository: NotificationsRepositoryProtocol 
         notificationsResult: Result<[NotificationEntity], Error> = .failure(GenericErrorEntity()),
         unreadNotificationIDs: [NotificationIDEntity] = [1]
     ) {
-        self.lastReadNotification = lastReadNotification
+        state = State(lastReadNotification: lastReadNotification)
         self.enabledNotifications = enabledNotifications
         self.notificationsResult = notificationsResult
         self.unreadNotificationIDs = unreadNotificationIDs
     }
     
     public func fetchLastReadNotification() async throws -> NotificationIDEntity {
-        lastReadNotification
+        await state.lastReadNotification
     }
     
     public func updateLastReadNotification(notificationId: NotificationIDEntity) async throws {
-        lastReadNotification = notificationId
+        await state.updateLastReadNotification(notificationId: notificationId)
     }
     
     public func fetchEnabledNotifications() -> [NotificationIDEntity] {
