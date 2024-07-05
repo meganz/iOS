@@ -38,10 +38,6 @@ struct FavoritePlaylistCell: View {
                     .frame(maxHeight: .infinity, alignment: .top)
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
-            
-            Image(uiImage: videoConfig.rowAssets.moreImage)
-                .foregroundColor(videoConfig.colorAssets.secondaryIconColor)
-                .onTapGesture { viewModel.onTappedMoreOptions() }
         }
         .padding(0)
         .background(videoConfig.colorAssets.pageBackgroundColor)
