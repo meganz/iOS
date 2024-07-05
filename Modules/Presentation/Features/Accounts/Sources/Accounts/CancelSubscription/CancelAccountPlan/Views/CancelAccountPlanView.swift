@@ -133,6 +133,7 @@ struct CancelAccountPlanView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 30)
+        .padding(.vertical, 30)
+        .padding(.horizontal, 5)
     }
 }
