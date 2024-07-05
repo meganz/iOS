@@ -6,6 +6,7 @@ import MEGAL10n
 import MEGAPresentationMock
 import MEGASdk
 import MEGASDKRepoMock
+import MEGASwift
 import Search
 import SearchMock
 import SwiftUI
@@ -61,7 +62,7 @@ fileprivate extension Date {
     }
 }
 
-class HomeSearchProviderTests: XCTestCase {
+class HomeSearchResultsProviderTests: XCTestCase {
     
     class Harness {
         let filesSearchUseCase: MockFilesSearchUseCase
@@ -69,8 +70,8 @@ class HomeSearchProviderTests: XCTestCase {
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
         let nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository
-        let transferListenerRepo: SDKTransferListenerRepository
         let nodeUpdateRepository: MockNodeUpdateRepository
+        let downloadTransfersListener: MockDownloadTransfersListener
         let contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase
         let sut: HomeSearchResultsProvider
         let nodes: [NodeEntity]
@@ -99,9 +100,10 @@ class HomeSearchProviderTests: XCTestCase {
             mediaUseCase = MockMediaUseCase()
 
             nodesUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
-            transferListenerRepo = SDKTransferListenerRepository(sdk: sdk)
 
             nodeUpdateRepository = MockNodeUpdateRepository()
+            
+            downloadTransfersListener = MockDownloadTransfersListener()
              
             contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
                 sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes)
@@ -114,7 +116,7 @@ class HomeSearchProviderTests: XCTestCase {
                 nodeUseCase: nodeDataUseCase,
                 mediaUseCase: mediaUseCase,
                 nodesUpdateListenerRepo: nodesUpdateListenerRepo,
-                transferListenerRepo: transferListenerRepo,
+                downloadTransferListener: downloadTransfersListener,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 nodeUpdateRepository: nodeUpdateRepository,
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
@@ -688,7 +690,7 @@ class HomeSearchProviderTests: XCTestCase {
     
     func testNodeUpdatesListener_whenShouldProcessNodesUpdate_shouldProcessNodeUpdates() async {
         // given
-        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 3)
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 2)
         
         var nodeUpdatesSignals = [SearchResultUpdateSignal]()
         
@@ -704,14 +706,17 @@ class HomeSearchProviderTests: XCTestCase {
         harness.nodeUpdateRepository.shouldProcessOnNodesUpdateValue = true
         _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
         
+        let task = Task {
+            await harness.sut.listenToSpecificResultUpdates()
+        }
+        
         // when
+        
         harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(nodes) // Trigger .generic signal
-        harness.transferListenerRepo.endHandler?(MockNode(handle: 1), false, .download) // Trigger .specific signal
-        harness.transferListenerRepo.endHandler?(MockNode(handle: 1), true, .download) // Doesn't trigger signals because isStreamingTransfer is true
-        harness.transferListenerRepo.endHandler?(MockNode(handle: 1), false, .upload) // Doesn't trigger signals because type is not download
-        harness.transferListenerRepo.endHandler?(MockNode(handle: 4), false, .download) // Doesn't trigger signals because node is not in the list: list is [1, 2, 3] but updated node is 4
+        harness.downloadTransfersListener.simulateDownloadedNode(nodes[1]) // Trigger .specific signal
         
         await fulfillment(of: [expectation], timeout: 1.0)
+        task.cancel()
         // then
         guard case .generic = nodeUpdatesSignals[0] else {
             XCTFail("Expecting .generic update signal")
@@ -723,7 +728,7 @@ class HomeSearchProviderTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(result.id, 1)
+        XCTAssertEqual(result.id, 2)
     }
 
     // MARK: - Private methods.

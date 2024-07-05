@@ -1,6 +1,12 @@
 import Search
 
 public class MockSearchResultsProviding: SearchResultsProviding {
+    
+    public var listenToDownloadsCalled = false
+    public func listenToSpecificResultUpdates() async {
+        listenToDownloadsCalled = true
+    }
+    
     public var refreshedSearchResultsToReturn: Search.SearchResultsEntity?
     public func refreshedSearchResults(queryRequest: Search.SearchQuery) async -> Search.SearchResultsEntity? {
         refreshedSearchResultsToReturn

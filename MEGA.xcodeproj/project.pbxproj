@@ -2572,6 +2572,7 @@
 		C48CADB02BB54C550005519B /* NodeBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */; };
 		C48CADB92BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADB82BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift */; };
 		C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */; };
+		C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4944FE72C339F6800A2C082 /* MockDownloadTransfersListener.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
 		C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */; };
 		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
@@ -2594,6 +2595,8 @@
 		C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */; };
 		C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */; };
 		C4B97D8D2B77916500EBA9E5 /* RandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */; };
+		C4C0A0082C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0A0072C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift */; };
+		C4C0A00E2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0A00D2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift */; };
 		C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */; };
 		C4C6A49827A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
 		C4C6A49A27A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
@@ -5336,6 +5339,7 @@
 		C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserConfig.swift; sourceTree = "<group>"; };
 		C48CADB82BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveNodeSourceUpdatesListener.swift; sourceTree = "<group>"; };
 		C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveViewController.swift; sourceTree = "<group>"; };
+		C4944FE72C339F6800A2C082 /* MockDownloadTransfersListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadTransfersListener.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
 		C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModelTests.swift; sourceTree = "<group>"; };
 		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
@@ -5358,6 +5362,8 @@
 		C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomNumberGeneratorTests.swift; sourceTree = "<group>"; };
 		C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuncCallRecorder.swift; sourceTree = "<group>"; };
 		C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberGenerator.swift; sourceTree = "<group>"; };
+		C4C0A0072C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadTransfersListener.swift; sourceTree = "<group>"; };
+		C4C0A00D2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadTransfersListenerTests.swift; sourceTree = "<group>"; };
 		C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C4C6A49527A4632600873165 /* MegaNode+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MegaNode+Display.swift"; sourceTree = "<group>"; };
 		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
@@ -5862,6 +5868,7 @@
 				25CF5EB42BDB7042005608F7 /* Cells */,
 				0E72E1222A27ECED00C900F9 /* CopyrightWarning */,
 				C48CADA92BB521130005519B /* DisplayModeProvider */,
+				C4C0A00B2C32C0ED00B9ECCB /* DownloadTransferListener */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
 				94B09E6C2B84D0B5007D6B84 /* NewNodeBrowser */,
@@ -8186,6 +8193,7 @@
 				5D33D66A250D9BC900D74666 /* Client */,
 				5D52C748250C4F2800286A43 /* Functions */,
 				949704B52AB427A700B2CA3A /* Router */,
+				C4944FE62C339F5B00A2C082 /* Transfers */,
 				B6FD6510268D7EA500988A17 /* UseCase */,
 				949B86E12BBC202700CB8ADF /* Utils */,
 				C4D6750D2BB2CAE3000A1F79 /* ViewControllers */,
@@ -10346,6 +10354,7 @@
 				C48CADAE2BB54C260005519B /* NodeBrowserConfig */,
 				C48CADB72BBAB1A40005519B /* NodeUpdates */,
 				94B09E4C2B84CC86007D6B84 /* StorageFullAlertViewModel */,
+				C4C0A0062C32B57700B9ECCB /* TransferListener */,
 				94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */,
 				94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */,
 				94B09E462B84CC86007D6B84 /* CloudDriveNodeInsertionRouter.swift */,
@@ -13004,6 +13013,14 @@
 			path = NodeUpdates;
 			sourceTree = "<group>";
 		};
+		C4944FE62C339F5B00A2C082 /* Transfers */ = {
+			isa = PBXGroup;
+			children = (
+				C4944FE72C339F6800A2C082 /* MockDownloadTransfersListener.swift */,
+			);
+			path = Transfers;
+			sourceTree = "<group>";
+		};
 		C499E1DD2B7663FB00503353 /* StorageFullAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -13091,6 +13108,22 @@
 				C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */,
 			);
 			path = RandomNumberGenerator;
+			sourceTree = "<group>";
+		};
+		C4C0A0062C32B57700B9ECCB /* TransferListener */ = {
+			isa = PBXGroup;
+			children = (
+				C4C0A0072C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift */,
+			);
+			path = TransferListener;
+			sourceTree = "<group>";
+		};
+		C4C0A00B2C32C0ED00B9ECCB /* DownloadTransferListener */ = {
+			isa = PBXGroup;
+			children = (
+				C4C0A00D2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift */,
+			);
+			path = DownloadTransferListener;
 			sourceTree = "<group>";
 		};
 		C4CBDD4E256EC8F800835CF5 /* Domain */ = {
@@ -14561,6 +14594,7 @@
 				C45093FE270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				94B09E612B84CC87007D6B84 /* CloudDriveContextMenuConfigFactory.swift in Sources */,
+				C4C0A0082C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift in Sources */,
 				BF11FEE42B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift in Sources */,
 				BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */,
 				94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */,
@@ -16322,6 +16356,7 @@
 				9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */,
 				BF4296642BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift in Sources */,
 				C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */,
+				C4C0A00E2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift in Sources */,
 				BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */,
 				94B85CA12B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift in Sources */,
 				C4D675142BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift in Sources */,
@@ -16418,6 +16453,7 @@
 				94E33C9A2C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift in Sources */,
 				94D4E9EB2C359F7100B07C3B /* MockCXProvider.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
+				C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,

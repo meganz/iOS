@@ -9,6 +9,8 @@ public final class MockTransfer: MEGATransfer {
     private let _endPos: Int64
     private let _deltaSize: Int64
     private let _lastErrorExtended: MEGAError
+    private let _isStreamingTransfer: Bool
+    private let _parentPath: String?
     
     public init(type: MEGATransferType = .download,
                 nodeHandle: UInt64 = 0,
@@ -16,7 +18,9 @@ public final class MockTransfer: MEGATransfer {
                 startPos: Int64 = 0,
                 endPos: Int64 = 0,
                 deltaSize: Int64 = 0,
-                lastErrorExtended: MEGAError = MEGAError()) {
+                lastErrorExtended: MEGAError = MEGAError(),
+                isStreamingTransfer: Bool = false,
+                parentPath: String? = nil) {
         self._type = type
         self._nodeHandle = nodeHandle
         self._parentHandle = parentHandle
@@ -24,6 +28,8 @@ public final class MockTransfer: MEGATransfer {
         self._endPos = endPos
         self._deltaSize = deltaSize
         self._lastErrorExtended = lastErrorExtended
+        self._isStreamingTransfer = isStreamingTransfer
+        self._parentPath = parentPath
     }
     
     public override var type: MEGATransferType {
@@ -52,5 +58,13 @@ public final class MockTransfer: MEGATransfer {
     
     public override var lastErrorExtended: MEGAError {
         _lastErrorExtended
+    }
+    
+    public override var parentPath: String? {
+        _parentPath
+    }
+    
+    public override var isStreamingTransfer: Bool {
+        _isStreamingTransfer
     }
 }
