@@ -33,3 +33,5 @@ extension CameraUploadManager {
         )
     }
 }
+
+extension CameraUploadManager: @unchecked Sendable { }

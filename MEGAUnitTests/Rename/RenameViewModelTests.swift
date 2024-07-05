@@ -31,7 +31,7 @@ class RenameViewModelTests: XCTestCase {
         await viewModel.rename(newName)
         XCTAssertTrue(router.didFinishSuccessfullyCalled)
         
-        useCase.shouldThrowError = true
+        useCase.shouldThrowError.mutate { $0 = true }
         
         await viewModel.rename(newName)
         XCTAssertTrue(router.didFinishWithErrorCalled)
