@@ -1,20 +1,21 @@
 import MEGADomain
+import MEGASwift
 
-public final class MockRenameUseCase: RenameUseCaseProtocol {
-    public var shouldThrowError: Bool
+public final class MockRenameUseCase: RenameUseCaseProtocol, @unchecked Sendable {
+    public var shouldThrowError: Atomic<Bool>
     
     public init(shouldThrowError: Bool) {
-        self.shouldThrowError = shouldThrowError
+        self.shouldThrowError = .init(wrappedValue: shouldThrowError)
     }
 
     public func renameDevice(_ deviceId: String, newName: String) async throws {
-        if shouldThrowError {
+        if shouldThrowError.wrappedValue {
             throw GenericErrorEntity()
         }
     }
     
     public func renameNode(_ node: NodeEntity, newName: String) async throws {
-        if shouldThrowError {
+        if shouldThrowError.wrappedValue {
             throw GenericErrorEntity()
         }
     }

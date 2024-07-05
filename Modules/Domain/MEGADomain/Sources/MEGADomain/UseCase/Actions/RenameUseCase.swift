@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol RenameUseCaseProtocol {
+public protocol RenameUseCaseProtocol: Sendable {
     func renameDevice(_ deviceId: String, newName: String) async throws
 }
 

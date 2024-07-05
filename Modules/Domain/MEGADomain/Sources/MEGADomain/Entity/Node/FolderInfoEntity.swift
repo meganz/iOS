@@ -1,4 +1,4 @@
-public struct FolderInfoEntity: Equatable {
+public struct FolderInfoEntity: Equatable, Sendable {
     public let versions: Int
     public let files: Int
     public let folders: Int

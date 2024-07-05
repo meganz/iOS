@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol NodeDataRepositoryProtocol: RepositoryProtocol {
+public protocol NodeDataRepositoryProtocol: RepositoryProtocol, Sendable {
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
     func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String

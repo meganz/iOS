@@ -3,7 +3,7 @@ import MEGASwift
 
 /// Repo that provides information relating to the current active status of the CameraUploads in the application. 
 /// This will monitor our active CameraUpload operation and provide the necessary information to gauge state of all operations.
-public protocol CameraUploadsStatsRepositoryProtocol: RepositoryProtocol {
+public protocol CameraUploadsStatsRepositoryProtocol: RepositoryProtocol, Sendable {
     
     ///  Provides current CameraUploadStatsEntity relating to the status of active camera uploads occurring in the application.
     /// - Returns: CameraUploadStatsEntity containing stats of uploads at the call of this function.
