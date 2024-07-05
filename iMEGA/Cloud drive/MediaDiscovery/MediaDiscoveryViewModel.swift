@@ -97,13 +97,15 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     private func loadNodes() {
         loadingTask = Task { @MainActor in
             do {
+                MEGALogDebug("[Search] load photos and videos in parent: \(parentNode.base64Handle), recursive: true, exclude sensitive: false")
                 nodes = try await mediaDiscoveryUseCase.nodes(
                     forParent: parentNode,
                     recursive: true,
                     excludeSensitive: false)
+                MEGALogDebug("[Search] nodes loaded \(nodes.count)")
                 invokeCommand?(.loadMedia(nodes: nodes))
             } catch {
-                MEGALogError("Error loading nodes: \(error.localizedDescription)")
+                MEGALogError("[Search] Error loading nodes: \(error.localizedDescription)")
             }
         }
     }

@@ -260,10 +260,13 @@ enum CloudDriveAction: ActionType {
     private func nodesForParent(parentNode: MEGANode, sortOrder: MEGASortOrderType, shouldExcludeSensitive: Bool) -> MEGANodeList {
         let filter = makeSearchFilter(parentNodeHandle: parentNode.handle, excludeSensitive: shouldExcludeSensitive)
         let cancelToken = MEGACancelToken()
-        return sdk.searchNonRecursively(with: filter,
-                                        orderType: sortOrder,
-                                        page: nil,
-                                        cancelToken: cancelToken)
+        MEGALogDebug("[Search] non recursively \(filter.term) in parent \(parentNode.base64Handle ?? "")")
+        let nodeList = sdk.searchNonRecursively(with: filter,
+                                                orderType: sortOrder,
+                                                page: nil,
+                                                cancelToken: cancelToken)
+        MEGALogDebug("[Search] nodes found \(nodeList.size)")
+        return nodeList
     }
     
     private func makeSearchFilter(parentNodeHandle: MEGAHandle, excludeSensitive: Bool) -> MEGASearchFilter {
