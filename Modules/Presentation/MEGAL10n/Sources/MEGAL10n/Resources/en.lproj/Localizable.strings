@@ -3960,6 +3960,8 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="Add videos";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="Delete playlist";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Remove from playlist?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Add";
 /* Used for adding videos to video playlist add button in video playlist content */

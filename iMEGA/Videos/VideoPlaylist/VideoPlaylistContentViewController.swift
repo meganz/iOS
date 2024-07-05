@@ -76,12 +76,20 @@ final class VideoPlaylistContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupContentView()
-        configureSnackBarPresenter()
-        listenToSnackBarPresentation()
         setupNavigationBar()
         subscribeToVideoSelection()
         listenToSelectedDisplayActionChanged()
         listenToVideoSelectionForTitle()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureSnackBarPresenter()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        listenToSnackBarPresentation()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -214,23 +222,28 @@ final class VideoPlaylistContentViewController: UIViewController {
     }
     
     @objc private func downloadAction(_ sender: UIBarButtonItem) {
-        // CC-7280
+        let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+        nodeAction(nodeActionViewController, didSelect: .download, forNodes: selectedVideos, from: sender)
     }
     
     @objc private func linkAction(_ sender: UIBarButtonItem) {
-        // CC-7280
+        let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+        nodeAction(nodeActionViewController, didSelect: .manageLink, forNodes: selectedVideos, from: sender)
     }
     
     @objc private func saveToPhotosAction(_ sender: UIBarButtonItem) {
-        // CC-7280
+        let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+        nodeAction(nodeActionViewController, didSelect: .saveToPhotos, forNodes: selectedVideos, from: sender)
     }
     
     @objc private func removeVideoFromPlaylistAction(_ sender: UIBarButtonItem) {
-        // CC-7280
+        let videos = videoSelection.videos.values.map { $0 }
+        guard videos.isNotEmpty else { return }
+        sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(videos)
     }
     
     @objc private func moreAction(_ sender: UIBarButtonItem) {
-        // CC-7280
+        // Future ticket
     }
     
     func resetNavigationBar() {
@@ -296,6 +309,15 @@ final class VideoPlaylistContentViewController: UIViewController {
                 self?.navigationItem.title = navigationItemTitle
             }
             .store(in: &subscriptions)
+    }
+    
+    private func nodeActionViewController(with selectedVideos: [MEGANode], from sender: UIBarButtonItem) -> NodeActionViewController {
+        NodeActionViewController(nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, sender: sender)
+    }
+    
+    private var selectedVideos: [MEGANode] {
+        videoSelection.videos.values
+            .compactMap { $0.toMEGANode(in: .sharedSdk) }
     }
 }
 
@@ -388,11 +410,11 @@ extension VideoPlaylistContentViewController: SnackBarPresenting {
     
     private func listenToSnackBarPresentation() {
         sharedUIState.$shouldShowSnackBar
-            .removeDuplicates()
             .filter { $0 == true }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
+                resetNavigationBar()
                 snackBarViewModel = makeSnackBarViewModel(message: sharedUIState.snackBarText)
                 self.snackBarViewModel?.update(snackBar: SnackBar(message: self.sharedUIState.snackBarText))
                 guard let snackBar = self.snackBarViewModel?.snackBar else { return }

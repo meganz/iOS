@@ -11,5 +11,7 @@ public final class VideoPlaylistContentSharedUIState {
     @Published public var snackBarText = ""
     @Published public var isAllSelected = false
     
+    public let didSelectRemoveVideoFromPlaylistAction = PassthroughSubject<[NodeEntity], Never>()
+    
     public init() {}
 }

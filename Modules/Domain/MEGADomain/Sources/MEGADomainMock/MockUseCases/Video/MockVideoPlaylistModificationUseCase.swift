@@ -6,11 +6,13 @@ public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificati
     private let addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error>
     private let deleteVideoPlaylistResult: [VideoPlaylistEntity]
     private let updateVideoPlaylistNameResult: Result<Void, any Error>
+    private let deleteVideosInVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error>
     
     public enum Message: Equatable {
         case addVideoToPlaylist
         case deleteVideoPlaylist
         case updateVideoPlaylistName
+        case deleteVideosInVideoPlaylist
     }
     
     public private(set) var messages = [Message]()
@@ -18,11 +20,13 @@ public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificati
     public init(
         addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
         deleteVideoPlaylistResult: [VideoPlaylistEntity] = [],
-        updateVideoPlaylistNameResult: Result<Void, any Error> = .failure(GenericErrorEntity())
+        updateVideoPlaylistNameResult: Result<Void, any Error> = .failure(GenericErrorEntity()),
+        deleteVideosInVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error> = .failure(GenericErrorEntity())
     ) {
         self.addToVideoPlaylistResult = addToVideoPlaylistResult
         self.deleteVideoPlaylistResult = deleteVideoPlaylistResult
         self.updateVideoPlaylistNameResult = updateVideoPlaylistNameResult
+        self.deleteVideosInVideoPlaylistResult = deleteVideosInVideoPlaylistResult
     }
     
     public func addVideoToPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity {
@@ -31,7 +35,8 @@ public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificati
     }
     
     public func deleteVideos(in videoPlaylistId: HandleEntity, videos: [VideoPlaylistVideoEntity]) async throws -> VideoPlaylistElementsResultEntity {
-        VideoPlaylistElementsResultEntity(success: 0, failure: 0)
+        messages.append(.deleteVideosInVideoPlaylist)
+        return try deleteVideosInVideoPlaylistResult.get()
     }
     
     public func delete(videoPlaylists: [VideoPlaylistEntity]) async -> [VideoPlaylistEntity] {
