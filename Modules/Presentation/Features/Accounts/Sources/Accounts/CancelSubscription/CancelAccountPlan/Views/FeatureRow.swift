@@ -12,6 +12,7 @@ struct FeatureRow: View {
                 .multilineTextAlignment(.leading)
                 .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(2.0)
 
             if let icon = feature.freeIconName {
                 Image(icon)
@@ -24,6 +25,7 @@ struct FeatureRow: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
                     .frame(maxWidth: .infinity)
+                    .padding(2.0)
             }
 
             if let icon = feature.proIconName {
@@ -37,6 +39,7 @@ struct FeatureRow: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI: .secondary)
                     .frame(maxWidth: .infinity)
+                    .padding(2.0)
             }
         }
         .padding(.vertical, 5)

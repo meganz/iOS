@@ -178,15 +178,19 @@ extension ProfileViewModel {
     }
     
     private func showCancelAccountPlan() {
-        guard let currentAccountDetails = accountUseCase.currentAccountDetails else { return }
-        
-        router.showCancelAccountPlan(
-            accountDetails: currentAccountDetails,
-            assets: CancelAccountPlanAssets(
-                availableImageName: CancelSubscriptionIconAssets.availableIcon,
-                unavailableImageName: CancelSubscriptionIconAssets.unavailableIcon
+        Task { @MainActor in
+            guard let currentAccountDetails = accountUseCase.currentAccountDetails,
+                  let currentPlan = await accountUseCase.currentAccountPlan() else { return }
+            
+            router.showCancelAccountPlan(
+                currentPlan: currentPlan,
+                accountDetails: currentAccountDetails,
+                assets: CancelAccountPlanAssets(
+                    availableImageName: CancelSubscriptionIconAssets.availableIcon,
+                    unavailableImageName: CancelSubscriptionIconAssets.unavailableIcon
+                )
             )
-        )
+        }
     }
     
     private func trackCancelSubscriptionButtonEvent() {

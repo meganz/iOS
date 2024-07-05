@@ -10,4 +10,15 @@ public extension MEGAPricing {
         }
         return 0
     }
+    
+    /// Lists the available plans defined and returned by the SDK.
+    ///
+    /// - Note: There may be discrepancies between the plans defined in the SDK and the products defined in the Apple Store.
+    /// Some plans may not be available for purchase from the Apple Store.
+    ///
+    /// - Returns: An array of `AccountPlanEntity` representing the available SDK plans.
+    /// 
+    func availableSDKPlans() -> [AccountPlanEntity] {
+        (0..<products).compactMap(toAccountPlanEntity)
+    }
 }

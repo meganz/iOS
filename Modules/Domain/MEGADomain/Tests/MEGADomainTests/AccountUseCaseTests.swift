@@ -17,6 +17,7 @@ final class AccountUseCaseTests: XCTestCase {
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
         nodesCount: UInt64 = 0,
+        plans: [AccountPlanEntity] = [],
         getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
         currentAccountDetails: AccountDetailsEntity? = nil,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
@@ -40,6 +41,7 @@ final class AccountUseCaseTests: XCTestCase {
             isExpiredAccount: isExpiredAccount,
             isInGracePeriod: isInGracePeriod,
             isAchievementsEnabled: isAchievementsEnabled,
+            plans: plans, 
             isSmsAllowed: isSmsAllowed,
             contacts: contacts,
             nodesCount: nodesCount,
@@ -54,6 +56,46 @@ final class AccountUseCaseTests: XCTestCase {
             accountType: accountType
         )
         return AccountUseCase(repository: repository)
+    }
+    
+    private var monthlyPlans: [AccountPlanEntity] {
+        [AccountPlanEntity(type: .proI, subscriptionCycle: .monthly),
+         AccountPlanEntity(type: .proII, subscriptionCycle: .monthly),
+         AccountPlanEntity(type: .proIII, subscriptionCycle: .monthly),
+         AccountPlanEntity(type: .lite, subscriptionCycle: .monthly)]
+    }
+    
+    private var yearlyPlans: [AccountPlanEntity] {
+        [AccountPlanEntity(type: .proI, subscriptionCycle: .yearly),
+         AccountPlanEntity(type: .proII, subscriptionCycle: .yearly),
+         AccountPlanEntity(type: .proIII, subscriptionCycle: .yearly),
+         AccountPlanEntity(type: .lite, subscriptionCycle: .yearly)]
+    }
+    
+    private var allPlans: [AccountPlanEntity] {
+        monthlyPlans + yearlyPlans
+    }
+    
+    private func assertAccountPlan(
+        for type: AccountTypeEntity,
+        cycle: SubscriptionCycleEntity,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) async {
+        let plans = allPlans
+        let sut = makeSUT(
+            plans: plans, 
+            currentAccountDetails: AccountDetailsEntity.build(
+                proLevel: type,
+                subscriptionCycle: cycle
+            )
+        )
+        
+        let expectedPlan = plans.first { $0.type == type && $0.subscriptionCycle == cycle }
+
+        let result = await sut.currentAccountPlan()
+
+        XCTAssertEqual(result, expectedPlan, "Expected to find a plan for type \(type) and cycle \(cycle) but got nil or wrong plan.", file: file, line: line)
     }
 
     func testUpgradeSecurity_shouldReturnSuccess() async throws {
@@ -288,6 +330,55 @@ final class AccountUseCaseTests: XCTestCase {
         } else {
             XCTAssertFalse(sut.hasValidProAccount(), "\(accountType) result should be false")
         }
+    }
+    
+    // MARK: - Account Plan For Type
+    
+    func testAccountPlanForType_success_shouldReturnPlan() async throws {
+        await assertAccountPlan(
+            for: .proI,
+            cycle: .yearly
+        )
+        await assertAccountPlan(
+            for: .proI,
+            cycle: .monthly
+        )
+        await assertAccountPlan(
+            for: .proII,
+            cycle: .yearly
+        )
+        await assertAccountPlan(
+            for: .proII,
+            cycle: .monthly
+        )
+        await assertAccountPlan(
+            for: .proIII,
+            cycle: .yearly
+        )
+        await assertAccountPlan(
+            for: .proIII,
+            cycle: .monthly
+        )
+        await assertAccountPlan(
+            for: .lite,
+            cycle: .yearly
+        )
+        await assertAccountPlan(
+            for: .lite,
+            cycle: .monthly
+        )
+    }
+
+    func testAccountPlanForType_failure_shouldReturnNil() async {
+        let sut = makeSUT(
+            currentAccountDetails: AccountDetailsEntity.build(
+                proLevel: .proI,
+                subscriptionCycle: .monthly
+            )
+        )
+
+        let result = await sut.currentAccountPlan()
+        XCTAssertNil(result, "Expected to find no plan for type .proI but got a plan.")
     }
 }
 
