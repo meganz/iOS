@@ -199,6 +199,11 @@ public class SearchResultsViewModel: ObservableObject {
     /// meant called to be called in the SwiftUI View's .task modifier
     /// which means task is called on the appearance and cancelled on disappearance
     func task() async {
+        await performInitialSearchOrRefresh()
+        await startMonitoringResults()
+    }
+    
+    func performInitialSearchOrRefresh() async {
         // We need to check if listItems is empty  because after first load of the screen, the listItems will be filled with data,
         // so there is no need for additional query which will only cause flicker when we quickly go in and out of this screen
         guard !initialLoadDone, listItems.isEmpty else {
@@ -211,6 +216,11 @@ public class SearchResultsViewModel: ObservableObject {
         }
         initialLoadDone = true
         await defaultSearchQuery()
+    }
+    
+    /// To be called on a separate `.task` modifier from the client View to get the benefit of task cancellation upon appearing/disappearing
+    func startMonitoringResults() async {
+        await resultsProvider.listenToSpecificResultUpdates()
     }
     
     private func defaultSearchQuery() async {
@@ -635,6 +645,7 @@ public class SearchResultsViewModel: ObservableObject {
         listItems = []
     }
     
+    @MainActor
     func searchResultUpdated(_ result: SearchResult) async {
         guard let index = listItems.firstIndex(where: { $0.result.id == result.id  }) else { return }
         await listItems[index].reload(with: result)

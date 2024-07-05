@@ -14,4 +14,8 @@ public protocol SearchResultsProviding {
     // * audio player
     // * select all functionality
     func currentResultIds() -> [ResultId]
+    
+    /// Listen to `.specific` result updates. This is a temporary solution for handling updates for newly downloaded nodes.
+    /// Can be better implemented using async sequence with [SAO-1507]
+    func listenToSpecificResultUpdates() async
 }

@@ -18,7 +18,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
     private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
-    private var transferListenerRepo: SDKTransferListenerRepository
+    private let downloadTransferListener: any DownloadTransfersListening
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sdk: MEGASdk
 
@@ -33,6 +33,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var loadMorePagesOffset = 20
     private var availableChips: [SearchChipEntity]
     private let hiddenNodesFeatureEnabled: Bool
+    
+    // To be invoked when there are updates in search results
+    // Suggestion for improvements: When time permits, we can replace closure-based callbacks with an async sequence
     private let onSearchResultsUpdated: (_ updated: SearchResultUpdateSignal) -> Void
     
     // The node from which we want start searching from,
@@ -50,7 +53,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodeUseCase: some NodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
         nodesUpdateListenerRepo: some NodesUpdateListenerProtocol,
-        transferListenerRepo: SDKTransferListenerRepository,
+        downloadTransferListener: some DownloadTransfersListening,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
         nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
@@ -67,7 +70,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.nodeUseCase = nodeUseCase
         self.mediaUseCase = mediaUseCase
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
-        self.transferListenerRepo = transferListenerRepo
+        self.downloadTransferListener = downloadTransferListener
         self.nodeUpdateRepository = nodeUpdateRepository
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.notificationCenter = notificationCenter
@@ -87,8 +90,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         )
 
         self.onSearchResultsUpdated = onSearchResultsUpdated
+        
+        // Possible improvement: With [SAO-1507], we can convert node updates into async sequence and remove this `addNodesUpdateHandler` out of `init`
         addNodesUpdateHandler()
-        addTransferCompletedHandler()
         
         notificationCenter
             .publisher(for: .didFallbackToMakingOfflineForMediaNode)
@@ -165,6 +169,16 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             } else {
                 fillResults(query: searchQueryEntity)
             }
+        }
+    }
+    
+    // We can merge `downloadTransferListener.downloadedNodes` with the output of [SAO-1507] to form a unified async sequence for client to listen to
+    func listenToSpecificResultUpdates() async {
+        for await node in downloadTransferListener.downloadedNodes {
+            guard !Task.isCancelled else {
+                break
+            }
+            self.onSearchResultsUpdated(.specific(result: self.mapNodeToSearchResult(node)))
         }
     }
     
@@ -277,23 +291,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
                 return
             }
             self.onSearchResultsUpdated(.generic)
-        }
-    }
-
-    /// We need to listen to transfer completion events to update the "downloaded" icon of a node
-    private func addTransferCompletedHandler() {
-        transferListenerRepo.endHandler = { [weak self] megaNode, isStreamingTransfer, transferType in
-            guard let self else { return }
-
-            let node = megaNode.toNodeEntity()
-
-            guard nodeList?.toNodeEntities().contains(node) != nil,
-                  !isStreamingTransfer,
-                  transferType == .download else {
-                return
-            }
-
-            self.onSearchResultsUpdated(.specific(result: self.mapNodeToSearchResult(node)))
         }
     }
 }

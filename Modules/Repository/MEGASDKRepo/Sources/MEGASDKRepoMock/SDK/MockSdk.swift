@@ -708,10 +708,12 @@ public final class MockSdk: MEGASdk {
         return node
     }
     
+    public var stubbedDownloadTransfer: MockTransfer?
+    
     public override func startDownloadNode(_ node: MEGANode, localPath: String, fileName: String?, appData: String?, startFirst: Bool, cancelToken: MEGACancelToken?, collisionCheck: CollisionCheck, collisionResolution: CollisionResolution, delegate: any MEGATransferDelegate) {
         delegate.onTransferFinish?(
             self,
-            transfer: MockTransfer(type: .download, nodeHandle: node.handle, parentHandle: node.parentHandle),
+            transfer: stubbedDownloadTransfer ?? MockTransfer(type: .download, nodeHandle: node.handle, parentHandle: node.parentHandle),
             error: MockError(errorType: .apiOk))
     }
     
