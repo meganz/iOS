@@ -110,6 +110,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),

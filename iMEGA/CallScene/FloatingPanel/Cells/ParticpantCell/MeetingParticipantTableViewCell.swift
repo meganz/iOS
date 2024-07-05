@@ -6,6 +6,7 @@ import UIKit
 class MeetingParticipantTableViewCell: UITableViewCell, ViewType {    
 
     @IBOutlet private weak var avatarImageView: UIImageView!
+    @IBOutlet private weak var raisedHandImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var moderatorTextLabel: UILabel!
     @IBOutlet private weak var contextMenuButton: UIButton!
@@ -59,12 +60,12 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
     @MainActor
     func executeCommand(_ command: MeetingParticipantViewModel.Command) {
         switch command {
-        case .configView(let isModerator, let isMicMuted, let isVideoOn, let shouldHideContextMenu):
+        case .configView(let isModerator, let isMicMuted, let isVideoOn, let shouldHideContextMenu, let raisedHand):
             moderatorTextLabel.isHidden = !isModerator
             contextMenuButton.isHidden = shouldHideContextMenu
             micButton.isSelected = isMicMuted
             videoButton.isSelected = !isVideoOn
-
+            raisedHandImageView.isHidden = !raisedHand
         case .updateAvatarImage(let image):
             avatarImageView.image = image
         case .updateName(let name):

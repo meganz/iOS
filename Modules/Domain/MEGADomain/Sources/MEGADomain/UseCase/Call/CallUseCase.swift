@@ -187,19 +187,54 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
 extension CallUseCase: CallCallbacksRepositoryProtocol {
 
     public func createdSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
+        callbacksDelegate?.participantJoined(
+            participant:
+                CallParticipantEntity(
+                    session: session,
+                    chatRoom: chatRoom,
+                    privilege: privilege,
+                    raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
+                )
+        )
     }
     
     public func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
+        callbacksDelegate?.participantLeft(
+            participant:
+                CallParticipantEntity(
+                    session: session,
+                    chatRoom: chatRoom,
+                    privilege: privilege,
+                    raisedHand: false
+                )
+        )
     }
     
     public func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
+        callbacksDelegate?.updateParticipant(
+            CallParticipantEntity(
+                session: session,
+                chatRoom: chatRoom,
+                privilege: privilege,
+                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
+            )
+        )
     }
     
     public func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
+        callbacksDelegate?.audioLevel(
+            for: CallParticipantEntity(
+                session: session,
+                chatRoom: chatRoom,
+                privilege: privilege,
+                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
+            )
+        )
+    }
+    
+    private func raisedHand(for participantId: HandleEntity, forCallInChatRoom chatRoom: ChatRoomEntity) -> Bool {
+        guard let call = repository.call(for: chatRoom.chatId) else { return false }
+        return call.raiseHandsList.contains(participantId)
     }
     
     public func callTerminated(_ call: CallEntity) {
@@ -227,11 +262,25 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
     }
     
     public func onHiResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
+        callbacksDelegate?.highResolutionChanged(
+            for: CallParticipantEntity(
+                session: session,
+                chatRoom: chatRoom,
+                privilege: privilege,
+                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
+            )
+        )
     }
     
     public func onLowResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
+        callbacksDelegate?.lowResolutionChanged(
+            for: CallParticipantEntity(
+                session: session,
+                chatRoom: chatRoom,
+                privilege: privilege,
+                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
+            )
+        )
     }
     
     public func localAvFlagsUpdated(video: Bool, audio: Bool) {
