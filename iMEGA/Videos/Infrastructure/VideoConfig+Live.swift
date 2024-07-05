@@ -104,10 +104,10 @@ extension VideoConfig {
                 color: .init(
                     pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.mainBar,
                     thumbnailBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : Color.videoPlaylistContentThumbnailBackground,
-                    primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.black000000.swiftUI,
-                    secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : UIColor.gray515151.swiftUI,
+                    primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.textForegroundPrimary.swiftUI,
+                    secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : UIColor.textForegroundSecondary.swiftUI,
                     secondaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.gray848484.swiftUI,
-                    buttonTintColor: isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color.videoPlaylistAddButtonBackground
+                    buttonTintColor: isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color.videoPlaylistContentButtonTint
                 )
             ),
             favouritesEmptyStateImage: UIImage.favouritesEmptyState,
