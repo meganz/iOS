@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,6 +29,18 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="LZc-aW-Xlv"/>
                             <constraint firstAttribute="width" constant="40" id="zD8-uh-H16"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raisedHand" translatesAutoresizingMaskIntoConstraints="NO" id="NiV-Dg-jz9">
+                        <rect key="frame" x="20" y="18" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="fkP-ku-KeY"/>
+                            <constraint firstAttribute="height" constant="24" id="ulT-O2-Qu7"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -98,8 +110,10 @@
                     <constraint firstItem="uWd-E2-uzf" firstAttribute="leading" secondItem="pSo-rM-USx" secondAttribute="trailing" constant="9" id="VXa-5M-Z1W"/>
                     <constraint firstItem="i4p-fs-7UR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="aM8-RE-21C"/>
                     <constraint firstItem="jmz-NY-5vL" firstAttribute="leading" secondItem="uWd-E2-uzf" secondAttribute="trailing" constant="8" id="chA-p7-Knj"/>
+                    <constraint firstItem="NiV-Dg-jz9" firstAttribute="centerX" secondItem="pSo-rM-USx" secondAttribute="centerX" id="dg5-nB-AJh"/>
                     <constraint firstAttribute="bottom" secondItem="mmU-eC-HYF" secondAttribute="bottom" id="rel-tQ-2dP"/>
                     <constraint firstItem="uWd-E2-uzf" firstAttribute="centerY" secondItem="pSo-rM-USx" secondAttribute="centerY" id="uD8-WE-MIP"/>
+                    <constraint firstItem="NiV-Dg-jz9" firstAttribute="centerY" secondItem="pSo-rM-USx" secondAttribute="centerY" id="vhk-ad-eqX"/>
                     <constraint firstItem="pSo-rM-USx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="wOo-xe-sgz"/>
                 </constraints>
             </tableViewCellContentView>
@@ -111,6 +125,7 @@
                 <outlet property="micButton" destination="pa4-k0-jv7" id="UFm-zM-f4O"/>
                 <outlet property="moderatorTextLabel" destination="Uvn-Wg-LMo" id="cni-Eh-5Aj"/>
                 <outlet property="nameLabel" destination="RJh-um-uRA" id="r5T-43-Trk"/>
+                <outlet property="raisedHandImageView" destination="NiV-Dg-jz9" id="Ffv-7g-9MS"/>
                 <outlet property="videoButton" destination="i8q-ge-uoX" id="Xdd-0I-ha3"/>
             </connections>
             <point key="canvasLocation" x="-4.3478260869565224" y="130.58035714285714"/>
@@ -120,6 +135,7 @@
         <image name="callSlots" width="24" height="24"/>
         <image name="icon-contacts" width="24" height="24"/>
         <image name="moreList" width="28" height="28"/>
+        <image name="raisedHand" width="24" height="24"/>
         <image name="userMicOn" width="24" height="24"/>
         <image name="userMutedMeetings" width="24" height="24"/>
         <image name="videoOff" width="24" height="24"/>

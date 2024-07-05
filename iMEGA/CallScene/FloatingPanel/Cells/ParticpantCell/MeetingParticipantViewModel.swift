@@ -10,7 +10,7 @@ enum MeetingParticipantViewAction: ActionType {
 
 final class MeetingParticipantViewModel: ViewModelType, CommonParticipantViewModel {
     enum Command: CommandType, Equatable {
-        case configView(isModerator: Bool, isMicMuted: Bool, isVideoOn: Bool, shouldHideContextMenu: Bool)
+        case configView(isModerator: Bool, isMicMuted: Bool, isVideoOn: Bool, shouldHideContextMenu: Bool, raisedHand: Bool)
         case updateAvatarImage(image: UIImage)
         case updateName(name: String)
         case updatePrivilege(isModerator: Bool)
@@ -74,7 +74,8 @@ final class MeetingParticipantViewModel: ViewModelType, CommonParticipantViewMod
                 .configView(isModerator: participant.isModerator && !isOneToOneChat,
                             isMicMuted: participant.audio == .off,
                             isVideoOn: participant.video == .on,
-                            shouldHideContextMenu: shouldHideContextMenu)
+                            shouldHideContextMenu: shouldHideContextMenu,
+                            raisedHand: participant.raisedHand)
             )
             loadNameTask = Task { @MainActor [weak self] in
                 guard let self else { return }

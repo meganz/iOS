@@ -4,6 +4,7 @@ import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPresentationMock
+import MEGASwift
 
 // mock for MeetingFloatingPanelHeaderConfigFactoryProtocol
 struct MockMeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderConfigFactoryProtocol {
@@ -39,6 +40,7 @@ extension MeetingFloatingPanelViewModel {
         containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+        callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
@@ -49,7 +51,8 @@ extension MeetingFloatingPanelViewModel {
             router: router,
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
-            callUseCase: callUseCase,
+            callUseCase: callUseCase, 
+            callUpdateUseCase: callUpdateUseCase,
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: chatUseCase,

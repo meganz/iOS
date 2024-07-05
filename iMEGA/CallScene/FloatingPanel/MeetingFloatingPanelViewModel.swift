@@ -55,6 +55,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         return callUseCase.call(for: chatRoom.chatId)
     }
     private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
@@ -63,6 +64,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var callParticipantsNotInCall = [CallParticipantEntity]()
     private var callParticipantsInWaitingRoom = [CallParticipantEntity]()
     private var updateAllowNonHostToAddParticipantsTask: Task<Void, Never>?
+    private var onCallUpdateTask: Task<Void, Never>?
     private let presentUpgradeFlow: (AccountDetailsEntity) -> Void
     // store state of the fact that user dismissed upsell banner
     // shown to non-organizer host when there's more than max number of meeting participant
@@ -114,6 +116,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
          callUseCase: some CallUseCaseProtocol,
+         callUpdateUseCase: some CallUpdateUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          chatUseCase: some ChatUseCaseProtocol,
@@ -126,6 +129,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
@@ -134,18 +138,19 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.headerConfigFactory = headerConfigFactory
         self.featureFlagProvider = featureFlags
         self.presentUpgradeFlow = presentUpgradeFlow
-        
     }
     
     deinit {
         callUseCase.stopListeningForCall()
         chatRoomParticipantsUpdatedTask?.cancel()
+        onCallUpdateTask?.cancel()
     }
     
     func dispatch(_ action: MeetingFloatingPanelAction) {
         switch action {
         case .onViewReady:
             onViewReady()
+            monitorOnCallUpdate()
         case .onViewAppear:
             if selectWaitingRoomList {
                 selectWaitingRoomList = false
@@ -525,21 +530,65 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
+    // MARK: - On Call Update
+    
+    private func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        onCallUpdateTask = Task { [weak self] in
+            do {
+                for try await call in callUpdates {
+                    self?.onCallUpdate(call)
+                }
+            } catch {
+                MEGALogError("Error monitoring call updates \(error)")
+            }
+        }
+    }
+    
+    private func onCallUpdate(_ call: CallEntity) {
+        switch call.changeType {
+        case .callRaiseHand:
+            reloadRaiseHandParticipantsList(call)
+        default:
+            break
+        }
+    }
+    
+    private func cancelMonitorOnCallUpdate() {
+        onCallUpdateTask?.cancel()
+        onCallUpdateTask = nil
+    }
+    
+    // MARK: - Raise hand
+
+    private func reloadRaiseHandParticipantsList(_ call: CallEntity) {
+        for participant in callParticipants {
+            participant.raisedHand = call.raiseHandsList.contains(participant.participantId)
+        }
+        reloadParticipantsIfNeeded()
+    }
+    
     // MARK: - Load data
     
     private func loadParticipantsInCall() {
-        loadDataForTab(.inCall)
+        Task {
+            await loadDataForTab(.inCall)
+        }
     }
     
     private func loadParticipantsInWaitingRoom() {
-        loadDataForTab(.waitingRoom)
+        Task {
+            await loadDataForTab(.waitingRoom)
+        }
     }
     
     private func loadParticipantsNotInCall() {
-        loadDataForTab(.notInCall)
+        Task {
+            await loadDataForTab(.notInCall)
+        }
     }
     
-    private func loadDataForTab(_ tab: ParticipantsListTab) {
+    @MainActor private func loadDataForTab(_ tab: ParticipantsListTab) async {
         invokeCommand?(.reloadViewData(participantsListView: participantListViewData(for: tab)))
     }
     
@@ -725,7 +774,14 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         myself.video = call.hasLocalVideo ? .on : .off
         callParticipants.append(myself)
         
-        let participants = call.clientSessions.compactMap({CallParticipantEntity(session: $0, chatRoom: chatRoom, privilege: chatRoomUseCase.peerPrivilege(forUserHandle: $0.peerId, chatRoom: chatRoom))})
+        let participants = call.clientSessions.compactMap({
+            CallParticipantEntity(
+                session: $0,
+                chatRoom: chatRoom,
+                privilege: chatRoomUseCase.peerPrivilege(forUserHandle: $0.peerId, chatRoom: chatRoom), 
+                raisedHand: call.raiseHandsList.contains($0.peerId)
+            )
+        })
         if !participants.isEmpty {
             callParticipants.append(contentsOf: participants)
         }

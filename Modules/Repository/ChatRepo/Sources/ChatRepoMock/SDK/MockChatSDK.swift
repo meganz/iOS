@@ -8,6 +8,9 @@ public final class MockChatSDK: MEGAChatSdk {
     public var autojoinPublicChatCalled = 0
     public var autorejoinPublicChatCalled = 0
     
+    public var hasChatCallDelegate = false
+    public var delegateQueueType: ListenerQueueType?
+
     public init(
         chatRoom: MEGAChatRoom? = MockChatRoom(),
         hasChatOptionEnabled: Bool = false
@@ -40,5 +43,14 @@ public final class MockChatSDK: MEGAChatSdk {
     
     public override func hasChatOptionEnabled(for option: MEGAChatOption, chatOptionsBitMask: Int) -> Bool {
         hasChatOptionEnabled
+    }
+    
+    public override func add(_ delegate: MEGAChatCallDelegate, queueType: ListenerQueueType) {
+        hasChatCallDelegate = true
+        delegateQueueType = queueType
+    }
+    
+    public override func remove(_ delegate: any MEGAChatCallDelegate) {
+        hasChatCallDelegate = false
     }
 }

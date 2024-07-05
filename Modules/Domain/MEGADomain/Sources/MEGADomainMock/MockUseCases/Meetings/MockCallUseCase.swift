@@ -183,28 +183,28 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         guard let chatSession = chatSession, let chat = self.chatRoom else {
             return
         }
-        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
+        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
     }
     
     public func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
         guard let chatSession = chatSession, let chat = self.chatRoom else {
             return
         }
-        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
+        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
     }
     
     public func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
         guard let chatSession = chatSession, let chat = self.chatRoom else {
             return
         }
-        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
+        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
     }
     
     public func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
         guard let chatSession = chatSession, let chat = self.chatRoom else {
             return
         }
-        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
+        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
     }
     
     public func callTerminated(_ call: CallEntity) {
@@ -238,14 +238,14 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         guard let chatSession = chatSession, let chat = self.chatRoom else {
             return
         }
-        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
+        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
     }
     
     public func onLowResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
         guard let chatSession = chatSession, let chat = self.chatRoom else {
             return
         }
-        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
+        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
     }
     
     public func localAvFlagsUpdated(video: Bool, audio: Bool) {

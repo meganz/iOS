@@ -2,7 +2,8 @@ public extension CallParticipantEntity {
     convenience init(
         session: ChatSessionEntity,
         chatRoom: ChatRoomEntity,
-        privilege: ChatRoomPrivilegeEntity
+        privilege: ChatRoomPrivilegeEntity,
+        raisedHand: Bool
     ) {
         self.init(
             chatId: chatRoom.chatId,
@@ -27,7 +28,7 @@ public extension CallParticipantEntity {
             audioDetected: session.audioDetected,
             isRecording: session.onRecording, 
             absentParticipantState: .notInCall, 
-            raisedHand: false
+            raisedHand: raisedHand
         )
     }
     
