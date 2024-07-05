@@ -9,6 +9,7 @@ public final class MockVideoPlaylistContentUseCase: VideoPlaylistContentsUseCase
     
     public enum Message: Equatable {
         case monitorVideoPlaylist(id: HandleEntity)
+        case userVideoPlaylistVideos
     }
     
     public private(set) var messages = [Message]()
@@ -39,6 +40,7 @@ public final class MockVideoPlaylistContentUseCase: VideoPlaylistContentsUseCase
     }
     
     public func userVideoPlaylistVideos(by id: HandleEntity) async -> [VideoPlaylistVideoEntity] {
-        []
+        messages.append(.userVideoPlaylistVideos)
+        return []
     }
 }

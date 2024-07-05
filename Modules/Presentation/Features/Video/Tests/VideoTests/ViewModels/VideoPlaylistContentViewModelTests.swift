@@ -494,7 +494,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         let exp = expectation(description: "shouldShowDeletePlaylistAlert equals true")
         let cancellable = sut.$shouldShowDeletePlaylistAlert
             .filter { $0 }
-            .sink { showAlert in
+            .sink { _ in
                 exp.fulfill()
             }
         
@@ -507,6 +507,204 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         cancellable.cancel()
         task.cancel()
         await fulfillment(of: [backgroundExp], timeout: 0.5)
+    }
+    
+    // MARK: - init.subscribeToRemoveVideosFromVideoPlaylistAction
+    
+    @MainActor
+    func testInitSubscribeToRemoveVideosFromVideoPlaylistAction_whenHasEmptyVideosChanged_doesNotTriggerActionSheet() async {
+        // Arrange
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity
+        )
+        
+        let exp = expectation(description: "action sheet flag expectation")
+        exp.isInverted = true
+        let cancellable = sut.$shouldShowDeleteVideosFromVideoPlaylistActionSheet
+            .filter { $0 }
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        // Act
+        sharedUIState.didSelectRemoveVideoFromPlaylistAction.send([])
+        
+        // Assert
+        await fulfillment(of: [exp], timeout: 0.5)
+        XCTAssertNil(sut.selectedVideos)
+        
+        cancellable.cancel()
+    }
+    
+    @MainActor
+    func testInitSubscribeToRemoveVideosFromVideoPlaylistAction_whenHasVideosSelected_triggersActionSheet() async {
+        // Arrange
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity
+        )
+        
+        let exp = expectation(description: "action sheet flag expectation")
+        let cancellable = sut.$shouldShowDeleteVideosFromVideoPlaylistActionSheet
+            .filter { $0 }
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        // Act
+        let selectedVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(selectedVideos)
+        
+        // Assert
+        await fulfillment(of: [exp], timeout: 0.5)
+        XCTAssertEqual(sut.selectedVideos, selectedVideos)
+        
+        cancellable.cancel()
+    }
+    
+    // MARK: - didTapCancelOnDeleteVideosFromVideoPlaylistActionSheet
+    
+    func testDidTapCancelOnDeleteVideosFromVideoPlaylistActionSheet_whenCalled_clearSelectedVideos() {
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, _, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity
+        )
+        
+        sut.didTapCancelOnDeleteVideosFromVideoPlaylistActionSheet()
+        
+        XCTAssertNil(sut.selectedVideos)
+    }
+    
+    func testDidTapCancelOnDeleteVideosFromVideoPlaylistActionSheet_whenHasSelectedVideos_clearSelectedVideos() {
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity
+        )
+        let selectedVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(selectedVideos)
+        
+        sut.didTapCancelOnDeleteVideosFromVideoPlaylistActionSheet()
+        
+        XCTAssertNil(sut.selectedVideos)
+    }
+    
+    // MARK: - deleteVideosFromVideoPlaylist
+    
+    @MainActor
+    func testDeleteVideosFromVideoPlaylist_whenHasNoSelectedVideos_doesNotPerformDeleteVideosFromPlaylist() async {
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, _, _, _, videoPlaylistModificationUseCase, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity
+        )
+        
+        await sut.deleteVideosFromVideoPlaylist()
+        
+        XCTAssertTrue(videoPlaylistModificationUseCase.messages.notContains(.deleteVideoPlaylist))
+    }
+    
+    @MainActor
+    func testDeleteVideosFromVideoPlaylist_whenHasSelectedVideos_deletesVideosInVideoPlaylists() async {
+        // Arrange
+        let selectedVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, videoPlaylistContentsUseCase, _, sharedUIState, _, _, videoPlaylistModificationUseCase, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(deleteVideosInVideoPlaylistResult: .failure(GenericErrorEntity()))
+        )
+        let exp = expectation(description: "action sheet flag expectation")
+        let cancellable = sut.$shouldShowDeleteVideosFromVideoPlaylistActionSheet
+            .filter { $0 }
+            .sink { _ in
+                exp.fulfill()
+            }
+        sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(selectedVideos)
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        // Act
+        await sut.deleteVideosFromVideoPlaylist()
+        
+        // Assert
+        XCTAssertEqual(videoPlaylistContentsUseCase.messages, [ .userVideoPlaylistVideos ])
+        XCTAssertEqual(videoPlaylistModificationUseCase.messages, [ .deleteVideosInVideoPlaylist ])
+        assertThatDeleteVideosFromVideoPlaylistClearSelectedVideos(on: sut)
+        
+        cancellable.cancel()
+    }
+    
+    @MainActor
+    func testDeleteVideosFromVideoPlaylist_whenHasError_doesNotUpdatesUI() async {
+        // Arrange
+        let selectedVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(deleteVideosInVideoPlaylistResult: .failure(GenericErrorEntity()))
+        )
+        let exp = expectation(description: "action sheet flag expectation")
+        let cancellable = sut.$shouldShowDeleteVideosFromVideoPlaylistActionSheet
+            .filter { $0 }
+            .sink { _ in
+                exp.fulfill()
+            }
+        sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(selectedVideos)
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        // Act
+        await sut.deleteVideosFromVideoPlaylist()
+        
+        // Assert
+        XCTAssertEqual(sharedUIState.snackBarText, "")
+        XCTAssertFalse(sharedUIState.shouldShowSnackBar)
+        assertThatDeleteVideosFromVideoPlaylistClearSelectedVideos(on: sut)
+        
+        cancellable.cancel()
+    }
+    
+    @MainActor
+    func testDeleteVideosFromVideoPlaylist_whenSuccess_showsSnackBar() async {
+        // Arrange
+        let selectedVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: selectedVideos.count, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(deleteVideosInVideoPlaylistResult: .success(.init(success: UInt(selectedVideos.count), failure: 0)))
+        )
+        let exp = expectation(description: "action sheet flag expectation")
+        let cancellable = sut.$shouldShowDeleteVideosFromVideoPlaylistActionSheet
+            .filter { $0 }
+            .sink { _ in
+                exp.fulfill()
+            }
+        sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(selectedVideos)
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        // Act
+        await sut.deleteVideosFromVideoPlaylist()
+        
+        // Assert
+        let snackBarMessage = Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Snackbar.removedVideosCountFromPlaylistName(selectedVideos.count)
+            .replacingOccurrences(of: "[A]", with: videoPlaylistEntity.name)
+        XCTAssertEqual(sharedUIState.snackBarText, snackBarMessage)
+        XCTAssertTrue(sharedUIState.shouldShowSnackBar)
+        assertThatDeleteVideosFromVideoPlaylistClearSelectedVideos(on: sut)
+        
+        cancellable.cancel()
     }
     
     // MARK: - Helpers
@@ -589,5 +787,13 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     private func addVideosToVideoPlaylistSucessfulMessage(videosCount: Int, videoPlaylistName: String) -> String {
         let message = Strings.Localizable.Videos.Tab.Playlist.Snackbar.videoCount(videosCount)
         return message.replacingOccurrences(of: "[A]", with: videoPlaylistName)
+    }
+    
+    private func assertThatDeleteVideosFromVideoPlaylistClearSelectedVideos(
+        on sut: VideoPlaylistContentViewModel,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertNil(sut.selectedVideos, file: file, line: line)
     }
 }

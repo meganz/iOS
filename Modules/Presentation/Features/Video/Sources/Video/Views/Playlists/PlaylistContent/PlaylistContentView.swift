@@ -71,6 +71,20 @@ struct PlaylistContentScreen: View {
         } message: {
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline)
         }
+        .confirmationDialog(
+            Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.ActionSheet.Title.removeFromPlaylist,
+            isPresented: $viewModel.shouldShowDeleteVideosFromVideoPlaylistActionSheet,
+            titleVisibility: .visible
+        ) {
+            Button(Strings.Localizable.remove, role: .destructive) {
+                Task {
+                    await viewModel.deleteVideosFromVideoPlaylist()
+                }
+            }
+            Button(Strings.Localizable.cancel, role: .cancel) {
+                viewModel.didTapCancelOnDeleteVideosFromVideoPlaylistActionSheet()
+            }
+        }
     }
     
     private var deleteVideoPlaylistAlertView: some View {

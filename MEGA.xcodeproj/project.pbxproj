@@ -197,6 +197,7 @@
 		246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */; };
 		246ACEB92AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */; };
 		247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */; };
+		2484574F2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484574E2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift */; };
 		2486F1A92B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2486F1A82B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift */; };
 		2486F1AE2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2486F1AD2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift */; };
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
@@ -2910,6 +2911,7 @@
 		246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterNodeActionAdapterTests.swift; sourceTree = "<group>"; };
 		246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterNodeActionAdapter.swift; sourceTree = "<group>"; };
 		247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsRouterTests.swift; sourceTree = "<group>"; };
+		2484574E2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		2486F1A82B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampTabContainerViewController.swift; sourceTree = "<group>"; };
 		2486F1AD2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampTabContainerViewModel.swift; sourceTree = "<group>"; };
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
@@ -6137,6 +6139,7 @@
 		24385D272BF09420002F0561 /* VideoPlaylist */ = {
 			isa = PBXGroup;
 			children = (
+				2484574E2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift */,
 				24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */,
 			);
 			path = VideoPlaylist;
@@ -15863,6 +15866,7 @@
 				BFAAF726252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift in Sources */,
 				BFAAF717252E85810053A9BF /* VideoExplorerTableViewCell.swift in Sources */,
 				BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */,
+				2484574F2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */,
 				241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */,
 				240C98A92BD04738008C9F98 /* VideoRevampTabContainerViewController+NodeActionViewControllerDelegate.swift in Sources */,

@@ -1,5 +1,6 @@
 import AsyncAlgorithms
 import Combine
+import Foundation
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -33,6 +34,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     @Published var shouldShowError = false
     @Published var shouldShowRenamePlaylistAlert = false
     @Published var shouldShowDeletePlaylistAlert = false
+    @Published var shouldShowDeleteVideosFromVideoPlaylistActionSheet = false
+    private(set) var selectedVideos: [NodeEntity]?
     
     @Published var shouldShowVideoPlaylistPicker = false
     
@@ -44,6 +47,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     private(set) var renameVideoPlaylistTask: Task<Void, Never>?
     private(set) var deleteVideoPlaylistTask: Task<Void, Never>?
+    
+    private var subscriptions = Set<AnyCancellable>()
     
     init(
         videoPlaylistEntity: VideoPlaylistEntity,
@@ -77,6 +82,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.renameVideoPlaylistAlertViewModel.action = { [weak self] newVideoPlaylistName in
             self?.renameVideoPlaylist(with: newVideoPlaylistName)
         }
+        
+        subscribeToRemoveVideosFromVideoPlaylistAction()
     }
     
     @MainActor
@@ -270,7 +277,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             }
         }
     }
-    
+
     func deleteVideoPlaylist() {
         guard videoPlaylistEntity.type == .user else {
             return
@@ -280,5 +287,47 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             guard let self else { return }
             _ = await videoPlaylistModificationUseCase.delete(videoPlaylists: [videoPlaylistEntity])
         }
+    }
+    
+    private func subscribeToRemoveVideosFromVideoPlaylistAction() {
+        sharedUIState.didSelectRemoveVideoFromPlaylistAction
+            .receive(on: DispatchQueue.main)
+            .filter(\.isNotEmpty)
+            .sink { [weak self] selectedVideos in
+                self?.selectedVideos = selectedVideos
+                self?.shouldShowDeleteVideosFromVideoPlaylistActionSheet = true
+            }
+            .store(in: &subscriptions)
+    }
+    
+    @MainActor
+    func deleteVideosFromVideoPlaylist() async {
+        do {
+            guard let selectedVideos else {
+                return
+            }
+            let videosToDelete = await retrieveSelectedVideoPlaylistVideoEntities(selectedVideos)
+            let result = try await videoPlaylistModificationUseCase.deleteVideos(in: videoPlaylistEntity.id, videos: videosToDelete)
+            sharedUIState.snackBarText = deleteVideosFromVideoPlaylistSnackBarText(videosCount: Int(result.success))
+            sharedUIState.shouldShowSnackBar = true
+        } catch {
+            // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
+        }
+        selectedVideos = nil
+    }
+    
+    private func retrieveSelectedVideoPlaylistVideoEntities(_ selectedVideos: [NodeEntity]) async -> [VideoPlaylistVideoEntity] {
+        let videoPlaylistVideoEntities = await videoPlaylistContentsUseCase.userVideoPlaylistVideos(by: videoPlaylistEntity.id)
+        let selectedVideoIds = selectedVideos.map(\.handle)
+        return videoPlaylistVideoEntities.filter { selectedVideoIds.contains($0.video.id) }
+    }
+    
+    private func deleteVideosFromVideoPlaylistSnackBarText(videosCount: Int) -> String {
+        Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Snackbar.removedVideosCountFromPlaylistName(videosCount)
+            .replacingOccurrences(of: "[A]", with: videoPlaylistEntity.name)
+    }
+    
+    func didTapCancelOnDeleteVideosFromVideoPlaylistActionSheet() {
+        selectedVideos = nil
     }
 }
