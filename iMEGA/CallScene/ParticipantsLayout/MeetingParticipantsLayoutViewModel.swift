@@ -1,4 +1,5 @@
 import Combine
+import CombineSchedulers
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -108,6 +109,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updateCallWillEnd(String)
         case hideCallWillEnd
         case enableSwitchCameraButton
+        case updateSnackBar(SnackBar?)
     }
     
     private var chatRoom: ChatRoomEntity
@@ -119,7 +121,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private(set) var callParticipants = [CallParticipantEntity]() {
         didSet {
-            let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
             requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
         }
     }
@@ -134,7 +135,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             didSetSpeakerParticipant(speakerParticipant)
         }
     }
-
+    
     private(set) var isSpeakerParticipantPinned: Bool = false
     internal var layoutMode: ParticipantsLayoutMode = .grid {
         didSet {
@@ -155,9 +156,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var switchingCamera: Bool = false
     private var hasScreenSharingParticipant: Bool = false
     private var hasBeenInProgress: Bool = false
-
     private weak var containerViewModel: MeetingContainerViewModel?
-
+    
     private let chatUseCase: any ChatUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private var callSessionUseCase: any CallSessionUseCaseProtocol
@@ -172,13 +172,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-
+    
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
     private var callsSoundNotificationPreference: Bool
     
     private var avatarChangeSubscription: AnyCancellable?
     private var avatarRefetchTasks: [Task<Void, Never>]?
-
+    
     private var callEndCountDownSubscription: AnyCancellable?
     private lazy var dateComponentsFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
@@ -196,19 +196,21 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private let tonePlayer = TonePlayer()
     var namesFetchingTask: Task<Void, Never>?
-
+    
     private var reconnecting1on1Subscription: AnyCancellable?
     
     private(set) var callSessionUpdateSubscription: AnyCancellable?
     private var callUpdateSubscription: AnyCancellable?
-
+    
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     private var layoutUpdateChannel: ParticipantLayoutUpdateChannel
     let cameraSwitcher: any CameraSwitching
-    
+    let scheduler: AnySchedulerOf<DispatchQueue>
+        
     init(
         containerViewModel: MeetingContainerViewModel,
+        scheduler: AnySchedulerOf<DispatchQueue>,
         chatUseCase: some ChatUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
         callSessionUseCase: some CallSessionUseCaseProtocol,
@@ -230,6 +232,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         cameraSwitcher: some CameraSwitching
     ) {
         self.chatUseCase = chatUseCase
+        self.scheduler = scheduler
         self.containerViewModel = containerViewModel
         self.callUseCase = callUseCase
         self.callSessionUseCase = callSessionUseCase
@@ -278,7 +281,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func onCallUpdateListener() {
         callUpdateSubscription = callUseCase.onCallUpdate()
-            .receive(on: DispatchQueue.main)
+            .receive(on: scheduler)
             .sink { [weak self] call in
                 self?.onCallUpdate(call)
             }
@@ -508,7 +511,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     
                     let addedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.addedHandlers)
                     let removedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.removedHandlers)
-
+                    
                     do {
                         async let addedParticipantNamesAsyncTask = chatRoomUserUseCase.userDisplayNames(
                             forPeerIds: addedParticipantHandlersSubset,
@@ -529,6 +532,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     }
                 }
             }
+    }
+    
+    private var myself: CallParticipantEntity {
+        .myself(
+            handle: accountUseCase.currentUserHandle ?? .invalid,
+            userName: chatUseCase.myFullName(),
+            chatRoom: chatRoom
+        )
     }
     
     private func configureCallSessionsListener() {
@@ -581,7 +592,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
             hasBeenInProgress = call.status == .inProgress
         case .onViewReady:
-            let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
             fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
                 self?.invokeCommand?(.updateMyAvatar(image))
             }
@@ -729,7 +739,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         if let timeRemainingString = self.dateComponentsFormatter.string(from: CallViewModelConstant.callEndCountDownTimerDuration) {
             invokeCommand?(.updateCallEndDurationRemainingString(timeRemainingString))
         }
-
+        
         callEndCountDownSubscription = Timer
             .publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
@@ -747,7 +757,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     self.analyticsEventUseCase.sendAnalyticsEvent(.meetings(.endCallWhenEmptyCallTimeout))
                     self.tonePlayer.play(tone: .callEnded)
                     self.endCallEndCountDownTimer()
-
+                    
                     // when ending call, CallKit decativation will interupt playing of tone.
                     // Adding a delay of 0.7 seconds so there is enough time to play the tone
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
@@ -932,7 +942,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             MEGALogDebug("Participant not found \(participant) in the list")
             return
         }
-                
+        
         tappedParticipant(callParticipants[participantIndex])
     }
     
@@ -1027,7 +1037,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     @MainActor
     private func updateAvatar(handle: HandleEntity, image: UIImage) {
-        let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
         
         if handle == myself.participantId {
             invokeCommand?(.updateMyAvatar(image))
@@ -1043,7 +1052,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         let newHasScreenSharingParticipant = callParticipants.contains { $0.hasScreenShare }
         let shouldChangeToThumbnailView = hasScreenSharingParticipant && !newHasScreenSharingParticipant
         hasScreenSharingParticipant = newHasScreenSharingParticipant
-
+        
         if hasScreenSharingParticipant {
             layoutMode = .speaker
         } else if shouldChangeToThumbnailView {
@@ -1063,8 +1072,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         for callParticipant in cameraParticipants {
             if let firstParticipant = cameraParticipants.first, callParticipant == firstParticipant {
                 if callParticipant.hasScreenShare,
-                    let speakerParticipant,
-                    callParticipant != speakerParticipant &&
+                   let speakerParticipant,
+                   callParticipant != speakerParticipant &&
                     !speakerParticipant.hasScreenShare {
                     if let screenShareParticipant = firstCallParticipant(callParticipant, in: screenShareParticipants) {
                         newParticipants.append(screenShareParticipant)
@@ -1116,9 +1125,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .callWillEnd:
             manageCallWillEnd(for: call)
         case .callRaiseHand:
+            let raiseHandListBefore = self.call.raiseHandsList
             self.call = call
-            updateRemoteRaisedHandChanges()
-            invokeCommand?(.updateLocalRaisedHandHidden(call.raiseHandsList.notContains(chatUseCase.myUserHandle())))
+            updateRemoteRaisedHandChanges(
+                raiseHandListBefore: raiseHandListBefore,
+                raiseHandListAfter: call.raiseHandsList
+            )
+            let localUserRaisedHand = call.raiseHandsList.notContains(chatUseCase.myUserHandle())
+            invokeCommand?(.updateLocalRaisedHandHidden(localUserRaisedHand))
         case .localAVFlags:
             cameraEnabled = call.hasLocalVideo
         default:
@@ -1126,28 +1140,68 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
-    private func updateRemoteRaisedHandChanges() {
-        callParticipants.forEach { participant in
-            if participantHasJustRaisedHand(participant, in: call) || participantHasJustLoweredHand(participant, in: call) {
-                participant.raisedHand = call.raiseHandsList.contains(participant.participantId)
-                guard let index = callParticipants.firstIndex(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell }) else {
-                    MEGALogError("Error getting participant in with raise hand change to updated")
-                    return }
-                invokeCommand?(.reloadParticipantRaisedHandAt(index, callParticipants))
-            }
+    private func updateRemoteRaisedHandChanges(
+        raiseHandListBefore: [HandleEntity],
+        raiseHandListAfter: [HandleEntity]
+    ) {
+        
+        // compute changes to minimally update collection view and show/hide snack bar only when needed
+        let diffed = RaiseHandDiffing.applyingRaisedHands(
+            callParticipantHandles: callParticipants.map(\.participantId),
+            raiseHandListBefore: raiseHandListBefore,
+            raiseHandListAfter: raiseHandListAfter
+        )
+        
+        diffed.forEach { change in
+            // update CallParticipantEntity objects and reload cells
+            guard let index = change.index else { return }
+            callParticipants[index].raisedHand = change.raisedHand
+            invokeCommand?(.reloadParticipantRaisedHandAt(index, callParticipants))
         }
         
-        func participantHasJustRaisedHand(_ participant: CallParticipantEntity, in call: CallEntity) -> Bool {
-            participant.raisedHand == false && call.raiseHandsList.contains(participant.participantId)
-        }
+        MEGALogDebug("[RaiseHand] raise hand changed \(diffed.isNotEmpty) : \(call.raiseHandsList)")
         
-        func participantHasJustLoweredHand(_ participant: CallParticipantEntity, in call: CallEntity) -> Bool {
-            participant.raisedHand == true && call.raiseHandsList.notContains(participant.participantId)
+        let localRaisedHand = raiseHandListAfter.contains(myself.participantId)
+        
+        if diffed.isNotEmpty {
+            updateSnackBar(
+                callParticipants: callParticipants,
+                localRaisedHand: localRaisedHand
+            )
         }
     }
     
+    func viewRaisedHands() {
+        
+    }
+    
+    func lowerRaisedHand() {
+        Task {
+            do {
+                try await self.callUseCase.lowerHand(forCall: call)
+            } catch {
+                MEGALogError("[RaiseHand] lowering hand failed \(error)")
+            }
+        }
+    }
+    
+    func updateSnackBar(
+        callParticipants: [CallParticipantEntity],
+        localRaisedHand: Bool
+    ) {
+        let factory = RaiseHandSnackBarFactory(
+            viewRaisedHandsHandler: viewRaisedHands,
+            lowerHandHandler: lowerRaisedHand
+        )
+        let snackBarModel = factory.snackBar(
+            participants: callParticipants,
+            localRaisedHand: localRaisedHand
+        )
+        invokeCommand?(.updateSnackBar(snackBarModel))
+    }
+    
     /// Call will end alert is shown for moderators and countdown for all participants.
-    /// Both can not be shown at same time, so countdown is presented for moderators when they choose one action in the alert. 
+    /// Both can not be shown at same time, so countdown is presented for moderators when they choose one action in the alert.
     /// For non moderators, countdown is showed directly.
     private func manageCallWillEnd(for call: CallEntity) {
         let timeToEndCall = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
@@ -1156,7 +1210,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func showCallWillEndNotification(timeToEndCall: Double) {
         callWillEndCountDown = timeToEndCall
-
+        
         invokeCommand?(.showCallWillEnd(timeToEndCall.timeString))
         startCallWillEndTimer()
     }
@@ -1471,7 +1525,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
         containerViewModel?.dispatch(.showMutedBy(name))
     }
-
+    
     var cameraAndShareButtonsInNavBar: Bool {
         moreButtonVisibleInCallControls(
             isOneToOne: isOneToOne,

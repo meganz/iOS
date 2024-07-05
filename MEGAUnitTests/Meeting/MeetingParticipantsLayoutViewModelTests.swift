@@ -1,3 +1,4 @@
+import CombineSchedulers
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -1201,20 +1202,24 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatUseCase: MockChatUseCase(myUserHandle: 100)
         )
         
-        let exp = expectation(description: "local user raise hand icon visible after onChatCallUpdate with local user handle in the raise hands list")
+        let exp0 = expectation(description: "updateLocalRaisedHandHidden")
+        let exp1 = expectation(description: "updateSnackBar")
         
         harness.sut.invokeCommand = { command in
             switch command {
             case .updateLocalRaisedHandHidden(let hidden):
-                XCTAssertEqual(hidden, false)
-                exp.fulfill()
+                XCTAssertFalse(hidden)
+                exp0.fulfill()
+            case .updateSnackBar(let snackBar):
+                XCTAssertNil(snackBar)
+                exp1.fulfill()
             default:
                 XCTFail("Unexpected command")
             }
         }
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [100]))
 
-        wait(for: [exp])
+        wait(for: [exp0, exp1])
     }
     
     func testCallUpdate_localUserNotRaiseHand() {
@@ -1224,20 +1229,24 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatUseCase: MockChatUseCase(myUserHandle: 100)
         )
         
-        let exp = expectation(description: "local user raise hand icon NOT visible after onChatCallUpdate without local user handle in the raise hands list")
+        let exp0 = expectation(description: "updateLocalRaisedHandHidden")
+        let exp1 = expectation(description: "updateSnackBar")
         
         harness.sut.invokeCommand = { command in
             switch command {
             case .updateLocalRaisedHandHidden(let hidden):
-                XCTAssertEqual(hidden, true)
-                exp.fulfill()
+                XCTAssertTrue(hidden)
+                exp0.fulfill()
+            case .updateSnackBar(let snackBar):
+                XCTAssertNil(snackBar)
+                exp1.fulfill()
             default:
                 XCTFail("Unexpected command")
             }
         }
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101, 32]))
 
-        wait(for: [exp])
+        wait(for: [exp0, exp1])
     }
     
     func testCallUpdate_remoteUserRaiseHand() {
@@ -1273,37 +1282,56 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     func testCallUpdate_remoteUserLowHand() {
         let callUseCase = MockCallUseCase()
         let harness = Harness(
+            scheduler: .immediate,
             callUseCase: callUseCase
         )
-        
-        let remoteUserLowHandExpectation = expectation(description: "remote user raise hand icon NOT visible after onChatCallUpdate without remote user handle in the raise hands list")
 
-        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, raisedHand: true)
-        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, raisedHand: false)
-        
-        harness.sut.invokeCommand = { command in
-            switch command {
-            case .reloadParticipantRaisedHandAt(let index, let participants):
-                XCTAssertFalse(participants[index].raisedHand)
-                remoteUserLowHandExpectation.fulfill()
-            default:
-                break
-            }
-        }
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, name: "1", raisedHand: true)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, name: "2", raisedHand: false)
         harness.sut.participantJoined(participant: firstParticipant)
         harness.sut.participantJoined(participant: secondParticipant)
         
-        XCTAssertTrue(harness.sut.callParticipants[0].raisedHand)
-
+        var receiveCommands = [MeetingParticipantsLayoutViewModel.Command]()
+        harness.sut.invokeCommand = { command in
+            receiveCommands.append(command)
+        }
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
+        guard
+            case .reloadParticipantRaisedHandAt = receiveCommands[0],
+            case .updateSnackBar(let snackBar) = receiveCommands[1],
+            case .updateLocalRaisedHandHidden(let hidden) = receiveCommands[2]
+        else {
+            XCTFail("received incorrect commands")
+            return
+        }
+        
+        XCTAssertNotNil(snackBar)
+        XCTAssertTrue(hidden)
+        
+        receiveCommands.removeAll()
+        
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: []))
-
-        wait(for: [remoteUserLowHandExpectation], timeout: 3)
+        
+        guard
+            case .reloadParticipantRaisedHandAt = receiveCommands[0],
+            case .updateSnackBar(let snackBar) = receiveCommands[1],
+            case .updateLocalRaisedHandHidden(let hidden) = receiveCommands[2]
+        else {
+            XCTFail("received incorrect commands")
+            return
+        }
+        
+        XCTAssertNil(snackBar)
+        XCTAssertTrue(hidden)
+            
     }
     
     class Harness {
         let sut: MeetingParticipantsLayoutViewModel
         init(
             containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
+            scheduler: AnySchedulerOf<DispatchQueue> = .main,
             callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
             chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
             callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
@@ -1325,6 +1353,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         ) {
             self.sut = .init(
                 containerViewModel: containerViewModel,
+                scheduler: scheduler,
                 chatUseCase: chatUseCase,
                 callUseCase: callUseCase,
                 callSessionUseCase: callSessionUseCase,

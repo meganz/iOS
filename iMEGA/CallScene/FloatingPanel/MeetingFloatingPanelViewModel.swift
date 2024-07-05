@@ -770,7 +770,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             MEGALogError("Failed to fetch call to populate participants")
             return
         }
-        let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
+        let myself = CallParticipantEntity.myself(
+            handle: accountUseCase.currentUserHandle ?? .invalid,
+            userName: chatUseCase.myFullName(),
+            chatRoom: chatRoom
+        )
         myself.video = call.hasLocalVideo ? .on : .off
         callParticipants.append(myself)
         

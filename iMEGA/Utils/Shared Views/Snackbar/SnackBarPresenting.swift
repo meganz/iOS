@@ -13,7 +13,9 @@ extension SnackBarPresenting {
     }
     
     func dismissSnackBar(immediate: Bool = false) {
-        guard let containerView = snackBarContainerView() else { return }
+        guard let containerView = snackBarContainerView() else { 
+            return
+        }
         
         let completion = { [weak self] in
             self?.layout(snackBarView: nil)
