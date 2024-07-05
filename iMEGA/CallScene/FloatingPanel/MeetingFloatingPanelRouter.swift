@@ -139,6 +139,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         )
         baseViewController = vc
         self.viewModel = viewModel
+        
         return vc
     }
     

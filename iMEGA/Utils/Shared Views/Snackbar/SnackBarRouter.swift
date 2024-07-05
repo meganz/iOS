@@ -14,6 +14,7 @@ final class SnackBarRouter: NSObject {
     
     @MainActor
     func present(snackBar: SnackBar) {
+        assert(presenter != nil, "presenter must be configured before presenting")
         guard let presenter else { return }
         let viewModel = SnackBarViewModel(snackBar: snackBar)
         let viewController = UIHostingController(rootView: SnackBarView(viewModel: viewModel))
@@ -22,6 +23,7 @@ final class SnackBarRouter: NSObject {
     }
     
     func dismissSnackBar(immediate: Bool = false) {
+        assert(presenter != nil, "presenter must be configured to dismiss")
         presenter?.dismissSnackBar(immediate: immediate)
     }
 }
