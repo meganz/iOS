@@ -13,6 +13,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     private let accountDetails: AccountDetailsEntity
+    private let currentPlan: AccountPlanEntity
     private let assets: CancelAccountPlanAssets
     
     private var appleIDSubscriptionsURL: URL? {
@@ -21,10 +22,12 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     
     public init(
         accountDetails: AccountDetailsEntity,
+        currentPlan: AccountPlanEntity,
         assets: CancelAccountPlanAssets,
         presenter: UIViewController
     ) {
         self.accountDetails = accountDetails
+        self.currentPlan = currentPlan
         self.assets = assets
         self.presenter = presenter
     }
@@ -32,6 +35,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     public func build() -> UIViewController {
         let featureListHelper = FeatureListHelper(
             account: accountDetails,
+            currentPlan: currentPlan,
             assets: assets
         )
         

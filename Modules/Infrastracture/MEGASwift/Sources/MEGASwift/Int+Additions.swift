@@ -30,3 +30,10 @@ extension Int {
     public var hours: TimeInterval { minutes * 60 }
     public var days: TimeInterval { hours * 24 }
 }
+
+extension Int {
+    public func toGBString() -> String {
+        let bytes: Int64 = Int64(self * 1024 * 1024 * 1024)
+        return ByteCountFormatter.string(fromByteCount: bytes, countStyle: .binary)
+    }
+}

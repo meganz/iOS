@@ -12,6 +12,21 @@ extension SKProduct {
     }
 }
 
+// MARK: - MEGAPricing
+extension MEGAPricing {
+    public func toAccountPlanEntity(index: Int) -> AccountPlanEntity? {
+        guard let id = iOSID(atProductIndex: index) else { return nil }
+    
+        return AccountPlanEntity(
+            productIdentifier: id,
+            type: proLevel(atProductIndex: index).toAccountTypeEntity(),
+            subscriptionCycle: SubscriptionCycleEntity(productIdentifier: id),
+            storage: storageGB(atProductIndex: index).toGBString(),
+            transfer: transferGB(atProductIndex: index).toGBString()
+        )
+    }
+}
+
 // MARK: - SubscriptionCycleEntity
 fileprivate extension SubscriptionCycleEntity {
     init(productIdentifier identifier: String) {

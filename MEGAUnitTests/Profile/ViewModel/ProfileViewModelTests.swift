@@ -185,18 +185,28 @@ final class ProfileViewModelTests: XCTestCase {
     
     func testAction_cancelSubscription_shouldPresentCancelAccountPlan() async {
         let planType: AccountTypeEntity = .proI
-        let (sut, router) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: planType))
+        let (sut, router) = makeSUT(
+            currentAccountDetails: AccountDetailsEntity.build(proLevel: planType),
+            accountPlan: AccountPlanEntity(type: planType)
+        )
         
         sut.dispatch(.cancelSubscription)
+
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
 
         XCTAssertEqual(router.showCancelAccountPlan_calledTimes, 1, "Expected showCancelAccountPlan to be called once.")
     }
     
     func testAction_cancelSubscription_shouldPresentCancellationSteps() async {
         let planType: AccountTypeEntity = .proFlexi
-        let (sut, router) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: planType))
+        let (sut, router) = makeSUT(
+            currentAccountDetails: AccountDetailsEntity.build(proLevel: planType),
+            accountPlan: AccountPlanEntity(type: planType)
+        )
         
         sut.dispatch(.cancelSubscription)
+
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
 
         XCTAssertEqual(router.showCancellationSteps_calledTimes, 1, "Expected showCancellationSteps to be called once.")
     }
@@ -217,6 +227,7 @@ final class ProfileViewModelTests: XCTestCase {
     
     private func makeSUT(
         currentAccountDetails: AccountDetailsEntity? = nil,
+        accountPlan: AccountPlanEntity? = nil,
         email: String = "test@email.com",
         smsState: SMSStateEntity = .notAllowed,
         isMasterBusinessAccount: Bool = false,
@@ -234,7 +245,8 @@ final class ProfileViewModelTests: XCTestCase {
             isMasterBusinessAccount: isMasterBusinessAccount,
             smsState: smsState,
             multiFactorAuthCheckResult: multiFactorAuthCheckResult,
-            multiFactorAuthCheckDelay: 1.0
+            multiFactorAuthCheckDelay: 1.0,
+            accountPlan: accountPlan
         )
         
         let router = MockProfileViewRouter()

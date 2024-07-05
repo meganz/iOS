@@ -4,15 +4,16 @@ import MEGAL10n
 import XCTest
 
 final class FeatureListHelperTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
+    func randomAccountType() -> AccountTypeEntity {
+        do {
+            let randomAccountType = AccountTypeEntity.allCases.randomElement()
+            return try XCTUnwrap(randomAccountType, "Failed to get a random account type")
+        } catch {
+            XCTFail("Error unwrapping random account type: \(error)")
+            return .free
+        }
     }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
+    
     func makeSUT(
         storageMax: Int64 = 1000000000,
         transferMax: Int64 = 500000000,
@@ -27,7 +28,11 @@ final class FeatureListHelperTests: XCTestCase {
             availableImageName: availableImageName,
             unavailableImageName: unavailableImageName
         )
-        return FeatureListHelper(account: account, assets: assets)
+        return FeatureListHelper(
+            account: account,
+            currentPlan: AccountPlanEntity(type: randomAccountType()),
+            assets: assets
+        )
     }
 
     func testCreateCurrentFeatures_shouldReturnCorrectFeatureCount() {
@@ -44,7 +49,7 @@ final class FeatureListHelperTests: XCTestCase {
         XCTAssertNotNil(storageFeature, "Storage feature should not be nil")
         XCTAssertEqual(storageFeature?.title, Strings.Localizable.storage, "Storage feature title mismatch")
         XCTAssertEqual(storageFeature?.freeText, Strings.Localizable.Storage.Limit.capacity(20), "Storage feature free text mismatch")
-        XCTAssertEqual(storageFeature?.proText, String.memoryStyleString(fromByteCount: sut.account.storageMax), "Storage feature pro text mismatch")
+        XCTAssertEqual(storageFeature?.proText, sut.currentPlan.storage, "Storage feature pro text mismatch")
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectTransferFeature() {
@@ -55,7 +60,7 @@ final class FeatureListHelperTests: XCTestCase {
         XCTAssertNotNil(transferFeature, "Transfer feature should not be nil")
         XCTAssertEqual(transferFeature?.title, Strings.Localizable.transfer, "Transfer feature title mismatch")
         XCTAssertEqual(transferFeature?.freeText, Strings.Localizable.Account.TransferQuota.FreePlan.limited, "Transfer feature free text mismatch")
-        XCTAssertEqual(transferFeature?.proText, String.memoryStyleString(fromByteCount: sut.account.transferMax), "Transfer feature pro text mismatch")
+        XCTAssertEqual(transferFeature?.proText, sut.currentPlan.transfer, "Transfer feature pro text mismatch")
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectPasswordProtectedLinksFeature() {

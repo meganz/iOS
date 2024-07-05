@@ -11,6 +11,7 @@ public protocol FeatureListHelperProtocol {
 
 struct FeatureListHelper: FeatureListHelperProtocol {
     let account: AccountDetailsEntity
+    let currentPlan: AccountPlanEntity
     let assets: CancelAccountPlanAssets
     
     func createCurrentFeatures() -> [FeatureDetails] {
@@ -19,13 +20,13 @@ struct FeatureListHelper: FeatureListHelperProtocol {
                 type: .storage,
                 title: Strings.Localizable.storage,
                 freeText: Strings.Localizable.Storage.Limit.capacity(20),
-                proText: String.memoryStyleString(fromByteCount: account.storageMax)
+                proText: currentPlan.storage
             ),
             FeatureDetails(
                 type: .transfer,
                 title: Strings.Localizable.transfer,
                 freeText: Strings.Localizable.Account.TransferQuota.FreePlan.limited,
-                proText: String.memoryStyleString(fromByteCount: account.transferMax)
+                proText: currentPlan.transfer
             ),
             FeatureDetails(
                 type: .passwordProtectedLinks,

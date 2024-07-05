@@ -16,6 +16,7 @@ public protocol AccountUseCaseProtocol {
     var isMasterBusinessAccount: Bool { get }
     var isSmsAllowed: Bool { get }
     var isAchievementsEnabled: Bool { get }
+    func currentAccountPlan() async -> AccountPlanEntity?
     
     // User and session management
     func currentUser() async -> UserEntity?
@@ -104,6 +105,10 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     
     public var isAchievementsEnabled: Bool {
         repository.isAchievementsEnabled
+    }
+    
+    public func currentAccountPlan() async -> AccountPlanEntity? {
+        await repository.currentAccountPlan()
     }
 
     // MARK: - User and session management

@@ -78,6 +78,26 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public var isAchievementsEnabled: Bool {
         sdk.isAchievementsEnabled
     }
+    
+    public func currentAccountPlan() async -> AccountPlanEntity? {
+        let availablePlans = await availablePlans()
+        
+        return availablePlans.first(where: {
+            $0.type == currentAccountDetails?.proLevel && $0.subscriptionCycle == currentAccountDetails?.subscriptionCycle
+        })
+    }
+    
+    private func availablePlans() async -> [AccountPlanEntity] {
+        await withAsyncValue { completion in
+            sdk.getPricingWith(RequestDelegate { result in
+                if case let .success(request) = result {
+                    completion(.success(request.pricing?.availableSDKPlans() ?? []))
+                } else {
+                    completion(.success([]))
+                }
+            })
+        }
+    }
 
     // MARK: - User and session management
     public func currentUser() async -> UserEntity? {
