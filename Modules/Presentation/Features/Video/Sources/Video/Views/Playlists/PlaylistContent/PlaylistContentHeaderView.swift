@@ -153,6 +153,7 @@ struct PlaylistContentHeaderView: View {
         isExported: true,
         playlistType: .favourite
     )
+    .preferredColorScheme(.dark)
 }
 
 private func view(imageContainers: [any ImageContaining], isExported: Bool, playlistType: VideoPlaylistEntityType) -> some View {
