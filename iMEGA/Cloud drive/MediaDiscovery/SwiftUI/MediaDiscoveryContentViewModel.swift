@@ -95,16 +95,19 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         do {
             viewState = .normal
             try Task.checkCancellation()
+            let shouldExcludeSensitiveItems = await shouldExcludeSensitiveItems()
+            MEGALogDebug("[Search] load photos and videos in parent: \(parentNode.base64Handle), recursive: \(shouldIncludeSubfolderMedia), exclude sensitive \(shouldExcludeSensitiveItems)")
             let nodes = try await mediaDiscoveryUseCase.nodes(
                 forParent: parentNode,
                 recursive: shouldIncludeSubfolderMedia,
-                excludeSensitive: await shouldExcludeSensitiveItems())
+                excludeSensitive: shouldExcludeSensitiveItems)
             try Task.checkCancellation()
+            MEGALogDebug("[Search] nodes loaded \(nodes.count)")
             photoLibraryContentViewModel.library = await sortIntoPhotoLibrary(nodes: nodes, sortOrder: sortOrder)
             try Task.checkCancellation()
             viewState = nodes.isEmpty ? .empty : .normal
         } catch {
-            MEGALogError("Error loading nodes: \(error.localizedDescription)")
+            MEGALogError("[Search] Error loading nodes: \(error.localizedDescription)")
         }
     }
         
