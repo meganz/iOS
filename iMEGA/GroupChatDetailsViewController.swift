@@ -193,6 +193,13 @@ extension GroupChatDetailsViewController {
             UIImage.inviteToChat
         }
     }
+    
+    @objc func setTableHeaderFooterViewBackgroundColor(
+        _ headerFooterView: GenericHeaderFooterView
+    ) {
+        guard UIColor.isDesignTokenEnabled() else { return }
+        headerFooterView.setPreferredBackgroundColor(TokenColors.Background.page)
+    }
 }
 
 extension GroupChatDetailsViewController: MEGAChatCallDelegate {
