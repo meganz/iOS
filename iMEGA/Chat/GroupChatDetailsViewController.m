@@ -756,6 +756,8 @@
             break;
     }
     
+    [self setTableHeaderFooterViewBackgroundColor: headerView];
+    
     return headerView;
 }
 
@@ -829,6 +831,8 @@
             break;
            
     }
+    
+    [self setTableHeaderFooterViewBackgroundColor: footerView];
     
     return footerView;
 }
