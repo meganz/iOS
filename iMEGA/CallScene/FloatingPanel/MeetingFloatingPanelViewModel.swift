@@ -532,7 +532,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     // MARK: - On Call Update
     
-    private func monitorOnCallUpdate() {
+    func monitorOnCallUpdate() {
         let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
         onCallUpdateTask = Task { [weak self] in
             do {
@@ -687,7 +687,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         
         let participants = switch tab {
         case .inCall:
-            callParticipants
+            featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak) ?
+            callParticipants.sortByRaiseHand(call: call) : callParticipants
         case .notInCall:
             callParticipantsNotInCall
         case .waitingRoom:

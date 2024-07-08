@@ -3,6 +3,8 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentationMock
+import MEGASwift
 import XCTest
 
 extension WaitingRoomConfig {
@@ -754,6 +756,105 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         evaluate {
             router.showMuteError_calledTimes == 1 &&
             callUseCase.muteParticipant_CalledTimes == 0
+        }
+    }
+    
+    func testEvent_callUpdateRaiseHandChanges_oneParticipantRaiseHand_participantsRaiseHandMustBeUpdated() async throws {
+        let harness = Harness.withMonitorCallUpdates()
+        harness.joinAllParticipants()
+        let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: [102])
+        try await harness.sendCallUpdate(call)
+        XCTAssertTrue(harness.raiseHandFlagsMustMatch(forCall: call))
+    }
+    
+    func testEvent_callUpdateRaiseHandChanges_moreThanOneParticipantRaiseHand_participantsRaiseHandMustBeUpdated() async throws {
+        let harness = Harness.withMonitorCallUpdates()
+        harness.joinAllParticipants()
+        let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: [102, 103])
+        try await harness.sendCallUpdate(call)
+        XCTAssertTrue(harness.raiseHandFlagsMustMatch(forCall: call))
+    }
+    
+    func testEvent_callUpdateRaiseHandChanges_participantLowerHand_participantsRaiseHandMustBeUpdated() async throws {
+        let harness = Harness.withMonitorCallUpdates()
+        harness.joinAllParticipants()
+        let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: [])
+        try await harness.sendCallUpdate(call)
+        XCTAssertTrue(harness.raiseHandFlagsMustMatch(forCall: call))
+    }
+    
+    class Harness {
+        let sut: MeetingFloatingPanelViewModel
+        
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2)
+        let thirdParticipant = CallParticipantEntity(participantId: 103, clientId: 3)
+        
+        lazy var callParticipants = [firstParticipant, secondParticipant, thirdParticipant]
+                
+        var continuation: AsyncStream<CallEntity>.Continuation?
+        
+        init(
+            router: some MeetingFloatingPanelRouting = MockMeetingFloatingPanelRouter(),
+            containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
+            chatRoom: ChatRoomEntity = ChatRoomEntity(),
+            callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+            callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
+            accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+            chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+            chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
+            selectWaitingRoomList: Bool = false,
+            headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol = MockMeetingFloatingPanelHeaderConfigFactory()
+        ) {
+            self.sut = .init(
+                router: router,
+                containerViewModel: containerViewModel,
+                chatRoom: chatRoom,
+                callUseCase: callUseCase,
+                callUpdateUseCase: callUpdateUseCase,
+                accountUseCase: accountUseCase,
+                chatRoomUseCase: chatRoomUseCase,
+                chatUseCase: chatUseCase,
+                selectWaitingRoomList: selectWaitingRoomList,
+                headerConfigFactory: headerConfigFactory,
+                featureFlags: MockFeatureFlagProvider(list: .init()),
+                presentUpgradeFlow: { _ in }
+            )
+        }
+        
+        static func withMonitorCallUpdates() -> Harness {
+            let (stream, continuation) = AsyncStream
+                .makeStream(of: CallEntity.self)
+            let callUpdateUseCase = MockCallUpdateUseCase(monitorCallUpdateSequenceResult: AnyAsyncThrowingSequence(stream))
+            
+            let harness = Harness(
+                callUpdateUseCase: callUpdateUseCase
+            )
+            
+            harness.continuation = continuation
+            harness.sut.monitorOnCallUpdate()
+            return harness
+        }
+        
+        func raiseHandFlagsMustMatch(forCall call: CallEntity) -> Bool {
+            let raiseHandIndex = callParticipants.partition(by: { $0.raisedHand })
+            let notRaiseHandParticipants = Array(callParticipants[..<raiseHandIndex])
+            let raiseHandParticipants = Array(callParticipants[raiseHandIndex...])
+            
+            let raiseHandIdsAreEqual = call.raiseHandsList == raiseHandParticipants.map { $0.participantId }
+            
+            let doesNotContainNotRaiseHandIds = !notRaiseHandParticipants.map { $0.participantId }.contains { call.raiseHandsList.contains($0)}
+            
+            return raiseHandIdsAreEqual && doesNotContainNotRaiseHandIds
+        }
+        
+        func sendCallUpdate(_ call: CallEntity) async throws {
+            continuation?.yield(call)
+            try await Task.sleep(nanoseconds: 1_000_000)
+        }
+        
+        func joinAllParticipants() {
+            callParticipants.forEach { sut.participantJoined(participant: $0) }
         }
     }
     
