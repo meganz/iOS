@@ -224,6 +224,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             switch action {
             case .delete:
                 shouldShowDeletePlaylistAlert = true
+            case .addVideosToVideoPlaylistContent:
+                shouldShowVideoPlaylistPicker = true
             default:
                 break
             }

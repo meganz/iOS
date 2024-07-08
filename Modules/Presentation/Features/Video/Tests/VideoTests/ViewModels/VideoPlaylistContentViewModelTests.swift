@@ -509,6 +509,36 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         await fulfillment(of: [backgroundExp], timeout: 0.5)
     }
     
+    @MainActor
+    func testSubscribeToSelectedVideoPlaylistActionChanged_whenAddVideosToPlaylistContentTapped_showsVideosPicker() async {
+        // Arrange
+        let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
+        
+        let backgroundExp = expectation(description: "subscribe background task")
+        let task = Task {
+            await sut.subscribeToSelectedVideoPlaylistActionChanged()
+            backgroundExp.fulfill()
+        }
+        
+        let exp = expectation(description: "shouldShowVideoPlaylistPicker equals true")
+        let cancellable = sut.$shouldShowVideoPlaylistPicker
+            .filter { $0 }
+            .sink { showAlert in
+                exp.fulfill()
+            }
+        
+        // Act
+        sharedUIState.selectedVideoPlaylistActionEntity = .addVideosToVideoPlaylistContent
+        
+        // Assert
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        cancellable.cancel()
+        task.cancel()
+        await fulfillment(of: [backgroundExp], timeout: 0.5)
+    }
+    
     // MARK: - init.subscribeToRemoveVideosFromVideoPlaylistAction
     
     @MainActor
