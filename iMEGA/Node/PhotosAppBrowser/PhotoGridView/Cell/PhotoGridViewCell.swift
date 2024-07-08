@@ -22,8 +22,7 @@ final class PhotoGridViewCell: UICollectionViewCell {
         didSet {
             let isSelected = selectedIndex != nil
             markerView?.selected = isSelected
-            overlayView?.isHidden = !isSelected
-            if let index = selectedIndex {
+            if !UIColor.isDesignTokenEnabled(), let index = selectedIndex {
                 markerView.text = "\(index + 1)"
             }
         }
@@ -38,17 +37,6 @@ final class PhotoGridViewCell: UICollectionViewCell {
         }
     }
 
-    lazy var overlayView: UIView? = {
-        guard UIColor.isDesignTokenEnabled() else { return nil }
-        let view = UIView()
-        // Requested by designers to not use design tokens for this one
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        view.isHidden = true
-        imageView?.addSubview(view)
-        imageView?.bringSubviewToFront(view)
-        return view
-    }()
-
     // MARK: - Overriden methods.
     
     override func awakeFromNib() {
@@ -60,7 +48,6 @@ final class PhotoGridViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         relayoutSubViews()
-        overlayView?.frame = imageView.bounds
     }
     
     // MARK: - Interface methods.
@@ -125,7 +112,6 @@ final class PhotoGridViewCell: UICollectionViewCell {
         panSelectionHandler = nil
         selectedIndex = nil
         durationString = nil
-        overlayView?.isHidden = true
         super.prepareForReuse()
     }
 }
