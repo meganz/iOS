@@ -80,7 +80,7 @@ final class ProfileViewModel: ViewModelType {
         
         var sections: [ProfileSection] = shouldShowPlanSection ? [.profile, .security, .plan, .session] : [.profile, .security, .session]
         
-        if isCancelSubscriptionFeatureFlagEnabled && accountUseCase.hasValidProAccount() {
+        if shouldShowCancelSubscriptionSection {
             sections.append(.subscription)
         }
         
@@ -113,6 +113,10 @@ final class ProfileViewModel: ViewModelType {
     
     private var shouldShowPlanSection: Bool {
         accountUseCase.isAccountType(.proFlexi) || accountUseCase.isAccountType(.business) || accountUseCase.isMasterBusinessAccount
+    }
+    
+    private var shouldShowCancelSubscriptionSection: Bool {
+        isCancelSubscriptionFeatureFlagEnabled && accountUseCase.hasValidProAccount()
     }
 }
 

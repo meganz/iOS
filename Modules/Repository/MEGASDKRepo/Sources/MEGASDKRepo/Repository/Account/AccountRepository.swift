@@ -140,6 +140,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public func isInGracePeriod() -> Bool {
         sdk.businessStatus == .gracePeriod
     }
+    
+    public func hasValidSubscription() -> Bool {
+        currentAccountDetails?.subscriptionStatus == .valid
+    }
 
     // MARK: - Account operations
     public func contacts() -> [UserEntity] {

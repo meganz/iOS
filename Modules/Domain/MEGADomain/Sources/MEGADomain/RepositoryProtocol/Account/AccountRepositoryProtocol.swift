@@ -24,6 +24,7 @@ public protocol AccountRepositoryProtocol: Sendable {
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
     func isExpiredAccount() -> Bool
     func isInGracePeriod() -> Bool
+    func hasValidSubscription() -> Bool
 
     // Account operations
     func contacts() -> [UserEntity]

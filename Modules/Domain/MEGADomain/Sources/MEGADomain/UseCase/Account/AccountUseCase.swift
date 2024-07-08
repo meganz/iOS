@@ -125,7 +125,7 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     }
     
     public func hasValidProAccount() -> Bool {
-        isStandardProAccount() || isValidProFlexiAccount()
+        (isStandardProAccount() || isValidProFlexiAccount()) && repository.hasValidSubscription()
     }
     
     public func hasValidProOrUnexpiredBusinessAccount() -> Bool {
