@@ -6,22 +6,18 @@ final class PhotoSelectedMarkerView: SingleTapView {
     private let outerCircleInsetValue: CGFloat = 4
     private let innerCircleInsetValue: CGFloat = 5
     private let labelInset: CGFloat = 2
-    private let labelInsetFactor: CGFloat = 0.28
 
     // Outer circle ring
     private lazy var outerCircle: CAShapeLayer = {
         let layer = CAShapeLayer()
         createPath(circleLayer: layer, insetValue: outerCircleInsetValue)
+        layer.strokeColor = UIColor.whiteFFFFFF.cgColor
+        layer.fillColor = UIColor.clear.cgColor
+        layer.lineWidth = 1.65
 
-        if UIColor.isDesignTokenEnabled() {
-            layer.strokeColor = designTokenStrokeColor
-            layer.fillColor = designTokenFillColor
-        } else {
-            layer.fillColor = UIColor.clear.cgColor
-            layer.strokeColor = UIColor.whiteFFFFFF.cgColor
-            // The design token version of the checkmark does not contain a shadow
+        // The design token version doesn't have a shadow
+        if !UIColor.isDesignTokenEnabled() {
             layer.shadowColor = UIColor.black000000.cgColor
-            layer.lineWidth = 1.65
             layer.shadowRadius = 1
             layer.shadowOpacity = 0.3
             layer.shadowOffset = CGSize(width: -2, height: 2)
@@ -36,38 +32,32 @@ final class PhotoSelectedMarkerView: SingleTapView {
         createPath(circleLayer: layer, insetValue: innerCircleInsetValue)
 
         if UIColor.isDesignTokenEnabled() {
-            layer.fillColor = TokenColors.Components.selectionControl.cgColor
+            layer.fillColor = TokenColors.Support.success.cgColor
         } else {
             layer.fillColor = UIColor.green4AA588.cgColor
         }
 
         return layer
     }()
-    
-    // Center label
+
+    // Center label: if the design token FF is enabled, it's the checkmark image, otherwise, it's a text label
     private lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-
-        if UIColor.isDesignTokenEnabled() {
-            label.textColor = TokenColors.Icon.inverseAccent
-        } else {
-            label.textColor = UIColor.whiteFFFFFF
-        }
-
+        label.textColor = UIColor.whiteFFFFFF
         label.baselineAdjustment = .alignCenters
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
 
-    private var designTokenStrokeColor: CGColor? {
-        selected ? nil : TokenColors.Border.strong.cgColor
-    }
-
-    private var designTokenFillColor: CGColor {
-        selected ? TokenColors.Components.selectionControl.cgColor : UIColor.clear.cgColor
-    }
+    private lazy var imageView: UIImageView = {
+        let view = UIImageView(image: .photoPickerCheckmark)
+        view.contentMode = .scaleAspectFit
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     var text: String? {
         didSet {
@@ -78,10 +68,11 @@ final class PhotoSelectedMarkerView: SingleTapView {
     var selected: Bool = false {
         didSet {
             innerCircle.isHidden = !selected
-            label.isHidden = !selected
+
             if UIColor.isDesignTokenEnabled() {
-                outerCircle.fillColor = designTokenFillColor
-                outerCircle.strokeColor = designTokenStrokeColor
+                imageView.isHidden = !selected
+            } else {
+                label.isHidden = !selected
             }
         }
     }
@@ -92,7 +83,7 @@ final class PhotoSelectedMarkerView: SingleTapView {
         super.init(frame: frame)
         configureLayers()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureLayers()
@@ -108,17 +99,44 @@ final class PhotoSelectedMarkerView: SingleTapView {
         label.frame = bounds.insetBy(dx: labelInset + innerCircleInsetValue,
                                      dy: labelInset + innerCircleInsetValue)
     }
-    
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        let hasDifferentColorAppearance = traitCollection.hasDifferentColorAppearance(
+            comparedTo: previousTraitCollection
+        )
+
+        if hasDifferentColorAppearance && UIColor.isDesignTokenEnabled() {
+            innerCircle.fillColor = TokenColors.Support.success.cgColor
+        }
+    }
+
     // MARK: - Private methods.
     
     private func configureLayers() {
         layer.addSublayer(outerCircle)
         layer.addSublayer(innerCircle)
-        addSubview(label)
+
+        if UIColor.isDesignTokenEnabled() {
+            addSubview(imageView)
+            setupImageViewConstraints()
+        } else {
+            addSubview(label)
+        }
     }
     
     private func createPath(circleLayer: CAShapeLayer, insetValue: CGFloat) {
         circleLayer.path = UIBezierPath(ovalIn: bounds.insetBy(dx: insetValue,
                                                                dy: insetValue)).cgPath
+    }
+
+    private func setupImageViewConstraints() {
+        NSLayoutConstraint.activate(
+            [
+                imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                imageView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ]
+        )
     }
 }
