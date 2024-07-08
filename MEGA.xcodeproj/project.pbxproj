@@ -892,6 +892,7 @@
 		830C28E025E6900200E9B56E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28DF25E6900200E9B56E /* GridView.swift */; };
 		830F60F12BD16BE600A1DA60 /* MockCallsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */; };
 		831056332BB432D50094A872 /* SimpleDialogView+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831056322BB432D50094A872 /* SimpleDialogView+Factory.swift */; };
+		8310847F2C3C1648004E1E5F /* CallParticipantsSortingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310847E2C3C1648004E1E5F /* CallParticipantsSortingTests.swift */; };
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
 		8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */; };
@@ -3675,6 +3676,7 @@
 		830C28DF25E6900200E9B56E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallsCoordinator.swift; sourceTree = "<group>"; };
 		831056322BB432D50094A872 /* SimpleDialogView+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SimpleDialogView+Factory.swift"; sourceTree = "<group>"; };
+		8310847E2C3C1648004E1E5F /* CallParticipantsSortingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantsSortingTests.swift; sourceTree = "<group>"; };
 		8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailViewController.swift; sourceTree = "<group>"; };
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		83113494223900CB00647AB4 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
@@ -12708,6 +12710,7 @@
 				941255512BED03C700058C0D /* CallKitCallManagerTests.swift */,
 				94EC99BB2BEA37F10007E30C /* CallKitProviderDelegateTests.swift */,
 				992003572B0C09620058FF5F /* CallParticipantCellTests.swift */,
+				8310847E2C3C1648004E1E5F /* CallParticipantsSortingTests.swift */,
 				94B503A62C357E320064270D /* CallsCoordinatorTests.swift */,
 				838116232BA32565001A2937 /* CallWillEndAlertViewModelTests.swift */,
 				948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */,
@@ -16345,6 +16348,7 @@
 				94EC99BC2BEA37F10007E30C /* CallKitProviderDelegateTests.swift in Sources */,
 				94C2884E2BC4253B008BBA3C /* CallLimitationsTests.swift in Sources */,
 				992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */,
+				8310847F2C3C1648004E1E5F /* CallParticipantsSortingTests.swift in Sources */,
 				94B503A72C357E320064270D /* CallsCoordinatorTests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				838116242BA32565001A2937 /* CallWillEndAlertViewModelTests.swift in Sources */,
