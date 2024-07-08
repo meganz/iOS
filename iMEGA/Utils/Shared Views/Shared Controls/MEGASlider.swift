@@ -12,11 +12,13 @@ final class MEGASlider: UISlider {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        registerForTraitChanges()
         configure()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        registerForTraitChanges()
         configure()
     }
     
@@ -30,6 +32,22 @@ final class MEGASlider: UISlider {
         
         setThumbImage(thumbImage(bgColor: customTintColor(), radius: thumbRadius), for: .normal)
         setThumbImage(thumbImage(bgColor: customTintColor(), radius: hightlitedThumbRadius), for: .highlighted)
+    }
+    
+    private func registerForTraitChanges() {
+        guard #available(iOS 17.0, *) else { return }
+        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { [weak self] (slider: MEGASlider, previousTraitCollection: UITraitCollection) in
+            if slider.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self?.configure()
+            }
+        })
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+            configure()
+        }
     }
     
     private func configureMinimumTrackTintColor() {
