@@ -24,10 +24,10 @@ extension ChatStatusEntity {
     
     var uiColor: UIColor {
         switch self {
-        case .online: MEGAAppColor.Chat.chatStatusOnline.uiColor
-        case .offline: MEGAAppColor.Chat.chatStatusOffline.uiColor
-        case .away: MEGAAppColor.Chat.chatStatusAway.uiColor
-        case .busy: MEGAAppColor.Chat.chatStatusBusy.uiColor
+        case .online: UIColor.chatStatusOnline
+        case .offline: UIColor.chatStatusOffline
+        case .away: UIColor.chatStatusAway
+        case .busy: UIColor.chatStatusBusy
         default: .clear
         }
     }

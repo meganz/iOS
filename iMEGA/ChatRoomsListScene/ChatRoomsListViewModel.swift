@@ -424,8 +424,11 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     @MainActor
     private func createContactsOnMegaViewState(withDescription description: String) {
+        let image = UIColor.isDesignTokenEnabled() ?
+            UIImage.inviteToChatDesignToken :
+            UIImage.inviteToChat
         contactsOnMegaViewState = ChatRoomsTopRowViewState(
-            image: UIImage.inviteToChat,
+            image: image,
             description: description) { [weak self] in
                 self?.topRowViewTapped()
             }
