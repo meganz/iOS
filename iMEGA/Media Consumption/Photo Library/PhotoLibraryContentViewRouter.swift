@@ -3,6 +3,7 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import SwiftUI
 
 protocol PhotoLibraryContentViewRouting {
@@ -17,18 +18,22 @@ protocol PhotoLibraryContentViewRouting {
 struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     private let contentMode: PhotoLibraryContentMode
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     init(contentMode: PhotoLibraryContentMode = .library,
-         tracker: some AnalyticsTracking = DIContainer.tracker) {
+         tracker: some AnalyticsTracking = DIContainer.tracker,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.contentMode = contentMode
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
     }
     
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard {
         return PhotoYearCard(
             viewModel: PhotoYearCardViewModel(
                 photoByYear: photoByYear,
-                thumbnailLoader: makeThumbnailLoader()
+                thumbnailLoader: makeThumbnailLoader(),
+                nodeUseCase: makeNodeUseCase()
             )
         )
     }
@@ -37,7 +42,9 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoMonthCard(
             viewModel: PhotoMonthCardViewModel(
                 photoByMonth: photoByMonth,
-                thumbnailLoader: makeThumbnailLoader()
+                thumbnailLoader: makeThumbnailLoader(),
+                nodeUseCase: makeNodeUseCase(),
+                featureFlagProvider: featureFlagProvider
             )
         )
     }
@@ -46,7 +53,9 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoDayCard(
             viewModel: PhotoDayCardViewModel(
                 photoByDay: photoByDay,
-                thumbnailLoader: makeThumbnailLoader()
+                thumbnailLoader: makeThumbnailLoader(), 
+                nodeUseCase: makeNodeUseCase(),
+                featureFlagProvider: featureFlagProvider
             )
         )
     }
@@ -57,7 +66,8 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
                 photo: photo,
                 viewModel: viewModel,
                 thumbnailLoader: makeThumbnailLoader(),
-                nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: contentMode)
+                nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: contentMode),
+                featureFlagProvider: featureFlagProvider
             )
         )
     }
@@ -93,6 +103,13 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     
     private func makeThumbnailLoader() -> any ThumbnailLoaderProtocol {
         ThumbnailLoaderFactory.makeThumbnailLoader(mode: contentMode)
+    }
+    
+    private func makeNodeUseCase() -> some NodeUseCaseProtocol {
+        NodeUseCase(
+          nodeDataRepository: NodeDataRepository.newRepo,
+          nodeValidationRepository: NodeValidationRepository.newRepo,
+          nodeRepository: NodeRepository.newRepo)
     }
 }
 
