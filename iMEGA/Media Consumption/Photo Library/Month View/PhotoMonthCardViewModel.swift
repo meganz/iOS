@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
 
 final class PhotoMonthCardViewModel: PhotoCardViewModel {
     private let photoByMonth: PhotoByMonth
@@ -16,10 +17,12 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
     }
 
     init(photoByMonth: PhotoByMonth,
-         thumbnailLoader: some ThumbnailLoaderProtocol) {
+         thumbnailLoader: some ThumbnailLoaderProtocol,
+         nodeUseCase: some NodeUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.photoByMonth = photoByMonth
         title = DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
         
-        super.init(coverPhoto: photoByMonth.coverPhoto, thumbnailLoader: thumbnailLoader)
+        super.init(coverPhoto: photoByMonth.coverPhoto, thumbnailLoader: thumbnailLoader, nodeUseCase: nodeUseCase, featureFlagProvider: featureFlagProvider)
     }
 }

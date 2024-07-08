@@ -236,11 +236,20 @@ class PhotoCellViewModel: ObservableObject {
     /// - Parameters:
     ///   - photo: Photo NodeEntity to monitor
     private func photoSensitivityChanges(for photo: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        guard let nodeUseCase else { return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence() }
+        
+        guard let nodeUseCase else {
+            return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+        }
+        
+        // Need to fetch the latest version of the node.
+        // This is a architecture bug with the SwiftUI version iOS 15 and below
+        // The NodeEntity does not update in this model, due to the way the SwiftUI view has been built
+        // If used in iOS16 +, this is not an issue as this VM gets recreated on reloads and scrolling away
+        let node = nodeUseCase.nodeForHandle(photo.handle) ?? photo
         
         return combineLatest(
-            nodeUseCase.sensitivityChanges(for: photo).prepend(photo.isMarkedSensitive),
-            monitorInheritedSensitivity(for: photo)
+            nodeUseCase.sensitivityChanges(for: node).prepend(node.isMarkedSensitive),
+            monitorInheritedSensitivity(for: node)
         )
         .map { isPhotoSensitive, isInheritingSensitive in
             if isPhotoSensitive {
