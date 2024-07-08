@@ -62,4 +62,8 @@ extension ContactTableViewCell {
         
         shareLabel.isHidden = true
     }
+    
+    @objc func removePendingShareIconColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+    }
 }
