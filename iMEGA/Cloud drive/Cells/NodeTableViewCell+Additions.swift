@@ -63,13 +63,15 @@ extension NodeTableViewCell {
         configureIconImageColor(for: downloadedImageView)
     }
     
-    @objc func createViewModel(node: MEGANode?) -> NodeTableViewCellViewModel {
-        createViewModel(nodes: [node].compactMap { $0 })
+    @objc func createViewModel(node: MEGANode?, shouldApplySensitiveBehaviour: Bool) -> NodeTableViewCellViewModel {
+        createViewModel(
+            nodes: [node].compactMap { $0 },
+            shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour)
     }
     
-    @objc func createViewModel(nodes: [MEGANode]) -> NodeTableViewCellViewModel {
+    @objc func createViewModel(nodes: [MEGANode], shouldApplySensitiveBehaviour: Bool) -> NodeTableViewCellViewModel {
         .init(nodes: nodes.toNodeEntities(),
-              flavour: cellFlavor,
+              shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
               nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,

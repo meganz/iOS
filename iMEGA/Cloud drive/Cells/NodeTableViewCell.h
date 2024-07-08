@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 
 @property (nonatomic, copy) void(^moreButtonAction)(UIButton *) ;
 
-- (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api;
+- (void)configureCellForNode:(MEGANode *)node shouldApplySensitiveBehaviour:(BOOL)shouldApplySensitiveBehaviour api:(MEGASdk *)api;
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket;
 

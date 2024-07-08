@@ -61,9 +61,9 @@
     }
 }
 
-- (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api {
+- (void)configureCellForNode:(MEGANode *)node shouldApplySensitiveBehaviour:(BOOL)shouldApplySensitiveBehaviour api:(MEGASdk *)api {
     self.node = node;
-    [self bindWithViewModel:[self createViewModelWithNode:node]];
+    [self bindWithViewModel:[self createViewModelWithNode:node shouldApplySensitiveBehaviour:shouldApplySensitiveBehaviour]];
 
     if (UIColor.isDesignTokenEnabled) {
         [self updateWithTrait:self.traitCollection];
@@ -151,7 +151,7 @@
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
     self.cellFlavor = NodeTableViewCellFlavorRecentAction;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
-    [self bindWithViewModel:[self createViewModelWithNodes:nodesArray]];
+    [self bindWithViewModel:[self createViewModelWithNodes:nodesArray shouldApplySensitiveBehaviour:YES]];
     [self updateWithTrait:[self traitCollection]];
     self.leadingConstraint.constant = 24;
     self.recentActionBucket = recentActionBucket;

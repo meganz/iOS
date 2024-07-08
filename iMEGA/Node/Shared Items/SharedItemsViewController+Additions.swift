@@ -103,7 +103,7 @@ extension SharedItemsViewController {
             return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")
         }
         
-        cell.configureCell(for: node, api: MEGASdk.shared)
+        cell.configureCell(for: node, shouldApplySensitiveBehaviour: false, api: MEGASdk.shared)
         
         cell.moreButtonAction = { [weak self] moreButton in
             guard let moreButton else { return }

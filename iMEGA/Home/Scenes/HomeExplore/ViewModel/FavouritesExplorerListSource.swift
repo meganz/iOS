@@ -92,7 +92,7 @@ extension FavouritesExplorerListSource {
         }
         
         cell?.cellFlavor = .flavorCloudDrive
-        cell?.configureCell(for: node, api: MEGASdk.shared)
+        cell?.configureCell(for: node, shouldApplySensitiveBehaviour: true, api: MEGASdk.shared)
         cell?.setSelectedBackgroundView(withColor: .clear)
         
         if tableView.isEditing,

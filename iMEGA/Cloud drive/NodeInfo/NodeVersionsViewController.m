@@ -111,7 +111,7 @@ MEGADelegate
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorVersions;
     cell.isNodeInRubbishBin = [node mnz_isInRubbishBin];
-    [cell configureCellForNode:node api:MEGASdk.shared];
+    [cell configureCellForNode:node shouldApplySensitiveBehaviour:NO api:MEGASdk.shared];
     
     if (self.tableView.isEditing) {
         for (MEGANode *tempNode in self.selectedNodesArray) {
