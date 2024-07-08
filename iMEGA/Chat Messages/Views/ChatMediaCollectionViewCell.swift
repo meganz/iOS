@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MessageKit
 
 extension CGFloat {
@@ -62,9 +63,11 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open var durationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = MEGAAppColor.White._FFFFFF.uiColor
+        label.textColor = UIColor.whiteFFFFFF
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
-        label.layer.shadowColor = MEGAAppColor.Shadow.blackAlpha20.uiColor.cgColor
+        label.layer.shadowColor = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Background.blur.cgColor :
+            UIColor.blackAlpha20.cgColor
         label.layer.shadowOffset = CGSize(width: 0, height: 1)
         label.layer.shadowRadius = 2
         label.layer.shadowOpacity = 1
