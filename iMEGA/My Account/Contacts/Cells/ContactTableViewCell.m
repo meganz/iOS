@@ -142,8 +142,9 @@
         }
     } else if (indexPath.section == 1) {
         self.shareLabel.hidden = YES;
+        self.permissionsImageView.hidden = NO;
         self.permissionsImageView.image = [UIImage imageNamed:@"delete"];
-        self.permissionsImageView.tintColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        self.permissionsImageView.tintColor = [self removePendingShareIconColor];
     }
 }
 

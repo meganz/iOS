@@ -529,7 +529,7 @@ class NodeInfoViewController: UIViewController {
         cell.shareLabel.isHidden = true
         cell.permissionsImageView.isHidden = false
         cell.permissionsImageView.image = UIImage.delete
-        
+        cell.permissionsImageView.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
         return cell
     }
     
