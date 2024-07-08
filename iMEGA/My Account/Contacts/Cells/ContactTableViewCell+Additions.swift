@@ -36,10 +36,10 @@ extension ContactTableViewCell {
     
     @objc func onlineStatusBackgroundColor(_ status: MEGAChatStatus) -> UIColor {
         switch status {
-        case .online: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : MEGAAppColor.Chat.chatStatusOnline.uiColor
-        case .offline: UIColor.isDesignTokenEnabled() ? TokenColors.Icon.disabled : MEGAAppColor.Chat.chatStatusOffline.uiColor
-        case .away: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.yellow : MEGAAppColor.Chat.chatStatusAway.uiColor
-        case .busy: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : MEGAAppColor.Chat.chatStatusBusy.uiColor
+        case .online: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : UIColor.chatStatusOnline
+        case .offline: UIColor.isDesignTokenEnabled() ? TokenColors.Icon.disabled : UIColor.chatStatusOffline
+        case .away: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.yellow : UIColor.chatStatusAway
+        case .busy: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : UIColor.chatStatusBusy
         default: .clear
         }
     }
