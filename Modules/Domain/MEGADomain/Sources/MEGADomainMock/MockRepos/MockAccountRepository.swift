@@ -164,6 +164,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     public func isInGracePeriod() -> Bool {
         _isInGracePeriod
     }
+    
+    public func hasValidSubscription() -> Bool {
+        currentAccountDetails?.subscriptionStatus == .valid
+    }
 
     public var accountCreationDate: Date? {
         _accountCreationDate
