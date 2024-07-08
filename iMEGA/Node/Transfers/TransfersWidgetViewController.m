@@ -302,7 +302,7 @@ static TransfersWidgetViewController* instance = nil;
         
         if (transfer.state == MEGATransferStateComplete) {
             NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferNodeCell" forIndexPath:indexPath];
-            [cell configureCellForNode:node api:MEGASdk.shared];
+            [cell configureCellForNode:node shouldApplySensitiveBehaviour:NO api:MEGASdk.shared];
             
             __weak typeof(self) weakself = self;
             cell.moreButtonAction = ^(UIButton * moreButton) {

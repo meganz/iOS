@@ -164,8 +164,10 @@
     }
     
     cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
-    cell.cellFlavor = self.cloudDrive.isFromSharedItem ? NodeTableViewCellFlavorSharedLink : NodeTableViewCellFlavorCloudDrive;
-    [cell configureCellForNode:node api:MEGASdk.shared];
+    cell.cellFlavor = NodeTableViewCellFlavorCloudDrive;
+    [cell configureCellForNode:node
+ shouldApplySensitiveBehaviour:!self.cloudDrive.isFromSharedItem
+                           api:MEGASdk.shared];
     
     if (self.tableView.isEditing) {
         // Check if selectedNodesArray contains the current node in the tableView

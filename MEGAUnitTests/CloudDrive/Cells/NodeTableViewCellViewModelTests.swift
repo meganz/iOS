@@ -36,7 +36,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         ]
         let viewModel = sut(
             nodes: nodes,
-            flavour: .flavorRecentAction,
+            shouldApplySensitiveBehaviour: true,
             nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlags: [.hiddenNodes: true]
             )
@@ -62,7 +62,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         ]
         let viewModel = sut(
             nodes: nodes,
-            flavour: .flavorRecentAction,
+            shouldApplySensitiveBehaviour: true,
             nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlags: [.hiddenNodes: false]
         )
@@ -89,7 +89,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         ]
         let viewModel = sut(
             nodes: nodes,
-            flavour: .flavorRecentAction,
+            shouldApplySensitiveBehaviour: true,
             nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlags: [.hiddenNodes: true]
             )
@@ -115,7 +115,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         ]
         let viewModel = sut(
             nodes: nodes,
-            flavour: .flavorRecentAction,
+            shouldApplySensitiveBehaviour: true,
             nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlags: [.hiddenNodes: false]
         )
@@ -143,7 +143,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         ]
         let viewModel = sut(
             nodes: nodes,
-            flavour: .flavorRecentAction,
+            shouldApplySensitiveBehaviour: true,
             nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlags: [.hiddenNodes: true]
             )
@@ -164,21 +164,12 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
         
-    func testConfigureCell_whenAllFlavourSet_shouldSetExpectedResult() async {
-        
-        let expectedFlavourResult: [(NodeTableViewCellFlavor, Bool)] = [
-            (.flavorRecentAction, true),
-            (.flavorCloudDrive, true),
-            (.explorerView, true),
-            (.flavorSharedLink, false),
-            (.flavorVersions, false)
-        ]
-        
-        for await (flavour, expectedResult) in expectedFlavourResult.async {
+    func testConfigureCell_withAllVariationsOfShouldApplySensitiveBehaviour_shouldSetExpectedResult() async {
+        for await shouldApplySensitiveBehaviour in [true, false].async {
             
             let viewModel = sut(
                 nodes: [.init(handle: 1, isMarkedSensitive: true)],
-                flavour: flavour,
+                shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
                 nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
                 featureFlags: [.hiddenNodes: true]
             )
@@ -189,7 +180,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             let subscription = viewModel.$isSensitive
                 .debounce(for: 0.5, scheduler: DispatchQueue.main)
                 .sink { isSensitive in
-                    XCTAssertEqual(isSensitive, expectedResult, "\(flavour) \(expectedResult ? "should" : "shouldn't") support isSensitive")
+                    XCTAssertEqual(isSensitive, shouldApplySensitiveBehaviour, "\(shouldApplySensitiveBehaviour ? "should" : "shouldn't") support isSensitive")
                     expectation.fulfill()
                 }
             
@@ -241,7 +232,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let nodeIconUseCase = MockNodeIconUsecase(stubbedIconData: imageData)
         let viewModel = sut(
             nodes: [node],
-            flavour: .flavorRecentAction,
+            shouldApplySensitiveBehaviour: true,
             nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
             nodeIconUseCase: nodeIconUseCase)
         
@@ -255,14 +246,14 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
 
 extension NodeTableViewCellViewModelTests {
     func sut(nodes: [NodeEntity] = [],
-             flavour: NodeTableViewCellFlavor = .flavorCloudDrive,
+             shouldApplySensitiveBehaviour: Bool = true,
              nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
              nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
              thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
              featureFlags: [FeatureFlagKey: Bool] = [.hiddenNodes: false]) -> NodeTableViewCellViewModel {
         NodeTableViewCellViewModel(
             nodes: nodes,
-            flavour: flavour,
+            shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
             nodeUseCase: nodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,

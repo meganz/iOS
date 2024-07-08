@@ -11,7 +11,7 @@ import MEGASwift
     let hasThumbnail: Bool
     
     private let nodes: [NodeEntity]
-    private let flavour: NodeTableViewCellFlavor
+    private let shouldApplySensitiveBehaviour: Bool
     private let nodeUseCase: any NodeUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
@@ -19,7 +19,7 @@ import MEGASwift
     private var task: Task<Void, Never>?
     
     init(nodes: [NodeEntity],
-         flavour: NodeTableViewCellFlavor,
+         shouldApplySensitiveBehaviour: Bool,
          nodeUseCase: some NodeUseCaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
@@ -30,7 +30,7 @@ import MEGASwift
             nodes.count == 1,
             nodes.first?.hasThumbnail ?? false
         ].allSatisfy { $0 }
-        self.flavour = flavour
+        self.shouldApplySensitiveBehaviour = shouldApplySensitiveBehaviour
         self.nodeUseCase = nodeUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeIconUseCase = nodeIconUseCase
@@ -89,8 +89,7 @@ import MEGASwift
     @MainActor
     private func applySensitiveConfiguration(for nodes: [NodeEntity]) async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-              [.flavorRecentAction, .explorerView, .flavorCloudDrive].contains(flavour)
-        else {
+              shouldApplySensitiveBehaviour else {
             isSensitive = false
             return
         }

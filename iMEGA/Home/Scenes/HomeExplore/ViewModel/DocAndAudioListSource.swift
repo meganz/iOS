@@ -72,7 +72,7 @@ extension DocAndAudioListSource {
         }
         
         cell?.cellFlavor = .explorerView
-        cell?.configureCell(for: node, api: MEGASdk.shared)
+        cell?.configureCell(for: node, shouldApplySensitiveBehaviour: true, api: MEGASdk.shared)
         cell?.setSelectedBackgroundView(withColor: .clear)
         
         if tableView.isEditing,
