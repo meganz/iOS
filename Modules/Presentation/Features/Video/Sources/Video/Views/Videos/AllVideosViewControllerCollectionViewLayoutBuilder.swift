@@ -32,9 +32,22 @@ struct AllVideosViewControllerCollectionViewLayoutBuilder {
             return makeSingleColumnLayout()
         case  (.regular, .compact), (.compact, .compact):
             return makeMultiColumnLayout(columnCount: 2)
+        case (.regular, .regular) where isPortrait:
+            return makeMultiColumnLayout(columnCount: 2)
         default:
             return makeMultiColumnLayout(columnCount: 3)
         }
+    }
+    
+    private var isPortrait: Bool {
+        interfaceOrientation.isPortrait || UIDevice.current.orientation.isPortrait
+    }
+    
+    private var interfaceOrientation: UIInterfaceOrientation {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return .unknown
+        }
+        return windowScene.interfaceOrientation
     }
     
     private func makeSingleColumnLayout() -> NSCollectionLayoutSection {
