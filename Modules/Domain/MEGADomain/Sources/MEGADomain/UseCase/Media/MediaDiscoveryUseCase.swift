@@ -18,7 +18,7 @@ public final class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
     private let filesSearchRepository: T
     private let nodeUpdateRepository: U
     
-    private let searchAllPhotosString = "*"
+    private let searchAllPhotosString = ""
     
     public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
     
@@ -47,7 +47,8 @@ public final class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
                     supportCancel: false,
                     sortOrderType: .defaultDesc,
                     formatType: format,
-                    sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled))
+                    sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled,
+                    nodeTypeEntity: .file))
                 return items
             }
             .reduce([NodeEntity]()) { $0 + $1 }
