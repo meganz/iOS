@@ -538,7 +538,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         .myself(
             handle: accountUseCase.currentUserHandle ?? .invalid,
             userName: chatUseCase.myFullName(),
-            chatRoom: chatRoom
+            chatRoom: chatRoom,
+            raisedHand: call.raiseHandsList.contains(accountUseCase.currentUserHandle ?? .invalid)
         )
     }
     

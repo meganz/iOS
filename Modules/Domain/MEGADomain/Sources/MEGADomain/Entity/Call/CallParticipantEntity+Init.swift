@@ -67,7 +67,8 @@ public extension CallParticipantEntity {
     static func myself(
         handle: HandleEntity,
         userName: String?,
-        chatRoom: ChatRoomEntity
+        chatRoom: ChatRoomEntity,
+        raisedHand: Bool
     ) -> CallParticipantEntity {
         CallParticipantEntity(
             chatId: chatRoom.chatId,
@@ -92,7 +93,7 @@ public extension CallParticipantEntity {
             audioDetected: false,
             isRecording: false,
             absentParticipantState: .notInCall,
-            raisedHand: false
+            raisedHand: raisedHand
         )
     }
     
