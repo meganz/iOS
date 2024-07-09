@@ -634,7 +634,10 @@ extension AppDelegate {
         voIPPushDelegate = VoIPPushDelegate(
             callCoordinator: callsCoordinator,
             voIpTokenUseCase: VoIPTokenUseCase(repo: VoIPTokenRepository.newRepo),
-            megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+            megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
+            logger: {
+                CrashlyticsLogger.log(category: .calls, $0)
+            }
         )
     }
     

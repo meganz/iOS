@@ -15,8 +15,8 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @interface AppDelegate : UIResponder
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, nullable) CallsCoordinator *callsCoordinator;
-@property (nonatomic, nullable) VoIPPushDelegate *voIPPushDelegate;
+@property (nonatomic, nullable, strong) CallsCoordinator *callsCoordinator;
+@property (nonatomic, nullable, strong) VoIPPushDelegate *voIPPushDelegate;
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;
 @property (nonatomic, weak, readonly) MainTabBarController *mainTBC;
 @property (nonatomic) NSNumber *openChatLater;

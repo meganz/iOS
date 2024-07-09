@@ -15,7 +15,8 @@ final class VoIPPushDelegateTests: XCTestCase {
             sut = VoIPPushDelegate(
                 callCoordinator: callsCoordinator,
                 voIpTokenUseCase: voIpTokenUseCase,
-                megaHandleUseCase: MockMEGAHandleUseCase(userHandle: handle)
+                megaHandleUseCase: MockMEGAHandleUseCase(userHandle: handle),
+                logger: { _ in }
             )
         }
         
