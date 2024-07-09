@@ -43,7 +43,7 @@ class CallCollectionView: UICollectionView {
     func configure(with callCollectionViewDelegate: some CallCollectionViewDelegate) {
         diffableDataSource = UICollectionViewDiffableDataSource(
             collectionView: self,
-            cellProvider: { [unowned self] collectionView, indexPath, _ in
+            cellProvider: { [unowned self, weak callCollectionViewDelegate] collectionView, indexPath, _ in
                 // using unowned here since collection view is the owner of the data source
                 // so, collection view will be deallocated together with data source, no chance
                 // of self being nil here
@@ -56,7 +56,7 @@ class CallCollectionView: UICollectionView {
                     cell.setAvatar(image: image)
                 }
                 if !participant.isScreenShareCell {
-                    callCollectionViewDelegate.fetchAvatar(for: participant)
+                    callCollectionViewDelegate?.fetchAvatar(for: participant)
                 }
                 cell.configure(for: participant, in: layoutMode)
                 return cell
