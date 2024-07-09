@@ -20,7 +20,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
             XCTFail("Unexpected failure")
         }
         
-        XCTAssertEqual(fileSearchRepo.searchString, "*")
+        XCTAssertEqual(fileSearchRepo.searchString, "")
         XCTAssertFalse(fileSearchRepo.searchRecursive ?? true)
     }
     
@@ -38,7 +38,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
             XCTFail("Unexpected failure")
         }
         
-        XCTAssertEqual(fileSearchRepo.searchString, "*")
+        XCTAssertEqual(fileSearchRepo.searchString, "")
         XCTAssertFalse(fileSearchRepo.searchRecursive ?? true)
     }
     
@@ -63,7 +63,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
             XCTFail("Unexpected failure")
         }
         
-        XCTAssertEqual(fileSearchRepo.searchString, "*")
+        XCTAssertEqual(fileSearchRepo.searchString, "")
         XCTAssertTrue(fileSearchRepo.searchRecursive ?? false)
     }
     
@@ -88,7 +88,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
             XCTFail("Unexpected failure")
         }
         
-        XCTAssertEqual(fileSearchRepo.searchString, "*")
+        XCTAssertEqual(fileSearchRepo.searchString, "")
         XCTAssertTrue(fileSearchRepo.searchRecursive ?? false)
     }
     

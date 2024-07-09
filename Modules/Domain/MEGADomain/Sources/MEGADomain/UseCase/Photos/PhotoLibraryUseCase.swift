@@ -112,7 +112,8 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
                     supportCancel: false,
                     sortOrderType: sortOrder,
                     formatType: format,
-                    sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled))
+                    sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled,
+                    nodeTypeEntity: .file))
             }
             .reduce([NodeEntity]()) { $0 + $1 }
     }
