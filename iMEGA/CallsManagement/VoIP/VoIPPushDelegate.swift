@@ -5,30 +5,44 @@ import PushKit
     private weak var callsCoordinator: (any CallsCoordinatorProtocol)?
     private let voIpTokenUseCase: any VoIPTokenUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
-
-    init(callCoordinator: some CallsCoordinatorProtocol,
-         voIpTokenUseCase: some VoIPTokenUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol) {
+    private var voIPPushRegistry: PKPushRegistry?
+    private let logger: (String) -> Void
+    init(
+        callCoordinator: some CallsCoordinatorProtocol,
+        voIpTokenUseCase: some VoIPTokenUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        logger: @escaping (String) -> Void
+    ) {
         self.callsCoordinator = callCoordinator
         self.voIpTokenUseCase = voIpTokenUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.logger = logger
         super.init()
         
         registerForVoIPNotifications()
+        logger("[VoIPPushDelegate] init")
     }
     
     private func registerForVoIPNotifications() {
-        let voipRegistry = PKPushRegistry(queue: DispatchQueue.main)
-        voipRegistry.delegate = self
-        voipRegistry.desiredPushTypes = Set([.voIP])
+        logger("[VoIPPushDelegate] register for voIP notifications")
+        voIPPushRegistry = PKPushRegistry(queue: DispatchQueue.main)
+        voIPPushRegistry?.delegate = self
+        voIPPushRegistry?.desiredPushTypes = Set([.voIP])
+    }
+    
+    deinit {
+        logger("[VoIPPushDelegate] deinit")
     }
     
     // MARK: - PKPushRegistryDelegate
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-        guard type == .voIP else { return }
+        logger("[VoIPPushDelegate] did update credentials")
+        guard type == .voIP else {
+            return
+        }
         
         guard pushCredentials.token.count > 0 else {
-            MEGALogError("VoIP token length is 0")
+            logger("VoIP token length is 0")
             return
         }
         
@@ -36,16 +50,27 @@ import PushKit
         let hexString = dataBuffer.map { String(format: "%02x", $0) }.joined()
         
         let deviceTokenString = String(hexString)
-        MEGALogDebug("Device token \(deviceTokenString)")
+        logger("Device token \(deviceTokenString)")
         voIpTokenUseCase.registerVoIPDeviceToken(deviceTokenString)
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
-        MEGALogDebug("Did receive incoming push with payload: \(payload.dictionaryPayload), and type: \(type)")
+        logger("[VoIPPushDelegate] Did receive incoming push with payload: \(payload.dictionaryPayload), and type: \(type)")
+        guard let callsCoordinator else {
+            logger("[VoIPPushDelegate] missing callsCoordinator")
+            return
+        }
+        
+        guard let chatId = chatId(from: payload) else {
+            logger("[VoIPPushDelegate] missing chat id")
+            return
+        }
         
         if isVoIPPush(for: payload) {
-            guard let chatId = chatId(from: payload) else { return }
-            callsCoordinator?.reportIncomingCall(in: chatId, completion: completion)
+            logger("[VoIPPushDelegate] correct type of payload")
+            callsCoordinator.reportIncomingCall(in: chatId, completion: completion)
+        } else {
+            logger("[VoIPPushDelegate] wrong type of payload")
         }
     }
     

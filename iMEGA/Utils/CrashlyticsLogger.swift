@@ -10,14 +10,16 @@ final class CrashlyticsLogger: NSObject {
         
         case general
         case audioPlayer
-        case tranfersWidget
+        case transfersWidget
         case appLifecycle
+        case calls
         var rawValue: String {
             switch self {
             case .general: "General"
             case .audioPlayer: "Audio Player"
-            case .tranfersWidget: "Transfers Widget"
+            case .transfersWidget: "Transfers Widget"
             case .appLifecycle: "App Lifecycle"
+            case .calls: "Calls"
             }
         }
     }
@@ -43,7 +45,7 @@ final class CrashlyticsLogger: NSObject {
             let msg = "[\(category.rawValue)] \(msg) (\(file).\(function))"
             Crashlytics.crashlytics().log(msg)
     #if DEBUG
-            print("\(msg)")
+            MEGALogDebug("\(msg)")
     #endif
         }
     }

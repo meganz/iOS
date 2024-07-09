@@ -114,8 +114,8 @@ static TransfersWidgetViewController* instance = nil;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [CrashlyticsLogger logWithCategory:LogCategoryTranfersWidget
-                                   msg:[NSString stringWithFormat: @"Tranfers widget will appear. Navigation bar info: %@.", self.navigationController.navigationBar]
+    [CrashlyticsLogger logWithCategory:LogCategoryTransfersWidget
+                                   msg:[NSString stringWithFormat: @"Transfers widget will appear. Navigation bar info: %@.", self.navigationController.navigationBar]
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
     
@@ -134,8 +134,8 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [CrashlyticsLogger logWithCategory:LogCategoryTranfersWidget
-                                   msg:[NSString stringWithFormat: @"Tranfers widget will disappear. Navigation bar info %@.", self.navigationController.navigationBar]
+    [CrashlyticsLogger logWithCategory:LogCategoryTransfersWidget
+                                   msg:[NSString stringWithFormat: @"Transfers widget will disappear. Navigation bar info %@.", self.navigationController.navigationBar]
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
     [self.progressView showWidgetIfNeeded];
@@ -186,8 +186,8 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)updateViewState {
-    [CrashlyticsLogger logWithCategory:LogCategoryTranfersWidget
-                                   msg:[NSString stringWithFormat: @"Tranfers widget updated state to %ld. Navigation bar info: %@.", (long)self.transfersSelected, self.navigationController.navigationBar]
+    [CrashlyticsLogger logWithCategory:LogCategoryTransfersWidget
+                                   msg:[NSString stringWithFormat: @"Transfers widget updated state to %ld. Navigation bar info: %@.", (long)self.transfersSelected, self.navigationController.navigationBar]
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
     
