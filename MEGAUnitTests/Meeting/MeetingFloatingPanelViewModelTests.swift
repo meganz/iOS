@@ -298,7 +298,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                     participantsListView: listView(
                         hostControlsRows: [],
                         selectedTab: .inCall,
-                        participants: [CallParticipantEntity.myself(handle: 100, userName: "", chatRoom: chatRoom)],
+                        participants: [CallParticipantEntity.myself(handle: 100, userName: "", chatRoom: chatRoom, raisedHand: false)],
                         existsWaitingRoom: false,
                         currentUserHandle: 100,
                         isMyselfModerator: true
@@ -343,7 +343,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .onViewReady,
              expectedCommands: [
                 .configView(canInviteParticipants: false, isOneToOneCall: chatRoom.chatType == .oneToOne, isMeeting: chatRoom.chatType == .meeting, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: false),
-                .reloadViewData(participantsListView: listView(hostControlsRows: [], selectedTab: .inCall, participants: [CallParticipantEntity.myself(handle: 100, userName: "", chatRoom: chatRoom)], existsWaitingRoom: false, currentUserHandle: 100))
+                .reloadViewData(participantsListView: listView(hostControlsRows: [], selectedTab: .inCall, participants: [CallParticipantEntity.myself(handle: 100, userName: "", chatRoom: chatRoom, raisedHand: false)], existsWaitingRoom: false, currentUserHandle: 100))
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }

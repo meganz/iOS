@@ -36,11 +36,12 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raisedHand" translatesAutoresizingMaskIntoConstraints="NO" id="NiV-Dg-jz9">
-                        <rect key="frame" x="20" y="18" width="24" height="24"/>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raisedHand" translatesAutoresizingMaskIntoConstraints="NO" id="NiV-Dg-jz9">
+                        <rect key="frame" x="12" y="10" width="40" height="40"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="24" id="fkP-ku-KeY"/>
-                            <constraint firstAttribute="height" constant="24" id="ulT-O2-Qu7"/>
+                            <constraint firstAttribute="width" constant="40" id="fkP-ku-KeY"/>
+                            <constraint firstAttribute="height" constant="40" id="ulT-O2-Qu7"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

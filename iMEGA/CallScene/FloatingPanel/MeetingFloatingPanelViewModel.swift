@@ -774,9 +774,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         let myself = CallParticipantEntity.myself(
             handle: accountUseCase.currentUserHandle ?? .invalid,
             userName: chatUseCase.myFullName(),
-            chatRoom: chatRoom
+            chatRoom: chatRoom, 
+            raisedHand: call.raiseHandsList.contains(accountUseCase.currentUserHandle ?? .invalid)
         )
         myself.video = call.hasLocalVideo ? .on : .off
+        myself.audio = call.hasLocalAudio ? .on : .off
         callParticipants.append(myself)
         
         let participants = call.clientSessions.compactMap({
