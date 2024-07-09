@@ -27,7 +27,7 @@ extension LoginViewController {
     }
     
     @objc func forgotPasswordTintColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_secondaryGray(for: traitCollection)
+        UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_secondaryGray(for: traitCollection)
     }
     
     @objc func loginLabelrimaryTextColor() -> UIColor {
