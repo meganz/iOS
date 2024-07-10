@@ -66,6 +66,7 @@
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
 @property (nonatomic) MEGANotificationType megatype; //1 share folder, 2 new message, 3 contact request
+@property (nonatomic, nullable) NSDictionary *megaGenericRemoteNotif;
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
@@ -139,7 +140,12 @@
     [self registerCameraUploadBackgroundRefresh];
 
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
-        _megatype = (MEGANotificationType)[[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] integerValue];
+        NSDictionary *remoteNotificationData = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+        _megatype = (MEGANotificationType)[[remoteNotificationData objectForKey:@"megatype"] integerValue];
+        
+        if (_megatype == MEGANotificationTypeGeneric) {
+            _megaGenericRemoteNotif = remoteNotificationData;
+        }
     }
     
     SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
@@ -709,6 +715,11 @@
     [self showEnableTwoFactorAuthenticationIfNeeded];
     
     [self showLaunchTabDialogIfNeeded];
+    
+    if (self.megatype == MEGANotificationTypeGeneric && self.megaGenericRemoteNotif != nil) {
+        [self handleGenericAppPushNotificationTapWithUserInfo:self.megaGenericRemoteNotif];
+        self.megaGenericRemoteNotif = nil;
+    }
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
@@ -1052,7 +1063,8 @@
         
     } else if (self.megatype) {
         if (self.megatype == MEGANotificationTypeGeneric) {
-            [self handleGenericAppPushNotificationTap];
+            if (UIApplication.sharedApplication.applicationState != UIApplicationStateActive) { return; }
+            [self handleGenericAppPushNotificationTapWithUserInfo:response.notification.request.content.userInfo];
         } else {
             [self openTabBasedOnNotificationMegatype];
         }
