@@ -87,6 +87,12 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         browseDelegate.endEditingMode = { [weak self] in
             self?.removeToolbar(animated: true)
         }
+        
+        if let searchBar = self.wrapper?.searchController.searchBar {
+            AppearanceManager.forceSearchBarUpdate(searchBar,
+                                                   backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                                   traitCollection: self.traitCollection)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

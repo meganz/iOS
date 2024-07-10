@@ -108,6 +108,11 @@ class AppearanceManager: NSObject {
                                           backgroundColorWhenDesignTokenEnable: UIColor,
                                           traitCollection: UITraitCollection) {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            
+            // In order to set the color for `searchBar.searchTextField.backgroundColor`, we need to set `searchBar.searchTextField.borderStyle = .none` otherwise the correct will display incorrectly
+            // and since `searchBar.searchTextField.borderStyle = .none` removes the default rounded corner, we need to re-set it.
+            searchBar.searchTextField.borderStyle = .none
+            searchBar.searchTextField.layer.cornerRadius = 10
             searchBar.tintColor = TokenColors.Text.placeholder
             searchBar.backgroundColor = backgroundColorWhenDesignTokenEnable
             searchBar.searchTextField.backgroundColor = TokenColors.Background.surface2
