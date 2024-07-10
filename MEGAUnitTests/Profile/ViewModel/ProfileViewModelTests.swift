@@ -17,7 +17,10 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_onViewDidLoad_defaultValue() {
-        let (sut, _) = makeSUT()
+        let (sut, _) = makeSUT(
+            hasValidProAccount: true,
+            hasValidSubscription: true
+        )
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         let expectedSections = ProfileViewModel.SectionCellDataSource(
             sectionOrder: sectionsOrder(),
@@ -27,7 +30,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testSectionsVisibility_withoutValidProAccount_shouldNotShowSubscriptionSection() {
-        let (sut, _) = makeSUT(hasValidProAccount: false)
+        let (sut, _) = makeSUT()
         sut.dispatch(.onViewDidLoad)
         
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
@@ -35,7 +38,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_onViewDidLoadWithoutValidProAccount_shouldShowCorrectSectionsAndRows() {
-        let (sut, _) = makeSUT(hasValidProAccount: false)
+        let (sut, _) = makeSUT()
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         let expectedSections = ProfileViewModel.SectionCellDataSource(
             sectionOrder: sectionsOrder(hasValidProAccount: false),
@@ -45,7 +48,11 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_onViewDidLoad_whenSmsIsAllowed() {
-        let (sut, _) = makeSUT(smsState: .optInAndUnblock)
+        let (sut, _) = makeSUT(
+            smsState: .optInAndUnblock, 
+            hasValidProAccount: true,
+            hasValidSubscription: true
+        )
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         let expectedResult = ProfileViewModel.SectionCellDataSource(
             sectionOrder: sectionsOrder(),
@@ -185,10 +192,7 @@ final class ProfileViewModelTests: XCTestCase {
     
     func testAction_cancelSubscription_shouldPresentCancelAccountPlan() async {
         let planType: AccountTypeEntity = .proI
-        let (sut, router) = makeSUT(
-            currentAccountDetails: AccountDetailsEntity.build(proLevel: planType),
-            accountPlan: AccountPlanEntity(type: planType)
-        )
+        let (sut, router) = makeSUT(accountType: planType)
         
         sut.dispatch(.cancelSubscription)
 
@@ -199,10 +203,7 @@ final class ProfileViewModelTests: XCTestCase {
     
     func testAction_cancelSubscription_shouldPresentCancellationSteps() async {
         let planType: AccountTypeEntity = .proFlexi
-        let (sut, router) = makeSUT(
-            currentAccountDetails: AccountDetailsEntity.build(proLevel: planType),
-            accountPlan: AccountPlanEntity(type: planType)
-        )
+        let (sut, router) = makeSUT(accountType: planType)
         
         sut.dispatch(.cancelSubscription)
 
@@ -223,23 +224,86 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    func testShouldShowPlanSection_whenAccountIsProFlexi_shouldIncludePlanSection() {
+        testPlanSectionVisibility(
+            accountType: .proFlexi,
+            shouldBeShown: true
+        )
+    }
+
+    func testShouldShowPlanSection_whenAccountIsBusiness_shouldIncludePlanSection() {
+        testPlanSectionVisibility(
+            accountType: .business,
+            shouldBeShown: true
+        )
+    }
+
+    func testShouldShowPlanSection_whenAccountIsMasterBusiness_shouldIncludePlanSection() {
+        testPlanSectionVisibility(
+            accountType: .business,
+            isMasterBusinessAccount: true,
+            shouldBeShown: true
+        )
+    }
+
+    func testShouldShowPlanSection_whenAccountIsFree_shouldNotIncludePlanSection() {
+        testPlanSectionVisibility(
+            accountType: .free,
+            shouldBeShown: false
+        )
+    }
+
+    func testShouldShowCancelSubscriptionSection_whenValidProAccountAndSubscription_shouldIncludeSubscriptionSection() {
+        testSubscriptionSectionVisibility(
+            hasValidProAccount: true,
+            hasValidSubscription: true,
+            shouldBeShown: true
+        )
+    }
+    
+    func testShouldShowCancelSubscriptionSection_whenValidProAccountAndInvalidSubscription_shouldIncludeSubscriptionSection() {
+        testSubscriptionSectionVisibility(
+            hasValidProAccount: true,
+            shouldBeShown: false
+        )
+    }
+
+    func testShouldShowCancelSubscriptionSection_whenInvalidProAccount_shouldNotIncludeSubscriptionSection() {
+        testSubscriptionSectionVisibility(
+            hasValidSubscription: true,
+            shouldBeShown: false
+        )
+    }
+    
+    func testShouldShowCancelSubscriptionSection_whenInvalidProAccountAndSuscription_shouldNotIncludeSubscriptionSection() {
+        testSubscriptionSectionVisibility(shouldBeShown: false)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
-        currentAccountDetails: AccountDetailsEntity? = nil,
-        accountPlan: AccountPlanEntity? = nil,
+        accountType: AccountTypeEntity = .free,
         email: String = "test@email.com",
         smsState: SMSStateEntity = .notAllowed,
         isMasterBusinessAccount: Bool = false,
         multiFactorAuthCheckResult: Bool = false,
         multiFactorAuthCheckDelay: TimeInterval = 0,
-        hasValidProAccount: Bool = true,
+        hasValidProAccount: Bool = false,
+        hasValidSubscription: Bool = false,
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [.cancelSubscription: true])
     ) -> (sut: ProfileViewModel, router: MockProfileViewRouter) {
         
+        let currentAccountDetails = AccountDetailsEntity.build(
+            proLevel: accountType,
+            subscriptionStatus: hasValidSubscription ? .valid: .none
+        )
+        
+        let accountPlan = AccountPlanEntity(type: accountType)
+        
         let accountUseCase = MockAccountUseCase(
             hasValidProAccount: hasValidProAccount,
+            hasValidSubscription: hasValidSubscription,
             currentAccountDetails: currentAccountDetails,
             email: email,
             isMasterBusinessAccount: isMasterBusinessAccount,
@@ -293,8 +357,10 @@ final class ProfileViewModelTests: XCTestCase {
                 sectionRows: expectedSectionRows
             )
             let (sut, _) = self.makeSUT(
-                currentAccountDetails: AccountDetailsEntity.build(proLevel: accountType),
-                isMasterBusinessAccount: isMasterBusinessAccount
+                accountType: accountType,
+                isMasterBusinessAccount: isMasterBusinessAccount,
+                hasValidProAccount: true,
+                hasValidSubscription: true
             )
             let result = self.receivedSectionDataSource(from: sut, after: .onViewDidLoad)
             XCTAssertEqual(result, expectedSections)
@@ -347,5 +413,38 @@ final class ProfileViewModelTests: XCTestCase {
         }
         
         return sections
+    }
+    
+    private func testPlanSectionVisibility(
+        accountType: AccountTypeEntity,
+        isMasterBusinessAccount: Bool = false,
+        shouldBeShown: Bool
+    ) {
+        let (sut, _) = makeSUT(
+            accountType: accountType,
+            isMasterBusinessAccount: isMasterBusinessAccount,
+            hasValidProAccount: true
+        )
+        sut.dispatch(.onViewDidLoad)
+
+        let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
+        let containsPlanSection = result?.sectionOrder.contains(.plan) ?? false
+        XCTAssertEqual(containsPlanSection, shouldBeShown, "Plan section visibility does not match expectation for account type \(accountType)")
+    }
+
+    private func testSubscriptionSectionVisibility(
+        hasValidProAccount: Bool = false,
+        hasValidSubscription: Bool = false,
+        shouldBeShown: Bool
+    ) {
+        let (sut, _) = makeSUT(
+            hasValidProAccount: hasValidProAccount,
+            hasValidSubscription: hasValidSubscription
+        )
+        sut.dispatch(.onViewDidLoad)
+
+        let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
+        let containsSubscriptionSection = result?.sectionOrder.contains(.subscription) ?? false
+        XCTAssertEqual(containsSubscriptionSection, shouldBeShown, "Subscription section visibility does not match expectation for valid pro account state \(hasValidProAccount)")
     }
 }

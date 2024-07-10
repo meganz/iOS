@@ -17,6 +17,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _accountCreationDate: Date?
     private let _isLoggedIn: Bool
     private let _hasValidProAccount: Bool
+    private let _hasValidSubscription: Bool
     private let _contacts: [UserEntity]
     private let _currentAccountDetails: AccountDetailsEntity?
     private let _isOverQuota: Bool
@@ -37,6 +38,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         isNewAccount: Bool = false,
         isLoggedIn: Bool = true,
         hasValidProAccount: Bool = false,
+        hasValidSubscription: Bool = false,
         accountCreationDate: Date? = nil,
         contacts: [UserEntity] = [],
         totalNodesCountVariable: UInt64 = 0,
@@ -66,6 +68,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         _isNewAccount = isNewAccount
         _isLoggedIn = isLoggedIn
         _hasValidProAccount = hasValidProAccount
+        _hasValidSubscription = hasValidSubscription
         _accountCreationDate = accountCreationDate
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
@@ -160,6 +163,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public func hasValidProOrUnexpiredBusinessAccount() -> Bool {
         _hasValidProOrUnexpiredBusinessAccount
+    }
+    
+    public func hasValidSubscription() -> Bool {
+        _hasValidSubscription
     }
     
     // MARK: - Account operations

@@ -285,17 +285,13 @@ final class AccountUseCaseTests: XCTestCase {
     }
     
     func testHasValidProOrUnexpiredBusinessAccount_proFlexi_shouldReturnCorrectValue() {
-        [(accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: false, hasValidSubscription: true, expectedResult: true),
-         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: true, isInGracePeriod: true, hasValidSubscription: true, expectedResult: false),
-         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: true, isInGracePeriod: false, hasValidSubscription: true, expectedResult: false),
-         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: true, hasValidSubscription: false, expectedResult: false),
-         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: false, hasValidSubscription: false, expectedResult: false),
-         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: true, hasValidSubscription: true, expectedResult: true)
-        ]
+        [(accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: false, expectedResult: true),
+         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: true, isInGracePeriod: true, expectedResult: false),
+         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: true, isInGracePeriod: false, expectedResult: false),
+         (accountType: AccountTypeEntity.proFlexi, isExpiredAccount: false, isInGracePeriod: true, expectedResult: true)]
             .enumerated()
             .forEach { (index, testCase) in
                 let sut = makeSUT(
-                    currentAccountDetails: AccountDetailsEntity.build(subscriptionStatus: testCase.hasValidSubscription ? .valid : .invalid),
                     isExpiredAccount: testCase.isExpiredAccount,
                     isInGracePeriod: testCase.isInGracePeriod,
                     accountType: testCase.accountType
