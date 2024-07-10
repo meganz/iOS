@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="由于您的云盘已满，您的上传无法继续";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="允许您的联系人查看您上次在MEGA的活跃时间";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="显示";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="上次在线：%s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="上次登录在很久以前";
 /*  */
@@ -3807,7 +3803,7 @@
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="没有演示文稿";
 /* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
-"home.search.empty.no-spreadsheets"="No spreadsheets";
+"home.search.empty.no-spreadsheets"="没有电子表格";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="没有封存档案";
 /* A title label for waiting room participants list view. */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="播放列表";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="无视频";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="位置";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="所有位置";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="云盘";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="相机上传";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="共享项目";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="时长";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="所有时长";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="少于10秒";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="在10到60秒之间";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="在1到4分钟之间";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="在4到20分钟之间";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="超过20分钟";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="未找到播放列表";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="添加视频";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="删除播放列表";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="从播放列表中移除？";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="添加";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="添加";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="重命名";
+"videos.tab.playlist.content.alert.title.rename"="重命名播放列表";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="输入新名称";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="重命名";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="重命名失败";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="删除播放列表？";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="播放列表将被删除，但其内容将保留在您的时间线中。";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="已删除“[A]”";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室里没有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4035,7 +4063,7 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"meetings.contact-picker.warning.over-limit.non-host"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro版以移除这些限制。";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="升级到Pro版即可获得无限通话";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
@@ -4043,9 +4071,9 @@
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="立即升级";
 /* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro版以移除这些限制。";
 /* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro版以移除这些限制。";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="隐藏的文件和文件夹";
 /* Hidden files and folders onboarding content hide important title */
@@ -4188,3 +4216,13 @@
 "getNodeLink.sensitive.alert.message.single"="此项目被设置为隐藏。一旦您共享该项目，任何拥有该链接的人都可以看到它。它仍将隐藏在您的云盘中。";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="其中一个或多个项目被设置为隐藏。一旦您共享该隐藏项目，任何拥有链接的人都可以看到它们。这些项目仍将隐藏在您的云盘中。";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="显示上次登录时间";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="您举起您的手";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="放手";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="查看";

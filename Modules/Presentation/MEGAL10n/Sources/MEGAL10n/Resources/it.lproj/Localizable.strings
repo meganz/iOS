@@ -41,7 +41,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link non valido";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="L'account che ha creato questo link è stato chiuso a causa di violazioni multiple dei nostri [A]Termini di Servizio[/A].";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="L'account che ha creato questo link è stato chiuso a causa di violazioni multiple dei nostri [A]Termini di servizio[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Inserisci la chiave di decrittazione";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -97,7 +97,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Controlla la tua casella di posta elettronica e segui il link per confermare il tuo account.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Il tuo account è stato chiuso a causa di una violazione dei Termini di Servizio di MEGA incluso il, ma non limitato al, comma 15.";
+"accountBlocked"="Il tuo account è stato chiuso a causa di una violazione dei Termini di servizio di MEGA incluso il, ma non limitato al, comma 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Inserisci una mail valida";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -131,7 +131,7 @@
 /*  */
 "passwordStrong"="Questa password può resistere agli attacchi più tipici di brute-force. Assicurati di ricordarla.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Sono d'accordo con i <a href=\"terms\">Termini di Servizio</a> di MEGA";
+"agreeWithTheMEGATermsOfService"="Sono d'accordo con i <a href=\"terms\">Termini di servizio</a> di MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
 "agreeWithLosingPasswordYouLoseData"="Capisco che [S]se perdo la mia password, potrei perdere i miei dati.[/S] Scopri di più riguardo la Read more about <a href=\"terms\">criptazione end-to-end di MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Le password non combaciano";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Per continuare devi accettare i nostri Termini di Servizio";
+"termsCheckboxUnselected"="Per continuare devi accettare i nostri Termini di servizio";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Devi essere d'accordo che capisci il pericolo della perdita della password";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="Questo potrebbe essere dovuto alle seguenti cause:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Il file è stato rimosso perché violava i nostri Termini di Servizio";
+"fileLinkUnavailableText2"="Il file è stato rimosso perché violava i nostri Termini di servizio";
 /*  */
 "fileLinkUnavailableText3"="URL non valido - il link che si sta provando ad accedere non esiste";
 /*  */
@@ -201,7 +201,7 @@
 /*  */
 "folderLinkUnavailableText1"="Questo potrebbe essere dovuto alle seguenti cause:";
 /*  */
-"folderLinkUnavailableText2"="Il link della cartella è stato rimosso perché viola i nostri Termini di Servizio.";
+"folderLinkUnavailableText2"="Il link della cartella è stato rimosso perché viola i nostri Termini di servizio.";
 /*  */
 "folderLinkUnavailableText3"="URL non valido - il link che si sta provando ad accedere non esiste";
 /*  */
@@ -551,9 +551,9 @@
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Oggetti nascosti";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
-"cameraUploads.albums.albumLink.sensitive.alert.message.single"="There are hidden items in this album. Sharing the album will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="Ci sono oggetti nascosti in questo album. Condividere l'album significa che gli oggetti nascosti saranno visibili alle persone con cui condividi. Gli oggetti saranno comunque nascosti nel tuo Cloud drive.";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
-"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="There are hidden items in one or more of these albums. Sharing the albums will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Ci sono oggetti nascosti in uno o più di questi album. Condividere gli album significa che gli oggetti nascosti saranno visibili alle persone con cui condividi. Gli oggetti saranno comunque nascosti nel tuo Cloud drive.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -713,7 +713,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Impostazioni dei Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Termini di Servizio";
+"termsOfServicesLabel"="Termini di servizio";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Regole sulla protezione dei dati";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -1417,11 +1417,11 @@
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Chiave di applicazione non valida";
 /* Error shown when terms of service are breached during download. */
-"Terms of Service breached"="Termini di Servizio violati";
+"Terms of Service breached"="Termini di servizio violati";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Il trasferimento è fallito a causa di una struttura ricorsiva della directory";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Termini di Servizio violati";
+"transfer.error.termsOfServiceViolation"="Termini di servizio violati";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Verifica SSL fallita";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="Il tuo upload non può procedere perché il tuo Cloud Drive è pieno";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permetti ai tuoi contatti di vedere l'ultima volta in cui sei stato attivo su MEGA";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Mostra";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Ultima visita: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Ultima visita molto tempo fa";
 /*  */
@@ -2331,7 +2327,7 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Resetta password";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Il link non è disponibile, in quanto l'account del proprietario è stato chiuso a causa di ripetute violazioni dei [A]Termini di Servizio[/A] di MEGA.";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Il link non è disponibile, in quanto l'account del proprietario è stato chiuso a causa di ripetute violazioni dei [A]Termini di servizio[/A] di MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
 "Taken down due to severe violation of our terms of service"="Questo oggetto è stato segnalato in quanto contiene materiale obiettabile, come sfruttamento di minori, estremismo violento, o bestialità. L'account del creatore del link è stato chiuso e tutti i suoi dettagli, incluso l'indirizzo IP, sono stati dati alle autorità.";
 /* Text used to show the user that some resource is not available */
@@ -3111,7 +3107,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Il tuo account MEGA è stato sospeso a causa di ripetute accuse di violazione del copyright. Ciò significa che non puoi accedere al tuo account o ai dati al suo interno.\n\nControlla la tua casella di posta elettronica per ulteriori informazioni su come presentare una contro-notifica.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Il tuo account MEGA è stato chiuso a causa di una violazione dei Termini di Servizio di MEGA.\n\nNon puoi riottenere accesso ai dati che hai archiviato o registrare un nuovo account.";
+"account.suspension.message.nonCopyright"="Il tuo account MEGA è stato chiuso a causa di una violazione dei Termini di servizio di MEGA.\n\nNon puoi riottenere accesso ai dati che hai archiviato o registrare un nuovo account.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Apri l'app di MEGA ed effettua il login per continuare.";
 /* Account Storage title label of used storage size */
@@ -3807,7 +3803,7 @@
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="Nessuna presentazione";
 /* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
-"home.search.empty.no-spreadsheets"="No spreadsheets";
+"home.search.empty.no-spreadsheets"="Nessun foglio di calcolo";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="Nessun archivio";
 /* A title label for waiting room participants list view. */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="Playlist";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Nessun video";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="Posizione";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="Tutte le posizioni";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="Cloud Drive";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="Caricamenti da fotocamera";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="Elementi condivisi";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="Durata";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="Tutte le durate";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="Meno di 10 secondi";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="Tra 10 e 60 secondi";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="Tra 1 e 4 minuti";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="Tra 4 e 20 minuti";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="Più di 20 minuti";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="Nessuna playlist trovata";
 /* Videos: video playlist add new playlist button text description */
@@ -3937,21 +3957,29 @@
 /* Used in create video playlist popup user video playlist name validation */
 "videos.tab.playlist.create.alert.userVideoPlaylistExists"="Una playlist con questo nome già esiste";
 /* Used in video playlist content to add videos to video playlist */
-"videos.tab.playlist.playlistContent.menu.addVideos"="Add videos";
+"videos.tab.playlist.playlistContent.menu.addVideos"="Aggiungi video";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="Elimina la playlist";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Rimuovere dalla playlist?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Aggiungi";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Aggiungi";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Rinomina";
+"videos.tab.playlist.content.alert.title.rename"="Rinomina la playlist";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Nuovo nome del file";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="Rinomina";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="Rinominazione fallita";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="Eliminare la playlist?";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="La playlist verrà eliminata ma il suo contenuto rimarrà nella tua Cronologia.";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” eliminato";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Non c'è nessuno nella sala d'attesa";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4035,7 +4063,7 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"meetings.contact-picker.warning.over-limit.non-host"="Solo 100 partecipanti possono partecipare alla chiamata. Eventuali partecipanti aggiuntivi potranno solo inviare e ricevere messaggi. L'organizzatore può effettuare l'upgrade a Pro per rimuovere queste restrizioni.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Effettua l'upgrade a Pro per avere chiamate illimitate";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
@@ -4043,9 +4071,9 @@
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Effettua l'upgrade ora";
 /* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="Solo 100 partecipanti possono partecipare alla chiamata. Eventuali partecipanti aggiuntivi potranno solo inviare e ricevere messaggi. L'organizzatore può effettuare l'upgrade a Pro per rimuovere queste restrizioni.";
 /* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Solo 100 partecipanti possono partecipare alla chiamata. Eventuali partecipanti aggiuntivi potranno solo inviare e ricevere messaggi. L'organizzatore può effettuare l'upgrade a Pro per rimuovere queste restrizioni.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="File e cartelle nascoste";
 /* Hidden files and folders onboarding content hide important title */
@@ -4113,43 +4141,43 @@
 /* Feature title */
 "feature.title"="Categoria";
 /* Cancellation Subscription manage by Google Play title */
-"accounts.cancelSubscriptionSteps.googlePlay.title"="Your subscription is not managed by Apple.";
+"accounts.cancelSubscriptionSteps.googlePlay.title"="Il tuo abbonamento non è gestito da Apple.";
 /* Cancellation Subscription manage by Google Play message */
-"accounts.cancelSubscriptionSteps.googlePlay.message"="This is because you subscribed to MEGA via Google Play. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.googlePlay.message"="Questo perché ti sei abbonato a MEGA tramite Google Play. Per annullare l'abbonamento, dovrai:";
 /* Cancellation Section Google Play Web Browser title: In a web browser */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="In a web browser";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="In un web browser";
 /* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visit play.google.com";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visita play.google.com";
 /* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Sign in with your Google Play account.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Accedi con il tuo account Google Play.";
 /* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Click your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Clicca sul tuo avatar.";
 /* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Click <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Clicca su <b>Pagamenti e abbonamenti</b>.";
 /* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Click <b>Subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Clicca su <b>Abbonamenti</b>.";
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Under your MEGA subscription, click <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Sotto il tuo abbonamento MEGA, clicca su <b>Annulla abbonamento.</b>";
 /* Cancellation Section Google Play Android Device title: On an Android device */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="On an Android device";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Su un dispositivo Android";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Open the Play Store app.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Apri l'app Play Store.";
 /* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Sign in with your Google Play account (if required).";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Accedi con il tuo account Google Play (se richiesto).";
 /* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tap your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tocca il tuo avatar.";
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tap <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tocca <b>Pagamenti e abbonamenti</b>.";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tap <b>Subscriptions</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tocca <b>Abbonamenti</b>.";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Under your MEGA subscription, tap <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Sotto il tuo abbonamento MEGA, tocca <b>Annulla abbonamento</b>.";
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="Altro";
 /* Context menu item to switch layout to main speaker (Call UI) */
-"chat.call.contextMenu.switchToMainView"="Switch to main view";
+"chat.call.contextMenu.switchToMainView"="Passa alla vista principale";
 /* Context menu item to switch layout to grid mode (Call UI) */
-"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+"chat.call.contextMenu.switchToGrid"="Passa alla vista a griglia";
 /* Context menu item to lower a raised hand (Call UI) */
 "chat.call.contextMenu.lowerHand"="Abbassa la mano";
 /* Context menu item to signal a raised hand (Call UI) */
@@ -4157,34 +4185,44 @@
 /* Context menu item label to indicate a new feature (Call UI) */
 "chat.call.contextMenu.newFeature"="Nuovo";
 /* Cancellation Subscription manage by Webclient title */
-"accounts.cancelSubscriptionSteps.webClient.title"="You need to cancel your subscription using a web browser";
+"accounts.cancelSubscriptionSteps.webClient.title"="Devi annullare l'abbonamento utilizzando un web browser";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="This is because you subscribed to MEGA in your web browser. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.webClient.message"="Questo perché ti sei iscritto a MEGA tramite un web browser. Per annullare l'abbonamento, dovrai:";
 /* Cancellation Section Webclient on a computer title: On a computer */
-"accounts.cancelSubscriptionSteps.webClient.computer.title"="On a computer";
+"accounts.cancelSubscriptionSteps.webClient.computer.title"="Su un computer";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.nz in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visita www.mega.nz nel tuo web browser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Accedi al tuo account MEGA.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Clicca su <b>Impostazioni</b>.";
 /* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click the <b>Plan</b> tab.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Clicca sulla sezione <b>Piano</b>.";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Clicca su <b>Annulla abbonamento</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
-"accounts.cancelSubscriptionSteps.webClient.mobile.title"="On a mobile device";
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="Su un dispositivo mobile";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.nz in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visita www.mega.nz nel tuo web browser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in to your MEGA account.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Accedi al tuo account MEGA.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tap on your avatar.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tocca il tuo avatar.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tocca <b>Annulla abbonamento</b>.";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Oggetti nascosti";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.single"="This item is set to hidden. Once you share the item, anyone with the link will be able to see it. It will still be hidden in your Cloud drive.";
+"getNodeLink.sensitive.alert.message.single"="Questo oggetto è impostato su nascosto. Una volta condiviso l'oggetto, chiunque disponga del link sarà in grado di vederlo. Sarà comunque nascosto nella tua unità Cloud.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.multi"="One or more of these items is set to hidden. Once you share the hidden items, anyone with the link will be able to see them. The items will still be hidden in your Cloud drive.";
+"getNodeLink.sensitive.alert.message.multi"="Uno o più di questi oggetti sono impostati come nascosti. Una volta condivisi gli oggetti nascosti, chiunque disponga del link sarà in grado di vederli. Gli oggetti saranno comunque nascosti nel tuo Cloud drive.";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="Mostra l’ultima visita";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="Hai alzato la tua mano";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="Abbassa la mano";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="Vedi";

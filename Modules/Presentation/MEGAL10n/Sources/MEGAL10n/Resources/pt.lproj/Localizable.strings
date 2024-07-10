@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="Não foi possível fazer o upload porque você já atingiu o seu limite de armazenamento";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permitir que seus contatos vejam o seu último acesso ao MEGA";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Mostrar";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Último acesso: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Último acesso há muito tempo atrás";
 /*  */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="Listas de reprodução";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Não há vídeos";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="Localização";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="Todos os locais";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="Nuvem de arquivos";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="Uploads da câmera";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="Itens compartilhados";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="Duração";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="Qualquer duração";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="Menos de 10 segundos";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="Entre 10 e 60 segundos";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="Entre 1 e 4 minutos";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="Entre 4 e 20 minutos";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="Mais de 20 minutos";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="Não há listas de reprodução";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="Adicionar vídeos";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="Deletar a lista de reprodução";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Você quer eliminar da lista de reprodução?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Adicionar";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Adicionar";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Renomear";
+"videos.tab.playlist.content.alert.title.rename"="Renomear a lista de reprodução";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Digite o novo nome";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="Renomear";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="Não foi possível renomear";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="Deletar a lista de reprodução?";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="A lista de reprodução será deletada, mas o conteúdo dela permanecerá na sua linha do tempo.";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” foi deletado";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Não há ninguém na sala de espera";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4188,3 +4216,13 @@
 "getNodeLink.sensitive.alert.message.single"="Este item está definido como oculto. Depois de compartilhar o item, qualquer pessoa com o link poderá vê-lo, mas ele ainda estará oculto na sua Nuvem de arquivos.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="Um ou mais destes itens estão definidos como ocultos. Depois de compartilhar os itens ocultos, qualquer pessoa com o link poderá vê-los, mas os itens ainda estarão ocultos na sua Nuvem de arquivos.";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="Mostrar último acesso";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="Você levantou a mão";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="Baixar a mão";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="Ver";

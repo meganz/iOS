@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="لا يمكن متابعة الترفيع لأن مساحة التخزين السحابية الخاصة بك ممتلئة";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="السماح لجهات الاتصال خاصتك بمعرفة آخر وقت ظهور كنت فيه متصلاً مع MEGA";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="اظهر";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="آخر ظهور: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="آخر ظهور من وقت طويل";
 /*  */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="قائمة تشغيل";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="لا يوجد مقطع فيديو";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="الموقع";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="جميع المواقع";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="السواقة السحابية";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="ترفيعات الكاميرا";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="العناصر المشاركة";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="مدة";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="جميع المدد";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="أقل من 10 ثوانٍ";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="بين 10 و60 ثانية";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="بين 1 و 4 دقائق";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="بين 4 و 20 دقيقة";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="أكثر من 20 دقيقة";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="لم يتم العثور على قوائم تشغيل";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="إضافة مقاطع فيديو";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="حذف قائمة التشغيل";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="إزالة من قائمة التشغيل؟";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="إضافة";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="إضافة";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="إعادة التسمية";
+"videos.tab.playlist.content.alert.title.rename"="Rename playlist";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="أدخل الاسم الجديد";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="إعادة التسمية";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="فشلت عملية إعادة التسمية";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="حذف قائمة التشغيل؟";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Playlist will be deleted but its contents will stay in your Timeline.";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="تم حذف ”[A]“ ألبوم";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="لا يوجد أحد في غرفة الانتظار";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4035,7 +4063,7 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"meetings.contact-picker.warning.over-limit.non-host"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذه القيود.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="قم بالترقية إلى برو Pro للحصول على مكالمات غير محدودة";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
@@ -4043,9 +4071,9 @@
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="رق حسابك الآن";
 /* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذه القيود.";
 /* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذه القيود.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="الملفات والمجلدات المخفية";
 /* Hidden files and folders onboarding content hide important title */
@@ -4188,3 +4216,13 @@
 "getNodeLink.sensitive.alert.message.single"="تم تعيين هذا العنصر ليكون مخفيًا. بمجرد مشاركة العنصر، سيتمكن أي شخص لديه الرابط من رؤيته. ستظل مخفية في السواقة السحابية الخاص بك.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="تم تعيين عنصر واحد أو أكثر من هذه العناصر ليكون مخفيًا. بمجرد مشاركة العناصر المخفية، سيتمكن أي شخص لديه الرابط من رؤيتها. ستظل العناصر مخفية في السواقة السحابية الخاص بك.";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="إظهار تاريخ اخر ظهور";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="لقد رفعت يدك";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="انزل يدك";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="عرض";

@@ -3224,6 +3224,24 @@
         <string>%d contatti</string>
       </dict>
     </dict>
+    <key>chat.message.numberOfAttachments</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>ha allegato %d file</string>
+        <key>many</key>
+        <string>ha allegato %d di file</string>
+        <key>other</key>
+        <string>ha allegato %d file</string>
+      </dict>
+    </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3325,9 +3343,29 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d video to “[A]”</string>
+        <string>%d video aggiunto a “[A]”</string>
+        <key>many</key>
+        <string>%d di video aggiunti a “[A]”</string>
         <key>other</key>
-        <string>Added %d videos to “[A]”</string>
+        <string>%d video aggiunti a “[A]”</string>
+      </dict>
+    </dict>
+    <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d video rimosso da “[A]”</string>
+        <key>many</key>
+        <string>%d di video rimossi da “[A]”</string>
+        <key>other</key>
+        <string>%d video rimossi da “[A]”</string>
       </dict>
     </dict>
   </dict>

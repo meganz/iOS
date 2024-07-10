@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="クラウドストレージがいっぱいのため、アップロードを続行できません";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="あなたの連絡先が、MEGAであなたが最後に活動していた時間を見れるようにします";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="表示";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="最終ログイン：%s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="最終ログインはだいぶ前";
 /*  */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="プレイリスト";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="動画がありません";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="場所";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="すべての場所";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="クラウドドライブ";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="カメラアップロード";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="共有項目";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="長さ";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="すべての長さ";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="10秒未満";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="10秒から60秒";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="1分から4分";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="4分から20分";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="20分以上";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="プレイリストが見つかりません";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="動画を追加";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="プレイリストを削除";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="プレイリストから削除しますか？";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="追加";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="追加";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="名前を変更";
+"videos.tab.playlist.content.alert.title.rename"="プレイリストの名前を変更";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="新しい名前を入力してください";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="名前を変更";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="名前の変更に失敗しました";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="プレイリストを削除しますか？";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="プレイリストは削除されますが、その内容はタイムラインに残ります。";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="「[A]」が削除されました";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="待合室に誰もいません";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4188,3 +4216,13 @@
 "getNodeLink.sensitive.alert.message.single"="この項目は非表示に設定されています。項目を共有すると、リンクを知っている人は誰でもその項目を見ることができるようになります。それでも当該項目は、あなたのクラウドドライブに隠されたままになります。";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="これらの項目の1つ以上が非表示に設定されています。非表示の項目を共有すると、リンクを知っている人は誰でもその項目を見ることができるようになります。それでも当該項目はあなたのクラウドドライブに隠されたままになります。";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="最終ログインを表示";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="挙手しました";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="手を下げる";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="表示";
