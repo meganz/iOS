@@ -23,11 +23,16 @@ public protocol AccountUseCaseProtocol {
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
     /// Check if the current account has a Pro plan or Pro Flexi plan that is not expired
-    /// Returns: `true` if the account is subscribed to a valid standard Pro plan or Pro Flexi that is not expired, `false` otherwise
+    /// Returns: `true` if the account is subscribed to a valid standard Pro plan or Pro Flexi that is not expired, `false` otherwise.
     func hasValidProAccount() -> Bool
     /// Check if the current account has a valid pro account or business account thats not expired
-    /// Returns: `true` if the account is standard pro account or pro flexi account thats not expired or in grace period or a business account thats not expired, `false` otherwise
+    /// Returns: `true` if the account is standard pro account or pro flexi account thats not expired or in grace period or a business
+    /// account thats not expired, `false` otherwise.
     func hasValidProOrUnexpiredBusinessAccount() -> Bool
+    /// Check if the current account has a valid subscription
+    /// Returns: `true` if the account has an active subscription, excluding single purchase subscriptions (e.g., via vouchers)
+    /// which grant pro status but are not recurring.
+    func hasValidSubscription() -> Bool
 
     // Account operations
     func contacts() -> [UserEntity]
@@ -125,7 +130,11 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     }
     
     public func hasValidProAccount() -> Bool {
-        (isStandardProAccount() || isValidProFlexiAccount()) && repository.hasValidSubscription()
+        isStandardProAccount() || isValidProFlexiAccount()
+    }
+    
+    public func hasValidSubscription() -> Bool {
+        repository.hasValidSubscription()
     }
     
     public func hasValidProOrUnexpiredBusinessAccount() -> Bool {
