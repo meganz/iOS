@@ -91,11 +91,57 @@ public extension String {
 
 public extension String {
     static var byteCountFormatter = ByteCountFormatter()
-
+    
+    /// Converts a byte count to a formatted string using memory style and ensures proper spacing between the count and unit.
+    /// - Parameters:
+    ///   - byteCount: The byte count to be formatted.
+    ///   - includesUnit: A boolean indicating whether the unit should be included in the formatted string.
+    /// - Returns: A combined formatted string representing the byte count with proper spacing.
     static func memoryStyleString(fromByteCount byteCount: Int64, includesUnit: Bool = true) -> String {
         byteCountFormatter.countStyle = .memory
         byteCountFormatter.includesUnit = includesUnit
         return byteCountFormatter.string(fromByteCount: byteCount)
+    }
+
+    /// Formats a string that represents a byte count by ensuring the count and unit are properly spaced.
+    /// - Returns: A formatted string with properly spaced count and unit.
+    func formattedByteCountString() -> String {
+        let components = self.split(separator: " ")
+        var countString = String.extractCount(fromComponents: components)
+        
+        if components.count > 1 {
+            let unitString = String.extractUnit(fromComponents: components)
+            countString = "\(countString) \(unitString)"
+        }
+        
+        return countString
+    }
+
+    /// Extracts the count component from a byte count string.
+    /// - Parameter components: The components of the byte count string.
+    /// - Returns: The count component as a string.
+    private static func extractCount(fromComponents components: [Substring]) -> String {
+        let countString = String(components.first ?? "")
+        if countString == "Zero" || countString.isEmpty {
+            return "0"
+        }
+        return countString
+    }
+
+    /// Extracts the unit component from a byte count string.
+    /// - Parameter components: The components of the byte count string.
+    /// - Returns: The unit component as a string.
+    private static func extractUnit(fromComponents components: [Substring]) -> String {
+        if components.count > 1 {
+            let unitCount = components[0]
+            var unitString = components[1]
+
+            if unitCount == "Zero" || unitCount == "0" || unitString == "bytes" || unitString.isEmpty {
+                unitString = "B"
+            }
+            return String(unitString)
+        }
+        return "B"
     }
 }
 

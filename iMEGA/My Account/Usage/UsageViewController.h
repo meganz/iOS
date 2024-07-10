@@ -54,7 +54,6 @@
 
 @property (nonatomic, strong, nullable) UsageViewModel *viewModel;
 
-- (NSString * _Nonnull)textForSizeLabels:(long long)number;
 - (void)setUpPieChartView;
 - (void)reloadPieChart:(NSInteger)currentPage;
 

@@ -23,9 +23,8 @@
     [self configView];
     [self configStorageContentView];
     
-    self.rubbishBinSizeLabel.text = [self textForSizeLabels:self.rubbishBinSize];
-    
-    self.incomingSharesSizeLabel.text = [self textForSizeLabels:self.incomingSharesSize];
+    self.rubbishBinSizeLabel.text = [self formattedStorageUsedStringFor:self.rubbishBinSize];
+    self.incomingSharesSizeLabel.text = [self formattedStorageUsedStringFor:self.incomingSharesSize];
     
     [self updateAppearance];
     
@@ -146,12 +145,6 @@
     
     self.pieChartSecondaryLabel.text = [NSString stringWithFormat:@"%@ / %@", firstPartString, secondPartString];
     self.pieChartTertiaryLabel.text = tertiaryTextString;
-}
-
-- (NSString * _Nonnull)textForSizeLabels:(long long)number {
-    NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:number];
-    
-    return [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
 }
 
 #pragma mark - IBActions

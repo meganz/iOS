@@ -209,7 +209,9 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     var rubbishBinFormattedStorageUsed: String {
         let rubbishBinStorageUsed = accountUseCase.rubbishBinStorageUsed()
-        return String.memoryStyleString(fromByteCount: rubbishBinStorageUsed)
+        return String
+            .memoryStyleString(fromByteCount: rubbishBinStorageUsed)
+            .formattedByteCountString()
     }
     
     func calculateCellHeight(at indexPath: IndexPath) -> CGFloat {
