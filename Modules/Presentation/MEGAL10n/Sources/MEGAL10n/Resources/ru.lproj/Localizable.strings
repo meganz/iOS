@@ -635,7 +635,7 @@
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Добавление контакта";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="Эл. почта контакта";
+"contactEmail"="Электронная почта контакта";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Добавить";
 /* Add contacts and share dialog error message when user try to add your own email address */
@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="Загрузку нельзя продолжить, потому что облачное хранилище заполнено";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Разрешать контактам видеть, когда вы были активны в MEGA последний раз";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Показывать";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Был в сети: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Был в сети очень давно";
 /*  */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="Плейлисты";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Нет видео";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="Расположение";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="Все расположения";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="Облачный диск";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="Загрузки из камеры";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="Общие элементы";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="Продолжительность";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="Любая продолжительность";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="Менее 10 секунд";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="От 10 до 60 секунд";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="От 1 до 4 минут";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="От 4 до 20 минут";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="Более 20 минут";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="Плейлисты не найдены";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="Все видео";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="Удалить плейлист";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Удалить из плейлиста?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Добавить";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Добавить";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Переименовать";
+"videos.tab.playlist.content.alert.title.rename"="Переименование плейлиста";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Введите новое название";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="Переименовать";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="Не удалось переименовать";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="Удалить плейлист?";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Плейлист будет удалён, но его содержимое останется на «Временной шкале».";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="Альбом «[A]» удалён";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="В комнате ожидания никого нет";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4188,3 +4216,13 @@
 "getNodeLink.sensitive.alert.message.single"="Этот элемент скрыт. Как только вы поделитесь элементом, его сможет увидеть любой пользователь, у которого есть ссылка. Он по-прежнему будет скрыт на вашем Облачном диске.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="Один или несколько из этих элементов скрыты. Как только вы поделитесь скрытыми элементами, их сможет увидеть любой пользователь, у которого есть ссылка. Эти элементы по-прежнему будут скрыты на вашем Облачном диске.";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="Показывать «был в сети»";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="Вы подняли руку";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="Опустить руку";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="Просмотр";

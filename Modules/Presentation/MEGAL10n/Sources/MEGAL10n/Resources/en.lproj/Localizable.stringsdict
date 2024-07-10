@@ -3010,21 +3010,21 @@
         <string>Added %d videos to “[A]”</string>
       </dict>
     </dict>
-  <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
-  <dict>
-    <key>NSStringLocalizedFormatKey</key>
-    <string>%#@video@</string>
-    <key>video</key>
+    <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
     <dict>
-      <key>NSStringFormatSpecTypeKey</key>
-      <string>NSStringPluralRuleType</string>
-      <key>NSStringFormatValueTypeKey</key>
-      <string>d</string>
-      <key>one</key>
-      <string>Removed %d video from “[A]”</string>
-      <key>other</key>
-      <string>Removed %d videos from “[A]”</string>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Removed %d video from “[A]”</string>
+        <key>other</key>
+        <string>Removed %d videos from “[A]”</string>
+      </dict>
     </dict>
-  </dict>
   </dict>
 </plist>

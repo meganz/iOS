@@ -3582,6 +3582,22 @@
         <string>%d kontaktów</string>
       </dict>
     </dict>
+    <key>chat.message.numberOfAttachments</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Attached %d file</string>
+        <key>other</key>
+        <string>Attached %d files</string>
+      </dict>
+    </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3700,6 +3716,22 @@
         <string>Dodano %d filmy do ”[A]”</string>
         <key>other</key>
         <string>Dodano %d filmy do ”[A]”</string>
+      </dict>
+    </dict>
+    <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Removed %d video from “[A]”</string>
+        <key>other</key>
+        <string>Removed %d videos from “[A]”</string>
       </dict>
     </dict>
   </dict>

@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="Ihr Upload kann nicht fortgesetzt werden, da Ihr Cloudspeicher voll ist";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Kontakten den Zeitpunkt anzeigen, an dem Sie zuletzt online waren";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Anzeigen";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Zuletzt online: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Zuletzt online: vor längerer Zeit";
 /*  */
@@ -3807,7 +3803,7 @@
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="Keine Präsentationen";
 /* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
-"home.search.empty.no-spreadsheets"="No spreadsheets";
+"home.search.empty.no-spreadsheets"="Keine Tabellenkalkulationen";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="Keine Archive";
 /* A title label for waiting room participants list view. */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="Playlists";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Keine Videos";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="Ort";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="Alle Standorte";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="Cloud Drive";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="Kamera-Uploads";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="Freigaben";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="Dauer";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="Alle Längen";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="Unter 10 Sekunden";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="10 bis 60 Sekunden";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="1 bis 4 Minuten";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="4 bis 20 Minuten";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="Mehr als 20 Minuten";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="Keine Playlists gefunden";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="Videos hinzufügen";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="Playlist löschen";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Aus Playlist entfernen?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Hinzufügen";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Hinzufügen";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Umbenennen";
+"videos.tab.playlist.content.alert.title.rename"="Playlist umbenennen";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Neuen Namen eingeben";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="Umbenennen";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="Umbenennen fehlgeschlagen";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="Playlist löschen?";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Die Playlist wird gelöscht, aber ihr Inhalt bleibt in Ihrer Zeitleiste.";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="„[A]“ wurde gelöscht";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Der Warteraum ist leer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4185,6 +4213,16 @@
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Verborgene Elemente";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.single"="Dieser Inhalt ist verborgen. Wenn Sie ihn freigeben, wird jeder ihn einsehen können, der über den Link verfügt. Der Inhalt bleiben in Ihrem Cloud Drive weiterhin verborgen.";
+"getNodeLink.sensitive.alert.message.single"="Dieser Inhalt ist verborgen. Wenn Sie ihn freigeben, wird jeder ihn einsehen können, der über den Link verfügt. Der Inhalt bleibt in Ihrem Cloud Drive weiterhin verborgen.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="Einer oder mehrere dieser Inhalte sind verborgen. Wenn Sie sie freigeben, wird jeder sie einsehen können, der über den Link verfügt. Die Inhalte bleiben in Ihrem Cloud Drive weiterhin verborgen.";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="Letzte Onlinezeit verfügbar machen";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="Sie haben die Hand gehoben";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="Hand senken";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="Ansehen";

@@ -85,7 +85,7 @@ final class RaiseHandSnackBarFactoryTests: XCTestCase {
     
     func testLocalUserRaisedHand_SnackBarConfiguredProperly() {
         let result = Harness(localRaisedHand: true).result
-        let expected = Harness.expected("Your hand is raised", "Lower hand")
+        let expected = Harness.expected("You raised your hand", "Lower hand")
         XCTAssertSnackBarEqual(result, expected)
     }
     

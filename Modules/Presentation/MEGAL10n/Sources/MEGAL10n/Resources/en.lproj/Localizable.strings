@@ -3967,7 +3967,7 @@
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Add";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Rename";
+"videos.tab.playlist.content.alert.title.rename"="Rename playlist";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Enter the new name";
 /* Videos: video playlist rename alert button title */
@@ -3979,7 +3979,7 @@
 /* Videos: video playlist delete playlist alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Playlist will be deleted but its contents will stay in your Timeline.";
 /* Videos: video playlist delete playlist snack bar message */
-"videos.tab.playlist.content.snackbar.playlistNameDeleted" = "\"[A]\" deleted";
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” deleted";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4219,7 +4219,7 @@
 /* Title of the Show last seen option in the chat settings */
 "settings.calls.status.showLastSeen.title"="Show last seen";
 /* Snack bar message shown when local user raises hand in the call */
-"chat.call.raise-hand.snack-bar.own-user-raised-hand"="Your hand is raised";
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="You raised your hand";
 /* Snack bar message shown when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */

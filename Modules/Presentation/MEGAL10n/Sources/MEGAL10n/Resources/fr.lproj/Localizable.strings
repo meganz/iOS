@@ -1353,7 +1353,7 @@
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
 "attachedFile"="A joint : %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
-"attachedXFiles"="%s fichiers joints.";
+"attachedXFiles"="A joint %s fichiers.";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Sauter au plus récent";
 /* Label in a button that allows to jump to the latest message */
@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="Vos téléversements ne peuvent pas se poursuivre, car votre espace de stockage nuagique est saturé";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permettre à vos contacts de voir la date et l’heure de votre dernière activité sur MEGA";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Afficher";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Vu pour la dernière fois : %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Vu pour la dernière fois il y a longtemps";
 /*  */
@@ -2519,7 +2515,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
 "dialog.storage.almostFull.detail"="Votre Disque nuagique est presque saturé. Surclassez votre compte maintenant vers un compte Pro et obtenez jusqu’à %@ To (%@ Go) d’espace de stockage nuagique.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Votre stockage nuagique est saturé. Veuillez passer à un abonnement MEGA Pro afin d’augmenter votre espace de stockage et de profiter d’avantages supplémentaires. Si vous restez par-delà votre limite de stockage et ne surclassez pas votre compte ni ne supprimez de données, votre compte pourrait être verrouillé. Pour plus de précisions, veuillez vous référer aux courriels que nous vous avons envoyés.";
+"dialog.storage.odq.detail"="Votre espace de stockage nuagique est saturé. Veuillez passer à un abonnement MEGA Pro afin d’augmenter votre espace de stockage et de profiter d’avantages supplémentaires. Si vous restez par-delà votre limite de stockage et ne surclassez pas votre compte ni ne supprimez de données, votre compte pourrait être verrouillé. Pour plus de précisions, veuillez vous référer aux courriels que nous vous avons envoyés.";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Le compte est verrouillé";
 /* Over Disk Quota paywall final title. */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="Listes de lecture";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Aucune vidéo";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="Emplacement";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="Tous les emplacements";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="Disque nuagique";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="Téléversements de l’appareil photo";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="Éléments partagés";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="Durée";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="Toutes les durées";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="Moins de 10 secondes";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="Entre 10 et 60 secondes";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="Entre 1 et 4 minutes";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="Entre 4 et 20 minutes";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="Plus de 20 minutes";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="Aucune liste de lecture n’a été trouvée";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="Ajouter des vidéos";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="Supprimer la liste de lecture";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Supprimer de la liste de lecture ?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Ajouter";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Ajouter";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Renommer";
+"videos.tab.playlist.content.alert.title.rename"="Renommer la liste de lecture";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Saisissez le nouveau nom";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="Renommer";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="Échec de renommage";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="Supprimer la liste de lecture ?";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="La liste de lecture sera supprimée, mais son contenu restera dans votre Vue chronologique.";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="« [A] » a été supprimé";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="La salle d’attente est vide";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4188,3 +4216,13 @@
 "getNodeLink.sensitive.alert.message.single"="Cet élément est défini comme étant caché. Une fois que vous aurez partagé l’article, quiconque disposant du lien pourra le voir. Il restera caché dans votre Disque nuagique.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="Un ou plusieurs de ces éléments sont définis comme étant cachés. Une fois que vous aurez partagé les éléments cachés, quiconque disposant du lien pourra les voir. Les éléments resteront cachés dans votre Disque nuagique.";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="Afficher «[w]Vu pour la dernière fois[w]»";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="Vous avez levé la main";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="Baisser la main";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="Afficher";

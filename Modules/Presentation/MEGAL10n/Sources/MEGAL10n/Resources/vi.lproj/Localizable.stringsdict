@@ -2508,6 +2508,20 @@
         <string>%d tên liên lạc</string>
       </dict>
     </dict>
+    <key>chat.message.numberOfAttachments</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Đã đính kèm %d tệp tin.</string>
+      </dict>
+    </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2590,6 +2604,22 @@
         <string>d</string>
         <key>other</key>
         <string>Đã thêm %d videos vào “[A]”</string>
+      </dict>
+    </dict>
+    <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Removed %d video from “[A]”</string>
+        <key>other</key>
+        <string>Removed %d videos from “[A]”</string>
       </dict>
     </dict>
   </dict>

@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="由於您的雲端空間已滿，您的上傳無法繼續，";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="允許您的聯絡人檢視您上次在MEGA上活動的時間";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="顯示";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="上一次上線：%s前";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="上一次上線在很久之前";
 /*  */
@@ -3821,7 +3817,7 @@
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="透過Pro方案獲得更多功能";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="升級到Pro方案可獲得更多儲存空間和使用Pro功能的權限。方案售價一個月%@起。";
+"onboarding.upgradeAccount.header.subTitle"="升級到Pro方案可獲得更多儲存空間和獲得Pro功能的權限。方案售價一個月%@起。";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="一些值得期待的功能是：";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="播放列表";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="沒有影片";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="位置";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="所有位置";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="雲端硬碟";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="相機上傳";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="共享項目";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="通話時間";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="所有時間";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="少於10秒";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="10到60秒之間";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="1到4分鐘之間";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="4到20分鐘之間";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="超過20分鐘";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="未找到播放列表";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="新增影片";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="刪除播放列表";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="要從播放列表中移除？";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="新增";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="新增";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="重新命名";
+"videos.tab.playlist.content.alert.title.rename"="重新命名播放列表";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="輸入新名稱";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="重新命名";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="重新命名失敗";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="刪除播放列表？";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="播放列表將被刪除，但其內容將保留在您的時間軸中。";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="已刪除「[A]」";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室裡沒有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4185,6 +4213,16 @@
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="隱藏的項目";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.single"="此項目設定為隱藏。一旦您共享該項目，任何知道連結的人都可以看到它。它在您的雲端硬碟中仍是隱藏的。";
+"getNodeLink.sensitive.alert.message.single"="此項目設定為隱藏。一旦您共享該項目，任何知道連結的人都可以看到它。它的狀態在您的雲端硬碟中仍是隱藏的。";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="其中一個或多個項目被設定為隱藏。一旦您共享項目，任何知道連結的人都可以看到它們。這些項目在您的雲端硬碟中仍是隱藏的。";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="顯示最後上線";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="您舉起手";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="放下手";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="檢視";

@@ -3582,6 +3582,26 @@
         <string>%d контакта</string>
       </dict>
     </dict>
+    <key>chat.message.numberOfAttachments</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Прикреплён %d файл</string>
+        <key>few</key>
+        <string>Прикреплено %d файла</string>
+        <key>many</key>
+        <string>Прикреплено %d файлов</string>
+        <key>other</key>
+        <string>Прикреплено %d файла</string>
+      </dict>
+    </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3700,6 +3720,26 @@
         <string>В «[A]» добавлено %d видео</string>
         <key>other</key>
         <string>В «[A]» добавлено %d видео</string>
+      </dict>
+    </dict>
+    <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Из «[A]» удалено %d видео</string>
+        <key>few</key>
+        <string>Из «[A]» удалено %d видео</string>
+        <key>many</key>
+        <string>Из «[A]» удалено %d видео</string>
+        <key>other</key>
+        <string>Из «[A]» удалено %d видео</string>
       </dict>
     </dict>
   </dict>

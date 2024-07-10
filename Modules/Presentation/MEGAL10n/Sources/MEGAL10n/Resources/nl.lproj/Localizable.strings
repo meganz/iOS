@@ -1864,10 +1864,6 @@
 "Your upload(s) cannot proceed because your account is full"="Uw upload kan niet doorgaan omdat uw Cloud opslag vol is";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Laat uw contacten zien wanneer u voor het laatst actief was op MEGA";
-/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Weergeven";
-/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Laatst gezien: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Laatst gezien is lang geleden";
 /*  */
@@ -3807,7 +3803,7 @@
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="Geen presentaties";
 /* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
-"home.search.empty.no-spreadsheets"="No spreadsheets";
+"home.search.empty.no-spreadsheets"="Geen spreadsheets";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="Geen archiven";
 /* A title label for waiting room participants list view. */
@@ -3914,6 +3910,30 @@
 "videos.tab.title.playlist"="Afspeellijst";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Geen video's";
+/* Videos: videos filter title for location */
+"videos.tab.all.filter.location.title.location"="Lokatie";
+/* Videos: videos filter option for all locations */
+"videos.tab.all.filter.location.option.allLocations"="Alle locaties";
+/* Videos: videos filter option for cloud drive */
+"videos.tab.all.filter.location.option.cloudDrive"="Cloud Schijf";
+/* Videos: videos filter option for Camera uploads */
+"videos.tab.all.filter.location.option.cameraUploads"="Camera uploads";
+/* Videos: videos filter option for shared items */
+"videos.tab.all.filter.location.option.sharedItems"="Gedeelde items";
+/* Videos: videos filter title for duration */
+"videos.tab.all.filter.duration.title.duration"="Looptijd";
+/* Videos: videos filter option for all duration */
+"videos.tab.all.filter.duration.option.allDurations"="Alle looptijden";
+/* Videos: videos filter option for less than 10 seconds */
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="Minder dan 10 seconden";
+/* Videos: videos filter option for between 10 and 60 seconds */
+"videos.tab.all.filter.duration.option.between10And60Seconds"="Tussen 10 en 60 seconden";
+/* Videos: videos filter option for between 1 and 4 minutes */
+"videos.tab.all.filter.duration.option.between1And4Minutes"="Tussen 1 en 4 minuten";
+/* Videos: videos filter option for between 4 and 20 minutes */
+"videos.tab.all.filter.duration.option.between4And20Minutes"="Tussen 4 en 20 minuten";
+/* Videos: videos filter option for more than 20 minutes */
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="Meer dan 20 minuten";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="Geen afspeellijsten gevonden";
 /* Videos: video playlist add new playlist button text description */
@@ -3940,18 +3960,26 @@
 "videos.tab.playlist.playlistContent.menu.addVideos"="Video's toevoegen";
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="Afspeellijst verwijderen";
+/* Used in video playlist content action sheet when about to remove videos from playlist */
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Uit de afspeellijst verwijderen?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Toevoegen";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Toevoegen";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Hernoemen";
+"videos.tab.playlist.content.alert.title.rename"="Afspeellijst hernoemen";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Vul de nieuwe naam in";
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="Hernoemen";
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="Hernoemen is mislukt";
+/* Videos: video playlist delete playlist alert title */
+"videos.tab.playlist.content.alert.title.deletePlaylist"="Afspeellijst verwijderen?";
+/* Videos: video playlist delete playlist alert subtitle */
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="De afspeellijst wordt verwijderd, maar de inhoud blijft op uw tijdlijn staan.";
+/* Videos: video playlist delete playlist snack bar message */
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” verwijderd";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Er is niemand in de wachtkamer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4188,3 +4216,13 @@
 "getNodeLink.sensitive.alert.message.single"="Dit item is ingesteld op verborgen. Zodra u het item hebt gedeeld, kan iedereen met de link het zien. Het zal nog steeds verborgen zijn op uw Cloud-schijf.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="Één of meer van deze items zijn ingesteld op verborgen. Zodra u de verborgen items hebt gedeeld, kan iedereen met de link ze zien. De items blijven verborgen op uw Cloud-schijf.";
+/* Title of the Show last seen option in the chat settings */
+"settings.calls.status.showLastSeen.title"="Laatst gezien weergeven";
+/* Snack bar message shown when local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.own-user-raised-hand"="U heeft uw hand opgestoken";
+/* Snack bar message shown when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+/* Action title to lower hand, shown on Snack bar local user raises hand in the call */
+"chat.call.raise-hand.snack-bar.lower-hand"="Hand omlaag doen";
+/* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
+"chat.call.raise-hand.snack-bar.view"="Weergeven";

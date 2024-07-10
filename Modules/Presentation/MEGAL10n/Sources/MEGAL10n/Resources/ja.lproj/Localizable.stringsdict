@@ -2508,6 +2508,20 @@
         <string>%d件の連絡先</string>
       </dict>
     </dict>
+    <key>chat.message.numberOfAttachments</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個のファイルを添付</string>
+      </dict>
+    </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2590,6 +2604,20 @@
         <string>d</string>
         <key>other</key>
         <string>%d個の動画を「[A]」に追加しました</string>
+      </dict>
+    </dict>
+    <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>「[A]」から%d個の動画を削除しました</string>
       </dict>
     </dict>
   </dict>
