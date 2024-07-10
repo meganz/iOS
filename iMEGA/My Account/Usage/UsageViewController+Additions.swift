@@ -225,21 +225,27 @@ extension UsageViewController {
         }
     }
     
+    @objc func formattedStorageUsedString(for size: Int64) -> String {
+        String
+           .memoryStyleString(fromByteCount: size)
+           .formattedByteCountString()
+    }
+    
     private func executeCommand(_ command: UsageViewModel.Command) {
         switch command {
         case .loaded(let storageType, let size):
             switch storageType {
             case .cloud:
-                cloudDriveSizeLabel?.text = text(forSizeLabels: size)
+                cloudDriveSizeLabel?.text = formattedStorageUsedString(for: size)
                 stopAnimating(cloudDriveActivityIndicator)
             case .backups:
-                backupsSizeLabel?.text = text(forSizeLabels: size)
+                backupsSizeLabel?.text = formattedStorageUsedString(for: size)
                 stopAnimating(backupsActivityIndicator)
             case .rubbishBin:
-                rubbishBinSizeLabel?.text = text(forSizeLabels: size)
+                rubbishBinSizeLabel?.text = formattedStorageUsedString(for: size)
                 stopAnimating(rubbishBinActivityIndicator)
             case .incomingShares:
-                incomingSharesSizeLabel?.text = text(forSizeLabels: size)
+                incomingSharesSizeLabel?.text = formattedStorageUsedString(for: size)
                 stopAnimating(incomingSharesActivityIndicator)
             }
             reloadCurrentPage()
