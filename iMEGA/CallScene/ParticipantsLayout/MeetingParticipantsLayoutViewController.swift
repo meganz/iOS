@@ -169,8 +169,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
     
     // this is needed to accommodate rotation and showing/hiding of the floating drawer
     // configureSpeakerView carries some custom constraints that are breaking the layout if this is not updated
-    func updateSnackBarConstraintsIfNeeded(animated: Bool) {
-        let constants = SnackBarConstraintConstants(statusBarHidden: statusBarHidden)
+    func updateSnackBarConstraintsIfNeeded(animated: Bool, menusShown: Bool) {
+        let constants = SnackBarConstraintConstants(statusBarHidden: !menusShown)
         leadingSnackConstraint?.constant = constants.leading
         trailingSnackConstraint?.constant = constants.trailing
         bottomSnackBarConstraint?.constant = constants.bottom
@@ -196,7 +196,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
                 )
             )
             viewModel.dispatch(.onOrientationChanged)
-            updateSnackBarConstraintsIfNeeded(animated: false)
+            updateSnackBarConstraintsIfNeeded(animated: false, menusShown: !statusBarHidden)
         })
     }
     
@@ -242,6 +242,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
             localUserView.configure(for: position)
         case .switchMenusVisibility:
             switchMenuVisibility()
+        case .switchMenusVisibilityToShownIfNeeded:
+            toggleMenus(hidden: false)
         case .switchLayoutMode(let layoutMode, let participantsCount):
             configureLayout(mode: layoutMode, participantsCount: participantsCount)
         case .disableSwitchLayoutModeButton(let disable):
@@ -371,15 +373,21 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
     }
     
     func switchMenuVisibility() {
-        statusBarHidden.toggle()
+        // if statusBarHidden == true, menusShow == false
+        // if statusBarHidden == false, menusShow == true
+        toggleMenus(hidden: !statusBarHidden)
+    }
+    
+    func toggleMenus(hidden: Bool) {
+        statusBarHidden = hidden
         if let nc = navigationController {
-            nc.setNavigationBarHidden(!(nc.navigationBar.isHidden), animated: true)
+            nc.setNavigationBarHidden(hidden, animated: true)
         }
         
-        localUserView.updateOffsetWithNavigation(hidden: statusBarHidden)
-        recordingImageView.isHidden = titleView.recordingImageView.isHidden || !titleView.recordingImageView.isHidden && !statusBarHidden
+        localUserView.updateOffsetWithNavigation(hidden: hidden)
+        recordingImageView.isHidden = hidden
         updateNavigationBarAppearance()
-        updateSnackBarConstraintsIfNeeded(animated: true)
+        updateSnackBarConstraintsIfNeeded(animated: true, menusShown: !hidden)
     }
     
     // MARK: - UI Actions

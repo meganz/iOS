@@ -26,6 +26,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case panelTransitionIsLongForm(Bool)
     case callAbsentParticipant(CallParticipantEntity)
     case muteParticipant(CallParticipantEntity)
+    case transitionToLongForm
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -210,6 +211,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             callAbsentParticipants([participant])
         case .muteParticipant(let participant):
             muteParticipant(participant: participant)
+        case .transitionToLongForm:
+            invokeCommand?(.transitionToLongForm)
+            selectParticipantsListTab(.inCall)
         }
     }
     

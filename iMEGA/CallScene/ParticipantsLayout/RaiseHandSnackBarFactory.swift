@@ -12,7 +12,6 @@ struct RaiseHandSnackBarFactory {
         case meAndOthers(count: Int) // count >= 0
     }
     
-    /// Not handled yet, will be implemented as part of  [MEET-3774]
     var viewRaisedHandsHandler: () -> Void
     var lowerHandHandler: () -> Void
     
@@ -47,12 +46,12 @@ struct RaiseHandSnackBarFactory {
             )
         case .othersNotMe(let firstOther, let count):
             .raiseHandSnackBar(
-                message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.ManyOtherPersonsRaisedHand.stringInt(firstOther, count),
+                message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.ManyOtherPersonsRaisedHands.stringInt(firstOther, count),
                 action: viewRaisedHandsAction
             )
         case .meAndOthers(count: let count):
             .raiseHandSnackBar(
-                message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.youAndOtherPersonRaisedHand(count),
+                message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.youAndOtherPersonRaisedHands(count),
                 action: viewRaisedHandsAction
             )
         }

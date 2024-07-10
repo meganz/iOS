@@ -5,10 +5,24 @@ import MEGADomain
 /// WARNING: CallParticipantEntity is a class (most other entities are structs)
 enum RaiseHandDiffing {
     
-    struct RaiseHandChange: Equatable, Hashable {
+    struct Change: Equatable, Hashable {
         var handle: HandleEntity
         var raisedHand: Bool
         var index: Int? // for own user there's no index as this user is not in the callParticipant array
+    }
+    
+    struct DiffResult: Equatable, Hashable {
+        var changes: Set<Change>
+        
+        /// A.   signals that there are new raised hands between raiseHandListBefore and raiseHandListAfter structures,
+        ///    it will be false when there are changes but users only lowered hands.
+        ///    This is needed to make SnackBar appear only for new raised hands and eliminate scenario:
+        ///    1. local user raises hand (we show snack bar : "Your hand is raised")
+        ///    2. remote user raises hand (we show snack bar to indicate that "You and remote raised hands")
+        ///    3. remote user lowers hand (we SHOULD NOT show snack bar , there are changes but only some hands were lowered)
+        ///
+        ///  B. signals that local user changed raise hand state so that we know to nil out the state of snack bar
+        var shouldUpdateSnackBar: Bool
     }
     
     /// returns list of changed states of raise hand feature
@@ -20,8 +34,11 @@ enum RaiseHandDiffing {
     static func applyingRaisedHands(
         callParticipantHandles: [HandleEntity],
         raiseHandListBefore: [HandleEntity],
-        raiseHandListAfter: [HandleEntity]
-    ) -> [RaiseHandChange] {
+        raiseHandListAfter: [HandleEntity],
+        localUserParticipantId: HandleEntity
+    ) -> DiffResult {
+        
+        MEGALogDebug("[RaiseHand] callParticipantHandles: \(callParticipantHandles), raiseHandListBefore \(raiseHandListBefore),  raiseHandListAfter \(raiseHandListAfter) ")
         
         // here we cache the mapping of participant id to index for fast acceess
         var indexMapping = [HandleEntity: Int]()
@@ -44,17 +61,25 @@ enum RaiseHandDiffing {
         // example : (3,4,9) - (3) = (4,9) → users with ids 4 and 9 raised hands
         let raised = raiseHandAfterSet.subtracting(raiseHandBeforeSet)
         
+        let hasNewRaisedHands = raised.isNotEmpty
+        let localRaisedHandStateChanged = (
+            lowered.contains(localUserParticipantId) || raised.contains(localUserParticipantId)
+        )
+        
         // we sum (union) sets to get both raised and lowered hands indexes and state
         // to minimally update the cached callParticipants and UI
         let changed = (raised.union(lowered))
             .map { participantId in
-                RaiseHandChange(
+                Change(
                     handle: participantId,
                     raisedHand: raised.contains(participantId),
                     index: indexMapping[participantId]
                 )
             }
          
-        return changed
+        return .init(
+            changes: Set(changed),
+            shouldUpdateSnackBar: hasNewRaisedHands || localRaisedHandStateChanged
+        )
     }
 }
