@@ -30,6 +30,7 @@ enum MeetingContainerAction: ActionType {
     case leaveCallFromRecordingAlert
     case showMutedBy(String)
     case showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void))
+    case transitionToLongForm
 }
 
 /**
@@ -202,6 +203,13 @@ final class MeetingContainerViewModel: ViewModelType {
             router.showMutedMessage(by: name)
         case .showCallWillEndAlert(let timeToEndCall, let completion):
             router.showCallWillEndAlert(timeToEndCall: timeToEndCall, completion: completion)
+        case .transitionToLongForm:
+            router.showFloatingPanelIfNeeded(
+                containerViewModel: self,
+                completion: { [weak self] in
+                    self?.router.transitionToLongForm()
+                }
+            )
         }
     }
     

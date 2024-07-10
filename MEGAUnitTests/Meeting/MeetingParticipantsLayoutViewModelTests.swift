@@ -1315,14 +1315,12 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         
         guard
             case .reloadParticipantRaisedHandAt = receiveCommands[0],
-            case .updateSnackBar(let snackBar) = receiveCommands[1],
-            case .updateLocalRaisedHandHidden(let hidden) = receiveCommands[2]
+            case .updateLocalRaisedHandHidden(let hidden) = receiveCommands[1]
         else {
             XCTFail("received incorrect commands")
             return
         }
         
-        XCTAssertNil(snackBar)
         XCTAssertTrue(hidden)
             
     }

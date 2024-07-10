@@ -62,6 +62,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case configView(title: String, subtitle: String, isUserAGuest: Bool, isOneToOne: Bool)
         case configLocalUserView(position: CameraPositionEntity)
         case switchMenusVisibility
+        case switchMenusVisibilityToShownIfNeeded
         case switchLayoutMode(layout: ParticipantsLayoutMode, participantsCount: Int)
         case disableSwitchLayoutModeButton(disable: Bool)
         case switchLocalVideo(Bool)
@@ -528,7 +529,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                                           addedParticipantNames: participantNamesResult[0],
                                           removedParticipantNames: participantNamesResult[1])
                     } catch {
-                        MEGALogDebug("Failed to load participants name \(error)")
+                        MEGALogError("Failed to load participants name \(error)")
                     }
                 }
             }
@@ -625,7 +626,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 case .success(let title):
                     self?.invokeCommand?(.updateName(title))
                 case .failure:
-                    MEGALogDebug("Could not change the chat title")
+                    MEGALogError("Could not change the chat title")
                 }
                 self?.containerViewModel?.dispatch(.changeMenuVisibility)
             }
@@ -940,7 +941,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         
         guard let participantIndex = callParticipants.firstIndex(of: participant) else {
             assert(true, "participant not found")
-            MEGALogDebug("Participant not found \(participant) in the list")
+            MEGALogError("Participant not found \(participant) in the list")
             return
         }
         
@@ -998,7 +999,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         avatarChangeSubscription = userImageUseCase
             .requestAvatarChangeNotification(forUserHandles: participants.map(\.participantId))
             .sink { error in
-                MEGALogDebug("error fetching the changed avatar \(error)")
+                MEGALogError("error fetching the changed avatar \(error)")
             } receiveValue: { [weak self] handles in
                 guard let self else { return }
                 self.avatarRefetchTasks = handles.map {
@@ -1013,7 +1014,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             
             do {
                 guard let name = try await self.chatRoomUserUseCase.userDisplayNames(forPeerIds: [handle], in: chatRoom).first else {
-                    MEGALogDebug("Unable to find the name for handle \(handle)")
+                    MEGALogError("Unable to find the name for handle \(handle)")
                     return
                 }
                 
@@ -1150,21 +1151,27 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         let diffed = RaiseHandDiffing.applyingRaisedHands(
             callParticipantHandles: callParticipants.map(\.participantId),
             raiseHandListBefore: raiseHandListBefore,
-            raiseHandListAfter: raiseHandListAfter
+            raiseHandListAfter: raiseHandListAfter,
+            localUserParticipantId: myself.participantId
         )
         
-        diffed.forEach { change in
+        diffed.changes.forEach { change in
             // update CallParticipantEntity objects and reload cells
             guard let index = change.index else { return }
             callParticipants[index].raisedHand = change.raisedHand
             invokeCommand?(.reloadParticipantRaisedHandAt(index, callParticipants))
         }
         
-        MEGALogDebug("[RaiseHand] raise hand changed \(diffed.isNotEmpty) : \(call.raiseHandsList)")
+        MEGALogDebug("[RaiseHand] raise hand changed \(diffed.changes.isNotEmpty) : \(call.raiseHandsList)")
         
         let localRaisedHand = raiseHandListAfter.contains(myself.participantId)
         
-        if diffed.isNotEmpty {
+        // to show snack bar we need to check that
+        // raised hands are changed but increased to avoid scenario:
+        // 1. local user raised hand (show snack bar)
+        // 2. remote user raised hand (show snack bar)
+        // 3. remote user lowered hand (do not show snack bar) <--- diff is not empty but we already showed snack bar for local user raising hand
+        if diffed.shouldUpdateSnackBar {
             updateSnackBar(
                 callParticipants: callParticipants,
                 localRaisedHand: localRaisedHand
@@ -1173,7 +1180,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     func viewRaisedHands() {
-        
+        showParticipantList()
+    }
+    
+    func showParticipantList() {
+        // we show menus if needed (navbar, drawer etc)
+        invokeCommand?(.switchMenusVisibilityToShownIfNeeded)
+        // and then transition to long form of navbar to show list of participants,
+        // we also switch to "in-call" tab in the floating drawer
+        containerViewModel?.dispatch(.transitionToLongForm)
     }
     
     func lowerRaisedHand() {
@@ -1190,6 +1205,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callParticipants: [CallParticipantEntity],
         localRaisedHand: Bool
     ) {
+        MEGALogDebug("[RaiseHand] updating snack bar localRaisedHand: \(localRaisedHand), raised hands: \(callParticipants.map(\.raisedHand))")
         let factory = RaiseHandSnackBarFactory(
             viewRaisedHandsHandler: viewRaisedHands,
             lowerHandHandler: lowerRaisedHand
@@ -1198,6 +1214,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             participants: callParticipants,
             localRaisedHand: localRaisedHand
         )
+        MEGALogDebug("[RaiseHand] updating snack bar with model : \(String(describing: snackBarModel))")
         invokeCommand?(.updateSnackBar(snackBarModel))
     }
     

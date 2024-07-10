@@ -737,25 +737,17 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     }
     
     func testAction_muteParticipant_muteError() {
-        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, chatType: .meeting)
-        let call = CallEntity()
-        let router = MockMeetingFloatingPanelRouter()
-        let callUseCase = MockCallUseCase(call: call, muteParticipantCompletion: .failure(GenericErrorEntity()))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase)
-        let viewModel = MeetingFloatingPanelViewModel.make(
-            router: router,
-            containerViewModel: containerViewModel,
-            chatRoom: chatRoom,
-            callUseCase: callUseCase,
-            headerConfigFactory: headerConfigFactory
+        
+        let harness = Harness(
+            chatRoom: .moderatorMeeting,
+            callUseCase: .init(call: .init(), muteParticipantCompletion: .failure(GenericErrorEntity()))
         )
         
-        let participant = CallParticipantEntity(chatId: chatRoom.chatId, participantId: 1, audio: .on)
-        viewModel.dispatch(.muteParticipant(participant))
+        harness.sut.dispatch(.muteParticipant(.unmutedParticipant(chatId: harness.chatRoom.chatId)))
         
         evaluate {
-            router.showMuteError_calledTimes == 1 &&
-            callUseCase.muteParticipant_CalledTimes == 0
+            harness.router.showMuteError_calledTimes == 1 &&
+            harness.callUseCase.muteParticipant_CalledTimes == 0
         }
     }
     
@@ -793,12 +785,15 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         lazy var callParticipants = [firstParticipant, secondParticipant, thirdParticipant]
                 
         var continuation: AsyncStream<CallEntity>.Continuation?
+        let chatRoom: ChatRoomEntity
+        let router: MockMeetingFloatingPanelRouter
+        let callUseCase: MockCallUseCase
         
         init(
-            router: some MeetingFloatingPanelRouting = MockMeetingFloatingPanelRouter(),
+            router: MockMeetingFloatingPanelRouter = .init(),
             containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
             chatRoom: ChatRoomEntity = ChatRoomEntity(),
-            callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+            callUseCase: MockCallUseCase = .init(),
             callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
             accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
             chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
@@ -806,6 +801,10 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             selectWaitingRoomList: Bool = false,
             headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol = MockMeetingFloatingPanelHeaderConfigFactory()
         ) {
+            self.chatRoom = chatRoom
+            self.router = router
+            self.callUseCase = callUseCase
+            
             self.sut = .init(
                 router: router,
                 containerViewModel: containerViewModel,
@@ -961,5 +960,19 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
         showHangOrEndCallDialog_calledTimes += 1
+    }
+    
+    func transitionToLongForm() {
+        
+    }
+}
+
+extension CallParticipantEntity {
+    static func unmutedParticipant(chatId: HandleEntity) -> Self {
+        .init(
+            chatId: chatId,
+            participantId: 1,
+            audio: .on
+        )
     }
 }

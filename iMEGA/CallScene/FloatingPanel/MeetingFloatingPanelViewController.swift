@@ -152,8 +152,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
             panModalSetNeedsLayoutUpdate()
             panModalTransition(to: .shortForm)
         case .transitionToLongForm:
-            panModalSetNeedsLayoutUpdate()
             panModalTransition(to: .longForm)
+            panModalSetNeedsLayoutUpdate()
         case .updateAllowNonHostToAddParticipants(let enabled):
             isAllowNonHostToAddParticipantsEnabled = enabled
             participantsTableView.reloadSections([0], with: .automatic)

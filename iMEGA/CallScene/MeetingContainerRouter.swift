@@ -32,6 +32,11 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showUsersLimitErrorAlert()
     func showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void)?)
     func showUpgradeToProDialog(_ account: AccountDetailsEntity)
+    func transitionToLongForm()
+    func showFloatingPanelIfNeeded(
+        containerViewModel: MeetingContainerViewModel,
+        completion: @escaping () -> Void
+    )
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -125,7 +130,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             containerViewModel: containerViewModel
         )
         showFloatingPanel(
-            containerViewModel: containerViewModel
+            containerViewModel: containerViewModel,
+            completion: {}
         )
         isCallUIVisible = true
         UIApplication.shared.isIdleTimerDisabled = true
@@ -162,14 +168,28 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             floatingPanelRouter.dismiss()
             self.floatingPanelRouter = nil
         } else {
-            showFloatingPanel(containerViewModel: containerViewModel)
+            showFloatingPanel(
+                containerViewModel: containerViewModel,
+                completion: {}
+            )
+        }
+    }
+    
+    func showFloatingPanelIfNeeded(
+        containerViewModel: MeetingContainerViewModel,
+        completion: @escaping () -> Void
+    ) {
+        if floatingPanelRouter == nil {
+            showFloatingPanel(containerViewModel: containerViewModel, completion: completion)
+        } else {
+            completion()
         }
     }
     
     func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel) {
         guard floatingPanelRouter != nil else {
             selectWaitingRoomList = true
-            showFloatingPanel(containerViewModel: containerViewModel)
+            showFloatingPanel(containerViewModel: containerViewModel, completion: {})
             meetingParticipantsRouter?.showNavigation()
             return
         }
@@ -369,7 +389,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     private func showFloatingPanel(
-        containerViewModel: MeetingContainerViewModel
+        containerViewModel: MeetingContainerViewModel,
+        completion: @escaping () -> Void
     ) {
         // When toggling the chatroom instance might be outdated. So fetching it again.
         guard let baseViewController = baseViewController,
@@ -394,7 +415,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             }
         )
         selectWaitingRoomList = false
-        floatingPanelRouter.start()
+        floatingPanelRouter.start(completion: completion)
         self.floatingPanelRouter = floatingPanelRouter
     }
     
@@ -410,7 +431,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                           !baseViewController.navigationBar.isHidden,
                           baseViewController.presentedViewController == nil,
                           let containerViewModel = self.containerViewModel {
-                    self.showFloatingPanel(containerViewModel: containerViewModel)
+                    self.showFloatingPanel(containerViewModel: containerViewModel, completion: {})
                 }
             }
     }
@@ -433,5 +454,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         presentedViewController.dismiss(animated: false) {
             completion()
         }
+    }
+    
+    func transitionToLongForm() {
+        floatingPanelRouter?.transitionToLongForm()
     }
 }

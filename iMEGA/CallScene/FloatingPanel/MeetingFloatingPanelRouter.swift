@@ -8,7 +8,7 @@ import MEGASDKRepo
 import PanModal
 import SwiftUI
 
-protocol MeetingFloatingPanelRouting: AnyObject, Routing {
+protocol MeetingFloatingPanelRouting: AnyObject {
     func dismiss(animated: Bool)
     func inviteParticipants(
         withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
@@ -17,21 +17,29 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     )
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
     func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
-    func showContextMenu(presenter: UIViewController,
-                         sender: UIButton,
-                         participant: CallParticipantEntity,
-                         isMyselfModerator: Bool,
-                         meetingFloatingPanelModel: MeetingFloatingPanelViewModel)
+    func showContextMenu(
+        presenter: UIViewController, 
+        sender: UIButton,
+        participant: CallParticipantEntity,
+        isMyselfModerator: Bool,
+        meetingFloatingPanelModel: MeetingFloatingPanelViewModel
+    )
     func showVideoPermissionError()
     func showAudioPermissionError()
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
-    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
+    func showConfirmDenyAction(
+        for username: String,
+        isCallUIVisible: Bool,
+        confirmDenyAction: @escaping () -> Void,
+        cancelDenyAction: @escaping () -> Void
+    )
     func showWaitingRoomParticipantsList(for call: CallEntity)
     func showMuteSuccess(for participant: CallParticipantEntity?)
     func showMuteError(for participant: CallParticipantEntity?)
     func showUpgradeFlow(_ accountDetails: AccountDetailsEntity)
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
+    func transitionToLongForm()
 }
 
 extension MeetingFloatingPanelRouting {
@@ -40,7 +48,7 @@ extension MeetingFloatingPanelRouting {
     }
 }
 
-final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
+final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {    
     private weak var baseViewController: UIViewController?
     private weak var presenter: UINavigationController?
     private weak var containerViewModel: MeetingContainerViewModel?
@@ -143,12 +151,12 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         return vc
     }
     
-    func start() {
+    func start(completion: @escaping () -> Void) {
         guard let viewController = build() as? any PanModalPresentable & UIViewController else { return }
         viewController.modalPresentationStyle = .custom
         viewController.modalPresentationCapturesStatusBarAppearance = true
         viewController.transitioningDelegate = PanModalPresentationDelegate.default
-        presenter?.present(viewController, animated: true)
+        presenter?.present(viewController, animated: true, completion: completion)
     }
     
     func dismiss(animated: Bool) {
@@ -313,5 +321,9 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
         let hangOrEndCallRouter = HangOrEndCallRouter(presenter: UIApplication.mnz_presentingViewController(), meetingContainerViewModel: containerViewModel)
         hangOrEndCallRouter.start()
+    }
+    
+    func transitionToLongForm() {
+        viewModel?.dispatch(.transitionToLongForm)
     }
 }
