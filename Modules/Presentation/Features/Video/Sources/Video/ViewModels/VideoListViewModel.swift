@@ -25,6 +25,8 @@ public final class VideoListViewModel: ObservableObject {
     @Published private(set) var chips: [ChipContainerViewModel] = [ FilterChipType.location, .duration ]
         .map { ChipContainerViewModel(title: $0.description, type: $0, isActive: false) }
     
+    @Published private(set) var shouldShowFilterChip = true
+    
     @Published private(set) var shouldShowPlaceHolderView = false
     @Published private(set) var shouldShowVideosEmptyView = false
     
@@ -212,6 +214,11 @@ public final class VideoListViewModel: ObservableObject {
         syncModel.$editMode
             .receive(on: DispatchQueue.main)
             .assign(to: &selection.$editMode)
+        
+        selection.$editMode
+            .map { !$0.isEditing }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$shouldShowFilterChip)
     }
     
     private func subscribeToAllSelected() {

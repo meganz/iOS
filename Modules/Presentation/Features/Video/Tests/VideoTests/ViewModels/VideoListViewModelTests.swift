@@ -10,22 +10,79 @@ final class VideoListViewModelTests: XCTestCase {
     private var cancellables = Set<AnyCancellable>()
     
     func testInit_whenInit_doesNotExecuteSearchOnUseCase() async {
-        let (_, _, photoLibraryUseCase) = makeSUT()
+        let (_, _, photoLibraryUseCase, _) = makeSUT()
         
         let messages = await photoLibraryUseCase.messages
         XCTAssertTrue(messages.isEmpty, "Expect to not search on creation")
     }
     
     func testInit_whenInit_doNotListenToNodesUpdate() {
-        let (_, fileSearchUseCase, _) = makeSUT()
+        let (_, fileSearchUseCase, _, _) = makeSUT()
         
         XCTAssertTrue(fileSearchUseCase.messages.isEmpty, "Expect to not listen nodes update")
+    }
+    
+    // MARK: - init.subscribeToEditingMode
+    
+    func testInit_initialState_shouldShowFilterChip() async {
+        let (sut, _, _, _) = makeSUT()
+        let exp = expectation(description: "show filter chip")
+        exp.assertForOverFulfill = false
+        var receivedValue = true
+        let cancellable = sut.$shouldShowFilterChip
+            .sink { shouldShowFilterChip in
+                receivedValue = shouldShowFilterChip
+                exp.fulfill()
+            }
+        
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        XCTAssertTrue(receivedValue)
+        cancellable.cancel()
+    }
+    
+    func testInit_whenIsNotEditing_shouldShowFilterChip() async {
+        let (sut, _, _, syncModel) = makeSUT()
+        let exp = expectation(description: "show filter chip")
+        exp.assertForOverFulfill = false
+        var receivedValue = true
+        let cancellable = sut.$shouldShowFilterChip
+            .dropFirst()
+            .sink { shouldShowFilterChip in
+                receivedValue = shouldShowFilterChip
+                exp.fulfill()
+            }
+        
+        syncModel.editMode = .inactive
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        XCTAssertTrue(receivedValue)
+        cancellable.cancel()
+    }
+    
+    func testInit_whenIsEditing_shouldNotShowFilterChip() async {
+        let (sut, _, _, syncModel) = makeSUT()
+        let exp = expectation(description: "should not show filter chip")
+        exp.assertForOverFulfill = false
+        var receivedValue = true
+        let cancellable = sut.$shouldShowFilterChip
+            .dropFirst()
+            .sink { shouldShowFilterChip in
+                receivedValue = shouldShowFilterChip
+                exp.fulfill()
+            }
+        
+        syncModel.editMode = .active
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        XCTAssertFalse(receivedValue)
+        cancellable.cancel()
     }
     
     // MARK: - onViewAppear
     
     func testOnViewAppear_whenCalled_executeSearchUseCase() async {
-        let (sut, _, photoLibraryUseCase) = makeSUT()
+        let (sut, _, photoLibraryUseCase, _) = makeSUT()
         
         await sut.onViewAppear()
         
@@ -34,7 +91,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testOnViewAppear_whenCalledOnFailedLoadVideos_executesSearchUseCaseInOrder() async {
-        let (sut, _, photoLibraryUseCase) = makeSUT()
+        let (sut, _, photoLibraryUseCase, _) = makeSUT()
         
         await sut.onViewAppear()
         
@@ -43,7 +100,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testOnViewAppear_whenCalledOnSuccessfullyLoadVideos_executesSearchUseCaseInOrder() async {
-        let (sut, _, photoLibraryUseCase) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
         
         await sut.onViewAppear()
         
@@ -52,7 +109,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testOnViewAppear_whenError_showsErrorView() async {
-        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
+        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
         
         await sut.onViewAppear()
         
@@ -60,7 +117,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testOnViewAppear_whenNoErrors_showsEmptyItemView() async {
-        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: []))
+        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: []))
         
         await sut.onViewAppear()
         
@@ -69,7 +126,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     func testOnViewAppear_whenNoErrors_showsVideoItems() async {
         let foundVideos = [ anyNode(id: 1, mediaType: .video), anyNode(id: 2, mediaType: .video) ]
-        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: foundVideos))
+        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: foundVideos))
         
         await sut.onViewAppear()
         
@@ -77,7 +134,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testOnViewAppear_whenLoadVideosSuccessfully_showsCorrectLoadingState() async {
-        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
+        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
         var loadingStates: [Bool] = []
         let exp = expectation(description: "loading state subscription")
         exp.assertForOverFulfill = false
@@ -96,7 +153,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testOnViewAppear_whenLoadVideosFailed_showsCorrectLoadingState() async {
-        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
+        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
         var loadingStates: [Bool] = []
         let exp = expectation(description: "loading state subscription")
         exp.assertForOverFulfill = false
@@ -125,7 +182,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .image),
             anyNode(id: 2, mediaType: .image)
         ]
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             fileSearchUseCase: MockFilesSearchUseCase(
                 nodeUpdates: [nonVideosUpdateNodes].async.eraseToAnyAsyncSequence()
             ),
@@ -160,7 +217,7 @@ final class VideoListViewModelTests: XCTestCase {
         let updatedVideoNodes = [
             anyNode(id: 1, mediaType: .video, name: "new video name", changeTypes: attributesRelatedChangeTypes)
         ]
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             fileSearchUseCase: MockFilesSearchUseCase(
                 nodeUpdates: [updatedVideoNodes].async.eraseToAnyAsyncSequence()
             ),
@@ -200,7 +257,7 @@ final class VideoListViewModelTests: XCTestCase {
         let updatedVideoNodes = [
             anyNode(id: 1, mediaType: .video, name: "new video name", changeTypes: invalidChangeTypes)
         ]
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             fileSearchUseCase: MockFilesSearchUseCase(
                 nodeUpdates: [updatedVideoNodes].async.eraseToAnyAsyncSequence()
             ),
@@ -307,7 +364,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video),
             anyNode(id: 2, mediaType: .video)
         ]
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -330,7 +387,7 @@ final class VideoListViewModelTests: XCTestCase {
     func testDidFinishSelectFilterOption_whenSelectOptionOfLocationChip_toggleLocationChip() async throws {
         // Arrange
         let selectedFilterOptionType: LocationChipFilterOptionType = locationFilterOptionOnlyThatMakesActivateChipVisually()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         let selectedChip = try XCTUnwrap(
@@ -367,7 +424,7 @@ final class VideoListViewModelTests: XCTestCase {
     func testDidFinishSelectFilterOption_whenSelectOptionOfDurationChip_toggleDurationChip() async throws {
         // Arrange
         let selectedFilterOptionType: DurationChipFilterOptionType = durationFilterOptionOnlyThatMakesActivateChipVisually()
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         let selectedChip = try XCTUnwrap(
@@ -404,7 +461,7 @@ final class VideoListViewModelTests: XCTestCase {
     func testDidFinishSelectFilterOption_whenSelectDefaultOptionOfLocationChip_toggleLocationChipToInactive() async throws {
         // Arrange 1 - previously select cloud drive
         let previousFilterOptionType: LocationChipFilterOptionType = .cloudDrive
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         let selectedChip1 = try XCTUnwrap(
@@ -470,7 +527,7 @@ final class VideoListViewModelTests: XCTestCase {
     func testDidFinishSelectFilterOption_whenSelectDefaultOptionOfDurationChip_toggleDurationChipToInactive() async throws {
         // Arrange 1 - previously select cloud drive
         let previousFilterOptionType: DurationChipFilterOptionType = .between10And60Seconds
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         let selectedChip1 = try XCTUnwrap(
@@ -535,7 +592,7 @@ final class VideoListViewModelTests: XCTestCase {
     // MARK: - filterOptions
     
     func testFilterOptions_whenNotSelectAnyChips_doNotRenderOptionsForBottomSheetFilter() async {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         
@@ -543,7 +600,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testFilterOptions_whenSelectLocationFilterChips_rendersCorrectOptionsForBottomSheetFilter() throws {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         
@@ -557,7 +614,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testFilterOptions_whenSelectDurationFilterChips_rendersCorrectOptionsForBottomSheetFilter() throws {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         
@@ -575,7 +632,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video, duration: 241), // between4And20Minutes
             anyNode(id: 2, mediaType: .video, duration: 1200) // moreThan20Minutes
         ]
-        let (sut, _, photoLibraryUseCase) = makeSUT(
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -597,7 +654,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video, duration: 2), // lessThan10Seconds
             anyNode(id: 2, mediaType: .video, duration: 1200) // moreThan20Minutes
         ]
-        let (sut, _, photoLibraryUseCase) = makeSUT(
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -619,7 +676,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video, duration: 11), // between10And60Seconds
             anyNode(id: 2, mediaType: .video, duration: 1200) // moreThan20Minutes
         ]
-        let (sut, _, photoLibraryUseCase) = makeSUT(
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -641,7 +698,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video, duration: 61), // between1And4Minutes
             anyNode(id: 2, mediaType: .video, duration: 1200) // moreThan20Minutes
         ]
-        let (sut, _, photoLibraryUseCase) = makeSUT(
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -663,7 +720,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video, duration: 241), // between1And4Minutes
             anyNode(id: 2, mediaType: .video, duration: 1200) // moreThan20Minutes
         ]
-        let (sut, _, photoLibraryUseCase) = makeSUT(
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -685,7 +742,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video, duration: 241), // between4And20Minutes
             anyNode(id: 2, mediaType: .video, duration: 1200) // moreThan20Minutes
         ]
-        let (sut, _, photoLibraryUseCase) = makeSUT(
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -707,7 +764,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video),
             anyNode(id: 2, mediaType: .video)
         ]
-        let (sut, _, photoLibraryUseCase) = makeSUT(
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -728,7 +785,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video, isExported: false),
             anyNode(id: 2, mediaType: .video, isExported: false)
         ]
-        let (sut, _, photoLibraryUseCase) = makeSUT(
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
         await sut.onViewAppear()
@@ -748,7 +805,7 @@ final class VideoListViewModelTests: XCTestCase {
     // MARK: - actionSheetTitle
     
     func testActionSheetTitle_whenNotSelectAnyChips_doNotRenderActionSheetTitle() {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         
@@ -756,7 +813,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     func testActionSheetTitle_whenSelectAnyChips_renderCorrectActionSheetTitle() {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         
@@ -771,7 +828,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     @MainActor
     func testSelectedLocationFilterOption_onValueChanged_reflectSelectedLocationFilterOptionType() async throws {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         
@@ -783,7 +840,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     @MainActor
     func testSelectedLocationFilterOption_onValueChanged_reflectsSelectedLocationFilterOptionType() async throws {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
         )
         
@@ -797,7 +854,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     func testSubscribeToItemsStateForEmptyState_whenConditionNotMet_shouldNotShowEmptyView() async {
         // Arrange
-        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
+        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
         
         var receivedValue = false
         let exp = expectation(description: "should not show empty view")
@@ -824,7 +881,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video),
             anyNode(id: 2, mediaType: .video)
         ]
-        let (sut, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes, succesfullyLoadMedia: true))
+        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes, succesfullyLoadMedia: true))
         
         var receivedValue = false
         let exp = expectation(description: "should show empty view")
@@ -858,17 +915,19 @@ final class VideoListViewModelTests: XCTestCase {
     ) -> (
         sut: VideoListViewModel,
         fileSearchUseCase: MockFilesSearchUseCase,
-        photoLibraryUseCase: MockPhotoLibraryUseCase
+        photoLibraryUseCase: MockPhotoLibraryUseCase,
+        syncModel: VideoRevampSyncModel
     ) {
+        let syncModel = VideoRevampSyncModel()
         let sut = VideoListViewModel(
             fileSearchUseCase: fileSearchUseCase,
             photoLibraryUseCase: photoLibraryUseCase,
             thumbnailUseCase: MockThumbnailUseCase(),
-            syncModel: VideoRevampSyncModel(),
+            syncModel: syncModel,
             selection: VideoSelection()
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, fileSearchUseCase, photoLibraryUseCase)
+        return (sut, fileSearchUseCase, photoLibraryUseCase, syncModel)
     }
     
     private func anyNode(id: HandleEntity, mediaType: MediaTypeEntity, name: String = "any", changeTypes: ChangeTypeEntity = .fileAttributes, duration: Int = 2, isExported: Bool = false) -> NodeEntity {

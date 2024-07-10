@@ -24,7 +24,9 @@ struct VideoListView: View {
     var body: some View {
         VStack(spacing: 0) {
             chipsView()
-                .frame(maxHeight: 60, alignment: .top)
+                .frame(height: viewModel.shouldShowFilterChip ? 60 : 0)
+                .opacity(viewModel.shouldShowFilterChip ? 1 : 0)
+                .animation(.easeInOut(duration: 0.05), value: viewModel.shouldShowFilterChip)
             content
                 .overlay(placeholder)
         }
