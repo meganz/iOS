@@ -347,8 +347,30 @@ extension AppDelegate {
         }
     }
     
-    @objc func handleGenericAppPushNotificationTap() {
+    @objc func handleGenericAppPushNotificationTap(userInfo: [String: Any]?) {
         DIContainer.tracker.trackAnalyticsEvent(with: GenericAppPushNotificationTappedEvent())
+        
+        guard let megaData = userInfo?["megadata"] as? [String: Any],
+              let urlString = megaData["generic_href"] as? String,
+              let url = NSURL(string: urlString) else {
+            MEGALogError("[Notification] Can't parse notification link.")
+            return
+        }
+        
+        switch url.mnz_type() {
+        case .default: 
+            // Added delay to show the mega app for a moment and not flash the in-app browser to the user
+            Task { @MainActor in
+                try await Task.sleep(nanoseconds: 500_000_000)
+                url.mnz_presentSafariViewController()
+            }
+        default:
+            guard let deepLinkURL = URL(string: urlString),
+                  UIApplication.shared.canOpenURL(deepLinkURL) else {
+                return
+            }
+            UIApplication.shared.open(deepLinkURL)
+        }
     }
  }
 
