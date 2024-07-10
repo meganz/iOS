@@ -271,7 +271,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self.passwordView updateAppearance];
     
     [self.forgotPasswordButton setTitleColor: [self forgotPasswordTintColor] forState:UIControlStateNormal];
-    self.forgotPasswordImageView.tintColor = [self forgotPasswordTintColor];
+    [self configureQuestionMarkTintColor:self.forgotPasswordImageView];
     
     [self.loginButton mnz_setupPrimary:self.traitCollection];
         
