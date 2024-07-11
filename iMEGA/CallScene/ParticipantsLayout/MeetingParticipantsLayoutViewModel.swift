@@ -1166,6 +1166,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         
         let localRaisedHand = raiseHandListAfter.contains(myself.participantId)
         
+        let callParticipantsThatJustRaisedHands = callParticipants.filter {
+            diffed.hasRaisedHand(participantId: $0.participantId)
+        }
+        
         // to show snack bar we need to check that
         // raised hands are changed but increased to avoid scenario:
         // 1. local user raised hand (show snack bar)
@@ -1173,7 +1177,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         // 3. remote user lowered hand (do not show snack bar) <--- diff is not empty but we already showed snack bar for local user raising hand
         if diffed.shouldUpdateSnackBar {
             updateSnackBar(
-                callParticipants: callParticipants,
+                callParticipantsThatJustRaisedHands: callParticipantsThatJustRaisedHands,
                 localRaisedHand: localRaisedHand
             )
         }
@@ -1202,7 +1206,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     func updateSnackBar(
-        callParticipants: [CallParticipantEntity],
+        callParticipantsThatJustRaisedHands: [CallParticipantEntity],
         localRaisedHand: Bool
     ) {
         MEGALogDebug("[RaiseHand] updating snack bar localRaisedHand: \(localRaisedHand), raised hands: \(callParticipants.map(\.raisedHand))")
@@ -1210,10 +1214,17 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             viewRaisedHandsHandler: viewRaisedHands,
             lowerHandHandler: lowerRaisedHand
         )
+        
+        // make sure we hide snack bar immediately after ANY action is triggered
+        let hideSnackBar: () -> Void = { [weak self] in
+            self?.invokeCommand?(.updateSnackBar(nil))
+        }
+        
         let snackBarModel = factory.snackBar(
-            participants: callParticipants,
+            participantsThatJustRaisedHands: callParticipantsThatJustRaisedHands,
             localRaisedHand: localRaisedHand
-        )
+        )?.withSupplementalAction(hideSnackBar)
+        
         MEGALogDebug("[RaiseHand] updating snack bar with model : \(String(describing: snackBarModel))")
         invokeCommand?(.updateSnackBar(snackBarModel))
     }

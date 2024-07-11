@@ -12,6 +12,8 @@ enum RaiseHandDiffing {
     }
     
     struct DiffResult: Equatable, Hashable {
+        // we do not care about order of updates, so using set instead of array
+        // makes testing easier as well as sets are easy to compare (order of adding does not matter)
         var changes: Set<Change>
         
         /// A.   signals that there are new raised hands between raiseHandListBefore and raiseHandListAfter structures,
@@ -23,6 +25,22 @@ enum RaiseHandDiffing {
         ///
         ///  B. signals that local user changed raise hand state so that we know to nil out the state of snack bar
         var shouldUpdateSnackBar: Bool
+        
+        /// used to filter out only participants that raised hands in latest call update, as
+        /// snack bar only should be show what's changed and not whole state of raised hands in the call
+        /// from design:
+        /// we show snack bar with such copy: "UserA and 1 other raised hand" :
+        /// "If more than 1 participant raised their hands __at the same time__.
+        func hasRaisedHand(participantId: HandleEntity) -> Bool {
+            let matchingChange = changes.first { change in
+                change.handle == participantId
+            }
+            return if let matchingChange {
+                matchingChange.raisedHand
+            } else {
+                false
+            }
+        }
     }
     
     /// returns list of changed states of raise hand feature
@@ -32,6 +50,7 @@ enum RaiseHandDiffing {
     /// callers need to provide ordered list of handles and raise hand id list before and after mutation
     /// callParticipantHandles is used to get the indexes of call participant _after mutation_
     static func applyingRaisedHands(
+        // call participants array does not contain local user id, that's why it's added as last parameter
         callParticipantHandles: [HandleEntity],
         raiseHandListBefore: [HandleEntity],
         raiseHandListAfter: [HandleEntity],
@@ -62,9 +81,7 @@ enum RaiseHandDiffing {
         let raised = raiseHandAfterSet.subtracting(raiseHandBeforeSet)
         
         let hasNewRaisedHands = raised.isNotEmpty
-        let localRaisedHandStateChanged = (
-            lowered.contains(localUserParticipantId) || raised.contains(localUserParticipantId)
-        )
+        let localUserRaisedHand = raised.contains(localUserParticipantId)
         
         // we sum (union) sets to get both raised and lowered hands indexes and state
         // to minimally update the cached callParticipants and UI
@@ -77,9 +94,17 @@ enum RaiseHandDiffing {
                 )
             }
          
+        // we show (or update already shown) snack bar only when some new (local or remote) hands
+        // are raised
+        let someNewHandsRaised = hasNewRaisedHands || localUserRaisedHand
+        // when all hands (local or remote) were lowered, we need to update snack bar (nil it out) to hide it
+        let noHandsRaisedAtAll = raiseHandAfterSet.isEmpty
+        // update as in show/update or hide it
+        let shouldUpdateSnackBar = someNewHandsRaised || noHandsRaisedAtAll
+        
         return .init(
             changes: Set(changed),
-            shouldUpdateSnackBar: hasNewRaisedHands || localRaisedHandStateChanged
+            shouldUpdateSnackBar: shouldUpdateSnackBar
         )
     }
 }

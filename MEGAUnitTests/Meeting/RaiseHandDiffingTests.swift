@@ -130,13 +130,36 @@ final class RaiseHandDiffingTests: XCTestCase {
         XCTAssertFalse(harness.sut.shouldUpdateSnackBar)
     }
     
-    func testApplyingRaisedHands_OnlyHandsLowered_ShouldNotUpdateSnackBar() {
+    func testApplyingRaisedHands_AllHandsLowered_ShouldUpdateSnackBar() {
         let harness = Harness(
             callParticipantHandles: [2, 3, 4],
             raiseHandListBefore: [2, 3],
             raiseHandListAfter: [],
             localUserParticipantId: 1
         )
+        XCTAssertTrue(harness.sut.shouldUpdateSnackBar)
+    }
+    
+    func testApplyingRaisedHands_LocalUserLowersHand_ShouldNotUpdateSnackBar() {
+        let harness = Harness(
+            callParticipantHandles: [2, 3, 4],
+            raiseHandListBefore: [2, 3, 1],
+            raiseHandListAfter: [2, 3],
+            localUserParticipantId: 1
+        )
         XCTAssertFalse(harness.sut.shouldUpdateSnackBar)
+    }
+    
+    func testHasRaisedHand_RaisedHand_ReturnsCorrectly() {
+        let harness = Harness(
+            callParticipantHandles: [1, 2, 3],
+            raiseHandListBefore: [3, 1],
+            raiseHandListAfter: [1, 2],
+            localUserParticipantId: 1
+        )
+        
+        XCTAssertTrue(harness.sut.hasRaisedHand(participantId: 2))
+        XCTAssertFalse(harness.sut.hasRaisedHand(participantId: 3))
+        XCTAssertFalse(harness.sut.hasRaisedHand(participantId: 1))
     }
 }

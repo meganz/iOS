@@ -1416,6 +1416,8 @@
 		948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */; };
 		9482F73C2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */; };
 		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
+		9486B8EF2C3FDC1C00D96762 /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B8EE2C3FDC1C00D96762 /* SnackBar.swift */; };
+		9486B8F12C3FDD3000D96762 /* SnackBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B8F02C3FDD3000D96762 /* SnackBarTests.swift */; };
 		94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94872E942C08886600DC76E6 /* UsageViewRouter.swift */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
@@ -4195,6 +4197,8 @@
 		948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManagerTests.swift; sourceTree = "<group>"; };
 		9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserViewModelTests.swift; sourceTree = "<group>"; };
 		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
+		9486B8EE2C3FDC1C00D96762 /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
+		9486B8F02C3FDD3000D96762 /* SnackBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarTests.swift; sourceTree = "<group>"; };
 		94872E942C08886600DC76E6 /* UsageViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewRouter.swift; sourceTree = "<group>"; };
 		948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandFeatureTests.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
@@ -10038,10 +10042,10 @@
 		83ECE1702488EFE600E9E264 /* ContactsGroups */ = {
 			isa = PBXGroup;
 			children = (
+				94DC6A8A2C3DACB60069E604 /* ContactsGroupCellViewModel.swift */,
 				83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */,
 				83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */,
 				83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */,
-				94DC6A8A2C3DACB60069E604 /* ContactsGroupCellViewModel.swift */,
 			);
 			path = ContactsGroups;
 			sourceTree = "<group>";
@@ -10230,6 +10234,7 @@
 		9458610A2926963200866F03 /* Snackbar */ = {
 			isa = PBXGroup;
 			children = (
+				9486B8EE2C3FDC1C00D96762 /* SnackBar.swift */,
 				943FF9F0292FD74A00B744C8 /* SnackBarPresenting.swift */,
 				943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */,
 				9458610B292696B300866F03 /* SnackBarView.swift */,
@@ -12793,6 +12798,7 @@
 				838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */,
 				BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */,
 				83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */,
+				9486B8F02C3FDD3000D96762 /* SnackBarTests.swift */,
 				8396E2A22ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift */,
 				8396E2A52ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift */,
 				99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */,
@@ -14701,6 +14707,7 @@
 				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
+				94DC6A8B2C3DACB60069E604 /* ContactsGroupCellViewModel.swift in Sources */,
 				83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */,
 				83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
@@ -14866,7 +14873,6 @@
 				945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				9D3563CE28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift in Sources */,
-				94DC6A8B2C3DACB60069E604 /* ContactsGroupCellViewModel.swift in Sources */,
 				94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				B6A01BA9289A5E9200B503FD /* FileManager+Additions.swift in Sources */,
@@ -15812,6 +15818,7 @@
 				B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */,
 				B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */,
 				B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */,
+				9486B8EF2C3FDC1C00D96762 /* SnackBar.swift in Sources */,
 				943FF9F1292FD74A00B744C8 /* SnackBarPresenting.swift in Sources */,
 				943FF9F5292FEDA600B744C8 /* SnackBarRouter.swift in Sources */,
 				9458610C292696B300866F03 /* SnackBarView.swift in Sources */,
@@ -16429,6 +16436,7 @@
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
 				25BE0B092AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift in Sources */,
 				BF6542432C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift in Sources */,
+				9459229C2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift in Sources */,
 				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* ContentConsumptionUserAttributeUseCaseAdditionsTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
@@ -16567,7 +16575,6 @@
 				24B6276F2A8F687E00AD588C /* NodeInfoRepositoryTests.swift in Sources */,
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
 				245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */,
-				9459229C2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift in Sources */,
 				6D01A3CA2C084F4400089BA8 /* NodeInfoViewModelTests.swift in Sources */,
 				25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */,
 				0EDE90422BF6D7E300D2F96E /* NodeUseCaseFactoryTests.swift in Sources */,
@@ -16655,6 +16662,7 @@
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
+				9486B8F12C3FDD3000D96762 /* SnackBarTests.swift in Sources */,
 				C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */,
 				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
