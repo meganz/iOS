@@ -16,12 +16,12 @@ struct RaiseHandSnackBarFactory {
     var lowerHandHandler: () -> Void
     
     func snackBar(
-        participants: [CallParticipantEntity],
+        participantsThatJustRaisedHands: [CallParticipantEntity],
         localRaisedHand: Bool
     ) -> SnackBar? {
         snackBar(
             from: scenario(
-                from: participants,
+                from: participantsThatJustRaisedHands,
                 localRaisedHand: localRaisedHand
             )
         )
@@ -52,7 +52,7 @@ struct RaiseHandSnackBarFactory {
         case .meAndOthers(count: let count):
             .raiseHandSnackBar(
                 message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.youAndOtherPersonRaisedHands(count),
-                action: viewRaisedHandsAction
+                action: lowerHandAction
             )
         }
     }

@@ -56,7 +56,7 @@ final class RaiseHandSnackBarFactoryTests: XCTestCase {
         
         var result: SnackBar? {
             sut.snackBar(
-                participants: participants,
+                participantsThatJustRaisedHands: participants,
                 localRaisedHand: localRaisedHand
             )
         }
@@ -97,13 +97,13 @@ final class RaiseHandSnackBarFactoryTests: XCTestCase {
     
     func testMeAndOtherOneRaisedHand_SnackBarConfiguredProperly() {
         let result = Harness(raisedHands: 1, localRaisedHand: true).result
-        let expected = Harness.expected("You and 1 other raised their hands", "View")
+        let expected = Harness.expected("You and 1 other raised their hands", "Lower hand")
         XCTAssertSnackBarEqual(result, expected)
     }
     
     func testMeAndManyOtherOneRaisedHand_SnackBarConfiguredProperly() {
         let result = Harness(raisedHands: 123, localRaisedHand: true).result
-        let expected = Harness.expected("You and 123 others raised their hands", "View")
+        let expected = Harness.expected("You and 123 others raised their hands", "Lower hand")
         XCTAssertSnackBarEqual(result, expected)
     }
     
@@ -133,8 +133,8 @@ final class RaiseHandSnackBarFactoryTests: XCTestCase {
         XCTAssertSnackBarEqual(result, expected)
     }
     
-    func testViewAction_WhenTrigger_ClosureCalled() {
-        let harness = Harness(raisedHands: 1, localRaisedHand: true).actionCalled()
+    func testViewAction_WhenTriggered_ClosureCalled() {
+        let harness = Harness(raisedHands: 1, localRaisedHand: false).actionCalled()
         XCTAssertEqual(harness.viewRaisedHandsHandlerCallCount, 1)
         XCTAssertEqual(harness.lowerHandHandlerCallCount, 0)
     }
