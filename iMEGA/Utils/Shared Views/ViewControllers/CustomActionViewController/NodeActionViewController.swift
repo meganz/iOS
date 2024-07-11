@@ -279,7 +279,7 @@ class NodeActionViewController: ActionSheetViewController {
         headerView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface2 : UIColor.mnz_secondaryBackgroundElevated(traitCollection)
         if nodes.count == 1, let node = nodes.first, node.isTakenDown() {
             titleLabel.attributedText = node.attributedTakenDownName()
-            titleLabel.textColor = UIColor.mnz_red(for: traitCollection)
+            titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection)
         } else {
             titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         }
