@@ -173,6 +173,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="disclosureIndicatorImageView" destination="OdL-fb-D4k" id="iNh-dp-tBE"/>
                         <outlet property="newGroupChatImageView" destination="sza-jK-4KU" id="BYg-dY-Kj6"/>
                         <outlet property="newGroupChatLabel" destination="dKu-Ca-hiO" id="JKB-5W-0Gh"/>
                         <outlet property="separatorView" destination="QXY-5r-FhQ" id="xM5-ae-s1m"/>
