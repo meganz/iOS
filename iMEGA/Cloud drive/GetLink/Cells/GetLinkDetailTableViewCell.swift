@@ -4,15 +4,19 @@ import MEGAL10n
 import UIKit
 
 class GetLinkDetailTableViewCell: UITableViewCell {
-
+    
     private lazy var dateFormatter: some DateFormatting = DateFormatter.dateMedium()
-
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var proImageView: UIImageView!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var activityIndicatorContainerView: UIView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-
+    
+    lazy private var detailLabelSelectedTextColor: UIColor = {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_turquoise(for: traitCollection)
+    }()
+    
     func configurePasswordCell(passwordActive: Bool, isPro: Bool, justUpgraded: Bool) {
         if passwordActive {
             nameLabel.text = Strings.Localizable.resetPassword
@@ -46,7 +50,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
         }
         proImageView.isHidden = true
         detailLabel.isHidden = false
-        detailLabel.textColor = dateSelected ? UIColor.mnz_turquoise(for: traitCollection) : UIColor.secondaryLabel
+        detailLabel.textColor = dateSelected ? detailLabelSelectedTextColor : UIColor.secondaryLabel
         activityIndicatorContainerView.isHidden = true
         accessoryType = .none
     }
