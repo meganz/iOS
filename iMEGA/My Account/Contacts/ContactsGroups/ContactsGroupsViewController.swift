@@ -10,7 +10,8 @@ class ContactsGroupsViewController: UIViewController {
     @IBOutlet weak var newGroupChatImageView: UIImageView!
     @IBOutlet weak var newGroupChatLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
-
+    @IBOutlet weak var disclosureIndicatorImageView: UIImageView!
+    
     var searchController = UISearchController()
     var groupChats = [MEGAChatListItem]()
     var searchingGroupChats = [MEGAChatListItem]()
@@ -57,6 +58,7 @@ class ContactsGroupsViewController: UIViewController {
         view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
         separatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
         tableView.separatorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+        disclosureIndicatorImageView.image = UIColor.isDesignTokenEnabled() ? UIImage(resource: .disclosure) : UIImage(resource: .standardDisclosureIndicator)
         tableView.reloadData()
     }
 
