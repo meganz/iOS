@@ -39,6 +39,7 @@ struct RaiseHandSnackBarFactory {
                 message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.ownUserRaisedHand,
                 action: lowerHandAction
             )
+            
         case .onlyOther(name: let name):
             .raiseHandSnackBar(
                 message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.otherPersonRaisedHand(name),
@@ -46,15 +47,23 @@ struct RaiseHandSnackBarFactory {
             )
         case .othersNotMe(let firstOther, let count):
             .raiseHandSnackBar(
-                message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.ManyOtherPersonsRaisedHands.stringInt(firstOther, count),
+                message: formattedFirstOther(firstOther, count),
                 action: viewRaisedHandsAction
             )
         case .meAndOthers(count: let count):
             .raiseHandSnackBar(
-                message: Strings.Localizable.Chat.Call.RaiseHand.SnackBar.youAndOtherPersonRaisedHands(count),
+                message: Strings.Localizable.Chat.Call.RaiseHands.SnackBar.youAndOtherPersonRaisedHands(count),
                 action: lowerHandAction
             )
         }
+    }
+    
+    private func formattedFirstOther(
+        _ firstOther: String,
+        _ count: Int
+    ) -> String {
+        let string = Strings.Localizable.Chat.Call.RaiseHands.SnackBar.manyOtherPersonsRaisedHands(count)
+        return string.replacingOccurrences(of: "[A]", with: firstOther)
     }
     
     /// analyses content of the participants and by using supplied closures isMe and amIContained

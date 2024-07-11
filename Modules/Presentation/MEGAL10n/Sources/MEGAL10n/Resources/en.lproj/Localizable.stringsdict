@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>chat.call.raise-hand.snack-bar.many-other-persons-raised-hands.string-int</key>
+	<key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%@ %#@count@</string>
+		<string>%#@count@</string>
 		<key>count</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -13,12 +13,12 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>and 1 other raised hand</string>
+			<string>[A] and 1 other raised hand</string>
 			<key>other</key>
-			<string>and %d others raised hand</string>
+			<string>[A] and %d others raised hand</string>
 		</dict>
 	</dict>
-	<key>chat.call.raise-hand.snack-bar.you-and-other-person-raised-hands</key>
+	<key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@count@</string>
