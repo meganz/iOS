@@ -1,14 +1,14 @@
 import Foundation
 import MEGAPresentation
 
-enum EncourageGuestUserToJoinMegaViewAction: ActionType {
+enum EncourageGuestUserToJoinMegaViewAction: ActionType, Equatable {
     case didCreateAccountButton
     case didTapCloseButton
 }
 
 struct EncourageGuestUserToJoinMegaViewModel: ViewModelType {
     
-    enum Command: CommandType {}
+    enum Command: CommandType, Equatable {}
     
     // MARK: - Private properties
     private let router: any EncourageGuestUserToJoinMegaRouting
