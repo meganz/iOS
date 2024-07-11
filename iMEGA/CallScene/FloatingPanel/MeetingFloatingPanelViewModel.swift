@@ -171,26 +171,26 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             guard let call = call else { return }
             participant.isModerator = true
             callUseCase.makePeerAModerator(inCall: call, peerId: participant.participantId)
-            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+            reloadCallParticipantsInCall()
         case .removeModeratorPrivilege(let participant):
             guard let call = call else { return }
             participant.isModerator = false
             callUseCase.removePeerAsModerator(inCall: call, peerId: participant.participantId)
-            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+            reloadCallParticipantsInCall()
         case .removeParticipant(let participant):
             guard let call = call, let index = callParticipants.firstIndex(of: participant) else { return }
             callParticipants.remove(at: index)
             callUseCase.removePeer(fromCall: call, peerId: participant.participantId)
-            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+            reloadCallParticipantsInCall()
         case .displayParticipantInMainView(let participant):
             containerViewModel?.dispatch(.displayParticipantInMainView(participant))
             invokeCommand?(.transitionToShortForm)
         case .didDisplayParticipantInMainView(let participant):
             callParticipants.forEach { $0.isSpeakerPinned = $0 == participant }
-            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+            reloadCallParticipantsInCall()
         case .didSwitchToGridView:
             callParticipants.forEach { $0.isSpeakerPinned = false }
-            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+            reloadCallParticipantsInCall()
         case .allowNonHostToAddParticipants(let enabled):
             updateAllowNonHostToAddParticipantsTask?.cancel()
             updateAllowNonHostToAddParticipantsTask = createAllowNonHostToAddParticipants(enabled: enabled, chatRoom: chatRoom)
@@ -358,7 +358,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         callParticipants.filter({ $0.participantId == handle }).forEach { participant in
             participant.isModerator = chatRoomUseCase.peerPrivilege(forUserHandle: participant.participantId, chatRoom: chatRoom) == .moderator
         }
-        invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+        reloadCallParticipantsInCall()
     }
     
     private func createAllowNonHostToAddParticipants(enabled: Bool, chatRoom: ChatRoomEntity) -> Task<Void, Never> {
@@ -691,8 +691,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         
         let participants = switch tab {
         case .inCall:
-            featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak) ?
-            callParticipants.sortByRaiseHand(call: call) : callParticipants
+            sortedCallParticipantsInCall()
         case .notInCall:
             callParticipantsNotInCall
         case .waitingRoom:
@@ -825,6 +824,16 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         callParticipantsInWaitingRoom.forEach { callParticipantInWaitingRoom in
             callParticipantsNotInCall.remove(object: callParticipantInWaitingRoom)
         }
+    }
+    
+    private func sortedCallParticipantsInCall() -> [CallParticipantEntity] {
+        featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak) ?
+        callParticipants.sortByRaiseHand(call: call) : callParticipants
+    }
+    
+    /// Sort call participants by raise hand before updating UI
+    private func reloadCallParticipantsInCall() {
+        invokeCommand?(.reloadParticipantsList(participants: sortedCallParticipantsInCall()))
     }
 }
 
