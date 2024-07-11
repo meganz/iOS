@@ -1,4 +1,5 @@
 import ChatRepo
+import MEGADesignToken
 import MEGAL10n
 import MEGAUIKit
 import UIKit
@@ -6,6 +7,7 @@ import UIKit
 class ContactsGroupsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var newGroupChatImageView: UIImageView!
     @IBOutlet weak var newGroupChatLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
 
@@ -21,6 +23,7 @@ class ContactsGroupsViewController: UIViewController {
         title = Strings.Localizable.groups
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.groups)
         newGroupChatLabel.text = Strings.Localizable.newGroupChat
+        newGroupChatImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.groupChatToken : UIImage.createGroup
         
         searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)
         navigationItem.searchController = searchController
@@ -50,9 +53,10 @@ class ContactsGroupsViewController: UIViewController {
     // MARK: - Private
     
     private func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
-        separatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        newGroupChatLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
+        separatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+        tableView.separatorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
         tableView.reloadData()
     }
 
@@ -162,7 +166,7 @@ extension ContactsGroupsViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as? ContactsGroupTableViewCell else {
             fatalError("Could not dequeue cell with identifier groupCell")
         }
-        cell.configure(for: chatListItem)
+        cell.configure(with: chatListItem.toChatListItemEntity())
         
         return cell
     }
