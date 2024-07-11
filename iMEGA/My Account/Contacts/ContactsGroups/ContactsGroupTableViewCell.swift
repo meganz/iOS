@@ -1,3 +1,6 @@
+import ChatRepo
+import MEGADesignToken
+import MEGADomain
 import MEGASDKRepo
 import UIKit
 
@@ -8,16 +11,41 @@ class ContactsGroupTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var keyRotationImage: UIImageView!
     
-    func configure(for chatListItem: MEGAChatListItem) {
-        titleLabel.text = chatListItem.chatTitle()
-        keyRotationImage.isHidden = chatListItem.isPublicChat
+    private var viewModel: ContactsGroupCellViewModel?
         
-        guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatListItem.chatId) else {
-            return
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateStyle(with: traitCollection)
+            configureAvatarImages()
         }
-        backAvatarImage.mnz_setImage(forUserHandle: chatRoom.peerHandle(at: 0))
-        let handle = chatRoom.peerCount > 1 ? chatRoom.peerHandle(at: 1) : MEGASdk.currentUserHandle()?.uint64Value ?? MEGAInvalidHandle
-        frontAvatarImage.mnz_setImage(forUserHandle: handle)
+    }
+    
+    func configure(
+        with chatListItem: ChatListItemEntity
+    ) {
+        viewModel = ContactsGroupCellViewModel(
+            chatListItem: chatListItem,
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+        )
+        
+        titleLabel.text = viewModel?.title
+        keyRotationImage.isHidden = viewModel?.isKeyRotationImageHidden ?? false
+        
+        configureAvatarImages()
+    }
+    
+    private func configureAvatarImages() {
+        guard let viewModel = viewModel else { return }
+        
+        backAvatarImage.mnz_setImage(forUserHandle: viewModel.backAvatarHandle)
+        frontAvatarImage.mnz_setImage(forUserHandle: viewModel.frontAvatarHandle)
         frontAvatarImage.borderColor = .mnz_backgroundElevated(traitCollection)
+    }
+    
+    private func updateStyle(with trait: UITraitCollection) {
+        titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
     }
 }
