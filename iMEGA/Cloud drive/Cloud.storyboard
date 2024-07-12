@@ -269,6 +269,7 @@
                                         <viewLayoutGuide key="safeArea" id="RBS-Wb-d6Q"/>
                                         <inset key="separatorInset" minX="62" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="bottomContainerStackView" destination="cI6-E4-tkl" id="65k-1S-kks"/>
                                             <outlet property="cancelButtonTrailingConstraint" destination="NRt-S8-abV" id="7mc-mt-LTi"/>
                                             <outlet property="downloadedImageView" destination="bhH-oL-szX" id="dnD-A6-6Z5"/>
                                             <outlet property="favouriteImageView" destination="Lza-B2-hEa" id="FJN-UR-i3Y"/>
@@ -280,8 +281,10 @@
                                             <outlet property="linkView" destination="bVj-Y3-Wxb" id="0Wk-ej-TSJ"/>
                                             <outlet property="moreButton" destination="rhz-t1-zjo" id="zM3-Eb-1Rp"/>
                                             <outlet property="nameLabel" destination="Wph-hv-1Yo" id="5YH-33-aHg"/>
+                                            <outlet property="thumbnailContainer" destination="nko-tS-qco" id="etC-ZK-qg8"/>
                                             <outlet property="thumbnailImageView" destination="PVB-u3-igw" id="097-Ky-2K7"/>
                                             <outlet property="thumbnailPlayImageView" destination="Vtr-b8-ke1" id="XiD-fe-aqN"/>
+                                            <outlet property="topContainerStackView" destination="LPw-0i-dgd" id="VAN-M5-5iy"/>
                                             <outlet property="versionedImageView" destination="PZb-V9-MwP" id="Xhz-od-kha"/>
                                         </connections>
                                     </tableViewCell>

@@ -70,6 +70,9 @@
 		0E96EAD32ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF73242A6786D9008F939D /* BrowserView.swift */; };
+		0EB5847C2C3CACBF00EEBD99 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */; };
+		0EB584822C3CC0AD00EEBD99 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */; };
+		0EB584852C3CC5B900EEBD99 /* BrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB584842C3CC5B900EEBD99 /* BrowserViewModelTests.swift */; };
 		0EBF70712BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */; };
 		0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */; };
 		0EC5A64F2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */; };
@@ -2801,6 +2804,8 @@
 		0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMediaDiscoveryBannerView.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		0EAF73242A6786D9008F939D /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
+		0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewModel.swift; sourceTree = "<group>"; };
+		0EB584842C3CC5B900EEBD99 /* BrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewModelTests.swift; sourceTree = "<group>"; };
 		0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingView.swift; sourceTree = "<group>"; };
 		0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewWrapper.swift; sourceTree = "<group>"; };
 		0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryFolderLinkToolbarConfigurator.swift; sourceTree = "<group>"; };
@@ -5904,6 +5909,7 @@
 				245385F82A13C04800208B31 /* NodeInfo */,
 				C4DAFB942BBE8C430028FC90 /* NodeUpdates */,
 				C499E1DD2B7663FB00503353 /* StorageFullAlert */,
+				0EB584842C3CC5B900EEBD99 /* BrowserViewModelTests.swift */,
 				9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */,
 				BF4296632BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift */,
 				BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */,
@@ -6917,6 +6923,7 @@
 				942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */,
 				41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */,
 				41AB8EC01A7103B300E40A39 /* BrowserViewController.m */,
+				0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */,
 				415226691A692ECC00EC7BB6 /* Cloud.storyboard */,
 				BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */,
 				C45093FD270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift */,
@@ -14484,6 +14491,7 @@
 				942A64F729C390410017F439 /* BrowserViewController+TargetAction.swift in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				94B09E5F2B84CC87007D6B84 /* BrowserViewControllerDelegateHandler.swift in Sources */,
+				0EB5847C2C3CACBF00EEBD99 /* BrowserViewModel.swift in Sources */,
 				C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
 				5DC0FD4D24D903A4004DB649 /* ButtonStyleFactory.swift in Sources */,
@@ -16144,6 +16152,7 @@
 				6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
 				942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
+				0EB584822C3CC0AD00EEBD99 /* BrowserViewModel.swift in Sources */,
 				83A2894F27F5BC070063CA8C /* CancellableTransfer+Shared.swift in Sources */,
 				83BA006B2798709200498493 /* CancellableTransfer.swift in Sources */,
 				83A2895027F5C04B0063CA8C /* CancellableTransferControllerWrapper.swift in Sources */,
@@ -16393,6 +16402,7 @@
 				0E43E1462B2F9F860079700A /* AVViewModelTests.swift in Sources */,
 				99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */,
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
+				0EB584852C3CC5B900EEBD99 /* BrowserViewModelTests.swift in Sources */,
 				830294AF2C11BB1F0002DF63 /* CallControlsViewModelTests.swift in Sources */,
 				941255522BED03C700058C0D /* CallKitCallManagerTests.swift in Sources */,
 				94EC99BC2BEA37F10007E30C /* CallKitProviderDelegateTests.swift in Sources */,
