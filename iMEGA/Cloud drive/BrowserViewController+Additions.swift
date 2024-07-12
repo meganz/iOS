@@ -1,10 +1,18 @@
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGASdk
+import MEGASDKRepo
 import MEGAUIKit
 
 extension BrowserViewController {
+    
+    @objc func makeViewModel() -> BrowserViewModel {
+        BrowserViewModel(
+            parentNode: parentNode,
+            isChildBrowser: isChildBrowser,
+            isSelectVideos: browserAction == .selectVideo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo))
+    }
     
     private
     func formattedShareType(from shareType: MEGAShareType) -> String {
@@ -126,35 +134,6 @@ extension BrowserViewController {
             button.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
             button.setTitleColor(UIColor.mnz_red(for: traitCollection), for: .selected)
             lineView.backgroundColor = button.isSelected ? UIColor.mnz_red(for: traitCollection) : nil
-        }
-    }
-    
-    @objc func videoPickerNodes(completion: @escaping (MEGANodeList) -> Void) {
-        let sdk = MEGASdk.shared
-        let megaNodeList = MEGANodeList()
-        
-        Task { [weak parentNode] in
-            guard let parentNode = parentNode else {
-                await MainActor.run {
-                    completion(megaNodeList)
-                }
-                return
-            }
-
-            let nodeList = sdk.children(forParent: parentNode)
-            let nodes = nodeList.toNodeEntities()
-            
-            for node in nodes {
-                if node.isFolder || node.fileExtensionGroup.isVideo {
-                    if let megaNode = node.toMEGANode(in: sdk) {
-                        megaNodeList.add(megaNode)
-                    }
-                }
-            }
-            
-            await MainActor.run {
-                completion(megaNodeList)
-            }
         }
     }
     

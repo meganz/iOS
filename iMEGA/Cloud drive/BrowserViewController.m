@@ -50,7 +50,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSelectBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarAddBarButtonItem;
 
-
+@property (strong, nonatomic) BrowserViewModel *viewModel;
 @property (nonatomic) NSMutableArray *searchNodesArray;
 @property (nonatomic) UISearchController *searchController;
 
@@ -137,6 +137,13 @@
 }
 
 #pragma mark - Private
+
+- (BrowserViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self makeViewModel];
+    }
+    return _viewModel;
+}
 
 - (void)setupBrowser {
     self.parentBrowser = !self.isChildBrowser;
@@ -278,11 +285,14 @@
 }
 
 - (void)reloadUI {
-    [self setParentNodeForBrowserAction];
-    
-    [self reloadNavigationBarUI];
-    [self reloadToolbarItemsUI];
-    [self.tableView reloadData];
+    __weak typeof(self) weakSelf = self;
+    [self setNodesWithCompletion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf reloadNavigationBarUI];
+            [weakSelf reloadToolbarItemsUI];
+            [weakSelf.tableView reloadData];
+        });
+    }];
 }
 
 - (void)reloadNavigationBarUI {
@@ -310,33 +320,18 @@
     [self setToolbarItemsEnabled:enableToolbarItems];
 }
 
-- (void)setParentNodeForBrowserAction {
-    if (self.cloudDriveButton.selected) {
-        if (self.isParentBrowser) {
-            if (!self.parentNode) {
-                self.parentNode = MEGASdk.shared.rootNode;
-            }
-        }
-        
-        if (self.browserAction == BrowserActionSelectVideo) {
-            [self videoPickerNodesWithCompletion:^(MEGANodeList *nodeList) {
-                self.nodes = nodeList;
-                [self reloadNavigationBarUI];
-                [self reloadToolbarItemsUI];
-                [self.tableView reloadData];
-            }];
-        } else {
-            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode];
-        }
-        
-    } else if (self.incomingButton.selected) {
-        if (self.isParentBrowser) {
-            self.parentNode = nil;
-            self.nodes = MEGASdk.shared.inShares;
-            self.shares = [MEGASdk.shared inSharesList:MEGASortOrderTypeNone];
-        } else {
-            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode];
-        }
+- (void)setNodesWithCompletion:(void (^)(void))completion {
+    if (self.incomingButton.selected && self.isParentBrowser) {
+        self.parentNode = nil;
+        self.nodes = MEGASdk.shared.inShares;
+        self.shares = [MEGASdk.shared inSharesList:MEGASortOrderTypeNone];
+        completion();
+    } else {
+        __weak typeof(self) weakSelf = self;
+        [self.viewModel nodesForParentWithCompletionHandler:^(MEGANodeList * _Nonnull nodeList) {
+            weakSelf.nodes = nodeList;
+            completion();
+        }];
     }
 }
 
@@ -699,11 +694,8 @@
         }
     }
     
-    if (node.hasThumbnail) {
-        [Helper thumbnailForNode:node api:MEGASdk.shared cell:cell];
-    } else {
-        [cell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
-    }
+    [cell bindWithViewModel:[cell createViewModelWithNode:node
+                            shouldApplySensitiveBehaviour:self.cloudDriveButton.selected]];
     
     if (![FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         cell.thumbnailPlayImageView.hidden = YES;
