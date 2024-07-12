@@ -6,7 +6,6 @@ struct ParticipantsAddingViewFactory {
     let accountUseCase: any AccountUseCaseProtocol
     let chatRoomUseCase: any ChatRoomUseCaseProtocol
     let chatRoom: ChatRoomEntity
-    var featureFlagProvider: any FeatureFlagProviderProtocol
     
     var hasVisibleContacts: Bool {
         accountUseCase.contacts().contains { $0.visibility == .visible }

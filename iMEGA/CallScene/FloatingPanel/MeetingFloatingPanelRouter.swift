@@ -40,6 +40,7 @@ protocol MeetingFloatingPanelRouting: AnyObject {
     func showUpgradeFlow(_ accountDetails: AccountDetailsEntity)
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
     func transitionToLongForm()
+    var panelIsLongForm: Bool { get }
 }
 
 extension MeetingFloatingPanelRouting {
@@ -323,5 +324,9 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func transitionToLongForm() {
         viewModel?.dispatch(.transitionToLongForm)
+    }
+    
+    var panelIsLongForm: Bool {
+        viewModel?.panelIsLongForm ?? false
     }
 }

@@ -147,8 +147,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            chatRoom: chatRoom,
-            featureFlagProvider: DIContainer.featureFlagProvider
+            chatRoom: chatRoom
         )
     }
     

@@ -31,6 +31,8 @@ enum MeetingContainerAction: ActionType {
     case showMutedBy(String)
     case showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void))
     case transitionToLongForm
+    // this one is to hide snack bar when user swipes to show participant list
+    case willTransitionToLongForm
 }
 
 /**
@@ -67,14 +69,13 @@ final class MeetingContainerViewModel: ViewModelType {
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let callManager: any CallManagerProtocol
     private let tracker: any AnalyticsTracking
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
-
+    
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
     private var muteUnmuteFailedNotificationsSubscription: AnyCancellable?
     private var seeWaitingRoomListEventSubscription: AnyCancellable?
     private var callUpdateSubscription: AnyCancellable?
-
+    
     private var call: CallEntity? {
         callUseCase.call(for: chatRoom.chatId)
     }
@@ -82,21 +83,21 @@ final class MeetingContainerViewModel: ViewModelType {
     private var isOneToOneChat: Bool {
         chatRoomUseCase.chatRoom(forChatId: chatRoom.chatId)?.chatType == .oneToOne
     }
-
-    init(router: some MeetingContainerRouting,
-         chatRoom: ChatRoomEntity,
-         callUseCase: some CallUseCaseProtocol,
-         chatRoomUseCase: some ChatRoomUseCaseProtocol,
-         chatUseCase: some ChatUseCaseProtocol,
-         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
-         authUseCase: some AuthUseCaseProtocol,
-         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
-         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-         callManager: some CallManagerProtocol,
-         tracker: some AnalyticsTracking = DIContainer.tracker,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    
+    init(
+        router: some MeetingContainerRouting,
+        chatRoom: ChatRoomEntity,
+        callUseCase: some CallUseCaseProtocol,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        authUseCase: some AuthUseCaseProtocol,
+        noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
+        analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        callManager: some CallManagerProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
         self.chatRoom = chatRoom
@@ -111,7 +112,6 @@ final class MeetingContainerViewModel: ViewModelType {
         self.megaHandleUseCase = megaHandleUseCase
         self.callManager = callManager
         self.tracker = tracker
-        self.featureFlagProvider = featureFlagProvider
         
         subscribeToSeeWaitingRoomListNotification()
         subscribeToOnCallUpdate()
@@ -128,7 +128,7 @@ final class MeetingContainerViewModel: ViewModelType {
                     .delay(for: .seconds(Constants.muteMicTimerDuration), scheduler: RunLoop.main)
                     .sink { [weak self] _ in
                         guard let self else { return }
-
+                        
                         muteMicrophoneIfNoOtherParticipantsArePresent()
                         muteMicSubscription = nil
                     }
@@ -143,7 +143,7 @@ final class MeetingContainerViewModel: ViewModelType {
                             self.cancelNoUserJoinedSubscription()
                         }
                         noUserJoinedSubscription = nil
-                }
+                    }
             }
         case .hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
@@ -210,6 +210,8 @@ final class MeetingContainerViewModel: ViewModelType {
                     self?.router.transitionToLongForm()
                 }
             )
+        case .willTransitionToLongForm:
+            router.hideSnackBar()
         }
     }
     
@@ -307,6 +309,10 @@ final class MeetingContainerViewModel: ViewModelType {
                 guard let self else { return }
                 router.selectWaitingRoomList(containerViewModel: self)
             }
+    }
+    
+    var floatingPanelShown: Bool {
+        router.floatingPanelShown
     }
     
     private func shareLink(_ presenter: UIViewController?, _ sender: AnyObject, _ completion: UIActivityViewController.CompletionWithItemsHandler?) {

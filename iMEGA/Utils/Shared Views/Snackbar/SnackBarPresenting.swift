@@ -13,7 +13,8 @@ extension SnackBarPresenting {
     }
     
     func dismissSnackBar(immediate: Bool = false) {
-        guard let containerView = snackBarContainerView() else { 
+
+        guard let containerView = snackBarContainerView() else {
             return
         }
         

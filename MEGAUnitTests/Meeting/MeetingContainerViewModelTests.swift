@@ -27,8 +27,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase = .loggedIn,
             authUseCase: some AuthUseCaseProtocol = MockAuthUseCase(),
             analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
-            megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-            featureFlag: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+            megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase()
         ) {
             
             self.callUseCase = callUseCase
@@ -45,8 +44,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
                 analyticsEventUseCase: analyticsEventUseCase,
                 megaHandleUseCase: megaHandleUseCase,
                 callManager: callManager,
-                tracker: tracker,
-                featureFlagProvider: featureFlag
+                tracker: tracker
             )
         }
     }

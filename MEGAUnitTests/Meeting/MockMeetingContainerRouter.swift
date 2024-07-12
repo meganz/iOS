@@ -3,6 +3,9 @@ import MEGADomain
 import XCTest
 
 final class MockMeetingContainerRouter: MeetingContainerRouting {
+    
+    var floatingPanelShown: Bool = false
+    
     var showMeetingUI_calledTimes = 0
     var dismiss_calledTimes = 0
     var toggleFloatingPanel_CalledTimes = 0
@@ -120,13 +123,12 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
         showUpgradeToProDialog_calledTimes += 1
     }
     
-    func transitionToLongForm() {
-    }
+    func transitionToLongForm() { }
     
     func showFloatingPanelIfNeeded(
         containerViewModel: MeetingContainerViewModel,
         completion: @escaping () -> Void
-    ) {
-        
-    }
+    ) {}
+    
+    func hideSnackBar() { }
 }

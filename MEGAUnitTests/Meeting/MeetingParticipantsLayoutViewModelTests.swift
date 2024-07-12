@@ -1281,8 +1281,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
     func testCallUpdate_remoteUserLowHand() {
         let callUseCase = MockCallUseCase()
+        let scheduler = DispatchQueue.test
         let harness = Harness(
-            scheduler: .immediate,
+            scheduler: scheduler.eraseToAnyScheduler(),
             callUseCase: callUseCase
         )
 
@@ -1297,6 +1298,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         }
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
+        scheduler.advance(by: .milliseconds(600))
         guard
             case .reloadParticipantRaisedHandAt = receiveCommands[0],
             case .updateSnackBar(let snackBar) = receiveCommands[1],
@@ -1312,6 +1314,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         receiveCommands.removeAll()
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: []))
+        scheduler.advance(by: .milliseconds(600))
         
         guard
             case .reloadParticipantRaisedHandAt = receiveCommands[0],
@@ -1327,6 +1330,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     class Harness {
+        let scheduler: AnySchedulerOf<DispatchQueue>
         let sut: MeetingParticipantsLayoutViewModel
         init(
             containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
@@ -1350,6 +1354,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
             cameraSwitcher: some CameraSwitching = MockCameraSwitcher()
         ) {
+            self.scheduler = scheduler
             self.sut = .init(
                 containerViewModel: containerViewModel,
                 scheduler: scheduler,
