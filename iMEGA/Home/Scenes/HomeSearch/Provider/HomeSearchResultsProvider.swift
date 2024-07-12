@@ -196,11 +196,14 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     }
     
     private func nodeListEntity(from searchQuery: SearchQuery) async -> NodeListEntity? {
-        let searchFilterEntity = await buildSearchFilterEntity(from: searchQuery)
+        guard let searchFilterEntity = await buildSearchFilterEntity(from: searchQuery) else {
+            return nil
+        }
+    
         return try? await filesSearchUseCase.search(filter: searchFilterEntity, cancelPreviousSearchIfNeeded: searchFilterEntity.supportCancel)
     }
     
-    private func buildSearchFilterEntity(from searchQuery: SearchQuery) async -> SearchFilterEntity {
+    private func buildSearchFilterEntity(from searchQuery: SearchQuery) async -> SearchFilterEntity? {
         let recursive = switch searchQuery {
         case .initial:
             false
@@ -208,23 +211,31 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             !shouldShowRoot(for: searchQueryEntity)
         }
         
-        let searchTargetLocation: SearchFilterEntity.SearchTargetLocation = if let parentNode {
-            .parentNode(parentNode)
+        return if recursive {
+            .recursive(
+                searchText: searchQuery.query,
+                searchTargetLocation: { if let parentNode { .parentNode(parentNode) } else { .folderTarget(.rootNode) } }(),
+                supportCancel: true,
+                sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
+                formatType: searchQuery.selectedNodeFormat?.toNodeFormatEntity() ?? .unknown,
+                sensitiveFilterOption: await shouldExcludeSensitive() ? .nonSensitiveOnly : .disabled,
+                nodeTypeEntity: searchQuery.selectedNodeType?.toNodeTypeEntity() ?? .unknown,
+                modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame()
+            )
+        } else if let node = parentNode ?? nodeUseCase.rootNode() {
+            .nonRecursive(
+               searchText: searchQuery.query,
+               searchTargetNode: node,
+               supportCancel: true,
+               sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
+               formatType: searchQuery.selectedNodeFormat?.toNodeFormatEntity() ?? .unknown,
+               sensitiveFilterOption: await shouldExcludeSensitive() ? .nonSensitiveOnly : .disabled,
+               nodeTypeEntity: searchQuery.selectedNodeType?.toNodeTypeEntity() ?? .unknown,
+               modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame()
+           )
         } else {
-            .folderTarget(.rootNode)
+            nil
         }
-        
-        return SearchFilterEntity(
-            searchText: searchQuery.query,
-            searchTargetLocation: searchTargetLocation,
-            recursive: recursive,
-            supportCancel: true,
-            sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
-            formatType: searchQuery.selectedNodeFormat?.toNodeFormatEntity() ?? .unknown,
-            sensitiveFilterOption: await shouldExcludeSensitive() ? .nonSensitiveOnly : .disabled,
-            nodeTypeEntity: searchQuery.selectedNodeType?.toNodeTypeEntity() ?? .unknown,
-            modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame()
-        )
     }
     
     private func shouldExcludeSensitive() async -> Bool {

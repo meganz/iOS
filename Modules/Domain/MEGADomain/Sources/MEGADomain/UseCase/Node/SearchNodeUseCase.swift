@@ -25,10 +25,9 @@ public struct SearchNodeUseCase<T: FilesSearchRepositoryProtocol>: SearchNodeUse
         case .publicLinks:
             .publicLink
         }
-        let searchFilterEntity = SearchFilterEntity(
-            searchText: text, 
+        let searchFilterEntity: SearchFilterEntity = .recursive(
+            searchText: text,
             searchTargetLocation: .folderTarget(folderTargetEntity),
-            recursive: true,
             supportCancel: true,
             sortOrderType: sortType,
             formatType: .unknown

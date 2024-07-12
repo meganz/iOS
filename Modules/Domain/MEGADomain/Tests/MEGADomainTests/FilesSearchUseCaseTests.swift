@@ -20,12 +20,10 @@ final class FilesSearchUseCaseTests: XCTestCase {
         ]
         
         let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes]),
-            nodeFormat: NodeFormatEntity.photo,
-            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo
+            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes])
         )
         let expectation = expectation(description: "search triggers completion block")
-        sut.search(filter: .init(searchText: "", searchTargetLocation: .folderTarget(.rootNode), recursive: true, supportCancel: false, sortOrderType: .none, formatType: .photo, sensitiveFilterOption: .disabled), cancelPreviousSearchIfNeeded: false) { results, _ in
+        sut.search(filter: .recursive(searchText: "", searchTargetLocation: .folderTarget(.rootNode), supportCancel: false, sortOrderType: .none, formatType: .photo, sensitiveFilterOption: .disabled), cancelPreviousSearchIfNeeded: false) { results, _ in
             guard let results else { XCTFail("Search results shouldn't be nil"); return }
             
             XCTAssertEqual(results, expectedNodes)
@@ -50,15 +48,12 @@ final class FilesSearchUseCaseTests: XCTestCase {
         ]
         
         let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes]),
-            nodeFormat: NodeFormatEntity.photo,
-            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
+            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes]))
         
         let results: [NodeEntity] = try await sut.search(
-            filter: .init(
+            filter: .recursive(
                 searchText: "",
                 searchTargetLocation: .folderTarget(.rootNode),
-                recursive: true,
                 supportCancel: false,
                 sortOrderType: .none,
                 formatType: .photo,
@@ -84,15 +79,12 @@ final class FilesSearchUseCaseTests: XCTestCase {
         ]
         
         let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes]),
-            nodeFormat: NodeFormatEntity.photo,
-            nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
+            filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes]))
         
         let results: [NodeEntity] = try await sut.search(
-            filter: .init(
+            filter: .recursive(
                 searchText: "",
                 searchTargetLocation: .folderTarget(.rootNode),
-                recursive: true,
                 supportCancel: false,
                 sortOrderType: .none,
                 formatType: .photo,
@@ -102,28 +94,6 @@ final class FilesSearchUseCaseTests: XCTestCase {
             cancelPreviousSearchIfNeeded: false
         )
         XCTAssertEqual(results, expectedNodes)
-    }
-    
-    func testOnNodeUpdate_updatedNodesShouldBeTheSame() {
-        let nodesUpdated = [
-            NodeEntity(name: "1.raw", handle: 1, hasThumbnail: true),
-            NodeEntity(name: "2.nef", handle: 2, hasThumbnail: true)
-        ]
-        let mockNodeUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
-        let sut = makeSUT(
-            filesSearchRepository: MockFilesSearchRepository(photoNodes: nodesUpdated),
-            nodeFormat: NodeFormatEntity.photo,
-            nodesUpdateListenerRepo: mockNodeUpdateListenerRepo
-        )
-        
-        let expectation = expectation(description: "onNodesUpdate triggers completion block")
-        sut.onNodesUpdate { results in
-            XCTAssertEqual(results, nodesUpdated)
-            expectation.fulfill()
-        }
-        
-        mockNodeUpdateListenerRepo.onNodesUpdateHandler?(nodesUpdated)
-        wait(for: [expectation], timeout: 1)
     }
     
     // MARK: - nodeUpdates
@@ -151,7 +121,6 @@ final class FilesSearchUseCaseTests: XCTestCase {
         }
             .eraseToAnyAsyncSequence()
         let sut = makeSUT(
-            nodeFormat: NodeFormatEntity.video,
             nodeRepository: MockNodeRepository(nodeUpdates: nodeUpdatesStream)
         )
         
@@ -167,14 +136,10 @@ final class FilesSearchUseCaseTests: XCTestCase {
     
     private func makeSUT(
         filesSearchRepository: MockFilesSearchRepository = MockFilesSearchRepository.newRepo,
-        nodeFormat: NodeFormatEntity = .photo,
-        nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository = MockSDKNodesUpdateListenerRepository.newRepo,
         nodeRepository: MockNodeRepository = MockNodeRepository.newRepo
     ) -> FilesSearchUseCase {
         FilesSearchUseCase(
             repo: filesSearchRepository,
-            nodeFormat: nodeFormat,
-            nodesUpdateListenerRepo: nodesUpdateListenerRepo,
             nodeRepository: nodeRepository
         )
     }

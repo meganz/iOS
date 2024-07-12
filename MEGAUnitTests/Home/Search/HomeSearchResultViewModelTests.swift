@@ -152,10 +152,9 @@ final class HomeSearchResultViewModelTests: XCTestCase {
     }
     
     private func makeSearchFilter(inputText: String, excludeSensitive: Bool) -> SearchFilterEntity {
-        SearchFilterEntity(
+        .recursive(
             searchText: inputText,
             searchTargetLocation: .folderTarget(.rootNode),
-            recursive: true,
             supportCancel: true,
             sortOrderType: .creationAsc,
             formatType: .unknown,

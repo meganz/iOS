@@ -2,6 +2,8 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_NodeUseCase: NodeUseCaseProtocol {
+    func rootNode() -> NodeEntity? { nil }
+    
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         .unknown
     }

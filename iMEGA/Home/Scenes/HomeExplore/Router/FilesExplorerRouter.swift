@@ -29,13 +29,10 @@ struct FilesExplorerRouter {
         }
         
         let sdk = MEGASdk.shared
-        let nodesUpdateListenerRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
         let transferListenerRepo = SDKTransferListenerRepository(sdk: sdk)
         let fileSearchRepo = FilesSearchRepository(sdk: sdk)
         let clipboardOperationRepo = SDKNodeClipboardOperationRepository(sdk: sdk)
         let useCase = FilesSearchUseCase(repo: fileSearchRepo,
-                                         nodeFormat: explorerType.toNodeFormatEntity(),
-                                         nodesUpdateListenerRepo: nodesUpdateListenerRepo,
                                          nodeRepository: NodeRepository.newRepo)
         let nodeClipboardOperationUseCase = NodeClipboardOperationUseCase(repo: clipboardOperationRepo)
         let fileDownloadUseCase = FilesDownloadUseCase(repo: transferListenerRepo)

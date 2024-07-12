@@ -17,12 +17,9 @@ struct VideoRevampRouter: VideoRevampRouting {
     
     func build() -> UIViewController {
         let sdk = MEGASdk.shared
-        let nodesUpdateListenerRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
         let fileSearchRepo = FilesSearchRepository(sdk: sdk)
         let fileSearchUseCase = FilesSearchUseCase(
             repo: fileSearchRepo,
-            nodeFormat: explorerType.toNodeFormatEntity(),
-            nodesUpdateListenerRepo: nodesUpdateListenerRepo,
             nodeRepository: NodeRepository.newRepo
         )
         let userVideoPlaylistsRepo = UserVideoPlaylistsRepository(
@@ -133,11 +130,8 @@ struct VideoRevampRouter: VideoRevampRouting {
         )
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let videoSelection = VideoSelection()
-        let nodesUpdateListenerRepo = SDKNodesUpdateListenerRepository(sdk: .shared)
         let fileSearchUseCase = FilesSearchUseCase(
             repo: fileSearchRepo,
-            nodeFormat: explorerType.toNodeFormatEntity(),
-            nodesUpdateListenerRepo: nodesUpdateListenerRepo,
             nodeRepository: NodeRepository.newRepo
         )
         let videoPlaylistUseCase = VideoPlaylistUseCase(

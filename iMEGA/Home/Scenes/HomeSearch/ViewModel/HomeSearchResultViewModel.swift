@@ -124,10 +124,9 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
             
             try await Task.sleep(nanoseconds: debounceTimeInNanoseconds)
             
-            let filter = SearchFilterEntity(
-                searchText: text, 
+            let filter: SearchFilterEntity = .recursive(
+                searchText: text,
                 searchTargetLocation: .folderTarget(.rootNode),
-                recursive: true,
                 supportCancel: true,
                 sortOrderType: .creationAsc,
                 formatType: .unknown,

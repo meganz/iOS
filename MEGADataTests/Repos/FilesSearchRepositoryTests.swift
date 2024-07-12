@@ -95,10 +95,9 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 sensitiveFilter: sensitiveFilter.toMEGASearchFilterSensitiveOption(),
                                                                 favouriteFilter: .disabled)
         
-        let result: NodeListEntity = try await repo.search(filter: .init(
+        let result: NodeListEntity = try await repo.search(filter: .recursive(
             searchText: searchString,
             searchTargetLocation: .parentNode(parent.toNodeEntity()),
-            recursive: recursive,
             supportCancel: false,
             sortOrderType: sortOrderType,
             formatType: formatType,
@@ -131,10 +130,9 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 sensitiveFilter: sensitiveFilter.toMEGASearchFilterSensitiveOption(),
                                                                 favouriteFilter: .disabled)
         
-        let result: NodeListEntity = try await repo.search(filter: .init(
+        let result: NodeListEntity = try await repo.search(filter: .nonRecursive(
             searchText: searchString,
-            searchTargetLocation: .parentNode(parent.toNodeEntity()),
-            recursive: recursive,
+            searchTargetNode: parent.toNodeEntity(),
             supportCancel: false,
             sortOrderType: sortOrderType,
             formatType: formatType,
@@ -168,10 +166,9 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 sensitiveFilter: sensitiveFilter.toMEGASearchFilterSensitiveOption(),
                                                                 favouriteFilter: .favouritesOnly)
         
-        let result: NodeListEntity = try await repo.search(filter: .init(
+        let result: NodeListEntity = try await repo.search(filter: .nonRecursive(
             searchText: searchString,
-            searchTargetLocation: .parentNode(parent.toNodeEntity()),
-            recursive: recursive,
+            searchTargetNode: parent.toNodeEntity(),
             supportCancel: false,
             sortOrderType: sortOrderType,
             formatType: formatType,
@@ -209,10 +206,9 @@ final class FilesSearchRepositoryTests: XCTestCase {
                                                                 pageSize: 2)
         
         let result: NodeListEntity = try await repo.search(
-            filter: .init(
+            filter: .nonRecursive(
                 searchText: searchString,
-                searchTargetLocation: .parentNode(parent.toNodeEntity()),
-                recursive: recursive,
+                searchTargetNode: parent.toNodeEntity(),
                 supportCancel: false,
                 sortOrderType: sortOrderType,
                 formatType: formatType,
