@@ -295,9 +295,13 @@ final class AudioPlayerViewController: UIViewController {
         
         if !closeButton.isHidden {
             closeButton.setTitle(Strings.Localizable.close, for: .normal)
-            let titleColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
-            closeButton.setTitleColor(titleColor, for: .normal)
+            configureCloseButtonColor()
         }
+    }
+    
+    private func configureCloseButtonColor() {
+        let titleColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
+        closeButton.setTitleColor(titleColor, for: .normal)
     }
     
     private func updateMoreButtonState() {
@@ -326,18 +330,43 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func fileLinkPlayerAppearance() {
-        bottomView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_Elevated(traitCollection)
-        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
-        separatorView.isHidden = false
-        separatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+        configureViewsColor()
     }
     
     private func defaultPlayerAppearance() {
-        bottomView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.clear
-        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        configureViewsColor()
         viewModel.dispatch(.refreshRepeatStatus)
         viewModel.dispatch(.refreshShuffleStatus)
-        separatorView.isHidden = true
+    }
+    
+    private func configureViewsColor() {
+        configureBottomViewColor()
+        configureViewBackgroundColor()
+        configureSeparatorViewColor()
+        configureCloseButtonColor()
+    }
+    
+    private func configureBottomViewColor() {
+        switch playerType {
+        case .default, .offline, .folderLink:
+            bottomView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.clear
+        case .fileLink:
+            bottomView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_Elevated(traitCollection)
+        }
+    }
+    
+    private func configureSeparatorViewColor() {
+        switch playerType {
+        case .default, .offline, .folderLink:
+            separatorView.isHidden = true
+        case .fileLink:
+            separatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+            separatorView.isHidden = false
+        }
+    }
+    
+    private func configureViewBackgroundColor() {
+        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
     }
     
     private func style(with trait: UITraitCollection) {
@@ -354,6 +383,8 @@ final class AudioPlayerViewController: UIViewController {
             titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
             subtitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         }
+        
+        configureViewsColor()
     }
     
     // MARK: - UI actions

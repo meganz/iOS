@@ -11,7 +11,7 @@ final class MEGASelectedButton: UIButton {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        registerForTraitChanges()
         self.setRightTintColor()
     }
     
@@ -28,6 +28,22 @@ final class MEGASelectedButton: UIButton {
                 tintColor = isSelected ? UIColor.green00A382 : UIColor.black000000
             default: break
             }
+        }
+    }
+    
+    private func registerForTraitChanges() {
+        guard #available(iOS 17.0, *) else { return }
+        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { [weak self] (button: MEGASelectedButton, previousTraitCollection: UITraitCollection) in
+            if button.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self?.setRightTintColor()
+            }
+        })
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if #unavailable(iOS 17.0), traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+            setRightTintColor()
         }
     }
 }
