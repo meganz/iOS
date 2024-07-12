@@ -87,15 +87,36 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
+    if (UIColor.isDesignTokenEnabled) {
+        self.tableView.backgroundColor = [self defaultBackgroundColor];
+        
+        self.onlineLabel.textColor = [self primaryTextColor];
+        self.awayLabel.textColor = [self primaryTextColor];
+        self.busyLabel.textColor = [self primaryTextColor];
+        self.offlineLabel.textColor = [self primaryTextColor];
+        self.autoAwayLabel.textColor = [self primaryTextColor];
+        self.statusPersistenceLabel.textColor = [self primaryTextColor];
+        self.lastActiveLabel.textColor = [self primaryTextColor];
+        
+        self.timeoutAutoAwayLabel.textColor = [self secondayTextColor];
+        [self.autoAwayTimeSaveButton setTitleColor:[self secondayTextColor] forState:UIControlStateNormal];
+        [self.autoAwayTimeSaveButton setTitleColor:[self disabledTextColor] forState:UIControlStateDisabled];
+        
+        self.autoAwaySwitch.tintColor = [self switchTintColor];
+        self.statusPersistenceSwitch.tintColor = [self switchTintColor];
+        self.lastActiveSwitch.tintColor = [self switchTintColor];
+    } else {
+        self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+        
+        self.timeoutAutoAwayLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+        [self.autoAwayTimeSaveButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+        
+        UIColor *disabledColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.4];
+        [self.autoAwayTimeSaveButton setTitleColor:disabledColor forState:UIControlStateDisabled];
+    }
+    
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
-    self.timeoutAutoAwayLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    [self.autoAwayTimeSaveButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
-    
-    UIColor *disabledColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.4];
-    [self.autoAwayTimeSaveButton setTitleColor:disabledColor forState:UIControlStateDisabled];
-
     [self.tableView reloadData];
 }
 

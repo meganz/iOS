@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -54,6 +55,27 @@ extension ChatStatusTableViewController {
         autoAwayTimePicker.selectRow(hours, inComponent: PickerComponent.hours.rawValue, animated: true)
         let minutes = Int((presenceConfig.autoAwayTimeout % 3600) / 60)
         autoAwayTimePicker.selectRow(minutes, inComponent: PickerComponent.minutes.rawValue, animated: true)
+    }
+    
+    // MARK: Appearance
+    @objc func defaultBackgroundColor() -> UIColor {
+        TokenColors.Background.page
+    }
+    
+    @objc func primaryTextColor() -> UIColor {
+        TokenColors.Text.primary
+    }
+    
+    @objc func secondayTextColor() -> UIColor {
+        TokenColors.Text.secondary
+    }
+    
+    @objc func disabledTextColor() -> UIColor {
+        TokenColors.Text.disabled
+    }
+    
+    @objc func switchTintColor() -> UIColor {
+        TokenColors.Support.success
     }
 }
 
