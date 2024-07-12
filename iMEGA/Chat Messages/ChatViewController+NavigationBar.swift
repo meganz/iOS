@@ -143,8 +143,7 @@ extension ChatViewController {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
-            chatRoom: chatRoom.toChatRoomEntity(),
-            featureFlagProvider: DIContainer.featureFlagProvider
+            chatRoom: chatRoom.toChatRoomEntity()
         )
     }
 }

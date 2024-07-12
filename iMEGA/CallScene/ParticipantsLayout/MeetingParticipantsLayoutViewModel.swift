@@ -202,6 +202,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private(set) var callSessionUpdateSubscription: AnyCancellable?
     private var callUpdateSubscription: AnyCancellable?
+    private var raiseHandSubscription: AnyCancellable?
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -255,7 +256,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.cameraEnabled = call.hasLocalVideo
         super.init()
         self.$callsSoundNotificationPreference.useCase = preferenceUseCase
-        onCallUpdateListener()
+        setupOnCallUpdateListeners()
         
         self.layoutUpdateChannel.getCurrentLayout = { [weak self] in
             guard let self else { return .grid }
@@ -280,11 +281,22 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callWillEndTimer?.invalidate()
     }
     
-    private func onCallUpdateListener() {
-        callUpdateSubscription = callUseCase.onCallUpdate()
+    private func setupOnCallUpdateListeners() {
+        let calUpdatePublisher = callUseCase.onCallUpdate()
+        
+        callUpdateSubscription = calUpdatePublisher
+            .filter { $0.changeType != .callRaiseHand }
             .receive(on: scheduler)
             .sink { [weak self] call in
                 self?.onCallUpdate(call)
+            }
+        
+        raiseHandSubscription = calUpdatePublisher
+            .filter { $0.changeType == .callRaiseHand }
+            .receive(on: scheduler)
+            .debounce(for: .seconds(0.5), scheduler: scheduler)
+            .sink { [weak self] call in
+                self?.callRaiseHandChanged(for: call)
             }
     }
     
@@ -1126,20 +1138,23 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         switch call.changeType {
         case .callWillEnd:
             manageCallWillEnd(for: call)
-        case .callRaiseHand:
-            let raiseHandListBefore = self.call.raiseHandsList
-            self.call = call
-            updateRemoteRaisedHandChanges(
-                raiseHandListBefore: raiseHandListBefore,
-                raiseHandListAfter: call.raiseHandsList
-            )
-            let localUserRaisedHand = call.raiseHandsList.notContains(chatUseCase.myUserHandle())
-            invokeCommand?(.updateLocalRaisedHandHidden(localUserRaisedHand))
+
         case .localAVFlags:
             cameraEnabled = call.hasLocalVideo
         default:
             break
         }
+    }
+    
+    private func callRaiseHandChanged(for call: CallEntity) {
+        let raiseHandListBefore = self.call.raiseHandsList
+        self.call = call
+        updateRemoteRaisedHandChanges(
+            raiseHandListBefore: raiseHandListBefore,
+            raiseHandListAfter: call.raiseHandsList
+        )
+        let localUserHandLowered = call.raiseHandsList.notContains(chatUseCase.myUserHandle())
+        invokeCommand?(.updateLocalRaisedHandHidden(localUserHandLowered))
     }
     
     private func updateRemoteRaisedHandChanges(
@@ -1225,7 +1240,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             localRaisedHand: localRaisedHand
         )?.withSupplementalAction(hideSnackBar)
         
-        MEGALogDebug("[RaiseHand] updating snack bar with model : \(String(describing: snackBarModel))")
         invokeCommand?(.updateSnackBar(snackBarModel))
     }
     
@@ -1568,6 +1582,10 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     
     var showRightNavBarItems: Bool {
         !isOneToOne
+    }
+    
+    var floatingPanelShown: Bool {
+        containerViewModel?.floatingPanelShown ?? false
     }
 }
 

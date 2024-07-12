@@ -10,8 +10,7 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
             accountUseCase: MockAccountUseCase(),
             chatRoomUseCase: MockChatRoomUseCase(),
-            chatRoom: ChatRoomEntity(chatId: .invalid),
-            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+            chatRoom: ChatRoomEntity(chatId: .invalid)
         )
         
         let hasVisibleContacts = participantsAddingViewFactory.hasVisibleContacts
@@ -25,8 +24,7 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
             accountUseCase: mockAccountUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
-            chatRoom: ChatRoomEntity(chatId: .invalid),
-            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+            chatRoom: ChatRoomEntity(chatId: .invalid)
         )
         
         let hasNonAddedVisibleContacts = participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: [])
@@ -44,8 +42,7 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
             accountUseCase: mockAccountUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            chatRoom: ChatRoomEntity(chatId: .invalid),
-            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+            chatRoom: ChatRoomEntity(chatId: .invalid)
         )
         
         let shouldShowAddParticipantsScreen = participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: [])

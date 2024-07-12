@@ -26,6 +26,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case panelTransitionIsLongForm(Bool)
     case callAbsentParticipant(CallParticipantEntity)
     case muteParticipant(CallParticipantEntity)
+    // this one is to show long form after user taps View on the Raise Hand snack bar
     case transitionToLongForm
 }
 
@@ -60,6 +61,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
+
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var callParticipantsNotInCall = [CallParticipantEntity]()
@@ -103,7 +105,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     var isWaitingRoomListVisible: Bool
     
     private var selectWaitingRoomList: Bool
-    private var panelIsLongForm = false {
+    var panelIsLongForm = false {
         didSet {
             isWaitingRoomListVisible = panelIsLongForm && selectedParticipantsListTab == .waitingRoom
         }
@@ -206,6 +208,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             guard let call else { return }
             router.showWaitingRoomParticipantsList(for: call)
         case .panelTransitionIsLongForm(let isLongForm):
+            containerViewModel?.dispatch(.willTransitionToLongForm)
             panelIsLongForm = isLongForm
         case .callAbsentParticipant(let participant):
             callAbsentParticipants([participant])
@@ -297,8 +300,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         ParticipantsAddingViewFactory(
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            chatRoom: chatRoom,
-            featureFlagProvider: DIContainer.featureFlagProvider
+            chatRoom: chatRoom
         )
     }
     

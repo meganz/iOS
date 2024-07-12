@@ -139,6 +139,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         _snackBarContainerView
     }
     
+    func shouldBeginShowingSnackBar() -> Bool {
+        !viewModel.floatingPanelShown
+    }
+    
     func layout(snackBarView: UIView?) {
         _snackBarContainerView?.removeFromSuperview()
         // when snack bar is dismissed, this is the actual bit of logic that dismisses
@@ -361,7 +365,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         case .enableSwitchCameraButton:
             updateRightBarItems()
         case .updateSnackBar(let snackBar):
-            if let snackBar {
+            // we do not show the snack bar when floating panel is extended
+            // in portrait it's shown underneath anyway, in landscape it's looks very strange
+            if let snackBar, !viewModel.floatingPanelShown {
                 MEGALogDebug("[RaiseHand] snack bar update non nil")
                 SnackBarRouter.shared.present(snackBar: snackBar)
             } else {

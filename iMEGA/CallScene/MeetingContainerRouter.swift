@@ -37,9 +37,12 @@ protocol MeetingContainerRouting: AnyObject, Routing {
         containerViewModel: MeetingContainerViewModel,
         completion: @escaping () -> Void
     )
+    func hideSnackBar() 
+    var floatingPanelShown: Bool { get }
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
+    
     private weak var presenter: UIViewController?
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
@@ -455,5 +458,13 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func transitionToLongForm() {
         floatingPanelRouter?.transitionToLongForm()
+    }
+    
+    func hideSnackBar() {
+        SnackBarRouter.shared.dismissSnackBar()
+    }
+    
+    var floatingPanelShown: Bool {
+        floatingPanelRouter?.panelIsLongForm ?? false
     }
 }

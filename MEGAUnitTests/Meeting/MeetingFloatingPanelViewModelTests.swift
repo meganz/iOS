@@ -965,6 +965,8 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     func transitionToLongForm() {
         
     }
+    
+    var panelIsLongForm: Bool = false
 }
 
 extension CallParticipantEntity {
