@@ -61,6 +61,7 @@ fileprivate extension NodeEntity {
             isTakenDown                        : node.isTakenDown(),
             isFavourite                        : node.isFavourite,
             isMarkedSensitive                  : node.isMarkedSensitive,
+            description                        : node.description,
             label                              : node.label.toNodeLabelTypeEntity(),
             
             // MARK: - Links

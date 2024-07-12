@@ -31,6 +31,7 @@ public struct NodeEntity: Sendable {
     public let isTakenDown: Bool
     public let isFavourite: Bool
     public let isMarkedSensitive: Bool
+    public let description: String?
     public let label: NodeLabelTypeEntity
     
     // MARK: - Link
@@ -58,7 +59,48 @@ public struct NodeEntity: Sendable {
     // MARK: - Backup
     public let deviceId: String?
     
-    public init(changeTypes: ChangeTypeEntity, nodeType: NodeTypeEntity?, name: String, fingerprint: String?, handle: HandleEntity, base64Handle: String, restoreParentHandle: HandleEntity, ownerHandle: HandleEntity, parentHandle: HandleEntity, isFile: Bool, isFolder: Bool, isRemoved: Bool, hasThumbnail: Bool, hasPreview: Bool, isPublic: Bool, isShare: Bool, isOutShare: Bool, isInShare: Bool, isExported: Bool, isExpired: Bool, isTakenDown: Bool, isFavourite: Bool, isMarkedSensitive: Bool, label: NodeLabelTypeEntity, publicHandle: HandleEntity, expirationTime: Date?, publicLinkCreationTime: Date?, size: UInt64, creationTime: Date, modificationTime: Date, width: Int, height: Int, shortFormat: Int, codecId: Int, duration: Int, mediaType: MediaTypeEntity?, latitude: Double?, longitude: Double?, deviceId: String?) {
+    public init(
+        changeTypes: ChangeTypeEntity,
+        nodeType: NodeTypeEntity?,
+        name: String,
+        fingerprint: String?,
+        handle: HandleEntity,
+        base64Handle: String,
+        restoreParentHandle: HandleEntity,
+        ownerHandle: HandleEntity,
+        parentHandle: HandleEntity,
+        isFile: Bool,
+        isFolder: Bool,
+        isRemoved: Bool,
+        hasThumbnail: Bool,
+        hasPreview: Bool,
+        isPublic: Bool,
+        isShare: Bool,
+        isOutShare: Bool,
+        isInShare: Bool,
+        isExported: Bool,
+        isExpired: Bool,
+        isTakenDown: Bool,
+        isFavourite: Bool,
+        isMarkedSensitive: Bool,
+        description: String?,
+        label: NodeLabelTypeEntity,
+        publicHandle: HandleEntity,
+        expirationTime: Date?,
+        publicLinkCreationTime: Date?,
+        size: UInt64,
+        creationTime: Date,
+        modificationTime: Date,
+        width: Int,
+        height: Int,
+        shortFormat: Int,
+        codecId: Int,
+        duration: Int,
+        mediaType: MediaTypeEntity?,
+        latitude: Double?,
+        longitude: Double?,
+        deviceId: String?
+    ) {
         self.changeTypes = changeTypes
         self.nodeType = nodeType
         self.name = name
@@ -82,6 +124,7 @@ public struct NodeEntity: Sendable {
         self.isTakenDown = isTakenDown
         self.isFavourite = isFavourite
         self.isMarkedSensitive = isMarkedSensitive
+        self.description = description
         self.label = label
         self.publicHandle = publicHandle
         self.expirationTime = expirationTime
