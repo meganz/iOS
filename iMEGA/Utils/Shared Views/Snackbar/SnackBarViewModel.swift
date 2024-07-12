@@ -33,7 +33,10 @@ final class SnackBarViewModel: ObservableObject {
     }
     
     private func dismissSnackBar() {
-        SnackBarRouter.shared.dismissSnackBar()
+        // There is a case where we dimiss the modal screen faster then this dismiss method called by subscription, resulting a crash since we assert the `presenter` inside `dismissSnackbar()` function. Thus, nil checking is needed here.
+        if SnackBarRouter.shared.presenter != nil {
+            SnackBarRouter.shared.dismissSnackBar()
+        }
         cancelDisplaySnackBarSubscription()
         isShowSnackBar = false
     }

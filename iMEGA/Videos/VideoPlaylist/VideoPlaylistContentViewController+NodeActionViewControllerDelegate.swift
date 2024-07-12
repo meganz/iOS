@@ -7,7 +7,16 @@ extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
             viewController: self,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
-        nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, for: node, from: sender)
+        switch action {
+        case .download, .manageLink, .saveToPhotos, .shareLink, .sendToChat, .exportFile:
+            nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, for: node, from: sender)
+        case .removeVideoFromVideoPlaylist:
+            removeVideoFromPlaylistAction()
+        case .moveVideoInVideoPlaylistContentToRubbishBin:
+            break // CC-7622
+        default:
+            break
+        }
         resetNavigationBar()
     }
     
@@ -21,9 +30,13 @@ extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
         switch action {
-        case .download, .manageLink, .saveToPhotos:
+        case .download, .manageLink, .saveToPhotos, .shareLink, .sendToChat, .exportFile:
             nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, forNodes: nodes, from: sender)
             resetNavigationBar()
+        case .removeVideoFromVideoPlaylist:
+            removeVideoFromPlaylistAction()
+        case .moveVideoInVideoPlaylistContentToRubbishBin:
+            break // CC-7622
         default:
             break
         }

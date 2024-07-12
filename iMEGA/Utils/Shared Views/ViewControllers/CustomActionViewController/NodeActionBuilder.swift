@@ -204,6 +204,8 @@ final class NodeActionBuilder {
             return normalAlbumActions()
         case .photosFavouriteAlbum:
             return favouriteAlbumActions()
+        case .videoPlaylistContent:
+            return videoPlaylistContentActions()
         default: break
         }
         
@@ -483,6 +485,8 @@ final class NodeActionBuilder {
             nodeActions = chatAttachmentNodeActions()
         case .backup:
             nodeActions = backupsNodeActions()
+        case .videoPlaylistContent:
+            nodeActions = videoPlaylistContentActions()
         @unknown default:
             break
         }
@@ -512,6 +516,8 @@ final class NodeActionBuilder {
             return textEditorActions()
         case .albumLink:
             return albumLinkActions()
+        case .videoPlaylistContent:
+            return videoPlaylistContentActions()
         default: // .unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents
             switch accessLevel {
             case .accessUnknown:
@@ -841,4 +847,16 @@ final class NodeActionBuilder {
                 .photosAlbum, .photosFavouriteAlbum]
             .contains(displayMode)
     }
+    
+    private func videoPlaylistContentActions() -> [NodeAction] {
+        [
+            .shareLinkAction(),
+            .saveToPhotosAction(),
+            .removeVideoFromVideoPlaylistAction(),
+            .sendToChatAction(),
+            .exportFileAction(nodeCount: selectedNodeCount),
+            .moveVideoInVideoPlaylistContentToRubbishBinAction()
+        ]
+    }
+    
 }

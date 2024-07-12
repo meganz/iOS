@@ -1591,4 +1591,34 @@ class NodeActionBuilderTests: XCTestCase {
         
         XCTAssertTrue(actions.contains(where: { $0.type == .hide }))
     }
+    
+    // MARK: - videoPlaylistContent
+    
+    func testBuild_displayModeVideoPlaylistContent_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.videoPlaylistContent)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [
+            .shareLink,
+            .saveToPhotos,
+            .removeVideoFromVideoPlaylist,
+            .sendToChat,
+            .exportFile,
+            .moveVideoInVideoPlaylistContentToRubbishBin ]))
+    }
+    
+    func testMultiselectBuild_displayModeVideoPlaylistContent_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.videoPlaylistContent)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [
+            .shareLink,
+            .saveToPhotos,
+            .removeVideoFromVideoPlaylist,
+            .sendToChat,
+            .exportFile,
+            .moveVideoInVideoPlaylistContentToRubbishBin ]))
+    }
 }

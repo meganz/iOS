@@ -156,6 +156,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             
         case .unhide:
             unhide(nodes: [node.toNodeEntity()])
+            
         default:
             break
         }
