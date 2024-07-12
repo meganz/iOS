@@ -98,7 +98,7 @@ static const void *base64HandleKey = &base64HandleKey;
     
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             [self sd_setImageWithURL:[NSURL fileURLWithPath:path]];
-        } else if ([[NSFileManager defaultManager] fileExistsAtPath:originalPath]) {
+        } else if ([[NSFileManager defaultManager] fileExistsAtPath:originalPath] && [FileExtensionGroupOCWrapper verifyIsImage:node.name]) {
             [self sd_setImageWithURL:[NSURL fileURLWithPath:originalPath]];
         } else {
             MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
