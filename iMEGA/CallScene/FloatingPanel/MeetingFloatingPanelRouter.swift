@@ -293,7 +293,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func showMuteSuccess(for participant: CallParticipantEntity?) {
-        SVProgressHUD.configureHudDarkMode()
         if let participant {
             SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Calls.ParticipantsInCall.MuteParticipant.success(participant.name ?? ""))
         } else {
@@ -302,7 +301,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func showMuteError(for participant: CallParticipantEntity?) {
-        SVProgressHUD.configureHudDarkMode()
         if let participant {
             SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ParticipantsInCall.MuteParticipant.error(participant.name ?? ""))
         } else {

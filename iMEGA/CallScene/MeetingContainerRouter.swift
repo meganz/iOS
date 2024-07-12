@@ -125,7 +125,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
-        
         showCallViewRouter(
             containerViewModel: containerViewModel
         )
@@ -302,12 +301,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func showScreenShareWarning() {
-        SVProgressHUD.configureHudDarkMode()
         SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ScreenShare.Waring.title)
     }
     
     func showMutedMessage(by name: String) {
-        SVProgressHUD.configureHudDarkMode()
         SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Calls.ParticipantsInCall.mutedBy(name))
     }
     
