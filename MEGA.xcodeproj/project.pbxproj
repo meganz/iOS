@@ -1119,7 +1119,6 @@
 		838B275E2BF60324005AD3F7 /* CallControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B275D2BF60324005AD3F7 /* CallControlsViewModel.swift */; };
 		838CC2652B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */; };
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
-		838D90A02B57FE550031CD62 /* SVProgressHUD+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */; };
 		838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */; };
 		838F27C72BA1E68700F267BC /* CallWillEndAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F27C62BA1E68700F267BC /* CallWillEndAlertRouter.swift */; };
 		838F63CE2836778A009B41D6 /* DuplicatedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F63CD2836778A009B41D6 /* DuplicatedItem.swift */; };
@@ -3924,7 +3923,6 @@
 		838B275D2BF60324005AD3F7 /* CallControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlsViewModel.swift; sourceTree = "<group>"; };
 		838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkPresentationItemSource.swift; sourceTree = "<group>"; };
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
-		838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+Additions.swift"; sourceTree = "<group>"; };
 		838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		838F27C62BA1E68700F267BC /* CallWillEndAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWillEndAlertRouter.swift; sourceTree = "<group>"; };
 		838F63CD2836778A009B41D6 /* DuplicatedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatedItem.swift; sourceTree = "<group>"; };
@@ -7114,7 +7112,6 @@
 				B6730B0A2735F34100A9CF5F /* Shared Views */,
 				94485B5729B9FA1E006B919E /* SharedItems */,
 				9464C2EB28C5EF1900F8B082 /* SortOrder */,
-				838D909E2B57FE2A0031CD62 /* SVProgressHUD */,
 				B639952A2898CBA400EA88F1 /* SwiftUI */,
 				B582965627C5DF28004DD7A5 /* Transfers */,
 				C4F06F702B6915DE005C1A3D /* UpgradeEncouragementShowTimeTracker */,
@@ -9552,14 +9549,6 @@
 				8387FC032C1082F1008EDDC4 /* CallControls */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		838D909E2B57FE2A0031CD62 /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */,
-			);
-			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		838F27C52BA1E66900F267BC /* CallWillEndAllert */ = {
@@ -15847,7 +15836,6 @@
 				5D79B51F249849580070FECD /* String+MarkedString.swift in Sources */,
 				B695B608264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
 				B695B602264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
-				838D90A02B57FE550031CD62 /* SVProgressHUD+Additions.swift in Sources */,
 				B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				B695B5FF264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */,
