@@ -51,6 +51,8 @@ extension DisplayMode {
                 .previewPdfPage
         case .albumLink:
                 .albumLink
+        case .videoPlaylistContent:
+                .videoPlaylistContent
         @unknown default:
                 .unknown
         }

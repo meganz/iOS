@@ -224,6 +224,14 @@ extension NodeAction {
         NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, image: UIImage.rubbishBin, type: .moveToRubbishBin)
     }
     
+    class func removeVideoFromVideoPlaylistAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.Videos.Tab.Playlist.Content.removeFromPlaylist, image: UIImage.hudMinus, type: .removeVideoFromVideoPlaylist)
+    }
+    
+    class func moveVideoInVideoPlaylistContentToRubbishBinAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, image: UIImage.rubbishBin, type: .moveVideoInVideoPlaylistContentToRubbishBin)
+    }
+    
     class func removeAction() -> NodeAction {
         NodeAction(title: Strings.Localizable.General.MenuAction.deletePermanently, image: UIImage.rubbishBin, type: .remove)
     }

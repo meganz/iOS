@@ -39,5 +39,7 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeRestoreBackup,
     MegaNodeActionTypeMediaDiscovery,
     MegaNodeActionTypeHide,
-    MegaNodeActionTypeUnhide
+    MegaNodeActionTypeUnhide,
+    MegaNodeActionTypeRemoveVideoFromVideoPlaylist,
+    MegaNodeActionTypeMoveVideoInVideoPlaylistContentToRubbishBin
 };

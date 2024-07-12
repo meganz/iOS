@@ -27,4 +27,5 @@ public enum ViewDisplayMode: Sendable {
     case previewPdfPage
     case albumLink
     case home
+    case videoPlaylistContent
 }

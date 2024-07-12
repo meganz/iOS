@@ -237,13 +237,18 @@ final class VideoPlaylistContentViewController: UIViewController {
     }
     
     @objc private func removeVideoFromPlaylistAction(_ sender: UIBarButtonItem) {
+        removeVideoFromPlaylistAction()
+    }
+    
+    func removeVideoFromPlaylistAction() {
         let videos = videoSelection.videos.values.map { $0 }
         guard videos.isNotEmpty else { return }
         sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(videos)
     }
     
     @objc private func moreAction(_ sender: UIBarButtonItem) {
-        // Future ticket
+        let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
+        present(nodeActionViewController, animated: true, completion: nil)
     }
     
     func resetNavigationBar() {
@@ -312,7 +317,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     }
     
     private func nodeActionViewController(with selectedVideos: [MEGANode], from sender: UIBarButtonItem) -> NodeActionViewController {
-        NodeActionViewController(nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, sender: sender)
+        NodeActionViewController(nodes: selectedVideos, delegate: self, displayMode: .videoPlaylistContent, sender: sender)
     }
     
     private var selectedVideos: [MEGANode] {

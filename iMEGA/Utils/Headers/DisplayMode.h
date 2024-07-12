@@ -22,5 +22,6 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModePhotosAlbum,
     DisplayModePhotosTimeline,
     DisplayModePreviewPdfPage,
-    DisplayModeAlbumLink
+    DisplayModeAlbumLink,
+    DisplayModeVideoPlaylistContent
 };
