@@ -58,9 +58,8 @@ public struct ShareUseCase<T: ShareRepositoryProtocol, S: FilesSearchRepositoryP
                 } else if node.isFile {
                     false
                 } else {
-                    try await filesSearchRepository.search(filter: .init(
+                    try await filesSearchRepository.search(filter: .recursive(
                         searchTargetLocation: .parentNode(node),
-                        recursive: true,
                         supportCancel: false,
                         sortOrderType: .defaultAsc,
                         formatType: .unknown,

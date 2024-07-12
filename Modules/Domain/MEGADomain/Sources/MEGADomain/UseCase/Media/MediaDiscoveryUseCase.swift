@@ -40,16 +40,28 @@ public final class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
             .async
             .map { [weak self] format -> [NodeEntity] in
                 guard let self else { throw  FileSearchResultErrorEntity.noDataAvailable }
-                let items: [NodeEntity] = try await filesSearchRepository.search(filter: SearchFilterEntity(
-                    searchText: searchAllPhotosString,
-                    searchTargetLocation: .parentNode(parent),
-                    recursive: recursive,
-                    supportCancel: false,
-                    sortOrderType: .defaultDesc,
-                    formatType: format,
-                    sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled,
-                    nodeTypeEntity: .file))
-                return items
+                let sensitiveFilterOption: SearchFilterEntity.SensitiveFilterOption = excludeSensitive ? .nonSensitiveOnly : .disabled
+                
+                let filter: SearchFilterEntity = if recursive {
+                    .recursive(
+                        searchText: searchAllPhotosString,
+                        searchTargetLocation: .parentNode(parent),
+                        supportCancel: false,
+                        sortOrderType: .defaultDesc,
+                        formatType: format,
+                        sensitiveFilterOption: sensitiveFilterOption,
+                        nodeTypeEntity: .file)
+                } else {
+                    .nonRecursive(
+                        searchText: searchAllPhotosString,
+                        searchTargetNode: parent,
+                        supportCancel: false,
+                        sortOrderType: .defaultDesc,
+                        formatType: format,
+                        sensitiveFilterOption: sensitiveFilterOption,
+                        nodeTypeEntity: .file)
+                }
+                return try await filesSearchRepository.search(filter: filter)
             }
             .reduce([NodeEntity]()) { $0 + $1 }
     }

@@ -440,8 +440,6 @@ final class HomeScreenFactory: NSObject {
     private func makeFilesSearchUseCase() -> some FilesSearchUseCaseProtocol {
         FilesSearchUseCase(
             repo: FilesSearchRepository.newRepo,
-            nodeFormat: .unknown,
-            nodesUpdateListenerRepo: SDKNodesUpdateListenerRepository.newRepo,
             nodeRepository: NodeRepository.newRepo
         )
     }

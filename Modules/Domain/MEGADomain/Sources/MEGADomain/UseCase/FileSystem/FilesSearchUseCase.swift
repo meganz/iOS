@@ -34,32 +34,19 @@ public protocol FilesSearchUseCaseProtocol {
     ///   - cancelPreviousSearchIfNeeded: Indicates if the previous search should be cancelled before starting a new one.
     /// - Returns: NodeListEntity that matches the criteria provided.
     func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> NodeListEntity
-    
-    func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void)
-    func stopNodesUpdateListener()
-    func startNodesUpdateListener()
 }
 
 public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
 
     private let repo: any FilesSearchRepositoryProtocol
-    private let nodeFormat: NodeFormatEntity
-    private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
-    private var nodesUpdateHandler: (([NodeEntity]) -> Void)?
     private let nodeRepository: any NodeRepositoryProtocol
     
     public init(
         repo: any FilesSearchRepositoryProtocol,
-        nodeFormat: NodeFormatEntity,
-        nodesUpdateListenerRepo: any NodesUpdateListenerProtocol,
         nodeRepository: any NodeRepositoryProtocol
     ) {
         self.repo = repo
-        self.nodeFormat = nodeFormat
-        self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         self.nodeRepository = nodeRepository
-        
-        addNodesUpdateHandler()
     }
     
     public func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
@@ -91,32 +78,8 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
         }
         return try await repo.search(filter: filter)
     }
-            
-    public func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void) {
-        self.nodesUpdateHandler = nodesUpdateHandler
-    }
-    
-    public func stopNodesUpdateListener() {
-        self.nodesUpdateHandler = nil
-        self.nodesUpdateListenerRepo.onNodesUpdateHandler = nil
-    }
-    
-    public func startNodesUpdateListener() {
-        if nodesUpdateHandler == nil {
-            addNodesUpdateHandler()
-        }
-    }
     
     public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
         nodeRepository.nodeUpdates
-    }
-    
-    // MARK: - Private
-    
-    private func addNodesUpdateHandler() {
-        self.nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
-            guard let self else { return }
-            self.nodesUpdateHandler?(nodes)
-        }
     }
 }

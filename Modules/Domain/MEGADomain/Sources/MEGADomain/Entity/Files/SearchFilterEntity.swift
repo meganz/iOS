@@ -61,7 +61,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
     
     public let modificationTimeFrame: TimeFrame?
     
-    public init(
+    private init(
         searchText: String? = nil,
         searchTargetLocation: SearchTargetLocation,
         recursive: Bool,
@@ -83,5 +83,56 @@ public struct SearchFilterEntity: Sendable, Equatable {
         self.favouriteFilterOption = favouriteFilterOption
         self.nodeTypeEntity = nodeTypeEntity
         self.modificationTimeFrame = modificationTimeFrame
+    }
+    
+    /// Creates a SearchFilterEntity with a focus on creating a request to recursively search based on the params provided
+    /// - Returns: SearchFilterEntity - To recursively search for results
+    public static func recursive(
+        searchText: String? = nil,
+        searchTargetLocation: SearchTargetLocation,
+        supportCancel: Bool,
+        sortOrderType: SortOrderEntity,
+        formatType: NodeFormatEntity,
+        sensitiveFilterOption: SensitiveFilterOption = .disabled,
+        favouriteFilterOption: FavouriteFilterOption = .disabled,
+        nodeTypeEntity: NodeTypeEntity = .unknown,
+        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
+    ) -> Self {
+        self.init(searchText: searchText,
+                  searchTargetLocation: searchTargetLocation,
+                  recursive: true,
+                  supportCancel: supportCancel,
+                  sortOrderType: sortOrderType,
+                  formatType: formatType,
+                  sensitiveFilterOption: sensitiveFilterOption,
+                  favouriteFilterOption: favouriteFilterOption,
+                  nodeTypeEntity: nodeTypeEntity,
+                  modificationTimeFrame: modificationTimeFrame)
+    }
+    
+    /// Creates a SearchFilterEntity with a focus on creating a request to non-recursively search based on the params provided.
+    /// This initializer differs from the recursive version, because a node entity is the only target location that can be provided to the SDK to perform a non-recursive search. FolderTargetEntity is not supported in this variation. So it is enforced to pass a target node entity.
+    /// - Returns: SearchFilterEntity - To non-recursively search for results
+    public static func nonRecursive(
+        searchText: String? = nil,
+        searchTargetNode: NodeEntity,
+        supportCancel: Bool,
+        sortOrderType: SortOrderEntity,
+        formatType: NodeFormatEntity,
+        sensitiveFilterOption: SensitiveFilterOption = .disabled,
+        favouriteFilterOption: FavouriteFilterOption = .disabled,
+        nodeTypeEntity: NodeTypeEntity = .unknown,
+        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
+    ) -> Self {
+        self.init(searchText: searchText,
+                  searchTargetLocation: .parentNode(searchTargetNode), 
+                  recursive: false,
+                  supportCancel: supportCancel,
+                  sortOrderType: sortOrderType, 
+                  formatType: formatType,
+                  sensitiveFilterOption: sensitiveFilterOption, 
+                  favouriteFilterOption: favouriteFilterOption,
+                  nodeTypeEntity: nodeTypeEntity,
+                  modificationTimeFrame: modificationTimeFrame)
     }
 }

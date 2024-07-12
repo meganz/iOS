@@ -68,18 +68,17 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     
     private func searchAllMedia(formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         let cancelToken = MEGACancelToken()
-        
         return try await withTaskCancellationHandler {
             try await withAsyncThrowingValue { completion in
-                let filter = SearchFilterEntity(searchTargetLocation: .folderTarget(.rootNode),
-                                                recursive: true,
-                                                supportCancel: true,
-                                                sortOrderType: .defaultDesc,
-                                                formatType: formatType,
-                                                sensitiveFilterOption: .disabled)
+                let filter: SearchFilterEntity = .recursive(
+                    searchTargetLocation: .folderTarget(.rootNode),
+                    supportCancel: true,
+                    sortOrderType: .defaultDesc,
+                    formatType: formatType,
+                    sensitiveFilterOption: .disabled)
                 
                 let nodeList = sdk.search(with: filter.toMEGASearchFilter(),
-                                          orderType: .defaultDesc, 
+                                          orderType: .defaultDesc,
                                           page: nil,
                                           cancelToken: cancelToken)
                 

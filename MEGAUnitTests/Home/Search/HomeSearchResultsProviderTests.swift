@@ -95,7 +95,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
             let nodeListEntity = NodeListEntity(nodes: nodes)
             filesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic), nodeListSearchResult: .success(nodeListEntity))
             
-            nodeDataUseCase = MockNodeDataUseCase()
+            nodeDataUseCase = MockNodeDataUseCase(rootNode: NodeEntity(handle: 1000))
 
             mediaUseCase = MockMediaUseCase()
 

@@ -65,6 +65,10 @@ final class FilesExplorerViewModel: ViewModelType {
     // MARK: - Debouncer
     private static let REQUESTS_DELAY: TimeInterval = 0.35
     private let debouncer = Debouncer(delay: REQUESTS_DELAY)
+    private var monitorTask: Task<Void, Never>?
+    private var searchTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     
     // MARK: - Initializer
     required init(explorerType: ExplorerTypeEntity,
@@ -85,14 +89,7 @@ final class FilesExplorerViewModel: ViewModelType {
         self.filesDownloadUseCase = filesDownloadUseCase
         self.nodeProvider = nodeProvider
         self.featureFlagProvider = featureFlagProvider
-        
-        self.useCase.onNodesUpdate { [weak self] _ in
-            guard let self else { return }
-            self.debouncer.start {
-                self.invokeCommand?(.reloadData)
-            }
-        }
-                
+                        
         self.nodeClipboardOperationUseCase.onNodeMove { [weak self] node in
             self?.invokeCommand?(.onNodesUpdate([node]))
         }
@@ -103,6 +100,11 @@ final class FilesExplorerViewModel: ViewModelType {
                 self.invokeCommand?(.reloadData)
             }
         }
+    }
+    
+    deinit {
+        monitorTask?.cancel()
+        searchTask?.cancel()
     }
     
     private func configureContextMenus() {
@@ -140,8 +142,9 @@ final class FilesExplorerViewModel: ViewModelType {
         case .onViewReady:
             invokeCommand?(.setViewConfiguration(viewConfiguration))
             configureContextMenus()
+            monitorTask = Task { await monitorNodeUpdates() }
         case .startSearching(let text):
-            Task { await startSearching(text) }
+            searchTask = Task { await startSearching(text) }
         case .didSelectNode(let node, let allNodes):
             didSelect(node: node, allNodes: allNodes)
         case .didChangeViewMode(let viewType):
@@ -153,6 +156,15 @@ final class FilesExplorerViewModel: ViewModelType {
     }
     
     // MARK: search
+    @MainActor
+    private func monitorNodeUpdates() async {
+        for await _ in useCase.nodeUpdates {
+            debouncer.start { @MainActor [weak self] in
+                self?.invokeCommand?(.reloadData)
+            }
+        }
+    }
+    
     @MainActor
     private func startSearching(_ text: String?) async {
         do {
@@ -181,10 +193,9 @@ final class FilesExplorerViewModel: ViewModelType {
     
     private func startSearch(text: String?, formatType: NodeFormatEntity, favouritesOnly: Bool = false) async throws -> [NodeEntity] {
         try await useCase.search(
-            filter: .init(
-                searchText: text, 
+            filter: .recursive(
+                searchText: text,
                 searchTargetLocation: .folderTarget(.rootNode),
-                recursive: true,
                 supportCancel: true,
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                 formatType: explorerType.toNodeFormatEntity(),

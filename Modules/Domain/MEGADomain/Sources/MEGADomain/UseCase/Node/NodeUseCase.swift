@@ -2,6 +2,7 @@ import AsyncAlgorithms
 import MEGASwift
 // MARK: - Use case protocol -
 public protocol NodeUseCaseProtocol {
+    func rootNode() -> NodeEntity?
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
     func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
@@ -55,6 +56,10 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
         self.nodeRepository = nodeRepository
     }
     
+    public func rootNode() -> NodeEntity? {
+        nodeRepository.rootNode()
+    }
+
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         nodeDataRepository.nodeAccessLevel(nodeHandle: nodeHandle)
     }
