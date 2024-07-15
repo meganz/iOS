@@ -14,6 +14,16 @@ struct FeatureListHelper: FeatureListHelperProtocol {
     let currentPlan: AccountPlanEntity
     let assets: CancelAccountPlanAssets
     
+    // The Cancel Subscription flow is only available for pro standard accounts (Pro I, II, III, lite, and Pro Flexi).
+    // For this reason, we only set the limit of the rewind feature for the above-mentioned accounts.
+    var rewindLimit: Int {
+        switch currentPlan.type {
+        case .lite: 90
+        case .proI, .proII, .proIII, .business, .proFlexi: 180
+        default: 0
+        }
+    }
+    
     func createCurrentFeatures() -> [FeatureDetails] {
         [
             FeatureDetails(
@@ -50,7 +60,7 @@ struct FeatureListHelper: FeatureListHelperProtocol {
                 type: .rewind,
                 title: Strings.Localizable.Rewind.Feature.title,
                 freeText: Strings.Localizable.Rewind.For.Free.users,
-                proText: Strings.Localizable.Rewind.For.Pro.users
+                proText: Strings.Localizable.Rewind.For.Pro.Users.maximumDays(rewindLimit)
             ),
             FeatureDetails(
                 type: .vpn,

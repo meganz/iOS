@@ -4,7 +4,7 @@ import MEGAL10n
 import XCTest
 
 final class FeatureListHelperTests: XCTestCase {
-    func randomAccountType() -> AccountTypeEntity {
+    private func randomAccountType() -> AccountTypeEntity {
         do {
             let randomAccountType = AccountTypeEntity.allCases.randomElement()
             return try XCTUnwrap(randomAccountType, "Failed to get a random account type")
@@ -14,7 +14,8 @@ final class FeatureListHelperTests: XCTestCase {
         }
     }
     
-    func makeSUT(
+    private func makeSUT(
+        accountType: AccountTypeEntity = .proI,
         storageMax: Int64 = 1000000000,
         transferMax: Int64 = 500000000,
         unavailableImageName: String = "unavailable",
@@ -30,9 +31,43 @@ final class FeatureListHelperTests: XCTestCase {
         )
         return FeatureListHelper(
             account: account,
-            currentPlan: AccountPlanEntity(type: randomAccountType()),
+            currentPlan: AccountPlanEntity(type: accountType),
             assets: assets
         )
+    }
+
+    private func verifyRewindLimit(
+        for accountType: AccountTypeEntity,
+        expectedLimit: Int,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let expectedString = Strings.Localizable.Rewind.For.Pro.Users.maximumDays(expectedLimit)
+        let sut = makeSUT(accountType: accountType)
+        
+        XCTAssertEqual(sut.rewindLimit, expectedLimit, file: file, line: line)
+        
+        let features = sut.createCurrentFeatures()
+        let rewindFeature = features.first { $0.type == .rewind }
+
+        XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil", file: file, line: line)
+        XCTAssertEqual(rewindFeature?.proText, expectedString, "Rewind feature pro text mismatch for \(accountType)", file: file, line: line)
+    }
+    
+    private func verifyRewindFeature(
+        for accountType: AccountTypeEntity,
+        expectedLimit: Int,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let sut = makeSUT(accountType: accountType)
+        let features = sut.createCurrentFeatures()
+        let rewindFeature = features.first { $0.type == .rewind }
+
+        XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil", file: file, line: line)
+        XCTAssertEqual(rewindFeature?.title, Strings.Localizable.Rewind.Feature.title, "Rewind feature title mismatch", file: file, line: line)
+        XCTAssertEqual(rewindFeature?.freeText, Strings.Localizable.Rewind.For.Free.users, "Rewind feature free text mismatch", file: file, line: line)
+        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.Users.maximumDays(expectedLimit), "Rewind feature pro text mismatch for \(accountType)", file: file, line: line)
     }
 
     func testCreateCurrentFeatures_shouldReturnCorrectFeatureCount() {
@@ -104,7 +139,7 @@ final class FeatureListHelperTests: XCTestCase {
         XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil")
         XCTAssertEqual(rewindFeature?.title, Strings.Localizable.Rewind.Feature.title, "Rewind feature title mismatch")
         XCTAssertEqual(rewindFeature?.freeText, Strings.Localizable.Rewind.For.Free.users, "Rewind feature free text mismatch")
-        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.users, "Rewind feature pro text mismatch")
+        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.Users.maximumDays(sut.rewindLimit), "Rewind feature pro text mismatch")
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectVPNFeature() {
@@ -138,5 +173,19 @@ final class FeatureListHelperTests: XCTestCase {
         XCTAssertEqual(callsAndMeetingsParticipantsFeature?.title, Strings.Localizable.CallAndMeeting.Participants.title, "Calls and Meetings Participants feature title mismatch")
         XCTAssertEqual(callsAndMeetingsParticipantsFeature?.freeText, Strings.Localizable.CallAndMeeting.Participants.For.Free.users, "Calls and Meetings Participants feature free text mismatch")
         XCTAssertEqual(callsAndMeetingsParticipantsFeature?.proText, Strings.Localizable.CallAndMeeting.Participants.Unlimited.For.Pro.users, "Calls and Meetings Participants feature pro text mismatch")
+    }
+
+    func testCreateCurrentFeatures_shouldHaveCorrectRewindFeatureForLitePlan() {
+        verifyRewindFeature(
+            for: .lite,
+            expectedLimit: 90
+        )
+    }
+
+    func testCreateCurrentFeatures_shouldHaveCorrectRewindFeatureForProPlan() {
+        verifyRewindFeature(
+            for: .proI,
+            expectedLimit: 180
+        )
     }
 }
