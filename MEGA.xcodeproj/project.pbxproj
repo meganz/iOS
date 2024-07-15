@@ -1420,6 +1420,8 @@
 		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
 		9486B8EF2C3FDC1C00D96762 /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B8EE2C3FDC1C00D96762 /* SnackBar.swift */; };
 		9486B8F12C3FDD3000D96762 /* SnackBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B8F02C3FDD3000D96762 /* SnackBarTests.swift */; };
+		9486B9062C41738A00D96762 /* RaiseHandUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B9052C41738A00D96762 /* RaiseHandUpdater.swift */; };
+		9486B9092C429B8A00D96762 /* RaiseHandUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B9082C429B8A00D96762 /* RaiseHandUpdaterTests.swift */; };
 		94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94872E942C08886600DC76E6 /* UsageViewRouter.swift */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
@@ -4202,6 +4204,8 @@
 		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		9486B8EE2C3FDC1C00D96762 /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
 		9486B8F02C3FDD3000D96762 /* SnackBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarTests.swift; sourceTree = "<group>"; };
+		9486B9052C41738A00D96762 /* RaiseHandUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandUpdater.swift; sourceTree = "<group>"; };
+		9486B9082C429B8A00D96762 /* RaiseHandUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandUpdaterTests.swift; sourceTree = "<group>"; };
 		94872E942C08886600DC76E6 /* UsageViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewRouter.swift; sourceTree = "<group>"; };
 		948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandFeatureTests.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
@@ -9309,6 +9313,7 @@
 				8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */,
 				94AE79AD2C32AE440018C753 /* RaiseHandDiffing.swift */,
 				943AB9802C231A0200ADC86E /* RaiseHandSnackBarFactory.swift */,
+				9486B9052C41738A00D96762 /* RaiseHandUpdater.swift */,
 			);
 			path = ParticipantsLayout;
 			sourceTree = "<group>";
@@ -12781,6 +12786,7 @@
 				94AE79B42C32F21A0018C753 /* RaiseHandDiffingTests.swift */,
 				948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */,
 				94AE79B82C32F7BC0018C753 /* RaiseHandSnackBarFactoryTests.swift */,
+				9486B9082C429B8A00D96762 /* RaiseHandUpdaterTests.swift */,
 				BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */,
 				83522FC92A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift */,
 				BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */,
@@ -15607,6 +15613,7 @@
 				83F388EA2C245B33000AF96F /* RaiseHandBadgeStore.swift in Sources */,
 				94AE79AE2C32AE440018C753 /* RaiseHandDiffing.swift in Sources */,
 				943AB9812C231A0200ADC86E /* RaiseHandSnackBarFactory.swift in Sources */,
+				9486B9062C41738A00D96762 /* RaiseHandUpdater.swift in Sources */,
 				C4B97D8D2B77916500EBA9E5 /* RandomNumberGenerator.swift in Sources */,
 				B6C95969268561EF00CF73A8 /* RatingRequestMonitor.swift in Sources */,
 				B6C9CB0927FBBB9D0073BA1A /* RawPhotoUploadOperation.swift in Sources */,
@@ -16624,6 +16631,7 @@
 				94AE79B52C32F21A0018C753 /* RaiseHandDiffingTests.swift in Sources */,
 				948BCDFF2C20683200B719B2 /* RaiseHandFeatureTests.swift in Sources */,
 				94AE79B92C32F7BC0018C753 /* RaiseHandSnackBarFactoryTests.swift in Sources */,
+				9486B9092C429B8A00D96762 /* RaiseHandUpdaterTests.swift in Sources */,
 				C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */,
 				24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,

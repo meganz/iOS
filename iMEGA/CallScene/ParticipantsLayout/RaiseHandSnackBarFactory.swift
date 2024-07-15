@@ -1,9 +1,17 @@
 import MEGADomain
 import MEGAL10n
+import SwiftUI
+
+protocol RaiseHandSnackBarProviding {
+    func snackBar(
+        participantsThatJustRaisedHands: [CallParticipantEntity],
+        localRaisedHand: Bool
+    ) -> SnackBar?
+}
 
 ///  Creates a SnackBar instance for given Raise Hand scenario, taking into account
 ///  _only_ necessary variables, local hand state and number of other participant that raised hands
-struct RaiseHandSnackBarFactory {
+struct RaiseHandSnackBarFactory: RaiseHandSnackBarProviding {
     enum Scenario {
         case nobodyRaisedHand
         case onlyMe
@@ -125,4 +133,54 @@ extension SnackBar {
             colors: .raiseHand
         )
     }
+}
+
+#if DEBUG
+extension RaiseHandSnackBarFactory.Scenario: CaseIterable {
+    static var allCases: [Self] {
+        return [
+            .nobodyRaisedHand,
+            .onlyMe,
+            .onlyOther(name: "Bob"),
+            .othersNotMe(firstOther: "Bob", count: 2),
+            .meAndOthers(count: 2)
+        ]
+    }
+}
+extension RaiseHandSnackBarFactory.Scenario: Identifiable {
+    var id: Int {
+        switch self {
+        case .nobodyRaisedHand: 0
+        case .onlyMe: 1
+        case .onlyOther: 2
+        case .othersNotMe: 3
+        case .meAndOthers: 4
+        }
+    }
+}
+extension RaiseHandSnackBarFactory.Scenario {
+    var snackBar: SnackBar? {
+        RaiseHandSnackBarFactory(
+            viewRaisedHandsHandler: {},
+            lowerHandHandler: {}
+        ).snackBar(from: self)
+    }
+}
+#endif
+
+#Preview("RaiseHandSnackBars") {
+    VStack {
+        ForEach(RaiseHandSnackBarFactory.Scenario.allCases) {
+            if let snackBar = $0.snackBar {
+                SnackBarView(
+                    viewModel: SnackBarViewModel(
+                        snackBar: snackBar
+                    )
+                )
+            } else {
+                Text("Empty for `.nobodyRaisedHand` scenario")
+            }
+        }
+    }
+    .preferredColorScheme(.dark)
 }

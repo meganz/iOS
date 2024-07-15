@@ -1148,54 +1148,33 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func callRaiseHandChanged(for call: CallEntity) {
         let raiseHandListBefore = self.call.raiseHandsList
+        
         self.call = call
-        updateRemoteRaisedHandChanges(
-            raiseHandListBefore: raiseHandListBefore,
-            raiseHandListAfter: call.raiseHandsList
-        )
-        let localUserHandLowered = call.raiseHandsList.notContains(chatUseCase.myUserHandle())
-        invokeCommand?(.updateLocalRaisedHandHidden(localUserHandLowered))
-    }
-    
-    private func updateRemoteRaisedHandChanges(
-        raiseHandListBefore: [HandleEntity],
-        raiseHandListAfter: [HandleEntity]
-    ) {
         
-        // compute changes to minimally update collection view and show/hide snack bar only when needed
-        let diffed = RaiseHandDiffing.applyingRaisedHands(
-            callParticipantHandles: callParticipants.map(\.participantId),
-            raiseHandListBefore: raiseHandListBefore,
-            raiseHandListAfter: raiseHandListAfter,
-            localUserParticipantId: myself.participantId
+        let updater = RaiseHandUpdater(
+            snackBarFactory: RaiseHandSnackBarFactory(
+                viewRaisedHandsHandler: viewRaisedHands,
+                lowerHandHandler: lowerRaisedHand
+            ),
+            updateLocalRaiseHand: {[weak self] hidden in
+                self?.invokeCommand?(.updateLocalRaisedHandHidden(hidden))
+            },
+            stateUpdater: {[weak self]  index, change in
+                guard let self else { return }
+                callParticipants[index].raisedHand = change.raisedHand
+                invokeCommand?(.reloadParticipantRaisedHandAt(index, callParticipants))
+            },
+            snackBarUpdater: {[weak self] snackBar in
+                self?.invokeCommand?(.updateSnackBar(snackBar))
+            }
         )
         
-        diffed.changes.forEach { change in
-            // update CallParticipantEntity objects and reload cells
-            guard let index = change.index else { return }
-            callParticipants[index].raisedHand = change.raisedHand
-            invokeCommand?(.reloadParticipantRaisedHandAt(index, callParticipants))
-        }
-        
-        MEGALogDebug("[RaiseHand] raise hand changed \(diffed.changes.isNotEmpty) : \(call.raiseHandsList)")
-        
-        let localRaisedHand = raiseHandListAfter.contains(myself.participantId)
-        
-        let callParticipantsThatJustRaisedHands = callParticipants.filter {
-            diffed.hasRaisedHand(participantId: $0.participantId)
-        }
-        
-        // to show snack bar we need to check that
-        // raised hands are changed but increased to avoid scenario:
-        // 1. local user raised hand (show snack bar)
-        // 2. remote user raised hand (show snack bar)
-        // 3. remote user lowered hand (do not show snack bar) <--- diff is not empty but we already showed snack bar for local user raising hand
-        if diffed.shouldUpdateSnackBar {
-            updateSnackBar(
-                callParticipantsThatJustRaisedHands: callParticipantsThatJustRaisedHands,
-                localRaisedHand: localRaisedHand
-            )
-        }
+        updater.update(
+            callParticipants: callParticipants,
+            raiseHandListBefore: raiseHandListBefore,
+            raiseHandListAfter: call.raiseHandsList,
+            localUserHandle: chatUseCase.myUserHandle()
+        )
     }
     
     func viewRaisedHands() {
@@ -1218,29 +1197,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 MEGALogError("[RaiseHand] lowering hand failed \(error)")
             }
         }
-    }
-    
-    func updateSnackBar(
-        callParticipantsThatJustRaisedHands: [CallParticipantEntity],
-        localRaisedHand: Bool
-    ) {
-        MEGALogDebug("[RaiseHand] updating snack bar localRaisedHand: \(localRaisedHand), raised hands: \(callParticipants.map(\.raisedHand))")
-        let factory = RaiseHandSnackBarFactory(
-            viewRaisedHandsHandler: viewRaisedHands,
-            lowerHandHandler: lowerRaisedHand
-        )
-        
-        // make sure we hide snack bar immediately after ANY action is triggered
-        let hideSnackBar: () -> Void = { [weak self] in
-            self?.invokeCommand?(.updateSnackBar(nil))
-        }
-        
-        let snackBarModel = factory.snackBar(
-            participantsThatJustRaisedHands: callParticipantsThatJustRaisedHands,
-            localRaisedHand: localRaisedHand
-        )?.withSupplementalAction(hideSnackBar)
-        
-        invokeCommand?(.updateSnackBar(snackBarModel))
     }
     
     /// Call will end alert is shown for moderators and countdown for all participants.
