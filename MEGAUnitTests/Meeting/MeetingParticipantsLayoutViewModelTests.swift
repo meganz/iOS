@@ -1211,7 +1211,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 XCTAssertFalse(hidden)
                 exp0.fulfill()
             case .updateSnackBar(let snackBar):
-                XCTAssertNil(snackBar)
+                XCTAssertNotNil(snackBar)
                 exp1.fulfill()
             default:
                 XCTFail("Unexpected command")

@@ -477,10 +477,18 @@ extension MockAccountUseCase {
 
 extension CallParticipantEntity {
     static var testParticipant: Self {
+        .testParticipant()
+    }
+    
+    static func testParticipant(
+        chatId: HandleEntity = 100,
+        participantId: HandleEntity = 100,
+        clientId: HandleEntity = 100
+    ) -> Self {
         .init(
-            chatId: 100,
-            participantId: 100,
-            clientId: 100,
+            chatId: chatId,
+            participantId: participantId,
+            clientId: clientId,
             isModerator: false,
             canReceiveVideoHiRes: true
         )
