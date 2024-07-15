@@ -521,8 +521,8 @@ extension AppDelegate {
     
     @objc func cacheCloudDriveAbTestsAndThen(_ completion: @escaping () -> Void) {
         Task {
-            let useNewCloudDrive = await DIContainer.abTestProvider.abTestVariant(for: .newCloudDrive) == .variantA
-            UserDefaults.standard.setValue(useNewCloudDrive, forKey: Helper.cloudDriveABTestCacheKey())
+            let newCloudDriveEnabled = await DIContainer.abTestProvider.abTestVariant(for: .newCloudDrive) == .variantA
+            UserDefaults.standard.setValue(newCloudDriveEnabled, forKey: Helper.cloudDriveABTestCacheKey())
             await MainActor.run {
                 completion()
             }

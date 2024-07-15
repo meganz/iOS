@@ -8,7 +8,8 @@ extension AppDelegate {
         mainTBC?.selectedIndex = TabType.cloudDrive.rawValue
         guard let navigationController = mainTBC?.children.first as? UINavigationController else { return }
         
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDrive),
+        guard UserDefaults.standard.bool(forKey: Helper.cloudDriveABTestCacheKey()) ||
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDrive),
         let newCloudDriveViewController = navigationController.viewControllers.first as? NewCloudDriveViewController else {
             guard let cdViewController = navigationController.viewControllers.first as? CloudDriveViewController else {
                 assertionFailure("The first tabbar VC must be a CloudDriveViewController")
