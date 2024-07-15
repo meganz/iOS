@@ -13,9 +13,9 @@ public enum ABTestFlagKey: ABTestFlagName, CaseIterable, Sendable {
 
     // This flag is part of real experiment related to the new search improvements on Home screen
     case newSearch = "nsf"
-    
+
     // New cloud drive
-    case newCloudDrive = "ncd"
+    case newCloudDrive = "ncd_final"
     
     // This flag is part of real experiment related to the advertisement feature to know whether user will see an ad or not
     case ads = "ads"
