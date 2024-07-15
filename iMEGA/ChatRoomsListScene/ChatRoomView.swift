@@ -134,9 +134,7 @@ private struct ChatRoomContentDetailsView: View {
                     
                     HStack(spacing: 4) {
                         if viewModel.existsInProgressCallInChatRoom {
-                            Image(.onACall)
-                                .resizable()
-                                .frame(width: 21, height: 21)
+                            inCallImage
                         }
                         
                         if viewModel.shouldShowUnreadCount {
@@ -166,6 +164,12 @@ private struct ChatRoomContentDetailsView: View {
                 }
             }
         }
+    }
+    
+    private var inCallImage: some View {
+        Image(isDesignTokenEnabled ? .makeCallRoundToken : .onACall)
+            .resizable()
+            .frame(width: 21, height: 21)
     }
 }
 
