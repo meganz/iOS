@@ -71,9 +71,7 @@ struct FutureMeetingRoomView: View {
                     
                     HStack(spacing: 4) {
                         if viewModel.existsInProgressCallInChatRoom {
-                            Image(.onACall)
-                                .resizable()
-                                .frame(width: 21, height: 21)
+                            inCallImage
                         }
                         
                         if viewModel.shouldShowUnreadCount {
@@ -130,5 +128,11 @@ struct FutureMeetingRoomView: View {
         }
         buttons.append(ActionSheet.Button.cancel())
         return buttons
+    }
+
+    private var inCallImage: some View {
+        Image(isDesignTokenEnabled ? .makeCallRoundToken : .onACall)
+            .resizable()
+            .frame(width: 21, height: 21)
     }
 }
