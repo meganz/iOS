@@ -3026,5 +3026,21 @@
 			<string>Removed %d videos from “[A]”</string>
 		</dict>
 	</dict>
+	<key>rewind.for.pro.users.maximumDays</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@maximumDays@</string>
+		<key>maximumDays</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Up to %d day</string>
+			<key>other</key>
+			<string>Up to %d days</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
