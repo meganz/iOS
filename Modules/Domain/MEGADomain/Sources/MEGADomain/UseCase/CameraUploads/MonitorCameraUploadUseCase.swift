@@ -51,7 +51,7 @@ public struct MonitorCameraUploadUseCase<S: CameraUploadsStatsRepositoryProtocol
                 }
             }
             
-            continuation.onTermination = { _ in
+            continuation.onTermination = { @Sendable _ in
                 [monitorUploadStatsTask, monitorNetworkTask]
                     .forEach { $0.cancel() }
             }

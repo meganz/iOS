@@ -2,7 +2,7 @@
 
 import PackageDescription
 
-let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+let settings: [SwiftSetting] = [.enableExperimentalFeature("ExistentialAny"), .enableExperimentalFeature("StrictConcurrency=targeted")]
 
 let package = Package(
     name: "MEGADomain",
