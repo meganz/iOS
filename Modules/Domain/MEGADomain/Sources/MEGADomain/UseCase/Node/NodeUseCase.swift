@@ -22,24 +22,29 @@ public protocol NodeUseCaseProtocol {
     func isRubbishBinRoot(node: NodeEntity) -> Bool
     func isRestorable(node: NodeEntity) -> Bool
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
+    
     /// Ascertain if the node's ancestor is marked as sensitive
     ///  - Parameters: node - the node to check
     ///  - Returns: true if the node's ancestor is marked as sensitive
     ///  - Throws: `NodeError.nodeNotFound` if the parent node cant be found
+    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
     func isInheritingSensitivity(node: NodeEntity) async throws -> Bool
     /// Ascertain if the node's ancestor is marked as sensitive
     ///  - Parameters: node - the node to check
     ///  - Returns: true if the node's ancestor is marked as sensitive
     ///  - Throws: `NodeError.nodeNotFound` if the parent node cant be found
     /// - Important: This could possibly block the calling thread, make sure not to call it on main thread.
+    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
     func isInheritingSensitivity(node: NodeEntity) throws -> Bool
     /// On a folder sensitivity change it will recalculate the inherited sensitivity of the ancestor of the node.
     /// - Parameter node: The node check for inherited sensitivity changes
     /// - Returns: An `AnyAsyncThrowingSequence<Bool>` indicating inherited sensitivity changes
+    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
     func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error>
     /// On node update it will yield the sensitivity changes of the node
     /// - Parameter node: The node check for sensitive change types
     /// - Returns: An `AnyAsyncSequence<Bool>` indicating node sensitivity changes
+    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
     func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool>
     /// Merges sensitivity changes due to node inheritance and the direct sensitivity changes of the node itself.
     ///
@@ -53,6 +58,7 @@ public protocol NodeUseCaseProtocol {
     ///
     /// - Parameter node: The `NodeEntity` for which to monitor sensitivity changes.
     /// - Returns: An `AnyAsyncThrowingSequence<Bool, any Error>` that emits sensitivity change events for the specified node.
+    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
     func mergeInheritedAndDirectSensitivityChanges(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error>
 }
 
