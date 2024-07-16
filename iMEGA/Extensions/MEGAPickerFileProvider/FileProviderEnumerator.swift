@@ -1,13 +1,18 @@
 import FileProvider
 import MEGADomain
+import MEGAPickerFileProviderDomain
 import MEGASDKRepo
 
 final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
     
     private let identifier: NSFileProviderItemIdentifier
+    private let fileProviderEnumeratorUseCase: any FileProviderEnumeratorUseCaseProtocol
     
-    init(identifier: NSFileProviderItemIdentifier) {
+    init(identifier: NSFileProviderItemIdentifier,
+         fileProviderEnumeratorUseCase: some FileProviderEnumeratorUseCaseProtocol) {
         self.identifier = identifier
+        self.fileProviderEnumeratorUseCase = fileProviderEnumeratorUseCase
+        
         super.init()
     }
 
@@ -33,7 +38,8 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
                     try await nodeActionUseCase.fetchNodes()
                 }
                 
-                let items = try fetchItems()
+                let items = try await fetchItems()
+                
                 observer.didEnumerate(items)
                 
                 observer.finishEnumerating(upTo: nil)
@@ -44,28 +50,9 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
     }
     
     // MARK: - Private
-    
-    private func fetchItems() throws -> [FileProviderItem] {
-        var items: [FileProviderItem] = []
-
-        var node: MEGANode?
-        if identifier == NSFileProviderItemIdentifier.rootContainer {
-            node = MEGASdk.shared.rootNode
-        } else {
-            let base64Handle = identifier.rawValue
-            node = MEGASdk.shared.node(forHandle: MEGASdk.handle(forBase64Handle: base64Handle))
-        }
-        
-        guard let node else {
-            throw NSFileProviderError(.noSuchItem)
-        }
-        
-        if node.isFolder() {
-            let childrenArray = MEGASdk.shared.children(forParent: node).toNodeArray()
-            childrenArray.forEach { items.append(FileProviderItem(node: $0.toNodeEntity())) }
-        } else {
-            items.append(FileProviderItem(node: node.toNodeEntity()))
-        }
-        return items
+    private func fetchItems() async throws -> [FileProviderItem] {
+        try await fileProviderEnumeratorUseCase
+            .fetchItems(for: identifier)
+            .map(FileProviderItem.init(node:))
     }
 }
