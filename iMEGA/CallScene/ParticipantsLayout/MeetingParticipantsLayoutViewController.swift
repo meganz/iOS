@@ -391,9 +391,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         }
         
         localUserView.updateOffsetWithNavigation(hidden: hidden)
-        recordingImageView.isHidden = hidden
+        updateRecordingImageView(statusBarHidden: hidden)
         updateNavigationBarAppearance()
         updateSnackBarConstraintsIfNeeded(animated: true, menusShown: !hidden)
+    }
+    
+    func updateRecordingImageView(statusBarHidden: Bool) {
+        recordingImageView.isHidden = titleView.recordingImageView.isHidden || !titleView.recordingImageView.isHidden && !statusBarHidden
     }
     
     // MARK: - UI Actions
