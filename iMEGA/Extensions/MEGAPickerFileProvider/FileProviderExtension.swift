@@ -1,5 +1,6 @@
 import FileProvider
 import MEGADomain
+import MEGAPickerFileProviderDomain
 import MEGAPresentation
 import MEGASDKRepo
 
@@ -9,6 +10,10 @@ final class FileProviderExtension: NSFileProviderExtension {
     private lazy var transferUseCase = TransferUseCase(repo: TransferRepository.newRepo)
     private lazy var nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
     private var thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+    private let fileProviderEnumeratorUseCase = FileProviderEnumeratorUseCase(
+        filesSearchRepo: FilesSearchRepository.newRepo,
+        nodeRepo: NodeRepository.newRepo,
+        megaHandleRepo: MEGAHandleRepository.newRepo)
     
     override init() {
         super.init()
@@ -74,8 +79,9 @@ final class FileProviderExtension: NSFileProviderExtension {
             throw NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue, userInfo: [PickerConstant.passcodeEnabled: true])
         }
         
-        let enumerator = FileProviderEnumerator(identifier: containerItemIdentifier)
-        return enumerator
+        return FileProviderEnumerator(
+            identifier: containerItemIdentifier,
+            fileProviderEnumeratorUseCase: fileProviderEnumeratorUseCase)
     }
     
     // MARK: - Managing shared files
