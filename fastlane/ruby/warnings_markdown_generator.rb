@@ -27,7 +27,7 @@ class WarningsMarkdownGenerator
       swift_packages: initial_markdown_text(SWIFT_PACKAGES),
       sdk_and_chat_warnings: initial_markdown_text(SDK_AND_CHAT_WARNINGS),
       analytics_library: initial_markdown_text(ANALYTICS_LIBRARY),
-      other_warnings: initial_markdown_text(OTHER_WARNINGS, is_open: true)
+      other_warnings: initial_markdown_text(OTHER_WARNINGS)
     }
   end
 
