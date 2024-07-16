@@ -29,7 +29,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>You and 1 other raised their hands</string>
+			<string>You and %d other raised their hands</string>
 			<key>other</key>
 			<string>You and %d others raised their hands</string>
 		</dict>
