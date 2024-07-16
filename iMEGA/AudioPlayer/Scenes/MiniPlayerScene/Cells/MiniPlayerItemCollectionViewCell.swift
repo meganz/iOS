@@ -12,10 +12,34 @@ final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
         subtitleLabel.text = ""
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        registerForTraitChanges()
+    }
+    
     // MARK: - Private functions
     private func style(with trait: UITraitCollection) {
+        configureViewsColor(trait: trait)
+    }
+    
+    private func registerForTraitChanges() {
+        guard #available(iOS 17.0, *) else { return }
+        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { [weak self] (cell: MiniPlayerItemCollectionViewCell, previousTraitCollection: UITraitCollection) in
+            if cell.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self?.configureViewsColor(trait: cell.traitCollection)
+            }
+        })
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if #unavailable(iOS 17.0), traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+            configureViewsColor(trait: traitCollection)
+        }
+    }
+    
+    private func configureViewsColor(trait: UITraitCollection) {
         contentView.backgroundColor = .clear
-        
         titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         subtitleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_subtitles(for: trait)
     }
