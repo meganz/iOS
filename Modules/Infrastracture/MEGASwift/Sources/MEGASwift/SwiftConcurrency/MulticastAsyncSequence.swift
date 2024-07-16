@@ -4,7 +4,7 @@ import Foundation
 /// When a new value is yielded, it will distribute this Element to all active streams.
 /// When an AsyncSequence is cancelled, it will cooperatively remove it from its list of managed AsyncSequences and no longer receive anymore yielded values.
 /// The MulticastAsyncSequence will not cancel all managed streams via cooperatively cancellation, you will need to call `terminateContinuations` to end all active streams, before end a Task.
-public actor MulticastAsyncSequence<Element> {
+public actor MulticastAsyncSequence<Element: Sendable> {
         
     /// A strategy that handles exhaustion of a buffer’s capacity.
     public enum BufferingPolicy {
@@ -39,7 +39,7 @@ public actor MulticastAsyncSequence<Element> {
             .makeStream(of: Element.self, bufferingPolicy: bufferingPolicy.toAsyncStreamBufferingPolicy())
         
         let uuid = addContinuation(continuation: continuation)
-        continuation.onTermination = { [weak self] _ in
+        continuation.onTermination = { @Sendable [weak self] _ in
             Task { [weak self] in await self?.terminateContinuation(id: uuid) }
         }
         

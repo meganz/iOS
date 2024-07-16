@@ -28,7 +28,7 @@ public struct SetAndElementUpdatesProvider: SetAndElementUpdatesProviderProtocol
         AsyncStream { continuation in
             let delegate = SetUpdateGlobalDelegate(filterBy: filteredBy) { continuation.yield($0) }
             
-            continuation.onTermination = { _ in sdk.remove(delegate) }
+            continuation.onTermination = { @Sendable _ in sdk.remove(delegate) }
             
             sdk.add(delegate, queueType: .globalBackground)
         }.eraseToAnyAsyncSequence()
@@ -38,7 +38,7 @@ public struct SetAndElementUpdatesProvider: SetAndElementUpdatesProviderProtocol
         AsyncStream { continuation in
             let delegate = SetElementUpdateGlobalDelegate { continuation.yield($0) }
             
-            continuation.onTermination = { _ in sdk.remove(delegate) }
+            continuation.onTermination = { @Sendable _ in sdk.remove(delegate) }
             
             sdk.add(delegate, queueType: .globalBackground)
         }.eraseToAnyAsyncSequence()

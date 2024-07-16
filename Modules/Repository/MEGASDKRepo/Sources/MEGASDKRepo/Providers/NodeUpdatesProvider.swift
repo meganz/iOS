@@ -16,7 +16,7 @@ public struct NodeUpdatesProvider: NodeUpdatesProviderProtocol {
             let delegate = NodeUpdateGlobalDelegate {
                 continuation.yield($0)
             }
-            continuation.onTermination = { _ in
+            continuation.onTermination = { @Sendable _ in
                 sdk.remove(delegate)
             }
             sdk.add(delegate, queueType: .globalBackground)
