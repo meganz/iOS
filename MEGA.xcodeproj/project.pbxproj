@@ -227,7 +227,6 @@
 		24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */; };
 		24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */; };
 		24E038462AEBE5570001159C /* AudioPlayerConfigEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */; };
-		24E99B462A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */; };
 		24EDF71D2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF71C2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift */; };
 		24EDF7212C1BF13A0065A26D /* MockVideoRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF7202C1BF13A0065A26D /* MockVideoRevampRouter.swift */; };
 		24EF67062B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF67052B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift */; };
@@ -2964,7 +2963,6 @@
 		24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInfoUseCase.swift; sourceTree = "<group>"; };
 		24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStreamingInfoUseCase.swift; sourceTree = "<group>"; };
 		24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntityTests.swift; sourceTree = "<group>"; };
-		24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleSecureFingerprintFlagUIAlertAdapter.swift; sourceTree = "<group>"; };
 		24EDF71C2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentViewControllerTests.swift; sourceTree = "<group>"; };
 		24EDF7202C1BF13A0065A26D /* MockVideoRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVideoRevampRouter.swift; sourceTree = "<group>"; };
 		24EF67052B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerEventObserversLoadingLogicController.swift; sourceTree = "<group>"; };
@@ -6068,7 +6066,6 @@
 			isa = PBXGroup;
 			children = (
 				12E23288286D49000099775D /* NodeActionViewModel.swift */,
-				24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -15892,7 +15889,6 @@
 				BF943E9223554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				32A2AA092A283D85007FC630 /* TimelineFilter.swift in Sources */,
 				25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */,
-				24E99B462A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift in Sources */,
 				8358A6E82925460800EE197C /* ToggleView.swift in Sources */,
 				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
 				94B09E562B84CC87007D6B84 /* ToolbarActionFactory.swift in Sources */,
