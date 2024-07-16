@@ -75,7 +75,7 @@
         self.closeButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
         
         [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
-        [self.closeButton mnz_setupBasic:self.traitCollection];
+        [self.closeButton mnz_setupBasic:self.traitCollection titleColor:NULL];
     }
 }
 

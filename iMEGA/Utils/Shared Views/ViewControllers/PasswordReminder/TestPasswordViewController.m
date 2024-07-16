@@ -137,7 +137,7 @@
     
     if ([self.confirmButton.titleLabel.text isEqualToString:LocalizedString(@"passwordAccepted", 
                                                                             @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.")]) {
-        [self.confirmButton mnz_setupBasic:self.traitCollection];
+        [self.confirmButton mnz_setupBasic:self.traitCollection titleColor: [UIColor succeedTextColor]];
         [self.confirmButton mnz_clearSetup];
       } else {
         [self.confirmButton mnz_setupSecondary:self.traitCollection];
@@ -205,10 +205,14 @@
 }
 
 - (void)passwordTestSuccess {
-    self.confirmButton.enabled = NO;
+    [self.confirmButton setUserInteractionEnabled:NO];
     [self.confirmButton mnz_clearSetup];
-    [self.confirmButton setTitleColor:UIColor.systemGreenColor forState:UIControlStateNormal];
-    [self.confirmButton setImage:[UIImage imageNamed:@"contact_request_accept"] forState:UIControlStateNormal];
+    
+    UIColor *textColor = [UIColor isDesignTokenEnabled] ? [UIColor succeedTextColor] : UIColor.systemGreenColor;
+    [self.confirmButton setTitleColor:textColor forState:UIControlStateNormal];
+    
+    NSString *imgName = [UIColor isDesignTokenEnabled] ? @"green_tick" : @"contact_request_accept";
+    [self.confirmButton setImage:[UIImage imageNamed: imgName] forState:UIControlStateNormal];
     [self.confirmButton setTitle:LocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.") forState:UIControlStateNormal];
     
     self.logoutButton.hidden = !self.isLoggingOut;
@@ -216,7 +220,7 @@
 
 - (void)resetUI {
     [self.passwordView setErrorState:NO];
-    self.confirmButton.enabled = YES;
+    [self.confirmButton setUserInteractionEnabled:YES];
     
     if (self.isLoggingOut) {
         [self.confirmButton setTitle:LocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
@@ -224,7 +228,7 @@
         [self.confirmButton setTitle:LocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
     }
     
-    [self.confirmButton mnz_setupBasic:self.traitCollection];
+    [self.confirmButton mnz_setupSecondary:self.traitCollection];
     [self.confirmButton setImage:nil forState:UIControlStateNormal];
 }
 
@@ -244,7 +248,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     [self.passwordView setErrorState:NO];
-    if (!self.confirmButton.enabled) {
+    if (!self.confirmButton.isUserInteractionEnabled) {
         [self resetUI];
     }
     

@@ -82,7 +82,7 @@
         self.seedTextViewView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
 
         [self.openInButton mnz_setupPrimary:self.traitCollection];
-        [self.nextButton mnz_setupBasic:self.traitCollection];
+        [self.nextButton mnz_setupBasic:self.traitCollection titleColor:NULL];
     }
 }
 
