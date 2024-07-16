@@ -80,7 +80,8 @@ struct CancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol {
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.two),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.three),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.four),
-                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.five)
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.five),
+                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.six)
                 ]
             ),
             StepSection(
