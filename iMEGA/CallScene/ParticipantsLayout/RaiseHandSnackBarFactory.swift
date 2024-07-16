@@ -166,7 +166,6 @@ extension RaiseHandSnackBarFactory.Scenario {
         ).snackBar(from: self)
     }
 }
-#endif
 
 #Preview("RaiseHandSnackBars") {
     VStack {
@@ -184,3 +183,5 @@ extension RaiseHandSnackBarFactory.Scenario {
     }
     .preferredColorScheme(.dark)
 }
+
+#endif
