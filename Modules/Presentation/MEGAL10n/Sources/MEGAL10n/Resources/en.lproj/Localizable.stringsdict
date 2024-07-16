@@ -13,7 +13,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>[A] and 1 other raised hand</string>
+			<string>[A] and %d other raised hand</string>
 			<key>other</key>
 			<string>[A] and %d others raised hand</string>
 		</dict>
