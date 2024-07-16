@@ -285,18 +285,18 @@
 }
 
 - (void)reloadUI {
+    [self setNavigationBarTitle];
     __weak typeof(self) weakSelf = self;
     [self setNodesWithCompletion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf reloadNavigationBarUI];
+            [weakSelf updateSearchBarVisibility];
             [weakSelf reloadToolbarItemsUI];
             [weakSelf.tableView reloadData];
         });
     }];
 }
 
-- (void)reloadNavigationBarUI {
-    [self setNavigationBarTitle];
+- (void)updateSearchBarVisibility {
     (self.nodes.size == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchBarIfNotActive] : [self addSearchBar];
 }
 
