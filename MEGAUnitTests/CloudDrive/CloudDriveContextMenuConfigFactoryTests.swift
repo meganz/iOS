@@ -33,6 +33,12 @@ final class CloudDriveContextMenuConfigFactoryTests: XCTestCase {
         }
     }
 
+    func testContextMenuConfiguration_withHiddenOptions_shouldMatchResults() {
+        assertContextMenuConfiguration(withHideOption: nil)
+        assertContextMenuConfiguration(withHideOption: true)
+        assertContextMenuConfiguration(withHideOption: false)
+    }
+
     // MARK: - Private methods.
 
     private typealias SUT = CloudDriveContextMenuConfigFactory
@@ -58,7 +64,8 @@ final class CloudDriveContextMenuConfigFactoryTests: XCTestCase {
             showMediaDiscovery: false,
             sortOrder: sortOrder,
             displayMode: .backup,
-            isFromViewInFolder: false
+            isFromViewInFolder: false, 
+            isHidden: nil
         )
 
         let resultSortOrder = try XCTUnwrap(result?.sortType, file: file, line: line)
@@ -70,4 +77,26 @@ final class CloudDriveContextMenuConfigFactoryTests: XCTestCase {
             line: line
         )
     }
+
+    private func assertContextMenuConfiguration(
+        withHideOption hidden: Bool?,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let sut = makeSUT()
+        let result = sut.contextMenuConfiguration(
+            parentNode: NodeEntity(),
+            nodeAccessType: .readWrite,
+            currentViewMode: .list,
+            isSelectionHidden: false,
+            showMediaDiscovery: false,
+            sortOrder: .none,
+            displayMode: .cloudDrive,
+            isFromViewInFolder: false,
+            isHidden: hidden
+        )
+
+        XCTAssertEqual(result?.isHidden, hidden, file: file, line: line)
+    }
+
 }

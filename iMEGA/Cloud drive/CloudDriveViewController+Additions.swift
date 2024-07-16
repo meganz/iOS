@@ -45,6 +45,21 @@ extension CloudDriveViewController {
     
     @objc func createCloudDriveViewModel() -> CloudDriveViewModel {
         let preferenceUseCase = PreferenceUseCase.default
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        let systemGeneratedNodeUseCase = SystemGeneratedNodeUseCase(
+            systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
+        )
+        let nodeUseCase = NodeUseCase(
+            nodeDataRepository: NodeDataRepository.newRepo,
+            nodeValidationRepository: NodeValidationRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+        let nodeSensitivityChecker = NodeSensitivityChecker(
+            featureFlagProvider: DIContainer.featureFlagProvider,
+            accountUseCase: accountUseCase,
+            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+            nodeUseCase: nodeUseCase
+        )
         return CloudDriveViewModel(
             parentNode: parentNode,
             shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
@@ -52,17 +67,14 @@ extension CloudDriveViewController {
                 preferenceUseCase: preferenceUseCase,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
             preferenceUseCase: preferenceUseCase,
-            systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
-                systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo),
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+            accountUseCase: accountUseCase,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
-            nodeUseCase: NodeUseCase(
-              nodeDataRepository: NodeDataRepository.newRepo,
-              nodeValidationRepository: NodeValidationRepository.newRepo,
-              nodeRepository: NodeRepository.newRepo),
+            nodeUseCase: nodeUseCase,
             tracker: DIContainer.tracker,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self), 
+            nodeSensitivityChecker: nodeSensitivityChecker
         )
     }
     

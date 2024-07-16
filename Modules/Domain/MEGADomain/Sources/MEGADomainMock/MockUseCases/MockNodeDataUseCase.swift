@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import MEGADomain
 import MEGASwift
 
@@ -12,7 +13,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public var downloadedToReturn: Bool
     public var isARubbishBinRootNodeValue: Bool
     public var isNodeInRubbishBin: (HandleEntity) -> Bool
-    private var nodes: [NodeEntity]
+    public var nodes: [NodeEntity]
     private var nodeEntity: NodeEntity?
     private let nodeListEntity: NodeListEntity?
     private let createFolderResult: Result<NodeEntity, NodeCreationErrorEntity>
@@ -177,5 +178,12 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     
     private func isInheritingSensitivityResult(for node: NodeEntity) -> Result<Bool, Error> {
         isInheritingSensitivityResults[node.handle] ?? isInheritingSensitivityResult
+    }
+
+    public func mergeInheritedAndDirectSensitivityChanges(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
+        merge(
+            sensitivityChanges(for: node),
+            monitorInheritedSensitivity(for: node)
+        ).eraseToAnyAsyncThrowingSequence()
     }
 }

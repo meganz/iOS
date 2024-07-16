@@ -3,6 +3,7 @@ import ConcurrencyExtras
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import MEGAUIKit
 import Search
 import SearchMock
@@ -49,6 +50,7 @@ class NodeBrowserViewModelTests: XCTestCase {
 
         let nodesUpdateListener: any NodesUpdateListenerProtocol
         let cloudDriveViewModeMonitoringService: MockCloudDriveViewModeMonitoringService
+        let nodeUseCase: MockNodeDataUseCase
 
         init(
             // this may appear strange but view mode is a "bigger" enum that has mediaDiscovery/list/thumbnail
@@ -59,7 +61,10 @@ class NodeBrowserViewModelTests: XCTestCase {
             node: NodeEntity,
             updateTransferWidgetHandler: @escaping () -> Void = {},
             sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity = { .defaultAsc },
-            onNodeStructureChanged: @escaping () -> Void = {}
+            onNodeStructureChanged: @escaping () -> Void = {},
+            monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence()
+                .eraseToAnyAsyncThrowingSequence(),
+            sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
         ) {
             let nodeSource = NodeSource.node { node }
             let expectedNodes = [
@@ -79,6 +84,12 @@ class NodeBrowserViewModelTests: XCTestCase {
             self.cloudDriveViewModeMonitoringService = MockCloudDriveViewModeMonitoringService(
                 nodeSource: nodeSource,
                 currentViewMode: defaultViewMode
+            )
+
+            self.nodeUseCase = MockNodeDataUseCase(
+                nodes: [node],
+                monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode,
+                sensitivityChangesForNode: sensitivityChangesForNode
             )
 
             sut = NodeBrowserViewModel(
@@ -128,7 +139,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     nodeUpdatesListener: nodesUpdateListener
                 ),
                 nodesUpdateListener: nodesUpdateListener, 
-                cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
+                cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService, 
+                nodeUseCase: nodeUseCase,
                 viewModeSaver: { saver($0) },
                 storageFullAlertViewModel: .init(router: MockStorageFullAlertViewRouting()),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
@@ -336,6 +348,101 @@ class NodeBrowserViewModelTests: XCTestCase {
             node: NodeEntity(handle: 100)
         )
         await assertViewMode(with: harness, expectedOrder: [.list, .thumbnail])
+    }
+
+    func testRefreshMenu_whenSet_shouldBeInvoked() async {
+        let node = NodeEntity(handle: 100)
+        let harness = Harness(node: node)
+        let exp = expectation(description: "wait for refresh menu to trigger")
+        var resultNodeHandle: HandleEntity?
+        harness.sut.refreshMenu = { nodeSource in
+            resultNodeHandle = nodeSource.parentNode?.handle
+            exp.fulfill()
+        }
+        await fulfillment(of: [exp], timeout: 1.0)
+        XCTAssertEqual(resultNodeHandle, node.handle)
+    }
+
+    func testListenToNodeSensitivityChanges_whenNodeIsMarkedSensitiveDueToInheritedSensitivityChanges_shouldTriggerUpdate() async {
+        await assertListenToNodeSensitivityChangesWhenInheritedSensitivityChanges(
+            initialSensitivityState: false,
+            updatedSensitivityState: true
+        )
+    }
+
+    func testListenToNodeSensitivityChanges_whenNodeIsMarkedInSensitiveDueToInheritedSensitivityChanges_shouldTriggerUpdate() async {
+        await assertListenToNodeSensitivityChangesWhenInheritedSensitivityChanges(
+            initialSensitivityState: true,
+            updatedSensitivityState: false
+        )
+    }
+
+    func testListenToNodeSensitivityChanges_whenNodeIsMarkedSensitiveDueToSensitivityChangesForNode_shouldTriggerUpdate() async {
+        await assertListenToNodeSensitivityChangesWhenSensitivityChangesForNode(
+            initialSensitivityState: false,
+            updatedSensitivityState: true
+        )
+    }
+
+    func testListenToNodeSensitivityChanges_whenNodeIsMarkedInSensitiveDueToSensitivityChangesForNode_shouldTriggerUpdate() async {
+        await assertListenToNodeSensitivityChangesWhenSensitivityChangesForNode(
+            initialSensitivityState: false,
+            updatedSensitivityState: true
+        )
+    }
+
+    private func assertListenToNodeSensitivityChangesWhenSensitivityChangesForNode(
+        initialSensitivityState: Bool,
+        updatedSensitivityState: Bool
+    ) async {
+        await assertListenToNodeSensitivityChanges(
+            initialSensitivityState: initialSensitivityState,
+            updatedSensitivityState: updatedSensitivityState
+        ) { node in
+            let sensitivityChangesForNode = SingleItemAsyncSequence(item: true)
+                .eraseToAnyAsyncSequence()
+            return Harness(node: node, sensitivityChangesForNode: sensitivityChangesForNode)
+        }
+    }
+
+    private func assertListenToNodeSensitivityChangesWhenInheritedSensitivityChanges(
+        initialSensitivityState: Bool,
+        updatedSensitivityState: Bool
+    ) async {
+        await assertListenToNodeSensitivityChanges(
+            initialSensitivityState: initialSensitivityState,
+            updatedSensitivityState: updatedSensitivityState
+        ) { node in
+            let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: true)
+                .eraseToAnyAsyncThrowingSequence()
+            return Harness(node: node, monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+        }
+    }
+
+    private func assertListenToNodeSensitivityChanges(
+        initialSensitivityState: Bool,
+        updatedSensitivityState: Bool,
+        makeHarness: (NodeEntity) -> Harness
+    ) async {
+        let node = NodeEntity(handle: 100, isMarkedSensitive: initialSensitivityState)
+        let updatedNode = NodeEntity(handle: 100, isMarkedSensitive: updatedSensitivityState)
+        let harness = makeHarness(node)
+
+        let exp = expectation(description: "Wait for node source to update")
+        var updatedNodeSource: NodeSource?
+        harness.nodeUseCase.nodes = [updatedNode]
+        let cancellable = harness
+            .sut
+            .$nodeSource
+            .dropFirst()
+            .sink { nodeSource in
+                updatedNodeSource = nodeSource
+                exp.fulfill()
+            }
+        harness.sut.onViewAppear()
+        await fulfillment(of: [exp], timeout: 1.0)
+        cancellable.cancel()
+        XCTAssertEqual(updatedNodeSource?.parentNode?.isMarkedSensitive, updatedSensitivityState)
     }
 
     private func assertViewMode(with harness: Harness, expectedOrder: [ViewModePreferenceEntity]) async {

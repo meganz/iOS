@@ -48,7 +48,8 @@ enum CloudDriveAction: ActionType {
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     private var parentNode: MEGANode?
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
-    
+    private let nodeSensitivityChecker: any NodeSensitivityChecking
+
     private let tracker: any AnalyticsTracking
     
     private var sensitiveSettingTask: Task<Bool, Never>? {
@@ -68,6 +69,7 @@ enum CloudDriveAction: ActionType {
          tracker: some AnalyticsTracking,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol,
+         nodeSensitivityChecker: some NodeSensitivityChecking,
          sdk: MEGASdk = MEGASdk.shared
     ) {
         self.parentNode = parentNode
@@ -81,6 +83,7 @@ enum CloudDriveAction: ActionType {
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         self.sdk = sdk
+        self.nodeSensitivityChecker = nodeSensitivityChecker
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
     }
     
@@ -139,31 +142,11 @@ enum CloudDriveAction: ActionType {
     }
     
     func isParentMarkedAsSensitive(forDisplayMode displayMode: DisplayMode, isFromSharedItem: Bool) async -> Bool? {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-              isFromSharedItem == false,
-              displayMode == .cloudDrive,
-              let parentNode,
-              parentNode.type != .root,
-              parentNode.isFolder() == true else {
-            return nil
-        }
-        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
-            return false // Always show hide regardless of the node sensitivity.
-        }
-        
-        do {
-            // System generated nodes and parent inheriting sensitivity should not be able to be hide or unhide.
-            guard try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode].toNodeEntities()),
-                  try await !nodeUseCase.isInheritingSensitivity(node: parentNode.toNodeEntity()) else {
-                return nil
-            }
-            return parentNode.isMarkedSensitive
-        } catch is CancellationError {
-            MEGALogError("[\(type(of: self))] isParentMarkedAsSensitive cancelled")
-        } catch {
-            MEGALogError("[\(type(of: self))] Error determining node sensitivity. Error: \(error)")
-        }
-        return nil
+        await nodeSensitivityChecker.evaluateNodeSensitivity(
+            for: .node({ [weak self] in self?.parentNode?.toNodeEntity() }),
+            displayMode: displayMode,
+            isFromSharedItem: isFromSharedItem
+        )
     }
     
     func nodesForDisplayMode(_ displayMode: DisplayMode, sortOrder: MEGASortOrderType) async -> MEGANodeList? {
