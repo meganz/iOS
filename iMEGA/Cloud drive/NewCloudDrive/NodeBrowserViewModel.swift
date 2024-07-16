@@ -53,6 +53,7 @@ class NodeBrowserViewModel: ObservableObject {
     
     private let nodeSourceUpdatesListener: any CloudDriveNodeSourceUpdatesListening
     private var nodesUpdateListener: any NodesUpdateListenerProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onOpenUserProfile: () -> Void
@@ -64,6 +65,15 @@ class NodeBrowserViewModel: ObservableObject {
     private let onNodeStructureChanged: () -> Void
     private var viewModePreferenceChangeNotificationTask: Task<Void, Never>?
     private var cloudDriveViewModeMonitoringService: any CloudDriveViewModeMonitoring
+    private var nodeSensitivityChangesListenerTask: Task<Void, Never>?
+    var refreshMenu: ((NodeSource) async -> Void)? {
+        didSet {
+            Task { [weak self] in
+                guard let self, let refreshMenu else { return }
+                await refreshMenu(nodeSource)
+            }
+        }
+    }
 
     init(
         viewMode: ViewModePreferenceEntity,
@@ -79,6 +89,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodesUpdateListener: some NodesUpdateListenerProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
+        nodeUseCase: some NodeUseCaseProtocol,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
         // - context menu can be reconstructed
@@ -115,6 +126,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.nodeSourceUpdatesListener = nodeSourceUpdatesListener
         self.nodesUpdateListener = nodesUpdateListener
         self.cloudDriveViewModeMonitoringService = cloudDriveViewModeMonitoringService
+        self.nodeUseCase = nodeUseCase
         self.onNodeStructureChanged = onNodeStructureChanged
 
         $viewMode
@@ -234,11 +246,13 @@ class NodeBrowserViewModel: ObservableObject {
         configureTransferWidgetVisibility()
         updateSortOrderIfNeeded()
         nodeSourceUpdatesListener.startListening()
+        listenToNodeSensitivityChanges()
     }
     
     func onViewDisappear() {
         configureAdsVisibility()
         nodeSourceUpdatesListener.stopListening()
+        cancelNodeSensitivityChangesListener()
     }
 
     func parentNodeMatches(node: NodeEntity) -> Bool {
@@ -289,6 +303,34 @@ class NodeBrowserViewModel: ObservableObject {
                 onNodeStructureChanged()
             }
         }
+    }
+
+    private func listenToNodeSensitivityChanges() {
+        nodeSensitivityChangesListenerTask = Task {
+            guard let parentNode = nodeSource.parentNode else { return }
+
+            do {
+                for try await _ in nodeUseCase.mergeInheritedAndDirectSensitivityChanges(for: parentNode) {
+                    if let updatedNode = nodeUseCase.nodeForHandle(parentNode.handle) {
+                        await refreshMenuWithUpdatedNodeSource(.node({ updatedNode }))
+                        await refreshAndReloadResults()
+                    }
+                }
+            } catch {
+                MEGALogError("[\(type(of: self))] Error while monitoring inherited node sensitivity. Error: \(error)")
+            }
+        }
+    }
+
+    private func cancelNodeSensitivityChangesListener() {
+        nodeSensitivityChangesListenerTask?.cancel()
+        nodeSensitivityChangesListenerTask = nil
+    }
+
+    @MainActor
+    private func refreshMenuWithUpdatedNodeSource(_ nodeSource: NodeSource) async {
+        self.nodeSource = nodeSource
+        await refreshMenu?(nodeSource)
     }
 
     // this is also triggered from outside when node folder is renamed

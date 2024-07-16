@@ -1,0 +1,81 @@
+@preconcurrency import MEGADomain
+@preconcurrency import MEGAPresentation
+
+protocol NodeSensitivityChecking: Sendable {
+    /// Determines whether to show the "Hide" or "Unhide" option for a given node source based on its sensitivity status.
+    ///
+    /// This method evaluates the sensitivity of the node source and returns:
+    /// - `true`: If the node is marked as sensitive, indicating that the "Unhide" option should be shown.
+    /// - `false`: If the node is not marked as sensitive, indicating that the "Hide" option should be shown.
+    /// - `nil`: If no action should be taken.
+    ///
+    /// - Parameters:
+    ///   - nodeSource: The source of the node being evaluated.
+    ///   - displayMode: The current display mode.
+    ///   - isFromSharedItem: A boolean indicating if the node is from a shared item.
+    /// - Returns: A boolean wrapped in an optional indicating the appropriate action, or `nil` if no action is needed.
+    func evaluateNodeSensitivity(
+        for nodeSource: NodeSource,
+        displayMode: DisplayMode,
+        isFromSharedItem: Bool
+    ) async -> Bool?
+}
+
+struct NodeSensitivityChecker: NodeSensitivityChecking {
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
+
+    init(
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol
+    ) {
+        self.featureFlagProvider = featureFlagProvider
+        self.accountUseCase = accountUseCase
+        self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
+        self.nodeUseCase = nodeUseCase
+    }
+
+    func evaluateNodeSensitivity(
+        for nodeSource: NodeSource,
+        displayMode: DisplayMode,
+        isFromSharedItem: Bool
+    ) async -> Bool? {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+              isFromSharedItem == false,
+              displayMode == .cloudDrive,
+              let parentNode = nodeSource.parentNode,
+              parentNode.nodeType != .root,
+              parentNode.isFolder else {
+            return nil
+        }
+
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+            return false // Always show hide regardless of the node sensitivity.
+        }
+
+        do {
+            // System generated nodes and parent inheriting sensitivity should not be able to be hide or unhide.
+            guard try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode]),
+                  try await !nodeUseCase.isInheritingSensitivity(node: parentNode) else {
+                return nil
+            }
+            return parentNode.isMarkedSensitive
+        } catch is CancellationError {
+
+            MEGALogError("[\(type(of: self))] evaluateNodeSensitivity for node \(nodeLoggingInfo(for: nodeSource)) cancelled")
+        } catch {
+            MEGALogError("[\(type(of: self))] Error determining node \(nodeLoggingInfo(for: nodeSource)) sensitivity. Error: \(error)")
+        }
+        return nil
+    }
+
+    private func nodeLoggingInfo(for nodeSource: NodeSource) -> String {
+        let nodeName = nodeSource.parentNode?.name ?? "Empty Name"
+        let nodeHandle = nodeSource.parentNode?.handle ?? .invalidHandle
+        return "[\(nodeName) : \(nodeHandle)]"
+    }
+}

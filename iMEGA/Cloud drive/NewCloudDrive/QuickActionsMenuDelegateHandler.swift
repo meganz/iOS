@@ -14,7 +14,9 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
     let rename: (NodeEntity) -> Void
     let leaveSharing: (NodeEntity) -> Void
     let nodeSource: NodeSource
-    
+    let hide: ([NodeEntity]) -> Void
+    let unhide: ([NodeEntity]) -> Void
+
     // this needs to be supplied from the outside to trigger the menu rebuild
     var refreshMenu: (() -> Void)?
     
@@ -29,6 +31,8 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
         removeSharing: @escaping (NodeEntity) -> Void,
         rename: @escaping (NodeEntity) -> Void,
         leaveSharing: @escaping (NodeEntity) -> Void,
+        hide: @escaping ([NodeEntity]) -> Void,
+        unhide: @escaping ([NodeEntity]) -> Void,
         nodeSource: NodeSource
     ) {
         self.showNodeInfo = showNodeInfo
@@ -41,7 +45,9 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
         self.removeSharing = removeSharing
         self.rename = rename
         self.leaveSharing = leaveSharing
-        
+        self.hide = hide
+        self.unhide = unhide
+
         self.nodeSource = nodeSource
     }
     
@@ -75,6 +81,10 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
             removeSharing(parentNode)
         case .removeLink:
             removeLink([parentNode])
+        case .hide:
+            hide([parentNode])
+        case .unhide:
+            unhide([parentNode])
         default:
             break
         }

@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASDKRepoMock
+import MEGASwift
 import MEGATest
 import XCTest
 
@@ -232,13 +233,20 @@ class CloudDriveViewModelTests: XCTestCase {
     
     func testIsParentMarkedAsSensitiveForDisplayMode_displayModeCloudDriveIsFolder_shouldMatchSensitiveState() async throws {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let nodeSensitiveChecker = NodeSensitivityChecker(
+            featureFlagProvider: featureFlagProvider,
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false))
+        )
         for await isMarkedSensitive in [true, false].async {
             let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: isMarkedSensitive)
             let sut = makeSUT(parentNode: parentNode,
                               accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
                               nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
-                              featureFlagProvider: featureFlagProvider)
-            
+                              featureFlagProvider: featureFlagProvider,
+                              nodeSensitivityChecker: nodeSensitiveChecker)
+
             let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
             XCTAssertEqual(isHidden, isMarkedSensitive)
         }
@@ -295,11 +303,18 @@ class CloudDriveViewModelTests: XCTestCase {
     func testIsParentMarkedAsSensitiveForDisplayMode_accountNotValid_shouldReturnFalse() async throws {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
+        let nodeSensitiveChecker = NodeSensitivityChecker(
+            featureFlagProvider: featureFlagProvider,
+            accountUseCase: MockAccountUseCase(),
+            systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
+            nodeUseCase: MockNodeDataUseCase()
+        )
         let sut = makeSUT(
             parentNode: parentNode,
             accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
-            featureFlagProvider: featureFlagProvider)
-        
+            featureFlagProvider: featureFlagProvider,
+            nodeSensitivityChecker: nodeSensitiveChecker)
+
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
         
         XCTAssertFalse(try XCTUnwrap(isHidden))
@@ -308,11 +323,18 @@ class CloudDriveViewModelTests: XCTestCase {
     func testAction_updateParentNode_updatesParentNodeAndReloadsNavigationBarItems() async throws {
         let updatedParentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let nodeSensitiveChecker = NodeSensitivityChecker(
+            featureFlagProvider: featureFlagProvider,
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
+            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false))
+        )
         let sut = makeSUT(parentNode: MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false),
                           accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
                           nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
-                          featureFlagProvider: featureFlagProvider)
-        
+                          featureFlagProvider: featureFlagProvider,
+                          nodeSensitivityChecker: nodeSensitiveChecker)
+
         test(viewModel: sut, action: .updateParentNode(updatedParentNode),
              expectedCommands: [.reloadNavigationBarItems])
         
@@ -487,7 +509,31 @@ class CloudDriveViewModelTests: XCTestCase {
             XCTAssertNil(nodes, "Expected nil nodes for display mode \(displayMode)")
         }
     }
-    
+
+    func testIsParentMarkedAsSensitive_whenNodeIsSensitive_shouldMatchResults() async {
+        await assertIsParentMarkedAsSensitive(
+            isNodeSensitive: true,
+            expectedDisplayMode: .cloudDrive,
+            expectedIsFromSharedItem: false
+        )
+    }
+
+    func testIsParentMarkedAsSensitive_whenNodeIsNotSensitive_shouldMatchResults() async {
+        await assertIsParentMarkedAsSensitive(
+            isNodeSensitive: false,
+            expectedDisplayMode: .backup,
+            expectedIsFromSharedItem: true
+        )
+    }
+
+    func testIsParentMarkedAsSensitive_whenNodeDoesNotContainSenstivityInfo_shouldMatchResults() async {
+        await assertIsParentMarkedAsSensitive(
+            isNodeSensitive: nil,
+            expectedDisplayMode: .sharedItem,
+            expectedIsFromSharedItem: true
+        )
+    }
+
     func makeSUT(
         parentNode: MEGANode? = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
@@ -501,6 +547,12 @@ class CloudDriveViewModelTests: XCTestCase {
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
         sdk: MEGASdk = MockSdk(),
+        nodeSensitivityChecker: some NodeSensitivityChecking = NodeSensitivityChecker(
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
+            accountUseCase: MockAccountUseCase(),
+            systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
+            nodeUseCase: MockNodeDataUseCase()
+        ),
         file: StaticString = #file,
         line: UInt = #line
     ) -> CloudDriveViewModel {
@@ -515,7 +567,8 @@ class CloudDriveViewModelTests: XCTestCase {
             nodeUseCase: nodeUseCase,
             tracker: tracker,
             featureFlagProvider: featureFlagProvider,
-            moveToRubbishBinViewModel: moveToRubbishBinViewModel,
+            moveToRubbishBinViewModel: moveToRubbishBinViewModel, 
+            nodeSensitivityChecker: nodeSensitivityChecker,
             sdk: sdk
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
@@ -548,5 +601,64 @@ class CloudDriveViewModelTests: XCTestCase {
             creationTimeFrame: nil,
             modificationTimeFrame: nil
         )
+    }
+
+    private func assertIsParentMarkedAsSensitive(
+        isNodeSensitive: Bool?,
+        expectedDisplayMode: DisplayMode,
+        expectedIsFromSharedItem: Bool,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        let nodeSensitivityChecker = MockNodeSensitivityChecker(isSensitive: isNodeSensitive)
+        let node = MockNode(handle: 100)
+        let sut = makeSUT(parentNode: node, nodeSensitivityChecker: nodeSensitivityChecker)
+        let result = await sut.isParentMarkedAsSensitive(
+            forDisplayMode: expectedDisplayMode,
+            isFromSharedItem: expectedIsFromSharedItem
+        )
+
+        XCTAssertEqual(result, isNodeSensitive, file: file, line: line)
+        XCTAssertEqual(nodeSensitivityChecker.actions.count, 1, file: file, line: line)
+
+        guard case let .evaluateNodeSensitivity(nodeSource, displayMode, isFromSharedItem)
+                = nodeSensitivityChecker.actions.first else {
+            XCTFail("action does not match", file: file, line: line)
+            return
+        }
+
+        XCTAssertEqual(nodeSource.parentNode?.handle, node.handle, file: file, line: line)
+        XCTAssertEqual(displayMode, expectedDisplayMode, file: file, line: line)
+        XCTAssertEqual(isFromSharedItem, expectedIsFromSharedItem, file: file, line: line)
+    }
+}
+
+final class MockNodeSensitivityChecker: NodeSensitivityChecking, @unchecked Sendable {
+    enum Action {
+        case evaluateNodeSensitivity(source: NodeSource, displayMode: DisplayMode, isFromSharedItem: Bool)
+    }
+
+    @Atomic var actions: [Action] = []
+    private let isSensitive: Bool?
+
+    init(isSensitive: Bool? = nil) {
+        self.isSensitive = isSensitive
+    }
+
+    func evaluateNodeSensitivity(
+        for nodeSource: NodeSource,
+        displayMode: DisplayMode,
+        isFromSharedItem: Bool
+    ) async -> Bool? {
+        $actions.mutate {
+            $0.append(
+                .evaluateNodeSensitivity(
+                    source: nodeSource,
+                    displayMode: displayMode,
+                    isFromSharedItem: isFromSharedItem
+                )
+            )
+        }
+        return isSensitive
     }
 }

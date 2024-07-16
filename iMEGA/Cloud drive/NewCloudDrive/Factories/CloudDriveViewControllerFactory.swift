@@ -34,7 +34,8 @@ struct CloudDriveViewControllerFactory {
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let nodeActions: NodeActions
     private let viewModeFactory: ViewModeFactory
-    
+    private let nodeSensitivityChecker: any NodeSensitivityChecking
+
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
         abTestProvider: some ABTestProviderProtocol,
@@ -56,7 +57,8 @@ struct CloudDriveViewControllerFactory {
         rubbishBinUseCase: some RubbishBinUseCaseProtocol,
         createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-        nodeActions: NodeActions
+        nodeActions: NodeActions,
+        nodeSensitivityChecker: some NodeSensitivityChecking
     ) {
         self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
@@ -79,7 +81,8 @@ struct CloudDriveViewControllerFactory {
         self.createContextMenuUseCase = createContextMenuUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.nodeActions = nodeActions
-        
+        self.nodeSensitivityChecker = nodeSensitivityChecker
+
         self.avatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
                 userAlertsClient: .live,
@@ -176,7 +179,15 @@ struct CloudDriveViewControllerFactory {
             rubbishBinUseCase: DIContainer.rubbishBinUseCase,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-            nodeActions: nodeActions
+            nodeActions: nodeActions,
+            nodeSensitivityChecker: NodeSensitivityChecker(
+                featureFlagProvider: DIContainer.featureFlagProvider,
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
+                    systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
+                ),
+                nodeUseCase: nodeUseCase
+            )
         )
     }
     
@@ -260,6 +271,7 @@ struct CloudDriveViewControllerFactory {
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodesUpdateListener: some NodesUpdateListenerProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
+        nodeUseCase: some NodeUseCaseProtocol,
         config: NodeBrowserConfig,
         nodeActions: NodeActions,
         navigationController: UINavigationController,
@@ -293,7 +305,8 @@ struct CloudDriveViewControllerFactory {
             noInternetViewModel: noInternetViewModel,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodesUpdateListener: nodesUpdateListener, 
-            cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
+            cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService, 
+            nodeUseCase: nodeUseCase,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
@@ -389,6 +402,8 @@ struct CloudDriveViewControllerFactory {
                 )
             },
             leaveSharing: nodeActions.leaveSharing,
+            hide: nodeActions.hide,
+            unhide: nodeActions.unhide,
             nodeSource: nodeSource
         )
         
@@ -586,6 +601,7 @@ struct CloudDriveViewControllerFactory {
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodesUpdateListener: nodesUpdateListener, 
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
+            nodeUseCase: nodeUseCase,
             config: overriddenConfig,
             nodeActions: nodeActions,
             navigationController: navigationController,
@@ -649,7 +665,8 @@ struct CloudDriveViewControllerFactory {
             audioPlayerManager: AudioPlayerManager.shared
         )
 
-        let setNavItemsFactory = { [weak nodeBrowserViewModel] in
+        let setNavItemsFactory: (NodeSource, Bool?) -> CloudDriveViewControllerNavItemsFactory
+        setNavItemsFactory = { [weak nodeBrowserViewModel] nodeSource, isHidden in
             let viewMode: ViewModePreferenceEntity = nodeBrowserViewModel?.viewMode ?? .list
             let isSelectionHidden = nodeBrowserViewModel?.isSelectionHidden ?? false
             let initialSortOrder = sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
@@ -662,28 +679,65 @@ struct CloudDriveViewControllerFactory {
                 contextMenuConfigFactory: contextMenuConfigFactory,
                 nodeUseCase: nodeUseCase,
                 isSelectionHidden: isSelectionHidden,
-                sortOrder: sortOrder
+                sortOrder: sortOrder,
+                isHidden: isHidden
             )
         }
 
         let onContextMenuRefresh: () -> Void = { [weak nodeBrowserViewModel] in
-            nodeBrowserViewModel?.contextMenuViewFactory = NodeBrowserContextMenuViewFactory(
+            guard let nodeBrowserViewModel else { return }
+
+            nodeBrowserViewModel.contextMenuViewFactory = NodeBrowserContextMenuViewFactory(
+                nodeSource: nodeBrowserViewModel.nodeSource,
+                isHidden: nodeBrowserViewModel.contextMenuViewFactory?.isHidden,
                 makeNavItemsFactory: setNavItemsFactory
             )
         }
-
         assert(actionHandlers.isNotEmpty, "sanity check as they should not be deallocated")
         // setting the refreshMenu handler so that context menu handlers can trigger it
         actionHandlers
             .compactMap { $0 as? (any RefreshMenuTriggering) }
             .forEach { $0.refreshMenu = onContextMenuRefresh }
 
-        nodeBrowserViewModel.contextMenuViewFactory = NodeBrowserContextMenuViewFactory(
-            makeNavItemsFactory: setNavItemsFactory
-        )
+        onContextMenuRefresh()
+        nodeBrowserViewModel.refreshMenu = { [weak nodeBrowserViewModel] updatedNodeSource in
+            guard let nodeBrowserViewModel else { return }
+            await updateNodeBrowserContextMenuFactory(
+                with: updatedNodeSource,
+                config: config,
+                setNavItemsFactory: setNavItemsFactory,
+                nodeBrowserViewModel: nodeBrowserViewModel
+            )
+        }
+
         return vc
     }
-    
+
+    private func updateNodeBrowserContextMenuFactory(
+        with nodeSource: NodeSource,
+        config: NodeBrowserConfig,
+        setNavItemsFactory: @escaping (NodeSource, Bool?) -> CloudDriveViewControllerNavItemsFactory,
+        nodeBrowserViewModel: NodeBrowserViewModel?
+    ) async {
+        let isHidden = await nodeSensitivityChecker.evaluateNodeSensitivity(
+            for: nodeSource,
+            displayMode: config.displayMode ?? .cloudDrive,
+            isFromSharedItem: false
+        )
+
+        guard nodeBrowserViewModel?.contextMenuViewFactory?.isHidden != isHidden else {
+            return
+        }
+
+        await MainActor.run {
+            nodeBrowserViewModel?.contextMenuViewFactory = NodeBrowserContextMenuViewFactory(
+                nodeSource: nodeSource,
+                isHidden: isHidden,
+                makeNavItemsFactory: setNavItemsFactory
+            )
+        }
+    }
+
     // this should be run in async way as it's locking up with the SDK lock
     private func accessType(for node: NodeEntity?) async -> NodeAccessTypeEntity {
         await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node?.handle ?? .invalid)
