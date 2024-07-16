@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <accessibilityOverrides dynamicTypePreference="3"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -167,6 +167,7 @@
                 <outlet property="infoLabel" destination="wNR-pS-h56" id="lyf-kA-mkU"/>
                 <outlet property="labelImageView" destination="j3F-J4-BKA" id="PUt-FC-HY3"/>
                 <outlet property="labelView" destination="0KD-Y7-Vdv" id="hKr-Hb-Xom"/>
+                <outlet property="labelsContainerStackView" destination="Vgc-Cc-Lr9" id="nM4-gp-sae"/>
                 <outlet property="linkImageView" destination="yMA-90-pjb" id="ZCh-p4-SPm"/>
                 <outlet property="linkView" destination="Wai-rD-4jV" id="bzE-gr-oEZ"/>
                 <outlet property="moreButton" destination="hBM-JO-gm6" id="Udz-vm-h1o"/>
