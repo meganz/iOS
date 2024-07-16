@@ -48,7 +48,7 @@ class ContactsTableViewHeader: UIView {
         backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
         
         requestsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
-        groupsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.label
+        groupsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         requestsDetailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.secondaryLabel
         
         requestsSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
