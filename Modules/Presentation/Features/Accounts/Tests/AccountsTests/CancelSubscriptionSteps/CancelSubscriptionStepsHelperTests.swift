@@ -65,7 +65,7 @@ final class CancelSubscriptionStepsHelperTests: XCTestCase {
         let computerSection = data.sections[0]
 
         XCTAssertEqual(computerSection.title, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.title)
-        XCTAssertEqual(computerSection.steps.count, 5)
+        XCTAssertEqual(computerSection.steps.count, 6)
         verifyWebclientOnComputerSteps(steps: computerSection.steps)
     }
     
@@ -121,6 +121,7 @@ final class CancelSubscriptionStepsHelperTests: XCTestCase {
         XCTAssertEqual(steps[2].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.three, file: file, line: line)
         XCTAssertEqual(steps[3].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.four, file: file, line: line)
         XCTAssertEqual(steps[4].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.five, file: file, line: line)
+        XCTAssertEqual(steps[5].text, Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.six, file: file, line: line)
     }
     
     private func verifyWebclientOnMobileSteps(
