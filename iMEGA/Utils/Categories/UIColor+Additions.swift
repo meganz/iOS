@@ -581,6 +581,10 @@ extension UIColor {
         TokenColors.Support.info
     }
     
+    @objc class func supportSuccessColor() -> UIColor {
+        TokenColors.Support.success
+    }
+    
     // MARK: - Chat Reactions
     
     @objc class func primaryTextColor() -> UIColor {
@@ -1210,6 +1214,10 @@ extension UIColor {
     
     @objc class func whiteTextColor() -> UIColor {
         UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.white
+    }
+    
+    @objc class func succeedTextColor() -> UIColor {
+        TokenColors.Text.success
     }
     
     // MARK: - Feature Flag

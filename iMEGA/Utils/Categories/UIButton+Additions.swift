@@ -43,9 +43,9 @@ extension UIButton {
     
     // MARK: - Buttons
     
-    @objc func mnz_setupBasic(_ traitCollection: UITraitCollection) {
+    @objc func mnz_setupBasic(_ traitCollection: UITraitCollection, titleColor: UIColor? = nil) {
         backgroundColor = UIColor.mnz_basicButton(for: traitCollection)
-        setTitleColor(UIColor.mnz_turquoise(for: traitCollection), for: UIControl.State.normal)
+        setTitleColor(titleColor ?? UIColor.mnz_turquoise(for: traitCollection), for: UIControl.State.normal)
         
         setupLayer()
     }

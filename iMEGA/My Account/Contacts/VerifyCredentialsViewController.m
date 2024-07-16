@@ -140,7 +140,7 @@
         if (UIColor.isDesignTokenEnabled) {
             [self setResetButtonColor:self.verifyOrResetButton];
         } else {
-            [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
+            [self.verifyOrResetButton mnz_setupBasic:self.traitCollection titleColor:NULL];
         }
     } else {
         [self.verifyOrResetButton setTitle:LocalizedString(@"account.verifyContact.confirmButtonText", @"Mark as verified") forState:UIControlStateNormal];
