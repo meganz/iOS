@@ -265,8 +265,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
             callCollectionView.update(participants: participants)
         case .reloadParticipantAt(let index, let participants):
             callCollectionView.reloadParticipant(in: participants, at: index)
-        case .reloadParticipantRaisedHandAt(let index, let participants):
-            callCollectionView.reloadParticipant(in: participants, at: index)
+        case .updateParticipantMicAt(let index, let participant):
+            callCollectionView.updateParticipantMic(participant, at: index)
+        case .updateParticipantAudioLevelAt(let index, let participant):
+            callCollectionView.updateParticipantAudioDetected(participant, at: index)
+        case .updateParticipantRaisedHandAt(let index, let participant):
+            callCollectionView.updateParticipantRaiseHand(participant, at: index)
         case .updateSpeakerViewFor(let participant):
             updateSpeaker(participant)
         case .localVideoFrame(let width, let height, let buffer):
@@ -334,6 +338,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
             callCollectionView.updateAvatar(image: image, for: participant)
         case .updateSpeakerAvatar(let image):
             speakerAvatarImageView.image = image
+        case .updateSpeakerMic(let audioEnabled, let audioDetected):
+            updateSpeakerMic(audioEnabled: audioEnabled, audioDetected: audioDetected)
         case .updateMyAvatar(let image):
             localUserView.updateAvatar(image: image)
         case .updateCallEndDurationRemainingString(let durationRemainingString):
@@ -454,13 +460,17 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
             speakerMicImageView.isHidden = true
             speakerNameLabel.text = Strings.Localizable.Calls.ScreenShare.MainView.presentingLabel(participant.name ?? "")
         } else {
-            if participant.audio == .on && !participant.audioDetected {
-                speakerMicImageView.isHidden = true
-            } else {
-                speakerMicImageView.isHidden = false
-                speakerMicImageView.image = participant.audioDetected ? .micActive : .micMuted
-            }
+            updateSpeakerMic(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected)
             speakerNameLabel.text = participant.name
+        }
+    }
+    
+    private func updateSpeakerMic(audioEnabled: Bool, audioDetected: Bool) {
+        if audioEnabled && !audioDetected {
+            speakerMicImageView.isHidden = true
+        } else {
+            speakerMicImageView.isHidden = false
+            speakerMicImageView.image = audioDetected ? .micActive : .micMuted
         }
     }
     

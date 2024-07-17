@@ -26,12 +26,7 @@ class CallParticipantCell: UICollectionViewCell {
             nameLabel.text = participant.name
             nameLabel.superview?.isHidden = layoutMode == .speaker
             
-            if participant.audio == .on && !participant.audioDetected {
-                micImageView.isHidden = true
-            } else {
-                micImageView.isHidden = false
-                micImageView.image = participant.audioDetected ? .micActive : .micMuted
-            }
+            updateMic(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected)
             
             let isVideoOn = participant.video == .on
             videoImageView.isHidden = !isVideoOn
@@ -55,11 +50,8 @@ class CallParticipantCell: UICollectionViewCell {
                 }
             }
             
-            if participant.audioDetected {
-                borderColor = UIColor.green00C29A
-                borderWidth = 1
-            }
-            raisedHandView.isHidden = !participant.raisedHand
+            updateAudioDetected(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected)
+            updateRaiseHand(participant.raisedHand)
         } else {
             nameLabel.isHidden = true
             nameLabel.superview?.isHidden = true
@@ -71,6 +63,31 @@ class CallParticipantCell: UICollectionViewCell {
     
     func setAvatar(image: UIImage) {
         avatarImageView.image = image
+    }
+    
+    func updateMic(audioEnabled: Bool, audioDetected: Bool) {
+        if audioEnabled && !audioDetected {
+            micImageView.isHidden = true
+        } else {
+            micImageView.isHidden = false
+            micImageView.image = audioDetected ? .micActive : .micMuted
+        }
+    }
+    
+    func updateAudioDetected(audioEnabled: Bool, audioDetected: Bool) {
+        if audioDetected {
+            borderColor = UIColor.green00C29A
+            borderWidth = 1
+            micImageView.isHidden = false
+            micImageView.image = .micActive
+        } else {
+            updateMic(audioEnabled: audioEnabled, audioDetected: audioDetected)
+            borderWidth = 0
+        }
+    }
+    
+    func updateRaiseHand(_ raised: Bool) {
+        raisedHandView.isHidden = !raised
     }
     
     override func prepareForReuse() {

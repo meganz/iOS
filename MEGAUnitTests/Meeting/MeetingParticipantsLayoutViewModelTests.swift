@@ -861,8 +861,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         
         XCTAssertEqual(harness.sut.layoutMode, .speaker)
         
-        participant.hasScreenShare = false
-        harness.sut.updateParticipant(participant)
+        let participantUpdated = CallParticipantEntity(participantId: 100, hasScreenShare: false)
+        harness.sut.updateParticipant(participantUpdated)
         
         XCTAssertEqual(harness.sut.layoutMode, .grid)
     }
@@ -1262,8 +1262,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         
         harness.sut.invokeCommand = { command in
             switch command {
-            case .reloadParticipantRaisedHandAt(let index, let participants):
-                XCTAssertTrue(participants[index].raisedHand)
+            case .updateParticipantRaisedHandAt(let index, _):
+                XCTAssertTrue(harness.sut.callParticipants[index].raisedHand)
                 remoteUserRaiseHandExpectation.fulfill()
             default:
                 break
@@ -1300,7 +1300,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
         scheduler.advance(by: .milliseconds(600))
         guard
-            case .reloadParticipantRaisedHandAt = receiveCommands[0],
+            case .updateParticipantRaisedHandAt = receiveCommands[0],
             case .updateSnackBar(let snackBar) = receiveCommands[1],
             case .updateLocalRaisedHandHidden(let hidden) = receiveCommands[2]
         else {
@@ -1317,7 +1317,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         scheduler.advance(by: .milliseconds(600))
         
         guard
-            case .reloadParticipantRaisedHandAt = receiveCommands[0],
+            case .updateParticipantRaisedHandAt = receiveCommands[0],
             case .updateSnackBar = receiveCommands[1],
             case .updateLocalRaisedHandHidden(let hidden) = receiveCommands[2]
         else {

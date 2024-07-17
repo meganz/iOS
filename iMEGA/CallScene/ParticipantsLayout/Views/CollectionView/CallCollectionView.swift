@@ -70,11 +70,11 @@ class CallCollectionView: UICollectionView {
         backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black000000
     }
     
-    // call this instead of manual calling insert/delete/reload cell
+    /// call this instead of manual calling insert/delete/reload cell
+    /// This function inserts and reloads but we do reloads manually to avoid flashing of cells when reconfiguring
+    /// Check updateParticipantMic, updateParticipantAudioDetected and updateParticipantRaiseHand for update without reloading cells
     private func updateCells(with participants: [CallParticipantEntity]) {
-        
         callParticipants = participants
-        // code below does inserts and reloads but we do reloads manually to avoid flashing of cells when reconfiguring
         
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, CallParticipantEntity>()
         snapshot.appendSections([SectionType.main])
@@ -84,6 +84,30 @@ class CallCollectionView: UICollectionView {
     
     func update(participants: [CallParticipantEntity]) {
         updateCells(with: participants)
+    }
+    
+    func updateParticipantMic(_ participant: CallParticipantEntity, at index: Int) {
+        guard let cell = cellAtIndex(index) else {
+            return
+        }
+        
+        cell.updateMic(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected)
+    }
+    
+    func updateParticipantAudioDetected(_ participant: CallParticipantEntity, at index: Int) {
+        guard let cell = cellAtIndex(index) else {
+            return
+        }
+        
+        cell.updateAudioDetected(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected)
+    }
+    
+    func updateParticipantRaiseHand(_ participant: CallParticipantEntity, at index: Int) {
+        guard let cell = cellAtIndex(index) else {
+            return
+        }
+        
+        cell.updateRaiseHand(participant.raisedHand)
     }
     
     func reloadParticipant(in participants: [CallParticipantEntity], at index: Int) {
@@ -103,8 +127,8 @@ class CallCollectionView: UICollectionView {
               case let indexPath = IndexPath(item: index, section: 0),
               let cell = cellForItem(at: indexPath) as? CallParticipantCell,
               cell.participant == participant else {
-                  return
-              }
+            return
+        }
         
         cell.setAvatar(image: image)
     }
@@ -122,6 +146,10 @@ class CallCollectionView: UICollectionView {
     
     private func updateBlurViewBounds() {
         blurEffectView.frame = bounds
+    }
+    
+    private func cellAtIndex(_ index: Int) -> CallParticipantCell? {
+        cellForItem(at: IndexPath(item: index, section: 0)) as? CallParticipantCell
     }
 }
 
