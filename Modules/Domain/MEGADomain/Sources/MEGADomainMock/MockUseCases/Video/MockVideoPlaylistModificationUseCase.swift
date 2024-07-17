@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGASwift
 
@@ -16,6 +17,7 @@ public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificati
     }
     
     public private(set) var messages = [Message]()
+    @Published public var publishedMessages = [Message]()
     
     public init(
         addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
@@ -36,6 +38,7 @@ public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificati
     
     public func deleteVideos(in videoPlaylistId: HandleEntity, videos: [VideoPlaylistVideoEntity]) async throws -> VideoPlaylistElementsResultEntity {
         messages.append(.deleteVideosInVideoPlaylist)
+        publishedMessages.append(.deleteVideosInVideoPlaylist)
         return try deleteVideosInVideoPlaylistResult.get()
     }
     

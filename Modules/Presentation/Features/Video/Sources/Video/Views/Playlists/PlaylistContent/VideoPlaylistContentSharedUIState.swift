@@ -12,6 +12,8 @@ public final class VideoPlaylistContentSharedUIState {
     @Published public var isAllSelected = false
     
     public let didSelectRemoveVideoFromPlaylistAction = PassthroughSubject<[NodeEntity], Never>()
+    public let didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction = PassthroughSubject<[NodeEntity], Never>()
+    public let didFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction = PassthroughSubject<[NodeEntity], Never>()
     
     public init() {}
 }
