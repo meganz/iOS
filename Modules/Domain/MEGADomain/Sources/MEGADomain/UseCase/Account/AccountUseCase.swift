@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Use case protocol
-public protocol AccountUseCaseProtocol {
+public protocol AccountUseCaseProtocol: Sendable {
     // User authentication status and identifiers
     var currentUserHandle: HandleEntity? { get }
     var isGuest: Bool { get }

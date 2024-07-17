@@ -1,4 +1,4 @@
-public protocol ABTestUseCaseProtocol {
+public protocol ABTestUseCaseProtocol: Sendable {
     func abTestValue(for: ABTestFlagName) async -> Int
 }
 

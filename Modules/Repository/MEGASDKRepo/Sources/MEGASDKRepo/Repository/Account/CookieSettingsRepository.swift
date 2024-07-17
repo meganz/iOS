@@ -1,4 +1,4 @@
-import FirebaseCrashlytics
+@preconcurrency import FirebaseCrashlytics
 import Foundation
 import MEGADomain
 import MEGASdk
