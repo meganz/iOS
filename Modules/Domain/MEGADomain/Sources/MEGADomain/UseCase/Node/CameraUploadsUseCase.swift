@@ -1,11 +1,11 @@
-public protocol CameraUploadsUseCaseProtocol {
+public protocol CameraUploadsUseCaseProtocol: Sendable {
     func cameraUploadsNode() async throws -> NodeEntity
     func registerCameraUploadsBackup(_ nodeName: String) async throws -> HandleEntity
     func unregisterCameraUploadsBackup(_ handle: HandleEntity) async throws
     func updateCameraUploadsBackupName(_ handle: HandleEntity) async throws
     func updateCameraUploadsBackupState(_ handle: HandleEntity, state: BackUpStateEntity, substate: BackUpSubStateEntity) async throws
     func isCameraUploadsNode(handle: HandleEntity) async throws -> Bool
-    func registerCameraUploadNodeNameUpdate(callback: @escaping () -> Void)
+    func registerCameraUploadNodeNameUpdate(callback: @escaping @Sendable () -> Void)
     func removeCameraUploadNodeNameUpdate()
 }
 
@@ -40,7 +40,7 @@ public struct CameraUploadsUseCase<T: CameraUploadsRepositoryProtocol>: CameraUp
         try await repo.isCameraUploadsNode(handle: handle)
     }
     
-    public func registerCameraUploadNodeNameUpdate(callback: @escaping () -> Void) {
+    public func registerCameraUploadNodeNameUpdate(callback: @escaping @Sendable () -> Void) {
         repo.registerCameraUploadNodeNameUpdate(callback: callback)
     }
     
