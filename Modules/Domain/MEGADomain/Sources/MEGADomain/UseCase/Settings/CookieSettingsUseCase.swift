@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Use case protocol
-public protocol CookieSettingsUseCaseProtocol {
+public protocol CookieSettingsUseCaseProtocol: Sendable {
     func cookieBannerEnabled() -> Bool
     
     func cookieSettings() async throws -> Int
