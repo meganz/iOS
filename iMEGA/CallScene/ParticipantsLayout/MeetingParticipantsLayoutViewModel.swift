@@ -71,7 +71,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updatePageControl(Int)
         case updateParticipants([CallParticipantEntity])
         case reloadParticipantAt(Int, [CallParticipantEntity])
-        case reloadParticipantRaisedHandAt(Int, [CallParticipantEntity])
+        case updateParticipantMicAt(Int, CallParticipantEntity)
+        case updateParticipantAudioLevelAt(Int, CallParticipantEntity)
+        case updateParticipantRaisedHandAt(Int, CallParticipantEntity)
         case updateSpeakerViewFor(CallParticipantEntity)
         case localVideoFrame(Int, Int, Data)
         case participantsStatusChanged(addedParticipantCount: Int,
@@ -96,6 +98,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case hideBadNetworkQuality
         case updateAvatar(UIImage, CallParticipantEntity)
         case updateSpeakerAvatar(UIImage)
+        case updateSpeakerMic(audioEnabled: Bool, audioDetected: Bool)
         case updateMyAvatar(UIImage)
         case updateCallEndDurationRemainingString(String)
         case removeCallEndDurationView
@@ -329,19 +332,53 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func reloadParticipant(_ participant: CallParticipantEntity) {
-        guard let index = callParticipants.firstIndex(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell}) else { return }
+        guard let index = index(for: participant) else { return }
         invokeCommand?(.reloadParticipantAt(index, callParticipants))
     }
     
-    private func reloadParticipantAndUpdateSpeaker(_ participant: CallParticipantEntity) {
-        reloadParticipant(participant)
-        
-        guard let currentSpeaker = speakerParticipant,
-              currentSpeaker == participant,
-              currentSpeaker.isScreenShareCell == participant.isScreenShareCell else {
+    private func updateParticipantMic(_ participant: CallParticipantEntity) {
+        guard let index = index(for: participant) else { return }
+        invokeCommand?(.updateParticipantMicAt(index, participant))
+    }
+    
+    private func updateParticipantAudioLevel(_ participant: CallParticipantEntity) {
+        guard let index = index(for: participant) else { return }
+        invokeCommand?(.updateParticipantAudioLevelAt(index, participant))
+    }
+    
+    /// This method returns the index for a participant inside the callParticipants
+    /// Participants has participantId and clientId as unique identifiers inside a call. When participants share screen, a fake participant is duplicated with property isScreenShareCell = true, to differentiate the participant from the share screen stream. For that reason we need to check isScreenShareCell for getting correct index.
+    private func index(for participant: CallParticipantEntity) -> Int? {
+        callParticipants.firstIndex(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell})
+    }
+    
+    /// Participant changes are received with a new full CallParticipantEntity object. This method find same participant in the callParticipants array in order to update it.
+    /// isScreenShareCell must be false, as those fake participants are duplicated from the original one just to stream the share screen video, but never updated.
+    private func participantToUpdate(from participant: CallParticipantEntity) -> CallParticipantEntity? {
+        guard let participantToUpdate = callParticipants.first(where: {$0 == participant && !$0.isScreenShareCell}) else {
+            MEGALogError("Error getting participant updated")
+            return nil
+        }
+        return participantToUpdate
+    }
+    
+    private func updateSpeakerMicIfNeeded(_ participant: CallParticipantEntity) {
+        guard isParticipantCurrentSpeakerParticipant(participant) else {
+            return
+        }
+        invokeCommand?(.updateSpeakerMic(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected))
+    }
+    
+    private func reloadSpeakerIfNeeded(_ participant: CallParticipantEntity) {
+        guard isParticipantCurrentSpeakerParticipant(participant) else {
             return
         }
         speakerParticipant = participant
+    }
+    
+    private func isParticipantCurrentSpeakerParticipant(_ participant: CallParticipantEntity) -> Bool {
+        speakerParticipant == participant &&
+        speakerParticipant?.isScreenShareCell == participant.isScreenShareCell
     }
     
     private func requestRemoteScreenShareVideo(for participant: CallParticipantEntity) {
@@ -848,7 +885,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             participant.isSpeakerPinned = false
             isSpeakerParticipantPinned = false
             speakerParticipant = nil
-            updateParticipant(participant)
+            reloadParticipantWithChanges(participant)
         }
     }
     
@@ -920,7 +957,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func assignSpeakerParticipant(_ participant: CallParticipantEntity) {
-        guard let newSpeakerParticipant = callParticipants.first(where: {$0 == participant && !$0.isScreenShareCell}) else { return }
+        guard let newSpeakerParticipant = participantToUpdate(from: participant) else { return }
         isSpeakerParticipantPinned = true
         speakerParticipant?.isSpeakerPinned = false
         newSpeakerParticipant.isSpeakerPinned = true
@@ -1129,9 +1166,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func updateActiveSpeakIndicator(for participant: CallParticipantEntity) {
         if isSpeakerParticipantPinned && speakerParticipant == participant {
             participant.isSpeakerPinned = true
-            invokeCommand?(.updateSpeakerViewFor(participant))
+            invokeCommand?(.updateSpeakerMic(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected))
         }
-        updateParticipant(participant)
+        guard let participantToUpdate = participantToUpdate(from: participant) else {
+            return
+        }
+        participantToUpdate.audioDetected = participant.audioDetected
+        updateParticipantAudioLevel(participant)
     }
     
     private func onCallUpdate(_ call: CallEntity) {
@@ -1162,7 +1203,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             stateUpdater: {[weak self]  index, change in
                 guard let self else { return }
                 callParticipants[index].raisedHand = change.raisedHand
-                invokeCommand?(.reloadParticipantRaisedHandAt(index, callParticipants))
+                invokeCommand?(.updateParticipantRaisedHandAt(index, callParticipants[index]))
             },
             snackBarUpdater: {[weak self] snackBar in
                 self?.invokeCommand?(.updateSnackBar(snackBar))
@@ -1267,7 +1308,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             }
             participant.name = $0
             participant.raisedHand = call.raiseHandsList.contains(participant.participantId)
-            updateParticipant(participant)
+            reloadParticipantWithChanges(participant)
             invokeCommand?(.updateParticipants(callParticipants))
             if callParticipants.count == 1 && layoutMode == .speaker {
                 invokeCommand?(.shouldHideSpeakerView(false))
@@ -1322,8 +1363,25 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func updateParticipant(_ participant: CallParticipantEntity) {
-        guard let participantToUpdate = callParticipants.first(where: {$0 == participant && !$0.isScreenShareCell}) else {
-            MEGALogError("Error getting participant updated")
+        guard let participantToUpdate = participantToUpdate(from: participant) else {
+            return
+        }
+        
+        if participant.audio != participantToUpdate.audio {
+            participantToUpdate.audio = participant.audio
+            updateParticipantMic(participant)
+            updateSpeakerMicIfNeeded(participantToUpdate)
+        }
+        
+        if participant.video != participantToUpdate.video ||
+            participantToUpdate.hasScreenShare != participant.hasScreenShare ||
+            participant.hasCamera != participantToUpdate.hasCamera {
+            reloadParticipantWithChanges(participant)
+        }
+    }
+    
+    private func reloadParticipantWithChanges(_ participant: CallParticipantEntity) {
+        guard let participantToUpdate = participantToUpdate(from: participant) else {
             return
         }
         
@@ -1353,7 +1411,8 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
         
         configScreenShareAndCameraFeedParticipants()
-        reloadParticipantAndUpdateSpeaker(participantToUpdate)
+        reloadParticipant(participant)
+        reloadSpeakerIfNeeded(participantToUpdate)
     }
     
     private func updateSpeakerOnStopScreenShare(of participant: CallParticipantEntity) {
@@ -1405,7 +1464,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         if isSpeakerParticipantPinned || layoutMode == .grid {
             return
         }
-        guard let participantWithAudio = callParticipants.first(where: {$0 == participant && !$0.isScreenShareCell}) else {
+        guard let participantWithAudio = participantToUpdate(from: participant) else {
             MEGALogError("Error getting participant with audio")
             return
         }
@@ -1569,7 +1628,7 @@ extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProt
     func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data, isHiRes: Bool) {
         for participant in callParticipants where participant.clientId == clientId {
             if participant.videoDataDelegate == nil {
-                guard let index = callParticipants.firstIndex(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell }) else { return }
+                guard let index = index(for: participant) else { return }
                 invokeCommand?(.reloadParticipantAt(index, callParticipants))
             }
             participant.remoteVideoFrame(width: width, height: height, buffer: buffer, isHiRes: isHiRes)
