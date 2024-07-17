@@ -731,7 +731,49 @@ class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(result.id, 2)
     }
 
+    func testSearchInitially_withNodeAsRubbishBinRootWhenShowHiddenItemsUISettingIsEnabled_noSensitiveFilterApplied() async {
+        await assertSearchInitially(withShowHiddenItemsUISetting: true) {
+            $0.nodeDataUseCase.isARubbishBinRootNodeValue = true
+        }
+    }
+
+    func testSearchInitially_withNodeAsRubbishBinRootWhenShowHiddenItemsUISettingIsDisabled_noSensitiveFilterApplied() async {
+        await assertSearchInitially(withShowHiddenItemsUISetting: false) {
+            $0.nodeDataUseCase.isARubbishBinRootNodeValue = true
+        }
+    }
+
+    func testSearchInitially_withNodeInRubbishBinWhenShowHiddenItemsUISettingIsEnabled_noSensitiveFilterApplied() async {
+        await assertSearchInitially(withShowHiddenItemsUISetting: true) {
+            $0.nodeDataUseCase.isNodeInRubbishBin = { _ in true }
+        }
+    }
+
+    func testSearchInitially_withNodeInRubbishBinWhenShowHiddenItemsUISettingIsDisabled_noSensitiveFilterApplied() async {
+        await assertSearchInitially(withShowHiddenItemsUISetting: false) {
+            $0.nodeDataUseCase.isNodeInRubbishBin = { _ in true }
+        }
+    }
+
     // MARK: - Private methods.
+
+    private func assertSearchInitially(
+        withShowHiddenItemsUISetting enabled: Bool,
+        harnessSetup: (Harness) -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        // given
+        let harness = Harness(self, showHiddenNodes: enabled, hiddenNodesFeatureEnabled: true)
+        harnessSetup(harness)
+
+        // when
+        _ = await harness.sut.searchInitially(queryRequest: .initial)
+
+        // then
+        let filters = harness.filesSearchUseCase.filters
+        XCTAssertEqual(filters.first?.sensitiveFilterOption, .disabled, file: file, line: line)
+    }
 
     private func assertSearchConfig(
         expectedAsset: SearchConfig.EmptyViewAssets,
