@@ -78,7 +78,7 @@ struct PlaylistContentScreen: View {
         ) {
             Button(Strings.Localizable.remove, role: .destructive) {
                 Task {
-                    await viewModel.deleteVideosFromVideoPlaylist()
+                    try? await viewModel.deleteVideosFromVideoPlaylist()
                 }
             }
             Button(Strings.Localizable.cancel, role: .cancel) {

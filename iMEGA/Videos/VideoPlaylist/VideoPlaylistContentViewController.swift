@@ -80,6 +80,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         subscribeToVideoSelection()
         listenToSelectedDisplayActionChanged()
         listenToVideoSelectionForTitle()
+        listenToDidFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -249,6 +250,27 @@ final class VideoPlaylistContentViewController: UIViewController {
     @objc private func moreAction(_ sender: UIBarButtonItem) {
         let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
         present(nodeActionViewController, animated: true, completion: nil)
+    }
+    
+    func didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction() {
+        let videos = videoSelection.videos.values.map { $0 }
+        guard videos.isNotEmpty else { return }
+        sharedUIState.didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction.send(videos)
+    }
+    
+    private func listenToDidFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction() {
+        sharedUIState.didFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] removedVideosFromVideoPlaylist in
+                self?.moveVideoToRubbishBinAction(removedVideosFromVideoPlaylist)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func moveVideoToRubbishBinAction(_ videos: [NodeEntity]) {
+        let removedVideosFromVideoPlaylist = videos.compactMap { $0.toMEGANode(in: .sharedSdk) }
+        let nodeActionViewController = nodeActionViewController(with: removedVideosFromVideoPlaylist, from: moreBarButtonItem)
+        nodeAction(nodeActionViewController, didSelect: .moveToRubbishBin, forNodes: removedVideosFromVideoPlaylist, from: moreBarButtonItem)
     }
     
     func resetNavigationBar() {

@@ -47,6 +47,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     private(set) var renameVideoPlaylistTask: Task<Void, Never>?
     private(set) var deleteVideoPlaylistTask: Task<Void, Never>?
+    private(set) var moveVideoInVideoPlaylistContentToRubbishBinTask: Task<Void, Never>?
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -84,6 +85,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         }
         
         subscribeToRemoveVideosFromVideoPlaylistAction()
+        subscribeToDidSelectMoveVideoInVideoPlaylistContentToRubbishBinAction()
     }
     
     @MainActor
@@ -302,20 +304,49 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+    private func subscribeToDidSelectMoveVideoInVideoPlaylistContentToRubbishBinAction() {
+        sharedUIState.didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction
+            .filter(\.isNotEmpty)
+            .sink { [weak self] selectedVideos in
+                guard let self else { return }
+                moveVideosToRubbishBin(selectedVideos)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func moveVideosToRubbishBin(_ selectedVideos: [NodeEntity]) {
+        self.selectedVideos = selectedVideos
+        moveVideoInVideoPlaylistContentToRubbishBinTask = Task { @MainActor in
+            do {
+                try await deleteVideosFromVideoPlaylist(showSnackBar: false)
+                sharedUIState
+                    .didFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction
+                    .send(selectedVideos)
+            } catch {
+                // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
+            }
+        }
+    }
+    
     @MainActor
-    func deleteVideosFromVideoPlaylist() async {
+    func deleteVideosFromVideoPlaylist(showSnackBar: Bool = true) async throws {
         do {
             guard let selectedVideos else {
                 return
             }
+            defer { self.selectedVideos = nil }
+            
             let videosToDelete = await retrieveSelectedVideoPlaylistVideoEntities(selectedVideos)
             let result = try await videoPlaylistModificationUseCase.deleteVideos(in: videoPlaylistEntity.id, videos: videosToDelete)
-            sharedUIState.snackBarText = deleteVideosFromVideoPlaylistSnackBarText(videosCount: Int(result.success))
-            sharedUIState.shouldShowSnackBar = true
+            
+            if showSnackBar {
+                sharedUIState.snackBarText = deleteVideosFromVideoPlaylistSnackBarText(videosCount: Int(result.success))
+                sharedUIState.shouldShowSnackBar = true
+            }
         } catch {
             // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
+            throw error
         }
-        selectedVideos = nil
     }
     
     private func retrieveSelectedVideoPlaylistVideoEntities(_ selectedVideos: [NodeEntity]) async -> [VideoPlaylistVideoEntity] {
