@@ -1,7 +1,7 @@
 import AsyncAlgorithms
 import MEGASwift
 // MARK: - Use case protocol -
-public protocol NodeUseCaseProtocol {
+public protocol NodeUseCaseProtocol: Sendable {
     func rootNode() -> NodeEntity?
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
     func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity

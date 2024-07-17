@@ -366,7 +366,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         let harness = Harness(self, nodes: [node])
 
-        harness.nodeDataUseCase.labelStringToReturn = "Red"
+        harness.nodeDataUseCase.labelStringToReturn.mutate { $0 = "Red" }
         let propertyIds = try await harness.propertyIdsForFoundNode()
         XCTAssertEqual(propertyIds, [.label])
     }

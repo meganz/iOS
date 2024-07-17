@@ -2,10 +2,9 @@ import AsyncAlgorithms
 import MEGADomain
 import MEGASwift
 
-public final class MockNodeDataUseCase: NodeUseCaseProtocol {
+public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     
     private let nodeAccessLevelVariable: NodeAccessTypeEntity
-    public var labelStringToReturn: String
     private let filesAndFolders: (Int, Int)
     private let folderInfo: FolderInfoEntity?
     private let size: UInt64
@@ -24,6 +23,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let sensitivityChangesForNode: AnyAsyncSequence<Bool>
     private let _rootNode: NodeEntity?
 
+    public var labelStringToReturn: Atomic<String>
     public var isMultimediaFileNode_CalledTimes = 0
     
     public init(nodeAccessLevelVariable: NodeAccessTypeEntity = .unknown,
@@ -47,7 +47,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 rootNode: NodeEntity? = nil
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
-        self.labelStringToReturn = labelString
+        labelStringToReturn = Atomic(wrappedValue: labelString)
         self.filesAndFolders = filesAndFolders
         self.folderInfo = folderInfo
         self.size = size
@@ -82,7 +82,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public func downloadToOffline(nodeHandle: HandleEntity) { }
     
     public func labelString(label: NodeLabelTypeEntity) -> String {
-        labelStringToReturn
+        labelStringToReturn.wrappedValue
     }
     
     public func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
