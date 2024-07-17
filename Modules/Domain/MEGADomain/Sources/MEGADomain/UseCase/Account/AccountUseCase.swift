@@ -33,6 +33,8 @@ public protocol AccountUseCaseProtocol: Sendable {
     /// Returns: `true` if the account has an active subscription, excluding single purchase subscriptions (e.g., via vouchers)
     /// which grant pro status but are not recurring.
     func hasValidSubscription() -> Bool
+    
+    func isStandardProAccount() -> Bool
 
     // Account operations
     func contacts() -> [UserEntity]
@@ -133,6 +135,13 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
         isStandardProAccount() || isValidProFlexiAccount()
     }
     
+    public func isStandardProAccount() -> Bool {
+        repository.isAccountType(.lite) ||
+        repository.isAccountType(.proI) ||
+        repository.isAccountType(.proII) ||
+        repository.isAccountType(.proIII)
+    }
+    
     public func hasValidSubscription() -> Bool {
         repository.hasValidSubscription()
     }
@@ -192,13 +201,6 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     }
 
     // MARK: - Private User and session management
-    private func isStandardProAccount() -> Bool {
-        repository.isAccountType(.lite) ||
-        repository.isAccountType(.proI) ||
-        repository.isAccountType(.proII) ||
-        repository.isAccountType(.proIII)
-    }
-
     private func isValidProFlexiAccount() -> Bool {
         repository.isAccountType(.proFlexi) &&
         !repository.isExpiredAccount()
