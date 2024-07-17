@@ -240,9 +240,18 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     
     private func shouldExcludeSensitive() async -> Bool {
         let showHiddenNodesSettingsEnabled = await contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
-        return hiddenNodesFeatureEnabled && !showHiddenNodesSettingsEnabled
+
+        return hiddenNodesFeatureEnabled
+        && !showHiddenNodesSettingsEnabled
+        && !isNodeARubbishBinRootOrInRubbishBin()
     }
-    
+
+    private func isNodeARubbishBinRootOrInRubbishBin() -> Bool {
+        guard let handle = parentNode?.handle else { return false }
+        return nodeUseCase.isARubbishBinRootNode(nodeHandle: handle)
+        || nodeUseCase.isInRubbishBin(nodeHandle: handle)
+    }
+
     private var parentNode: NodeEntity? {
         parentNodeProvider()
     }
