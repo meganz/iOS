@@ -384,6 +384,9 @@ private extension ProgressIndicatorView {
         guard !UIColor.isDesignTokenEnabled() else {
             backgroundLayer?.fillColor = TokenColors.Background.surface2.cgColor
             progressBackgroundLayer?.strokeColor = TokenColors.Background.surface3.cgColor
+            // Reset the progress layer's stroke color when the trait collection is changed.
+            // This is necessary due to limitations with CAShapeLayer.
+            configureData()
             return
         }
 
