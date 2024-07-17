@@ -178,14 +178,36 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         }
     }
     
+    func testMonitorPhotos_onFolderSensitivityChanged_shouldReturnAllPhotosWithThumbnails() async throws {
+        let thumbnailPhoto = NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)
+        let photos = [thumbnailPhoto,
+                      NodeEntity(name: "test2.jpg", handle: 4, hasThumbnail: false)]
+        let photosRepository = MockPhotosRepository(photos: photos)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            folderSensitivityChanged: SingleItemAsyncSequence(item: ()).eraseToAnyAsyncSequence())
+        let sut = makeSUT(
+            photosRepository: photosRepository,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
+        
+        var iterator = await sut.monitorPhotos(filterOptions: [.allLocations, .allMedia]).makeAsyncIterator()
+        
+        let initialPhotos = try await iterator.next()?.get()
+        XCTAssertEqual(initialPhotos, [thumbnailPhoto])
+        
+        let folderUpdatePhotos = try await iterator.next()?.get()
+        XCTAssertEqual(folderUpdatePhotos, [thumbnailPhoto])
+    }
+    
     // MARK: Private
     
     private func makeSUT(
         photosRepository: some PhotosRepositoryProtocol = MockPhotosRepository(),
-        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase()
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
     ) -> MonitorPhotosUseCase {
         MonitorPhotosUseCase(photosRepository: photosRepository,
-                             photoLibraryUseCase: photoLibraryUseCase)
+                             photoLibraryUseCase: photoLibraryUseCase,
+                             sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
     
     private func makePhotosUpdatedSequenceWithItems() -> AnyAsyncSequence<[NodeEntity]> {

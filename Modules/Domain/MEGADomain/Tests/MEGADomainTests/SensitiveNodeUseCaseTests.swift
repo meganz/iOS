@@ -112,6 +112,31 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
         task.cancel()
     }
     
+    func testFolderSensitivityChanged_onFolderSensitivityChanged_shouldYield() async {
+        let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
+        let sut = makeSUT(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        
+        let startedExp = expectation(description: "Task started")
+        let yieldedExp = expectation(description: "Task yielded")
+        let cancelledExp = expectation(description: "Async Sequence stopped")
+        let task = Task {
+            startedExp.fulfill()
+            for await _ in sut.folderSensitivityChanged() {
+                yieldedExp.fulfill()
+            }
+            cancelledExp.fulfill()
+        }
+        await fulfillment(of: [startedExp], timeout: 0.25)
+        
+        continuation.yield([NodeEntity(changeTypes: .sensitive, handle: 1, isFolder: false)])
+        continuation.yield([NodeEntity(changeTypes: .sensitive, handle: 1, isFolder: true)])
+        continuation.yield([NodeEntity(changeTypes: .new, handle: 1, isFolder: true)])
+        continuation.finish()
+        
+        await fulfillment(of: [yieldedExp, cancelledExp], timeout: 1.0)
+        task.cancel()
+    }
+    
     private func makeSUT(
         nodeInRubbishBin: NodeEntity? = nil,
         node: NodeEntity? = nil,

@@ -34,6 +34,9 @@ public protocol SensitiveNodeUseCaseProtocol: Sendable {
     /// - Parameter node: The `NodeEntity` for which to monitor sensitivity changes.
     /// - Returns: An `AnyAsyncThrowingSequence<Bool, any Error>` that emits sensitivity change events for the specified node.
     func mergeInheritedAndDirectSensitivityChanges(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error>
+    /// On node update it will yield if folder sensitivity has changed
+    /// - Returns: An `AnyAsyncSequence<Void>` indicating folder sensitivity changed
+    func folderSensitivityChanged() -> AnyAsyncSequence<Void>
 }
 
 public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol>: SensitiveNodeUseCaseProtocol {
@@ -80,5 +83,15 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol>: SensitiveNodeUseC
             monitorInheritedSensitivity(for: node)
         )
         .eraseToAnyAsyncThrowingSequence()
+    }
+    
+    public func folderSensitivityChanged() -> AnyAsyncSequence<Void> {
+        nodeRepository
+            .nodeUpdates
+            .compactMap {
+                $0.first(where: { $0.isFolder && $0.changeTypes.contains(.sensitive) })
+                    .map({ _ in () })
+            }
+            .eraseToAnyAsyncSequence()
     }
 }

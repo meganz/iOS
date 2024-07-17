@@ -8,16 +8,19 @@ public final class MockSensitiveNodeUseCase: SensitiveNodeUseCaseProtocol {
     private let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>]
     private let monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error>
     private let sensitivityChangesForNode: AnyAsyncSequence<Bool>
+    private let _folderSensitivityChanged: AnyAsyncSequence<Void>
     
     public init(isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
                 isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:],
                 monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence(),
-                sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+                sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+                folderSensitivityChanged: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.isInheritingSensitivityResult = isInheritingSensitivityResult
         self.isInheritingSensitivityResults = isInheritingSensitivityResults
         self.monitorInheritedSensitivityForNode = monitorInheritedSensitivityForNode
         self.sensitivityChangesForNode = sensitivityChangesForNode
+        _folderSensitivityChanged = folderSensitivityChanged
     }
     
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
@@ -48,6 +51,10 @@ public final class MockSensitiveNodeUseCase: SensitiveNodeUseCaseProtocol {
             sensitivityChanges(for: node),
             monitorInheritedSensitivity(for: node)
         ).eraseToAnyAsyncThrowingSequence()
+    }
+    
+    public func folderSensitivityChanged() -> AnyAsyncSequence<Void> {
+        _folderSensitivityChanged
     }
 }
 

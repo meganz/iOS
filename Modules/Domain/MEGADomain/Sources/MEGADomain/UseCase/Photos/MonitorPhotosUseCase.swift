@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import MEGASwift
 
 public protocol MonitorPhotosUseCaseProtocol: Sendable {
@@ -16,11 +17,14 @@ private typealias NodeEntityFilter = ((NodeEntity) -> Bool)
 public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     private let photosRepository: any PhotosRepositoryProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     
     public init(photosRepository: some PhotosRepositoryProtocol,
-                photoLibraryUseCase: some PhotoLibraryUseCaseProtocol) {
+                photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
+                sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol) {
         self.photosRepository = photosRepository
         self.photoLibraryUseCase = photoLibraryUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
     
     public func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
@@ -34,9 +38,8 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     // MARK: - Private
     
     private func monitorPhotos(nodeEntityFilter predicate: NodeEntityFilter? = nil) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
-        let monitorAll = await photosRepository
-            .photosUpdated()
-            .map { _ in
+        let monitorAll = await updatePhotos()
+            .map {
                 await allPhotos()
             }
             .prepend {
@@ -99,5 +102,15 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         } catch {
             return .failure(error)
         }
+    }
+
+    private func updatePhotos() async -> AnyAsyncSequence<Void> {
+        let photosUpdated = await photosRepository
+            .photosUpdated()
+            .map { _ in () }
+        
+        return merge(photosUpdated,
+                     sensitiveNodeUseCase.folderSensitivityChanged())
+        .eraseToAnyAsyncSequence()
     }
 }

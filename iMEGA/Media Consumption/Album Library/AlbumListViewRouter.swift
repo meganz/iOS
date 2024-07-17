@@ -88,7 +88,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         MonitorAlbumsUseCase(
             monitorPhotosUseCase: MonitorPhotosUseCase(
                 photosRepository: PhotosRepository.sharedRepo,
-                photoLibraryUseCase: makePhotoLibraryUseCase()),
+                photoLibraryUseCase: makePhotoLibraryUseCase(),
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo)),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             userAlbumRepository: userAlbumRepository(),
             photosRepository: PhotosRepository.sharedRepo,
