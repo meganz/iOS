@@ -3,6 +3,22 @@ import MEGASDKRepo
 import MEGASwift
 
 public final class CameraUploadsRepository: NSObject, CameraUploadsRepositoryProtocol {
+    actor TaskManager {
+        private var cameraUploadNodeNameUpdateCompletion: (@Sendable () -> Void)?
+        
+        func register(cameraUploadNodeNameUpdateCompletion: @escaping @Sendable () -> Void) {
+            self.cameraUploadNodeNameUpdateCompletion = cameraUploadNodeNameUpdateCompletion
+        }
+        
+        func removeCameraUploadNodeNameUpdateCompletion() {
+            cameraUploadNodeNameUpdateCompletion = nil
+        }
+        
+        func executeCameraUploadNodeNameUpdateCompletion() {
+            cameraUploadNodeNameUpdateCompletion?()
+        }
+    }
+    
     public static var newRepo: CameraUploadsRepository {
         CameraUploadsRepository(
             sdk: MEGASdk.sharedSdk,
@@ -11,7 +27,7 @@ public final class CameraUploadsRepository: NSObject, CameraUploadsRepositoryPro
     }
 
     private let sdk: MEGASdk
-    private var onCUNodeNameUpdated: (() -> Void)?
+    private let taskManager = TaskManager()
     private let cameraUploadsNodeAccess: CameraUploadNodeAccess
 
     public init(sdk: MEGASdk, cameraUploadsNodeAccess: CameraUploadNodeAccess) {
@@ -120,16 +136,18 @@ public final class CameraUploadsRepository: NSObject, CameraUploadsRepositoryPro
         return cuNodeEntity.handle == handle
     }
     
-    public func registerCameraUploadNodeNameUpdate(callback: @escaping () -> Void) {
-        sdk.add(self)
-        
-        onCUNodeNameUpdated = callback
+    public func registerCameraUploadNodeNameUpdate(callback: @escaping @Sendable () -> Void) {
+        Task {
+            sdk.add(self)
+            await taskManager.register(cameraUploadNodeNameUpdateCompletion: callback)
+        }
     }
     
     public func removeCameraUploadNodeNameUpdate() {
-        sdk.remove(self)
-        
-        onCUNodeNameUpdated = nil
+        Task {
+            sdk.remove(self)
+            await taskManager.removeCameraUploadNodeNameUpdateCompletion()
+        }
     }
 }
 
@@ -146,7 +164,7 @@ extension CameraUploadsRepository: MEGAGlobalDelegate {
             })
             
             if isCUNodeRenamed {
-                onCUNodeNameUpdated?()
+                await taskManager.executeCameraUploadNodeNameUpdateCompletion()
             }
         }
     }

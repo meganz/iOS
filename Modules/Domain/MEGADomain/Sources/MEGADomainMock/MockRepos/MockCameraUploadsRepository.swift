@@ -1,7 +1,7 @@
 import MEGADomain
 
 public struct MockCameraUploadsRepository: CameraUploadsRepositoryProtocol {
-    public static var newRepo: MockCameraUploadsRepository = MockCameraUploadsRepository()
+    public static let newRepo: MockCameraUploadsRepository = MockCameraUploadsRepository()
     private let cameraUploadsNode: NodeEntity
     private let cameraUploadsNodeHandle: HandleEntity
     private let isCameraUploadsNode: Bool
