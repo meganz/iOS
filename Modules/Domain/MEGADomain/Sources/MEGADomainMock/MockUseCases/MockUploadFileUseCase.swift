@@ -9,6 +9,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
     private let cancelTransferResult: (Result<Void, TransferErrorEntity>)
     private let filename: String
     private let nodeEntity: NodeEntity?
+    private let transferEntity: TransferEntity?
     
     public init(
         duplicate: Bool = true,
@@ -17,7 +18,8 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
         uploadSupportFileResult: Result<TransferEntity, TransferErrorEntity>? = nil,
         cancelTransferResult: Result<Void, TransferErrorEntity> = .failure(.generic),
         filename: String = "",
-        nodeEntity: NodeEntity? = nil
+        nodeEntity: NodeEntity? = nil,
+        transfer: TransferEntity? = nil
     ) {
         self.duplicate = duplicate
         self.newName = newName
@@ -26,6 +28,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
         self.cancelTransferResult = cancelTransferResult
         self.filename = filename
         self.nodeEntity = nodeEntity
+        self.transferEntity = transfer
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
@@ -42,9 +45,32 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
         completion?(result)
     }
     
-    public func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let result = uploadSupportFileResult else { return }
-        completion(result)
+    public func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void) async throws -> TransferEntity {
+        guard let result = uploadSupportFileResult, let transferEntity else {
+            throw TransferErrorEntity.generic
+        }
+        
+        start(transferEntity)
+        
+        let totalBytes: Int = 4
+        
+        for i in 1...Int(totalBytes) {
+            try await Task.sleep(nanoseconds: UInt64(100_000_000))
+            progress(TransferEntity(type: transferEntity.type, transferredBytes: i, totalBytes: totalBytes, path: transferEntity.path))
+        }
+        
+        switch result {
+        case .success(let transfer):
+            return transfer
+        case .failure(let error):
+            throw error
+        }
+    }
+    
+    public func cancel(transfer: TransferEntity) async throws {
+        if case .failure(let error) = cancelTransferResult {
+            throw error
+        }
     }
     
     public func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void) {

@@ -1,4 +1,3 @@
-import Combine
 import MEGADomain
 import MEGAL10n
 
@@ -7,12 +6,11 @@ final class ReportIssueViewModel: ObservableObject {
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
     private let supportUseCase: any SupportUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let monitorUseCase: any NetworkMonitorUseCaseProtocol
     private var transfer: TransferEntity?
     private var sourceUrl: URL?
     private var detailsPlaceholder = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
-    private var subscriptions: AnyCancellable?
-    private let monitorUseCase: any NetworkMonitorUseCaseProtocol
-    private var reportAlertType: ReportIssueAlertTypeModel = .none
+    private (set) var reportAlertType: ReportIssueAlertTypeModel = .none
     
     var areLogsEnabled: Bool
     var shouldDisableSendButton: Bool {
@@ -53,49 +51,73 @@ final class ReportIssueViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
     }
     
-    private func uploadLogFileIfNeeded() {
+    private func uploadLogFileIfNeeded() async {
         guard let sourceUrl else {
-            createTicketForSupport()
+            await createTicketForSupport()
             return
         }
-        uploadFileUseCase.uploadSupportFile(sourceUrl) { [weak self] (transferEntity) in
-            DispatchQueue.main.async {
-                self?.transfer = transferEntity
-                self?.isUploadingLog = true
-            }
-        } progress: { [weak self] (transferEntity) in
-            DispatchQueue.main.async {
-                self?.progress = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
-            }
-        } completion: { [weak self] (result) in
-            DispatchQueue.main.async {
-                self?.isUploadingLog = false
-                switch result {
-                case .failure:
-                    self?.reportAlertType = .uploadLogFileFailure
-                    self?.showingReportIssueAlert = true
-                case .success(let transferEntity):
-                    self?.progress = 100
-                    self?.createTicketForSupport(filename: transferEntity.fileName)
-                }
-            }
+        
+        do {
+            let transfer = try await uploadLogFile(from: sourceUrl)
+            await handleUploadSuccess(transfer: transfer)
+        } catch {
+            await handleUploadFailure()
         }
     }
     
-    private func createTicketForSupport(filename: String? = nil) {
-        Task { @MainActor in
-            do {
-                try await supportUseCase.createSupportTicket(withMessage: getFormattedReportIssueMessage(details, filename: filename))
-                reportAlertType = .createSupportTicketFinished
-            } catch {
-                if let err = error as? ReportErrorEntity, case .tooManyRequest = err {
-                    reportAlertType = .createSupportTicketTooManyRequestFailure
-                } else {
-                    reportAlertType = .createSupportTicketFailure
-                }
+    private func uploadLogFile(from sourceUrl: URL) async throws -> TransferEntity {
+        try await uploadFileUseCase.uploadSupportFile(sourceUrl) { [weak self] transfer in
+            guard let self else { return }
+            Task {
+                await self.updateCurrentTransfer(transfer)
             }
-            showingReportIssueAlert = true
+        } progress: { [weak self] transfer in
+            guard let self else { return }
+            Task {
+                await self.updateCurrentProgress(Float(transfer.transferredBytes) / Float(transfer.totalBytes))
+            }
         }
+    }
+
+    @MainActor
+    private func updateCurrentTransfer(_ transfer: TransferEntity) {
+        self.transfer = transfer
+        isUploadingLog = true
+    }
+
+    @MainActor
+    private func updateCurrentProgress(_ progress: Float) {
+        self.progress = progress
+    }
+    
+    @MainActor
+    private func handleUploadSuccess(transfer: TransferEntity) async {
+        progress = 1
+        isUploadingLog = false
+        await createTicketForSupport(filename: transfer.fileName)
+    }
+    
+    @MainActor
+    private func handleUploadFailure() async {
+        isUploadingLog = false
+        reportAlertType = .uploadLogFileFailure
+        showingReportIssueAlert = true
+    }
+    
+    @MainActor
+    private func createTicketForSupport(filename: String? = nil) async {
+        do {
+            let formattedMessage = await getFormattedReportIssueMessage(details, filename: filename)
+            try await supportUseCase.createSupportTicket(withMessage: formattedMessage)
+            reportAlertType = .createSupportTicketFinished
+        } catch {
+            if let err = error as? ReportErrorEntity, case .tooManyRequest = err {
+                reportAlertType = .createSupportTicketTooManyRequestFailure
+            } else {
+                reportAlertType = .createSupportTicketFailure
+            }
+        }
+        showingReportIssueAlert = true
     }
     
     @MainActor
@@ -106,41 +128,43 @@ final class ReportIssueViewModel: ObservableObject {
         return await messageViewModel.generateReportIssueMessage(message: message, filename: filename ?? "No log file")
     }
     
-    func createTicket() {
+    func createTicket() async {
         if isSendLogFileToggleOn && areLogsEnabled {
-            uploadLogFileIfNeeded()
+            await uploadLogFileIfNeeded()
         } else {
-            createTicketForSupport()
+            await createTicketForSupport()
         }
     }
     
+    func cancelUploadReport() async {
+        guard let transfer else {
+            await dismissReport()
+            return
+        }
+        
+        do {
+            try await uploadFileUseCase.cancel(transfer: transfer)
+            MEGALogDebug("[Report issue] report canceled")
+        } catch {
+            MEGALogError("[Report issue] fail cancel the report")
+            await dismissReport()
+        }
+    }
+    
+    @MainActor
     func dismissReport() {
         router.dismiss()
     }
     
-    func cancelUploadReport() {
-        guard let transfer else {
-            router.dismiss()
-            return
-        }
-        uploadFileUseCase.cancel(transfer: transfer) { [weak self] (result) in
-            switch result {
-            case .success:
-                MEGALogDebug("[Report issue] report canceled")
-            case .failure:
-                MEGALogError("[Report issue] fail cancel the report")
-                self?.router.dismiss()
-            }
-        }
-    }
-    
+    @MainActor
     func showCancelUploadReportAlert() {
         reportAlertType = .cancelUploadReport
         showingReportIssueAlert = true
     }
     
+    @MainActor
     func showReportIssueActionSheetIfNeeded() {
-        showingReportIssueActionSheet = isReportDiscardable
+        showingReportIssueActionSheet = !(details.isEmpty || details == detailsPlaceholder)
         if !showingReportIssueActionSheet {
             dismissReport()
         }
@@ -149,27 +173,35 @@ final class ReportIssueViewModel: ObservableObject {
     func reportIssueAlertData() -> ReportIssueAlertDataModel {
         switch reportAlertType {
         case .createSupportTicketTooManyRequestFailure:
-            return ReportIssueAlertDataModel(title: Strings.Localizable.Help.ReportIssue.Fail.Too.Many.Request.title,
-                                             message: Strings.Localizable.Help.ReportIssue.Fail.Too.Many.Request.message,
-                                             primaryButtonTitle: Strings.Localizable.ok)
+            ReportIssueAlertDataModel(
+                title: Strings.Localizable.Help.ReportIssue.Fail.Too.Many.Request.title,
+                message: Strings.Localizable.Help.ReportIssue.Fail.Too.Many.Request.message,
+                primaryButtonTitle: Strings.Localizable.ok
+            )
         case .uploadLogFileFailure, .createSupportTicketFailure:
-            return ReportIssueAlertDataModel(title: Strings.Localizable.somethingWentWrong,
-                                             message: Strings.Localizable.Help.ReportIssue.Fail.message,
-                                             primaryButtonTitle: Strings.Localizable.ok)
+            ReportIssueAlertDataModel(
+                title: Strings.Localizable.somethingWentWrong,
+                message: Strings.Localizable.Help.ReportIssue.Fail.message,
+                primaryButtonTitle: Strings.Localizable.ok
+            )
         case .createSupportTicketFinished:
-            return ReportIssueAlertDataModel(title: Strings.Localizable.Help.ReportIssue.Success.title,
-                                             message: Strings.Localizable.Help.ReportIssue.Success.message,
-                                             primaryButtonTitle: Strings.Localizable.ok,
-                                             primaryButtonAction: dismissReport)
+            ReportIssueAlertDataModel(
+                title: Strings.Localizable.Help.ReportIssue.Success.title,
+                message: Strings.Localizable.Help.ReportIssue.Success.message,
+                primaryButtonTitle: Strings.Localizable.ok,
+                primaryButtonAction: dismissReport
+            )
         case .cancelUploadReport:
-            return ReportIssueAlertDataModel(title: Strings.Localizable.Help.ReportIssue.Creating.Cancel.title,
-                                             message: Strings.Localizable.Help.ReportIssue.Creating.Cancel.message,
-                                             primaryButtonTitle: Strings.Localizable.continue,
-                                             primaryButtonAction: dismissReport,
-                                             secondaryButtoTitle: Strings.Localizable.yes,
-                                             secondaryButtonAction: cancelUploadReport)
+            ReportIssueAlertDataModel(
+                title: Strings.Localizable.Help.ReportIssue.Creating.Cancel.title,
+                message: Strings.Localizable.Help.ReportIssue.Creating.Cancel.message,
+                primaryButtonTitle: Strings.Localizable.continue,
+                primaryButtonAction: dismissReport,
+                secondaryButtonTitle: Strings.Localizable.yes,
+                secondaryButtonAction: cancelUploadReport
+            )
         case .none:
-            return ReportIssueAlertDataModel()
+            ReportIssueAlertDataModel()
         }
     }
     

@@ -4,8 +4,8 @@ import Foundation
 public protocol UploadFileUseCaseProtocol {
     func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool
     func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
-    func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
-    func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void)
+    func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void) async throws -> TransferEntity
+    func cancel(transfer: TransferEntity) async throws
     func tempURL(forFilename filename: String) -> URL
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func cancelUploadTransfers()
@@ -54,12 +54,16 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
         }
     }
     
-    public func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        uploadFileRepository.uploadSupportFile(url, start: start, progress: progress, completion: completion)
+    public func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void) async throws -> TransferEntity {
+        try await uploadFileRepository.uploadSupportFile(
+            url,
+            start: start,
+            progress: progress
+        )
     }
     
-    public func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void) {
-        uploadFileRepository.cancel(transfer: transfer, completion: completion)
+    public func cancel(transfer: TransferEntity) async throws {
+        try await uploadFileRepository.cancel(transfer: transfer)
     }
     
     public func tempURL(forFilename filename: String) -> URL {

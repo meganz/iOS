@@ -46,20 +46,26 @@ struct ReportIssueView: View {
         .ignoresSafeArea(edges: .bottom)
         .alert(isPresented: $viewModel.showingReportIssueAlert) {
             let alertData = viewModel.reportIssueAlertData()
-            if let secondaryButtonAlert = alertData.secondaryButtoTitle {
+            if let secondaryButtonAlert = alertData.secondaryButtonTitle {
                 return Alert(title: Text(alertData.title),
                              message: Text(alertData.message),
                              primaryButton: .cancel(Text(alertData.primaryButtonTitle), action: {
-                    alertData.primaryButtonAction?()
+                    Task {
+                        await alertData.primaryButtonAction?()
+                    }
                 })
                              , secondaryButton: .destructive(Text(secondaryButtonAlert), action: {
-                    alertData.secondaryButtonAction?()
+                    Task {
+                        await alertData.secondaryButtonAction?()
+                    }
                 }))
             } else {
                 return Alert(title: Text(alertData.title),
                              message: Text(alertData.message),
                              dismissButton: .default(Text(alertData.primaryButtonTitle), action: {
-                    alertData.primaryButtonAction?()
+                    Task {
+                        await alertData.primaryButtonAction?()
+                    }
                 }))
             }
         }
@@ -92,7 +98,9 @@ struct ReportIssueView: View {
     
     private var rightNavigationBarButton: some View {
         Button(Strings.Localizable.send) {
-            viewModel.createTicket()
+            Task {
+                await viewModel.createTicket()
+            }
         }
         .accentColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary)
         .font(.body.bold())
