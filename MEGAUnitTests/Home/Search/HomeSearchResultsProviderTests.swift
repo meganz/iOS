@@ -65,12 +65,12 @@ fileprivate extension Date {
 class HomeSearchResultsProviderTests: XCTestCase {
     
     class Harness {
+        static let parentNodeHandle: HandleEntity = 999
         let filesSearchUseCase: MockFilesSearchUseCase
         let nodeDetails: MockNodeDetailUseCase
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
         let nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository
-        let nodeUpdateRepository: MockNodeUpdateRepository
         let downloadTransfersListener: MockDownloadTransfersListener
         let contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase
         let sut: HomeSearchResultsProvider
@@ -100,8 +100,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
             mediaUseCase = MockMediaUseCase()
 
             nodesUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
-
-            nodeUpdateRepository = MockNodeUpdateRepository()
             
             downloadTransfersListener = MockDownloadTransfersListener()
              
@@ -110,7 +108,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
             )
             
             sut = HomeSearchResultsProvider(
-                parentNodeProvider: { NodeEntity(handle: 123) },
+                parentNodeProvider: { NodeEntity(handle: Harness.parentNodeHandle) },
                 filesSearchUseCase: filesSearchUseCase,
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,
@@ -118,7 +116,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 nodesUpdateListenerRepo: nodesUpdateListenerRepo,
                 downloadTransferListener: downloadTransfersListener,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
-                nodeUpdateRepository: nodeUpdateRepository,
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 allChips: SearchChipEntity.allChips(
                     areChipsGroupEnabled: true,
@@ -678,9 +675,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
             nodeUpdatesSignals.append($0)
         })
         
-        harness.nodeUpdateRepository.shouldProcessOnNodesUpdateValue = false
-        _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
-        
         // when
         harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(nodes)
         
@@ -702,8 +696,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 expectation.fulfill()
             }
         })
-        
-        harness.nodeUpdateRepository.shouldProcessOnNodesUpdateValue = true
         _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
         
         let task = Task {
@@ -712,7 +704,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         
-        harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(nodes) // Trigger .generic signal
+        harness.nodesUpdateListenerRepo.onNodesUpdateHandler?([.init(parentHandle: Harness.parentNodeHandle)]) // Trigger .generic signal
         harness.downloadTransfersListener.simulateDownloadedNode(nodes[1]) // Trigger .specific signal
         
         await fulfillment(of: [expectation], timeout: 1.0)
