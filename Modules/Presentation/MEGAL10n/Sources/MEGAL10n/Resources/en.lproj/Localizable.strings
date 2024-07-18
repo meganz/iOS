@@ -4116,8 +4116,8 @@
 "rewind.feature.title"="Rewind";
 /* Rewind fro free users */
 "rewind.for.free.users"="Up to 30 days (view only)";
-/* Rewind fro pro users */
-"rewind.for.pro.users"="Up to 180 days";
+/* Rewind for pro users, where %d is the number of days that marks the rewind limit */
+"rewind.for.pro.users"="Up to %d days";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */

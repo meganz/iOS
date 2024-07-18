@@ -60,7 +60,7 @@ struct FeatureListHelper: FeatureListHelperProtocol {
                 type: .rewind,
                 title: Strings.Localizable.Rewind.Feature.title,
                 freeText: Strings.Localizable.Rewind.For.Free.users,
-                proText: Strings.Localizable.Rewind.For.Pro.Users.maximumDays(rewindLimit)
+                proText: Strings.Localizable.Rewind.For.Pro.users(rewindLimit)
             ),
             FeatureDetails(
                 type: .vpn,

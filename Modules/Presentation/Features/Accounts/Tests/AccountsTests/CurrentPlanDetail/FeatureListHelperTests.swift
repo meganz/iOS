@@ -42,7 +42,7 @@ final class FeatureListHelperTests: XCTestCase {
         file: StaticString = #file,
         line: UInt = #line
     ) {
-        let expectedString = Strings.Localizable.Rewind.For.Pro.Users.maximumDays(expectedLimit)
+        let expectedString = Strings.Localizable.Rewind.For.Pro.users(expectedLimit)
         let sut = makeSUT(accountType: accountType)
         
         XCTAssertEqual(sut.rewindLimit, expectedLimit, file: file, line: line)
@@ -67,7 +67,7 @@ final class FeatureListHelperTests: XCTestCase {
         XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil", file: file, line: line)
         XCTAssertEqual(rewindFeature?.title, Strings.Localizable.Rewind.Feature.title, "Rewind feature title mismatch", file: file, line: line)
         XCTAssertEqual(rewindFeature?.freeText, Strings.Localizable.Rewind.For.Free.users, "Rewind feature free text mismatch", file: file, line: line)
-        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.Users.maximumDays(expectedLimit), "Rewind feature pro text mismatch for \(accountType)", file: file, line: line)
+        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.users(expectedLimit), "Rewind feature pro text mismatch for \(accountType)", file: file, line: line)
     }
 
     func testCreateCurrentFeatures_shouldReturnCorrectFeatureCount() {
@@ -139,7 +139,7 @@ final class FeatureListHelperTests: XCTestCase {
         XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil")
         XCTAssertEqual(rewindFeature?.title, Strings.Localizable.Rewind.Feature.title, "Rewind feature title mismatch")
         XCTAssertEqual(rewindFeature?.freeText, Strings.Localizable.Rewind.For.Free.users, "Rewind feature free text mismatch")
-        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.Users.maximumDays(sut.rewindLimit), "Rewind feature pro text mismatch")
+        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.users(sut.rewindLimit), "Rewind feature pro text mismatch")
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectVPNFeature() {
