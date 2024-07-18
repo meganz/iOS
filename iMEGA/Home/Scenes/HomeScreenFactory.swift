@@ -343,7 +343,6 @@ final class HomeScreenFactory: NSObject {
             nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
             downloadTransferListener: makeDownloadTransfersListener(),
             nodeIconUsecase: makeNodeIconUsecase(),
-            nodeUpdateRepository: NodeUpdateRepository.newRepo,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             allChips: Self.allChips(areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)),
             sdk: sdk,
