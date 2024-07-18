@@ -32,7 +32,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
-@property (weak, nonatomic) IBOutlet UIImageView *forgotPasswordImageView;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (weak, nonatomic) IBOutlet UILabel *createAccountLabel;
@@ -75,10 +74,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     [self.loginButton setTitle:LocalizedString(@"login", @"Login") forState:UIControlStateNormal];
 
-    NSString *forgotPasswordString = LocalizedString(@"forgotPassword", @"An option to reset the password.");
-    forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
-    forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"¿" withString:@""];
-    [self.forgotPasswordButton setTitle:forgotPasswordString forState:UIControlStateNormal];
+    [self.forgotPasswordButton setTitle:LocalizedString(@"forgotPassword", @"An option to reset the password.") forState:UIControlStateNormal];
     
     [self registerForKeyboardNotifications];
 }
@@ -271,7 +267,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self.passwordView updateAppearance];
     
     [self.forgotPasswordButton setTitleColor: [self forgotPasswordTintColor] forState:UIControlStateNormal];
-    [self configureQuestionMarkTintColor:self.forgotPasswordImageView];
     
     [self.loginButton mnz_setupPrimary:self.traitCollection];
         

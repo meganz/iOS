@@ -30,14 +30,6 @@ extension LoginViewController {
         UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_secondaryGray(for: traitCollection)
     }
     
-    @objc func configureQuestionMarkTintColor(_ imageView: UIImageView) {
-        if UIColor.isDesignTokenEnabled() {
-            imageView.image = UIImage(resource: .littleQuestionMark).withTintColor(forgotPasswordTintColor(), renderingMode: .alwaysOriginal)
-        } else {
-            imageView.tintColor = forgotPasswordTintColor()
-        }
-    }
-    
     @objc func loginLabelrimaryTextColor() -> UIColor {
         UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
     }
