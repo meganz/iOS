@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 public struct UploadFileRepository: UploadFileRepositoryProtocol {
     private let sdk: MEGASdk
@@ -33,24 +34,46 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken, delegate: transferDelegate)
     }
     
-    public func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        sdk.startUploadForSupport(withLocalPath: url.path, isSourceTemporary: true, delegate: TransferDelegate(start: start, progress: progress, completion: completion))
+    public func uploadSupportFile(
+        _ url: URL,
+        start: @escaping (TransferEntity) -> Void,
+        progress: @escaping (TransferEntity) -> Void
+    ) async throws -> TransferEntity {
+        try await withAsyncThrowingValue { continuation in
+            sdk.startUploadForSupport(
+                withLocalPath: url.path,
+                isSourceTemporary: true,
+                delegate: TransferDelegate(
+                    start: start,
+                    progress: progress,
+                    completion: { result in
+                        switch result {
+                        case .success(let transfer):
+                            continuation(.success(transfer))
+                        case .failure(let error):
+                            continuation(.failure(error))
+                        }
+                    }
+                )
+            )
+        }
     }
     
-    public func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void) {
-        guard let t = transfer.toMEGATransfer(in: sdk) else {
-            completion(.failure(.generic))
-            return
+    public func cancel(transfer: TransferEntity) async throws {
+        guard let transfer = transfer.toMEGATransfer(in: sdk) else {
+            throw TransferErrorEntity.generic
         }
         
-        sdk.cancelTransfer(t, delegate: RequestDelegate { result in
-            switch result {
-            case .failure:
-                completion(.failure(.generic))
-            case .success:
-                completion(.success(()))
-            }
-        })
+        return try await withAsyncThrowingValue { continuation in
+            sdk.cancelTransfer(transfer, delegate: RequestDelegate { result in
+                switch result {
+                case .failure:
+                    continuation(.failure(TransferErrorEntity.generic))
+                case .success:
+                    continuation(.success)
+                }
+            })
+        }
     }
     
     public func cancelUploadTransfers() {
