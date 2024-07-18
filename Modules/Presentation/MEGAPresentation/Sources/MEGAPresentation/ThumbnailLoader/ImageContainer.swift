@@ -40,12 +40,12 @@ public struct URLImageContainer: ImageContaining, Sendable {
     public let type: ImageType
     
     public init?(imageURL: URL, type: ImageType) {
-        guard let image = Image(contentsOfFile: imageURL.path) else {
+        guard let uiImage = UIImage(contentsOfFile: imageURL.path) else {
             return nil
         }
-        
+
         self.imageURL = imageURL
-        self.image = image
+        self.image = Image(uiImage: uiImage)
         self.type = type
     }
     

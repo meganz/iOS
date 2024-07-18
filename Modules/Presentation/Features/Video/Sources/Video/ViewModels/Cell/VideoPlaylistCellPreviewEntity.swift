@@ -1,5 +1,5 @@
 import MEGADomain
-import MEGASwiftUI
+import MEGAPresentation
 
 public struct VideoPlaylistCellPreviewEntity {
     let imageContainers: [any ImageContaining]

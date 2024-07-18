@@ -1,5 +1,5 @@
 import MEGADomain
-import MEGASwiftUI
+import MEGAPresentation
 import SwiftUI
 @testable import Video
 

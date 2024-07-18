@@ -1,6 +1,5 @@
-@testable import MEGA
 import MEGADomain
-import MEGASwiftUI
+import MEGAPresentation
 import XCTest
 
 final class ThumbnailTypeEntityMappingTests: XCTestCase {

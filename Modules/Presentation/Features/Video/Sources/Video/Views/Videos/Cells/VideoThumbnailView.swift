@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct VideoThumbnailView: View {

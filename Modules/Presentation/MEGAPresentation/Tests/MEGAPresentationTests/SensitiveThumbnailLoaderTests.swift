@@ -1,8 +1,8 @@
-@testable import MEGA
 import MEGADomain
 import MEGADomainMock
+@testable import MEGAPresentation
+import MEGAPresentationMock
 import MEGASwift
-import MEGASwiftUI
 import SwiftUI
 import XCTest
 
@@ -10,16 +10,16 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
     
     func testInitialImage_nodeNotMarkedSensitive_shouldReturnPlaceholder() {
         let node = NodeEntity(name: "test.jpg", handle: 1)
-        
+        let placeholder: Image = Image("heart")
         let sut = makeSUT()
         
-        XCTAssertTrue(sut.initialImage(for: node, type: .thumbnail)
-            .isEqual(ImageContainer(image: node.placeholderImage, type: .placeholder)))
+        XCTAssertTrue(sut.initialImage(for: node, type: .thumbnail, placeholder: { placeholder })
+            .isEqual(ImageContainer(image: placeholder, type: .placeholder)))
     }
     
     func testInitialImage_nodeMarkedSensitive_shouldReturnSensitiveContainer() {
         let node = NodeEntity(name: "test.jpg", handle: 1, isMarkedSensitive: true)
-        
+        let placeholder: Image = Image("heart")
         let image = Image("folder")
         let type = ImageType.thumbnail
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: type)
@@ -29,7 +29,7 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         
         let expected = SensitiveImageContainer(image: image, type: type,
                                                isSensitive: node.isMarkedSensitive)
-        XCTAssertTrue(sut.initialImage(for: node, type: .thumbnail).isEqual(expected))
+        XCTAssertTrue(sut.initialImage(for: node, type: .thumbnail, placeholder: { placeholder }).isEqual(expected))
     }
     
     func testInitialImagePlaceholder_nodeNotMarkedAsSensitive_shouldReturnPlaceholderProvided() {
@@ -78,10 +78,10 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         
         let inheritedSensitivity = false
         let thumbnailLoader = MockThumbnailLoader(loadImage: stream.eraseToAnyAsyncSequence())
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(inheritedSensitivity))
+        let nodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(inheritedSensitivity))
         
         let sut = makeSUT(thumbnailLoader: thumbnailLoader,
-                          nodeUseCaseProtocol: nodeUseCase)
+                          sensitiveNodeUseCase: nodeUseCase)
         
         var iterator = try await sut.loadImage(for: node, type: .preview).makeAsyncIterator()
         
@@ -108,10 +108,10 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
     
     private func makeSUT(
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        nodeUseCaseProtocol: some NodeUseCaseProtocol = MockNodeDataUseCase()
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
     ) -> SensitiveThumbnailLoader {
         SensitiveThumbnailLoader(
             thumbnailLoader: thumbnailLoader,
-            nodeUseCaseProtocol: nodeUseCaseProtocol)
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
 }

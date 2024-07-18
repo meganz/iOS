@@ -1,5 +1,5 @@
+import MEGAPresentation
 import SwiftUI
-import MEGASwiftUI
 
 enum PreviewImageContainerFactory {
     static func withColor(_ color: UIColor, size: CGSize) -> any ImageContaining {

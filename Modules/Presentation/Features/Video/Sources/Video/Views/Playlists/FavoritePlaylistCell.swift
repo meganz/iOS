@@ -1,6 +1,6 @@
 import MEGADomain
 import MEGAL10n
-import MEGASwiftUI
+import MEGAPresentation
 import SwiftUI
 
 struct FavoritePlaylistCell: View {

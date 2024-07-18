@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 import XCTest
 
 final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {

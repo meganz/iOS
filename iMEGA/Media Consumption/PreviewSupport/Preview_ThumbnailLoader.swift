@@ -1,6 +1,6 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASwift
-import MEGASwiftUI
 import SwiftUI
 
 struct Preview_ThumbnailLoader: ThumbnailLoaderProtocol {
