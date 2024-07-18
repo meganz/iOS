@@ -3,10 +3,11 @@ import UIKit
 final class PhotoCollectionBottomView: UIView {
     private let padding: CGFloat = 10
     
+    // The following UIColor values are not design token-dependent, as they're color-literal "white" values in both dark/light modes
     private lazy var label: UILabel = {
         let label = UILabel()
         label.layer.zPosition = 1
-        label.textColor = MEGAAppColor.White._FFFFFF.uiColor
+        label.textColor = UIColor.white
         label.font = .boldSystemFont(ofSize: 12)
         return label
     }()
@@ -14,7 +15,7 @@ final class PhotoCollectionBottomView: UIView {
     private lazy var videoIconLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.path = UIBezierPath.videoIconPath.cgPath
-        layer.fillColor = MEGAAppColor.White._FFFFFF.uiColor.cgColor
+        layer.fillColor = UIColor.white.cgColor
         return layer
     }()
     
