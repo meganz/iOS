@@ -1063,7 +1063,7 @@
         
     } else if (self.megatype) {
         if (self.megatype == MEGANotificationTypeGeneric) {
-            if (UIApplication.sharedApplication.applicationState != UIApplicationStateActive) { return; }
+            if (![self isAdsMainTabBarRootView]) { return; }
             [self handleGenericAppPushNotificationTapWithUserInfo:response.notification.request.content.userInfo];
         } else {
             [self openTabBasedOnNotificationMegatype];
