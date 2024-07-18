@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADesignToken
 import SwiftUI
 import XCTest
 
@@ -44,11 +45,17 @@ final class CameraUploadStatusImageViewModelTests: XCTestCase {
     }
     
     func testProgressLineColor_onStatus_colorShouldBeCorrect() {
+        let uploadingColor = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Support.info.swiftUI :
+            Color(.cameraUploadStatusUploading)
+        let completedColor = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Support.success.swiftUI :
+            Color(.cameraUploadStatusCompleted)
         let expectations: [(CameraUploadStatus, Color)] = [
             (.turnedOff, .clear),
             (.checkPendingItemsToUpload, .clear),
-            (.uploading(progress: 0.65), MEGAAppColor.Photos.cameraUploadStatusUploading.color),
-            (.completed, MEGAAppColor.Photos.cameraUploadStatusCompleted.color),
+            (.uploading(progress: 0.65), uploadingColor),
+            (.completed, completedColor),
             (.idle, .clear),
             (.warning, .clear)]
         

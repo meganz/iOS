@@ -28,9 +28,9 @@ final class CameraUploadStatusImageViewModel: ObservableObject {
     var progressLineColor: Color {
         switch status {
         case .uploading:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Support.info.swiftUI : MEGAAppColor.Photos.cameraUploadStatusUploading.color
+            return UIColor.isDesignTokenEnabled() ? TokenColors.Support.info.swiftUI : Color(.cameraUploadStatusUploading)
         case .completed:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Support.success.swiftUI : MEGAAppColor.Photos.cameraUploadStatusCompleted.color
+            return UIColor.isDesignTokenEnabled() ? TokenColors.Support.success.swiftUI : Color(.cameraUploadStatusCompleted)
         default:
             return .clear
         }
