@@ -174,10 +174,10 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             monitorPhotosAsyncSequence: photosSequence)
         let mediaUseCase = MockMediaUseCase(rawImageFiles: [rawCover.name, rawSensitive.name],
                                             gifImageFiles: [gifCover.name, gifInheritedSensitive.name])
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
         let sut = makeSUT(monitorPhotosUseCase: monitorPhotosUseCase,
                           mediaUseCase: mediaUseCase,
-                          nodeUseCase: nodeUseCase)
+                          sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         var albumsSequence = await sut.monitorSystemAlbums(excludeSensitives: true)
             .makeAsyncIterator()
@@ -185,11 +185,11 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         let albums = try await albumsSequence.next()?.get()
         
         let expected = [AlbumEntity(id: AlbumIdEntity.favourite.value, coverNode: favouriteCover,
-                                    count: 2, type: .favourite),
+                                    count: 1, type: .favourite),
                         AlbumEntity(id: AlbumIdEntity.gif.value, coverNode: gifCover,
-                                    count: 2, type: .gif),
+                                    count: 1, type: .gif),
                         AlbumEntity(id: AlbumIdEntity.raw.value, coverNode: rawCover,
-                                    count: 2, type: .raw)]
+                                    count: 1, type: .raw)]
         XCTAssertEqual(albums, expected)
     }
     
@@ -325,10 +325,10 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         let userAlbumRepository = MockUserAlbumRepository(albums: albumSets,
                                                           albumElementIds: albumElementIds)
         let photosRepository = MockPhotosRepository(photos: [cover, coverSensitive, coverInheritedSensitive])
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
         let sut = makeSUT(userAlbumRepository: userAlbumRepository,
                           photosRepository: photosRepository,
-                          nodeUseCase: nodeUseCase)
+                          sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         var albumsSequence = await sut.monitorUserAlbums(excludeSensitives: true)
             .makeAsyncIterator()
@@ -506,10 +506,10 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             let userRepository = MockUserAlbumRepository(albumElementIds: [albumId: albumElementIds])
             let photos = [normal, sensitive, inheritedSensitive]
             let photosRepository = MockPhotosRepository(photos: photos)
-            let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
+            let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
             let sut = makeSUT(userAlbumRepository: userRepository,
                               photosRepository: photosRepository,
-                              nodeUseCase: nodeUseCase)
+                              sensitiveNodeUseCase: sensitiveNodeUseCase)
             
             var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user),
                                                                        excludeSensitives: true,
@@ -550,10 +550,10 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         let userRepository = MockUserAlbumRepository(albumElementIds: [albumId: albumElementIds])
         let photos = [normal, sensitive, inheritedSensitive]
         let photosRepository = MockPhotosRepository(photos: photos)
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
         let sut = makeSUT(userAlbumRepository: userRepository,
                           photosRepository: photosRepository,
-                          nodeUseCase: nodeUseCase)
+                          sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user),
                                                                    excludeSensitives: false,
@@ -572,12 +572,12 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
         photosRepository: some PhotosRepositoryProtocol = MockPhotosRepository(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase()
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
     ) -> MonitorAlbumsUseCase {
         MonitorAlbumsUseCase(monitorPhotosUseCase: monitorPhotosUseCase,
                              mediaUseCase: mediaUseCase,
                              userAlbumRepository: userAlbumRepository,
                              photosRepository: photosRepository,
-                             nodeUseCase: nodeUseCase)
+                             sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
 }

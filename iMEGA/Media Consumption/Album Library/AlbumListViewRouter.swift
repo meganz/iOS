@@ -94,9 +94,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             userAlbumRepository: userAlbumRepository(),
             photosRepository: PhotosRepository.sharedRepo,
-            nodeUseCase: NodeUseCase(
-                nodeDataRepository: NodeDataRepository.newRepo,
-                nodeValidationRepository: NodeValidationRepository.newRepo,
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo))
     }
     

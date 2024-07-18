@@ -106,7 +106,7 @@ final class AlbumCellViewModel: ObservableObject {
               album.type == .user else { return }
         
         for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album,
-                                                                                   excludeSensitives: false,
+                                                                                   excludeSensitives: excludeSensitives(),
                                                                                    includeSensitiveInherited: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)) {
             numberOfNodes = albumPhotos.count
             
@@ -140,12 +140,7 @@ final class AlbumCellViewModel: ObservableObject {
     
     @MainActor
     private func setDefaultAlbumCover(_ photos: [AlbumPhotoEntity]) async {
-        let excludeSensitives = if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
-            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
-        } else {
-            false
-        }
-        guard let latestPhoto = photos.latestModifiedPhoto(excludeSensitives: excludeSensitives) else {
+        guard let latestPhoto = photos.latestModifiedPhoto() else {
             if thumbnailContainer.type != .placeholder {
                 thumbnailContainer = ImageContainer(image: Image(.placeholder), type: .placeholder)
             }
@@ -201,6 +196,14 @@ final class AlbumCellViewModel: ObservableObject {
             return
         }
         thumbnailContainer = imageContainer
+    }
+    
+    private func excludeSensitives() async -> Bool {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
+            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        } else {
+            false
+        }
     }
 }
 
