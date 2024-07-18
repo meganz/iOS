@@ -17,6 +17,9 @@ do {
     log("Creating hotfix MR on GitLab")
     try await createMR(sourceBranch: branchName, targetBranch: "master", title: "Hotfix \(userInput.hotfixVersion)", squash: false)
 
+    log("Creating release version iOS \(userInput.hotfixVersion) for all Main Application Jira projects")
+    try await createReleaseVersion(version: userInput.hotfixVersion)
+
     log("Finished successfully")
     exit(ProcessResult.success)
 } catch {

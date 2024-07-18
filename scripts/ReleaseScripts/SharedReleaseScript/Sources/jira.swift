@@ -1,7 +1,6 @@
 import Foundation
-import SharedReleaseScript
 
-func createReleaseVersion(version: String) async throws {
+public func createReleaseVersion(version: String) async throws {
     let releasePath = "/rest/api/2/version"
     let url = try makeURL(base: environment.jiraBaseURL, path: releasePath)
 
