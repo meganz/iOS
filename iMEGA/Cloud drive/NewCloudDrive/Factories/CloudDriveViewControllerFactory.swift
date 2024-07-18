@@ -722,7 +722,7 @@ struct CloudDriveViewControllerFactory {
         let isHidden = await nodeSensitivityChecker.evaluateNodeSensitivity(
             for: nodeSource,
             displayMode: config.displayMode ?? .cloudDrive,
-            isFromSharedItem: false
+            isFromSharedItem: config.isFromSharedItem ?? false
         )
 
         guard nodeBrowserViewModel?.contextMenuViewFactory?.isHidden != isHidden else {
@@ -824,7 +824,7 @@ struct CloudDriveViewControllerFactory {
                     // for more details inspect NodeOpener.swift and it's openNode method
                     allNodeHandles: $0.nonEmptyOrNilSiblingsIds(),
                     displayMode: config.displayMode?.carriedOverDisplayMode, 
-                    isFromSharedItem: false,
+                    isFromSharedItem: config.isFromSharedItem ?? false,
                     warningViewModel: config.warningViewModel
                 )
             },
@@ -832,7 +832,8 @@ struct CloudDriveViewControllerFactory {
                 router.didTapMoreAction(
                     on: result.id,
                     button: button,
-                    displayMode: carriedOverDisplayMode
+                    displayMode: carriedOverDisplayMode, 
+                    isFromSharedItem: config.isFromSharedItem ?? false
                 )
             },
             resignKeyboard: { [weak bridge] in

@@ -262,7 +262,7 @@ final class HomeScreenFactory: NSObject {
                 tracker.trackAnalyticsEvent(with: event)
                 
                 // button reference is required to position popover on the iPad correctly
-                router.didTapMoreAction(on: result.id, button: button)
+                router.didTapMoreAction(on: result.id, button: button, isFromSharedItem: false)
             },
             resignKeyboard: { [weak bridge] in
                 bridge?.hideKeyboard()

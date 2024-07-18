@@ -7,6 +7,7 @@ import MEGAPresentationMock
 import MEGASDKRepo
 import MEGASDKRepoMock
 import MEGATest
+import UIKit
 import XCTest
 
 final class HomeSearchResultViewModelTests: XCTestCase {
@@ -102,7 +103,43 @@ final class HomeSearchResultViewModelTests: XCTestCase {
         XCTAssertEqual(searchFileHistoryUseCase.savedHistoryEntries.map(\.text),
                        [inputText, inputText])
     }
-    
+
+    @MainActor
+    func testIsFromSharedItem_whenMoreActionInvoked_shouldReturnFalseForIsFromSharedItem() async {
+        let router = MockNodeRouting()
+        let nodes = [NodeEntity(handle: 1), NodeEntity(handle: 2), NodeEntity(handle: 3)]
+        let filesSearchUseCase = MockFilesSearchUseCase(searchResult: .success(nodes))
+        let searchFileHistoryUseCase = MockSearchFileHistoryUseCase()
+        let sut = makeSUT(
+            fileSearchUseCase: filesSearchUseCase,
+            searchFileHistoryUseCase: searchFileHistoryUseCase,
+            router: router
+        )
+
+        let exp = expectation(description: "Should update with results")
+
+        sut.notifyUpdate = { [weak exp] in
+            if case let .results(resultState) = $0.viewState {
+                switch resultState {
+                case .data(let viewModels):
+                    viewModels.first?.moreAction(.invalid, UIButton())
+                    exp?.fulfill()
+                default:
+                    XCTFail("Invalid result state emitted")
+                }
+            }
+        }
+
+        sut.didInputText(text: "p")
+        await fulfillment(of: [exp], timeout: 1.0)
+        guard case let .didTapMoreActionWithoutDisplayMode(_, _, isFromSharedItem) = router.actions.first else {
+            XCTFail("Expected didTapMoreActionWithoutDisplayMode")
+            return
+        }
+
+        XCTAssertFalse(isFromSharedItem)
+    }
+
     private func makeSUT(
         fileSearchUseCase: some FilesSearchUseCaseProtocol = MockFilesSearchUseCase(),
         searchFileHistoryUseCase: some SearchFileHistoryUseCaseProtocol = MockSearchFileHistoryUseCase(),
@@ -164,12 +201,19 @@ final class HomeSearchResultViewModelTests: XCTestCase {
 }
 
 private final class MockNodeRouting: NodeRouting {
-    func didTapMoreAction(on node: HandleEntity, button: UIButton) {
-        
+    enum Actions: Equatable {
+        case didTapMoreActionWithoutDisplayMode(HandleEntity, UIButton, Bool)
+        case didTapMoreActionWithDisplayMode(HandleEntity, UIButton, DisplayMode?, Bool)
+    }
+
+    private(set) var actions: [Actions] = []
+
+    func didTapMoreAction(on node: HandleEntity, button: UIButton, isFromSharedItem: Bool) {
+        actions.append(.didTapMoreActionWithoutDisplayMode(node, button, isFromSharedItem))
     }
     
-    func didTapMoreAction(on node: HandleEntity, button: UIButton, displayMode: DisplayMode?) {
-        
+    func didTapMoreAction(on node: HandleEntity, button: UIButton, displayMode: DisplayMode?, isFromSharedItem: Bool) {
+        actions.append(.didTapMoreActionWithDisplayMode(node, button, displayMode, isFromSharedItem))
     }
     
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningViewModel?) {

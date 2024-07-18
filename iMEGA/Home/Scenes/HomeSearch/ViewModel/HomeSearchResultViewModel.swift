@@ -155,7 +155,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
 
         let moreAction: (HandleEntity, UIButton) -> Void = { [weak self] _, button in
             self?.tracker.trackAnalyticsEvent(with: SearchResultOverflowMenuItemEvent())
-            self?.router.didTapMoreAction(on: file.handle, button: button)
+            self?.router.didTapMoreAction(on: file.handle, button: button, isFromSharedItem: false)
         }
 
         return HomeSearchResultFileViewModel(
