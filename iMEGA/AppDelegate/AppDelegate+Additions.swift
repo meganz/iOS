@@ -352,8 +352,10 @@ extension AppDelegate {
         
         guard let megaData = userInfo?["megadata"] as? [String: Any],
               let urlString = megaData["generic_href"] as? String,
-              let url = NSURL(string: urlString) else {
-            MEGALogError("[Notification] Can't parse notification link.")
+              let trimmedURL = urlString.trim,
+              let url = NSURL(string: trimmedURL) else {
+            MEGALogError("[Notification] URL NOT opened. Can't parse notification link.")
+            SVProgressHUD.showError(withStatus: Strings.Localizable.linkNotValid)
             return
         }
         
