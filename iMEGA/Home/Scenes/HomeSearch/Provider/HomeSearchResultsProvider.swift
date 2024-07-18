@@ -42,7 +42,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     // root node can be nil in case when we start app in offline
     private let parentNodeProvider: () -> NodeEntity?
     private let mapper: SearchResultMapper
-    private let nodeUpdateRepository: any NodeUpdateRepositoryProtocol
     private let notificationCenter: NotificationCenter
     private var subscriptions = Set<AnyCancellable>()
     
@@ -55,7 +54,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodesUpdateListenerRepo: some NodesUpdateListenerProtocol,
         downloadTransferListener: some DownloadTransfersListening,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
-        nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         notificationCenter: NotificationCenter = .default,
         allChips: [SearchChipEntity],
@@ -71,7 +69,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.mediaUseCase = mediaUseCase
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         self.downloadTransferListener = downloadTransferListener
-        self.nodeUpdateRepository = nodeUpdateRepository
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.notificationCenter = notificationCenter
         self.availableChips = allChips
@@ -302,15 +299,16 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         mapper.map(node: node)
     }
     
+    // Need some improvements node update listening mechanism - [SAO-1821]
     private func addNodesUpdateHandler() {
         nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] updatedNodes in
-            guard let self,
-                  let parentNode = self.parentNode,
-                  let childNodes = self.nodeList?.toNodeEntities(),
-                  self.nodeUpdateRepository.shouldProcessOnNodesUpdate(parentNode: parentNode, childNodes: childNodes, updatedNodes: updatedNodes) else {
-                return
+            guard let self else { return }
+            Task { [weak self] in
+                guard let self, let parentNodeHandle = self.parentNode?.handle,
+                      updatedNodes.contains(where: { $0.handle == parentNodeHandle })
+                        || updatedNodes.contains(where: { $0.parentHandle == parentNodeHandle }) else { return }
+                self.onSearchResultsUpdated(.generic)
             }
-            self.onSearchResultsUpdated(.generic)
         }
     }
 }
