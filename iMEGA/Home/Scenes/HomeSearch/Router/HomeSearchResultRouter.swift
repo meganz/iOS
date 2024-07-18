@@ -8,13 +8,15 @@ import MEGASDKRepo
 protocol NodeRouting {
     func didTapMoreAction(
         on node: HandleEntity,
-        button: UIButton
+        button: UIButton,
+        isFromSharedItem: Bool
     )
     
     func didTapMoreAction(
         on node: HandleEntity,
         button: UIButton,
-        displayMode: DisplayMode?
+        displayMode: DisplayMode?,
+        isFromSharedItem: Bool
     )
 
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningViewModel?)
@@ -50,15 +52,17 @@ final class HomeSearchResultRouter: NodeRouting {
     
     func didTapMoreAction(
         on node: HandleEntity,
-        button: UIButton
+        button: UIButton,
+        isFromSharedItem: Bool
     ) {
-        didTapMoreAction(on: node, button: button, displayMode: nil)
+        didTapMoreAction(on: node, button: button, displayMode: nil, isFromSharedItem: isFromSharedItem)
     }
     
     func didTapMoreAction(
         on node: HandleEntity,
         button: UIButton,
-        displayMode: DisplayMode?
+        displayMode: DisplayMode?,
+        isFromSharedItem: Bool
     ) {
         let isBackupNode = backupsUseCase.isBackupNodeHandle(node)
         guard let nodeActionViewController = NodeActionViewController(
@@ -67,6 +71,7 @@ final class HomeSearchResultRouter: NodeRouting {
             displayMode: displayMode ?? .cloudDrive,
             isIncoming: false,
             isBackupNode: isBackupNode,
+            isFromSharedItem: isFromSharedItem,
             sender: button
         ) else { return }
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)

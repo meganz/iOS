@@ -74,9 +74,18 @@ class NodeActionViewController: ActionSheetViewController {
         displayMode: DisplayMode,
         isIncoming: Bool = false,
         isBackupNode: Bool,
+        isFromSharedItem: Bool = false,
         sender: Any) {
             guard let node = MEGASdk.shared.node(forHandle: node) else { return nil }
-            self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, isBackupNode: isBackupNode, sender: sender)
+            self.init(
+                node: node,
+                delegate: delegate,
+                displayMode: displayMode,
+                isIncoming: isIncoming,
+                isBackupNode: isBackupNode,
+                isFromSharedItem: isFromSharedItem,
+                sender: sender
+            )
         }
     
     init?(
