@@ -1,7 +1,7 @@
 import AsyncAlgorithms
 import MEGASwift
 
-public protocol MonitorAlbumsUseCaseProtocol {
+public protocol MonitorAlbumsUseCaseProtocol: Sendable {
     /// Infinite `AnyAsyncSequence` returning result type of system albums (Favourite, Raw and Gif) or error
     ///
     /// The async sequence will immediately return system albums then updates when photo updates occur.
@@ -39,18 +39,18 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
     private let mediaUseCase: any MediaUseCaseProtocol
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let photosRepository: any PhotosRepositoryProtocol
-    private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     
     public init(monitorPhotosUseCase: some MonitorPhotosUseCaseProtocol,
                 mediaUseCase: some MediaUseCaseProtocol,
                 userAlbumRepository: some UserAlbumRepositoryProtocol,
                 photosRepository: some PhotosRepositoryProtocol,
-                nodeUseCase: some NodeUseCaseProtocol) {
+                sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol) {
         self.monitorPhotosUseCase = monitorPhotosUseCase
         self.mediaUseCase = mediaUseCase
         self.userAlbumRepository = userAlbumRepository
         self.photosRepository = photosRepository
-        self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
     
     public func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], Error>> {
@@ -85,7 +85,8 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
             return EmptyAsyncSequence<[AlbumPhotoEntity]>().eraseToAnyAsyncSequence()
         }
         return await merge(userAlbumContentUpdated(album: album),
-                           userAlbumPhotoUpdated(album: album))
+                           userAlbumPhotoUpdated(album: album),
+                           albumPhotosOnFolderSensitivityChanged(album: album))
         .prepend {
             await userAlbumRepository.albumElementIds(
                 by: album.id, includeElementsInRubbishBin: false)
@@ -109,25 +110,25 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         var numOfRawPhotos = 0
         
         for photo in photos {
-            let shouldShowCoverPhoto = coverPhotosSensitiveState?[photo.handle] ?? true
+            guard coverPhotosSensitiveState?[photo.handle] ?? true else { continue }
             
             if photo.isFavourite {
                 numOfFavouritePhotos += 1
-                if shouldShowCoverPhoto && isPhotoModificationTimeLater(currentPhoto: favouriteAlbumCover,
-                                                                        photo: photo) {
+                if isPhotoModificationTimeLater(currentPhoto: favouriteAlbumCover,
+                                                photo: photo) {
                     favouriteAlbumCover = photo
                 }
             }
             if mediaUseCase.isGifImage(photo.name) {
                 numOfGifPhotos += 1
-                if shouldShowCoverPhoto && isPhotoModificationTimeLater(currentPhoto: gifAlbumCover,
-                                                                        photo: photo) {
+                if isPhotoModificationTimeLater(currentPhoto: gifAlbumCover,
+                                                photo: photo) {
                     gifAlbumCover = photo
                 }
             } else if mediaUseCase.isRawImage(photo.name) {
                 numOfRawPhotos += 1
-                if shouldShowCoverPhoto && isPhotoModificationTimeLater(currentPhoto: rawAlbumCover,
-                                                                        photo: photo) {
+                if isPhotoModificationTimeLater(currentPhoto: rawAlbumCover,
+                                                photo: photo) {
                     rawAlbumCover = photo
                 }
             }
@@ -284,6 +285,15 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
     }
     
     private func isInheritingSensitivity(node: NodeEntity) async -> Bool {
-        (try? await nodeUseCase.isInheritingSensitivity(node: node)) ?? false
+        (try? await sensitiveNodeUseCase.isInheritingSensitivity(node: node)) ?? false
+    }
+    
+    private func albumPhotosOnFolderSensitivityChanged(album: AlbumEntity) -> AnyAsyncSequence<[AlbumPhotoIdEntity]> {
+        sensitiveNodeUseCase.folderSensitivityChanged()
+            .map {
+                await userAlbumRepository.albumElementIds(by: album.id,
+                                                          includeElementsInRubbishBin: false)
+            }
+            .eraseToAnyAsyncSequence()
     }
 }
