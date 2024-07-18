@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 

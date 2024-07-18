@@ -1,5 +1,5 @@
 import MEGADesignToken
-import MEGASwiftUI
+import MEGAPresentation
 import SwiftUI
 
 struct VideoPlaylistThumbnailView: View {

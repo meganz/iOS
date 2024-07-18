@@ -1,4 +1,4 @@
-import MEGASwiftUI
+import MEGAPresentation
 import SwiftUI
 
 struct PhotoCellImage: View {

@@ -1,8 +1,8 @@
-@testable import MEGA
 import MEGADomain
 import MEGADomainMock
+@testable import MEGAPresentation
 import MEGASwift
-import MEGASwiftUI
+import MEGATest
 import SwiftUI
 import XCTest
 
@@ -11,11 +11,11 @@ final class ThumbnailLoaderTests: XCTestCase {
     func testInitialImageForType_noCachedImage_shouldReturnPlaceholderForFileType() {
         let fileName = "test.jpg"
         let photo = NodeEntity(name: fileName, handle: 43)
-        
+        let placeholder: Image = Image("heart")
         let sut = makeSUT()
         
-        XCTAssertTrue(sut.initialImage(for: photo, type: .thumbnail)
-            .isEqual(ImageContainer(image: Image(FileTypes().fileTypeResource(forFileName: "0.jpg")), type: .placeholder)))
+        XCTAssertTrue(sut.initialImage(for: photo, type: .thumbnail, placeholder: { placeholder })
+            .isEqual(ImageContainer(image: placeholder, type: .placeholder)))
     }
     
     func testInitialImageForType_noCachedImage_shouldReturnPlaceholderProvided() {
@@ -23,7 +23,7 @@ final class ThumbnailLoaderTests: XCTestCase {
         let photo = NodeEntity(name: fileName, handle: 43)
         
         let sut = makeSUT()
-        let expectedImage = Image(.placeholder)
+        let expectedImage: Image = Image("heart")
         XCTAssertTrue(sut.initialImage(for: photo, type: .thumbnail, placeholder: { expectedImage })
             .isEqual(ImageContainer(image: expectedImage, type: .placeholder)))
     }
@@ -31,13 +31,14 @@ final class ThumbnailLoaderTests: XCTestCase {
     func testInitialImageForType_imageCached_shouldReturnCachedImage() throws {
         let localURL = try makeImageURL()
         let photo = NodeEntity(name: "0.jpg", handle: 1)
-        
+        let placeholder: Image = Image("heart")
+
         [(ThumbnailTypeEntity.thumbnail, ImageType.thumbnail),
          (.preview, .preview),
          (.original, .original)].forEach { thumbnailType, expectedType in
             let sut = makeSUT(thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: thumbnailType)]))
             
-            let image = sut.initialImage(for: photo, type: thumbnailType)
+            let image = sut.initialImage(for: photo, type: thumbnailType, placeholder: { placeholder })
             XCTAssertTrue(image.isEqual(URLImageContainer(imageURL: localURL, type: expectedType)))
         }
     }

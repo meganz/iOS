@@ -1,27 +1,21 @@
 import MEGADomain
 import MEGASwift
-import MEGASwiftUI
 import SwiftUI
 
 struct SensitiveThumbnailLoader: ThumbnailLoaderProtocol {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
-    private let nodeUseCaseProtocol: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     
     init(thumbnailLoader: some ThumbnailLoaderProtocol,
-         nodeUseCaseProtocol: some NodeUseCaseProtocol) {
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol) {
         self.thumbnailLoader = thumbnailLoader
-        self.nodeUseCaseProtocol = nodeUseCaseProtocol
-    }
-    
-    func initialImage(for node: NodeEntity, type: ThumbnailTypeEntity) -> any ImageContaining {
-        initialImage(for: node, type: type) {
-            node.placeholderImage
-        }
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
     
     func initialImage(for node: NodeEntity, type: ThumbnailTypeEntity, placeholder: @Sendable () -> Image) -> any ImageContaining {
         if node.isMarkedSensitive {
-            thumbnailLoader.initialImage(for: node, type: type)
+            thumbnailLoader
+                .initialImage(for: node, type: type, placeholder: placeholder)
                 .toSensitiveImageContaining(isSensitive: node.isMarkedSensitive)
         } else {
             ImageContainer(image: placeholder(), type: .placeholder)
@@ -32,7 +26,7 @@ struct SensitiveThumbnailLoader: ThumbnailLoaderProtocol {
         let isSensitive = if node.isMarkedSensitive {
             true
         } else {
-            try await nodeUseCaseProtocol.isInheritingSensitivity(node: node)
+            try await sensitiveNodeUseCase.isInheritingSensitivity(node: node)
         }
         return try await thumbnailLoader.loadImage(for: node, type: type)
             .map {

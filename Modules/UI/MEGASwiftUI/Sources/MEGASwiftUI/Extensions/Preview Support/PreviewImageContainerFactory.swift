@@ -1,3 +1,4 @@
+import MEGAPresentation
 import SwiftUI
 
 enum PreviewImageContainerFactory {

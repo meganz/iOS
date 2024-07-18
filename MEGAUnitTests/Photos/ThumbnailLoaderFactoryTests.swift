@@ -1,4 +1,5 @@
 @testable import MEGA
+@testable import MEGAPresentation
 import MEGAPresentationMock
 import XCTest
 

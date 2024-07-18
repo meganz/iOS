@@ -1,5 +1,5 @@
 import MEGADomain
-import MEGASwiftUI
+import MEGAPresentation
 
 protocol VideoPlaylistThumbnailLoaderProtocol {
     func loadThumbnails(for videos: [NodeEntity]) async -> [(any ImageContaining)]

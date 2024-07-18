@@ -1,6 +1,6 @@
 @testable import MEGA
 import MEGADomain
-import MEGASwiftUI
+import MEGAPresentation
 import SwiftUI
 import XCTest
 
