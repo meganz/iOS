@@ -1179,9 +1179,16 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         switch call.changeType {
         case .callWillEnd:
             manageCallWillEnd(for: call)
-
         case .localAVFlags:
             cameraEnabled = call.hasLocalVideo
+        case .status:
+            // earliest moment to get initial list of raised hands
+            if call.status == .inProgress {
+                MEGALogDebug("[RaiseHand] list from callComposition: \(call.raiseHandsList)")
+                // read and cache call here to get most recent raised hands list, used
+                // when user joins and there are already some hands raised in the call
+                self.call = call
+            }
         default:
             break
         }
