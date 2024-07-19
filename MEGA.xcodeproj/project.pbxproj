@@ -6702,14 +6702,6 @@
 			path = StartMeetingScene;
 			sourceTree = "<group>";
 		};
-		320262F7298CB0A20049688C /* Filter */ = {
-			isa = PBXGroup;
-			children = (
-				320262F8298CB0B40049688C /* FilterType+Mapper.swift */,
-			);
-			path = Filter;
-			sourceTree = "<group>";
-		};
 		3286072228851AFF0056A3A5 /* FilterView */ = {
 			isa = PBXGroup;
 			children = (
@@ -8724,6 +8716,8 @@
 				9479F02A28BFAB26008578BE /* ContextMenuModel+Mapper.swift */,
 				9479F02628BFA4C3008578BE /* ContextMenuModel.swift */,
 				BFB076562B8EE91D00FE6962 /* ContextMenuWithButtonView.swift */,
+				9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */,
+				320262F8298CB0B40049688C /* FilterType+Mapper.swift */,
 			);
 			path = ContextMenus;
 			sourceTree = "<group>";
@@ -9223,6 +9217,7 @@
 			children = (
 				8358332B29487F2900394F1A /* ChatRoomParticipantPrivilege.swift */,
 				8358332D29487F3D00394F1A /* ChatRoomParticipantPrivilegeView.swift */,
+				9463EEDA2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift */,
 			);
 			path = ChatRoomPrivilege;
 			sourceTree = "<group>";
@@ -10640,15 +10635,6 @@
 			path = MEGAPicker;
 			sourceTree = "<group>";
 		};
-		A83BB99328E5F181001A7C68 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				9463EEDA2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift */,
-				9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */,
-			);
-			path = Chat;
-			sourceTree = "<group>";
-		};
 		A841886827832C5900291F4C /* Logs */ = {
 			isa = PBXGroup;
 			children = (
@@ -11409,8 +11395,6 @@
 		B662B86F24F331D50089376A /* Model Mapping */ = {
 			isa = PBXGroup;
 			children = (
-				A83BB99328E5F181001A7C68 /* Chat */,
-				320262F7298CB0A20049688C /* Filter */,
 				A859043529F2D1A000632F0C /* Offline */,
 			);
 			path = "Model Mapping";
