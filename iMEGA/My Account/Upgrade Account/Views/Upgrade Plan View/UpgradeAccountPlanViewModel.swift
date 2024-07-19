@@ -1,5 +1,6 @@
 import Accounts
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -22,6 +23,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private var abTestProvider: any ABTestProviderProtocol
+    private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
@@ -62,6 +64,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         viewType: UpgradeAccountPlanViewType,
         router: any UpgradeAccountPlanRouting
     ) {
@@ -69,6 +72,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.purchaseUseCase = purchaseUseCase
         self.accountDetails = accountDetails
         self.abTestProvider = abTestProvider
+        self.tracker = tracker
         self.viewType = viewType
         self.router = router
         registerDelegates()
@@ -144,6 +148,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 
                 switch result {
                 case .success:
+                    tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseSucceededEvent())
                     postAccountDidPurchasedPlanNotification()
                     postRefreshAccountDetailsNotification()
                     
@@ -153,6 +158,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                         isDismiss = true
                     }
                 case .failure(let error):
+                    tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
                     guard error.toPurchaseErrorStatus() != .paymentCancelled else { return }
                     setAlertType(.purchase(.failed))
                 }
@@ -295,6 +301,15 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             buySelectedPlan()
         }
     }
+    
+    func cancelUpgradeButtonTapped() {
+        tracker.trackAnalyticsEvent(with: CancelUpgradeMyAccountEvent())
+        isDismiss = true
+    }
+    
+    func onLoad() {
+        tracker.trackAnalyticsEvent(with: UpgradeAccountPlanScreenEvent())
+    }
 
     // MARK: - Private
     private func postRefreshAccountDetailsNotification() {
@@ -374,6 +389,21 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return selectedPlan
     }
     
+    private func trackEventBuyPlan(_ currentSelectedPlan: AccountPlanEntity) {
+        switch currentSelectedPlan.type {
+        case .proI:
+            tracker.trackAnalyticsEvent(with: BuyProIEvent())
+        case .proII:
+            tracker.trackAnalyticsEvent(with: BuyProIIEvent())
+        case .proIII:
+            tracker.trackAnalyticsEvent(with: BuyProIIIEvent())
+        case .lite:
+            tracker.trackAnalyticsEvent(with: BuyProLiteEvent())
+        default:
+            break
+        }
+    }
+    
     private func buySelectedPlan() {
         guard let currentSelectedPlan else { return }
         
@@ -386,6 +416,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 
                 await startLoading()
                 await purchaseUseCase.purchasePlan(currentSelectedPlan)
+                trackEventBuyPlan(currentSelectedPlan)
             } catch {
                 guard let error = error as? ActiveSubscriptionError else {
                     fatalError("[Upgrade Account] Error \(error) is not supported.")

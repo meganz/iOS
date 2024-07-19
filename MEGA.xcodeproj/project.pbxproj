@@ -1005,6 +1005,7 @@
 		835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */; };
 		835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */; };
 		835EE371258120C200D8E3B8 /* QuickAccessWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */; };
+		835F71222C4A5DDE000B359D /* AccountPlanEntity+Plans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835F71212C4A5DDE000B359D /* AccountPlanEntity+Plans.swift */; };
 		8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
 		8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
 		8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
@@ -3808,6 +3809,7 @@
 		835E62492085ED56007470A2 /* MEGAPauseTransferRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPauseTransferRequestDelegate.h; sourceTree = "<group>"; };
 		835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPauseTransferRequestDelegate.m; sourceTree = "<group>"; };
 		835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetEntry.swift; sourceTree = "<group>"; };
+		835F71212C4A5DDE000B359D /* AccountPlanEntity+Plans.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountPlanEntity+Plans.swift"; sourceTree = "<group>"; };
 		8361358C21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOUploadTransfer+CoreDataProperties.h"; sourceTree = "<group>"; };
 		8361358D21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOUploadTransfer+CoreDataClass.h"; sourceTree = "<group>"; };
 		8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOUploadTransfer+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -9267,6 +9269,14 @@
 			path = QuickAccess;
 			sourceTree = "<group>";
 		};
+		835F711D2C4A5D74000B359D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				835F71212C4A5DDE000B359D /* AccountPlanEntity+Plans.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		8361D9EE283E7B2B0001FAC1 /* NameCollision */ = {
 			isa = PBXGroup;
 			children = (
@@ -10927,6 +10937,7 @@
 			isa = PBXGroup;
 			children = (
 				C4A016BB2B674DC100492185 /* Mocks */,
+				835F711D2C4A5D74000B359D /* Utils */,
 				B57496E82A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift */,
 				B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */,
 				C4A016B92B67338C00492185 /* UpgradeEncouragementViewModelTests.swift */,
@@ -16339,6 +16350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				835F71222C4A5DDE000B359D /* AccountPlanEntity+Plans.swift in Sources */,
 				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,

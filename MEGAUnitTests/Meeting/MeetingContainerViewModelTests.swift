@@ -55,6 +55,15 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.showMeetingUI_calledTimes == 1)
     }
     
+    func testAction_onViewReady_shouldTrackScreenEvent() {
+        let harness = Harness()
+        test(viewModel: harness.sut, action: .onViewReady, expectedCommands: [])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: harness.tracker.trackedEventIdentifiers,
+            with: [CallScreenEvent()]
+        )
+    }
+    
     func testAction_hangCall_attendeeIsGuest() {
         let harness = Harness(
             chatRoom: .moderatorMeeting,

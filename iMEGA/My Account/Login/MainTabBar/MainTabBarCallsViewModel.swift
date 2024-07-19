@@ -314,6 +314,8 @@ class MainTabBarCallsViewModel: ViewModelType {
         if call.termCodeType == .callDurationLimit {
             if call.isOwnClientCaller { // or is chat room organiser - future implementation
                 guard let accountDetails = accountUseCase.currentAccountDetails else { return }
+                tracker.trackAnalyticsEvent(with: MainTabBarScreenEvent())
+                tracker.trackAnalyticsEvent(with: UpgradeToProToGetUnlimitedCallsDialogEvent())
                 router.showUpgradeToProDialog(accountDetails)
             }
         }

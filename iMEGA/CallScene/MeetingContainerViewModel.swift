@@ -145,6 +145,7 @@ final class MeetingContainerViewModel: ViewModelType {
                         noUserJoinedSubscription = nil
                     }
             }
+            tracker.trackAnalyticsEvent(with: CallScreenEvent())
         case .hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
         case .tapOnBackButton:
@@ -399,6 +400,7 @@ final class MeetingContainerViewModel: ViewModelType {
             if call.isOwnClientCaller { // or is chat room organiser - future implementation
                 hangCall()
                 guard let accountDetails = accountUseCase.currentAccountDetails else { return }
+                tracker.trackAnalyticsEvent(with: UpgradeToProToGetUnlimitedCallsDialogEvent())
                 router.showUpgradeToProDialog(accountDetails)
             } else {
                 hangAndDismissCall(completion: nil)
