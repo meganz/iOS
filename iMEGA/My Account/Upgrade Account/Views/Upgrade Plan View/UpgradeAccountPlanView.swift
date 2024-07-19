@@ -19,11 +19,14 @@ struct UpgradeAccountPlanView: View {
             planView()
             snackBarView()
         }
+        .onLoad {
+            viewModel.onLoad()
+        }
     }
     
     private var cancelButton: some View {
         Button {
-            viewModel.isDismiss = true
+            viewModel.cancelUpgradeButtonTapped()
         } label: {
             Text(Strings.Localizable.cancel)
                 .foregroundColor(

@@ -282,13 +282,15 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
-    func testCallUpdate_callDestroyedUserIsCallerAndCallUINotVisible_shouldShowUpgradeToPro() {
+    func testCallUpdate_callDestroyedUserIsCallerAndCallUINotVisible_shouldShowUpgradeToProAndTrackEvents() {
         let callUseCase = MockCallUseCase()
-
+        let mockTracker = MockTracker()
+        
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build())
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build()),
+            tracker: mockTracker
         )
         viewModel.isCallUIVisible = false
         
@@ -297,6 +299,11 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         evaluate {
             self.router.showUpgradeToProDialog_calledTimes == 1
         }
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [MainTabBarScreenEvent(), UpgradeToProToGetUnlimitedCallsDialogEvent()]
+        )
     }
     
     func testCallUpdate_callDestroyedUserIsCallerAndCallUIVisible_shouldNotShowUpgradeToPro() {

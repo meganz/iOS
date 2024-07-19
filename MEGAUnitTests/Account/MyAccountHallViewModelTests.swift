@@ -325,6 +325,13 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    func test_viewDidTapUpgradeButton_tracksAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapUpgradeButton,
+            expectedEvent: UpgradeMyAccountEvent()
+        )
+    }
+    
     func testTransferUsed_shouldReturnCorrectValue() {
         let expectedTransferUsed: Int64 = 5000
         let accountDetails = AccountDetailsEntity.build(transferUsed: expectedTransferUsed)

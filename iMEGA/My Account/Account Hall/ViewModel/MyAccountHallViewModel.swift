@@ -124,6 +124,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
                 await loadContent(target)
             }
         case .didTapUpgradeButton:
+            trackUpgradeAccountButtonTappedEvent()
             showUpgradeAccountPlanView()
         case .addSubscriptions:
             registerRequestDelegates()
@@ -154,6 +155,10 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     private func trackAccountHeaderEvent() {
         tracker.trackAnalyticsEvent(with: AccountScreenHeaderTappedEvent())
+    }
+    
+    private func trackUpgradeAccountButtonTappedEvent() {
+        tracker.trackAnalyticsEvent(with: UpgradeMyAccountEvent())
     }
     
     private func showUpgradeAccountPlanView() {
