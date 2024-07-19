@@ -18,7 +18,7 @@ public struct SearchResultThumbnailItemView: View {
             .task {
                 await viewModel.loadThumbnail()
             }
-            .contextMenuWithPreview(
+            .replacedByContextMenuWithPreview(
                 actions: viewModel.previewContent.actions.toUIActions,
                 sourcePreview: {
                     content

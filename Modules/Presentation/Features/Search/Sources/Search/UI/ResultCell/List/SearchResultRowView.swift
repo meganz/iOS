@@ -22,7 +22,7 @@ struct SearchResultRowView: View {
     
     var body: some View {
         contentWithInsetsAndSwipeActions
-            .contextMenuWithPreview(
+            .replacedByContextMenuWithPreview(
                 actions: viewModel.previewContent.actions.toUIActions,
                 sourcePreview: {
                     content
