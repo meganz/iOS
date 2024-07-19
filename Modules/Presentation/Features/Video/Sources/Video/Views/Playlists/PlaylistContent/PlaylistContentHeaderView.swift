@@ -23,8 +23,10 @@ struct PlaylistContentHeaderView: View {
                     
                     secondaryInformationView
                 }
-                
-                addButton
+             
+                if previewEntity.shouldShowAddButton {
+                    addButton
+                }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

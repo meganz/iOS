@@ -8,6 +8,10 @@ public struct VideoPlaylistCellPreviewEntity {
     var title: String
     let isExported: Bool
     let type: VideoPlaylistEntityType
+    
+    var shouldShowAddButton: Bool {
+        type == .user
+    }
 }
 
 extension VideoPlaylistCellPreviewEntity {
