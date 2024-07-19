@@ -21,10 +21,7 @@ struct InteractionView<Content: View>: UIViewRepresentable {
             hostView.view.topAnchor.constraint(equalTo: view.topAnchor),
             hostView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            hostView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            hostView.view.widthAnchor.constraint(equalTo: view.widthAnchor),
-            hostView.view.heightAnchor.constraint(equalTo: view.heightAnchor)
+            hostView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ]
         
         view.addSubview(hostView.view)
