@@ -578,6 +578,7 @@
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
                 cell.leftImageView.image = [self groupChatAddParticipantImage];
                 cell.emailLabel.text = LocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
+                [cell configEmailLabelColorAsPrimary];
                 cell.onlineStatusView.backgroundColor = nil;
                 [cell.permissionsButton setImage:nil forState:UIControlStateNormal];
                 cell.permissionsButton.tag = indexPath.row;

@@ -1,4 +1,5 @@
 import Combine
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -41,9 +42,13 @@ final class ScheduleMeetingViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-        createBarButtonItem.setTitleTextAttributes([.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)], for: .normal)
-        cancelBarButtonItem.setTitleTextAttributes([.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)], for: .normal)
+        
+        createBarButtonItem.setTitleTextAttributes([.foregroundColor: barButtonForegroundColor], for: .normal)
+        cancelBarButtonItem.setTitleTextAttributes([.foregroundColor: barButtonForegroundColor], for: .normal)
+    }
+    
+    var barButtonForegroundColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
     }
     
     @objc func submitButtonItemTapped() {

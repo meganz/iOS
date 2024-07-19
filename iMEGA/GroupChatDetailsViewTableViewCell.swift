@@ -23,4 +23,12 @@ extension GroupChatDetailsViewTableViewCell {
             nameLabel?.textColor = isDestructive ? UIColor.mnz_red(for: traitCollection) : UIColor.label
         }
     }
+    
+    @objc func configEmailLabelColorAsPrimary() {
+        if UIColor.isDesignTokenEnabled() {
+            emailLabel?.textColor = TokenColors.Text.primary
+        } else {
+            emailLabel?.textColor = UIColor.mnz_subtitles(for: traitCollection)
+        }
+    }
 }
