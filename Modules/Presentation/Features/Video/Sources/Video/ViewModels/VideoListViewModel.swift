@@ -11,6 +11,9 @@ public final class VideoListViewModel: ObservableObject {
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private(set) var syncModel: VideoRevampSyncModel
+    private(set) var reloadVideosOnSortOrderChangedTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     private(set) var reloadVideosTask: Task<Void, Never>?
     private(set) var reloadfilteredVideosTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
@@ -60,6 +63,7 @@ public final class VideoListViewModel: ObservableObject {
         subscribeToAllSelected()
         subscribeToChipFilterOptions()
         subscribeToItemsStateForEmptyState()
+        monitorSortOrderChanged()
     }
     
     @MainActor
@@ -76,15 +80,19 @@ public final class VideoListViewModel: ObservableObject {
         shouldShowPlaceHolderView = false
     }
     
-    func monitorSortOrderChanged() async {
-        let sortOrderAsyncSequence = syncModel.$videoRevampSortOrderType
+    private func monitorSortOrderChanged() {
+        syncModel.$videoRevampSortOrderType
             .removeDuplicates()
             .dropFirst()
-            .values
-        
-        for await sortOrderType in sortOrderAsyncSequence {
-            try? await loadVideos(searchText: syncModel.searchText, sortOrderType: sortOrderType)
-        }
+            .sink { [weak self] sortOrderType in
+                guard let self else {
+                    return
+                }
+                reloadVideosOnSortOrderChangedTask = Task { @MainActor in
+                    try? await self.loadVideos(searchText: self.syncModel.searchText, sortOrderType: sortOrderType)
+                }
+            }
+            .store(in: &subscriptions)
     }
     
     @MainActor

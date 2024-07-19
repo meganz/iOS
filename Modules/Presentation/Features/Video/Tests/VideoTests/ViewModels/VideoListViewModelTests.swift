@@ -22,6 +22,78 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(fileSearchUseCase.messages.isEmpty, "Expect to not listen nodes update")
     }
     
+    // MARK: - init.monitorSortOrderChanged
+    
+    @MainActor
+    func testMonitorSortOrderChanged_whenHasNoSortOrderChanged_doesNotReloadVideos() async {
+        // Arrange
+        let (sut, _, photoLibraryUseCase, syncModel) = makeSUT()
+        
+        let sortOrderExp = expectation(description: "sort order changed")
+        sortOrderExp.isInverted = true
+        let cancellable = syncModel.$videoRevampSortOrderType
+            .dropFirst()
+            .sink { _ in
+                sortOrderExp.fulfill()
+            }
+        
+        let messagesExp = expectation(description: "spy expectation")
+        var receivedMessages: [MockPhotoLibraryUseCase.Message]?
+        messagesExp.assertForOverFulfill = false
+        let cancellable2 = await photoLibraryUseCase.$messages
+            .sink { messages in
+                receivedMessages = messages
+                messagesExp.fulfill()
+            }
+        
+        // Act
+        await sut.reloadVideosOnSortOrderChangedTask?.value
+        await fulfillment(of: [sortOrderExp, messagesExp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertTrue(receivedMessages?.notContains(.media) == true)
+        
+        cancellable.cancel()
+        cancellable2.cancel()
+    }
+    
+    @MainActor
+    func testMonitorSortOrderChanged_whenHasSortOrderChanged_reloadVideos() async throws {
+        // Arrange
+        let (sut, _, photoLibraryUseCase, syncModel) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
+        syncModel.videoRevampSortOrderType = .favouriteAsc
+        
+        let sortOrderExp = expectation(description: "sort order changed")
+        sortOrderExp.assertForOverFulfill = false
+        let cancellable = syncModel.$videoRevampSortOrderType
+            .dropFirst()
+            .sink { _ in
+                sortOrderExp.fulfill()
+            }
+        
+        let messagesExp = expectation(description: "spy expectation")
+        var receivedMessages: [MockPhotoLibraryUseCase.Message]?
+        messagesExp.assertForOverFulfill = false
+        let cancellable2 = await photoLibraryUseCase.$messages
+            .dropFirst()
+            .sink { messages in
+                receivedMessages = messages
+                messagesExp.fulfill()
+            }
+        
+        // Act
+        syncModel.videoRevampSortOrderType = .labelDesc
+        await sut.reloadVideosOnSortOrderChangedTask?.value
+        
+        // Assert
+        XCTAssertTrue(receivedMessages?.contains(.media) == true)
+        
+        cancellable.cancel()
+        cancellable2.cancel()
+        sut.reloadVideosOnSortOrderChangedTask?.cancel()
+        await fulfillment(of: [sortOrderExp, messagesExp], timeout: 0.5)
+    }
+    
     // MARK: - init.subscribeToEditingMode
     
     func testInit_initialState_shouldShowFilterChip() async {
