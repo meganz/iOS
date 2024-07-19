@@ -2,25 +2,25 @@ import SwiftUI
 
 struct ViewDidLoadModifier: ViewModifier {
     @State private var didLoad = false
-    private let action: (() -> Void)?
+    private let action: (() async -> Void)
     
-    init(perform action: (() -> Void)? = nil) {
+    init(perform action: @escaping (() async -> Void)) {
         self.action = action
     }
     
     func body(content: Content) -> some View {
         content
-            .onAppear {
+            .task {
                 if !didLoad {
                     didLoad.toggle()
-                    action?()
+                    await action()
                 }
             }
     }
 }
 
 public extension View {
-    func onLoad(perform action: (() -> Void)? = nil) -> some View {
+    func onLoad(perform action: @escaping (() async -> Void)) -> some View {
         modifier(ViewDidLoadModifier(perform: action))
     }
 }

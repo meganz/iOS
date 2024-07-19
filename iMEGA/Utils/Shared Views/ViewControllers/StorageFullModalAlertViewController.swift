@@ -53,12 +53,14 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
     }
     
     @objc func show(requiredStorage: Int64) {
-        modalPresentationStyle = .overFullScreen
-        self.requiredStorage = requiredStorage
-        guard !UIApplication.mnz_visibleViewController().isKind(of: StorageFullModalAlertViewController.self) else {
-            return
+        Task { @MainActor in
+            self.modalPresentationStyle = .overFullScreen
+            self.requiredStorage = requiredStorage
+            guard !UIApplication.mnz_visibleViewController().isKind(of: StorageFullModalAlertViewController.self) else {
+                return
+            }
+            UIApplication.mnz_visibleViewController().present(self, animated: true, completion: nil)
         }
-        UIApplication.mnz_visibleViewController().present(self, animated: true, completion: nil)
     }
     
     @objc func showStorageAlertIfNeeded() {

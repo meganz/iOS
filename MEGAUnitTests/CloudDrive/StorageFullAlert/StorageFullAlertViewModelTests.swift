@@ -22,9 +22,9 @@ final class StorageFullAlertViewModelTests: XCTestCase {
         }
     }
     
-    func testShowStorageAlertIfNeeded() {
+    func testShowStorageAlertIfNeeded() async {
         let harness = Harness()
-        harness.sut.showStorageAlertIfNeeded()
+        await harness.sut.showStorageAlertIfNeeded()
         XCTAssertEqual(harness.router.showStorageAlertIfNeededRecorder.callCount, 1)
     }
 }

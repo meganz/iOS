@@ -53,7 +53,7 @@ struct NodeBrowserView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }
-        .onLoad { viewModel.onLoadTask() }
+        .onLoad { await viewModel.onLoadTask() }
     }
 
     @ToolbarContentBuilder

@@ -9,7 +9,7 @@ final class StorageFullAlertViewModel {
         self.router = router
     }
     
-    func showStorageAlertIfNeeded() {
+    func showStorageAlertIfNeeded() async {
         router.showStorageAlertIfNeeded()
     }
 }

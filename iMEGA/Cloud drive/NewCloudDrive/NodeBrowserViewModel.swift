@@ -234,9 +234,8 @@ class NodeBrowserViewModel: ObservableObject {
         return nil
     }
     
-    @MainActor
-    func onLoadTask() {
-        storageFullAlertViewModel.showStorageAlertIfNeeded()
+    func onLoadTask() async {
+        await storageFullAlertViewModel.showStorageAlertIfNeeded()
         startObservingNodeSourceChanges()
     }
     
