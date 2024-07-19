@@ -3,7 +3,7 @@ import UIKit
 final class PhotoCollectionBottomView: UIView {
     private let padding: CGFloat = 10
     
-    // The following UIColor values are not design token-dependent, as they're color-literal "white" values in both dark/light modes
+    // The following UIColor values are not design token-dependent, as they're color-literal "black/white" values in both dark/light modes
     private lazy var label: UILabel = {
         let label = UILabel()
         label.layer.zPosition = 1
@@ -21,7 +21,7 @@ final class PhotoCollectionBottomView: UIView {
     
     private lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0), MEGAAppColor.Black._000000.uiColor].map { $0.cgColor }
+        gradientLayer.colors = [UIColor.black.withAlphaComponent(0), UIColor.black].map { $0.cgColor }
         gradientLayer.opacity = 0.5
         return gradientLayer
     }()
