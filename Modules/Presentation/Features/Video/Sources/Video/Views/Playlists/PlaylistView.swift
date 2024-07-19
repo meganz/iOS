@@ -24,6 +24,7 @@ struct PlaylistView: View {
         VStack {
             newPlaylistView
             contentView
+                .overlay(placeholder)
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .alert(isPresented: $viewModel.shouldShowAddNewPlaylistAlert, viewModel.alertViewModel)
@@ -148,7 +149,7 @@ struct PlaylistView: View {
     
     @ViewBuilder
     private var contentView: some View {
-        if viewModel.videoPlaylists.isEmpty {
+        if viewModel.shouldShowVideosEmptyView {
             emptyView
         } else {
             listView
@@ -218,6 +219,10 @@ struct PlaylistView: View {
             videoPlaylistEntity: videoPlaylist,
             onTapMoreOptions: { _ in }
         )
+    }
+    
+    private var placeholder: some View {
+        VideoListPlaceholderView(videoConfig: videoConfig, isActive: viewModel.shouldShowPlaceHolderView)
     }
 }
 

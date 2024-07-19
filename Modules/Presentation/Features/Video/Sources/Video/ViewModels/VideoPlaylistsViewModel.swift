@@ -22,6 +22,9 @@ final class VideoPlaylistsViewModel: ObservableObject {
     @Published var shouldShowRenamePlaylistAlert = false
     @Published var shouldShowDeletePlaylistAlert = false
     
+    @Published private(set) var shouldShowPlaceHolderView = false
+    @Published private(set) var shouldShowVideosEmptyView = false
+    
     var selectedVideoPlaylistEntity: VideoPlaylistEntity?
     @Published var isSheetPresented = false
     
@@ -72,6 +75,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         assignVideoPlaylistRenameValidator()
         listenSearchTextChange()
         monitorSortOrderChanged()
+        subscribeToItemsStateForEmptyState()
     }
     
     private func assignVideoPlaylistNameValidator() {
@@ -105,11 +109,15 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     @MainActor
     private func loadVideoPlaylists(sortOrder: SortOrderEntity? = nil) async {
+        shouldShowPlaceHolderView = videoPlaylists.isEmpty
+        
         async let systemVideoPlaylists = loadSystemVideoPlaylists()
         async let userVideoPlaylists = videoPlaylistsUseCase.userVideoPlaylists()
         
         let playlists = await systemVideoPlaylists + userVideoPlaylists
         videoPlaylists = VideoPlaylistsSorter.sort(playlists, by: sortOrder ?? syncModel.videoRevampVideoPlaylistsSortOrderType)
+        
+        shouldShowPlaceHolderView = false
     }
     
     private func loadSystemVideoPlaylists() async -> [VideoPlaylistEntity] {
@@ -290,5 +298,16 @@ final class VideoPlaylistsViewModel: ObservableObject {
         let message = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.playlistNameDeleted
         syncModel.snackBarMessage = message.replacingOccurrences(of: "[A]", with: videoPlaylist.name)
         syncModel.shouldShowSnackBar = true
+    }
+    
+    private func subscribeToItemsStateForEmptyState() {
+        let isEmptyStream = $videoPlaylists.map(\.isEmpty).dropFirst()
+        let isLoadingStream = $shouldShowPlaceHolderView.dropFirst()
+        
+        Publishers.CombineLatest(isEmptyStream, isLoadingStream)
+            .map { $0 && !$1 }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$shouldShowVideosEmptyView)
     }
 }

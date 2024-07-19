@@ -21,6 +21,24 @@ struct FavoritePlaylistCell: View {
     
     var body: some View {
         HStack {
+            content
+        }
+        .padding(0)
+        .background(videoConfig.colorAssets.pageBackgroundColor)
+        .task {
+            await viewModel.onViewAppear()
+        }
+        .onTapGesture {
+            router.openVideoPlaylistContent(for: viewModel.videoPlaylistEntity)
+        }
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        if viewModel.isLoading {
+            VideoListPlaceholderCell()
+                .shimmering(active: viewModel.isLoading)
+        } else {
             ThumbnailLayerView(
                 videoConfig: videoConfig,
                 imageContainers: viewModel.previewEntity.imageContainers,
@@ -38,14 +56,6 @@ struct FavoritePlaylistCell: View {
                     .frame(maxHeight: .infinity, alignment: .top)
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
-        }
-        .padding(0)
-        .background(videoConfig.colorAssets.pageBackgroundColor)
-        .task {
-            await viewModel.onViewAppear()
-        }
-        .onTapGesture {
-            router.openVideoPlaylistContent(for: viewModel.videoPlaylistEntity)
         }
     }
     
