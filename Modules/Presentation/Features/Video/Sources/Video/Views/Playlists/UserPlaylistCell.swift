@@ -24,6 +24,7 @@ struct UserPlaylistCell: View {
             videoConfig: videoConfig,
             previewEntity: viewModel.previewEntity,
             secondaryInformationViewType: viewModel.secondaryInformationViewType,
+            isLoading: viewModel.isLoading,
             onTappedMoreOptions: { viewModel.onTappedMoreOptions() }
         )
         .task {
@@ -40,10 +41,23 @@ struct UserPlaylistCellContent: View {
     let videoConfig: VideoConfig
     let previewEntity: VideoPlaylistCellPreviewEntity
     let secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType
+    let isLoading: Bool
     let onTappedMoreOptions: () -> Void
     
     var body: some View {
         HStack {
+            content
+        }
+        .padding(0)
+        .background(videoConfig.colorAssets.pageBackgroundColor)
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        if isLoading {
+            VideoListPlaceholderCell()
+                .shimmering(active: isLoading)
+        } else {
             ThumbnailLayerView(
                 videoConfig: videoConfig,
                 imageContainers: previewEntity.imageContainers,
@@ -66,8 +80,6 @@ struct UserPlaylistCellContent: View {
                 .foregroundStyle(videoConfig.colorAssets.secondaryIconColor)
                 .onTapGesture { onTappedMoreOptions() }
         }
-        .padding(0)
-        .background(videoConfig.colorAssets.pageBackgroundColor)
     }
     
     @ViewBuilder
@@ -93,6 +105,7 @@ struct UserPlaylistCellContent: View {
         videoConfig: .preview,
         previewEntity: .preview(isExported: false),
         secondaryInformationViewType: .emptyPlaylist,
+        isLoading: false,
         onTappedMoreOptions: {}
     )
     .frame(height: 80, alignment: .center)
@@ -103,6 +116,7 @@ struct UserPlaylistCellContent: View {
         videoConfig: .preview,
         previewEntity: .preview(isExported: true),
         secondaryInformationViewType: .emptyPlaylist,
+        isLoading: false,
         onTappedMoreOptions: {}
     )
     .preferredColorScheme(.dark)
@@ -122,6 +136,7 @@ struct UserPlaylistCellContent: View {
             ]
         ),
         secondaryInformationViewType: .information,
+        isLoading: false,
         onTappedMoreOptions: {}
     )
     .frame(height: 80, alignment: .center)

@@ -57,12 +57,14 @@ struct VideoListPlaceholderView: View {
     
     private func placeholderCells() -> some View {
         ForEach(0..<placeholderCount, id: \.self) { _ in
-            cellView
+            VideoListPlaceholderCell()
         }
         .shimmering(active: isActive)
     }
-    
-    private var cellView: some View {
+}
+
+struct VideoListPlaceholderCell: View {
+    var body: some View {
         HStack {
             Rectangle()
                 .frame(width: 142, height: 80)

@@ -191,6 +191,45 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, .information)
     }
     
+    // MARK: - isLoading
+    
+    func testIsLoading_whenInit_ShowsLoading() async {
+        let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: 0)
+        let (sut, _) = await makeSUT(
+            thumbnailUseCase: MockThumbnailUseCase(),
+            videoPlaylistEntity: videoPlaylist
+        )
+        
+        XCTAssertTrue(sut.isLoading)
+    }
+    
+    func testIsLoading_whenOnAppear_disableLoadingAfterDisplayablePropertiesAreSet() async {
+        let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, sharedLinkStatus: .exported(true), count: 2)
+        let (_, _, imageURL) = imagePathData()
+        let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
+        let mockThumbnailUseCase = MockThumbnailUseCase(
+            cachedThumbnails: [thumbnailEntity],
+            loadThumbnailResult: .success(thumbnailEntity)
+        )
+        let allVideos = [[
+            nodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 30),
+            nodeEntity(name: "video 2", handle: 2, hasThumbnail: true, duration: 30)
+        ]].async.eraseToAnyAsyncSequence()
+        let (sut, _) = await makeSUT(
+            thumbnailUseCase: mockThumbnailUseCase,
+            videoPlaylistEntity: videoPlaylist,
+            videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: allVideos)
+        )
+        
+        XCTAssertTrue(sut.isLoading)
+        
+        await sut.onViewAppear()
+        
+        assertThatPreviewEntityCreatesCorrectly(on: sut, videoPlaylist: videoPlaylist)
+        XCTAssertEqual(sut.secondaryInformationViewType, .information)
+        XCTAssertFalse(sut.isLoading)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

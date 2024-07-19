@@ -17,6 +17,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty)
     }
     
+    // MARK: - OnViewAppear
+    
     func testOnViewAppeared_whenCalled_loadVideoPlaylists() async {
         let (sut, videoPlaylistUseCase, _, _) = makeSUT()
         
@@ -37,6 +39,29 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         XCTAssertFalse(sut.videoPlaylists.isEmpty)
         XCTAssertTrue((sut.videoPlaylists.first?.isSystemVideoPlaylist) != nil)
+    }
+    
+    func testOnViewAppeared_whenLoadVideosSuccessfully_showsCorrectLoadingState() async {
+        let (sut, _, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
+                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+            ])
+        )
+        var loadingStates: [Bool] = []
+        let exp = expectation(description: "loading state subscription")
+        exp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowPlaceHolderView
+            .sink { isLoading in
+                loadingStates.append(isLoading)
+                exp.fulfill()
+            }
+        
+        await sut.onViewAppeared()
+        
+        XCTAssertEqual(loadingStates, [ false, true, false ])
+        
+        cancellable.cancel()
+        await fulfillment(of: [exp], timeout: 0.5)
     }
     
     func testInit_inInitialState() {
@@ -484,6 +509,60 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         XCTAssertNil(sut.newlyCreatedVideoPlaylist)
         XCTAssertNil(sut.createVideoPlaylistTask)
+    }
+    
+    // MARK: - subscribeToItemsStateForEmptyState
+    
+    func testSubscribeToItemsStateForEmptyState_whenConditionNotMet_shouldNotShowEmptyView() async {
+        // Arrange
+        let (sut, _, _, _) = makeSUT(videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: []))
+        
+        var receivedValues: [Bool]?
+        let exp = expectation(description: "should not show empty view")
+        exp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowVideosEmptyView
+            .dropFirst()
+            .filter { !$0 }
+            .receive(on: DispatchQueue.main)
+            .sink {
+                receivedValues?.append($0)
+                exp.fulfill()
+            }
+        
+        await sut.onViewAppeared()
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertFalse(receivedValues?.contains(false) == true)
+        
+        cancellable.cancel()
+    }
+    
+    func testSubscribeToItemsStateForEmptyState_whenConditionMet_shouldShowEmptyView() async {
+        // Arrange
+        let (sut, _, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
+                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+            ])
+        )
+        
+        var receivedValue = false
+        let exp = expectation(description: "should show empty view")
+        exp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowVideosEmptyView
+            .dropFirst()
+            .sink { shouldShow in
+                receivedValue = shouldShow
+                exp.fulfill()
+            }
+        
+        await sut.onViewAppeared()
+        await fulfillment(of: [exp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertFalse(receivedValue)
+        
+        cancellable.cancel()
     }
     
     // MARK: - Helpers

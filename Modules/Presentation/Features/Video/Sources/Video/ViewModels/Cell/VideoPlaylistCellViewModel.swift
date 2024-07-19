@@ -12,6 +12,7 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     
     @Published var previewEntity: VideoPlaylistCellPreviewEntity
     @Published var secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType = .emptyPlaylist
+    @Published var isLoading = true
     
     init(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
@@ -46,6 +47,8 @@ final class VideoPlaylistCellViewModel: ObservableObject {
         )
         
         secondaryInformationViewType = videos.count == 0 ? .emptyPlaylist : .information
+        
+        isLoading = false
     }
     
     private func durationText(from videos: [NodeEntity]) -> String {
