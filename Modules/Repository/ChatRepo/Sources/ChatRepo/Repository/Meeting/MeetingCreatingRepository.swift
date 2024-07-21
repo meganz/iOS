@@ -4,19 +4,28 @@ import MEGADomain
 import MEGASDKRepo
 import MEGASwift
 
-public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreatingRepositoryProtocol {
+public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreatingRepositoryProtocol, Sendable {
     
     public static var newRepo: MeetingCreatingRepository {
-        MeetingCreatingRepository(chatSdk: .sharedChatSdk, sdk: .sharedSdk)
+        MeetingCreatingRepository(
+            chatSdk: .sharedChatSdk,
+            sdk: .sharedSdk,
+            chatConnectionStateUpdateProvider: ChatConnectionStateUpdateProvider(sdk: .sharedChatSdk)
+        )
     }
     
     private let chatSdk: MEGAChatSdk
     private let sdk: MEGASdk
-    private var chatResultDelegate: MEGAChatResultDelegate?
+    private let chatConnectionStateUpdateProvider: any ChatConnectionStateUpdateProviderProtocol
     
-    init(chatSdk: MEGAChatSdk, sdk: MEGASdk) {
+    init(
+        chatSdk: MEGAChatSdk,
+        sdk: MEGASdk,
+        chatConnectionStateUpdateProvider: some ChatConnectionStateUpdateProviderProtocol
+    ) {
         self.chatSdk = chatSdk
         self.sdk = sdk
+        self.chatConnectionStateUpdateProvider = chatConnectionStateUpdateProvider
     }
     
     public func username() -> String {
@@ -111,7 +120,7 @@ public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, Meetin
         firstName: String,
         lastName: String,
         link: String,
-        completion: @escaping (Result<Void, GenericErrorEntity>) -> Void,
+        completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void,
         karereInitCompletion: @escaping () -> Void
     ) {
         chatSdk.logout(with: ChatRequestDelegate { [weak self] result in
@@ -152,52 +161,44 @@ public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, Meetin
         })
     }
     
-    private func connectToChat(link: String, completion: @escaping (Result<Void, GenericErrorEntity>) -> Void) {
+    private func connectToChat(link: String, completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void) {
         guard let url = URL(string: link) else {
             completion(.failure(GenericErrorEntity()))
             return
         }
         
-        chatSdk.openChatPreview(url, delegate: ChatRequestDelegate { [weak self]  result in
+        chatSdk.openChatPreview(url, delegate: ChatRequestDelegate { [weak self] result in
             guard let self else {
                 completion(.failure(GenericErrorEntity()))
                 return
             }
             switch result {
             case .success(let chatRequest):
-                chatResultDelegate = MEGAChatResultDelegate { [weak self] _, chatId, newState in
-                    guard let self else {
-                        completion(.failure(GenericErrorEntity()))
-                        return
-                    }
-                    if chatRequest.chatHandle == chatId, newState == .online, let chatResultDelegate {
-                        chatSdk.remove(chatResultDelegate)
-                        completion(.success(()))
-                    }
-                }
-                if let chatResultDelegate {
-                    chatSdk.add(chatResultDelegate)
+                Task { [weak self] in
+                    guard let self else { return }
+                    await handleChatConnection(
+                        chatRequest: chatRequest,
+                        completion: completion
+                    )
                 }
             case .failure:
                 completion(.failure(GenericErrorEntity()))
             }
         })
     }
-}
-
-typealias MEGAChatResultDelegateCompletion = (_ api: MEGAChatSdk, _ chatId: HandleEntity, _ newState: MEGAChatConnection) -> Void
-
-class MEGAChatResultDelegate: NSObject, MEGAChatDelegate {
-    let completion: MEGAChatResultDelegateCompletion
     
-    init(completion: @escaping MEGAChatResultDelegateCompletion) {
-        self.completion = completion
-    }
-    
-    func onChatConnectionStateUpdate(_ api: MEGAChatSdk, chatId: UInt64, newState: Int32) {
-        guard let intNewState = MEGAChatConnection(rawValue: Int(newState)) else {
+    private func handleChatConnection(
+        chatRequest: MEGAChatRequest,
+        completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void
+    ) async {
+        let chatHandle = chatRequest.chatHandle
+        _ = await chatConnectionStateUpdateProvider
+            .updates
+            .first { $0 == chatHandle && $1 == .online }
+        guard !Task.isCancelled else {
+            completion(.failure(GenericErrorEntity()))
             return
         }
-        completion(api, chatId, intNewState)
+        completion(.success)
     }
 }
