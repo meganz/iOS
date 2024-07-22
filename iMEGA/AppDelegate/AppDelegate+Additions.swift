@@ -1,5 +1,6 @@
 import ChatRepo
 import Combine
+import FirebaseCrashlytics
 import Foundation
 import Intents
 import LogRepo
@@ -248,6 +249,19 @@ extension AppDelegate {
             }
         }
     }
+    
+    @objc func handleFatalError(event: MEGAEvent) {
+        let error = NSError.init(
+            domain: "nz.mega.eventFatalError",
+            code: event.number,
+            userInfo: [NSLocalizedDescriptionKey: "Fatal error event received from SDK: \(event.eventString ?? "")"]
+        )
+        Crashlytics.crashlytics().record(error: error)
+        
+        if event.number == 3 {
+            NotificationCenter.default.post(name: NSNotification.Name.MEGASQLiteDiskFull, object: nil)
+        }
+    }
 }
 
 // MARK: - Config Cookie Settings
@@ -280,6 +294,13 @@ extension AppDelegate {
 // MARK: - MEGAChatSdk onDBError
 extension AppDelegate {
     @objc func handleChatDBError(error: MEGAChatDBError, message: String) {
+        let recordError = NSError.init(
+            domain: "nz.mega.chatDBError",
+            code: error.rawValue,
+            userInfo: [NSLocalizedDescriptionKey: "DB error received from chat"]
+        )
+        Crashlytics.crashlytics().record(error: recordError)
+        
         switch error {
         case .full:
             NotificationCenter.default.post(name: NSNotification.Name.MEGASQLiteDiskFull, object: nil, userInfo: nil)
