@@ -1,6 +1,6 @@
 import Combine
 
-public protocol ChatLinkRepositoryProtocol: RepositoryProtocol {
+public protocol ChatLinkRepositoryProtocol: RepositoryProtocol, Sendable {
     func queryChatLink(for chatRoom: ChatRoomEntity) async throws -> String
     func createChatLink(for chatRoom: ChatRoomEntity) async throws -> String
     func removeChatLink(for chatRoom: ChatRoomEntity) async throws

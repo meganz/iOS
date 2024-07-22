@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import MEGAChatSdk
 import MEGADomain
 import MEGASwift
@@ -72,7 +72,7 @@ public struct ChatLinkRepository: ChatLinkRepositoryProtocol {
     }
 }
 
-private final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
+private final class ChatRequestListener: NSObject, MEGAChatRequestDelegate, Sendable {
     private let sdk: MEGAChatSdk
     private let changeType: MEGAChatRequestType
     let chatId: HandleEntity
