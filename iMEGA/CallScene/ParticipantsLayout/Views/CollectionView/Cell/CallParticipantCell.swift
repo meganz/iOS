@@ -58,6 +58,7 @@ class CallParticipantCell: UICollectionViewCell {
             micImageView.isHidden = true
             avatarImageView.isHidden = true
             videoImageView.isHidden = false
+            raisedHandView.isHidden = true
         }
     }
     
