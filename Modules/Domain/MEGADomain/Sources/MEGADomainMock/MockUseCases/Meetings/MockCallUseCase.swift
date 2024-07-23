@@ -1,7 +1,7 @@
 import Combine
 import MEGADomain
 
-public final class MockCallUseCase: CallUseCaseProtocol {
+public final class MockCallUseCase: CallUseCaseProtocol, @unchecked Sendable {
     
     public var startListeningForCall_CalledTimes = 0
     var stopListeningForCall_CalledTimes = 0

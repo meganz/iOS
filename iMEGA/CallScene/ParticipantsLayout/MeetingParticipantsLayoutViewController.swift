@@ -113,8 +113,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
             view.backgroundColor = TokenColors.Background.page
         }
         
-        viewModel.invokeCommand = { [weak self] in
-            self?.executeCommand($0)
+        viewModel.invokeCommand = { [weak self] command in
+            DispatchQueue.main.async { self?.executeCommand(command) }
         }
         
         navigationItem.titleView = titleView
