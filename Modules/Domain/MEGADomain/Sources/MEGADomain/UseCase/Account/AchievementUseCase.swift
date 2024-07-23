@@ -2,7 +2,7 @@ import Foundation
 import MEGAFoundation
 
 // MARK: - Use case protocol -
-public protocol AchievementUseCaseProtocol {
+public protocol AchievementUseCaseProtocol: Sendable {
     func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitDataStorage>
     func getAchievementDetails() async throws -> AchievementDetailsEntity
 }
