@@ -68,7 +68,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         photoCellRegistration = UICollectionView.CellRegistration { [unowned self] cell, _, photo in
             let viewModel = PhotoCellViewModel(
                 photo: photo,
-                viewModel: viewModel,
+                viewModel: viewModel, 
                 thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: representer.contentMode),
                 nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: representer.contentMode)
             )

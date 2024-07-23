@@ -103,7 +103,6 @@ final class VideoPlaylistContentViewController: UIViewController {
             videoConfig: videoConfig,
             previewEntity: videoPlaylistEntity,
             videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
-            thumbnailUseCase: thumbnailUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,

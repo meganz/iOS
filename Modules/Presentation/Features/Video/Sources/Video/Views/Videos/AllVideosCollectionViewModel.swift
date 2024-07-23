@@ -1,12 +1,20 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 
 final class AllVideosCollectionViewModel: ObservableObject {
-    let thumbnailUseCase: any ThumbnailUseCaseProtocol
+
+    let thumbnailLoader: any ThumbnailLoaderProtocol
+    let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     @Published var videos = [NodeEntity]()
     
-    init(thumbnailUseCase: some ThumbnailUseCaseProtocol, videos: [NodeEntity]) {
-        self.thumbnailUseCase = thumbnailUseCase
+    init(
+        videos: [NodeEntity],
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
+    ) {
         self.videos = videos
+        self.thumbnailLoader = thumbnailLoader
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
 }

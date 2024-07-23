@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 import MEGATest
 import SwiftUI
 @testable import Video
@@ -9,17 +10,13 @@ final class VideoPlaylistThumbnailLoaderTests: XCTestCase {
     
     // MARK: - loadThumbnails
     
-    func testLoadThumbnails_whenNoCachedThumbnailsThumbnailAndErrors_deliversPlaceholderImage() async {
+    func testLoadThumbnails_whenNoCachedThumbnailsThumbnailAndErrors_deliversEmptyResult() async {
         let allVideos: [NodeEntity] = []
-        let thumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [],
-            loadThumbnailResult: .failure(GenericErrorEntity()),
-            loadPreviewResult: .failure(GenericErrorEntity()),
-            loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
-        )
-        let sut = makeSUT(thumbnailUseCase: thumbnailUseCase)
+        let thumbnailLoader = MockThumbnailLoader()
         
-        let imageContainers = await sut.loadThumbnails(for: allVideos).compactMap { $0 }
+        let sut = makeSUT(thumbnailLoader: thumbnailLoader)
+        
+        let imageContainers = await sut.loadThumbnails(for: allVideos)
         
         imageContainers.enumerated().forEach { (index, imageContainer) in
             XCTAssertEqual(imageContainer.image, Image(systemName: "square.fill"), "Failed at index: \(index), with data: \(imageContainer)")
@@ -37,9 +34,11 @@ final class VideoPlaylistThumbnailLoaderTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
-        let sut = makeSUT(thumbnailUseCase: thumbnailUseCase)
+        let thumbnailLoader = MockThumbnailLoader()
+
+        let sut = makeSUT(thumbnailLoader: thumbnailLoader)
         
-        let imageContainers = await sut.loadThumbnails(for: allVideos).compactMap { $0 }
+        let imageContainers = await sut.loadThumbnails(for: allVideos)
         
         imageContainers.enumerated().forEach { (index, imageContainer) in
             XCTAssertNotNil(imageContainer, "Failed at index: \(index), with data: \(imageContainer)")
@@ -55,8 +54,10 @@ final class VideoPlaylistThumbnailLoaderTests: XCTestCase {
             cachedThumbnails: [thumbnailEntity],
             loadThumbnailResult: .success(thumbnailEntity)
         )
-        let sut = makeSUT(thumbnailUseCase: thumbnailUseCase)
-        
+        let thumbnailLoader = MockThumbnailLoader()
+
+        let sut = makeSUT(thumbnailLoader: thumbnailLoader)
+    
         let imageContainers = await sut.loadThumbnails(for: allVideos).compactMap { $0 }
         
         imageContainers.enumerated().forEach { (index, imageContainer) in
@@ -66,8 +67,8 @@ final class VideoPlaylistThumbnailLoaderTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(thumbnailUseCase: MockThumbnailUseCase) -> VideoPlaylistThumbnailLoader {
-        VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
+    private func makeSUT(thumbnailLoader: MockThumbnailLoader) -> VideoPlaylistThumbnailLoader {
+        VideoPlaylistThumbnailLoader(thumbnailLoader: thumbnailLoader)
     }
     
     private func anyImageURL() -> URL {

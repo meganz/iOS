@@ -9,7 +9,9 @@ public final class VideoListViewModel: ObservableObject {
     
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
-    private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
+    let thumbnailLoader: any ThumbnailLoaderProtocol
+    let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    
     private(set) var syncModel: VideoRevampSyncModel
     private(set) var reloadVideosOnSortOrderChangedTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
@@ -47,15 +49,17 @@ public final class VideoListViewModel: ObservableObject {
     var newlySelectedChip: ChipContainerViewModel?
     
     public init(
+        syncModel: VideoRevampSyncModel,
+        selection: VideoSelection,
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
-        syncModel: VideoRevampSyncModel,
-        selection: VideoSelection
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
-        self.thumbnailUseCase = thumbnailUseCase
+        self.thumbnailLoader = thumbnailLoader
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.syncModel = syncModel
         self.selection = selection
         

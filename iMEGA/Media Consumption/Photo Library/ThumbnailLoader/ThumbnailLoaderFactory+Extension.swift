@@ -8,16 +8,17 @@ extension ThumbnailLoaderFactory {
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          mode: PhotoLibraryContentMode? = nil
     ) -> any ThumbnailLoaderProtocol {
-        
-        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-           [PhotoLibraryContentMode.albumLink, .mediaDiscoveryFolderLink].notContains(mode) {
+        if [PhotoLibraryContentMode.albumLink, .mediaDiscoveryFolderLink].notContains(mode) {
             makeThumbnailLoader(
                 config: .sensitive(
                     sensitiveNodeUseCase: SensitiveNodeUseCase(
                         nodeRepository: NodeRepository.newRepo)),
-                thumbnailUseCase: makeThumbnailUseCase(mode: mode))
+                thumbnailUseCase: makeThumbnailUseCase(mode: mode),
+                featureFlagProvider: featureFlagProvider)
         } else {
-            makeThumbnailLoader(config: .general, thumbnailUseCase: makeThumbnailUseCase(mode: mode))
+            makeThumbnailLoader(config: .general, 
+                                thumbnailUseCase: makeThumbnailUseCase(mode: mode),
+                                featureFlagProvider: featureFlagProvider)
         }
     }
     

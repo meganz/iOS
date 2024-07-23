@@ -1,6 +1,8 @@
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
+import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
 
@@ -37,7 +39,6 @@ public class VideoRevampFactory {
     public static func makeTabContainerView(
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
         videoSelection: VideoSelection,
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
@@ -46,16 +47,19 @@ public class VideoRevampFactory {
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
+        
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo)
+        let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase)
         let videoListViewModel = VideoListViewModel(
+            syncModel: syncModel,
+            selection: videoSelection,
             fileSearchUseCase: fileSearchUseCase,
             photoLibraryUseCase: photoLibraryUseCase,
-            thumbnailUseCase: thumbnailUseCase,
-            syncModel: syncModel,
-            selection: videoSelection
+            thumbnailLoader: thumbnailLoader,
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let videoPlaylistViewModel = VideoPlaylistsViewModel(
             videoPlaylistsUseCase: videoPlaylistUseCase,
-            thumbnailUseCase: thumbnailUseCase, 
             videoPlaylistContentUseCase: videoPlaylistContentUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             syncModel: syncModel,
@@ -73,7 +77,8 @@ public class VideoRevampFactory {
                 affirmativeButtonInitiallyEnabled: false,
                 destructiveButtonTitle: Strings.Localizable.cancel,
                 message: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.enterTheNewName
-            )
+            ),
+            thumbnailLoader: thumbnailLoader
         )
         let view = TabContainerView(
             videoListViewModel: videoListViewModel,
@@ -90,7 +95,6 @@ public class VideoRevampFactory {
         videoConfig: VideoConfig,
         previewEntity: VideoPlaylistEntity,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
@@ -101,11 +105,14 @@ public class VideoRevampFactory {
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         syncModel: VideoRevampSyncModel
     ) -> UIViewController {
+        let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo)
+        let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase)
         let viewModel = VideoPlaylistContentViewModel(
             videoPlaylistEntity: previewEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentUseCase,
-            thumbnailUseCase: thumbnailUseCase,
-            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: thumbnailUseCase),
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
+                thumbnailLoader: thumbnailLoader),
             sharedUIState: sharedUIState,
             presentationConfig: presentationConfig,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
@@ -120,6 +127,8 @@ public class VideoRevampFactory {
             ),
             videoPlaylistsUseCase: videoPlaylistUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            thumbnailLoader: thumbnailLoader,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             syncModel: syncModel
         )
         
@@ -130,5 +139,15 @@ public class VideoRevampFactory {
             router: router
         )
         return UIHostingController(rootView: view)
+    }
+}
+
+extension VideoRevampFactory {
+    private static func makeThumbnailLoader(sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol) -> any ThumbnailLoaderProtocol {
+        ThumbnailLoaderFactory.makeThumbnailLoader(
+            config: .sensitive(sensitiveNodeUseCase: sensitiveNodeUseCase),
+            thumbnailUseCase: ThumbnailUseCase(
+                repository: ThumbnailRepository.newRepo)
+        )
     }
 }

@@ -46,7 +46,8 @@ let package = Package(
                 "Video",
                 "MEGADomain",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
-                "MEGATest"
+                "MEGATest",
+                .product(name: "MEGAPresentationMock", package: "MEGAPresentation")
             ],
             swiftSettings: settings
         )

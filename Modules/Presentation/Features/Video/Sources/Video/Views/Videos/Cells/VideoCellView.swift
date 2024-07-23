@@ -30,9 +30,8 @@ struct VideoCellView: View {
             onTappedCheckMark: onTappedCheckMark,
             onTappedMoreOptions: viewModel.onTappedMoreOptions
         )
-        .task {
-            await viewModel.attemptLoadThumbnail()
-        }
+        .throwingTask { try await viewModel.attemptLoadThumbnail() }
+        .task { await viewModel.monitorInheritedSensitivityChanges() }
     }
 }
 

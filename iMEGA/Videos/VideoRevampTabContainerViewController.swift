@@ -39,7 +39,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let viewModel: VideoRevampTabContainerViewModel
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
-    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
@@ -56,7 +55,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         viewModel: VideoRevampTabContainerViewModel,
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
@@ -66,7 +64,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.viewModel = viewModel
         self.fileSearchUseCase = fileSearchUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
-        self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistUseCase = videoPlaylistUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
@@ -126,7 +123,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         let contentView = VideoRevampFactory.makeTabContainerView(
             fileSearchUseCase: fileSearchUseCase,
             photoLibraryUseCase: photoLibraryUseCase,
-            thumbnailUseCase: thumbnailUseCase,
             syncModel: viewModel.syncModel,
             videoSelection: viewModel.videoSelection,
             videoPlaylistUseCase: videoPlaylistUseCase,

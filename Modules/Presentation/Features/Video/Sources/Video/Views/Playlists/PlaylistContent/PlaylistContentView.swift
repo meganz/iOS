@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import SwiftUI
 
 struct PlaylistContentScreen: View {
@@ -26,9 +27,10 @@ struct PlaylistContentScreen: View {
         PlaylistContentView(
             videoConfig: videoConfig,
             previewEntity: viewModel.headerPreviewEntity,
-            thumbnailUseCase: viewModel.thumbnailUseCase,
             videos: viewModel.videos,
             router: router,
+            thumbnailLoader: viewModel.thumbnailLoader,
+            sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
             videoSelection: videoSelection,
             onTapAddButton: { viewModel.shouldShowVideoPlaylistPicker = true }
         )
@@ -100,26 +102,29 @@ struct PlaylistContentScreen: View {
 
 struct PlaylistContentView: View {
     
-    let videoConfig: VideoConfig
-    let previewEntity: VideoPlaylistCellPreviewEntity
-    let thumbnailUseCase: any ThumbnailUseCaseProtocol
-    let videos: [NodeEntity]
+    private let videoConfig: VideoConfig
+    private let previewEntity: VideoPlaylistCellPreviewEntity
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let videos: [NodeEntity]
     let router: any VideoRevampRouting
     @StateObject private var videoSelection: VideoSelection
-    let onTapAddButton: () -> Void
+    private let onTapAddButton: () -> Void
     
     init(
         videoConfig: VideoConfig,
         previewEntity: VideoPlaylistCellPreviewEntity,
-        thumbnailUseCase: any ThumbnailUseCaseProtocol,
         videos: [NodeEntity],
         router: any VideoRevampRouting,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         videoSelection: @autoclosure @escaping () -> VideoSelection,
         onTapAddButton: @escaping () -> Void
     ) {
         self.videoConfig = videoConfig
         self.previewEntity = previewEntity
-        self.thumbnailUseCase = thumbnailUseCase
+        self.thumbnailLoader = thumbnailLoader
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.videos = videos
         self.router = router
         _videoSelection = StateObject(wrappedValue: videoSelection())
@@ -176,12 +181,13 @@ struct PlaylistContentView: View {
     
     private func listView() -> some View {
         AllVideosCollectionViewRepresenter(
-            thumbnailUseCase: thumbnailUseCase,
             videos: videos,
             videoConfig: videoConfig,
             selection: videoSelection,
             router: router,
-            viewType: .playlistContent
+            viewType: .playlistContent,
+            thumbnailLoader: thumbnailLoader,
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
     }
 }
@@ -199,9 +205,10 @@ struct PlaylistContentView: View {
             isExported: false,
             type: .favourite
         ),
-        thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
+        thumbnailLoader: Preview_ThumbnailLoader(),
+        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -218,9 +225,10 @@ struct PlaylistContentView: View {
             isExported: false,
             type: .user
         ),
-        thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
+        thumbnailLoader: Preview_ThumbnailLoader(),
+        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -238,9 +246,10 @@ struct PlaylistContentView: View {
             isExported: false,
             type: .favourite
         ),
-        thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
+        thumbnailLoader: Preview_ThumbnailLoader(),
+        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -257,9 +266,10 @@ struct PlaylistContentView: View {
             isExported: false,
             type: .user
         ),
-        thumbnailUseCase: Preview_ThumbnailUseCase(),
         videos: [],
         router: Preview_VideoRevampRouter(),
+        thumbnailLoader: Preview_ThumbnailLoader(),
+        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )

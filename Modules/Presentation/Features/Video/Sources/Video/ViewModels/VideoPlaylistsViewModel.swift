@@ -2,11 +2,12 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASwiftUI
 
 final class VideoPlaylistsViewModel: ObservableObject {
+    let thumbnailLoader: any ThumbnailLoaderProtocol
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
-    private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let syncModel: VideoRevampSyncModel
@@ -45,22 +46,22 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     init(
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
         alertViewModel: TextFieldAlertViewModel,
         renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
         monitorSortOrderChangedDispatchQueue: DispatchQueue = DispatchQueue.main
     ) {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
-        self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.syncModel = syncModel
         self.alertViewModel = alertViewModel
         self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
         self.monitorSortOrderChangedDispatchQueue = monitorSortOrderChangedDispatchQueue
+        self.thumbnailLoader = thumbnailLoader
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
         
         self.alertViewModel.action = { [weak self] newVideoPlaylistName in

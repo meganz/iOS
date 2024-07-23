@@ -128,8 +128,7 @@ struct ThumbnailLayerView: View {
 #Preview {
     func makeNullViewModel() -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
-            thumbnailUseCase: Preview_ThumbnailUseCase(),
-            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: Preview_ThumbnailUseCase()),
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailLoader: Preview_ThumbnailLoader()),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistEntity: videoPlaylistEntity(),
             onTapMoreOptions: { _ in }

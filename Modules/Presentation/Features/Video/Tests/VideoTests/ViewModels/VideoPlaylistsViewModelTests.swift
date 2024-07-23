@@ -2,6 +2,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentationMock
 import MEGASwiftUI
 import MEGATest
 @testable import Video
@@ -582,12 +583,12 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let alertViewModel = TextFieldAlertViewModel(title: "title", affirmativeButtonTitle: "Affirmative", destructiveButtonTitle: "Destructive")
         let sut = VideoPlaylistsViewModel(
             videoPlaylistsUseCase: videoPlaylistUseCase,
-            thumbnailUseCase: MockThumbnailUseCase(), 
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             syncModel: syncModel,
             alertViewModel: alertViewModel,
-            renameVideoPlaylistAlertViewModel: alertViewModel,
+            renameVideoPlaylistAlertViewModel: alertViewModel, 
+            thumbnailLoader: MockThumbnailLoader(),
             monitorSortOrderChangedDispatchQueue: DispatchQueue.main
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

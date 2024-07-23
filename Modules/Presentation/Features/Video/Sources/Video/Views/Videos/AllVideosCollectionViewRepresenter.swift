@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 import SwiftUI
 
 struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
@@ -15,14 +16,19 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     }
     
     init(
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videos: [NodeEntity],
         videoConfig: VideoConfig,
         selection: VideoSelection,
         router: some VideoRevampRouting,
-        viewType: ViewType
+        viewType: ViewType,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
     ) {
-        self.viewModel = AllVideosCollectionViewModel(thumbnailUseCase: thumbnailUseCase, videos: videos)
+        self.viewModel = AllVideosCollectionViewModel(
+            videos: videos,
+            thumbnailLoader: thumbnailLoader,
+            sensitiveNodeUseCase: sensitiveNodeUseCase
+        )
         self.videoConfig = videoConfig
         self.selection = selection
         self.router = router

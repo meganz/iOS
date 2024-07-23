@@ -15,15 +15,19 @@ public enum ThumbnailLoaderFactory {
     
     public static func makeThumbnailLoader(
         config: Configuration,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol
+        thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) -> any ThumbnailLoaderProtocol {
+        
         switch config {
         case .general:
             makeThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
-        case let .sensitive(sensitiveNodeUseCase):
+        case let .sensitive(sensitiveNodeUseCase) where featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes):
             makeSensitiveThumbnailLoader(
                 thumbnailUseCase: thumbnailUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase)
+        default:
+            makeThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
         }
     }
     

@@ -22,6 +22,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             && lhs.node.name == rhs.node.name
             && lhs.node.label == rhs.node.label
             && lhs.node.isExported == rhs.node.isExported
+            && lhs.node.isMarkedSensitive == rhs.node.isMarkedSensitive
         }
     }
     
@@ -50,9 +51,12 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         let cellRegistration = CellRegistration { [weak self] cell, _, rowItem in
             guard let self else { return }
             
+            let viewModel = representer.viewModel
+            
             let cellViewModel = VideoCellViewModel(
-                thumbnailUseCase: representer.viewModel.thumbnailUseCase,
                 nodeEntity: rowItem.node,
+                thumbnailLoader: viewModel.thumbnailLoader,
+                sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
                 onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) }
             )
             let adapter = VideoSelectionCheckmarkUIUpdateAdapter(

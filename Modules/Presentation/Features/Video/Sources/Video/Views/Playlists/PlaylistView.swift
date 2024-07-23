@@ -201,7 +201,7 @@ struct PlaylistView: View {
         
     private var listView: some View {
         VideoPlaylistsCollectionViewRepresenter(
-            thumbnailUseCase: viewModel.thumbnailUseCase,
+            thumbnailLoader: viewModel.thumbnailLoader,
             viewModel: viewModel,
             videoConfig: videoConfig,
             router: router,
@@ -209,16 +209,6 @@ struct PlaylistView: View {
         )
         .listStyle(PlainListStyle())
         .padding(.horizontal, 8)
-    }
-    
-    private func videoPlaylistCellViewModel(_ videoPlaylist: VideoPlaylistEntity) -> VideoPlaylistCellViewModel {
-        VideoPlaylistCellViewModel(
-            thumbnailUseCase: viewModel.thumbnailUseCase,
-            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: viewModel.thumbnailUseCase),
-            videoPlaylistContentUseCase: viewModel.videoPlaylistContentUseCase,
-            videoPlaylistEntity: videoPlaylist,
-            onTapMoreOptions: { _ in }
-        )
     }
     
     private var placeholder: some View {
@@ -230,12 +220,12 @@ struct PlaylistView: View {
     PlaylistView(
         viewModel: VideoPlaylistsViewModel(
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(userVideoPlaylists: [.preview]),
-            thumbnailUseCase: Preview_ThumbnailUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
-            renameVideoPlaylistAlertViewModel: .preview
+            renameVideoPlaylistAlertViewModel: .preview, 
+            thumbnailLoader: Preview_ThumbnailLoader()
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()
@@ -246,12 +236,12 @@ struct PlaylistView: View {
     PlaylistView(
         viewModel: VideoPlaylistsViewModel(
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
-            thumbnailUseCase: Preview_ThumbnailUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
-            renameVideoPlaylistAlertViewModel: .preview
+            renameVideoPlaylistAlertViewModel: .preview,
+            thumbnailLoader: Preview_ThumbnailLoader()
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()

@@ -1,10 +1,10 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
 final class VideoPlaylistCellViewModel: ObservableObject {
     
-    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private(set) var videoPlaylistEntity: VideoPlaylistEntity
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
@@ -15,13 +15,11 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     @Published var isLoading = true
     
     init(
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistEntity: VideoPlaylistEntity,
         onTapMoreOptions: @escaping (_ node: VideoPlaylistEntity) -> Void
     ) {
-        self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistThumbnailLoader = videoPlaylistThumbnailLoader
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.videoPlaylistEntity = videoPlaylistEntity
