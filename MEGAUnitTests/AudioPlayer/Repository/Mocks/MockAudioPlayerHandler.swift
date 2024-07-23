@@ -28,6 +28,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var initMiniPlayerCallCount = 0
     var refreshCurrentItemState_calledTimes = 0
     var autoPlay_calledTimes = 0
+    var closePlayer_calledTimes = 0
     var repeatMode = RepeatMode.none
     
     private var _isPlayerDefined = false
@@ -149,7 +150,9 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?) {}
     func playerHidden(_ hidden: Bool, presenter: UIViewController) {}
     func playerHiddenIgnoringPlayerLifeCycle(_ hidden: Bool, presenter: UIViewController) {}
-    func closePlayer() {}
+    func closePlayer() {
+        closePlayer_calledTimes += 1
+    }
     func presentMiniPlayer(_ viewController: UIViewController) {}
     func isPlayerPlaying() -> Bool { true }
     func isPlayerPaused() -> Bool { false }
