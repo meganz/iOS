@@ -1421,7 +1421,6 @@
 		94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94872E942C08886600DC76E6 /* UsageViewRouter.swift */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
-		948BCDFF2C20683200B719B2 /* RaiseHandFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */; };
 		948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */; };
 		948BCE062C20704D00B719B2 /* CameraSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */; };
 		949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */; };
@@ -4200,7 +4199,6 @@
 		9486B9052C41738A00D96762 /* RaiseHandUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandUpdater.swift; sourceTree = "<group>"; };
 		9486B9082C429B8A00D96762 /* RaiseHandUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandUpdaterTests.swift; sourceTree = "<group>"; };
 		94872E942C08886600DC76E6 /* UsageViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewRouter.swift; sourceTree = "<group>"; };
-		948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandFeatureTests.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
 		948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSwitcherTests.swift; sourceTree = "<group>"; };
 		948D92672B2373CE0020E894 /* DisplayMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
@@ -12782,7 +12780,6 @@
 				83DAF93B2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift */,
 				83F388F22C2475B1000AF96F /* RaiseHandBadgeStoreTests.swift */,
 				94AE79B42C32F21A0018C753 /* RaiseHandDiffingTests.swift */,
-				948BCDFE2C20683200B719B2 /* RaiseHandFeatureTests.swift */,
 				94AE79B82C32F7BC0018C753 /* RaiseHandSnackBarFactoryTests.swift */,
 				9486B9082C429B8A00D96762 /* RaiseHandUpdaterTests.swift */,
 				BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */,
@@ -16628,7 +16625,6 @@
 				948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */,
 				83F388F32C2475B1000AF96F /* RaiseHandBadgeStoreTests.swift in Sources */,
 				94AE79B52C32F21A0018C753 /* RaiseHandDiffingTests.swift in Sources */,
-				948BCDFF2C20683200B719B2 /* RaiseHandFeatureTests.swift in Sources */,
 				94AE79B92C32F7BC0018C753 /* RaiseHandSnackBarFactoryTests.swift in Sources */,
 				9486B9092C429B8A00D96762 /* RaiseHandUpdaterTests.swift in Sources */,
 				C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */,
