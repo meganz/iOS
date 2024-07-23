@@ -124,7 +124,7 @@
     
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [MEGASdk.shared removeMEGAGlobalDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
     
     [self.photoUpdatePublisher cancelSubscriptions];
 }
