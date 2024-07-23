@@ -665,77 +665,28 @@ struct CloudDriveViewControllerFactory {
             audioPlayerManager: AudioPlayerManager.shared
         )
 
-        let setNavItemsFactory: (NodeSource, Bool?) -> CloudDriveViewControllerNavItemsFactory
-        setNavItemsFactory = { [weak nodeBrowserViewModel] nodeSource, isHidden in
-            let viewMode: ViewModePreferenceEntity = nodeBrowserViewModel?.viewMode ?? .list
-            let isSelectionHidden = nodeBrowserViewModel?.isSelectionHidden ?? false
-            let initialSortOrder = sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
-            let sortOrder = nodeBrowserViewModel?.sortOrder ?? initialSortOrder
-            return CloudDriveViewControllerNavItemsFactory(
-                nodeSource: nodeSource,
-                config: config,
-                currentViewMode: viewMode,
-                contextMenuManager: contextMenuManager,
-                contextMenuConfigFactory: contextMenuConfigFactory,
-                nodeUseCase: nodeUseCase,
-                isSelectionHidden: isSelectionHidden,
-                sortOrder: sortOrder,
-                isHidden: isHidden
-            )
+        let onContextMenuRefresh: () -> Void = {  [weak nodeBrowserViewModel] in
+            Task { @MainActor [weak nodeBrowserViewModel] in
+                await nodeBrowserViewModel?.updateContextMenu()
+            }
         }
 
-        let onContextMenuRefresh: () -> Void = { [weak nodeBrowserViewModel] in
-            guard let nodeBrowserViewModel else { return }
-
-            nodeBrowserViewModel.contextMenuViewFactory = NodeBrowserContextMenuViewFactory(
-                nodeSource: nodeBrowserViewModel.nodeSource,
-                isHidden: nodeBrowserViewModel.contextMenuViewFactory?.isHidden,
-                makeNavItemsFactory: setNavItemsFactory
-            )
-        }
         assert(actionHandlers.isNotEmpty, "sanity check as they should not be deallocated")
         // setting the refreshMenu handler so that context menu handlers can trigger it
         actionHandlers
             .compactMap { $0 as? (any RefreshMenuTriggering) }
             .forEach { $0.refreshMenu = onContextMenuRefresh }
 
-        onContextMenuRefresh()
-        nodeBrowserViewModel.refreshMenu = { [weak nodeBrowserViewModel] updatedNodeSource in
-            guard let nodeBrowserViewModel else { return }
-            await updateNodeBrowserContextMenuFactory(
-                with: updatedNodeSource,
-                config: config,
-                setNavItemsFactory: setNavItemsFactory,
-                nodeBrowserViewModel: nodeBrowserViewModel
-            )
-        }
-
-        return vc
-    }
-
-    private func updateNodeBrowserContextMenuFactory(
-        with nodeSource: NodeSource,
-        config: NodeBrowserConfig,
-        setNavItemsFactory: @escaping (NodeSource, Bool?) -> CloudDriveViewControllerNavItemsFactory,
-        nodeBrowserViewModel: NodeBrowserViewModel?
-    ) async {
-        let isHidden = await nodeSensitivityChecker.evaluateNodeSensitivity(
-            for: nodeSource,
-            displayMode: config.displayMode ?? .cloudDrive,
-            isFromSharedItem: config.isFromSharedItem ?? false
+        nodeBrowserViewModel.cloudDriveContextMenuFactory = CloudDriveContextMenuFactory(
+            config: config,
+            contextMenuManager: contextMenuManager,
+            contextMenuConfigFactory: contextMenuConfigFactory,
+            nodeSensitivityChecker: nodeSensitivityChecker,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            nodeUseCase: nodeUseCase
         )
 
-        guard nodeBrowserViewModel?.contextMenuViewFactory?.isHidden != isHidden else {
-            return
-        }
-
-        await MainActor.run {
-            nodeBrowserViewModel?.contextMenuViewFactory = NodeBrowserContextMenuViewFactory(
-                nodeSource: nodeSource,
-                isHidden: isHidden,
-                makeNavItemsFactory: setNavItemsFactory
-            )
-        }
+        return vc
     }
 
     // this should be run in async way as it's locking up with the SDK lock

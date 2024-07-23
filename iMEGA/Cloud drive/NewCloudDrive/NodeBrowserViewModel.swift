@@ -66,11 +66,11 @@ class NodeBrowserViewModel: ObservableObject {
     private var viewModePreferenceChangeNotificationTask: Task<Void, Never>?
     private var cloudDriveViewModeMonitoringService: any CloudDriveViewModeMonitoring
     private var nodeSensitivityChangesListenerTask: Task<Void, Never>?
-    var refreshMenu: ((NodeSource) async -> Void)? {
+
+    var cloudDriveContextMenuFactory: CloudDriveContextMenuFactory? {
         didSet {
-            Task { [weak self] in
-                guard let self, let refreshMenu else { return }
-                await refreshMenu(nodeSource)
+            Task { @MainActor in
+                await updateContextMenu()
             }
         }
     }
@@ -258,6 +258,19 @@ class NodeBrowserViewModel: ObservableObject {
         node == nodeSource.parentNode
     }
 
+    @MainActor
+    func updateContextMenu() async {
+        guard let cloudDriveContextMenuFactory else { return }
+        for await updatedContextMenuViewFactory in cloudDriveContextMenuFactory.makeNodeBrowserContextMenuViewFactory(
+            nodeSource: nodeSource,
+            viewMode: viewMode,
+            isSelectionHidden: isSelectionHidden,
+            sortOrder: sortOrder
+        ) {
+            contextMenuViewFactory = updatedContextMenuViewFactory
+        }
+    }
+
     private func startObservingNodeSourceChanges() {
         nodeSourceUpdatesListener.nodeSourcePublisher
             .receive(on: DispatchQueue.main)
@@ -329,7 +342,7 @@ class NodeBrowserViewModel: ObservableObject {
     @MainActor
     private func refreshMenuWithUpdatedNodeSource(_ nodeSource: NodeSource) async {
         self.nodeSource = nodeSource
-        await refreshMenu?(nodeSource)
+        await updateContextMenu()
     }
 
     // this is also triggered from outside when node folder is renamed
