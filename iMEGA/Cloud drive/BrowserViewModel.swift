@@ -3,12 +3,12 @@ import MEGAPresentation
 import MEGASDKRepo
 
 @objc final class BrowserViewModel: NSObject {
-    private let parentNode: MEGANode?
     private let isChildBrowser: Bool
     private let isSelectVideos: Bool
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sdk: MEGASdk
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private var parentNode: MEGANode?
     
     private var parentNodeHandle: MEGAHandle? {
         if let parentNode {
@@ -32,6 +32,10 @@ import MEGASDKRepo
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.sdk = sdk
         self.featureFlagProvider = featureFlagProvider
+    }
+    
+    func updateParentNode(_ node: MEGANode?) {
+        parentNode = node
     }
     
     @objc func nodesForParent() async -> MEGANodeList {

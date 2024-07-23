@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
+@class BrowserViewModel;
+
 typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionCopy = 0,
     BrowserActionMove,
@@ -46,6 +48,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
 
 @property (nonatomic) MEGAShareType parentShareType;
+@property (strong, nonatomic) BrowserViewModel *viewModel;
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
 @property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
