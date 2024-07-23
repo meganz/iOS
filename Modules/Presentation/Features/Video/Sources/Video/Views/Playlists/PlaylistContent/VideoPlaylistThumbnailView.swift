@@ -73,6 +73,7 @@ struct VideoPlaylistThumbnailView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 142, height: 80)
+                    .sensitive(image)
             default:
                 EmptyView()
                     .frame(width: 142, height: 80)
@@ -93,6 +94,7 @@ struct VideoPlaylistThumbnailView: View {
                     .resizable()
                     .frame(height: 39)
                     .aspectRatio(contentMode: .fit)
+                    .sensitive(image)
             default:
                 EmptyView()
                     .frame(width: 142, height: 80)
@@ -103,7 +105,6 @@ struct VideoPlaylistThumbnailView: View {
                 .aspectRatio(contentMode: .fill)
         }
     }
-
 }
 
 // MARK: - Light mode

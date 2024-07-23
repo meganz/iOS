@@ -1,5 +1,6 @@
 import MEGASwiftUI
 import SwiftUI
+import MEGAPresentation
 
 struct VideoThumbnailView: View {
     
@@ -25,6 +26,7 @@ struct VideoThumbnailView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cornerRadius(4)
+                .sensitive(previewEntity.imageContainer)
         }
     }
     

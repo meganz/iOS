@@ -35,7 +35,6 @@ struct VideoRevampRouter: VideoRevampRouting {
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
-        let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let videoPlaylistUseCase = VideoPlaylistUseCase(
             fileSearchUseCase: fileSearchUseCase,
             userVideoPlaylistsRepository: userVideoPlaylistsRepo, 
@@ -54,7 +53,6 @@ struct VideoRevampRouter: VideoRevampRouting {
             viewModel: viewModel,
             fileSearchUseCase: fileSearchUseCase,
             photoLibraryUseCase: photoLibraryUseCase,
-            thumbnailUseCase: thumbnailUseCase,
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,

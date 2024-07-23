@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 @testable import Video
 import XCTest
 
@@ -14,8 +15,9 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
         let node = anyNode(id: 1)
         let selection = VideoSelection()
         let cellViewModel = VideoCellViewModel(
-            thumbnailUseCase: MockThumbnailUseCase(),
             nodeEntity: node,
+            thumbnailLoader: MockThumbnailLoader(),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             onTapMoreOptions: { _ in }
         )
         let sut = VideoSelectionCheckmarkUIUpdateAdapter(
@@ -44,8 +46,9 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
         let node = anyNode(id: 1)
         let selection = VideoSelection()
         let cellViewModel = VideoCellViewModel(
-            thumbnailUseCase: MockThumbnailUseCase(),
             nodeEntity: node,
+            thumbnailLoader: MockThumbnailLoader(),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             onTapMoreOptions: { _ in }
         )
         let sut = VideoSelectionCheckmarkUIUpdateAdapter(

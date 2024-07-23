@@ -3,6 +3,7 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASwiftUI
 
 public protocol VideoPlaylistContentViewModelSelectionDelegate: AnyObject {
@@ -18,7 +19,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     private(set) var videoPlaylistEntity: VideoPlaylistEntity
     private let videoPlaylistContentsUseCase: any VideoPlaylistContentsUseCaseProtocol
-    private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
+    let thumbnailLoader: any ThumbnailLoaderProtocol
+    let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private weak var selectionDelegate: VideoPlaylistContentViewModelSelectionDelegate?
@@ -54,7 +56,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     init(
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol,
         sharedUIState: VideoPlaylistContentSharedUIState,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig? = nil,
@@ -63,11 +64,12 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         syncModel: VideoRevampSyncModel
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
-        self.thumbnailUseCase = thumbnailUseCase
         self.videoPlaylistThumbnailLoader = videoPlaylistThumbnailLoader
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.sharedUIState = sharedUIState
@@ -76,6 +78,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
+        self.thumbnailLoader = thumbnailLoader
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.syncModel = syncModel
         
         assignVideoPlaylistRenameValidator()

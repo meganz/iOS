@@ -153,23 +153,24 @@ struct TabBarItem: View {
 #Preview {
     func makeNullViewModel() -> VideoListViewModel {
         VideoListViewModel(
+            syncModel: VideoRevampSyncModel(),
+            selection: VideoSelection(),
             fileSearchUseCase: Preview_FilesSearchUseCase(),
             photoLibraryUseCase: Preview_PhotoLibraryUseCase(),
-            thumbnailUseCase: Preview_ThumbnailUseCase(),
-            syncModel: VideoRevampSyncModel(),
-            selection: VideoSelection()
+            thumbnailLoader: Preview_ThumbnailLoader(),
+            sensitiveNodeUseCase: Preview_SensitiveNodeUseCase()
         )
     }
 
     func makeVideoPlaylistsViewModel() -> VideoPlaylistsViewModel {
         VideoPlaylistsViewModel(
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
-            thumbnailUseCase: Preview_ThumbnailUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
-            renameVideoPlaylistAlertViewModel: .preview
+            renameVideoPlaylistAlertViewModel: .preview,
+            thumbnailLoader: Preview_ThumbnailLoader()
         )
     }
     

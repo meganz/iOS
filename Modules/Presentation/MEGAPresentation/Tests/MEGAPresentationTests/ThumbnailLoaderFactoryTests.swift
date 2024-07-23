@@ -12,11 +12,23 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
         XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
     }
     
-    func testMakeThumbnailLoader_configIsSensitive_shouldReturnThumbnailLoader() {
+    func testMakeThumbnailLoader_configIsSensitiveIfFeatureFlagOn_shouldReturnSensitiveThumbnailLoader() {
+        
         let thumbnailLoader = ThumbnailLoaderFactory
             .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase()), 
-                                 thumbnailUseCase: MockThumbnailUseCase())
+                                 thumbnailUseCase: MockThumbnailUseCase(),
+                                 featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
 
         XCTAssertTrue(thumbnailLoader is SensitiveThumbnailLoader)
+    }
+    
+    func testMakeThumbnailLoader_configIsSensitiveIfFeatureFlagOff_shouldReturnGeneralThumbnailLoader() {
+        
+        let thumbnailLoader = ThumbnailLoaderFactory
+            .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase()),
+                                 thumbnailUseCase: MockThumbnailUseCase(),
+                                 featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
+
+        XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
     }
 }

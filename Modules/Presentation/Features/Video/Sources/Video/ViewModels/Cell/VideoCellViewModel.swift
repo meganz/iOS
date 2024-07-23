@@ -1,10 +1,13 @@
 import MEGADomain
 import MEGAPresentation
+import MEGASwift
 import SwiftUI
 
 final class VideoCellViewModel: ObservableObject {
     
-    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private(set) var nodeEntity: NodeEntity
     private let onTapMoreOptions: (_ node: NodeEntity) -> Void
     
@@ -12,39 +15,68 @@ final class VideoCellViewModel: ObservableObject {
     @Published var isSelected = false
     
     init(
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
         nodeEntity: NodeEntity,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void
     ) {
-        self.thumbnailUseCase = thumbnailUseCase
         self.nodeEntity = nodeEntity
+        self.thumbnailLoader = thumbnailLoader
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.onTapMoreOptions = onTapMoreOptions
         
-        guard let cachedContainer = thumbnailUseCase.cachedThumbnailContainer(for: nodeEntity, type: .thumbnail) else {
-            let placeholderContainer = ImageContainer(image: Image(systemName: "square.fill"), type: .placeholder)
-            previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: placeholderContainer)
-            return
-        }
+        let placeholder = Image(systemName: "square.fill")
+        
+        let cachedContainer = thumbnailLoader.initialImage(for: nodeEntity, type: .thumbnail, placeholder: { placeholder })
+        
         previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: cachedContainer)
     }
     
-    func attemptLoadThumbnail() async {
-        guard
-            previewEntity.imageContainer.type == .placeholder,
-            let remoteContainer = await loadThumbnailContainerFromRemote() else {
+    @MainActor
+    func attemptLoadThumbnail() async throws {
+        
+        guard let container: any ImageContaining = try await thumbnailLoader.loadImage(for: nodeEntity, type: .thumbnail) else {
             return
         }
-        previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: remoteContainer)
+        
+        await updateThumbnailContainerIfNeeded(container)
+    }
+    
+    @MainActor
+    func monitorInheritedSensitivityChanges() async {
+        guard 
+            featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+              !nodeEntity.isMarkedSensitive,
+              await $previewEntity.values.contains(where: { $0.imageContainer.type != .placeholder }) else { return }
+        
+        do {
+            for try await isInheritingSensitivity in monitorInheritedSensitivity(for: nodeEntity, sensitiveNodeUseCase: sensitiveNodeUseCase) {
+                await updateThumbnailContainerIfNeeded(previewEntity.imageContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity))
+            }
+        } catch {
+            print("[\(type(of: self))] failed to retrieve inherited sensitivity for node: \(error.localizedDescription)")
+        }
     }
     
     func onTappedMoreOptions() {
         onTapMoreOptions(nodeEntity)
     }
+        
+    @MainActor
+    private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {
+        guard !previewEntity.imageContainer.isEqual(container) else { return }
+        previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: container)
+    }
     
-    private func loadThumbnailContainerFromRemote() async -> (any ImageContaining)? {
-        guard let container = try? await thumbnailUseCase.loadThumbnailContainer(for: nodeEntity, type: .thumbnail) else {
-            return nil
-        }
-        return container
+    /// Async sequence will yield inherited sensitivity changes. It will immediately yield the current inherited sensitivity since it could have changed since thumbnail loaded
+    /// - Parameters:
+    ///   - video: Video NodeEntity to monitor
+    private func monitorInheritedSensitivity(for video: NodeEntity, sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol) -> AnyAsyncThrowingSequence<Bool, any Error> {
+        sensitiveNodeUseCase
+            .monitorInheritedSensitivity(for: video)
+            .prepend { try await sensitiveNodeUseCase.isInheritingSensitivity(node: video) }
+            .eraseToAnyAsyncThrowingSequence()
     }
 }

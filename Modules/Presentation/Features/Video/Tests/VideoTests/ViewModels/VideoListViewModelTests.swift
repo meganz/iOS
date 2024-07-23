@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 import MEGATest
 @testable import Video
 import XCTest
@@ -363,12 +364,13 @@ final class VideoListViewModelTests: XCTestCase {
     func testListenSearchTextChange_whenEmitsNewValue_performSearch() async {
         let photoLibraryUseCase = MockPhotoLibraryUseCase(allVideos: [])
         let syncModel = VideoRevampSyncModel()
-        let sut = VideoListViewModel(
+         let sut = VideoListViewModel(
+            syncModel: syncModel,
+            selection: VideoSelection(),
             fileSearchUseCase: MockFilesSearchUseCase(),
             photoLibraryUseCase: photoLibraryUseCase,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            syncModel: syncModel,
-            selection: VideoSelection()
+            thumbnailLoader: MockThumbnailLoader(),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
         
         let task = Task {
@@ -396,11 +398,12 @@ final class VideoListViewModelTests: XCTestCase {
         let syncModel = VideoRevampSyncModel()
         let photoLibraryUseCase = MockPhotoLibraryUseCase(allVideos: videoNodes)
         let sut = VideoListViewModel(
+            syncModel: syncModel,
+            selection: VideoSelection(),
             fileSearchUseCase: MockFilesSearchUseCase(),
             photoLibraryUseCase: photoLibraryUseCase,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            syncModel: syncModel,
-            selection: VideoSelection()
+            thumbnailLoader: MockThumbnailLoader(),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
         
         let task = Task {
@@ -992,11 +995,12 @@ final class VideoListViewModelTests: XCTestCase {
     ) {
         let syncModel = VideoRevampSyncModel()
         let sut = VideoListViewModel(
+            syncModel: syncModel,
+            selection: VideoSelection(),
             fileSearchUseCase: fileSearchUseCase,
             photoLibraryUseCase: photoLibraryUseCase,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            syncModel: syncModel,
-            selection: VideoSelection()
+            thumbnailLoader: MockThumbnailLoader(),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, fileSearchUseCase, photoLibraryUseCase, syncModel)

@@ -3,6 +3,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentationMock
 import MEGASwift
 import MEGASwiftUI
 @testable import Video
@@ -37,10 +38,11 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
+        let thumbnailLoader = MockThumbnailLoader()
         let (sut, _, videoPlaylistContentsUseCase, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
-            thumbnailUseCase: thumbnailUseCase
+            thumbnailLoader: thumbnailLoader
         )
         
         await sut.onViewAppeared()
@@ -79,10 +81,12 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
+        let thumbnailLoader = MockThumbnailLoader()
+
         let (sut, _, _, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
-            thumbnailUseCase: thumbnailUseCase
+            thumbnailLoader: thumbnailLoader
         )
         
         await sut.onViewAppeared()
@@ -118,10 +122,11 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             loadPreviewResult: .failure(GenericErrorEntity()),
             loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
         )
+        let thumbnailLoader = MockThumbnailLoader()
         let (sut, _, _, _, _, _, _, _, syncModel) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
-            thumbnailUseCase: thumbnailUseCase
+            thumbnailLoader: thumbnailLoader
         )
         
         await sut.onViewAppeared()
@@ -854,7 +859,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     private func makeSUT(
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase = MockVideoPlaylistContentUseCase(),
-        thumbnailUseCase: MockThumbnailUseCase = MockThumbnailUseCase(),
+        thumbnailLoader: MockThumbnailLoader = MockThumbnailLoader(),
+        sensitiveNodeUseCase: MockSensitiveNodeUseCase = MockSensitiveNodeUseCase(),
         sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         videoPlaylistsUseCase: MockVideoPlaylistUseCase = MockVideoPlaylistUseCase(),
         videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase = MockVideoPlaylistModificationUseCase(),
@@ -878,7 +884,6 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         let sut = VideoPlaylistContentViewModel(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
-            thumbnailUseCase: thumbnailUseCase,
             videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
             sharedUIState: sharedUIState,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
@@ -890,6 +895,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             ),
             videoPlaylistsUseCase: videoPlaylistsUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            thumbnailLoader: thumbnailLoader,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             syncModel: syncModel
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

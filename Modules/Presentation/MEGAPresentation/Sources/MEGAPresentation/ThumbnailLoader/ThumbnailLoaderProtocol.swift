@@ -1,8 +1,8 @@
-import SwiftUI
 import MEGADomain
 import MEGASwift
+import SwiftUI
 
-public protocol ThumbnailLoaderProtocol {
+public protocol ThumbnailLoaderProtocol: Sendable {
     
     /// Load initial image for a node
     ///  - Parameters:

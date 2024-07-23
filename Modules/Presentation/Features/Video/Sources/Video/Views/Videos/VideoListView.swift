@@ -112,12 +112,13 @@ struct VideoListView: View {
     
     private func listView() -> some View {
         AllVideosCollectionViewRepresenter(
-            thumbnailUseCase: viewModel.thumbnailUseCase,
             videos: viewModel.videos,
             videoConfig: videoConfig,
             selection: viewModel.selection,
             router: router,
-            viewType: .allVideos
+            viewType: .allVideos,
+            thumbnailLoader: viewModel.thumbnailLoader,
+            sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .onDisappear {
@@ -173,11 +174,12 @@ struct VideoListView: View {
 #Preview {
     VideoListView(
         viewModel: VideoListViewModel(
+            syncModel: VideoRevampSyncModel(),
+            selection: VideoSelection(),
             fileSearchUseCase: Preview_FilesSearchUseCase(),
             photoLibraryUseCase: Preview_PhotoLibraryUseCase(),
-            thumbnailUseCase: Preview_ThumbnailUseCase(),
-            syncModel: VideoRevampSyncModel(),
-            selection: VideoSelection()
+            thumbnailLoader: Preview_ThumbnailLoader(),
+            sensitiveNodeUseCase: Preview_SensitiveNodeUseCase()
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()

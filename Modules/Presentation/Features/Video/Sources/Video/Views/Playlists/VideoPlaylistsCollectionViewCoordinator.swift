@@ -51,16 +51,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
     private func makeDataSource(for collectionView: UICollectionView) -> DiffableDataSource {
         let cellRegistration = CellRegistration { [weak self] cell, _, rowItem in
             guard let self else { return }
-            
-            let cellViewModel = VideoPlaylistCellViewModel(
-                thumbnailUseCase: representer.viewModel.thumbnailUseCase,
-                videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: representer.viewModel.thumbnailUseCase),
-                videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase,
-                videoPlaylistEntity: rowItem.videoPlaylist,
-                onTapMoreOptions: { [weak self] in
-                    self?.representer.didSelectMoreOptionForItem($0)
-                }
-            )
+            let cellViewModel = cellViewModel(for: rowItem)
             configureCell(cell, cellViewModel: cellViewModel, rowItem: rowItem)
         }
         
@@ -137,8 +128,8 @@ final class VideoPlaylistsCollectionViewCoordinator {
     
     private func cellViewModel(for rowItem: RowItem) -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
-            thumbnailUseCase: representer.viewModel.thumbnailUseCase,
-            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailUseCase: representer.viewModel.thumbnailUseCase),
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
+                thumbnailLoader: representer.viewModel.thumbnailLoader),
             videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase,
             videoPlaylistEntity: rowItem.videoPlaylist,
             onTapMoreOptions: { [weak self] in

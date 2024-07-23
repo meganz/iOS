@@ -1,21 +1,22 @@
 import MEGADomain
+import MEGAPresentation
 import SwiftUI
 
 struct VideoPlaylistsCollectionViewRepresenter: UIViewRepresentable {
-    let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    let thumbnailLoader: any ThumbnailLoaderProtocol
     @StateObject var viewModel: VideoPlaylistsViewModel
     let videoConfig: VideoConfig
     let router: any VideoRevampRouting
     let didSelectMoreOptionForItem: (VideoPlaylistEntity) -> Void
     
     init(
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
         viewModel: @autoclosure @escaping () -> VideoPlaylistsViewModel,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting,
         didSelectMoreOptionForItem: @escaping (VideoPlaylistEntity) -> Void
     ) {
-        self.thumbnailUseCase = thumbnailUseCase
+        self.thumbnailLoader = thumbnailLoader
         _viewModel = StateObject(wrappedValue: viewModel())
         self.videoConfig = videoConfig
         self.router = router
