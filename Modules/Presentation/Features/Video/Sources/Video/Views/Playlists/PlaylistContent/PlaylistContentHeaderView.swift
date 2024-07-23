@@ -41,6 +41,7 @@ struct PlaylistContentHeaderView: View {
             } else {
                 VideoPlaylistThumbnailView(
                     videoConfig: videoConfig,
+                    viewContext: .playlistContentHeader,
                     imageContainers: previewEntity.imageContainers
                 )
             }
