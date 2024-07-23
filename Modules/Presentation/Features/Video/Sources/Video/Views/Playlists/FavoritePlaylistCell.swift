@@ -90,7 +90,11 @@ struct ThumbnailLayerView: View {
             if imageContainers.isEmpty {
                 emptyThumbnailView()
             } else {
-                 VideoPlaylistThumbnailView(videoConfig: videoConfig, imageContainers: imageContainers)
+                VideoPlaylistThumbnailView(
+                    videoConfig: videoConfig,
+                    viewContext: .playlistCell,
+                    imageContainers: imageContainers
+                )
                 
                 playlistIcon()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
