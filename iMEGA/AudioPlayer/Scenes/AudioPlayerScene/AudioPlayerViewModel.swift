@@ -7,6 +7,7 @@ import MEGAPresentation
 
 enum AudioPlayerAction: ActionType {
     case onViewDidLoad
+    case onViewDidDissapear
     case updateCurrentTime(percentage: Float)
     case progressDragEventBegan
     case progressDragEventEnded
@@ -19,7 +20,6 @@ enum AudioPlayerAction: ActionType {
     case onRepeatPressed
     case onChangeSpeedModePressed
     case showPlaylist
-    case initMiniPlayer
     case `import`
     case sendToChat
     case share(sender: UIBarButtonItem?)
@@ -427,17 +427,6 @@ final class AudioPlayerViewModel: ViewModelType {
             }
         case .showPlaylist:
             router.goToPlaylist()
-        case .initMiniPlayer:
-            switch configEntity.playerType {
-            case .`default`:
-                router.showMiniPlayer(node: configEntity.playerHandler.playerCurrentItem()?.node, shouldReload: true)
-            case .folderLink:
-                router.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
-            case .fileLink:
-                router.showMiniPlayer(file: configEntity.fileLink ?? "", shouldReload: true)
-            case .offline:
-                router.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
-            }
         case .`import`:
             if let node = configEntity.node {
                 router.importNode(node)
@@ -471,6 +460,8 @@ final class AudioPlayerViewModel: ViewModelType {
         case .onTermsOfServiceViolationAlertDismissAction:
             configEntity.playerHandler.closePlayer()
             router.dismiss()
+        case .onViewDidDissapear:
+            accountUseCase.isLoggedIn() ? initMiniPlayer() : requestStopAudioPlayerSession()
         }
     }
     
@@ -580,6 +571,27 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
         } else {
             playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
             configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+        }
+    }
+    
+    private func requestStopAudioPlayerSession() {
+        if configEntity.playerHandler.isPlayerAlive() {
+            configEntity.playerHandler.playerPause()
+            configEntity.playerHandler.closePlayer()
+            streamingInfoUseCase?.stopServer()
+        }
+    }
+    
+    private func initMiniPlayer() {
+        switch configEntity.playerType {
+        case .`default`:
+            router.showMiniPlayer(node: configEntity.playerHandler.playerCurrentItem()?.node, shouldReload: true)
+        case .folderLink:
+            router.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
+        case .fileLink:
+            router.showMiniPlayer(file: configEntity.fileLink ?? "", shouldReload: true)
+        case .offline:
+            router.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
         }
     }
 }

@@ -64,9 +64,9 @@ final class AudioPlayerViewController: UIViewController {
         viewModel.dispatch(.onViewDidLoad)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewModel.dispatch(.initMiniPlayer)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.dispatch(.onViewDidDissapear)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
