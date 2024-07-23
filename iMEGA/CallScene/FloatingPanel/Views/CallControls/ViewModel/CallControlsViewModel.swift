@@ -20,7 +20,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     private let permissionHandler: any DevicePermissionsHandling
     private let callManager: any CallManagerProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let audioRouteChangeNotificationName: Notification.Name
@@ -51,7 +50,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         callManager: some CallManagerProtocol,
         notificationCenter: NotificationCenter,
         audioRouteChangeNotificationName: Notification.Name,
-        featureFlagProvider: some FeatureFlagProviderProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         layoutUpdateChannel: ParticipantLayoutUpdateChannel,
         cameraSwitcher: some CameraSwitching,
@@ -70,7 +68,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.callManager = callManager
         self.notificationCenter = notificationCenter
         self.audioRouteChangeNotificationName = audioRouteChangeNotificationName
-        self.featureFlagProvider = featureFlagProvider
         self.accountUseCase = accountUseCase
         self.layoutUpdateChannel = layoutUpdateChannel
         self.cameraSwitcher = cameraSwitcher
@@ -153,8 +150,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     // we do not show raise hand functionality in one-to-one calls
     var showMoreButton: Bool {
         moreButtonVisibleInCallControls(
-            isOneToOne: !isNotOneToOneCall, 
-            raiseHandFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak)
+            isOneToOne: !isNotOneToOneCall
         )
     }
     

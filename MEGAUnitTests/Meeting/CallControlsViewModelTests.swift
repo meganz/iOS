@@ -109,22 +109,12 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertFalse(harness.sut.routeViewVisible)
     }
                 
-    func testMoreButtonShow_NotShown__FFOffAnd1on1Call() {
-        let harness = Harness(chatType: .oneToOne, raiseToSpeakFeatureEnabled: false)
+    func testMoreButtonShow_OneToOneCall_NotShown() {
+        let harness = Harness(chatType: .oneToOne)
         XCTAssertFalse(harness.sut.showMoreButton)
     }
     
-    func testMoreButtonShow_NotShown__FFOnAnd1on1Call() {
-        let harness = Harness(chatType: .oneToOne, raiseToSpeakFeatureEnabled: true)
-        XCTAssertFalse(harness.sut.showMoreButton)
-    }
-    
-    func testMoreButtonShow_NotShown_FFOffAndNot1on1Call() {
-        let harness = Harness(chatType: .meeting, raiseToSpeakFeatureEnabled: false)
-        XCTAssertFalse(harness.sut.showMoreButton)
-    }
-    
-    func testMoreButtonShow_Shown_FFOnAndNot1on1Call() {
+    func testMoreButtonShow_notOneToOneCall_Shown() {
         let harness = Harness.withMoreButtonEnabled()
         XCTAssertTrue(harness.sut.showMoreButton)
     }
@@ -326,8 +316,7 @@ final class CallControlsViewModelTests: XCTestCase {
             speakerEnabled: Bool = false,
             cameraEnabled: Bool = false,
             audioPortOutput: AudioPort = .builtInReceiver,
-            bluetoothAudioDeviceAvailable: Bool = false,
-            raiseToSpeakFeatureEnabled: Bool = false
+            bluetoothAudioDeviceAvailable: Bool = false
         ) {
             self.chatRoom = ChatRoomEntity(ownPrivilege: isModerator ? .moderator : .standard, chatType: chatType)
             self.callUseCase = MockCallUseCase(call: CallEntity(numberOfParticipants: numberOfCallParticipants))
@@ -358,7 +347,6 @@ final class CallControlsViewModelTests: XCTestCase {
                 callManager: callManager,
                 notificationCenter: notificationCenter,
                 audioRouteChangeNotificationName: .audioRouteChange,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.raiseToSpeak: raiseToSpeakFeatureEnabled]),
                 accountUseCase: MockAccountUseCase(currentUser: .testUser),
                 layoutUpdateChannel: layoutUpdateChannel,
                 cameraSwitcher: cameraSwitcher,
@@ -435,7 +423,7 @@ final class CallControlsViewModelTests: XCTestCase {
         }
         
         static func withMoreButtonEnabled() -> Harness {
-            Harness(chatType: .meeting, raiseToSpeakFeatureEnabled: true)
+            Harness(chatType: .meeting)
         }
         
         func raisedHand(_ raised: Bool) -> Self {

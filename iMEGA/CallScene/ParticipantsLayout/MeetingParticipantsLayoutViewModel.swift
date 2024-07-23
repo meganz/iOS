@@ -1593,8 +1593,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     
     var cameraAndShareButtonsInNavBar: Bool {
         moreButtonVisibleInCallControls(
-            isOneToOne: isOneToOne,
-            raiseHandFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak)
+            isOneToOne: isOneToOne
         )
     }
     
@@ -1650,8 +1649,7 @@ extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProt
 /// Rename meeting [change it's title] button is NOT shown in call UI when Raise Hand feature is active.
 /// Logic to decide this layout was refactored into the function below, so that it's always in sync, in all the places, it's taken into account.
 func moreButtonVisibleInCallControls(
-    isOneToOne: Bool,
-    raiseHandFeatureEnabled: Bool
+    isOneToOne: Bool
 ) -> Bool {
-    !isOneToOne && raiseHandFeatureEnabled
+    !isOneToOne
 }

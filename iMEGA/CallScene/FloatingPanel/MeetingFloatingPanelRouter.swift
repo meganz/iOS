@@ -100,7 +100,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             callManager: CallKitCallManager.shared,
             notificationCenter: NotificationCenter.default,
             audioRouteChangeNotificationName: AVAudioSession.routeChangeNotification,
-            featureFlagProvider: DIContainer.featureFlagProvider, 
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             layoutUpdateChannel: layoutUpdateChannel,
             cameraSwitcher: CameraSwitcher(

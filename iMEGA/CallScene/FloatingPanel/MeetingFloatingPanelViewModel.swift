@@ -829,8 +829,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func sortedCallParticipantsInCall() -> [CallParticipantEntity] {
-        featureFlagProvider.isFeatureFlagEnabled(for: .raiseToSpeak) ?
-        callParticipants.sortByRaiseHand(call: call) : callParticipants
+        callParticipants.sortByRaiseHand(call: call)
     }
     
     /// Sort call participants by raise hand before updating UI
