@@ -155,4 +155,17 @@ extension BrowserViewController {
     @objc var toolBarAddBarButtonItemTitle: String {
         Strings.Localizable.Videos.Tab.Playlist.Browser.Button.add
     }
+    
+    // Update parent in view model to keep it aligned with view controller.
+    @objc func setParentNodeForBrowserAction() {
+        guard isParentBrowser else { return }
+        
+        if cloudDriveButton.isSelected && parentNode == nil {
+            parentNode = MEGASdk.shared.rootNode
+            viewModel.updateParentNode(parentNode)
+        } else if incomingButton.isSelected {
+            parentNode = nil
+            viewModel.updateParentNode(nil)
+        }
+    }
 }

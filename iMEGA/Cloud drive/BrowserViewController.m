@@ -50,7 +50,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSelectBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarAddBarButtonItem;
 
-@property (strong, nonatomic) BrowserViewModel *viewModel;
 @property (nonatomic) NSMutableArray *searchNodesArray;
 @property (nonatomic) UISearchController *searchController;
 
@@ -285,6 +284,7 @@
 }
 
 - (void)reloadUI {
+    [self setParentNodeForBrowserAction];
     [self setNavigationBarTitle];
     __weak typeof(self) weakSelf = self;
     [self setNodesWithCompletion:^{
@@ -322,7 +322,6 @@
 
 - (void)setNodesWithCompletion:(void (^)(void))completion {
     if (self.incomingButton.selected && self.isParentBrowser) {
-        self.parentNode = nil;
         self.nodes = MEGASdk.shared.inShares;
         self.shares = [MEGASdk.shared inSharesList:MEGASortOrderTypeNone];
         completion();

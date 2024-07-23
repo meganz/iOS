@@ -82,6 +82,20 @@ final class BrowserViewModelTests: XCTestCase {
         }
     }
     
+    func testUpdateParentNode_nodesForParentCalled_shouldUseCorrectHandleForSearch() async {
+        let sdk = MockSdk(nodes: [])
+        let sut = makeSUT(
+            sdk: sdk)
+        
+        let newParentNode = MockNode(handle: 99)
+        
+        sut.updateParentNode(newParentNode)
+        
+        _ = await sut.nodesForParent()
+        
+        XCTAssertEqual(sdk.searchQueryParameters?.node, newParentNode)
+    }
+    
     func makeSUT(
         parentNode: MEGANode? = nil,
         isChildBrowser: Bool = false,
