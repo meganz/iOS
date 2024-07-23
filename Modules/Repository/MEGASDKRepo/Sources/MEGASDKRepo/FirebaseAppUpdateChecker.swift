@@ -1,4 +1,4 @@
-import FirebaseAppDistribution
+@preconcurrency import FirebaseAppDistribution
 import MEGADomain
 
 public struct FirebaseAppUpdateChecker: AppUpdateCheckerProtocol {
