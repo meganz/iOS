@@ -1,18 +1,17 @@
 import SwiftUI
 
 struct NodeBrowserContextMenuViewFactory {
-    let nodeSource: NodeSource
-    let isHidden: Bool?
-    let makeNavItemsFactory: (_ nodeSource: NodeSource, _ isHidden: Bool?) -> CloudDriveViewControllerNavItemsFactory
+    typealias MakeNavItemsFactory = () -> CloudDriveViewControllerNavItemsFactory
+    let makeNavItemsFactory: MakeNavItemsFactory
 
     func makeContextMenuWithButtonView() -> ContextMenuWithButtonView<Image>? {
-        makeNavItemsFactory(nodeSource, isHidden).contextMenu {
+        makeNavItemsFactory().contextMenu {
             Image(uiImage: UIImage.moreNavigationBar)
         }
     }
 
     func makeAddMenuWithButtonView() -> ContextMenuWithButtonView<Image>? {
-        makeNavItemsFactory(nodeSource, isHidden).addMenu {
+        makeNavItemsFactory().addMenu {
             Image(uiImage: UIImage.navigationbarAdd)
         }
     }

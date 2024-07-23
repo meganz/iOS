@@ -350,17 +350,39 @@ class NodeBrowserViewModelTests: XCTestCase {
         await assertViewMode(with: harness, expectedOrder: [.list, .thumbnail])
     }
 
-    func testRefreshMenu_whenSet_shouldBeInvoked() async {
+    func testCloudDriveContextMenuFactory_whenSensitiveNodeIsTrue_shouldUpdateMenuViewFactoryWithHiddenAsTrue() async {
+        await assertCloudDriveContextMenuFactory(withNodeAsSensitive: true)
+    }
+
+    func testCloudDriveContextMenuFactory_whenSensitiveNodeIsFalse_shouldUpdateMenuViewFactoryWithHiddenAsFalse() async {
+        await assertCloudDriveContextMenuFactory(withNodeAsSensitive: false)
+    }
+
+    func assertCloudDriveContextMenuFactory(withNodeAsSensitive isSensitive: Bool) async {
         let node = NodeEntity(handle: 100)
         let harness = Harness(node: node)
         let exp = expectation(description: "wait for refresh menu to trigger")
-        var resultNodeHandle: HandleEntity?
-        harness.sut.refreshMenu = { nodeSource in
-            resultNodeHandle = nodeSource.parentNode?.handle
-            exp.fulfill()
+
+        let cancellable = harness.sut.$contextMenuViewFactory.sink { updatedFactory in
+            if updatedFactory?.makeNavItemsFactory().isHidden == isSensitive {
+                exp.fulfill()
+            }
         }
+
+        harness.sut.cloudDriveContextMenuFactory = CloudDriveContextMenuFactory(
+            config: NodeBrowserConfig(),
+            contextMenuManager: ContextMenuManager(createContextMenuUseCase: MockCreateContextMenuUseCase()),
+            contextMenuConfigFactory: CloudDriveContextMenuConfigFactory(
+                backupsUseCase: MockBackupsUseCase(),
+                nodeUseCase: harness.nodeUseCase
+            ),
+            nodeSensitivityChecker: MockNodeSensitivityChecker(isSensitive: isSensitive),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
+            nodeUseCase: harness.nodeUseCase
+        )
+
         await fulfillment(of: [exp], timeout: 1.0)
-        XCTAssertEqual(resultNodeHandle, node.handle)
+        cancellable.cancel()
     }
 
     func testListenToNodeSensitivityChanges_whenNodeIsMarkedSensitiveDueToInheritedSensitivityChanges_shouldTriggerUpdate() async {

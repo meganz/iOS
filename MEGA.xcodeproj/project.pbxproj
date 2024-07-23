@@ -2407,6 +2407,8 @@
 		BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */; };
 		BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */; };
 		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
+		BFB529742C4A2100003034EF /* CloudDriveContextMenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB529732C4A2100003034EF /* CloudDriveContextMenuFactory.swift */; };
+		BFB529782C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB529772C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift */; };
 		BFB889792A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */; };
 		BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */; };
 		BFB889932A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */; };
@@ -5202,6 +5204,8 @@
 		BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessageLayoutDelegate.swift"; sourceTree = "<group>"; };
 		BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDisplayDelegate.swift"; sourceTree = "<group>"; };
 		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
+		BFB529732C4A2100003034EF /* CloudDriveContextMenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuFactory.swift; sourceTree = "<group>"; };
+		BFB529772C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuFactoryTests.swift; sourceTree = "<group>"; };
 		BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingRulesEntity+UIHelper.swift"; sourceTree = "<group>"; };
 		BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingRulesEntityTests.swift; sourceTree = "<group>"; };
 		BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaitingRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
@@ -5886,6 +5890,7 @@
 				0E72E1222A27ECED00C900F9 /* CopyrightWarning */,
 				C48CADA92BB521130005519B /* DisplayModeProvider */,
 				C4C0A00B2C32C0ED00B9ECCB /* DownloadTransferListener */,
+				BFB529762C4A2CD1003034EF /* Factories */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
 				94B09E6C2B84D0B5007D6B84 /* NewNodeBrowser */,
@@ -12676,6 +12681,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		BFB529762C4A2CD1003034EF /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				BFB529772C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
 		BFC060F128A0C09900BA2AD7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -13040,6 +13053,7 @@
 			children = (
 				94B09E432B84CC86007D6B84 /* CloudDriveBottomToolbarFactory.swift */,
 				94B09E492B84CC86007D6B84 /* CloudDriveContextMenuConfigFactory.swift */,
+				BFB529732C4A2100003034EF /* CloudDriveContextMenuFactory.swift */,
 				94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */,
 				BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */,
 				9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */,
@@ -14648,6 +14662,7 @@
 				C45093FE270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				94B09E612B84CC87007D6B84 /* CloudDriveContextMenuConfigFactory.swift in Sources */,
+				BFB529742C4A2100003034EF /* CloudDriveContextMenuFactory.swift in Sources */,
 				C4C0A0082C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift in Sources */,
 				BF11FEE42B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift in Sources */,
 				BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */,
@@ -16414,6 +16429,7 @@
 				94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */,
 				9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */,
 				BF4296642BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift in Sources */,
+				BFB529782C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift in Sources */,
 				C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */,
 				C4C0A00E2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift in Sources */,
 				BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */,
