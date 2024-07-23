@@ -147,7 +147,7 @@ if periodCount > 1:
     searchText = searchText.rsplit(".", periodCount - 1)[0]
 
 languagesInformation = [
-    { "name": "English", "transifixCode": "l:en", "fastlaneMetadataFolders": ["en-US", "en-UK"] },
+    { "name": "English", "transifixCode": "l:en", "fastlaneMetadataFolders": ["en-US"] },
     { "name": "Spanish", "transifixCode": "l:es", "fastlaneMetadataFolders": ["es-ES", "es-MX"] },
     { "name": "Arabic", "transifixCode": "l:ar", "fastlaneMetadataFolders": ["ar-SA"] },
     { "name": "French", "transifixCode": "l:fr", "fastlaneMetadataFolders": ["fr-CA", "fr-FR"] },
