@@ -23,7 +23,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let _contacts: [UserEntity]
     private let _isSmsAllowed: Bool
     private let _isAchievementsEnabled: Bool
-    private let _plans: [AccountPlanEntity]
+    private let _plans: [PlanEntity]
 
     // MARK: - Result Handlers
     private let getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity>
@@ -66,7 +66,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         isExpiredAccount: Bool = false,
         isInGracePeriod: Bool = false,
         isAchievementsEnabled: Bool = false,
-        plans: [AccountPlanEntity] = [],
+        plans: [PlanEntity] = [],
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
         nodesCount: UInt64 = 0,
@@ -149,7 +149,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _isAchievementsEnabled
     }
     
-    public func currentAccountPlan() async -> AccountPlanEntity? {
+    public func currentAccountPlan() async -> PlanEntity? {
         _plans.first { $0.type == _currentAccountDetails?.proLevel && $0.subscriptionCycle == _currentAccountDetails?.subscriptionCycle }
     }
 

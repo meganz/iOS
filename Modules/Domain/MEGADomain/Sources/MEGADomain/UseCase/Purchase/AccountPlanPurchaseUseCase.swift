@@ -1,9 +1,9 @@
 import Combine
 
 public protocol AccountPlanPurchaseUseCaseProtocol {
-    func accountPlanProducts() async -> [AccountPlanEntity]
+    func accountPlanProducts() async -> [PlanEntity]
     func restorePurchase()
-    func purchasePlan(_ plan: AccountPlanEntity) async
+    func purchasePlan(_ plan: PlanEntity) async
     func cancelCreditCardSubscriptions(reason: String?) async throws
     
     var successfulRestorePublisher: AnyPublisher<Void, Never> { get }
@@ -25,7 +25,7 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
         repo = repository
     }
     
-    public func accountPlanProducts() async -> [AccountPlanEntity] {
+    public func accountPlanProducts() async -> [PlanEntity] {
         await repo.accountPlanProducts()
     }
     
@@ -33,7 +33,7 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
         repo.restorePurchase()
     }
     
-    public func purchasePlan(_ plan: AccountPlanEntity) async {
+    public func purchasePlan(_ plan: PlanEntity) async {
         await repo.purchasePlan(plan)
     }
     

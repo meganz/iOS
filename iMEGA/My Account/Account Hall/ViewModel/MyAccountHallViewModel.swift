@@ -56,7 +56,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     var incomingContactRequestsCount = 0
     var unreadNotificationsCount = 0
 
-    private(set) var planList: [AccountPlanEntity] = []
+    private(set) var planList: [PlanEntity] = []
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol

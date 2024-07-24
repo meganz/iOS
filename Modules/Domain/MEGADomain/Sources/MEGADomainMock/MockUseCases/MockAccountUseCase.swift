@@ -31,7 +31,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _rubbishBinStorage: Int64
     private let _incomingSharesStorage: Int64
     private let _backupStorage: Int64
-    private let _currentAccountPlan: AccountPlanEntity?
+    private let _currentAccountPlan: PlanEntity?
     
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -63,7 +63,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         rubbishBinStorage: Int64 = 0,
         incomingSharesStorage: Int64 = 0,
         backupStorage: Int64 = 0,
-        accountPlan: AccountPlanEntity? = nil
+        accountPlan: PlanEntity? = nil
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -139,7 +139,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         _isAchievementsEnabled
     }
     
-    public func currentAccountPlan() async -> AccountPlanEntity? {
+    public func currentAccountPlan() async -> PlanEntity? {
         _currentAccountPlan
     }
     

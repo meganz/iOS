@@ -31,7 +31,7 @@ final class FeatureListHelperTests: XCTestCase {
         )
         return FeatureListHelper(
             account: account,
-            currentPlan: AccountPlanEntity(type: accountType),
+            currentPlan: PlanEntity(type: accountType),
             assets: assets
         )
     }

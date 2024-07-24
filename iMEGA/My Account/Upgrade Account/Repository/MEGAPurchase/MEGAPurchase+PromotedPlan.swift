@@ -105,7 +105,7 @@ extension MEGAPurchase {
             throw InAppPurchaseStoreError.proFlexiOrBusinessAccount
         }
         
-        let plan = product.toAccountPlanEntity()
+        let plan = product.toPlanEntity()
         let isProductAlreadyPurchased = plan.type == accountDetails.proLevel &&
                                         plan.subscriptionCycle == accountDetails.subscriptionCycle
         guard !isProductAlreadyPurchased else {

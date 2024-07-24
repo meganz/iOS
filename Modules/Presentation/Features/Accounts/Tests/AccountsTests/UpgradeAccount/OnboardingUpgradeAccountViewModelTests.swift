@@ -10,20 +10,20 @@ import MEGATest
 import XCTest
 
 final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
-    private let freePlan = AccountPlanEntity(type: .free, name: "Free")
-    private let proI_monthly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .monthly)
-    private let proI_yearly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly)
-    private let proII_monthly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .monthly)
-    private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .yearly)
-    private let proIII_monthly = AccountPlanEntity(type: .proIII, name: "Pro III", subscriptionCycle: .monthly)
+    private let freePlan = PlanEntity(type: .free, name: "Free")
+    private let proI_monthly = PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .monthly)
+    private let proI_yearly = PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly)
+    private let proII_monthly = PlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .monthly)
+    private let proII_yearly = PlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .yearly)
+    private let proIII_monthly = PlanEntity(type: .proIII, name: "Pro III", subscriptionCycle: .monthly)
 
     func testLowestProPlan_shouldHaveCorrectProPlan() async {
-        let expectedLowestPlan = AccountPlanEntity(type: .proI,
+        let expectedLowestPlan = PlanEntity(type: .proI,
                                                    subscriptionCycle: .monthly,
                                                    price: 1)
-        let planList = [AccountPlanEntity(type: .proII, subscriptionCycle: .monthly, price: 2),
+        let planList = [PlanEntity(type: .proII, subscriptionCycle: .monthly, price: 2),
                         expectedLowestPlan,
-                        AccountPlanEntity(type: .proIII, subscriptionCycle: .monthly, price: 3)]
+                        PlanEntity(type: .proIII, subscriptionCycle: .monthly, price: 3)]
         
         let (sut, _) = makeSUT(planList: planList)
         await awaitRegisterDelegateTask(in: sut)
@@ -38,7 +38,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         let expectedStorageMessage = Strings.Localizable.Onboarding.UpgradeAccount.Content.GenerousStorage.message
             .replacingOccurrences(of: "[A]", with: expectedPlanStorage)
             .replacingOccurrences(of: "[B]", with: expectedPlanStorageUnit)
-        let expectedLowestPlan = AccountPlanEntity(type: .proI,
+        let expectedLowestPlan = PlanEntity(type: .proI,
                                                    name: "Pro I",
                                                    subscriptionCycle: .monthly, 
                                                    storage: "\(expectedPlanStorage) \(expectedPlanStorageUnit)",
@@ -71,15 +71,15 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         let (sut, _) = makeSUT()
         await awaitRegisterDelegateTask(in: sut)
         await sut.setUpLowestProPlan()
-        XCTAssertEqual(sut.lowestProPlan, AccountPlanEntity(), "Expected default empty lowest plan")
+        XCTAssertEqual(sut.lowestProPlan, PlanEntity(), "Expected default empty lowest plan")
         XCTAssertEqual(sut.selectedCycleTab, .yearly, "Expected default cycle tab to be yearly")
     }
     
     func testSetupPlans_shouldFetchPlansAndSetDefaults() async {
         let planList = [
-            AccountPlanEntity(type: .proII, price: 2),
-            AccountPlanEntity(type: .proI, price: 1),
-            AccountPlanEntity(type: .proIII, price: 3)
+            PlanEntity(type: .proII, price: 2),
+            PlanEntity(type: .proI, price: 1),
+            PlanEntity(type: .proIII, price: 3)
         ]
         let (sut, _) = makeSUT(planList: planList)
         
@@ -132,7 +132,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     }
     
     // MARK: - Plan list
-    private func testFilteredPlanList(planList: [AccountPlanEntity], expectedPlans: [AccountPlanEntity], forCycle cycle: SubscriptionCycleEntity) async {
+    private func testFilteredPlanList(planList: [PlanEntity], expectedPlans: [PlanEntity], forCycle cycle: SubscriptionCycleEntity) async {
         let (sut, _) = makeSUT(planList: planList)
         
         await awaitRegisterDelegateTask(in: sut)
@@ -265,7 +265,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     ) async {
         let tracker = MockTracker()
         let (sut, _) = makeSUT(tracker: tracker)
-        sut.setSelectedPlan(AccountPlanEntity(type: planType))
+        sut.setSelectedPlan(PlanEntity(type: planType))
         
         await sut.registerDelegateTask?.value
 
@@ -303,7 +303,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     // MARK: - Helper
 
     private func makeSUT(
-        planList: [AccountPlanEntity] = [],
+        planList: [PlanEntity] = [],
         tracker: AnalyticsTracking = MockTracker(),
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         isAdsEnabled: Bool = false,

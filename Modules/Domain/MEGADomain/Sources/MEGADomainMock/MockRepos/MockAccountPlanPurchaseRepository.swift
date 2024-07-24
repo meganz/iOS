@@ -2,7 +2,7 @@ import Combine
 import MEGADomain
 
 public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseRepositoryProtocol {
-    private let plans: [AccountPlanEntity]
+    private let plans: [PlanEntity]
     public let successfulRestorePublisher: AnyPublisher<Void, Never>
     public let incompleteRestorePublisher: AnyPublisher<Void, Never>
     public let failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never>
@@ -19,7 +19,7 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
         MockAccountPlanPurchaseRepository()
     }
     
-    public init(plans: [AccountPlanEntity] = [],
+    public init(plans: [PlanEntity] = [],
                 successfulRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
                 incompleteRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
                 failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> = Empty().eraseToAnyPublisher(),
@@ -31,7 +31,7 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
         self.purchasePlanResultPublisher = purchasePlanResultPublisher
     }
     
-    public func accountPlanProducts() -> [AccountPlanEntity] {
+    public func accountPlanProducts() -> [PlanEntity] {
         plans
     }
     
@@ -51,7 +51,7 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
         restorePurchaseCalled += 1
     }
     
-    public func purchasePlan(_ plan: AccountPlanEntity) async {
+    public func purchasePlan(_ plan: PlanEntity) async {
         purchasePlanCalled += 1
     }
     

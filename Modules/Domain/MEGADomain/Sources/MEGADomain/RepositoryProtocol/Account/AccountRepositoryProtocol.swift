@@ -15,7 +15,7 @@ public protocol AccountRepositoryProtocol: Sendable {
     var isMasterBusinessAccount: Bool { get }
     var isSMSAllowed: Bool { get }
     var isAchievementsEnabled: Bool { get }
-    func currentAccountPlan() async -> AccountPlanEntity?
+    func currentAccountPlan() async -> PlanEntity?
 
     // User and session management
     func currentUser() async -> UserEntity?

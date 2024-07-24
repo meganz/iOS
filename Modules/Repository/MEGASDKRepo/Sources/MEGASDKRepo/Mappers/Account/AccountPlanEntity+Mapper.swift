@@ -4,9 +4,11 @@ import StoreKit
 
 // MARK: - SKProduct
 extension SKProduct {
-    public func toAccountPlanEntity(storage: Int = 0,
-                                    transfer: Int = 0) -> AccountPlanEntity {
-        AccountPlanEntity(product: self,
+    public func toPlanEntity(
+        storage: Int = 0,
+        transfer: Int = 0
+    ) -> PlanEntity {
+        PlanEntity(product: self,
                           storageLimit: storage,
                           transferLimit: transfer)
     }
@@ -14,10 +16,10 @@ extension SKProduct {
 
 // MARK: - MEGAPricing
 extension MEGAPricing {
-    public func toAccountPlanEntity(index: Int) -> AccountPlanEntity? {
+    public func toPlanEntity(index: Int) -> PlanEntity? {
         guard let id = iOSID(atProductIndex: index) else { return nil }
     
-        return AccountPlanEntity(
+        return PlanEntity(
             productIdentifier: id,
             type: proLevel(atProductIndex: index).toAccountTypeEntity(),
             subscriptionCycle: SubscriptionCycleEntity(productIdentifier: id),
@@ -38,8 +40,8 @@ fileprivate extension SubscriptionCycleEntity {
     }
 }
 
-// MARK: - AccountPlanEntity
-fileprivate extension AccountPlanEntity {
+// MARK: - PlanEntity
+fileprivate extension PlanEntity {
     init(product: SKProduct,
          storageLimit: Int,
          transferLimit: Int) {

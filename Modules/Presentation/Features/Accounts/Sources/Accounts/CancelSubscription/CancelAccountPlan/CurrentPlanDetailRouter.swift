@@ -13,7 +13,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     private let accountDetails: AccountDetailsEntity
-    private let currentPlan: AccountPlanEntity
+    private let currentPlan: PlanEntity
     private let assets: CancelAccountPlanAssets
     
     private var appleIDSubscriptionsURL: URL? {
@@ -22,7 +22,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     
     public init(
         accountDetails: AccountDetailsEntity,
-        currentPlan: AccountPlanEntity,
+        currentPlan: PlanEntity,
         assets: CancelAccountPlanAssets,
         presenter: UIViewController
     ) {

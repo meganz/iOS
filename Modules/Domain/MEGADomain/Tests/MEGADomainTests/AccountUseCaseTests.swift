@@ -17,7 +17,7 @@ final class AccountUseCaseTests: XCTestCase {
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
         nodesCount: UInt64 = 0,
-        plans: [AccountPlanEntity] = [],
+        plans: [PlanEntity] = [],
         getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
         currentAccountDetails: AccountDetailsEntity? = nil,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
@@ -58,21 +58,21 @@ final class AccountUseCaseTests: XCTestCase {
         return AccountUseCase(repository: repository)
     }
     
-    private var monthlyPlans: [AccountPlanEntity] {
-        [AccountPlanEntity(type: .proI, subscriptionCycle: .monthly),
-         AccountPlanEntity(type: .proII, subscriptionCycle: .monthly),
-         AccountPlanEntity(type: .proIII, subscriptionCycle: .monthly),
-         AccountPlanEntity(type: .lite, subscriptionCycle: .monthly)]
+    private var monthlyPlans: [PlanEntity] {
+        [PlanEntity(type: .proI, subscriptionCycle: .monthly),
+         PlanEntity(type: .proII, subscriptionCycle: .monthly),
+         PlanEntity(type: .proIII, subscriptionCycle: .monthly),
+         PlanEntity(type: .lite, subscriptionCycle: .monthly)]
     }
     
-    private var yearlyPlans: [AccountPlanEntity] {
-        [AccountPlanEntity(type: .proI, subscriptionCycle: .yearly),
-         AccountPlanEntity(type: .proII, subscriptionCycle: .yearly),
-         AccountPlanEntity(type: .proIII, subscriptionCycle: .yearly),
-         AccountPlanEntity(type: .lite, subscriptionCycle: .yearly)]
+    private var yearlyPlans: [PlanEntity] {
+        [PlanEntity(type: .proI, subscriptionCycle: .yearly),
+         PlanEntity(type: .proII, subscriptionCycle: .yearly),
+         PlanEntity(type: .proIII, subscriptionCycle: .yearly),
+         PlanEntity(type: .lite, subscriptionCycle: .yearly)]
     }
     
-    private var allPlans: [AccountPlanEntity] {
+    private var allPlans: [PlanEntity] {
         monthlyPlans + yearlyPlans
     }
     
