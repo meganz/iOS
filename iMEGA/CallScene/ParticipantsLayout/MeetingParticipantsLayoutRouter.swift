@@ -51,7 +51,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             containerViewModel: containerViewModel, 
             scheduler: .main,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .sharedChatSdk)),
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .sharedChatSdk)),

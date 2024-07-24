@@ -1,6 +1,6 @@
 import Combine
 
-public protocol CallUseCaseProtocol: Sendable {
+public protocol CallUseCaseProtocol {
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T)
     func stopListeningForCall()
     func call(for chatId: HandleEntity) -> CallEntity?
@@ -29,7 +29,7 @@ public protocol CallUseCaseProtocol: Sendable {
     func lowerHand(forCall call: CallEntity) async throws
 }
 
-public protocol CallCallbacksUseCaseProtocol: AnyObject, Sendable {
+public protocol CallCallbacksUseCaseProtocol: AnyObject {
     func participantJoined(participant: CallParticipantEntity)
     func participantLeft(participant: CallParticipantEntity)
     func waitingRoomUsersAllow(with handles: [HandleEntity])
@@ -68,36 +68,24 @@ public extension CallCallbacksUseCaseProtocol {
     func mutedByClient(handle: HandleEntity) { }
 }
 
-public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, Sendable {
-    
-    private actor CallUseCaseActor {
-        private(set) weak var callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
-        
-        func set(callbacksDelegate: (any CallCallbacksUseCaseProtocol)?) {
-            self.callbacksDelegate = callbacksDelegate
-        }
-    }
+public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
     
     private let repository: T
     
-    private let callUseCaseActor = CallUseCaseActor()
+    private weak var callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
 
     public init(repository: T) {
         self.repository = repository
     }
     
     public func startListeningForCallInChat<S: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: S) {
-        Task {
-            repository.startListeningForCallInChat(chatId, callbacksDelegate: self)
-            await callUseCaseActor.set(callbacksDelegate: callbacksDelegate)
-        }
+        repository.startListeningForCallInChat(chatId, callbacksDelegate: self)
+        self.callbacksDelegate = callbacksDelegate
     }
     
     public func stopListeningForCall() {
-        Task {
-            await callUseCaseActor.set(callbacksDelegate: nil)
-            repository.stopListeningForCall()
-        }
+        self.callbacksDelegate = nil
+        repository.stopListeningForCall()
     }
     
     public func call(for chatId: HandleEntity) -> CallEntity? {
@@ -199,57 +187,49 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, 
 extension CallUseCase: CallCallbacksRepositoryProtocol {
 
     public func createdSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.participantJoined(
-                participant:
-                    CallParticipantEntity(
-                        session: session,
-                        chatRoom: chatRoom,
-                        privilege: privilege,
-                        raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
-                    )
-            )
-        }
-    }
-    
-    public func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.participantLeft(
-                participant:
-                    CallParticipantEntity(
-                        session: session,
-                        chatRoom: chatRoom,
-                        privilege: privilege,
-                        raisedHand: false
-                    )
-            )
-        }
-    }
-    
-    public func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.updateParticipant(
+        callbacksDelegate?.participantJoined(
+            participant:
                 CallParticipantEntity(
                     session: session,
                     chatRoom: chatRoom,
                     privilege: privilege,
                     raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
                 )
-            )
-        }
+        )
     }
     
-    public func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.audioLevel(
-                for: CallParticipantEntity(
+    public func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.participantLeft(
+            participant:
+                CallParticipantEntity(
                     session: session,
                     chatRoom: chatRoom,
                     privilege: privilege,
-                    raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
+                    raisedHand: false
                 )
+        )
+    }
+    
+    public func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.updateParticipant(
+            CallParticipantEntity(
+                session: session,
+                chatRoom: chatRoom,
+                privilege: privilege,
+                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
             )
-        }
+        )
+    }
+    
+    public func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.audioLevel(
+            for: CallParticipantEntity(
+                session: session,
+                chatRoom: chatRoom,
+                privilege: privilege,
+                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
+            )
+        )
     }
     
     private func raisedHand(for participantId: HandleEntity, forCallInChatRoom chatRoom: ChatRoomEntity) -> Bool {
@@ -258,100 +238,72 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
     }
     
     public func callTerminated(_ call: CallEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.callTerminated(call)
-        }
+        callbacksDelegate?.callTerminated(call)
     }
     
     public func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.ownPrivilegeChanged(to: privilege, in: chatRoom)
-        }
+        callbacksDelegate?.ownPrivilegeChanged(to: privilege, in: chatRoom)
     }
     
     public func participantAdded(with handle: HandleEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.participantAdded(with: handle)
-        }
+        callbacksDelegate?.participantAdded(with: handle)
     }
     
     public func participantRemoved(with handle: HandleEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.participantRemoved(with: handle)
-        }
+        callbacksDelegate?.participantRemoved(with: handle)
     }
     
     public func connecting() {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.connecting()
-        }
+        callbacksDelegate?.connecting()
     }
     
     public func inProgress() {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.inProgress()
-        }
+        callbacksDelegate?.inProgress()
     }
     
     public func onHiResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.highResolutionChanged(
-                for: CallParticipantEntity(
-                    session: session,
-                    chatRoom: chatRoom,
-                    privilege: privilege,
-                    raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
-                )
+        callbacksDelegate?.highResolutionChanged(
+            for: CallParticipantEntity(
+                session: session,
+                chatRoom: chatRoom,
+                privilege: privilege,
+                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
             )
-        }
+        )
     }
     
     public func onLowResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.lowResolutionChanged(
-                for: CallParticipantEntity(
-                    session: session,
-                    chatRoom: chatRoom,
-                    privilege: privilege,
-                    raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
-                )
+        callbacksDelegate?.lowResolutionChanged(
+            for: CallParticipantEntity(
+                session: session,
+                chatRoom: chatRoom,
+                privilege: privilege,
+                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
             )
-        }
+        )
     }
     
     public func localAvFlagsUpdated(video: Bool, audio: Bool) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.localAvFlagsUpdated(video: video, audio: audio)
-        }
+        callbacksDelegate?.localAvFlagsUpdated(video: video, audio: audio)
     }
     
     public func chatTitleChanged(chatRoom: ChatRoomEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom)
-        }
+        callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom)
     }
     
     public func networkQualityChanged(_ quality: NetworkQuality) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.networkQualityChanged(quality)
-        }
+        callbacksDelegate?.networkQualityChanged(quality)
     }
     
     public func outgoingRingingStopReceived() {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.outgoingRingingStopReceived()
-        }
+        callbacksDelegate?.outgoingRingingStopReceived()
     }
     
     public func waitingRoomUsersAllow(with handles: [HandleEntity]) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.waitingRoomUsersAllow(with: handles)
-        }
+        callbacksDelegate?.waitingRoomUsersAllow(with: handles)
     }
     
     public func mutedByClient(handle: HandleEntity) {
-        Task {
-            await callUseCaseActor.callbacksDelegate?.mutedByClient(handle: handle)
-        }
+        callbacksDelegate?.mutedByClient(handle: handle)
     }
 }
