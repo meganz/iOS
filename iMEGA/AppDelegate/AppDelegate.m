@@ -669,6 +669,8 @@
             
                     [MEGALinkManager processSelectedOptionOnLink];
                     [self showCookieDialogIfNeeded];
+
+                    [self processGenericAppPushNotificationTapIfNeeded];
                 } else {
                     [self processActionsAfterSetRootVC];
                 }
@@ -716,6 +718,10 @@
     
     [self showLaunchTabDialogIfNeeded];
     
+    [self processGenericAppPushNotificationTapIfNeeded];
+}
+
+- (void)processGenericAppPushNotificationTapIfNeeded {
     if (self.megatype == MEGANotificationTypeGeneric && self.megaGenericRemoteNotif != nil) {
         [self handleGenericAppPushNotificationTapWithUserInfo:self.megaGenericRemoteNotif];
         self.megaGenericRemoteNotif = nil;
@@ -1063,8 +1069,11 @@
         
     } else if (self.megatype) {
         if (self.megatype == MEGANotificationTypeGeneric) {
-            if (![self isAdsMainTabBarRootView]) { return; }
-            [self handleGenericAppPushNotificationTapWithUserInfo:response.notification.request.content.userInfo];
+            if ([self isAdsMainTabBarRootView] && !LTHPasscodeViewController.sharedUser.isLockscreenPresent) {
+                [self handleGenericAppPushNotificationTapWithUserInfo:response.notification.request.content.userInfo];
+            } else {
+                self.megaGenericRemoteNotif = response.notification.request.content.userInfo;
+            }
         } else {
             [self openTabBasedOnNotificationMegatype];
         }
