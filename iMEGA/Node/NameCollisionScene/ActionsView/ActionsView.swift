@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGADomain
+import MEGASwiftUI
 import SwiftUI
 
 struct ActionsView: View {
@@ -37,18 +39,18 @@ struct ActionView: View {
     
     var body: some View {
         VStack {
-            Divider()
+            MEGADivider(isDesignTokenEnabled: isDesignTokenEnabled)
             HStack(spacing: Constants.horizontalSpacing) {
                 VStack(alignment: .leading, spacing: Constants.verticalSpacing) {
                     VStack(alignment: .leading, spacing: Constants.textSpacing) {
                         Text(viewModel.actionTitle)
                             .font(.body.bold())
-                            .foregroundColor(MEGAAppColor.Green._00C29A.color)
+                            .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Green._00C29A.color)
                         if let description = viewModel.actionDescription {
                             Text(description)
                                 .multilineTextAlignment(.leading)
                                 .font(.footnote)
-                                .foregroundColor(colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(0.8) : MEGAAppColor.Black._000000.color.opacity(0.8))
+                                .foregroundColor(descriptionForegroundColor)
                         }
                     }
                     if viewModel.showItemView {
@@ -57,14 +59,22 @@ struct ActionView: View {
                     }
                 }
                 Spacer()
-                Image(uiImage: UIImage.standardDisclosureIndicator)
+                Image(uiImage: isDesignTokenEnabled ? UIImage.standardDisclosureIndicatorDesignToken: UIImage.standardDisclosureIndicator)
                     .resizable()
                     .frame(width: Constants.disclosureSize.width, height: Constants.disclosureSize.height)
             }
             .padding()
-            Divider()
+            MEGADivider(isDesignTokenEnabled: isDesignTokenEnabled)
         }
-        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor.cgColor) : MEGAAppColor.White._FFFFFF.color)
+        .designTokenBackground(
+            isDesignTokenEnabled,
+            legacyColor: colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor.cgColor) : MEGAAppColor.White._FFFFFF.color
+        )
         .frame(maxWidth: .infinity)
+    }
+    
+    private var descriptionForegroundColor: Color {
+        isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI
+        : colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(0.8) : MEGAAppColor.Black._000000.color.opacity(0.8)
     }
 }

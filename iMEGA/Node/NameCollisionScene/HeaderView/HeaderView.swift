@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct HeaderView: View {
@@ -18,6 +19,7 @@ struct HeaderView: View {
                 Text(viewModel.titleComponents[2])
                     .font(.subheadline)
             }
+            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
         }
         .frame(maxWidth: .infinity)
     }

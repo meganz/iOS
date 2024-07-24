@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -18,25 +19,28 @@ struct ItemView: View {
                 .clipped()
             VStack(alignment: .leading, spacing: 0) {
                 Text(name)
-                    .foregroundColor(.primary)
                     .font(.subheadline.bold())
                 if let date = date {
                     Text(date)
-                        .foregroundColor(.primary)
                         .font(.caption)
                 }
                 if let size = size {
                     Text(size)
-                        .foregroundColor(.primary)
                         .font(.caption)
                 }
             }
+            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
             Spacer()
         }
         .padding(10)
-        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor) : MEGAAppColor.White._FFFFFF.color)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor) : MEGAAppColor.White._FFFFFF.color)
         .overlay(RoundedRectangle(cornerRadius: 8)
-            .stroke(colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(0.2) : MEGAAppColor.Black._000000.color.opacity(0.1), lineWidth: 1)
+            .stroke(borderStrokeColor, lineWidth: 1)
         )
+    }
+    
+    private var borderStrokeColor: Color {
+        isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI
+        : colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(0.2) : MEGAAppColor.Black._000000.color.opacity(0.1)
     }
 }
