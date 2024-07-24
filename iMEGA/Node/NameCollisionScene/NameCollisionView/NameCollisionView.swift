@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -20,6 +21,7 @@ struct NameCollisionView: View {
                 Button(Strings.Localizable.cancel) {
                     viewModel.cancelResolveNameCollisions()
                 }
+                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
                 .accentColor(Color.primary)
             }
             .padding()
@@ -44,7 +46,7 @@ struct NameCollisionView: View {
                 }
             }
         }
-        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._1C1C1E.uiColor) : Color(MEGAAppColor.White._F7F7F7.uiColor))
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: colorScheme == .dark ? Color(MEGAAppColor.Black._1C1C1E.uiColor) : Color(MEGAAppColor.White._F7F7F7.uiColor))
         .onAppear {
             viewModel.onViewAppeared()
         }
