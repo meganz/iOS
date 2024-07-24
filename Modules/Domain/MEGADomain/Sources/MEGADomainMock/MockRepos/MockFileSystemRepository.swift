@@ -1,7 +1,8 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
-public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
+public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unchecked Sendable {
     public static let newRepo = MockFileSystemRepository()
     
     private let fileExists: Bool
@@ -12,7 +13,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
     private let creationDate: Date
     private let relativePath: String
     
-    public var removeFileURLs = [URL]()
+    @Atomic public var removeFileURLs = [URL]()
 
     public init(fileExists: Bool = false,
                 copiedNode: Bool = false,
@@ -47,7 +48,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
     }
     
     public func removeItem(at url: URL) throws {
-        removeFileURLs.append(url)
+        $removeFileURLs.mutate { $0.append(url) }
     }
     
     public func fileSize(at url: URL) -> UInt64? {
@@ -61,5 +62,4 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
     public func relativePathToDocumentsDirectory(for url: URL) -> String {
         relativePath
     }
-    
 }
