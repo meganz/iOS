@@ -2,6 +2,7 @@ import Combine
 import MEGADomain
 import SwiftUI
 
+@MainActor
 final class AlbumCoverPickerViewModel: ObservableObject {
     
     @Published var photos = [AlbumPhotoEntity]()
@@ -73,29 +74,16 @@ final class AlbumCoverPickerViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    @MainActor
     private func loadNodes() async {
         do {
-            photos = try await albumContentsUseCase.photos(in: album)
-            photos.sort {
-                if $0.photo.modificationTime == $1.photo.modificationTime {
-                    return $0.photo.handle > $1.photo.handle
-                } else {
-                    return $0.photo.modificationTime > $1.photo.modificationTime
-                }
-            }
-            selectCoverNode()
+            photos = try await albumContentsUseCase.latestModifiedPhotos(in: album)
+            await selectCoverNode()
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
         }
     }
     
-    private func selectCoverNode() {
-        if let coverNode = album.coverNode,
-           let coverPhoto = photos.first(where: { $0.id == coverNode.handle }) {
-            photoSelection.selectedPhoto = coverPhoto
-        } else {
-            photoSelection.selectedPhoto = photos.first
-        }
+    private func selectCoverNode() async {
+        photoSelection.selectedPhoto = await albumContentsUseCase.selectCoverNode(photos: photos, album: album)
     }
 }

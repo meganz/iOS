@@ -218,6 +218,7 @@
 		24CCAC482B1363BD00BE4726 /* DownloadFileRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCAC472B1363BD00BE4726 /* DownloadFileRepositoryTests.swift */; };
 		24DA49E02B172B360065FF57 /* MEGAGetPublicNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DA49DF2B172B360065FF57 /* MEGAGetPublicNodeRequestDelegate.m */; };
 		24DA49E12B172B360065FF57 /* MEGAGetPublicNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DA49DF2B172B360065FF57 /* MEGAGetPublicNodeRequestDelegate.m */; };
+		24DE24382C4F8EAB00E0EAF4 /* AlbumContentsUseCaseProtocol+AlbumCoverPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE24372C4F8EAB00E0EAF4 /* AlbumContentsUseCaseProtocol+AlbumCoverPicker.swift */; };
 		24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */; };
 		24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */; };
 		24E038462AEBE5570001159C /* AudioPlayerConfigEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */; };
@@ -2949,6 +2950,7 @@
 		24CCAC472B1363BD00BE4726 /* DownloadFileRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFileRepositoryTests.swift; sourceTree = "<group>"; };
 		24DA49DE2B172B0E0065FF57 /* MEGAGetPublicNodeRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetPublicNodeRequestDelegate.h; path = API/Requests/MEGAGetPublicNodeRequestDelegate.h; sourceTree = "<group>"; };
 		24DA49DF2B172B360065FF57 /* MEGAGetPublicNodeRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPublicNodeRequestDelegate.m; path = API/Requests/MEGAGetPublicNodeRequestDelegate.m; sourceTree = "<group>"; };
+		24DE24372C4F8EAB00E0EAF4 /* AlbumContentsUseCaseProtocol+AlbumCoverPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumContentsUseCaseProtocol+AlbumCoverPicker.swift"; sourceTree = "<group>"; };
 		24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInfoUseCase.swift; sourceTree = "<group>"; };
 		24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStreamingInfoUseCase.swift; sourceTree = "<group>"; };
 		24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntityTests.swift; sourceTree = "<group>"; };
@@ -5787,6 +5789,7 @@
 		0EED79E62A9C0AFF00213201 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				24DE24372C4F8EAB00E0EAF4 /* AlbumContentsUseCaseProtocol+AlbumCoverPicker.swift */,
 				0E2363B42A9EDDCC0019BBBE /* AlbumEntity+Analytics.swift */,
 			);
 			path = Extensions;
@@ -14352,6 +14355,7 @@
 				9D4B25322964D5A20017E51A /* AlbumContentPickerView.swift in Sources */,
 				9D94AF6C296532EE00C7FBAA /* AlbumContentPickerViewModel.swift in Sources */,
 				12BDD4D628285BA900009D73 /* AlbumContentRouter.swift in Sources */,
+				24DE24382C4F8EAB00E0EAF4 /* AlbumContentsUseCaseProtocol+AlbumCoverPicker.swift in Sources */,
 				32B1150F298373DF00101622 /* AlbumContentViewController+ContextMenu.swift in Sources */,
 				12E9105528247C5300FBC6DA /* AlbumContentViewController.swift in Sources */,
 				12BDD4DA28285C0700009D73 /* AlbumContentViewModel.swift in Sources */,
