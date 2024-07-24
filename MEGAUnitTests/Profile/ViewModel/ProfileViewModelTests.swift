@@ -276,7 +276,7 @@ final class ProfileViewModelTests: XCTestCase {
             subscriptionStatus: hasValidSubscription ? .valid: .none
         )
         
-        let accountPlan = AccountPlanEntity(type: accountType)
+        let accountPlan = PlanEntity(type: accountType)
         
         let accountUseCase = MockAccountUseCase(
             hasValidSubscription: hasValidSubscription,

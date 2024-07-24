@@ -79,7 +79,7 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         sdk.isAchievementsEnabled
     }
     
-    public func currentAccountPlan() async -> AccountPlanEntity? {
+    public func currentAccountPlan() async -> PlanEntity? {
         let availablePlans = await availablePlans()
         
         return availablePlans.first(where: {
@@ -87,7 +87,7 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         })
     }
     
-    private func availablePlans() async -> [AccountPlanEntity] {
+    private func availablePlans() async -> [PlanEntity] {
         await withAsyncValue { completion in
             sdk.getPricingWith(RequestDelegate { result in
                 if case let .success(request) = result {

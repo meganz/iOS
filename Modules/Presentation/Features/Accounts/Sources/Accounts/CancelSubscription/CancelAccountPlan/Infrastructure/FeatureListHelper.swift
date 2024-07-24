@@ -11,7 +11,7 @@ public protocol FeatureListHelperProtocol {
 
 struct FeatureListHelper: FeatureListHelperProtocol {
     let account: AccountDetailsEntity
-    let currentPlan: AccountPlanEntity
+    let currentPlan: PlanEntity
     let assets: CancelAccountPlanAssets
     
     // The Cancel Subscription flow is only available for pro standard accounts (Pro I, II, III, lite, and Pro Flexi).

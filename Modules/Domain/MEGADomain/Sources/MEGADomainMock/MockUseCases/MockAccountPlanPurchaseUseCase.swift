@@ -2,7 +2,7 @@ import Combine
 import MEGADomain
 
 final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCaseProtocol {
-    private var accountPlanProducts: [AccountPlanEntity]
+    private var accountPlanProducts: [PlanEntity]
     private let _successfulRestorePublisher: PassthroughSubject<Void, Never>
     private let _incompleteRestorePublisher: PassthroughSubject<Void, Never>
     private let _failedRestorePublisher: PassthroughSubject<AccountPlanErrorEntity, Never>
@@ -16,7 +16,7 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     public var registerPurchaseDelegateCalled = 0
     public var deRegisterPurchaseDelegateCalled = 0
     
-    public init(accountPlanProducts: [AccountPlanEntity] = [],
+    public init(accountPlanProducts: [PlanEntity] = [],
                 successfulRestorePublisher: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>(),
                 incompleteRestorePublisher: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>(),
                 failedRestorePublisher: PassthroughSubject<AccountPlanErrorEntity, Never> = PassthroughSubject<AccountPlanErrorEntity, Never>(),
@@ -28,7 +28,7 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
         _purchasePlanResultPublisher = purchasePlanResultPublisher
     }
     
-    public func accountPlanProducts() async -> [AccountPlanEntity] {
+    public func accountPlanProducts() async -> [PlanEntity] {
         accountPlanProducts
     }
     
@@ -48,7 +48,7 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
         _purchasePlanResultPublisher.eraseToAnyPublisher()
     }
     
-    public func purchasePlan(_ plan: AccountPlanEntity) async {
+    public func purchasePlan(_ plan: PlanEntity) async {
         purchasePlanCalled += 1
     }
     

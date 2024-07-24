@@ -1,9 +1,9 @@
 import Combine
 
 public protocol AccountPlanPurchaseRepositoryProtocol: RepositoryProtocol {
-    func accountPlanProducts() async -> [AccountPlanEntity]
+    func accountPlanProducts() async -> [PlanEntity]
     func restorePurchase()
-    func purchasePlan(_ plan: AccountPlanEntity) async
+    func purchasePlan(_ plan: PlanEntity) async
     func cancelCreditCardSubscriptions(reason: String?) async throws
     
     var successfulRestorePublisher: AnyPublisher<Void, Never> { get }

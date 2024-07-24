@@ -25,7 +25,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private var abTestProvider: any ABTestProviderProtocol
     private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
-    private var planList: [AccountPlanEntity] = []
+    private var planList: [PlanEntity] = []
     private var accountDetails: AccountDetailsEntity
     private(set) var viewType: UpgradeAccountPlanViewType
     @Published var isExternalAdsActive: Bool = false
@@ -43,7 +43,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     @Published var isDismiss = false
     @Published var isLoading = false
-    @Published private(set) var currentPlan: AccountPlanEntity?
+    @Published private(set) var currentPlan: PlanEntity?
     private(set) var recommendedPlanType: AccountTypeEntity?
     var isShowBuyButton = false
     
@@ -173,7 +173,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             if viewType == .upgrade {
                 setRecommendedPlan(basedOnPlan: accountDetails.proLevel)
             } else {
-                let lowestPlan = planList.sorted(by: { $0.price < $1.price }).first ?? AccountPlanEntity()
+                let lowestPlan = planList.sorted(by: { $0.price < $1.price }).first ?? PlanEntity()
                 setRecommendedPlan(basedOnPlan: lowestPlan.type)
             }
             
@@ -198,12 +198,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     @MainActor
     private func setCurrentPlan(type: AccountTypeEntity) {
         guard type != .free else {
-            currentPlan = AccountPlanEntity(type: .free, name: AccountTypeEntity.free.toAccountTypeDisplayName())
+            currentPlan = PlanEntity(type: .free, name: AccountTypeEntity.free.toAccountTypeDisplayName())
             return
         }
         
         guard !type.isLowerTierPlan else {
-            currentPlan = AccountPlanEntity(type: type, name: type.toAccountTypeDisplayName())
+            currentPlan = PlanEntity(type: type, name: type.toAccountTypeDisplayName())
             return
         }
 
@@ -226,7 +226,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         selectedPlanType?.toAccountTypeDisplayName() ?? ""
     }
     
-    var filteredPlanList: [AccountPlanEntity] {
+    var filteredPlanList: [PlanEntity] {
         planList.filter { $0.subscriptionCycle == selectedCycleTab }
     }
     
@@ -243,7 +243,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                                    linkColor: MEGAAppColor.View.turquoise.color)
     }
     
-    func createAccountPlanViewModel(_ plan: AccountPlanEntity) -> AccountPlanViewModel {
+    func createAccountPlanViewModel(_ plan: PlanEntity) -> AccountPlanViewModel {
         AccountPlanViewModel(
             plan: plan,
             planTag: planTag(plan),
@@ -254,7 +254,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             })
     }
     
-    func setSelectedPlan(_ plan: AccountPlanEntity) {
+    func setSelectedPlan(_ plan: PlanEntity) {
         guard isSelectionEnabled(forPlan: plan) else {
             showSnackBar(for: .currentRecurringPlanSelected)
             return
@@ -339,7 +339,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         selectedPlanType = recommendedPlanType
     }
     
-    private func planTag(_ plan: AccountPlanEntity) -> AccountPlanTagEntity {
+    private func planTag(_ plan: PlanEntity) -> AccountPlanTagEntity {
         guard let currentPlan else { return .none }
         
         switch accountDetails.subscriptionCycle {
@@ -358,12 +358,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return .none
     }
     
-    private func isPlanSelected(_ plan: AccountPlanEntity) -> Bool {
+    private func isPlanSelected(_ plan: PlanEntity) -> Bool {
         guard let selectedPlanType else { return false }
         return selectedPlanType == plan.type && isSelectionEnabled(forPlan: plan)
     }
     
-    private func isSelectionEnabled(forPlan plan: AccountPlanEntity) -> Bool {
+    private func isSelectionEnabled(forPlan plan: PlanEntity) -> Bool {
         guard let currentPlan, accountDetails.subscriptionCycle != .none else {
             return true
         }
@@ -381,7 +381,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     // MARK: Buy plan
-    var currentSelectedPlan: AccountPlanEntity? {
+    var currentSelectedPlan: PlanEntity? {
         guard let selectedPlanType,
               let selectedPlan = filteredPlanList.first(where: { $0.type == selectedPlanType }) else {
             return nil
@@ -389,7 +389,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return selectedPlan
     }
     
-    private func trackEventBuyPlan(_ currentSelectedPlan: AccountPlanEntity) {
+    private func trackEventBuyPlan(_ currentSelectedPlan: PlanEntity) {
         switch currentSelectedPlan.type {
         case .proI:
             tracker.trackAnalyticsEvent(with: BuyProIEvent())

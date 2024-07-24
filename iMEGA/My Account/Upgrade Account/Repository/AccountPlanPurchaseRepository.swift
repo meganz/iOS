@@ -59,7 +59,7 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
     }
     
     @MainActor
-    func purchasePlan(_ plan: AccountPlanEntity) async {
+    func purchasePlan(_ plan: PlanEntity) async {
         guard let products = purchase.products as? [SKProduct],
               let productPlan = products.first(where: { $0.productIdentifier == plan.productIdentifier }) else {
             return
@@ -80,16 +80,16 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         }
     }
     
-    func accountPlanProducts() async -> [AccountPlanEntity] {
+    func accountPlanProducts() async -> [PlanEntity] {
         guard let products = purchase.products as? [SKProduct] else { return [] }
 
-        var accountPlans: [AccountPlanEntity] = []
+        var accountPlans: [PlanEntity] = []
         for product in products {
             // We need to find out where the current product is listed in our `MEGAPricing instance because sometimes
             // there's a mismatch between the products listed in the SDK/API and those available in the Apple Store.
             // This discrepancy can occur when new products are added to the SDK/API but haven't been added to the Apple Store yet.
             let productIndex = purchase.pricingProductIndex(for: product)
-            let plan = product.toAccountPlanEntity(
+            let plan = product.toPlanEntity(
                 storage: storageGB(atProductIndex: Int(productIndex)),
                 transfer: transferGB(atProductIndex: Int(productIndex))
             )

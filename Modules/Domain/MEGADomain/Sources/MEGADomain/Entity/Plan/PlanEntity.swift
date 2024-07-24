@@ -1,4 +1,4 @@
-public struct AccountPlanEntity: Sendable {
+public struct PlanEntity: Sendable {
     public let productIdentifier: String
     public var type: AccountTypeEntity
     public var name: String
@@ -30,13 +30,13 @@ public struct AccountPlanEntity: Sendable {
     }
 }
 
-extension AccountPlanEntity: Equatable {
-    public static func == (lhs: AccountPlanEntity, rhs: AccountPlanEntity) -> Bool {
+extension PlanEntity: Equatable {
+    public static func == (lhs: PlanEntity, rhs: PlanEntity) -> Bool {
         lhs.type == rhs.type && lhs.subscriptionCycle == rhs.subscriptionCycle
     }
 }
 
-extension AccountPlanEntity: Hashable {
+extension PlanEntity: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(type)
         hasher.combine(subscriptionCycle)

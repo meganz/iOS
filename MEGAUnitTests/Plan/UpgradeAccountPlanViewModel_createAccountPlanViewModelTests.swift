@@ -8,12 +8,12 @@ import XCTest
 final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
-    private let proI_monthly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .monthly)
-    private let proI_yearly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly)
-    private let proII_monthly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .monthly)
-    private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .yearly)
-    private let proIII_monthly = AccountPlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .monthly)
-    private let proIII_yearly = AccountPlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .yearly)
+    private let proI_monthly = PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .monthly)
+    private let proI_yearly = PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly)
+    private let proII_monthly = PlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .monthly)
+    private let proII_yearly = PlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .yearly)
+    private let proIII_monthly = PlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .monthly)
+    private let proIII_yearly = PlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .yearly)
     
     func testCreateAccountPlanViewModel_withSelectedPlanType_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .free)
@@ -218,7 +218,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     private func makeSUT(
         accountDetails: AccountDetailsEntity,
         currentAccountDetails: AccountDetailsEntity? = nil,
-        planList: [AccountPlanEntity] = [],
+        planList: [PlanEntity] = [],
         viewType: UpgradeAccountPlanViewType = .upgrade
     ) -> UpgradeAccountPlanViewModel {
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)

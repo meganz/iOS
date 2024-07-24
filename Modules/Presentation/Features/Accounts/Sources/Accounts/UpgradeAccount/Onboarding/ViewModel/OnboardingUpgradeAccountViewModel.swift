@@ -21,7 +21,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     let isAdsEnabled: Bool
     
     @Published private(set) var shouldDismiss: Bool = false
-    @Published private(set) var lowestProPlan: AccountPlanEntity = AccountPlanEntity()
+    @Published private(set) var lowestProPlan: PlanEntity = PlanEntity()
     
     // Variant A only
     private let viewProPlanAction: () -> Void
@@ -30,7 +30,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     @Published var selectedCycleTab: SubscriptionCycleEntity = .yearly
     @Published private(set) var selectedPlanType: AccountTypeEntity?
     @Published var isTermsAndPoliciesPresented = false
-    private var planList: [AccountPlanEntity] = []
+    private var planList: [PlanEntity] = []
     private(set) var recommendedPlanType: AccountTypeEntity?
     
     private(set) var registerDelegateTask: Task<Void, Never>?
@@ -194,7 +194,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         setDefaultRecommendedSelectedPlan()
     }
     
-    private let freeAccountPlan = AccountPlanEntity(
+    private let freeAccountPlan = PlanEntity(
         type: .free,
         name: Strings.Localizable.Free.Plan.name,
         subscriptionCycle: .none,
@@ -207,11 +207,11 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         selectedPlanType?.toAccountTypeDisplayName() ?? ""
     }
     
-    var filteredPlanList: [AccountPlanEntity] {
+    var filteredPlanList: [PlanEntity] {
         planList.filter { $0.subscriptionCycle == selectedCycleTab || $0.subscriptionCycle == .none }
     }
     
-    var currentSelectedPlan: AccountPlanEntity? {
+    var currentSelectedPlan: PlanEntity? {
         guard let selectedPlanType,
               let selectedPlan = filteredPlanList.first(where: { $0.type == selectedPlanType }) else {
             return nil
@@ -233,7 +233,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         selectedPlanType = recommendedPlanType
     }
     
-    func createAccountPlanViewModel(_ plan: AccountPlanEntity) -> AccountPlanViewModel {
+    func createAccountPlanViewModel(_ plan: PlanEntity) -> AccountPlanViewModel {
         AccountPlanViewModel(
             plan: plan,
             planTag: planTag(plan),
@@ -244,7 +244,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
             })
     }
     
-    private func planTag(_ plan: AccountPlanEntity) -> AccountPlanTagEntity {
+    private func planTag(_ plan: PlanEntity) -> AccountPlanTagEntity {
         guard let recommendedPlanType,
               plan.subscriptionCycle == selectedCycleTab,
               plan.type == recommendedPlanType else {
@@ -254,12 +254,12 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         return .recommended
     }
     
-    private func isPlanSelected(_ plan: AccountPlanEntity) -> Bool {
+    private func isPlanSelected(_ plan: PlanEntity) -> Bool {
         guard let selectedPlanType else { return false }
         return selectedPlanType == plan.type
     }
     
-    func setSelectedPlan(_ plan: AccountPlanEntity) {
+    func setSelectedPlan(_ plan: PlanEntity) {
         selectedPlanType = plan.type
     }
     
@@ -324,7 +324,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     }
     
     // MARK: - Helper
-    private func lowestPlan(planList: [AccountPlanEntity]) -> AccountPlanEntity {
-        return planList.sorted(by: { $0.price < $1.price }).first ?? AccountPlanEntity()
+    private func lowestPlan(planList: [PlanEntity]) -> PlanEntity {
+        return planList.sorted(by: { $0.price < $1.price }).first ?? PlanEntity()
     }
 }

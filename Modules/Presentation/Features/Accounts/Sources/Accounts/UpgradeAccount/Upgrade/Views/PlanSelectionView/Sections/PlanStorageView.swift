@@ -3,7 +3,7 @@ import MEGAL10n
 import SwiftUI
 
 public struct PlanStorageView: View {
-    public var plan: AccountPlanEntity
+    public var plan: PlanEntity
     public var primaryTextColor: Color
     public var secondaryTextColor: Color
     

@@ -13,10 +13,10 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
                         MockSKProduct(identifier: "pro2.oneMonth", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro3.oneMonth", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "lite.oneMonth", price: "1", priceLocale: Locale.current)]
-        let expectedResult = [AccountPlanEntity(type: .proI, subscriptionCycle: .monthly),
-                              AccountPlanEntity(type: .proII, subscriptionCycle: .monthly),
-                              AccountPlanEntity(type: .proIII, subscriptionCycle: .monthly),
-                              AccountPlanEntity(type: .lite, subscriptionCycle: .monthly)]
+        let expectedResult = [PlanEntity(type: .proI, subscriptionCycle: .monthly),
+                              PlanEntity(type: .proII, subscriptionCycle: .monthly),
+                              PlanEntity(type: .proIII, subscriptionCycle: .monthly),
+                              PlanEntity(type: .lite, subscriptionCycle: .monthly)]
         
         let mockPurchase = MockMEGAPurchase(productPlans: products)
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
@@ -29,10 +29,10 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
                         MockSKProduct(identifier: "pro2.oneYear", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro3.oneYear", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "lite.oneYear", price: "1", priceLocale: Locale.current)]
-        let expectedResult = [AccountPlanEntity(type: .proI, subscriptionCycle: .yearly),
-                              AccountPlanEntity(type: .proII, subscriptionCycle: .yearly),
-                              AccountPlanEntity(type: .proIII, subscriptionCycle: .yearly),
-                              AccountPlanEntity(type: .lite, subscriptionCycle: .yearly)]
+        let expectedResult = [PlanEntity(type: .proI, subscriptionCycle: .yearly),
+                              PlanEntity(type: .proII, subscriptionCycle: .yearly),
+                              PlanEntity(type: .proIII, subscriptionCycle: .yearly),
+                              PlanEntity(type: .lite, subscriptionCycle: .yearly)]
         
         let mockPurchase = MockMEGAPurchase(productPlans: products)
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
