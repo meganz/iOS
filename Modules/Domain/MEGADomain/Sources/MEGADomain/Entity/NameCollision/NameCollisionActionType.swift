@@ -1,4 +1,4 @@
-public enum NameCollisionActionType {
+public enum NameCollisionActionType: Sendable {
     case update
     case replace
     case rename

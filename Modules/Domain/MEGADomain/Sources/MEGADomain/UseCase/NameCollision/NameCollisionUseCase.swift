@@ -2,7 +2,7 @@ import Foundation
 import MEGAFoundation
 
 // MARK: - Use case protocol -
-public protocol NameCollisionUseCaseProtocol {
+public protocol NameCollisionUseCaseProtocol: Sendable {
     func resolveNameCollisions(for collisions: [NameCollisionEntity]) -> [NameCollisionEntity]
     func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity]
     func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [HandleEntity]
@@ -140,7 +140,9 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: NodeActionsRepo
     
     // MARK: - Private
     private func removeOriginalDuplicatedItemIfNeeded(for collision: NameCollisionEntity) async throws {
-        if (collision.collisionAction == .replace || collision.collisionAction == .update), let collisionHandle = collision.collisionNodeHandle, let rubbish = nodeRepository.rubbishNode() {
+        if collision.collisionAction == .replace || collision.collisionAction == .update, 
+            let collisionHandle = collision.collisionNodeHandle, 
+            let rubbish = nodeRepository.rubbishNode() {
             _ = try await nodeActionsRepository.moveNode(handle: collisionHandle, in: rubbish.handle, newName: nil)
         }
     }

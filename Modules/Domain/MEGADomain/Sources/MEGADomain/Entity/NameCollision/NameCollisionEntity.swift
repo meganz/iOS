@@ -1,6 +1,6 @@
 import Foundation
 
-public struct NameCollisionEntity: Equatable {
+public struct NameCollisionEntity: Equatable, Sendable {
     public let parentHandle: HandleEntity
     public let name: String
     public let isFile: Bool

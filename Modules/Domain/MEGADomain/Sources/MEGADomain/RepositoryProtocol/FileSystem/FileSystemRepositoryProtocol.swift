@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol FileSystemRepositoryProtocol: RepositoryProtocol {
+public protocol FileSystemRepositoryProtocol: RepositoryProtocol, Sendable {
     func documentsDirectory() -> URL
     func fileExists(at url: URL) -> Bool
     func moveFile(at sourceURL: URL, to destinationURL: URL) -> Bool
