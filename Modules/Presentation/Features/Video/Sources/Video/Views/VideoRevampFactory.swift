@@ -51,10 +51,10 @@ public class VideoRevampFactory {
         let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo)
         let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase)
         let videoListViewModel = VideoListViewModel(
-            syncModel: syncModel,
+            syncModel: syncModel, 
+            contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: videoSelection,
             fileSearchUseCase: fileSearchUseCase,
-            photoLibraryUseCase: photoLibraryUseCase,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )
