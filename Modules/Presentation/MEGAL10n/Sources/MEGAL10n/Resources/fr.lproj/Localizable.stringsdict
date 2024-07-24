@@ -2,6 +2,42 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] et %d autre personne ont levé la main</string>
+        <key>many</key>
+        <string>[A] et %d autres personnes ont levé la main</string>
+        <key>other</key>
+        <string>[A] et %d autres personnes ont levé la main</string>
+      </dict>
+    </dict>
+    <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Vous et %d autre personne avez levé la main</string>
+        <key>many</key>
+        <string>Vous et %d autres personnes avez levé la main</string>
+        <key>other</key>
+        <string>Vous et %d autres personnes avez levé la main</string>
+      </dict>
+    </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3366,6 +3402,24 @@
         <string>%d de vidéos ont été supprimées de « [A] »</string>
         <key>other</key>
         <string>%d vidéos ont été supprimées de « [A] »</string>
+      </dict>
+    </dict>
+    <key>rewind.for.pro.users.maximumDays</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@maximumDays@</string>
+      <key>maximumDays</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Jusqu’à %d jour</string>
+        <key>many</key>
+        <string>Jusqu’à %d jours</string>
+        <key>other</key>
+        <string>Jusqu’à %d jours</string>
       </dict>
     </dict>
   </dict>

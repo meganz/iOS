@@ -2,6 +2,38 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] and %d other raised their hands</string>
+        <key>other</key>
+        <string>[A] and %d others raised their hands</string>
+      </dict>
+    </dict>
+    <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>You and %d other raised your hands</string>
+        <key>other</key>
+        <string>You and %d others raised your hands</string>
+      </dict>
+    </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2622,6 +2654,20 @@
         <string>Removed %d video from “[A]”</string>
         <key>other</key>
         <string>Removed %d videos from “[A]”</string>
+      </dict>
+    </dict>
+    <key>rewind.for.pro.users.maximumDays</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@maximumDays@</string>
+      <key>maximumDays</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string></string>
       </dict>
     </dict>
   </dict>

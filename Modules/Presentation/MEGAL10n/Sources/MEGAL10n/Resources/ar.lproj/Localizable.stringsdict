@@ -2,6 +2,54 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>[A] و %d آخر رفعوا أيديهم</string>
+        <key>one</key>
+        <string>[A] و %d آخر رفعوا أيديهم</string>
+        <key>two</key>
+        <string>[A] و %d آخران رفعوا أيديهم</string>
+        <key>few</key>
+        <string>[A] و %d آخرون رفعوا أيديهم</string>
+        <key>many</key>
+        <string>[A] و %d آخرون رفعوا أيديهم</string>
+        <key>other</key>
+        <string>[A] و %d آخرون رفعوا أيديهم</string>
+      </dict>
+    </dict>
+    <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>أنت و %d آخر رفعتوا أيديكم</string>
+        <key>one</key>
+        <string>أنت و %d آخر رفعتوا أيديكم</string>
+        <key>two</key>
+        <string>أنت و %d آخران رفعتوا أيديكم</string>
+        <key>few</key>
+        <string>أنت و %d آخرون رفعتوا أيديكم</string>
+        <key>many</key>
+        <string>أنت و %d آخرون رفعتوا أيديكم</string>
+        <key>other</key>
+        <string>أنت و %d آخرون رفعتوا أيديكم</string>
+      </dict>
+    </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -4308,10 +4356,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>أرفق %d ملف.</string>
         <key>one</key>
-        <string>Attached %d file</string>
+        <string>أرفق %d ملف.</string>
+        <key>two</key>
+        <string>أرفق %d ملفين.</string>
+        <key>few</key>
+        <string>أرفق %d ملفات.</string>
+        <key>many</key>
+        <string>أرفق %d ملف.</string>
         <key>other</key>
-        <string>Attached %d files</string>
+        <string>أرفق %d ملف.</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -4468,10 +4524,42 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تمت إزالته %d مقطع فيديو من»[A]»</string>
         <key>one</key>
-        <string>Removed %d video from “[A]”</string>
+        <string>تمت إزالته %d مقطع فيديو من»[A]»</string>
+        <key>two</key>
+        <string>تمت إزالته %d مقطعي فيديو من»[A]»</string>
+        <key>few</key>
+        <string>تمت إزالته %d مقاطع فيديو من»[A]»</string>
+        <key>many</key>
+        <string>تمت إزالته %d مقطع فيديو من »[A]»</string>
         <key>other</key>
-        <string>Removed %d videos from “[A]”</string>
+        <string>تمت إزالته %d مقطع فيديو من »[A]»</string>
+      </dict>
+    </dict>
+    <key>rewind.for.pro.users.maximumDays</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@maximumDays@</string>
+      <key>maximumDays</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string></string>
+        <key>one</key>
+        <string></string>
+        <key>two</key>
+        <string></string>
+        <key>few</key>
+        <string></string>
+        <key>many</key>
+        <string></string>
+        <key>other</key>
+        <string></string>
       </dict>
     </dict>
   </dict>

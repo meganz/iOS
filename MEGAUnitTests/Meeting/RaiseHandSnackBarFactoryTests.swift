@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADomain
+import MEGAL10n
 import XCTest
 
 final class RaiseHandSnackBarFactoryTests: XCTestCase {
@@ -76,6 +77,11 @@ final class RaiseHandSnackBarFactoryTests: XCTestCase {
             result?.action?.handler()
             return self
         }
+        
+        static func expectedManyOthers(_ name: String, _ count: Int, _ action: String) -> SnackBar? {
+            let string = Strings.Localizable.Chat.Call.RaiseHands.SnackBar.manyOtherPersonsRaisedHands(count)
+            return expected(string.replacingOccurrences(of: "[A]", with: name), action)
+        }
     }
     
     func testNoHandRaised_ReturnsNil() {
@@ -85,37 +91,49 @@ final class RaiseHandSnackBarFactoryTests: XCTestCase {
     
     func testLocalUserRaisedHand_SnackBarConfiguredProperly() {
         let result = Harness(localRaisedHand: true).result
-        let expected = Harness.expected("You raised your hand", "Lower hand")
+        let expected = Harness.expected(
+            Strings.Localizable.Chat.Call.RaiseHand.SnackBar.ownUserRaisedHand,
+            Strings.Localizable.Chat.Call.RaiseHand.SnackBar.lowerHand
+        )
         XCTAssertSnackBarEqual(result, expected)
     }
     
     func testOtherOneRaisedHand_SnackBarConfiguredProperly() {
         let result = Harness(raisedHands: 1).result
-        let expected = Harness.expected("Name0 raised their hand", "View")
+        let expected = Harness.expected(
+            Strings.Localizable.Chat.Call.RaiseHand.SnackBar.otherPersonRaisedHand("Name0"),
+            Strings.Localizable.Chat.Call.RaiseHand.SnackBar.view
+        )
         XCTAssertSnackBarEqual(result, expected)
     }
     
     func testMeAndOtherOneRaisedHand_SnackBarConfiguredProperly() {
         let result = Harness(raisedHands: 1, localRaisedHand: true).result
-        let expected = Harness.expected("You and 1 other raised their hands", "Lower hand")
+        let expected = Harness.expected(
+            Strings.Localizable.Chat.Call.RaiseHands.SnackBar.youAndOtherPersonRaisedHands(1),
+            Strings.Localizable.Chat.Call.RaiseHand.SnackBar.lowerHand
+        )
         XCTAssertSnackBarEqual(result, expected)
     }
     
     func testMeAndManyOtherOneRaisedHand_SnackBarConfiguredProperly() {
         let result = Harness(raisedHands: 123, localRaisedHand: true).result
-        let expected = Harness.expected("You and 123 others raised their hands", "Lower hand")
+        let expected = Harness.expected(
+            Strings.Localizable.Chat.Call.RaiseHands.SnackBar.youAndOtherPersonRaisedHands(123),
+            Strings.Localizable.Chat.Call.RaiseHand.SnackBar.lowerHand
+        )
         XCTAssertSnackBarEqual(result, expected)
     }
     
     func testManyOthersRaisedHand_SnackBarConfiguredProperly() {
         let result = Harness(raisedHands: 3).result
-        let expected = Harness.expected("Name0 and 2 others raised hand", "View")
+        let expected = Harness.expectedManyOthers("Name0", 2, Strings.Localizable.Chat.Call.RaiseHand.SnackBar.view)
         XCTAssertSnackBarEqual(result, expected)
     }
     
     func testManyOthersRaisedHand_SnackBarConfiguredProperly_TwoTotal() {
         let result = Harness(raisedHands: 2).result
-        let expected = Harness.expected("Name0 and 1 other raised hand", "View")
+        let expected = Harness.expectedManyOthers("Name0", 1, Strings.Localizable.Chat.Call.RaiseHand.SnackBar.view)
         XCTAssertSnackBarEqual(result, expected)
     }
     
@@ -129,7 +147,7 @@ final class RaiseHandSnackBarFactoryTests: XCTestCase {
                 .init(name: "Bob5", raisedHand: true)
             ]
         ).result
-        let expected = Harness.expected("Bob4 and 1 other raised hand", "View")
+        let expected = Harness.expectedManyOthers("Bob4", 1, Strings.Localizable.Chat.Call.RaiseHand.SnackBar.view)
         XCTAssertSnackBarEqual(result, expected)
     }
     

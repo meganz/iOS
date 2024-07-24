@@ -3803,7 +3803,7 @@
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="لا يوجد العروض التقديمية";
 /* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
-"home.search.empty.no-spreadsheets"="No spreadsheets";
+"home.search.empty.no-spreadsheets"="لا توجد جداول بيانات";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="ات يوجد ملفات مؤرشفة";
 /* A title label for waiting room participants list view. */
@@ -3967,7 +3967,7 @@
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="إضافة";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Rename playlist";
+"videos.tab.playlist.content.alert.title.rename"="إعادة تسمية قائمة التشغيل";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="أدخل الاسم الجديد";
 /* Videos: video playlist rename alert button title */
@@ -3977,9 +3977,11 @@
 /* Videos: video playlist delete playlist alert title */
 "videos.tab.playlist.content.alert.title.deletePlaylist"="حذف قائمة التشغيل؟";
 /* Videos: video playlist delete playlist alert subtitle */
-"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Playlist will be deleted but its contents will stay in your Timeline.";
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="سيتم حذف قائمة التشغيل ولكن محتوياتها ستبقى في المخطط الزمني الخاص بك.";
 /* Videos: video playlist delete playlist snack bar message */
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="تم حذف ”[A]“ ألبوم";
+/* Videos: video playlist remove video from video playlist */
+"videos.tab.playlist.content.removeFromPlaylist"="إزالة من قائمة التشغيل";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="لا يوجد أحد في غرفة الانتظار";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4114,8 +4116,8 @@
 "rewind.feature.title"="ترجيع";
 /* Rewind fro free users */
 "rewind.for.free.users"="حتى 30 يومًا (للعرض فقط)";
-/* Rewind fro pro users */
-"rewind.for.pro.users"="ما يصل إلى 180 يوماً";
+/* Rewind for pro users, where %d is the number of days that marks the rewind limit */
+"rewind.for.pro.users"="يصل إلى %d يوم";
 /* MEGA VPN title */
 "mega.vpn.title"="ميغا في بي إن MEGA VPN";
 /* Call and meeting duration title */
@@ -4194,12 +4196,14 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. قم بزيارة www.mega.nz في متصفح الويب الخاص بك.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. قم بتسجيل الدخول إلى حساب ميغا MEGA الخاص بك.";
-/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. انقر على <b>إعدادات</b>.";
-/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. انقر على صفحة <b>الباقة</b>.";
-/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. انقر على <b>إلغاء الاشتراك</b>.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. انقر على القائمة الرئيسية.";
+/* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. انقر على <b>إعدادات</b>.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. انقر على <b>الباقة</b>.";
+/* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. انقر على <b>إلغاء الاشتراك</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="على هاتف محمول";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
@@ -4221,7 +4225,7 @@
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="لقد رفعت يدك";
 /* Snack bar message shown when another participant raises hand in the call */
-"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ رفعوا أيديهم";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.lower-hand"="انزل يدك";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */

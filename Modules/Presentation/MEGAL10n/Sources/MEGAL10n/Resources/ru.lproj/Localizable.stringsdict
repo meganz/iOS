@@ -2,6 +2,46 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] и ещё %d пользователь подняли руки</string>
+        <key>few</key>
+        <string>[A] и ещё %d пользователя подняли руки</string>
+        <key>many</key>
+        <string>[A] и ещё %d пользователей подняли руки</string>
+        <key>other</key>
+        <string>[A] и ещё %d пользователя подняли руки</string>
+      </dict>
+    </dict>
+    <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Вы и ещё %d пользователь подняли руки</string>
+        <key>few</key>
+        <string>Вы и ещё %d пользователя подняли руки</string>
+        <key>many</key>
+        <string>Вы и ещё %d пользователей подняли руки</string>
+        <key>other</key>
+        <string>Вы и ещё %d пользователя подняли руки</string>
+      </dict>
+    </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3740,6 +3780,26 @@
         <string>Из «[A]» удалено %d видео</string>
         <key>other</key>
         <string>Из «[A]» удалено %d видео</string>
+      </dict>
+    </dict>
+    <key>rewind.for.pro.users.maximumDays</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@maximumDays@</string>
+      <key>maximumDays</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>До %d дня</string>
+        <key>few</key>
+        <string>До %d дней</string>
+        <key>many</key>
+        <string>До %d дней</string>
+        <key>other</key>
+        <string>До %d дня</string>
       </dict>
     </dict>
   </dict>
