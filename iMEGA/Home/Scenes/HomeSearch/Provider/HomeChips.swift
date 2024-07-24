@@ -191,14 +191,12 @@ extension SearchChipEntity {
     }
 
     public static func allChips(
-        areChipsGroupEnabled: Bool,
         currentDate: @escaping () -> Date,
         calendar: Calendar
     ) -> [Self] {
-        let allChipsGrouped = allChipsGrouped(
+        allChipsGrouped(
             currentDate: currentDate(),
             calendar: calendar
         )
-        return areChipsGroupEnabled ? allChipsGrouped : allNodeFormatChips
     }
 }

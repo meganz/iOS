@@ -344,7 +344,7 @@ final class HomeScreenFactory: NSObject {
             downloadTransferListener: makeDownloadTransfersListener(),
             nodeIconUsecase: makeNodeIconUsecase(),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-            allChips: Self.allChips(areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)),
+            allChips: Self.allChips(),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
             hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
@@ -354,11 +354,8 @@ final class HomeScreenFactory: NSObject {
             }
         )
     }
-    private static func allChips(
-        areChipsGroupEnabled: Bool
-    ) -> [SearchChipEntity] {
+    private static func allChips() -> [SearchChipEntity] {
         SearchChipEntity.allChips(
-            areChipsGroupEnabled: areChipsGroupEnabled,
             currentDate: { .init() },
             calendar: .autoupdatingCurrent
         )

@@ -118,7 +118,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 allChips: SearchChipEntity.allChips(
-                    areChipsGroupEnabled: true,
                     currentDate: { .testDate },
                     calendar: .testCalendar
                 ),
