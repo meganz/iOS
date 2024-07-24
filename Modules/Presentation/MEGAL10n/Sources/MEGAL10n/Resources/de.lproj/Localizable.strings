@@ -3911,9 +3911,9 @@
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Keine Videos";
 /* Videos: videos filter title for location */
-"videos.tab.all.filter.location.title.location"="Ort";
+"videos.tab.all.filter.location.title.location"="Speicherort";
 /* Videos: videos filter option for all locations */
-"videos.tab.all.filter.location.option.allLocations"="Alle Standorte";
+"videos.tab.all.filter.location.option.allLocations"="Alle Speicherorte";
 /* Videos: videos filter option for cloud drive */
 "videos.tab.all.filter.location.option.cloudDrive"="Cloud Drive";
 /* Videos: videos filter option for Camera uploads */
@@ -3921,7 +3921,7 @@
 /* Videos: videos filter option for shared items */
 "videos.tab.all.filter.location.option.sharedItems"="Freigaben";
 /* Videos: videos filter title for duration */
-"videos.tab.all.filter.duration.title.duration"="Dauer";
+"videos.tab.all.filter.duration.title.duration"="Länge";
 /* Videos: videos filter option for all duration */
 "videos.tab.all.filter.duration.option.allDurations"="Alle Längen";
 /* Videos: videos filter option for less than 10 seconds */
@@ -3980,6 +3980,8 @@
 "videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Die Playlist wird gelöscht, aber ihr Inhalt bleibt in Ihrer Zeitleiste.";
 /* Videos: video playlist delete playlist snack bar message */
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="„[A]“ wurde gelöscht";
+/* Videos: video playlist remove video from video playlist */
+"videos.tab.playlist.content.removeFromPlaylist"="Aus Playlist entfernen";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Der Warteraum ist leer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4093,7 +4095,7 @@
 /* Free plan title */
 "free.Plan.name"="Free";
 /* Price description for the free plan */
-"free.Plan.Price.description"="Free";
+"free.Plan.Price.description"="Kostenlos";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4114,8 +4116,8 @@
 "rewind.feature.title"="Rewind";
 /* Rewind fro free users */
 "rewind.for.free.users"="Bis zu 30 Tage (nur Ansicht)";
-/* Rewind fro pro users */
-"rewind.for.pro.users"="Bis zu 180 Tage";
+/* Rewind for pro users, where %d is the number of days that marks the rewind limit */
+"rewind.for.pro.users"="Bis zu %d Tage";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
@@ -4173,7 +4175,7 @@
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Tippen Sie unter Ihrem MEGA-Abonnement auf <b>Abo kündigen.</b>";
 /* More button in Call UI that shows context menu. */
-"chat.call.quickAction.more"="Weitere";
+"chat.call.quickAction.more"="Mehr";
 /* Context menu item to switch layout to main speaker (Call UI) */
 "chat.call.contextMenu.switchToMainView"="Zu Hauptansicht wechseln";
 /* Context menu item to switch layout to grid mode (Call UI) */
@@ -4194,12 +4196,14 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Öffnen Sie www.mega.nz in Ihrem Webbrowser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Loggen Sie sich in Ihren MEGA-Account ein.";
-/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Klicken Sie auf <b>Einstellungen</b>.";
-/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Klicken Sie auf den Reiter <b>Paket</b>.";
-/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Klicken Sie auf <b>Abonnement kündigen</b>.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Klicken Sie auf das Hauptmenü.";
+/* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Klicken Sie auf <b>Einstellungen</b>.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Klicken Sie auf <b>Paket</b>.";
+/* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Klicken Sie auf <b>Abonnement kündigen</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Auf einem Mobilgerät";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
@@ -4221,7 +4225,7 @@
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="Sie haben die Hand gehoben";
 /* Snack bar message shown when another participant raises hand in the call */
-"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ hat die Hand gehoben";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.lower-hand"="Hand senken";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */

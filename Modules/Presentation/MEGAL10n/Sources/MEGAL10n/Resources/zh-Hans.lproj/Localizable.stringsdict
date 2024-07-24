@@ -2,6 +2,34 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[A]和其他%d个人举起手</string>
+      </dict>
+    </dict>
+    <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>您和其他%d个人举起手</string>
+      </dict>
+    </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2618,6 +2646,20 @@
         <string>d</string>
         <key>other</key>
         <string>已移从“[A]”中移除%d个视频</string>
+      </dict>
+    </dict>
+    <key>rewind.for.pro.users.maximumDays</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@maximumDays@</string>
+      <key>maximumDays</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>长达%d天</string>
       </dict>
     </dict>
   </dict>

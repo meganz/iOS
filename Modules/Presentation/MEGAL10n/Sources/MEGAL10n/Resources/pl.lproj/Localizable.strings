@@ -3967,7 +3967,7 @@
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Dodaj";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Rename playlist";
+"videos.tab.playlist.content.alert.title.rename"="Zmień nazwę listy odtwarzania";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Wprowadź nową nazwę";
 /* Videos: video playlist rename alert button title */
@@ -3980,6 +3980,8 @@
 "videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Lista odtwarzania zostanie usunięta, ale jej zawartość pozostanie na osi czasu.";
 /* Videos: video playlist delete playlist snack bar message */
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” usunięty";
+/* Videos: video playlist remove video from video playlist */
+"videos.tab.playlist.content.removeFromPlaylist"="Usuń z listy odtwarzania";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="W poczekalni nie ma nikogo";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4114,8 +4116,8 @@
 "rewind.feature.title"="Przewiń";
 /* Rewind fro free users */
 "rewind.for.free.users"="Do 30 dni (tylko podgląd)";
-/* Rewind fro pro users */
-"rewind.for.pro.users"="Do 180 dni";
+/* Rewind for pro users, where %d is the number of days that marks the rewind limit */
+"rewind.for.pro.users"="Do %d dni";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
@@ -4194,12 +4196,14 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Odwiedź www.mega.nz w przeglądarce internetowej.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Zaloguj się na swoje konto MEGA.";
-/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Kliknij <b>Ustawienia</b>.";
-/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Kliknij zakładkę <b>Plan</b> .";
-/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Kliknij <b>Anuluj subskrypcję</b>.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Kliknij menu główne.";
+/* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Kliknij <b>Ustawienia</b>.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Kliknij <b>plan</b>.";
+/* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Kliknij <b>Anuluj subskrypcję</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Na urządzeniu mobilnym";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
@@ -4221,7 +4225,7 @@
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="Podniosłeś rękę";
 /* Snack bar message shown when another participant raises hand in the call */
-"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ podniosły rękę";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.lower-hand"="Opuść ręka";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */

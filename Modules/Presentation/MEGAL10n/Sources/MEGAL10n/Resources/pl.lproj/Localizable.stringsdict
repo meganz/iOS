@@ -2,6 +2,46 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] a %d inni podniosili ręce</string>
+        <key>few</key>
+        <string>[A] a %d inni podniosili ręce</string>
+        <key>many</key>
+        <string>[A] a %d inni podniosili ręce</string>
+        <key>other</key>
+        <string>[A] a %d inni podniosili ręce</string>
+      </dict>
+    </dict>
+    <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ty i %d inni podnieśli ręce</string>
+        <key>few</key>
+        <string>Ty i %d inni podnieśli ręce</string>
+        <key>many</key>
+        <string>Ty i %d inni podnieśli ręce</string>
+        <key>other</key>
+        <string>Ty i %d inni podnieśli ręce</string>
+      </dict>
+    </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3593,9 +3633,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Attached %d file</string>
+        <string>Dołączono %d plik</string>
+        <key>few</key>
+        <string>Dołączono %d plików</string>
+        <key>many</key>
+        <string>Dołączono %d plików</string>
         <key>other</key>
-        <string>Attached %d files</string>
+        <string>Dołączono %d plików</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -3729,9 +3773,33 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Removed %d video from “[A]”</string>
+        <string>Usunięto %d film z ”[A]”</string>
+        <key>few</key>
+        <string>Usunięto %d filmy z ”[A]”</string>
+        <key>many</key>
+        <string>Usunięto %d filmy z ”[A]”</string>
         <key>other</key>
-        <string>Removed %d videos from “[A]”</string>
+        <string>Usunięto %d filmy z ”[A]”</string>
+      </dict>
+    </dict>
+    <key>rewind.for.pro.users.maximumDays</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@maximumDays@</string>
+      <key>maximumDays</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string></string>
+        <key>few</key>
+        <string></string>
+        <key>many</key>
+        <string></string>
+        <key>other</key>
+        <string></string>
       </dict>
     </dict>
   </dict>

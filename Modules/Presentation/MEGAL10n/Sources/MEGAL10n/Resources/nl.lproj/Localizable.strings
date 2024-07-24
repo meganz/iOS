@@ -3980,6 +3980,8 @@
 "videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="De afspeellijst wordt verwijderd, maar de inhoud blijft op uw tijdlijn staan.";
 /* Videos: video playlist delete playlist snack bar message */
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” verwijderd";
+/* Videos: video playlist remove video from video playlist */
+"videos.tab.playlist.content.removeFromPlaylist"="Uit afspeellijst verwijderen";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Er is niemand in de wachtkamer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4114,8 +4116,8 @@
 "rewind.feature.title"="Terugspoelen";
 /* Rewind fro free users */
 "rewind.for.free.users"="Tot op 30 dagen (alleen weergeven)";
-/* Rewind fro pro users */
-"rewind.for.pro.users"="Tot op 180 dagen";
+/* Rewind for pro users, where %d is the number of days that marks the rewind limit */
+"rewind.for.pro.users"="Tot %d dagen";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
@@ -4194,12 +4196,14 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Bezoek www.mega.nz in uw webbrowser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in op uw MEGA-account.";
-/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Klik <b>Instellingen</b>.";
-/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Klik op de <b>Abonnementen</b> tabblad.";
-/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Klik <b>Abonnement opzeggen</b>.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. klik op het hoofdmenu.";
+/* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Klik <b>Instellingen</b>.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Klik <b>Abonnement</b>.";
+/* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6.Klik <b>Abonnement opzeggen</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Op een mobiel apparaat";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
@@ -4221,7 +4225,7 @@
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="U heeft uw hand opgestoken";
 /* Snack bar message shown when another participant raises hand in the call */
-"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ staken hun hand op";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.lower-hand"="Hand omlaag doen";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */

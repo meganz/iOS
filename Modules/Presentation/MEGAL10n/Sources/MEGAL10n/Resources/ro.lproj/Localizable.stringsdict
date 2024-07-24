@@ -2,6 +2,42 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] și alți %d persoană au ridicat mâna</string>
+        <key>few</key>
+        <string>[A] și alte %d persoane au ridicat mâna</string>
+        <key>other</key>
+        <string>[A] și alte %d de persoane au ridicat mâna</string>
+      </dict>
+    </dict>
+    <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Dvs. și %d altă persoană ați ridicat mâna</string>
+        <key>few</key>
+        <string>Dvs. și alte %d persoane ați ridicat mâna</string>
+        <key>other</key>
+        <string>Dvs. și alte %d de persoane ați ridicat mâna</string>
+      </dict>
+    </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3343,11 +3379,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Adăugat %d videoclip pentru în „[A]”</string>
+        <string>%d videoclip a fost adăugat în „[A]”</string>
         <key>few</key>
-        <string>Adăugat %d videoclipuri pentru în „[A]”</string>
+        <string>%d videoclipuri au fost adăugate în „[A]”</string>
         <key>other</key>
-        <string>Adăugat %d de videoclipuri pentru în „[A]”</string>
+        <string>%d de videoclipuri au fost adăugate în „[A]”</string>
       </dict>
     </dict>
     <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
@@ -3366,6 +3402,24 @@
         <string>Au fost eliminate %d videoclipuri din „[A]”</string>
         <key>other</key>
         <string>Au fost eliminate %d de videoclipuri din „[A]”</string>
+      </dict>
+    </dict>
+    <key>rewind.for.pro.users.maximumDays</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@maximumDays@</string>
+      <key>maximumDays</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Până la %d zi</string>
+        <key>few</key>
+        <string>Până la %d de zile</string>
+        <key>other</key>
+        <string>Până la %d de zile</string>
       </dict>
     </dict>
   </dict>

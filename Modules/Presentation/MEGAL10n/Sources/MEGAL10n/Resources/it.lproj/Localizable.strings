@@ -713,7 +713,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Impostazioni dei Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Termini di servizio";
+"termsOfServicesLabel"="Termini di Servizio";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Regole sulla protezione dei dati";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -1417,11 +1417,11 @@
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Chiave di applicazione non valida";
 /* Error shown when terms of service are breached during download. */
-"Terms of Service breached"="Termini di servizio violati";
+"Terms of Service breached"="Termini di Servizio violati";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Il trasferimento è fallito a causa di una struttura ricorsiva della directory";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Termini di servizio violati";
+"transfer.error.termsOfServiceViolation"="Termini di Servizio violati";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Verifica SSL fallita";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -3980,6 +3980,8 @@
 "videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="La playlist verrà eliminata ma il suo contenuto rimarrà nella tua Cronologia.";
 /* Videos: video playlist delete playlist snack bar message */
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” eliminato";
+/* Videos: video playlist remove video from video playlist */
+"videos.tab.playlist.content.removeFromPlaylist"="Rimuovi dalla playlist";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Non c'è nessuno nella sala d'attesa";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4114,8 +4116,8 @@
 "rewind.feature.title"="Ripristina";
 /* Rewind fro free users */
 "rewind.for.free.users"="Fino a 30 giorni (solo visualizzazione)";
-/* Rewind fro pro users */
-"rewind.for.pro.users"="Fino a 180 giorni";
+/* Rewind for pro users, where %d is the number of days that marks the rewind limit */
+"rewind.for.pro.users"="Fino a %d giorni";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN ";
 /* Call and meeting duration title */
@@ -4143,35 +4145,35 @@
 /* Cancellation Subscription manage by Google Play title */
 "accounts.cancelSubscriptionSteps.googlePlay.title"="Il tuo abbonamento non è gestito da Apple.";
 /* Cancellation Subscription manage by Google Play message */
-"accounts.cancelSubscriptionSteps.googlePlay.message"="Questo perché ti sei abbonato a MEGA tramite Google Play. Per annullare l'abbonamento, dovrai:";
+"accounts.cancelSubscriptionSteps.googlePlay.message"="Questo perché hai creato l'abbonamento a MEGA tramite Google Play. Per annullare l'abbonamento, dovrai:";
 /* Cancellation Section Google Play Web Browser title: In a web browser */
 "accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="In un web browser";
 /* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visita play.google.com";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visitare play.google.com";
 /* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Accedi con il tuo account Google Play.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Accedere con il tuo account Google Play.";
 /* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Clicca sul tuo avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Cliccare sul tuo avatar.";
 /* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Clicca su <b>Pagamenti e abbonamenti</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Cliccare su <b>Pagamenti e abbonamenti</b>.";
 /* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Clicca su <b>Abbonamenti</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Cliccare su <b>Abbonamenti</b>.";
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Sotto il tuo abbonamento MEGA, clicca su <b>Annulla abbonamento.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Sotto il tuo abbonamento MEGA, cliccare su <b>Annulla abbonamento.</b>";
 /* Cancellation Section Google Play Android Device title: On an Android device */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Su un dispositivo Android";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Apri l'app Play Store.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Aprire l'app Play Store.";
 /* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Accedi con il tuo account Google Play (se richiesto).";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Accedere con il tuo account Google Play (se richiesto).";
 /* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tocca il tuo avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Toccare il tuo avatar.";
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tocca <b>Pagamenti e abbonamenti</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Toccare <b>Pagamenti e abbonamenti</b>.";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tocca <b>Abbonamenti</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Toccare <b>Abbonamenti</b>.";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Sotto il tuo abbonamento MEGA, tocca <b>Annulla abbonamento</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Sotto il tuo abbonamento MEGA, toccare <b>Annulla abbonamento</b>.";
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="Altro";
 /* Context menu item to switch layout to main speaker (Call UI) */
@@ -4187,29 +4189,31 @@
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="Devi annullare l'abbonamento utilizzando un web browser";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="Questo perché ti sei iscritto a MEGA tramite un web browser. Per annullare l'abbonamento, dovrai:";
+"accounts.cancelSubscriptionSteps.webClient.message"="Questo perché hai creato l'abbonamento a MEGA tramite un web browser. Per annullare l'abbonamento, dovrai:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Su un computer";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visita www.mega.nz nel tuo web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visitare www.mega.nz nel tuo web browser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Accedi al tuo account MEGA.";
-/* Cancellation step Webclient: Third step using the computer - 3. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Clicca su <b>Impostazioni</b>.";
-/* Cancellation step Webclient: Four step using the computer - 4. Click the Plan tab. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Clicca sulla sezione <b>Piano</b>.";
-/* Cancellation step Webclient: Fifth step using the computer - 5. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Clicca su <b>Annulla abbonamento</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Accedere al tuo account MEGA.";
+/* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Cliccare sul menu principale.";
+/* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Cliccare su <b>Impostazioni</b>.";
+/* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Cliccare su <b>Piano</b>.";
+/* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Cliccare su <b>Annulla abbonamento</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Su un dispositivo mobile";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visita www.mega.nz nel tuo web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visitare www.mega.nz nel tuo web browser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Accedi al tuo account MEGA.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Accedere al tuo account MEGA.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Tocca il tuo avatar.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Toccare il tuo avatar.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tocca <b>Annulla abbonamento</b>.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Toccare <b>Annulla abbonamento</b>.";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Oggetti nascosti";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4221,7 +4225,7 @@
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="Hai alzato la tua mano";
 /* Snack bar message shown when another participant raises hand in the call */
-"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ ha alzato la propria mano";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.lower-hand"="Abbassa la mano";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
