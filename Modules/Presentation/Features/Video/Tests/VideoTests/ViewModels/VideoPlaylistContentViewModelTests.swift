@@ -75,12 +75,6 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             monitorVideoPlaylistAsyncSequenceResult: videoPlaylistUpdatesStream,
             monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
         )
-        let thumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [],
-            loadThumbnailResult: .failure(GenericErrorEntity()),
-            loadPreviewResult: .failure(GenericErrorEntity()),
-            loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
-        )
         let thumbnailLoader = MockThumbnailLoader()
 
         let (sut, _, _, _, _, _, _, _, _) = makeSUT(
@@ -88,10 +82,20 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailLoader: thumbnailLoader
         )
+        let exp = expectation(description: "Should show error")
+        var shouldShowError: Bool?
+        let cancellable = sut.$shouldShowError
+            .dropFirst()
+            .sink { value in
+                shouldShowError = value
+                exp.fulfill()
+            }
         
         await sut.onViewAppeared()
+        await fulfillment(of: [exp], timeout: 0.5)
         
-        XCTAssertTrue(sut.shouldShowError, "Expect to show error when has any other error during reload")
+        XCTAssertTrue(shouldShowError == true, "Expect to show error when has any other error during reload")
+        cancellable.cancel()
     }
     
     func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithVideoPlaylistNotFoundErrorUpdates_popsScreenWithSnackBarMessage() async {
