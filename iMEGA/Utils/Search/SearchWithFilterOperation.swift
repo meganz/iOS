@@ -1,4 +1,4 @@
-class SearchWithFilterOperation: MEGAOperation {
+class SearchWithFilterOperation: Operation {
     let sdk: MEGASdk
     let filter: MEGASearchFilter
     let page: MEGASearchPage?
@@ -7,6 +7,10 @@ class SearchWithFilterOperation: MEGAOperation {
     let cancelToken: MEGACancelToken
 
     let completion: (_ results: MEGANodeList?, _ isCanceled: Bool) -> Void
+
+    private var isOperationCancelled: Bool {
+        dependencies.contains(where: \.isCancelled) || isCancelled
+    }
 
     @objc init(
         sdk: MEGASdk,
@@ -26,21 +30,19 @@ class SearchWithFilterOperation: MEGAOperation {
         self.completion = completion
     }
 
-    override func start() {
-        startExecuting()
-        let nodeList = sdk.search(
-            with: filter,
-            orderType: sortOrder, 
-            page: page,
-            cancelToken: cancelToken
-        )
-
-        guard !isCancelled else {
+    override func main() {
+        guard !isOperationCancelled else {
             completion(nil, true)
             return
         }
 
-        completion(nodeList, false)
-        finish()
+        let nodeList = sdk.search(
+            with: filter,
+            orderType: sortOrder,
+            page: page,
+            cancelToken: cancelToken
+        )
+
+        completion(nodeList, isOperationCancelled)
     }
 }

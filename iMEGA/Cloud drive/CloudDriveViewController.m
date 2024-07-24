@@ -682,7 +682,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)search {
     if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
         NSString *text = self.searchController.searchBar.text;
-        [SVProgressHUD show];
         self.cancelToken = MEGACancelToken.alloc.init;
         __weak typeof(self) weakSelf = self;
         [self.viewModel shouldExcludeSensitiveItemsWithCompletionHandler:^(BOOL shouldExcludeSharedItems) {
@@ -696,12 +695,28 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                                                                                                      cancelToken:strongSelf.cancelToken
                                                                                                       completion:^(MEGANodeList*nodeList, BOOL isCancelled) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    strongSelf.searchNodesArray = [NSMutableArray arrayWithArray: [nodeList toNodeArray]];
-                    [strongSelf reloadData];
                     strongSelf.cancelToken = nil;
-                    [strongSelf performSelector:@selector(dismissHUD) withObject:nil afterDelay:kHUDDismissDelay];
+
+                    if (!isCancelled) {
+                        strongSelf.searchNodesArray = [NSMutableArray arrayWithArray: [nodeList toNodeArray]];
+                        [strongSelf reloadData];
+                    }
+
+                    if (self.searchQueue.operationCount == 0) {
+                        if (!isCancelled) {
+                            [strongSelf performSelector:@selector(dismissHUD) withObject:nil afterDelay:kHUDDismissDelay];
+                        } else {
+                            [strongSelf dismissHUD];
+                        }
+                    }
                 });
             }];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!SVProgressHUD.isVisible) {
+                    [SVProgressHUD show];
+                }
+            });
             [strongSelf.searchQueue addOperation:searchOperation];
         }];
     } else {
@@ -936,6 +951,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
         [self cancelSearchIfNeeded];
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dismissHUD) object:nil];
         [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
     } else {
         [self reloadData];
