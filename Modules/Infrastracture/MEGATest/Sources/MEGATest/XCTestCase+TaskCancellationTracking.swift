@@ -9,7 +9,7 @@ public extension XCTestCase {
     ///   - action: Task to run
     func trackTaskCancellation(timeout nanoseconds: UInt64 = 1_000_000_000, 
                                description: String = "Expected task to cancel during test case tearDown",
-                               action: @escaping @Sendable () async throws -> Void,
+                               action: @escaping () async throws -> Void,
                                file: StaticString = #filePath, 
                                line: UInt = #line) {
         

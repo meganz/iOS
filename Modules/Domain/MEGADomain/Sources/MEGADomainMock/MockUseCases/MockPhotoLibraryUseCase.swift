@@ -13,7 +13,7 @@ public actor MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
     
     @Published public private(set) var messages = [Message]()
     
-    public enum Message {
+    public enum Message: Sendable {
         case media
     }
     

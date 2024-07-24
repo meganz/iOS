@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentationMock
@@ -154,6 +154,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     // MARK: - onViewAppear
     
+    @MainActor
     func testOnViewAppear_whenCalled_executeSearchUseCase() async {
         let (sut, _, photoLibraryUseCase, _) = makeSUT()
         
@@ -163,6 +164,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(messages.contains(.media), "Expect to search")
     }
     
+    @MainActor
     func testOnViewAppear_whenCalledOnFailedLoadVideos_executesSearchUseCaseInOrder() async {
         let (sut, _, photoLibraryUseCase, _) = makeSUT()
         
@@ -172,6 +174,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(messages, [ .media ])
     }
     
+    @MainActor
     func testOnViewAppear_whenCalledOnSuccessfullyLoadVideos_executesSearchUseCaseInOrder() async {
         let (sut, _, photoLibraryUseCase, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
         
@@ -181,6 +184,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(messages, [ .media ])
     }
     
+    @MainActor
     func testOnViewAppear_whenError_showsErrorView() async {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
         
@@ -189,6 +193,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.shouldShowError, true)
     }
     
+    @MainActor
     func testOnViewAppear_whenNoErrors_showsEmptyItemView() async {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: []))
         
@@ -197,6 +202,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.videos.isEmpty, true)
     }
     
+    @MainActor
     func testOnViewAppear_whenNoErrors_showsVideoItems() async {
         let foundVideos = [ anyNode(id: 1, mediaType: .video), anyNode(id: 2, mediaType: .video) ]
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: foundVideos))
@@ -206,6 +212,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.videos, foundVideos)
     }
     
+    @MainActor
     func testOnViewAppear_whenLoadVideosSuccessfully_showsCorrectLoadingState() async {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
         var loadingStates: [Bool] = []
@@ -225,6 +232,7 @@ final class VideoListViewModelTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 0.5)
     }
     
+    @MainActor
     func testOnViewAppear_whenLoadVideosFailed_showsCorrectLoadingState() async {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
         var loadingStates: [Bool] = []
@@ -246,6 +254,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     // MARK: - listenNodesUpdate
     
+    @MainActor
     func testOnNodesUpdate_whenHasNodeUpdatesOnNonVideoNodes_doesNotUpdateUI() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video),
@@ -271,16 +280,15 @@ final class VideoListViewModelTests: XCTestCase {
                 exp.fulfill()
             }
         
-        let task = Task {
-            await sut.listenNodesUpdate()
-        }
+        trackTaskCancellation { await sut.listenNodesUpdate() }
+
         await fulfillment(of: [exp], timeout: 0.5)
         
         XCTAssertEqual(receivedVideos, videoNodes)
         cancellable.cancel()
-        task.cancel()
     }
     
+    @MainActor
     func testOnNodesUpdate_whenHasNodeUpdatesOnVideoNodes_updatesUI() async throws {
         let attributesRelatedChangeTypes: ChangeTypeEntity = [ .attributes, .fileAttributes, .favourite, .publicLink ]
         let initialVideoNodes = [
@@ -307,9 +315,8 @@ final class VideoListViewModelTests: XCTestCase {
                 exp.fulfill()
             }
         
-        let task = Task {
-            await sut.listenNodesUpdate()
-        }
+        trackTaskCancellation { await sut.listenNodesUpdate() }
+
         await sut.reloadVideosTask?.value
         await fulfillment(of: [exp], timeout: 0.5)
         
@@ -317,10 +324,9 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(receivedVideos.first, updatedVideoNodes.first)
         XCTAssertEqual(receivedVideos.last, initialVideoNodes.last)
         cancellable.cancel()
-        task.cancel()
-        try await Task.sleep(nanoseconds: 1_000_000)
     }
     
+    @MainActor
     func testOnNodesUpdate_whenHasNodeUpdatesOnVideoNodesButNonValidChangeTypes_doesNotUpdateUI() async throws {
         let invalidChangeTypes: ChangeTypeEntity = [ .removed, .timestamp ]
         let initialVideoNodes = [
@@ -346,36 +352,33 @@ final class VideoListViewModelTests: XCTestCase {
                 receivedVideos = videos
                 exp.fulfill()
             }
-        let task = Task {
-            await sut.listenNodesUpdate()
-        }
+        
+        trackTaskCancellation { await sut.listenNodesUpdate() }
         await sut.reloadVideosTask?.value
         await fulfillment(of: [exp], timeout: 0.5)
         
         XCTAssertEqual(receivedVideos.count, 2)
         XCTAssertEqual(receivedVideos, initialVideoNodes)
         cancellable.cancel()
-        task.cancel()
-        try await Task.sleep(nanoseconds: 1_000_000)
     }
     
     // MARK: - listenSearchTextChange
     
+    @MainActor
     func testListenSearchTextChange_whenEmitsNewValue_performSearch() async {
         let photoLibraryUseCase = MockPhotoLibraryUseCase(allVideos: [])
         let syncModel = VideoRevampSyncModel()
          let sut = VideoListViewModel(
-            syncModel: syncModel,
+            syncModel: syncModel, 
+            contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: VideoSelection(),
             fileSearchUseCase: MockFilesSearchUseCase(),
-            photoLibraryUseCase: photoLibraryUseCase,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
         
-        let task = Task {
-            await sut.listenSearchTextChange()
-        }
+        trackTaskCancellation { await sut.listenSearchTextChange() }
+        
         syncModel.searchText = "any search text"
         
         let exp = expectation(description: "search message found")
@@ -387,9 +390,9 @@ final class VideoListViewModelTests: XCTestCase {
             }
         await fulfillment(of: [exp], timeout: 1.0)
         cancellation.cancel()
-        task.cancel()
     }
     
+    @MainActor
     func testListenSearchTextChange_whenEmitsNewValueOnSuccess_showsVideos() async {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video),
@@ -399,9 +402,9 @@ final class VideoListViewModelTests: XCTestCase {
         let photoLibraryUseCase = MockPhotoLibraryUseCase(allVideos: videoNodes)
         let sut = VideoListViewModel(
             syncModel: syncModel,
+            contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: VideoSelection(),
             fileSearchUseCase: MockFilesSearchUseCase(),
-            photoLibraryUseCase: photoLibraryUseCase,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
@@ -434,6 +437,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     // MARK: - Cell Selection
     
+    @MainActor
     func testToggleSelectAllVideos_onCalledAgain_shouldToggleBetweenSelectAllAndUnselectAll() async {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video),
@@ -702,6 +706,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.filterOptions, DurationChipFilterOptionType.allCases.map(\.stringValue))
     }
     
+    @MainActor
     func testFilter_whenFilterByDuration_allDurations_shouldFilterVideosByDuration() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video, duration: 241), // between4And20Minutes
@@ -724,6 +729,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.videos, videoNodes)
     }
     
+    @MainActor
     func testFilter_whenFilterByDuration_lessThan10Seconds_shouldFilterVideosByDuration() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video, duration: 2), // lessThan10Seconds
@@ -746,6 +752,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.videos.allSatisfy { $0.duration < 10 })
     }
     
+    @MainActor
     func testFilter_whenFilterByDuration_between10And60Seconds_shouldFilterVideosByDuration() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video, duration: 11), // between10And60Seconds
@@ -768,6 +775,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.videos.allSatisfy { $0.duration >= 10 && $0.duration < 60 })
     }
     
+    @MainActor
     func testFilter_whenFilterByDuration_between1And4Minutes_shouldFilterVideosByDuration() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video, duration: 61), // between1And4Minutes
@@ -790,6 +798,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.videos.allSatisfy { $0.duration >= 60 && $0.duration < 240 })
     }
     
+    @MainActor
     func testFilter_whenFilterByDuration_between4And20Minutes_shouldFilterVideosByDuration() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video, duration: 241), // between1And4Minutes
@@ -812,6 +821,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.videos.allSatisfy { $0.duration >= 240 && $0.duration < 1200 })
     }
     
+    @MainActor
     func testFilter_whenFilterByDuration_moreThan20Minutes_shouldFilterVideosByDuration() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video, duration: 241), // between4And20Minutes
@@ -834,6 +844,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.videos.allSatisfy { $0.duration >= 1200 })
     }
     
+    @MainActor
     func testFilter_whenFilterByLocation_shouldFilterVideosByLocation() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video),
@@ -855,6 +866,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
     }
     
+    @MainActor
     func testFilter_whenFilterByLocationOnlySharedItems_shouldFilterVideosByLocation() async throws {
         let videoNodes = [
             anyNode(id: 1, mediaType: .video, isExported: false),
@@ -901,7 +913,6 @@ final class VideoListViewModelTests: XCTestCase {
     
     // MARK: - selectedLocationFilterOption
     
-    @MainActor
     func testSelectedLocationFilterOption_onValueChanged_reflectSelectedLocationFilterOptionType() async throws {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
@@ -913,7 +924,6 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedLocationFilterOptionType, .allLocation)
     }
     
-    @MainActor
     func testSelectedLocationFilterOption_onValueChanged_reflectsSelectedLocationFilterOptionType() async throws {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
@@ -927,6 +937,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     // MARK: - subscribeToItemsStateForEmptyState
     
+    @MainActor
     func testSubscribeToItemsStateForEmptyState_whenConditionNotMet_shouldNotShowEmptyView() async {
         // Arrange
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
@@ -950,6 +961,7 @@ final class VideoListViewModelTests: XCTestCase {
         cancellable.cancel()
     }
     
+    @MainActor
     func testSubscribeToItemsStateForEmptyState_whenConditionMet_shouldShowEmptyView() async {
         // Arrange
         let videoNodes = [
@@ -995,10 +1007,10 @@ final class VideoListViewModelTests: XCTestCase {
     ) {
         let syncModel = VideoRevampSyncModel()
         let sut = VideoListViewModel(
-            syncModel: syncModel,
+            syncModel: syncModel, 
+            contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: VideoSelection(),
             fileSearchUseCase: fileSearchUseCase,
-            photoLibraryUseCase: photoLibraryUseCase,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
