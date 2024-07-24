@@ -351,18 +351,6 @@ public final class MockSdk: MEGASdk {
     public override var rootNode: MEGANode? { megaRootNode }
     public override var rubbishNode: MEGANode? { rubbishBinNode }
     
-    public override func nodeListSearch(for node: MEGANode, search searchString: String?, cancelToken: MEGACancelToken, recursive: Bool, orderType: MEGASortOrderType, nodeFormatType: MEGANodeFormatType, folderTargetType: MEGAFolderTargetType) -> MEGANodeList {
-        searchQueryParameters = SearchQueryParameters(node: node,
-                                                      searchString: searchString,
-                                                      recursive: recursive,
-                                                      sortOrderType: orderType,
-                                                      formatType: nodeFormatType, 
-                                                      sensitiveFilter: .disabled,
-                                                      favouriteFilter: .disabled)
-        nodeListSearchCallCount += 1
-        return MockNodeList(nodes: nodes)
-    }
-    
     public override func search(with filter: MEGASearchFilter, orderType: MEGASortOrderType, page: MEGASearchPage?, cancelToken: MEGACancelToken) -> MEGANodeList {
         searchQueryParameters = SearchQueryParameters(node: MockNode(handle: filter.parentNodeHandle),
                                                       searchString: filter.term,
@@ -547,18 +535,6 @@ public final class MockSdk: MEGASdk {
     
     public override func upgradeSecurity(with delegate: any MEGARequestDelegate) {
         _upgradeSecurity(self, delegate)
-    }
-    
-    public override func nodeListSearchOnInShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
-        filterNodeList(incomingNodes, by: searchString)
-    }
-    
-    public override func nodeListSearchOnOutShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
-        filterNodeList(outgoingNodes, by: searchString)
-    }
-    
-    public override func nodeListSearchOnPublicLinks(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
-        filterNodeList(publicLinkNodes, by: searchString)
     }
     
     private func filterNodeList(_ nodeList: MEGANodeList, by searchString: String) -> MEGANodeList {
