@@ -3,53 +3,48 @@ import MEGAChatSdk
 import MEGADomain
 import MEGASwift
 
-public final class CallRepository: NSObject, CallRepositoryProtocol, Sendable {
+public final class CallRepository: NSObject, CallRepositoryProtocol {
     
     public static var newRepo: CallRepository {
-        CallRepository(
-            chatSdk: .sharedChatSdk,
-            callSessionRepository: CallSessionRepository.newRepo,
-            chatRepository: ChatRepository.newRepo
-        )
+        CallRepository(chatSdk: .sharedChatSdk)
     }
     
     private let chatSdk: MEGAChatSdk
-    private let chatRepository: any ChatRepositoryProtocol
-    private let callRepositoryCallbacksActor: CallRepositoryCallbacksActor
+    private var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
+    
+    private var callId: HandleEntity?
+    private var call: CallEntity?
+    
+    private var callUpdateListeners = [CallUpdateListener]()
+    private var callWaitingRoomUsersUpdateListener: CallWaitingRoomUsersUpdateListener?
+    private var onCallUpdateListener: OnCallUpdateListener?
+    
+    private var callAvailabilityListener: CallAvailabilityListener?
+    private var chatOnlineListener: ChatOnlineListener?
+    
     private let callLimitNoPresent = 0xFFFFFFFF
     
-    private let waitingRoomChanges: Set<CallEntity.ChangeType> = [
-        .waitingRoomComposition,
-        .waitingRoomUsersEntered,
-        .waitingRoomUsersDeny,
-        .waitingRoomUsersAllow,
-        .waitingRoomUsersLeave
-    ]
-    
-    public init(
-        chatSdk: MEGAChatSdk,
-        callSessionRepository: some CallSessionRepositoryProtocol,
-        chatRepository: some ChatRepositoryProtocol
-    ) {
+    public init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
-        self.chatRepository = chatRepository
-        self.callRepositoryCallbacksActor = CallRepositoryCallbacksActor(
-            chatSdk: chatSdk,
-            callSessionRepository: callSessionRepository,
-            chatRepository: chatRepository
-        )
     }
 
     public func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol) {
-        Task {
-            await callRepositoryCallbacksActor.startListeningForCallInChat(chatId: chatId, callbacksDelegate: callbacksDelegate)
+        if let call = chatSdk.chatCall(forChatId: chatId) {
+            self.call = call.toCallEntity()
+            self.callId = call.callId
         }
+        
+        chatSdk.add(self as any MEGAChatCallDelegate)
+        chatSdk.add(self as any MEGAChatDelegate)
+        self.callbacksDelegate = callbacksDelegate
     }
     
     public func stopListeningForCall() {
-        Task {
-            await callRepositoryCallbacksActor.stopListeningForCall()
-        }
+        chatSdk.remove(self as any MEGAChatCallDelegate)
+        chatSdk.remove(self as any MEGAChatDelegate)
+        self.call = nil
+        self.callId = .invalid
+        self.callbacksDelegate = nil
     }
     
     public func call(for chatId: HandleEntity) -> CallEntity? {
@@ -63,34 +58,33 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, Sendable {
         enableAudio: Bool,
         localizedCameraName: String?
     ) async throws -> CallEntity {
-        async let chatOnline: Void = chatRepository.listenForChatOnline(chatId)
-        async let callAvailability: Void = chatRepository.listenForCallAvailability(chatId)
-        
-        _ = await [chatOnline, callAvailability]
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            let answerCallChatRequestDelegate = ChatRequestDelegate { [weak self] requestCompletion in
-                switch requestCompletion {
+        return try await withAsyncThrowingValue { completion in
+            answerCall(
+                chatId: chatId,
+                enableVideo: enableVideo,
+                enableAudio: enableAudio,
+                localizedCameraName: localizedCameraName
+            ) { [weak self] result in
+                switch result {
                 case .success:
-                    guard let megaChatCall = self?.chatSdk.chatCall(forChatId: chatId) else {
-                        continuation.resume(throwing: CallErrorEntity.generic)
+                    guard let self,
+                          let megaChatCall = chatSdk.chatCall(forChatId: chatId) else {
+                        completion(.failure(CallErrorEntity.generic))
                         return
                     }
-                    continuation.resume(returning: megaChatCall.toCallEntity())
+                    let callEntity = megaChatCall.toCallEntity()
+                    call = callEntity
+                    callId = callEntity.callId
+                    completion(.success(callEntity))
                 case .failure(let error):
-                    let errorEntity: CallErrorEntity = switch error.type {
-                        case .MEGAChatErrorTooMany:
-                            .tooManyParticipants
-                        default:
-                            .generic
+                    switch error.type {
+                    case .MEGAChatErrorTooMany:
+                        completion(.failure(CallErrorEntity.tooManyParticipants))
+                    default:
+                        completion(.failure(CallErrorEntity.generic))
                     }
-                    continuation.resume(throwing: errorEntity)
                 }
             }
-            if let localizedCameraName {
-                chatSdk.setChatVideoInDevices(localizedCameraName)
-            }
-            chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallChatRequestDelegate)
         }
     }
     
@@ -101,36 +95,21 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, Sendable {
         notRinging: Bool,
         localizedCameraName: String?
     ) async throws -> CallEntity {
-        _ = await chatRepository.listenForChatOnline(chatId)
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            let delegate = ChatRequestDelegate { [weak self] completion in
-                switch completion {
-                case .success:
-                    guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
-                        continuation.resume(throwing: CallErrorEntity.generic)
-                        return
-                    }
-                    continuation.resume(returning: call.toCallEntity())
-                case .failure(let error):
-                    switch error.type {
-                    case .MEGAChatErrorTooMany:
-                        continuation.resume(throwing: CallErrorEntity.tooManyParticipants)
-                    default:
-                        continuation.resume(throwing: CallErrorEntity.generic)
-                    }
-                }
-            }
-            if let localizedCameraName {
-                chatSdk.setChatVideoInDevices(localizedCameraName)
-            }
-            chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, delegate: delegate)
-        }
+        try await startCall(
+            chatId: chatId,
+            enableVideo: enableVideo,
+            enableAudio: enableAudio,
+            notRinging: notRinging,
+            localizedCameraName: localizedCameraName
+        )
     }
     
     public func createActiveSessions() {
-        Task {
-            await callRepositoryCallbacksActor.createActiveSessions()
+        guard let call, !call.clientSessions.isEmpty, let chatRoom = chatSdk.chatRoom(forChatId: call.chatId) else {
+            return
+        }
+        call.clientSessions.forEach {
+            callbacksDelegate?.createdSession($0, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: $0.peerId).toChatRoomPrivilegeEntity())
         }
     }
     
@@ -171,19 +150,31 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, Sendable {
     }
     
     public func localAvFlagsChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never> {
-        chatRepository.monitorChatCallUpdate(for: callId, changeTypes: [.localAVFlags])
+        callUpdateListener(forCallId: callId, change: .localAVFlags)
+            .monitor
+            .eraseToAnyPublisher()
     }
     
     public func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never> {
-        chatRepository.monitorChatCallUpdate(for: callId, changeTypes: [.status])
+        callUpdateListener(forCallId: callId, change: .status)
+            .monitor
+            .eraseToAnyPublisher()
     }
     
     public func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
-        chatRepository.monitorChatCallUpdate(for: call.callId, changeTypes: waitingRoomChanges)
+        let callWaitingRoomUsersUpdate = CallWaitingRoomUsersUpdateListener(sdk: chatSdk, callId: call.callId)
+        callWaitingRoomUsersUpdateListener = callWaitingRoomUsersUpdate
+        
+        return callWaitingRoomUsersUpdate
+            .monitor
     }
     
     public func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
-        chatRepository.monitorChatCallUpdate()
+        let onCallUpdate = OnCallUpdateListener(sdk: chatSdk)
+        onCallUpdateListener = onCallUpdate
+        
+        return onCallUpdate
+            .monitor
     }
     
     public func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
@@ -304,118 +295,95 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, Sendable {
             )
         }
     }
+    
+    // MARK: - Private
+    private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
+        guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {
+            let callUpdateListener = CallUpdateListener(sdk: chatSdk, callId: callId, changeType: change)
+            callUpdateListeners.append(callUpdateListener)
+            return callUpdateListener
+        }
+        
+        return callUpdateListener
+    }
 }
 
-private actor CallRepositoryCallbacksActor {
-    private var callSessionRepository: any CallSessionRepositoryProtocol
-    private var chatRepository: any ChatRepositoryProtocol
-    private let chatSdk: MEGAChatSdk
-    private var callEntity: CallEntity?
-    private var subscriptions: Set<AnyCancellable> = []
-    private weak var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
+private final class CallUpdateListener: NSObject, MEGAChatCallDelegate {
+    private let sdk: MEGAChatSdk
+    let changeType: CallEntity.ChangeType
+    let callId: HandleEntity
     
-    init(
-        chatSdk: MEGAChatSdk,
-        callSessionRepository: some CallSessionRepositoryProtocol,
-        chatRepository: some ChatRepositoryProtocol
-    ) {
-        self.chatSdk = chatSdk
-        self.callSessionRepository = callSessionRepository
-        self.chatRepository = chatRepository
+    private let source = PassthroughSubject<CallEntity, Never>()
+    
+    var monitor: AnyPublisher<CallEntity, Never> {
+        source.eraseToAnyPublisher()
     }
     
-    func startListeningForCallInChat(chatId: HandleEntity, callbacksDelegate: some CallCallbacksRepositoryProtocol) {
-        var callId: HandleEntity?
-        
-        if let call = chatSdk.chatCall(forChatId: chatId)?.toCallEntity() {
-            self.callEntity = call
-            callId = call.callId
-        }
-        
-        self.callbacksDelegate = callbacksDelegate
-        
-        callSessionRepository
-            .onCallSessionUpdate()
-            .filter { $0.1.callId == callId }
-            .sink { [weak self] session, _ in
-                guard let self else { return }
-                Task {
-                    await self.processChatSessionUpdate(session, chatId: chatId)
-                }
-            }.store(in: &subscriptions)
-        
-        chatRepository
-            .monitorChatCallUpdate()
-            .filter { $0.callId == callId }
-            .sink { [weak self] callEntity in
-                guard let self else { return }
-                Task {
-                    await self.processChatCallUpdate(callEntity)
-                }
-            }.store(in: &subscriptions)
-        
-        chatRepository
-            .monitorChatListItemSingleUpdate()
-            .filter { $0.chatId == chatId }
-            .sink { [weak self] chatListItemEntity in
-                guard let self else { return }
-                Task {
-                    await self.processChatListItemUpdate(chatListItemEntity)
-                }
-            }.store(in: &subscriptions)
-        
+    init(sdk: MEGAChatSdk, callId: HandleEntity, changeType: CallEntity.ChangeType) {
+        self.sdk = sdk
+        self.changeType = changeType
+        self.callId = callId
+        super.init()
+        sdk.add(self)
     }
     
-    func stopListeningForCall() {
-        callEntity = nil
-        subscriptions.forEach { $0.cancel() }
+    deinit {
+        sdk.remove(self)
     }
     
-    func createActiveSessions() {
-        guard let callEntity, !callEntity.clientSessions.isEmpty, let chatRoom = chatSdk.chatRoom(forChatId: callEntity.chatId) else {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        guard call.callId == callId, call.changes.toChangeTypeEntity() == changeType else {
             return
         }
-        callEntity.clientSessions.forEach {
-            callbacksDelegate?.createdSession($0, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: $0.peerId).toChatRoomPrivilegeEntity())
-        }
+        source.send(call.toCallEntity())
     }
+}
+
+extension CallRepository: MEGAChatCallDelegate {
     
-    private func processChatSessionUpdate(_ session: ChatSessionEntity, chatId: HandleEntity) {
-        guard let chatRoom = chatSdk.chatRoom(forChatId: chatId) else { return }
+    public func onChatSessionUpdate(_ api: MEGAChatSdk, chatId: UInt64, callId: UInt64, session: MEGAChatSession) {
+        if self.callId != callId {
+            return
+        }
         
-        if session.changeType == .status {
-            switch session.statusType {
+        guard let chatRoom = api.chatRoom(forChatId: chatId) else { return }
+        
+        if session.hasChanged(.status) {
+            switch session.status {
             case .inProgress:
-                callbacksDelegate?.createdSession(session, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
+                callbacksDelegate?.createdSession(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             case .destroyed:
-                callbacksDelegate?.destroyedSession(session, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
+                callbacksDelegate?.destroyedSession(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             default:
                 break
             }
         }
         
-        if session.statusType == .inProgress {
-            if session.changeType == .remoteAvFlags {
-                callbacksDelegate?.avFlagsUpdated(for: session, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
+        if session.status == .inProgress {
+            if session.hasChanged(.remoteAvFlags) {
+                callbacksDelegate?.avFlagsUpdated(for: session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             }
             
-            if session.changeType == .audioLevel {
-                callbacksDelegate?.audioLevel(for: session, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
+            if session.hasChanged(.audioLevel) {
+                callbacksDelegate?.audioLevel(for: session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             }
             
-            if session.changeType == .onHiRes {
-                callbacksDelegate?.onHiResSessionChanged(session, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
+            if session.hasChanged(.onHiRes) {
+                callbacksDelegate?.onHiResSessionChanged(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             }
             
-            if session.changeType == .onLowRes {
-                callbacksDelegate?.onLowResSessionChanged(session, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
+            if session.hasChanged(.onLowRes) {
+                callbacksDelegate?.onLowResSessionChanged(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             }
         }
     }
     
-    private func processChatCallUpdate(_ callEntity: CallEntity) {
-        self.callEntity = callEntity
-        guard let call = chatSdk.chatCall(forCallId: callEntity.callId) else { return }
+    public func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        guard callId == call.callId else {
+            return
+        }
+        
+        self.call = call.toCallEntity()
         
         if call.hasChanged(for: .localAVFlags) {
             callbacksDelegate?.localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
@@ -481,19 +449,246 @@ private actor CallRepositoryCallbacksActor {
             fatalError("Call status has an unkown status")
         }
     }
-    
-    private func processChatListItemUpdate(_ chatListItemEntity: ChatListItemEntity) {
-        switch chatListItemEntity.changeType {
+}
+
+extension CallRepository: MEGAChatDelegate {
+    public func onChatListItemUpdate(_ api: MEGAChatSdk, item: MEGAChatListItem) {
+        guard let chatId = call?.chatId,
+              item.chatId == chatId else {
+            return
+        }
+        
+        switch item.changes {
         case .ownPrivilege:
-            guard let chatRoom = chatSdk.chatRoom(forChatId: chatListItemEntity.chatId) else {
+            guard let chatRoom = chatSdk.chatRoom(forChatId: chatId) else {
                 return
             }
-            callbacksDelegate?.ownPrivilegeChanged(to: chatListItemEntity.ownPrivilege, in: chatRoom.toChatRoomEntity())
+            callbacksDelegate?.ownPrivilegeChanged(to: item.ownPrivilege.toChatRoomPrivilegeEntity(), in: chatRoom.toChatRoomEntity())
         case .title:
-            guard let chatRoom = chatSdk.chatRoom(forChatId: chatListItemEntity.chatId) else { return }
+            guard let chatRoom = chatSdk.chatRoom(forChatId: item.chatId) else { return }
             callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom.toChatRoomEntity())
         default:
             break
+        }
+    }
+}
+
+private final class CallWaitingRoomUsersUpdateListener: NSObject, MEGAChatCallDelegate {
+    private let sdk: MEGAChatSdk
+    let callId: HandleEntity
+    private let source = PassthroughSubject<CallEntity, Never>()
+    
+    var monitor: AnyPublisher<CallEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk, callId: HandleEntity) {
+        self.sdk = sdk
+        self.callId = callId
+        super.init()
+        sdk.add(self, queueType: .globalBackground)
+    }
+    
+    deinit {
+        sdk.remove(self)
+    }
+    
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        let waitingRoomChanges: Set<Bool> = [
+            call.hasChanged(for: .waitingRoomComposition),
+            call.hasChanged(for: .waitingRoomUsersEntered),
+            call.hasChanged(for: .waitingRoomUsersDeny),
+            call.hasChanged(for: .waitingRoomUsersAllow),
+            call.hasChanged(for: .waitingRoomUsersLeave)
+        ]
+        
+        if callId == call.callId,
+           waitingRoomChanges.contains(true) {
+            source.send(call.toCallEntity())
+        }
+    }
+}
+
+private final class OnCallUpdateListener: NSObject, MEGAChatCallDelegate {
+    private let sdk: MEGAChatSdk
+    private let source = PassthroughSubject<CallEntity, Never>()
+    
+    var monitor: AnyPublisher<CallEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk) {
+        self.sdk = sdk
+        super.init()
+        sdk.add(self, queueType: .globalBackground)
+    }
+    
+    deinit {
+        sdk.remove(self)
+    }
+    
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        source.send(call.toCallEntity())
+    }
+}
+
+extension CallRepository {
+    private func startCall(chatId: ChatIdEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            chatOnlineListener = ChatOnlineListener(
+                chatId: chatId,
+                sdk: chatSdk
+            ) { [weak self] chatId in
+                guard let self else { return }
+                chatOnlineListener = nil
+                let delegate = ChatRequestDelegate { [weak self] completion in
+                    switch completion {
+                    case .success:
+                        guard let self, let call = chatSdk.chatCall(forChatId: chatId) else {
+                            continuation.resume(with: .failure(CallErrorEntity.generic))
+                            return
+                        }
+                        continuation.resume(with: .success(call.toCallEntity()))
+                    case .failure(let error):
+                        switch error.type {
+                        case .MEGAChatErrorTooMany:
+                            continuation.resume(with: .failure(CallErrorEntity.tooManyParticipants))
+                        default:
+                            continuation.resume(with: .failure(CallErrorEntity.generic))
+                        }
+                    }
+                }
+                if let localizedCameraName {
+                    chatSdk.setChatVideoInDevices(localizedCameraName)
+                }
+                chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, delegate: delegate)
+            }
+        }
+    }
+    
+    private func answerCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, localizedCameraName: String?, completion: @escaping MEGAChatRequestCompletion) {
+        let group = DispatchGroup()
+        
+        group.enter()
+        chatOnlineListener = ChatOnlineListener(
+            chatId: chatId,
+            sdk: chatSdk
+        ) { [weak self] _ in
+            guard let self else { return }
+            chatOnlineListener = nil
+            group.leave()
+        }
+        
+        group.enter()
+        callAvailabilityListener = CallAvailabilityListener(
+            chatId: chatId,
+            sdk: self.chatSdk
+        ) { [weak self] _, _ in
+            guard let self else { return }
+            callAvailabilityListener = nil
+            group.leave()
+        }
+        
+        group.notify(queue: .main) { [self] in
+            let answerCallChatRequestDelegate = ChatRequestDelegate { requestCompletion in
+                switch requestCompletion {
+                case .success(let request):
+                    completion(.success(request))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+            if let localizedCameraName {
+                chatSdk.setChatVideoInDevices(localizedCameraName)
+            }
+            chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallChatRequestDelegate)
+        }
+    }
+}
+
+/// ChatOnlineListener is a helper class to listen for the chat online status.
+/// It will notify to the listener when the chat is online.
+private final class ChatOnlineListener: NSObject {
+    private let chatId: UInt64
+    typealias Completion = (_ chatId: UInt64) -> Void
+    private var completion: Completion?
+    private let sdk: MEGAChatSdk
+
+    init(chatId: UInt64,
+         sdk: MEGAChatSdk,
+         completion: @escaping Completion) {
+        self.chatId = chatId
+        self.sdk = sdk
+        self.completion = completion
+        super.init()
+        
+        if sdk.chatConnectionState(chatId) == .online {
+            completion(chatId)
+            self.completion = nil
+        } else {
+            addListener()
+        }
+    }
+    
+    private func addListener() {
+        sdk.add(self as (any MEGAChatDelegate))
+    }
+    
+    private func removeListener() {
+        sdk.remove(self as (any MEGAChatDelegate))
+    }
+}
+
+extension ChatOnlineListener: MEGAChatDelegate {
+    func onChatConnectionStateUpdate(_ api: MEGAChatSdk, chatId: UInt64, newState: Int32) {
+        if self.chatId == chatId,
+           newState == MEGAChatConnection.online.rawValue {
+            removeListener()
+            completion?(chatId)
+            self.completion = nil
+        }
+    }
+}
+
+/// CallAvailabilityListener is a helper class to listen for the call availability.
+/// It will notify to the listener when the call is available.
+private final class CallAvailabilityListener: NSObject {
+    private let chatId: UInt64
+    typealias Completion = (_ chatId: UInt64, _ call: MEGAChatCall) -> Void
+    private var completion: Completion?
+    private let sdk: MEGAChatSdk
+
+    init(chatId: UInt64,
+         sdk: MEGAChatSdk,
+         completion: @escaping Completion) {
+        self.chatId = chatId
+        self.sdk = sdk
+        self.completion = completion
+        super.init()
+        
+        if let call = sdk.chatCall(forChatId: chatId) {
+            completion(chatId, call)
+            self.completion = nil
+        } else {
+            addListener()
+        }
+    }
+    
+    private func addListener() {
+        sdk.add(self as (any MEGAChatCallDelegate))
+    }
+    
+    private func removeListener() {
+        sdk.remove(self as (any MEGAChatCallDelegate))
+    }
+}
+
+extension CallAvailabilityListener: MEGAChatCallDelegate {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        if call.chatId == chatId {
+            removeListener()
+            completion?(chatId, call)
+            self.completion = nil
         }
     }
 }

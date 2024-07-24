@@ -2,7 +2,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 
-class MockCallRepository: CallRepositoryProtocol, @unchecked Sendable {
+class MockCallRepository: CallRepositoryProtocol {
     func startListeningForCallInChat(
         _ chatId: HandleEntity,
         callbacksDelegate: CallCallbacksRepositoryProtocol
