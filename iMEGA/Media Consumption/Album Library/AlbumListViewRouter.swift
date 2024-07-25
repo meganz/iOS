@@ -7,14 +7,14 @@ import MEGASwiftUI
 import SwiftUI
 
 protocol AlbumListViewRouting {
-    func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell
+    func cell(album: AlbumEntity, selectedAlbum: Binding<AlbumEntity?>, selection: AlbumSelection) -> AlbumCell
     func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
-    func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell {
+    func cell(album: AlbumEntity, selectedAlbum: Binding<AlbumEntity?>, selection: AlbumSelection) -> AlbumCell {
         let vm = AlbumCellViewModel(
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
             monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
@@ -22,9 +22,11 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             album: album,
-            selection: selection
+            selection: selection,
+            selectedAlbum: selectedAlbum
         )
         return AlbumCell(viewModel: vm)
     }

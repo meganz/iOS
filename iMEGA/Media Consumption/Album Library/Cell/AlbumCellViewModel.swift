@@ -1,5 +1,6 @@
 import AsyncAlgorithms
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
@@ -32,10 +33,12 @@ final class AlbumCellViewModel: ObservableObject {
     
     @Published var shouldShowEditStateOpacity: Double = 0.0
     @Published var opacity: Double = 1.0
+    @Binding var selectedAlbum: AlbumEntity?
     
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -51,19 +54,23 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
         tracker: some AnalyticsTracking = DIContainer.tracker,
+        selectedAlbum: Binding<AlbumEntity?>,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.thumbnailLoader = thumbnailLoader
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.album = album
         self.selection = selection
         self.tracker = tracker
+        _selectedAlbum = selectedAlbum
         self.featureFlagProvider = featureFlagProvider
         
         title = album.name
@@ -93,11 +100,15 @@ final class AlbumCellViewModel: ObservableObject {
     }
     
     func onAlbumTap() {
-        guard !album.systemAlbum else { return }
-        isSelected.toggle()
+        guard !(isEditing && album.systemAlbum) else { return }
         
-        tracker.trackAnalyticsEvent(with: album.makeAlbumSelectedEvent(
-            selectionType: isSelected ? .multiadd : .multiremove))
+        if isEditing {
+            isSelected.toggle()
+        } else {
+            selectedAlbum = album
+        }
+        
+        trackAnalytics()
     }
     
     @MainActor
@@ -115,6 +126,7 @@ final class AlbumCellViewModel: ObservableObject {
                 continue
             }
             await setDefaultAlbumCover(albumPhotos)
+            albumMetaData = makeAlbumMetaData(from: albumPhotos)
         }
     }
     
@@ -126,7 +138,7 @@ final class AlbumCellViewModel: ObservableObject {
         // Wait for initial thumbnail to load with sensitivity before checking inherited sensitivity updates
         _ = await $thumbnailContainer.values.contains(where: { $0.type != .placeholder })
         do {
-            for try await isInheritingSensitivity in nodeUseCase.inheritedSensitivity(for: coverNode) {
+            for try await isInheritingSensitivity in sensitiveNodeUseCase.inheritedSensitivity(for: coverNode) {
                 let sensitiveImageContaining = thumbnailContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity)
                 guard !thumbnailContainer.isEqual(sensitiveImageContaining) else { continue }
                 thumbnailContainer = sensitiveImageContaining
@@ -205,9 +217,38 @@ final class AlbumCellViewModel: ObservableObject {
             false
         }
     }
+
+    private func makeAlbumMetaData(from photos: [AlbumPhotoEntity]) -> AlbumMetaDataEntity {
+        photos.reduce(AlbumMetaDataEntity(imageCount: 0, videoCount: 0)) { counts, photo in
+            if photo.photo.name.fileExtensionGroup.isImage {
+                .init(imageCount: counts.imageCount + 1, videoCount: counts.videoCount)
+            } else {
+                .init(imageCount: counts.imageCount, videoCount: counts.videoCount + 1)
+            }
+        }
+    }
+    
+    private func trackAnalytics() {
+        let selectionType: AlbumSelected.SelectionType = if isEditing {
+            isSelected ? .multiadd : .multiremove
+        } else {
+            .single
+        }
+        let event = if featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) {
+            AlbumSelectedEvent(
+                selectionType: selectionType,
+                imageCount: albumMetaData?.imageCount.toKotlinInt(),
+                videoCount: albumMetaData?.videoCount.toKotlinInt()
+            )
+        } else {
+            album.makeAlbumSelectedEvent(
+                selectionType: selectionType)
+        }
+        tracker.trackAnalyticsEvent(with: event)
+    }
 }
 
-private extension NodeUseCaseProtocol {
+private extension SensitiveNodeUseCaseProtocol {
     /// Async sequence will immediately yield inherited sensitivity and then any updated changes
     /// It will immediately yield the current inherited sensitivity since it could have changed since thumbnail loaded
     /// - Parameters:

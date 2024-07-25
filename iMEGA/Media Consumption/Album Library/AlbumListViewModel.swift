@@ -25,7 +25,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     lazy var selection = AlbumSelection()
     
-    var albumCreationAlertMsg: String?
     var createAlbumTask: Task<Void, Never>?
     var deleteAlbumTask: Task<Void, Never>?
     var albumRemoveShareLinkTask: Task<Void, Never>?
@@ -288,16 +287,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         album = newAlbumContent?.album
         album?.count = newAlbumContent?.photos?.count ?? 0
         album?.coverNode = newAlbumContent?.photos?.sorted { $0.modificationTime > $1.modificationTime }.first
-    }
-    
-    @MainActor
-    func onAlbumTap(_ album: AlbumEntity) {
-        guard selection.editMode.isEditing == false else { return }
-        
-        albumCreationAlertMsg = nil
-        self.album = album
-        
-        tracker.trackAnalyticsEvent(with: album.makeAlbumSelectedEvent(selectionType: .single))
     }
     
     func monitorAlbums() async throws {
