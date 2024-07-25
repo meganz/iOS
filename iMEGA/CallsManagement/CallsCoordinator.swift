@@ -264,6 +264,10 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private var localizedCameraName: String? {
         captureDeviceUseCase.wideAngleCameraLocalizedName(position: .front)
     }
+    
+    private func userIsNotParticipatingInCall(inChat chatId: ChatIdEntity) -> Bool {
+        callUseCase.call(for: chatId)?.status != .inProgress
+    }
 }
 
 extension CallsCoordinator: CallsCoordinatorProtocol {
@@ -338,6 +342,15 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
     
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else {
+            MEGALogError("[CallKit] Provider report new incoming call in chat room that does not exists")
+            return
+        }
+        
+        guard userIsNotParticipatingInCall(inChat: chatId) else {
+            MEGALogDebug("[CallKit] Provider avoid reporting new incoming call as user is already participating in a call with the same chatId")
+            /// According to Apple forums https://forums.developer.apple.com/forums/thread/117939
+            /// While your app currently has an active call (ringing or answered), your app is not required to create additional calls for VoIP pushes received during this call. This is intended to be used to support advanced functionality like dynamic call priority, but it could also be used to cancel an incoming call.
+            /// We use this functionality to avoid reporting new incoming call when user is already participating in a call in the same chat, what could happen due race conditions between joining a call and VoIP push.
             return
         }
         
