@@ -2,6 +2,7 @@ import MEGADomain
 import MEGAPermissions
 import SwiftUI
 
+@MainActor
 final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     let imageViewModel: CameraUploadStatusImageViewModel
     
@@ -32,11 +33,11 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     func monitorCameraUpload() async {
 
         guard isCameraUploadsEnabled else {
-            await updateStatus(.turnedOff)
+            updateStatus(.turnedOff)
             return
         }
         
-        await updateStatus(.checkPendingItemsToUpload)
+        updateStatus(.checkPendingItemsToUpload)
         
         var hasFinishedDroppingResult = false
         for await status in monitorCameraUploadStatusProvider.monitorCameraUploadImageStatusSequence() {
@@ -49,7 +50,7 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
                 hasFinishedDroppingResult = true
             }
             cancelDelayedStatusChangeTask()
-            await handleStatusUpdate(status)
+            handleStatusUpdate(status)
         }
     }
     
@@ -61,7 +62,6 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     
     // MARK: - Private Functions
     
-    @MainActor
     private func handleStatusUpdate(_ status: CameraUploadStatus) {
         if status == .completed {
             uploadCompleteIdleCheck()
@@ -69,7 +69,6 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         updateStatus(status)
     }
     
-    @MainActor
     private func updateStatus(_ status: CameraUploadStatus) {
         imageViewModel.status = status
     }
@@ -79,7 +78,7 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         cancelDelayedStatusChangeTask()
         delayedStatusChangeTask = Task {
             try await Task.sleep(nanoseconds: idleWaitTimeNanoSeconds)
-            await updateStatus(monitorCameraUploadStatusProvider.hasLimitedLibraryAccess() ? .warning : .idle)
+            updateStatus(monitorCameraUploadStatusProvider.hasLimitedLibraryAccess() ? .warning : .idle)
             cancelDelayedStatusChangeTask()
         }
     }
