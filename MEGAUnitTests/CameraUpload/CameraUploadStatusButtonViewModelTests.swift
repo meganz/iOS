@@ -11,6 +11,7 @@ import XCTest
 final class CameraUploadStatusButtonViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
+    @MainActor
     func testInit_cameraUploadsEnabledState_shouldSetStatusToCorrectly() {
         [(cameraUploadEnabled: false, status: CameraUploadStatus.turnedOff),
          (cameraUploadEnabled: true, status: CameraUploadStatus.checkPendingItemsToUpload)].forEach {
@@ -20,6 +21,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testMonitorCameraUpload_noUpdates_shouldSetToCheckPendingItemsToUploadAndThenIdle() async {
         let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
             item: .init(progress: 1, pendingFilesCount: 0, pendingVideosCount: 0))
@@ -44,6 +46,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 1.0)
     }
     
+    @MainActor
     func testMonitorCameraUpload_noUpdatesAndLimitedLibraryAccess_shouldSetToCheckPendingItemsToUploadAndThenWarning() async {
         let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
             item: .init(progress: 1, pendingFilesCount: 0, pendingVideosCount: 0))
@@ -69,6 +72,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 1.0)
     }
     
+    @MainActor
     func testMonitorCameraUpload_onPendingFiles_shouldUpdateProgress() async {
         let progress: Float = 0.55
         let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
@@ -81,6 +85,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         XCTAssertEqual(sut.imageViewModel.status, .uploading(progress: progress))
     }
     
+    @MainActor
     func testMonitorCameraUpload_onNoPendingFiles_shouldSetStatusAsCheckingThenIdle() async throws {
         let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
             item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
@@ -107,6 +112,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         XCTAssertEqual(statuses, [.checkPendingItemsToUpload, .idle])
     }
         
+    @MainActor
     func testOnMonitorCameraUpload_preferenceChanged_shouldUpdateImageStatus() async {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
@@ -119,6 +125,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         XCTAssertEqual(sut.imageViewModel.status, .turnedOff)
     }
     
+    @MainActor
     private func makeSUT(
         idleWaitTimeNanoSeconds: UInt64 = 1_000_000_000,
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),
