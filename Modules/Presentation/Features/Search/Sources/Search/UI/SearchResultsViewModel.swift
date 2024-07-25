@@ -118,6 +118,8 @@ public class SearchResultsViewModel: ObservableObject {
             _self?.debounceTask?.cancel()
             _self?.debounceTask = Task {
                 try await Task.sleep(nanoseconds: UInt64(searchInputDebounceDelay*1_000_000_000))
+
+                if Task.isCancelled { return }
                 await _self?.showLoadingPlaceholderIfNeeded()
                 await _self?.queryChanged(to: query, isSearchActive: true)
             }
@@ -125,9 +127,10 @@ public class SearchResultsViewModel: ObservableObject {
         
         self.bridge.onSearchResultsUpdated = { [weak self] signal in
             guard let self else { return }
+            // Mike: Need to debounce this to improve performance [SAO-1863]
             Task {
                 // Any possible ongoing searching task is no longer relevant upon result updates,
-                // it should be replaced with the refresh task
+                // it should be replaced with the refreshing task
                 self.cancelSearchTask()
                 self.searchingTask = Task {
                     switch signal {
@@ -139,7 +142,6 @@ public class SearchResultsViewModel: ObservableObject {
                 }
                 
                 try? await self.searchingTask?.value
-                self.searchingTask = nil
             }
         }
 
@@ -234,12 +236,10 @@ public class SearchResultsViewModel: ObservableObject {
     
     private func cancelSearchTask() {
         searchingTask?.cancel()
-        searchingTask = nil
     }
 
     private func cancelDebounceTask() {
         debounceTask?.cancel()
-        debounceTask = nil
     }
 
     @MainActor
@@ -307,7 +307,6 @@ public class SearchResultsViewModel: ObservableObject {
         }
         
         try? await searchingTask?.value
-        searchingTask = nil
     }
     
     private func performSearch(
@@ -484,6 +483,7 @@ public class SearchResultsViewModel: ObservableObject {
         items: [SearchResultRowViewModel],
         query: SearchQuery
     ) async {
+        if Task.isCancelled { return }
         updateSearchResultsLoaded(true)
         await updateLoadingPlaceholderVisibility(false)
 
