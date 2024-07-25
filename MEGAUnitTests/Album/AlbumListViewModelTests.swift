@@ -388,44 +388,6 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testOnAlbumTap_whenUserTap_shouldSetCorrectValues() {
-        let tracker = MockTracker()
-        let sut = albumListViewModel(tracker: tracker)
-        
-        let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
-        
-        sut.onAlbumTap(gifAlbum)
-        XCTAssertNil(sut.albumCreationAlertMsg)
-        XCTAssertEqual(sut.album, gifAlbum)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [
-                gifAlbum.makeAlbumSelectedEvent(selectionType: .single)
-            ]
-        )
-    }
-    
-    @MainActor
-    func testOnAlbumTap_notInEditMode_shouldSendSelectedEvent() {
-        let userAlbum = AlbumEntity(id: 5, type: .user,
-                                    metaData: AlbumMetaDataEntity(
-                                        imageCount: 6,
-                                        videoCount: 8))
-        let tracker = MockTracker()
-        let sut = albumListViewModel(tracker: tracker)
-        
-        sut.onAlbumTap(userAlbum)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [
-                userAlbum.makeAlbumSelectedEvent(selectionType: .single)
-            ]
-        )
-    }
-    
-    @MainActor
     func testOnCreateAlbum_whenIsEditModeActive_shouldReturnFalseForShowCreateAlbumAlert() {
         let tracker = MockTracker()
         let sut = albumListViewModel(tracker: tracker)

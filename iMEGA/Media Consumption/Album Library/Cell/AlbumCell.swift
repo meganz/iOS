@@ -7,10 +7,6 @@ import SwiftUI
 struct AlbumCell: View {
     @StateObject var viewModel: AlbumCellViewModel
     
-    private var tap: some Gesture { TapGesture().onEnded { _ in
-        viewModel.onAlbumTap()
-    }}
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ZStack(alignment: viewModel.isLoading ? .center : .bottomTrailing) {
@@ -69,7 +65,9 @@ struct AlbumCell: View {
         .task {
             await viewModel.monitorAlbumPhotos()
         }
-        .gesture(viewModel.editMode.isEditing ? tap : nil)
+        .onTapGesture {
+            viewModel.onAlbumTap()
+        }
     }
     
     private var checkMarkView: some View {
@@ -93,6 +91,7 @@ struct AlbumCell: View {
             thumbnailLoader: Preview_ThumbnailLoader(),
             monitorAlbumsUseCase: Preview_MonitorAlbumsUseCase(),
             nodeUseCase: Preview_NodeUseCase(),
+            sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
             contentConsumptionUserAttributeUseCase: Preview_ContentConsumptionUserAttributeUseCase(),
             album: AlbumEntity(
                 id: 1, name: "Album name",
@@ -106,7 +105,8 @@ struct AlbumCell: View {
                     videoCount: 12
                 )
             ),
-            selection: AlbumSelection()
+            selection: AlbumSelection(),
+            selectedAlbum: Binding.constant(nil)
         )
     )
 }

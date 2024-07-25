@@ -1,5 +1,6 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
@@ -234,39 +235,158 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testOnAlbumTap_onUserAlbum_shouldToggleSelectionAndTrackEvent() {
-        let album = AlbumEntity(id: 4, type: .user)
+        [EditMode.active, .transient].forEach { editMode in
+            let album = AlbumEntity(id: 4, type: .user)
+            let tracker = MockTracker()
+            let selection = AlbumSelection()
+            selection.editMode = editMode
+            let sut = makeAlbumCellViewModel(
+                album: album,
+                selection: selection,
+                tracker: tracker)
+            
+            XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
+            
+            sut.onAlbumTap()
+            
+            XCTAssertTrue(sut.isSelected, "Failed on editMode: \(editMode)")
+            
+            sut.onAlbumTap()
+            
+            XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
+            
+            assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [
+                    album.makeAlbumSelectedEvent(selectionType: .multiadd),
+                    album.makeAlbumSelectedEvent(selectionType: .multiremove)
+                ]
+            )
+        }
+    }
+    
+    func testOnAlbumTap_whenUserTap_shouldSetCorrectValues() {
+        var selectedAlbum: AlbumEntity?
+        let selectedAlbumBinding = Binding(get: {
+            selectedAlbum
+        }, set: {
+            selectedAlbum = $0
+        })
+        let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
         let tracker = MockTracker()
         let sut = makeAlbumCellViewModel(
-            album: album,
-            tracker: tracker)
-        
-        XCTAssertFalse(sut.isSelected)
-        
-        sut.onAlbumTap()
-        
-        XCTAssertTrue(sut.isSelected)
+            album: gifAlbum,
+            tracker: tracker,
+            selectedAlbum: selectedAlbumBinding)
         
         sut.onAlbumTap()
         
-        XCTAssertFalse(sut.isSelected)
-        
+        XCTAssertEqual(selectedAlbum, gifAlbum)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
-                album.makeAlbumSelectedEvent(selectionType: .multiadd),
-                album.makeAlbumSelectedEvent(selectionType: .multiremove)
+                gifAlbum.makeAlbumSelectedEvent(selectionType: .single)
             ]
         )
     }
     
-    func testOnAlbumTap_whenUserTapOnAlbumCell_ShouldNotToggleForSystemAlbums() {
-        let sut = makeAlbumCellViewModel(
-            album: AlbumEntity(id: 4, name: "Gif", coverNode: NodeEntity(handle: 3),
-                               count: 1, type: .gif, modificationTime: nil))
+    func testOnAlbumTap_notInEditMode_shouldSendSelectedEvent() {
+        let userAlbum = AlbumEntity(id: 5, type: .user,
+                                    metaData: AlbumMetaDataEntity(
+                                        imageCount: 6,
+                                        videoCount: 8))
+        let tracker = MockTracker()
+        let selection = AlbumSelection()
+        selection.editMode = .inactive
         
-        XCTAssertFalse(sut.isSelected)
+        let sut = makeAlbumCellViewModel(
+            album: userAlbum,
+            selection: selection,
+            tracker: tracker)
+        
         sut.onAlbumTap()
-        XCTAssertFalse(sut.isSelected)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                userAlbum.makeAlbumSelectedEvent(selectionType: .single)
+            ]
+        )
+    }
+    
+    func testOnAlbumTap_whenUserTapOnAlbumCellInEditMode_ShouldNotToggleForSystemAlbums() {
+        [EditMode.active, .transient].forEach { editMode in
+            let selection = AlbumSelection()
+            selection.editMode = editMode
+            let tracker = MockTracker()
+            let sut = makeAlbumCellViewModel(
+                album: AlbumEntity(id: 4, name: "Gif", coverNode: NodeEntity(handle: 3),
+                                   count: 1, type: .gif, modificationTime: nil),
+                selection: selection,
+                tracker: tracker)
+            
+            XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
+            
+            sut.onAlbumTap()
+            
+            XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
+            XCTAssertTrue(tracker.trackedEventIdentifiers.isEmpty, "Failed on editMode: \(editMode)")
+        }
+    }
+    
+    func testOnAlbumTap_whenUserTapOnAlbumAfterPhotosLoaded_shouldSendCorrectAnalyticsEvent() {
+        let albumId = HandleEntity(6554)
+        let albumPhotos = [
+            AlbumPhotoEntity(photo: NodeEntity(name: "test.jpg", handle: 1),
+                             albumPhotoId: albumId),
+            AlbumPhotoEntity(photo: NodeEntity(name: "test2.jpg", handle: 2),
+                             albumPhotoId: albumId),
+            AlbumPhotoEntity(photo: NodeEntity(name: "test2.mp4", handle: 3),
+                             albumPhotoId: albumId)
+        ]
+        let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
+            .eraseToAnyAsyncSequence()
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+        
+        let tracker = MockTracker()
+        let sut = makeAlbumCellViewModel(
+            album: .init(id: albumId, type: .user),
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            tracker: tracker,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.albumPhotoCache: true]))
+        
+        let exp = expectation(description: "Album photos loaded")
+        
+        let subscription = sut.$numberOfNodes
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        let cancelledExp = expectation(description: "Task canncelled")
+        let task = Task { @MainActor in
+            await sut.monitorAlbumPhotos()
+            cancelledExp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 0.2)
+        task.cancel()
+        wait(for: [cancelledExp], timeout: 0.2)
+        
+        sut.onAlbumTap()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                AlbumSelectedEvent(
+                    selectionType: .single,
+                    imageCount: 2,
+                    videoCount: 1
+                )
+            ]
+        )
+        
+        subscription.cancel()
     }
     
     func testFeatureFlagForShowingShareIconOnAlbum_whenTurnedOff_shouldNotShowShareLink() {
@@ -515,7 +635,7 @@ final class AlbumCellViewModelTests: XCTestCase {
                                 coverNode: nil, count: 0, type: .user)
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
-   
+        
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
         let sut = makeAlbumCellViewModel(album: album,
@@ -545,13 +665,13 @@ final class AlbumCellViewModelTests: XCTestCase {
         let isInheritedSensitivityUpdate = true
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: isInheritedSensitivityUpdate)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             isInheritingSensitivityResult: .success(isInheritedSensitivity),
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: MockThumbnailLoader(initialImage: coverImageContainer),
-            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
         )
         
@@ -588,12 +708,12 @@ final class AlbumCellViewModelTests: XCTestCase {
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: isInheritedSensitivityUpdate)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
         )
         
@@ -623,13 +743,13 @@ final class AlbumCellViewModelTests: XCTestCase {
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: !cover.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
         )
         
@@ -658,9 +778,11 @@ final class AlbumCellViewModelTests: XCTestCase {
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         selection: AlbumSelection = AlbumSelection(),
         tracker: some AnalyticsTracking = MockTracker(),
+        selectedAlbum: Binding<AlbumEntity?> = .constant(nil),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -668,10 +790,12 @@ final class AlbumCellViewModelTests: XCTestCase {
         let sut = AlbumCellViewModel(thumbnailLoader: thumbnailLoader,
                                      monitorAlbumsUseCase: monitorAlbumsUseCase,
                                      nodeUseCase: nodeUseCase,
+                                     sensitiveNodeUseCase: sensitiveNodeUseCase,
                                      contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                                      album: album,
                                      selection: selection,
                                      tracker: tracker,
+                                     selectedAlbum: selectedAlbum,
                                      featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
