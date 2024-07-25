@@ -137,6 +137,7 @@ struct ChatRoomsListView: View {
                         ForEach(futureMeetings, id: \.title) { futureMeetingSection in
                             MeetingsListHeaderView(title: futureMeetingSection.title)
                                 .listRowInsets(EdgeInsets())
+                                .listRowBackground(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                             ForEach(futureMeetingSection.items) { futureMeeting in
                                 FutureMeetingRoomView(viewModel: futureMeeting)
                                     .listRowInsets(EdgeInsets())
@@ -161,6 +162,7 @@ struct ChatRoomsListView: View {
                         
                         MeetingsListHeaderView(title: Strings.Localizable.Chat.Listing.SectionHeader.PastMeetings.title)
                             .listRowInsets(EdgeInsets())
+                            .listRowBackground(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                         ForEach(pastMeetings) { pastMeeting in
                             ChatRoomView(viewModel: pastMeeting)
                                 .listRowInsets(EdgeInsets())
