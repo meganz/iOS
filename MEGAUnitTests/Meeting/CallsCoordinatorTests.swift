@@ -15,12 +15,13 @@ final class CallsCoordinatorTests: XCTestCase {
         let callManager = MockCallManager()
         let callKitProviderDelegateFactory = MockCallKitProviderDelegateFactory()
         init(
-            chatRoomEntity: ChatRoomEntity? = nil
+            chatRoomEntity: ChatRoomEntity? = nil,
+            call: CallEntity? = nil
         ) {
             chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
             
             sut = CallsCoordinator(
-                callUseCase: MockCallUseCase(),
+                callUseCase: MockCallUseCase(call: call),
                 chatRoomUseCase: chatRoomUseCase,
                 chatUseCase: MockChatUseCase(),
                 callSessionUseCase: MockCallSessionUseCase(),
@@ -70,6 +71,18 @@ final class CallsCoordinatorTests: XCTestCase {
         harness.sut.reportIncomingCall(in: 123, completion: { completionCalled = true })
         XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.mockProvider.reportNewIncomingCalls, [.testUUID])
         XCTAssertTrue(completionCalled)
+    }
+    
+    func testReportIncomingCall_CallExistsInChatUserIsParticipating_DoesNotReportToCallManager() {
+        let harness = Harness(chatRoomEntity: .testChatRoomEntity, call: CallEntity(status: .inProgress))
+        harness.sut.reportIncomingCall(in: 123, completion: {})
+        XCTAssertEqual(harness.callManager.incomingCalls, [])
+    }
+    
+    func testReportIncomingCall_CallExistsInChatUserIsNotParticipating_ReportToCallManager() {
+        let harness = Harness(chatRoomEntity: .testChatRoomEntity, call: CallEntity(status: .userNoPresent))
+        harness.sut.reportIncomingCall(in: 123, completion: {})
+        XCTAssertEqual(harness.callManager.incomingCalls, [.init(uuid: .testUUID, chatRoom: .testChatRoomEntity)])
     }
 }
 
