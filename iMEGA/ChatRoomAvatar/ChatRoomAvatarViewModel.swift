@@ -35,6 +35,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                   let primaryAvatar = UIImage(data: primaryAvatar) {
             return .one(primaryAvatar)
         } else {
+            isAvatarLoaded = false
             return .placeHolder("circle.fill")
         }
     }
