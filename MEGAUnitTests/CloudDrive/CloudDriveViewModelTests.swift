@@ -237,7 +237,7 @@ class CloudDriveViewModelTests: XCTestCase {
             featureFlagProvider: featureFlagProvider,
             accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false))
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
         )
         for await isMarkedSensitive in [true, false].async {
             let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: isMarkedSensitive)
@@ -307,7 +307,7 @@ class CloudDriveViewModelTests: XCTestCase {
             featureFlagProvider: featureFlagProvider,
             accountUseCase: MockAccountUseCase(),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
-            nodeUseCase: MockNodeDataUseCase()
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
         let sut = makeSUT(
             parentNode: parentNode,
@@ -327,7 +327,7 @@ class CloudDriveViewModelTests: XCTestCase {
             featureFlagProvider: featureFlagProvider,
             accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false))
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
         )
         let sut = makeSUT(parentNode: MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false),
                           accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
@@ -551,7 +551,7 @@ class CloudDriveViewModelTests: XCTestCase {
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             accountUseCase: MockAccountUseCase(),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
-            nodeUseCase: MockNodeDataUseCase()
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         ),
         file: StaticString = #file,
         line: UInt = #line

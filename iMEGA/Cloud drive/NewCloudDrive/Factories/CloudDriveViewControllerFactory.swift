@@ -186,7 +186,9 @@ struct CloudDriveViewControllerFactory {
                 systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
                     systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
                 ),
-                nodeUseCase: nodeUseCase
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo
+                )
             )
         )
     }
