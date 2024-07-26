@@ -1,4 +1,4 @@
-@preconcurrency import MEGADomain
+import MEGADomain
 @preconcurrency import MEGAPresentation
 
 protocol NodeSensitivityChecking: Sendable {
@@ -25,18 +25,18 @@ struct NodeSensitivityChecker: NodeSensitivityChecking {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
-    private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
 
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
-        nodeUseCase: some NodeUseCaseProtocol
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
     ) {
         self.featureFlagProvider = featureFlagProvider
         self.accountUseCase = accountUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
-        self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
 
     func evaluateNodeSensitivity(
@@ -53,14 +53,16 @@ struct NodeSensitivityChecker: NodeSensitivityChecking {
             return nil
         }
 
-        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
-            return false // Always show hide regardless of the node sensitivity.
-        }
-
         do {
-            // System generated nodes and parent inheriting sensitivity should not be able to be hide or unhide.
-            guard try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode]),
-                  try await !nodeUseCase.isInheritingSensitivity(node: parentNode) else {
+            // System generated nodes should not be able to be hidden or unhidden. This should be checked before account
+            guard try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode]) else {
+                return nil
+            }
+            guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+                return false // Always show hide regardless of the node sensitivity.
+            }
+            // Parent inheriting sensitivity should not be able to be hidden or unhidden.
+            guard try await !sensitiveNodeUseCase.isInheritingSensitivity(node: parentNode) else {
                 return nil
             }
             return parentNode.isMarkedSensitive

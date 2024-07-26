@@ -92,23 +92,27 @@ final class NodeSensitivityCheckerTests: XCTestCase {
         XCTAssertNil(result)
     }
 
-    func testEvaluateNodeSensitivity_whenInheritingSensitivityResult_shouldReturnNil() async {
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
-        let node = NodeEntity(isFolder: true)
-        let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [:])
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .failure(GenericErrorEntity()))
-        let sut = makeSUT(
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
-            accountUseCase: accountUseCase,
-            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
-            nodeUseCase: nodeUseCase
-        )
-        let result = await sut.evaluateNodeSensitivity(
-            for: NodeSource.node { node },
-            displayMode: .cloudDrive,
-            isFromSharedItem: false
-        )
-        XCTAssertNil(result)
+    func testEvaluateNodeSensitivity_whenInheritingSensitivityTrueOrFailed_shouldReturnNil() async {
+        let inheritSensitiveResults: [Result<Bool, Error>] = [.success(true), .failure(GenericErrorEntity())]
+        for inheritSensitiveResult in inheritSensitiveResults {
+            let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+            let node = NodeEntity(isFolder: true)
+            let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [:])
+            let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+                isInheritingSensitivityResult: inheritSensitiveResult)
+            let sut = makeSUT(
+                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
+                accountUseCase: accountUseCase,
+                systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+                sensitiveNodeUseCase: sensitiveNodeUseCase
+            )
+            let result = await sut.evaluateNodeSensitivity(
+                for: NodeSource.node { node },
+                displayMode: .cloudDrive,
+                isFromSharedItem: false
+            )
+            XCTAssertNil(result, "Failed for inherited result \(inheritSensitiveResult)")
+        }
     }
 
     func testEvaluateNodeSensitivity_whenSystemGeneratedNodeThrowingError_shouldReturnNil() async {
@@ -134,13 +138,13 @@ final class NodeSensitivityCheckerTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
         let node = NodeEntity(isFolder: true, isMarkedSensitive: false)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [:])
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(false))
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
 
         let sut = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
             accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
-            nodeUseCase: nodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let result = await sut.evaluateNodeSensitivity(
             for: NodeSource.node { node },
@@ -154,13 +158,13 @@ final class NodeSensitivityCheckerTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
         let node = NodeEntity(isFolder: true, isMarkedSensitive: false)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [:])
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(false))
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
 
         let sut = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
             accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
-            nodeUseCase: nodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let result = await sut.evaluateNodeSensitivity(
             for: NodeSource.node { node },
@@ -169,6 +173,25 @@ final class NodeSensitivityCheckerTests: XCTestCase {
         )
         XCTAssertEqual(result, false)
     }
+    
+    func testEvaluateNodeSensitivity_whenSystemGeneratedNodeInvalidAccount_shouldReturnNil() async {
+        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false)
+        let systemNode = NodeEntity(isFolder: true, isMarkedSensitive: false)
+        let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(
+            nodesForLocation: [.cameraUpload: systemNode])
+
+        let sut = makeSUT(
+            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
+            accountUseCase: accountUseCase,
+            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase
+        )
+        let result = await sut.evaluateNodeSensitivity(
+            for: NodeSource.node { systemNode },
+            displayMode: .cloudDrive,
+            isFromSharedItem: false
+        )
+        XCTAssertNil(result)
+    }
 
     // MARK: - Helpers
 
@@ -176,13 +199,13 @@ final class NodeSensitivityCheckerTests: XCTestCase {
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase()
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
     ) -> NodeSensitivityChecker {
         .init(
             featureFlagProvider: featureFlagProvider,
             accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
-            nodeUseCase: nodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
     }
 

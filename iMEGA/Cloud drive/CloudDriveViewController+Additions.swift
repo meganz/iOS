@@ -58,7 +58,8 @@ extension CloudDriveViewController {
             featureFlagProvider: DIContainer.featureFlagProvider,
             accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
-            nodeUseCase: nodeUseCase
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo)
         )
         return CloudDriveViewModel(
             parentNode: parentNode,

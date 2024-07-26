@@ -1580,16 +1580,32 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(actions.notContains(where: { $0.type == .hide }))
     }
     
-    func testMultiselectBuild_hiddenNodesFeatureFlagOnNotValidProAccount_shouldReturnHiddenAction() {
+    func testMultiselectBuild_hiddenNodesFeatureFlagOnNotValidProAccountHiddenSet_shouldReturnHiddenAction() {
+        [true, false].forEach { isHidden in
+            actions = NodeActionBuilder()
+                .setAccessLevel(.accessOwner)
+                .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
+                .setDisplayMode(.cloudDrive)
+                .setIsHiddenNodesFeatureEnabled(true)
+                .setHasValidProOrUnexpiredBusinessAccount(false)
+                .setIsHidden(isHidden)
+                .multiselectBuild()
+            
+            XCTAssertTrue(actions.contains(where: { $0.type == .hide }), "Should contain hide action for hidden \(isHidden)")
+        }
+    }
+    
+    func testMultiselectBuild_hiddenNodesFeatureFlagOnNotValidProAccountHiddenNotSet_shouldNotReturnHiddenAction() {
         actions = NodeActionBuilder()
             .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHiddenNodesFeatureEnabled(true)
             .setHasValidProOrUnexpiredBusinessAccount(false)
+            .setIsHidden(nil)
             .multiselectBuild()
         
-        XCTAssertTrue(actions.contains(where: { $0.type == .hide }))
+        XCTAssertTrue(actions.notContains(where: { $0.type == .hide }))
     }
     
     // MARK: - videoPlaylistContent

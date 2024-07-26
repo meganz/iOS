@@ -828,7 +828,8 @@ final class NodeActionBuilder {
     
     private func shouldAddHiddenAction() -> Bool {
         guard isHiddenNodesFeatureEnabled,
-              !hasValidProOrUnexpiredBusinessAccount || isHidden == false else {
+              let isHidden,
+              hasValidProOrUnexpiredBusinessAccount ? isHidden == false : true else {
             return false
         }
         
