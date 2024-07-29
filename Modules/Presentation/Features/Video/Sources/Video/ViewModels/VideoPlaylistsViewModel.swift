@@ -43,6 +43,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private(set) var createVideoPlaylistTask: Task<Void, Never>?
     private(set) var monitorSortOrderChangedTask: Task<Void, Never>?
     private(set) var renameVideoPlaylistTask: Task<Void, Never>?
+    private let contentProvider: any VideoPlaylistsViewModelContentProviderProtocol
     
     init(
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
@@ -52,6 +53,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         alertViewModel: TextFieldAlertViewModel,
         renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
         thumbnailLoader: some ThumbnailLoaderProtocol,
+        contentProvider: some VideoPlaylistsViewModelContentProviderProtocol,
         monitorSortOrderChangedDispatchQueue: DispatchQueue = DispatchQueue.main
     ) {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
@@ -62,6 +64,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
         self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
         self.monitorSortOrderChangedDispatchQueue = monitorSortOrderChangedDispatchQueue
         self.thumbnailLoader = thumbnailLoader
+        self.contentProvider = contentProvider
+        
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
         
         self.alertViewModel.action = { [weak self] newVideoPlaylistName in
@@ -98,7 +102,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
         await loadVideoPlaylists()
         await monitorVideoPlaylists()
     }
-    
+   
+    @MainActor
     private func monitorVideoPlaylists() async {
         for await _ in videoPlaylistsUseCase.videoPlaylistsUpdatedAsyncSequence {
             guard !Task.isCancelled else {
@@ -112,34 +117,10 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private func loadVideoPlaylists(sortOrder: SortOrderEntity? = nil) async {
         shouldShowPlaceHolderView = videoPlaylists.isEmpty
         
-        async let systemVideoPlaylists = loadSystemVideoPlaylists()
-        async let userVideoPlaylists = videoPlaylistsUseCase.userVideoPlaylists()
-        
-        let playlists = await systemVideoPlaylists + userVideoPlaylists
-        videoPlaylists = VideoPlaylistsSorter.sort(playlists, by: sortOrder ?? syncModel.videoRevampVideoPlaylistsSortOrderType)
+        videoPlaylists = await contentProvider.loadVideoPlaylists(
+            sortOrder: sortOrder ?? syncModel.videoRevampVideoPlaylistsSortOrderType)
         
         shouldShowPlaceHolderView = false
-    }
-    
-    private func loadSystemVideoPlaylists() async -> [VideoPlaylistEntity] {
-        guard let videoPlaylist = try? await videoPlaylistsUseCase.systemVideoPlaylists() else {
-            return []
-        }
-        
-        return videoPlaylist
-            .compactMap { videoPlaylist in
-                guard videoPlaylist.isSystemVideoPlaylist else {
-                    return nil
-                }
-                return VideoPlaylistEntity(
-                    id: videoPlaylist.id,
-                    name: Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites,
-                    count: videoPlaylist.count,
-                    type: videoPlaylist.type,
-                    creationTime: videoPlaylist.creationTime,
-                    modificationTime: videoPlaylist.modificationTime
-                )
-            }
     }
     
     private func monitorSortOrderChanged() {
@@ -166,14 +147,14 @@ final class VideoPlaylistsViewModel: ObservableObject {
             .sink { [weak self] value in
                 guard let self else { return }
                 if value.isEmpty {
-                    self.loadVideoPlaylistsOnSearchTextChangedTask = Task { [weak self] in
+                    loadVideoPlaylistsOnSearchTextChangedTask = Task { @MainActor [weak self] in
                         guard !Task.isCancelled, let self else {
                             return
                         }
-                        await self.loadVideoPlaylists()
+                        await loadVideoPlaylists()
                     }
                 } else {
-                    self.videoPlaylists = self.videoPlaylists.filter { $0.name.lowercased().contains(value.lowercased()) }
+                    videoPlaylists = videoPlaylists.filter { $0.name.localizedCaseInsensitiveContains(value) }
                 }
             }
             .store(in: &subscriptions)

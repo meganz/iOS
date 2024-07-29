@@ -1,6 +1,6 @@
 import MEGASwift
 
-public protocol FilesSearchUseCaseProtocol {
+public protocol FilesSearchUseCaseProtocol: Sendable {
     
     /// Listen to node updates through an async sequence.
     /// Returns: Stream of updated node entities.

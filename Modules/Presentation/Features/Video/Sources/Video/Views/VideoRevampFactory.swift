@@ -78,7 +78,9 @@ public class VideoRevampFactory {
                 destructiveButtonTitle: Strings.Localizable.cancel,
                 message: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.enterTheNewName
             ),
-            thumbnailLoader: thumbnailLoader
+            thumbnailLoader: thumbnailLoader,
+            contentProvider: VideoPlaylistsViewModelContentProvider(
+                videoPlaylistsUseCase: videoPlaylistUseCase)
         )
         let view = TabContainerView(
             videoListViewModel: videoListViewModel,
@@ -105,7 +107,6 @@ public class VideoRevampFactory {
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         syncModel: VideoRevampSyncModel
     ) -> UIViewController {
-        let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo)
         let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase)
         let viewModel = VideoPlaylistContentViewModel(

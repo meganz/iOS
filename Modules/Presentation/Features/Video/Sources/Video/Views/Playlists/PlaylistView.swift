@@ -225,7 +225,9 @@ struct PlaylistView: View {
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview, 
-            thumbnailLoader: Preview_ThumbnailLoader()
+            thumbnailLoader: Preview_ThumbnailLoader(), 
+            contentProvider: VideoPlaylistsViewModelContentProvider(
+                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase())
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()
@@ -241,7 +243,9 @@ struct PlaylistView: View {
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview,
-            thumbnailLoader: Preview_ThumbnailLoader()
+            thumbnailLoader: Preview_ThumbnailLoader(),
+            contentProvider: VideoPlaylistsViewModelContentProvider(
+                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase())
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()

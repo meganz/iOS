@@ -2,7 +2,7 @@ import AsyncAlgorithms
 import Foundation
 import MEGASwift
 
-public protocol VideoPlaylistUseCaseProtocol {
+public protocol VideoPlaylistUseCaseProtocol: Sendable {
     
     /// An AsyncSequence of Void that triggers updates when changes occur in the user's video playlists.
     var videoPlaylistsUpdatedAsyncSequence: AnyAsyncSequence<Void> { get }

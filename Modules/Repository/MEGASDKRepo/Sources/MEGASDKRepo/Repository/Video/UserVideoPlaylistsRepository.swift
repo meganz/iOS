@@ -37,6 +37,15 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
             .filter { $0.setType == .playlist }
     }
     
+    public func playlistContentUpdated(by id: HandleEntity) -> AnyAsyncSequence<[SetElementEntity]> {
+        setElementsUpdatedAsyncSequence
+            .compactMap { nodes in
+                let filteredResult = nodes.filter { $0.ownerId == id }
+                return filteredResult.isNotEmpty ? filteredResult : nil
+            }
+            .eraseToAnyAsyncSequence()
+    }
+    
     // MARK: - addVideosToVideoPlaylist
     
     public func addVideosToVideoPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistCreateSetElementsResultEntity {

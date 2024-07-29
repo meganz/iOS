@@ -14,6 +14,11 @@ public protocol UserVideoPlaylistsRepositoryProtocol: Sendable, RepositoryProtoc
     /// - Returns: array of set entitites representing user video playlists
     func videoPlaylists() async -> [SetEntity]
     
+    /// AnyAsyncSequence that produces the SetElementEntity list when a change has occurred on the specific user playlist.
+    /// - Parameter id: The user playlist id
+    /// - Returns: AnyAsyncSequence<[SetElementEntity]> of all the changed elements. Only yields when a new update has occurred.
+    func playlistContentUpdated(by id: HandleEntity) -> AnyAsyncSequence<[SetElementEntity]>
+    
     /// Add videos to the video playlist
     /// - Parameters:
     ///   - id: The video id

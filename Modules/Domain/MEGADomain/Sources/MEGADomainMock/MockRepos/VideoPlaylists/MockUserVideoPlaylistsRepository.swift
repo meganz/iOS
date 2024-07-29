@@ -28,6 +28,7 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
     private let videoPlaylistContentResult: [SetElementEntity]
     private let createVideoPlaylistResult: Result<SetEntity, Error>
     private let updateVideoPlaylistNameResult: Result<Void, Error>
+    private let playlistContentUpdated: AnyAsyncSequence<[SetElementEntity]>
     
     public init(
         videoPlaylistsResult: [SetEntity] = [],
@@ -38,7 +39,9 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
         createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        updateVideoPlaylistNameResult: Result<Void, Error> = .failure(GenericErrorEntity())
+        updateVideoPlaylistNameResult: Result<Void, Error> = .failure(GenericErrorEntity()),
+        playlistContentUpdated: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence<[SetElementEntity]>().eraseToAnyAsyncSequence()
+
     ) {
         self.videoPlaylistsResult = videoPlaylistsResult
         self.addVideosToVideoPlaylistResult = addVideosToVideoPlaylistResult
@@ -49,11 +52,21 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
         self.setsUpdatedAsyncSequence = setsUpdatedAsyncSequence
         self.setElementsUpdatedAsyncSequence = setElementsUpdatedAsyncSequence
         self.updateVideoPlaylistNameResult = updateVideoPlaylistNameResult
+        self.playlistContentUpdated = playlistContentUpdated
     }
     
     public func videoPlaylists() async -> [SetEntity] {
         messages.append(.userVideoPlaylists)
         return videoPlaylistsResult
+    }
+    
+    public func playlistContentUpdated(by id: HandleEntity) -> AnyAsyncSequence<[SetElementEntity]> {
+        setElementsUpdatedAsyncSequence
+            .compactMap { nodes in
+                let filteredResult = nodes.filter { $0.ownerId == id }
+                return filteredResult.isNotEmpty ? filteredResult : nil
+            }
+            .eraseToAnyAsyncSequence()
     }
     
     public func addVideosToVideoPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistCreateSetElementsResultEntity {
