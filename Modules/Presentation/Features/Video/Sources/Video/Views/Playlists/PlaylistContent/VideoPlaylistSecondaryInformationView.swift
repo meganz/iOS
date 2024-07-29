@@ -6,8 +6,27 @@ struct VideoPlaylistSecondaryInformationView: View {
     let videosCount: String
     let totalDuration: String
     let isPublicLink: Bool
+    let layoutIgnoringOrientation: Bool
+    
+    @State private var isPortrait = true
     
     var body: some View {
+        content
+            .onOrientationChanged { newOrientation in
+                isPortrait = newOrientation.isPortrait
+            }
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        if layoutIgnoringOrientation || isPortrait {
+            horizontalLayoutContent
+        } else {
+            verticalLayoutContent
+        }
+    }
+    
+    private var horizontalLayoutContent: some View {
         HStack(spacing: TokenSpacing._3) {
             secondaryText(text: videosCount)
             
@@ -17,6 +36,18 @@ struct VideoPlaylistSecondaryInformationView: View {
             
             circleSeparatorImage
                 .opacity(isPublicLink ? 1 : 0)
+            
+            Image(uiImage: videoConfig.rowAssets.publicLinkImage)
+                .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryTextColor)
+                .opacity(isPublicLink ? 1 : 0)
+        }
+    }
+    
+    private var verticalLayoutContent: some View {
+        VStack(alignment: .leading, spacing: TokenSpacing._3) {
+            secondaryText(text: videosCount)
+            
+            secondaryText(text: totalDuration)
             
             Image(uiImage: videoConfig.rowAssets.publicLinkImage)
                 .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryTextColor)
@@ -43,7 +74,8 @@ struct VideoPlaylistSecondaryInformationView: View {
         videoConfig: .preview,
         videosCount: "24 videos",
         totalDuration: "3:05:20",
-        isPublicLink: true
+        isPublicLink: true,
+        layoutIgnoringOrientation: true
     )
 }
 
@@ -52,7 +84,20 @@ struct VideoPlaylistSecondaryInformationView: View {
         videoConfig: .preview,
         videosCount: "24 videos",
         totalDuration: "3:05:20",
-        isPublicLink: false
+        isPublicLink: false,
+        layoutIgnoringOrientation: true
     )
     .preferredColorScheme(.dark)
+}
+
+#Preview {
+    VideoPlaylistSecondaryInformationView(
+        videoConfig: .preview,
+        videosCount: "24 videos",
+        totalDuration: "3:05:20",
+        isPublicLink: false,
+        layoutIgnoringOrientation: false
+    )
+    .preferredColorScheme(.dark)
+    .previewInterfaceOrientation(.landscapeLeft)
 }

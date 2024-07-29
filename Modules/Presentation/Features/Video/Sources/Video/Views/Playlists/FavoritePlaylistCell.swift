@@ -71,7 +71,8 @@ struct FavoritePlaylistCell: View {
                 videoConfig: videoConfig,
                 videosCount: viewModel.previewEntity.count,
                 totalDuration: viewModel.previewEntity.duration,
-                isPublicLink: viewModel.previewEntity.isExported
+                isPublicLink: viewModel.previewEntity.isExported,
+                layoutIgnoringOrientation: false
             )
         }
     }

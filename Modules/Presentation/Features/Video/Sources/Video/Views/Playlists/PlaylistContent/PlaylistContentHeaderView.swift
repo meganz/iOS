@@ -86,7 +86,8 @@ struct PlaylistContentHeaderView: View {
                 videoConfig: videoConfig,
                 videosCount: previewEntity.count,
                 totalDuration: previewEntity.duration,
-                isPublicLink: previewEntity.isExported
+                isPublicLink: previewEntity.isExported,
+                layoutIgnoringOrientation: true
             )
         }
     }
