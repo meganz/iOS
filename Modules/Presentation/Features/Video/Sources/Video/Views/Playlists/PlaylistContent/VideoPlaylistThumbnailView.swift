@@ -106,17 +106,18 @@ struct VideoPlaylistThumbnailView: View {
             case .thumbnail:
                 image.image
                     .resizable()
-                    .frame(height: 39)
-                    .aspectRatio(contentMode: .fit)
+                    .scaledToFill()
+                    .frame(width: 70, height: 39)
+                    .clipped()
                     .sensitive(image)
             default:
                 EmptyView()
-                    .frame(width: 142, height: 80)
+                    .frame(width: 70, height: 39)
             }
         } else {
             thumbnailBackgroundColor
-                .frame(height: 39)
-                .aspectRatio(contentMode: .fill)
+                .frame(width: 70, height: 39)
+                .clipped()
         }
     }
 }
