@@ -29,11 +29,8 @@ private struct DeviceOrientationViewModifier: ViewModifier {
                     eventHandler(.unknown)
                 }
             }
-            .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) {
-                guard let device = $0.object as? UIDevice else {
-                    return
-                }
-                eventHandler(device.orientation)
+            .onRotate { deviceOrientation in
+                eventHandler(deviceOrientation)
             }
     }
 }
