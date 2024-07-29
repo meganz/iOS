@@ -4,16 +4,18 @@ import MEGADomain
 extension MEGAChatSource {
     func toChatSourceEntity() -> ChatSourceEntity {
         switch self {
+        case .invalidChat:
+                .invalidChat
         case .error:
-            return .error
+                .error
         case .none:
-            return .none
+                .none
         case .local:
-            return .local
+                .local
         case .remote:
-            return .remote
+                .remote
         @unknown default:
-            return .error
+                .error
         }
     }
 }

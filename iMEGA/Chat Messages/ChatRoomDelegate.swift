@@ -571,8 +571,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             return
         }
         switch MEGAChatSdk.shared.loadMessages(forChat: chatRoom.chatId, count: count) {
+        case .invalidChat:
+            MEGALogError("loadMessagesForChat: not available chat with the given chatid")
         case .error:
-            MEGALogDebug("loadMessagesForChat: history has to be fetched from server, but we are not logged in yet")
+            MEGALogError("loadMessagesForChat: history has to be fetched from server, but we are not logged in yet")
         case .none:
             MEGALogDebug("loadMessagesForChat: there's no more history available (not even in the server)")
             awaitingLoad = true
