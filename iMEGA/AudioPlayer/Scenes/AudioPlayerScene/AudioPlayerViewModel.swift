@@ -7,7 +7,8 @@ import MEGAPresentation
 
 enum AudioPlayerAction: ActionType {
     case onViewDidLoad
-    case onViewDidDissapear
+    case viewDidDissapear
+    case initMiniPlayer
     case updateCurrentTime(percentage: Float)
     case progressDragEventBegan
     case progressDragEventEnded
@@ -460,8 +461,10 @@ final class AudioPlayerViewModel: ViewModelType {
         case .onTermsOfServiceViolationAlertDismissAction:
             configEntity.playerHandler.closePlayer()
             router.dismiss()
-        case .onViewDidDissapear:
+        case .viewDidDissapear:
             accountUseCase.isLoggedIn() ? initMiniPlayer() : requestStopAudioPlayerSession()
+        case .initMiniPlayer:
+            initMiniPlayer()
         }
     }
     
