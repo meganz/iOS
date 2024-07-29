@@ -8,7 +8,7 @@ struct ErrorView: View {
         Text(error)
             .font(.footnote)
             .foregroundStyle(isDesignTokenEnabled ?
-                             TokenColors.Button.brand.swiftUI : MEGAAppColor.Red._F30C14.color)
+                             TokenColors.Text.error.swiftUI : MEGAAppColor.Red._F30C14.color)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
     }
