@@ -201,22 +201,20 @@ class ChatSharedItemsViewController: UIViewController {
         let source = MEGAChatSdk.shared.loadAttachments(forChat: chatRoom.chatId, count: 16)
         
         switch source {
+        case .invalidChat:
+            MEGALogError("[ChatSharedFiles] not available chat with the given chatid")
         case .error:
-            MEGALogDebug("[ChatSharedFiles] Error fetching chat files because we are not logged in yet")
-            
+            MEGALogError("[ChatSharedFiles] Error fetching chat files because we are not logged in yet")
         case .none:
             MEGALogDebug("[ChatSharedFiles] No more files available")
             attachmentsLoaded = true
             activityIndicator.stopAnimating()
-            
         case .local:
             MEGALogDebug("[ChatSharedFiles] Files will be fetched locally")
             attachmentsLoading = true
-            
         case .remote:
             MEGALogDebug("[ChatSharedFiles] Files will be fetched remotely")
             attachmentsLoading = true
-            
         @unknown default:
             MEGALogDebug("[ChatSharedFiles] Unnknown error")
         }
