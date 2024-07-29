@@ -3,6 +3,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 import MEGAUI
 
@@ -132,7 +133,7 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
 extension ContactDetailsViewController {
     @objc
     func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
-        NodeInfoViewModel(withNode: node)
+        NodeInfoViewModel(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider)
     }
     
     @objc

@@ -33,7 +33,8 @@ extension SharedItemsViewController {
                                        isNodeUndecryptedFolder: Bool) -> NodeInfoViewModel {
         return NodeInfoViewModel(
             withNode: node,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo), 
+            featureFlagProvider: DIContainer.featureFlagProvider,
             isNodeUndecryptedFolder: isNodeUndecryptedFolder,
             shouldDisplayContactVerificationInfo: isContactVerificationEnabled() && incomingButton?.isSelected == true,
             completion: { [weak self] in

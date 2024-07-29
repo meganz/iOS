@@ -1,8 +1,10 @@
 import MEGADomain
+import MEGAPresentation
 
 @objc final class NodeInfoViewModel: NSObject {
     private let router = SharedItemsViewRouter()
     private let shareUseCase: (any ShareUseCaseProtocol)?
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     let shouldDisplayContactVerificationInfo: Bool
 
@@ -12,12 +14,14 @@ import MEGADomain
     init(
         withNode node: MEGANode,
         shareUseCase: (any ShareUseCaseProtocol)? = nil,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         isNodeUndecryptedFolder: Bool = false,
         shouldDisplayContactVerificationInfo: Bool = false,
         completion: (() -> Void)? = nil
     ) {
         self.shareUseCase = shareUseCase
         self.node = node
+        self.featureFlagProvider = featureFlagProvider
         self.isNodeUndecryptedFolder = isNodeUndecryptedFolder
         self.shouldDisplayContactVerificationInfo = shouldDisplayContactVerificationInfo
     }
@@ -42,6 +46,16 @@ import MEGADomain
     func isContactVerified() -> Bool {
         guard let user = shareUseCase?.user(from: node.toNodeEntity()) else { return false }
         return shareUseCase?.areCredentialsVerifed(of: user) == true
+    }
+
+    func shouldShowNodeDescription() -> Bool {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .nodeDescription),
+              // Hide the node description when available. To be handled in the future.
+              node.description == nil || node.description?.isEmpty == true else {
+            return false
+        }
+
+        return true
     }
 
     func openVerifyCredentials(

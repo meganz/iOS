@@ -1,5 +1,6 @@
 import ChatRepo
 import MEGADomain
+import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 
@@ -209,7 +210,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
 
     func viewInfo(node: MEGANode) {
-        let viewModel = NodeInfoViewModel(withNode: node)
+        let viewModel = NodeInfoViewModel(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider)
         let nodeInfoViewController = NodeInfoViewController.instantiate(withViewModel: viewModel, delegate: nil)
         baseViewController?.present(nodeInfoViewController, animated: true, completion: nil)
     }

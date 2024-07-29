@@ -3,11 +3,13 @@ import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
 import MEGASwiftUI
+import SwiftUI
 import UIKit
 
 enum NodeInfoTableViewSection {
     case info
     case details
+    case description(NodeDescriptionCellController)
     case link
     case versions
     case sharing
@@ -98,6 +100,7 @@ class NodeInfoViewController: UIViewController {
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         tableView.register(HostingTableViewCell<NodeInfoVerifyAccountTableViewCell>.self,
                                  forCellReuseIdentifier: "NodeInfoVerifyAccountTableViewCell")
+        NodeDescriptionCellController.registerCell(for: tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -341,6 +344,31 @@ class NodeInfoViewController: UIViewController {
             if sdk.accessLevel(for: node) == .accessOwner && !node.isTakenDown() {
                 sections.append(.link)
             }
+        }
+
+        if let viewModel, viewModel.shouldShowNodeDescription() {
+            let descriptionViewModel = NodeDescriptionViewModel(
+                node: node.toNodeEntity(),
+                nodeUseCase: NodeUseCase(
+                    nodeDataRepository: NodeDataRepository.newRepo,
+                    nodeValidationRepository: NodeValidationRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo
+                ),
+                backupUseCase: BackupsUseCase(
+                    backupsRepository: BackupsRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo
+                )
+            )
+
+            let descriptionController = NodeDescriptionCellController(
+                viewModel: descriptionViewModel,
+                controller: self
+            )
+
+            sections.append(.description(descriptionController))
+        }
+
+        if !node.mnz_isInRubbishBin() {
             if node.isFolder() && sdk.accessLevel(for: node) == .accessOwner {
                 sections.append(.sharing)
                 if pendingOutShares().isNotEmpty {
@@ -570,6 +598,8 @@ extension NodeInfoViewController: UITableViewDataSource {
             return cachedPendingShares.count
         case .link, .versions, .removeSharing:
             return 1
+        case .description(let controller):
+            return controller.tableView(tableView, numberOfRowsInSection: section)
         }
     }
     
@@ -601,6 +631,8 @@ extension NodeInfoViewController: UITableViewDataSource {
             return pendingSharingCell(forIndexPath: indexPath)
         case .removeSharing:
             return removeSharingCell(forIndexPath: indexPath)
+        case .description(let controller):
+            return controller.tableView(tableView, cellForRowAt: indexPath)
         }
     }
 }
@@ -610,6 +642,10 @@ extension NodeInfoViewController: UITableViewDataSource {
 extension NodeInfoViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if case .description(let controller) = cachedSections[section] {
+            return controller.tableView(tableView, viewForHeaderInSection: section)
+        }
+
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
@@ -637,12 +673,17 @@ extension NodeInfoViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
-            return UIView(frame: .zero)
+        switch cachedSections[section] {
+        case .description(let controller):
+            return controller.tableView(tableView, viewForFooterInSection: section)
+        default:
+            guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
+                return UIView(frame: .zero)
+            }
+            footer.setPreferredBackgroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_secondaryBackground(for: traitCollection))
+            footer.configure(title: nil, topDistance: 5.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+            return footer
         }
-        footer.setPreferredBackgroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_secondaryBackground(for: traitCollection))
-        footer.configure(title: nil, topDistance: 5.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-        return footer
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -668,6 +709,8 @@ extension NodeInfoViewController: UITableViewDelegate {
             }
         case .pendingSharing:
             showAlertForRemovingPendingShare(forIndexPat: indexPath)
+        case .description(let controller):
+            controller.tableView(tableView, didSelectRowAt: indexPath)
         case .info:
             break
         }
