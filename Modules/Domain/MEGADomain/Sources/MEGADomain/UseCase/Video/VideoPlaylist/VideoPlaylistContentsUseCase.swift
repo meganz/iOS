@@ -3,12 +3,12 @@ import MEGASwift
 
 public protocol VideoPlaylistContentsUseCaseProtocol: Sendable {
     
-    /// An async throwing sequence of VideoPlaylistEntity can trhow error that  will emites updated given VideoPlaylistEntity values.
+    /// An async throwing sequence of VideoPlaylistEntity can throw error that  will emit updated given VideoPlaylistEntity values.
     /// - Parameter videoPlaylist: VideoPlaylistEntity instance that wants to be monitored
     /// - Returns: Stream of either Updated `VideoPlaylistEntity` or `Error` (CancellationError if cancelled, VideoPlaylistErrorEntity if other error)`.
     func monitorVideoPlaylist(for videoPlaylist: VideoPlaylistEntity) -> AnyAsyncThrowingSequence<VideoPlaylistEntity, any Error>
     
-    /// An async sequence of collection of `NodeEntity` can trhow error that  will emites updated given VideoPlaylistEntity values.
+    /// An async sequence of collection of `NodeEntity` can throw error that  will emit updated given VideoPlaylistEntity values.
     /// - Parameter videoPlaylist: VideoPlaylistEntity instance which its content wants to be monitored
     /// - Returns: Stream of either Updated video node entities
     func monitorUserVideoPlaylistContent(for videoPlaylist: VideoPlaylistEntity) -> AnyAsyncSequence<[NodeEntity]>
@@ -25,22 +25,31 @@ public protocol VideoPlaylistContentsUseCaseProtocol: Sendable {
 }
 
 public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol {
-    
+        
     private let userVideoPlaylistRepository: any UserVideoPlaylistsRepositoryProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let fileSearchRepository: any FilesSearchRepositoryProtocol
     private let nodeRepository: any NodeRepositoryProtocol
-    
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
+
     public init(
         userVideoPlaylistRepository: some UserVideoPlaylistsRepositoryProtocol,
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         fileSearchRepository: some FilesSearchRepositoryProtocol,
-        nodeRepository: some NodeRepositoryProtocol
+        nodeRepository: some NodeRepositoryProtocol,
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
     ) {
         self.userVideoPlaylistRepository = userVideoPlaylistRepository
         self.photoLibraryUseCase = photoLibraryUseCase
         self.fileSearchRepository = fileSearchRepository
         self.nodeRepository = nodeRepository
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
     // MARK: - monitorVideoPlaylist
@@ -81,30 +90,23 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
     }
     
     // MARK: - monitorUserVideoPlaylistContent
-    
     public func monitorUserVideoPlaylistContent(for videoPlaylist: VideoPlaylistEntity) -> AnyAsyncSequence<[NodeEntity]> {
         switch videoPlaylist.type {
         case .favourite:
-            return nodeRepository.nodeUpdates
-                .filter { $0.contains { node in node.name.fileExtensionGroup.isVideo }}
-                .compactMap { _ in
-                    try? await videos(in: videoPlaylist)
-                }
-                .prepend {
-                    (try? await videos(in: videoPlaylist)) ?? []
-                }
-                .eraseToAnyAsyncSequence()
-            
+            merge(
+                updatedVideoNodes().map { _ in () },
+                sensitiveNodeUseCase.folderSensitivityChanged())
+            .compactMap { _ in
+                try? await videos(in: videoPlaylist)
+            }
+            .prepend {
+                (try? await videos(in: videoPlaylist)) ?? []
+            }
+            .eraseToAnyAsyncSequence()
         case .user:
-            return userVideoPlaylistRepository.setElementsUpdatedAsyncSequence
-                .filter {
-                    $0.contains { setElement in
-                        setElement.ownerId == videoPlaylist.id
-                    }
-                }
-                .compactMap { _ in
-                    try? await videos(in: videoPlaylist)
-                }
+            merge(contentUpdated(in: videoPlaylist),
+                  nodesUpdated(in: videoPlaylist),
+                  playlistVideosOnFolderSensitivityChanged(in: videoPlaylist))
                 .prepend {
                     (try? await videos(in: videoPlaylist)) ?? []
                 }
@@ -115,18 +117,30 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
     // MARK: - videos
     
     public func videos(in playlist: VideoPlaylistEntity) async throws -> [NodeEntity] {
-        switch playlist.type {
+        
+        let excludeSensitive = await shouldExcludeSensitive()
+        
+        return switch playlist.type {
         case .favourite:
-            try await photoLibraryUseCase.media(for: [.allLocations, .videos], excludeSensitive: nil)
-                .filter(\.isFavourite)
+            try await photoLibraryUseCase.media(
+                for: [.allLocations, .videos],
+                excludeSensitive: excludeSensitive)
+            .filter(\.isFavourite)
         default:
-            await userVideoPlaylistVideos(by: playlist.id).map(\.video)
+            await userVideoPlaylistVideos(by: playlist.id, excludeSensitive: excludeSensitive)
+                .map(\.video)
         }
     }
     
     // MARK: - userVideoPlaylistVideos
     
     public func userVideoPlaylistVideos(by id: HandleEntity) async -> [VideoPlaylistVideoEntity] {
+        let excludeSensitive = await shouldExcludeSensitive()
+
+        return await userVideoPlaylistVideos(by: id, excludeSensitive: excludeSensitive)
+    }
+    
+    private func userVideoPlaylistVideos(by id: HandleEntity, excludeSensitive: Bool) async -> [VideoPlaylistVideoEntity] {
         await withTaskGroup(of: VideoPlaylistVideoEntity?.self) { group in
             let videoSetElements = await userVideoPlaylistRepository.videoPlaylistContent(
                 by: id,
@@ -135,7 +149,7 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
             
             for setElement in videoSetElements {
                 group.addTask {
-                    await video(from: setElement)
+                    await video(from: setElement, excludeSensitive: excludeSensitive)
                 }
             }
             
@@ -147,10 +161,32 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
         }
     }
     
-    private func video(from setElement: SetElementEntity) async -> VideoPlaylistVideoEntity? {
-        guard let video = await fetchVideo(id: setElement.nodeId) else {
+    private func shouldExcludeSensitive() async -> Bool {
+        guard hiddenNodesFeatureFlagEnabled() else {
+            return false
+        }
+        
+        return await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+    }
+    
+    private func video(from setElement: SetElementEntity, excludeSensitive: Bool) async -> VideoPlaylistVideoEntity? {
+        guard 
+            let video = await fetchVideo(id: setElement.nodeId) else {
             return nil
         }
+        
+        let isNodeAllowed = if !excludeSensitive {
+            true
+        } else if video.isMarkedSensitive {
+            false
+        } else {
+            !(await isInheritingSensitivity(node: video))
+        }
+        
+        guard isNodeAllowed else {
+            return nil
+        }
+                
         return VideoPlaylistVideoEntity(video: video, videoPlaylistVideoId: setElement.id)
     }
     
@@ -170,5 +206,49 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
         }
         
         return videoPlaylist.toVideoPlaylistEntity(type: .user, sharedLinkStatus: .exported(videoPlaylist.isExported))
+    }
+        
+    private func isInheritingSensitivity(node: NodeEntity) async -> Bool {
+        (try? await sensitiveNodeUseCase.isInheritingSensitivity(node: node)) ?? false
+    }
+    
+    private func updatedVideoNodes() -> AnyAsyncSequence<[NodeEntity]> {
+        nodeRepository
+            .nodeUpdates
+            .filter { $0.contains { node in node.name.fileExtensionGroup.isVideo }}
+            .eraseToAnyAsyncSequence()
+    }
+    
+    private func playlistVideosOnFolderSensitivityChanged(in playlist: VideoPlaylistEntity) -> AnyAsyncSequence<[NodeEntity]> {
+        sensitiveNodeUseCase
+            .folderSensitivityChanged()
+            .map { try await videos(in: playlist) }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    private func contentUpdated(in playlist: VideoPlaylistEntity) -> AnyAsyncSequence<[NodeEntity]> {
+        userVideoPlaylistRepository
+            .playlistContentUpdated(by: playlist.id)
+            .compactMap { _ in try? await videos(in: playlist) }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    private func nodesUpdated(in playlist: VideoPlaylistEntity) -> AnyAsyncSequence<[NodeEntity]> {
+        switch playlist.type {
+        case .favourite:
+            EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence()
+        case .user:
+            updatedVideoNodes()
+                .compactMap { updatedPhotos -> [NodeEntity]? in
+                    let playlistVideoIds = await userVideoPlaylistRepository.videoPlaylistContent(
+                        by: playlist.id,
+                        includeElementsInRubbishBin: false)
+                    guard playlistVideoIds.isNotEmpty,
+                          updatedPhotos.contains(where: { photoNode in playlistVideoIds.contains(where: { albumPhotoId in albumPhotoId.nodeId == photoNode.handle }) })
+                    else { return nil }
+                    return try await videos(in: playlist)
+                }
+                .eraseToAnyAsyncSequence()
+        }
     }
 }

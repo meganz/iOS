@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGAPresentation
 
-protocol VideoPlaylistThumbnailLoaderProtocol {
+protocol VideoPlaylistThumbnailLoaderProtocol: Sendable {
     func loadThumbnails(for videos: [NodeEntity]) async -> [(any ImageContaining)]
 }
 

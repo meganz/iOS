@@ -17,22 +17,24 @@ struct VideoRevampRouter: VideoRevampRouting {
     
     func build() -> UIViewController {
         let sdk = MEGASdk.shared
+        let nodeRepository = NodeRepository.newRepo
         let fileSearchRepo = FilesSearchRepository(sdk: sdk)
         let fileSearchUseCase = FilesSearchUseCase(
             repo: fileSearchRepo,
-            nodeRepository: NodeRepository.newRepo
+            nodeRepository: nodeRepository
         )
         let userVideoPlaylistsRepo = UserVideoPlaylistsRepository(
             sdk: sdk,
             setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: sdk)
         )
-        
+        let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(
+            repo: UserAttributeRepository.newRepo)
         let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection(), syncModel: syncModel)
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let videoPlaylistUseCase = VideoPlaylistUseCase(
@@ -44,8 +46,11 @@ struct VideoRevampRouter: VideoRevampRouting {
             userVideoPlaylistRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase,
             fileSearchRepository: fileSearchRepo,
-            nodeRepository: NodeRepository.newRepo
-        )
+            nodeRepository: nodeRepository,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository)) {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
+            }
         let videoPlaylistModificationUseCase = VideoPlaylistModificationUseCase(
             userVideoPlaylistsRepository: userVideoPlaylistsRepo
         )
@@ -112,25 +117,30 @@ struct VideoRevampRouter: VideoRevampRouting {
     func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity, presentationConfig: VideoPlaylistContentSnackBarPresentationConfig) {
         let userVideoPlaylistsRepo = UserVideoPlaylistsRepository.newRepo
         let fileSearchRepo = FilesSearchRepository.newRepo
+        let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(
+            repo: UserAttributeRepository.newRepo)
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
-        
+        let nodeRepository = NodeRepository.newRepo
         let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
             userVideoPlaylistRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase,
             fileSearchRepository: fileSearchRepo,
-            nodeRepository: NodeRepository.newRepo
+            nodeRepository: nodeRepository,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let videoSelection = VideoSelection()
         let fileSearchUseCase = FilesSearchUseCase(
             repo: fileSearchRepo,
-            nodeRepository: NodeRepository.newRepo
+            nodeRepository: nodeRepository
         )
         let videoPlaylistUseCase = VideoPlaylistUseCase(
             fileSearchUseCase: fileSearchUseCase,

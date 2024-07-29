@@ -589,6 +589,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             alertViewModel: alertViewModel,
             renameVideoPlaylistAlertViewModel: alertViewModel, 
             thumbnailLoader: MockThumbnailLoader(),
+            contentProvider: VideoPlaylistsViewModelContentProvider(
+                videoPlaylistsUseCase: videoPlaylistUseCase),
             monitorSortOrderChangedDispatchQueue: DispatchQueue.main
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

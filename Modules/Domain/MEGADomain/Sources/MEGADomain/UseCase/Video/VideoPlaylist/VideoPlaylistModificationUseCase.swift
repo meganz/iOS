@@ -1,4 +1,4 @@
-public protocol VideoPlaylistModificationUseCaseProtocol {
+public protocol VideoPlaylistModificationUseCaseProtocol: Sendable {
     func addVideoToPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity
     func deleteVideos(in videoPlaylistId: HandleEntity, videos: [VideoPlaylistVideoEntity]) async throws -> VideoPlaylistElementsResultEntity
     func delete(videoPlaylists: [VideoPlaylistEntity]) async -> [VideoPlaylistEntity]

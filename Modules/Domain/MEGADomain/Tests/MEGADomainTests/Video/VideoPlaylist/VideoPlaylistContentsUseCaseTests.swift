@@ -381,7 +381,37 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
             finished.fulfill()
         }
         
-        await fulfillment(of: [started, iterated, finished], timeout: 0.5)
+        await fulfillment(of: [started, iterated, finished], timeout: 1)
+        task.cancel()
+        
+        XCTAssertNotNil(receivedVideos)
+    }
+    
+    // MARK: - monitorUserVideoPlaylistContent - folderSensitivityChanged
+    
+    func testMonitorUserVideoPlaylistContent_whenFolderSensitivtyHasChanged_emitsUpdate() async {
+        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let expectedResults = anyVideoPlaylistContents()
+        let (sut, _, _, _) = makeSUT(
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
+                folderSensitivityChanged: SingleItemAsyncSequence(item: ()).eraseToAnyAsyncSequence())
+        )
+        
+        @Atomic var receivedVideos: [NodeEntity]?
+        let started = expectation(description: "started")
+        let iterated = expectation(description: "iterated")
+        iterated.expectedFulfillmentCount = 2
+        let finished = expectation(description: "finished")
+        let task = Task {
+            started.fulfill()
+            for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
+                $receivedVideos.mutate { $0 = videos }
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        
+        await fulfillment(of: [started, iterated, finished], timeout: 1)
         task.cancel()
         
         XCTAssertNotNil(receivedVideos)
@@ -396,7 +426,10 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         videoPlaylistsResult: [SetEntity] = [],
         nodeRepository: MockNodeRepository = MockNodeRepository(),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        sensitiveNodesUserAttributeEntity: SensitiveNodesUserAttributeEntity = .init(onboarded: false, showHiddenNodes: true),
+        sensitiveNodeUseCase: MockSensitiveNodeUseCase = .init(),
+        hiddenNodesFeatureFlagEnabled: Bool = false
     ) -> (
         sut: VideoPlaylistContentsUseCase,
         userVideoPlaylistRepository: MockUserVideoPlaylistsRepository,
@@ -414,7 +447,10 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
             userVideoPlaylistRepository: userVideoPlaylistRepository,
             photoLibraryUseCase: photoLibraryUseCase,
             fileSearchRepository: fileSearchRepository,
-            nodeRepository: nodeRepository
+            nodeRepository: nodeRepository,
+            contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase( sensitiveNodesUserAttributeEntity: sensitiveNodesUserAttributeEntity),
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            hiddenNodesFeatureFlagEnabled: { hiddenNodesFeatureFlagEnabled }
         )
         return (sut, userVideoPlaylistRepository, photoLibraryUseCase, fileSearchRepository)
     }
