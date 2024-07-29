@@ -62,11 +62,22 @@ final class AudioPlayerViewController: UIViewController {
         }
         
         viewModel.dispatch(.onViewDidLoad)
+        navigationController?.delegate = self
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        viewModel.dispatch(.onViewDidDissapear)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isMovingFromParent || isBeingDismissed {
+            viewModel.dispatch(.viewDidDissapear)
+        } else if let presentingViewController = presentingViewController, presentingViewController.isBeingDismissed {
+            viewModel.dispatch(.viewDidDissapear)
+        }
+    }
+    
+    /// Overriding dismiss function to detect dismissal of current view controller triggered from navigation controller's dismissal
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.dismiss(animated: flag, completion: completion)
+        viewModel.dispatch(.viewDidDissapear)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -92,9 +103,17 @@ final class AudioPlayerViewController: UIViewController {
     
     deinit {
         viewModel.dispatch(.deinit)
+        removeDelegates()
     }
     
     // MARK: - Private functions
+    
+    private func removeDelegates() {
+        if navigationController?.delegate === self {
+            navigationController?.delegate = nil
+        }
+    }
+    
     private func updatePlayerStatus(currentTime: String, remainingTime: String, percentage: Float, isPlaying: Bool) {
         currentTimeLabel.text = currentTime
         remainingTimeLabel.text = remainingTime
@@ -607,6 +626,17 @@ extension AudioPlayerViewController: AdsSlotViewControllerProtocol {
             return cookiesBitmap.contains(.ads) && cookiesBitmap.contains(.adsCheckCookie)
         } catch {
             return false
+        }
+    }
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension AudioPlayerViewController: UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController != self {
+            viewModel.dispatch(.initMiniPlayer)
         }
     }
 }
