@@ -4236,3 +4236,11 @@
 "chat.call.raise-hand.snack-bar.lower-hand"="Lower hand";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="View";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="Read-only";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="Description";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="No description";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Add description";

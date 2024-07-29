@@ -1,6 +1,7 @@
 import ChatRepo
 import Foundation
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
 class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate {
@@ -200,7 +201,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
 
     private func showNodeInfo(_ node: MEGANode) {
         let nodeInfoNavigationController = NodeInfoViewController.instantiate(
-            withViewModel: .init(withNode: node),
+            withViewModel: .init(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider),
             delegate: nil
         )
         

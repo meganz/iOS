@@ -1,10 +1,11 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 
 extension PreviewDocumentViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
-        return NodeInfoViewModel(withNode: node)
+        return NodeInfoViewModel(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider)
     }
     
     @objc func downloadFileLink() {

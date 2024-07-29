@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
 final class NodeInfoRouter: NSObject {
@@ -25,7 +26,8 @@ final class NodeInfoRouter: NSObject {
     func showInformation(for node: MEGANode) {
         let viewModel = NodeInfoViewModel(
             withNode: node,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo), 
+            featureFlagProvider: DIContainer.featureFlagProvider,
             shouldDisplayContactVerificationInfo: MEGASdk.shared.isContactVerificationWarningEnabled
         )
         
