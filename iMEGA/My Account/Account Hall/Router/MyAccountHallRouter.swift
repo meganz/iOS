@@ -119,17 +119,6 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         )
     }
     
-    private func setupContactsViewController(with node: NodeEntity, mode: ContactsMode) -> ContactsViewController? {
-        guard let node = node.toMEGANode(in: MEGASdk.shared),
-              let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(identifier: "ContactsViewControllerID") as? ContactsViewController else {
-            return nil
-        }
-        
-        contactsVC.node = node
-        contactsVC.contactsMode = mode
-        return contactsVC
-    }
-    
     private func executeNodeAction(
         for node: NodeEntity,
         action: @escaping (UIViewController, NodeEntity) -> Void

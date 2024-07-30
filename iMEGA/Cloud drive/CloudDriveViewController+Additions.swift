@@ -117,19 +117,6 @@ extension CloudDriveViewController {
         toggle(editModeActive: false)
     }
     
-    @objc func showShareFolderForNodes(_ nodes: [MEGANode]) {
-        guard let navigationController =
-                UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? MEGANavigationController, let contactsVC = navigationController.viewControllers.first as? ContactsViewController else {
-            return
-        }
-        
-        contactsVC.contactsViewControllerDelegate = self
-        contactsVC.nodesArray = nodes
-        contactsVC.contactsMode = .shareFoldersWith
-        
-        present(navigationController, animated: true)
-    }
-    
     @objc func showSendToChat(_ nodes: [MEGANode]) {
         guard let navigationController =
                 UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController, let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
