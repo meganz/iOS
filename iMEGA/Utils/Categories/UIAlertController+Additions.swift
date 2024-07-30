@@ -22,11 +22,16 @@ extension UIAlertController {
     
     private func discardChangesAlert(withConfirmAction action: @escaping (() -> Void)) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: Strings.Localizable.discardChanges, style: .destructive) { _ in
-            action()
-        })
-        alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
         
+        let discardAction = UIAlertAction(title: Strings.Localizable.discardChanges, style: .destructive) { _ in
+            action()
+        }
+        if UIColor.isDesignTokenEnabled() {
+            discardAction.titleTextColor = TokenColors.Text.error
+        }
+        
+        alert.addAction(discardAction)
+        alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
         return alert
     }
     
