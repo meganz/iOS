@@ -1,6 +1,6 @@
-import QuickLookThumbnailing
+@preconcurrency import QuickLookThumbnailing
 
-protocol FileAttributeGeneratorProtocol {
+protocol FileAttributeGeneratorProtocol: Sendable {
     /// Create a square (200px x 200px) thumbnail from the original source (cropped in the center of the image)
     /// - Parameter destinationURL: url where the thumbnail will be saved
     /// - Returns: true if the thumbnail is created, otherwise false
@@ -20,7 +20,7 @@ protocol FileAttributeGeneratorProtocol {
 }
 
 final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
-    
+
     private let sourceURL: URL
     private let pixelWidth: Int
     private let pixelHeight: Int
