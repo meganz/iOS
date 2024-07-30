@@ -10,6 +10,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
+    let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+
     private let syncModel: VideoRevampSyncModel
     private let monitorSortOrderChangedDispatchQueue: DispatchQueue
     
@@ -49,6 +51,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
         alertViewModel: TextFieldAlertViewModel,
         renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
@@ -59,6 +62,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.syncModel = syncModel
         self.alertViewModel = alertViewModel
         self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel

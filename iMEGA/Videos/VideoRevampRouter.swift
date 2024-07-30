@@ -61,6 +61,10 @@ struct VideoRevampRouter: VideoRevampRouting {
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistContentUseCase: videoPlaylistContentsUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
+                preferenceUseCase: PreferenceUseCase.default,
+                sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+            ),
             videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled),
             router: self
         )

@@ -1,5 +1,5 @@
 import AsyncAlgorithms
-import Combine
+@preconcurrency import Combine
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -46,7 +46,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var presentationConfig: VideoPlaylistContentSnackBarPresentationConfig?
     
     private(set) var videoPlaylistNames: [String] = []
-    
     private(set) var renameVideoPlaylistTask: Task<Void, Never>?
     private(set) var deleteVideoPlaylistTask: Task<Void, Never>?
     private(set) var moveVideoInVideoPlaylistContentToRubbishBinTask: Task<Void, Never>?
@@ -127,9 +126,9 @@ final class VideoPlaylistContentViewModel: ObservableObject {
                     break
                 }
                 self.videoPlaylistEntity = videoPlaylist
-                self.videos = VideoPlaylistContentSorter.sort(videos, by: sortOrder)
+                self.videos = await VideoPlaylistContentSorter.sort(videos, by: sortOrder)
                 self.sharedUIState.videosCount = videos.count
-                await loadThumbnails(for: videos)
+                await loadThumbnails(for: self.videos)
             }
         } catch {
             handle(error)
@@ -238,26 +237,26 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         }
     }
     
+    @MainActor
+    func monitorVideoPlaylists() async {
+        
+        for await _ in videoPlaylistsUseCase.videoPlaylistsUpdatedAsyncSequence.prepend(()) {
+            guard !Task.isCancelled else {
+                break
+            }
+            await loadVideoPlaylistsNames()
+        }
+    }
+    
     private func assignVideoPlaylistRenameValidator() {
         let validator = VideoPlaylistNameValidator(existingVideoPlaylistNames: { [weak self] in
             self?.videoPlaylistNames ?? []
         })
         renameVideoPlaylistAlertViewModel.validator = { validator.validateWhenRenamed(into: $0) }
     }
-    
-    func monitorVideoPlaylists() async {
-        await loadVideoPlaylists()
         
-        for await _ in videoPlaylistsUseCase.videoPlaylistsUpdatedAsyncSequence {
-            guard !Task.isCancelled else {
-                break
-            }
-            await loadVideoPlaylists()
-        }
-    }
-    
     @MainActor
-    private func loadVideoPlaylists(sortOrder: SortOrderEntity? = nil) async {
+    private func loadVideoPlaylistsNames() async {
         let systemVideoPlaylistNames = [Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites]
         let userVideoPlaylistNames = await videoPlaylistsUseCase.userVideoPlaylists().map(\.name)
         videoPlaylistNames = systemVideoPlaylistNames + userVideoPlaylistNames

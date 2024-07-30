@@ -42,6 +42,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+
     private let videoConfig: VideoConfig
     let router: any VideoRevampRouting
     
@@ -58,6 +60,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) {
@@ -67,6 +70,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.videoPlaylistUseCase = videoPlaylistUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.videoConfig = videoConfig
         self.router = router
         self.videoToolbarViewModel = VideoToolbarViewModel()
@@ -128,6 +132,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistContentUseCase: videoPlaylistContentUseCase, 
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             videoConfig: videoConfig,
             router: router
         )
