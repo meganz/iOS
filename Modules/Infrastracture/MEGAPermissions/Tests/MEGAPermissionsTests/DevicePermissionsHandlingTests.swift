@@ -20,7 +20,7 @@ final class DevicePermissionsHandlingTests: XCTestCase {
             handler.shouldAskForAudioPermissions = scenario.inputs.0
             handler.shouldAskForVideoPermissions = scenario.inputs.1
             handler.shouldAskForPhotosPermissions = scenario.inputs.2
-            handler.shouldAskForNotificaitonPermissionsValueToReturn = scenario.inputs.3
+            handler.shouldAskForNotificationPermissionsValueToReturn = scenario.inputs.3
             let shouldSetup = await handler.shouldSetupPermissions()
             XCTAssertEqual(shouldSetup, scenario.output)
         }
@@ -78,29 +78,5 @@ final class DevicePermissionsHandlingTests: XCTestCase {
         let handler = MockDevicePermissionHandler()
         handler.audioPermissionAuthorizationStatus = .notDetermined
         XCTAssertFalse(handler.isAudioPermissionAuthorized)
-    }
-    
-    func testHasContactsAuthorization_returnTrue_ifAuthorized() {
-        let handler = MockDevicePermissionHandler()
-        handler.contactsAuthorizationStatus = .authorized
-        XCTAssertTrue(handler.hasContactsAuthorization)
-    }
-    
-    func testHasContactsAuthorization_returnFalse_ifNotDetermined() {
-        let handler = MockDevicePermissionHandler()
-        handler.contactsAuthorizationStatus = .notDetermined
-        XCTAssertFalse(handler.hasContactsAuthorization)
-    }
-    
-    func testHasContactsAuthorization_returnFalse_ifDenied() {
-        let handler = MockDevicePermissionHandler()
-        handler.contactsAuthorizationStatus = .denied
-        XCTAssertFalse(handler.hasContactsAuthorization)
-    }
-    
-    func testHasContactsAuthorization_returnFalse_ifRestricted() {
-        let handler = MockDevicePermissionHandler()
-        handler.contactsAuthorizationStatus = .restricted
-        XCTAssertFalse(handler.hasContactsAuthorization)
     }
 }

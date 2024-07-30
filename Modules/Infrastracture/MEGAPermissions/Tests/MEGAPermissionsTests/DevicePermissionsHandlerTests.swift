@@ -1,5 +1,4 @@
 import AVFoundation
-import Contacts
 @testable import MEGAPermissions
 import Photos
 import UserNotifications
@@ -25,14 +24,6 @@ final class DevicePermissionsHandlerTests: XCTestCase {
                 self.photoStatusAccessorPassedInValues.append($0)
                 return self.photoStatusAccessorValueToReturn
             },
-            contactsAccessor: { [unowned self] in
-                self.contactsAccessorCallCount += 1
-                return self.contactsAccessorValueToReturn
-            },
-            contactStatusAccessor: { [unowned self] in
-                self.contactStatusAccessorCallCount += 1
-                return self.contactStatusAccessorValueToReturn
-            },
             notificationsAccessor: { [unowned self] in
                 self.notificationAccessorCallCount += 1
                 return self.notificationAccessorValueToReturn
@@ -49,9 +40,6 @@ final class DevicePermissionsHandlerTests: XCTestCase {
         var passedInRequestedPhotoAccessLevels: [PHAccessLevel] = []
         var photoAuthorizationStatusToReturn: PHAuthorizationStatus = .notDetermined
         
-        var contactsAccessorCallCount = 0
-        var contactsAccessorValueToReturn = false
-        
         var notificationAccessorCallCount = 0
         var notificationAccessorValueToReturn = false
         
@@ -63,9 +51,6 @@ final class DevicePermissionsHandlerTests: XCTestCase {
         
         var mediaStatusAccessorPassedInValues: [AVMediaType] = []
         var mediaStatusAccessorValueToReturn: AVAuthorizationStatus = .notDetermined
-        
-        var contactStatusAccessorCallCount = 0
-        var contactStatusAccessorValueToReturn: CNAuthorizationStatus = .notDetermined
         
         init() {
             
@@ -124,22 +109,6 @@ final class DevicePermissionsHandlerTests: XCTestCase {
         XCTAssertEqual(harness.passedInAccessorMediaTypes, [.video])
         XCTAssertFalse(hasPermission)
         
-    }
-    
-    func testRequestContactsPermissions_returnsTrue() async throws {
-        let harness = Harness()
-        harness.contactsAccessorValueToReturn = true
-        let hasPermission = await harness.sut.requestContactsPermissions()
-        XCTAssertEqual(harness.contactsAccessorCallCount, 1)
-        XCTAssertTrue(hasPermission)
-    }
-    
-    func testRequestContactsPermissions_returnsFalse() async throws {
-        let harness = Harness()
-        harness.contactsAccessorValueToReturn = false
-        let hasPermission = await harness.sut.requestContactsPermissions()
-        XCTAssertEqual(harness.contactsAccessorCallCount, 1)
-        XCTAssertFalse(hasPermission)
     }
     
     func testRequestNotificationsPermission_returnsTrue() async throws {
@@ -276,22 +245,6 @@ final class DevicePermissionsHandlerTests: XCTestCase {
         let hasAuthorization = harness.sut.hasAuthorizedAccessToPhotoAlbum
         XCTAssertEqual(harness.photoStatusAccessorPassedInValues, [.MEGAAccessLevel])
         XCTAssertFalse(hasAuthorization)
-    }
-    
-    func testContactsAuthorizationStatus_isAuthorized_returnsCorrectValue() async throws {
-        let harness = Harness()
-        harness.contactStatusAccessorValueToReturn = .authorized
-        let status = harness.sut.contactsAuthorizationStatus
-        XCTAssertEqual(harness.contactStatusAccessorCallCount, 1)
-        XCTAssertEqual(status, .authorized)
-    }
-    
-    func testContactsAuthorizationStatus_isDenied_returnsCorrectValue() async throws {
-        let harness = Harness()
-        harness.contactStatusAccessorValueToReturn = .denied
-        let status = harness.sut.contactsAuthorizationStatus
-        XCTAssertEqual(harness.contactStatusAccessorCallCount, 1)
-        XCTAssertEqual(status, .denied)
     }
     
     func testShouldAskForNotificationPermission_isNotDetermined_returnTrue() async throws {

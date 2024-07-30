@@ -1,5 +1,4 @@
 import AVFoundation
-import Contacts
 import Photos
 import UserNotifications
 
@@ -7,11 +6,10 @@ import UserNotifications
 // permission status for device permissions that application needs to offer all the
 // features to the user
 // Those permissions are:
-//   1. reading contact list
-//   2. access to microphone
-//   3. access to camera
-//   4. access to read write into photo album
-//   5. permission to send and present remote push notifications to the user
+//   1. access to microphone
+//   2. access to camera
+//   3. access to read write into photo album
+//   4. permission to send and present remote push notifications to the user
 //
 // note:
 // This pure Swift API, for classes using ObjC,
@@ -29,13 +27,10 @@ public protocol DevicePermissionsHandling {
     // uses AVCaptureDevice
     func requestPermission(for mediaType: AVMediaType) async -> Bool
     
-    // request access to user's contact list, using CNContactStore
-    func requestContactsPermissions() async -> Bool
-    
-    // requsts from UNUserNotificationCenter permission to send badge and sound notifications
+    // Request from UNUserNotificationCenter permission to send badge and sound notifications
     func requestNotificationsPermission() async -> Bool
     
-    // checks currrent status of authorization to user's photo library
+    // checks current status of authorization to user's photo library
     var photoLibraryAuthorizationStatus: PHAuthorizationStatus { get }
     
     // checks current authorization to microphone
@@ -43,9 +38,6 @@ public protocol DevicePermissionsHandling {
     
     // checks if access to camera is .authorized
     var isVideoPermissionAuthorized: Bool { get }
-    
-    // returns current status of the app to user's contact list
-    var contactsAuthorizationStatus: CNAuthorizationStatus { get }
     
     // checks current status of permission to send push notifications to user
     // with badge and sound
@@ -100,10 +92,6 @@ public extension DevicePermissionsHandling {
         request(asker: { await requestPhotoLibraryAccessPermissions() }, handler: handler)
     }
     
-    func contactsPermissionWithCompletionHandler(handler: @escaping (Bool) -> Void) {
-        request(asker: { await requestContactsPermissions() }, handler: handler)
-    }
-    
     func notificationsPermission(with handler: @escaping (Bool) -> Void) {
         request(asker: { await requestNotificationsPermission() }, handler: handler)
     }
@@ -131,10 +119,6 @@ public extension DevicePermissionsHandling {
             shouldAskForVideoPermissions ||
             shouldAskForPhotosPermissions
         )
-    }
-    
-    var hasContactsAuthorization: Bool {
-        contactsAuthorizationStatus == .authorized
     }
     
     var isAudioPermissionAuthorized: Bool {

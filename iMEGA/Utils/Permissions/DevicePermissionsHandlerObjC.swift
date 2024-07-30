@@ -36,11 +36,6 @@ class DevicePermissionsHandlerObjC: NSObject {
     }
     
     @objc
-    var hasAuthorizedContacts: Bool {
-        permissionHandler.contactsAuthorizationStatus == .authorized
-    }
-    
-    @objc
     func alertAudioPermission(incomingCall: Bool) {
         router.alertAudioPermission(incomingCall: incomingCall)
     }
@@ -74,11 +69,6 @@ class DevicePermissionsHandlerObjC: NSObject {
     @objc
     func requstPhotoAlbumAccessPermissionsWithHandler(_ handler: @escaping (Bool) -> Void) {
         permissionHandler.photosPermissionWithCompletionHandler(handler: handler)
-    }
-    
-    @objc
-    func requestContactsPermissionWithHandler(_ handler: @escaping (Bool) -> Void) {
-        permissionHandler.contactsPermissionWithCompletionHandler(handler: handler)
     }
     
     @objc
