@@ -1,16 +1,13 @@
+import Combine
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
+import MEGAL10n
+import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
 final class ContactsViewModelTests: XCTestCase {
-    private func makeSUT(isContactVerificationWarningEnabled: Bool, isSharedFolderOwnerVerified: Bool) -> ContactsViewModel {
-            let sdk = MockSdk(
-                isContactVerificationWarningEnabled: isContactVerificationWarningEnabled,
-                isSharedFolderOwnerVerified: isSharedFolderOwnerVerified
-            )
-            return ContactsViewModel(sdk: sdk)
-        }
-    
     func testShouldShowContactsNotVerifiedBanner_whenSharingFolder_contactVerficationOff_shouldBeHidden() {
         let sut = makeSUT(isContactVerificationWarningEnabled: false, isSharedFolderOwnerVerified: true)
 
@@ -219,5 +216,131 @@ final class ContactsViewModelTests: XCTestCase {
                 visibleUsersArray: visibleUsersArray
             )
         )
+    }
+    
+    func testShowAlertForSensitiveDescendants_hiddenNodesFeatureOff_shouldNotShowLoadingOrAlert() {
+        let sut = makeSUT(isHiddenNodesEnabled: false)
+        
+        let exp = expectation(description: "Should not show loading indicator or alert")
+        exp.isInverted = true
+        
+        let loadingSubscription = sut.$isLoading
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+        let alertSubscription = sut.$alertModel
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        sut.showAlertForSensitiveDescendants([MockNode(handle: 1, isMarkedSensitive: true)])
+        
+        wait(for: [exp], timeout: 0.2)
+        [loadingSubscription, alertSubscription].forEach { $0.cancel() }
+    }
+    
+    func testShowAlertForSensitiveDescendants_shareFolderWithModeNodesNotSensitive_shouldToggleIsLoadingCorrectlyAndNotShowAlert() {
+        let sut = makeSUT(
+            contactsMode: .shareFoldersWith,
+            doesContainSensitiveDescendants: [:],
+            isHiddenNodesEnabled: true)
+        
+        let (expectationLoadingStates, loadingSubscription) = expectLoadingShowAndDismiss(on: sut)
+        let alertExp = expectation(description: "Should not show alert")
+        alertExp.isInverted = true
+        let alertSubscription = sut.$alertModel
+            .dropFirst()
+            .sink { _ in
+                alertExp.fulfill()
+            }
+        
+        sut.showAlertForSensitiveDescendants([MockNode(handle: 1, isMarkedSensitive: false)])
+        
+        wait(for: [expectationLoadingStates, alertExp], timeout: 0.5)
+        [loadingSubscription, alertSubscription].forEach { $0.cancel() }
+    }
+    
+    func testShowAlertForSensitiveDescendants_shareFolderWithModeNodesSensitive_shouldToggleIsLoadingCorrectlyShowAlertWithCorrectAction() {
+        for isMultipleNodes in [true, false] {
+            var sensitiveNodes = [MockNode(handle: 1, isMarkedSensitive: true),
+                                  MockNode(handle: 2, isMarkedSensitive: true)]
+            if !isMultipleNodes {
+                sensitiveNodes = [sensitiveNodes.first].compactMap { $0 }
+            }
+            let sut = makeSUT(
+                contactsMode: .shareFoldersWith,
+                doesContainSensitiveDescendants: Dictionary(uniqueKeysWithValues: sensitiveNodes.map { ($0.handle, true) }),
+                isHiddenNodesEnabled: true)
+            
+            let (expectationLoadingStates, loadingSubscription) = expectLoadingShowAndDismiss(on: sut)
+            let dismissViewExp = expectation(description: "Should dismiss view on cancel action")
+            let dismissViewSubscription = sut.dismissViewSubject
+                .sink {
+                    dismissViewExp.fulfill()
+                }
+            let alertExp = expectation(description: "Should show alert")
+            let expectedAlertMessage = if isMultipleNodes {
+                Strings.Localizable.ShareFolder.Sensitive.Alert.Message.multi
+            } else {
+                Strings.Localizable.ShareFolder.Sensitive.Alert.Message.single
+            }
+            let alertSubscription = sut.$alertModel
+                .dropFirst()
+                .sink {
+                    XCTAssertEqual($0?.title, Strings.Localizable.ShareFolder.Sensitive.Alert.title)
+                    XCTAssertEqual($0?.message, expectedAlertMessage)
+                    $0?.actions.first { $0.style == .cancel }?.handler()
+                    alertExp.fulfill()
+                }
+            
+            sut.showAlertForSensitiveDescendants(sensitiveNodes)
+            
+            wait(for: [expectationLoadingStates, alertExp, dismissViewExp], timeout: 1.0)
+            [loadingSubscription, alertSubscription, dismissViewSubscription]
+                .forEach { $0.cancel() }
+        }
+    }
+    
+    private func makeSUT(
+        contactsMode: ContactsMode = .default,
+        isContactVerificationWarningEnabled: Bool = false,
+        isSharedFolderOwnerVerified: Bool = false,
+        doesContainSensitiveDescendants: [HandleEntity: Bool] = [:],
+        isHiddenNodesEnabled: Bool = false
+    ) -> ContactsViewModel {
+        let sdk = MockSdk(
+            isContactVerificationWarningEnabled: isContactVerificationWarningEnabled,
+            isSharedFolderOwnerVerified: isSharedFolderOwnerVerified
+        )
+        return ContactsViewModel(
+            sdk: sdk,
+            contactsMode: contactsMode,
+            shareUseCase: MockShareUseCase(
+                doesContainSensitiveDescendants: doesContainSensitiveDescendants
+            ),
+            featureFlagProvider: MockFeatureFlagProvider(
+                list: [.hiddenNodes: isHiddenNodesEnabled])
+        )
+    }
+    
+    private func expectLoadingShowAndDismiss(
+        on sut: ContactsViewModel,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> (XCTestExpectation, AnyCancellable) {
+        var expectedLoadingStates = [true, false]
+        let exp = expectation(description: "Should show loading states")
+        exp.expectedFulfillmentCount = expectedLoadingStates.count
+        let subscription = sut.$isLoading
+            .dropFirst()
+            .sink {
+                let expectedLoadingState = expectedLoadingStates.removeFirst()
+                XCTAssertEqual($0, expectedLoadingState, "Unexpected loading state: \(expectedLoadingState)", file: file, line: line)
+                exp.fulfill()
+            }
+        
+        return (exp, subscription)
     }
 }

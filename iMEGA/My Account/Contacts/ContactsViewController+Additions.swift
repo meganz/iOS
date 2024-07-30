@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAFoundation
 import MEGAL10n
 import MEGAPresentation
+import MEGASDKRepo
 import SwiftUI
 
 extension ContactsViewController {
@@ -120,7 +121,11 @@ extension ContactsViewController {
     @objc
     func createViewModel() {
         self.viewModel = ContactsViewModel(
-            sdk: MEGASdk.shared
+            sdk: MEGASdk.shared,
+            contactsMode: contactsMode,
+            shareUseCase: ShareUseCase(
+                repo: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo)
         )
     }
 
@@ -182,6 +187,37 @@ extension ContactsViewController {
             default:
                 break
             }
+        }
+    }
+    
+    @objc func setupSubscriptions() {
+        subscriptions = [
+            viewModel.$alertModel
+                .compactMap { $0 }
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.showAlert(alertModel: $0) },
+            viewModel.$isLoading
+                .dropFirst()
+                .removeDuplicates()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.handleLoading($0) },
+            viewModel.dismissViewSubject
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.dismiss(animated: true) }
+        ]
+    }
+    
+    private func showAlert(alertModel: AlertModel) {
+        present(UIAlertController(model: alertModel), animated: true)
+    }
+    
+    private func handleLoading(_ isLoading: Bool) {
+        if isLoading {
+            SVProgressHUD.setDefaultMaskType(.clear)
+            SVProgressHUD.show()
+        } else {
+            SVProgressHUD.setDefaultMaskType(.none)
+            SVProgressHUD.dismiss()
         }
     }
 }
