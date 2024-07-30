@@ -1,8 +1,11 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
+import MEGASDKRepo
 import MessageKit
+import SwiftUI
 
-final class NodeShareRouter: NSObject {
+struct NodeShareRouter {
 
     private weak var viewController: UIViewController?
 
@@ -20,15 +23,18 @@ final class NodeShareRouter: NSObject {
     }
 
     func showSharingFolder(for node: MEGANode) {
+        showSharingFolders(for: [node])
+    }
+    
+    func showSharingFolders(for nodes: [MEGANode]) {
         guard let viewController = viewController else { return }
-        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded {
-            guard let navigation = UIStoryboard(name: "Contacts", bundle: nil)
-                .instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? UINavigationController else { return }
-            let contactViewController = navigation.viewControllers.first as? ContactsViewController
-            contactViewController?.nodesArray = [node]
-            contactViewController?.contactsMode = .shareFoldersWith
-            
-            viewController.present(navigation, animated: true, completion: nil)
+        BackupNodesValidator(presenter: viewController, nodes: nodes.toNodeEntities()).showWarningAlertIfNeeded {
+            let viewControllerToPresent = if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
+                copyrightWrappedShareFoldersViewController(nodes: nodes)
+            } else {
+                makeContactsShareFoldersViewController(nodes: nodes)
+            }
+            viewController.present(viewControllerToPresent, animated: true, completion: nil)
         }
     }
     
@@ -64,5 +70,31 @@ final class NodeShareRouter: NSObject {
         else { return }
         
         navigationController.pushViewController(contactsVC, animated: true)
+    }
+    
+    private func makeContactsShareFoldersViewController(nodes: [MEGANode]) -> MEGANavigationController {
+        guard let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(
+            withIdentifier: "ContactsViewControllerID") as? ContactsViewController else {
+            fatalError("Could not instantiate ContactsViewController")
+        }
+        contactsVC.contactsMode = .shareFoldersWith
+        contactsVC.nodesArray = nodes
+        return MEGANavigationController(rootViewController: contactsVC)
+    }
+    
+    private func copyrightWrappedShareFoldersViewController(nodes: [MEGANode]) -> UIViewController {
+        let copyrightUseCase = CopyrightUseCase(
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo,
+                                       filesSearchRepository: FilesSearchRepository.newRepo),
+            userAlbumRepository: UserAlbumRepository.newRepo)
+        let viewModel = EnforceCopyrightWarningViewModel(preferenceUseCase: PreferenceUseCase.default,
+                                                         copyrightUseCase: copyrightUseCase)
+        
+        let view = EnforceCopyrightWarningView(viewModel: viewModel) {
+            ContactsView(nodes: nodes,
+                         mode: .shareFoldersWith)
+            .ignoresSafeArea(edges: .bottom)
+        }
+        return UIHostingController(rootView: view)
     }
 }

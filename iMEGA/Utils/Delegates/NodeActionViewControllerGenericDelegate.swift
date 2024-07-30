@@ -278,27 +278,12 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             do {
                 let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo)
                 _ = try await shareUseCase.createShareKeys(forNodes: [node.toNodeEntity()])
-                showContactListForShareFolderNode(node, viewController: viewController)
+                NodeShareRouter(viewController: viewController)
+                    .showSharingFolder(for: node)
             } catch {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
-    }
-    
-    private func showContactListForShareFolderNode(_ node: MEGANode, viewController: UIViewController) {
-        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded { [weak self] in
-            self?.shareFolder(node)
-       }
-    }
-    
-    private func shareFolder(_ node: MEGANode) {
-        let contactsStoryboard = UIStoryboard(name: "Contacts", bundle: nil)
-        guard let navigationController = contactsStoryboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? MEGANavigationController else { return }
-        let contactsViewController = navigationController.viewControllers.first as! ContactsViewController
-        contactsViewController.nodesArray = [node]
-        contactsViewController.contactsMode = .shareFoldersWith
-        
-        viewController?.present(navigationController, animated: true)
     }
     
     private func manageShare(_ node: MEGANode) {
