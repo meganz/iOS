@@ -30,7 +30,7 @@ import Foundation
 ///     - isShareAvailable: Indicates if the share action is available
 ///     - isSharedItemsChild: Indicates if the current node is a shared items child
 ///     - isOutShare: Indicates if the current node is being shared with other users
-///     - isExported: Indicates if the currrent node has been exported
+///     - isExported: Indicates if the current node has been exported
 ///     - isEmptyState: Indicates whether an empty state is currently being displayed
 ///     - timeRemainingToDeactiveDND: Indicates the remaining time to active again the notifications
 ///     - versionsCount: The number of versions of the current node

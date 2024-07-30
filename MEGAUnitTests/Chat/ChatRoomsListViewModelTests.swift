@@ -186,10 +186,10 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsTrue_asksForNotificaitonPermissions() async {
+    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsTrue_asksForNotificationPermissions() async {
         let permissionHandler = MockDevicePermissionHandler()
         let permissionRouter = MockPermissionAlertRouter()
-        permissionHandler.shouldAskForNotificaitonPermissionsValueToReturn = true
+        permissionHandler.shouldAskForNotificationPermissionsValueToReturn = true
         let viewModel = makeChatRoomsListViewModel(
             permissionHandler: permissionHandler,
             permissionAlertRouter: permissionRouter
@@ -199,10 +199,10 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsFalse_doesNotAskForNotificaitonPermissions() async {
+    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsFalse_doesNotAskForNotificationPermissions() async {
         let permissionHandler = MockDevicePermissionHandler()
         let permissionRouter = MockPermissionAlertRouter()
-        permissionHandler.shouldAskForNotificaitonPermissionsValueToReturn = false
+        permissionHandler.shouldAskForNotificationPermissionsValueToReturn = false
         let viewModel = makeChatRoomsListViewModel(
             permissionHandler: permissionHandler,
             permissionAlertRouter: permissionRouter

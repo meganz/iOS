@@ -1,5 +1,4 @@
 import AVFoundation
-import Contacts
 import MEGAPermissions
 import Photos
 import UserNotifications
@@ -37,8 +36,6 @@ public class MockDevicePermissionHandler: DevicePermissionsHandling {
         return requestMediaPermissionValuesToReturn[mediaType]!
     }
     
-    public func requestContactsPermissions() async -> Bool { false }
-    
     public func requestNotificationsPermission() async -> Bool { false }
     
     public var shouldAskForAudioPermissions: Bool = false
@@ -47,14 +44,13 @@ public class MockDevicePermissionHandler: DevicePermissionsHandling {
     
     public var shouldAskForPhotosPermissions: Bool = false
     
-    public var shouldAskForNotificaitonPermissionsValueToReturn = false
+    public var shouldAskForNotificationPermissionsValueToReturn = false
+    
     public func shouldAskForNotificationPermission() async -> Bool {
-        shouldAskForNotificaitonPermissionsValueToReturn
+        shouldAskForNotificationPermissionsValueToReturn
     }
     
     public var hasAuthorizedAccessToPhotoAlbum: Bool = false
-    
-    public var contactsAuthorizationStatus: CNAuthorizationStatus = .notDetermined
     
     public var photoLibraryAuthorizationStatus: PHAuthorizationStatus = .notDetermined
     

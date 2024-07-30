@@ -1,5 +1,4 @@
 import AVKit
-import Contacts
 import Photos
 import UIKit
 
@@ -15,8 +14,6 @@ public struct DevicePermissionsHandler {
         mediaStatusAccessor: @escaping (AVMediaType) -> AVAuthorizationStatus,
         photoAccessor: @escaping (PHAccessLevel) async -> PHAuthorizationStatus,
         photoStatusAccessor: @escaping (PHAccessLevel) -> PHAuthorizationStatus,
-        contactsAccessor: @escaping () async -> Bool,
-        contactStatusAccessor: @escaping () -> CNAuthorizationStatus,
         notificationsAccessor: @escaping () async -> Bool,
         notificationsStatusAccessor: @escaping () async -> UNAuthorizationStatus
     ) {
@@ -24,8 +21,6 @@ public struct DevicePermissionsHandler {
         self.mediaStatusAccessor = mediaStatusAccessor
         self.photoAccessor = photoAccessor
         self.photoStatusAccessor = photoStatusAccessor
-        self.contactsAccessor = contactsAccessor
-        self.contactStatusAccessor = contactStatusAccessor
         self.notificationsAccessor = notificationsAccessor
         self.notificationsStatusAccessor = notificationsStatusAccessor
     }
@@ -35,9 +30,6 @@ public struct DevicePermissionsHandler {
     
     private let photoAccessor: (PHAccessLevel) async -> PHAuthorizationStatus
     private let photoStatusAccessor: (PHAccessLevel) -> PHAuthorizationStatus
-    
-    private let contactsAccessor: () async -> Bool
-    private let contactStatusAccessor: () -> CNAuthorizationStatus
     
     private let notificationsAccessor: () async -> Bool
     private let notificationsStatusAccessor: () async -> UNAuthorizationStatus
@@ -51,15 +43,6 @@ public extension DevicePermissionsHandler {
             mediaStatusAccessor: { AVCaptureDevice.authorizationStatus(for: $0) },
             photoAccessor: { await PHPhotoLibrary.requestAuthorization(for: $0) },
             photoStatusAccessor: { PHPhotoLibrary.authorizationStatus(for: $0) },
-            contactsAccessor: {
-                await withUnsafeContinuation { continuation in
-                    let contactStore = CNContactStore()
-                    contactStore.requestAccess(for: .contacts) { granted, _ in
-                        continuation.resume(returning: granted)
-                    }
-                }
-            },
-            contactStatusAccessor: { CNContactStore.authorizationStatus(for: .contacts) },
             notificationsAccessor: {
                 do {
                     return try await UNUserNotificationCenter.current().requestAuthorization(options: notificationOptions)
@@ -93,10 +76,6 @@ extension DevicePermissionsHandler: DevicePermissionsHandling {
         await mediaAccessor(mediaType)
     }
     
-    public func requestContactsPermissions() async -> Bool {
-        await contactsAccessor()
-    }
-    
     public func requestNotificationsPermission() async -> Bool {
         await notificationsAccessor()
     }
@@ -126,11 +105,7 @@ extension DevicePermissionsHandler: DevicePermissionsHandling {
     public var hasAuthorizedAccessToPhotoAlbum: Bool {
         photoLibraryAuthorizationStatus == .authorized
     }
-    
-    public var contactsAuthorizationStatus: CNAuthorizationStatus {
-        contactStatusAccessor()
-    }
-    
+
     public func shouldAskForNotificationPermission() async -> Bool {
         await notificationsStatusAccessor() == .notDetermined
     }
