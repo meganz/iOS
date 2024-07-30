@@ -4,14 +4,14 @@ import MEGADomain
 import MEGASDKRepo
 import MEGASwift
 
-public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
+public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: ChatRoomRepository {
         ChatRoomRepository(sdk: MEGAChatSdk.sharedChatSdk)
     }
     
     private let sdk: MEGAChatSdk
-    private var chatRoomUpdateListeners = [ChatRoomUpdateListener]()
-    private var chatRoomMessageLoadedListeners = [ChatRoomMessageLoadedListener]()
+    @Atomic private var chatRoomUpdateListeners = [ChatRoomUpdateListener]()
+    @Atomic private var chatRoomMessageLoadedListeners = [ChatRoomMessageLoadedListener]()
     @Atomic private var openChatRooms = Set<HandleEntity>()
     
     public init(sdk: MEGAChatSdk) {
@@ -228,7 +228,7 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     private func chatRoomUpdateListener(forChatId chatId: HandleEntity) -> ChatRoomUpdateListener {
         guard let chatRoomUpdateListener = chatRoomUpdateListeners.filter({ $0.chatId == chatId }).first else {
             let chatRoomUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId)
-            chatRoomUpdateListeners.append(chatRoomUpdateListener)
+            $chatRoomUpdateListeners.mutate { $0.append(chatRoomUpdateListener) }
             return chatRoomUpdateListener
         }
         
@@ -244,7 +244,7 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     private func chatRoomMessageLoadedListener(forChatId chatId: HandleEntity) -> ChatRoomMessageLoadedListener {
         guard let chatRoomMessageLoadedListener = chatRoomMessageLoadedListeners.filter({ $0.chatId == chatId }).first else {
             let chatRoomMessageLoadedListener = ChatRoomMessageLoadedListener(sdk: sdk, chatId: chatId)
-            chatRoomMessageLoadedListeners.append(chatRoomMessageLoadedListener)
+            $chatRoomMessageLoadedListeners.mutate { $0.append(chatRoomMessageLoadedListener) }
             return chatRoomMessageLoadedListener
         }
         
@@ -273,8 +273,8 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     public func closeChatRoom(chatId: HandleEntity, delegate: some MEGAChatRoomDelegate) {
         $openChatRooms.mutate { $0.remove(chatId) }
-        chatRoomUpdateListeners.removeAll { $0.chatId == chatId }
-        chatRoomMessageLoadedListeners.removeAll { $0.chatId == chatId }
+        $chatRoomUpdateListeners.mutate { $0.removeAll { $0.chatId == chatId } }
+        $chatRoomMessageLoadedListeners.mutate { $0.removeAll { $0.chatId == chatId } }
         
         sdk.closeChatRoom(chatId, delegate: delegate)
     }
