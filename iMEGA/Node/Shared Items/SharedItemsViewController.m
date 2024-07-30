@@ -1097,6 +1097,7 @@
             if (self.searchNodeUseCaseOCWrapper != nil) {
                 [self.searchNodeUseCaseOCWrapper cancelSearch];
             }
+            [self cancelSearchTask];
             [self loadDefaultSharedItems];
         } else {
             if (self.searchNodeUseCaseOCWrapper == nil) {
