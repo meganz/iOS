@@ -1,6 +1,6 @@
 import Combine
 
-public protocol ChatRoomUseCaseProtocol {
+public protocol ChatRoomUseCaseProtocol: Sendable {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
     func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity?
     func peerHandles(forChatRoom chatRoom: ChatRoomEntity) -> [HandleEntity]
@@ -37,7 +37,7 @@ public protocol ChatRoomUseCaseProtocol {
     func userEmail(for handle: HandleEntity) async -> String?
 }
 
-public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCaseProtocol {
+public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCaseProtocol, Sendable {
     private var chatRoomRepo: T
     
     public init(chatRoomRepo: T) {
