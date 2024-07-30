@@ -193,7 +193,8 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         let videoPlaylistThumbnailLoader = MockVideoPlaylistThumbnailLoader()
         let sut = VideoPlaylistCellViewModel(
             videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
-            videoPlaylistContentUseCase: videoPlaylistContentUseCase,
+            videoPlaylistContentUseCase: videoPlaylistContentUseCase, 
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc),
             videoPlaylistEntity: videoPlaylistEntity,
             onTapMoreOptions: onTapMoreOptions
         )

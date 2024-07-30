@@ -221,7 +221,8 @@ struct PlaylistView: View {
         viewModel: VideoPlaylistsViewModel(
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(userVideoPlaylists: [.preview]),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
-            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
+            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(), 
+            sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview, 
@@ -239,7 +240,8 @@ struct PlaylistView: View {
         viewModel: VideoPlaylistsViewModel(
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
-            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
+            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(), 
+            sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview,

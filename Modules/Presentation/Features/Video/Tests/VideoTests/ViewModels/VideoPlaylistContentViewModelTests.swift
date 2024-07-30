@@ -12,7 +12,7 @@ import XCTest
 final class VideoPlaylistContentViewModelTests: XCTestCase {
     
     // MARK: - onViewAppeared.monitorVideoPlaylistContent
-    
+    @MainActor
     func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithUpdates_reloadVideoPlaylistContentSuccessfully() async {
         let allVideos = [
             NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
@@ -32,12 +32,6 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             monitorVideoPlaylistAsyncSequenceResult: SingleItemAsyncSequence(item: videoPlaylistEntity).eraseToAnyAsyncThrowingSequence(),
             monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
         )
-        let thumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [],
-            loadThumbnailResult: .failure(GenericErrorEntity()),
-            loadPreviewResult: .failure(GenericErrorEntity()),
-            loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
-        )
         let thumbnailLoader = MockThumbnailLoader()
         let (sut, _, videoPlaylistContentsUseCase, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
@@ -52,6 +46,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.sharedUIState.videosCount, allVideos.count)
     }
     
+    @MainActor
     func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithErrorUpdates_reloadVideoPlaylistContentWithError() async {
         let allVideos = [
             NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
@@ -98,6 +93,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         cancellable.cancel()
     }
     
+    @MainActor
     func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithVideoPlaylistNotFoundErrorUpdates_popsScreenWithSnackBarMessage() async {
         let allVideos = [
             NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
@@ -120,12 +116,6 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             monitorVideoPlaylistAsyncSequenceResult: videoPlaylistUpdatesStream,
             monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
         )
-        let thumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [],
-            loadThumbnailResult: .failure(GenericErrorEntity()),
-            loadPreviewResult: .failure(GenericErrorEntity()),
-            loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
-        )
         let thumbnailLoader = MockThumbnailLoader()
         let (sut, _, _, _, _, _, _, _, syncModel) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
@@ -143,7 +133,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     }
     
     // MARK: - addVideosToVideoPlaylist
-    
+    @MainActor
     func testAddVideosToVideoPlaylist_emptyVideos_shouldNotAddVideosToPlaylist() async {
         let allVideos = [
             NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
@@ -185,6 +175,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertFalse(sut.sharedUIState.shouldShowSnackBar)
     }
     
+    @MainActor
     func testAddVideosToVideoPlaylist_addVideosSuccess_shouldShowSnackBar() async {
         let videosToAdd = [ NodeEntity(name: "video 2", handle: 2, hasThumbnail: true) ]
         let allVideos: [NodeEntity] = []
@@ -209,7 +200,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     }
     
     // MARK: - subscribeToAllSelected
-    
+    @MainActor
     func testSubscribeToAllSelected_whenIsAllSelectedChanged_triggerSelectionDelegate() async {
         let allVideos = [
             NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
@@ -236,12 +227,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase
         )
-        
-        let taskExpectation = expectation(description: "wait for task complete")
-        let task = Task {
-            await sut.subscribeToAllSelected()
-            taskExpectation.fulfill()
-        }
+                
+        trackTaskCancellation { await sut.subscribeToAllSelected() }
         
         let isCalledExpectation = expectation(description: "isAllSelected is called")
         let cancellable = sharedUIState.$isAllSelected
@@ -258,10 +245,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         // assert
         await fulfillment(of: [isCalledExpectation], timeout: 1.0)
         
-        task.cancel()
         cancellable.cancel()
-        
-        await fulfillment(of: [taskExpectation], timeout: 1.0)
     }
     
     // MARK: - subscribeToSelectedDisplayActionChanged
@@ -347,6 +331,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     
     // MARK: - monitorVideoPlaylists
     
+    @MainActor
     func testMonitorVideoPlaylists_whenCalled_loadsVideoPlaylists() async {
         let videoPlaylistEntity = videoPlaylist(id: 1, type: .user)
         let userVideoPlaylists = [

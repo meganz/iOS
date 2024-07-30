@@ -44,6 +44,7 @@ public class VideoRevampFactory {
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
@@ -61,7 +62,8 @@ public class VideoRevampFactory {
         let videoPlaylistViewModel = VideoPlaylistsViewModel(
             videoPlaylistsUseCase: videoPlaylistUseCase,
             videoPlaylistContentUseCase: videoPlaylistContentUseCase,
-            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase, 
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             syncModel: syncModel,
             alertViewModel: TextFieldAlertViewModel(
                 title: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.title,

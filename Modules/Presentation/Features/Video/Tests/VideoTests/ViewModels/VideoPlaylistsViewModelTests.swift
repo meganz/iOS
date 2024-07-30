@@ -20,6 +20,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     // MARK: - OnViewAppear
     
+    @MainActor
     func testOnViewAppeared_whenCalled_loadVideoPlaylists() async {
         let (sut, videoPlaylistUseCase, _, _) = makeSUT()
         
@@ -29,6 +30,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(videoPlaylistUseCase.messages.contains(.userVideoPlaylists))
     }
     
+    @MainActor
     func testOnViewAppeared_whenCalled_setVideoPlaylists() async {
         let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
@@ -42,6 +44,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue((sut.videoPlaylists.first?.isSystemVideoPlaylist) != nil)
     }
     
+    @MainActor
     func testOnViewAppeared_whenLoadVideosSuccessfully_showsCorrectLoadingState() async {
         let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
@@ -371,6 +374,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertEqual(videoPlaylistUseCase.messages, [ .updateVideoPlaylistName ])
     }
     
+    @MainActor
     func testRenameVideoPlaylist_whenRenameSuccessfully_renameActualSelectedPlaylist() async {
         let creationTime = Date()
         let modificationTime = Date()
@@ -398,6 +402,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         assertThatCleanUpTemporaryVariablesAfterRenaming(on: sut)
     }
     
+    @MainActor
     func testRenameVideoPlaylist_whenRenameFailed_showsRenameError() async {
         let videoPlaylistName =  "a video playlist name"
         let selectedVideoPlaylist = VideoPlaylistEntity(id: 2, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
@@ -469,7 +474,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     // MARK: - onViewDissapear
-    
+    @MainActor
     func testOnViewDissapear_whenFinishedAddingVideosToVideoPlaylistShowsVideoPlaylistContent_setsNewlyCreatedVideoPlaylistToNil() async {
         let videosToAdd: [NodeEntity] = [
             NodeEntity(
@@ -514,6 +519,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     // MARK: - subscribeToItemsStateForEmptyState
     
+    @MainActor
     func testSubscribeToItemsStateForEmptyState_whenConditionNotMet_shouldNotShowEmptyView() async {
         // Arrange
         let (sut, _, _, _) = makeSUT(videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: []))
@@ -539,6 +545,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         cancellable.cancel()
     }
     
+    @MainActor
     func testSubscribeToItemsStateForEmptyState_whenConditionMet_shouldShowEmptyView() async {
         // Arrange
         let (sut, _, _, _) = makeSUT(
@@ -584,7 +591,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let sut = VideoPlaylistsViewModel(
             videoPlaylistsUseCase: videoPlaylistUseCase,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(),
-            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase, 
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc),
             syncModel: syncModel,
             alertViewModel: alertViewModel,
             renameVideoPlaylistAlertViewModel: alertViewModel, 

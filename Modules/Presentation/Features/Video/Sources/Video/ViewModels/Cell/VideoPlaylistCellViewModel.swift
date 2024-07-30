@@ -8,6 +8,7 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private(set) var videoPlaylistEntity: VideoPlaylistEntity
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let onTapMoreOptions: (_ node: VideoPlaylistEntity) -> Void
     
     @Published var previewEntity: VideoPlaylistCellPreviewEntity
@@ -17,11 +18,13 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     init(
         videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         videoPlaylistEntity: VideoPlaylistEntity,
         onTapMoreOptions: @escaping (_ node: VideoPlaylistEntity) -> Void
     ) {
         self.videoPlaylistThumbnailLoader = videoPlaylistThumbnailLoader
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.videoPlaylistEntity = videoPlaylistEntity
         self.onTapMoreOptions = onTapMoreOptions
         self.previewEntity = .placeholder
@@ -36,10 +39,12 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     
     @MainActor
     private func loadThumbnails(for videos: [NodeEntity]) async {
-        let imageContainers = await videoPlaylistThumbnailLoader.loadThumbnails(for: videos.sorted(by: { $0.modificationTime > $1.modificationTime }))
+        let sortOrder = sortOrderPreferenceUseCase.sortOrder(for: .videoPlaylistContent)
+        let sortedVideos = await VideoPlaylistContentSorter.sort(videos, by: sortOrder)
+        let imageContainers = await videoPlaylistThumbnailLoader.loadThumbnails(for: sortedVideos)
         
         previewEntity = videoPlaylistEntity.toVideoPlaylistCellPreviewEntity(
-            thumbnailContainers: imageContainers.compactMap { $0 },
+            thumbnailContainers: imageContainers,
             videosCount: videos.count,
             durationText: durationText(from: videos)
         )

@@ -2,7 +2,7 @@ import MEGADomain
 
 enum VideoPlaylistContentSorter {
     
-    static func sort(_ videos: [NodeEntity], by sortOrder: SortOrderEntity) -> [NodeEntity] {
+    static func sort(_ videos: [NodeEntity], by sortOrder: SortOrderEntity) async -> [NodeEntity] {
         switch sortOrder {
         case .defaultAsc:
             videos.sorted { $0.name < $1.name }
