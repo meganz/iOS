@@ -107,11 +107,6 @@
 
 #pragma mark - Lifecycle
 
-- (void)awakeFromNib{
-    [super awakeFromNib];
-    [self createViewModel];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -126,6 +121,8 @@
     
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
     
+    [self setupSubscriptions];
+    [self.viewModel showAlertForSensitiveDescendants:self.nodesArray];
     [self setupContacts];
     
     self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
@@ -225,6 +222,14 @@
         [self.tableView reloadData];
     }
 }
+
+- (ContactsViewModel *)viewModel {
+    if (_viewModel == nil) {
+        [self createViewModel];
+    }
+    return _viewModel;
+}
+
 
 #pragma mark - Private
 

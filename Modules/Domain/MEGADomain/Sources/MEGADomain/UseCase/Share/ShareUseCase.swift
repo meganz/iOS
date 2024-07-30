@@ -1,4 +1,4 @@
-public protocol ShareUseCaseProtocol {
+public protocol ShareUseCaseProtocol: Sendable {
     func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity]
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity]
     func areCredentialsVerifed(of user: UserEntity) -> Bool

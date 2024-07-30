@@ -1,13 +1,25 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 
 @objc final class ContactsViewModel: NSObject {
     private let sdk: MEGASdk
+    private let contactsMode: ContactsMode
+    private let shareUseCase: any ShareUseCaseProtocol
+    private let isHiddenNodesEnabled: Bool
+    
+    private var callLimitsSubscription: AnyCancellable?
+    private var loadingTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    let dismissViewSubject = PassthroughSubject<Void, Never>()
+    @Published private(set) var isLoading = false
+    @Published private(set) var alertModel: AlertModel?
+    
     var bannerConfig: BannerView.Config?
     var bannerReloadTrigger: (() -> Void)?
     var bannerDecider: (Int) -> Bool = { _ in false }
-    private var callLimitsSubscription: AnyCancellable?
     var callLimitations: CallLimitations? {
         didSet {
             callLimitsSubscription?.cancel()
@@ -28,9 +40,19 @@ import MEGAPresentation
     }
     
     init(
-        sdk: MEGASdk
+        sdk: MEGASdk,
+        contactsMode: ContactsMode,
+        shareUseCase: some ShareUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.sdk = sdk
+        self.contactsMode = contactsMode
+        self.shareUseCase = shareUseCase
+        isHiddenNodesEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
+    }
+    
+    deinit {
+        loadingTask?.cancel()
     }
     
     func shouldShowBannerWarning(
@@ -91,5 +113,43 @@ import MEGAPresentation
         (users?.count ?? 0) < selectedUsersCount
 
         return hasExistingUnverifiedContacts || hasInvitedNonExistingUsers
+    }
+    
+    @objc func showAlertForSensitiveDescendants(_ nodes: [MEGANode]) {
+        guard isHiddenNodesEnabled,
+              contactsMode == .shareFoldersWith else { return }
+        isLoading = true
+        defer { isLoading = false }
+        
+        loadingTask = Task { @MainActor in
+            do {
+                guard try await shareUseCase.doesContainSensitiveDescendants(in: nodes.toNodeEntities()) else { return }
+                
+                alertModel = AlertModel.makeShareContainsSensitiveItems(nodeCount: nodes.count) { @MainActor [weak self] in
+                    self?.dismissViewSubject.send()
+                }
+            } catch {
+                MEGALogError("[\(type(of: self))]: determineIfAlbumsContainSensitiveNodes returned \(error.localizedDescription)")
+            }
+        }
+    }
+}
+
+private extension AlertModel {
+    static func makeShareContainsSensitiveItems(nodeCount: Int, cancelHandler: @escaping () -> Void) -> Self {
+        let message = if nodeCount > 1 {
+            Strings.Localizable.ShareFolder.Sensitive.Alert.Message.multi
+        } else {
+            Strings.Localizable.ShareFolder.Sensitive.Alert.Message.single
+        }
+        return .init(
+            title: Strings.Localizable.ShareFolder.Sensitive.Alert.title,
+            message: message,
+            actions: [
+                .init(title: Strings.Localizable.cancel, style: .cancel,
+                      handler: cancelHandler),
+                .init(title: Strings.Localizable.continue, style: .default,
+                      isPreferredAction: true, handler: {})
+            ])
     }
 }

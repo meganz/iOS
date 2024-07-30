@@ -66,6 +66,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (nonatomic, copy) void(^createGroupChat)(NSArray *,  NSString *, BOOL, BOOL, BOOL);
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
+@property (strong, nonatomic) NSSet<id> *subscriptions;
 @property (nonatomic, weak) id<ContactsViewControllerDelegate> contactsViewControllerDelegate;
 
 - (void)shareNodesWithLevel:(MEGAShareType)shareType nodes:(NSArray *)nodes;

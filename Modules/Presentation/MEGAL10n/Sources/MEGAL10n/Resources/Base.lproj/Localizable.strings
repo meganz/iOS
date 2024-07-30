@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="Hidden items";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="There are hidden items in this folder. Sharing the folder will mean that the hidden items are visible to those you share with.";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="There are hidden items in one or more of these folders. Sharing the folders will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Rename album";
 /* Rename public album alert message */
