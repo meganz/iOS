@@ -1,5 +1,9 @@
 import MEGADomain
 
+@objc final class TaskOCWrapper: NSObject {
+    var task: Task<(), Never>?
+}
+
 extension SharedItemsViewController: UISearchBarDelegate {
     
     @objc func loadDefaultSharedItems() {
@@ -22,14 +26,17 @@ extension SharedItemsViewController: UISearchBarDelegate {
         do {
             SVProgressHUD.show()
             if let nodes = try await asyncSearchClosure(searchText, sortType) {
+                if Task.isCancelled { return }
                 if let mutableNodeArray = (nodes as NSArray).mutableCopy() as? NSMutableArray {
                     searchNodesArray = mutableNodeArray
                 }
             } else {
+                if Task.isCancelled { return }
                 searchNodesArray.removeAllObjects()
             }
             await SVProgressHUD.dismiss()
         } catch {
+            if Task.isCancelled { return }
             SVProgressHUD.showError(withStatus: error.localizedDescription)
         }
         self.tableView?.reloadData()
@@ -37,7 +44,12 @@ extension SharedItemsViewController: UISearchBarDelegate {
 
     @objc func search(by searchText: String) {
         guard let searchNodeUseCaseOCWrapper else { return }
-        Task { @MainActor in
+        if searchTask == nil {
+            searchTask = .init()
+        }
+        
+        cancelSearchTask()
+        searchTask?.task = Task { @MainActor in
             if incomingButton?.isSelected ?? false {
                 searchUnverifiedNodes(key: searchText)
                 await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnInShares)
@@ -49,6 +61,10 @@ extension SharedItemsViewController: UISearchBarDelegate {
                 await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnPublicLinks)
             }
         }
+    }
+    
+    @objc func cancelSearchTask() {
+        searchTask?.task?.cancel()
     }
     
     // MARK: - UISearchBarDelegate

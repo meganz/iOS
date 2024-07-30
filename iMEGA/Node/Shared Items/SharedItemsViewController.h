@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton, SharedItemsViewModel, SharedItemsTableViewCell, SearchNodeUseCaseOCWrapper;
+@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton, SharedItemsViewModel, SharedItemsTableViewCell, SearchNodeUseCaseOCWrapper, TaskOCWrapper;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -62,6 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *publicLinksArray;
 
 @property (strong, nonatomic) SharedItemsViewModel *viewModel;
+@property (strong, nonatomic, nullable) TaskOCWrapper *searchTask;
 
 - (void)selectSegment:(NSUInteger)index;
 - (void)didTapSelect;
