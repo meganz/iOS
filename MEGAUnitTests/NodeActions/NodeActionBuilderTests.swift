@@ -1624,6 +1624,44 @@ class NodeActionBuilderTests: XCTestCase {
             .moveVideoInVideoPlaylistContentToRubbishBin ]))
     }
     
+    func testBuild_displayModeVideoPlaylistContentAndSetIsHiddenTrue_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.videoPlaylistContent)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
+            .setIsHidden(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [
+            .shareLink,
+            .saveToPhotos,
+            .removeVideoFromVideoPlaylist,
+            .sendToChat,
+            .exportFile,
+            .unhide,
+            .moveVideoInVideoPlaylistContentToRubbishBin
+        ]))
+    }
+    
+    func testBuild_displayModeVideoPlaylistContentAndSetIsHiddenFalse_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.videoPlaylistContent)
+            .setIsHiddenNodesFeatureEnabled(true)
+            .setHasValidProOrUnexpiredBusinessAccount(true)
+            .setIsHidden(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [
+            .shareLink,
+            .saveToPhotos,
+            .removeVideoFromVideoPlaylist,
+            .sendToChat,
+            .exportFile,
+            .hide,
+            .moveVideoInVideoPlaylistContentToRubbishBin
+        ]))
+    }
+    
     func testMultiselectBuild_displayModeVideoPlaylistContent_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
             .setDisplayMode(.videoPlaylistContent)

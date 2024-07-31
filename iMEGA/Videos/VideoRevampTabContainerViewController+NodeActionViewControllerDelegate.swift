@@ -24,7 +24,7 @@ extension VideoRevampTabContainerViewController: NodeActionViewControllerDelegat
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
         switch action {
-        case .copy, .move, .shareLink, .manageLink, .exportFile, .sendToChat, .removeLink, .moveToRubbishBin, .download, .saveToPhotos:
+        case .copy, .move, .shareLink, .manageLink, .exportFile, .sendToChat, .removeLink, .moveToRubbishBin, .download, .saveToPhotos, .hide, .unhide:
             nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, forNodes: nodes, from: sender)
             resetNavigationBar()
         default:

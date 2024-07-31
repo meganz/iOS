@@ -834,7 +834,7 @@ final class NodeActionBuilder {
         }
         
         return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage, .recents,
-                .textEditor, .photosAlbum, .photosFavouriteAlbum]
+                .textEditor, .photosAlbum, .photosFavouriteAlbum, .videoPlaylistContent]
             .contains(displayMode)
     }
     
@@ -845,7 +845,7 @@ final class NodeActionBuilder {
             return false
         }
         return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage, .recents, .textEditor,
-                .photosAlbum, .photosFavouriteAlbum]
+                .photosAlbum, .photosFavouriteAlbum, .videoPlaylistContent]
             .contains(displayMode)
     }
     
@@ -856,8 +856,8 @@ final class NodeActionBuilder {
             .removeVideoFromVideoPlaylistAction(),
             .sendToChatAction(),
             .exportFileAction(nodeCount: selectedNodeCount),
+            hiddenStateAction(),
             .moveVideoInVideoPlaylistContentToRubbishBinAction()
-        ]
+        ].compactMap { $0 }
     }
-    
 }
