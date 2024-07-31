@@ -59,6 +59,10 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             handleDownloadAction(for: nodes.toNodeEntities())
         case .saveToPhotos:
             saveToPhotos(nodes)
+        case .hide:
+            hide(nodes: nodes.toNodeEntities())
+        case .unhide:
+            unhide(nodes: nodes.toNodeEntities())
         default:
             break
         }
