@@ -184,6 +184,23 @@ final class VideoCellViewModelTests: XCTestCase {
         XCTAssertEqual(tappedNodes, [ video ])
     }
     
+    // MARK: - onCellTapped
+    
+    func testOnTappedCell_whenCalled_triggerTap() async {
+        let video = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
+        let thumbnailLoader = MockThumbnailLoader()
+        var tappedNodes = [NodeEntity]()
+        let sut = makeSUT(
+            thumbnailLoader: thumbnailLoader,
+            nodeEntity: video,
+            onTapped: { tappedNodes.append($0) }
+        )
+        
+        sut.onCellTapped()
+        
+        XCTAssertEqual(tappedNodes, [ video ])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -191,6 +208,7 @@ final class VideoCellViewModelTests: XCTestCase {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         nodeEntity: NodeEntity,
         onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void = { _ in },
+        onTapped: @escaping (_ node: NodeEntity) -> Void = { _ in },
         featureFlagHiddenNodes: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -201,7 +219,8 @@ final class VideoCellViewModelTests: XCTestCase {
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]),
-            onTapMoreOptions: onTapMoreOptions
+            onTapMoreOptions: onTapMoreOptions,
+            onTapped: onTapped
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

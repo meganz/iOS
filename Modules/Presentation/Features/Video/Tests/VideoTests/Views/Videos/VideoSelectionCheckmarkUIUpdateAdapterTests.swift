@@ -18,7 +18,8 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
             nodeEntity: node,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-            onTapMoreOptions: { _ in }
+            onTapMoreOptions: { _ in },
+            onTapped: { _ in }
         )
         let sut = VideoSelectionCheckmarkUIUpdateAdapter(
             selection: selection,
@@ -49,7 +50,8 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
             nodeEntity: node,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-            onTapMoreOptions: { _ in }
+            onTapMoreOptions: { _ in },
+            onTapped: { _ in }
         )
         let sut = VideoSelectionCheckmarkUIUpdateAdapter(
             selection: selection,
