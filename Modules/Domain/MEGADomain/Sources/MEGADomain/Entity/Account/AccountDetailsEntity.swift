@@ -68,6 +68,8 @@ public struct AccountDetailsEntity: Sendable {
     public let subscriptionMethodId: PaymentMethodEntity
     public let subscriptionCycle: SubscriptionCycleEntity
     public let numberUsageItems: Int
+    public let subscriptions: [AccountSubscriptionEntity]
+    public let plans: [AccountPlanEntity]
     public let storageUsedForHandle: @Sendable (_ handle: HandleEntity) -> Int64
     
     public init(
@@ -84,6 +86,8 @@ public struct AccountDetailsEntity: Sendable {
         subscriptionMethodId: PaymentMethodEntity,
         subscriptionCycle: SubscriptionCycleEntity,
         numberUsageItems: Int,
+        subscriptions: [AccountSubscriptionEntity],
+        plans: [AccountPlanEntity],
         storageUsedForHandle: @escaping @Sendable (_ handle: HandleEntity) -> Int64
     ) {
         self.storageUsed = storageUsed
@@ -99,6 +103,8 @@ public struct AccountDetailsEntity: Sendable {
         self.subscriptionMethodId = subscriptionMethodId
         self.subscriptionCycle = subscriptionCycle
         self.numberUsageItems = numberUsageItems
+        self.subscriptions = subscriptions
+        self.plans = plans
         self.storageUsedForHandle = storageUsedForHandle
     }
 }

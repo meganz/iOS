@@ -4,7 +4,7 @@ import MEGADomain
 import MEGASdk
 import MEGASwift
 
-public final class AccountRepository: NSObject, AccountRepositoryProtocol {
+public final class AccountRepository: NSObject, AccountRepositoryProtocol {    
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
     private let myChatFilesFolderNodeAccess: NodeAccessProtocol
@@ -86,18 +86,6 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
             $0.type == currentAccountDetails?.proLevel && $0.subscriptionCycle == currentAccountDetails?.subscriptionCycle
         })
     }
-    
-    private func availablePlans() async -> [PlanEntity] {
-        await withAsyncValue { completion in
-            sdk.getPricingWith(RequestDelegate { result in
-                if case let .success(request) = result {
-                    completion(.success(request.pricing?.availableSDKPlans() ?? []))
-                } else {
-                    completion(.success([]))
-                }
-            })
-        }
-    }
 
     // MARK: - User and session management
     public func currentUser() async -> UserEntity? {
@@ -141,8 +129,14 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         sdk.businessStatus == .gracePeriod
     }
     
-    public func hasValidSubscription() -> Bool {
-        currentAccountDetails?.subscriptionStatus == .valid
+    public func isBilledProPlan() -> Bool {
+        guard let subscriptions = accountSubscriptions(),
+              let currentProPlan = accountProPlans()?.first,
+              let subscriptionId = currentProPlan.subscriptionId else {
+            return false
+        }
+        
+        return subscriptions.contains { $0.id == subscriptionId }
     }
 
     // MARK: - Account operations
@@ -315,6 +309,37 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
                 }
             })
         })
+    }
+    
+    private func availablePlans() async -> [PlanEntity] {
+        await withAsyncValue { completion in
+            sdk.getPricingWith(RequestDelegate { result in
+                if case let .success(request) = result {
+                    completion(.success(request.pricing?.availableSDKPlans() ?? []))
+                } else {
+                    completion(.success([]))
+                }
+            })
+        }
+    }
+    
+    /// Retrieves the Pro plan from the current account details, if it exists.
+    ///
+    /// This function checks if the `currentAccountDetails` is available and
+    /// filters the plans to find the one marked as the Pro plan. It is guaranteed
+    /// that a user can only have 0 or 1 Pro plan at any given time. Therefore, this
+    /// function will return either one Pro plan or nil if no Pro plan is found.
+    ///
+    /// - Returns: An optional `AccountPlanEntity` representing the Pro plan,
+    ///
+    private func accountProPlans() -> [AccountPlanEntity]? {
+        guard let currentAccountDetails else { return nil }
+        return currentAccountDetails.plans.filter { $0.isProPlan }
+    }
+    
+    private func accountSubscriptions() -> [AccountSubscriptionEntity]? {
+        guard let currentAccountDetails else { return nil }
+        return currentAccountDetails.subscriptions
     }
 }
 

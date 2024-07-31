@@ -16,9 +16,12 @@ extension MEGAAccountDetails {
             subscriptionMethod: self.subscriptionMethod,
             subscriptionMethodId: self.subscriptionMethodId.toPaymentMethodEntity(),
             subscriptionCycle: self.subscriptionCycle(),
-            numberUsageItems: self.numberUsageItems) { handle in
-                self.storageUsed(forHandle: handle)
-            }
+            numberUsageItems: self.numberUsageItems,
+            subscriptions: userSubscriptions().toAccountSubscriptionEntityArray(),
+            plans: userPlans().toAccountPlanEntityArray()
+        ) { handle in
+            self.storageUsed(forHandle: handle)
+        }
     }
     
     private func subscriptionCycle() -> SubscriptionCycleEntity {

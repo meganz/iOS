@@ -18,11 +18,11 @@ final class ProfileViewModelTests: XCTestCase {
     
     func testAction_onViewDidLoad_defaultValue() {
         let isStandardProAccount = true
-        let hasValidSubscription = true
-        let isSubscriptionHidden = !(isStandardProAccount && hasValidSubscription)
+        let isBilledProPlan = true
+        let isSubscriptionHidden = !(isStandardProAccount && isBilledProPlan)
         let (sut, _) = makeSUT(
             isStandardProAccount: isStandardProAccount,
-            hasValidSubscription: hasValidSubscription
+            isBilledProPlan: isBilledProPlan
         )
         let result = receivedSectionDataSource(
             from: sut,
@@ -56,13 +56,13 @@ final class ProfileViewModelTests: XCTestCase {
     
     func testAction_onViewDidLoad_whenSmsIsAllowed() {
         let isStandardProAccount = true
-        let hasValidSubscription = true
-        let isSubscriptionHidden = !(isStandardProAccount && hasValidSubscription)
+        let isBilledProPlan = true
+        let isSubscriptionHidden = !(isStandardProAccount && isBilledProPlan)
         
         let (sut, _) = makeSUT(
             smsState: .optInAndUnblock, 
             isStandardProAccount: isStandardProAccount,
-            hasValidSubscription: hasValidSubscription
+            isBilledProPlan: isBilledProPlan
         )
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         let expectedResult = ProfileViewModel.SectionCellDataSource(
@@ -231,7 +231,7 @@ final class ProfileViewModelTests: XCTestCase {
     func testShouldShowCancelSubscriptionSection_whenStandardProAccountAndSubscription_shouldIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(
             isStandardProAccount: true,
-            hasValidSubscription: true,
+            isBilledProPlan: true,
             shouldBeShown: true
         )
     }
@@ -245,7 +245,7 @@ final class ProfileViewModelTests: XCTestCase {
 
     func testShouldShowCancelSubscriptionSection_whenNotStandardProAccount_shouldNotIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(
-            hasValidSubscription: true,
+            isBilledProPlan: true,
             shouldBeShown: false
         )
     }
@@ -264,22 +264,16 @@ final class ProfileViewModelTests: XCTestCase {
         multiFactorAuthCheckResult: Bool = false,
         multiFactorAuthCheckDelay: TimeInterval = 0,
         isStandardProAccount: Bool = false,
-        hasValidSubscription: Bool = false,
+        isBilledProPlan: Bool = false,
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [.cancelSubscription: true]),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: ProfileViewModel, router: MockProfileViewRouter) {
-        
-        let currentAccountDetails = AccountDetailsEntity.build(
-            proLevel: accountType,
-            subscriptionStatus: hasValidSubscription ? .valid: .none
-        )
-        
+        let currentAccountDetails = AccountDetailsEntity.build(proLevel: accountType)
         let accountPlan = PlanEntity(type: accountType)
-        
         let accountUseCase = MockAccountUseCase(
-            hasValidSubscription: hasValidSubscription,
+            isBilledProPlan: isBilledProPlan,
             isStandardProAccount: isStandardProAccount,
             currentAccountDetails: currentAccountDetails,
             email: email,
@@ -289,7 +283,6 @@ final class ProfileViewModelTests: XCTestCase {
             multiFactorAuthCheckDelay: 1.0,
             accountPlan: accountPlan
         )
-        
         let router = MockProfileViewRouter()
         
         return (
@@ -350,7 +343,7 @@ final class ProfileViewModelTests: XCTestCase {
             accountType: accountType,
             isMasterBusinessAccount: isMasterBusinessAccount,
             isStandardProAccount: standardProAccounts.contains(accountType),
-            hasValidSubscription: true
+            isBilledProPlan: true
         )
         let result = self.receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         XCTAssertEqual(result, expectedSections, file: file, line: line)
@@ -425,14 +418,14 @@ final class ProfileViewModelTests: XCTestCase {
 
     private func testSubscriptionSectionVisibility(
         isStandardProAccount: Bool = false,
-        hasValidSubscription: Bool = false,
+        isBilledProPlan: Bool = false,
         shouldBeShown: Bool,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
         let (sut, _) = makeSUT(
             isStandardProAccount: isStandardProAccount,
-            hasValidSubscription: hasValidSubscription
+            isBilledProPlan: isBilledProPlan
         )
         sut.dispatch(.onViewDidLoad)
 

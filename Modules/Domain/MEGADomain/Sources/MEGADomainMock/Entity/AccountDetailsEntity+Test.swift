@@ -15,6 +15,8 @@ public extension AccountDetailsEntity {
         subscriptionMethodId: PaymentMethodEntity = .none,
         subscriptionCycle: SubscriptionCycleEntity = .none,
         numberUsageItems: Int = 0,
+        subscriptions: [AccountSubscriptionEntity] = [],
+        plans: [AccountPlanEntity] = [],
         storageUsedForHandle: @escaping @Sendable (_ handle: HandleEntity) -> Int64 = { _ in 0 }
     ) -> AccountDetailsEntity {
         .init(
@@ -31,6 +33,8 @@ public extension AccountDetailsEntity {
             subscriptionMethodId: subscriptionMethodId,
             subscriptionCycle: subscriptionCycle,
             numberUsageItems: numberUsageItems,
+            subscriptions: subscriptions,
+            plans: plans,
             storageUsedForHandle: storageUsedForHandle
         )
     }
