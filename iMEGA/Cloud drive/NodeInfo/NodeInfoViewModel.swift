@@ -11,6 +11,10 @@ import MEGAPresentation
     var node: MEGANode
     var isNodeUndecryptedFolder: Bool
 
+    var shouldShowNodeDescription: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .nodeDescription)
+    }
+
     init(
         withNode node: MEGANode,
         shareUseCase: (any ShareUseCaseProtocol)? = nil,
@@ -46,16 +50,6 @@ import MEGAPresentation
     func isContactVerified() -> Bool {
         guard let user = shareUseCase?.user(from: node.toNodeEntity()) else { return false }
         return shareUseCase?.areCredentialsVerifed(of: user) == true
-    }
-
-    func shouldShowNodeDescription() -> Bool {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .nodeDescription),
-              // Hide the node description when available. To be handled in the future.
-              node.description == nil || node.description?.isEmpty == true else {
-            return false
-        }
-
-        return true
     }
 
     func openVerifyCredentials(

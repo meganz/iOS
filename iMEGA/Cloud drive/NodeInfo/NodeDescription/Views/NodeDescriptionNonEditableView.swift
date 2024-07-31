@@ -2,20 +2,36 @@ import MEGADesignToken
 import SwiftUI
 
 struct NodeDescriptionNonEditableView: View {
-    private let description: String
+    @Environment(\.colorScheme) var colorScheme
+
+    private let description: NodeDescriptionViewModel.Description
     private let verticalPadding: CGFloat?
 
-    init(description: String, verticalPadding: CGFloat? = nil) {
+    init(description: NodeDescriptionViewModel.Description, verticalPadding: CGFloat? = nil) {
         self.description = description
         self.verticalPadding = verticalPadding
     }
 
     var body: some View {
-        Text(description)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .font(.body)
-            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-            .padding(.horizontal, 16)
-            .padding(.vertical, verticalPadding)
+        VStack(spacing: 0) {
+            Text(description.text)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.body)
+                .foregroundStyle(
+                    isDesignTokenEnabled
+                    ? description.isPlaceholder ? TokenColors.Text.secondary.swiftUI : TokenColors.Text.primary.swiftUI
+                    : description.isPlaceholder ? Color(UIColor.secondaryLabel) : Color(UIColor.label)
+                )
+                .padding(.horizontal, 16)
+                .padding(.vertical, verticalPadding)
+            NodeDescriptionSeparatorView()
+        }
+        .background(
+            isDesignTokenEnabled
+            ? TokenColors.Background.page.swiftUI
+            : colorScheme == .dark
+            ? MEGAAppColor.Black._2C2C2E.color
+            : MEGAAppColor.White._FFFFFF.color
+        )
     }
 }
