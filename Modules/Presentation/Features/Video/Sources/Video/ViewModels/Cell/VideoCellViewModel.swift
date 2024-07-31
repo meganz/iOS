@@ -10,6 +10,7 @@ final class VideoCellViewModel: ObservableObject {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private(set) var nodeEntity: NodeEntity
     private let onTapMoreOptions: (_ node: NodeEntity) -> Void
+    private let onTapped: (_ node: NodeEntity) -> Void
     
     @Published var previewEntity: VideoCellPreviewEntity
     @Published var isSelected = false
@@ -19,13 +20,15 @@ final class VideoCellViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-        onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void
+        onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void,
+        onTapped: @escaping (_ node: NodeEntity) -> Void
     ) {
         self.nodeEntity = nodeEntity
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.featureFlagProvider = featureFlagProvider
         self.onTapMoreOptions = onTapMoreOptions
+        self.onTapped = onTapped
         
         let placeholder = Image(systemName: "square.fill")
         
@@ -78,5 +81,9 @@ final class VideoCellViewModel: ObservableObject {
             .monitorInheritedSensitivity(for: video)
             .prepend { try await sensitiveNodeUseCase.isInheritingSensitivity(node: video) }
             .eraseToAnyAsyncThrowingSequence()
+    }
+    
+    func onCellTapped() {
+        onTapped(nodeEntity)
     }
 }

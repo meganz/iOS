@@ -22,16 +22,25 @@ struct VideoCellView: View {
     }
     
     var body: some View {
-        VideoCellViewContent(
-            previewEntity: viewModel.previewEntity,
-            videoConfig: videoConfig,
-            editMode: $selection.editMode,
-            isSelected: $viewModel.isSelected,
-            onTappedCheckMark: onTappedCheckMark,
-            onTappedMoreOptions: viewModel.onTappedMoreOptions
-        )
-        .throwingTask { try await viewModel.attemptLoadThumbnail() }
-        .task { await viewModel.monitorInheritedSensitivityChanges() }
+        Button {
+            if selection.editMode.isEditing {
+                onTappedCheckMark()
+            } else {
+                viewModel.onCellTapped()
+            }
+        } label: {
+            VideoCellViewContent(
+                previewEntity: viewModel.previewEntity,
+                videoConfig: videoConfig,
+                editMode: $selection.editMode,
+                isSelected: $viewModel.isSelected,
+                onTappedMoreOptions: viewModel.onTappedMoreOptions
+            )
+            .contentShape(Rectangle())
+            .throwingTask { try await viewModel.attemptLoadThumbnail() }
+            .task { await viewModel.monitorInheritedSensitivityChanges() }
+        }
+        .buttonStyle(NoHighlightButtonStyle())
     }
 }
 
@@ -41,18 +50,14 @@ struct VideoCellViewContent: View {
     let videoConfig: VideoConfig
     let editMode: Binding<EditMode>
     let isSelected: Binding<Bool>
-    let onTappedCheckMark: () -> Void
     let onTappedMoreOptions: () -> Void
     
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
             
             if editMode.wrappedValue.isEditing {
-                Button(
-                    action: { onTappedCheckMark() },
-                    label: { checkMarkView }
-                )
-                .padding(.leading, 10)
+                checkMarkView
+                    .padding(.leading, 10)
             }
             
             leadingContent
@@ -70,11 +75,6 @@ struct VideoCellViewContent: View {
             
         }
         .frame(maxWidth: .infinity, idealHeight: 80, alignment: .leading)
-        .onTapGesture {
-            if editMode.wrappedValue.isEditing {
-                onTappedCheckMark()
-            }
-        }
     }
     
     private var leadingContent: some View {
@@ -146,7 +146,6 @@ struct VideoCellViewContent: View {
             videoConfig: .preview,
             editMode: .constant(.inactive),
             isSelected: .constant(false),
-            onTappedCheckMark: {},
             onTappedMoreOptions: {}
         )
         
@@ -155,7 +154,6 @@ struct VideoCellViewContent: View {
             videoConfig: .preview,
             editMode: .constant(.active),
             isSelected: .constant(false),
-            onTappedCheckMark: {},
             onTappedMoreOptions: {}
         )
         
@@ -164,7 +162,6 @@ struct VideoCellViewContent: View {
             videoConfig: .preview,
             editMode: .constant(.active),
             isSelected: .constant(true),
-            onTappedCheckMark: {},
             onTappedMoreOptions: {}
         )
         
@@ -173,7 +170,6 @@ struct VideoCellViewContent: View {
             videoConfig: .preview,
             editMode: .constant(.inactive),
             isSelected: .constant(false),
-            onTappedCheckMark: {},
             onTappedMoreOptions: {}
         )
         
@@ -182,7 +178,6 @@ struct VideoCellViewContent: View {
             videoConfig: .preview,
             editMode: .constant(.inactive),
             isSelected: .constant(false),
-            onTappedCheckMark: {},
             onTappedMoreOptions: {}
         )
         
@@ -191,7 +186,6 @@ struct VideoCellViewContent: View {
             videoConfig: .preview,
             editMode: .constant(.inactive),
             isSelected: .constant(false),
-            onTappedCheckMark: {},
             onTappedMoreOptions: {}
         )
         
@@ -200,7 +194,6 @@ struct VideoCellViewContent: View {
             videoConfig: .preview,
             editMode: .constant(.inactive),
             isSelected: .constant(false),
-            onTappedCheckMark: {},
             onTappedMoreOptions: {}
         )
         
@@ -209,7 +202,6 @@ struct VideoCellViewContent: View {
             videoConfig: .preview,
             editMode: .constant(.inactive),
             isSelected: .constant(false),
-            onTappedCheckMark: {},
             onTappedMoreOptions: {}
         )
     }

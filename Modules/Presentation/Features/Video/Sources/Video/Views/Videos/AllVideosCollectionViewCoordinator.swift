@@ -40,9 +40,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         self.videoConfig = representer.videoConfig
     }
     
-    func configureDataSource(for collectionView: UICollectionView) {
-        collectionView.delegate = self
-        
+    func configureDataSource(for collectionView: UICollectionView) {        
         dataSource = makeDataSource(for: collectionView)
         collectionView.dataSource = dataSource
     }
@@ -57,7 +55,8 @@ final class AllVideosCollectionViewCoordinator: NSObject {
                 nodeEntity: rowItem.node,
                 thumbnailLoader: viewModel.thumbnailLoader,
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
-                onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) }
+                onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) },
+                onTapped: { [weak self] in self?.onTapCell(video: $0) }
             )
             let adapter = VideoSelectionCheckmarkUIUpdateAdapter(
                 selection: representer.selection,
@@ -69,6 +68,14 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         return DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
+    }
+    
+    private func onTapCell(video: NodeEntity) {
+        guard representer.selection.editMode != .active else {
+            return
+        }
+        let videos = (dataSource?.snapshot().itemIdentifiers ?? []).map(\.node)
+        representer.router.openMediaBrowser(for: video, allVideos: videos)
     }
     
     func reloadData(with videos: [NodeEntity]) {
@@ -132,15 +139,5 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     
     private func onTapMoreOptions(_ video: NodeEntity, sender: Any) {
         representer.router.openMoreOptions(for: video, sender: sender)
-    }
-}
-
-// MARK: - AllVideosCollectionViewCoordinator+UICollectionViewDelegate
-
-extension AllVideosCollectionViewCoordinator: UICollectionViewDelegate {
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let videos = (dataSource?.snapshot().itemIdentifiers ?? []).map(\.node)
-        guard let video = videos[safe: indexPath.item] else { return }
-        representer.router.openMediaBrowser(for: video, allVideos: videos)
     }
 }
