@@ -1,17 +1,55 @@
 import MEGADomain
+import MEGAL10n
 
 final class NodeDescriptionViewModel {
-    let node: NodeEntity
-    let nodeUseCase: any NodeUseCaseProtocol
-    let backupUseCase: any BackupsUseCaseProtocol
+    enum Description: Equatable {
+        case content(String)
+        case placeholder(String)
 
-    var hasReadOnlyAccess: Bool {
+        var text: String {
+            switch self {
+            case .content(let text): return text
+            case .placeholder(let text): return text
+            }
+        }
+
+        var isPlaceholder: Bool {
+            guard case .placeholder = self else { return false }
+            return true
+        }
+    }
+
+    private let node: NodeEntity
+    private let nodeUseCase: any NodeUseCaseProtocol
+    private let backupUseCase: any BackupsUseCaseProtocol
+
+    private var hasReadOnlyAccess: Bool {
         let nodeAccessLevel = nodeUseCase.nodeAccessLevel(nodeHandle: node.handle)
 
         return nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
         || backupUseCase.isBackupNodeHandle(node.handle)
         || backupUseCase.isBackupsRootNode(node)
         || (nodeAccessLevel != .full && nodeAccessLevel != .owner)
+    }
+
+    var description: Description {
+        guard let description = node.description, description.isNotEmpty else {
+            return hasReadOnlyAccess
+            ? .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+            : .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readWrite)
+        }
+
+        return .content(description)
+    }
+
+    var header: String {
+        Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.header
+    }
+
+    var footer: String? {
+        hasReadOnlyAccess
+        ? Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly
+        : nil
     }
 
     init(

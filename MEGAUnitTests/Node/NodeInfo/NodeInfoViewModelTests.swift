@@ -73,16 +73,6 @@ final class NodeInfoViewModelTests: XCTestCase {
         assertShouldShowNodeDescription(node: node, expectedResult: true)
     }
 
-    func testShouldShowNodeDescription_whenFeatureFlagIsOnAndDescriptionIsEmptyString_shouldReturnTrue() {
-        let node = MockNode(handle: 100, description: "")
-        assertShouldShowNodeDescription(node: node, expectedResult: true)
-    }
-
-    func testShouldShowNodeDescription_whenFeatureFlagIsOnAndDescriptionIsNonEmpty_shouldReturnFalse() {
-        let node = MockNode(handle: 100, description: "text")
-        assertShouldShowNodeDescription(node: node, expectedResult: false)
-    }
-
     private func makeSUT(
         node: MockNode = MockNode(handle: 0),
         shareUseCase: ShareUseCaseProtocol = MockShareUseCase(),
@@ -107,7 +97,7 @@ final class NodeInfoViewModelTests: XCTestCase {
         line: UInt = #line
     ) {
         let sut = makeSUT(node: node, featureFlagProvider: featureFlagProvider)
-        let result = sut.shouldShowNodeDescription()
+        let result = sut.shouldShowNodeDescription
         XCTAssertEqual(result, expectedResult, file: file, line: line)
     }
 }

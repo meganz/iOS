@@ -1,4 +1,3 @@
-import MEGAL10n
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
@@ -33,13 +32,12 @@ extension NodeDescriptionCellController: UITableViewDataSource {
         ) as? HostingTableViewCell<NodeDescriptionNonEditableView>
 
         guard let cell, let controller else { return HostingTableViewCell<NodeDescriptionNonEditableView>() }
-
-        let description = viewModel.hasReadOnlyAccess
-        ? Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly
-        : Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readWrite
+        
         let verticalPadding: CGFloat? = if #available(iOS 16.0, *) { nil } else { 11 }
-
-        let view = NodeDescriptionNonEditableView(description: description, verticalPadding: verticalPadding)
+        let view = NodeDescriptionNonEditableView(
+            description: viewModel.description,
+            verticalPadding: verticalPadding
+        )
         cell.host(view, parent: controller)
 
         return cell
@@ -48,18 +46,12 @@ extension NodeDescriptionCellController: UITableViewDataSource {
 
 extension NodeDescriptionCellController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        NodeDescriptionHeaderView(
-            title: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.header
-        ).toUIView()
+        NodeDescriptionHeaderView(title: viewModel.header).toUIView()
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        NodeDescriptionFooterView(
-            leadingText: viewModel.hasReadOnlyAccess
-            ? Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly
-            : nil,
-            trailingText: nil
-        ).toUIView()
+        guard let footer = viewModel.footer else { return nil }
+        return NodeDescriptionFooterView(leadingText: footer, trailingText: nil).toUIView()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}

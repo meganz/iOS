@@ -1,44 +1,155 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
+import MEGATest
 import XCTest
 
 final class NodeDescriptionViewModelTests: XCTestCase {
 
-    func testHasReadOnlyAccess_forNodeOwnerAndFullAccessLevel_shouldHaveWriteAccess() {
-        let nodeAccess: [NodeAccessTypeEntity] = [.owner, .full]
-        nodeAccess.forEach {
-            let sut = makeSUT(accessType: $0)
-            XCTAssertFalse(sut.hasReadOnlyAccess, "Expected write access for \($0)")
+    var readOnlyAccessNodeTypes: [NodeAccessTypeEntity] {
+        [.readWrite, .read, .unknown]
+    }
+
+    var fullAccessNodeTypes: [NodeAccessTypeEntity] {
+        [.owner, .full]
+    }
+
+    func testDescription_whenNodeDescriptionIsAbsentAndNoAccessToUpdateDescription_shouldMatchReadOnlyString() {
+        readOnlyAccessNodeTypes.forEach {
+            let sut = makeSUT(description: nil, accessType: $0)
+            XCTAssertEqual(
+                sut.description,
+                .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+            )
         }
     }
 
-    func testHasReadOnlyAccess_forAccessLevelBelowFullAccess_shouldHaveReadOnlyAccess() {
-        let nodeAccess: [NodeAccessTypeEntity] = [.readWrite, .read, .unknown]
-        nodeAccess.forEach {
-            let sut = makeSUT(accessType: $0)
-            XCTAssertTrue(sut.hasReadOnlyAccess, "Expected read access for \($0)")
+    func testDescription_whenNodeDescriptionIsEmptyAndNoAccessToUpdateDescription_shouldMatchReadOnlyString() {
+        readOnlyAccessNodeTypes.forEach {
+            let sut = makeSUT(description: "", accessType: $0)
+            XCTAssertEqual(
+                sut.description,
+                .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+            )
         }
     }
 
-    func testHasReadOnlyAccess_forNodeInRubbishBin_shouldHaveReadOnlyAccess() {
+    func testDescription_whenNodeDescriptionIsAbsentAndHasAccessToUpdateDescription_shouldMatchReadOnlyString() {
+        fullAccessNodeTypes.forEach {
+            let sut = makeSUT(description: nil, accessType: $0)
+            XCTAssertEqual(
+                sut.description,
+                .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readWrite)
+            )
+        }
+    }
+
+    func testDescription_whenNodeDescriptionIsEmptyAndHasAccessToUpdateDescription_shouldMatchReadOnlyString() {
+        let node = NodeEntity()
+        fullAccessNodeTypes.forEach {
+            let sut = makeSUT(description: "", accessType: $0)
+            XCTAssertEqual(
+                sut.description,
+                .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readWrite)
+            )
+        }
+    }
+
+    func testDescription_whenNodeDescriptionIsAbsentAndTheNodeIsInRubbishBin_shouldMatchReadOnlyString() {
+        let sut = makeSUT(description: nil, isNodeInRubbishBin: true)
+        XCTAssertEqual(
+            sut.description,
+            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+        )
+    }
+
+    func testDescription_whenNodeDescriptionIsEmptyAndTheNodeIsInRubbishBin_shouldMatchReadOnlyString() {
+        let sut = makeSUT(description: nil, isNodeInRubbishBin: true)
+        XCTAssertEqual(
+            sut.description,
+            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+        )
+    }
+
+    func testDescription_whenNodeDescriptionIsAbsentAndTheNodeIsBackupsNode_shouldMatchReadOnlyString() {
+        let sut = makeSUT(description: nil, isBackupsNode: true)
+        XCTAssertEqual(
+            sut.description,
+            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+        )
+    }
+
+    func testDescription_whenNodeDescriptionIsEmptyAndTheNodeIsBackupsNode_shouldMatchReadOnlyString() {
+        let sut = makeSUT(description: nil, isBackupsNode: true)
+        XCTAssertEqual(
+            sut.description,
+            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+        )
+    }
+
+    func testDescription_whenNodeDescriptionIsAbsentAndTheNodeIsBackupsRootNode_shouldMatchReadOnlyString() {
+        let sut = makeSUT(description: nil, isBackupsRootNode: true)
+        XCTAssertEqual(
+            sut.description,
+            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+        )
+    }
+
+    func testDescription_whenNodeDescriptionIsEmptyAndTheNodeIsBackupsRootNode_shouldMatchReadOnlyString() {
+        let sut = makeSUT(description: nil, isBackupsRootNode: true)
+        XCTAssertEqual(
+            sut.description,
+            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
+        )
+    }
+
+    func testDescription_hasNodeDescription_shouldReturnDescription() {
+        let description = "any description"
+        fullAccessNodeTypes.forEach {
+            let sut = makeSUT(description: description, accessType: $0)
+            XCTAssertEqual(sut.description, .content(description))
+        }
+    }
+
+    func testHeader_whenInvoked_shouldMatch() {
+        let sut = makeSUT()
+        XCTAssertEqual(sut.header, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.header)
+    }
+
+    func testFooter_withAccessToUpdateNodeDescription_shouldReturnNil() {
+        fullAccessNodeTypes.forEach {
+            let sut = makeSUT(accessType: $0)
+            XCTAssertNil(sut.footer)
+        }
+    }
+
+    func testFooter_withNoAccessToUpdateNodeDescription_shouldReturnFooterText() {
+        readOnlyAccessNodeTypes.forEach {
+            let sut = makeSUT(accessType: $0)
+            XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
+        }
+    }
+
+    func testFooter_withNodeInRubbishBin_shouldReturnFooterText() {
         let sut = makeSUT(isNodeInRubbishBin: true)
-        XCTAssertTrue(sut.hasReadOnlyAccess)
+        XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
     }
 
-    func testHasReadOnlyAccess_forNodeInBackup_shouldHaveReadOnlyAccess() {
+    func testFooter_withNodeIsBackupsNode_shouldReturnFooterText() {
         let sut = makeSUT(isBackupsNode: true)
-        XCTAssertTrue(sut.hasReadOnlyAccess)
+        XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
     }
 
-    func testHasReadOnlyAccess_forBackupNodeRootNode_shouldHaveReadOnlyAccess() {
+    func testFooter_withNodeABackupsRootNode_shouldReturnFooterText() {
         let sut = makeSUT(isBackupsRootNode: true)
-        XCTAssertTrue(sut.hasReadOnlyAccess)
+        XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
     }
 
     // MARK: - Helpers
 
     private func makeSUT(
+        description: String? = "any description",
         accessType: NodeAccessTypeEntity = .owner,
         isNodeInRubbishBin: Bool = false,
         isBackupsNode: Bool = false,
@@ -54,23 +165,8 @@ final class NodeDescriptionViewModelTests: XCTestCase {
             isBackupsNode: isBackupsNode,
             isBackupsRootNode: isBackupsRootNode
         )
-        return makeSUT(
-            nodeUseCase: nodeUseCase,
-            backupUseCase: backupUseCase,
-            file: file,
-            line: line
-        )
-    }
-
-    private func makeSUT(
-        node: NodeEntity = NodeEntity(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
-        backupUseCase: some BackupsUseCaseProtocol = MockBackupsUseCase(),
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) -> NodeDescriptionViewModel {
         let sut = NodeDescriptionViewModel(
-            node: node,
+            node: NodeEntity(description: description),
             nodeUseCase: nodeUseCase,
             backupUseCase: backupUseCase
         )
