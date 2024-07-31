@@ -13,6 +13,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let _isMasterBusinessAccount: Bool
     private let _isExpiredAccount: Bool
     private let _isInGracePeriod: Bool
+    private let _isBilledProPlan: Bool
     private let accountType: AccountTypeEntity
 
     // MARK: - Account Characteristics
@@ -65,6 +66,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         isMasterBusinessAccount: Bool = false,
         isExpiredAccount: Bool = false,
         isInGracePeriod: Bool = false,
+        isBilledProPlan: Bool = false,
         isAchievementsEnabled: Bool = false,
         plans: [PlanEntity] = [],
         isSmsAllowed: Bool = false,
@@ -97,6 +99,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _isMasterBusinessAccount = isMasterBusinessAccount
         _isExpiredAccount = isExpiredAccount
         _isInGracePeriod = isInGracePeriod
+        _isBilledProPlan = isBilledProPlan
         _isAchievementsEnabled = isAchievementsEnabled
         _plans = plans
         _accountCreationDate = accountCreationDate
@@ -165,10 +168,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _isInGracePeriod
     }
     
-    public func hasValidSubscription() -> Bool {
-        currentAccountDetails?.subscriptionStatus == .valid
+    public func isBilledProPlan() -> Bool {
+        _isBilledProPlan
     }
-
+    
     public var accountCreationDate: Date? {
         _accountCreationDate
     }

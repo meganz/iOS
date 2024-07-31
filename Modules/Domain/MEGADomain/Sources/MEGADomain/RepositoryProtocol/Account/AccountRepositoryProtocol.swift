@@ -24,7 +24,14 @@ public protocol AccountRepositoryProtocol: Sendable {
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
     func isExpiredAccount() -> Bool
     func isInGracePeriod() -> Bool
-    func hasValidSubscription() -> Bool
+    /// Checks if the current Pro plan is associated with any subscription.
+    ///
+    /// This function retrieves the list of account subscriptions and the current Pro plan,
+    /// then checks if the Pro plan's ID matches any of the subscription IDs to determine if
+    /// the Pro plan is actively subscribed.
+    ///
+    /// - Returns: A Boolean value indicating whether the current Pro plan is associated with any subscription.
+    func isBilledProPlan() -> Bool
 
     // Account operations
     func contacts() -> [UserEntity]

@@ -29,10 +29,9 @@ public protocol AccountUseCaseProtocol: Sendable {
     /// Returns: `true` if the account is standard pro account or pro flexi account thats not expired or in grace period or a business
     /// account thats not expired, `false` otherwise.
     func hasValidProOrUnexpiredBusinessAccount() -> Bool
-    /// Check if the current account has a valid subscription
-    /// Returns: `true` if the account has an active subscription, excluding single purchase subscriptions (e.g., via vouchers)
-    /// which grant pro status but are not recurring.
-    func hasValidSubscription() -> Bool
+    /// Check if the current Pro Plan is associated with any subscription.
+    /// - Returns: `true` if the current Pro Plan is associated with an active subscription.
+    func isBilledProPlan() -> Bool
     
     func isStandardProAccount() -> Bool
 
@@ -142,8 +141,8 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
         repository.isAccountType(.proIII)
     }
     
-    public func hasValidSubscription() -> Bool {
-        repository.hasValidSubscription()
+    public func isBilledProPlan() -> Bool {
+        repository.isBilledProPlan()
     }
     
     public func hasValidProOrUnexpiredBusinessAccount() -> Bool {

@@ -116,12 +116,20 @@ final class ProfileViewModel: ViewModelType {
     }
     
     private var shouldShowCancelSubscriptionSection: Bool {
-        // This property checks if the user has both a standard pro account (lite, Pro I, II, III) and a valid subscription.
-        // We validate the subscription status because a user may have a single purchase subscription
-        // (e.g., via vouchers). In such cases, the user has a standard pro account, but since this is
-        // not a recurring purchase, the subscription status is 'none' (not 'valid'), and the cancel
-        // subscription button should be hidden.
-        isCancelSubscriptionFeatureFlagEnabled && accountUseCase.isStandardProAccount() && accountUseCase.hasValidSubscription()
+        // This property checks if the user should be shown the cancel subscription section.
+        // The conditions are as follows:
+        // 1. The cancel subscription feature flag is enabled.
+        // 2. The user has a standard pro plan (Lite, Pro I, II, III).
+        // 3. The user is subscribed to a Pro plan.
+        //
+        // We validate if the current Pro plan is associated with any subscription because a user may have
+        // a one-off plan (e.g., via vouchers). In such cases, the user has a standard pro plan, but
+        // since this is not a recurring purchase, the current pro plan is not associated with any
+        // subscription and therefore we are not able to cancel the subscription, so we should hide the
+        // cancel subscription button.
+        isCancelSubscriptionFeatureFlagEnabled &&
+        accountUseCase.isStandardProAccount() &&
+        accountUseCase.isBilledProPlan()
     }
 }
 
