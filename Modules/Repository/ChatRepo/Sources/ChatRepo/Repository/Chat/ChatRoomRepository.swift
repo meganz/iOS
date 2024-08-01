@@ -59,6 +59,23 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
         }
     }
     
+    public func createPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String {
+        try await withAsyncThrowingValue {  completion in
+            sdk.createChatLink(chatRoom.chatId, delegate: ChatRequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    if let text = request.text {
+                        completion(.success(text))
+                    } else {
+                        completion(.failure(ChatLinkErrorEntity.resourceNotFound))
+                    }
+                case .failure(let error):
+                    completion(.failure(error.toChatLinkErrorEntity()))
+                }
+            })
+        }
+    }
+    
     public func createPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         let publicChatLinkCreationDelegate = ChatRequestDelegate { result in
             switch result {
@@ -74,6 +91,23 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
         }
         
         sdk.createChatLink(chatRoom.chatId, delegate: publicChatLinkCreationDelegate)
+    }
+
+    public func queryChatLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String {
+        try await withAsyncThrowingValue {  completion in
+            sdk.queryChatLink(chatRoom.chatId, delegate: ChatRequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    if let text = request.text {
+                        completion(.success(text))
+                    } else {
+                        completion(.failure(ChatLinkErrorEntity.resourceNotFound))
+                    }
+                case .failure(let error):
+                    completion(.failure(error.toChatLinkErrorEntity()))
+                }
+            })
+        }
     }
     
     public func queryChatLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {

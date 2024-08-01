@@ -102,10 +102,28 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         completion(createChatRoomResult)
     }
     
+    public func createPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String {
+        switch createPublicLinkResult {
+        case .success(let link):
+            return link
+        case .failure(let error):
+            throw error
+        }
+    }
+
     public func createPublicLink(forChatRoom chatRoom: MEGADomain.ChatRoomEntity, completion: @escaping (Result<String, MEGADomain.ChatLinkErrorEntity>) -> Void) {
         completion(createPublicLinkResult)
     }
     
+    public func queryChatLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String {
+        switch queryChatLinkResult {
+        case .success(let link):
+            return link
+        case .failure(let error):
+            throw error
+        }
+    }
+
     public func queryChatLink(forChatRoom chatRoom: MEGADomain.ChatRoomEntity, completion: @escaping (Result<String, MEGADomain.ChatLinkErrorEntity>) -> Void) {
         completion(queryChatLinkResult)
     }

@@ -41,6 +41,7 @@ protocol MeetingFloatingPanelRouting: AnyObject {
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
     func transitionToLongForm()
     var panelIsLongForm: Bool { get }
+    func triggerInviteParticipantsFromContainer()
 }
 
 extension MeetingFloatingPanelRouting {
@@ -251,6 +252,10 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showAudioPermissionError() {
         permissionRouter.alertAudioPermission(incomingCall: false)
+    }
+    
+    func triggerInviteParticipantsFromContainer() {
+        viewModel?.dispatch(.inviteParticipants)
     }
     
     func showWaitingRoomParticipantsList(

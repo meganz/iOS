@@ -4244,3 +4244,21 @@
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="No description";
 /* Text displayed in the description field when no description is present, in read-write mode. */
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Add description";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Share meeting link";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Copy meeting link";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="Invite participants";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="Anyone with this link can join the meeting and view the meeting chat.";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="Send to chat";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="Copy";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="Share";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="Cancel";
