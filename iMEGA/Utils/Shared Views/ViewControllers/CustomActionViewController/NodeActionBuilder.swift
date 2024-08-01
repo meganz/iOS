@@ -432,10 +432,6 @@ final class NodeActionBuilder {
             if versionCount > 0 {
                 nodeActions.append(.viewVersionsAction(versionCount: versionCount))
             }
-            
-            if !isBackupNode {
-                nodeActions.append(.labelAction(label: label))
-            }
         }
         
         if isMediaFile {

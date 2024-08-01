@@ -430,7 +430,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setisIncomingShareChildView(true)
             .build()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .label, .download, .rename, .copy, .leaveSharing]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .download, .rename, .copy, .leaveSharing]))
     }
     
     func testIncomingFullSharedFolder_verifyContact_enabled() {
@@ -453,7 +453,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .label, .download, .rename, .copy, .move, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .download, .rename, .copy, .move, .moveToRubbishBin]))
     }
     
     func testIncomingFullSharedFolderNodeNoVersion() {
@@ -464,7 +464,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setVersionCount(0)
             .build()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .label, .download, .rename, .copy, .move, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .download, .rename, .copy, .move, .moveToRubbishBin]))
     }
     
     func testIncomingFullSharedFolderNodeWithMultiVersion() {
@@ -475,7 +475,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setVersionCount(2)
             .build()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .label, .download, .rename, .copy, .move, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .download, .rename, .copy, .move, .moveToRubbishBin]))
     }
     
     func testIncomingReadAndReadWriteSharedFolder() {
