@@ -15,7 +15,7 @@ final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContent
     public init(sdk: MEGASdk) {
         self.sdk = sdk
         super.init()
-        sdk.add(self)
+        sdk.add(self, queueType: .globalBackground)
     }
     
     deinit {
