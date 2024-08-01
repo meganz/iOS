@@ -3,24 +3,24 @@ import MEGAChatSdk
 import MEGADomain
 import MEGASwift
 
-public final class CallRepository: NSObject, CallRepositoryProtocol {
+public final class CallRepository: NSObject, CallRepositoryProtocol, @unchecked Sendable {
     
     public static var newRepo: CallRepository {
         CallRepository(chatSdk: .sharedChatSdk)
     }
     
     private let chatSdk: MEGAChatSdk
-    private var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
+    @Atomic private var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
     
-    private var callId: HandleEntity?
-    private var call: CallEntity?
+    @Atomic private var callId: HandleEntity?
+    @Atomic private var call: CallEntity?
     
-    private var callUpdateListeners = [CallUpdateListener]()
-    private var callWaitingRoomUsersUpdateListener: CallWaitingRoomUsersUpdateListener?
-    private var onCallUpdateListener: OnCallUpdateListener?
+    @Atomic private var callUpdateListeners = [CallUpdateListener]()
+    @Atomic private var callWaitingRoomUsersUpdateListener: CallWaitingRoomUsersUpdateListener?
+    @Atomic private var onCallUpdateListener: OnCallUpdateListener?
     
-    private var callAvailabilityListener: CallAvailabilityListener?
-    private var chatOnlineListener: ChatOnlineListener?
+    @Atomic private var callAvailabilityListener: CallAvailabilityListener?
+    @Atomic private var chatOnlineListener: ChatOnlineListener?
     
     private let callLimitNoPresent = 0xFFFFFFFF
     
@@ -30,21 +30,21 @@ public final class CallRepository: NSObject, CallRepositoryProtocol {
 
     public func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
-            self.call = call.toCallEntity()
-            self.callId = call.callId
+            self.$call.mutate { $0 = call.toCallEntity() }
+            self.$callId.mutate { $0 = call.callId }
         }
         
         chatSdk.add(self as any MEGAChatCallDelegate)
         chatSdk.add(self as any MEGAChatDelegate)
-        self.callbacksDelegate = callbacksDelegate
+        self.$callbacksDelegate.mutate { $0 = callbacksDelegate }
     }
     
     public func stopListeningForCall() {
         chatSdk.remove(self as any MEGAChatCallDelegate)
         chatSdk.remove(self as any MEGAChatDelegate)
-        self.call = nil
-        self.callId = .invalid
-        self.callbacksDelegate = nil
+        self.$call.mutate { $0 = nil }
+        self.$callId.mutate { $0 = .invalid }
+        self.$callbacksDelegate.mutate { $0 = nil }
     }
     
     public func call(for chatId: HandleEntity) -> CallEntity? {
@@ -73,8 +73,8 @@ public final class CallRepository: NSObject, CallRepositoryProtocol {
                         return
                     }
                     let callEntity = megaChatCall.toCallEntity()
-                    call = callEntity
-                    callId = callEntity.callId
+                    $call.mutate { $0 = callEntity }
+                    $callId.mutate { $0 = callEntity.callId }
                     completion(.success(callEntity))
                 case .failure(let error):
                     switch error.type {
@@ -163,7 +163,7 @@ public final class CallRepository: NSObject, CallRepositoryProtocol {
     
     public func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
         let callWaitingRoomUsersUpdate = CallWaitingRoomUsersUpdateListener(sdk: chatSdk, callId: call.callId)
-        callWaitingRoomUsersUpdateListener = callWaitingRoomUsersUpdate
+        $callWaitingRoomUsersUpdateListener.mutate { $0 = callWaitingRoomUsersUpdate }
         
         return callWaitingRoomUsersUpdate
             .monitor
@@ -171,7 +171,7 @@ public final class CallRepository: NSObject, CallRepositoryProtocol {
     
     public func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
         let onCallUpdate = OnCallUpdateListener(sdk: chatSdk)
-        onCallUpdateListener = onCallUpdate
+        $onCallUpdateListener.mutate { $0 = onCallUpdate }
         
         return onCallUpdate
             .monitor
@@ -300,7 +300,7 @@ public final class CallRepository: NSObject, CallRepositoryProtocol {
     private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
         guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {
             let callUpdateListener = CallUpdateListener(sdk: chatSdk, callId: callId, changeType: change)
-            callUpdateListeners.append(callUpdateListener)
+            $callUpdateListeners.mutate { $0.append(callUpdateListener) }
             return callUpdateListener
         }
         
@@ -383,7 +383,7 @@ extension CallRepository: MEGAChatCallDelegate {
             return
         }
         
-        self.call = call.toCallEntity()
+        self.$call.mutate { $0 = call.toCallEntity() }
         
         if call.hasChanged(for: .localAVFlags) {
             callbacksDelegate?.localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
@@ -533,14 +533,22 @@ private final class OnCallUpdateListener: NSObject, MEGAChatCallDelegate {
 }
 
 extension CallRepository {
+    private func set(chatOnlineListener: ChatOnlineListener?) {
+        $chatOnlineListener.mutate { $0 = chatOnlineListener }
+    }
+    
+    private func set(callAvailabilityListener: CallAvailabilityListener?) {
+        $callAvailabilityListener.mutate { $0 = callAvailabilityListener }
+    }
+    
     private func startCall(chatId: ChatIdEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity {
         try await withCheckedThrowingContinuation { continuation in
-            chatOnlineListener = ChatOnlineListener(
+            let chatOnlineListener = ChatOnlineListener(
                 chatId: chatId,
                 sdk: chatSdk
             ) { [weak self] chatId in
                 guard let self else { return }
-                chatOnlineListener = nil
+                set(chatOnlineListener: nil)
                 let delegate = ChatRequestDelegate { [weak self] completion in
                     switch completion {
                     case .success:
@@ -563,6 +571,8 @@ extension CallRepository {
                 }
                 chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, delegate: delegate)
             }
+            
+            set(chatOnlineListener: chatOnlineListener)
         }
     }
     
@@ -570,24 +580,27 @@ extension CallRepository {
         let group = DispatchGroup()
         
         group.enter()
-        chatOnlineListener = ChatOnlineListener(
+        let chatOnlineListener = ChatOnlineListener(
             chatId: chatId,
             sdk: chatSdk
         ) { [weak self] _ in
             guard let self else { return }
-            chatOnlineListener = nil
+            set(chatOnlineListener: nil)
             group.leave()
         }
         
         group.enter()
-        callAvailabilityListener = CallAvailabilityListener(
+        let callAvailabilityListener = CallAvailabilityListener(
             chatId: chatId,
             sdk: self.chatSdk
         ) { [weak self] _, _ in
             guard let self else { return }
-            callAvailabilityListener = nil
+            set(callAvailabilityListener: nil)
             group.leave()
         }
+        
+        set(chatOnlineListener: chatOnlineListener)
+        set(callAvailabilityListener: callAvailabilityListener)
         
         group.notify(queue: .main) { [self] in
             let answerCallChatRequestDelegate = ChatRequestDelegate { requestCompletion in
@@ -608,10 +621,10 @@ extension CallRepository {
 
 /// ChatOnlineListener is a helper class to listen for the chat online status.
 /// It will notify to the listener when the chat is online.
-private final class ChatOnlineListener: NSObject {
+private final class ChatOnlineListener: NSObject, @unchecked Sendable {
     private let chatId: UInt64
     typealias Completion = (_ chatId: UInt64) -> Void
-    private var completion: Completion?
+    @Atomic private var completion: Completion?
     private let sdk: MEGAChatSdk
 
     init(chatId: UInt64,
@@ -619,12 +632,12 @@ private final class ChatOnlineListener: NSObject {
          completion: @escaping Completion) {
         self.chatId = chatId
         self.sdk = sdk
-        self.completion = completion
         super.init()
+        self.$completion.mutate { $0 = completion }
         
         if sdk.chatConnectionState(chatId) == .online {
             completion(chatId)
-            self.completion = nil
+            self.$completion.mutate { $0 = nil }
         } else {
             addListener()
         }
@@ -645,7 +658,7 @@ extension ChatOnlineListener: MEGAChatDelegate {
            newState == MEGAChatConnection.online.rawValue {
             removeListener()
             completion?(chatId)
-            self.completion = nil
+            self.$completion.mutate { $0 = nil }
         }
     }
 }

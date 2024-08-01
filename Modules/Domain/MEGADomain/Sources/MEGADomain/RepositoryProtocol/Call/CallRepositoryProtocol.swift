@@ -1,6 +1,6 @@
 import Combine
 
-public protocol CallRepositoryProtocol {
+public protocol CallRepositoryProtocol: Sendable {
     func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol)
     func stopListeningForCall()
     func call(for chatId: HandleEntity) -> CallEntity?
@@ -31,7 +31,7 @@ public protocol CallRepositoryProtocol {
     func lowerHand(forCall call: CallEntity) async throws
 }
 
-public protocol CallCallbacksRepositoryProtocol {
+public protocol CallCallbacksRepositoryProtocol: Sendable {
     func createdSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
     func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
     func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
