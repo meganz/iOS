@@ -1,7 +1,7 @@
 import Combine
 import MEGADomain
 
-public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseRepositoryProtocol {
+public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseRepositoryProtocol, @unchecked Sendable {
     private let plans: [PlanEntity]
     public let successfulRestorePublisher: AnyPublisher<Void, Never>
     public let incompleteRestorePublisher: AnyPublisher<Void, Never>

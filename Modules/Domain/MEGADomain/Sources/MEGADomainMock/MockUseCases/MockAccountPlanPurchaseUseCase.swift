@@ -1,7 +1,7 @@
 import Combine
 import MEGADomain
 
-final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCaseProtocol {
+final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCaseProtocol, @unchecked Sendable {
     private var accountPlanProducts: [PlanEntity]
     private let _successfulRestorePublisher: PassthroughSubject<Void, Never>
     private let _incompleteRestorePublisher: PassthroughSubject<Void, Never>

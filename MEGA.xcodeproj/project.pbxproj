@@ -1590,6 +1590,7 @@
 		A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A559E16A2BE8C7C700374073 /* NSNotification+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */; };
+		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
 		A5A744AE2B9FF59100605E4C /* AccountRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */; };
 		A5BED9782B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
@@ -4377,6 +4378,7 @@
 		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASdkCleanUp.swift; sourceTree = "<group>"; };
 		A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Additions.swift"; sourceTree = "<group>"; };
+		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
 		A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountRepository+Additions.swift"; sourceTree = "<group>"; };
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
@@ -11158,6 +11160,7 @@
 			isa = PBXGroup;
 			children = (
 				B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */,
+				A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */,
 				41D4080E1B8F240B0001F8BE /* MEGAPurchase.h */,
 				41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */,
 			);
@@ -15279,6 +15282,7 @@
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */,
 				B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */,
+				A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
 				5B5E591320EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m in Sources */,

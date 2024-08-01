@@ -1,6 +1,6 @@
 import Combine
 
-public protocol AccountPlanPurchaseUseCaseProtocol {
+public protocol AccountPlanPurchaseUseCaseProtocol: Sendable {
     func accountPlanProducts() async -> [PlanEntity]
     func restorePurchase()
     func purchasePlan(_ plan: PlanEntity) async
@@ -17,7 +17,7 @@ public protocol AccountPlanPurchaseUseCaseProtocol {
     func deRegisterPurchaseDelegate() async
 }
 
-public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtocol>: AccountPlanPurchaseUseCaseProtocol {
+public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtocol>: AccountPlanPurchaseUseCaseProtocol, Sendable {
     
     private let repo: T
     
