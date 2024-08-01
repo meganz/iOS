@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 import MEGASdk
 
@@ -59,7 +59,7 @@ private final class AvatarRequestDelegate: NSObject, MEGARequestDelegate {
     }
 }
 
-private final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate {
+private final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate, Sendable {
     private let handles: [HandleEntity]
     private let source: PassthroughSubject<[HandleEntity], Never>
 

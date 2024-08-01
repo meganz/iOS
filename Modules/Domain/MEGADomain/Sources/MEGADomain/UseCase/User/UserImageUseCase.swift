@@ -1,6 +1,6 @@
 import Combine
 
-public protocol UserImageUseCaseProtocol {
+public protocol UserImageUseCaseProtocol: Sendable {
     /// Returns the hexadecimal color code for the avatar of a user identified by the given Base64 handle.
     /// - Parameter handle: The Base64 handle of the user.
     /// - Returns: The hexadecimal color code of the user's avatar, or nil if the handle is invalid. Example: "#FF6A19"
