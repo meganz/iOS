@@ -86,6 +86,15 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         }
     }
     
+    public func fetchPublicLink(forChatRoom chatRoom: MEGADomain.ChatRoomEntity) async throws -> String {
+        switch publicLinkCompletion {
+        case .success(let link):
+            return link
+        case .failure(let error):
+            throw error
+        }
+    }
+    
     public func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         completion(publicLinkCompletion)
     }

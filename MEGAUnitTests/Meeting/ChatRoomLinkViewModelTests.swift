@@ -125,7 +125,7 @@ final class MockMeetingInfoRouter: MeetingInfoRouting {
         showShareActivity_calledTimes += 1
     }
     
-    func showSendToChat(_ link: String) {
+    func sendLinkToChat(_ link: String) {
         showSendToChat_calledTimes += 1
     }
     

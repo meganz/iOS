@@ -367,6 +367,80 @@ final class MeetingContainerViewModelTests: XCTestCase {
             harness.router.dismiss_calledTimes == 1
         }
     }
+    
+    func testAction_copyLinkTappedLinkAvailable_pasteboardShouldContainLink() async {
+        let harness = Harness(
+            chatRoom: ChatRoomEntity(chatType: .meeting),
+            chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
+        )
+        
+        test(
+            viewModel: harness.sut,
+            action: .copyLinkTapped,
+            expectedCommands: []
+        )
+        
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+
+        XCTAssertEqual(harness.router.showLinkCopied_calledTimes, 1)
+    }
+    
+    func testAction_copyLinkTappedLinkNotAvailable_pasteboardShouldNotContainLink() async {
+        let harness = Harness()
+        
+        test(
+            viewModel: harness.sut,
+            action: .copyLinkTapped,
+            expectedCommands: []
+        )
+
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+
+        XCTAssertEqual(harness.router.showLinkCopied_calledTimes, 0)
+    }
+    
+    func testAction_sendLinkToChatTappedLinkAvailable_shouldCallRouterWithLink() async {
+        let harness = Harness(
+            chatRoom: ChatRoomEntity(chatType: .meeting),
+            chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
+        )
+        
+        test(
+            viewModel: harness.sut,
+            action: .sendLinkToChatTapped,
+            expectedCommands: []
+        )
+        
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+
+        XCTAssertEqual(harness.router.sendLinkToChat_calledTimes, 1)
+    }
+    
+    func testAction_sendLinkToChatTappedLinkNotAvailable_shouldNotCallRouterWithLink() async {
+        let harness = Harness()
+        
+        test(
+            viewModel: harness.sut,
+            action: .sendLinkToChatTapped,
+            expectedCommands: []
+        )
+        
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        
+        XCTAssertEqual(harness.router.sendLinkToChat_calledTimes, 0)
+    }
+    
+    func testAction_inviteParticipantsTapped_shouldNotifyRouter() {
+        let harness = Harness()
+        
+        test(
+            viewModel: harness.sut,
+            action: .inviteParticipantsTapped,
+            expectedCommands: []
+        )
+        
+        XCTAssertEqual(harness.router.notifyFloatingPanelInviteParticipants_calledTimes, 1)
+    }
 }
 
 extension CallEntity {

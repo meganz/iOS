@@ -39,6 +39,10 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     )
     func hideSnackBar() 
     var floatingPanelShown: Bool { get }
+    func notifyFloatingPanelInviteParticipants()
+    func showShareLinkOptionsAlert(_ shareLinkOptions: ShareLinkOptions)
+    func sendLinkToChat(_ link: String)
+    func showLinkCopied()
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -64,6 +68,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     static var isAlreadyPresented: Bool {
         MeetingContainerViewController.isAlreadyPresented
     }
+    
+    private var sendToChatWrapper: SendToChatWrapper?
     
     @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
@@ -151,18 +157,20 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func showShareMeetingError() {
-        guard CustomModalAlertViewController.isAlreadyPresented == false else { return }
-        
-        let customModalAlertViewController = CustomModalAlertViewController()
-        customModalAlertViewController.image = UIImage(resource: .chatLinkCreation)
-        customModalAlertViewController.viewTitle = chatRoom.title
-        customModalAlertViewController.firstButtonTitle = Strings.Localizable.close
-        customModalAlertViewController.link = chatRoom.chatType == .meeting ? Strings.Localizable.Meetings.Sharelink.error : Strings.Localizable.noChatLinkAvailable
-        customModalAlertViewController.firstCompletion = { [weak customModalAlertViewController] in
-            customModalAlertViewController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            guard let self, CustomModalAlertViewController.isAlreadyPresented == false else { return }
+            
+            let customModalAlertViewController = CustomModalAlertViewController()
+            customModalAlertViewController.image = UIImage(resource: .chatLinkCreation)
+            customModalAlertViewController.viewTitle = chatRoom.title
+            customModalAlertViewController.firstButtonTitle = Strings.Localizable.close
+            customModalAlertViewController.link = chatRoom.chatType == .meeting ? Strings.Localizable.Meetings.Sharelink.error : Strings.Localizable.noChatLinkAvailable
+            customModalAlertViewController.firstCompletion = { [weak customModalAlertViewController] in
+                customModalAlertViewController?.dismiss(animated: true, completion: nil)
+            }
+            customModalAlertViewController.overrideUserInterfaceStyle = .dark
+            UIApplication.mnz_presentingViewController().present(customModalAlertViewController, animated: true)
         }
-        customModalAlertViewController.overrideUserInterfaceStyle = .dark
-        UIApplication.mnz_presentingViewController().present(customModalAlertViewController, animated: true)
     }
     
     func toggleFloatingPanel(containerViewModel: MeetingContainerViewModel) {
@@ -370,6 +378,65 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     func showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void)?) {
         guard let presenter = presenter else { return }
         CallWillEndAlertRouter(baseViewController: presenter, timeToEndCall: timeToEndCall, isCallUIVisible: isCallUIVisible, dismissCompletion: completion).start()
+    }
+    
+    func showShareLinkOptionsAlert(_ shareLinkOptions: ShareLinkOptions) {
+        guard let presenter = presenter?.presenterViewController() else { return }
+        let alert = UIAlertController(
+            title: Strings.Localizable.Call.ShareOptions.title,
+            message: nil,
+            preferredStyle: .actionSheet)
+        let sendToChatAction =  UIAlertAction(
+            title: Strings.Localizable.Call.ShareOptions.sendToChat,
+            style: .default
+        ) { _ in
+            shareLinkOptions.sendLinkToChatAction()
+        }
+        alert.addAction(sendToChatAction)
+        
+        let copyAction =  UIAlertAction(
+            title: Strings.Localizable.Call.ShareOptions.copy,
+            style: .default
+        ) { _ in
+            shareLinkOptions.copyLinkAction()
+        }
+        alert.addAction(copyAction)
+        
+        let shareAction =  UIAlertAction(
+            title: Strings.Localizable.Call.ShareOptions.share,
+            style: .default
+        ) { _ in
+            shareLinkOptions.shareLinkAction(presenter)
+        }
+        alert.addAction(shareAction)
+        
+        let cancelAction = UIAlertAction(
+            title: Strings.Localizable.cancel,
+            style: .cancel,
+            handler: nil
+        )
+        alert.addAction(cancelAction)
+        
+        presenter.present(alert, animated: true)
+    }
+    
+    func notifyFloatingPanelInviteParticipants() {
+        floatingPanelRouter?.triggerInviteParticipantsFromContainer()
+    }
+    
+    func sendLinkToChat(_ link: String) {
+        Task { @MainActor in
+            guard let presenter = presenter?.presenterViewController() else {
+                return
+            }
+            let sendToChatWrapper = SendToChatWrapper(link: link, interfaceStyle: .dark)
+            self.sendToChatWrapper = sendToChatWrapper
+            sendToChatWrapper.showSendToChat(presenter: presenter)
+        }
+    }
+    
+    func showLinkCopied() {
+        SVProgressHUD.show(UIImage(resource: .hudSuccess), status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
     }
     
     // MARK: - Private methods.

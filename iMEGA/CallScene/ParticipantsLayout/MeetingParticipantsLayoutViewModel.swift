@@ -15,7 +15,7 @@ enum CallViewAction: ActionType {
     case tapOnBackButton
     case showRenameChatAlert
     case switchCamera
-    case shareLink(NSObject)
+    case shareLinkTapped(sender: NSObject)
     case setNewTitle(String)
     case discardChangeTitle
     case renameTitleDidChange(String)
@@ -33,6 +33,8 @@ enum CallViewAction: ActionType {
     case showNavigation
     case orientationOrModeChange(isIPhoneLandscape: Bool, isSpeakerMode: Bool)
     case onOrientationChanged
+    case copyLinkTapped
+    case inviteParticipantsTapped
 }
 
 enum ParticipantsLayoutMode {
@@ -114,6 +116,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case hideCallWillEnd
         case enableSwitchCameraButton
         case updateSnackBar(SnackBar?)
+        case showEmptyMeetingShareOptionsView
+        case removeEmptyMeetingShareOptionsView
     }
     
     private var chatRoom: ChatRoomEntity
@@ -640,6 +644,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
             if !isOneToOne {
                 addMeetingParticipantStatusPipelineSubscription()
+                if call.numberOfParticipants <= 1 {
+                    invokeCommand?(.showEmptyMeetingShareOptionsView)
+                }
             }
             hasBeenInProgress = call.status == .inProgress
         case .onViewReady:
@@ -763,10 +770,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             Task {
                 await cameraSwitcher.switchCamera()
             }
-        case .shareLink(let sender):
-            containerViewModel?.dispatch(.shareLink(presenter: nil, sender: sender, completion: {[weak self] _, _, _, _ in
-                self?.containerViewModel?.dispatch(.hideOptionsMenu)
-            }))
+        case .shareLinkTapped(let sender):
+            containerViewModel?.dispatch(.shareLinkTapped(sender))
+        case .copyLinkTapped:
+            containerViewModel?.dispatch(.copyLinkTapped)
+        case .inviteParticipantsTapped:
+            containerViewModel?.dispatch(.inviteParticipantsTapped)
         }
     }
     
@@ -1295,6 +1304,7 @@ struct CallDurationInfo {
 
 extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
+        invokeCommand?(.removeEmptyMeetingShareOptionsView)
         self.hasParticipantJoinedBefore = true
         if isOneToOne && reconnecting1on1Subscription != nil {
             cancelReconnecting1on1Subscription()

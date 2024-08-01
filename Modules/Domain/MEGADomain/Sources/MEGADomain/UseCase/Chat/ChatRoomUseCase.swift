@@ -8,6 +8,7 @@ public protocol ChatRoomUseCaseProtocol: Sendable {
     func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
+    func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String
     func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
@@ -68,6 +69,23 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         chatRoomRepo.userStatus(forUserHandle: userHandle)
     }
 
+    public func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String {
+        if chatRoom.chatType == .oneToOne {
+            // Not allowed to create/query chat link
+            throw ChatLinkErrorEntity.creatingChatLinkNotAllowed
+        }
+        
+        if chatRoom.ownPrivilege == .moderator {
+            do {
+                return try await chatRoomRepo.queryChatLink(forChatRoom: chatRoom)
+            } catch {
+                return try await chatRoomRepo.createPublicLink(forChatRoom: chatRoom)
+            }
+        } else {
+            return try await chatRoomRepo.queryChatLink(forChatRoom: chatRoom)
+        }
+    }
+    
     public func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         guard chatRoom.chatType != .oneToOne else {
             // Not allowed to create/query chat link

@@ -33,6 +33,10 @@ enum MeetingContainerAction: ActionType {
     case transitionToLongForm
     // this one is to hide snack bar when user swipes to show participant list
     case willTransitionToLongForm
+    case inviteParticipantsTapped
+    case shareLinkTapped(AnyObject)
+    case copyLinkTapped
+    case sendLinkToChatTapped
 }
 
 /**
@@ -213,6 +217,14 @@ final class MeetingContainerViewModel: ViewModelType {
             )
         case .willTransitionToLongForm:
             router.hideSnackBar()
+        case .shareLinkTapped(let sender):
+            shareLink(from: sender)
+        case .copyLinkTapped:
+            copyLinkToClipboard()
+        case .sendLinkToChatTapped:
+            sendLinkToChat()
+        case .inviteParticipantsTapped:
+            router.notifyFloatingPanelInviteParticipants()
         }
     }
     
@@ -316,7 +328,52 @@ final class MeetingContainerViewModel: ViewModelType {
         router.floatingPanelShown
     }
     
+    private func shareLink(from sender: AnyObject) {
+        tracker.trackAnalyticsEvent(with: ShareLinkBarButtonPressedEvent())
+        let shareLinkOptions = ShareLinkOptions(
+            sender: sender) { [weak self] in
+                self?.dispatch(.sendLinkToChatTapped)
+            } copyLinkAction: { [weak self] in
+                self?.dispatch(.copyLinkTapped)
+            } shareLinkAction: { [weak self] presenter in
+                self?.dispatch(
+                    .shareLink(
+                        presenter: presenter,
+                        sender: sender,
+                        completion: nil
+                    )
+                )
+            }
+        router.showShareLinkOptionsAlert(shareLinkOptions)
+    }
+    
+    private func copyLinkToClipboard() {
+        tracker.trackAnalyticsEvent(with: CopyLinkToPasteboardPressedEvent())
+        Task {
+            do {
+                let link = try await chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom)
+                router.showLinkCopied()
+                UIPasteboard.general.string = link
+            } catch {
+                router.showShareMeetingError()
+            }
+        }
+    }
+    
+    private func sendLinkToChat() {
+        tracker.trackAnalyticsEvent(with: SendLinkToChatPressedEvent())
+        Task {
+            do {
+                let link = try await chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom)
+                router.sendLinkToChat(link)
+            } catch {
+                router.showShareMeetingError()
+            }
+        }
+    }
+    
     private func shareLink(_ presenter: UIViewController?, _ sender: AnyObject, _ completion: UIActivityViewController.CompletionWithItemsHandler?) {
+        tracker.trackAnalyticsEvent(with: ShareLinkPressedEvent())
         chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
             assert(Thread.isMainThread)
             guard let self else { return }

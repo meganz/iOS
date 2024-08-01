@@ -29,6 +29,10 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var showUsersLimitErrorAlert_calledTimes = 0
     var showCallWillEndAlert_calledTimes = 0
     var showUpgradeToProDialog_calledTimes = 0
+    var notifyFloatingPanelInviteParticipants_calledTimes = 0
+    var showShareLinkOptionsAlert_calledTimes = 0
+    var sendLinkToChat_calledTimes = 0
+    var showLinkCopied_calledTimes = 0
     
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
@@ -131,4 +135,20 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     ) {}
     
     func hideSnackBar() { }
+    
+    func notifyFloatingPanelInviteParticipants() {
+        notifyFloatingPanelInviteParticipants_calledTimes += 1
+    }
+    
+    func showShareLinkOptionsAlert(_ shareLinkOptions: ShareLinkOptions) {
+        showShareLinkOptionsAlert_calledTimes += 1
+    }
+    
+    func sendLinkToChat(_ link: String) {
+        sendLinkToChat_calledTimes += 1
+    }
+    
+    func showLinkCopied() {
+        showLinkCopied_calledTimes += 1
+    }
 }

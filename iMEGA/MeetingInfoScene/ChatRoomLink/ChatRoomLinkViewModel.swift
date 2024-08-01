@@ -93,7 +93,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
         guard let meetingLink else { return }
         switch shareOption {
         case .send:
-            router.showSendToChat(meetingLink)
+            router.sendLinkToChat(meetingLink)
         case .copy:
             UIPasteboard.general.string = meetingLink
             router.showLinkCopied()

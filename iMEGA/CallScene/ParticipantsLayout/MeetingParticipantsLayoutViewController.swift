@@ -37,6 +37,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
     private var callEndTimerNotificationView: CallNotificationView?
     private var callWillEndTimerNotificationView: CallNotificationView?
     
+    private var emptyMeetingShareOptionsViewHost: UIViewController?
+
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
@@ -381,6 +383,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
                 MEGALogDebug("[RaiseHand] snack bar update is nil")
                 SnackBarRouter.shared.dismissSnackBar(immediate: false)
             }
+        case .showEmptyMeetingShareOptionsView:
+            addEmptyMeetingShareOptionsView()
+        case .removeEmptyMeetingShareOptionsView:
+            emptyMeetingShareOptionsViewHost?.view.removeFromSuperview()
+            emptyMeetingShareOptionsViewHost?.removeFromParent()
         }
     }
     
@@ -420,7 +427,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
     }
     
     @objc func shareLinkButtonTapped() {
-        viewModel.dispatch(.shareLink(shareLinkButton))
+        viewModel.dispatch(.shareLinkTapped(sender: shareLinkButton))
     }
     
     @IBAction func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
@@ -755,6 +762,40 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         stackViewTopConstraint.constant = top + safeInsetTop
         stackViewBottomConstraint.constant = bottom + safeInsetBottom
         callCollectionView.reloadData()
+    }
+    
+    private func addEmptyMeetingShareOptionsView() {
+        let emptyCallShareOptionsView = EmptyCallShareOptionsView { [weak self] action in
+            guard let self else { return }
+            switch action {
+            case .shareLink:
+                viewModel.dispatch(.shareLinkTapped(sender: shareLinkButton))
+            case .copyLink:
+                viewModel.dispatch(.copyLinkTapped)
+            case .inviteParticipants:
+                viewModel.dispatch(.inviteParticipantsTapped)
+            }
+        }
+        
+        let emptyMeetingShareOptionsHost = UIHostingController(rootView: emptyCallShareOptionsView)
+        emptyMeetingShareOptionsHost.view.backgroundColor = .clear
+        
+        guard let swiftUIView = emptyMeetingShareOptionsHost.view else { return }
+        
+        addChild(emptyMeetingShareOptionsHost)
+        view.addSubview(swiftUIView)
+        
+        swiftUIView.translatesAutoresizingMaskIntoConstraints = false
+        emptyMeetingShareOptionsHost.didMove(toParent: self)
+        
+        NSLayoutConstraint.activate([
+            swiftUIView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            swiftUIView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        view.bringSubviewToFront(swiftUIView)
+        
+        emptyMeetingShareOptionsViewHost = emptyMeetingShareOptionsHost
     }
 }
 

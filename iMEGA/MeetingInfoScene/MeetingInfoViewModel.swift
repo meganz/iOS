@@ -12,7 +12,7 @@ protocol MeetingInfoRouting {
     func closeMeetingInfoView()
     func showLeaveChatAlert(leaveAction: @escaping(() -> Void))
     func showShareMeetingLinkActivity(_ link: String, metadataItemSource: ChatLinkPresentationItemSource)
-    func showSendToChat(_ link: String)
+    func sendLinkToChat(_ link: String)
     func showLinkCopied()
     func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity, didUpdatePeerPermission: @escaping (ChatRoomParticipantPrivilege) -> Void)
     func inviteParticipants(

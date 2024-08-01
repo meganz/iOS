@@ -879,6 +879,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var showMuteSuccess_calledTimes = 0
     var showMuteError_calledTimes = 0
     var showHangOrEndCallDialog_calledTimes = 0
+    var triggerInviteParticipantsFromContainer_calledTimes = 0
 
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
@@ -967,6 +968,10 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     var panelIsLongForm: Bool = false
+    
+    func triggerInviteParticipantsFromContainer() {
+        triggerInviteParticipantsFromContainer_calledTimes += 1
+    }
 }
 
 extension CallParticipantEntity {

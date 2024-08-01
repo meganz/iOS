@@ -8,8 +8,8 @@ import MEGASDKRepo
 final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     private(set) var presenter: UINavigationController
     private let scheduledMeeting: ScheduledMeetingEntity
-    private var link: String?
     private var inviteToMegaNavigationController: MEGANavigationController?
+    private var sendToChatWrapper: SendToChatWrapper?
 
     init(presenter: UINavigationController,
          scheduledMeeting: ScheduledMeetingEntity) {
@@ -87,17 +87,10 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         presenter.present(shareActivity, animated: true)
     }
 
-    func showSendToChat(_ link: String) {
-        self.link = link
-        guard let navigationController =
-                UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController, let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
-            return
-        }
-        
-        sendToViewController.sendToChatActivityDelegate = self
-        sendToViewController.sendMode = .text
-        
-        presenter.present(navigationController, animated: true)
+    func sendLinkToChat(_ link: String) {
+        let sendToChatWrapper = SendToChatWrapper(link: link)
+        self.sendToChatWrapper = sendToChatWrapper
+        sendToChatWrapper.showSendToChat(presenter: presenter)
     }
 
     func showLinkCopied() {
@@ -192,15 +185,5 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     @objc private func dismissInviteContactsScreen() {
         self.inviteToMegaNavigationController?.dismiss(animated: true)
         self.inviteToMegaNavigationController = nil
-    }
-}
-
-extension MeetingInfoRouter: SendToChatActivityDelegate {
-    func send(_ viewController: SendToViewController!, didFinishActivity completed: Bool) {
-        viewController.dismiss(animated: true)
-    }
-    
-    func textToSend() -> String {
-        link ?? ""
     }
 }
