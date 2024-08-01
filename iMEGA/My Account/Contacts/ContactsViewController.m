@@ -765,7 +765,7 @@
                     user = self.recentlyAddedUsersArray[indexPath.row];
                 } else {
                     NSArray *sectionArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
-                    user = sectionArray[indexPath.row];
+                    user = [sectionArray objectOrNilAtIndex:indexPath.row];
                 }
             }
             break;
