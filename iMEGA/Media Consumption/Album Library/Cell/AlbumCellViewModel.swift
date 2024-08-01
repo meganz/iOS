@@ -126,7 +126,7 @@ final class AlbumCellViewModel: ObservableObject {
                 continue
             }
             await setDefaultAlbumCover(albumPhotos)
-            albumMetaData = makeAlbumMetaData(from: albumPhotos)
+            albumMetaData = await albumPhotos.makeAlbumMetaData()
         }
     }
     
@@ -134,7 +134,8 @@ final class AlbumCellViewModel: ObservableObject {
     @MainActor
     func monitorCoverPhotoSensitivity() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-              let coverNode = album.coverNode else { return }
+              let coverNode = album.coverNode,
+              !coverNode.isMarkedSensitive else { return }
         // Wait for initial thumbnail to load with sensitivity before checking inherited sensitivity updates
         _ = await $thumbnailContainer.values.contains(where: { $0.type != .placeholder })
         do {
@@ -210,21 +211,12 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailContainer = imageContainer
     }
     
+    @MainActor
     private func excludeSensitives() async -> Bool {
         if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
             await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
         } else {
             false
-        }
-    }
-
-    private func makeAlbumMetaData(from photos: [AlbumPhotoEntity]) -> AlbumMetaDataEntity {
-        photos.reduce(AlbumMetaDataEntity(imageCount: 0, videoCount: 0)) { counts, photo in
-            if photo.photo.name.fileExtensionGroup.isImage {
-                .init(imageCount: counts.imageCount + 1, videoCount: counts.videoCount)
-            } else {
-                .init(imageCount: counts.imageCount, videoCount: counts.videoCount + 1)
-            }
         }
     }
     
@@ -261,5 +253,17 @@ private extension SensitiveNodeUseCaseProtocol {
             }
             .removeDuplicates()
             .eraseToAnyAsyncThrowingSequence()
+    }
+}
+
+private extension Sequence where Element == AlbumPhotoEntity {
+    func makeAlbumMetaData() async -> AlbumMetaDataEntity {
+        reduce(AlbumMetaDataEntity(imageCount: 0, videoCount: 0)) { counts, photo in
+            if photo.photo.name.fileExtensionGroup.isImage {
+                .init(imageCount: counts.imageCount + 1, videoCount: counts.videoCount)
+            } else {
+                .init(imageCount: counts.imageCount, videoCount: counts.videoCount + 1)
+            }
+        }
     }
 }

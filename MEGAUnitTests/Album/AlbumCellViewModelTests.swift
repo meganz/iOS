@@ -657,6 +657,29 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    func testMonitorCoverPhotoSensitivity_coverMarkedAsSensitive_shouldNotUpdateImageContainerOnInheritSensitivityChange() {
+        let cover = NodeEntity(handle: 65, isMarkedSensitive: true)
+        let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
+        let coverImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let sut = makeAlbumCellViewModel(
+            album: album,
+            thumbnailLoader: MockThumbnailLoader(initialImage: coverImageContainer),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
+                isInheritingSensitivityResult: .success(true)),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        )
+        
+        let exp = expectation(description: "Should not update thumbnail container")
+        exp.isInverted = true
+        
+        let subscription = thumbnailContainerUpdates(on: sut) { _ in
+            exp.fulfill()
+        }
+        trackTaskCancellation { await sut.monitorCoverPhotoSensitivity() }
+    
+        wait(for: [exp], timeout: 0.5)
+    }
+    
     func testMonitorCoverPhotoSensitivity_withAlbumCoverSensitivityUpdate_shouldUpdateImageContainerWithInitialResultThenMonitorUpdates() async throws {
         let cover = NodeEntity(handle: 65)
         let album = AlbumEntity(id: 45, coverNode: cover, type: .user)

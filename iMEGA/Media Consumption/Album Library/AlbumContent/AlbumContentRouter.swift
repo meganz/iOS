@@ -37,6 +37,8 @@ struct AlbumContentRouter: AlbumContentRouting {
             userAlbumRepo: userAlbumRepo,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             photoLibraryUseCase: makePhotoLibraryUseCase(),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let photoLibraryRepository = PhotoLibraryRepository(
@@ -109,6 +111,8 @@ struct AlbumContentRouter: AlbumContentRouting {
             userAlbumRepo: userAlbumRepository(),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             photoLibraryUseCase: makePhotoLibraryUseCase(),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         
