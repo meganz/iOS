@@ -76,13 +76,6 @@ struct VideoRevampRouter: VideoRevampRouting {
     }
     
     func openMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity]) {
-        guard
-            video.mediaType == .video,
-            allVideos.allSatisfy({ $0.mediaType == .video })
-        else {
-            return
-        }
-        
         let nodeInfoUseCase = NodeInfoUseCase()
         guard let selectedNode = nodeInfoUseCase.node(fromHandle: video.handle) else { return }
         let allNodes = allVideos.compactMap { nodeInfoUseCase.node(fromHandle: $0.handle) }
