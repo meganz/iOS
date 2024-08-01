@@ -1599,8 +1599,6 @@
 		A5EFB0532B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */; };
 		A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
-		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
-		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
 		A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A803C8FC2955DB790056C9F0 /* SAMKeychain */; };
 		A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */; };
 		A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB382A4B0FAD00F99382 /* MEGAChatSdk */; };
@@ -4387,10 +4385,6 @@
 		A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SaveNode.swift"; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatBaseRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.m; sourceTree = SOURCE_ROOT; };
-		A802B1FB1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAChatStartCallRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatStartCallRequestDelegate.h; sourceTree = SOURCE_ROOT; };
-		A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatStartCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatStartCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
-		A802B1FF1FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAChatAnswerCallRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.h; sourceTree = SOURCE_ROOT; };
-		A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatAnswerCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
 		A80550302A7BCA3900BC3725 /* MEGARepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGARepo; sourceTree = "<group>"; };
 		A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueViewRouter.swift; sourceTree = "<group>"; };
 		A811DCB72476C460002FCD98 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -10605,8 +10599,6 @@
 			children = (
 				831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */,
 				831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */,
-				A802B1FF1FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.h */,
-				A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */,
 				5B222A72205A9CD30083D433 /* MEGAChatAttachNodeRequestDelegate.h */,
 				5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */,
 				777AC33C21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.h */,
@@ -10616,8 +10608,6 @@
 				A8B354D221354680002018A9 /* MEGAChatNotificationDelegate.h */,
 				A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */,
 				83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */,
-				A802B1FB1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.h */,
-				A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */,
 			);
 			name = Chat;
 			path = API/Chat;
@@ -15219,7 +15209,6 @@
 				C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */,
 				5DAC09D524CFCA16001B6476 /* MEGACarouselFlowLayout.swift in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
-				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
 				777AC33E21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
@@ -15230,7 +15219,6 @@
 				83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
-				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */,
 				B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */,
