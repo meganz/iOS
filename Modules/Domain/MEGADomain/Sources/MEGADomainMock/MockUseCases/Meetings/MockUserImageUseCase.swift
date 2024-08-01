@@ -1,15 +1,15 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 
 public struct MockUserImageUseCase: UserImageUseCaseProtocol {
     private let fetchAvatarResult: Result<ImageFilePathEntity, UserImageLoadErrorEntity>
-    private let clearAvatarCacheCompletion: ((Base64HandleEntity) -> Void)?
-    private let downloadAvatarCompletion: ((Base64HandleEntity) -> Void)?
+    private let clearAvatarCacheCompletion: (@Sendable (Base64HandleEntity) -> Void)?
+    private let downloadAvatarCompletion: (@Sendable (Base64HandleEntity) -> Void)?
     public let avatarChangePublisher: PassthroughSubject<[HandleEntity], Never>
     
     public init(fetchAvatarResult: Result<ImageFilePathEntity, UserImageLoadErrorEntity> = .failure(.generic),
-                clearAvatarCacheCompletion: ((Base64HandleEntity) -> Void)? = nil,
-                downloadAvatarCompletion: ((Base64HandleEntity) -> Void)? = nil,
+                clearAvatarCacheCompletion: (@Sendable (Base64HandleEntity) -> Void)? = nil,
+                downloadAvatarCompletion: (@Sendable (Base64HandleEntity) -> Void)? = nil,
                 avatarChangePublisher: PassthroughSubject<[HandleEntity], Never> = PassthroughSubject<[HandleEntity], Never>()
     ) {
         self.fetchAvatarResult = fetchAvatarResult
