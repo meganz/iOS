@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct OccurrenceView: View {
@@ -23,11 +24,11 @@ struct OccurrenceView: View {
                 Text(occurrence.date)
                     .padding(.horizontal)
                     .font(.footnote)
-                    .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(Constants.headerTitleOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.headerTitleOpacity))
+                    .foregroundColor(dateTextColor)
                 Divider()
-                    .background(colorScheme == .dark ? MEGAAppColor.Gray._545458.color : MEGAAppColor.Gray._3C3C43.color)
+                    .background(dividerColor)
             }
-            .background(colorScheme == .dark ? MEGAAppColor.Gray._1D1D1D.color.opacity(Constants.headerBackgroundOpacity) : MEGAAppColor.White._F7F7F7.color.opacity(Constants.headerBackgroundOpacity))
+            .background(backgroundColor)
             .frame(height: Constants.headerHeight)
 
             HStack(alignment: .center) {
@@ -39,11 +40,47 @@ struct OccurrenceView: View {
                         .font(.subheadline)
                     Text(occurrence.time)
                         .font(.caption)
-                        .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color)
+                        .foregroundColor(timeTextColor)
                 }
             }
             .frame(height: Constants.rowHeight)
         }
         .listRowInsets(EdgeInsets())
+    }
+    
+    var dateTextColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.secondary.swiftUI
+        } else {
+            colorScheme == .dark ? UIColor.grayEBEBF5.swiftUI.opacity(Constants.headerTitleOpacity) : UIColor.gray3C3C43.swiftUI.opacity(Constants.headerTitleOpacity)
+        }
+    }
+
+    var dividerColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Border.subtle.swiftUI
+        } else {
+            colorScheme == .dark ?
+                UIColor.gray545458.swiftUI :
+                UIColor.gray3C3C43.swiftUI
+        }
+    }
+
+    var backgroundColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Background.surface1.swiftUI
+        } else {
+            colorScheme == .dark ? UIColor.gray1D1D1D.swiftUI.opacity(Constants.headerBackgroundOpacity) : UIColor.whiteF7F7F7.swiftUI.opacity(Constants.headerBackgroundOpacity)
+        }
+    }
+
+    var timeTextColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.primary.swiftUI
+        } else {
+            colorScheme == .dark ?
+                UIColor.grayD1D1D1.swiftUI :
+                UIColor.gray515151.swiftUI
+        }
     }
 }
