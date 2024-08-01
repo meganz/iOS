@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGASwift
 
 final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
         
@@ -15,18 +16,16 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     private let nodeListEntityForHandle: [HandleEntity: NodeListEntity]
     private let nodesForLocation: [FolderTargetEntity: [NodeEntity]]
     
-    public var callback: (([NodeEntity]) -> Void)?
-    
     public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
     
-    public var startMonitoringNodesUpdateCalled = 0
-    public var stopMonitoringNodesUpdateCalled = 0
-    public var searchString: String?
-    public var searchRecursive: Bool?
+    @Atomic public var callback: (([NodeEntity]) -> Void)?
+    @Atomic public var startMonitoringNodesUpdateCalled = 0
+    @Atomic public var stopMonitoringNodesUpdateCalled = 0
+    @Atomic public var searchString: String?
+    @Atomic public var searchRecursive: Bool?
+    @Atomic public var messages = [Message]()
     
-    public private(set) var messages = [Message]()
-    
-    public enum Message: Equatable {
+    public enum Message: Equatable, Sendable {
         case node(id: HandleEntity)
         case search(searchText: String?, sortOrder: SortOrderEntity)
     }
@@ -47,17 +46,17 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     }
     
     public func startMonitoringNodesUpdate(callback: (([NodeEntity]) -> Void)?) {
-        self.callback = callback
-        startMonitoringNodesUpdateCalled += 1
+        self.$callback.mutate { $0 = callback }
+        $startMonitoringNodesUpdateCalled.mutate { $0 += 1 }
     }
     
     public func stopMonitoringNodesUpdate() {
-        self.callback = nil
-        stopMonitoringNodesUpdateCalled += 1
+        self.$callback.mutate { $0 = nil }
+        $stopMonitoringNodesUpdateCalled.mutate { $0 += 1 }
     }
 
     public func node(by id: HandleEntity) async -> NodeEntity? {
-        messages.append(.node(id: id))
+        $messages.mutate { $0.append(.node(id: id)) }
         return nodesForHandle
             .flatMap { $0.value }
             .first { node in node.handle == id }
@@ -86,10 +85,11 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     }
     
     public func search(filter: SearchFilterEntity) async throws -> [NodeEntity] {
-        searchString = filter.searchText
-        searchRecursive = filter.recursive
-        
-        messages.append(.search(searchText: searchString, sortOrder: filter.sortOrderType))
+        $searchString.mutate { $0 = filter.searchText }
+        $searchRecursive.mutate { $0 = filter.recursive }
+        let message = Message.search(searchText: searchString,
+                                     sortOrder: filter.sortOrderType)
+        $messages.mutate { $0.append(message) }
         
         let filterCondition = { (node: NodeEntity) -> Bool in
             let sensitiveCondition = switch filter.sensitiveFilterOption {
@@ -127,8 +127,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     }
     
     public func search(filter: SearchFilterEntity) async throws -> NodeListEntity {
-        searchString = filter.searchText
-        searchRecursive = filter.recursive
+        $searchString.mutate { $0 = filter.searchText }
+        $searchRecursive.mutate { $0 = filter.recursive }
         switch filter.searchTargetLocation {
         case .parentNode(let nodeEntity):
             if let nodeListEntity = nodeListEntityForHandle[nodeEntity.handle] {
@@ -157,8 +157,8 @@ extension MockFilesSearchRepository {
                        formatType: NodeFormatEntity,
                        completion: @escaping ([NodeEntity]?, Bool) -> Void) {
         
-        searchString = string
-        searchRecursive = recursive
+        $searchString.mutate { $0 = string }
+        $searchRecursive.mutate { $0 = recursive }
         let nodes: [NodeEntity] = switch formatType {
         case .photo: photoNodes.filter { !$0.isFolder }
         case .video: videoNodes.filter { !$0.isFolder }
@@ -174,8 +174,8 @@ extension MockFilesSearchRepository {
                        supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity) async throws -> [NodeEntity] {
-        searchString = string
-        searchRecursive = recursive
+        $searchString.mutate { $0 = string }
+        $searchRecursive.mutate { $0 = recursive }
         return switch formatType {
         case .photo: photoNodes.filter { !$0.isFolder }
         case .video: videoNodes.filter { !$0.isFolder }

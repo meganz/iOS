@@ -15,6 +15,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     private let userAlbumRepo: any UserAlbumRepositoryProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
     
     public init(albumContentsRepo: any AlbumContentsUpdateNotifierRepositoryProtocol,
@@ -23,6 +24,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
                 userAlbumRepo: any UserAlbumRepositoryProtocol,
                 contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
                 photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
+                sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
                 hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
         self.albumContentsRepo = albumContentsRepo
         self.mediaUseCase = mediaUseCase
@@ -30,6 +32,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         self.userAlbumRepo = userAlbumRepo
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
@@ -68,7 +71,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
             albumElementIds.forEach { albumElementId in
                 group.addTask {
                     guard let photo = await photo(forNodeId: albumElementId.nodeId),
-                          shouldShowPhoto(photo, showHidden: showHidden) else {
+                          await shouldShowPhoto(photo, showHidden: showHidden) else {
                         return nil
                     }
                     return AlbumPhotoEntity(photo: photo,
@@ -135,11 +138,15 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
             .showHiddenNodes
     }
     
-    private func shouldShowPhoto(_ node: NodeEntity, showHidden: Bool) -> Bool {
+    private func shouldShowPhoto(_ node: NodeEntity, showHidden: Bool) async -> Bool {
         guard hiddenNodesFeatureFlagEnabled(),
               !showHidden else {
             return true
         }
-        return !node.isMarkedSensitive
+        return if node.isMarkedSensitive {
+            false
+        } else {
+            (try? await !sensitiveNodeUseCase.isInheritingSensitivity(node: node)) ?? false
+        }
     }
 }

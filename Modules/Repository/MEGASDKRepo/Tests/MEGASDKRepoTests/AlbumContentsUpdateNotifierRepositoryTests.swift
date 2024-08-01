@@ -194,9 +194,9 @@ final class AlbumContentsUpdateNotifierRepositoryTests: XCTestCase {
         wait(for: [exp], timeout: 0.5)
     }
     
-    func testOnAlbumReload_onOneNodeInTrashWithVisualMediaNodeAndThumbnail_shouldBeCalled() {
-        let node = anyNode(handle: 1, changeType: .inShare, isVisualMediaAndHasThumbnail: false)
-        let mockSdk = MockSdk(rubbishBinNode: node)
+    func testOnAlbumReload_visualMediaNodeInTrash_shouldBeCalled() {
+        let rubbishBinNode = MockNode(handle: 1)
+        let mockSdk = MockSdk(rubbishBinNode: rubbishBinNode)
         let sut = makeSUT(sdk: mockSdk)
         let exp = expectation(description: "OnAlbumReload should be called.")
         
@@ -205,7 +205,7 @@ final class AlbumContentsUpdateNotifierRepositoryTests: XCTestCase {
                 exp.fulfill()
             }.store(in: &subscriptions)
         
-        let changedNodes = [node, anyNode(handle: 2, changeType: .timestamp, isVisualMediaAndHasThumbnail: true)]
+        let changedNodes = [MockNode(handle: 232, name: "test.jpg", parentHandle: rubbishBinNode.handle)]
         sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: changedNodes))
         
         wait(for: [exp], timeout: 0.5)

@@ -51,13 +51,16 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 mediaUseCase: mediaUseCase,
                 userAlbumRepository: userAlbumRepo,
                 albumContentsUpdateRepository: albumContentsUpdatesRepo,
-                albumContentsUseCase: AlbumContentsUseCase(albumContentsRepo: albumContentsUpdatesRepo,
-                                                           mediaUseCase: mediaUseCase,
-                                                           fileSearchRepo: filesSearchRepo,
-                                                           userAlbumRepo: userAlbumRepo,
-                                                           contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                                                           photoLibraryUseCase: photoLibraryUseCase,
-                                                           hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
+                albumContentsUseCase: AlbumContentsUseCase(
+                    albumContentsRepo: albumContentsUpdatesRepo,
+                    mediaUseCase: mediaUseCase,
+                    fileSearchRepo: filesSearchRepo,
+                    userAlbumRepo: userAlbumRepo,
+                    contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                    photoLibraryUseCase: photoLibraryUseCase,
+                    sensitiveNodeUseCase: SensitiveNodeUseCase(
+                        nodeRepository: NodeRepository.newRepo),
+                    hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled
             ),

@@ -2,8 +2,6 @@
 import MEGADomain
 import MEGASdk
 
-private typealias ReloadCondition = () -> Bool
-
 final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContentsUpdateNotifierRepositoryProtocol {
     public static var newRepo = AlbumContentsUpdateNotifierRepository(sdk: MEGASdk.sharedSdk)
     
@@ -24,29 +22,20 @@ final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContent
         sdk.remove(self)
     }
     
-    private func isAnyNodeMovedIntoTrash(_ nodes: [NodeEntity]) -> Bool {
-        guard let rubbishNode = self.sdk.rubbishNode else { return false }
-        
-        let rubbishNodeEntity = rubbishNode.toNodeEntity()
-        
-        return nodes.contains(rubbishNodeEntity)
-    }
-    
     private func shouldAlbumReload(_ nodes: [NodeEntity]) -> Bool {
-        let hasVisualMedia = nodes.contains { $0.fileExtensionGroup.isVisualMedia }
-        guard hasVisualMedia else {
-            return false
-        }
+        let rubbishNodeHandle = sdk.rubbishNode?.handle
         
-        let isAnyNodesTrashed: ReloadCondition = {
-            self.isAnyNodeMovedIntoTrash(nodes)
+        return nodes.contains { node in
+            guard !(node.isFolder && node.changeTypes.contains(.sensitive)) else {
+                return true
+            }
+            guard node.fileExtensionGroup.isVisualMedia else { return false }
+            
+            return [node.changeTypes.intersection([.new, .attributes, .parent,
+                                                   .publicLink, .sensitive]).isNotEmpty,
+                    node.parentHandle == rubbishNodeHandle]
+                .contains { $0 }
         }
-        let containsChangeTypes: ReloadCondition = {
-            nodes.contains(changedTypes: [.new, .attributes, .parent, .publicLink, .sensitive])
-        }
-        
-        return [isAnyNodesTrashed,
-                containsChangeTypes].contains { $0() }
     }
 }
 
