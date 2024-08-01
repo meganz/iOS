@@ -18,15 +18,15 @@ import Foundation
 /// ```
 ///
 /// Note:
-/// Avoid using it in the context of the **Main Thread**, due to the usage of synchronous access
+/// Must avoid heavy operation within mutation closure
 @propertyWrapper
-public final class Atomic<T: Sendable> {
+public final class Atomic<T: Sendable>: @unchecked Sendable {
     
-    /// The internal `DispatchQueue` used for synchronization.
-    private let _queue: AtomicDispatchQueueProtocol
+    /// The internal `NSLock` used for synchronization.
+    private let lock: NSLock = NSLock()
     
     /// The actual value being wrapped.
-    private var _value: T
+    private var value: T
     
     /// Returns the current instance of `Atomic`, allowing access to the wrapper's methods and properties.
     public var projectedValue: Atomic<T> {
@@ -35,28 +35,23 @@ public final class Atomic<T: Sendable> {
     
     /// The thread-safe wrapped value.
     public var wrappedValue: T {
-        _queue.sync {
-            _value
-        }
+        lock.withLock { value }
     }
     
-    /// Creates an `Atomic` property wrapper with an initial wrapped value and optional dispatch queue.
+    /// Creates an `Atomic` property wrapper with an initial wrapped value
     ///
     /// - Parameters:
     ///   - wrappedValue: The initial value for the wrapped property.
-    ///   - queue: The `DispatchQueue` to use for synchronization. If not provided, a new concurrent queue is created.
-    public init(wrappedValue value: T, queue: AtomicDispatchQueueProtocol = DispatchQueue(label: "com.mega.concurrentqueue", attributes: .concurrent)) {
-        _value = value
-        _queue = queue
+    public init(wrappedValue: T) {
+        value = wrappedValue
     }
     
     /// Safely mutates the wrapped value.
     ///
     /// - Parameter mutation: A closure that accepts an `inout` parameter of the wrapped value type, which can be mutated safely.
-    public func mutate(_ mutation: @escaping (inout T) -> Void) {
-        _queue.async(flags: .barrier) {
-            mutation(&self._value)
-        }
+    ///  Should not perform heavy operation within the clousure, otherwise calling thread will be blocked for too long.
+    public func mutate(_ mutation: (inout T) -> Void) {
+        lock.withLock { mutation(&self.value) }
     }
 }
 

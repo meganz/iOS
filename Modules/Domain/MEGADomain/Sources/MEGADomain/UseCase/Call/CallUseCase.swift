@@ -1,6 +1,8 @@
 import Combine
+import Foundation
+import MEGASwift
 
-public protocol CallUseCaseProtocol {
+public protocol CallUseCaseProtocol: Sendable {
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T)
     func stopListeningForCall()
     func call(for chatId: HandleEntity) -> CallEntity?
@@ -29,7 +31,7 @@ public protocol CallUseCaseProtocol {
     func lowerHand(forCall call: CallEntity) async throws
 }
 
-public protocol CallCallbacksUseCaseProtocol: AnyObject {
+public protocol CallCallbacksUseCaseProtocol: AnyObject, Sendable {
     func participantJoined(participant: CallParticipantEntity)
     func participantLeft(participant: CallParticipantEntity)
     func waitingRoomUsersAllow(with handles: [HandleEntity])
@@ -68,11 +70,22 @@ public extension CallCallbacksUseCaseProtocol {
     func mutedByClient(handle: HandleEntity) { }
 }
 
-public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
+public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, @unchecked Sendable {
+    private let lock = NSLock()
     
     private let repository: T
     
-    private weak var callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
+    private weak var _callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
+    
+    private var callbacksDelegate: (any CallCallbacksUseCaseProtocol)? {
+        get {
+            lock.withLock { _callbacksDelegate }
+        }
+        
+        set {
+            lock.withLock { _callbacksDelegate = newValue }
+        }
+    }
 
     public init(repository: T) {
         self.repository = repository

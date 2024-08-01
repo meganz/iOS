@@ -34,16 +34,15 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
     private let originalNodeSource: NodeSource
     private var nodeUpdatesListener: any NodesUpdateListenerProtocol
     
-    private var runningState: Atomic<RunningState>
+    @Atomic
+    private var runningState: RunningState = .notStarted
     
     init(
         originalNodeSource: NodeSource,
-        nodeUpdatesListener: some NodesUpdateListenerProtocol,
-        atomicQueue: some AtomicDispatchQueueProtocol = DispatchQueue(label: "com.mega.concurrentqueue", attributes: .concurrent)
+        nodeUpdatesListener: some NodesUpdateListenerProtocol
     ) {
         self.originalNodeSource = originalNodeSource
         self.nodeUpdatesListener = nodeUpdatesListener
-        runningState = .init(wrappedValue: .notStarted, queue: atomicQueue)
         self.nodeUpdatesListener.onNodesUpdateHandler = { [weak self] updatedNodes in
             self?.consumeNodeUpdates(updatedNodes)
         }
@@ -51,10 +50,10 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
     
     // To be called when the client needs to listening to NodeSource updates
     func startListening() {
-        if case let .inactive(pendingNodesUpdate) = runningState.wrappedValue, let pendingNodesUpdate {
+        if case let .inactive(pendingNodesUpdate) = runningState, let pendingNodesUpdate {
             processNodeUpdates(pendingNodesUpdate)
         }
-        runningState.mutate { $0 = .active }
+        $runningState.mutate { $0 = .active }
     }
     
     /// To be called when the client no longer needs to listening to NodeSource updates
@@ -64,16 +63,16 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
     /// (e.g: When a CD screen is not top of navigation stack, it shouldn't update the navigation bar items, because navigation bar is common used
     /// by all VC in the stacks, only the top VC in the stack should update the navigation bar)
     func stopListening() {
-        runningState.mutate { $0 = .inactive(pendingNodesUpdate: nil) }
+        $runningState.mutate { $0 = .inactive(pendingNodesUpdate: nil) }
     }
     
     private func consumeNodeUpdates(_ updatedNodes: [NodeEntity]) {
-        switch runningState.wrappedValue {
+        switch runningState {
         case .notStarted: break
         case .active:
             processNodeUpdates(updatedNodes)
         case .inactive:
-            runningState.mutate { $0 = .inactive(pendingNodesUpdate: updatedNodes) }
+            $runningState.mutate { $0 = .inactive(pendingNodesUpdate: updatedNodes) }
         }
     }
     

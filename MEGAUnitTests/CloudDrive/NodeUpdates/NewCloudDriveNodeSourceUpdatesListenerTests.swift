@@ -15,8 +15,7 @@ final class NewCloudDriveNodeSourceUpdatesListenerTests: XCTestCase {
         init(nodeEntity: NodeEntity) {
             sut = NewCloudDriveNodeSourceUpdatesListener(
                 originalNodeSource: .node { nodeEntity },
-                nodeUpdatesListener: mockNodeUpdateListener,
-                atomicQueue: MockAtomicDispatchQueue()
+                nodeUpdatesListener: mockNodeUpdateListener
             )
         }
 
@@ -128,15 +127,5 @@ final class NewCloudDriveNodeSourceUpdatesListenerTests: XCTestCase {
         
         // then
         XCTAssertEqual(result?.parentNode?.name, "0-new")
-    }
-}
-
-private class MockAtomicDispatchQueue: AtomicDispatchQueueProtocol {
-    func async(flags: DispatchWorkItemFlags, execute work: @escaping @Sendable @convention(block) () -> Void) {
-        work()
-    }
-    
-    func sync<T>(execute work: () throws -> T) rethrows -> T {
-        try work()
     }
 }
