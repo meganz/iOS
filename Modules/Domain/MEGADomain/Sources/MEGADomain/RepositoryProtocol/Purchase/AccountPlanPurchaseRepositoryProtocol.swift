@@ -1,6 +1,6 @@
 import Combine
 
-public protocol AccountPlanPurchaseRepositoryProtocol: RepositoryProtocol {
+public protocol AccountPlanPurchaseRepositoryProtocol: RepositoryProtocol, Sendable {
     func accountPlanProducts() async -> [PlanEntity]
     func restorePurchase()
     func purchasePlan(_ plan: PlanEntity) async

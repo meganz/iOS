@@ -1,10 +1,10 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 import MEGASdk
 import MEGASDKRepo
 import MEGASwift
 
-final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseRepositoryProtocol {
+final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseRepositoryProtocol, Sendable {
 
     static var newRepo: AccountPlanPurchaseRepository {
         AccountPlanPurchaseRepository(purchase: MEGAPurchase.sharedInstance(), sdk: MEGASdk.shared)
