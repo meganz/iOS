@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
 final public class MockDownloadChatRepository: DownloadChatRepositoryProtocol {
     public static var newRepo: MockDownloadChatRepository {
@@ -13,10 +14,9 @@ final public class MockDownloadChatRepository: DownloadChatRepositoryProtocol {
         messageId: HandleEntity,
         chatId: HandleEntity,
         to url: URL,
-        metaData: TransferMetaDataEntity?,
-        completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void
-    ) {
-        
+        metaData: TransferMetaDataEntity?
+    ) async throws -> TransferEntity {
+        TransferEntity()
     }
     
     public func downloadChatFile(
@@ -26,11 +26,8 @@ final public class MockDownloadChatRepository: DownloadChatRepositoryProtocol {
         to url: URL,
         filename: String?,
         appdata: String?,
-        startFirst: Bool,
-        start: ((TransferEntity) -> Void)?,
-        update: ((TransferEntity) -> Void)?,
-        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
-    ) {
-        
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
 }

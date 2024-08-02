@@ -13,14 +13,16 @@ public struct MockSaveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol {
         }
     }
     
-    public func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity,
-                                     chatId: HandleEntity,
-                                     completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        completion(saveToPhotosResult)
-    }
-    
     public func saveToPhotos(fileLink: FileLinkEntity,
                              completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
         completion(saveToPhotosResult)
+    }
+    
+    public func saveToPhotosChatNode(
+        handle: HandleEntity,
+        messageId: HandleEntity,
+        chatId: HandleEntity
+    ) async throws {
+        try saveToPhotosResult.get()
     }
 }

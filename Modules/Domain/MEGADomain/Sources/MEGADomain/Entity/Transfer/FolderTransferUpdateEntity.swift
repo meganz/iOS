@@ -1,4 +1,4 @@
-public struct FolderTransferUpdateEntity {
+public struct FolderTransferUpdateEntity: Sendable {
     public let transfer: TransferEntity
     public let stage: TransferStageEntity
     public let folderCount: UInt

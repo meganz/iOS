@@ -75,7 +75,9 @@ final class CancellableTransferViewModel: ViewModelType {
                 }
             case .downloadChat:
                 sendDownloadAnalyticsStats()
-                startChatFileDownloads()
+                Task(priority: .userInitiated) {
+                    await startChatFileDownloads()
+                }
             case .downloadFileLink:
                 startFileLinkDownload()
             }
@@ -241,32 +243,48 @@ final class CancellableTransferViewModel: ViewModelType {
         }
     }
     
-    // MARK: - Downloads
-    private func startChatFileDownloads() {
-        fileTransfers.forEach { transferViewEntity in
-            downloadNodeUseCase.downloadChatFileToOffline(forNodeHandle: transferViewEntity.handle,
-                                                          messageId: transferViewEntity.messageId,
-                                                          chatId: transferViewEntity.chatId,
-                                                          filename: transferViewEntity.name,
-                                                          appdata: transferViewEntity.appData,
-                                                          startFirst: transferViewEntity.priority) { transferEntity in
-                transferViewEntity.state = transferEntity.state
-                self.continueFolderTransfersIfNeeded()
-            } update: { _ in } completion: { [weak self] result in
-                switch result {
-                case .success(let transferEntity):
+    @MainActor
+    private func downloadChatFile(transferViewEntity: CancellableTransfer) async {
+        do {
+            for try await status in try await downloadNodeUseCase.downloadChatFileToOffline(
+                forNodeHandle: transferViewEntity.handle,
+                messageId: transferViewEntity.messageId,
+                chatId: transferViewEntity.chatId,
+                filename: transferViewEntity.name,
+                appdata: transferViewEntity.appData,
+                startFirst: transferViewEntity.priority
+            ) {
+                switch status {
+                case .start(let transferEntity):
                     transferViewEntity.state = transferEntity.state
-                case .failure(let error):
-                    transferViewEntity.state = .failed
-                    if error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                        self?.transferErrors.append(error)
-                    }
-                    self?.continueFolderTransfersIfNeeded()
+                    continueFolderTransfersIfNeeded()
+                case .update:
+                    continue
+                case .folderUpdate:
+                    continue
+                case .finish(let transferEntity):
+                    transferViewEntity.state = transferEntity.state
                 }
             }
+        } catch let error as TransferErrorEntity {
+            if error != .alreadyDownloaded && error != .copiedFromTempFolder {
+                transferErrors.append(error)
+            }
+            continueFolderTransfersIfNeeded()
+        } catch {
+            MEGALogError("Download chat file failed: \(error.localizedDescription)")
         }
     }
     
+    // MARK: - Downloads
+    private func startChatFileDownloads() async {
+        await withThrowingTaskGroup(of: Void.self) { group in
+            group.addTasksUnlessCancelled(for: fileTransfers, priority: .background) { transferViewEntity in
+                await self.downloadChatFile(transferViewEntity: transferViewEntity)
+            }
+        }
+    }
+
     private func startFileDownloads() {
         fileTransfers.forEach { transferViewEntity in
             downloadNodeUseCase.downloadFileToOffline(forNodeHandle: transferViewEntity.handle,

@@ -1,8 +1,16 @@
 import Foundation
+import MEGASwift
 
 public protocol DownloadNodeUseCaseProtocol {
     func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?)
-    func downloadChatFileToOffline(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?)
+    func downloadChatFileToOffline(
+        forNodeHandle handle: HandleEntity,
+        messageId: HandleEntity,
+        chatId: HandleEntity,
+        filename: String?,
+        appdata: String?,
+        startFirst: Bool
+    ) async throws -> AnyAsyncSequence<TransferEventEntity>
     func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
     func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
     func cancelDownloadTransfers()
@@ -82,17 +90,23 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         }
     }
     
-    public func downloadChatFileToOffline(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    @MainActor
+    public func downloadChatFileToOffline(
+        forNodeHandle handle: HandleEntity,
+        messageId: HandleEntity,
+        chatId: HandleEntity,
+        filename: String?,
+        appdata: String?,
+        startFirst: Bool
+    ) async throws -> AnyAsyncSequence<TransferEventEntity> {
         
-        guard let node = chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
-            completion?(.failure(.couldNotFindNodeByHandle))
-            return
+        guard let node = await chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
+            throw TransferErrorEntity.couldNotFindNodeByHandle
         }
                 
         if !shouldDownloadToGallery(name: node.name) {
             guard offlineFileFetcherRepository.offlineFile(for: node.base64Handle) == nil else {
-                completion?(.failure(.alreadyDownloaded))
-                return
+                throw TransferErrorEntity.alreadyDownloaded
             }
             
             let tempUrl = tempURL(for: node)
@@ -100,20 +114,20 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
                 let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
                 if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl) {
                     offlineFilesRepository.createOfflineFile(name: node.name, for: handle)
-                    completion?(.failure(.copiedFromTempFolder))
-                    return
+                    throw TransferErrorEntity.copiedFromTempFolder
                 }
             }
         }
 
-        downloadChatRepository.downloadChatFile(forNodeHandle: handle, messageId: messageId, chatId: chatId, to: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, start: start, update: update) { result in
-            switch result {
-            case .success(let transferEntity):
-                completion?(.success(transferEntity))
-            case .failure(let error):
-                completion?(.failure(error))
-            }
-        }
+        return try downloadChatRepository.downloadChatFile(
+            forNodeHandle: handle,
+            messageId: messageId,
+            chatId: chatId,
+            to: fileSystemRepository.documentsDirectory(),
+            filename: filename,
+            appdata: appdata,
+            startFirst: startFirst
+        )
     }
 
     public func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {

@@ -171,12 +171,16 @@ extension ChatViewController {
                 TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
                 
-                saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId, completion: { result in
-                    if case let .failure(error) = result, error != .cancelled {
-                        SVProgressHUD.dismiss()
-                        SVProgressHUD.show(UIImage(resource: .saveToPhotos), status: Strings.Localizable.somethingWentWrong)
+                Task(priority: .userInitiated) {
+                    do {
+                        try await saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId)
+                    } catch let error as SaveMediaToPhotosErrorEntity {
+                        if error != .cancelled {
+                            await SVProgressHUD.dismiss()
+                            SVProgressHUD.show(UIImage(resource: .saveToPhotos), status: Strings.Localizable.somethingWentWrong)
+                        }
                     }
-                })
+                }
             } else {
                 MEGALogDebug("Wrong Message type to be saved to album")
             }
