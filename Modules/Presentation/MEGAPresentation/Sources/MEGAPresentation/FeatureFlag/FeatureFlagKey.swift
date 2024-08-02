@@ -11,4 +11,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case cancelSubscription = "Cancel Subscription"
     case videoPlaylistSharing = "Video Playlist Sharing"
     case nodeDescription = "Node Description"
+    case photosBrowser = "New Photos Browser"
 }
