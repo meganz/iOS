@@ -263,7 +263,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.previewEntity.title, videoPlaylist.name, file: file, line: line)
         XCTAssertEqual(sut.previewEntity.count, "\(videoPlaylist.count) Videos", file: file, line: line)
         XCTAssertEqual(sut.previewEntity.isExported, videoPlaylist.isLinkShared, file: file, line: line)
-        XCTAssertEqual(sut.previewEntity.duration, "00:01:00", file: file, line: line)
+        XCTAssertEqual(sut.previewEntity.duration, "01:00", file: file, line: line)
         XCTAssertEqual(sut.previewEntity.imageContainers.count, videoPlaylist.count, file: file, line: line)
     }
 }
