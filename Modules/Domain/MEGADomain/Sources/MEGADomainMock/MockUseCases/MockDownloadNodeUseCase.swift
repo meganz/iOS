@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASwift
 
 public final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
     private let transferEntity: TransferEntity?
@@ -17,11 +18,6 @@ public final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
         guard let result = result else { return }
         completion?(result)
     }
-    
-    public func downloadChatFileToOffline(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
-        guard let result = result else { return }
-        completion?(result)
-    }
 
     public func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         guard let transferEntity = transferEntity,
@@ -37,4 +33,15 @@ public final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
     }
     
     public func cancelDownloadTransfers() { }
+    
+    public func downloadChatFileToOffline(
+        forNodeHandle handle: HandleEntity,
+        messageId: HandleEntity,
+        chatId: HandleEntity,
+        filename: String?,
+        appdata: String?,
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
+    }
 }

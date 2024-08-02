@@ -131,7 +131,16 @@ extension MEGAPhotoBrowserViewController {
                 
                 switch self.displayMode {
                 case .chatAttachment, .chatSharedFiles:
-                    saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId, completion: completionBlock)
+                    Task(priority: .userInitiated) {
+                        do {
+                            try await saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId)
+                        } catch let error as SaveMediaToPhotosErrorEntity {
+                            if error != .cancelled {
+                                await SVProgressHUD.dismiss()
+                                SVProgressHUD.show(UIImage.saveToPhotos, status: error.localizedDescription)
+                            }
+                        }
+                    }
                 case .fileLink:
                     guard let linkUrl = URL(string: self.publicLink) else { return }
                     let fileLink = FileLinkEntity(linkURL: linkUrl)

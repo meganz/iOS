@@ -488,7 +488,9 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             forwardMessages([message])
             
         case .saveToPhotos:
-            saveToPhotos(node)
+            Task(priority: .userInitiated) {
+                await saveToPhotos(node)
+            }
         case .download:
             guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
                 return
@@ -510,28 +512,28 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
         }
     }
     
-    private func saveToPhotos(_ node: MEGANode) {
+    private func saveToPhotos(_ node: MEGANode) async {
         guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
             return
         }
+        let granted = await permissionHandler.requestPhotoLibraryAccessPermissions()
         
-        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
-            guard let self else { return }
-            
-            guard granted else {
-                permissionRouter.alertPhotosPermission()
-                return
-            }
-            
+        if granted {
             let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo, downloadChatRepository: DownloadChatRepository.newRepo)
             TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
             
-            saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, completion: { result in
-                if case let .failure(error) = result, error != .cancelled {
-                    SVProgressHUD.dismiss()
-                    SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.somethingWentWrong)
+            do {
+                try await saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId)
+            } catch let error as SaveMediaToPhotosErrorEntity {
+                if error != .cancelled {
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(UIImage(resource: .saveToPhotos), status: Strings.Localizable.somethingWentWrong)
                 }
-            })
+            } catch {
+                MEGALogError("Save to photos chat node failed with \(error.localizedDescription)")
+            }
+        } else {
+            permissionRouter.alertPhotosPermission()
         }
     }
 }

@@ -2,6 +2,7 @@ import MEGAChatSdk
 import MEGADomain
 import MEGASdk
 import MEGASDKRepo
+import MEGASwift
 
 public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
     
@@ -24,25 +25,31 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
         messageId: HandleEntity,
         chatId: HandleEntity,
         to url: URL,
-        metaData: TransferMetaDataEntity?,
-        completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void
-    ) {
+        metaData: TransferMetaDataEntity?
+    ) async throws -> TransferEntity {
         guard let node = chatSdk.chatNode(handle: nodeHandle, messageId: messageId, chatId: chatId) else {
-            completion(.failure(.couldNotFindNodeByHandle))
-            return
+            throw TransferErrorEntity.couldNotFindNodeByHandle
         }
-        
-        sdk.startDownloadNode(
-            node,
-            localPath: url.path,
-            fileName: nil,
-            appData: metaData?.rawValue,
-            startFirst: true,
-            cancelToken: cancelToken,
-            collisionCheck: CollisionCheck.fingerprint,
-            collisionResolution: CollisionResolution.newWithN,
-            delegate: TransferDelegate(completion: completion)
-        )
+        return try await withAsyncThrowingValue { completion in
+            sdk.startDownloadNode(
+                node,
+                localPath: url.path,
+                fileName: nil,
+                appData: metaData?.rawValue,
+                startFirst: true,
+                cancelToken: cancelToken,
+                collisionCheck: CollisionCheck.fingerprint,
+                collisionResolution: CollisionResolution.newWithN,
+                delegate: TransferDelegate { result in
+                    switch result {
+                    case .failure(let error):
+                        completion(.failure(error))
+                    case .success(let transfer):
+                        completion(.success(transfer))
+                    }
+                }
+            )
+        }
     }
     
     public func downloadChatFile(
@@ -52,24 +59,16 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
         to url: URL,
         filename: String?,
         appdata: String?,
-        startFirst: Bool,
-        start: ((TransferEntity) -> Void)?,
-        update: ((TransferEntity) -> Void)?,
-        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
-    ) {
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity> {
         
         guard let node = chatSdk.chatNode(handle: handle, messageId: messageId, chatId: chatId), let name = node.name else {
-            completion?(.failure(.couldNotFindNodeByHandle))
-            return
+            throw TransferErrorEntity.couldNotFindNodeByHandle
         }
-        
-        downloadFile(
+        return try downloadFile(
             for: node,
             name: name,
             to: url,
-            completion: completion,
-            start: start,
-            update: update,
             filename: filename,
             appdata: appdata,
             startFirst: startFirst,
@@ -82,29 +81,37 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
         for node: MEGANode,
         name: String,
         to url: URL,
-        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?,
-        start: ((TransferEntity) -> Void)?,
-        update: ((TransferEntity) -> Void)?,
-        folderUpdate: ((FolderTransferUpdateEntity) -> Void)? = nil,
         filename: String? = nil,
         appdata: String? = nil,
         startFirst: Bool,
         cancelToken: MEGACancelToken?
-    ) {
-        let offlineNameString = sdk.escapeFsIncompatible(name, destinationPath: url.path)
-        let filePath = url.path + "/" + (offlineNameString ?? name)
-
-        if let completion = completion {
-            let transferDelegate = TransferDelegate(completion: completion)
-            if let start = start {
-                transferDelegate.start = start
+    ) throws -> AnyAsyncSequence<TransferEventEntity> {
+        let sequence: AnyAsyncSequence<TransferEventEntity> = AsyncThrowingStream(TransferEventEntity.self) { continuation in
+            let offlineNameString = sdk.escapeFsIncompatible(name, destinationPath: url.path)
+            let filePath = url.path + "/" + (offlineNameString ?? name)
+            
+            let transferDelegate = TransferDelegate { result in
+                switch result {
+                case .success(let transferEntity):
+                    continuation.yield(.finish(transferEntity))
+                    continuation.finish()
+                case .failure(let error):
+                    continuation.finish(throwing: error)
+                }
             }
-            if let update = update {
-                transferDelegate.progress = update
+            
+            transferDelegate.start = { transferEntity in
+                continuation.yield(.start(transferEntity))
             }
-            if let folderUpdate = folderUpdate {
-                transferDelegate.folderUpdate = folderUpdate
+            
+            transferDelegate.progress = { transferEntity in
+                continuation.yield(.update(transferEntity))
             }
+            
+            transferDelegate.folderUpdate = { folderTransferUpdateEntity in
+                continuation.yield(.folderUpdate(folderTransferUpdateEntity))
+            }
+            
             sdk.startDownloadNode(
                 node,
                 localPath: filePath,
@@ -112,21 +119,11 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
                 appData: appdata,
                 startFirst: startFirst,
                 cancelToken: cancelToken,
-                collisionCheck: CollisionCheck.fingerprint,
-                collisionResolution: CollisionResolution.newWithN,
+                collisionCheck: .fingerprint,
+                collisionResolution: .newWithN,
                 delegate: transferDelegate
             )
-        } else {
-            sdk.startDownloadNode(
-                node,
-                localPath: filePath,
-                fileName: filename,
-                appData: appdata,
-                startFirst: startFirst,
-                cancelToken: cancelToken,
-                collisionCheck: CollisionCheck.fingerprint,
-                collisionResolution: CollisionResolution.newWithN
-            )
-        }
+        }.eraseToAnyAsyncSequence()
+        return sequence
     }
 }

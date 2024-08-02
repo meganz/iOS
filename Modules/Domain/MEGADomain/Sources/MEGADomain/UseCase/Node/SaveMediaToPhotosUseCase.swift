@@ -1,6 +1,6 @@
 public protocol SaveMediaToPhotosUseCaseProtocol {
     func saveToPhotos(nodes: [NodeEntity]) async throws
-    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
+    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) async throws
     func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
 }
         
@@ -54,20 +54,20 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
         }
     }
     
-    public func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        guard let node = chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
-            completion(.failure(.nodeNotFound))
-            return
+    public func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) async throws {
+        guard let node = await chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
+            throw SaveMediaToPhotosErrorEntity.nodeNotFound
         }
         
         let tempUrl = fileCacheRepository.tempFileURL(for: node)
-        
-        downloadChatRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, metaData: .saveInPhotos) { result in
-            switch result {
-            case .success:
-                completion(.success)
-            case .failure(let error):
-                completion(.failure(error == TransferErrorEntity.cancelled ? .cancelled : .downloadFailed))
+        do {
+            _ = try await downloadChatRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, metaData: .saveInPhotos)
+            return
+        } catch let error as TransferErrorEntity {
+            if error == .cancelled {
+                throw SaveMediaToPhotosErrorEntity.cancelled
+            } else {
+                throw SaveMediaToPhotosErrorEntity.downloadFailed
             }
         }
     }

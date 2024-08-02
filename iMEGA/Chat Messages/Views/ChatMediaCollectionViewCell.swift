@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGADomain
 import MessageKit
 
 extension CGFloat {
@@ -225,12 +226,12 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     }
     
     func onTransferFinish(_: MEGASdk, transfer: MEGATransfer, error _: MEGAError) {
-        if currentNode?.handle == transfer.nodeHandle {
-            if let transferPath = transfer.path, FileManager.default.fileExists(atPath: transferPath) {
-                imageView.sd_setImage(with: URL(fileURLWithPath: transferPath))
-                downloadGifIcon.isHidden = true
-
-            }
+        if currentNode?.handle == transfer.nodeHandle,
+           let transferPath = transfer.path,
+            FileManager.default.fileExists(atPath: transferPath),
+           transfer.appData != TransferMetaDataEntity.saveInPhotos.rawValue {
+            imageView.sd_setImage(with: URL(fileURLWithPath: transferPath))
+            downloadGifIcon.isHidden = true
         }
     }
 }

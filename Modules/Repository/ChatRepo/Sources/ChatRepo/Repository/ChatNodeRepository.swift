@@ -12,17 +12,17 @@ public struct ChatNodeRepository: ChatNodeRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
-    public func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity? {
-        if let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle {
+    public func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) async -> NodeEntity? {
+        if let message = await chatSdk.message(chatId: chatId, messageId: messageId),
+           let node = message.nodeList?.node(at: 0),
+           handle == node.handle {
             return node.toNodeEntity()
-        } else if let messageForNodeHistory = chatSdk.messageFromNodeHistory(forChat: chatId, messageId: messageId), let node = messageForNodeHistory.nodeList?.node(at: 0), handle == node.handle {
+        } else if let messageForNodeHistory = await chatSdk.messageFromNodeHistory(chatId: chatId, messageId: messageId),
+                  let node = messageForNodeHistory.nodeList?.node(at: 0),
+                  handle == node.handle {
             return node.toNodeEntity()
         } else {
             return nil
         }
-    }
-    
-    public func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64? {
-        chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size
     }
 }
