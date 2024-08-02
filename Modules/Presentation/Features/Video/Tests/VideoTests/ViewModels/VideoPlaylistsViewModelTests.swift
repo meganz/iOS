@@ -302,6 +302,81 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isSheetPresented)
     }
     
+    @MainActor
+    func testDidSelectMoreOptionForItem_whenVideoPlaylistSharingFeatureFlagIsOff_shouldNotShowShareLinkContextMenuAction() async {
+        let creationTime = Date()
+        let modificationTime = Date()
+        let initialUserVideoPlaylists = [
+            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false)),
+            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true))
+        ]
+        let selectedVideoPlaylist = initialUserVideoPlaylists[0]
+        var updatedVideoPlaylist = selectedVideoPlaylist
+        updatedVideoPlaylist.name = "renamed"
+        let (sut, _, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(
+                updateVideoPlaylistNameResult: .success(()),
+                userVideoPlaylistsResult: initialUserVideoPlaylists
+            ),
+            featureFlagProvider: MockFeatureFlagProvider(list: [ .videoPlaylistSharing: false ])
+        )
+        await sut.onViewAppeared()
+        
+        sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
+        
+        XCTAssertFalse(sut.shouldShowShareLinkContextActionForSelectedVideoPlaylist)
+    }
+    
+    @MainActor
+    func testDidSelectMoreOptionForItem_whenVideoPlaylistIsNotExported_shouldReturnTrue() async {
+        let creationTime = Date()
+        let modificationTime = Date()
+        let initialUserVideoPlaylists = [
+            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false)),
+            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true))
+        ]
+        let selectedVideoPlaylist = initialUserVideoPlaylists[0]
+        var updatedVideoPlaylist = selectedVideoPlaylist
+        updatedVideoPlaylist.name = "renamed"
+        let (sut, _, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(
+                updateVideoPlaylistNameResult: .success(()),
+                userVideoPlaylistsResult: initialUserVideoPlaylists
+            ),
+            featureFlagProvider: MockFeatureFlagProvider(list: [ .videoPlaylistSharing: true ])
+        )
+        await sut.onViewAppeared()
+        
+        sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
+        
+        XCTAssertTrue(sut.shouldShowShareLinkContextActionForSelectedVideoPlaylist)
+    }
+    
+    @MainActor
+    func testDidSelectMoreOptionForItem_whenVideoPlaylistIsExported_shouldReturnFalse() async {
+        let creationTime = Date()
+        let modificationTime = Date()
+        let initialUserVideoPlaylists = [
+            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true)),
+            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false))
+        ]
+        let selectedVideoPlaylist = initialUserVideoPlaylists[0]
+        var updatedVideoPlaylist = selectedVideoPlaylist
+        updatedVideoPlaylist.name = "renamed"
+        let (sut, _, _, _) = makeSUT(
+            videoPlaylistUseCase: MockVideoPlaylistUseCase(
+                updateVideoPlaylistNameResult: .success(()),
+                userVideoPlaylistsResult: initialUserVideoPlaylists
+            ),
+            featureFlagProvider: MockFeatureFlagProvider(list: [ .videoPlaylistSharing: true ])
+        )
+        await sut.onViewAppeared()
+        
+        sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
+        
+        XCTAssertFalse(sut.shouldShowShareLinkContextActionForSelectedVideoPlaylist)
+    }
+    
     // MARK: - didSelectActionSheetMenuAction
     
     func testDidSelectActionSheetMenuAction_renameContextAction_showsRenameAlert() {
@@ -579,6 +654,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         videoPlaylistUseCase: MockVideoPlaylistUseCase = MockVideoPlaylistUseCase(),
         syncModel: VideoRevampSyncModel = VideoRevampSyncModel(),
         videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase = MockVideoPlaylistModificationUseCase(addToVideoPlaylistResult: .failure(GenericErrorEntity())),
+        featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
@@ -595,8 +671,9 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc),
             syncModel: syncModel,
             alertViewModel: alertViewModel,
-            renameVideoPlaylistAlertViewModel: alertViewModel, 
+            renameVideoPlaylistAlertViewModel: alertViewModel,
             thumbnailLoader: MockThumbnailLoader(),
+            featureFlagProvider: featureFlagProvider,
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: videoPlaylistUseCase),
             monitorSortOrderChangedDispatchQueue: DispatchQueue.main

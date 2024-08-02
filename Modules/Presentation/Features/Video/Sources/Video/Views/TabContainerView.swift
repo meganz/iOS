@@ -172,6 +172,7 @@ struct TabBarItem: View {
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview,
             thumbnailLoader: Preview_ThumbnailLoader(),
+            featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: Preview_VideoPlaylistUseCase())
         )

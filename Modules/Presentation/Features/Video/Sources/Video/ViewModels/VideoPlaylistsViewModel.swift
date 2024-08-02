@@ -14,6 +14,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
 
     private let syncModel: VideoRevampSyncModel
     private let monitorSortOrderChangedDispatchQueue: DispatchQueue
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     @Published var videoPlaylists = [VideoPlaylistEntity]()
     @Published var shouldShowAddNewPlaylistAlert = false
@@ -37,6 +38,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
         videoPlaylists.map(\.name)
     }
     
+    @Published var shouldShowShareLinkContextActionForSelectedVideoPlaylist = false
+    
     private(set) var alertViewModel: TextFieldAlertViewModel
     private(set) var renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel
     
@@ -56,6 +59,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         alertViewModel: TextFieldAlertViewModel,
         renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
         thumbnailLoader: some ThumbnailLoaderProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         contentProvider: some VideoPlaylistsViewModelContentProviderProtocol,
         monitorSortOrderChangedDispatchQueue: DispatchQueue = DispatchQueue.main
     ) {
@@ -68,6 +72,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
         self.monitorSortOrderChangedDispatchQueue = monitorSortOrderChangedDispatchQueue
         self.thumbnailLoader = thumbnailLoader
+        self.featureFlagProvider = featureFlagProvider
         self.contentProvider = contentProvider
         
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
@@ -223,6 +228,10 @@ final class VideoPlaylistsViewModel: ObservableObject {
             return
         }
         self.selectedVideoPlaylistEntity = selectedVideoPlaylistEntity
+        
+        shouldShowShareLinkContextActionForSelectedVideoPlaylist = featureFlagProvider.isFeatureFlagEnabled(for: .videoPlaylistSharing)
+        && !selectedVideoPlaylistEntity.isLinkShared
+        
         isSheetPresented = true
     }
     
@@ -230,6 +239,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
         switch contextAction.type {
         case .rename:
             shouldShowRenamePlaylistAlert = true
+        case .shareLink:
+            break
         case .deletePlaylist:
             shouldShowDeletePlaylistAlert = true
         }

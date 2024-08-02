@@ -81,6 +81,7 @@ public class VideoRevampFactory {
                 message: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.enterTheNewName
             ),
             thumbnailLoader: thumbnailLoader,
+            featureFlagProvider: DIContainer.featureFlagProvider,
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: videoPlaylistUseCase)
         )

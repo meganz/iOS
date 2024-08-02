@@ -113,14 +113,8 @@ struct PlaylistView: View {
     }
     
     private var presentationDetentsHeight: CGFloat {
-        let estimatedContentHeight: () -> CGFloat = {
-            let textHeight = UIFont.preferredFont(forTextStyle: .body).lineHeight
-            let dividerHeight: CGFloat = 1
-            let cellHeight = textHeight + dividerHeight
-            let extraHeight: CGFloat = 75
-            return (cellHeight * CGFloat(actionButtons().count)) + extraHeight
-        }
-        return estimatedContentHeight()
+        let sheetButtonsHeight: CGFloat = 60
+        return CGFloat(actionButtons().count) * sheetButtonsHeight
     }
     
     private func actionButtons() -> [ActionSheetButton] {
@@ -130,12 +124,13 @@ struct PlaylistView: View {
                 icon: "rename",
                 title: Strings.Localizable.rename
             ),
+            shareLinkActionButton(),
             ContextAction(
                 type: .deletePlaylist,
                 icon: "rubbishBin",
                 title: Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Menu.deletePlaylist
             )
-        ]
+        ].compactMap { $0 }
         
         return items
             .map { contextAction in
@@ -145,6 +140,18 @@ struct PlaylistView: View {
                     action: { viewModel.didSelectActionSheetMenuAction(contextAction) }
                 )
             }
+    }
+    
+    private func shareLinkActionButton() -> ContextAction? {
+        if viewModel.shouldShowShareLinkContextActionForSelectedVideoPlaylist {
+            ContextAction(
+                type: .shareLink,
+                icon: "hudLink",
+                title: Strings.Localizable.Meetings.Panel.shareLink
+            )
+        } else {
+            nil
+        }
     }
     
     @ViewBuilder
@@ -226,7 +233,8 @@ struct PlaylistView: View {
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview, 
-            thumbnailLoader: Preview_ThumbnailLoader(), 
+            thumbnailLoader: Preview_ThumbnailLoader(),
+            featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false), 
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: Preview_VideoPlaylistUseCase())
         ),
@@ -246,6 +254,7 @@ struct PlaylistView: View {
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview,
             thumbnailLoader: Preview_ThumbnailLoader(),
+            featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: Preview_VideoPlaylistUseCase())
         ),
