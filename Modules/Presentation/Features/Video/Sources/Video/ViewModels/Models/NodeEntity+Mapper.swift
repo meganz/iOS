@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAFoundation
 import MEGAPresentation
 import SwiftUI
 
@@ -8,7 +9,7 @@ extension NodeEntity {
         VideoCellPreviewEntity(
             isFavorite: isFavourite,
             imageContainer: thumbnailContainer,
-            duration: VideoDurationFormatter.formatDuration(seconds: UInt(max(duration, 0))),
+            duration: TimeInterval(duration).timeString,
             title: name,
             size: FileSizeFormatter.memoryStyleString(fromByteCount: Int64(size)),
             isExported: isExported,

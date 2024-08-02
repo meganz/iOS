@@ -153,7 +153,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             .map(\.duration)
             .reduce(0, +)
         
-        return VideoDurationFormatter.formatDuration(seconds: UInt(max(playlistDuration, 0)))
+        return TimeInterval(playlistDuration).timeString
     }
     
     @MainActor
