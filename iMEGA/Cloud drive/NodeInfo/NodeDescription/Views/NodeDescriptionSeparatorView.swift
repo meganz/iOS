@@ -6,14 +6,14 @@ struct NodeDescriptionSeparatorView: View {
 
     var body: some View {
         borderColor
-            .frame(height: 0.5)
+            .frame(height: 1)
     }
 
     private var borderColor: Color {
         isDesignTokenEnabled
         ? TokenColors.Border.strong.swiftUI
         : colorScheme == .dark
-        ? MEGAAppColor.Gray._54545865.color
-        : MEGAAppColor.Gray._3C3C4330.color
+        ? Color(UIColor.gray54545865)
+        : Color(UIColor.gray3C3C4330)
     }
 }

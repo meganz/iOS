@@ -686,7 +686,13 @@ extension NodeInfoViewController: UITableViewDelegate {
             return UIView(frame: .zero)
         }
         footer.setPreferredBackgroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_secondaryBackground(for: traitCollection))
-        footer.configure(title: nil, topDistance: 5.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+        let isTopSeparatorVisible = if case .description = cachedSections[section] { false } else { true }
+        footer.configure(
+            title: nil,
+            topDistance: 5.0,
+            isTopSeparatorVisible: isTopSeparatorVisible,
+            isBottomSeparatorVisible: false
+        )
         return footer
     }
     

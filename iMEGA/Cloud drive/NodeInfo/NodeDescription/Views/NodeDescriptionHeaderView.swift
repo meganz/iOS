@@ -2,6 +2,8 @@ import MEGADesignToken
 import SwiftUI
 
 struct NodeDescriptionHeaderView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     let title: String
 
     var body: some View {
@@ -16,6 +18,7 @@ struct NodeDescriptionHeaderView: View {
                 .frame(height: 0.5)
         }
         .padding(.top, 30)
+        .background(backgroundColor)
     }
 
     private var titleColor: Color {
@@ -28,5 +31,13 @@ struct NodeDescriptionHeaderView: View {
         isDesignTokenEnabled
         ? TokenColors.Border.strong.swiftUI
         : .clear
+    }
+
+    private var backgroundColor: Color {
+        isDesignTokenEnabled
+        ? TokenColors.Background.page.swiftUI
+        : colorScheme == .dark
+        ? Color(UIColor.black1C1C1E)
+        : Color(UIColor.whiteF7F7F7)
     }
 }
