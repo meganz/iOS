@@ -30,8 +30,8 @@ struct NodeDescriptionNonEditableView: View {
             isDesignTokenEnabled
             ? TokenColors.Background.page.swiftUI
             : colorScheme == .dark
-            ? MEGAAppColor.Black._2C2C2E.color
-            : MEGAAppColor.White._FFFFFF.color
+            ? Color(UIColor.black2C2C2E)
+            : Color(UIColor.whiteFFFFFF)
         )
     }
 }
