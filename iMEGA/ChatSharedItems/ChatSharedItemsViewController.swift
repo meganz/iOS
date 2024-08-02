@@ -1,4 +1,5 @@
 import ChatRepo
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -62,6 +63,9 @@ class ChatSharedItemsViewController: UIViewController {
         
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat.leastNormalMagnitude))
         tableView.allowsMultipleSelectionDuringEditing = true
+        if UIColor.isDesignTokenEnabled() {
+            tableView.backgroundColor = TokenColors.Background.page
+        }
         
         MEGAChatSdk.shared.openNodeHistory(forChat: chatRoom.chatId, delegate: self)
         

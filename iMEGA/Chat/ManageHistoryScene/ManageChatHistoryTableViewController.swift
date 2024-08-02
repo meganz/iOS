@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import UIKit
@@ -206,8 +207,12 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
         historyRetentionCustomLabel.textColor = .mnz_turquoise(for: traitCollection)
         historyRetentionSaveButton.setTitleColor(.mnz_turquoise(for: traitCollection), for: .normal)
         
-        clearAllChatHistoryLabel.textColor = .mnz_red(for: traitCollection)
-        
+        if UIColor.isDesignTokenEnabled() {
+            clearAllChatHistoryLabel.textColor = TokenColors.Text.error
+        } else {
+            clearAllChatHistoryLabel.textColor = .mnz_red(for: traitCollection)
+        }
+
         tableView.reloadData()
     }
     
