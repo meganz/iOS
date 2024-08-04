@@ -136,13 +136,6 @@
     [homeRouting showRecents];
 }
 
-- (void)showUploadFile {
-    self.selectedIndex = TabTypeCloudDrive;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
-    CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
-    [cloudDriveVC presentUploadOptions];
-}
-
 - (void)showScanDocument {
     self.selectedIndex = TabTypeCloudDrive;
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
