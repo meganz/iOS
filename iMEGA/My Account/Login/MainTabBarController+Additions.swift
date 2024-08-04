@@ -254,6 +254,11 @@ extension MainTabBarController {
             at: TabType.chat.rawValue
         )
     }
+    
+    @objc func showUploadFile() {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.handleQuickUploadAction()
+    }
 }
 
 // MARK: - UITabBarControllerDelegate
