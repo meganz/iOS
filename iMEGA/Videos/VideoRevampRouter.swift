@@ -66,7 +66,8 @@ struct VideoRevampRouter: VideoRevampRouting {
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
             videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled),
-            router: self
+            router: self,
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
         return viewController
     }
