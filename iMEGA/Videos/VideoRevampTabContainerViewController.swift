@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import MEGAUIKit
 import SwiftUI
@@ -10,6 +11,9 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     private var cancellables = Set<AnyCancellable>()
     
+    private lazy var recentlyWatchedVideosBarButtonItem = {
+        UIBarButtonItem(image: UIImage.clockPlay, style: .plain, target: self, action: #selector(recentlyWatchedVideosButtonItemTapped))
+    }()
     private let moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar, style: .plain, target: nil, action: nil)
     
     private lazy var cancelBarButtonItem = {
@@ -46,6 +50,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
 
     private let videoConfig: VideoConfig
     let router: any VideoRevampRouting
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private let videoToolbarViewModel: VideoToolbarViewModel
     
@@ -62,7 +67,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         videoConfig: VideoConfig,
-        router: some VideoRevampRouting
+        router: some VideoRevampRouting,
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.viewModel = viewModel
         self.fileSearchUseCase = fileSearchUseCase
@@ -74,6 +80,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.videoConfig = videoConfig
         self.router = router
         self.videoToolbarViewModel = VideoToolbarViewModel()
+        self.featureFlagProvider = featureFlagProvider
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -115,7 +122,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.rightBarButtonItems = [moreBarButtonItem]
+        navigationItem.rightBarButtonItems = defaultRightBarButtonItems()
         setupContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
         
         if let navigationBar = navigationController?.navigationBar {
@@ -261,7 +268,13 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func setupRightNavigationBarButtons() {
-        navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : [moreBarButtonItem], animated: true)
+        navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : defaultRightBarButtonItems(), animated: true)
+    }
+    
+    private func defaultRightBarButtonItems() -> [UIBarButtonItem] {
+        featureFlagProvider.isFeatureFlagEnabled(for: .recentlyWatchedVideos)
+        ? [moreBarButtonItem, recentlyWatchedVideosBarButtonItem]
+        : [moreBarButtonItem]
     }
     
     @objc private func cancelBarButtonItemTapped() {
@@ -270,7 +283,10 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     @objc private func selectAllBarButtonItemTapped() {
         viewModel.dispatch(.navigationBarAction(.didTapSelectAll))
-        
+    }
+    
+    @objc private func recentlyWatchedVideosButtonItemTapped() {
+        // CC-7811
     }
     
     private func configureSearchBar() {
