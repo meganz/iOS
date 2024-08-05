@@ -2,6 +2,7 @@ import ChatRepo
 import CoreServices
 import Foundation
 import ISEmojiView
+import MEGADesignToken
 import MEGAL10n
 import MEGASDKRepo
 import MessageKit
@@ -37,6 +38,9 @@ extension ChatViewController {
 
     private var joinInputBar: JoinInputBar {
         let joinInputBar = JoinInputBar.instanceFromNib
+        if UIColor.isDesignTokenEnabled() {
+            joinInputBar.joinButton.backgroundColor = TokenColors.Components.interactive
+        }
         joinInputBar.buttonTappedHandler = { [weak self] button in
             self?.join(button: button)
         }
