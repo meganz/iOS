@@ -7,7 +7,6 @@ public protocol ChatRoomUseCaseProtocol: Sendable {
     func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity
     func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
-    func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String
@@ -68,7 +67,7 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
     public func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity {
         chatRoomRepo.userStatus(forUserHandle: userHandle)
     }
-
+    
     public func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String {
         if chatRoom.chatType == .oneToOne {
             // Not allowed to create/query chat link
@@ -78,32 +77,13 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         if chatRoom.ownPrivilege == .moderator {
             do {
                 return try await chatRoomRepo.queryChatLink(forChatRoom: chatRoom)
-            } catch {
+            } catch ChatLinkErrorEntity.resourceNotFound {
                 return try await chatRoomRepo.createPublicLink(forChatRoom: chatRoom)
+            } catch {
+                throw error
             }
         } else {
             return try await chatRoomRepo.queryChatLink(forChatRoom: chatRoom)
-        }
-    }
-    
-    public func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
-        guard chatRoom.chatType != .oneToOne else {
-            // Not allowed to create/query chat link
-            completion(.failure(.creatingChatLinkNotAllowed))
-            return
-        }
-        
-        if chatRoom.ownPrivilege == .moderator {
-            chatRoomRepo.queryChatLink(forChatRoom: chatRoom) { result in
-                // If the user is a moderator and the link is not generated yet. Generate the link.
-                if case let .failure(error) = result, error == .resourceNotFound {
-                    chatRoomRepo.createPublicLink(forChatRoom: chatRoom, completion: completion)
-                } else {
-                    completion(result)
-                }
-            }
-        } else {
-            chatRoomRepo.queryChatLink(forChatRoom: chatRoom, completion: completion)
         }
     }
 

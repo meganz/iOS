@@ -229,28 +229,30 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func showShareChatLinkActivity(presenter: UIViewController?, sender: AnyObject, link: String, metadataItemSource: ChatLinkPresentationItemSource, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
-        guard UIActivityViewController.isAlreadyPresented == false else {
-            MEGALogDebug("Meeting link Share controller is already presented.")
-            return
-        }
-        let activityViewController = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
-        if let barButtonSender = sender as? UIBarButtonItem {
-            activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
-        } else if let buttonSender = sender as? UIButton {
-            activityViewController.popoverPresentationController?.sourceView = buttonSender
-            activityViewController.popoverPresentationController?.sourceRect = buttonSender.frame
-        } else {
-            MEGALogError("Parameter sender has a not allowed type")
-            return
-        }
-        activityViewController.overrideUserInterfaceStyle = .dark
-        activityViewController.completionWithItemsHandler = completion
-        
-        if let presenter = presenter {
-            presenter.present(activityViewController, animated: true)
-        } else {
-            UIApplication.mnz_presentingViewController()
-                .present(activityViewController, animated: true)
+        DispatchQueue.main.async {
+            guard UIActivityViewController.isAlreadyPresented == false else {
+                MEGALogDebug("Meeting link Share controller is already presented.")
+                return
+            }
+            let activityViewController = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
+            if let barButtonSender = sender as? UIBarButtonItem {
+                activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
+            } else if let buttonSender = sender as? UIButton {
+                activityViewController.popoverPresentationController?.sourceView = buttonSender
+                activityViewController.popoverPresentationController?.sourceRect = buttonSender.frame
+            } else {
+                MEGALogError("Parameter sender has a not allowed type")
+                return
+            }
+            activityViewController.overrideUserInterfaceStyle = .dark
+            activityViewController.completionWithItemsHandler = completion
+            
+            if let presenter = presenter {
+                presenter.present(activityViewController, animated: true)
+            } else {
+                UIApplication.mnz_presentingViewController()
+                    .present(activityViewController, animated: true)
+            }
         }
     }
     

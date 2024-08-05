@@ -110,10 +110,6 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
             throw error
         }
     }
-
-    public func createPublicLink(forChatRoom chatRoom: MEGADomain.ChatRoomEntity, completion: @escaping (Result<String, MEGADomain.ChatLinkErrorEntity>) -> Void) {
-        completion(createPublicLinkResult)
-    }
     
     public func queryChatLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String {
         switch queryChatLinkResult {
@@ -122,10 +118,6 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         case .failure(let error):
             throw error
         }
-    }
-
-    public func queryChatLink(forChatRoom chatRoom: MEGADomain.ChatRoomEntity, completion: @escaping (Result<String, MEGADomain.ChatLinkErrorEntity>) -> Void) {
-        completion(queryChatLinkResult)
     }
     
     public func renameChatRoom(_ chatRoom: MEGADomain.ChatRoomEntity, title: String, completion: @escaping (Result<String, MEGADomain.ChatRoomErrorEntity>) -> Void) {

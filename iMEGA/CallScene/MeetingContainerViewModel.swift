@@ -374,51 +374,54 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func shareLink(_ presenter: UIViewController?, _ sender: AnyObject, _ completion: UIActivityViewController.CompletionWithItemsHandler?) {
         tracker.trackAnalyticsEvent(with: ShareLinkPressedEvent())
-        chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
-            assert(Thread.isMainThread)
-            guard let self else { return }
-            switch result {
-            case .success(let link):
-                guard let url = URL(string: link) else {
-                    router.showShareMeetingError()
-                    return
-                }
-                var title = (chatRoom.title ?? "") + "\n" + link
-                var subject = ""
-                var message = ""
-                if chatRoom.isMeeting {
-                    subject = Strings.Localizable.Meetings.Info.ShareMeetingLink.subject
-                    message =
-                    Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
-                    Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(chatRoom.title ?? "")
-                    if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
-                        let meetingDate = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
-                        title = scheduledMeeting.title + "\n" + meetingDate
-                        message += "\n" +
-                        Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(meetingDate)
-                    }
-                    message += "\n" + Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(link)
-                } else {
-                    title = chatRoom.title ?? ""
-                    message = title + "\n" + link
-                }
+        Task {
+            do {
+                let link = try await chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom)
+                let metadataItemSource = try await prepareMetadataItemSource(for: link)
+                
                 router.showShareChatLinkActivity(
                     presenter: presenter,
                     sender: sender,
                     link: link,
-                    metadataItemSource: ChatLinkPresentationItemSource(
-                        title: title,
-                        subject: subject,
-                        message: message,
-                        url: url
-                    ),
+                    metadataItemSource: metadataItemSource,
                     isGuestAccount: accountUseCase.isGuest,
                     completion: completion
                 )
-            case .failure:
+            } catch {
                 router.showShareMeetingError()
             }
         }
+    }
+    
+    private func prepareMetadataItemSource(for link: String) async throws -> ChatLinkPresentationItemSource {
+        guard let url = URL(string: link) else {
+            throw ChatLinkErrorEntity.generic
+        }
+        var title = (chatRoom.title ?? "") + "\n" + link
+        var subject = ""
+        var message = ""
+        if chatRoom.isMeeting {
+            subject = Strings.Localizable.Meetings.Info.ShareMeetingLink.subject
+            message =
+            Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
+            Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(chatRoom.title ?? "")
+            if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
+                let meetingDate = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
+                title = scheduledMeeting.title + "\n" + meetingDate
+                message += "\n" +
+                Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(meetingDate)
+            }
+            message += "\n" + Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(link)
+        } else {
+            title = chatRoom.title ?? ""
+            message = title + "\n" + link
+        }
+        return ChatLinkPresentationItemSource(
+            title: title,
+            subject: subject,
+            message: message,
+            url: url
+        )
     }
     
     private func subscribeToOnCallUpdate() {
