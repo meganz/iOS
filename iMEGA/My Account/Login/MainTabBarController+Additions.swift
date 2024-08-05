@@ -259,6 +259,32 @@ extension MainTabBarController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.handleQuickUploadAction()
     }
+    
+    @objc func showScanDocument() {
+        let cloudDriveTabIndex = TabType.cloudDrive.rawValue
+        selectedIndex = cloudDriveTabIndex
+        
+        guard let navigationController = children[safe: cloudDriveTabIndex] as? MEGANavigationController else { return }
+        guard UserDefaults.standard.bool(forKey: Helper.cloudDriveABTestCacheKey()) ||
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDrive),
+              
+        let newCloudDriveViewController = navigationController.viewControllers.first as? NewCloudDriveViewController,
+              let parentNode = newCloudDriveViewController.parentNode else {
+            guard let cdViewController = navigationController.viewControllers.first as? CloudDriveViewController else {
+                assertionFailure("The first tabbar VC must be a CloudDriveViewController")
+                return
+            }
+            
+            cdViewController.presentScanDocument()
+            return
+        }
+        
+        let scanRouter = ScanDocumentViewRouter(presenter: newCloudDriveViewController, parent: parentNode)
+        
+        Task { @MainActor in
+            await scanRouter.start()
+        }
+    }
 }
 
 // MARK: - UITabBarControllerDelegate

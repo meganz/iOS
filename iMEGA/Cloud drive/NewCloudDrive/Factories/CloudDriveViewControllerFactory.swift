@@ -664,7 +664,8 @@ struct CloudDriveViewControllerFactory {
             viewModeProvider: makeViewModeProvider(viewModel: nodeBrowserViewModel),
             displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel), 
             matchingNodeProvider: makeMatchingNodeProvider(viewModel: nodeBrowserViewModel),
-            audioPlayerManager: AudioPlayerManager.shared
+            audioPlayerManager: AudioPlayerManager.shared,
+            parentNodeProvider: { nodeSource.parentNode }
         )
 
         let onContextMenuRefresh: () -> Void = {  [weak nodeBrowserViewModel] in

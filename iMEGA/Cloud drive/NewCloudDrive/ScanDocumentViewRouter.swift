@@ -1,8 +1,9 @@
 import MEGADomain
 import MEGAL10n
+import MEGASwift
 import VisionKit
 
-struct ScanDocumentViewRouter {
+struct ScanDocumentViewRouter: Sendable {
     private let presenter: UIViewController
     private let parent: NodeEntity
     private let scanDocumentViewControllerDelegate = ScanDocumentViewControllerDelegate()
@@ -48,12 +49,12 @@ struct ScanDocumentViewRouter {
     }
 }
 
-private final class ScanDocumentViewControllerDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
-    private var continuation: CheckedContinuation<[UIImage]?, Never>?
+private final class ScanDocumentViewControllerDelegate: NSObject, @unchecked Sendable, VNDocumentCameraViewControllerDelegate {
+    @Atomic private var continuation: CheckedContinuation<[UIImage]?, Never>?
 
     func scannedImages() async -> [UIImage]? {
         await withCheckedContinuation { continuation in
-            self.continuation = continuation
+            self.$continuation.mutate { $0 = continuation }
         }
     }
 
