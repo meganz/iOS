@@ -511,6 +511,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private func goToCallUI(for call: CallEntity) {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
         router.openCallUI(for: call, in: chatRoom, isSpeakerEnabled: isSpeakerEnabled)
+        callManager.muteCall(in: chatRoom, muted: !isMicrophoneMuted)
         onCallUpdateSubscription?.cancel()
     }
 }
