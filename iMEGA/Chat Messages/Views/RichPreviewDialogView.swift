@@ -28,7 +28,9 @@ class RichPreviewDialogView: UIView {
         button.contentHorizontalAlignment = .left
         button.setTitle(Strings.Localizable.never, for: .normal)
         button.isUserInteractionEnabled = true
-
+        if UIColor.isDesignTokenEnabled() {
+            button.tintColor = TokenColors.Text.primary
+        }
         return button
     }()
     
@@ -36,7 +38,9 @@ class RichPreviewDialogView: UIView {
         let button = UIButton(type: .system)
         button.contentHorizontalAlignment = .left
         button.isUserInteractionEnabled = true
-
+        if UIColor.isDesignTokenEnabled() {
+            button.tintColor = TokenColors.Text.primary
+        }
         return button
     }()
     
@@ -45,7 +49,9 @@ class RichPreviewDialogView: UIView {
         button.contentHorizontalAlignment = .left
         button.setTitle(Strings.Localizable.never, for: .normal)
         button.isUserInteractionEnabled = true
-
+        if UIColor.isDesignTokenEnabled() {
+            button.tintColor = TokenColors.Text.primary
+        }
         return button
     }()
     
@@ -124,7 +130,7 @@ class RichPreviewDialogView: UIView {
     
     private func updateAppearance() {
         if UIColor.isDesignTokenEnabled() {
-            backgroundColor = TokenColors.Background.surface2
+            backgroundColor = TokenColors.Background.page
             titleLabel.textColor = TokenColors.Text.primary
             descriptionLabel.textColor = TokenColors.Text.primary
         } else {
