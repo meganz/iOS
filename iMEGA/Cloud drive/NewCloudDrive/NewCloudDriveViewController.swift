@@ -4,6 +4,8 @@ import MEGADomain
 final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowserView> {
     private(set) var viewModeProvider: CloudDriveViewModeProvider
     private(set) var displayModeProvider: CloudDriveDisplayModeProvider
+    private let parentNodeProvider: ParentNodeProvider
+
     init(
         rootView: NodeBrowserView,
         wrapper: SearchControllerWrapper,
@@ -14,10 +16,12 @@ final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowse
         viewModeProvider: CloudDriveViewModeProvider,
         displayModeProvider: CloudDriveDisplayModeProvider,
         matchingNodeProvider: CloudDriveMatchingNodeProvider,
-        audioPlayerManager: some AudioPlayerHandlerProtocol
+        audioPlayerManager: some AudioPlayerHandlerProtocol,
+        parentNodeProvider: @escaping ParentNodeProvider
     ) {
         self.viewModeProvider = viewModeProvider
         self.displayModeProvider = displayModeProvider
+        self.parentNodeProvider = parentNodeProvider
         super.init(
             rootView: rootView,
             wrapper: wrapper,
@@ -36,6 +40,12 @@ final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowse
 }
 
 extension NewCloudDriveViewController: TextFileEditable {}
+
+extension NewCloudDriveViewController {
+    var parentNode: NodeEntity? {
+        parentNodeProvider()
+    }
+}
 
 /// For Quick Quick Upload feature, we need to know the current viewMode of the CloudDriveVC in order to generate the correct upload actions
 /// CloudDriveViewModeProvider is used for that purpose

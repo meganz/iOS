@@ -136,13 +136,6 @@
     [homeRouting showRecents];
 }
 
-- (void)showScanDocument {
-    self.selectedIndex = TabTypeCloudDrive;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
-    CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
-    [cloudDriveVC presentScanDocument];
-}
-
 - (void)showAddContact {
     InviteContactViewController *inviteContactVC = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
     MEGANavigationController *navigation = [MEGANavigationController.alloc initWithRootViewController:inviteContactVC];
