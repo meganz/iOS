@@ -1,6 +1,6 @@
 import LinkPresentation
 
-class ChatLinkPresentationItemSource: NSObject, UIActivityItemSource {
+final class ChatLinkPresentationItemSource: NSObject, UIActivityItemSource, Sendable {
     private let title: String
     private let subject: String
     private let message: String

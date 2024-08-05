@@ -95,10 +95,6 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         }
     }
     
-    public func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
-        completion(publicLinkCompletion)
-    }
-    
     public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         completion(renameChatRoomCompletion)
     }
