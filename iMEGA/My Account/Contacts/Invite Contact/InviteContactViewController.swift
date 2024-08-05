@@ -1,4 +1,3 @@
-import Contacts
 import ContactsUI
 import MEGADesignToken
 import MEGADomain
