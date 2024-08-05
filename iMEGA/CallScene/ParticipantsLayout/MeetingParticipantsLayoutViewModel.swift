@@ -116,8 +116,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case hideCallWillEnd
         case enableSwitchCameraButton
         case updateSnackBar(SnackBar?)
-        case showEmptyMeetingShareOptionsView
-        case removeEmptyMeetingShareOptionsView
+        case showEmptyCallShareOptionsView
+        case removeEmptyCallShareOptionsView
+        case updateBarButtons
     }
     
     private var chatRoom: ChatRoomEntity
@@ -644,9 +645,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
             if !isOneToOne {
                 addMeetingParticipantStatusPipelineSubscription()
-                if call.numberOfParticipants <= 1 {
-                    invokeCommand?(.showEmptyMeetingShareOptionsView)
-                }
             }
             hasBeenInProgress = call.status == .inProgress
         case .onViewReady:
@@ -1197,6 +1195,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 // read and cache call here to get most recent raised hands list, used
                 // when user joins and there are already some hands raised in the call
                 self.call = call
+                
+                showEmptyCallShareOptionsViewIfNeeded()
             }
         default:
             break
@@ -1293,6 +1293,19 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.enableSwitchCameraButton)
         }
     }
+    
+    private func showEmptyCallShareOptionsViewIfNeeded() {
+        if !isOneToOne && call.numberOfParticipants <= 1 {
+            invokeCommand?(.showEmptyCallShareOptionsView)
+        }
+    }
+    
+    private func removeEmptyCallShareOptionsViewIfNeeded() {
+        if !isOneToOne && !hasParticipantJoinedBefore {
+            invokeCommand?(.removeEmptyCallShareOptionsView)
+            invokeCommand?(.updateBarButtons)
+        }
+    }
 }
 
 struct CallDurationInfo {
@@ -1304,7 +1317,7 @@ struct CallDurationInfo {
 
 extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
-        invokeCommand?(.removeEmptyMeetingShareOptionsView)
+        removeEmptyCallShareOptionsViewIfNeeded()
         self.hasParticipantJoinedBefore = true
         if isOneToOne && reconnecting1on1Subscription != nil {
             cancelReconnecting1on1Subscription()
