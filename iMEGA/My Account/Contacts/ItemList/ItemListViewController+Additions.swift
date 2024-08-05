@@ -53,10 +53,11 @@ extension ItemListViewController {
             fileSystemRepo: FileSystemRepository.newRepo
         )
         
+        let name = item.name ?? ""
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
-            initials: item.name.initialForAvatar(),
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+            initials: name.initialForAvatar(),
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
         )
         
         return await avatarHandler.avatar(for: base64Handle)
