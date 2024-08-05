@@ -1,5 +1,5 @@
 import MEGADomain
 
-public protocol AnalyticsRepositoryProtocol: RepositoryProtocol {
+public protocol AnalyticsRepositoryProtocol: RepositoryProtocol, Sendable {
     func sendAnalyticsEvent(_ eventEntity: EventEntity)
 }
