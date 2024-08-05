@@ -1,6 +1,6 @@
 import MEGAAnalyticsDomain
 
-public final class MockViewIDRepository: ViewIDRepositoryProtocol {
+public final class MockViewIDRepository: ViewIDRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: MockViewIDRepository {
         MockViewIDRepository()
     }
