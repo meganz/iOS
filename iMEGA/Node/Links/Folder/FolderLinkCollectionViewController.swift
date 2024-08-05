@@ -227,7 +227,13 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
 
 extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfallLayout {
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAt indexPath: IndexPath!) -> CGSize {
-        dtCollectionManager?.currentItemSize(for: indexPath) ?? .zero
+        if indexPath.section == ThumbnailSection.file.rawValue {
+            CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFile.rawValue))
+        } else if indexPath.section == ThumbnailSection.folder.rawValue {
+            CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFolder.rawValue))
+        } else {
+            .zero
+        }
     }
 }
 
