@@ -383,11 +383,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
                 MEGALogDebug("[RaiseHand] snack bar update is nil")
                 SnackBarRouter.shared.dismissSnackBar(immediate: false)
             }
-        case .showEmptyMeetingShareOptionsView:
+        case .showEmptyCallShareOptionsView:
             addEmptyMeetingShareOptionsView()
-        case .removeEmptyMeetingShareOptionsView:
+        case .removeEmptyCallShareOptionsView:
             emptyMeetingShareOptionsViewHost?.view.removeFromSuperview()
             emptyMeetingShareOptionsViewHost?.removeFromParent()
+        case .updateBarButtons:
+            updateRightBarItems()
         }
     }
     
@@ -572,7 +574,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         if !(isUserAGuest ?? false) {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(resource: .backArrow), style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
-        updateRightBarItems()
     }
     
     private func updateRightBarItems() {

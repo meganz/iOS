@@ -4246,11 +4246,11 @@
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Add description";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
 "call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
-/* Title for share link button in Empty meeting share options dialog */
-"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Share meeting link";
-/* Title for copy link button in Empty meeting share options dialog */
-"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Copy meeting link";
-/* Title for invite participants button in Empty meeting share options dialog */
+/* Title for share link button in Empty call share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Share link";
+/* Title for copy link button in Empty call share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Copy link";
+/* Title for invite participants button in Empty call share options dialog */
 "call.meeting.empty.shareOptionsDialog.inviteParticipants"="Invite participants";
 /* Label to inform user about privacy of sharing a chat link */
 "call.shareOptions.title"="Anyone with this link can join the meeting and view the meeting chat.";

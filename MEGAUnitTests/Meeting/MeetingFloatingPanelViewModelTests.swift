@@ -368,7 +368,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
-    func testAction_shareLink_Success() {
+    func testAction_shareLink_Success() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let call = CallEntity()
         let containerRouter = MockMeetingContainerRouter()
@@ -382,7 +382,10 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            callUseCase: callUseCase,
                                                            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
-        test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
+        await test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
+        
+        try await Task.sleep(nanoseconds: 500_000_000)
+
         XCTAssert(containerRouter.shareLink_calledTimes == 1)
     }
     
