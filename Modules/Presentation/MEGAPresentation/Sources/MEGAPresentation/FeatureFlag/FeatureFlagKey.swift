@@ -9,6 +9,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case notificationCenter = "NotificationCenter"
     case hiddenNodes =  "Hidden Nodes"
     case cancelSubscription = "Cancel Subscription"
+    case subscriptionCancellationSurvey = "Subscription Cancellation Survey"
     case videoPlaylistSharing = "Video Playlist Sharing"
     case recentlyWatchedVideos = "Recently Watched Videos"
     case nodeDescription = "Node Description"
