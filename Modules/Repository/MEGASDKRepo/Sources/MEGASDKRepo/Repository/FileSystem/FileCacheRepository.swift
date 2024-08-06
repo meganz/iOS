@@ -5,21 +5,24 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
     public static var newRepo: FileCacheRepository {
         FileCacheRepository(fileManager: .default)
     }
-    
+
     private enum Constants {
         static let originalCacheDirectory = "originalV3"
         static let uploadsDirectory = "Uploads"
     }
     
     private let fileManager: FileManager
-    private lazy var appGroup: AppGroupContainer = AppGroupContainer(fileManager: fileManager)
-    
+    private let appGroup: AppGroupContainer
+
     public var tempFolder: URL {
         fileManager.temporaryDirectory
     }
 
     public init(fileManager: FileManager) {
         self.fileManager = fileManager
+        self.appGroup =  AppGroupContainer(fileManager: fileManager)
+        self.cachedOriginalImageDirectoryURL = appGroup.url(for: .cache)
+            .appendingPathComponent(Constants.originalCacheDirectory, isDirectory: true)
     }
     
     // MARK: - Temp file cache
@@ -40,8 +43,7 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
     }
     
     // MARK: - Original image cache
-    public lazy var cachedOriginalImageDirectoryURL = appGroup.url(for: .cache)
-        .appendingPathComponent(Constants.originalCacheDirectory, isDirectory: true)
+    public let cachedOriginalImageDirectoryURL: URL
     
     public func cachedOriginalImageURL(for node: NodeEntity) -> URL {
         let directory = cachedOriginalImageDirectoryURL

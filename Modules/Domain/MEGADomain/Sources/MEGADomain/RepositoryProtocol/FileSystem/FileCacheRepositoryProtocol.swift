@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol FileCacheRepositoryProtocol: RepositoryProtocol {
+public protocol FileCacheRepositoryProtocol: RepositoryProtocol, Sendable {
     var tempFolder: URL { get }
     func tempFileURL(for node: NodeEntity) -> URL
     func existingTempFileURL(for node: NodeEntity) -> URL?
