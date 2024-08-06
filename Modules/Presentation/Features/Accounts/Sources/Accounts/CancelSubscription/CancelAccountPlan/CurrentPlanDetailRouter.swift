@@ -15,6 +15,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private let accountDetails: AccountDetailsEntity
     private let currentPlan: PlanEntity
     private let assets: CancelAccountPlanAssets
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var appleIDSubscriptionsURL: URL? {
         URL(string: "https://apps.apple.com/account/subscriptions")
@@ -24,12 +25,14 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         accountDetails: AccountDetailsEntity,
         currentPlan: PlanEntity,
         assets: CancelAccountPlanAssets,
-        presenter: UIViewController
+        presenter: UIViewController,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.accountDetails = accountDetails
         self.currentPlan = currentPlan
         self.assets = assets
         self.presenter = presenter
+        self.featureFlagProvider = featureFlagProvider
     }
     
     public func build() -> UIViewController {
@@ -65,10 +68,15 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     
     public func showCancellationSteps() {
         switch accountDetails.subscriptionMethodId {
-        case .itunes: showAppleManageSubscriptions()
+        case .itunes:
+            isCancellationSurveyEnabled ? showCancellationSurvey() : showAppleManageSubscriptions()
         case .googleWallet: showGoogleCancellationSteps()
         default: showWebClientCancellationSteps()
         }
+    }
+    
+    private var isCancellationSurveyEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .subscriptionCancellationSurvey)
     }
     
     private func showGoogleCancellationSteps() {
@@ -85,6 +93,12 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         ).start()
     }
 
+    private func showCancellationSurvey() {
+        CancellationSurveyRouter(
+            presenter: baseViewController
+        ).start()
+    }
+    
     private func showAppleManageSubscriptions() {
         guard let scene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
