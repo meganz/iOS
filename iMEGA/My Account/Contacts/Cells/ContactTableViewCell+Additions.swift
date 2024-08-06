@@ -13,6 +13,8 @@ extension ContactTableViewCell {
             nameLabel.textColor = TokenColors.Text.primary
             shareLabel?.textColor = TokenColors.Text.secondary
             permissionsLabel?.textColor = TokenColors.Text.primary
+            
+            controlSwitch?.onTintColor = TokenColors.Support.success
         } else {
             nameLabel.textColor = UIColor.label
             shareLabel?.textColor = UIColor.mnz_subtitles(for: traitCollection)

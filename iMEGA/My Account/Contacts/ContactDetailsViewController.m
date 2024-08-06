@@ -254,7 +254,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
     cell.nameLabel.text = LocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
-    cell.nameLabel.textColor = UIColor.labelColor;
+    cell.nameLabel.textColor = [self primaryTextColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     return cell;
@@ -264,7 +264,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"rename"];
     cell.nameLabel.text = self.userNickname.length == 0 ? LocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") : LocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
-    cell.nameLabel.textColor = UIColor.labelColor;
+    cell.nameLabel.textColor = [self primaryTextColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -274,7 +274,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsVerifyCredentialsTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
     cell.nameLabel.text = LocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
-    cell.nameLabel.textColor = UIColor.labelColor;
+    cell.nameLabel.textColor = [self primaryTextColor];
     cell.permissionsImageView.hidden = !self.areCredentialsVerified;
     return cell;
 }
@@ -283,9 +283,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
         cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
-        cell.avatarImageView.tintColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        cell.avatarImageView.tintColor = [self removeContactIconColor];
         cell.nameLabel.text = LocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-        cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        cell.nameLabel.textColor = [self redTextColor];
     } else { //Add contact
         cell.avatarImageView.image = [UIImage imageNamed:@"navigationbar_add"];
         cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
@@ -333,7 +333,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
     cell.avatarImageView.tintColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.nameLabel.text = self.chatRoom.isArchived ? LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : LocalizedString(@"archiveChat", @"Title of button to archive chats.");
-    cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.labelColor;
+    cell.nameLabel.textColor = self.chatRoom.isArchived ? [self redTextColor] : [self primaryTextColor];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
