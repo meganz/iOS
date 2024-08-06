@@ -137,6 +137,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>MEGA accesses your camera when you capture a video, photo or make a call inside the app.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>If you allow access, you can invite your contacts to use MEGA by sending a message or email.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.</string>
 	<key>NSLocalNetworkUsageDescription</key>
