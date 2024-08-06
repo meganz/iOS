@@ -4,6 +4,8 @@
 "NSCameraUsageDescription"="MEGA accesses your camera when you capture a video, photo or make a call inside the app.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera uploads is enabled.";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="If you allow access, you can invite your contacts to use MEGA by sending a message or email.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA requires access to your photo library to add photos and videos to your device gallery";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
