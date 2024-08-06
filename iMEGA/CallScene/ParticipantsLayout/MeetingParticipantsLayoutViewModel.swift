@@ -640,6 +640,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             } else {
                 if (chatRoom.chatType == .meeting || chatRoom.chatType == .group) && (call.numberOfParticipants == 0 || call.numberOfParticipants == 1 && call.status == .inProgress) {
                     invokeCommand?(.showWaitingForOthersMessage)
+                    showEmptyCallShareOptionsViewIfNeeded()
                 }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
@@ -647,6 +648,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 addMeetingParticipantStatusPipelineSubscription()
             }
             hasBeenInProgress = call.status == .inProgress
+            invokeCommand?(.updateBarButtons)
         case .onViewReady:
             fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
                 self?.invokeCommand?(.updateMyAvatar(image))
@@ -1195,8 +1197,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 // read and cache call here to get most recent raised hands list, used
                 // when user joins and there are already some hands raised in the call
                 self.call = call
-                
-                showEmptyCallShareOptionsViewIfNeeded()
             }
         default:
             break
@@ -1295,17 +1295,22 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func showEmptyCallShareOptionsViewIfNeeded() {
-        if !isOneToOne && call.numberOfParticipants <= 1 {
+        if !isOneToOne && call.numberOfParticipants <= 1 && !hasParticipantJoinedBefore {
+            shareLinkBarButtonHidden = true
             invokeCommand?(.showEmptyCallShareOptionsView)
         }
     }
     
     private func removeEmptyCallShareOptionsViewIfNeeded() {
         if !isOneToOne && !hasParticipantJoinedBefore {
+            shareLinkBarButtonHidden = false
             invokeCommand?(.removeEmptyCallShareOptionsView)
             invokeCommand?(.updateBarButtons)
         }
     }
+    
+    /// Keeps sync between nav bar share link button visibility and empty call share options view. If one is visible the other one must be hidden.
+    var shareLinkBarButtonHidden: Bool = false
 }
 
 struct CallDurationInfo {

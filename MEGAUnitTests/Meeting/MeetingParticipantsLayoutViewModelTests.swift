@@ -33,7 +33,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false, isOneToOne: false),
                 .showWaitingForOthersMessage,
-                .updateHasLocalAudio(false)
+                .showEmptyCallShareOptionsView,
+                .updateHasLocalAudio(false),
+                .updateBarButtons
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
@@ -63,7 +65,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
              action: .onViewLoaded,
              expectedCommands: [
                 .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false, isOneToOne: false),
-                .updateHasLocalAudio(false)
+                .updateHasLocalAudio(false),
+                .updateBarButtons
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
