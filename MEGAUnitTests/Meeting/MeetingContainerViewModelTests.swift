@@ -95,12 +95,15 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.toggleFloatingPanel_CalledTimes == 1)
     }
     
-    func testAction_shareLink_Success() {
+    func testAction_shareLink_Success() async throws {
         let harness = Harness(
             chatRoom: .standardPrivilegeMeeting,
             chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
         )
-        test(viewModel: harness.sut, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
+        await test(viewModel: harness.sut, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
+        
+        try await Task.sleep(nanoseconds: 500_000_000)
+        
         XCTAssert(harness.router.shareLink_calledTimes == 1)
     }
     
