@@ -264,6 +264,10 @@ extension GiphySelectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
                                        ])
         return title
     }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
+        UIImage.noGIF
+    }
 
     func customView(forEmptyDataSet _: UIScrollView) -> UIView? {
         if requestTask?.state == .running {
