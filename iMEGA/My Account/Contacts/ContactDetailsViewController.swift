@@ -53,6 +53,42 @@ extension ContactDetailsViewController {
         let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
         CallKitCallManager.shared.startCall(in: chatRoom.toChatRoomEntity(), chatIdBase64Handle: chatIdBase64Handle, hasVideo: video, notRinging: false, isJoiningActiveCall: false)
     }
+    
+    @objc func readWritePermissionsIcon() -> UIImage {
+        if UIColor.isDesignTokenEnabled() {
+            UIImage(resource: .readWritePermissions)
+                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
+        } else {
+            UIImage(resource: .readWritePermissions)
+        }
+    }
+    
+    @objc func moderatorIcon() -> UIImage {
+        if UIColor.isDesignTokenEnabled() {
+            UIImage(resource: .moderator)
+                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
+        } else {
+            UIImage(resource: .moderator)
+        }
+    }
+    
+    @objc func standardIcon() -> UIImage {
+        if UIColor.isDesignTokenEnabled() {
+            UIImage(resource: .standard)
+                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
+        } else {
+            UIImage(resource: .standard)
+        }
+    }
+    
+    @objc func readOnlyChatIcon() -> UIImage {
+        if UIColor.isDesignTokenEnabled() {
+            UIImage(resource: .readOnlyChat)
+                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
+        } else {
+            UIImage(resource: .readOnlyChat)
+        }
+    }
 }
 
 extension ContactDetailsViewController: PushNotificationControlProtocol {
