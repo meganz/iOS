@@ -89,6 +89,18 @@ extension ContactDetailsViewController {
             UIImage(resource: .readOnlyChat)
         }
     }
+    
+    @objc var removeContactIconColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+    }
+    
+    @objc var redTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.mnz_red(for: traitCollection)
+    }
+    
+    @objc var primaryTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
+    }
 }
 
 extension ContactDetailsViewController: PushNotificationControlProtocol {
