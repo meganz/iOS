@@ -47,7 +47,7 @@ private struct RadioButtonIcon: View {
     let size: CGFloat = 20
     
     private var color: Color {
-        isDesignTokenEnabled ? TokenColors.Icon.inverse.swiftUI : .primary
+        isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : .primary
     }
 
     var body: some View {
