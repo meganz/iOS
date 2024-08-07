@@ -6,7 +6,7 @@ struct RecentActionBucketProvider: SearchResultsProviding {
     
     func listenToSpecificResultUpdates() async {}
     
-    func refreshedSearchResults(queryRequest: Search.SearchQuery) async -> Search.SearchResultsEntity? {
+    func refreshedSearchResults(queryRequest: Search.SearchQuery) async throws -> Search.SearchResultsEntity? {
         // To be addressed in [SAO-1273]
         nil
     }
