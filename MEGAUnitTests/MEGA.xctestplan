@@ -232,6 +232,13 @@
         "identifier" : "VideoTests",
         "name" : "VideoTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/PhotosBrowser",
+        "identifier" : "PhotosBrowserTests",
+        "name" : "PhotosBrowserTests"
+      }
     }
   ],
   "version" : 1
