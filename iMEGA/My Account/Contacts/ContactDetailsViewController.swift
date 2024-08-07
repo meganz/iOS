@@ -90,7 +90,7 @@ extension ContactDetailsViewController {
         }
     }
     
-    @objc var removeContactIconColor: UIColor {
+    @objc var redIconColor: UIColor {
         UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
     }
     
