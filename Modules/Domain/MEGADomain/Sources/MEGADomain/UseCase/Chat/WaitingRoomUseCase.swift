@@ -3,9 +3,9 @@ public protocol WaitingRoomUseCaseProtocol {
     func joinChat(forChatId chatId: UInt64, userHandle: UInt64) async throws -> ChatRoomEntity
 }
 
-public final class WaitingRoomUseCase<T: WaitingRoomRepositoryProtocol>: WaitingRoomUseCaseProtocol {
-    private var waitingRoomRepo: T
-    
+public final class WaitingRoomUseCase<T: WaitingRoomRepositoryProtocol>: WaitingRoomUseCaseProtocol, Sendable {
+    private let waitingRoomRepo: T
+
     public init(waitingRoomRepo: T) {
         self.waitingRoomRepo = waitingRoomRepo
     }
