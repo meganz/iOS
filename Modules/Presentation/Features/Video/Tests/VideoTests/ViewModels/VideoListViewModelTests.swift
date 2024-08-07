@@ -190,7 +190,7 @@ final class VideoListViewModelTests: XCTestCase {
         
         await sut.onViewAppear()
         
-        XCTAssertEqual(sut.shouldShowError, true)
+        XCTAssertEqual(sut.viewState, .error)
     }
     
     @MainActor
@@ -213,20 +213,20 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testOnViewAppear_whenLoadVideosSuccessfully_showsCorrectLoadingState() async {
+    func testOnViewAppear_whenLoadVideosSuccessfully_showsCorrectViewState() async {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
-        var loadingStates: [Bool] = []
-        let exp = expectation(description: "loading state subscription")
+        var viewStates: [VideoListViewModel.ViewState] = []
+        let exp = expectation(description: "view state subscription")
         exp.assertForOverFulfill = false
-        let cancellable = sut.$shouldShowPlaceHolderView
-            .sink { isLoading in
-                loadingStates.append(isLoading)
+        let cancellable = sut.$viewState
+            .sink { viewState in
+                viewStates.append(viewState)
                 exp.fulfill()
             }
         
         await sut.onViewAppear()
         
-        XCTAssertEqual(loadingStates, [ false, true, false ])
+        XCTAssertEqual(viewStates, [ .partial, .loading, .empty ])
         
         cancellable.cancel()
         await fulfillment(of: [exp], timeout: 0.5)
@@ -235,18 +235,18 @@ final class VideoListViewModelTests: XCTestCase {
     @MainActor
     func testOnViewAppear_whenLoadVideosFailed_showsCorrectLoadingState() async {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
-        var loadingStates: [Bool] = []
-        let exp = expectation(description: "loading state subscription")
+        var viewStates: [VideoListViewModel.ViewState] = []
+        let exp = expectation(description: "view state subscription")
         exp.assertForOverFulfill = false
-        let cancellable = sut.$shouldShowPlaceHolderView
-            .sink { isLoading in
-                loadingStates.append(isLoading)
+        let cancellable = sut.$viewState
+            .sink { viewState in
+                viewStates.append(viewState)
                 exp.fulfill()
             }
         
         await sut.onViewAppear()
         
-        XCTAssertEqual(loadingStates, [ false, true, false ])
+        XCTAssertEqual(viewStates, [ .partial, .loading, .error ])
         
         cancellable.cancel()
         await fulfillment(of: [exp], timeout: 0.5)
@@ -369,7 +369,7 @@ final class VideoListViewModelTests: XCTestCase {
         let photoLibraryUseCase = MockPhotoLibraryUseCase(allVideos: [])
         let syncModel = VideoRevampSyncModel()
          let sut = VideoListViewModel(
-            syncModel: syncModel, 
+            syncModel: syncModel,
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: VideoSelection(),
             fileSearchUseCase: MockFilesSearchUseCase(),
@@ -431,7 +431,7 @@ final class VideoListViewModelTests: XCTestCase {
             }
             .store(in: &cancellables)
         await fulfillment(of: [videosExp], timeout: 1.0)
-        XCTAssertFalse(sut.shouldShowError, "Should not show error when success search")
+        XCTAssertEqual(sut.viewState, .loaded, "Should not show error when success search")
         XCTAssertTrue(capturedValues.isNotEmpty)
     }
     
@@ -935,60 +935,6 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedDurationFilterOptionType, .allDurations)
     }
     
-    // MARK: - subscribeToItemsStateForEmptyState
-    
-    @MainActor
-    func testSubscribeToItemsStateForEmptyState_whenConditionNotMet_shouldNotShowEmptyView() async {
-        // Arrange
-        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
-        
-        var receivedValue = false
-        let exp = expectation(description: "should not show empty view")
-        exp.isInverted = true
-        let cancellable = sut.$shouldShowVideosEmptyView
-            .dropFirst()
-            .sink { shouldShow in
-                receivedValue = shouldShow
-                exp.fulfill()
-            }
-        
-        await sut.onViewAppear()
-        await fulfillment(of: [exp], timeout: 0.5)
-        
-        // Assert
-        XCTAssertFalse(receivedValue)
-        
-        cancellable.cancel()
-    }
-    
-    @MainActor
-    func testSubscribeToItemsStateForEmptyState_whenConditionMet_shouldShowEmptyView() async {
-        // Arrange
-        let videoNodes = [
-            anyNode(id: 1, mediaType: .video),
-            anyNode(id: 2, mediaType: .video)
-        ]
-        let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes, succesfullyLoadMedia: true))
-        
-        var receivedValue = false
-        let exp = expectation(description: "should show empty view")
-        exp.assertForOverFulfill = false
-        let cancellable = sut.$shouldShowVideosEmptyView
-            .dropFirst()
-            .sink { shouldShow in
-                receivedValue = shouldShow
-                exp.fulfill()
-            }
-        
-        await sut.onViewAppear()
-        await fulfillment(of: [exp], timeout: 0.5)
-        
-        // Assert
-        XCTAssertFalse(receivedValue)
-        
-        cancellable.cancel()
-    }
-    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -1007,7 +953,7 @@ final class VideoListViewModelTests: XCTestCase {
     ) {
         let syncModel = VideoRevampSyncModel()
         let sut = VideoListViewModel(
-            syncModel: syncModel, 
+            syncModel: syncModel,
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: VideoSelection(),
             fileSearchUseCase: fileSearchUseCase,

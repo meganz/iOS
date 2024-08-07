@@ -52,18 +52,12 @@ struct VideoListView: View {
     
     @ViewBuilder
     private var content: some View {
-        GeometryReader { proxy in
-            Group {
-                if viewModel.shouldShowVideosEmptyView {
-                    videoEmptyView()
-                        .frame(maxHeight: .infinity, alignment: .center)
-                } else if viewModel.videos.isNotEmpty {
-                    listView()
-                } else {
-                    EmptyView()
-                }
-            }
-            .frame(width: proxy.size.width)
+        switch viewModel.viewState {
+        case .loading, .loaded, .partial:
+            listView()
+        case .empty, .error:
+            videoEmptyView()
+                .frame(maxHeight: .infinity, alignment: .center)
         }
     }
     
@@ -167,7 +161,7 @@ struct VideoListView: View {
     }
     
     private var placeholder: some View {
-        VideoListPlaceholderView(videoConfig: videoConfig, isActive: viewModel.shouldShowPlaceHolderView)
+        VideoListPlaceholderView(videoConfig: videoConfig, isActive: viewModel.viewState == .loading)
     }
 }
 
