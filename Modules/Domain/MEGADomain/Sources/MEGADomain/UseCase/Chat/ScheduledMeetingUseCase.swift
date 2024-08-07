@@ -84,6 +84,6 @@ public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: Sc
     }
     
     public func occurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
-        repository.ocurrencesShouldBeReloadListener(forChatRoom: chatRoom)
+        repository.occurrencesShouldBeReloadListener(forChatRoom: chatRoom)
     }
 }
