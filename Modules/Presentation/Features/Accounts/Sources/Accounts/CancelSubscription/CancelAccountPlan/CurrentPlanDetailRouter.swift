@@ -70,7 +70,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         guard let billedPlan = accountDetails.plans.first(where: { $0.isProPlan }),
               let currentSubscription = accountDetails.subscriptions.first(where: { $0.id == billedPlan.subscriptionId }) else { return }
         
-        switch accountDetails.subscriptionMethodId {
+        switch currentSubscription.paymentMethodId {
         case .itunes:
             isCancellationSurveyEnabled ? showCancellationSurvey() : showAppleManageSubscriptions()
         case .googleWallet: showGoogleCancellationSteps()
