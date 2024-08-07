@@ -20,6 +20,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Infrastructure/MEGASwift"),
+        .package(path: "../../../Infrastructure/MEGAFoundation"),
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../../UI/MEGAUIKit"),
@@ -37,7 +38,8 @@ let package = Package(
                 "MEGASwiftUI",
                 "MEGAL10n",
                 "MEGASwift",
-                "MEGADesignToken"
+                "MEGADesignToken",
+                "MEGAFoundation"
             ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         ),
