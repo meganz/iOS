@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -105,8 +106,13 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 action: #selector(selectAllButtonPressed(_:))
             )
         } else {
-            let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
-            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
+            if UIColor.isDesignTokenEnabled() {
+                leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: TokenColors.Text.primary], for: .normal)
+            } else {
+                let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
+                leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
+            }
+
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
     }
