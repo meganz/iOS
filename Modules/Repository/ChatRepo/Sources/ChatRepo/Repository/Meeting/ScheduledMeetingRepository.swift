@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import MEGAChatSdk
 import MEGADomain
 import MEGASwift
@@ -9,10 +9,11 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     }
     
     private let chatSDK: MEGAChatSdk
-    private var ocurrencesUpdateRequestListener: OcurrencesUpdateRequestListener?
+    private let occurrencesUpdateRequestListener: OccurrencesUpdateRequestListener
 
     public init(chatSDK: MEGAChatSdk) {
         self.chatSDK = chatSDK
+        occurrencesUpdateRequestListener = OccurrencesUpdateRequestListener(sdk: chatSDK)
     }
     
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
@@ -112,11 +113,11 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
         }
     }
     
-    public func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
-        let ocurrencesUpdateRequestListener = OcurrencesUpdateRequestListener(sdk: chatSDK, chatId: chatRoom.chatId)
-        self.ocurrencesUpdateRequestListener = ocurrencesUpdateRequestListener
-        return ocurrencesUpdateRequestListener
+    public func occurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+        return occurrencesUpdateRequestListener
             .monitor
+            .filter {$0.0 == chatRoom.chatId }
+            .map { $0.1 }
             .eraseToAnyPublisher()
     }
     
@@ -159,18 +160,16 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     }
 }
 
-private final class OcurrencesUpdateRequestListener: NSObject, MEGAChatScheduledMeetingDelegate {
+private final class OccurrencesUpdateRequestListener: NSObject, MEGAChatScheduledMeetingDelegate, Sendable {
     private let sdk: MEGAChatSdk
-    private let chatId: ChatIdEntity
-    private let source = PassthroughSubject<Bool, Never>()
+    private let source = PassthroughSubject<(ChatIdEntity, Bool), Never>()
 
-    var monitor: AnyPublisher<Bool, Never> {
+    var monitor: AnyPublisher<(ChatIdEntity, Bool), Never> {
         source.eraseToAnyPublisher()
     }
     
-    init(sdk: MEGAChatSdk, chatId: ChatIdEntity) {
+    init(sdk: MEGAChatSdk) {
         self.sdk = sdk
-        self.chatId = chatId
         super.init()
         sdk.add(self)
     }
@@ -180,8 +179,6 @@ private final class OcurrencesUpdateRequestListener: NSObject, MEGAChatScheduled
     }
     
     func onSchedMeetingOccurrencesUpdate(_ api: MEGAChatSdk, chatId: UInt64, append: Bool) {
-        if chatId == self.chatId {
-            source.send(!append)
-        }
+        source.send((chatId, !append))
     }
 }
