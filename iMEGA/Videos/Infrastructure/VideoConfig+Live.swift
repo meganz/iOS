@@ -33,7 +33,7 @@ extension VideoConfig {
             secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : Color.secondary,
             primaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : Color.videoToolbarIconEnabled,
             secondaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.secondary,
-            pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear,
+            pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : UIColor.systemBackground.swiftUI,
             whiteColor: isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : Color.white,
             durationTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.white,
             tabActiveIndicatorColor: isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : MEGAAppColor.Red._F30C14.color,

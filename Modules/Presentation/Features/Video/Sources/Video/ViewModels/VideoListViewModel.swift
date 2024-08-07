@@ -7,6 +7,14 @@ import MEGASwift
 
 final class VideoListViewModel: ObservableObject {
     
+    enum ViewState: Equatable {
+        case partial
+        case loading
+        case loaded
+        case empty
+        case error
+    }
+    
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     let thumbnailLoader: any ThumbnailLoaderProtocol
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
@@ -24,16 +32,12 @@ final class VideoListViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     
     @Published private(set) var videos = [NodeEntity]()
-    @Published private(set) var shouldShowError = false
-    
     @Published private(set) var chips: [ChipContainerViewModel] = [ FilterChipType.location, .duration ]
         .map { ChipContainerViewModel(title: $0.description, type: $0, isActive: false) }
     
     @Published private(set) var shouldShowFilterChip = true
-    
-    @Published private(set) var shouldShowPlaceHolderView = false
-    @Published private(set) var shouldShowVideosEmptyView = false
-    
+    @Published private(set) var viewState: ViewState = .partial
+
     var actionSheetTitle: String {
         newlySelectedChip?.type.description ?? ""
     }
@@ -66,22 +70,22 @@ final class VideoListViewModel: ObservableObject {
         subscribeToEditingMode()
         subscribeToAllSelected()
         subscribeToChipFilterOptions()
-        subscribeToItemsStateForEmptyState()
         monitorSortOrderChanged()
     }
     
     @MainActor
     func onViewAppear() async {
         do {
-            shouldShowPlaceHolderView = videos.isEmpty
+            if viewState == .partial {
+                viewState = .loading
+            }
             try await loadVideos(sortOrderType: syncModel.videoRevampSortOrderType)
             try Task.checkCancellation()
         } catch is CancellationError {
             // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
         } catch {
-            shouldShowError = true
+            viewState = videos.isEmpty ? .error : .loaded
         }
-        shouldShowPlaceHolderView = false
     }
     
     private func monitorSortOrderChanged() {
@@ -114,7 +118,7 @@ final class VideoListViewModel: ObservableObject {
             } catch is CancellationError {
                 break
             } catch {
-                shouldShowError = true
+                // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
             }
         }
     }
@@ -150,6 +154,7 @@ final class VideoListViewModel: ObservableObject {
     private func loadVideos(searchText: String = "", sortOrderType: SortOrderEntity? = .defaultAsc) async throws {
         try Task.checkCancellation()
         self.videos = try await contentProvider.search(by: searchText, sortOrderType: sortOrderType, durationFilterOptionType: selectedDurationFilterOptionType, locationFilterOptionType: selectedLocationFilterOptionType)
+        viewState = videos.isNotEmpty ? .loaded : .empty
     }
     
     @MainActor
@@ -157,17 +162,7 @@ final class VideoListViewModel: ObservableObject {
         do {
             try await loadVideos(sortOrderType: syncModel.videoRevampSortOrderType)
         } catch {
-            shouldShowError = true
-        }
-    }
-    
-    private func updateVideos(with updatedVideos: [NodeEntity]) {
-        reloadVideosTask = Task { @MainActor in
-            do {
-                try await loadVideos(sortOrderType: syncModel.videoRevampSortOrderType)
-            } catch {
-                shouldShowError = true
-            }
+            // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
         }
     }
     
@@ -272,15 +267,5 @@ final class VideoListViewModel: ObservableObject {
         case .duration:
             return DurationChipFilterOptionType.allCases.map(\.stringValue)
         }
-    }
-    
-    private func subscribeToItemsStateForEmptyState() {
-        let videosStream = $videos.map(\.isEmpty).dropFirst().removeDuplicates()
-        let isLoadingStream = $shouldShowPlaceHolderView.dropFirst().removeDuplicates()
-        
-        Publishers.CombineLatest(videosStream, isLoadingStream)
-            .map { $0 && !$1 }
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$shouldShowVideosEmptyView)
     }
 }
