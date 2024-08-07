@@ -1,12 +1,14 @@
 import MEGASdk
 
 /// A thread-safe wrapper for MEGACancelToken that ensures cancellation is performed safely across multiple threads.
-struct ThreadSafeCancelToken: @unchecked Sendable {
+public struct ThreadSafeCancelToken: @unchecked Sendable {
     /// The underlying cancellation token.
-    let value = MEGACancelToken()
+    public let value = MEGACancelToken()
 
     /// A private serial dispatch queue to ensure thread-safe operations on the cancellation token.
     private let queue = DispatchQueue(label: "ThreadSafeCancelTokenSerialQueue")
+    
+    public init() { }
 
     /// Cancels the underlying MEGACancelToken in a thread-safe manner.
     ///

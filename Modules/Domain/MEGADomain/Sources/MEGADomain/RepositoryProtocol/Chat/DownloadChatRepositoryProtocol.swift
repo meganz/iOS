@@ -1,7 +1,7 @@
 import Foundation
 import MEGASwift
 
-public protocol DownloadChatRepositoryProtocol: RepositoryProtocol {
+public protocol DownloadChatRepositoryProtocol: RepositoryProtocol, Sendable {
     /// Downloads a chat message from the specified node, given the message ID and chat ID, and saves it to the specified URL.
     /// - Parameters:
     ///   - nodeHandle: The handle of the node associated with the chat file.

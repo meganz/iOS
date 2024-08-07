@@ -9,7 +9,7 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
     private let chatSdk: MEGAChatSdk
     private let sdk: MEGASdk
     
-    private let cancelToken = MEGACancelToken()
+    private let cancelToken = ThreadSafeCancelToken()
     
     public static var newRepo: DownloadChatRepository {
         DownloadChatRepository(chatSdk: .sharedChatSdk, sdk: .sharedSdk)
@@ -37,7 +37,7 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
                 fileName: nil,
                 appData: metaData?.rawValue,
                 startFirst: true,
-                cancelToken: cancelToken,
+                cancelToken: cancelToken.value,
                 collisionCheck: CollisionCheck.fingerprint,
                 collisionResolution: CollisionResolution.newWithN,
                 delegate: TransferDelegate { result in
@@ -72,7 +72,7 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
             filename: filename,
             appdata: appdata,
             startFirst: startFirst,
-            cancelToken: self.cancelToken
+            cancelToken: cancelToken
         )
     }
     
@@ -84,7 +84,7 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
         filename: String? = nil,
         appdata: String? = nil,
         startFirst: Bool,
-        cancelToken: MEGACancelToken?
+        cancelToken: ThreadSafeCancelToken
     ) throws -> AnyAsyncSequence<TransferEventEntity> {
         let sequence: AnyAsyncSequence<TransferEventEntity> = AsyncThrowingStream(TransferEventEntity.self) { continuation in
             let offlineNameString = sdk.escapeFsIncompatible(name, destinationPath: url.path)
@@ -118,7 +118,7 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
                 fileName: filename,
                 appData: appdata,
                 startFirst: startFirst,
-                cancelToken: cancelToken,
+                cancelToken: cancelToken.value,
                 collisionCheck: .fingerprint,
                 collisionResolution: .newWithN,
                 delegate: transferDelegate
