@@ -6,21 +6,35 @@ let settings: [SwiftSetting] = [.enableExperimentalFeature("ExistentialAny"), .e
 
 let package = Package(
     name: "PhotosBrowser",
+    platforms: [
+        .macOS(.v10_15), .iOS(.v15)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "PhotosBrowser",
             targets: ["PhotosBrowser"])
     ],
+    dependencies: [
+        .package(path: "../../../Domain/MEGADomain"),
+        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../../Infrastracture/MEGATest"),
+        .package(path: "../../../UI/MEGASwiftUI"),
+        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "PhotosBrowser",
+            dependencies: ["MEGADomain",
+                           "MEGAPresentation",
+                           "MEGASwiftUI",
+                           "MEGADesignToken"],
             swiftSettings: settings),
         .testTarget(
             name: "PhotosBrowserTests",
-            dependencies: ["PhotosBrowser"],
+            dependencies: ["PhotosBrowser",
+                           "MEGAPresentation",
+                           "MEGATest",
+                           .product(name: "MEGAPresentationMock", package: "MEGAPresentation")],
             swiftSettings: settings)
     ]
 )

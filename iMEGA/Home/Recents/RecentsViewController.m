@@ -235,8 +235,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     
     if (nodesArray.count == 1) {
         if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdk.shared displayMode:DisplayModeCloudDrive isFromSharedItem:NO presentingNode:nodesArray.firstObject];
-            [self.delegate showSelectedNodeInViewController:photoBrowserVC];
+            [self.delegate showSelectedNodeInViewController: [self photosBrowserViewControllerWith:nodesArray]];
         } else {
             if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] && node.mnz_isPlayable) {
                 if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
