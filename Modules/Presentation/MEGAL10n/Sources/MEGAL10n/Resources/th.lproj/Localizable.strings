@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="บัญชีอีเมลยังไม่มีในการตั้งค่าบนอุปกรณ์ของคุณ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="นโยบายสิทธิส่วนบุคคล";
+"privacyPolicyLabel"="นโยบายความเป็นส่วนตัวและข้อมูล";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="นโยบายคุกกี้";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="ไม่สามารถบันทึก “%@” ลงในคลาวด์ไดร์ฟได้ กรุณาลองอีกครั้งในภายหลัง แต่หากยังประสบปัญหาอยู่ ให้ติดต่อบุคคลที่แชร์ลิงก์กับคุณ";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="ผู้ติดต่อบางรายที่คุณแชร์ข้อมูลด้วยยังไม่ได้รับการตรวจสอบจากคุณ เพื่อความปลอดภัยมากยิ่งขึ้น เราขอแนะนำให้คุณตรวจสอบข้อมูลประจำตัวของพวกเขาในรายชื่อติดต่อ โดยแตะที่ ⓘ ถัดจากรายชื่อติดต่อที่คุณต้องการตรวจสอบ";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="รายการที่ถูกซ่อน";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="โฟลเดอร์นี้มีรายการบางอย่างที่ซ่อนไว้ การแชร์โฟลเดอร์นี้จะทำให้ผู้ที่คุณแชร์ด้วยสามารถเห็นเนื้อหาที่ซ่อนอยู่ได้ แต่เนื้อหาเหล่านี้จะยังคงซ่อนอยู่ในคลาวด์ไดร์ฟของคุณ";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="โฟลเดอร์เหล่านี้มีรายการบางอย่างที่ซ่อนอยู่ หากคุณแชร์โฟลเดอร์ ผู้ที่ได้รับลิงก์จะสามารถเห็นสิ่งที่ซ่อนไว้ได้ อย่างไรก็ตาม สิ่งเหล่านี้จะยังคงถูกซ่อนอยู่ในคลาวด์ไดร์ฟของคุณ";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="เปลี่ยนชื่ออัลบั้ม";
 /* Rename public album alert message */
@@ -3967,7 +3973,7 @@
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="เพิ่ม";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Rename playlist";
+"videos.tab.playlist.content.alert.title.rename"="เปลี่ยนชื่อเพลย์ลิสต์";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="กรอกชื่อใหม่";
 /* Videos: video playlist rename alert button title */
@@ -3981,7 +3987,7 @@
 /* Videos: video playlist delete playlist snack bar message */
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="ลบ “[A]” ออกแล้ว";
 /* Videos: video playlist remove video from video playlist */
-"videos.tab.playlist.content.removeFromPlaylist"="Remove from playlist";
+"videos.tab.playlist.content.removeFromPlaylist"="นำออกจากเพลย์ลิสต์";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="ไม่มีใครอยู่ในห้องนั่งรอ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4065,7 +4071,7 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
+"meetings.contact-picker.warning.over-limit.non-host"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="อัปเกรดเป็นแผน Pro เพื่อโทรได้ไม่อั้น";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
@@ -4117,7 +4123,7 @@
 /* Rewind fro free users */
 "rewind.for.free.users"="สูงสุด 30 วัน (ดูอย่างเดียว)";
 /* Rewind for pro users, where %d is the number of days that marks the rewind limit */
-"rewind.for.pro.users"="Up to %d days";
+"rewind.for.pro.users"="นานถึง %d วัน";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
@@ -4197,13 +4203,13 @@
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. เข้าสู่ระบบบัญชี MEGA ของคุณ";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click the main menu.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. คลิกที่เมนูหลัก";
 /* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. คลิก<b>การตั้งค่า</b>";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Plan</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. คลิก<b>แผน</b>";
 /* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. คลิก<b>ยกเลิกการสมัครใช้งาน</b>";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="บนอุปกรณ์มือถือ";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
@@ -4214,6 +4220,36 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. แตะที่รูปประจำตัวของคุณ";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. แตะ<b>ยกเลิกการสมัครใช้งาน</b>";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="ฉันแค่ต้องการทดลองใช้แผนนี้ชั่วคราวและไม่ต้องการใช้แผนนี้อีกต่อไป";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="ฉันคิดว่าแผนของฉันแพงเกินไป";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="ฉันไม่มีความจำเป็นที่จะใช้พื้นที่จัดเก็บทั้งหมดที่มีตอนนี้ในแผนของฉัน";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="ฟีเจอร์การใช้งานของ MEGA ไม่ตอบสนองกับความต้องการของฉัน";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="ฉันกำลังเปลี่ยนไปใช้ผู้ให้บริการรายอื่น";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="ฉันรู้สึกว่า MEGA ใช้งานยาก";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="ฉันไม่ประทับใจต่อการบริการลูกค้าและบริการสนับสนุน";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="อื่น ๆ (กรุณาระบุรายละเอียด)";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="ฉันไม่สามารถรับภาระค่าใช้จ่ายตรงนี้ได้แล้ว";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="ฉันไม่ต้องการสมัครใช้งานหรือให้หักเงินค่าบริการอัตโนมัติ";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="ไม่ต้องยกเลิก";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="เลือกเหตุผลที่คุณยกเลิกการสมัครใช้งาน";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="รายการที่ถูกซ่อน";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4225,8 +4261,34 @@
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="คุณได้ยกมือแล้ว";
 /* Snack bar message shown when another participant raises hand in the call */
-"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ ได้ยกมือ";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.lower-hand"="เอามือลง";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="ดู";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="อ่านอย่างเดียว";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="รายละเอียด";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="ไม่มีคำอธิบาย";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="เพิ่มคำอธิบาย";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="แชร์ลิงก์การประชุม";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="คัดลอกลิงก์การประชุม";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="เชิญผู้เข้าร่วม";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="ทุกคนที่มีลิงก์นี้สามารถเข้าร่วมการประชุมและดูแชทการประชุมได้";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="ส่งไปยังแชท";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="คัดลอก";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="แชร์";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="ยกเลิก";

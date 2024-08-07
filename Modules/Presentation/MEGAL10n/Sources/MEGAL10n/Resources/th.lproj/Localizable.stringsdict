@@ -12,10 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[A] and %d other raised their hands</string>
         <key>other</key>
-        <string>[A] and %d others raised their hands</string>
+        <string>[A] และคนอื่น ๆ อีก %d คนได้ยกมือ</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -28,10 +26,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>You and %d other raised your hands</string>
         <key>other</key>
-        <string>You and %d others raised your hands</string>
+        <string>คุณและคนอื่น ๆ อีก %d คนได้ยกมือ</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
@@ -2246,34 +2242,6 @@
         <string>การประชุมจะมีขึ้นใน[weekDayNames]และ[lastWeekDayName]ของทุก %d สัปดาห์</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>การประชุมจะมีขึ้นในวันที่ [ordinalDay] ของทุก %d เดือน</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>การประชุมจะมีขึ้นในวันที่ [ordinalDays] และที่ [ordinalLastDay] ของทุก %d เดือน</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2328,20 +2296,6 @@
         <string>d</string>
         <key>other</key>
         <string>[weekDayNames]ของทุก %d สัปดาห์</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>ทุกวันที่ [ordinalNumber] ของทุก %d เดือน</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
@@ -2550,10 +2504,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Attached %d file</string>
         <key>other</key>
-        <string>Attached %d files</string>
+        <string>ไฟล์แนบ %d ไฟล์</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -2650,10 +2602,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Removed %d video from “[A]”</string>
         <key>other</key>
-        <string>Removed %d videos from “[A]”</string>
+        <string>ลบวิดีโอ %d รายการออกจาก “[A]” แล้ว</string>
       </dict>
     </dict>
     <key>rewind.for.pro.users.maximumDays</key>

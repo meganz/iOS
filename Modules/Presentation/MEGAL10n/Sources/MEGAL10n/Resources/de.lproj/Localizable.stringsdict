@@ -2562,38 +2562,6 @@
         <string>Das Meeting findet alle %d Wochen am [weekDayNames] und [lastWeekDayName] statt.</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Das Meeting findet am [ordinalDay]. jedes Monats statt.</string>
-        <key>other</key>
-        <string>Das Meeting findet alle %d Monate am [ordinalDay]. des Monats statt.</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Das Meeting findet am [ordinalDays] und [ordinalLastDay] jedes Monats statt.</string>
-        <key>other</key>
-        <string>Das Meeting findet alle %d Monate am [ordinalDays] und [ordinalLastDay] des Monats statt.</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2656,22 +2624,6 @@
         <string>Jede Woche am [weekDayNames]</string>
         <key>other</key>
         <string>Alle %d Wochen am [weekDayNames]</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Am [ordinalNumber] jedes Monats</string>
-        <key>other</key>
-        <string>Alle %d Monate am [ordinalNumber] des Monats</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>

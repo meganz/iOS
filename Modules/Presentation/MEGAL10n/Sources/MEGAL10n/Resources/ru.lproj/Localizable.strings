@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="На вашем устройстве не найдено ни одного аккаунта с адресом эл. почты";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Политика конфиденциальности";
+"privacyPolicyLabel"="Политика конфиденциальности и данных";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Политика использования куки-файлов";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="«%@» не удаётся сохранить на Облачном диске. Повторите попытку позже. Если проблема не исчезнет, обратитесь к человеку, который поделился с вами ссылкой.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Некоторые контакты, с которыми вы делитесь информацией, не были вами подтверждены. Чтобы обеспечить дополнительную безопасность, мы рекомендуем вам подтвердить их учетные данные в «Контактах». Нажмите на ⓘ рядом с контактом, который хотите подтвердить.";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="Скрытые элементы";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="В этой папке есть скрытые элементы. Если вы поделитесь папкой, скрытые элементы будут видны тем, с кем вы делитесь. Эти элементы по-прежнему будут скрыты на вашем Облачном диске.";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="В одной или нескольких из этих папок есть скрытые элементы. Если вы поделитесь папками, скрытые элементы будут видны тем, с кем вы делитесь. Эти элементы по-прежнему будут скрыты на вашем Облачном диске.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Переименование альбома";
 /* Rename public album alert message */
@@ -4214,6 +4220,36 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Нажмите на свой аватар.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Нажмите <b>«Отменить подписку»</b>.";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Ваша подписка будет немедленно отменена, и вы будете переведены на бесплатный аккаунт MEGA, когда истечёт срок действия текущего плана. Примечание: При отмене подписки ваш аккаунт не удаляется.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="Мне временно был нужен этот план, и я им больше не пользуюсь";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="Подписка слишком дорогая";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="Мне не нужен весь объём в этой подписке";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="Мне нужны функции, которых нет у MEGA";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="Я перехожу к другому провайдеру";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="Мне сложно пользоваться MEGA";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="Я не доволен поддержкой и обслуживанием клиентов";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="Другое (пожалуйста, укажите подробности)";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="Я больше не могу себе этого позволить";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="Мне не нужна подписка или автоматическое выставление счетов";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="Я разрешаю MEGA связываться со мной для дальнейшего обсуждения этой темы";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="Не отменять";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="Выберите причину отмены подписки";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Скрытые элементы";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4230,3 +4266,29 @@
 "chat.call.raise-hand.snack-bar.lower-hand"="Опустить руку";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="Просмотр";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="Только чтение";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="Описание";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="Нет описания";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Добавить описание";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="Поделитесь этой ссылкой или добавьте участников";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Поделиться ссылкой на встречу";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Копировать ссылку на встречу";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="Пригласить участников";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="Любой пользователь с этой ссылкой может присоединиться к встрече и просмотреть чат встречи.";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="Отправить в чат";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="Копировать";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="Обмен";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="Отмена";

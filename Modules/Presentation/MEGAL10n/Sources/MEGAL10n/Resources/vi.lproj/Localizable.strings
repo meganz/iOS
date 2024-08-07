@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Không có tài khoản email nào được thiết lập cho máy này";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
+"privacyPolicyLabel"="Chính[w]Sách Dữ[w]Liệu và Riêng[w]Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Chính Sách Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="Không thể lưu “%@” vào Ổ Mây. Hãy thử lại sau và nếu sự cố vẫn tiếp diễn, hãy liên hệ với người đã chia sẻ đường liên kết cho bạn.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Một số tên liên lạc mà bạn đang chia sẻ thông tin chưa được bạn đã xác thực tin tưởng. Để đảm bảo an toàn hơn, chúng tôi khuyên bạn nên xác thực chứng chỉ đăng nhập của họ trong Sổ Liên Lạc bằng cách vào dấu ⓘ bên cạnh tên liên lạc bạn muốn xác thực.";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="Các mục ẩn";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="Có các mục ẩn trong thư mục này. Việc thực hiện chia sẻ thư mục sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="Có các mục ẩn nằm trong một hoặc nhiều thư mục này. Việc thực hiện chia sẻ thư mục sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Đổi tên album";
 /* Rename public album alert message */
@@ -4214,6 +4220,36 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Chạm vào ảnh đại diện của bạn.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Chạm vào <b>Hủy đăng ký</b>.";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="Tôi chỉ sử dụng cái này tạm thời và không còn nhu cầu nữa";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="Tôi cảm thấy gói của tôi quá đắt";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="Tôi không cần tất cả dung lượng trong gói của mình";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="Tôi cần sử đụng các tính năng mà MEGA không có có";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="Tôi chuyển sang sử dụng hãng khác";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="Tôi cảm thấy MEGA khó sử dụng";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="Tôi không có hài lòng với cách hỗ trợ và dịch vụ khách hàng";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="Lý do khác (xin điền chi tiết)";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="Tôi không còn khả năng chi trả";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="Tôi không muốn có gói đăng ký hoặc bị tính phí tự động";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="Đừng hủy";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="Chọn một lý do mà bạn hủy gói đăng ký";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Các mục ẩn";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4230,3 +4266,29 @@
 "chat.call.raise-hand.snack-bar.lower-hand"="Bỏ tay xuống";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="Xem";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="Chỉ-được-xem";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="Chi tiết";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="Không có mô tả";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Thêm miêu tả";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Chia sẻ đường liên kết cuộc họp";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Sao chép đường liên kết cuộc họp";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="Mời thêm thành viên";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="Bất kỳ ai có đường liên kết này đều có thể tham gia cuộc họp và xem tin nhắn của cuộc họp.";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="Gửi đến chát";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="Sao chép";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="Chia sẻ";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="Hủy";

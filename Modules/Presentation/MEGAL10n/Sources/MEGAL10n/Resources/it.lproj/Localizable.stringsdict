@@ -13,9 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] and %d other raised their hands</string>
+        <string>[A] e %d persona hanno alzato la propria mano</string>
+        <key>many</key>
+        <string>[A] e %d di persone hanno alzato la propria mano</string>
         <key>other</key>
-        <string>[A] and %d others raised their hands</string>
+        <string>[A] e altre %d persone hanno alzato la propria mano</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -29,9 +31,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>You and %d other raised your hands</string>
+        <string>Tu e %d persona avete alzato la vostra mano</string>
+        <key>many</key>
+        <string>Tu e %d di persone avete alzato la vostra mano</string>
         <key>other</key>
-        <string>You and %d others raised your hands</string>
+        <string>Tu e altre %d persone avete alzato la vostra mano</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
@@ -2878,42 +2882,6 @@
         <string>Il meeting avrà luogo ogni %d settimane di [weekDayNames] e di [lastWeekDayName].</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Il meeting avrà luogo ogni mese il giorno [ordinalDay].</string>
-        <key>many</key>
-        <string>Il meeting avrà luogo ogni %d di mesi il giorno [ordinalDay].</string>
-        <key>other</key>
-        <string>Il meeting avrà luogo ogni %d mesi il giorno [ordinalDay].</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Il meeting avrà luogo ogni mese nei giorni [ordinalDays] e [ordinalLastDay].</string>
-        <key>many</key>
-        <string>Il meeting avrà luogo ogni %d di mesi nei giorni [ordinalDays] e [ordinalLastDay].</string>
-        <key>other</key>
-        <string>Il meeting avrà luogo ogni %d mesi nei giorni [ordinalDays] e [ordinalLastDay].</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2984,24 +2952,6 @@
         <string>Ogni %d di settimane di [weekDayNames]</string>
         <key>other</key>
         <string>Ogni %d settimane di [weekDayNames]</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Ogni mese il giorno [ordinalNumber]</string>
-        <key>many</key>
-        <string>Ogni %d di mesi il giorno [ordinalNumber]</string>
-        <key>other</key>
-        <string>Ogni %d mesi il giorno [ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>

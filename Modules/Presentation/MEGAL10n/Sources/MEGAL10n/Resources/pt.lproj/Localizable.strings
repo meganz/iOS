@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Não há uma conta de email configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Política de privacidade";
+"privacyPolicyLabel"="Política de privacidade e de dados";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Política de cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="Não foi possível salvar “%@” na sua Nuvem de arquivos. Tente novamente mais tarde e, se o problema persistir, entre em contato com a pessoa que compartilhou o link com você.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Você não verificou alguns dos contatos com os quais você está compartilhando informações. Como medida de segurança, recomendamos que você verifique as credenciais dos mesmos em Contatos tocando no ícone ⓘ ao lado do contato que quiser verificar.";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="Itens ocultos";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="Há itens ocultos nesta pasta. Ao compartilhar a pasta, os itens ocultos ficarão visíveis para as pessoas com as quais você o compartilhar, mas vão permanecer ocultos na sua Nuvem de arquivos.";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="Há itens ocultos em uma ou mais destas pastas. Ao compartilhar as pastas, os itens ocultos ficarão visíveis para as pessoas com as quais você o compartilhar, mas vão permanecer ocultos na sua Nuvem de arquivos.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Renomear álbum";
 /* Rename public album alert message */
@@ -4214,6 +4220,36 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Pressione o seu avatar.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Pressione <b>Cancelar assinatura</b>.";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="A sua assinatura será cancelada imediatamente e você passará a ter uma conta gratuita do MEGA quando o seu plano atual expirar. Aviso: cancelar a sua assinatura não vai fazer que a sua conta seja deletada.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="Eu só precisava deste plano por um tempo e já não o uso";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="Achei o plano muito caro";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="Não preciso de tanto espaço de armazenamento";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="Preciso de recursos que o MEGA não oferece";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="Vou mudar de provedor de armazenamento em nuvem";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="Acho o MEGA difícil de usar";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="Não estou satisfeito com o suporte e o atendimento ao cliente";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="Outro (por favor, especifique)";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="Já não posso pagar o valor";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="Não quero uma assinatura ou cobrança automática";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="Eu permito que o MEGA entre em contato comigo para falar mais sobre este assunto";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="Não cancelar";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="Selecione o motivo para cancelar a sua assinatura";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Itens ocultos";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4230,3 +4266,29 @@
 "chat.call.raise-hand.snack-bar.lower-hand"="Baixar a mão";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="Ver";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="Somente leitura";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="Descrição";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="Sem descrição";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Adicionar descrição";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="Compartilhe este link ou adicione participantes";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Compartilhar o link da reunião";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Copiar o link da reunião";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="Convidar participantes";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="Qualquer pessoa com este link pode entrar na reunião e visualizar o chat correspondente.";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="Enviar ao Chat";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="Copiar";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="Compartilhar";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="Cancelar";

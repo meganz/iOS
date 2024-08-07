@@ -7,7 +7,7 @@
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="Dacă permiteți accesul, puteți invita persoanele de contact să utilizeze MEGA trimițând un mesaj sau un e-mail.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="MEGA necesită acces la biblioteca foto pentru a adăuga fotografii și videoclipuri în galeria aparatului";
+"NSPhotoLibraryAddUsageDescription"="MEGA necesită acces la biblioteca foto pentru a adăuga fotografii și videoclipuri în galeria dispozitivului";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="MEGA accesează Face ID pentru a-ți permite să deblochezi cu ușurință codul de acces al aplicației când activezi această opțiune.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
@@ -19,4 +19,4 @@
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationWhenInUseUsageDescription"="MEGA îți accesează locația atunci când o partajezi cu contactele tale într-un chat.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
-"NSLocalNetworkUsageDescription"="Acest lucru îți va permite să folosești MEGA pentru a efectua și primi apeluri prin intermediul aparatelor care se află în aceeași rețea Wi-Fi sau locală.";
+"NSLocalNetworkUsageDescription"="Acest lucru îți va permite să folosești MEGA pentru a efectua și primi apeluri prin intermediul dispozitivelor care se află în aceeași rețea Wi-Fi sau locală.";

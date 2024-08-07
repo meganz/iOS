@@ -12,10 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[A] and %d other raised their hands</string>
         <key>other</key>
-        <string>[A] and %d others raised their hands</string>
+        <string>[A] 님 외 %d명이 손을 들었습니다</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -28,10 +26,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>You and %d other raised your hands</string>
         <key>other</key>
-        <string>You and %d others raised your hands</string>
+        <string>당신과 %d명이 손을 들었습니다</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
@@ -2246,34 +2242,6 @@
         <string>회의가 매 %d주마다 [weekDayNames]과 [lastWeekDayName]에 반복됩니다.</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>회의가 매 %d개월마다 [ordinalDay]일에 반복됩니다.</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>회의가 매 %d개월마다 [ordinalDays]일과 [ordinalLastDay]일에 반복됩니다.</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2328,20 +2296,6 @@
         <string>d</string>
         <key>other</key>
         <string>매 %d주마다 [weekDayNames]</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>매 %d개월마다 [ordinalNumber]일</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
@@ -2550,10 +2504,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Attached %d file</string>
         <key>other</key>
-        <string>Attached %d files</string>
+        <string>파일 %d개 첨부함</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -2636,10 +2588,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d video to “[A]”</string>
         <key>other</key>
-        <string>Added %d videos to “[A]”</string>
+        <string>“[A]”에 동영상 %d개 추가함</string>
       </dict>
     </dict>
     <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
@@ -2652,10 +2602,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Removed %d video from “[A]”</string>
         <key>other</key>
-        <string>Removed %d videos from “[A]”</string>
+        <string>“[A]”에서 동영상 %d개 제거함</string>
       </dict>
     </dict>
     <key>rewind.for.pro.users.maximumDays</key>
