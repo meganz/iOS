@@ -18,8 +18,14 @@ public final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
         self.getFavouriteNodesResult = getFavouriteNodesResult
         self.onNodesUpdateCallback = onNodesUpdateCallback
     }
+    
+    public func allFavouriteNodes(searchString: String?) async throws -> [MEGADomain.NodeEntity] {
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: getAllFavouriteNodesWithSearchResult)
+        }
+    }
    
-    public func allFavouriteNodes(searchString: String?) async throws -> [NodeEntity] {
+    public func allFavouriteNodes(searchString: String?, excludeSensitives: Bool, limit: Int) async throws -> [NodeEntity] {
         try await withCheckedThrowingContinuation {
             $0.resume(with: getAllFavouriteNodesWithSearchResult)
         }

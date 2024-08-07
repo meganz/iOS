@@ -100,7 +100,7 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
     
     func testAllFavouriteNodes() async throws {
         let resultNodes = [NodeEntity]()
-        let nodes = try await favouriteNodesSuccessRepository.allFavouritesNodes()
+        let nodes = try await favouriteNodesSuccessRepository.allFavouritesNodes(limit: 0)
         XCTAssertEqual(nodes, resultNodes)
     }
     
@@ -124,10 +124,31 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
                 nodeRepository: MockNodeRepository(isInheritingSensitivityResults: nodes)
             )
             
-            let result = try await sut.allFavouriteNodes(searchString: nil, excludeSensitives: excludeSensitives)
+            let result = try await sut.allFavouriteNodes(searchString: nil, excludeSensitives: excludeSensitives, limit: 0)
             
             XCTAssertEqual(result, expectedResult)
         }
+    }
+    
+    func testAllFavouriteNodesSearchWithSensitiveFlagAndLimitSet_returnsCorrectAmountNodes() async throws {
+        let sensitiveNode = NodeEntity(handle: 2)
+        let sensitiveNode2 = NodeEntity(handle: 4)
+        let expectedResult = NodeEntity(handle: 3)
+        
+        let nodes: [NodeEntity: Result<Bool, Error>] = [
+            sensitiveNode: .success(true),
+            sensitiveNode2: .success(true),
+            expectedResult: .success(false)
+        ]
+        
+        let sut = sut(
+            repo: MockFavouriteNodesRepository(result: .success(nodes.keys.map { $0 })),
+            nodeRepository: MockNodeRepository(isInheritingSensitivityResults: nodes)
+        )
+        
+        let result = try await sut.allFavouriteNodes(searchString: nil, excludeSensitives: true, limit: 1)
+        
+        XCTAssertEqual(result, [expectedResult])
     }
     
     func testAllFavouriteNodesSearch_whenFeatureFlagIsOff_returnsAllNodesIncludingSensitive() async throws {

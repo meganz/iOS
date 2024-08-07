@@ -1,4 +1,4 @@
-public protocol NodeAttributeUseCaseProtocol {
+public protocol NodeAttributeUseCaseProtocol: Sendable {
     func pathFor(node: NodeEntity) -> String?
     func numberChildrenFor(node: NodeEntity) -> Int
     func isInRubbishBin(node: NodeEntity) -> Bool

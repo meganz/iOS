@@ -22,14 +22,14 @@ public final class MockFavouriteNodesRepository: FavouriteNodesRepositoryProtoco
         completion(result)
     }
     
-    public func allFavouritesNodes(searchString: String?) async throws -> [NodeEntity] {
+    public func allFavouritesNodes(searchString: String?, limit: Int) async throws -> [NodeEntity] {
         try await withCheckedThrowingContinuation {
             $0.resume(with: result)
         }
     }
     
-    public func allFavouritesNodes() async throws -> [NodeEntity] {
-        [NodeEntity]()
+    public func allFavouritesNodes(limit: Int) async throws -> [NodeEntity] {
+        try result.get()
     }
     
     public func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) { }

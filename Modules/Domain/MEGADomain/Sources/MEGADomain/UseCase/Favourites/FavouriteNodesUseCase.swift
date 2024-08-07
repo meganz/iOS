@@ -1,7 +1,7 @@
 import AsyncAlgorithms
 import Foundation
 
-public protocol FavouriteNodesUseCaseProtocol {
+public protocol FavouriteNodesUseCaseProtocol: Sendable {
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     
@@ -15,8 +15,9 @@ public protocol FavouriteNodesUseCaseProtocol {
     /// - Parameters:
     ///   - searchString: Search text used to case insensitively filter the Node results by their name, if the search term is included in the name it will return true. If nil, no name filtering is applied.
     ///   - excludeSensitives: True, indicates that the returned result will not include any sensitively inherited nodes.
+    ///   - limit: Number of nodes to return, if value is 0 or below it will return all nodes.
     /// - Returns: List of Favourited nodes, filtered by search and exclusion criteria.
-    func allFavouriteNodes(searchString: String?, excludeSensitives: Bool) async throws -> [NodeEntity]
+    func allFavouriteNodes(searchString: String?, excludeSensitives: Bool, limit: Int) async throws -> [NodeEntity]
     
     func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void)
     func unregisterOnNodesUpdate()
@@ -28,8 +29,12 @@ public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: Node
     private let nodeRepository: U
     private let contentConsumptionUserAttributeUseCase: V
     private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
-
-    public init(repo: T, nodeRepository: U, contentConsumptionUserAttributeUseCase: V, hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
+    
+    public init(repo: T,
+                nodeRepository: U,
+                contentConsumptionUserAttributeUseCase: V,
+                hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
+        
         self.repo = repo
         self.nodeRepository = nodeRepository
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
@@ -40,10 +45,10 @@ public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: Node
         try await allFavouriteNodes(searchString: searchString, overrideExcludeSensitives: nil)
     }
     
-    public func allFavouriteNodes(searchString: String?, excludeSensitives: Bool) async throws -> [NodeEntity] {
-        try await allFavouriteNodes(searchString: searchString, overrideExcludeSensitives: excludeSensitives)
+    public func allFavouriteNodes(searchString: String?, excludeSensitives: Bool, limit: Int) async throws -> [NodeEntity] {
+        try await allFavouriteNodes(searchString: searchString, overrideExcludeSensitives: excludeSensitives, limit: limit)
     }
-
+    
     @available(*, renamed: "allFavouriteNodes()")
     public func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         repo.getAllFavouriteNodes(completion: completion)
@@ -61,15 +66,22 @@ public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: Node
         repo.unregisterOnNodesUpdate()
     }
     
-    private func allFavouriteNodes(searchString: String?, overrideExcludeSensitives: Bool?) async throws -> [NodeEntity] {
-        let nodes = try await repo.allFavouritesNodes(searchString: searchString)
+    private func allFavouriteNodes(searchString: String?, overrideExcludeSensitives: Bool?, limit: Int? = nil) async throws -> [NodeEntity] {
         
-        return if await shouldExcludeSensitive(override: overrideExcludeSensitives) {
+        let nodes = try await repo.allFavouritesNodes(searchString: searchString, limit: 0)
+        
+        let excludedSensitiveNodes = if await shouldExcludeSensitive(override: overrideExcludeSensitives) {
             try await withThrowingTaskGroup(of: (Int, NodeEntity?).self, returning: [NodeEntity].self) { taskGroup in
                 let nodeRepository = self.nodeRepository
                 for (index, node) in nodes.enumerated() {
                     _ = taskGroup.addTaskUnlessCancelled {
-                        let optionalNode: NodeEntity? = try await nodeRepository.isInheritingSensitivity(node: node) ? nil : node
+                        let optionalNode: NodeEntity? = if node.isMarkedSensitive {
+                            nil
+                        } else if try await nodeRepository.isInheritingSensitivity(node: node) {
+                            nil
+                        } else {
+                            node
+                        }
                         return (index, optionalNode)
                     }
                 }
@@ -80,11 +92,21 @@ public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: Node
         } else {
             nodes
         }
+        
+        return if let limit, limit > 0 {
+            Array(excludedSensitiveNodes.prefix(limit))
+        } else {
+            excludedSensitiveNodes
+        }
     }
 
     private func shouldExcludeSensitive(override: Bool?) async -> Bool {
-        if let override { override }
-        else if hiddenNodesFeatureFlagEnabled() { await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes }
-        else { false }
+        if let override {
+            override
+        } else if hiddenNodesFeatureFlagEnabled() {
+            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        } else {
+            false
+        }
     }
 }

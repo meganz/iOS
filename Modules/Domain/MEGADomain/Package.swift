@@ -33,7 +33,9 @@ let package = Package(
             swiftSettings: settings),
         .target(
             name: "MEGADomainMock",
-            dependencies: ["MEGADomain"],
+            dependencies: [
+                "MEGADomain"
+            ],
             swiftSettings: settings),
         .testTarget(
             name: "MEGADomainTests",
