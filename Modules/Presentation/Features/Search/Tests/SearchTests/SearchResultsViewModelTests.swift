@@ -1,4 +1,5 @@
 import ConcurrencyExtras
+import MEGAFoundation
 @testable import MEGAUIKit
 @testable import Search
 import SearchMock
@@ -551,13 +552,19 @@ final class SearchResultsViewModelTests: XCTestCase {
 
             // when
             harness.bridge.onSearchResultsUpdated(.generic)
-            
-            for _ in 1...3 { // Needs to yield to make way for other concurrent tasks to fully finished first.
-                await Task.yield()
+            await Task.megaYield()
+
+            let exp = expectation(description: "Wait for the list to update")
+            let cancellable = harness.sut.$listItems.sink { results in
+                if results.map({ $0.result.id }) == Array(1...15) {
+                    exp.fulfill()
+                }
             }
-            
+
+            await fulfillment(of: [exp], timeout: 2.0)
             // then
             XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...15))
+            cancellable.cancel()
         }
     }
     
@@ -566,25 +573,38 @@ final class SearchResultsViewModelTests: XCTestCase {
             // given
             let harness = Harness(self).withResultsPrepared(count: 10)
             await harness.sut.task()
-            
-            // when
-            harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 1))) // Triggers item update
-            await Task.yield()
-            await Task.yield()
-            await Task.yield()
-            harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 2))) // Triggers item updates
-            await Task.yield()
-            await Task.yield()
-            await Task.yield()
-            harness.bridge.onSearchResultsUpdated(.specific(result: .resultWith(id: 100))) // Not triggering item update
-            await Task.yield()
-            await Task.yield()
-            await Task.yield()
-            
-            // then
-            XCTAssertEqual(harness.sut.listItems[0].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
-            XCTAssertEqual(harness.sut.listItems[1].thumbnailImage.pngData()?.count, SearchResult.defaultThumbnailImageData.count)
-            XCTAssertNil(harness.sut.listItems[2].thumbnailImage.pngData())
+            await Task.megaYield()
+
+            let thumbnailImage1 = UIImage(systemName: "square.and.arrow.up.fill")!.pngData()!
+            let thumbnailImage2 = UIImage(systemName: "pencil.circle.fill")!.pngData()!
+            let thumbnailImage3 = UIImage(systemName: "pencil.tip")!.pngData()!
+
+            let exp = expectation(description: "Wait for the images to be updated")
+            exp.expectedFulfillmentCount = 2
+
+            let cancellable1 = harness.sut.listItems[0].$thumbnailImage.sink { image in
+                if image.pngData()?.count == thumbnailImage1.count {
+                    exp.fulfill()
+                }
+            }
+
+            let cancellable2 = harness.sut.listItems[1].$thumbnailImage.sink { image in
+                if image.pngData()?.count == thumbnailImage2.count {
+                    exp.fulfill()
+                }
+            }
+
+            let updatedResult1 = SearchResult.resultWith(id: 1, thumbnailImageData: thumbnailImage1)
+            let updatedResult2 = SearchResult.resultWith(id: 2, thumbnailImageData: thumbnailImage2)
+            let updatedResult100 = SearchResult.resultWith(id: 100, thumbnailImageData: thumbnailImage3)
+
+            harness.bridge.onSearchResultsUpdated(.specific(result: updatedResult1)) // Triggers item update
+            harness.bridge.onSearchResultsUpdated(.specific(result: updatedResult2)) // Triggers item updates
+            harness.bridge.onSearchResultsUpdated(.specific(result: updatedResult100)) // Not triggering item update
+
+            await fulfillment(of: [exp], timeout: 2.0)
+            cancellable1.cancel()
+            cancellable2.cancel()
         }
     }
 

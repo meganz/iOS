@@ -1,4 +1,5 @@
 import Combine
+import MEGAFoundation
 import MEGASwift
 import MEGASwiftUI
 import MEGAUIKit
@@ -94,6 +95,8 @@ public class SearchResultsViewModel: ObservableObject {
 
     private var selectedRowsSubscription: AnyCancellable?
 
+    private let updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal>
+
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
@@ -102,7 +105,8 @@ public class SearchResultsViewModel: ObservableObject {
         showLoadingPlaceholderDelay: Double = 1,
         searchInputDebounceDelay: Double = 0.5,
         keyboardVisibilityHandler: any KeyboardVisibilityHandling,
-        viewDisplayMode: ViewDisplayMode
+        viewDisplayMode: ViewDisplayMode,
+        updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1) // Emits search result updates as a batch every 1 seconds
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -112,6 +116,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.keyboardVisibilityHandler = keyboardVisibilityHandler
         self.viewDisplayMode = viewDisplayMode
         self.layout = layout
+        self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -126,23 +131,9 @@ public class SearchResultsViewModel: ObservableObject {
         }
         
         self.bridge.onSearchResultsUpdated = { [weak self] signal in
-            guard let self else { return }
-            // Mike: Need to debounce this to improve performance [SAO-1863]
-            Task {
-                // Any possible ongoing searching task is no longer relevant upon result updates,
-                // it should be replaced with the refreshing task
-                self.cancelSearchTask()
-                self.searchingTask = Task {
-                    switch signal {
-                    case .generic:
-                        await self.refreshSearchResults()
-                    case .specific(let result):
-                        await self.searchResultUpdated(result)
-                    }
-                }
-                
-                try? await self.searchingTask?.value
-            }
+            guard self != nil else { return }
+            // Use of publisher also attempts to fix crash issue SAO-1916
+            updatedSearchResultsPublisher.append(signal)
         }
 
         self.bridge.queryCleaned = { [weak self] in
@@ -196,6 +187,14 @@ public class SearchResultsViewModel: ObservableObject {
                 
                 bridge.selectionChanged(selectedResultIds)
             }
+
+        updatedSearchResultsPublisher
+            .publisher
+            .sink(receiveValue: { [weak self] signals in
+                guard let self else { return }
+                searchResultsUpdated(signals)
+            })
+            .store(in: &subscriptions)
     }
 
     /// meant called to be called in the SwiftUI View's .task modifier
@@ -433,6 +432,28 @@ public class SearchResultsViewModel: ObservableObject {
         )
     }
 
+    private func searchResultsUpdated(_ signals: [SearchResultUpdateSignal]) {
+        Task { [weak self] in
+            guard let self else { return }
+            // Any possible ongoing searching task is no longer relevant upon result updates,
+            // it should be replaced with the refreshing task
+            cancelSearchTask()
+            searchingTask = Task { [weak self] in
+                guard let self else { return }
+                switch SearchResultsUpdateManager(signals: signals).processSignals() {
+                case .generic:
+                    await refreshSearchResults()
+                case .specificUpdateResults(let results):
+                    await searchResultsUpdated(results)
+                case .none:
+                    break
+                }
+            }
+
+            try? await searchingTask?.value
+        }
+    }
+
     private func rowViewModel(for result: SearchResult) -> SearchResultRowViewModel? {
         listItems.first { $0.result == result }
     }
@@ -645,12 +666,21 @@ public class SearchResultsViewModel: ObservableObject {
         listItems = []
     }
     
-    @MainActor
     func searchResultUpdated(_ result: SearchResult) async {
         guard let index = listItems.firstIndex(where: { $0.result.id == result.id  }) else { return }
         await listItems[index].reload(with: result)
     }
-    
+
+    private func searchResultsUpdated(_ results: [SearchResult]) async {
+        await withTaskGroup(of: Void.self) { taskGroup in
+            for result in results {
+                taskGroup.addTask {
+                    await self.searchResultUpdated(result)
+                }
+            }
+        }
+    }
+
     @MainActor
     private func updateChipsItems(with chipViewModels: [ChipViewModel]) {
         chipsItems = chipViewModels

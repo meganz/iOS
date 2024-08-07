@@ -10,7 +10,8 @@ extension SearchResult {
         hasThumbnail: Bool = false,
         properties: [ResultProperty] = [],
         thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
-        backgroundDisplayMode: VerticalBackgroundViewMode = .preview
+        backgroundDisplayMode: VerticalBackgroundViewMode = .preview,
+        thumbnailImageData: Data = defaultThumbnailImageData
     ) -> Self {
         .init(
             id: id,
@@ -22,7 +23,7 @@ extension SearchResult {
             description: { _ in "Desc" },
             type: .node,
             properties: properties,
-            thumbnailImageData: { Self.defaultThumbnailImageData },
+            thumbnailImageData: { thumbnailImageData },
             swipeActions: { _ in [] }
         )
     }
@@ -30,6 +31,14 @@ extension SearchResult {
         .resultWith(
             id: id,
             title: "title_\(id)"
+        )
+    }
+
+    public static func resultWith(id: ResultId, thumbnailImageData: Data) -> Self {
+        .resultWith(
+            id: id,
+            title: "title_\(id)",
+            thumbnailImageData: thumbnailImageData
         )
     }
 }
