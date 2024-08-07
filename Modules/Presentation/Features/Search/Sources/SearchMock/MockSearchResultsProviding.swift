@@ -8,7 +8,7 @@ public class MockSearchResultsProviding: SearchResultsProviding {
     }
     
     public var refreshedSearchResultsToReturn: Search.SearchResultsEntity?
-    public func refreshedSearchResults(queryRequest: Search.SearchQuery) async -> Search.SearchResultsEntity? {
+    public func refreshedSearchResults(queryRequest: Search.SearchQuery) async throws -> Search.SearchResultsEntity? {
         refreshedSearchResultsToReturn
     }
     

@@ -7,7 +7,7 @@ import UIKit
 public struct NonProductionTestResultsProvider: SearchResultsProviding {
     public func listenToSpecificResultUpdates() async {}
     
-    public func refreshedSearchResults(queryRequest: SearchQuery) async -> SearchResultsEntity? {
+    public func refreshedSearchResults(queryRequest: SearchQuery) async throws -> SearchResultsEntity? {
         nil
     }
     

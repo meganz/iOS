@@ -212,7 +212,7 @@ public class SearchResultsViewModel: ObservableObject {
             // because when we from some screen which may trigger changes to the search results
             // for example: go to settings to toggle the `Show Hidden Nodes` setting,
             // we expect the search result to show/not show hidden nodes according to the changed setting
-            await refreshSearchResults()
+            try? await refreshSearchResults()
             return
         }
         initialLoadDone = true
@@ -439,10 +439,10 @@ public class SearchResultsViewModel: ObservableObject {
             // it should be replaced with the refreshing task
             cancelSearchTask()
             searchingTask = Task { [weak self] in
-                guard let self else { return }
+                guard let self, !Task.isCancelled else { return }
                 switch SearchResultsUpdateManager(signals: signals).processSignals() {
                 case .generic:
-                    await refreshSearchResults()
+                    try await refreshSearchResults()
                 case .specificUpdateResults(let results):
                     await searchResultsUpdated(results)
                 case .none:
@@ -450,7 +450,7 @@ public class SearchResultsViewModel: ObservableObject {
                 }
             }
 
-            try? await searchingTask?.value
+            try await searchingTask?.value
         }
     }
 
@@ -672,11 +672,9 @@ public class SearchResultsViewModel: ObservableObject {
     }
 
     private func searchResultsUpdated(_ results: [SearchResult]) async {
-        await withTaskGroup(of: Void.self) { taskGroup in
-            for result in results {
-                taskGroup.addTask {
-                    await self.searchResultUpdated(result)
-                }
+        await withTaskGroup(of: Void.self) { group in
+            group.addTasksUnlessCancelled(for: results) { result in
+                await self.searchResultUpdated(result)
             }
         }
     }
@@ -703,12 +701,14 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
     
-    private func refreshSearchResults() async {
-        guard let searchResults = await resultsProvider.refreshedSearchResults(queryRequest: currentQuery) else {
+    private func refreshSearchResults() async throws {
+        try Task.checkCancellation()
+        guard let searchResults = try await resultsProvider.refreshedSearchResults(queryRequest: currentQuery) else {
             await updateListItem(with: [])
             return
         }
-        
+        try Task.checkCancellation()
+
         var newResultViewModels = [SearchResultRowViewModel]()
         for result in searchResults.results {
             let item = mapSearchResultToViewModel(result)
@@ -720,6 +720,7 @@ public class SearchResultsViewModel: ObservableObject {
             newResultViewModels.append(item)
         }
         
+        try Task.checkCancellation()
         await updateListItem(with: newResultViewModels)
     }
 

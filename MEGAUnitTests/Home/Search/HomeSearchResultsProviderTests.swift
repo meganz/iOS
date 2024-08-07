@@ -159,7 +159,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         }
     }
 
-    func testSearch_whenFailures_returnsNoResults() async throws {
+    func testSearch_whenFailures_returnsNoResults() async {
         let harness = Harness(self)
 
         let searchResults = await harness.sut.search(
@@ -175,7 +175,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
 
         // when
         _ = await harness.sut.search(queryRequest: .initial)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -188,7 +188,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
 
         // when
         _ = await harness.sut.search(queryRequest: .userSupplied(.query("", isSearchActive: false)))
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -201,7 +201,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: .userSupplied(.query("foo", isSearchActive: false)))
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -214,7 +214,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: .initial)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -227,7 +227,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: .initial)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -240,7 +240,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: .initial)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -254,7 +254,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: query)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -268,7 +268,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: query)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -282,7 +282,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: query)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -318,7 +318,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: query)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -333,7 +333,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when
         _ = await harness.sut.search(queryRequest: query)
-        
+
         // then
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
@@ -516,54 +516,54 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
     
-    func testSearch_whenLastItemIndexIsAtTheLoadMorePoint_shouldFillMoreItems() async throws {
+    func testSearch_whenLastItemIndexIsAtTheLoadMorePoint_shouldFillMoreItems() async {
         // given
         let nodes = NodeEntity.entities(startHandle: 1, endHandle: 150)
         let harness = Harness(self, nodes: nodes)
         
         // when
         var resultIds = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)?.results.map(\.id)
-        
+
         // then
         XCTAssertEqual(resultIds, UInt64.array(start: 1, end: 100))
         
         // when
         resultIds = await harness.sut.search(queryRequest: .initial, lastItemIndex: 81)?.results.map(\.id)
-        
+
         XCTAssertEqual(resultIds, UInt64.array(start: 101, end: 150))
     }
     
-    func testSearch_whenLastItemIndexIsNotAtTheLoadMorePoint_shouldFillMoreItems() async throws {
+    func testSearch_whenLastItemIndexIsNotAtTheLoadMorePoint_shouldFillMoreItems() async {
         // given
         let nodes = NodeEntity.entities(startHandle: 1, endHandle: 150)
         let harness = Harness(self, nodes: nodes)
         
         // when
         let resultIds = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)?.results.map(\.id)
-        
+
         // then
         XCTAssertEqual(resultIds, UInt64.array(start: 1, end: 100))
         
         // when
         let resultEntity = await harness.sut.search(queryRequest: .initial, lastItemIndex: 79)
-        
+
         XCTAssertNil(resultEntity)
     }
     
-    func testSearch_whenAtTheEndOfList_shouldReturnNil() async throws {
+    func testSearch_whenAtTheEndOfList_shouldReturnNil() async {
         // given
         let nodes = NodeEntity.entities(startHandle: 1, endHandle: 90)
         let harness = Harness(self, nodes: nodes)
         
         // when
         let resultIds = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)?.results.map(\.id)
-        
+
         // then
         XCTAssertEqual(resultIds, UInt64.array(start: 1, end: 90))
         
         // when
         let resultEntity = await harness.sut.search(queryRequest: .initial, lastItemIndex: 90)
-        
+
         XCTAssertNil(resultEntity)
     }
     
@@ -573,8 +573,8 @@ class HomeSearchResultsProviderTests: XCTestCase {
         let harness = Harness(self, nodes: nodes)
         
         // when
-        let results = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results
-        
+        let results = try await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results
+
         // then
         XCTAssertEqual(results?.count, 100)
     }
@@ -585,11 +585,15 @@ class HomeSearchResultsProviderTests: XCTestCase {
         let harness = Harness(self, nodes: nodes)
         harness.filesSearchUseCase.updateNodeListSearchResult(.failure(.generic))
         
-        // when
-        let resultEntity = await harness.sut.refreshedSearchResults(queryRequest: .initial)
-        
-        // then
-        XCTAssertNil(resultEntity)
+        do {
+            // when
+            let resultEntity = try await harness.sut.refreshedSearchResults(queryRequest: .initial)
+        } catch {
+            guard case FileSearchResultErrorEntity.generic = error else {
+                XCTFail("The error should match the FileSearchResultErrorEntity.generic")
+                return
+            }
+        }
     }
     
     func testRefreshedSearchResults_withContinousNodeChanges_shouldReturnCorrectResults() async throws {
@@ -598,47 +602,47 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         // when: searchInitially and refresh invoked
         let harness = Harness(self, nodes: nodes)
-        _ = await harness.sut.searchInitially(queryRequest: .initial)
-        var resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        
+        _ = try await harness.sut.searchInitially(queryRequest: .initial)
+        var resultIds = try await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+
         // then: Refreshed result should have 100 nodes
         XCTAssertEqual(UInt64.array(start: 1, end: 100), resultIds)
         
         // and when: nodes are reduced to 50 nodes
         nodes.removeLast(50)
         harness.filesSearchUseCase.updateNodeListSearchResult(.success(NodeListEntity(nodes: nodes)))
-        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        
+        resultIds = try await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+
         // and then: Refreshed result should have 50 nodes
         XCTAssertEqual(UInt64.array(start: 1, end: 50), resultIds)
         
         // and when: nodes are reduced by 10
         nodes.removeFirst(10)
         harness.filesSearchUseCase.updateNodeListSearchResult(.success(NodeListEntity(nodes: nodes)))
-        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        
+        resultIds = try await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+
         // and then: Refreshed result should have 40 nodes
         XCTAssertEqual(UInt64.array(start: 11, end: 50), resultIds)
         
         // and when: 200 nodes are added
         nodes.append(contentsOf: NodeEntity.entities(startHandle: 51, endHandle: 250))
         harness.filesSearchUseCase.updateNodeListSearchResult(.success(NodeListEntity(nodes: nodes)))
-        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        
+        resultIds = try await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+
         // and then: Refreshed result should have: 40 orginal
         XCTAssertEqual(UInt64.array(start: 11, end: 50), resultIds)
         
         // and when: Load more results and refresh
         _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: 40)
-        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        
+        resultIds = try await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+
         // and then: Refreshed result should have: 40 original + 100 loadmore
         XCTAssertEqual(UInt64.array(start: 11, end: 150), resultIds)
         
         // and when: Load more results to the end and refresh
         _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: 130)
-        resultIds = await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
-        
+        resultIds = try await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+
         // and then: Refreshed result should have all 240 children nodes
         XCTAssertEqual(UInt64.array(start: 11, end: 250), resultIds)
     }
@@ -648,8 +652,8 @@ class HomeSearchResultsProviderTests: XCTestCase {
         let harness = Harness(self, nodes: NodeEntity.entities(startHandle: 1, endHandle: 200))
         
         // when
-        let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("node 0", isSearchActive: false)))?.results.map(\.id)
-        
+        let resultIds = try await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("node 0", isSearchActive: false)))?.results.map(\.id)
+
         // then
         XCTAssertEqual(resultIds?.count, 100)
     }
@@ -658,8 +662,8 @@ class HomeSearchResultsProviderTests: XCTestCase {
         // given
         let harness = Harness(self, nodes: NodeEntity.entities(startHandle: 1, endHandle: 200))
         // when
-        let resultIds = await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("", isSearchActive: false)))?.results.map(\.id)
-        
+        let resultIds = try await harness.sut.refreshedSearchResults(queryRequest: .userSupplied(.query("", isSearchActive: false)))?.results.map(\.id)
+
         // then
         XCTAssertEqual(resultIds?.count, 100)
     }
@@ -696,7 +700,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
             }
         })
         _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
-        
+
         let task = Task {
             await harness.sut.listenToSpecificResultUpdates()
         }
@@ -722,26 +726,26 @@ class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(result.id, 2)
     }
 
-    func testSearchInitially_withNodeAsRubbishBinRootWhenShowHiddenItemsUISettingIsEnabled_noSensitiveFilterApplied() async {
-        await assertSearchInitially(withShowHiddenItemsUISetting: true) {
+    func testSearchInitially_withNodeAsRubbishBinRootWhenShowHiddenItemsUISettingIsEnabled_noSensitiveFilterApplied() async throws {
+        try await assertSearchInitially(withShowHiddenItemsUISetting: true) {
             $0.nodeDataUseCase.isARubbishBinRootNodeValue = true
         }
     }
 
-    func testSearchInitially_withNodeAsRubbishBinRootWhenShowHiddenItemsUISettingIsDisabled_noSensitiveFilterApplied() async {
-        await assertSearchInitially(withShowHiddenItemsUISetting: false) {
+    func testSearchInitially_withNodeAsRubbishBinRootWhenShowHiddenItemsUISettingIsDisabled_noSensitiveFilterApplied() async throws {
+        try await assertSearchInitially(withShowHiddenItemsUISetting: false) {
             $0.nodeDataUseCase.isARubbishBinRootNodeValue = true
         }
     }
 
-    func testSearchInitially_withNodeInRubbishBinWhenShowHiddenItemsUISettingIsEnabled_noSensitiveFilterApplied() async {
-        await assertSearchInitially(withShowHiddenItemsUISetting: true) {
+    func testSearchInitially_withNodeInRubbishBinWhenShowHiddenItemsUISettingIsEnabled_noSensitiveFilterApplied() async throws {
+        try await assertSearchInitially(withShowHiddenItemsUISetting: true) {
             $0.nodeDataUseCase.isNodeInRubbishBin = { _ in true }
         }
     }
 
-    func testSearchInitially_withNodeInRubbishBinWhenShowHiddenItemsUISettingIsDisabled_noSensitiveFilterApplied() async {
-        await assertSearchInitially(withShowHiddenItemsUISetting: false) {
+    func testSearchInitially_withNodeInRubbishBinWhenShowHiddenItemsUISettingIsDisabled_noSensitiveFilterApplied() async throws {
+        try await assertSearchInitially(withShowHiddenItemsUISetting: false) {
             $0.nodeDataUseCase.isNodeInRubbishBin = { _ in true }
         }
     }
@@ -753,13 +757,13 @@ class HomeSearchResultsProviderTests: XCTestCase {
         harnessSetup: (Harness) -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
-    ) async {
+    ) async throws {
         // given
         let harness = Harness(self, showHiddenNodes: enabled, hiddenNodesFeatureEnabled: true)
         harnessSetup(harness)
 
         // when
-        _ = await harness.sut.searchInitially(queryRequest: .initial)
+        _ = try await harness.sut.searchInitially(queryRequest: .initial)
 
         // then
         let filters = harness.filesSearchUseCase.filters

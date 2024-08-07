@@ -103,9 +103,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     /// Get the most updated results from data source according to a query.
     /// - Parameter queryRequest: The query
     /// - Returns: The updated results list, paginated based on the current number of results that was filled previously (plus an amount of `loadMorePagesOffset` results to facilite "load more" function)
-    func refreshedSearchResults(queryRequest: SearchQuery) async -> SearchResultsEntity? {
-        let refreshedNodeList = await nodeListEntity(from: queryRequest)
-        
+    func refreshedSearchResults(queryRequest: SearchQuery) async throws -> SearchResultsEntity? {
+        let refreshedNodeList = try await nodeListEntity(from: queryRequest)
+
         guard let refreshedNodeList else { return nil }
         
         // After refreshing, the number of nodes can change and we need to update pagination info
@@ -137,7 +137,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         if let lastItemIndex {
             return await loadMore(queryRequest: queryRequest, index: lastItemIndex)
         } else {
-            return await searchInitially(queryRequest: queryRequest)
+            return try? await searchInitially(queryRequest: queryRequest)
         }
     }
     
@@ -150,13 +150,13 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     }
     /// the requirement is to return children/contents of the
     /// folder being searched when query is empty, no chips etc
-    func searchInitially(queryRequest: SearchQuery) async -> SearchResultsEntity {
-        
+    func searchInitially(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
+
         // Initially, no item is filled yet
         filledItemsCount = 0
-        
-        self.nodeList = await nodeListEntity(from: queryRequest)
-        
+
+        self.nodeList = try await nodeListEntity(from: queryRequest)
+
         return switch queryRequest {
         case .initial:
             fillResults()
@@ -192,12 +192,12 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         }
     }
     
-    private func nodeListEntity(from searchQuery: SearchQuery) async -> NodeListEntity? {
+    private func nodeListEntity(from searchQuery: SearchQuery) async throws -> NodeListEntity? {
         guard let searchFilterEntity = await buildSearchFilterEntity(from: searchQuery) else {
             return nil
         }
     
-        return try? await filesSearchUseCase.search(filter: searchFilterEntity, cancelPreviousSearchIfNeeded: searchFilterEntity.supportCancel)
+        return try await filesSearchUseCase.search(filter: searchFilterEntity, cancelPreviousSearchIfNeeded: searchFilterEntity.supportCancel)
     }
     
     private func buildSearchFilterEntity(from searchQuery: SearchQuery) async -> SearchFilterEntity? {
