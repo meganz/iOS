@@ -21,8 +21,10 @@ extension FavouritesRouter: FavouritesRouting {
         let favouritesUseCase = FavouriteNodesUseCase(
             repo: FavouriteNodesRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
+            })
         
         let viewModel = FavouritesViewModel(router: self, favouritesUseCase: favouritesUseCase)
         favouritesVC.viewModel = viewModel

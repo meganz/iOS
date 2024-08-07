@@ -22,16 +22,16 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
         getFavouriteNodes(limitCount: 0, completion: completion)
     }
     
-    public func allFavouritesNodes() async throws -> [NodeEntity] {
+    public func allFavouritesNodes(limit: Int) async throws -> [NodeEntity] {
         return try await withCheckedThrowingContinuation { continuation in
-            getFavouriteNodes(limitCount: 0) { result in
+            getFavouriteNodes(limitCount: limit) { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: GetFavouriteNodesErrorEntity.generic); return }
                 
                 continuation.resume(with: result)
             }
         }
     }
-    
+        
     public func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         sdk.favourites(forParent: nil, count: limitCount, delegate: RequestDelegate { (result) in
             switch result {
@@ -71,7 +71,7 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
         }
     }
     
-    public func allFavouritesNodes(searchString: String?) async throws -> [NodeEntity] {
+    public func allFavouritesNodes(searchString: String?, limit: Int) async throws -> [NodeEntity] {
         try await withCheckedThrowingContinuation { continuation in
             allFavouriteNodes(searchString: searchString) { continuation.resume(with: $0) }
         }
