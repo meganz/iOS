@@ -67,6 +67,9 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     }
     
     public func showCancellationSteps() {
+        guard let billedPlan = accountDetails.plans.first(where: { $0.isProPlan }),
+              let currentSubscription = accountDetails.subscriptions.first(where: { $0.id == billedPlan.subscriptionId }) else { return }
+        
         switch accountDetails.subscriptionMethodId {
         case .itunes:
             isCancellationSurveyEnabled ? showCancellationSurvey() : showAppleManageSubscriptions()

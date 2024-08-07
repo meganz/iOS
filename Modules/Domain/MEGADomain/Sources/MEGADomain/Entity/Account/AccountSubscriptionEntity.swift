@@ -3,7 +3,7 @@ public struct AccountSubscriptionEntity: Sendable {
     public let status: SubscriptionStatusEntity
     public let cycle: String?
     public let paymentMethod: String?
-    public let paymentMethodId: Int32
+    public let paymentMethodId: PaymentMethodEntity
     public let renewTime: Int64
     public let accountType: AccountTypeEntity
     public let features: [String]?
@@ -13,7 +13,7 @@ public struct AccountSubscriptionEntity: Sendable {
        status: SubscriptionStatusEntity,
        cycle: String?,
        paymentMethod: String?,
-       paymentMethodId: Int32,
+       paymentMethodId: PaymentMethodEntity,
        renewTime: Int64,
        accountType: AccountTypeEntity,
        features: [String]?
