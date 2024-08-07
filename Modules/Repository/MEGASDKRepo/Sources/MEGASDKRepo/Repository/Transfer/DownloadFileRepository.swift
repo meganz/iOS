@@ -16,8 +16,8 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk?
     private let nodeProvider: any MEGANodeProviderProtocol
-    private let cancelToken = MEGACancelToken()
-    
+    private let cancelToken = ThreadSafeCancelToken()
+
     public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk? = nil, nodeProvider: some MEGANodeProviderProtocol = DefaultMEGANodeProvider(sdk: .sharedSdk)) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
@@ -47,7 +47,7 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
                 fileName: nil,
                 appData: metaData?.rawValue,
                 startFirst: true,
-                cancelToken: cancelToken,
+                cancelToken: cancelToken.value,
                 collisionCheck: CollisionCheck.fingerprint,
                 collisionResolution: CollisionResolution.newWithN,
                 delegate: TransferDelegate(completion: { result in continuation(result.mapError { $0 }) })
@@ -78,7 +78,7 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             fileName: nil,
             appData: metaData?.rawValue,
             startFirst: true,
-            cancelToken: cancelToken,
+            cancelToken: cancelToken.value,
             collisionCheck: CollisionCheck.fingerprint,
             collisionResolution: CollisionResolution.newWithN,
             delegate: TransferDelegate(completion: completion)
@@ -115,7 +115,7 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
                 fileName: nil,
                 appData: appData,
                 startFirst: true,
-                cancelToken: cancelToken,
+                cancelToken: cancelToken.value,
                 collisionCheck: CollisionCheck.fingerprint,
                 collisionResolution: CollisionResolution.newWithN,
                 delegate: transferDelegate
@@ -145,7 +145,7 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             megaNode = node
         }
         
-        downloadFile(for: megaNode, name: nodeName, to: url, completion: completion, start: start, update: update, folderUpdate: folderUpdate, filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: self.cancelToken)
+        downloadFile(for: megaNode, name: nodeName, to: url, completion: completion, start: start, update: update, folderUpdate: folderUpdate, filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: self.cancelToken.value)
     }
 
     public func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, to url: URL, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
@@ -160,15 +160,13 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
                     return
                 }
                 
-                self.downloadFile(for: node, name: name, to: url, completion: completion, start: start, update: update, filename: nil, appdata: metaData?.rawValue, startFirst: startFirst, cancelToken: self.cancelToken)
+                self.downloadFile(for: node, name: name, to: url, completion: completion, start: start, update: update, filename: nil, appdata: metaData?.rawValue, startFirst: startFirst, cancelToken: self.cancelToken.value)
             }
         }))
     }
     
     public func cancelDownloadTransfers() {
-        if !cancelToken.isCancelled {
-            cancelToken.cancel()
-        }
+        cancelToken.cancel()
     }
     
     // MARK: - Private

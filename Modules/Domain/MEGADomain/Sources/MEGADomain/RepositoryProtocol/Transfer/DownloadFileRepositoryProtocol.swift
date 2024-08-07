@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol DownloadFileRepositoryProtocol: RepositoryProtocol {
+public protocol DownloadFileRepositoryProtocol: RepositoryProtocol, Sendable {
     
     ///  Initiates download to save the given node handle to the passed in destination url.
     /// - Parameters:
