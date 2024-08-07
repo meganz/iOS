@@ -283,7 +283,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
         cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
-        cell.avatarImageView.tintColor = [self removeContactIconColor];
+        cell.avatarImageView.tintColor = [self redIconColor];
         cell.nameLabel.text = LocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
         cell.nameLabel.textColor = [self redTextColor];
     } else { //Add contact
@@ -331,7 +331,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForArchiveChatWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
-    cell.avatarImageView.tintColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    cell.avatarImageView.tintColor = self.chatRoom.isArchived ? [self redIconColor] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.nameLabel.text = self.chatRoom.isArchived ? LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : LocalizedString(@"archiveChat", @"Title of button to archive chats.");
     cell.nameLabel.textColor = self.chatRoom.isArchived ? [self redTextColor] : [self primaryTextColor];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
@@ -379,7 +379,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForRemoveParticipantWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
-    cell.avatarImageView.tintColor = [UIColor mnz_errorRedForTraitCollection:(self.traitCollection)];
+    cell.avatarImageView.tintColor = [self redIconColor];
     cell.nameLabel.text = LocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
     cell.nameLabel.textColor = [UIColor mnz_errorRedForTraitCollection:(self.traitCollection)];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
