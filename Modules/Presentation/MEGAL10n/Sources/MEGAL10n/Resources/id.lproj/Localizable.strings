@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Tidak ada alamat email tersedia pada perangkat anda";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Kebijakan Privasi";
+"privacyPolicyLabel"="Privacy and Data Policy";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Kebijakan Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -3567,9 +3567,9 @@
 /* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
 "upgradeAccountPlan.plan.tag.recommended"="Disarankan";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/bulan";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@ per bulan";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/tahun";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@ per tahun";
 /* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
 "upgradeAccountPlan.plan.details.storage"="Penyimpanan: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” tidak dapat disimpan ke drive Cloud. Coba lagi nanti dan jika masalah berlanjut, hubungi orang yang membagikan tautan tersebut kepada anda.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Beberapa kontak yang anda bagikan informasi belum diverifikasi oleh anda. Untuk memastikan keamanan ekstra, kami sarankan anda memverifikasi kredensialnya di Kontak dengan mengetuk ⓘ di sebelah kontak yang ingin anda verifikasi.";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="Item tersembunyi";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="There are hidden items in this folder. Sharing the folder will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="There are hidden items in one or more of these folders. Sharing the folders will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Ganti nama album";
 /* Rename public album alert message */
@@ -4214,6 +4220,36 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Ketuk avatar anda.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Ketuk <b>Batalkan langganan</b>.";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="Saya membutuhkan paket ini untuk sementara dan tidak lagi menggunakannya";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="Saya menemukan paket saya terlalu mahal";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="Saya tidak membutuhkan semua penyimpanan dalam paket saya";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="Saya membutuhkan fitur yang tidak dimiliki MEGA";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="Saya beralih ke penyedia lain";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="Saya merasa MEGA sulit digunakan";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="Saya tidak senang dengan dukungan dan layanan pelanggan";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="Lainnya (harap berikan detailnya)";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="Saya tidak mampu lagi membelinya";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="Saya tidak ingin berlangganan atau penagihan otomatis";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="Jangan batalkan";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="Pilih alasan untuk membatalkan langganan anda";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Item tersembunyi";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4230,3 +4266,29 @@
 "chat.call.raise-hand.snack-bar.lower-hand"="Turunkan tangan";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="Lihat";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="Hanya-baca";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="Deskripsi";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="Tidak ada deskripsi";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Tambah deskripsi";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Bagikan Tautan Rapat";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Salin tautan rapat";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="Undang Peserta";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="Siapa pun yang memiliki tautan ini dapat bergabung ke rapat dan melihat obrolan rapat.";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="Kirim ke obrolan";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="Salin";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="Bagikan";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="Batal";

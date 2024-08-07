@@ -2242,34 +2242,6 @@
         <string>会议将在每%d周的[weekDayNames]和[lastWeekDayName]举行一次。</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>会议将在每%d月的[ordinalDay]举行一次。</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>会议将在每%d月的[ordinalDays]和[ordinalLastDay]举行一次。</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2324,20 +2296,6 @@
         <string>d</string>
         <key>other</key>
         <string>每%d周的[weekDayNames]</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>每%d月的[ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>

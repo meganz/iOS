@@ -3202,46 +3202,6 @@
         <string>Spotkania będą odbywać się co %d tygodni w dniach [weekDayNames] i [lastWeekDayName].</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Spotkania będą odbywać się co miesiąc w dniu [ordinalDay].</string>
-        <key>few</key>
-        <string>Spotkania będą odbywać się co %d miesięcy w dniu [ordinalDay].</string>
-        <key>many</key>
-        <string>Spotkania będą odbywać się co %d miesięcy w dniu [ordinalDay].</string>
-        <key>other</key>
-        <string>Spotkania będą odbywać się co %d miesięcy w dniu [ordinalDay].</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Spotkania będą odbywać się co miesiąc w [ordinalDays] i [ordinalLastDay].</string>
-        <key>few</key>
-        <string>Spotkania będą odbywać się co %d miesięcy w dniach [ordinalDays] i [ordinalLastDay].</string>
-        <key>many</key>
-        <string>Spotkania będą odbywać się co %d miesięcy w dniach [ordinalDays] i [ordinalLastDay].</string>
-        <key>other</key>
-        <string>Spotkania będą odbywać się co %d miesięcy w dniach [ordinalDays] i [ordinalLastDay].</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3320,26 +3280,6 @@
         <string>Co %d tygodni w [weekDayNames]</string>
         <key>other</key>
         <string>Co %d tygodni w [weekDayNames]</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Co miesiąc w dniu [ordinalNumber]</string>
-        <key>few</key>
-        <string>Co %d miesięcy na [ordinalNumber]</string>
-        <key>many</key>
-        <string>Co %d miesięcy na [ordinalNumber]</string>
-        <key>other</key>
-        <string>Co %d miesięcy na [ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>

@@ -3202,46 +3202,6 @@
         <string>Встреча будет проводиться каждые %d недели в [weekDayNames] и [lastWeekDayName].</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Встреча будет проводиться в [ordinalDay] число каждый месяц.</string>
-        <key>few</key>
-        <string>Встреча будет проводиться в [ordinalDay] число каждые %d месяца.</string>
-        <key>many</key>
-        <string>Встреча будет проводиться в [ordinalDay] число каждые %d месяцев.</string>
-        <key>other</key>
-        <string>Встреча будет проводиться в [ordinalDay] число каждые %d месяца.</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждый месяц.</string>
-        <key>few</key>
-        <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждые %d месяца.</string>
-        <key>many</key>
-        <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждые %d месяцев.</string>
-        <key>other</key>
-        <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждые %d месяца.</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3320,26 +3280,6 @@
         <string>Каждые %d недель в [weekDayNames]</string>
         <key>other</key>
         <string>Каждые %d недели в [weekDayNames]</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>В [ordinalNumber] число каждый месяц</string>
-        <key>few</key>
-        <string>В [ordinalNumber] число каждые %d месяца</string>
-        <key>many</key>
-        <string>В [ordinalNumber] число каждые %d месяцев</string>
-        <key>other</key>
-        <string>В [ordinalNumber] число каждые %d месяца</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>

@@ -2562,38 +2562,6 @@
         <string>Vergadering gebeurt elke %d weken op [weekDayNames] en [lastWeekDayName].</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Vergadering gebeurt elke maand op [ordinalDay].</string>
-        <key>other</key>
-        <string>Vergadering gebeurt elke %d maand op [ordinalDay].</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Vergadering gebeurt elke maand op [ordinalDays] en [ordinalLastDay].</string>
-        <key>other</key>
-        <string>Vergadering gebeurt elke %d maand op [ordinalDays] en [ordinalLastDay].</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2656,22 +2624,6 @@
         <string>Elke week op [weekDayNames]</string>
         <key>other</key>
         <string>Elke %d weken op [weekDayNames]</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Elke maand op de [ordinalNumber]</string>
-        <key>other</key>
-        <string>Elke %d maand op de [ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>

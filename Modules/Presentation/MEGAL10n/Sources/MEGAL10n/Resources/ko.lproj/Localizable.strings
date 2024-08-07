@@ -553,7 +553,7 @@
 /* Alert message presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.message.single"="이 사진첩에 숨겨진 항목이 있습니다. 사진첩을 공유하는 것은 숨겨진 항목이 공유하고자 하는 사람들에게 보인다는 것입니다. 항목은 클라우드 드라이브에서 숨긴 상태로 유지됩니다.";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
-"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="There are hidden items in one or more of these albums. Sharing the albums will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="1개 이상의 사진첩에 숨겨진 항목이 있습니다. 사진첩을 공유하는 것은 숨겨진 항목이 공유하고자 하는 사람들에게 보인다는 것입니다. 항목은 클라우드 드라이브에서 숨긴 상태로 유지됩니다.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="필터";
 /* Choose type headline within filter UI */
@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="개인정보 보호 정책";
+"privacyPolicyLabel"="개인정보 및 데이터 처리 방침";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="쿠키 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@”을/를 클라우드 드라이브에 저장할 수 없습니다. 나중에 다시 시도하고 문제가 계속 되면, 링크를 공유해준 사람에게 연락하세요.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="정보를 공유하는 연락처 중 일부가 당신에 의해 인증되지 않았습니다. 추가적인 보안을 적용하려면, 연락처에서 인증하려는 연락처 옆의 ⓘ를 탭하여 그들의 자격 증명을 인증할 것을 권장합니다.";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="숨겨진 항목";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="이 폴더에 숨겨진 항목이 있습니다. 폴더를 공유하는 것은 숨겨진 항목이 공유하고자 하는 사람들에게 보인다는 것입니다. 항목은 클라우드 드라이브에서 숨긴 상태로 유지됩니다.";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="1개 이상의 폴더에 숨겨진 항목이 있습니다. 폴더를 공유하는 것은 숨겨진 항목이 공유하고자 하는 사람들에게 보인다는 것입니다. 항목은 클라우드 드라이브에서 숨긴 상태로 유지됩니다.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="사진첩 이름 바꾸기";
 /* Rename public album alert message */
@@ -3803,7 +3809,7 @@
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="프레젠테이션 없음";
 /* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
-"home.search.empty.no-spreadsheets"="No spreadsheets";
+"home.search.empty.no-spreadsheets"="스프레드시트 없음";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="압축 파일 없음";
 /* A title label for waiting room participants list view. */
@@ -3967,7 +3973,7 @@
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="추가";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Rename playlist";
+"videos.tab.playlist.content.alert.title.rename"="재생목록 이름 변경";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="새 이름을 입력하세요";
 /* Videos: video playlist rename alert button title */
@@ -3977,11 +3983,11 @@
 /* Videos: video playlist delete playlist alert title */
 "videos.tab.playlist.content.alert.title.deletePlaylist"="재생목록을 삭제할까요?";
 /* Videos: video playlist delete playlist alert subtitle */
-"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Playlist will be deleted but its contents will stay in your Timeline.";
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="재생목록이 삭제되지만 항목들은 연표에 남게 됩니다.";
 /* Videos: video playlist delete playlist snack bar message */
-"videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” deleted";
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” 삭제됨";
 /* Videos: video playlist remove video from video playlist */
-"videos.tab.playlist.content.removeFromPlaylist"="Remove from playlist";
+"videos.tab.playlist.content.removeFromPlaylist"="재생목록에서 제거";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="대기실에 아무도 없습니다";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4117,7 +4123,7 @@
 /* Rewind fro free users */
 "rewind.for.free.users"="최대 30일 (보기 전용)";
 /* Rewind for pro users, where %d is the number of days that marks the rewind limit */
-"rewind.for.pro.users"="Up to %d days";
+"rewind.for.pro.users"="최대 %d일";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
@@ -4143,43 +4149,43 @@
 /* Feature title */
 "feature.title"="기능";
 /* Cancellation Subscription manage by Google Play title */
-"accounts.cancelSubscriptionSteps.googlePlay.title"="Your subscription is not managed by Apple.";
+"accounts.cancelSubscriptionSteps.googlePlay.title"="당신의 구독은 Apple에 의해 관리되지 않습니다";
 /* Cancellation Subscription manage by Google Play message */
-"accounts.cancelSubscriptionSteps.googlePlay.message"="This is because you subscribed to MEGA via Google Play. To cancel your subscription, you will need to:";
+"accounts.cancelSubscriptionSteps.googlePlay.message"="이것은 당신이 Google Play를 통해 MEGA를 구독하였기 때문입니다. 구독을 취소하려면, 다음을 하세요:";
 /* Cancellation Section Google Play Web Browser title: In a web browser */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="In a web browser";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="웹 브라우저에서";
 /* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visit play.google.com";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. play.google.com에 방문합니다";
 /* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Sign in with your Google Play account.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Google Play 계정으로 로그인 합니다.";
 /* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Click your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. 아바타를 클릭합니다.";
 /* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Click <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. <b>결제 및 정기 결제</b>를 클릭합니다.";
 /* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Click <b>Subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. <b>정기 결제</b>를 클릭합니다.";
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Under your MEGA subscription, click <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. MEGA 구독 아래에, <b>구독 취소</b>를 클릭합니다.";
 /* Cancellation Section Google Play Android Device title: On an Android device */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="On an Android device";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Android 장치에서";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Open the Play Store app.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Play Store 앱을 엽니다.";
 /* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Sign in with your Google Play account (if required).";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Google Play 계정으로 로그인합니다 (필요한 경우).";
 /* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tap your avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. 아바타를 탭합니다.";
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tap <b>Payments & subscriptions.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. <b>결제 및 정기 결제</b>를 탭합니다.";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tap <b>Subscriptions</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. <b>정기 결제</b>를 탭합니다";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Under your MEGA subscription, tap <b>Cancel subscription.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. MEGA 구독 아래에, <b>구독 취소</b>를 탭합니다.";
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="더 보기";
 /* Context menu item to switch layout to main speaker (Call UI) */
-"chat.call.contextMenu.switchToMainView"="Switch to main view";
+"chat.call.contextMenu.switchToMainView"="메인 보기로 전환";
 /* Context menu item to switch layout to grid mode (Call UI) */
-"chat.call.contextMenu.switchToGrid"="Switch to grid view";
+"chat.call.contextMenu.switchToGrid"="그리드 보기로 전환";
 /* Context menu item to lower a raised hand (Call UI) */
 "chat.call.contextMenu.lowerHand"="손 내리기";
 /* Context menu item to signal a raised hand (Call UI) */
@@ -4193,27 +4199,57 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="컴퓨터에서";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit www.mega.nz in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 웹 브라우저에서 www.mega.nz 에 방문합니다.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. MEGA 계정에 로그인합니다.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. 메인 메뉴를 클릭합니다.";
 /* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. <b>설정</b>을 클릭합니다.";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Plan</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. <b>요금제</b>를 클릭합니다.";
 /* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. <b>구독 취소</b>를 클릭합니다.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="휴대 장치에서";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit www.mega.nz in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 웹 브라우저에서 www.mega.nz 에 방문합니다.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. MEGA 계정에 로그인합니다.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. 아바타를 탭합니다.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Tap <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. <b>구독 취소</b>를 탭합니다.";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="이 요금제가 일시적으로 필요했고 더 이상 필요하지 않습니다";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="요금제가 너무 비쌉니다";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="요금제에 필요한 만큼의 저장소가 없습니다";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="MEGA에 없는 기능이 필요합니다";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="다른 공급자로 변경하려고 합니다";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="MEGA가 이용하기에 어렵습니다";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="지원과 고객 서비스에 만족하지 않습니다";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="기타 (자세한 이유를 알려주세요)";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="더 이상 이용할 수 없습니다";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="구독 또는 자동 결제를 원하지 않습니다";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="취소하지 마세요";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="구독을 취소하는 이유를 선택하세요";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="숨겨진 항목";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4225,8 +4261,34 @@
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="당신이 손을 들었습니다";
 /* Snack bar message shown when another participant raises hand in the call */
-"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ 님이 손을 들었습니다";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.lower-hand"="손 내리기";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="보기";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="읽기 전용";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="설명";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="설명 없음";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="설명 추가";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="이 링크를 공유하거나 참여자를 추가해 함께 하세요";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="회의 링크 공유";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="회의 링크 복사";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="참여자 초대";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="대화에 보내기";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="복사";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="공유";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="취소";

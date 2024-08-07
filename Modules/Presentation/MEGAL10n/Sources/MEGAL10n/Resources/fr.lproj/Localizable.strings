@@ -61,7 +61,7 @@
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
 "Enter the password"="Saisissez le mot de passe";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOut_alertTitle"="Déconnecté";
+"loggedOut_alertTitle"="Déconnexion";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Vous avez été déconnecté de cet appareil à partir d’un autre endroit";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
@@ -135,7 +135,7 @@
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
 "agreeWithLosingPasswordYouLoseData"="Je comprends que [S]si je perds mon mot de passe, je pourrais perdre mes données[/S]. En apprendre davantage sur le <a href=\"terms\">chiffrement de bout en bout de MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
-"nameInvalidFormat"="Saisir un nom valide";
+"nameInvalidFormat"="Saisissez un nom valide";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Les mots de passe ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -147,7 +147,7 @@
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="En attente de la confirmation par courriel.";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="Veuillez saisir votre mot de passe pour confirmer votre compte";
+"confirmText"="Saisissez votre mot de passe pour confirmer votre compte";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
 "Confirm account"="Confirmer le compte";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
@@ -349,7 +349,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Un fichier porte déjà ce nom";
 /* Browser save to cloud drive select button title */
-"cloudDrive.browser.saveToCloudDrive.title"="Enregistrer sur Disque nuagique";
+"cloudDrive.browser.saveToCloudDrive.title"="Enregistrer sur mon Disque nuagique";
 /* List option shown on the details of a file or folder after the user has copied it */
 "cloudDrive.browser.paste"="Coller";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Aucun compte courriel n’est défini sur votre appareil";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Politique de protection des renseignements personnels";
+"privacyPolicyLabel"="Politique de protection des renseignements personnels et des données";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Politique d’utilisation des Témoins";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -839,7 +839,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Le lien d’annulation est expiré.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour supprimer votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour supprimer votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Saisissez votre mot de passe ci-dessous.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Votre compte a été supprimé";
 /* Account closure, password check dialog when user click on closure email. */
@@ -879,13 +879,13 @@
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Réinitialisation du mot de passe";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
-"pleaseEnterYourRecoveryKey"="Veuillez saisir votre Clé de récupération";
+"pleaseEnterYourRecoveryKey"="Saisissez votre Clé de récupération";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Clé de récupération";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="La Clé de récupération est invalide";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Votre Clé de récupération sera utilisée pour réinitialiser votre mot de passe. Veuillez saisir votre nouveau mot de passe.";
+"youRecoveryKeyIsGoingTo"="Votre Clé de récupération sera utilisée pour réinitialiser votre mot de passe. Saisissez votre nouveau mot de passe.";
 /*  */
 "yourPasswordHasBeenReset"="Votre mot de passe a été réinitialisé. Veuillez maintenant vous connecter à votre compte.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -2093,7 +2093,7 @@
 /* Text related to verified phone number. Used as title or cell description. */
 "Phone Number"="Numéro de téléphone";
 /* Label tell user to enter received txt to below input boxes */
-"Please type the verification code sent to"="Veuillez saisir le code de confirmation envoyé à";
+"Please type the verification code sent to"="Saisissez le code de confirmation envoyé à";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="N’avez-vous pas reçu le code ?";
 /* Message shown when verify phone number successfully */
@@ -2675,7 +2675,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Accéder à l’AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="Voici la dernière étape pour supprimer votre compte. Votre compte et votre abonnement seront tous deux supprimés et vous perdrez irrémédiablement toutes les données stockées dans le compte. Veuillez saisir votre mot de passe ci-dessous.";
+"account.delete.subscription.webClient"="Voici la dernière étape pour supprimer votre compte. Votre compte et votre abonnement seront tous deux supprimés et vous perdrez irrémédiablement toutes les données stockées dans le compte. Saisissez votre mot de passe ci-dessous.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Changer votre image de profil";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="« %@ » ne peut pas être enregistré dans le Disque nuagique. Réessayez plus tard et si le problème persiste, contactez la personne qui a partagé le lien avec vous.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Certains des contacts avec lesquels vous partagez des données n’ont pas été confirmés par vous. Pour renforcer la sécurité, nous vous recommandons de confirmer leur numéro d’identification dans Contacts en touchant le ⓘ à côté du contact que vous souhaitez confirmer.";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="Éléments cachés";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="Des éléments cachés sont présents dans ce dossier. Partager le dossier implique que les éléments cachés sont visibles par les personnes avec qui vous le partagez. Les éléments resteront cachés sur votre Disque nuagique.";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="Des éléments cachés sont présents dans un ou plusieurs de ces dossiers. Partager les dossiers implique que les éléments cachés seront visibles par les personnes avec qui vous les partagez. Les éléments resteront cachés dans votre Disque nuagique.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Renommer l’album";
 /* Rename public album alert message */
@@ -4214,6 +4220,36 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Touchez votre avatar.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="5. Touchez <b>Annuler l’abonnement</b>.";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="J’avais besoin de cet abonnement temporairement et ne l’utilise plus";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="J’ai trouvé mon abonnement trop cher";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="Je n’ai pas besoin de tout l’espace de stockage de mon abonnement";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="J’ai besoin de fonctions que MEGA ne propose pas";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="Je change de fournisseur";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="Je trouve que MEGA est difficile à utiliser";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="Je ne suis pas satisfait du soutien et du service à la clientèle";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="Autre (veuillez donner des détails)";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="Je ne peux plus me le permettre";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="Je ne veux pas d’abonnement ni de facturation automatique";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="Ne pas annuler";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="Sélectionnez une raison d’annulation de votre abonnement";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Éléments cachés";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4230,3 +4266,29 @@
 "chat.call.raise-hand.snack-bar.lower-hand"="Baisser la main";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="Afficher";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="Lecture seule";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="Description";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="Aucune description";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Ajoutez une description";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="Partagez ce lien ou invitez des participants à vous rejoindre";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Partager le lien de la réunion";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Copier le lien de la réunion";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="Inviter des participants";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="Quiconque disposant de ce lien peut se joindre à la réunion et lire la conversation de la réunion.";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="Envoyer vers une conversation";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="Copier";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="Partager";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="Annuler";

@@ -3842,54 +3842,6 @@
         <string>سيتكرر الاجتماع كل %d أسبوع يوم [weekDayNames] و [lastWeekDayName]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>zero</key>
-        <string>سيتكرر الاجتماع كل %d شهر في [ordinalDay].</string>
-        <key>one</key>
-        <string>سيتكرر الاجتماع كل شهر في [ordinalDay].</string>
-        <key>two</key>
-        <string>سيتكرر الاجتماع كل %d شهرين في [ordinalDay].</string>
-        <key>few</key>
-        <string>سيتكرر الاجتماع كل %d أشهر في [ordinalDay].</string>
-        <key>many</key>
-        <string>سيتكرر الاجتماع كل %d شهراً في [ordinalDay].</string>
-        <key>other</key>
-        <string>سيتكرر الاجتماع كل %d شهر في [ordinalDay].</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>zero</key>
-        <string>سيتكرر الاجتماع كل %d شهر في [ordinalDays] و [ordinalLastDay].</string>
-        <key>one</key>
-        <string>سيتكرر الاجتماع كل شهر في [ordinalDays] و [ordinalLastDay].</string>
-        <key>two</key>
-        <string>سيتكرر الاجتماع كل %d شهرين في [ordinalDays] و [ordinalLastDay].</string>
-        <key>few</key>
-        <string>سيتكرر الاجتماع كل %d أشهر في [ordinalDays] و [ordinalLastDay].</string>
-        <key>many</key>
-        <string>سيتكرر الاجتماع كل %d شهراً في [ordinalDays] و [ordinalLastDay].</string>
-        <key>other</key>
-        <string>سيتكرر الاجتماع كل %d شهر في [ordinalDays] و [ordinalLastDay].</string>
-      </dict>
-    </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3984,30 +3936,6 @@
         <string>كل %d أسبوعاً في [weekDayNames]</string>
         <key>other</key>
         <string>كل %d أسبوع في [weekDayNames]</string>
-      </dict>
-    </dict>
-    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>zero</key>
-        <string>كل %d شهر في [ordinalNumber]</string>
-        <key>one</key>
-        <string>كل شهر في [ordinalNumber]</string>
-        <key>two</key>
-        <string>كل %d شهرين في [ordinalNumber]</string>
-        <key>few</key>
-        <string>كل %d أشهر في [ordinalNumber]</string>
-        <key>many</key>
-        <string>كل %d شهراً في [ordinalNumber]</string>
-        <key>other</key>
-        <string>كل %d شهر في [ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>

@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您的裝置沒有設定電子郵件帳戶";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="私隱權政策";
+"privacyPolicyLabel"="隱私和資料政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Cookie政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="「%@」無法儲存到雲端硬碟。請稍後再試。如果問題仍然存在，請聯繫共享連結給您的人。";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="與您共享資訊的某些聯絡人尚未經過您的驗證。為了確保額外的安全性，我們建議您透過在聯絡人中點選您要驗證的聯絡人旁邊的ⓘ來驗證他們的憑證。";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="隱藏的項目";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="此資料夾包含隱藏的項目。共享資料夾意味著與您共享的人可以看到隱藏的項目。這些項目仍會在您的雲端硬碟中隱藏。";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="其中一個或多個資料夾中有隱藏的項目。共享資料夾意味著與您共享的人可以看見隱藏的項目。這些項目的狀態在您的雲端硬碟中仍是隱藏的。";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="重新命名相簿";
 /* Rename public album alert message */
@@ -4214,6 +4220,36 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. 點選您的大頭貼。";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. 點選<b>取消訂閱</b>。";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="我暫時需要這個方案，不再使用了";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="我發現我的方案太貴了";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="我不需要方案中的所有儲存空間";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="我需要的功能MEGA沒有提供";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="我要轉換到另一個供應商";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="我覺得MEGA很難用";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="我對於支援和客服不滿意";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="其它（請提供詳細訊息）";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="我再也負擔不起它了";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="我不想訂閱或自動扣款";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="不要取消";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="選擇取消訂閱的原因";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="隱藏的項目";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4230,3 +4266,29 @@
 "chat.call.raise-hand.snack-bar.lower-hand"="放下手";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="檢視";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="僅能讀取";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="說明";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="沒有描述";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="加入描述";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="共享此連結或新增與會者加入您";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="共享會議連結";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="複製對話連結";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="邀請與會者";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="任何擁有此連結的人都可以加入會議並查看會議對話。";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="發送到對話";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="複製";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="共享";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="取消";

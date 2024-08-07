@@ -63,7 +63,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Deconectat";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest aparat din altă locație";
+"loggedOutFromAnotherLocation"="Ați fost deconectat de pe acest dispozitiv dintr-o altă locație";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe o rețea Wi-Fi publică cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
@@ -155,9 +155,9 @@
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Această adresă de e-mail este deja folosită";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="Trebuie să eliberezi ceva spațiu pe aparat";
+"nodeTooBig"="Trebuie să eliberezi ceva spațiu pe dispozitiv";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA are nevoie de minimum %@. Eliberează puțin spațiu ștergând aplicațiile pe care nu le mai folosești sau fișierele video mari din galerie. Poți și gestiona ceea ce MEGA stochează pe aparat.";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA are nevoie de minimum %@. Eliberează puțin spațiu ștergând aplicațiile pe care nu le mai folosești sau fișierele video mari din galerie. Poți și gestiona ceea ce MEGA stochează pe dispozitiv.";
 /* Title for the file link view */
 "fileLink"="Linkul fișierului";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -635,7 +635,7 @@
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Adaugă un contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="E-mail de contact";
+"contactEmail"="Adresa de e-mail de contact";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Adaugă";
 /* Add contacts and share dialog error message when user try to add your own email address */
@@ -705,9 +705,9 @@
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Vă rugăm să scrieți feedback-ul dvs. aici:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="Niciun cont de e-mail configurat pe aparat";
+"noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitiv";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Politica de confidențialitate";
+"privacyPolicyLabel"="Politica privind confidențialitatea și datele";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Politica privind cookie-urile";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -755,7 +755,7 @@
 /* Title for custom settings */
 "Custom Settings"="Setări personalizate";
 /* Title to show when device local storage is almost full */
-"Device Storage Almost Full"="Stocarea aparatului aproape plină";
+"Device Storage Almost Full"="Stocarea dispozitivului aproape plină";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Nu ai suficient spațiu de stocare pentru încărcarea suplimentară a camerei. Eliberează spațiu ștergând aplicații, videoclipuri sau muzică care nu sunt necesare. Poți gestiona spațiul de stocare în %@";
 /* Navigation path for Storage settings in iOS */
@@ -775,17 +775,17 @@
 /* Footer description when upload all burst photos is disabled */
 "Only the representative photos from your burst photo sequences will be uploaded."="Se vor încărca doar fotografiile favorite din secvențele fotografiilor în rafală.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Poze a aparatului.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Încarcă albume partajate";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Vor fi încărcate albume partajate din aplicația Poze a aparatului.";
+"Shared Albums from your device's Photos app will be uploaded."="Vor fi încărcate albume partajate din aplicația Poze a dispozitivului.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Nu vor fi încărcate albume partajate din aplicația Poze a aparatului.";
+"Shared Albums from your device's Photos app will not be uploaded."="Nu vor fi încărcate albume partajate din aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload Albums Synced from iTunes"="Încarcă albumele sincronizate de pe iTunes";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Albumele sincronizate sunt locul în care sincronizezi fotografiile sau videoclipurile cu aplicația Poze a aparatului, de pe iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Albumele sincronizate sunt locul în care sincronizezi fotografiile sau videoclipurile cu aplicația Poze a dispozitivului, de pe iTunes.";
 /* App means “Application” */
 "App Version"="Versiunea aplicației";
 /* Title of the label where the SDK version is shown */
@@ -809,7 +809,7 @@
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Cheia de recuperare a fost exportată în secțiunea Offline ca MEGA-CHEIEDERECUPERARE.txt. Notă: Aceasta va fi ștearsă dacă te deconectezi, te rugăm să o stochezi într-un loc sigur.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="Pe aparat";
+"onYourDevice"="Pe dispozitiv";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Șterge fișierele offline";
 /* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
@@ -901,7 +901,7 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Adresă de e-mail nouă";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="Confirmă e-mailul";
+"confirmEmail"="Confirmați adresa de e-mail";
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmați noua adresă de e-mail";
 /* The title of the alert dialog to change the email associated to an account. */
@@ -969,7 +969,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ spațiu de stocare pentru fiecare recomandare. \nValabili timp de 365 de zile.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Selectează din contactele aparatului sau introdu mai multe adrese de e-mail.";
+"Select from phone contacts or enter multiple email addresses"="Selectează din contactele dispozitivului sau introdu mai multe adrese de e-mail.";
 /*  */
 "insertYourFriendsEmails"="Inserează e-mailurile prietenilor:";
 /*  */
@@ -1049,7 +1049,7 @@
 /* Hint text for the first name (Placeholder) */
 "firstName"="Prenume";
 /* Hint text for the last name (Placeholder) */
-"lastName"="Nume";
+"lastName"="Nume de familie";
 /* Title for "Local" used space. */
 "localLabel"="Local";
 /* Title for MEGA "Available" space. */
@@ -1331,7 +1331,7 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Vezi abonamentele";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Înlătură";
+"dismiss"="Închideți";
 /* Content of the notification when there is unknown activity on the Chat */
 "You may have new messages"="Ai mesaje noi";
 /* Notification text body shown when you have received a contact request */
@@ -1359,7 +1359,7 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Mesaje noi";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade succesive de abonament cu aceeași durată și la același preț ca perioada inițială aleasă. Puteți dezactiva reînnoirea automată a abonamentului MEGA Pro cu cel mult 24 de ore înainte de scadența următoarei plăți a abonamentului prin pagina de setări a contului dvs. Apple. Pentru a vă gestiona abonamentele, pur și simplu atingeți pictograma App Store de pe aparatul mobil, conectați-vă cu ID-ul Apple în partea de jos a paginii (dacă nu ați făcut-o deja) și apoi atingeți Vizualizare ID. Veți fi direcționat la pagina contului dvs., unde puteți derula în jos la Gestionați abonamentele la aplicații. De acolo, puteți selecta abonamentul MEGA Pro și puteți vizualiza data de reînnoire programată, puteți alege un alt pachet de abonament sau puteți comuta comutatorul de pornire/oprire la dezactivat pentru a dezactiva reînnoirea automată a abonamentului.";
+"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade succesive de abonament cu aceeași durată și la același preț ca perioada inițială aleasă. Puteți dezactiva reînnoirea automată a abonamentului MEGA Pro cu cel mult 24 de ore înainte de scadența următoarei plăți a abonamentului prin pagina de setări a contului dvs. Apple. Pentru a vă gestiona abonamentele, pur și simplu atingeți pictograma App Store de pe dispozitivul mobil, conectați-vă cu ID-ul Apple în partea de jos a paginii (dacă nu ați făcut-o deja) și apoi atingeți Vizualizare ID. Veți fi direcționat la pagina contului dvs., unde puteți derula în jos la Gestionați abonamentele la aplicații. De acolo, puteți selecta abonamentul MEGA Pro și puteți vizualiza data de reînnoire programată, puteți alege un alt pachet de abonament sau puteți comuta comutatorul de pornire/oprire la dezactivat pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Deschideți MEGA și conectați-vă pentru a continua";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1471,7 +1471,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Scanează un cod";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Aliniază codul QR pentru a-l scana cu camera aparatului";
+"lineCodeWithCamera"="Aliniază codul QR pentru a-l scana cu camera dispozitivului";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Cod nevalid";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1539,7 +1539,7 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Exportă cheia de recuperare";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Continuă pentru a te deconecta";
+"proceedToLogout"="Continuați să vă deconectați";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="Ești pe cale să te deconectezi, te rugăm să testezi parola pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, îți vei pierde accesul la datele MEGA.";
 /* state previous to import a file */
@@ -1611,7 +1611,7 @@
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "Authenticator app required"="Aplicație de autentificare necesară";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Ne pare rău, autentificarea cu doi factori nu poate fi activată pe aparat. Te rugăm să deschizi App Store pentru a instala o aplicație de autentificare.";
+"youNeedATwoFactorAuthenticationApp"="Ne pare rău, autentificarea cu doi factori nu poate fi activată pe dispozitiv. Te rugăm să deschizi App Store pentru a instala o aplicație de autentificare.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Ai nevoie de o aplicație de autentificare pentru a activa A2F pe MEGA. Poți descărca și instala aplicația Google Authenticator, Duo Mobile, Authy sau Microsoft Authenticator pentru telefon sau tabletă.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
@@ -1625,21 +1625,21 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Autentificarea cu doi factori dezactivată";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scanează sau copiază sămânța în aplicația de autentificare. Asigură-te că copiezi această sămânță într-un loc sigur în cazul în care îți pierzi aparatul.";
+"scanOrCopyTheSeed"="Scanează sau copiază sămânța în aplicația de autentificare. Asigură-te că copiezi această sămânță într-un loc sigur în cazul în care îți pierzi dispozitivul.";
 /* A button to help them restore their account if they have lost their 2FA device. */
-"lostYourAuthenticatorDevice"="Ți-ai pierdut aparatul pentru autentificare?";
+"lostYourAuthenticatorDevice"="Ați pierdut dispozitivul de autentificare?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
 "Save Images in Photos"="Salvează imagini în Poze";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Salvează videoclipuri în Poze";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imaginile sau videoclipurile descărcate vor fi stocate în biblioteca media a aparatului în locul secțiunii Offline.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imaginile sau videoclipurile descărcate vor fi stocate în biblioteca media a dispozitivului în locul secțiunii Offline.";
 /* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Cameră";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Salvează în Poze";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salvează o copie a imaginilor și videoclipurilor realizate din aplicația MEGA în biblioteca media a aparatului.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salvează o copie a imaginilor și videoclipurilor realizate din aplicația MEGA în biblioteca media a dispozitivului.";
 /* Title of the Spotlight Search section */
 "Search"="Caută";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
@@ -1657,7 +1657,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Fotografiile tale în cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Încărcările camerelor sunt o caracteristică esențială pentru orice aparat mobil și vă asigurăm. Creează-ți contul acum.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Încărcările camerelor sunt o caracteristică esențială pentru orice dispozitiv mobil și vă asigurăm. Creează-ți contul acum.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Configurare MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1677,7 +1677,7 @@
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Activează notificările";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="Dorim să îți trimitem notificări pentru a primi instantaneu mesaje noi pe aparat.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Dorim să îți trimitem notificări pentru a primi instantaneu mesaje noi pe dispozitiv.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Activează accesul";
 /* Title of the Settings section where you can configure security details of your MEGA account */
@@ -1937,7 +1937,7 @@
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="Te rugăm să permiți accesul";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Te rugăm să accesezi secțiunea Intimitate din aplicația Configurări a aparatului. Activează Servicii de localizare și setează MEGA pe La utilizarea aplicației sau Întotdeauna.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Te rugăm să accesezi secțiunea Intimitate din aplicația Configurări a dispozitivului. Activează Servicii de localizare și setează MEGA pe La utilizarea aplicației sau Întotdeauna.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationWhenInUseUsageDescription"="MEGA îți accesează locația atunci când o partajezi cu contactele tale într-un chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
@@ -1945,7 +1945,7 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Pornește datele mobile";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="Poți porni datele mobile pentru această aplicație din aplicația Configurări a aparatului.";
+"You can turn on mobile data for this app in Settings."="Poți porni datele mobile pentru această aplicație din aplicația Configurări a dispozitivului.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Schimbi pe un server de test?";
 /* text of the alert dialog when the user is changing the API URL to staging */
@@ -2033,7 +2033,7 @@
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Nu deranja";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Notifications muted"="Notificări amuțite";
+"Notifications muted"="Notificările sunt dezactivate";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Se reconectează…";
 /* Title shown when the user reconnect in a call. */
@@ -2207,9 +2207,9 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Când te deconectezi, transferurile în curs vor fi anulate.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="Când te deconectezi, fișierele din secțiunea Offline vor fi șterse de pe aparat.";
+"When you logout, files from your Offline section will be deleted from your device."="Când te deconectezi, fișierele din secțiunea Offline vor fi șterse de pe dispozitiv.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Când te deconectezi, fișierele din secțiunea Offline vor fi șterse de pe aparat și transferurile în curs vor fi anulate.";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Când te deconectezi, fișierele din secțiunea Offline vor fi șterse de pe dispozitiv și transferurile în curs vor fi anulate.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat creat în %s1";
 /* Title shown when there are no shared files */
@@ -2249,7 +2249,7 @@
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Eșec la eliminarea numărului de telefon, te rugăm să încerci din nou mai târziu.";
 /* Text used to notify the user that some action would discard a non ended action */
-"Discard Changes"="Renunță la modificări";
+"Discard Changes"="Renunțați la modificări";
 /* Title of the Proxy section under Settings */
 "Proxy"="Proxy";
 /* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
@@ -2471,13 +2471,13 @@
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Accesați rapid fișierele din secțiunea Offline";
 /* Dialog title for the no enough device storage screen */
-"The device does not have enough space for MEGA to run properly."="Aparatul nu are suficient spațiu pentru ca MEGA să funcționeze corect.";
+"The device does not have enough space for MEGA to run properly."="Dispozitivul nu are suficient spațiu pentru ca MEGA să funcționeze corect.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Eliberați spațiu ștergând aplicațiile pe care nu le mai utilizați sau fișierele video mari din galeria dvs. Vă puteți gestiona spațiul de stocare în %@";
 /* The title of Turn on Notifications view */
 "dialog.turnOnNotifications.label.title"="Pornește notificările";
 /* The description of Turn on Notifications view */
-"dialog.turnOnNotifications.label.description"="În acest fel, veți vedea instantaneu mesaje noi pe aparatul dvs.";
+"dialog.turnOnNotifications.label.description"="În acest fel, veți vedea instantaneu mesaje noi pe dispozitivul dvs.";
 /* First step to turn on notifications */
 "dialog.turnOnNotifications.label.stepOne"="1. Deschide <b>Configurări</b>";
 /* Second step to turn on notifications */
@@ -2655,7 +2655,7 @@
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.title"="Aveți deja un abonament activ";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.message"="V-ați abonat anterior la un abonament Pro cu Google Play sau AppGallery. Vă rugăm să anulați manual abonamentul cu acestea în Google Play sau Huawei AppGallery de pe aparat și apoi încercați din nou.";
+"account.upgrade.alreadyHaveASubscription.message"="V-ați abonat anterior la un abonament Pro cu Google Play sau AppGallery. Vă rugăm să anulați manual abonamentul cu acestea în Google Play sau Huawei AppGallery de pe dispozitiv și apoi încercați din nou.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Doriți să anulați abonamentul curent și să continuați cu achiziția?";
 /* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
@@ -3005,7 +3005,7 @@
 /* Text description for the rename action when upload/copy/move and already exists in destination */
 "nameCollision.files.action.rename.description"="Fișierul va fi redenumit sub numele:";
 /* Text of the update action when trying to upload a file and already exists in destination */
-"nameCollision.files.action.update.title"="Actualizează";
+"nameCollision.files.action.update.title"="Actualizare";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Fișierul va fi actualizat cu o nouă versiune.";
 /* Meetings end call dialog title */
@@ -3049,7 +3049,7 @@
 /* Ttile for empty chats tab */
 "chat.chats.emptyState.title"="Începe să chatuiești acum";
 /* Description for empty chats tab */
-"chat.chats.emptyState.description"="Chatuiește securizat și privat, cu oricine și de pe orice aparat, știind că nimeni nu îți poate citi chaturile, nici măcar MEGA.";
+"chat.chats.emptyState.description"="Chatuiește securizat și privat, cu oricine și de pe orice dispozitiv, știind că nimeni nu îți poate citi chaturile, nici măcar MEGA.";
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Chat nou";
 /* Title for chats section */
@@ -3311,7 +3311,7 @@
 /* Schedule meeting discard changes title */
 "meetings.scheduleMeeting.discardChanges.title"="Renunțați la modificări sau continuați să editați?";
 /* Schedule meeting discard changes confirmation */
-"meetings.scheduleMeeting.discardChanges.confirm"="Renunță la modificări";
+"meetings.scheduleMeeting.discardChanges.confirm"="Renunțați la modificări";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Continuați să editați";
 /* Schedule meeting creation complete */
@@ -3359,11 +3359,11 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Cameră";
 /* Device Center title */
-"device.center.title"="Centrul de aparate";
+"device.center.title"="Centrul de dispozitive";
 /* Device Center list current device title */
-"device.center.current.device.title"="Acest aparat";
+"device.center.current.device.title"="Acest dispozitiv";
 /* Device Center list other devices title */
-"device.center.other.devices.title"="Alte aparate";
+"device.center.other.devices.title"="Alte dispozitive";
 /* Device Center backup up to date status */
 "device.center.backup.upToDate.status.message"="La zi";
 /* Device Center backup scanning status */
@@ -3389,11 +3389,11 @@
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blocat";
 /* Default device name in case the device name cannot be obtained */
-"device.center.default.device.title"="Aparat necunoscut";
+"device.center.default.device.title"="Dispozitiv necunoscut";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Eroare necunoscută.";
 /* Device Center backup error: Filesystem not supported */
-"device.center.backup.error.fileSystemUnsupported"="MEGA nu poate sincroniza sau backup pentru acest folder, deoarece sistemul de fișiere de pe aparatul dvs. nu este acceptat.";
+"device.center.backup.error.fileSystemUnsupported"="MEGA nu poate sincroniza sau backup pentru acest folder, deoarece sistemul de fișiere de pe dispozitivul dvs. nu este acceptat.";
 /* Device Center backup error: Chosen folder can't be synced */
 "device.center.backup.error.folderCantSync"="Folderul ales nu poate fi sincronizat.";
 /* Device Center backup error: Individual file sync issue */
@@ -3401,9 +3401,9 @@
 /* Device Center backup error: Initial scan failure */
 "device.center.backup.error.initialScanFailed"="Scanarea inițială a eșuat. Va trebui să reactivați sincronizarea sau backupul din aplicația desktop.";
 /* Device Center backup error: Device folder not located */
-"device.center.backup.error.folderDeviceUnlocatedNow"="Folderul din aparat nu poate fi localizat acum, încercați din nou mai târziu.";
+"device.center.backup.error.folderDeviceUnlocatedNow"="Folderul din dispozitiv nu poate fi localizat acum, încercați din nou mai târziu.";
 /* Device Center backup error: Device folder can't be located */
-"device.center.backup.error.folderDeviceUnlocated"="Folderul din aparat dvs. nu poate fi localizat.";
+"device.center.backup.error.folderDeviceUnlocated"="Folderul din dispozitiv dvs. nu poate fi localizat.";
 /* Device Center backup error: MEGA folder moved or deleted */
 "device.center.backup.error.folderMegaMovedOrDeleted"="Folderul din MEGA nu poate fi localizat deoarece a fost mutat sau șters sau este posibil să nu aveți acces.";
 /* Device Center backup error: Storage quota limit */
@@ -3463,13 +3463,13 @@
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="Afișează în Backups";
 /* Device Center rename device action title */
-"device.center.rename.device.title"="Numele aparatului";
+"device.center.rename.device.title"="Numele dispozitivului";
 /* Device Center rename device action duplicated name message */
-"device.center.rename.device.duplicated.name"="Un aparat cu acest nume există deja";
+"device.center.rename.device.duplicated.name"="Un dispozitiv cu acest nume există deja";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Introduceți un alt nume";
 /* Device Center rename device action invalid long name message */
-"device.center.rename.device.invalid.long.name"="Numele aparatului poate fi de până la 32 de caractere";
+"device.center.rename.device.invalid.long.name"="Numele dispozitivului poate fi de până la 32 de caractere";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Activată";
 /* Device Center camera upload status disabled */
@@ -3635,7 +3635,7 @@
 /* Recurring meeting tip view message */
 "meetings.scheduleMeeting.recurringMeetingTip.message"="Puteți vizualiza, anula sau edita orice ocurență a unei întâlniri recurente atingând și menținând apăsată întâlnirea și selectând Ocurențe.";
 /* Schedule meeting update button */
-"meetings.scheduleMeeting.update"="Actualizează";
+"meetings.scheduleMeeting.update"="Actualizați";
 /* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
 "meetings.scheduleMeeting.updateSuccessfull.popupMessage"="Întâlnire a fost actualizată";
 /* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
@@ -3676,6 +3676,12 @@
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="„%@” nu poate fi salvat pe Unitatea cloud. Încercați din nou mai târziu și dacă problema continuă, contactați persoana care a partajat linkul cu dvs.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Unele contacte cu care partajați informații nu au fost confirmate de dvs. Pentru a asigura un plus de securitate, vă recomandăm să confirmați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl confirmați.";
+/* Title of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.title"="Elemente ascunse";
+/* Message of the dialog for sharing a folder containing sensitive items */
+"shareFolder.sensitive.alert.message.single"="Există elemente ascunse în acest folder. Partajarea folderului va însemna că elementele ascunse sunt vizibile pentru cei cu care partajați. Elementele vor fi în continuare ascunse în Unitatea cloud.";
+/* Message of the dialog for sharing folders containing sensitive items */
+"shareFolder.sensitive.alert.message.multi"="Există elemente ascunse într-unul sau mai multe dintre aceste folder. Partajarea folderelor va însemna că elementele ascunse sunt vizibile pentru cei cu care partajați. Elementele vor fi în continuare ascunse în Unitatea cloud.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Redenumește albumul";
 /* Rename public album alert message */
@@ -3713,7 +3719,7 @@
 /* Meeting waiting room guest join first name textfield */
 "meetings.waitingRoom.guest.firstName"="Prenume";
 /* Meeting waiting room guest join last name textfield */
-"meetings.waitingRoom.guest.lastName"="Nume";
+"meetings.waitingRoom.guest.lastName"="Nume de familie";
 /* Meeting waiting room guest join button */
 "meetings.waitingRoom.guest.join"="Alăturați-vă";
 /* Meeting waiting room message of wait for host to let you in */
@@ -4023,7 +4029,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog with message */
 "calls.sfuOutdated.updateAppAlert.message"="Nu utilizați cea mai recentă versiune a aplicației noastre, astfel încât să nu puteți începe sau să vă alăturați apelurilor. Actualizați acum pentru a continua.";
 /* Calls: SFU protocol is outdated then show update alert dialog with update button */
-"calls.sfuOutdated.updateAppAlert.button.update"="Actualizează";
+"calls.sfuOutdated.updateAppAlert.button.update"="Actualizați";
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Omite";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
@@ -4161,7 +4167,7 @@
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
 "accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Sub abonamentul dvs. MEGA, dați clic pe <b>Anulați abonamentul.</b>";
 /* Cancellation Section Google Play Android Device title: On an Android device */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Pe un aparat Android";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Pe un dispozitiv Android";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Deschideți aplicația Play Store.";
 /* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
@@ -4205,7 +4211,7 @@
 /* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Dați clic pe <b>Anulează abonamentul</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
-"accounts.cancelSubscriptionSteps.webClient.mobile.title"="Pe un aparat mobil";
+"accounts.cancelSubscriptionSteps.webClient.mobile.title"="Pe un dispozitiv mobil";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Accesați www.mega.nz în browserul web.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
@@ -4214,6 +4220,36 @@
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Atingeți avatarul dvs.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="5. Atingeți <b>Anulați abonamentul</b>.";
+/* Cancel subscription survey header title */
+"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+/* Cancel subscription survey header subtitle */
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+/* Cancel subscription survey reason with id 1 */
+"accounts.cancelSubscriptionSurvey.reason.one"="Aveam nevoie de acest abonament temporar și nu îl mai folosesc";
+/* Cancel subscription survey reason with id 2 */
+"accounts.cancelSubscriptionSurvey.reason.two"="Mi s-a părut abonamentul prea scump";
+/* Cancel subscription survey reason with id 3 */
+"accounts.cancelSubscriptionSurvey.reason.three"="Nu am nevoie de tot spațiul de stocare din abonamentul meu";
+/* Cancel subscription survey reason with id 4 */
+"accounts.cancelSubscriptionSurvey.reason.four"="Am nevoie de funcții pe care MEGA nu le are";
+/* Cancel subscription survey reason with id 5 */
+"accounts.cancelSubscriptionSurvey.reason.five"="Trec la un alt furnizor";
+/* Cancel subscription survey reason with id 6 */
+"accounts.cancelSubscriptionSurvey.reason.six"="Mi se pare MEGA greu de folosit";
+/* Cancel subscription survey reason with id 7 */
+"accounts.cancelSubscriptionSurvey.reason.seven"="Nu sunt mulțumit de asistență și servicii pentru clienți";
+/* Cancel subscription survey reason with id 8 */
+"accounts.cancelSubscriptionSurvey.reason.eight"="Altele (vă rugăm să furnizați detalii)";
+/* Cancel subscription survey reason with id 9 */
+"accounts.cancelSubscriptionSurvey.reason.nine"="Nu-mi mai pot permite";
+/* Cancel subscription survey reason with id 10 */
+"accounts.cancelSubscriptionSurvey.reason.ten"="Nu doresc un abonament sau facturare automată";
+/* Cancel subscription survey checkbox title to allow MEGA to contact user */
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+/* Cancel subscription survey button to cancel Subscription cancellation */
+"accounts.cancelSubscriptionSurvey.dontCancel.title"="Nu anulați";
+/* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
+"accounts.cancelSubscriptionSurvey.error.selectAReason"="Selectați un motiv pentru anularea abonamentului";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Elemente ascunse";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4230,3 +4266,29 @@
 "chat.call.raise-hand.snack-bar.lower-hand"="Coborâți mâna";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
 "chat.call.raise-hand.snack-bar.view"="Vedeți";
+/* Table footer text for the node description field when the node description is a read-only field. */
+"cloudDrive.nodeInfo.nodeDescription.readonly"="Numai citire";
+/* Table header text for the node description field. */
+"cloudDrive.nodeInfo.nodeDescription.header"="Descriere";
+/* Text displayed in the description field when no description is present, in read-only mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readOnly"="Nicio descriere";
+/* Text displayed in the description field when no description is present, in read-write mode. */
+"cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Adăugați o descriere";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
+"call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+/* Title for share link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Partajați linkul întâlnirii";
+/* Title for copy link button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.copyMeetingLink"="Copiați linkul întâlnirii";
+/* Title for invite participants button in Empty meeting share options dialog */
+"call.meeting.empty.shareOptionsDialog.inviteParticipants"="Invită participanți";
+/* Label to inform user about privacy of sharing a chat link */
+"call.shareOptions.title"="Oricine cu acest link se poate alătura întâlnirii și poate vedea chatul întâlnirii.";
+/* Title for a button to send a chat link to a chat */
+"call.shareOptions.sendToChat"="Trimite în chat";
+/* Title for a button to copy a chat link */
+"call.shareOptions.copy"="Copiază";
+/* Title for a button to share a chat link */
+"call.shareOptions.share"="Partajează";
+/* Title for a button to cancel share link */
+"call.shareOptions.cancel"="Anulați";
