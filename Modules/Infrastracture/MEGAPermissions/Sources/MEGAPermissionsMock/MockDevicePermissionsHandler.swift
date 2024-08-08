@@ -3,7 +3,7 @@ import MEGAPermissions
 import Photos
 import UserNotifications
 
-public class MockDevicePermissionHandler: DevicePermissionsHandling {
+public final class MockDevicePermissionHandler: DevicePermissionsHandling, @unchecked Sendable {
     
     private var requestPhotoLibraryAccessPermissionsGranted: Bool = false
     
