@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -110,7 +111,7 @@ struct ImportAlbumView: View {
                 .frame(maxHeight: 44)
         }, center: {
             navigationTitle
-        }, backgroundColor: MEGAAppColor.Background.navigationBgColor.color)
+        }, backgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.navigationBg.swiftUI)
     }
     
     @ViewBuilder
@@ -162,7 +163,11 @@ struct ImportAlbumView: View {
     }
     
     private var toolbarButtonColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
+        if isDesignTokenEnabled {
+            TokenColors.Text.primary.swiftUI
+        } else {
+            colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
+        }
     }
     
     private func dismissImportAlbumScreen() {
@@ -181,7 +186,7 @@ struct ImportAlbumView: View {
             shareLinkButton()
         }
         .frame(maxHeight: 64)
-        .background(MEGAAppColor.Background.navigationBgColor.color
+        .background((isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.navigationBg.swiftUI)
             .edgesIgnoringSafeArea(.bottom))
     }
     
