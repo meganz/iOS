@@ -19,6 +19,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     private let parentNodes: [NodeEntity]
     private let isInheritingSensitivityResult: Result<Bool, Error>
     private let isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>]
+    private let isInRubbishBinNodes: [NodeEntity]
     
     public init(
         node: NodeEntity? = nil,
@@ -33,7 +34,8 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         parentNodes: [NodeEntity] = [],
         isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
         isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:],
-        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        isInRubbishBinNodes: [NodeEntity] = []
     ) {
         self.node = node
         self.rubbishBinNode = rubbishBinNode
@@ -47,6 +49,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         self.isInheritingSensitivityResult = isInheritingSensitivityResult
         self.isInheritingSensitivityResults = isInheritingSensitivityResults
         self.nodeUpdates = nodeUpdates
+        self.isInRubbishBinNodes = isInRubbishBinNodes
         $childrenNodes.mutate { $0 = childrenNodes }
     }
     
@@ -111,7 +114,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     }
 
     public func isInRubbishBin(node: NodeEntity) -> Bool {
-        rubbishBinNode == node
+        isInRubbishBinNodes.contains { $0 == node }
     }
 
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {

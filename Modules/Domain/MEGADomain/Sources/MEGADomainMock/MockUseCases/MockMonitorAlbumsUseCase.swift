@@ -3,7 +3,7 @@ import MEGASwift
 
 public struct MockMonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
     public actor State {
-        public enum MonitorType: Hashable {
+        public enum MonitorType: Hashable, Sendable {
             case systemAlbum(excludeSensitives: Bool)
             case userAlbum(excludeSensitives: Bool)
             case userAlbumPhotos(excludeSensitives: Bool, includeSensitiveInherited: Bool)
