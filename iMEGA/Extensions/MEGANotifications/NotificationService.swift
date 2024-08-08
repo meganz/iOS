@@ -10,7 +10,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     private static var session: String?
     private static var setLogToConsole = false
     private static let genericBody = Strings.Localizable.youMayHaveNewMessages
-
+    private let memoryPressureSource = DispatchSource.makeMemoryPressureSource(
+        eventMask: .all,
+        queue: nil
+    )
     private var contentHandler: ((UNNotificationContent) -> Void)?
     private var bestAttemptContent: UNMutableNotificationContent?
     
@@ -34,6 +37,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         UncaughtExceptionHandler.registerHandler()
         NotificationService.setupLogging()
         MEGALogDebug("NSE Init, pid: \(ProcessInfo.processInfo.processIdentifier)")
+        observeAndLogMemoryPressure()
     }
 
     // MARK: - UNNotificationServiceExtension
@@ -177,6 +181,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private func postNotification(withError error: String?, message: MEGAChatMessage? = nil) {
+        if let memoryUsage = MemoryUsage() {
+            MEGALogDebug("Memory usage:\(memoryUsage.formattedDescription)")
+        }
         MEGAChatSdk.shared.remove(self as MEGAChatNotificationDelegate)
 
         guard let contentHandler = contentHandler else {
@@ -521,4 +528,28 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
     }
 
+    private func observeAndLogMemoryPressure() {
+        memoryPressureSource.setEventHandler { [weak self] in
+            guard let self else { return }
+            
+            let event: DispatchSource.MemoryPressureEvent  = memoryPressureSource.mask
+            
+            switch event {
+            case DispatchSource.MemoryPressureEvent.normal:
+                MEGALogDebug("Memory pressure: normal")
+            case DispatchSource.MemoryPressureEvent.warning:
+                MEGALogWarning("Memory pressure: warning")
+            case DispatchSource.MemoryPressureEvent.critical:
+                MEGALogError("Memory pressure: criticial")
+            default:
+                break
+            }
+            
+            if let usage = MemoryUsage() {
+                MEGALogDebug("Pressure Warning: Memory usage:\(usage.formattedDescription)")
+            }
+            
+        }
+        memoryPressureSource.resume()
+    }
 }

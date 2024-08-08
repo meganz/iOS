@@ -1373,6 +1373,7 @@
 		9459229C2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459229B2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift */; };
 		945928F52AA23C1B0037694C /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 945928F42AA23C1B0037694C /* Search */; };
 		94598D751F0CD53A00B57144 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* Share.storyboard */; };
+		9459CA892C6510B900458B67 /* MemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459CA882C6510B900458B67 /* MemoryUsage.swift */; };
 		945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945A90C72C3D611500E10BBF /* MockMeetingContainerRouter.swift */; };
 		9460C8AC28227180006C3E3D /* CloudDriveViewController+EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */; };
 		94614C69290FEA6C00503174 /* CloudDriveViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */; };
@@ -4177,6 +4178,7 @@
 		9459229B2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupCellViewModelTests.swift; sourceTree = "<group>"; };
 		945928F22AA23B1A0037694C /* Search */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Search; sourceTree = "<group>"; };
 		94598D741F0CD53A00B57144 /* Share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Share.storyboard; path = iMEGA/Extensions/MEGAShare/Share.storyboard; sourceTree = SOURCE_ROOT; };
+		9459CA882C6510B900458B67 /* MemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUsage.swift; sourceTree = "<group>"; };
 		945A90C72C3D611500E10BBF /* MockMeetingContainerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMeetingContainerRouter.swift; sourceTree = "<group>"; };
 		9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+EmptyState.swift"; sourceTree = "<group>"; };
 		94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+Backup.swift"; sourceTree = "<group>"; };
@@ -8814,6 +8816,7 @@
 				7794AED8231E4E0A0039C1D2 /* Info.plist */,
 				7794AEE0231E54680039C1D2 /* MEGANotifications-Bridging-Header.h */,
 				7794AEE2231E5C2F0039C1D2 /* MEGANotifications-PrefixHeader.pch */,
+				9459CA882C6510B900458B67 /* MemoryUsage.swift */,
 				BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */,
 				7794AED6231E4E0A0039C1D2 /* NotificationService.swift */,
 				BF121D662A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift */,
@@ -16139,6 +16142,7 @@
 				A84F4A93298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
 				A81BD5B227EB312400234902 /* MEGAStore+Message.swift in Sources */,
 				774941DB240FF69800FC5CB6 /* MEGAStore.m in Sources */,
+				9459CA892C6510B900458B67 /* MemoryUsage.swift in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
 				774941E22410EAEF00FC5CB6 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				774941E02410EAE000FC5CB6 /* MOMediaDestination+CoreDataClass.m in Sources */,
