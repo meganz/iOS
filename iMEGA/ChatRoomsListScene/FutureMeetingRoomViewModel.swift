@@ -349,8 +349,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
             if let incomingCallUUID = callManager.callUUID(forChatRoom: chatRoom) {
                 callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
             } else {
-                let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
-                callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: false, isJoiningActiveCall: true)
+                startCallJoiningActiveCall(true, notRinging: false, in: chatRoom)
             }
         } else {
             prepareAndShowCallUI(for: call, in: chatRoom)
@@ -358,10 +357,19 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     }
     
     private func startCall(in chatRoom: ChatRoomEntity) {
-        let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
-        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: true, isJoiningActiveCall: false)
+        startCallJoiningActiveCall(false, notRinging: true, in: chatRoom)
     }
     
+    private func startCallJoiningActiveCall(_ joining: Bool, notRinging: Bool, in chatRoom: ChatRoomEntity) {
+        callManager.startCall(
+            with: CallActionSync(
+                chatRoom: chatRoom,
+                notRinging: notRinging,
+                isJoiningActiveCall: joining
+            )
+        )
+    }
+        
     private func prepareAndShowCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity) {
         audioSessionUseCase.enableLoudSpeaker()
         router.openCallView(for: call, in: chatRoom)

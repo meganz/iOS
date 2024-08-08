@@ -44,17 +44,19 @@ final class CallKitCallManagerTests: XCTestCase {
         init() {
             sut = CallKitCallManager(
                 callController: callController,
-                uuidFactory: { .testUUID }
+                uuidFactory: { .testUUID },
+                chatIdBase64Converter: { _ in .testChatIdBase64 }
             )
         }
         
         func startCall(hasVideo: Bool = true, isJoiningActiveCall: Bool = false) -> Self {
             sut.startCall(
-                in: .testEntity,
-                chatIdBase64Handle: .testChatIdBase64,
-                hasVideo: hasVideo,
-                notRinging: true, 
-                isJoiningActiveCall: isJoiningActiveCall
+                with: CallActionSync(
+                    chatRoom: .testEntity,
+                    videoEnabled: hasVideo,
+                    notRinging: true,
+                    isJoiningActiveCall: isJoiningActiveCall
+                )
             )
             return self
         }
@@ -101,11 +103,9 @@ final class CallKitCallManagerTests: XCTestCase {
     func test_endCall_notifiesCallController() throws {
         let harness = Harness()
         harness.sut.startCall(
-            in: .testEntity, 
-            chatIdBase64Handle: .testChatIdBase64,
-            hasVideo: false,
-            notRinging: false,
-            isJoiningActiveCall: false
+            with: CallActionSync(
+                chatRoom: .testEntity
+            )
         )
         harness.sut.endCall(in: .testEntity, endForAll: true)
         let action = try XCTUnwrap(harness.lastReceivedAction() as? CXEndCallAction)

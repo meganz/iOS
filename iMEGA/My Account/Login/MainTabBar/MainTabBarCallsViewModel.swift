@@ -495,10 +495,11 @@ class MainTabBarCallsViewModel: ViewModelType {
         }
         
         callManager.startCall(
-            in: chatRoom, chatIdBase64Handle: chatIdBase64Handle,
-            hasVideo: intent.callCapability == .videoCall,
-            notRinging: false,
-            isJoiningActiveCall: callUseCase.call(for: chatRoom.chatId) != nil
+            with: CallActionSync(
+                chatRoom: chatRoom,
+                videoEnabled: intent.callCapability == .videoCall,
+                isJoiningActiveCall: callUseCase.call(for: chatRoom.chatId) != nil
+            )
         )
     }
     

@@ -576,7 +576,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (active) {
         [self joinMeetingWithChatRoom:chatRoom];
     } else {
-        [self startCallInChatRoom:chatRoom video:videoCall];
+        [self startCallInChatRoom:chatRoom videoEnabled:videoCall];
     }
 }
 

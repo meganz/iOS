@@ -48,10 +48,13 @@ extension ContactDetailsViewController {
         tableView.sizeHeaderToFit()
     }
     
-    @objc func startCall(inChatRoom chatRoom: MEGAChatRoom, video: Bool) {
-        let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
-        let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
-        CallKitCallManager.shared.startCall(in: chatRoom.toChatRoomEntity(), chatIdBase64Handle: chatIdBase64Handle, hasVideo: video, notRinging: false, isJoiningActiveCall: false)
+    @objc func startCall(inChatRoom chatRoom: MEGAChatRoom, videoEnabled: Bool) {
+        CallKitCallManager.shared.startCall(
+            with: CallActionSync(
+                chatRoom: chatRoom.toChatRoomEntity(),
+                videoEnabled: videoEnabled
+            )
+        )
     }
     
     @objc func readWritePermissionsIcon() -> UIImage {

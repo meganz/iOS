@@ -223,8 +223,12 @@ extension MEGALinkManager {
         }
         let chatRoom = megaChatRoom.toChatRoomEntity()
         Task { @MainActor in
-            let chatIdBase64Handle = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo).base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
-            CallKitCallManager.shared.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: false, isJoiningActiveCall: true)
+            CallKitCallManager.shared.startCall(
+                with: CallActionSync(
+                    chatRoom: chatRoom,
+                    isJoiningActiveCall: true
+                )
+            )
         }
     }
 
