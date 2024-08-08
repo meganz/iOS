@@ -270,6 +270,23 @@ class ExplorerBaseViewController: UIViewController {
         endEditingMode()
     }
     
+    private func shareFolders() {
+        guard let selected = selectedNodes()?.toNodeEntities() else { return }
+        
+        let sharedItemsRouter = SharedItemsViewRouter()
+        let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo)
+        
+        Task { @MainActor [shareUseCase] in
+            do {
+                _ = try await shareUseCase.createShareKeys(forNodes: selected)
+                sharedItemsRouter.showShareFoldersContactView(withNodes: selected)
+            } catch {
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+            endEditingMode()
+        }
+    }
+    
     // MARK: - Methods needs to be overriden by the subclass
     
     func selectedNodes() -> [MEGANode]? {
@@ -333,6 +350,8 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
             hide()
         case .unhide:
             unhide()
+        case .shareFolder:
+            shareFolders()
         default:
             break
         }
