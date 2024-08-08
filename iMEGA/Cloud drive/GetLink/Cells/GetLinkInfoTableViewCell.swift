@@ -18,6 +18,7 @@ class GetLinkInfoTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        viewModel?.dispatch(.cancelTasks)
         viewModel = nil
     }
     
