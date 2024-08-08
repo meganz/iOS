@@ -251,6 +251,8 @@
 		257F0B292AE9EC7B00216F79 /* PhotoLibraryZoomControlScrollTrackedOffsetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F0B282AE9EC7B00216F79 /* PhotoLibraryZoomControlScrollTrackedOffsetViewModifier.swift */; };
 		257F0B452AEB22F200216F79 /* PhotoLibraryCollectionViewLayoutChangesMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F0B442AEB22F200216F79 /* PhotoLibraryCollectionViewLayoutChangesMonitor.swift */; };
 		257F0B522AEEFB6400216F79 /* PhotoDateSection+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F0B512AEEFB6400216F79 /* PhotoDateSection+Additions.swift */; };
+		2590021D2C605778004A421C /* SpotlightContentIndexerActorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */; };
+		2591C1382C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */; };
 		2592C2A22AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */; };
 		259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */; };
 		259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */; };
@@ -3000,6 +3002,8 @@
 		257F0B282AE9EC7B00216F79 /* PhotoLibraryZoomControlScrollTrackedOffsetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomControlScrollTrackedOffsetViewModifier.swift; sourceTree = "<group>"; };
 		257F0B442AEB22F200216F79 /* PhotoLibraryCollectionViewLayoutChangesMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCollectionViewLayoutChangesMonitor.swift; sourceTree = "<group>"; };
 		257F0B512AEEFB6400216F79 /* PhotoDateSection+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoDateSection+Additions.swift"; sourceTree = "<group>"; };
+		2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActorTests.swift; sourceTree = "<group>"; };
+		2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActor.swift; sourceTree = "<group>"; };
 		2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+SnackBarPresenting.swift"; sourceTree = "<group>"; };
 		259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+AudioPlayerPresenterProtocol.swift"; sourceTree = "<group>"; };
 		2599D0C32BE202F9003DC13C /* FilesExplorerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewModelTests.swift; sourceTree = "<group>"; };
@@ -6454,6 +6458,14 @@
 				257BEB892AA926EC00B49666 /* MediaDiscoveryContentViewModel.swift */,
 			);
 			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		2590021B2C605766004A421C /* Spotlight */ = {
+			isa = PBXGroup;
+			children = (
+				2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */,
+			);
+			path = Spotlight;
 			sourceTree = "<group>";
 		};
 		2599D0C22BE202E8003DC13C /* FileExplorer */ = {
@@ -10186,6 +10198,7 @@
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
+				2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */,
 				A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */,
 			);
 			path = Spotlight;
@@ -11946,6 +11959,7 @@
 				0EE5AC142B1E930C00BCDD88 /* SharedViewModels */,
 				32B0723128A4E3CA002BAE34 /* Slideshow */,
 				B63AEB122511F73C000B8517 /* SMSVerification */,
+				2590021B2C605766004A421C /* Spotlight */,
 				0D2E4AFC2623B2CC00F4804A /* TextEditor */,
 				83B5E87527F6F8300073C870 /* Transfers */,
 				B63AEB16251203F5000B8517 /* Utils */,
@@ -15962,6 +15976,7 @@
 				B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */,
 				BFCD7D8E2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift in Sources */,
 				BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */,
+				2591C1382C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift in Sources */,
 				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
 				5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */,
 				94B09E642B84CC87007D6B84 /* StorageFullAlertViewModel.swift in Sources */,
@@ -16798,6 +16813,7 @@
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
 				9486B8F12C3FDD3000D96762 /* SnackBarTests.swift in Sources */,
+				2590021D2C605778004A421C /* SpotlightContentIndexerActorTests.swift in Sources */,
 				C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */,
 				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
