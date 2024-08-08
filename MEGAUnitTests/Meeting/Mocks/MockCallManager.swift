@@ -21,7 +21,7 @@ final class MockCallManager: CallManagerProtocol {
     var updateCallMuted_CalledTimes = 0
     var callUUID: UUID?
     
-    func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool, isJoiningActiveCall: Bool) {
+    func startCall(with actionSync: CallActionSync) {
         startCall_CalledTimes += 1
     }
     

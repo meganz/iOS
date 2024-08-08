@@ -443,8 +443,14 @@ final class WaitingRoomViewModel: ObservableObject {
     
     private func answerCall() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
-        let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
-        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: isVideoEnabled, notRinging: false, isJoiningActiveCall: true)
+        callManager.startCall(
+            with: CallActionSync(
+                chatRoom: chatRoom,
+                audioEnabled: !isMicrophoneMuted,
+                videoEnabled: isVideoEnabled,
+                isJoiningActiveCall: true
+            )
+        )
         viewState = .waitForHostToLetIn
     }
     

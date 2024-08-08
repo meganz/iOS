@@ -14,34 +14,44 @@ protocol CallControlling {
 extension CXCallController: CallControlling {}
 
 final class CallKitCallManager {
-    static var shared = CallKitCallManager(callController: CXCallController(), uuidFactory: { UUID() })
+    static var shared = CallKitCallManager(
+        callController: CXCallController(),
+        uuidFactory: {
+            UUID()
+        },
+        chatIdBase64Converter: { chatId in
+            HandleConverter.chatIdHandleConverter(chatId)
+        }
+    )
     private let callController: any CallControlling
     private let uuidFactory: () -> UUID
+    private let chatIdBase64Converter: (ChatIdEntity) -> String
     @Atomic private var callsDictionary = [UUID: CallActionSync]()
     init(
         callController: any CallControlling,
-        uuidFactory: @escaping () -> UUID
+        uuidFactory: @escaping () -> UUID,
+        chatIdBase64Converter: @escaping (ChatIdEntity) -> String
     ) {
         self.callController = callController
         self.uuidFactory = uuidFactory
+        self.chatIdBase64Converter = chatIdBase64Converter
     }
 }
 
 extension CallKitCallManager: CallManagerProtocol {
-    
-    func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool, isJoiningActiveCall: Bool) {
+    func startCall(with actionSync: CallActionSync) {
         let startCallUUID = uuidFactory()
-        let callKitHandle = CXHandle(type: .generic, value: chatIdBase64Handle)
+        let callKitHandle = CXHandle(type: .generic, value: chatIdBase64Converter(actionSync.chatRoom.chatId))
         let startCallAction = CXStartCallAction(call: startCallUUID, handle: callKitHandle)
-        startCallAction.isVideo = hasVideo
-        startCallAction.contactIdentifier = chatRoom.title
+        startCallAction.isVideo = actionSync.videoEnabled
+        startCallAction.contactIdentifier = actionSync.chatRoom.title
 
         let transaction = CXTransaction(action: startCallAction)
         callController.request(transaction) { [weak self] error in
             guard let self else { return }
             if error == nil {
                 MEGALogDebug("[CallKit]: Controller Call started")
-                addCall(withUUID: startCallUUID, chatRoom: chatRoom, videoEnabled: hasVideo, notRinging: notRinging, isJoiningActiveCall: isJoiningActiveCall)
+                addCallActionSync(actionSync, withUUID: startCallUUID)
             } else {
                 MEGALogError("[CallKit]: Controller error starting call: \(error!.localizedDescription)")
             }
@@ -132,6 +142,12 @@ extension CallKitCallManager: CallManagerProtocol {
     private func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity, audioEnabled: Bool = true, videoEnabled: Bool = false, notRinging: Bool = false, isJoiningActiveCall: Bool = false) {
         $callsDictionary.mutate {
             $0[uuid] = CallActionSync(chatRoom: chatRoom, videoEnabled: videoEnabled, notRinging: notRinging, isJoiningActiveCall: isJoiningActiveCall)
+        }
+    }
+    
+    private func addCallActionSync(_ action: CallActionSync, withUUID uuid: UUID) {
+        $callsDictionary.mutate {
+            $0[uuid] = action
         }
     }
 }

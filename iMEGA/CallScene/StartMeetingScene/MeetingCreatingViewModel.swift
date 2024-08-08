@@ -312,10 +312,16 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func startCall(inChatRoom chatRoom: ChatRoomEntity) {
-        let chatIdBase64Handle = megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
         dismiss { [weak self] in
             guard let self else { return }
-            callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: isVideoEnabled, notRinging: false, isJoiningActiveCall: true)
+            callManager.startCall(
+                with: CallActionSync(
+                    chatRoom: chatRoom,
+                    audioEnabled: !self.isMicrophoneEnabled,
+                    videoEnabled: self.isVideoEnabled,
+                    isJoiningActiveCall: true
+                )
+            )
         }
     }
         

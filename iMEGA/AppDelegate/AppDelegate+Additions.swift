@@ -484,15 +484,22 @@ extension AppDelegate {
     private func startCallWithNoRinging(inChatRoom chatRoom: ChatRoomEntity) {
         let callManager = CallKitCallManager.shared
         let callUseCase = CallUseCase(repository: CallRepository.newRepo)
-        let chatIdBase64Handle = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo).base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
         if callUseCase.call(for: chatRoom.chatId) != nil {
             if let incomingCallUUID = callManager.callUUID(forChatRoom: chatRoom) {
                 callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
             } else {
-                callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: true, isJoiningActiveCall: true)
+                callManager.startCall(
+                    with: CallActionSync(
+                        chatRoom: chatRoom,
+                        notRinging: true,
+                        isJoiningActiveCall: true
+                    )
+                )
             }
         } else {
-            callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: true, isJoiningActiveCall: false)
+            callManager.startCall(
+                with: CallActionSync.startCallNoRinging(in: chatRoom)
+            )
         }
     }
     

@@ -1129,6 +1129,7 @@
 		838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F63CD2836778A009B41D6 /* DuplicatedItem.swift */; };
 		838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		838F7C13243B7A5B004DEC84 /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
+		839108C72C63C5DB00B4E4A9 /* HandleConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839108C62C63C5DB00B4E4A9 /* HandleConverter.swift */; };
 		8394EB812643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */; };
 		8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */; };
@@ -3945,6 +3946,7 @@
 		838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		838F27C62BA1E68700F267BC /* CallWillEndAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWillEndAlertRouter.swift; sourceTree = "<group>"; };
 		838F63CD2836778A009B41D6 /* DuplicatedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatedItem.swift; sourceTree = "<group>"; };
+		839108C62C63C5DB00B4E4A9 /* HandleConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleConverter.swift; sourceTree = "<group>"; };
 		8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModelTests.swift; sourceTree = "<group>"; };
 		8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Additions.swift"; sourceTree = "<group>"; };
 		8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportNodeRepository.swift; sourceTree = "<group>"; };
@@ -8881,6 +8883,7 @@
 			isa = PBXGroup;
 			children = (
 				83E8097C2BC0055F00E1B3FF /* CallKit */,
+				839108C82C63C94000B4E4A9 /* Helpers */,
 				83E3443A2BCE9F2B006A2E3D /* VoIP */,
 				837D0F382BC7E23000C629AE /* CallActionSync.swift */,
 				83E809682BBEA2C000E1B3FF /* CallManagerProtocol.swift */,
@@ -9613,6 +9616,14 @@
 				8340CB00284E534E007C3B39 /* NameCollisionAction.swift */,
 			);
 			path = ViewEntity;
+			sourceTree = "<group>";
+		};
+		839108C82C63C94000B4E4A9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				839108C62C63C5DB00B4E4A9 /* HandleConverter.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		8394CFB2211B1ADF00A1634A /* Cells */ = {
@@ -15065,6 +15076,7 @@
 				BFE3B9FE28596715003949FF /* GroupChatDetailsViewController.swift in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
 				991754F12B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift in Sources */,
+				839108C72C63C5DB00B4E4A9 /* HandleConverter.swift in Sources */,
 				5DD91D2F24D7EE62001C72DB /* HandlerView.swift in Sources */,
 				832CAEF3286485A40069409D /* HangOrEndCallRouter.swift in Sources */,
 				83135B2A2862123B0015AE2F /* HangOrEndCallView.swift in Sources */,

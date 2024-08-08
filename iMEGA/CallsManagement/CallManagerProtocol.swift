@@ -3,7 +3,7 @@ import MEGADomain
 /// Define entry points for call actions (start, mute, end call..) from any place (app UI, CallKit, links...)
 /// and management of calls in progress
 protocol CallManagerProtocol: AnyObject {
-    func startCall(in chatRoom: ChatRoomEntity, chatIdBase64Handle: String, hasVideo: Bool, notRinging: Bool, isJoiningActiveCall: Bool)
+    func startCall(with actionSync: CallActionSync)
     func answerCall(in chatRoom: ChatRoomEntity, withUUID uuid: UUID)
     func endCall(in chatRoom: ChatRoomEntity, endForAll: Bool)
     func muteCall(in chatRoom: ChatRoomEntity, muted: Bool)

@@ -781,8 +781,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     }
     
     private func startCall(in chatRoom: ChatRoomEntity) {
-        let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
-        callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: false, notRinging: true, isJoiningActiveCall: false)
+        callManager.startCall(
+            with: CallActionSync.startCallNoRinging(in: chatRoom)
+        )
     }
     
     private func prepareAndShowCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity) {

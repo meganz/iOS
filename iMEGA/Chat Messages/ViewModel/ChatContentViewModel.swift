@@ -346,19 +346,28 @@ final class ChatContentViewModel: ViewModelType {
         if shouldOpenWaitingRoom() {
             openWaitingRoom()
         } else {
-            let chatIdBase64Handle = handleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "Unknown"
             if callUseCase.call(for: chatRoom.chatId) != nil {
                 if let incomingCallUUID = uuidForActiveCallKitCall() {
                     callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
                 } else {
-                    callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: true)
+                    startCallJoiningActiveCall(true, withVideo: videoCall, notRinging: notRinging)
                 }
             } else {
-                callManager.startCall(in: chatRoom, chatIdBase64Handle: chatIdBase64Handle, hasVideo: videoCall, notRinging: notRinging, isJoiningActiveCall: false)
+                startCallJoiningActiveCall(false, withVideo: videoCall, notRinging: notRinging)
             }
         }
     }
     
+    private func startCallJoiningActiveCall(_ joining: Bool, withVideo: Bool, notRinging: Bool) {
+        callManager.startCall(
+            with: CallActionSync(
+                chatRoom: chatRoom,
+                videoEnabled: withVideo,
+                notRinging: notRinging,
+                isJoiningActiveCall: joining
+            )
+        )
+    }
     private func uuidForActiveCallKitCall() -> UUID? {
         callManager.callUUID(forChatRoom: chatRoom)
     }
