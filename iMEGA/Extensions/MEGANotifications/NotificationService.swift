@@ -10,13 +10,11 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     private static var session: String?
     private static var setLogToConsole = false
     private static let genericBody = Strings.Localizable.youMayHaveNewMessages
-    private let memoryPressureSource = DispatchSource.makeMemoryPressureSource(
-        eventMask: .all,
-        queue: nil
-    )
+
     private var contentHandler: ((UNNotificationContent) -> Void)?
     private var bestAttemptContent: UNMutableNotificationContent?
-    private var chatId: ChatIdEntity?
+    
+    private var chatId: UInt64?
     private var msgId: UInt64?
     private var megatime: TimeInterval? // set by the api
     private var megatime2: TimeInterval? // set by the pushserver
@@ -36,14 +34,13 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         UncaughtExceptionHandler.registerHandler()
         NotificationService.setupLogging()
         MEGALogDebug("NSE Init, pid: \(ProcessInfo.processInfo.processIdentifier)")
-        observeAndLogMemoryPressure()
     }
-    
+
     // MARK: - UNNotificationServiceExtension
-    
+
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         MEGALogInfo("Push received: request identifier: \(request.identifier)\n user info: \(request.content.userInfo)")
-        
+
         if request.content.isStartScheduledMeetingNotification == true {
             processStartScheduledMeetingNotification(withContentHandler: contentHandler, request: request)
             return
@@ -65,7 +62,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         if let currentSession = NotificationService.session {
             guard currentSession == session else {
                 MEGALogDebug("Restart extension process: NSE session != Keychain session")
-                // restartExtensionProcess calls processNotification internally
                 restartExtensionProcess(with: session)
                 return
             }
@@ -73,34 +69,24 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier),
                sharedUserDefaults.bool(forKey: MEGAInvalidateNSECache) {
                 MEGALogDebug("Restart extension process: app invalidates the NSE cache")
-                // restartExtensionProcess calls processNotification internally
                 restartExtensionProcess(with: session)
                 return
             }
         } else {
-            
-            NotificationService.initExtensionProcess(
-                delegate: self, 
-                loginRequired: { Self.mustLoginToProcessPush(chatId: chatId )},
-                with: session,
-                completion: { [weak self] success in
-                    if success {
-                        MEGALogDebug("didReceive, login success")
-                        NotificationService.session = session
-                        self?.processNotification()
-                    } else {
-                        MEGALogError("didReceive, login failed")
-                        self?.postNotification(withError: "login failed")
-                    }
-                })
+            guard NotificationService.initExtensionProcess(with: session) else {
+                return
+            }
+            NotificationService.session = session
         }
+        
+        processNotification()
     }
-    
+
     override func serviceExtensionTimeWillExpire() {
         MEGALogDebug("Service extension time will expire")
         if let chatId = chatId, let msgId = msgId, let message = MEGAChatSdk.shared.message(forChat: chatId, messageId: msgId) {
             if message.type == .unknown {
-                postNotification(withError: "Unknown message type")
+                postNotification(withError: "Unknown message")
             } else {
                 let error = !generateNotification(with: message, immediately: true)
                 postNotification(withError: error ? "No chat room for message" : nil, message: message)
@@ -110,13 +96,11 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             postNotification(withError: "Service Extension time will expire and message not found")
         }
     }
-    
+
     // MARK: - Private
     
     private func generateNotification(with message: MEGAChatMessage, immediately: Bool) -> Bool {
-        MEGALogDebug("generateNotification: messageId \(message.messageId), immediately \(immediately)")
         guard let chatId = chatId, let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId) else {
-            MEGALogError("generateNotification: no chatRoom for chat id = \(String(describing: chatId))")
             return false
         }
         let notificationManager = MEGALocalNotificationManager(chatRoom: chatRoom, message: message)
@@ -170,7 +154,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             guard let destinationFilePath = path(for: node, in: "thumbnailsV3") else {
                 return readyToPost
             }
-            
+
             MEGASdk.sharedNSE.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: RequestDelegate { [weak self] result in
                 guard case let .success(request) = result else {
                     return
@@ -193,15 +177,15 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private func postNotification(withError error: String?, message: MEGAChatMessage? = nil) {
-        MEGALogDebug("postNotification: \(String(describing: error)) message is not nil: \(message != nil)")
+        MEGAChatSdk.shared.remove(self as MEGAChatNotificationDelegate)
+
         guard let contentHandler = contentHandler else {
-            MEGALogError("contentHandler is nil")
             return
         }
         guard let bestAttemptContent = bestAttemptContent else {
             return
         }
-        
+
         if let errorString = error {
             MEGALogError(errorString)
             bestAttemptContent.body = NotificationService.genericBody
@@ -227,10 +211,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         checkDelaysWithMessage(message)
         
         if (message?.status == .seen) || message?.isDeleted ?? false {
-            MEGALogWarning("Message seen or deleted, will be silenced")
             contentHandler(UNNotificationContent()) // Don't deliver the notification to the user.
         } else {
-            MEGALogDebug("Render best attempt")
             contentHandler(bestAttemptContent)
         }
     }
@@ -253,23 +235,16 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private func processNotification() {
-        // this code assumes we are called after login succeeded
-        assert(NotificationService.session != nil, "session must be set")
         MEGALogDebug("Process notification")
         guard let megadataDictionary = bestAttemptContent?.userInfo["megadata"] as? [String: String],
-              let chatIdBase64 = megadataDictionary["chatid"],
-              let msgIdBase64 = megadataDictionary["msgid"]
-        else {
-            postNotification(withError: "No chatId/msgId in the notification")
-            return
+            let chatIdBase64 = megadataDictionary["chatid"],
+            let msgIdBase64 = megadataDictionary["msgid"]
+            else {
+                postNotification(withError: "No chatId/msgId in the notification")
+                return
         }
         let chatId = MEGASdk.handle(forBase64UserHandle: chatIdBase64)
         let msgId = MEGASdk.handle(forBase64UserHandle: msgIdBase64)
-        
-        guard Self.hasLocalDataForChat(chatId: chatId) else {
-            postNotification(withError: "No local data for chat saved")
-            return
-        }
         
         self.chatId = chatId
         self.msgId = msgId
@@ -284,77 +259,40 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         if let message = MEGAChatSdk.shared.message(forChat: chatId, messageId: msgId) {
-            // it's possible that once we are logged in , chat SDK already fetched message so we can display it now
-            // and we can be finished processing
-            MEGALogDebug("message in chat sdk exists")
-            guard message.type != .unknown else {
-                MEGALogError("Message exists in cache but unknown type or generate failed")
-                postNotification(withError: "Unknown type")
-                return
-            }
-            
-            if generateNotification(with: message, immediately: false) {
-                MEGALogDebug("generate cached success, will post")
+            if message.type != .unknown && generateNotification(with: message, immediately: false) {
+                MEGALogDebug("Message exists in karere cache")
                 postNotification(withError: nil, message: message)
                 return
-            } else {
-                MEGALogError("Message exists in cache but generate failed")
             }
         }
         
-        reportPushMessageReceived(chatId: chatId)
-    }
-    
-    private static func hasLocalDataForChat(chatId: ChatIdEntity?) -> Bool {
-        guard let chatId else { return false }
-        // this method must be called after MEGAChatSDK was initialized
-        return MEGAChatSdk.shared.chatRoom(forChatId: chatId) != nil
-    }
-    
-    private static func mustLoginToProcessPush(chatId: ChatIdEntity?) -> Bool {
-        // If we do NOT have local data, then we can avoid login and
-        // jump directly to show generic message.
-        // Ergo, we must login before we can process message further, if we
-        // have local data saved for given chat
-        hasLocalDataForChat(chatId: chatId)
+        MEGAChatSdk.shared.add(self as MEGAChatNotificationDelegate)
+        MEGAChatSdk.shared.pushReceived(withBeep: true, chatId: chatId, delegate: ChatRequestDelegate { [weak self] result in
+            guard case let .failure(error) = result else { return }
+            self?.postNotification(withError: "Error in pushReceived \(error)")
+        })
     }
     
     private func restartExtensionProcess(with session: String) {
-        MEGALogDebug("Restarting extension process")
         NotificationService.session = nil
-        MEGASdk.sharedNSE.localLogout(with: RequestDelegate {[weak self] result in
-            guard let self else { return }
+        MEGASdk.sharedNSE.localLogout(with: RequestDelegate { result in
             guard case .success = result else {
                 if case let .failure(error) = result {
                     self.postNotification(withError: "SDK error in localLogout \(error)")
                 }
                 return
             }
-            MEGAChatSdk.shared.localLogout(with: ChatRequestDelegate {[weak self] result in
-                guard let self else { return }
-                let _chatId = chatId
+            MEGAChatSdk.shared.localLogout(with: ChatRequestDelegate { result in
                 guard case .success = result else {
                     if case let .failure(error) = result {
                         self.postNotification(withError: "MEGAChat error in localLogout \(error)")
                     }
                     return
                 }
-                MEGALogDebug("Restart extension, login start")
-                NotificationService.initExtensionProcess(
-                    delegate: self,
-                    loginRequired: { Self.mustLoginToProcessPush(chatId: _chatId) },
-                    with: session,
-                    completion: { success in
-                        if success {
-                            MEGALogDebug("Restart extension, login succeeded")
-                            NotificationService.session = session
-                            self.processNotification()
-                        } else {
-                            MEGALogError("Restart extension, login failed")
-                            self.postNotification(withError: "Login failed [restartExtensionProcess]")
-                        }
-                    }
-                )
+                if NotificationService.initExtensionProcess(with: session) {
+                    NotificationService.session = session
+                    self.processNotification()
+                }
             })
         })
     }
@@ -404,20 +342,20 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
            let megatime = megatime,
            let msgTime = message?.timestamp?.timeIntervalSince1970 {
             if (megatime - msgTime) > MEGAMinDelayInSecondsToSendAnEvent {
-#if !DEBUG
+                #if !DEBUG
                 analyticsEventUseCase.sendAnalyticsEvent(.nse(.delayBetweenChatdAndApi))
-#endif
+                #endif
                 MEGALogWarning("Delay between chatd and api")
             }
             MEGALogDebug("Delay between chatd and api: \(megatime - msgTime)")
         }
         
         if let megatime = megatime,
-           let megatime2 = megatime2 {
+            let megatime2 = megatime2 {
             if (megatime2 - megatime) > MEGAMinDelayInSecondsToSendAnEvent {
-#if !DEBUG
+                #if !DEBUG
                 analyticsEventUseCase.sendAnalyticsEvent(.nse(.delayBetweenApiAndPushserver))
-#endif
+                #endif
                 MEGALogWarning("Delay between api and pushserver")
             }
             MEGALogDebug("Delay between api and pushserver: \(megatime2 - megatime)")
@@ -425,100 +363,30 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         if let megatime2 = megatime2 {
             if (pushReceivedTi - megatime2) > MEGAMinDelayInSecondsToSendAnEvent {
-#if !DEBUG
+                #if !DEBUG
                 analyticsEventUseCase.sendAnalyticsEvent(.nse(.delayBetweenPushserverAndNSE))
-#endif
+                #endif
                 MEGALogWarning("Delay between pushserver and Apple/device/NSE")
             }
             MEGALogDebug("Delay between pushserver and Apple/device/NSE: \(pushReceivedTi - megatime2)")
         }
     }
-    
+
     // MARK: - Lean init, login and connect
-    private static func initExtensionProcess(
-        delegate: any MEGAChatNotificationDelegate,
-        loginRequired: () -> Bool,
-        with session: String,
-        completion: @escaping (_ success: Bool) -> Void
-    ) {
-        
+    
+    private static func initExtensionProcess(with session: String) -> Bool {
         MEGALogDebug("Init extension process")
-        
-        MEGALogError("remove chatSDK delegate")
-        // removing in case we are re-initalising the NSE inside the same process
-        MEGAChatSdk.shared.remove(delegate)
-        
         copyDatabasesFromMainApp(with: session)
-        
-        /*
-         initialisation process for SDK/ChatSDK in NSE:
-         1. init SDK (it's a singleton)
-         2. copy databases (if needed)
-         3. init lean chatSDK
-           a). if init failed, we bail and exit
-           b). we have give it a chance to early exit if ChatSDK can't render
-               push and we'll show generic message
-         4. call fast login SDK
-         a). if we were reusing NSE process, we reconnect SDKs
-         5. when login SDK succeeds -> start processing incoming chat message notifications
-            a) only now can call pushReceived
-         */
-        
-        var shouldReconnect = false
-        var chatInit = MEGAChatSdk.shared.initState()
-        if chatInit == .notDone {
-            MEGALogDebug("Init state == notDone -> Init Karere Lean Mode")
-            chatInit = MEGAChatSdk.shared.initKarereLeanMode(withSid: session)
-            
-            MEGALogDebug("Reset client Id")
-            MEGAChatSdk.shared.resetClientId()
-        } else {
-            shouldReconnect = true
-        }
-        
-        guard chatInit != .error else {
-            MEGALogError("Init Karere Lean Mode fails -> logout")
-            MEGAChatSdk.shared.logout()
-            completion(false)
-            return
-        }
-        
-        // Here, we are given a chance to early out in case
-        // ChatSDK has no data regarding the chat id we are looking for.
-        // ChatSDK running in NSE cannot currently fetch data of chats it does not have stored,
-        // so we can jump directly to showing user generic message
-        // Hence, if our SDK DB has cached given chat data, we must login to process the message
-        guard loginRequired() else {
-            completion(true)
-            return
-        }
-        
-        loginToMEGA(with: session,
-                    completion: { success in
-            guard success else {
-                MEGALogError("Init loginToMEGA failed")
-                completion(false)
-                return
-            }
-            if shouldReconnect {
-                MEGALogDebug("Init state != notDone -> Reconnect")
-                MEGASdk.sharedNSE.reconnect()
-                MEGAChatSdk.shared.reconnect()
-            }
-            
-            MEGAChatSdk.shared.setBackgroundStatus(true)
-            
-            MEGALogDebug("Add chatSDK delegate")
-            MEGAChatSdk.shared.add(delegate)
-            
+
+        let success = initChat(with: session)
+        if success {
             MEGALogDebug("Init chat success")
-            
+            loginToMEGA(with: session)
             if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
-                MEGALogDebug("set false MEGAInvalidateNSECache")
                 sharedUserDefaults.set(false, forKey: MEGAInvalidateNSECache)
             }
-            completion(true)
-        })
+        }
+        return success
     }
     
     private static func setupLogging() {
@@ -553,25 +421,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGALogger.shared()?.startLogging(toFile: logsPath)
         }
     }
-    
-    func onChatNotification(_ api: MEGAChatSdk, chatId: UInt64, message: MEGAChatMessage) {
-        MEGALogDebug("onChatNotification chatId: \(chatId) messageId: \(message.messageId)")
-        guard chatId == self.chatId && message.messageId == self.msgId else {
-            let base64messageId = MEGASdk.base64Handle(forUserHandle: message.messageId) ?? ""
-            let base64chatId = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
-            MEGALogWarning("On chat: \(base64chatId) notification for message: \(base64messageId) different from the one that trigger the push")
-            return
-        }
-        
-        MEGALogDebug("onChatNotification generateNotification")
-        if generateNotification(with: message, immediately: false) {
-            MEGALogDebug("onChatNotification will post")
-            postNotification(withError: nil, message: message)
-        } else {
-            MEGALogDebug("onChatNotification generateNotification failed")
-        }
-    }
-    
+
     // As part of the lean init, a cache is required. It will not be generated from scratch.
     private static func copyDatabasesFromMainApp(with session: String) {
         MEGALogDebug("Copy databases from main app")
@@ -581,7 +431,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGALogError("No groupContainerURL")
             return
         }
-        
+
         let groupSupportURL = groupContainerURL.appendingPathComponent(MEGAExtensionGroupSupportFolder)
         if !fileManager.fileExists(atPath: groupSupportURL.path) {
             MEGALogError("No groupSupportURL")
@@ -589,7 +439,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         let nseCacheURL = groupContainerURL.appendingPathComponent(MEGANotificationServiceExtensionCacheFolder)
-        
+                
         do {
             try fileManager.createDirectory(at: nseCacheURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
@@ -597,10 +447,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         guard let nseCacheContent = try? fileManager.contentsOfDirectory(atPath: nseCacheURL.path),
-              let groupSupportPathContent = try? fileManager.contentsOfDirectory(atPath: groupSupportURL.path)
-        else {
-            MEGALogError("Error enumerating groupSupportPathContent")
-            return
+            let groupSupportPathContent = try? fileManager.contentsOfDirectory(atPath: groupSupportURL.path)
+            else {
+                MEGALogError("Error enumerating groupSupportPathContent")
+                return
         }
         
         let cacheSessionName = session.dropFirst(Int(MEGADropFirstCharactersFromSession))
@@ -621,68 +471,54 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
     }
     
-    /// it's necessary to do SDK call pushReceived ONLY _after_ LOGIN requested succeeded to avoid race condition
-    private static func loginToMEGA(with session: String, completion: @escaping (_ success: Bool) -> Void) {
+    private static func initChat(with session: String) -> Bool {
+        MEGALogDebug("Init chat")
+
+        var chatInit = MEGAChatSdk.shared.initState()
+        if chatInit == .notDone {
+            MEGALogDebug("Init state == notDone -> Init Karere Lean Mode")
+            chatInit = MEGAChatSdk.shared.initKarereLeanMode(withSid: session)
+            if chatInit == .error {
+                MEGALogError("Init Karere Lean Mode fails -> logout")
+                MEGAChatSdk.shared.logout()
+                return false
+            }
+            MEGALogDebug("Reset client Id")
+            MEGAChatSdk.shared.resetClientId()
+        } else {
+            MEGALogDebug("Init state != notDone -> Reconnect")
+            MEGASdk.sharedNSE.reconnect()
+            MEGAChatSdk.shared.reconnect()
+        }
+        
+        MEGAChatSdk.shared.setBackgroundStatus(true)
+        return true
+    }
+    
+    private static func loginToMEGA(with session: String) {
         MEGALogDebug("Login to MEGA")
         MEGASdk.sharedNSE.fastLogin(withSession: session, delegate: RequestDelegate { result in
-            switch result {
-            case let .failure(error):
-                MEGALogError("Login error \(error)")
-                completion(false)
-            case .success:
-                MEGALogDebug("Login success")
-                completion(true)
-            }
-        })
-    }
-    
-    private func reportPushMessageReceived(chatId: ChatIdEntity) {
-        MEGALogDebug("reportPushMessageReceived \(chatId)")
-        if let memoryUsage = MemoryUsage() {
-            MEGALogDebug("Memory usage:\(memoryUsage.formattedDescription)")
-        }
-        MEGAChatSdk.shared.pushReceived(
-            withBeep: true,
-            chatId: chatId,
-            delegate: ChatRequestDelegate { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
-                // actual message content is received in onChatNotification callback
+            guard case let .failure(error) = result else {
                 return
-            case .failure(let error):
-                if error.type == .MegaChatErrorTypeExist {
-                    MEGALogError("pushReceived: previous PUSH is being processed")
-                } else {
-                    MEGALogError("pushReceived callback failure \(String(describing: error.name))")
-                }
-                postNotification(withError: "Error in pushReceived \(error)")
             }
+            
+            MEGALogError("Login error \(error)")
         })
     }
-    
-    private func observeAndLogMemoryPressure() {
-        memoryPressureSource.setEventHandler { [weak self] in
-            guard let self else { return }
-            
-            let event: DispatchSource.MemoryPressureEvent  = memoryPressureSource.mask
-            print(event)
-            switch event {
-            case DispatchSource.MemoryPressureEvent.normal:
-                MEGALogDebug("Memory pressure: normal")
-            case DispatchSource.MemoryPressureEvent.warning:
-                MEGALogWarning("Memory pressure: warning")
-            case DispatchSource.MemoryPressureEvent.critical:
-                MEGALogError("Memory pressure: criticial")
-            default:
-                break
-            }
-            
-            if let usage = MemoryUsage() {
-                MEGALogDebug("Pressure Warning: Memory usage:\(usage.formattedDescription)")
-            }
-            
+
+    // MARK: - MEGAChatNotificationDelegate
+
+    func onChatNotification(_ api: MEGAChatSdk, chatId: UInt64, message: MEGAChatMessage) {
+        if chatId != self.chatId || message.messageId != self.msgId {
+            let base64messageId = MEGASdk.base64Handle(forUserHandle: message.messageId) ?? ""
+            let base64chatId = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
+            MEGALogWarning("On chat: \(base64chatId) notification for message: \(base64messageId) different from the one that trigger the push")
+            return
         }
-        memoryPressureSource.resume()
+
+        if generateNotification(with: message, immediately: false) {
+            postNotification(withError: nil, message: message)
+        }
     }
+
 }

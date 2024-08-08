@@ -1306,7 +1306,6 @@
 		941255522BED03C700058C0D /* CallKitCallManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941255512BED03C700058C0D /* CallKitCallManagerTests.swift */; };
 		9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 9418A7A12ACF84210014C01C /* MEGADesignToken */; };
 		9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB282A4EE5FB002B0077 /* MEGAPermissions */; };
-		941FAB512C62179B0080F53E /* MemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941FAB502C62179B0080F53E /* MemoryUsage.swift */; };
 		9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422494128DB77A2009626E6 /* ContactLinkContentView.swift */; };
 		9422494428DB77B8009626E6 /* ContactLinkContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422494328DB77B8009626E6 /* ContactLinkContentView.xib */; };
 		9422636E2B445FF60010B667 /* DisplayModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422636D2B445FF60010B667 /* DisplayModeTests.swift */; };
@@ -4093,7 +4092,6 @@
 		941255512BED03C700058C0D /* CallKitCallManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitCallManagerTests.swift; sourceTree = "<group>"; };
 		9418DB272A4EE5E7002B0077 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
-		941FAB502C62179B0080F53E /* MemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUsage.swift; sourceTree = "<group>"; };
 		9422494128DB77A2009626E6 /* ContactLinkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkContentView.swift; sourceTree = "<group>"; };
 		9422494328DB77B8009626E6 /* ContactLinkContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactLinkContentView.xib; sourceTree = "<group>"; };
 		9422636D2B445FF60010B667 /* DisplayModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModeTests.swift; sourceTree = "<group>"; };
@@ -8816,7 +8814,6 @@
 				7794AED8231E4E0A0039C1D2 /* Info.plist */,
 				7794AEE0231E54680039C1D2 /* MEGANotifications-Bridging-Header.h */,
 				7794AEE2231E5C2F0039C1D2 /* MEGANotifications-PrefixHeader.pch */,
-				941FAB502C62179B0080F53E /* MemoryUsage.swift */,
 				BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */,
 				7794AED6231E4E0A0039C1D2 /* NotificationService.swift */,
 				BF121D662A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift */,
@@ -16142,7 +16139,6 @@
 				A84F4A93298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
 				A81BD5B227EB312400234902 /* MEGAStore+Message.swift in Sources */,
 				774941DB240FF69800FC5CB6 /* MEGAStore.m in Sources */,
-				941FAB512C62179B0080F53E /* MemoryUsage.swift in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
 				774941E22410EAEF00FC5CB6 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				774941E02410EAE000FC5CB6 /* MOMediaDestination+CoreDataClass.m in Sources */,
