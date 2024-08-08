@@ -1016,7 +1016,7 @@
 
 - (void)indexFavourites {
     self.spotlightIndexer = [[SpotlightIndexer alloc] initWithSdk:MEGASdk.shared passcodeEnabled:LTHPasscodeViewController.doesPasscodeExist];
-    [self.spotlightIndexer indexFavourites];
+    [self.spotlightIndexer indexFavouritesWithCompletionHandler:^{ }];
 }
 
 #pragma mark - LTHPasscodeViewControllerDelegate
@@ -1043,7 +1043,7 @@
 }
 
 - (void)passcodeWasEnabled {
-    [self.spotlightIndexer deindexAllSearchableItems];
+    [self.spotlightIndexer deindexAllSearchableItemsWithCompletionHandler:^{ }];
 }
 
 - (void)passcodeViewControllerWillClose {
