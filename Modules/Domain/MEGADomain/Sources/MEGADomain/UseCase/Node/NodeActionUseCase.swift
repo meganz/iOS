@@ -1,4 +1,4 @@
-public protocol NodeActionUseCaseProtocol {
+public protocol NodeActionUseCaseProtocol: Sendable {
     
     /// Fetch the filesystem in MEGA
     func fetchNodes() async throws
