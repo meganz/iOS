@@ -8,10 +8,10 @@ public extension MEGASdk {
     /// - Returns: An array of items of type T.
     static func fetchItems<T: NSObject>(
         numberOfItems: Int,
-        itemAtIndexClosure: @escaping (Int32) -> T?
+        itemAtIndexClosure: @escaping (Int) -> T?
     ) -> [T] {
         (0..<numberOfItems).compactMap { index in
-            itemAtIndexClosure(Int32(index))
+            itemAtIndexClosure(index)
         }
     }
 }
