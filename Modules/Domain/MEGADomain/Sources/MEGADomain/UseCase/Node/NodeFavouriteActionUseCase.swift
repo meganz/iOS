@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol NodeFavouriteActionUseCaseProtocol {
+public protocol NodeFavouriteActionUseCaseProtocol: Sendable {
     func favourite(node: NodeEntity) async throws
     func unFavourite(node: NodeEntity) async throws
 }

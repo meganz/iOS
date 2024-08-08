@@ -1,4 +1,4 @@
-public protocol NodeActionRepositoryProtocol: RepositoryProtocol {
+public protocol NodeActionRepositoryProtocol: RepositoryProtocol, Sendable {
     func fetchNodes() async throws
     func createFolder(name: String, parent: NodeEntity) async throws -> NodeEntity
     func rename(node: NodeEntity, name: String) async throws -> NodeEntity
