@@ -16,7 +16,7 @@ import UserNotifications
 // there is a simplified wrapper: DevicePermissionHandlerObjCWrapper
 // so please use it instead of exposing any of this to ObjC,
 // but better still, convert code you touch to Swift
-public protocol DevicePermissionsHandling {
+public protocol DevicePermissionsHandling: Sendable {
     
     // request read/write access level (do not use level directly, use .MEGAAccessLevel) to user's photo library
     // should return true if user given full or partial access

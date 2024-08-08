@@ -10,12 +10,12 @@ extension PHAccessLevel {
 public struct DevicePermissionsHandler {
     
     public init(
-        mediaAccessor: @escaping (AVMediaType) async -> Bool,
-        mediaStatusAccessor: @escaping (AVMediaType) -> AVAuthorizationStatus,
-        photoAccessor: @escaping (PHAccessLevel) async -> PHAuthorizationStatus,
-        photoStatusAccessor: @escaping (PHAccessLevel) -> PHAuthorizationStatus,
-        notificationsAccessor: @escaping () async -> Bool,
-        notificationsStatusAccessor: @escaping () async -> UNAuthorizationStatus
+        mediaAccessor: @escaping @Sendable (AVMediaType) async -> Bool,
+        mediaStatusAccessor: @escaping @Sendable (AVMediaType) -> AVAuthorizationStatus,
+        photoAccessor: @escaping @Sendable (PHAccessLevel) async -> PHAuthorizationStatus,
+        photoStatusAccessor: @escaping @Sendable (PHAccessLevel) -> PHAuthorizationStatus,
+        notificationsAccessor: @escaping @Sendable () async -> Bool,
+        notificationsStatusAccessor: @escaping @Sendable () async -> UNAuthorizationStatus
     ) {
         self.mediaAccessor = mediaAccessor
         self.mediaStatusAccessor = mediaStatusAccessor
@@ -25,14 +25,14 @@ public struct DevicePermissionsHandler {
         self.notificationsStatusAccessor = notificationsStatusAccessor
     }
     
-    private let mediaAccessor: (AVMediaType) async -> Bool
-    private let mediaStatusAccessor: (AVMediaType) -> AVAuthorizationStatus
+    private let mediaAccessor: @Sendable (AVMediaType) async -> Bool
+    private let mediaStatusAccessor: @Sendable (AVMediaType) -> AVAuthorizationStatus
     
-    private let photoAccessor: (PHAccessLevel) async -> PHAuthorizationStatus
-    private let photoStatusAccessor: (PHAccessLevel) -> PHAuthorizationStatus
+    private let photoAccessor: @Sendable (PHAccessLevel) async -> PHAuthorizationStatus
+    private let photoStatusAccessor: @Sendable (PHAccessLevel) -> PHAuthorizationStatus
     
-    private let notificationsAccessor: () async -> Bool
-    private let notificationsStatusAccessor: () async -> UNAuthorizationStatus
+    private let notificationsAccessor: @Sendable () async -> Bool
+    private let notificationsStatusAccessor: @Sendable () async -> UNAuthorizationStatus
     
 }
 
