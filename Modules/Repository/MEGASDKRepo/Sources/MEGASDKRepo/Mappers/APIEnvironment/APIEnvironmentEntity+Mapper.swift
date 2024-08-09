@@ -7,7 +7,7 @@ extension APIEnvironmentEntity: RawRepresentable {
         switch rawValue {
         case "Production": self = .production
         case "Staging": self = .staging
-        case "Staging444": self = .staging444
+        case "bt1444": self = .bt1444
         case "Sandbox3": self = .sandbox3
         default:
             return nil
@@ -16,19 +16,19 @@ extension APIEnvironmentEntity: RawRepresentable {
     
     public var rawValue: String {
         switch self {
-        case .production: return "Production"
-        case .staging: return "Staging"
-        case .staging444: return "Staging:444"
-        case .sandbox3: return "Sandbox3"
+        case .production: "Production"
+        case .staging: "Staging"
+        case .bt1444: "bt1:444"
+        case .sandbox3: "Sandbox3"
         }
     }
     
     public func toEnvironmentCode() -> Int {
         switch self {
-        case .production: return 0
-        case .staging: return 1
-        case .staging444: return 2
-        case .sandbox3: return 3
+        case .production: 0
+        case .staging: 1
+        case .bt1444: 2
+        case .sandbox3: 3
         }
     }
 }

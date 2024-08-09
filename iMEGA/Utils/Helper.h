@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
     MEGAAPIEnvProduction,
     MEGAAPIEnvStaging,
-    MEGAAPIEnvStaging444,
+    MEGAAPIEnvBt1444,
     MEGAAPIEnvSandbox3
 };
 
