@@ -4,7 +4,7 @@ import MEGAL10n
 import MEGAPresentation
 import MEGASwift
 
-protocol CommonParticipantViewModel: AnyObject {
+protocol CommonParticipantViewModel: AnyObject, Sendable {
     var participant: CallParticipantEntity { get }
     var userImageUseCase: any UserImageUseCaseProtocol { get set }
     var chatRoomUseCase: any ChatRoomUseCaseProtocol { get }
