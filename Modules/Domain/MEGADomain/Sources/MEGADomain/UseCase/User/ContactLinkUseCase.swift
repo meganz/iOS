@@ -1,4 +1,4 @@
-public protocol ContactLinkUseCaseProtocol {
+public protocol ContactLinkUseCaseProtocol: Sendable {
     func contactLinkQuery(handle: HandleEntity) async throws -> ContactLinkEntity?
 }
 
