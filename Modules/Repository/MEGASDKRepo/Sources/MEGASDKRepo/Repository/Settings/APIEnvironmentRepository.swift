@@ -17,7 +17,7 @@ public struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
     private enum Constants {
         static let productionSDKUrl = "https://g.api.mega.co.nz/"
         static let stagingSDKUrl = "https://staging.api.mega.co.nz/"
-        static let staging444SDKUrl = "https://staging.api.mega.co.nz:444/"
+        static let bt1444SDKUrl = "https://bt1.api.mega.co.nz:444/"
         static let sandbox3SDKUrl = "https://api-sandbox3.developers.mega.co.nz/"
     }
     
@@ -35,9 +35,9 @@ public struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
         case .staging:
             sdk.changeApiUrl(Constants.stagingSDKUrl, disablepkp: false)
             folderSdk.changeApiUrl(Constants.stagingSDKUrl, disablepkp: false)
-        case .staging444:
-            sdk.changeApiUrl(Constants.staging444SDKUrl, disablepkp: true)
-            folderSdk.changeApiUrl(Constants.staging444SDKUrl, disablepkp: true)
+        case .bt1444:
+            sdk.changeApiUrl(Constants.bt1444SDKUrl, disablepkp: true)
+            folderSdk.changeApiUrl(Constants.bt1444SDKUrl, disablepkp: true)
         case .sandbox3:
             sdk.changeApiUrl(Constants.sandbox3SDKUrl, disablepkp: true)
             folderSdk.changeApiUrl(Constants.sandbox3SDKUrl, disablepkp: true)

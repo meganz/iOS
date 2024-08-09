@@ -70,8 +70,8 @@ public final class AboutViewModel: ObservableObject {
                 environment: .staging
             ),
             APIEnvironment(
-                title: APIEnvironmentEntity.staging444.rawValue,
-                environment: .staging444
+                title: APIEnvironmentEntity.bt1444.rawValue,
+                environment: .bt1444
             ),
             APIEnvironment(
                 title: APIEnvironmentEntity.sandbox3.rawValue,

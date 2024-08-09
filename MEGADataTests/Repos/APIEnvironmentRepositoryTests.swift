@@ -16,7 +16,7 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
     private enum Constants {
         static let productionSDKUrl = "https://g.api.mega.co.nz/"
         static let stagingSDKUrl = "https://staging.api.mega.co.nz/"
-        static let staging444SDKUrl = "https://staging.api.mega.co.nz:444/"
+        static let bt1444SDKUrl = "https://bt1.api.mega.co.nz:444/"
         static let sandbox3SDKUrl = "https://api-sandbox3.developers.mega.co.nz/"
     }
     
@@ -48,12 +48,12 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
         XCTAssertFalse(disablepkp)
     }
     
-    func testChangeAPIURL_staging444() throws {
-        repo.changeAPIURL(.staging444) {}
-        XCTAssertEqual(sdk.apiURL, Constants.staging444SDKUrl)
+    func testChangeAPIURL_bt1444() throws {
+        repo.changeAPIURL(.bt1444) {}
+        XCTAssertEqual(sdk.apiURL, Constants.bt1444SDKUrl)
         disablepkp = try XCTUnwrap(sdk.disablepkp)
         XCTAssertTrue(disablepkp)
-        XCTAssertEqual(folderSdk.apiURL, Constants.staging444SDKUrl)
+        XCTAssertEqual(folderSdk.apiURL, Constants.bt1444SDKUrl)
         disablepkp = try XCTUnwrap(folderSdk.disablepkp)
         XCTAssertTrue(disablepkp)
     }

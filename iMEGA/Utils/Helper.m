@@ -315,8 +315,8 @@
         [Helper apiURLChanged];
     }]];
     
-    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"Staging:444", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [Helper setApiURL:MEGAAPIEnvStaging444];
+    [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"Bt1:444", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [Helper setApiURL:MEGAAPIEnvBt1444];
         [Helper apiURLChanged];
     }]];
     
@@ -338,9 +338,9 @@
             [MEGASdk.shared changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             [MEGASdk.sharedFolderLink changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             break;
-        case MEGAAPIEnvStaging444:
-            [MEGASdk.shared changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
-            [MEGASdk.sharedFolderLink changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
+        case MEGAAPIEnvBt1444:
+            [MEGASdk.shared changeApiUrl:@"https://bt1.api.mega.co.nz:444/" disablepkp:YES];
+            [MEGASdk.sharedFolderLink changeApiUrl:@"https://bt1.api.mega.co.nz:444/" disablepkp:YES];
             break;
         case MEGAAPIEnvSandbox3:
             [MEGASdk.shared changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
