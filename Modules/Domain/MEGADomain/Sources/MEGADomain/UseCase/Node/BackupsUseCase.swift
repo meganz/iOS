@@ -1,4 +1,4 @@
-public protocol BackupsUseCaseProtocol {
+public protocol BackupsUseCaseProtocol: Sendable {
     func hasBackupNode(in nodes: [NodeEntity]) async -> Bool
     func isBackupNode(_ node: NodeEntity) -> Bool
     func isBackupsRootNode(_ node: NodeEntity) -> Bool

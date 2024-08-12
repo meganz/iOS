@@ -7,11 +7,11 @@ import XCTest
 
 final class NodeActionViewModelTests: XCTestCase {
 
-    func testIsHidden_hiddenNodeFeatureOff_shouldReturnNil() async {
+    func testIsHidden_hiddenNodeFeatureOffIrrespectiveOfNodesSharedOrBackup_shouldReturnNil() async {
         let node = NodeEntity(handle: 65, isMarkedSensitive: true)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-        let result = await sut.isHidden([node], isFromSharedItem: false)
+        let result = await sut.isHidden([node], isFromSharedItem: Bool.random(), containsBackupNode: Bool.random())
         XCTAssertNil(result)
     }
     
@@ -20,7 +20,7 @@ final class NodeActionViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let result = await sut.isHidden(nodes, isFromSharedItem: false)
+        let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
         
         XCTAssertTrue(try XCTUnwrap(result))
     }
@@ -31,7 +31,7 @@ final class NodeActionViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        let result = await sut.isHidden(nodes, isFromSharedItem: false)
+        let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
         
         XCTAssertFalse(try XCTUnwrap(result))
     }
@@ -41,7 +41,7 @@ final class NodeActionViewModelTests: XCTestCase {
             let node = NodeEntity(handle: 65, isMarkedSensitive: isMarkedSensitive)
             let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
             let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-            let result = await sut.isHidden([node], isFromSharedItem: true)
+            let result = await sut.isHidden([node], isFromSharedItem: true, containsBackupNode: false)
             XCTAssertNil(result)
         }
     }
@@ -58,7 +58,7 @@ final class NodeActionViewModelTests: XCTestCase {
                 nodesForLocation: [.cameraUpload: systemNode]),
             featureFlagProvider: featureFlagProvider
         )
-        let result = await sut.isHidden(nodes, isFromSharedItem: false)
+        let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
         XCTAssertNil(result)
     }
     
@@ -82,7 +82,7 @@ final class NodeActionViewModelTests: XCTestCase {
                     containsSystemGeneratedNodeError: error),
                 featureFlagProvider: featureFlagProvider
             )
-            let result = await sut.isHidden(nodes, isFromSharedItem: false)
+            let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
             XCTAssertNil(result)
         }
     }
@@ -92,7 +92,7 @@ final class NodeActionViewModelTests: XCTestCase {
         let sut = makeSUT(
             featureFlagProvider: featureFlagProvider
         )
-        let result = await sut.isHidden([], isFromSharedItem: false)
+        let result = await sut.isHidden([], isFromSharedItem: false, containsBackupNode: false)
         XCTAssertNil(result)
     }
     
@@ -104,16 +104,25 @@ final class NodeActionViewModelTests: XCTestCase {
             nodeNotSensitive.handle: .success(false),
             nodeInheritingSensitivity.handle: .success(true)
         ]
-        let nodeUseCase = MockNodeDataUseCase(
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             isInheritingSensitivityResults: isInheritingSensitivityResults)
         
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(
-            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: featureFlagProvider
         )
-        let result = await sut.isHidden(nodes, isFromSharedItem: false)
+        let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
         XCTAssertNil(result)
+    }
+    
+    func testIsHidden_nodesContainBackupNode_shouldReturnNil() async {
+        let node = NodeEntity(handle: 1)
+        let sut = makeSUT()
+        
+        let isHidden = await sut.isHidden([node], isFromSharedItem: false, containsBackupNode: true)
+        
+        XCTAssertNil(isHidden)
     }
 
     func testHasValidProOrUnexpiredBusinessAccount_onAccountValidity_shouldReturnCorrectResult() {
@@ -158,8 +167,9 @@ final class NodeActionViewModelTests: XCTestCase {
     func testIsSensitive_whenFeatureFlagEnabledAndParentNodeIsSensitive_shouldReturnTrue() async {
         // given
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(true))
-        let sut = makeSUT(nodeUseCase: nodeUseCase, featureFlagProvider: featureFlagProvider)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true))
+        let sut = makeSUT(sensitiveNodeUseCase: sensitiveNodeUseCase,
+                          featureFlagProvider: featureFlagProvider)
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
         
         // when
@@ -172,14 +182,14 @@ final class NodeActionViewModelTests: XCTestCase {
     private func makeSUT(
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         maxDetermineSensitivityTasks: Int = 10,
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> NodeActionViewModel {
         NodeActionViewModel(
             accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
-            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             maxDetermineSensitivityTasks: maxDetermineSensitivityTasks,
             featureFlagProvider: featureFlagProvider)
     }
