@@ -1,4 +1,4 @@
-public protocol RecentNodesUseCaseProtocol {
+public protocol RecentNodesUseCaseProtocol: Sendable {
     func recentActionBuckets(limitCount: Int) async throws -> [RecentActionBucketEntity]
 }
 

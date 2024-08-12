@@ -1,10 +1,9 @@
 import Foundation
 
 // MARK: - Use case protocol -
-public protocol FavouriteItemsUseCaseProtocol {
-    func createFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
+public protocol FavouriteItemsUseCaseProtocol: Sendable {
+    func createFavouriteItems(_ items: [FavouriteItemEntity]) async throws
     func insertFavouriteItem(_ item: FavouriteItemEntity)
-    func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
     func deleteFavouriteItem(with base64Handle: Base64HandleEntity)
     func fetchAllFavouriteItems() -> [FavouriteItemEntity]
     func fetchFavouriteItems(upTo count: Int) -> [FavouriteItemEntity]
@@ -18,17 +17,9 @@ public struct FavouriteItemsUseCase<T: FavouriteItemsRepositoryProtocol>: Favour
         self.repo = repo
     }
 
-    public func createFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
-        repo.deleteAllFavouriteItems { (result) in
-            switch result {
-            case .success:
-                repo.batchInsertFavouriteItems(items) { insertResult in
-                    completion(insertResult)
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    public func createFavouriteItems(_ items: [FavouriteItemEntity]) async throws {
+        try await repo.deleteAllFavouriteItems()
+        try await repo.batchInsertFavouriteItems(items)
     }
     
     public func deleteFavouriteItem(with base64Handle: Base64HandleEntity) {
@@ -38,11 +29,7 @@ public struct FavouriteItemsUseCase<T: FavouriteItemsRepositoryProtocol>: Favour
     public func insertFavouriteItem(_ item: FavouriteItemEntity) {
         repo.insertFavouriteItem(item)
     }
-    
-    public func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
-        repo.batchInsertFavouriteItems(items, completion: completion)
-    }
-    
+
     public func fetchAllFavouriteItems() -> [FavouriteItemEntity] {
         return repo.fetchAllFavouriteItems()
     }

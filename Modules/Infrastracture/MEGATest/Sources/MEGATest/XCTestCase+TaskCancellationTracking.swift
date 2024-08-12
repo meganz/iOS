@@ -34,4 +34,16 @@ public extension XCTestCase {
             XCTAssertTrue(isCancelled, description, file: file, line: line)
         }
     }
+    
+    func expectationTaskStarted(timeout: TimeInterval = 0.5, task: @escaping @Sendable() async -> Void) async -> Task<Void, Never> {
+        let taskStartExpectation = expectation(description: "Expected task to start")
+        
+        let startedTask = Task {
+            taskStartExpectation.fulfill()
+            await task()
+        }
+        
+        await fulfillment(of: [taskStartExpectation], timeout: timeout)
+        return startedTask
+    }
 }
