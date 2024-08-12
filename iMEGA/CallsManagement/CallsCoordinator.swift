@@ -1,11 +1,13 @@
 import CallKit
 import ChatRepo
 import Combine
+import CombineSchedulers
 import MEGADomain
 import MEGAPresentation
 
 protocol CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
+        scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
@@ -21,6 +23,7 @@ protocol CallsCoordinatorFactoryProtocol {
 
 @objc class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
+        scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
@@ -33,6 +36,7 @@ protocol CallsCoordinatorFactoryProtocol {
         callUpdateFactory: CXCallUpdateFactory
     ) -> CallsCoordinator {
         CallsCoordinator(
+            scheduler: scheduler,
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: chatUseCase,
@@ -86,10 +90,13 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callSessionUpdateSubscription: AnyCancellable?
     
+    let scheduler: AnySchedulerOf<DispatchQueue>
+
     @PreferenceWrapper(key: .presentPasscodeLater, defaultValue: false, useCase: PreferenceUseCase.default)
     var presentPasscodeLater: Bool
     
     init(
+        scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
@@ -102,6 +109,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         callUpdateFactory: CXCallUpdateFactory,
         callKitProviderDelegateFactory: some CallKitProviderDelegateProviding
     ) {
+        self.scheduler = scheduler
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
@@ -127,7 +135,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     
     private func onCallUpdateListener() {
         callUpdateSubscription = callUseCase.onCallUpdate()
-            .receive(on: DispatchQueue.main)
+            .receive(on: scheduler)
             .sink { [weak self] call in
                 self?.onCallUpdate(call)
             }
@@ -139,6 +147,8 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
             manageCallStatusChange(for: call)
         case .localAVFlags:
             updateVideoForCall(call)
+        case .ringingStatus:
+            endCallWhenRingingStopAndUserNotPresent(call)
         default:
             break
         }
@@ -268,6 +278,25 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private func userIsNotParticipatingInCall(inChat chatId: ChatIdEntity) -> Bool {
         callUseCase.call(for: chatId)?.status != .inProgress
     }
+    
+    /// When a new incoming call is reported, we need to check that same user has not answered already in other device.
+    /// If so, call must be reported as ended in order to dismiss VoIP call notification.
+    private func checkIfIncomingCallHasBeenAlreadyAnsweredElsewhere(for chatId: ChatIdEntity) {
+        if let call = callUseCase.call(for: chatId) {
+            for handle in call.participants where chatUseCase.myUserHandle() == handle {
+                reportEndCall(call)
+                break
+            }
+        }
+    }
+    
+    /// This happens when call is ringing (possibly VoIP call notification presented)
+    /// and answered in other device by same user
+    private func endCallWhenRingingStopAndUserNotPresent(_ call: CallEntity) {
+        if call.status == .userNoPresent && !call.isRinging {
+            reportEndCall(call)
+        }
+    }
 }
 
 extension CallsCoordinator: CallsCoordinatorProtocol {
@@ -370,11 +399,12 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         
         let update = callUpdateFactory.createCallUpdate(title: chatRoom.title ?? "Unknown")
         
-        providerDelegate?.provider.reportNewIncomingCall(with: incomingCallUUID, update: update) { error in
+        providerDelegate?.provider.reportNewIncomingCall(with: incomingCallUUID, update: update) { [weak self] error in
             guard error == nil else {
                 MEGALogError("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
                 return
             }
+            self?.checkIfIncomingCallHasBeenAlreadyAnsweredElsewhere(for: chatId)
             completion()
         }
     }

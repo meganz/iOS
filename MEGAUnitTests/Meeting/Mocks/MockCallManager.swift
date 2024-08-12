@@ -19,7 +19,7 @@ final class MockCallManager: CallManagerProtocol {
     var incomingCalls = [Incoming]()
     var callForUUIDToReturn: CallActionSync?
     var updateCallMuted_CalledTimes = 0
-    var callUUID: UUID?
+    var addIncomingCall_CalledTimes = 0
     
     func startCall(with actionSync: CallActionSync) {
         startCall_CalledTimes += 1
@@ -39,7 +39,7 @@ final class MockCallManager: CallManagerProtocol {
     
     func callUUID(forChatRoom chatRoom: ChatRoomEntity) -> UUID? {
         callUUID_CalledTimes += 1
-        return callUUID
+        return incomingCalls.first(where: { $0.chatRoom == chatRoom })?.uuid
     }
 
     func call(forUUID uuid: UUID) -> CallActionSync? {
@@ -56,6 +56,7 @@ final class MockCallManager: CallManagerProtocol {
     }
     
     func addIncomingCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
+        addIncomingCall_CalledTimes += 1
         incomingCalls.append(
             Incoming(uuid: uuid, chatRoom: chatRoom)
         )

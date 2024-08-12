@@ -138,7 +138,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let call = CallEntity(isRinging: true)
         let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
         let callManager = MockCallManager()
-        callManager.callUUID = UUID()
+        callManager.addIncomingCall(withUUID: UUID(), chatRoom: chatRoom)
         let sut = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,

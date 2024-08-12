@@ -144,7 +144,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         chatUseCase.isCallInProgress = true
         callUseCase.call = CallEntity(status: .userNoPresent)
         let callManager = MockCallManager()
-        callManager.callUUID = UUID()
+        callManager.addIncomingCall(withUUID: UUID(), chatRoom: ChatRoomEntity(chatId: 100))
 
         let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callManager: callManager)
 
@@ -157,7 +157,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         chatUseCase.isCallInProgress = true
         callUseCase.call = CallEntity(status: .inProgress)
         let callManager = MockCallManager()
-        callManager.callUUID = UUID()
+        callManager.addIncomingCall(withUUID: UUID(), chatRoom: ChatRoomEntity())
 
         let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callManager: callManager)
 
