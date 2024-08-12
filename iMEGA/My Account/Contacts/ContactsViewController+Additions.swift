@@ -123,8 +123,9 @@ extension ContactsViewController {
             sdk: MEGASdk.shared,
             contactsMode: contactsMode,
             shareUseCase: ShareUseCase(
-                repo: ShareRepository.newRepo,
-                filesSearchRepository: FilesSearchRepository.newRepo)
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo)
         )
     }
 

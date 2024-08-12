@@ -274,7 +274,10 @@ class ExplorerBaseViewController: UIViewController {
         guard let selected = selectedNodes()?.toNodeEntities() else { return }
         
         let sharedItemsRouter = SharedItemsViewRouter()
-        let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo)
+        let shareUseCase = ShareUseCase(
+            shareRepository: ShareRepository.newRepo,
+            filesSearchRepository: FilesSearchRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo)
         
         Task { @MainActor [shareUseCase] in
             do {

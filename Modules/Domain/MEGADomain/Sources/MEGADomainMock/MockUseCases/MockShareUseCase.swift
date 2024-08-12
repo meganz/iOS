@@ -1,13 +1,13 @@
 import MEGADomain
 
-public class MockShareUseCase: ShareUseCaseProtocol {
+public final class MockShareUseCase: ShareUseCaseProtocol {
     private let nodes: [NodeEntity]
     private let shares: [ShareEntity]
     private let sharedNodeHandles: [HandleEntity]
     private let areUserCredentialsVerified: Bool
     private let user: UserEntity?
     private let createShareKeysError: Error?
-    private let doesContainSensitiveDescendants: [HandleEntity: Bool]
+    private let containsSensitiveContent: [HandleEntity: Bool]
     
     public var userFunctionHasBeenCalled = false
     public var createShareKeyFunctionHasBeenCalled = false
@@ -20,7 +20,7 @@ public class MockShareUseCase: ShareUseCaseProtocol {
         areUserCredentialsVerified: Bool = false,
         user: UserEntity? = nil,
         createShareKeysError: Error? = nil,
-        doesContainSensitiveDescendants: [HandleEntity: Bool] = [:]
+        containsSensitiveContent: [HandleEntity: Bool] = [:]
     ) {
         self.nodes = nodes
         self.shares = shares
@@ -28,7 +28,7 @@ public class MockShareUseCase: ShareUseCaseProtocol {
         self.areUserCredentialsVerified = areUserCredentialsVerified
         self.user = user
         self.createShareKeysError = createShareKeysError
-        self.doesContainSensitiveDescendants = doesContainSensitiveDescendants
+        self.containsSensitiveContent = containsSensitiveContent
     }
     
     public func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
@@ -60,9 +60,9 @@ public class MockShareUseCase: ShareUseCaseProtocol {
         return sharedNodeHandles
     }
     
-    public func doesContainSensitiveDescendants(in nodes: some Sequence<NodeEntity>) async throws -> Bool {
+    public func containsSensitiveContent(in nodes: some Sequence<NodeEntity>) async throws -> Bool {
         nodes.contains { node in
-            doesContainSensitiveDescendants[node.handle] ?? false
+            containsSensitiveContent[node.handle] ?? false
         }
     }
 }

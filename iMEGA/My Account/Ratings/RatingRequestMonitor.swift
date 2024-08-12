@@ -20,8 +20,13 @@ import StoreKit
         currentAppVersion: currentAppVersion
     )
     private lazy var shareUseCase: some ShareUseCaseProtocol = ShareUseCase(
-        repo: ShareRepository(sdk: sdk),
-        filesSearchRepository: FilesSearchRepository(sdk: sdk)
+        shareRepository: ShareRepository(sdk: sdk),
+        filesSearchRepository: FilesSearchRepository(sdk: sdk),
+        nodeRepository: NodeRepository(
+            sdk: sdk,
+            sharedFolderSdk: .shared,
+            nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk)
+        )
     )
     
     @objc init(sdk: MEGASdk) {

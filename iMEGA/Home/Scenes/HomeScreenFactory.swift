@@ -131,8 +131,9 @@ final class HomeScreenFactory: NSObject {
         homeViewController.router = router
         homeViewController.homeViewModel = HomeViewModel(
             shareUseCase: ShareUseCase(
-                repo: ShareRepository.newRepo,
-                filesSearchRepository: FilesSearchRepository.newRepo),
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
             tracker: tracker
         )
         
