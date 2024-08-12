@@ -10,16 +10,9 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
     }
     
     private let sdk: MEGASdk
-    @Atomic private var onNodesUpdate: (([NodeEntity]) -> Void)?
-    @Atomic private var favouritesNodesEntityArray: [NodeEntity]?
     
     init(sdk: MEGASdk) {
         self.sdk = sdk
-    }
-    
-    @available(*, renamed: "allFavouritesNodes()")
-    public func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        getFavouriteNodes(limitCount: 0, completion: completion)
     }
     
     public func allFavouritesNodes(limit: Int) async throws -> [NodeEntity] {
@@ -31,23 +24,27 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
             }
         }
     }
+    
+    public func allFavouritesNodes(searchString: String?, limit: Int) async throws -> [NodeEntity] {
+        try await withAsyncThrowingValue{ completion in
+            allFavouriteNodes(searchString: searchString) { completion($0.mapError { $0 as any Error }) }
+        }
+    }
         
-    public func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        sdk.favourites(forParent: nil, count: limitCount, delegate: RequestDelegate { (result) in
+    private func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+        sdk.favourites(forParent: nil, count: limitCount, delegate: RequestDelegate { [weak sdk] (result) in
             switch result {
             case .success(let request):
-                guard let favouritesHandleArray = request.megaHandleArray else {
+                guard 
+                    let sdk,
+                    let favouritesHandleArray = request.megaHandleArray else {
                     return
                 }
-                let favouritesNodesArray = favouritesHandleArray.compactMap { handle -> NodeEntity? in
-                    guard let node = self.sdk.node(forHandle: handle.uint64Value) else {
-                        return nil
+                let favouritesNodesArray: [NodeEntity] = favouritesHandleArray
+                    .compactMap { handle -> NodeEntity? in
+                        sdk.node(forHandle: handle.uint64Value)?.toNodeEntity()
                     }
-                    return node.toNodeEntity()
-                }
-                
-                self.$favouritesNodesEntityArray.mutate { $0 = favouritesNodesArray }
-                
+                                
                 completion(.success(favouritesNodesArray))
                 
             case .failure:
@@ -56,7 +53,7 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
         })
     }
     
-    public func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+    private func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         getFavouriteNodes(limitCount: 0) { result in
             switch result {
             case .success(let nodes):
@@ -70,47 +67,5 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
             }
         }
     }
-    
-    public func allFavouritesNodes(searchString: String?, limit: Int) async throws -> [NodeEntity] {
-        try await withCheckedThrowingContinuation { continuation in
-            allFavouriteNodes(searchString: searchString) { continuation.resume(with: $0) }
-        }
-    }
-    
-    public func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
-        sdk.add(self)
-        
-        $onNodesUpdate.mutate { $0 = callback }
-    }
-    
-    public func unregisterOnNodesUpdate() {
-        sdk.remove(self)
-        
-        $onNodesUpdate.mutate { $0 = nil }
-    }
-}
 
-extension FavouriteNodesRepository: MEGAGlobalDelegate {
-    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        guard let nodesUpdateArray = nodeList?.toNodeArray() else { return }
-        var shouldProcessOnNodesUpdate: Bool = false
-        
-        var favouritesDictionary = [String: String]()
-        self.favouritesNodesEntityArray?.forEach({ nodeEntity in
-            favouritesDictionary[nodeEntity.base64Handle] = nodeEntity.base64Handle
-        })
-        
-        for nodeUpdated in nodesUpdateArray {
-            if let base64Handle = nodeUpdated.base64Handle,
-               nodeUpdated.hasChangedType(.attributes) || favouritesDictionary[base64Handle] != nil {
-                shouldProcessOnNodesUpdate = true
-                break
-            }
-        }
-        
-        if shouldProcessOnNodesUpdate {
-            guard let nodeEntities = nodeList?.toNodeEntities() else { return }
-            self.onNodesUpdate?(nodeEntities)
-        }
-    }
 }

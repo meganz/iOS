@@ -428,10 +428,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         contentViewController.didMove(toParent: self)
     }
     
-    private func addFavouritesViewController() {
-        router.showFavourites(navigationController: navigationController ?? UINavigationController(), homeViewController: self, slidePanelView: slidePanelView)
-    }
-    
     private func addOfflineViewController() {
         addChild(offlineViewController)
         slidePanelView.addOfflineViewController(offlineViewController)
@@ -604,10 +600,6 @@ extension HomeViewController: SlidePanelDelegate {
             return true
         }
         return false
-    }
-    
-    func loadFavourites() {
-        addFavouritesViewController()
     }
     
     func loadOffline() {

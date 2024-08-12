@@ -17,8 +17,6 @@ protocol SlidePanelDelegate: AnyObject {
     
     func shouldEnablePanGestureScrollingDown(inSlidePanel slidePanel: SlidePanelView) -> Bool
     
-    func loadFavourites()
-    
     func loadOffline()
 }
 
@@ -36,12 +34,6 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     
     public var recentScrollView: UIScrollView?
     
-    // MARK: - Favourites Tab
-    
-    @IBOutlet private var favouritesContainerView: UIView!
-    
-    public var favouritesScrollView: UIScrollView?
-    
     // MARK: - Offlines Tab
     
     @IBOutlet private var offlineContainerView: UIView!
@@ -57,12 +49,10 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             switch currentDisplayTab {
             case .recents:
                 recentsContainerView.isHidden = false
-                favouritesContainerView.isHidden = true
                 offlineContainerView.isHidden = true
                 
             case .offline:
                 recentsContainerView.isHidden = true
-                favouritesContainerView.isHidden = true
                 offlineContainerView.isHidden = false
                 if offlineScrollView == nil {
                     delegate?.loadOffline()
@@ -132,20 +122,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         recentScrollView = scrollView
         scrollView?.addGestureRecognizer(panGesture)
     }
-    
-    func addFavouritesViewController(_ favouritesViewController: FavouritesViewController) {
-        move(favouritesViewController.view, toContainerView: favouritesContainerView)
-        let panGesture = UIPanGestureRecognizer()
-        panGesture.name = "Favourites Panel Pan Gesture"
-        panGesture.addTarget(self, action: #selector(didPan(_:)))
-        panGesture.delegate = self
         
-        let scrollView = firstScrollViewInSubviews(favouritesViewController.view.subviews)
-        scrollView?.backgroundColor = TokenColors.Background.page
-        favouritesScrollView = scrollView
-        scrollView?.addGestureRecognizer(panGesture)
-    }
-    
     func addOfflineViewController(_ offlineViewController: OfflineViewController) {
         move(offlineViewController.view, toContainerView: offlineContainerView)
         let panGesture = UIPanGestureRecognizer()
@@ -196,12 +173,10 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         switch currentDisplayTab {
         case .recents:
             recentsContainerView.isHidden = false
-            favouritesContainerView.isHidden = true
             offlineContainerView.isHidden = true
             
         case .offline:
             recentsContainerView.isHidden = true
-            favouritesContainerView.isHidden = true
             offlineContainerView.isHidden = false
         }
     }

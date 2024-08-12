@@ -2,8 +2,6 @@ import AsyncAlgorithms
 import Foundation
 
 public protocol FavouriteNodesUseCaseProtocol: Sendable {
-    func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
-    func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     
     /// Get all favourite nodes for the active account and filter the result by the search query and the specified exclusion criteria. The result will exclude sensitive results based on account global showHiddenNodes preference.
     /// - Parameters:
@@ -18,9 +16,6 @@ public protocol FavouriteNodesUseCaseProtocol: Sendable {
     ///   - limit: Number of nodes to return, if value is 0 or below it will return all nodes.
     /// - Returns: List of Favourited nodes, filtered by search and exclusion criteria.
     func allFavouriteNodes(searchString: String?, excludeSensitives: Bool, limit: Int) async throws -> [NodeEntity]
-    
-    func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void)
-    func unregisterOnNodesUpdate()
 }
 
 public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: NodeRepositoryProtocol, V: ContentConsumptionUserAttributeUseCaseProtocol>: FavouriteNodesUseCaseProtocol {
@@ -47,23 +42,6 @@ public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: Node
     
     public func allFavouriteNodes(searchString: String?, excludeSensitives: Bool, limit: Int) async throws -> [NodeEntity] {
         try await allFavouriteNodes(searchString: searchString, overrideExcludeSensitives: excludeSensitives, limit: limit)
-    }
-    
-    @available(*, renamed: "allFavouriteNodes()")
-    public func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        repo.getAllFavouriteNodes(completion: completion)
-    }
-    
-    public func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        repo.getFavouriteNodes(limitCount: limitCount, completion: completion)
-    }
-    
-    public func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
-        repo.registerOnNodesUpdate(callback: callback)
-    }
-    
-    public func unregisterOnNodesUpdate() {
-        repo.unregisterOnNodesUpdate()
     }
     
     private func allFavouriteNodes(searchString: String?, overrideExcludeSensitives: Bool?, limit: Int? = nil) async throws -> [NodeEntity] {
