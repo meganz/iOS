@@ -75,6 +75,7 @@ public class SearchResultsViewModel: ObservableObject {
     // this flag is used to indicate whether the data has been loaded for every triggered search
     
     @Atomic private var areNewSearchResultsLoaded = false
+    @SearchResultsViewModelActor private var canLoadMore = false
 
     // data source for the results (result list, chips)
     private let resultsProvider: any SearchResultsProviding
@@ -199,8 +200,11 @@ public class SearchResultsViewModel: ObservableObject {
 
     /// meant called to be called in the SwiftUI View's .task modifier
     /// which means task is called on the appearance and cancelled on disappearance
+    @SearchResultsViewModelActor
     func task() async {
+        canLoadMore = false
         await performInitialSearchOrRefresh()
+        canLoadMore = true
         await startMonitoringResults()
     }
     
@@ -362,6 +366,7 @@ public class SearchResultsViewModel: ObservableObject {
     
     @SearchResultsViewModelActor
     func onItemAppear(_ item: SearchResultRowViewModel) async {
+        guard canLoadMore else {return }
         await loadMoreIfNeeded(item: item)
     }
 
