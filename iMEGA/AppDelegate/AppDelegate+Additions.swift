@@ -671,6 +671,7 @@ extension AppDelegate {
     @objc func initProviderDelegate() {
         guard callsCoordinator == nil else { return }
         let callsCoordinator = CallsCoordinatorFactory().makeCallsCoordinator(
+            scheduler: .main,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
