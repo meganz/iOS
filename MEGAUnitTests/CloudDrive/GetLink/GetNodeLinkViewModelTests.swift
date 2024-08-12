@@ -68,7 +68,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         
         let sut = sut(
             nodes: nodes,
-            shareUseCase: MockShareUseCase(doesContainSensitiveDescendants: [nodes[1].handle: true]),
+            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true]),
             hiddenNodesFeatureFlagActive: true
         )
         
@@ -99,7 +99,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         
         let sut = sut(
             nodes: nodes,
-            shareUseCase: MockShareUseCase(doesContainSensitiveDescendants: [nodes[1].handle: true]),
+            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true]),
             hiddenNodesFeatureFlagActive: true
         )
         
@@ -133,7 +133,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         
         let sut = sut(
             nodes: nodes,
-            shareUseCase: MockShareUseCase(doesContainSensitiveDescendants: [nodes[1].handle: true]),
+            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true]),
             hiddenNodesFeatureFlagActive: true
         )
         

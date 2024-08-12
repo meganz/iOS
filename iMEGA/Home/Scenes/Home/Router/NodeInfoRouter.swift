@@ -26,7 +26,10 @@ final class NodeInfoRouter: NSObject {
     func showInformation(for node: MEGANode) {
         let viewModel = NodeInfoViewModel(
             withNode: node,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo), 
+            shareUseCase: ShareUseCase(
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
             featureFlagProvider: DIContainer.featureFlagProvider,
             shouldDisplayContactVerificationInfo: MEGASdk.shared.isContactVerificationWarningEnabled
         )

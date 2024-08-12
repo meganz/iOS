@@ -244,7 +244,7 @@ final class ContactsViewModelTests: XCTestCase {
     func testShowAlertForSensitiveDescendants_shareFolderWithModeNodesNotSensitive_shouldToggleIsLoadingCorrectlyAndNotShowAlert() {
         let sut = makeSUT(
             contactsMode: .shareFoldersWith,
-            doesContainSensitiveDescendants: [:],
+            containsSensitiveContent: [:],
             isHiddenNodesEnabled: true)
         
         let (expectationLoadingStates, loadingSubscription) = expectLoadingShowAndDismiss(on: sut)
@@ -271,7 +271,7 @@ final class ContactsViewModelTests: XCTestCase {
             }
             let sut = makeSUT(
                 contactsMode: .shareFoldersWith,
-                doesContainSensitiveDescendants: Dictionary(uniqueKeysWithValues: sensitiveNodes.map { ($0.handle, true) }),
+                containsSensitiveContent: Dictionary(uniqueKeysWithValues: sensitiveNodes.map { ($0.handle, true) }),
                 isHiddenNodesEnabled: true)
             
             let (expectationLoadingStates, loadingSubscription) = expectLoadingShowAndDismiss(on: sut)
@@ -307,7 +307,7 @@ final class ContactsViewModelTests: XCTestCase {
         contactsMode: ContactsMode = .default,
         isContactVerificationWarningEnabled: Bool = false,
         isSharedFolderOwnerVerified: Bool = false,
-        doesContainSensitiveDescendants: [HandleEntity: Bool] = [:],
+        containsSensitiveContent: [HandleEntity: Bool] = [:],
         isHiddenNodesEnabled: Bool = false
     ) -> ContactsViewModel {
         let sdk = MockSdk(
@@ -318,7 +318,7 @@ final class ContactsViewModelTests: XCTestCase {
             sdk: sdk,
             contactsMode: contactsMode,
             shareUseCase: MockShareUseCase(
-                doesContainSensitiveDescendants: doesContainSensitiveDescendants
+                containsSensitiveContent: containsSensitiveContent
             ),
             featureFlagProvider: MockFeatureFlagProvider(
                 list: [.hiddenNodes: isHiddenNodesEnabled])

@@ -166,10 +166,10 @@ final class GetNodeLinkViewModel: ViewModelType {
         invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
         
         do {
-            let result = try await shareUseCase.doesContainSensitiveDescendants(in: nodes.toNodeEntities())
+            let result = try await shareUseCase.containsSensitiveContent(in: nodes.toNodeEntities())
             continuation.yield(result ? .notDetermined : .noSensitiveContent)
         } catch {
-            MEGALogError("[\(type(of: self))]: determineIfAlbumsContainSensitiveNodes returned \(error.localizedDescription)")
+            MEGALogError("[\(type(of: self))]: containsSensitiveContent returned \(error.localizedDescription)")
             continuation.finish()
         }
     }

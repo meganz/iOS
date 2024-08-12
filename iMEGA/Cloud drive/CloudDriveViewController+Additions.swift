@@ -63,7 +63,10 @@ extension CloudDriveViewController {
         )
         return CloudDriveViewModel(
             parentNode: parentNode,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
+            shareUseCase: ShareUseCase(
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: preferenceUseCase,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),

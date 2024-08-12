@@ -17,15 +17,22 @@ extension SharedItemsViewController: ContactsViewControllerDelegate {
 // MARK: - Unverified outgoing and incoming nodes
 extension SharedItemsViewController {
     @objc func createSharedItemsViewModel() -> SharedItemsViewModel {
-        SharedItemsViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
-                             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo,
-                                                        videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo)),
-                             saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository.newRepo,
-                                                                                fileCacheRepository: FileCacheRepository.newRepo,
-                                                                                nodeRepository: NodeRepository.newRepo,
-                                                                                chatNodeRepository: ChatNodeRepository.newRepo,
-                                                                                downloadChatRepository: DownloadChatRepository.newRepo),
-                             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+        SharedItemsViewModel(
+            shareUseCase: ShareUseCase(
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
+            mediaUseCase: MediaUseCase(
+                fileSearchRepo: FilesSearchRepository.newRepo,
+                videoMediaUseCase: VideoMediaUseCase(
+                    videoMediaRepository: VideoMediaRepository.newRepo)),
+            saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(
+                downloadFileRepository: DownloadFileRepository.newRepo,
+                fileCacheRepository: FileCacheRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo,
+                chatNodeRepository: ChatNodeRepository.newRepo,
+                downloadChatRepository: DownloadChatRepository.newRepo),
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
     }
     
@@ -33,7 +40,10 @@ extension SharedItemsViewController {
                                        isNodeUndecryptedFolder: Bool) -> NodeInfoViewModel {
         return NodeInfoViewModel(
             withNode: node,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo), 
+            shareUseCase: ShareUseCase(
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
             featureFlagProvider: DIContainer.featureFlagProvider,
             isNodeUndecryptedFolder: isNodeUndecryptedFolder,
             shouldDisplayContactVerificationInfo: isContactVerificationEnabled() && incomingButton?.isSelected == true,

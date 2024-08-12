@@ -218,7 +218,7 @@ final class HomeRouter: HomeRouterProtocol {
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
+            shareUseCase: makeShareUseCase(),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
             navigationController: navigationController
@@ -249,11 +249,18 @@ final class HomeRouter: HomeRouterProtocol {
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo, filesSearchRepository: FilesSearchRepository.newRepo),
+            shareUseCase: makeShareUseCase(),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
             shouldOpenAchievements: true,
             navigationController: navigationController
         ).start()
+    }
+    
+    private func makeShareUseCase() -> some ShareUseCaseProtocol {
+        ShareUseCase(
+            shareRepository: ShareRepository.newRepo,
+            filesSearchRepository: FilesSearchRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo)
     }
 }

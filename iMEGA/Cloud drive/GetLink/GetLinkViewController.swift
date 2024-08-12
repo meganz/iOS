@@ -53,8 +53,9 @@ class GetLinkViewController: UIViewController {
     var snackBarContainer: UIView?
     
     private var getLinkVM = GetNodeLinkViewModel(shareUseCase: ShareUseCase(
-        repo: ShareRepository.newRepo,
-        filesSearchRepository: FilesSearchRepository.newRepo))
+        shareRepository: ShareRepository.newRepo,
+        filesSearchRepository: FilesSearchRepository.newRepo,
+        nodeRepository: NodeRepository.newRepo))
     private var nodesToExportCount = 0
     private var justUpgradedToProAccount = false
     private var isLinkAlreadyCreated = false

@@ -84,8 +84,10 @@ struct NodeShareRouter {
     
     private func copyrightWrappedShareFoldersViewController(nodes: [MEGANode]) -> UIViewController {
         let copyrightUseCase = CopyrightUseCase(
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo,
-                                       filesSearchRepository: FilesSearchRepository.newRepo),
+            shareUseCase: ShareUseCase(
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
             userAlbumRepository: UserAlbumRepository.newRepo)
         let viewModel = EnforceCopyrightWarningViewModel(preferenceUseCase: PreferenceUseCase.default,
                                                          copyrightUseCase: copyrightUseCase)

@@ -123,13 +123,13 @@ import MEGAPresentation
         
         loadingTask = Task { @MainActor in
             do {
-                guard try await shareUseCase.doesContainSensitiveDescendants(in: nodes.toNodeEntities()) else { return }
+                guard try await shareUseCase.containsSensitiveContent(in: nodes.toNodeEntities()) else { return }
                 
                 alertModel = AlertModel.makeShareContainsSensitiveItems(nodeCount: nodes.count) { @MainActor [weak self] in
                     self?.dismissViewSubject.send()
                 }
             } catch {
-                MEGALogError("[\(type(of: self))]: determineIfAlbumsContainSensitiveNodes returned \(error.localizedDescription)")
+                MEGALogError("[\(type(of: self))]: containsSensitiveContent returned \(error.localizedDescription)")
             }
         }
     }
