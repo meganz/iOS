@@ -7,8 +7,6 @@ protocol HomeRouterProtocol {
 
     func didTap(on source: HomeRoutingSource, with object: Any?)
     
-    func showFavourites(navigationController: UINavigationController, homeViewController: HomeViewController, slidePanelView: SlidePanelView)
-    
     func showNode(_ base64Handle: Base64HandleEntity)
     
     func showDownloadTransfer(node: MEGANode)
@@ -161,10 +159,6 @@ final class HomeRouter: HomeRouterProtocol {
                 _ = await nodeActionUseCase.unhide(nodes: [node].toNodeEntities())
             }
         }
-    }
-    
-    func showFavourites(navigationController: UINavigationController, homeViewController: HomeViewController, slidePanelView: SlidePanelView) {
-        FavouritesRouter(navigationController: self.navigationController ?? UINavigationController(), homeViewController: homeViewController, slidePanelView: slidePanelView).start()
     }
     
     func showNode(_ base64Handle: Base64HandleEntity) {

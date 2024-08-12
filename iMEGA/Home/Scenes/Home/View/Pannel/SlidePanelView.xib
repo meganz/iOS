@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SlidePanelView" customModule="MEGA" customModuleProvider="target">
             <connections>
-                <outlet property="favouritesContainerView" destination="Cbf-Ne-kel" id="7oS-FP-wgF"/>
                 <outlet property="handlerView" destination="Ugx-eD-eqR" id="URd-t2-Kwt"/>
                 <outlet property="offlineContainerView" destination="zY0-Xu-hQL" id="WUT-DT-4ij"/>
                 <outlet property="recentsContainerView" destination="8yN-0Y-kcV" id="QGE-Ly-sNt"/>
@@ -50,10 +49,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="616"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cbf-Ne-kel">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="616"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -61,14 +56,10 @@
                                 <constraint firstAttribute="bottom" secondItem="8yN-0Y-kcV" secondAttribute="bottom" id="FF0-XH-K4X"/>
                                 <constraint firstAttribute="bottom" secondItem="zY0-Xu-hQL" secondAttribute="bottom" id="Oj6-EK-biq"/>
                                 <constraint firstItem="8yN-0Y-kcV" firstAttribute="top" secondItem="DPg-Yf-bbk" secondAttribute="top" id="Pl0-rH-Cqr"/>
-                                <constraint firstAttribute="bottom" secondItem="Cbf-Ne-kel" secondAttribute="bottom" id="cCy-KQ-drq"/>
-                                <constraint firstAttribute="trailing" secondItem="Cbf-Ne-kel" secondAttribute="trailing" id="gDc-fR-cm4"/>
                                 <constraint firstItem="zY0-Xu-hQL" firstAttribute="top" secondItem="DPg-Yf-bbk" secondAttribute="top" id="gPf-ke-mvC"/>
                                 <constraint firstItem="zY0-Xu-hQL" firstAttribute="leading" secondItem="DPg-Yf-bbk" secondAttribute="leading" id="mGP-mT-GN4"/>
-                                <constraint firstItem="Cbf-Ne-kel" firstAttribute="top" secondItem="DPg-Yf-bbk" secondAttribute="top" id="q1f-Xr-M0Y"/>
                                 <constraint firstItem="8yN-0Y-kcV" firstAttribute="leading" secondItem="DPg-Yf-bbk" secondAttribute="leading" id="s2F-TL-RRt"/>
                                 <constraint firstAttribute="trailing" secondItem="zY0-Xu-hQL" secondAttribute="trailing" id="teZ-kZ-yi0"/>
-                                <constraint firstItem="Cbf-Ne-kel" firstAttribute="leading" secondItem="DPg-Yf-bbk" secondAttribute="leading" id="x3y-Dv-TlM"/>
                             </constraints>
                         </view>
                     </subviews>

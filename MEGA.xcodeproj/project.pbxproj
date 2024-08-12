@@ -528,10 +528,6 @@
 		5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E918C1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m */; };
 		5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */; };
-		5B33F0FA26601E4100E5F0F4 /* FavouritesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B33F0F726601E4100E5F0F4 /* FavouritesRouter.swift */; };
-		5B33F0FB26601E4100E5F0F4 /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B33F0F826601E4100E5F0F4 /* FavouritesViewModel.swift */; };
-		5B33F0FD2660202F00E5F0F4 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B33F0FC2660202F00E5F0F4 /* FavouritesViewController.swift */; };
-		5B33F0FF2660205400E5F0F4 /* Favourites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B33F0FE2660205400E5F0F4 /* Favourites.storyboard */; };
 		5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */; };
 		5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */; };
 		5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */; };
@@ -611,8 +607,6 @@
 		5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */; };
 		5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */; };
 		5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8A852243DF42D009FE957 /* Usage.storyboard */; };
-		5BBC13DE26CE62D10010115B /* FavouritesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13DD26CE62D10010115B /* FavouritesViewModelTests.swift */; };
-		5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E126CE635B0010115B /* MockFavouritesRouter.swift */; };
 		5BBC13E626CE64F50010115B /* NodeCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13E526CE64F50010115B /* NodeCellViewModelTests.swift */; };
 		5BC25725220080FD0098E781 /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3D05F242A36240048123A /* UIColor+Additions.swift */; };
@@ -3342,10 +3336,6 @@
 		5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACopyRequestDelegate.m; path = API/Requests/MEGACopyRequestDelegate.m; sourceTree = "<group>"; };
 		5B323F211F5834E100C5F557 /* ReferralBonusesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferralBonusesTableViewController.h; sourceTree = "<group>"; };
 		5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferralBonusesTableViewController.m; sourceTree = "<group>"; };
-		5B33F0F726601E4100E5F0F4 /* FavouritesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesRouter.swift; sourceTree = "<group>"; };
-		5B33F0F826601E4100E5F0F4 /* FavouritesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesViewModel.swift; sourceTree = "<group>"; };
-		5B33F0FC2660202F00E5F0F4 /* FavouritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
-		5B33F0FE2660205400E5F0F4 /* Favourites.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Favourites.storyboard; sourceTree = "<group>"; };
 		5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CookieSettings.storyboard; sourceTree = "<group>"; };
 		5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieSettingsRouter.swift; sourceTree = "<group>"; };
 		5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -3436,8 +3426,6 @@
 		5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordStrengthIndicatorView.m; sourceTree = "<group>"; };
 		5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordStrengthIndicatorView.xib; sourceTree = "<group>"; };
 		5BB8A852243DF42D009FE957 /* Usage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Usage.storyboard; sourceTree = "<group>"; };
-		5BBC13DD26CE62D10010115B /* FavouritesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModelTests.swift; sourceTree = "<group>"; };
-		5BBC13E126CE635B0010115B /* MockFavouritesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFavouritesRouter.swift; sourceTree = "<group>"; };
 		5BBC13E526CE64F50010115B /* NodeCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCellViewModelTests.swift; sourceTree = "<group>"; };
 		5BC25723220080FB0098E781 /* NSDate+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+MNZCategory.h"; sourceTree = "<group>"; };
 		5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+MNZCategory.m"; sourceTree = "<group>"; };
@@ -7674,17 +7662,6 @@
 			path = API/Transfers;
 			sourceTree = "<group>";
 		};
-		5B33F0F326601DD000E5F0F4 /* FavouritesScene */ = {
-			isa = PBXGroup;
-			children = (
-				5B33F0FE2660205400E5F0F4 /* Favourites.storyboard */,
-				5B33F0F726601E4100E5F0F4 /* FavouritesRouter.swift */,
-				5B33F0FC2660202F00E5F0F4 /* FavouritesViewController.swift */,
-				5B33F0F826601E4100E5F0F4 /* FavouritesViewModel.swift */,
-			);
-			path = FavouritesScene;
-			sourceTree = "<group>";
-		};
 		5B366C492576844600FD3806 /* CookiesSettingsScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -7838,15 +7815,6 @@
 				4178409F1AC328A600713F3C /* ChangePasswordViewController.m */,
 			);
 			path = ChangeCredentials;
-			sourceTree = "<group>";
-		};
-		5B9B992F26CD6953006FFBDD /* Favourites */ = {
-			isa = PBXGroup;
-			children = (
-				5BBC13DD26CE62D10010115B /* FavouritesViewModelTests.swift */,
-				5BBC13E126CE635B0010115B /* MockFavouritesRouter.swift */,
-			);
-			path = Favourites;
 			sourceTree = "<group>";
 		};
 		5B9F20112433330000F22FBA /* ContactLinkQR */ = {
@@ -8495,7 +8463,6 @@
 		5D8A05AA24E4C03100456AC7 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				5B33F0F326601DD000E5F0F4 /* FavouritesScene */,
 				5D1F73B12537DD0F00E34D7A /* Home */,
 				5D570D0A2537E6F1006C5670 /* HomeExplore */,
 				5D166B752521952F004F4F4A /* HomeSearch */,
@@ -8670,7 +8637,6 @@
 		5DFC8DC324ECF35C00DDA006 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				5B9B992F26CD6953006FFBDD /* Favourites */,
 				2599D0C22BE202E8003DC13C /* FileExplorer */,
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
 				9961E7242A282FBA004FB05F /* Videos */,
@@ -14088,7 +14054,6 @@
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
 				BFB33D91263B922F006E203D /* EndMeetingOptionsViewViewController.xib in Resources */,
 				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
-				5B33F0FF2660205400E5F0F4 /* Favourites.storyboard in Resources */,
 				BF5E33922558D2890055395E /* FileExplorerGridCell.xib in Resources */,
 				C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */,
 				A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */,
@@ -14997,9 +14962,6 @@
 				B5FE690F286984AC00A1725C /* FavouritesExplorerGridViewController.swift in Sources */,
 				B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */,
 				B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */,
-				5B33F0FA26601E4100E5F0F4 /* FavouritesRouter.swift in Sources */,
-				5B33F0FD2660202F00E5F0F4 /* FavouritesViewController.swift in Sources */,
-				5B33F0FB26601E4100E5F0F4 /* FavouritesViewModel.swift in Sources */,
 				B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */,
 				B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */,
 				B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */,
@@ -16612,7 +16574,6 @@
 				B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
 				0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */,
-				5BBC13DE26CE62D10010115B /* FavouritesViewModelTests.swift in Sources */,
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
@@ -16685,7 +16646,6 @@
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */,
 				B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */,
-				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
 				945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
