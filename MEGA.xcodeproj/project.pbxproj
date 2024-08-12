@@ -1436,6 +1436,7 @@
 		94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94872E942C08886600DC76E6 /* UsageViewRouter.swift */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
+		948AE4A42C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */; };
 		948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */; };
 		948BCE062C20704D00B719B2 /* CameraSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */; };
 		949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */; };
@@ -4234,6 +4235,7 @@
 		9486B9052C41738A00D96762 /* RaiseHandUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandUpdater.swift; sourceTree = "<group>"; };
 		9486B9082C429B8A00D96762 /* RaiseHandUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandUpdaterTests.swift; sourceTree = "<group>"; };
 		94872E942C08886600DC76E6 /* UsageViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewRouter.swift; sourceTree = "<group>"; };
+		948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewStateFactory.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
 		948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSwitcherTests.swift; sourceTree = "<group>"; };
 		948D92672B2373CE0020E894 /* DisplayMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
@@ -9443,6 +9445,7 @@
 				BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */,
 				BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */,
 				BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */,
+				948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */,
 				83B71A6328F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift */,
 				BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */,
 				BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */,
@@ -14734,6 +14737,7 @@
 				9463EEDB2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift in Sources */,
 				BFD213BA28ED4CDF0057150E /* ChatRoomsEmptyView.swift in Sources */,
 				BFD213BC28EE43D00057150E /* ChatRoomsEmptyViewState.swift in Sources */,
+				948AE4A42C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift in Sources */,
 				83DE9D0828EC376F00F24DF4 /* ChatRoomsListRouter.swift in Sources */,
 				6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */,
 				836A783028E2F2B500B6849F /* ChatRoomsListView.swift in Sources */,

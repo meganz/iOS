@@ -86,10 +86,10 @@ extension PermissionAlertRouter: PermissionAlertRouting {
         modalPresenter(.custom(.notifications(completion: dismisserCompletion)))
     }
     
-    // this will ask only for audio if `vidaoCall == false`
+    // this will ask only for audio if `videoCall == false`
     // if user denies, will present alert
-    // if user privides audio access for nonVIdeo call, `granted` is called
-    // if `vidaoCall == true`, will ask for audio permission once user
+    // if user provides audio access for nonVideo call, `granted` is called
+    // if `videoCall == true`, will ask for audio permission once user
     // provides access to audio
     // if user denies video access, alert will be shown
     // if user gives audio and video permission for video call, `granted` is called

@@ -71,7 +71,16 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var displayPastMeetings: [ChatRoomViewModel]?
     @Published var displayFutureMeetings: [FutureMeetingSection]?
     
-    @Published var contactsOnMegaViewState: ChatRoomsTopRowViewState?
+    var contactsOnMegaViewState: ChatRoomsTopRowViewState? {
+        if chatViewMode == .chats {
+            ChatRoomsTopRowViewState.contactsOnMega(
+                designTokenEnabled: UIColor.isDesignTokenEnabled(),
+                action: {[weak self] in self?.topRowViewTapped() }
+            )
+        } else {
+            nil
+        }
+    }
     
     @Published var activeCallViewModel: ActiveCallViewModel?
     @Published var searchText: String {
@@ -126,7 +135,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
-    
+    let emptyViewStateFactory: ChatRoomsEmptyViewStateFactory
     init(
         router: some ChatRoomsListRouting,
         chatUseCase: any ChatUseCaseProtocol,
@@ -164,7 +173,36 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         
+        self.emptyViewStateFactory = .init(
+            newEmptyStates: featureFlagProvider.isFeatureFlagEnabled(for: .chatEmptyStates)
+        )
+        
         configureTitle()
+    }
+    
+    func emptyViewState() -> ChatRoomsEmptyViewState? {
+        guard isChatRoomEmpty else {
+            return nil
+        }
+        
+        let searching = isSearchActive || searchText.isNotEmpty
+        
+        return if searching {
+            emptyViewStateFactory.searchEmptyViewState()
+        } else {
+            emptyViewStateFactory.emptyChatRoomsViewState(
+                chatViewMode: chatViewMode,
+                contactsOnMega: contactsOnMegaViewState,
+                archivedChats: archiveChatsViewState(),
+                bottomButtonAction: { [weak self] in 
+                    guard let self else { return }
+                    if self.chatViewMode == .chats {
+                        self.addChatButtonTapped()
+                    }
+                },
+                bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
+            )
+        }
     }
     
     @MainActor
@@ -197,7 +235,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         listenToChatStatusUpdate()
         monitorNetworkChanges()
         monitorActiveCallChanges()
-        createTaskToUpdateContactsOnMegaViewStateIfRequired()
         fetchScheduledMeetingTipRecord()
     }
     
@@ -222,9 +259,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     func selectChatMode(_ mode: ChatViewMode) {
         guard mode != chatViewMode else { return }
         chatViewMode = mode
-        
         fetchChats()
-        createTaskToUpdateContactsOnMegaViewStateIfRequired()
     }
     
     func addChatButtonTapped() {
@@ -240,57 +275,26 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     func archiveChatsViewState() -> ChatRoomsTopRowViewState? {
-        guard chatUseCase.archivedChatListCount() > 0 else { return nil }
+        let count = chatUseCase.archivedChatListCount()
+        guard count > 0 else { return nil }
         
-        return ChatRoomsTopRowViewState(
-            image: UIImage(resource: .archiveChat),
-            description: Strings.Localizable.archivedChats,
-            rightDetail: "\(chatUseCase.archivedChatListCount())") { [weak self] in
+        return ChatRoomsTopRowViewState.archivedChatsViewState(
+            count: count,
+            action: { [weak self] in
                 self?.router.showArchivedChatRooms()
             }
-    }
-    
-    func searchEmptyViewState() -> ChatRoomsEmptyViewState {
-        ChatRoomsEmptyViewState(
-            contactsOnMega: nil,
-            archivedChats: nil,
-            centerImageResource: .searchEmptyState,
-            centerTitle: Strings.Localizable.noResults,
-            centerDescription: nil,
-            bottomButtonTitle: nil,
-            bottomButtonAction: nil,
-            bottomButtonMenus: nil
         )
     }
     
-    func noNetworkEmptyViewState() -> ChatRoomsEmptyViewState {
-        ChatRoomsEmptyViewState(
-            contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState : nil,
-            archivedChats: archiveChatsViewState(),
-            centerImageResource: .noInternetEmptyState,
-            centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
-            centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
-            bottomButtonTitle: nil,
-            bottomButtonAction: nil,
-            bottomButtonMenus: nil
-        )
-    }
-    
-    func emptyChatRoomsViewState() -> ChatRoomsEmptyViewState {
-        ChatRoomsEmptyViewState(
-            contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState : nil,
-            archivedChats: archiveChatsViewState(),
-            centerImageResource: chatViewMode == .chats ? .chatEmptyState : .meetingEmptyState,
-            centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
-            centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
-            bottomButtonTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title,
-            bottomButtonAction: { [weak self] in
-                guard let self else { return }
-                if self.chatViewMode == .chats {
-                    self.addChatButtonTapped()
-                }
-            },
-            bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
+    func noNetworkEmptyViewState() -> ChatRoomsEmptyViewState? {
+        if isConnectedToNetwork {
+            return nil
+        }
+        
+        return emptyViewStateFactory.noNetworkEmptyViewState(
+            chatViewMode: chatViewMode,
+            contactsOnMega: contactsOnMegaViewState,
+            archivedChats: archiveChatsViewState()
         )
     }
     
@@ -398,40 +402,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         shouldDisplayUnreadBadgeForChats = chats.contains { $0.unreadCount != 0 }
         let meetings = chatUseCase.fetchMeetings() ?? []
         shouldDisplayUnreadBadgeForMeetings = meetings.contains { $0.unreadCount != 0 }
-    }
-    
-    private func createTaskToUpdateContactsOnMegaViewStateIfRequired() {
-        if chatViewMode == .chats {
-            Task {
-                await updateContactsOnMegaViewStateIfRequired()
-            }
-        }
-    }
-    
-    private func updateContactsOnMegaViewStateIfRequired() async {
-        let description = descriptionForContactsOnMegaViewState()
-        if contactsOnMegaViewState?.description != description {
-            await createContactsOnMegaViewState(withDescription: description)
-        }
-    }
-    
-    private func descriptionForContactsOnMegaViewState() -> String {
-        let description: String
-        description = Strings.Localizable.inviteContactNow
-        
-        return description
-    }
-    
-    @MainActor
-    private func createContactsOnMegaViewState(withDescription description: String) {
-        let image = UIColor.isDesignTokenEnabled() ?
-            UIImage.inviteToChatDesignToken :
-            UIImage.inviteToChat
-        contactsOnMegaViewState = ChatRoomsTopRowViewState(
-            image: image,
-            description: description) { [weak self] in
-                self?.topRowViewTapped()
-            }
     }
     
     private func cancelLoadingTask() {

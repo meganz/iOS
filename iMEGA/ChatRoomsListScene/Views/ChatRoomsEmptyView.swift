@@ -3,6 +3,7 @@ import SwiftUI
 
 struct ChatRoomsEmptyView: View {
     let emptyViewState: ChatRoomsEmptyViewState
+    let isDesignTokenEnabled: Bool
     
     var body: some View {
         VStack {
@@ -27,15 +28,18 @@ struct ChatRoomsEmptyView: View {
             VStack {
                 Spacer()
                 
-                ChatRoomsEmptyCenterView(imageResource: emptyViewState.centerImageResource,
-                                         title: emptyViewState.centerTitle,
-                                         description: emptyViewState.centerDescription)
+                ChatRoomsEmptyCenterView(
+                    imageResource: emptyViewState.centerImageResource,
+                    title: emptyViewState.centerTitle,
+                    description: emptyViewState.centerDescription
+                )
                 
                 Spacer()
                 
                 if let buttonTitle = emptyViewState.bottomButtonTitle {
                     ChatRoomsEmptyBottomButtonView(
                         name: buttonTitle,
+                        isDesignTokenEnabled: isDesignTokenEnabled,
                         menus: emptyViewState.bottomButtonMenus,
                         action: emptyViewState.bottomButtonAction
                     )
@@ -91,6 +95,7 @@ private struct ChatRoomsEmptyBottomButtonView: View {
     var textColor: Color { isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : MEGAAppColor.White._FFFFFF.color }
     var maxWidth: CGFloat? = 288
     var cornerRadius: CGFloat = 10
+    let isDesignTokenEnabled: Bool
     var font: Font = .headline
     var menus: [ChatRoomsEmptyBottomButtonMenu]?
     var action: (() -> Void)?

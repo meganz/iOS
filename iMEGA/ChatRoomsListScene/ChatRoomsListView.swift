@@ -22,8 +22,11 @@ struct ChatRoomsListView: View {
                 ChatRoomActiveCallView(viewModel: activeCallViewModel)
             }
             
-            if viewModel.isConnectedToNetwork == false {
-                ChatRoomsEmptyView(emptyViewState: viewModel.noNetworkEmptyViewState())
+            if let offlineEmptyState = viewModel.noNetworkEmptyViewState() {
+                ChatRoomsEmptyView(
+                    emptyViewState: offlineEmptyState,
+                    isDesignTokenEnabled: isDesignTokenEnabled
+                )
             } else {
                 content()
             }
@@ -114,8 +117,11 @@ struct ChatRoomsListView: View {
                 .listStyle(.plain)
                 .overlay(
                     VStack {
-                        if viewModel.isChatRoomEmpty {
-                            ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive || viewModel.searchText.isNotEmpty ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
+                        if let emptyViewState = viewModel.emptyViewState() {
+                            ChatRoomsEmptyView(
+                                emptyViewState: emptyViewState,
+                                isDesignTokenEnabled: isDesignTokenEnabled
+                            )
                         }
                     }
                     , alignment: .center
@@ -173,11 +179,14 @@ struct ChatRoomsListView: View {
                 .listStyle(.plain)
                 .overlay(
                     VStack {
-                        if viewModel.isChatRoomEmpty {
-                            ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive || viewModel.searchText.isNotEmpty ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
+                        if let emptyViewState = viewModel.emptyViewState() {
+                            ChatRoomsEmptyView(
+                                emptyViewState: emptyViewState,
+                                isDesignTokenEnabled: isDesignTokenEnabled
+                            )
                         }
-                    }
-                    , alignment: .center
+                    },
+                    alignment: .center
                 )
                 .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                 .scrollStatusMonitor($viewModel.isMeetingListScrolling)

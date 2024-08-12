@@ -65,7 +65,17 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     func testSelectChatMode_inviteContactNow_shouldMatch() throws {
-        assertContactsOnMegaViewStateWhenSelectedChatMode(description: Strings.Localizable.inviteContactNow)
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(router: router, chatViewMode: .meetings)
+        viewModel.selectChatMode(.chats)
+        XCTAssertEqual(viewModel.contactsOnMegaViewState?.description, Strings.Localizable.inviteContactNow)
+    }
+    
+    func testSelectMeetingsMode_inviteContactNow_shouldMatch() throws {
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(router: router, chatViewMode: .meetings)
+        viewModel.selectChatMode(.meetings)
+        XCTAssertNil(viewModel.contactsOnMegaViewState?.description)
     }
     
     func testSelectChatsMode_inputAsChats_viewModelsShouldMatch() {
@@ -456,24 +466,6 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     // MARK: - Private methods
-    
-    private func assertContactsOnMegaViewStateWhenSelectedChatMode(description: String, line: UInt = #line) {
-        let router = MockChatRoomsListRouter()
-        let viewModel = makeChatRoomsListViewModel(router: router, chatViewMode: .meetings)
-        
-        let expectation = expectation(description: "Waiting for contactsOnMegaViewState to be updated")
-        
-        subscription = viewModel
-            .$contactsOnMegaViewState
-            .dropFirst()
-            .sink { _ in
-                expectation.fulfill()
-            }
-        
-        viewModel.selectChatMode(.chats)
-        wait(for: [expectation], timeout: 10)
-        XCTAssertEqual(viewModel.contactsOnMegaViewState?.description, description, line: line)
-    }
     
     private func pastDate(bySubtractHours numberOfHours: Int) -> Date? {
         Calendar.current.date(byAdding: .day, value: -numberOfHours, to: Date())
