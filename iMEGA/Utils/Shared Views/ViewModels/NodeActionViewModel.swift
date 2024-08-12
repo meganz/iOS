@@ -11,7 +11,7 @@ struct NodeActionViewModel {
     
     private let accountUseCase: any AccountUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
-    private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private let maxDetermineSensitivityTasks: Int
@@ -22,12 +22,12 @@ struct NodeActionViewModel {
     
     init(accountUseCase: some AccountUseCaseProtocol,
          systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
-         nodeUseCase: some NodeUseCaseProtocol,
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          maxDetermineSensitivityTasks: Int = 500,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.accountUseCase = accountUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
-        self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.maxDetermineSensitivityTasks = maxDetermineSensitivityTasks
         self.featureFlagProvider = featureFlagProvider
     }
@@ -35,11 +35,13 @@ struct NodeActionViewModel {
     /// Indicates if nodes are already hidden or not. If nodes are hidden, then show unhide action; if not, then show hide action. If no action should be shown, return nil. If nodes contain system-generated nodes, return nil. If nodes are from shared items, return nil.
     /// - Parameter nodes: The nodes to check to show hide entry point or not
     /// - Parameter isFromSharedItem: Indicates if the nodes are from a shared item
+    /// - Parameter containsABackupNode: Indicates if the nodes contain a backup node
     /// - Returns: An `Optional<Bool>`: if value is nil, don't show entry point; if value is false, show hide action; if value is true, don't show hide action
-    func isHidden(_ nodes: [NodeEntity], isFromSharedItem: Bool) async -> Bool? {
+    func isHidden(_ nodes: [NodeEntity], isFromSharedItem: Bool, containsBackupNode: Bool) async -> Bool? {
         do {
             guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
                   isFromSharedItem == false,
+                  !containsBackupNode,
                   nodes.isNotEmpty,
                   try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: nodes) else {
                 return nil
@@ -60,7 +62,7 @@ struct NodeActionViewModel {
         } else if node.isMarkedSensitive {
             true
         } else {
-            (try? await nodeUseCase.isInheritingSensitivity(node: node)) ?? false
+            (try? await sensitiveNodeUseCase.isInheritingSensitivity(node: node)) ?? false
         }
     }
     
@@ -113,6 +115,6 @@ struct NodeActionViewModel {
     private func combinedNodeSensitivity(for node: NodeEntity) async -> NodeSensitivity {
         NodeSensitivity(
             isMarkedSensitive: node.isMarkedSensitive,
-            isInheritingSensitivity: (try? await nodeUseCase.isInheritingSensitivity(node: node)) ?? false)
+            isInheritingSensitivity: (try? await sensitiveNodeUseCase.isInheritingSensitivity(node: node)) ?? false)
     }
 }

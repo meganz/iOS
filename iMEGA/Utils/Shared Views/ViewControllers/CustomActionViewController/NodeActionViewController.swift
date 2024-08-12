@@ -21,11 +21,8 @@ class NodeActionViewController: ActionSheetViewController {
         systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
             systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
         ),
-        nodeUseCase: NodeUseCase(
-            nodeDataRepository: NodeDataRepository.newRepo,
-            nodeValidationRepository: NodeValidationRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo
-        )
+        sensitiveNodeUseCase: SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo)
     )
     
     var sender: Any
@@ -147,7 +144,8 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsBackupNode(containsABackupNode)
                 .setAreMediaFiles(areMediaFiles)
                 .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
-                .setIsHidden(await viewModel.isHidden(nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem))
+                .setIsHidden(await viewModel.isHidden(
+                    nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem, containsBackupNode: containsABackupNode))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .multiselectBuild()
             
@@ -248,7 +246,8 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsBackupNode(isBackupNode)
                 .setIsExported(node.isExported())
                 .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
-                .setIsHidden(await viewModel.isHidden([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
+                .setIsHidden(await viewModel.isHidden(
+                    [node.toNodeEntity()], isFromSharedItem: isFromSharedItem, containsBackupNode: isBackupNode))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .build()
             
@@ -439,7 +438,8 @@ class NodeActionViewController: ActionSheetViewController {
                                     sharedFolderReceiverEmail: sharedFolder.user ?? "",
                                     sharedFolderContact: sharedFolderContact)
                 .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
-                .setIsHidden(await viewModel.isHidden([node.toNodeEntity()], isFromSharedItem: isFromSharedItem))
+                .setIsHidden(await viewModel.isHidden(
+                    nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem, containsBackupNode: isBackupNode))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
                 .build()
             
