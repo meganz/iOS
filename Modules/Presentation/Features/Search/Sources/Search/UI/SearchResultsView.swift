@@ -126,10 +126,8 @@ public struct SearchResultsView: View {
             SearchResultRowView(viewModel: item)
                 .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)
                 .listRowBackground(Color.clear)
-                .onAppear {
-                    Task {
-                        await viewModel.onItemAppear(item)
-                    }
+                .task {
+                    await viewModel.onItemAppear(item)
                 }
         }
         .listStyle(.plain)
@@ -148,10 +146,8 @@ public struct SearchResultsView: View {
                             selected: $viewModel.selectedResultIds,
                             selectionEnabled: $viewModel.editing
                         )
-                        .onAppear {
-                            Task {
-                                await viewModel.onItemAppear(item)
-                            }
+                        .task {
+                            await viewModel.onItemAppear(item)
                         }
                     }
                 }
@@ -166,10 +162,8 @@ public struct SearchResultsView: View {
                             selected: $viewModel.selectedResultIds,
                             selectionEnabled: $viewModel.editing
                         )
-                        .onAppear {
-                            Task {
-                                await viewModel.onItemAppear(item)
-                            }
+                        .task {
+                            await viewModel.onItemAppear(item)
                         }
                     }
                 }
