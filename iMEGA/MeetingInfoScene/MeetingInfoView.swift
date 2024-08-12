@@ -21,6 +21,7 @@ struct MeetingInfoView: View {
                         closeAction: viewModel.dismissedWaitingRoomBanner
                     )
                 )
+                .font(.footnote.bold())
             }
             ScrollView {
                 VStack(spacing: Constants.spacing) {
