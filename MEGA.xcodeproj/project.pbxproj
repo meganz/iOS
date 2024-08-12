@@ -240,6 +240,7 @@
 		2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */; };
 		2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */; };
 		25484F782B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */; };
+		254E997D2C697185002C82D4 /* WidgetCentreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254E997C2C697185002C82D4 /* WidgetCentreProtocol.swift */; };
 		2554C5C62BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2554C5C52BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift */; };
 		255FE6902ACBB5D40077A85C /* AppearanceListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255FE68F2ACBB5D40077A85C /* AppearanceListFooterView.swift */; };
 		255FE6932ACCB1810077A85C /* AppearanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255FE6922ACCB1810077A85C /* AppearanceViewModel.swift */; };
@@ -2992,6 +2993,7 @@
 		2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertView.swift; sourceTree = "<group>"; };
 		2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManagerTests.swift; sourceTree = "<group>"; };
 		25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadBannerStatusProviderTests.swift; sourceTree = "<group>"; };
+		254E997C2C697185002C82D4 /* WidgetCentreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetCentreProtocol.swift; sourceTree = "<group>"; };
 		2554C5C52BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemGeneratedNodeRepository+Additions.swift"; sourceTree = "<group>"; };
 		255FE68F2ACBB5D40077A85C /* AppearanceListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceListFooterView.swift; sourceTree = "<group>"; };
 		255FE6922ACCB1810077A85C /* AppearanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModel.swift; sourceTree = "<group>"; };
@@ -10106,6 +10108,7 @@
 			isa = PBXGroup;
 			children = (
 				83E3460125B5C73E006F2AD6 /* QuickAccessWidgetManager.swift */,
+				254E997C2C697185002C82D4 /* WidgetCentreProtocol.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -16150,6 +16153,7 @@
 				940CEE3C2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */,
 				BF2675DB2A32A3F300736759 /* WeekDaysInformation.swift in Sources */,
 				9959F75D2A93460B00225D71 /* WeekNumberInformation.swift in Sources */,
+				254E997D2C697185002C82D4 /* WidgetCentreProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

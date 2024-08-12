@@ -1,4 +1,4 @@
-public protocol RecentItemsUseCaseProtocol {
+public protocol RecentItemsUseCaseProtocol: Sendable {
     func resetRecentItems(by items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
     func insertRecentItem(_ item: RecentItemEntity)
     func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)

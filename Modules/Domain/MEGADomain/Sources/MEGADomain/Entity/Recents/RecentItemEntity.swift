@@ -1,6 +1,6 @@
 import Foundation
 
-public struct RecentItemEntity: Equatable {
+public struct RecentItemEntity: Equatable, Sendable {
 
     public let base64Handle: String
     public let name: String

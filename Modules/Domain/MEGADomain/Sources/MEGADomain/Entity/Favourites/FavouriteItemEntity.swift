@@ -1,6 +1,6 @@
 import Foundation
 
-public struct FavouriteItemEntity: Equatable {
+public struct FavouriteItemEntity: Equatable, Sendable {
     public let base64Handle: String
     public let name: String
     public let timestamp: Date

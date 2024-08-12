@@ -1218,9 +1218,7 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (nodeList) {
-        [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
-        [self.quickAccessWidgetManager updateFavouritesWidgetFor:nodeList];
-
+        [self.quickAccessWidgetManager updateWidgetContentWith:nodeList];
         [self postNodeUpdatesNotificationsFor:nodeList];
         [self removeCachedFilesIfNeededFor:nodeList];
     } else {

@@ -1,7 +1,8 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
-class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
+final class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
     
     private let store: MEGAStore
     
@@ -9,16 +10,24 @@ class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
         self.store = store
     }
     
-    func deleteAllFavouriteItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
-        store.deleteQuickAccessFavouriteItems(completion: completion)
+    func deleteAllFavouriteItems() async throws {
+        try await withAsyncThrowingValue { completion in
+            store.deleteQuickAccessFavouriteItems { result in
+                completion(result.mapError { $0 as any Error })
+            }
+        }
     }
     
     func insertFavouriteItem(_ item: FavouriteItemEntity) {
         store.insertQuickAccessFavouriteItem(withBase64Handle: item.base64Handle, name: item.name, timestamp: item.timestamp)
     }
     
-    func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
-        store.batchInsertQuickAccessFavouriteItems(items, completion: completion)
+    func batchInsertFavouriteItems(_ items: [FavouriteItemEntity]) async throws {
+        try await withAsyncThrowingValue { completion in
+            store.batchInsertQuickAccessFavouriteItems(items) { result in
+                completion(result.mapError { $0 as any Error })
+            }
+        }
     }
     
     func deleteFavouriteItem(with base64Handle: String) {
@@ -32,5 +41,4 @@ class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
     func fetchFavouriteItems(upTo count: Int) -> [FavouriteItemEntity] {
         store.fetchQuickAccessFavourtieItems(withLimit: count)
     }
-    
 }
