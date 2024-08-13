@@ -14,7 +14,9 @@ protocol AlbumListViewRouting {
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
+    @MainActor
     func cell(album: AlbumEntity, selectedAlbum: Binding<AlbumEntity?>, selection: AlbumSelection) -> AlbumCell {
+        let nodeRepository = NodeRepository.newRepo
         let vm = AlbumCellViewModel(
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
             monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
@@ -22,8 +24,10 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo),
-            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo),
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            albumCoverUseCase: AlbumCoverUseCase(nodeRepository: nodeRepository),
             album: album,
             selection: selection,
             selectedAlbum: selectedAlbum

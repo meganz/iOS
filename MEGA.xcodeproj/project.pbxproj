@@ -29,6 +29,7 @@
 		0E385A792BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E385A772BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift */; };
 		0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */; };
 		0E385A7D2BB3C66700261892 /* HideFilesAndFoldersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E385A7C2BB3C66700261892 /* HideFilesAndFoldersRouter.swift */; };
+		0E3A30A72C659B9400C91BD0 /* Preview_AlbumCoverUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3A30A62C659B9400C91BD0 /* Preview_AlbumCoverUseCase.swift */; };
 		0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */; };
 		0E3B1A392A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A382A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift */; };
 		0E3B1A482A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A472A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift */; };
@@ -2776,6 +2777,7 @@
 		0E385A772BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideFilesAndFoldersViewModel.swift; sourceTree = "<group>"; };
 		0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideFilesAndFoldersViewModelTests.swift; sourceTree = "<group>"; };
 		0E385A7C2BB3C66700261892 /* HideFilesAndFoldersRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideFilesAndFoldersRouter.swift; sourceTree = "<group>"; };
+		0E3A30A62C659B9400C91BD0 /* Preview_AlbumCoverUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_AlbumCoverUseCase.swift; sourceTree = "<group>"; };
 		0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAlbumInfoCellViewModel.swift; sourceTree = "<group>"; };
 		0E3B1A382A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAlbumInfoCellViewModelTests.swift; sourceTree = "<group>"; };
 		0E3B1A472A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchOptionCellViewModel.swift; sourceTree = "<group>"; };
@@ -6348,6 +6350,7 @@
 		24C415072B8492C000804D8D /* PreviewSupport */ = {
 			isa = PBXGroup;
 			children = (
+				0E3A30A62C659B9400C91BD0 /* Preview_AlbumCoverUseCase.swift */,
 				0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */,
 				0EDF33372BC7371800EEF8F8 /* Preview_NodeUseCase.swift */,
 				0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */,
@@ -15678,6 +15681,7 @@
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
 				B6A0CF1A28A08D1B00D7F52E /* PreferenceUseCase+Additions.swift in Sources */,
+				0E3A30A72C659B9400C91BD0 /* Preview_AlbumCoverUseCase.swift in Sources */,
 				0E81A8D52BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift in Sources */,
 				0EDF33382BC7371800EEF8F8 /* Preview_NodeUseCase.swift in Sources */,
 				0E2586F52C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift in Sources */,
