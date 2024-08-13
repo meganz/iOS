@@ -436,58 +436,70 @@ final class AlbumCellViewModelTests: XCTestCase {
         }
     }
     
-    func testMonitorAlbumPhotos_userAlbumCoverNil_shouldSetLatestPhotoAsCover() throws {
-        let latestCoverHandle = HandleEntity(76)
-        let album = AlbumEntity(id: 65, name: "User",
-                                coverNode: nil, count: 0, type: .user)
-        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: thumbnailContainer)
-        let thumbnailLoader = MockThumbnailLoader(loadImages: [latestCoverHandle: thumbnailAsyncSequence])
-        
+    func testMonitorAlbumPhotos_albumCoverRetrieved_shouldSetThumbnail() {
+        let album = AlbumEntity(id: 65, coverNode: nil, type: .user)
+        let coverNode = NodeEntity(handle: 1)
         let albumPhotos = [
             AlbumPhotoEntity(
-                photo: NodeEntity(
-                    handle: 1,
-                    modificationTime: try "2024-05-03T22:01:04Z".date),
-                albumPhotoId: album.id),
-            AlbumPhotoEntity(
-                photo: NodeEntity(
-                    handle: latestCoverHandle,
-                    modificationTime: try "2024-05-04T10:01:04Z".date),
-                albumPhotoId: album.id),
-            AlbumPhotoEntity(
-                photo: NodeEntity(
-                    handle: 5,
-                    modificationTime: try "2024-05-02T05:01:04Z".date),
+                photo: coverNode,
                 albumPhotoId: album.id)
         ]
+        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: thumbnailContainer)
+        let thumbnailLoader = MockThumbnailLoader(loadImages: [coverNode.handle: thumbnailAsyncSequence])
         let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
             .eraseToAnyAsyncSequence()
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+        let albumCoverUseCase = MockAlbumCoverUseCase(albumCover: coverNode)
         
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         
-        let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailLoader: thumbnailLoader,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         featureFlagProvider: featureFlagProvider)
-        
+        let sut = makeAlbumCellViewModel(
+            album: album,
+            thumbnailLoader: thumbnailLoader,
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            albumCoverUseCase: albumCoverUseCase,
+            featureFlagProvider: featureFlagProvider)
         let exp = expectation(description: "Should update thumbnail with latest photo")
         
         let subscription = thumbnailContainerUpdates(on: sut) {
             XCTAssertTrue($0.isEqual(thumbnailContainer))
             exp.fulfill()
         }
-        let cancelled = expectation(description: "Async sequence cancelled")
-        let task = Task {
-            await sut.monitorAlbumPhotos()
-            cancelled.fulfill()
-        }
+        trackTaskCancellation { await sut.monitorAlbumPhotos() }
         
         wait(for: [exp], timeout: 1.0)
-        task.cancel()
         subscription.cancel()
-        wait(for: [cancelled], timeout: 0.5)
+    }
+    
+    func testMonitorAlbumPhotos_retrievedUserAlbumCoverNil_shouldSetPlaceholder() throws {
+        let initialCover = NodeEntity(handle: 3)
+        let album = AlbumEntity(id: 65, name: "User",
+                                coverNode: initialCover, count: 0, type: .user)
+        let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
+
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
+        let albumCoverUseCase = MockAlbumCoverUseCase(albumCover: nil)
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        
+        let sut = makeAlbumCellViewModel(album: album,
+                                         thumbnailLoader: thumbnailLoader,
+                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         albumCoverUseCase: albumCoverUseCase,
+                                         featureFlagProvider: featureFlagProvider)
+        
+        let exp = expectation(description: "Should update thumbnail with latest photo")
+        
+        let subscription = thumbnailContainerUpdates(on: sut) {
+            XCTAssertTrue($0.type == .placeholder)
+            exp.fulfill()
+        }
+        trackTaskCancellation { await sut.monitorAlbumPhotos() }
+        
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
     }
     
     func testMonitorAlbumPhotos_userAlbumCoverNilNoPhotos_shouldNotUpdateAlbumCover() async throws {
@@ -513,119 +525,6 @@ final class AlbumCellViewModelTests: XCTestCase {
         let task = Task { await sut.monitorAlbumPhotos() }
         
         await fulfillment(of: [exp], timeout: 0.5)
-        task.cancel()
-        subscription.cancel()
-    }
-    
-    func testMonitorAlbumPhotos_userAlbumCoverIsInRubbishBin_shouldUseDefaultCover() async {
-        let cover = NodeEntity(handle: 54)
-        let album = AlbumEntity(id: 65, name: "User",
-                                coverNode: cover, count: 0, type: .user)
-        let defaultCover = NodeEntity(handle: 87)
-        let coverImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: coverImageContainer)
-        let thumbnailLoader = MockThumbnailLoader(loadImages: [defaultCover.handle: thumbnailAsyncSequence])
-        
-        let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: [
-            AlbumPhotoEntity(photo: defaultCover)
-        ]).eraseToAnyAsyncSequence()
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let nodeUseCase = MockNodeDataUseCase(isNodeInRubbishBin: { _ in true })
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        
-        let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailLoader: thumbnailLoader,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         nodeUseCase: nodeUseCase,
-                                         featureFlagProvider: featureFlagProvider)
-        
-        let exp = expectation(description: "Should update cover with default photo")
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(coverImageContainer))
-            exp.fulfill()
-        }
-        
-        let task = Task { await sut.monitorAlbumPhotos() }
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        subscription.cancel()
-    }
-    
-    func testMonitorAlbumPhotos_userAlbumCoverIsRestoredFromRubbish_shouldSetAlbumCover() async {
-        let cover = NodeEntity(handle: 54)
-        let album = AlbumEntity(id: 65, name: "User",
-                                coverNode: cover, count: 0, type: .user)
-        let coverImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: coverImageContainer)
-        let thumbnailLoader = MockThumbnailLoader(loadImages: [cover.handle: thumbnailAsyncSequence])
-        
-        let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: [
-            AlbumPhotoEntity(photo: cover)
-        ]).eraseToAnyAsyncSequence()
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let nodeUseCase = MockNodeDataUseCase(isNodeInRubbishBin: { _ in false })
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        
-        let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailLoader: thumbnailLoader,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         nodeUseCase: nodeUseCase,
-                                         featureFlagProvider: featureFlagProvider)
-        
-        let loadedThumbnail = ImageContainer(image: Image(systemName: "heart"), type: .thumbnail)
-        sut.thumbnailContainer = loadedThumbnail
-        
-        let exp = expectation(description: "Should update cover with album cover photo")
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(coverImageContainer))
-            exp.fulfill()
-        }
-        
-        let task = Task { await sut.monitorAlbumPhotos() }
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        subscription.cancel()
-    }
-    
-    func testMonitorAlbumPhotos_userAlbumCoverNotInRubbishButNotInPhotos_shouldUseDefaultCover() async {
-        let cover = NodeEntity(handle: 54)
-        let album = AlbumEntity(id: 65, name: "User",
-                                coverNode: cover, count: 0, type: .user)
-        let defaultCover = NodeEntity(handle: 87)
-        let coverImageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        let thumbnailAsyncSequence = makeThumbnailAsyncSequence(container: coverImageContainer)
-        let thumbnailLoader = MockThumbnailLoader(loadImages: [defaultCover.handle: thumbnailAsyncSequence])
-        
-        let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: [
-            AlbumPhotoEntity(photo: defaultCover)
-        ]).eraseToAnyAsyncSequence()
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let nodeUseCase = MockNodeDataUseCase(isNodeInRubbishBin: { _ in false })
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        
-        let sut = makeAlbumCellViewModel(album: album,
-                                         thumbnailLoader: thumbnailLoader,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         nodeUseCase: nodeUseCase,
-                                         featureFlagProvider: featureFlagProvider)
-        
-        let exp = expectation(description: "Should update cover with default photo")
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(coverImageContainer))
-            exp.fulfill()
-        }
-        
-        let task = Task { await sut.monitorAlbumPhotos() }
-        
-        await fulfillment(of: [exp], timeout: 1.0)
         task.cancel()
         subscription.cancel()
     }
@@ -803,6 +702,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         selection: AlbumSelection = AlbumSelection(),
         tracker: some AnalyticsTracking = MockTracker(),
         selectedAlbum: Binding<AlbumEntity?> = .constant(nil),
@@ -815,6 +715,7 @@ final class AlbumCellViewModelTests: XCTestCase {
                                      nodeUseCase: nodeUseCase,
                                      sensitiveNodeUseCase: sensitiveNodeUseCase,
                                      contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                                     albumCoverUseCase: albumCoverUseCase,
                                      album: album,
                                      selection: selection,
                                      tracker: tracker,

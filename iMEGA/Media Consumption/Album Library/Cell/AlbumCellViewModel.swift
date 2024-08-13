@@ -40,6 +40,7 @@ final class AlbumCellViewModel: ObservableObject {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
@@ -56,6 +57,7 @@ final class AlbumCellViewModel: ObservableObject {
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
         tracker: some AnalyticsTracking = DIContainer.tracker,
@@ -67,6 +69,7 @@ final class AlbumCellViewModel: ObservableObject {
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.albumCoverUseCase = albumCoverUseCase
         self.album = album
         self.selection = selection
         self.tracker = tracker
@@ -120,12 +123,7 @@ final class AlbumCellViewModel: ObservableObject {
                                                                                    excludeSensitives: excludeSensitives(),
                                                                                    includeSensitiveInherited: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)) {
             numberOfNodes = albumPhotos.count
-            
-            guard shouldUseDefaultCover(photos: albumPhotos) else {
-                await loadAlbumCoverIfNeeded(from: albumPhotos)
-                continue
-            }
-            await setDefaultAlbumCover(albumPhotos)
+            await loadAlbumCover(from: albumPhotos)
             albumMetaData = await albumPhotos.makeAlbumMetaData()
         }
     }
@@ -150,18 +148,6 @@ final class AlbumCellViewModel: ObservableObject {
     }
     
     // MARK: Private
-    
-    @MainActor
-    private func setDefaultAlbumCover(_ photos: [AlbumPhotoEntity]) async {
-        guard let latestPhoto = photos.latestModifiedPhoto() else {
-            if thumbnailContainer.type != .placeholder {
-                thumbnailContainer = ImageContainer(image: Image(.placeholder), type: .placeholder)
-            }
-            return
-        }
-        
-        await loadThumbnail(for: latestPhoto)
-    }
     
     @MainActor
     private func loadThumbnail(for node: NodeEntity) async {
@@ -193,21 +179,15 @@ final class AlbumCellViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func shouldUseDefaultCover(photos: [AlbumPhotoEntity]) -> Bool {
-        guard let albumCover = album.coverNode else {
-            return true
-        }
-        return nodeUseCase.isInRubbishBin(nodeHandle: albumCover.handle) ||
-        photos.notContains(where: { $0.photo.handle == albumCover.handle })
-    }
-    
     @MainActor
-    private func loadAlbumCoverIfNeeded(from photos: [AlbumPhotoEntity]) async {
-        guard let cover = album.coverNode,
-              let imageContainer = try? await thumbnailLoader.loadImage(for: cover, type: .thumbnail),
-              !thumbnailContainer.isEqual(imageContainer) else {
-            return
+    private func loadAlbumCover(from photos: [AlbumPhotoEntity]) async {
+        let imageContainer = if let albumCover = await albumCoverUseCase.albumCover(for: album, photos: photos) {
+            try? await thumbnailLoader.loadImage(for: albumCover, type: .thumbnail)
+        } else {
+            ImageContainer(image: Image(.placeholder), type: .placeholder)
         }
+        guard let imageContainer,
+              !thumbnailContainer.isEqual(imageContainer) else { return }
         thumbnailContainer = imageContainer
     }
     

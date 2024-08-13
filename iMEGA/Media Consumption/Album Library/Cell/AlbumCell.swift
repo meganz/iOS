@@ -93,6 +93,7 @@ struct AlbumCell: View {
             nodeUseCase: Preview_NodeUseCase(),
             sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
             contentConsumptionUserAttributeUseCase: Preview_ContentConsumptionUserAttributeUseCase(),
+            albumCoverUseCase: Preview_AlbumCoverUseCase(),
             album: AlbumEntity(
                 id: 1, name: "Album name",
                 coverNode: nil,
