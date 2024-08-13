@@ -1,7 +1,7 @@
 // MARK: - Use case protocol -
 public protocol MeetingCreatingUseCaseProtocol {
-    func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity
-    func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
+    func createMeeting(_ startCall: CreateMeetingNowEntity) async throws -> ChatRoomEntity
+    func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
     func username() -> String
     func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void)
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
@@ -22,12 +22,12 @@ public struct MeetingCreatingUseCase<T: MeetingCreatingRepositoryProtocol, U: Us
         self.userStoreRepo = userStoreRepo
     }
         
-    public func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity {
+    public func createMeeting(_ startCall: CreateMeetingNowEntity) async throws -> ChatRoomEntity {
         try await meetingCreatingRepo.createMeeting(startCall)
     }
     
-    public func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        meetingCreatingRepo.joinChatCall(forChatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, userHandle: userHandle, completion: completion)
+    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+        meetingCreatingRepo.joinChat(forChatId: chatId, userHandle: userHandle, completion: completion)
     }
     
     public func username() -> String {

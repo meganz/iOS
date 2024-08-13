@@ -2,7 +2,7 @@ import SwiftUI
 
 final class SnackBarRouter: NSObject {
     static var shared = SnackBarRouter()
-    var presenter: (any SnackBarPresenting)?
+    weak var presenter: (any SnackBarPresenting)?
 
     func configurePresenter(_ presenter: some SnackBarPresenting) {
         self.presenter = presenter

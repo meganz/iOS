@@ -40,7 +40,7 @@ public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, Meetin
         chatSdk.createChatLink(chatId)
     }
     
-    public func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity {
+    public func createMeeting(_ startCall: CreateMeetingNowEntity) async throws -> ChatRoomEntity {
         try await withAsyncThrowingValue { result in
             let delegate = ChatRequestDelegate { [weak self] completion in
                 switch completion {
@@ -66,7 +66,7 @@ public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, Meetin
         }
     }
     
-    public func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         let delegate = ChatRequestDelegate { [weak self] result in
             switch result {
             case .success(let request):
