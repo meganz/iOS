@@ -79,7 +79,7 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
 
 extension FilesSearchRepository {
     
-    private func search(with filter: SearchFilterEntity, page: SearchPageEntity? = nil, cancelToken: MEGACancelToken = MEGACancelToken(), completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
+    private func search(with filter: SearchFilterEntity, page: SearchPageEntity? = nil, cancelToken: ThreadSafeCancelToken = ThreadSafeCancelToken(), completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
                         
         let searchOperation = SearchWithFilterOperation(
             sdk: sdk,
@@ -105,14 +105,14 @@ extension FilesSearchRepository {
     }
     
     private func search(with filter: SearchFilterEntity, page: SearchPageEntity? = nil) async throws -> NodeListEntity {
-        let cancelToken = MEGACancelToken()
+        let cancelToken = ThreadSafeCancelToken()
         return try await withTaskCancellationHandler<NodeListEntity> {
             try await withAsyncThrowingValue { completion in
                 search(with: filter, page: page, cancelToken: cancelToken) { completion($0) }
             }
         } onCancel: {
-            if !cancelToken.isCancelled {
-                cancelToken.cancel()
+            if !cancelToken.value.isCancelled {
+                cancelToken.value.cancel()
             }
         }
     }

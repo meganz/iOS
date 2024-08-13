@@ -7,7 +7,7 @@ final class SearchWithFilterOperation: AsyncOperation {
     let page: MEGASearchPage?
     let recursive: Bool
     let sortOrder: MEGASortOrderType
-    let cancelToken: MEGACancelToken
+    let cancelToken: ThreadSafeCancelToken
 
     let completion: (_ results: MEGANodeList?, _ isCanceled: Bool) -> Void
 
@@ -17,7 +17,7 @@ final class SearchWithFilterOperation: AsyncOperation {
         page: MEGASearchPage?,
         recursive: Bool,
         sortOrder: MEGASortOrderType,
-        cancelToken: MEGACancelToken,
+        cancelToken: ThreadSafeCancelToken,
         completion: @escaping (_ results: MEGANodeList?, _ isCanceled: Bool) -> Void
     ) {
         self.sdk = sdk
@@ -33,12 +33,12 @@ final class SearchWithFilterOperation: AsyncOperation {
         startExecuting()
         
         let nodeList = if recursive {
-            sdk.search(with: filter, orderType: sortOrder, page: page, cancelToken: cancelToken)
+            sdk.search(with: filter, orderType: sortOrder, page: page, cancelToken: cancelToken.value)
         } else {
-            sdk.searchNonRecursively(with: filter, orderType: sortOrder, page: page, cancelToken: cancelToken)
+            sdk.searchNonRecursively(with: filter, orderType: sortOrder, page: page, cancelToken: cancelToken.value)
         }
         
-        guard !isCancelled, !cancelToken.isCancelled else {
+        guard !isCancelled, !cancelToken.value.isCancelled else {
             completion(nil, true)
             return
         }
@@ -53,8 +53,8 @@ final class SearchWithFilterOperation: AsyncOperation {
             return
         }
         
-        if !cancelToken.isCancelled {
-            cancelToken.cancel()
+        if !cancelToken.value.isCancelled {
+            cancelToken.value.cancel()
         }
         
         super.cancel()
