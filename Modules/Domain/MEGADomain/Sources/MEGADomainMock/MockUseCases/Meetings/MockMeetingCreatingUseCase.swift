@@ -22,7 +22,7 @@ public final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         self.checkChatLinkCompletion = checkChatLinkCompletion
     }
     
-    public func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity {
+    public func createMeeting(_ startCall: CreateMeetingNowEntity) async throws -> ChatRoomEntity {
         switch createMeetingResult {
         case .success(let chatRoom):
             return chatRoom
@@ -31,7 +31,7 @@ public final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         }
     }
     
-    public func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         completion(joinCallCompletion)
     }
     

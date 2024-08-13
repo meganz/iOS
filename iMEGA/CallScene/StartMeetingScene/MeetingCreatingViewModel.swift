@@ -186,13 +186,12 @@ final class MeetingCreatingViewModel: ViewModelType {
             isSpeakerEnabled = !isSpeakerEnabled
             enableLoudSpeaker(enabled: isSpeakerEnabled)
         case .didTapStartMeetingButton:
-            disableLocalVideoIfNeeded()
             switch type {
             case .start:
                 startChatCall()
             case .join:
                 guard let chatId else { return }
-                joinChatCall(chatId: chatId)
+                joinChatAndStartCall(chatId: chatId)
             case .guestJoin:
                 guard let chatId else { return }
                 createEphemeralAccountAndJoinChat(chatId: chatId)
@@ -261,23 +260,16 @@ final class MeetingCreatingViewModel: ViewModelType {
             guard let self else { return }
             switch $0 {
             case .success:
-                joinChatCall(chatId: chatId)
+                joinChatAndStartCall(chatId: chatId)
                 NotificationCenter.default.post(name: .accountDidLogin, object: nil)
             case .failure:
                 dismiss()
             }
-        } karereInitCompletion: {
-            if self.isVideoEnabled {
-                self.localVideoUseCase.openVideoDevice { _ in
-                    self.selectFrontCameraIfNeeded()
-                    self.localVideoUseCase.addLocalVideo(for: chatId, callbacksDelegate: self)
-                }
-            }
-        }
+        } karereInitCompletion: { }
     }
     
-    private func joinChatCall(chatId: UInt64) {
-        meetingUseCase.joinCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled, userHandle: userHandle) { [weak self] in
+    private func joinChatAndStartCall(chatId: UInt64) {
+        meetingUseCase.joinChat(forChatId: chatId, userHandle: userHandle) { [weak self] in
             guard let self else { return }
             switch $0 {
             case .success(let chatRoom):
@@ -293,10 +285,8 @@ final class MeetingCreatingViewModel: ViewModelType {
             dispatch(.updateMeetingName(defaultMeetingName))
         }
         
-        let startCallData = StartCallEntity(
+        let startCallData = CreateMeetingNowEntity(
             meetingName: meetingName,
-            enableVideo: isVideoEnabled,
-            enableAudio: isMicrophoneEnabled,
             speakRequest: isSpeakRequestEnabled,
             waitingRoom: isWaitingRoomEnabled,
             allowNonHostToAddParticipants: doesAllowNonHostToAddParticipants)
