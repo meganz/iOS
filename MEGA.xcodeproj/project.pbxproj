@@ -75,7 +75,6 @@
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
 		0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */; };
 		0ECFECF72ACE0D5C00CBC420 /* AppearanceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */; };
-		0ED6F0CE2C51D494009801B7 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED6F0CD2C51D494009801B7 /* ContactsView.swift */; };
 		0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */; };
 		0EDE0DDD2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */; };
 		0EDE903E2BF6D21700D2F96E /* NodeUseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE903D2BF6D21700D2F96E /* NodeUseCaseFactory.swift */; };
@@ -2823,7 +2822,6 @@
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
 		0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchCellViewConfiguration.swift; sourceTree = "<group>"; };
 		0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModelTests.swift; sourceTree = "<group>"; };
-		0ED6F0CD2C51D494009801B7 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewModel.swift; sourceTree = "<group>"; };
 		0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlbumsLinkInitialSections.swift; sourceTree = "<group>"; };
 		0EDE903D2BF6D21700D2F96E /* NodeUseCaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeUseCaseFactory.swift; sourceTree = "<group>"; };
@@ -7010,7 +7008,6 @@
 				415DCF221BF48EFA00914A1E /* ContactRequestsViewController.h */,
 				415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */,
 				415226731A692ECC00EC7BB6 /* Contacts.storyboard */,
-				0ED6F0CD2C51D494009801B7 /* ContactsView.swift */,
 				8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */,
 				94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */,
 				415226741A692ECC00EC7BB6 /* ContactsViewController.h */,
@@ -14818,7 +14815,6 @@
 				83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */,
 				83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
-				0ED6F0CE2C51D494009801B7 /* ContactsView.swift in Sources */,
 				8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */,
 				94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
