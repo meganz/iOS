@@ -31,6 +31,7 @@ struct ChatTabsSelectorView: View {
                 Divider()
                     .frame(maxHeight: 1)
                     .background(chatViewMode == .chats ? selectedColor : unselectedDividerColor)
+                    .opacity(chatViewMode == .chats ? 1 : 0)
             }
             
             VStack {
@@ -52,6 +53,7 @@ struct ChatTabsSelectorView: View {
                 Divider()
                     .frame(maxHeight: 1)
                     .background(chatViewMode == .meetings ? selectedColor : unselectedDividerColor)
+                    .opacity(chatViewMode == .meetings ? 1 : 0)
             }
         }
         .frame(maxHeight: 44)
