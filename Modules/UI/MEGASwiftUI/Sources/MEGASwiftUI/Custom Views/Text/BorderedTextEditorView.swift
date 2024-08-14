@@ -5,23 +5,21 @@ public struct BorderedTextEditorView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     @State private var hasError: Bool = false
-    @FocusState private var isFocused: Bool
     @Binding var textInput: String
-    @Binding var isFieldFocused: Bool
+    @Binding var isFocused: Bool
     private let maxCharacterLimit: Int
     private let height: CGFloat
     
     public init(
         textInput: Binding<String>,
-        isFieldFocused: Binding<Bool>,
+        isFocused: Binding<Bool>,
         maxCharacterLimit: Int = 0,
         height: CGFloat = 142
     ) {
         _textInput = textInput
-        _isFieldFocused = isFieldFocused
+        _isFocused = isFocused
         self.maxCharacterLimit = maxCharacterLimit
         self.height = height
-        isFocused = isFieldFocused.wrappedValue
     }
     
     public var body: some View {
@@ -37,14 +35,9 @@ public struct BorderedTextEditorView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 
                 HStack(spacing: 0) {
-                    TextEditor(text: $textInput)
-                        .transparentScrolling()
-                        .focused($isFocused)
+                    TextEditorWithDoneKeyboardView(text: $textInput, isFocused: $isFocused)
                         .padding(2)
                         .background(.clear)
-                        .onChange(of: isFocused) { isFocused in
-                            isFieldFocused = isFocused
-                        }
                         .onChange(of: textInput) { text in
                             guard shouldShowMaxLimit else { return }
                             hasError = text.count > maxCharacterLimit
@@ -53,10 +46,10 @@ public struct BorderedTextEditorView: View {
                     clearTextButton
                 }
             }
+            .frame(height: height)
             
             characterLimitCounterText
         }
-        .frame(height: height)
     }
     
     @ViewBuilder
@@ -100,23 +93,9 @@ public struct BorderedTextEditorView: View {
     }
 }
 
-private extension View {
-    func transparentScrolling() -> some View {
-        if #available(iOS 16.0, *) {
-            return scrollContentBackground(.hidden)
-                .scrollIndicators(.never)
-        } else {
-            return onAppear {
-                UITextView.appearance().backgroundColor = .clear
-                UITextView.appearance().showsVerticalScrollIndicator = false
-            }
-        }
-    }
-}
-
 #Preview {
     Group {
-        BorderedTextEditorView(textInput: .constant("Show character counter"), isFieldFocused: .constant(true), maxCharacterLimit: 120)
-        BorderedTextEditorView(textInput: .constant("No character counter footer"), isFieldFocused: .constant(false), maxCharacterLimit: 0)
+        BorderedTextEditorView(textInput: .constant("Show character counter"), isFocused: .constant(true), maxCharacterLimit: 120)
+        BorderedTextEditorView(textInput: .constant("No character counter footer"), isFocused: .constant(false), maxCharacterLimit: 0)
     }
 }

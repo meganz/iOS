@@ -42,14 +42,13 @@ struct CancellationSurveyView: View {
                         
                         bottomButtonsView
                     }
-                    .padding(EdgeInsets(top: 10, leading: 16, bottom: 20, trailing: 16))
+                    .padding(EdgeInsets(top: 10, leading: 16, bottom: 60, trailing: 16))
                 }
                 .adaptsToKeyboard()
-                .onChange(of: viewModel.focusedReason) { reason in
-                    if let reason {
-                        withAnimation {
-                            scrollProxy.scrollTo(reason.id, anchor: .bottom)
-                        }
+                .onChange(of: viewModel.isOtherFieldFocused) { isFocused in
+                    guard isFocused else { return }
+                    withAnimation {
+                        scrollProxy.scrollTo(viewModel.otherReasonID, anchor: .center)
                     }
                 }
             }
@@ -126,7 +125,7 @@ struct CancellationSurveyView: View {
         if let selectedReason = viewModel.selectedReason, selectedReason.isOtherReason {
             BorderedTextEditorView(
                 textInput: $viewModel.otherReasonText,
-                isFieldFocused: $viewModel.isOtherFieldFocused,
+                isFocused: $viewModel.isOtherFieldFocused,
                 maxCharacterLimit: 120
             )
             .id(viewModel.otherReasonID)
