@@ -116,7 +116,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case hideCallWillEnd
         case enableSwitchCameraButton
         case updateSnackBar(SnackBar?)
-        case showEmptyCallShareOptionsView
+        case showEmptyCallShareOptionsView(canInviteParticipants: Bool)
         case removeEmptyCallShareOptionsView
         case updateBarButtons
     }
@@ -1297,8 +1297,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func showEmptyCallShareOptionsViewIfNeeded() {
         if !isOneToOne && call.numberOfParticipants <= 1 && !hasParticipantJoinedBefore {
             shareLinkBarButtonHidden = true
-            invokeCommand?(.showEmptyCallShareOptionsView)
+            invokeCommand?(.showEmptyCallShareOptionsView(canInviteParticipants: canInviteParticipants))
         }
+    }
+    
+    private var canInviteParticipants: Bool {
+        (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) &&
+        chatRoom.chatType != .oneToOne &&
+        !accountUseCase.isGuest
     }
     
     private func removeEmptyCallShareOptionsViewIfNeeded() {

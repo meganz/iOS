@@ -383,8 +383,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
                 MEGALogDebug("[RaiseHand] snack bar update is nil")
                 SnackBarRouter.shared.dismissSnackBar(immediate: false)
             }
-        case .showEmptyCallShareOptionsView:
-            addEmptyMeetingShareOptionsView()
+        case .showEmptyCallShareOptionsView(let canInviteParticipants):
+            addEmptyMeetingShareOptionsView(canInviteParticipants)
         case .removeEmptyCallShareOptionsView:
             emptyMeetingShareOptionsViewHost?.view.removeFromSuperview()
             emptyMeetingShareOptionsViewHost?.removeFromParent()
@@ -769,8 +769,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         callCollectionView.reloadData()
     }
     
-    private func addEmptyMeetingShareOptionsView() {
-        let emptyCallShareOptionsView = EmptyCallShareOptionsView { [weak self] action in
+    private func addEmptyMeetingShareOptionsView(_ canInviteParticipants: Bool) {
+        let emptyCallShareOptionsView = EmptyCallShareOptionsView(
+            canInviteParticipants: canInviteParticipants
+        ) { [weak self] action in
             guard let self else { return }
             switch action {
             case .shareLink:

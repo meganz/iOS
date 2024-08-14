@@ -9,15 +9,18 @@ enum EmptyCallShareOptionAction {
 }
 
 struct EmptyCallShareOptionsView: View {
+    let canInviteParticipants: Bool
     let actionHandler: (EmptyCallShareOptionAction) -> Void
 
     var body: some View {
         VStack(spacing: 16) {
-            Text(Strings.Localizable.Call.Meeting.Empty.ShareOptionsDialog.title)
-                .font(.subheadline)
-                .foregroundColor(TokenColors.Text.secondary.swiftUI)
-                .frame(width: 250)
-                .padding(.bottom)
+            Text(
+                canInviteParticipants ? Strings.Localizable.Call.Meeting.Empty.ShareOptionsDialog.title : Strings.Localizable.Call.Meeting.Empty.ShareOptionsDialog.NotAllowedToInvite.title
+            )
+            .font(.subheadline)
+            .foregroundColor(TokenColors.Text.secondary.swiftUI)
+            .frame(width: 250)
+            .padding(.bottom)
             
             Button {
                 actionHandler(.shareLink)
@@ -39,13 +42,15 @@ struct EmptyCallShareOptionsView: View {
             .background(TokenColors.Button.secondary.swiftUI)
             .cornerRadius(8)
             
-            Button {
-                actionHandler(.inviteParticipants)
-            } label: {
-                Text(Strings.Localizable.Call.Meeting.Empty.ShareOptionsDialog.inviteParticipants)
-                    .foregroundColor(TokenColors.Text.primary.swiftUI)
+            if canInviteParticipants {
+                Button {
+                    actionHandler(.inviteParticipants)
+                } label: {
+                    Text(Strings.Localizable.Call.Meeting.Empty.ShareOptionsDialog.inviteParticipants)
+                        .foregroundColor(TokenColors.Text.primary.swiftUI)
+                }
+                .frame(width: 250, height: 50)
             }
-            .frame(width: 250, height: 50)
         }
         .padding(32)
         .background(TokenColors.Background.surface1.swiftUI)
@@ -57,8 +62,14 @@ struct EmptyCallShareOptionsView: View {
     }
 }
 
-#Preview("EmptyCallShareOptionsView") {
-    EmptyCallShareOptionsView { action in
+#Preview("EmptyCallShareOptionsView can invite participants") {
+    EmptyCallShareOptionsView(canInviteParticipants: true) { action in
+        print(action)
+    }
+}
+
+#Preview("EmptyCallShareOptionsView cann't invite participants") {
+    EmptyCallShareOptionsView(canInviteParticipants: false) { action in
         print(action)
     }
 }
