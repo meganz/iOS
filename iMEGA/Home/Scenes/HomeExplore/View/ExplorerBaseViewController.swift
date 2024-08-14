@@ -290,6 +290,15 @@ class ExplorerBaseViewController: UIViewController {
         }
     }
     
+    private func manageLinks() {
+        guard let selected = selectedNodes() else { return }
+        GetLinkRouter(
+            presenter: self,
+            nodes: selected
+        ).start()
+        endEditingMode()
+    }
+    
     // MARK: - Methods needs to be overriden by the subclass
     
     func selectedNodes() -> [MEGANode]? {
@@ -355,6 +364,8 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
             unhide()
         case .shareFolder:
             shareFolders()
+        case .manageLink:
+            manageLinks()
         default:
             break
         }
