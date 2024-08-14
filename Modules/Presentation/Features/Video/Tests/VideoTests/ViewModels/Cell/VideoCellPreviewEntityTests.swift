@@ -117,7 +117,7 @@ class VideoCellPreviewEntityTests: XCTestCase {
     private func greyImage() -> UIImage { image(named: "GreySmall") }
     
     private func image(named: String) -> UIImage {
-        guard let image = MEGAAssetsPreviewImageProvider.image(named:named) else {
+        guard let image = MEGAAssetsImageProvider.image(named: named) else {
             fatalError("Could not found color from asset named: \(named)")
         }
         return image
