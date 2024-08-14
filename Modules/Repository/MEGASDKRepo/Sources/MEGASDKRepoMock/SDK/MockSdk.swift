@@ -598,6 +598,10 @@ public final class MockSdk: MEGASdk {
         processRequestResult(delegate: delegate)
     }
     
+    public override func creditCardCancelSubscriptions(_ reason: String?, subscriptionId: String?, canContact: Bool, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
     public override func getMiscFlags(with delegate: MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
