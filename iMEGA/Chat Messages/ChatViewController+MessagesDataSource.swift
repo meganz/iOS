@@ -119,8 +119,11 @@ extension ChatViewController: MessagesDataSource {
         }
         let description = (bottomLabelString as NSString).replacingOccurrences(of: String(format: "[RED]%@[/RED]", title), with: "")
         
+        let errorColor = UIColor.isDesignTokenEnabled() ?
+            TokenColors.Text.error :
+            UIColor.mnz_errorRed(for: traitCollection)
         let titleAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.mnz_red(for: traitCollection),
+            NSAttributedString.Key.foregroundColor: errorColor,
             NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium)
         ]
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
