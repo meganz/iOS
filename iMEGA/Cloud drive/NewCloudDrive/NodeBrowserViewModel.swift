@@ -36,7 +36,15 @@ class NodeBrowserViewModel: ObservableObject {
     let config: NodeBrowserConfig
     @Published var contextMenuViewFactory: NodeBrowserContextMenuViewFactory?
 
-    @Published var sortOrder: MEGADomain.SortOrderEntity
+    // We can remove sortOrder in the future since we're mainly using sortOrderProvider as the source of truth now. Ticket [SAO-1994]
+    private(set) var sortOrder: MEGADomain.SortOrderEntity {
+        didSet {
+            guard oldValue != sortOrder else { return }
+            Task {
+                await updateContextMenu()
+            }
+        }
+    }
     @Published var shouldShowMediaDiscoveryAutomatically: Bool?
     @Published var viewMode: ViewModePreferenceEntity
     @Published var editing = false
@@ -69,7 +77,7 @@ class NodeBrowserViewModel: ObservableObject {
 
     var cloudDriveContextMenuFactory: CloudDriveContextMenuFactory? {
         didSet {
-            Task { @MainActor in
+            Task {
                 await updateContextMenu()
             }
         }
