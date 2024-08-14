@@ -8,26 +8,26 @@ extension VideoConfig {
     /// Internal Video SPM module Dependencies helper for SwiftUI
     static let preview = VideoConfig(
         videoListAssets: VideoListAssets(
-            noResultVideoImage: MEGAAssetsPreviewImageProvider.image(named: "noResultsVideo")!,
-            checkmarkImage: MEGAAssetsPreviewImageProvider.image(named: "turquoise_checkmark")!,
-            chipDownArrowImage: MEGAAssetsPreviewImageProvider.image(named: "filterChipDownArrow")!
+            noResultVideoImage: MEGAAssetsImageProvider.image(named: "noResultsVideo")!,
+            checkmarkImage: MEGAAssetsImageProvider.image(named: "turquoise_checkmark")!,
+            chipDownArrowImage: MEGAAssetsImageProvider.image(named: "filterChipDownArrow")!
         ),
         rowAssets: RowAssets(
-            favoriteImage: MEGAAssetsPreviewImageProvider.image(named: "favouriteThumbnail")!,
-            playImage: MEGAAssetsPreviewImageProvider.image(named: "blackPlayButton")!,
-            publicLinkImage: MEGAAssetsPreviewImageProvider.image(named: "linked")!,
-            moreImage: MEGAAssetsPreviewImageProvider.image(named: "moreList")!,
-            addPlaylistImage: MEGAAssetsPreviewImageProvider.image(named: "navigationbar_add")!,
-            rectangleVideoStackPlaylistImage: MEGAAssetsPreviewImageProvider.image(named: "rectangleVideoStack")!,
-            favouritePlaylistThumbnailImage: MEGAAssetsPreviewImageProvider.image(named: "FavouritePlaylistThumbnail")!,
+            favoriteImage: MEGAAssetsImageProvider.image(named: "favouriteThumbnail")!,
+            playImage: MEGAAssetsImageProvider.image(named: "blackPlayButton")!,
+            publicLinkImage: MEGAAssetsImageProvider.image(named: "linked")!,
+            moreImage: MEGAAssetsImageProvider.image(named: "moreList")!,
+            addPlaylistImage: MEGAAssetsImageProvider.image(named: "navigationbar_add")!,
+            rectangleVideoStackPlaylistImage: MEGAAssetsImageProvider.image(named: "rectangleVideoStack")!,
+            favouritePlaylistThumbnailImage: MEGAAssetsImageProvider.image(named: "FavouritePlaylistThumbnail")!,
             labelAssets: VideoConfig.RowAssets.LabelAssets(
-                redImage: MEGAAssetsPreviewImageProvider.image(named: "RedSmall")!,
-                orangeImage: MEGAAssetsPreviewImageProvider.image(named: "OrangeSmall")!,
-                yellowImage: MEGAAssetsPreviewImageProvider.image(named: "YellowSmall")!,
-                greenImage: MEGAAssetsPreviewImageProvider.image(named: "GreenSmall")!,
-                blueImage: MEGAAssetsPreviewImageProvider.image(named: "BlueSmall")!,
-                purpleImage: MEGAAssetsPreviewImageProvider.image(named: "PurpleSmall")!,
-                greyImage: MEGAAssetsPreviewImageProvider.image(named: "GreySmall")!
+                redImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
+                orangeImage: MEGAAssetsImageProvider.image(named: "OrangeSmall")!,
+                yellowImage: MEGAAssetsImageProvider.image(named: "YellowSmall")!,
+                greenImage: MEGAAssetsImageProvider.image(named: "GreenSmall")!,
+                blueImage: MEGAAssetsImageProvider.image(named: "BlueSmall")!,
+                purpleImage: MEGAAssetsImageProvider.image(named: "PurpleSmall")!,
+                greyImage: MEGAAssetsImageProvider.image(named: "GreySmall")!
             )
         ),
         colorAssets: ColorAssets(
@@ -37,14 +37,14 @@ extension VideoConfig {
             secondaryIconColor: TokenColors.Icon.secondary.swiftUI,
             pageBackgroundColor: TokenColors.Background.page.swiftUI,
             whiteColor: TokenColors.Text.onColor.swiftUI,
-            durationTextColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "black_161616")!).opacity(0.5),
-            tabActiveIndicatorColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "red_F30C14")!),
+            durationTextColor: Color(uiColor: MEGAAssetsColorProvider.color(named: "black_161616")!).opacity(0.5),
+            tabActiveIndicatorColor: Color(uiColor: MEGAAssetsColorProvider.color(named: "red_F30C14")!),
             tabInactiveIndicatorColor: Color.clear,
-            tabInactiveTextColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "gray_515151")!),
+            tabInactiveTextColor: Color(uiColor: MEGAAssetsColorProvider.color(named: "gray_515151")!),
             addPlaylistButtonTextColor: TokenColors.Text.inverseAccent.swiftUI,
             addPlaylistButtonBackgroundColor: TokenColors.Icon.accent.swiftUI,
-            toolbarBackgroundColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "navigationBgColor")!),
-            navigationBgColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "navigationBgColor")!),
+            toolbarBackgroundColor: Color(uiColor: MEGAAssetsColorProvider.color(named: "navigationBgColor")!),
+            navigationBgColor: Color(uiColor: MEGAAssetsColorProvider.color(named: "navigationBgColor")!),
             emptyFavoriteThumbnailBackgroundColor: TokenColors.Background.surface2.swiftUI,
             emptyFavoriteThumbnaillImageForegroundColor: TokenColors.Icon.secondary.swiftUI,
             videoThumbnailImageViewPlaceholderBackgroundColor: Color.black,
@@ -61,11 +61,11 @@ extension VideoConfig {
             
         ),
         toolbarAssets: ToolbarAssets(
-            offlineImage: MEGAAssetsPreviewImageProvider.image(named: "offline")!,
-            linkImage: MEGAAssetsPreviewImageProvider.image(named: "link")!,
-            saveToPhotosImage: MEGAAssetsPreviewImageProvider.image(named: "saveToPhotos")!,
-            sendToChatImage: MEGAAssetsPreviewImageProvider.image(named: "sendToChat")!,
-            moreListImage: MEGAAssetsPreviewImageProvider.image(named: "moreList")!
+            offlineImage: MEGAAssetsImageProvider.image(named: "offline")!,
+            linkImage: MEGAAssetsImageProvider.image(named: "link")!,
+            saveToPhotosImage: MEGAAssetsImageProvider.image(named: "saveToPhotos")!,
+            sendToChatImage: MEGAAssetsImageProvider.image(named: "sendToChat")!,
+            moreListImage: MEGAAssetsImageProvider.image(named: "moreList")!
         ),
         recentlyWatchedAssets: RecentlyWatchedAssets(
             emptyView: .init(
@@ -100,7 +100,7 @@ extension VideoConfig {
             headerView: .init(
                 image: .init(
                     dotSeparatorImage: UIImage(systemName: "circle.fill")!,
-                    publicLinkImage: MEGAAssetsPreviewImageProvider.image(named: "linked")!,
+                    publicLinkImage: MEGAAssetsImageProvider.image(named: "linked")!,
                     addButtonImage: UIImage(systemName: "plus")!,
                     playButtonImage: UIImage(systemName: "play.fill")!
                 ),
@@ -110,11 +110,11 @@ extension VideoConfig {
                     primaryTextColor: TokenColors.Text.primary.swiftUI,
                     secondaryTextColor: TokenColors.Text.secondary.swiftUI,
                     secondaryIconColor: TokenColors.Text.secondary.swiftUI,
-                    buttonTintColor: MEGAAssetsPreviewColorProvider.swiftUIColor(named: "videoPlaylistContent_buttonTintColor")
+                    buttonTintColor: MEGAAssetsColorProvider.swiftUIColor(named: "videoPlaylistContent_buttonTintColor")
                 )
             ),
-            favouritesEmptyStateImage: MEGAAssetsPreviewImageProvider.image(named: "favouritesEmptyState")!,
-            noResultVideoPlaylistImage: MEGAAssetsPreviewImageProvider.image(named: "rectangleVideoStackOutline")!
+            favouritesEmptyStateImage: MEGAAssetsImageProvider.image(named: "favouritesEmptyState")!,
+            noResultVideoPlaylistImage: MEGAAssetsImageProvider.image(named: "rectangleVideoStackOutline")!
         )
     )
 }

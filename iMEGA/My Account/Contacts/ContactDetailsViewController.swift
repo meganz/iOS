@@ -152,13 +152,13 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
         videoCallButton.contentMode = .scaleAspectFit
         
         if UIColor.isDesignTokenEnabled() {
-            let message = MEGAAssetsPreviewImageProvider.image(named: "sendMessageRound_token")
+            let message = MEGAAssetsImageProvider.image(named: "sendMessageRound_token")
             messageButton.setImage(message, for: .normal)
             messageButton.setImage(message?.applying(alpha: 0.5), for: .disabled)
-            let call = MEGAAssetsPreviewImageProvider.image(named: "makeCallRound_token")
+            let call = MEGAAssetsImageProvider.image(named: "makeCallRound_token")
             callButton.setImage(call, for: .normal)
             callButton.setImage(message?.applying(alpha: 0.5), for: .disabled)
-            let videoCall = MEGAAssetsPreviewImageProvider.image(named: "callVideoRound_token")
+            let videoCall = MEGAAssetsImageProvider.image(named: "callVideoRound_token")
             videoCallButton.setImage(videoCall, for: .normal)
             videoCallButton.setImage(videoCall?.applying(alpha: 0.5), for: .disabled)
         }

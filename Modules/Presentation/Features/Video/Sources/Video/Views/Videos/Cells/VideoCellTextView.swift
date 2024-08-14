@@ -22,7 +22,7 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This a short text",
-        labelImage: MEGAAssetsPreviewImageProvider.image(named: "RedSmall")!
+        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!
     )
 }
 
@@ -30,7 +30,7 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This is a long long long text that needs second line probabaly line probabaly",
-        labelImage: MEGAAssetsPreviewImageProvider.image(named: "RedSmall")!
+        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!
     )
 }
 
@@ -38,7 +38,7 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This is a long long long text that needs second line probabaly line probabaly",
-        labelImage: MEGAAssetsPreviewImageProvider.image(named: "RedSmall")!
+        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!
     )
     .preferredColorScheme(.dark)
 }

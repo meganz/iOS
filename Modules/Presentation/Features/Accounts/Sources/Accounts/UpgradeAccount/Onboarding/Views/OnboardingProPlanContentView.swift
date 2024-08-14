@@ -73,5 +73,5 @@ private struct ProPlanView: View {
 }
 
 #Preview {
-    ProPlanView(image: MEGAAssetsPreviewImageProvider.image(named: "storage"), title: "Title", message: "Message")
+    ProPlanView(image: MEGAAssetsImageProvider.image(named: "storage"), title: "Title", message: "Message")
 }
