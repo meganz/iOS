@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPresentation
 import MessageUI
 import UIKit
 
@@ -35,6 +36,8 @@ class InviteContactViewController: UIViewController {
         controller.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0")
         return controller
     }()
+    
+    let tracker = InviteContactTracking.inviteContactTracker
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -56,6 +59,7 @@ class InviteContactViewController: UIViewController {
         updateAppearance()
 
         contactPickerViewController.delegate = self
+        tracker.trackInviteScreen()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -126,11 +130,13 @@ class InviteContactViewController: UIViewController {
             return
         }
 
+        tracker.trackAddFromContactsTapped()
         present(contactPickerViewController, animated: true, completion: nil)
     }
 
     @IBAction func enterEmailButtonTapped(_ sender: Any) {
         guard let enterEmailVC = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "EnterEmailViewControllerID") as? EnterEmailViewController else { return }
+        tracker.trackEnterEmailAddressTapped()
         navigationController?.pushViewController(enterEmailVC, animated: true)
     }
 
@@ -138,6 +144,7 @@ class InviteContactViewController: UIViewController {
         guard let contactLinkVC = UIStoryboard(name: "ContactLinkQR", bundle: nil).instantiateViewController(withIdentifier: "ContactLinkQRViewControllerID") as? ContactLinkQRViewController  else { return }
         contactLinkVC.scanCode = true
         contactLinkVC.modalPresentationStyle = .fullScreen
+        tracker.trackScanCodeTapped()
         present(contactLinkVC, animated: true, completion: nil)
     }
 
@@ -147,6 +154,7 @@ class InviteContactViewController: UIViewController {
         let activity = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: [])
         activity.popoverPresentationController?.sourceView = moreLabel
         activity.popoverPresentationController?.sourceRect = moreLabel.frame
+        tracker.trackShareInviteTapped()
         present(activity, animated: true)
     }
 }

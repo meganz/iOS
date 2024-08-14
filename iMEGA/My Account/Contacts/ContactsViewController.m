@@ -123,6 +123,7 @@
     
     [self setupSubscriptions];
     [self.viewModel showAlertForSensitiveDescendants:self.nodesArray];
+    [self.viewModel didLoadView];
     [self setupContacts];
     
     self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
@@ -1103,6 +1104,10 @@
 }
 
 - (IBAction)addContact:(id)sender {
+    [self executeInvite:sender];
+}
+
+- (void)executeInvite:(id)sender {
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
@@ -1201,7 +1206,8 @@
 }
 
 - (IBAction)inviteContact:(UIBarButtonItem *)sender {
-    [self addContact:sender];
+    [self.viewModel trackInviteToMegaToolbarTapped];
+    [self executeInvite:sender];
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -1244,6 +1250,7 @@
 }
 
 - (IBAction)createGroupAction:(UIBarButtonItem *)sender {
+    [self.viewModel trackNewGroupChatTapped];
     if (self.contactsMode == ContactsModeChatCreateGroup) {
         if (self.searchController.isActive) {
             self.searchController.active = NO;
@@ -1306,7 +1313,8 @@
 
 
 - (IBAction)inviteContactTouchUpInside:(UIButton *)sender {
-    [self addContact:sender];
+    [self.viewModel trackInviteEmptyScreenTapped];
+    [self executeInvite:sender];
 }
 
 - (IBAction)addShareWith:(id)sender {
@@ -1902,7 +1910,7 @@
 
 - (void)buttonTouchUpInsideEmptyState:(UIButton *)button {
     if (MEGAReachabilityManager.isReachable) {
-        [self addContact:button];
+        [self executeInvite: button];
     } else {
         if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
             [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];

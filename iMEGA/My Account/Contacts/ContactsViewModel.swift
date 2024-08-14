@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -39,16 +40,20 @@ import MEGAPresentation
         bannerConfig != nil && !dismissedBannerWarning
     }
     
+    let tracker: any AnalyticsTracking
+    
     init(
         sdk: MEGASdk,
         contactsMode: ContactsMode,
         shareUseCase: some ShareUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.sdk = sdk
         self.contactsMode = contactsMode
         self.shareUseCase = shareUseCase
         isHiddenNodesEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
+        self.tracker = tracker
     }
     
     deinit {
@@ -131,6 +136,24 @@ import MEGAPresentation
             } catch {
                 MEGALogError("[\(type(of: self))]: containsSensitiveContent returned \(error.localizedDescription)")
             }
+        }
+    }
+    
+    @objc func trackInviteEmptyScreenTapped() {
+        tracker.trackAnalyticsEvent(with: InviteContactsPressedEvent())
+    }
+    
+    @objc func trackInviteToMegaToolbarTapped() {
+        tracker.trackAnalyticsEvent(with: InviteToMEGAPressedEvent())
+    }
+    
+    @objc func trackNewGroupChatTapped() {
+        tracker.trackAnalyticsEvent(with: GroupChatPressedEvent())
+    }
+    
+    @objc func didLoadView() {
+        if contactsMode == .chatStartConversation {
+            tracker.trackAnalyticsEvent(with: NewChatScreenEvent())
         }
     }
 }
