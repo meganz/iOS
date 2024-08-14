@@ -4276,6 +4276,8 @@
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Add description";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
 "call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Share this link to invite others";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Share meeting link";
 /* Title for copy link button in Empty meeting share options dialog */

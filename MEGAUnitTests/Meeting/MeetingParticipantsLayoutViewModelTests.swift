@@ -33,7 +33,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false, isOneToOne: false),
                 .showWaitingForOthersMessage,
-                .showEmptyCallShareOptionsView,
+                .showEmptyCallShareOptionsView(canInviteParticipants: true),
                 .updateHasLocalAudio(false),
                 .updateBarButtons
              ])
