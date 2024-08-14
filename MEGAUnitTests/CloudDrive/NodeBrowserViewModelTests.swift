@@ -349,6 +349,55 @@ class NodeBrowserViewModelTests: XCTestCase {
         )
         await assertViewMode(with: harness, expectedOrder: [.list, .thumbnail])
     }
+    
+    func testSortOrderChange() async {
+        await withMainSerialExecutor {
+            // given
+            let harness = Harness(
+                defaultViewMode: .list,
+                node: NodeEntity(handle: 100)
+            )
+            
+            harness.sut.cloudDriveContextMenuFactory = makeContextMenuFactory(nodeUseCase: harness.nodeUseCase, isSensitive: true)
+            await Task.megaYield()
+            
+            let firstSortOrderExp = expectation(description: "Waiting for first sort order")
+            
+            // When we change the sortOrder `sut.updateContextMenu()` will produce 2 NodeBrowserContextMenuViewFactory objects, thus the 2 expected fulfilllment count
+            let secondSortOrderExp = expectation(description: "Waiting for second sort order")
+            secondSortOrderExp.expectedFulfillmentCount = 2
+            var outputSortOrders = [MEGADomain.SortOrderEntity]()
+            
+            let cancellable = harness.sut.$contextMenuViewFactory
+                .map { $0?.makeNavItemsFactory().sortOrder }
+                .receive(on: DispatchQueue.main)
+                .sink {
+                    guard let sortOrder = $0 else { return }
+                    outputSortOrders.append(sortOrder)
+                    if outputSortOrders.count == 1 {
+                        firstSortOrderExp.fulfill()
+                    } else {
+                        secondSortOrderExp.fulfill()
+                    }
+                }
+            
+            // when
+            harness.sut.changeSortOrder(.nameAscending) // This doesn't trigger `updateContextMenu()`
+            await fulfillment(of: [firstSortOrderExp], timeout: 1)
+            
+            // then
+            XCTAssertEqual(outputSortOrders.compactMap { $0 }, [.defaultAsc])
+            
+            // and when
+            harness.sut.changeSortOrder(.favourite) // This does trigger `updateContextMenu()`
+            await fulfillment(of: [secondSortOrderExp], timeout: 1)
+            
+            // and then
+            XCTAssertEqual(outputSortOrders.compactMap { $0 }, [.defaultAsc, .favouriteAsc, .favouriteAsc])
+            
+            cancellable.cancel()
+        }
+    }
 
     func testCloudDriveContextMenuFactory_whenSensitiveNodeIsTrue_shouldUpdateMenuViewFactoryWithHiddenAsTrue() async {
         await assertCloudDriveContextMenuFactory(withNodeAsSensitive: true)
@@ -369,17 +418,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             }
         }
 
-        harness.sut.cloudDriveContextMenuFactory = CloudDriveContextMenuFactory(
-            config: NodeBrowserConfig(),
-            contextMenuManager: ContextMenuManager(createContextMenuUseCase: MockCreateContextMenuUseCase()),
-            contextMenuConfigFactory: CloudDriveContextMenuConfigFactory(
-                backupsUseCase: MockBackupsUseCase(),
-                nodeUseCase: harness.nodeUseCase
-            ),
-            nodeSensitivityChecker: MockNodeSensitivityChecker(isSensitive: isSensitive),
-            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
-            nodeUseCase: harness.nodeUseCase
-        )
+        harness.sut.cloudDriveContextMenuFactory = makeContextMenuFactory(nodeUseCase: harness.nodeUseCase, isSensitive: isSensitive)
 
         await fulfillment(of: [exp], timeout: 1.0)
         cancellable.cancel()
@@ -504,6 +543,23 @@ class NodeBrowserViewModelTests: XCTestCase {
             )
             return
         }
+    }
+    
+    private func makeContextMenuFactory(
+        nodeUseCase: some NodeUseCaseProtocol,
+        isSensitive: Bool
+    ) -> CloudDriveContextMenuFactory {
+        CloudDriveContextMenuFactory(
+            config: NodeBrowserConfig(),
+            contextMenuManager: ContextMenuManager(createContextMenuUseCase: MockCreateContextMenuUseCase()),
+            contextMenuConfigFactory: CloudDriveContextMenuConfigFactory(
+                backupsUseCase: MockBackupsUseCase(),
+                nodeUseCase: nodeUseCase
+            ),
+            nodeSensitivityChecker: MockNodeSensitivityChecker(isSensitive: isSensitive),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
+            nodeUseCase: nodeUseCase
+        )
     }
 }
 
