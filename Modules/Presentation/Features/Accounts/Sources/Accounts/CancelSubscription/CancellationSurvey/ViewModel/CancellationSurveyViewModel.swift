@@ -5,7 +5,6 @@ final class CancellationSurveyViewModel: ObservableObject {
     @Published var selectedReason: CancellationSurveyReason?
     @Published var cancellationSurveyReasonList: [CancellationSurveyReason] = []
     @Published var otherReasonText: String = ""
-    @Published var focusedReason: CancellationSurveyReason?
     @Published var isOtherFieldFocused: Bool = false
     @Published var allowToBeContacted: Bool = false
     @Published var showNoReasonSelectedError: Bool = false
@@ -29,15 +28,9 @@ final class CancellationSurveyViewModel: ObservableObject {
     }
     
     @MainActor
-    func handleFieldFocusChange(reason: CancellationSurveyReason, isFocused: Bool) {
-        focusedReason = isFocused ? reason : nil
-    }
-    
-    @MainActor
     func selectReason(_ reason: CancellationSurveyReason) {
         selectedReason = reason
-        
-        guard showNoReasonSelectedError else { return }
+        isOtherFieldFocused = !reason.isOtherReason
         showNoReasonSelectedError = false
     }
     

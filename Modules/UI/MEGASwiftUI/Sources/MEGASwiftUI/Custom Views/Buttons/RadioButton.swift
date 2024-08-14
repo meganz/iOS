@@ -34,6 +34,9 @@ public struct RadioButton: View {
                 
                 Spacer()
             }
+            .transaction { transaction in
+                transaction.animation = nil
+            }
         }
         .frame(maxWidth: .infinity)
         .background(.clear)
