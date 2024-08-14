@@ -1488,6 +1488,7 @@
 		94B0C6CE2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */; };
 		94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */; };
 		94B503A72C357E320064270D /* CallsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B503A62C357E320064270D /* CallsCoordinatorTests.swift */; };
+		94B532752C6BB436008FE67D /* InviteContactTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B532742C6BB436008FE67D /* InviteContactTracking.swift */; };
 		94B6E8852A83F6410082D9B1 /* MEGAPickerFileProviderDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */; };
 		94B6E8882A83F8530082D9B1 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */; };
 		94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */; };
@@ -4284,6 +4285,7 @@
 		94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelBannerFactory.swift; sourceTree = "<group>"; };
 		94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWithFilterOperation.swift; sourceTree = "<group>"; };
 		94B503A62C357E320064270D /* CallsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsCoordinatorTests.swift; sourceTree = "<group>"; };
+		94B532742C6BB436008FE67D /* InviteContactTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteContactTracking.swift; sourceTree = "<group>"; };
 		94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoVerifyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeVersionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94B85CA02B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveNavigationTitleBuilderTests.swift; sourceTree = "<group>"; };
@@ -7851,6 +7853,7 @@
 			children = (
 				8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */,
 				5BA53FE82462B26000D168B9 /* InviteContact.storyboard */,
+				94B532742C6BB436008FE67D /* InviteContactTracking.swift */,
 				8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */,
 			);
 			path = "Invite Contact";
@@ -15107,6 +15110,7 @@
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
 				5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */,
+				94B532752C6BB436008FE67D /* InviteContactTracking.swift in Sources */,
 				8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */,
 				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				947C6CBA2A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift in Sources */,
