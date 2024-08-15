@@ -64,7 +64,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                        section.sectionType)
     }
     
-    func testDispatchViewConfiguration_onNoExportedAlbums_shouldSetTitleToShareLinkAndTrackScreen() {
+    @MainActor func testDispatchViewConfiguration_onNoExportedAlbums_shouldSetTitleToShareLinkAndTrackScreen() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false))
             let tracker = MockTracker()
@@ -91,7 +91,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatchViewConfiguration_onExportedAlbums_shouldSetTitleToManageShareLink() {
+    @MainActor func testDispatchViewConfiguration_onExportedAlbums_shouldSetTitleToManageShareLink() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
             let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true))
@@ -109,6 +109,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchOnViewReady_onAlbumLinkLoaded_shouldUpdateLinkSectionLinkCell() async throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
@@ -129,7 +130,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
             let updatedIndexPath = IndexPath(row: 0, section: 0)
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
+            await test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)),
@@ -148,6 +149,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchSwitchToggled_onDecryptKeySeparateToggled_linkAndKeyShouldUpdateCorrectly() async throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = AlbumEntity(id: 1, type: .user)
@@ -167,7 +169,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 shareAlbumUseCase: shareAlbumUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
+            await test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -201,6 +203,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchShareLink_onDecryptSeperateOff_shouldOnlyShareOriginalLink() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
@@ -219,7 +222,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
+            await test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -229,7 +232,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             ], expectationValidation: ==)
             
             await sut.loadingTask?.value
-            let barButton = await UIBarButtonItem()
+            let barButton = UIBarButtonItem()
             test(viewModel: sut, action: .shareLink(sender: barButton),
                  expectedCommands: [
                     .showShareActivity(sender: barButton, link: link, key: nil)
@@ -238,6 +241,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchShareLink_onDecryptSeperateOn_shouldShareLinkSeperatelyFromKey() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = AlbumEntity(id: 1, type: .user)
@@ -257,7 +261,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
+            await test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -266,7 +270,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                 .dismissHud
             ], expectationValidation: ==)
             await sut.loadingTask?.value
-            let barButton = await UIBarButtonItem()
+            let barButton = UIBarButtonItem()
             test(viewModel: sut, action: .shareLink(sender: barButton),
                  expectedCommands: [
                     .showShareActivity(sender: barButton, link: linkOnly, key: key)
@@ -275,6 +279,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchCopyLink_onDecryptSeperateOff_shouldCopyShareOriginalLink() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = AlbumEntity(id: 1, type: .user)
@@ -293,7 +298,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
+            await test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -315,6 +320,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchCopyLink_onDecryptSeperateOn_shouldCopyOnlyLink() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = AlbumEntity(id: 1, type: .user)
@@ -335,7 +341,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear],
+            await test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear],
                  expectedCommands: [
                     .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                    isMultilink: false,
@@ -358,6 +364,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchCopyKey_onDecryptSeperateOn_shouldCopyKey() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = AlbumEntity(id: 1, type: .user)
@@ -378,7 +385,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
+            await test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
                 .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                                isMultilink: false,
                                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -398,7 +405,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatchViewConfiguration_onNotExportedAlbumsAndContainsSensitiveElement_shouldPromptAlert() {
+    @MainActor func testDispatchViewConfiguration_onNotExportedAlbumsAndContainsSensitiveElement_shouldPromptAlert() {
         
         let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false))
         let sut = makeGetAlbumLinkViewModel(album: album,

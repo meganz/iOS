@@ -4,7 +4,7 @@ import XCTest
 
 final class EncourageGuestUserToJoinMegaViewModelTests: XCTestCase {
     
-    func testDispatchCreateAccount_shouldCallCreateAccount() {
+    @MainActor func testDispatchCreateAccount_shouldCallCreateAccount() {
         let mockRouter = MockEncourageGuestUserToJoinMegaRouter()
         let sut = EncourageGuestUserToJoinMegaViewModel(router: mockRouter)
         
@@ -13,7 +13,7 @@ final class EncourageGuestUserToJoinMegaViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.createAccountCallCount, 1)
     }
     
-    func testDispatchDismiss_shouldCallDismissView() {
+    @MainActor func testDispatchDismiss_shouldCallDismissView() {
         let mockRouter = MockEncourageGuestUserToJoinMegaRouter()
         let sut = EncourageGuestUserToJoinMegaViewModel(router: mockRouter)
         

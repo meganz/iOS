@@ -3,7 +3,7 @@ import XCTest
 
 class EndMeetingOptionsViewModelTests: XCTestCase {
 
-    func testAction_onLeave() {
+    @MainActor func testAction_onLeave() {
         let router = MockEndMeetingOptionsRouter()
         let viewModel = EndMeetingOptionsViewModel(router: router)
         test(viewModel: viewModel, action: .onLeave, expectedCommands: [])
@@ -11,7 +11,7 @@ class EndMeetingOptionsViewModelTests: XCTestCase {
         XCTAssert(router.showJoinMega_calledTimes == 1)
     }
     
-    func testAction_onCancel() {
+    @MainActor func testAction_onCancel() {
         let router = MockEndMeetingOptionsRouter()
         let viewModel = EndMeetingOptionsViewModel(router: router)
         test(viewModel: viewModel, action: .onCancel, expectedCommands: [])

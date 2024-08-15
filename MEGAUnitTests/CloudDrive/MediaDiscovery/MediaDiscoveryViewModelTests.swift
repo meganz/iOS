@@ -8,12 +8,12 @@ import XCTest
 final class MediaDiscoveryViewModelTests: XCTestCase {
     // MARK: - Action Command tests
     
-    func testAction_onViewReady_withEmptyMediaFiles() throws {
+    @MainActor func testAction_onViewReady_withEmptyMediaFiles() throws {
         let sut = makeMediaDiscoveryViewModel()
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.loadMedia(nodes: [])])
     }
     
-    func testAction_onViewReady_loadedNodesRequestLoadMedia() throws {
+    @MainActor func testAction_onViewReady_loadedNodesRequestLoadMedia() throws {
         let expected = [NodeEntity(handle: 1)]
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expected)
         let sut = makeMediaDiscoveryViewModel(mediaDiscoveryUseCase: mediaDiscoveryUseCase)
@@ -21,7 +21,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.loadMedia(nodes: expected)])
     }
     
-    func testSendEvent_onMediaDiscoveryVisited_shouldReturnTrue() throws {
+    @MainActor func testSendEvent_onMediaDiscoveryVisited_shouldReturnTrue() throws {
         let analyticsUseCase = MockMediaDiscoveryAnalyticsUseCase()
         let sut = makeMediaDiscoveryViewModel(analyticsUseCase: analyticsUseCase)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.loadMedia(nodes: [])])
@@ -29,7 +29,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         XCTAssertTrue(analyticsUseCase.hasPageVisitedCalled)
     }
     
-    func testSendEvent_onMediaDiscoveryExit_shouldReturnTrue() throws {
+    @MainActor func testSendEvent_onMediaDiscoveryExit_shouldReturnTrue() throws {
         let analyticsUseCase = MockMediaDiscoveryAnalyticsUseCase()
         let sut = makeMediaDiscoveryViewModel(analyticsUseCase: analyticsUseCase)
         test(viewModel: sut, action: .onViewWillDisAppear, expectedCommands: [])
@@ -37,7 +37,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         XCTAssertTrue(analyticsUseCase.hasPageStayCalled)
     }
     
-    func testAction_downloadPhotos_shouldDownloadTransfersAndSetFolderLinkFlag() {
+    @MainActor func testAction_downloadPhotos_shouldDownloadTransfersAndSetFolderLinkFlag() {
         let router = MockMediaDiscoveryRouter()
         let sut = makeMediaDiscoveryViewModel(router: router, credentialUseCase: MockCredentialUseCase(session: true))
         let selectedPhotos = [
@@ -71,7 +71,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
                                                                            photos: photosToImport))
     }
     
-    func testAction_saveToPhotos_shouldSaveSelectedPhotosAndEndEditingMode() {
+    @MainActor func testAction_saveToPhotos_shouldSaveSelectedPhotosAndEndEditingMode() {
         let saveMediaUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success)
         let sut = makeMediaDiscoveryViewModel(saveMediaUseCase: saveMediaUseCase)
         test(viewModel: sut, action: .saveToPhotos([NodeEntity(handle: 1)]), expectedCommands: [
@@ -79,7 +79,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         ])
     }
             
-    func testAction_saveToPhotosFailed_shouldShowError() {
+    @MainActor func testAction_saveToPhotosFailed_shouldShowError() {
         let error = SaveMediaToPhotosErrorEntity.downloadFailed
         let saveMediaUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .failure(error))
         let sut = makeMediaDiscoveryViewModel(saveMediaUseCase: saveMediaUseCase)
@@ -100,7 +100,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func testAction_importPhotos_shouldEndEditingModeAndImportPhotosWithCorrectFolderLink() {
+    @MainActor func testAction_importPhotos_shouldEndEditingModeAndImportPhotosWithCorrectFolderLink() {
         let router = MockMediaDiscoveryRouter()
         let sut = makeMediaDiscoveryViewModel(router: router, credentialUseCase: MockCredentialUseCase(session: true))
         test(viewModel: sut, action: .importPhotos([NodeEntity(handle: 4)]),
@@ -130,7 +130,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
                                                                            photos: photosToImport))
     }
     
-    func testAction_shareLink_shouldShowShareLinkWithFolderLink() {
+    @MainActor func testAction_shareLink_shouldShowShareLinkWithFolderLink() {
         let router = MockMediaDiscoveryRouter()
         let sut = makeMediaDiscoveryViewModel(router: router)
         test(viewModel: sut, action: .shareLink(nil),

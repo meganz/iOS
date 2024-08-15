@@ -6,7 +6,7 @@ import XCTest
 
 final class VerificationCodeViewModelTests: XCTestCase {
     
-    func testAction_onViewReady_addPhoneNumber() {
+    @MainActor func testAction_onViewReady_addPhoneNumber() {
         let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),
                                             checkSMSUseCase: MockCheckSMSUseCase(),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
@@ -19,7 +19,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
              expectedCommands: [.configView(phoneNumber: "+64 27 232 0000", screenTitle: Strings.Localizable.addPhoneNumber)])
     }
     
-    func testAction_onViewReady_unblockAccount() {
+    @MainActor func testAction_onViewReady_unblockAccount() {
         let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),
                                             checkSMSUseCase: MockCheckSMSUseCase(),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
@@ -32,7 +32,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
              expectedCommands: [.configView(phoneNumber: "+64 27 232 0000", screenTitle: Strings.Localizable.verifyYourAccount)])
     }
 
-    func testAction_resendCode() {
+    @MainActor func testAction_resendCode() {
         let router = MockVerificationCodeViewRouter()
         let sut = VerificationCodeViewModel(router: router,
                                             checkSMSUseCase: MockCheckSMSUseCase(),
@@ -45,7 +45,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         XCTAssertEqual(router.goBack_calledTimes, 1)
     }
     
-    func testAction_didCheckCodeSucceeded_addPhoneNumber() {
+    @MainActor func testAction_didCheckCodeSucceeded_addPhoneNumber() {
         let router = MockVerificationCodeViewRouter()
         let sut = VerificationCodeViewModel(router: router,
                                             checkSMSUseCase: MockCheckSMSUseCase(),
@@ -58,7 +58,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         XCTAssertEqual(router.phoneNumberVerified_calledTimes, 1)
     }
     
-    func testAction_didCheckCodeSucceeded_unblockAccount_notLogin() {
+    @MainActor func testAction_didCheckCodeSucceeded_unblockAccount_notLogin() {
         let router = MockVerificationCodeViewRouter()
         let sut = VerificationCodeViewModel(router: router,
                                             checkSMSUseCase: MockCheckSMSUseCase(),
@@ -72,7 +72,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         XCTAssertEqual(router.goToOnboarding_calledTimes, 1)
     }
     
-    func testAction_didCheckCodeSucceeded_unblockAccount_login() {
+    @MainActor func testAction_didCheckCodeSucceeded_unblockAccount_login() {
         let router = MockVerificationCodeViewRouter()
         let sut = VerificationCodeViewModel(router: router,
                                             checkSMSUseCase: MockCheckSMSUseCase(),
@@ -86,7 +86,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
         XCTAssertEqual(router.phoneNumberVerified_calledTimes, 1)
     }
     
-    func testAction_checkVerificationCode_success() {
+    @MainActor func testAction_checkVerificationCode_success() {
         let sut = VerificationCodeViewModel(router: MockVerificationCodeViewRouter(),
                                             checkSMSUseCase: MockCheckSMSUseCase(checkCodeResult: .success("")),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
@@ -101,7 +101,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                 .checkCodeSucceeded])
     }
     
-    func testAction_checkVerificationCode_error() {
+    @MainActor func testAction_checkVerificationCode_error() {
         let errorMessageDict: [CheckSMSErrorEntity: String] =
         [.reachedDailyLimit: Strings.Localizable.youHaveReachedTheDailyLimit,
          .codeDoesNotMatch: Strings.Localizable.theVerificationCodeDoesnTMatch,

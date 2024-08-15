@@ -9,7 +9,7 @@ import MEGATest
 import XCTest
 
 final class MeetingCreatingViewModelTests: XCTestCase {
-    func testAction_onViewReady_createMeeting() {
+    @MainActor func testAction_onViewReady_createMeeting() {
         let router = MockMeetingCreateRouter()
         let audioSession = MockAudioSessionUseCase()
         
@@ -34,7 +34,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_joinMeeting() {
+    @MainActor func testAction_onViewReady_joinMeeting() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let useCase = MockMeetingCreatingUseCase(
@@ -66,7 +66,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_updateSpeakerButton() {
+    @MainActor func testAction_updateSpeakerButton() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
         let audioSession = MockAudioSessionUseCase()
@@ -146,7 +146,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         }
     }
     
-    func testDidTapStartMeetingButton_forGuestJoin_shouldTrackEvent() {
+    @MainActor func testDidTapStartMeetingButton_forGuestJoin_shouldTrackEvent() {
         let chatRoom = ChatRoomEntity(chatId: 1, title: "Test Meeting")
         let meetingCreatingUseCase = MockMeetingCreatingUseCase(checkChatLinkCompletion: .success(chatRoom))
         let tracker = MockTracker()

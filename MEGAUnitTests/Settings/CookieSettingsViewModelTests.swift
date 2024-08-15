@@ -11,6 +11,7 @@ class CookieSettingsViewModelTests: XCTestCase {
                                                Strings.Localizable.Settings.Cookies.Essential.footer,
                                                Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer]
     
+    @MainActor
     func testConfigViewTask_adsFlagsEnabled_shouldEnableAds() async {
         let sut = makeSUT(
             abTestProvider: MockABTestProvider(
@@ -32,6 +33,7 @@ class CookieSettingsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsActive.numberOfSections)
     }
     
+    @MainActor
     func testConfigViewTask_adsFlagsDisabled_shouldNotEnableAds() async {
         let sut = makeSUT(
             abTestProvider: MockABTestProvider(
@@ -53,6 +55,7 @@ class CookieSettingsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsInactive.numberOfSections)
     }
     
+    @MainActor
     func testActionConfigView_adsIsEnabled_adsCheckCookieNotYetSet_success() {
         var expectedFooters = footersArray
         expectedFooters.append(Strings.Localizable.Settings.Cookies.AdvertisingCookies.footer)
@@ -75,6 +78,7 @@ class CookieSettingsViewModelTests: XCTestCase {
              expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: expectedCookiesBit.rawValue)), .updateFooters(expectedFooters)])
     }
     
+    @MainActor
     func testActionConfigView_adsIsEnabled_adsCheckCookieAlreadySet_success() {
         var expectedFooters = footersArray
         expectedFooters.append(Strings.Localizable.Settings.Cookies.AdvertisingCookies.footer)
@@ -96,6 +100,7 @@ class CookieSettingsViewModelTests: XCTestCase {
              expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: withAdsCheckCookieBit.rawValue)), .updateFooters(expectedFooters)])
     }
     
+    @MainActor
     func testAction_configView_cookieSettings_success() {
         let sut = makeSUT(cookieSettings: .success(defaultCookieBits))
         
@@ -104,6 +109,7 @@ class CookieSettingsViewModelTests: XCTestCase {
              expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: defaultCookieBits)), .updateFooters(footersArray)])
     }
     
+    @MainActor
     func testAction_configView_cookieSettings_fail_bitmapNotSet() {
         let sut = makeSUT(cookieSettings: .failure(.bitmapNotSet))
         
@@ -112,6 +118,7 @@ class CookieSettingsViewModelTests: XCTestCase {
              expectedCommands: [.configCookieSettings(CookiesBitmap.essential), .updateFooters(footersArray)])
     }
     
+    @MainActor
     func testAction_configView_cookieSettings_fail_generic() {
         let sut = makeSUT(cookieSettings: .failure(.generic))
         
@@ -120,6 +127,7 @@ class CookieSettingsViewModelTests: XCTestCase {
              expectedCommands: [.updateFooters(footersArray)])
     }
     
+    @MainActor
     func testAction_configView_cookieSettings_fail_invalidBitmap() {
         let sut = makeSUT(cookieSettings: .failure(.invalidBitmap))
         
@@ -128,6 +136,7 @@ class CookieSettingsViewModelTests: XCTestCase {
              expectedCommands: [.updateFooters(footersArray)])
     }
     
+    @MainActor
     func testAction_save_setCookieSettings_success() {
         let sut = makeSUT(cookieSettings: .success(defaultCookieBits))
         
@@ -137,6 +146,7 @@ class CookieSettingsViewModelTests: XCTestCase {
     }
     
     // MARK: Cookie Policy
+    @MainActor
     func testAction_showCookiePolicy_sessionTransferSuccess_showPolicyWithSession() async throws {
         let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/testCookie"))
         let mockRouter = MockCookieSettingsRouter()
@@ -158,6 +168,7 @@ class CookieSettingsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_showCookiePolicy_extenalAdsIsFalse_showPolicyWithoutSession() async throws {
         let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/cookie"))
         let mockRouter = MockCookieSettingsRouter()
@@ -175,6 +186,7 @@ class CookieSettingsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func checkCookiePolicyDispatchResult(
         sut: CookieSettingsViewModel,
         mockRouter: MockCookieSettingsRouter,
@@ -203,6 +215,7 @@ class CookieSettingsViewModelTests: XCTestCase {
     // All Cookie bits: .essential, .preference, .analytics, .ads, .thirdparty
     private let defaultCookieBits = CookiesBitmap.all.rawValue // 31
     
+    @MainActor
     private func makeSUT(
         cookieBannerEnable: Bool = true,
         cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(31),
@@ -223,8 +236,11 @@ class CookieSettingsViewModelTests: XCTestCase {
     }
 }
 
+@MainActor
 final class MockCookieSettingsRouter: CookieSettingsRouting {
     private(set) var source: CookieSettingsSource?
+    
+    nonisolated init() {}
     
     func didTap(on source: CookieSettingsSource) {
         self.source = source

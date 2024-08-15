@@ -14,6 +14,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfSections, 2)
     }
     
+    @MainActor
     func testNotificationsSectionNumberOfRows_notificationsEnabled_matchNotificationsCount() async {
         let (sut, _) = makeSUT(
             featureFlagList: [.notificationCenter: true],
@@ -31,6 +32,7 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testFetchNotificationList_whenEnabledNotificationsChange_notificationsShouldBeUpdated() async {
         let (sut, notificationsUseCase) = makeSUT(
             featureFlagList: [.notificationCenter: true],
@@ -55,6 +57,7 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testFetchNotificationList_shouldBeSortedByHighestToLowestID() async {
         let (sut, _) = makeSUT(
             featureFlagList: [.notificationCenter: true],
@@ -74,6 +77,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.promoList.map(\.id), [3, 2, 1])
     }
     
+    @MainActor
     func testDoCurrentAndEnabledNotificationsDiffer_currentAndEnabledMatch_shouldReturnFalse() async {
         let (sut, _) = makeSUT(
             featureFlagList: [.notificationCenter: true],
@@ -92,6 +96,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertFalse(sut.doCurrentAndEnabledNotificationsDiffer())
     }
 
+    @MainActor
     func testDoCurrentAndEnabledNotificationsDiffer_whenBothHaveDifferentNotifications_shouldReturnTrue() async {
         let (sut, notificationsUseCase) = makeSUT(
             featureFlagList: [.notificationCenter: true],
@@ -112,6 +117,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.doCurrentAndEnabledNotificationsDiffer())
     }
     
+    @MainActor
     func testUpdateLastReadNotificationId_shouldUpdateLastReadId() async throws {
         let expectedLastReadId = NotificationIDEntity(3)
         let (sut, notificationsUseCase) = makeSUT(
@@ -136,7 +142,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(lastReadNotifId, expectedLastReadId)
     }
 
-    func testDidTapNotification_whenNotificationTapped_presentRedirectionURLLink() {
+    @MainActor func testDidTapNotification_whenNotificationTapped_presentRedirectionURLLink() {
         let (sut, _) = makeSUT(featureFlagList: [.notificationCenter: true])
         let expectedURL = URL(string: "http://test")!
         let testNotification = NotificationEntity(
@@ -176,6 +182,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(imageLoader.clearCacheCallCount, 1, "Clear cache call count should be incremented")
     }
     
+    @MainActor
     private func testFetchNotificationList(
         sut: NotificationsViewModel,
         expectedPromoListCount: Int,

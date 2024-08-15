@@ -4,7 +4,7 @@ import XCTest
 
 class HangOrEndCallViewModelTests: XCTestCase {
 
-    func testAction_leaveCall() {
+    @MainActor func testAction_leaveCall() {
         let router = MockHangOrEndCallRouter()
         let viewModel = HangOrEndCallViewModel(router: router,
                                                analyticsEventUseCase: MockAnalyticsEventUseCase())
@@ -12,7 +12,7 @@ class HangOrEndCallViewModelTests: XCTestCase {
         XCTAssert(router.leaveCall_calledTimes == 1)
     }
     
-    func testAction_endCallForAll() {
+    @MainActor func testAction_endCallForAll() {
         let router = MockHangOrEndCallRouter()
         let statsUseCase = MockAnalyticsEventUseCase()
         let viewModel = HangOrEndCallViewModel(router: router, analyticsEventUseCase: statsUseCase)

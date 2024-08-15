@@ -14,7 +14,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     private let albumEntity =
     AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif)
     
-    func testDispatchViewReady_onLoadedNodesSuccessfully_shouldReturnNodesForAlbumAndTrackScreenEvent() {
+    @MainActor func testDispatchViewReady_onLoadedNodesSuccessfully_shouldReturnNodesForAlbumAndTrackScreenEvent() {
         let tracker = MockTracker()
         let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
                              NodeEntity(name: "sample2.gif", handle: 2)]
@@ -32,7 +32,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         )
     }
     
-    func testDispatchViewReady_onLoadedNodesSuccessfully_shouldSortAndThenReturnNodesForFavouritesAlbum() throws {
+    @MainActor func testDispatchViewReady_onLoadedNodesSuccessfully_shouldSortAndThenReturnNodesForFavouritesAlbum() throws {
         let expectedNodes = [NodeEntity(name: "sample2.gif", handle: 4, modificationTime: try "2022-12-15T20:01:04Z".date),
                              NodeEntity(name: "sample2.gif", handle: 3, modificationTime: try "2022-12-3T20:01:04Z".date),
                              NodeEntity(name: "sample1.gif", handle: 2, modificationTime: try "2022-08-19T20:01:04Z".date),
@@ -43,7 +43,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
     }
     
-    func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() {
+    @MainActor func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() {
         let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []))
         
@@ -51,14 +51,14 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertNil(sut.contextMenuConfiguration)
     }
     
-    func testDispatchViewReady_onLoadedNodesEmpty_albumNilShouldDismiss() {
+    @MainActor func testDispatchViewReady_onLoadedNodesEmpty_albumNilShouldDismiss() {
         let sut = makeAlbumContentViewModel(album: albumEntity,
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []))
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.dismissAlbum])
     }
     
-    func testDispatchViewReady_onNewPhotosToAdd_shouldShowAlbumsToShowEmptyAlbumsThenAddPhotosThenLoadAlbumContent() {
+    @MainActor func testDispatchViewReady_onNewPhotosToAdd_shouldShowAlbumsToShowEmptyAlbumsThenAddPhotosThenLoadAlbumContent() {
         let nodesToAdd = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
         let resultEntity = AlbumElementsResultEntity(success: UInt(nodesToAdd.count), failure: 0)
         let albumModificationUseCase = MockAlbumModificationUseCase(addPhotosResult: .success(resultEntity))
@@ -107,7 +107,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isFavouriteAlbum)
     }
     
-    func testContextMenuConfiguration_onFavouriteAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() throws {
+    @MainActor func testContextMenuConfiguration_onFavouriteAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() throws {
         let image = NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)
         let video = NodeEntity(name: "sample2.mp4", handle: 2, mediaType: .video)
         let expectedNodes = [image, video]
@@ -121,7 +121,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(config.isEmptyState)
     }
     
-    func testContextMenuConfiguration_onOnlyImagesLoaded_shouldShowImagesAndHideFilter() throws {
+    @MainActor func testContextMenuConfiguration_onOnlyImagesLoaded_shouldShowImagesAndHideFilter() throws {
         let images = [NodeEntity(name: "test.jpg", handle: 1)]
         let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: images.toAlbumPhotoEntities()))
@@ -133,7 +133,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(config.isEmptyState)
     }
     
-    func testContextMenuConfiguration_onOnlyVideosLoaded_shouldShowVideosAndHideFilter() throws {
+    @MainActor func testContextMenuConfiguration_onOnlyVideosLoaded_shouldShowVideosAndHideFilter() throws {
         let videos = [NodeEntity(name: "test.mp4", handle: 1)]
         let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: videos.toAlbumPhotoEntities()))
@@ -145,7 +145,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(config.isEmptyState)
     }
     
-    func testContextMenuConfiguration_onUserAlbumContentLoadedWithItems_shouldShowFilterAndNotInEmptyState() throws {
+    @MainActor func testContextMenuConfiguration_onUserAlbumContentLoadedWithItems_shouldShowFilterAndNotInEmptyState() throws {
         let image = NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)
         let video = NodeEntity(name: "sample2.mp4", handle: 2, mediaType: .video)
         let expectedNodes = [image, video]
@@ -160,7 +160,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(config.isEmptyState)
     }
     
-    func testContextMenuConfiguration_onRawAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() throws {
+    @MainActor func testContextMenuConfiguration_onRawAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() throws {
         let expectedNodes = [NodeEntity(name: "sample1.cr2", handle: 1),
                              NodeEntity(name: "sample2.nef", handle: 2)]
         let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 2, type: .raw),
@@ -173,7 +173,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(config.isEmptyState)
     }
     
-    func testContextMenuConfiguration_onGifAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() throws {
+    @MainActor func testContextMenuConfiguration_onGifAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() throws {
         let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
                              NodeEntity(name: "sample2.gif", handle: 2)]
         let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, name: "Gif", coverNode: NodeEntity(handle: 1), count: 2, type: .gif),
@@ -187,7 +187,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(config.isEmptyState)
     }
     
-    func testContextMenuConfiguration_onImagesOnlyLoadedForUserAlbum_shouldNotEnableFilter() throws {
+    @MainActor func testContextMenuConfiguration_onImagesOnlyLoadedForUserAlbum_shouldNotEnableFilter() throws {
         let imageNames: [FileNameEntity] = ["image1.png", "image2.png", "image3.heic"]
         let expectedImages = imageNames.enumerated().map { (index: Int, name: String) in
             NodeEntity(name: name, handle: UInt64(index + 1), mediaType: .image)
@@ -206,7 +206,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(config.isEmptyState)
     }
     
-    func testContextMenuConfiguration_onVideosOnlyLoadedForUserAlbum_shouldNotEnableFilter() throws {
+    @MainActor func testContextMenuConfiguration_onVideosOnlyLoadedForUserAlbum_shouldNotEnableFilter() throws {
         let videoNames: [FileNameEntity] = ["video1.mp4", "video2.avi", "video3.mov"]
         let expectedVideos = videoNames.enumerated().map { (index: Int, name: String) in
             NodeEntity(name: name, handle: UInt64(index + 1), mediaType: .video)
@@ -257,7 +257,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(config.sortType, .modificationDesc)
     }
     
-    func testDispatchChangeSortOrder_onSortOrderDifferent_shouldShowAlbumWithNewSortedValue() throws {
+    @MainActor func testDispatchChangeSortOrder_onSortOrderDifferent_shouldShowAlbumWithNewSortedValue() throws {
         let sut = makeAlbumContentViewModel(album: albumEntity,
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []))
         
@@ -319,7 +319,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(config.filterType, .allMedia)
     }
     
-    func testDispatchChangeFilter_onPhotosLoaded_shouldReturnCorrectNodesForFilterTypeAndSetCorrectMenuConfiguration() throws {
+    @MainActor func testDispatchChangeFilter_onPhotosLoaded_shouldReturnCorrectNodesForFilterTypeAndSetCorrectMenuConfiguration() throws {
         let imageNames: [FileNameEntity] = ["image1.png", "image2.png", "image3.heic"]
         let expectedImages = imageNames.enumerated().map { (index: Int, name: String) in
             NodeEntity(name: name, handle: UInt64(index + 1), mediaType: .image)
@@ -359,7 +359,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(configAfter2.filterType, .allMedia)
     }
     
-    func testShouldShowAddToAlbumButton_onPhotoLibraryNotEmptyOnUserAlbum_shouldReturnTrue() {
+    @MainActor func testShouldShowAddToAlbumButton_onPhotoLibraryNotEmptyOnUserAlbum_shouldReturnTrue() {
         let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                             photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: [NodeEntity(name: "photo 1.jpg", handle: 1)]))
@@ -369,7 +369,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertTrue(sut.canAddPhotosToAlbum)
     }
     
-    func testShouldShowAddToAlbumButton_onPhotoLibraryEmptyOnUserAlbum_shouldReturnFalse() {
+    @MainActor func testShouldShowAddToAlbumButton_onPhotoLibraryEmptyOnUserAlbum_shouldReturnFalse() {
         let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []))
         
@@ -425,7 +425,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, expectedAddedPhotos)
     }
     
-    func testShowAlbumContentPicker_onCompletionWithExistingItems_shouldNotAddExistingItems() {
+    @MainActor func testShowAlbumContentPicker_onCompletionWithExistingItems_shouldNotAddExistingItems() {
         let expectedAddedPhotos = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: expectedAddedPhotos)
@@ -454,7 +454,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
     }
     
-    func testShowAlbumContentPicker_onErrorThrown_shouldFinishLoading() {
+    @MainActor func testShowAlbumContentPicker_onErrorThrown_shouldFinishLoading() {
         let expectedAddedPhotos = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: expectedAddedPhotos)
@@ -542,7 +542,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.alertViewModel.textString, "New Album")
     }
     
-    func testShowAlbumCoverPicker_onChangingNewCoverPic_shouldChangeTheCoverPic() {
+    @MainActor func testShowAlbumCoverPicker_onChangingNewCoverPic_shouldChangeTheCoverPic() {
         let photos = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: nil, count: 2, type: .user)
         
@@ -557,7 +557,7 @@ final class AlbumContentViewModelTests: XCTestCase {
              expectedCommands: [.showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.albumCoverUpdated))])
     }
     
-    func testDispatchDeletePhotos_onSuccessfulRemovalOfPhotos_shouldShowHudOfNumberOfRemovedItems() {
+    @MainActor func testDispatchDeletePhotos_onSuccessfulRemovalOfPhotos_shouldShowHudOfNumberOfRemovedItems() {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
         let albumPhotos = nodesToRemove.enumerated().map { AlbumPhotoEntity(photo: $0.element, albumPhotoId: UInt64($0.offset + 1))}
@@ -578,7 +578,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(albumModificationUseCase.deletedPhotos, albumPhotos)
     }
     
-    func testDispatchDeletePhotos_onPhotosAlreadyRemoved_shouldDoNothing() {
+    @MainActor func testDispatchDeletePhotos_onPhotosAlreadyRemoved_shouldDoNothing() {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
         let albumModificationUseCase = MockAlbumModificationUseCase()
@@ -598,7 +598,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertNil(albumModificationUseCase.deletedPhotos)
     }
     
-    func testShowAlbumPhotos_onImagesRemovedWithImageFilter_shouldSwitchToShowVideos() {
+    @MainActor func testShowAlbumPhotos_onImagesRemovedWithImageFilter_shouldSwitchToShowVideos() {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let expectedImages = [NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)]
         let expectedVideos = [NodeEntity(name: "sample1.mp4", handle: 1, mediaType: .video)]
@@ -632,7 +632,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func testDispatchDeleteAlbum_onSuccessfulRemovalOfAlbum_shouldShowHudOfRemoveAlbum() {
+    @MainActor func testDispatchDeleteAlbum_onSuccessfulRemovalOfAlbum_shouldShowHudOfRemoveAlbum() {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: nil, count: 1, type: .user)
         let albumModificationUseCase = MockAlbumModificationUseCase(albums: [album])
         let sut = makeAlbumContentViewModel(album: album,
@@ -649,7 +649,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(albumModificationUseCase.deletedAlbumsIds, [album.id])
     }
     
-    func testDispatchConfigureContextMenu_onReceived_shouldRebuildContextMenuWithNewSelectHiddenValue() {
+    @MainActor func testDispatchConfigureContextMenu_onReceived_shouldRebuildContextMenuWithNewSelectHiddenValue() {
         let sut = makeAlbumContentViewModel(album: albumEntity)
         
         let expectedContextConfigurationSelectHidden = true
@@ -717,7 +717,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_removeLink_shouldShowSuccessAfterRemoved() {
+    @MainActor func testAction_removeLink_shouldShowSuccessAfterRemoved() {
         let userAlbum = AlbumEntity(id: 1, type: .user)
         let sut = makeAlbumContentViewModel(album: userAlbum,
                                             shareAlbumUseCase: MockShareAlbumUseCase(removeSharedAlbumLinkResult: .success))

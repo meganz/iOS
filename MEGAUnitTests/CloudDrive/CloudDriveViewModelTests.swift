@@ -182,6 +182,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertEqual(outputs, expected)
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_hiddenNodesFeatureOff_shouldReturnNil() async {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
@@ -190,6 +191,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertNil(isHidden)
     }
     
+    @MainActor
     func tesIsParentMarkedAsSensitiveForDisplayMode_displayModeNotCloudDrive_shouldReturnNil() async {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1)
@@ -200,6 +202,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertNil(isHidden)
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_displayModeCloudDriveIsFile_shouldReturnNil() async {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1, nodeType: .file)
@@ -210,6 +213,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertNil(isHidden)
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_rootNode_shouldReturnNil() async {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1, nodeType: .root)
@@ -220,6 +224,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertNil(isHidden)
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_parentInheritsSensitivity_shouldReturnNil() async {
         let parentNode = MockNode(handle: 1, nodeType: .folder)
         let sut = makeSUT(parentNode: parentNode,
@@ -231,6 +236,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertNil(isHidden)
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_displayModeCloudDriveIsFolder_shouldMatchSensitiveState() async throws {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let nodeSensitiveChecker = NodeSensitivityChecker(
@@ -252,6 +258,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_whenEntryPointArrivedFromSharedItem_shouldReturnNilForDisplaySharedItems() async throws {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         for await isMarkedSensitive in [true, false].async {
@@ -264,6 +271,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_systemNode_shouldReturnNil() async throws {
         let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false)
         let sut = makeSUT(
@@ -277,6 +285,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertNil(isHidden)
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_whenParentIsASystemNodeAndErrorsAreThrown_shouldReturnNil() async throws {
 
         let errors: [any Error] = [
@@ -300,6 +309,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_accountNotValid_shouldReturnFalse() async throws {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
@@ -320,6 +330,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertFalse(try XCTUnwrap(isHidden))
     }
     
+    @MainActor
     func testAction_updateParentNode_updatesParentNodeAndReloadsNavigationBarItems() async throws {
         let updatedParentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
@@ -357,6 +368,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertEqual(updatedNode.handle, 1)
     }
     
+    @MainActor
     func testShouldExcludeSensitiveItems_featureFlagOff_shouldReturnFalse() async {
         let sut = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
@@ -364,6 +376,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertFalse(shouldExclude)
     }
     
+    @MainActor
     func testShouldExcludeSensitiveItems_called_shouldReturnInverseOfShowHiddenNodes() async {
         for await showHiddenNodes in [true, false].async {
             let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
@@ -377,6 +390,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchAction_updateSensitivitySettingOnNextSearch_shouldRecalculateSensitiveSetting() async throws {
         let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
             sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
@@ -435,6 +449,7 @@ class CloudDriveViewModelTests: XCTestCase {
             expectedEvent: CloudDriveHideNodeMenuItemEvent())
     }
     
+    @MainActor
     func testNodesForDisplayMode_cloudDrive_shouldUseCorrectFilterForNonRecursiveSearch() async {
         let parentNode = MockNode(handle: 89)
         let expectedNodes = [MockNode(handle: 1), MockNode(handle: 3)]
@@ -451,6 +466,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertEqual(searchQuery?.sensitiveFilter, .disabled)
     }
     
+    @MainActor
     func testNodesForDisplayMode_nilParent_shouldReturnNil() async {
         let sut = makeSUT(parentNode: nil)
         
@@ -459,6 +475,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertNil(nodes)
     }
     
+    @MainActor
     func testNodesForDisplayMode_cloudDriveParentProvidedSensitiveSettinOn_shouldUseCorrectFilterForNonRecursiveSearch() async {
         let expectedNodes = [MockNode(handle: 1), MockNode(handle: 3)]
         let sdk = MockSdk(nodes: expectedNodes)
@@ -485,6 +502,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testNodesForDisplayMode_rubbishBinAndBackup_shouldDisableSensitiveSearch() async {
         let expectedNodes = [MockNode(handle: 1), MockNode(handle: 3)]
         let sdk = MockSdk(nodes: expectedNodes)
@@ -503,6 +521,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testNodesForDisplayMode_invalidDisplayMode_returnsNil() async {
         for displayMode in [DisplayMode.sharedItem, .nodeInfo, .nodeVersions, .folderLink, .fileLink, .nodeInsideFolderLink,
                             .recents, .publicLinkTransfers, .transfers, .transfersFailed, .chatAttachment, .chatSharedFiles,
@@ -516,6 +535,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testIsParentMarkedAsSensitive_whenNodeIsSensitive_shouldMatchResults() async {
         await assertIsParentMarkedAsSensitive(
             isNodeSensitive: true,
@@ -524,6 +544,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testIsParentMarkedAsSensitive_whenNodeIsNotSensitive_shouldMatchResults() async {
         await assertIsParentMarkedAsSensitive(
             isNodeSensitive: false,
@@ -532,6 +553,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testIsParentMarkedAsSensitive_whenNodeDoesNotContainSenstivityInfo_shouldMatchResults() async {
         await assertIsParentMarkedAsSensitive(
             isNodeSensitive: nil,
@@ -613,6 +635,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     private func assertIsParentMarkedAsSensitive(
         isNodeSensitive: Bool?,
         expectedDisplayMode: DisplayMode,

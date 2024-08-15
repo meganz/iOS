@@ -37,6 +37,7 @@ final class UsageViewModelTests: XCTestCase {
         return sut
     }
 
+    @MainActor
     private func runStorageTest(
         storageType: StorageType,
         expectedStorage: Int64,
@@ -63,6 +64,7 @@ final class UsageViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testDispatchLoadRootNodeStorage_shouldInvokeCorrectCommands() {
         runStorageTest(
             storageType: .cloud,
@@ -71,6 +73,7 @@ final class UsageViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testDispatchLoadBackupStorage_shouldInvokeCorrectCommands() {
         runStorageTest(
             storageType: .backups,
@@ -79,6 +82,7 @@ final class UsageViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testDispatchLoadRubbishBinStorage_shouldInvokeCorrectCommands() {
         runStorageTest(
             storageType: .rubbishBin,
@@ -87,6 +91,7 @@ final class UsageViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testDispatchLoadIncomingSharedStorage_shouldInvokeCorrectCommands() {
         runStorageTest(
             storageType: .incomingShares,
@@ -115,7 +120,7 @@ final class UsageViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isFreeAccount)
     }
 
-    func testLoadStorageDetails_shouldInvokeLoadedStorageCommand() {
+    @MainActor func testLoadStorageDetails_shouldInvokeLoadedStorageCommand() {
         let accountDetails = AccountDetailsEntity.build(
             storageUsed: expectedUsedStorage,
             storageMax: expectedMaxStorage
@@ -130,7 +135,7 @@ final class UsageViewModelTests: XCTestCase {
         )
     }
 
-    func testLoadTransferDetails_shouldInvokeLoadedTransferCommand() {
+    @MainActor func testLoadTransferDetails_shouldInvokeLoadedTransferCommand() {
         let accountDetails = AccountDetailsEntity.build(
             transferUsed: expectedUsedTransfer,
             transferMax: expectedMaxTransfer

@@ -148,7 +148,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_changeEmail_shouldPresentChangeController() {
+    @MainActor func testAction_changeEmail_shouldPresentChangeController() {
         let (sut, _) = makeSUT(
             multiFactorAuthCheckResult: true,
             multiFactorAuthCheckDelay: 0.5
@@ -162,7 +162,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_changePassword_shouldPresentChangeController() {
+    @MainActor func testAction_changePassword_shouldPresentChangeController() {
         let (sut, _) = makeSUT(
             multiFactorAuthCheckResult: true,
             multiFactorAuthCheckDelay: 0.5
@@ -176,6 +176,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_cancelSubscription_shouldPresentCancelAccountPlan() async {
         let planType: AccountTypeEntity = .proI
         let (sut, router) = makeSUT(accountType: planType)

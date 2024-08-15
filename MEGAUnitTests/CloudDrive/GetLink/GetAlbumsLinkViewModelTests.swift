@@ -65,7 +65,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                        section.sectionType)
     }
     
-    func testDispatch_onViewReady_shouldSetTitleToShareLinkAndTrackEvent() throws {
+    @MainActor func testDispatch_onViewReady_shouldSetTitleToShareLinkAndTrackEvent() throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
             let tracker = MockTracker()
@@ -94,7 +94,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatch_onViewReadyAndAllAlbumsAlreadyExported_shouldSetTitleToShareLinkAndTrackEvent() throws {
+    @MainActor func testDispatch_onViewReadyAndAllAlbumsAlreadyExported_shouldSetTitleToShareLinkAndTrackEvent() throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let albums = [
                 AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)),
@@ -126,7 +126,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatch_onViewReadyLinksLoaded_shouldUpdateLinkCells() throws {
+    @MainActor func testDispatch_onViewReadyLinksLoaded_shouldUpdateLinkCells() throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
             let firstAlbum = AlbumEntity(id: 1, type: .user)
@@ -157,7 +157,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatch_shareLink_shouldShowShareActivityWithJoinedLinksInNewLine() {
+    @MainActor func testDispatch_shareLink_shouldShowShareActivityWithJoinedLinksInNewLine() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
             let albums = [AlbumEntity(id: 1, type: .user),
@@ -189,7 +189,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatch_copyLink_shouldAddSpaceSeparatedLinksToPasteboard() {
+    @MainActor func testDispatch_copyLink_shouldAddSpaceSeparatedLinksToPasteboard() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
             let albums = [AlbumEntity(id: 1, type: .user),
@@ -221,7 +221,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatch_onDidSelectRowIndexPath_shouldAddSelectedLinkToPasteBoard() {
+    @MainActor func testDispatch_onDidSelectRowIndexPath_shouldAddSelectedLinkToPasteBoard() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = AlbumEntity(id: 1, type: .user)
             let otherAlbum = AlbumEntity(id: 3, type: .user)
@@ -252,7 +252,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatch_onViewReadyAndAlbumContainsSensitiveElement_shouldShowAlert() throws {
+    @MainActor func testDispatch_onViewReadyAndAlbumContainsSensitiveElement_shouldShowAlert() throws {
         let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
         let tracker = MockTracker()
         let sut = makeGetAlbumsLinkViewModel(
@@ -327,7 +327,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
 
     }
     
-    func testDispatch_onViewReadyAndOneAlbumContainsSensitiveElementsAndIsNotExported_shouldShowAlert() throws {
+    @MainActor func testDispatch_onViewReadyAndOneAlbumContainsSensitiveElementsAndIsNotExported_shouldShowAlert() throws {
         let albums = [
             AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)),
             AlbumEntity(id: 2, type: .user)
@@ -395,9 +395,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         ], expectationValidation: ==)
     }
     
-    private func expectSuccessfulOnViewReady(sut: GetAlbumsLinkViewModel,
-                                             albums: [AlbumEntity],
-                                             expectedRowReload: [IndexPath]) {
+    @MainActor private func expectSuccessfulOnViewReady(sut: GetAlbumsLinkViewModel, albums: [AlbumEntity], expectedRowReload: [IndexPath]) {
         test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count),
                            isMultilink: true,

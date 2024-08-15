@@ -11,6 +11,7 @@ import XCTest
 
 final class MyAccountHallViewModelTests: XCTestCase {
 
+    @MainActor
     func testAction_onViewAppear() {
         let (sut, _) = makeSUT()
         test(viewModel: sut,
@@ -18,6 +19,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
              expectedCommands: [.reloadUIContent])
     }
     
+    @MainActor
     func testAction_loadPlanList() async {
         let (sut, _) = makeSUT()
         
@@ -32,6 +34,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(commands, [.configPlanDisplay])
     }
     
+    @MainActor
     func testAction_loadContentCounts() async {
         let (sut, _) = makeSUT()
         
@@ -46,6 +49,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(commands, [.reloadCounts])
     }
     
+    @MainActor
     func testAction_loadAccountDetails() async {
         let (sut, _) = makeSUT()
         
@@ -60,7 +64,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(commands, [.configPlanDisplay])
     }
     
-    func testAction_addSubscriptions() {
+    @MainActor func testAction_addSubscriptions() {
         let (sut, _) = makeSUT()
         
         test(viewModel: sut,
@@ -68,7 +72,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
              expectedCommands: [])
     }
     
-    func testAction_removeSubscriptions() {
+    @MainActor func testAction_removeSubscriptions() {
         let (sut, _) = makeSUT()
         
         test(viewModel: sut,
@@ -83,6 +87,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.accountDetails, expectedAccountDetails)
     }
     
+    @MainActor
     func testArePromosAvailable_whenNotificationsEnabled_shouldReturnTrue() async throws {
         let (sut, _) = makeSUT(
             enabledNotifications: [NotificationIDEntity(1), NotificationIDEntity(2), NotificationIDEntity(3)],
@@ -93,6 +98,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertTrue(result, "Promos should be available when notifications are enabled and the notification center feature flag is true.")
     }
     
+    @MainActor
     func testArePromosAvailable_whenNotificationsNotEnabled_shouldReturnFalse() async throws {
         let (sut, _) = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true])
@@ -112,7 +118,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isMasterBusinessAccount)
     }
     
-    func testAction_didTapUpgradeButton_showUpgradeView() {
+    @MainActor func testAction_didTapUpgradeButton_showUpgradeView() {
         let (sut, _) = makeSUT()
         
         test(viewModel: sut, actions: [MyAccountHallAction.didTapUpgradeButton], expectedCommands: [])
@@ -123,7 +129,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isNotificationCenterEnabled())
     }
     
-    func testDidTapDeviceCenterButton_whenButtonIsTapped_navigatesToDeviceCenter() {
+    @MainActor func testDidTapDeviceCenterButton_whenButtonIsTapped_navigatesToDeviceCenter() {
         let (sut, router) = makeSUT()
         
         test(viewModel: sut,
@@ -133,7 +139,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(router.navigateToDeviceCenter_calledTimes, 1)
     }
     
-    func testDidTapCameraUploadsAction_whenCameraUploadActionTapped_callsRouterOnce() {
+    @MainActor func testDidTapCameraUploadsAction_whenCameraUploadActionTapped_callsRouterOnce() {
         let deviceCenterBridge = DeviceCenterBridge()
         let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
         
@@ -148,7 +154,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
-    func testDidTapRenameAction_whenRenameActionTapped_callsRouterOnce() {
+    @MainActor func testDidTapRenameAction_whenRenameActionTapped_callsRouterOnce() {
         let deviceCenterBridge = DeviceCenterBridge()
         let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
         
@@ -173,6 +179,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testDidTapShowIn_whenShowInActionTapped_callsRouterOnce() async throws {
         let deviceCenterBridge = DeviceCenterBridge()
         let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
@@ -194,6 +201,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testDidTapInfoAction_whenInfoActionTapped_callsRouterOnce() async throws {
         let deviceCenterBridge = DeviceCenterBridge()
         let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
@@ -215,6 +223,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func loadPromosAndGetAvailability(for sut: MyAccountHallViewModel) async -> Bool {
         sut.dispatch(.load(.promos))
         

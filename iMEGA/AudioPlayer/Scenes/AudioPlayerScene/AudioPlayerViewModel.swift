@@ -365,8 +365,8 @@ final class AudioPlayerViewModel: ViewModelType {
     func dispatch(_ action: AudioPlayerAction) {
         switch action {
         case .onViewDidLoad:
-            Task {
-                guard let node = configEntity.node, let nodeInfoUseCase else { return }
+            Task { [weak self] in
+                guard let self, let node = configEntity.node, let nodeInfoUseCase else { return }
                 let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
                 if isTakenDown {
                     invokeCommand?(.showTermsOfServiceViolationAlert)
@@ -473,8 +473,8 @@ final class AudioPlayerViewModel: ViewModelType {
         if !configEntity.playerHandler.isPlayerDefined() {
             streamingInfoUseCase?.stopServer()
         }
-        Task {
-            await audioPlayerUseCase.unregisterMEGADelegate()
+        Task { [weak audioPlayerUseCase] in
+            await audioPlayerUseCase?.unregisterMEGADelegate()
         }
     }
 }

@@ -7,6 +7,7 @@ import XCTest
 
 final class AudioPlayerViewModelTests: XCTestCase {
     
+    @MainActor
     func testPlaybackActions() {
         let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
         
@@ -67,6 +68,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 4)
     }
     
+    @MainActor
     func testRouterActions() {
         let (onlineSUT, _, _, onlineRouter) = makeOnlineSUT()
         let (offlineSUT, offlineRouter) = makeOfflineSUT()

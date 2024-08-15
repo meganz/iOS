@@ -5,7 +5,7 @@ import XCTest
 
 final class NodeCellViewModelTests: XCTestCase {
     
-    func testAction_initForReuse() {
+    @MainActor func testAction_initForReuse() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeDataUC = MockNodeDataUseCase()
@@ -23,7 +23,7 @@ final class NodeCellViewModelTests: XCTestCase {
              expectedCommands: [.config(mockNodeModel)])
     }
     
-    func testAction_manageLabel_unknown() {
+    @MainActor func testAction_manageLabel_unknown() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeDataUC = MockNodeDataUseCase()
@@ -42,7 +42,7 @@ final class NodeCellViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeModel.label, .unknown)
     }
     
-    func testAction_manageLabel_red() {
+    @MainActor func testAction_manageLabel_red() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .red)
         let mockNodeDataUC = MockNodeDataUseCase(labelString: "redSmall")
@@ -62,7 +62,7 @@ final class NodeCellViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeModel.label, .red)
     }
     
-    func testAction_manageLabel_orange() {
+    @MainActor func testAction_manageLabel_orange() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .orange)
         let mockNodeDataUC = MockNodeDataUseCase(labelString: "orangeSmall")
@@ -82,7 +82,7 @@ final class NodeCellViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeModel.label, .orange)
     }
     
-    func testAction_manageLabel_yellow() {
+    @MainActor func testAction_manageLabel_yellow() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .yellow)
         let mockNodeDataUC = MockNodeDataUseCase(labelString: "yellowSmall")
@@ -102,7 +102,7 @@ final class NodeCellViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeModel.label, .yellow)
     }
     
-    func testAction_manageLabel_green() {
+    @MainActor func testAction_manageLabel_green() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .green)
         let mockNodeDataUC = MockNodeDataUseCase(labelString: "greenSmall")
@@ -122,7 +122,7 @@ final class NodeCellViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeModel.label, .green)
     }
     
-    func testAction_manageLabel_blue() {
+    @MainActor func testAction_manageLabel_blue() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .blue)
         let mockNodeDataUC = MockNodeDataUseCase(labelString: "blueSmall")
@@ -142,7 +142,7 @@ final class NodeCellViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeModel.label, .blue)
     }
     
-    func testAction_manageLabel_purple() {
+    @MainActor func testAction_manageLabel_purple() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .purple)
         let mockNodeDataUC = MockNodeDataUseCase(labelString: "purpleSmall")
@@ -162,7 +162,7 @@ final class NodeCellViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeModel.label, .purple)
     }
     
-    func testAction_manageLabel_grey() {
+    @MainActor func testAction_manageLabel_grey() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .grey)
         let mockNodeDataUC = MockNodeDataUseCase(labelString: "greySmall")
@@ -182,7 +182,7 @@ final class NodeCellViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeModel.label, .grey)
     }
     
-    func testAction_manageThumbnail_isFolder() {
+    @MainActor func testAction_manageThumbnail_isFolder() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(isFolder: true)
         let mockNodeDataUC = MockNodeDataUseCase()
@@ -201,7 +201,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                 .setIcon(.filetypeFolder)])
     }
     
-    func testAction_manageThumbnail_isFile_noThumbnail() {
+    @MainActor func testAction_manageThumbnail_isFile_noThumbnail() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(isFile: true)
         let mockNodeDataUC = MockNodeDataUseCase()
@@ -220,7 +220,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                 .setIcon(.filetypeGeneric)])
     }
     
-    func testAction_manageThumbnail_isFile_hasThumbnail() throws {
+    @MainActor func testAction_manageThumbnail_isFile_hasThumbnail() throws {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(isFile: true, hasThumbnail: true)
         let mockNodeDataUC = MockNodeDataUseCase()
@@ -239,7 +239,7 @@ final class NodeCellViewModelTests: XCTestCase {
                                 .setThumbnail("/abc")])
     }
     
-    func testAction_hasVersions_false() {
+    @MainActor func testAction_hasVersions_false() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeDataUC = MockNodeDataUseCase()
@@ -257,7 +257,7 @@ final class NodeCellViewModelTests: XCTestCase {
              expectedCommands: [.setVersions(mockNodeDataUC.hasVersions(nodeHandle: .invalid))])
     }
     
-    func testAction_hasVersions_true() {
+    @MainActor func testAction_hasVersions_true() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeDataUC = MockNodeDataUseCase(versions: true)
@@ -275,7 +275,7 @@ final class NodeCellViewModelTests: XCTestCase {
              expectedCommands: [.setVersions(mockNodeDataUC.hasVersions(nodeHandle: .invalid))])
     }
     
-    func testAction_isDownloaded_false() {
+    @MainActor func testAction_isDownloaded_false() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeDataUC = MockNodeDataUseCase()
@@ -293,7 +293,7 @@ final class NodeCellViewModelTests: XCTestCase {
              expectedCommands: [.setDownloaded(mockNodeDataUC.isDownloaded(nodeHandle: .invalid))])
     }
     
-    func testAction_isDownloaded_true() {
+    @MainActor func testAction_isDownloaded_true() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(isFile: true)
         let mockNodeDataUC = MockNodeDataUseCase(downloaded: true)
@@ -311,7 +311,7 @@ final class NodeCellViewModelTests: XCTestCase {
              expectedCommands: [.setDownloaded(mockNodeDataUC.isDownloaded(nodeHandle: .invalid))])
     }
     
-    func testAction_moreTouchUpInside() {
+    @MainActor func testAction_moreTouchUpInside() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity()
         let mockNodeDataUC = MockNodeDataUseCase()

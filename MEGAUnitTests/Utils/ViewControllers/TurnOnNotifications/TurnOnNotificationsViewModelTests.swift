@@ -8,7 +8,7 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
     let mockRouter = MockTurnOnNotificationsViewRouter()
     let mockPreference = MockPreferenceUseCase()
     
-    func testAction_onViewLoaded_configView() {
+    @MainActor func testAction_onViewLoaded_configView() {
         let sut = TurnOnNotificationsViewModel(router: mockRouter,
                                                accountUseCase: MockAccountUseCase(isLoggedIn: true))
         sut.dispatch(.onViewLoaded)
@@ -36,14 +36,14 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewLoaded, expectedCommands: [.configView(expectedNotificationsModel)])
     }
     
-    func testAction_openSettings() {
+    @MainActor func testAction_openSettings() {
         let sut = TurnOnNotificationsViewModel(router: mockRouter,
                                                accountUseCase: MockAccountUseCase(isLoggedIn: true))
         test(viewModel: sut, action: .openSettings, expectedCommands: [])
         XCTAssertEqual(mockRouter.openSettings_calledTimes, 1)
     }
     
-    func testAction_dismiss() {
+    @MainActor func testAction_dismiss() {
         let sut = TurnOnNotificationsViewModel(router: mockRouter,
                                                accountUseCase: MockAccountUseCase(isLoggedIn: true))
         test(viewModel: sut, action: .dismiss, expectedCommands: [])

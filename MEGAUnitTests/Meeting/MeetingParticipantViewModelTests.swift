@@ -5,7 +5,7 @@ import XCTest
 
 final class MeetingParticipantViewModelTests: XCTestCase {
     
-    func testAction_onViewReady_isMe() {
+    @MainActor func testAction_onViewReady_isMe() {
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true)
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
@@ -27,7 +27,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_isOtherThanMe() {
+    @MainActor func testAction_onViewReady_isOtherThanMe() {
         let particpant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, isModerator: true)
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
@@ -49,7 +49,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_isParticipant() {
+    @MainActor func testAction_onViewReady_isParticipant() {
         let particpant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, isModerator: false)
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
@@ -71,7 +71,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_isGuest() {
+    @MainActor func testAction_onViewReady_isGuest() {
         let particpant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, isModerator: false)
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
@@ -93,7 +93,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_isMicMuted() {
+    @MainActor func testAction_onViewReady_isMicMuted() {
         let particpant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, isModerator: true, audio: .off)
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
@@ -115,7 +115,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_isVideoOn() {
+    @MainActor func testAction_onViewReady_isVideoOn() {
         let particpant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, isModerator: true, video: .on)
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
@@ -137,7 +137,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onContextMenuTapped() {
+    @MainActor func testAction_onContextMenuTapped() {
         let particpant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, isModerator: true, video: .on)
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
@@ -154,6 +154,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         XCTAssert(completionBlockCalled, "Context menu completion block not called")
     }
     
+    @MainActor
     func testAction_onViewReady_clearCache() async {
         let particpant = CallParticipantEntity(participantId: 100)
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)

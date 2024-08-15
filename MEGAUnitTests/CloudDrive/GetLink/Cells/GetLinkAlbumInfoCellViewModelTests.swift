@@ -9,8 +9,7 @@ import MEGATest
 import XCTest
 
 final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
-    
-    func testDispatch_onViewReadyWithAlbumCover_shouldSetLabelsAndUpdateThumbnail() throws {
+    @MainActor func testDispatch_onViewReadyWithAlbumCover_shouldSetLabelsAndUpdateThumbnail() throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
@@ -29,7 +28,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         ])
     }
     
-    func testDispatch_onViewReadyWithErrorAlbumCover_shouldSetLabelsAndSetPlaceholderThumbnail() throws {
+    @MainActor func testDispatch_onViewReadyWithErrorAlbumCover_shouldSetLabelsAndSetPlaceholderThumbnail() throws {
         let albumName = "Fruit"
         let albumCount = 45
         let album = AlbumEntity(id: 5, name: albumName, coverNode: NodeEntity(handle: 50), count: albumCount, type: .user)
@@ -43,7 +42,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         ])
     }
     
-    func testDispatch_onViewReadyWithOutAlbumCover_shouldOnlySetLabels() throws {
+    @MainActor func testDispatch_onViewReadyWithOutAlbumCover_shouldOnlySetLabels() throws {
         let albumName = "Fruit"
         let albumCount = 45
         let album = AlbumEntity(id: 5, name: albumName, count: albumCount, type: .user)

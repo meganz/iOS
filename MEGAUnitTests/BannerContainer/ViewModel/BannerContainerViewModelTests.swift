@@ -5,12 +5,12 @@ import XCTest
 
 final class BannerContainerViewModelTests: XCTestCase {
     
-    func testAction_onViewWillAppear() {
+    @MainActor func testAction_onViewWillAppear() {
         let sut = makeSUT(withOfflineLogOutWarningDismissed: true)
         test(viewModel: sut.viewModel, action: .onViewWillAppear, expectedCommands: [.hideBanner(animated: false)])
     }
     
-    func testAction_OnViewDidLoad_WarningDismissed() {
+    @MainActor func testAction_OnViewDidLoad_WarningDismissed() {
         let sut = makeSUT()
         
         XCTAssertTrue(sut.preference[.offlineLogOutWarningDismissed] == Optional<Bool>.none)
@@ -20,7 +20,7 @@ final class BannerContainerViewModelTests: XCTestCase {
         test(viewModel: sut.viewModel, action: .onViewDidLoad(UITraitCollection()), expectedCommands: [])
     }
     
-    func testAction_OnViewDidLoad_WarningNotDismissed() {
+    @MainActor func testAction_OnViewDidLoad_WarningNotDismissed() {
         let sut = makeSUT()
         
         XCTAssertTrue(sut.preference[.offlineLogOutWarningDismissed] == Optional<Bool>.none)
@@ -32,7 +32,7 @@ final class BannerContainerViewModelTests: XCTestCase {
                                                actionIcon: BannerType.warning.actionIcon)])
     }
     
-    func testAction_OnTrailCollectionDidChange() {
+    @MainActor func testAction_OnTrailCollectionDidChange() {
         test(viewModel: makeSUT().viewModel,
              action: .onTraitCollectionDidChange(UITraitCollection()),
              expectedCommands: [
@@ -42,7 +42,7 @@ final class BannerContainerViewModelTests: XCTestCase {
                                actionIcon: BannerType.warning.actionIcon)])
     }
     
-    func testAction_onClose() {
+    @MainActor func testAction_onClose() {
         test(viewModel: makeSUT().viewModel, action: .onClose, expectedCommands: [.hideBanner(animated: true)])
     }
     
