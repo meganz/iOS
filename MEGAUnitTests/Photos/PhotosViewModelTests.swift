@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 @testable import MEGADomain
 import MEGADomainMock
 import MEGAPermissionsMock
@@ -323,6 +324,18 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertTrue(sut.timelineViewModel.cameraUploadStatusShown)
     }
     
+    @MainActor
+    func testTrackHideNodeMenuEvent_shouldTrackEvent() {
+        let tracker = MockTracker()
+        let sut = makePhotosViewModel(
+            tracker: tracker
+        )
+        
+        sut.trackHideNodeMenuEvent()
+        
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TimelineHideNodeMenuItemEvent()])
+    }
+    
     private func sampleNodesForAllLocations() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 0, hasThumbnail: true)
         let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true)
@@ -360,7 +373,8 @@ final class PhotosViewModelTests: XCTestCase {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
-        monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase = MockMonitorCameraUploadUseCase()
+        monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(),
+        tracker: MockTracker = MockTracker()
     ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let usecase = MockPhotoLibraryUseCase(allPhotos: [],
@@ -373,7 +387,9 @@ final class PhotosViewModelTests: XCTestCase {
                                preferenceUseCase: preferenceUseCase,
                                monitorCameraUploadUseCase: monitorCameraUploadUseCase,
                                devicePermissionHandler: MockDevicePermissionHandler(),
-                               cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
+                               cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+                               tracker: tracker
+        )
     }
 }
 

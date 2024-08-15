@@ -1,6 +1,6 @@
 import Combine
 
-public protocol AlbumModificationUseCaseProtocol {
+public protocol AlbumModificationUseCaseProtocol: Sendable {
     func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity
     func rename(album id: HandleEntity, with newName: String) async throws -> String
     func updateAlbumCover(album id: HandleEntity, withAlbumPhoto albumPhoto: AlbumPhotoEntity) async throws -> HandleEntity

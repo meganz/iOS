@@ -1,7 +1,9 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
@@ -1013,21 +1015,11 @@ final class TextEditorViewModelTests: XCTestCase {
     func testAction_HideNode() {
         let textFile = TextFile(fileName: "testAction_hideNode")
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase()
-        let mockDownloadNodeUC = MockDownloadNodeUseCase()
-        let mockNodeDataUC = MockNodeDataUseCase()
-        let mockBackupsUC = MockBackupsUseCase()
-        let mockNode = NodeEntity(handle: 123, isFile: true)
-
-        let viewModel = TextEditorViewModel(
-            router: mockRouter,
+        let tracker = MockTracker()
+        let viewModel = sut(
             textFile: textFile,
-            textEditorMode: .view,
-            uploadFileUseCase: mockUploadFileUC,
-            downloadNodeUseCase: mockDownloadNodeUC,
-            nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC,
-            nodeEntity: mockNode
+            router: mockRouter,
+            tracker: tracker
         )
 
         viewModel.nodeAction(
@@ -1037,6 +1029,7 @@ final class TextEditorViewModelTests: XCTestCase {
             from: "any-sender")
         
         XCTAssertEqual(mockRouter.hideNode_calledTimes, 1)
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorHideNodeMenuItemEvent()])
     }
     
     func testAction_UnhideNode() {
@@ -1066,6 +1059,35 @@ final class TextEditorViewModelTests: XCTestCase {
             from: "any-sender")
         
         XCTAssertEqual(mockRouter.unhideNode_calledTimes, 1)
+    }
+    
+    private func sut(
+        nodeEntity: NodeEntity = NodeEntity(handle: 123, isFile: true),
+        parentHandle: HandleEntity? = nil,
+        textFile: TextFile = TextFile(fileName: "testAction_hideNode"),
+        textEditorMode: TextEditorMode = .view,
+        router: MockTextEditorViewRouter = MockTextEditorViewRouter(),
+        uploadFileUseCase: MockUploadFileUseCase = MockUploadFileUseCase(),
+        downloadNodeUseCase: MockDownloadNodeUseCase = MockDownloadNodeUseCase(),
+        nodeUseCase: MockNodeDataUseCase = MockNodeDataUseCase(),
+        backupsUseCase: MockBackupsUseCase = MockBackupsUseCase(),
+        tracker: MockTracker = MockTracker(),
+        file: StaticString = #file,
+        line: UInt = #line
+    ) -> TextEditorViewModel {
+        let sut = TextEditorViewModel(
+            router: router,
+            textFile: textFile,
+            textEditorMode: textEditorMode,
+            uploadFileUseCase: uploadFileUseCase,
+            downloadNodeUseCase: downloadNodeUseCase,
+            nodeUseCase: nodeUseCase,
+            backupsUseCase: backupsUseCase,
+            parentHandle: parentHandle,
+            nodeEntity: nodeEntity,
+            tracker: tracker)
+        trackForMemoryLeaks(on: sut, file: file, line: line)
+        return sut
     }
     
     private func mockNodeActionViewController() -> NodeActionViewController {

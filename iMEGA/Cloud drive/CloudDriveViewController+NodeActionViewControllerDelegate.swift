@@ -139,6 +139,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     }
     
     func hide(nodes: [NodeEntity]) {
+        viewModel.dispatch(.didTapHideNodes)
         HideFilesAndFoldersRouter(presenter: self)
             .hideNodes(nodes)
     }

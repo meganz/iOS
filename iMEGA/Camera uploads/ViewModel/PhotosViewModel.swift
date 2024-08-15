@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
@@ -45,6 +46,7 @@ final class PhotosViewModel: NSObject {
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let cameraUploadsSettingsViewRouter: any Routing
+    private let tracker: any AnalyticsTracking
     private var subscriptions = Set<AnyCancellable>()
     
     init(photoUpdatePublisher: PhotoUpdatePublisher,
@@ -54,7 +56,8 @@ final class PhotosViewModel: NSObject {
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
          monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
          devicePermissionHandler: some DevicePermissionsHandling,
-         cameraUploadsSettingsViewRouter: some Routing) {
+         cameraUploadsSettingsViewRouter: some Routing,
+         tracker: some AnalyticsTracking = DIContainer.tracker) {
         
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
@@ -68,7 +71,7 @@ final class PhotosViewModel: NSObject {
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             preferenceUseCase: preferenceUseCase)
-        
+        self.tracker = tracker
         super.init()
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         
@@ -137,6 +140,10 @@ final class PhotosViewModel: NSObject {
         case .cameraUploads: return .cameraUploads
         default: return .allLocations
         }
+    }
+    
+    func trackHideNodeMenuEvent() {
+        tracker.trackAnalyticsEvent(with: TimelineHideNodeMenuItemEvent())
     }
     
     // MARK: - Sort

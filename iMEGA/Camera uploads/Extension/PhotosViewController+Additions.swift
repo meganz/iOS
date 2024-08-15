@@ -115,6 +115,8 @@ extension PhotosViewController {
     }
     
     private func hide(nodes: [NodeEntity]) {
+        viewModel.trackHideNodeMenuEvent()
+        
         HideFilesAndFoldersRouter(presenter: self)
             .hideNodes(nodes)
         self.toggleEditing()

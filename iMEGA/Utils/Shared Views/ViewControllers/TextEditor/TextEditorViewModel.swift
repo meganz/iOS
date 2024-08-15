@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -74,6 +75,7 @@ final class TextEditorViewModel: ViewModelType {
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     private var isBackupNode: Bool = false
+    private let tracker: any AnalyticsTracking
     
     init(
         router: some TextEditorViewRouting,
@@ -84,7 +86,8 @@ final class TextEditorViewModel: ViewModelType {
         nodeUseCase: any NodeUseCaseProtocol,
         backupsUseCase: any BackupsUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
-        nodeEntity: NodeEntity? = nil
+        nodeEntity: NodeEntity? = nil,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
         self.textFile = textFile
@@ -95,6 +98,7 @@ final class TextEditorViewModel: ViewModelType {
         self.backupsUseCase = backupsUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
+        self.tracker = tracker
     }
     
     func dispatch(_ action: TextEditorViewAction) {
@@ -394,6 +398,7 @@ extension TextEditorViewModel: NodeActionViewControllerDelegate {
         case .removeLink:
             router.removeLink(from: node.handle)
         case .hide:
+            tracker.trackAnalyticsEvent(with: TextEditorHideNodeMenuItemEvent())
             router.hide(node: node.toNodeEntity())
         case .unhide:
             router.unhide(node: node.toNodeEntity())

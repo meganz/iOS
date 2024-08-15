@@ -1,5 +1,6 @@
 import Accounts
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -8,16 +9,18 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private let configEntity: AudioPlayerConfigEntity
     private let presenter: UIViewController
     private let audioPlaylistViewRouter: any AudioPlaylistViewRouting
+    private let tracker: any AnalyticsTracking
     
     private(set) var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
     private(set) var fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate?
     
     var baseViewController: UIViewController?
     
-    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController, audioPlaylistViewRouter: some AudioPlaylistViewRouting) {
+    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController, audioPlaylistViewRouter: some AudioPlaylistViewRouting, tracker: some AnalyticsTracking = DIContainer.tracker) {
         self.configEntity = configEntity
         self.presenter = presenter
         self.audioPlaylistViewRouter = audioPlaylistViewRouter
+        self.tracker = tracker
         super.init()
     }
     
@@ -31,7 +34,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 isNodeFromFolderLink: configEntity.isFolderLink,
                 messageId: configEntity.messageId,
                 chatId: configEntity.chatId,
-                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: vc)
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: vc),
+                nodeActionListener: nodeActionListener(tracker)
             )
         case .fileLink:
             fileLinkActionViewControllerDelegate = FileLinkActionViewControllerDelegate(
@@ -113,5 +117,16 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     
     private func isPlayingFromVersionView() -> Bool {
         presenter.isKind(of: NodeVersionsViewController.self)
+    }
+    
+    private func nodeActionListener(_ tracker: some AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
+        { action in
+            switch action {
+            case .hide:
+                tracker.trackAnalyticsEvent(with: AudioPlayerHideNodeMenuItemEvent())
+            default:
+                break // we do not track other events here yet
+            }
+        }
     }
 }
