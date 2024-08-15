@@ -3,9 +3,9 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-struct HiddenFilesFoldersOnboardingView: View {
+struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
     @Environment(\.dismiss) private var dismiss
-    let primaryAction: (() -> Void)
+    let primaryButton: PrimaryButtonView
     
     var body: some View {
         OnboardingNavigationBar {
@@ -65,9 +65,8 @@ struct HiddenFilesFoldersOnboardingView: View {
     
     private func buttons() -> some View {
         VStack(spacing: TokenSpacing._5) {
-            PrimaryActionButtonView(title: Strings.Localizable.seePlans,
-                                    action: primaryAction)
-            .frame(minWidth: 288)
+            primaryButton
+                .frame(minWidth: 288)
             
             Button {
                 dismiss()
@@ -184,11 +183,11 @@ private struct OnboardingItemView: View {
 }
 
 #Preview {
-    HiddenFilesFoldersOnboardingView { }
+    HiddenFilesFoldersOnboardingView(primaryButton: Button("See Plans", action: {}))
 }
 
 #Preview {
-    HiddenFilesFoldersOnboardingView { }
+    HiddenFilesFoldersOnboardingView(primaryButton: Button("Continue", action: {}))
         .preferredColorScheme(.dark)
 }
 

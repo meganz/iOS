@@ -50,6 +50,11 @@
 		0E52388B2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E52388A2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift */; };
 		0E52388D2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E52388C2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift */; };
 		0E5336232B2A521C00FD5089 /* PhotoLibraryContentViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5336222B2A521C00FD5089 /* PhotoLibraryContentViewRouterTests.swift */; };
+		0E5F5E7C2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E7B2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift */; };
+		0E5F5E7F2C6C39630037A99C /* HiddenFilesOnboardingPrimaryButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E7E2C6C39630037A99C /* HiddenFilesOnboardingPrimaryButtonViewModel.swift */; };
+		0E5F5E832C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E822C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift */; };
+		0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E852C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift */; };
+		0E5F5E8D2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E8C2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift */; };
 		0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */; };
 		0E72E1262A2841CE00C900F9 /* EnforceCopyrightWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */; };
 		0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */; };
@@ -2800,6 +2805,11 @@
 		0E52388A2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonView.swift; sourceTree = "<group>"; };
 		0E52388C2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonViewModel.swift; sourceTree = "<group>"; };
 		0E5336222B2A521C00FD5089 /* PhotoLibraryContentViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentViewRouterTests.swift; sourceTree = "<group>"; };
+		0E5F5E7B2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesOnboardingButtonView.swift; sourceTree = "<group>"; };
+		0E5F5E7E2C6C39630037A99C /* HiddenFilesOnboardingPrimaryButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesOnboardingPrimaryButtonViewModel.swift; sourceTree = "<group>"; };
+		0E5F5E822C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift; sourceTree = "<group>"; };
+		0E5F5E852C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHideFilesAndFoldersRouter.swift; sourceTree = "<group>"; };
+		0E5F5E8C2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeOnboardingPrimaryButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepositoryTests.swift; sourceTree = "<group>"; };
 		0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningView.swift; sourceTree = "<group>"; };
 		0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModel.swift; sourceTree = "<group>"; };
@@ -5731,6 +5741,8 @@
 		0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */ = {
 			isa = PBXGroup;
 			children = (
+				0E5F5E7B2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift */,
+				0E5F5E7E2C6C39630037A99C /* HiddenFilesOnboardingPrimaryButtonViewModel.swift */,
 				0E385A7C2BB3C66700261892 /* HideFilesAndFoldersRouter.swift */,
 				0E385A772BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift */,
 			);
@@ -5778,6 +5790,14 @@
 			path = Status;
 			sourceTree = "<group>";
 		};
+		0E5F5E842C6C61170037A99C /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				0E5F5E852C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		0E72E11F2A27EC8D00C900F9 /* CopyrightWarning */ = {
 			isa = PBXGroup;
 			children = (
@@ -5814,7 +5834,10 @@
 		0EE5AC142B1E930C00BCDD88 /* SharedViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				0E5F5E842C6C61170037A99C /* Mocks */,
 				0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */,
+				0E5F5E8C2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift */,
+				0E5F5E822C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift */,
 				0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */,
 				0EE396F72B87E4B200927E7E /* NodeActionViewModelTests.swift */,
 				6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */,
@@ -15091,6 +15114,8 @@
 				9D3563D028B54EEE00CB3365 /* HelpViewRouter.swift in Sources */,
 				5D64660824890BEA006030A5 /* HexColor.swift in Sources */,
 				0EBF70712BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift in Sources */,
+				0E5F5E7C2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift in Sources */,
+				0E5F5E7F2C6C39630037A99C /* HiddenFilesOnboardingPrimaryButtonViewModel.swift in Sources */,
 				0E385A7D2BB3C66700261892 /* HideFilesAndFoldersRouter.swift in Sources */,
 				0E385A792BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift in Sources */,
 				B69AF66528A1E5190022B094 /* HistoryRetentionPickerViewModel.swift in Sources */,
@@ -16601,6 +16626,7 @@
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,
 				534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */,
+				0E5F5E8D2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift in Sources */,
 				C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
@@ -16614,6 +16640,7 @@
 				2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
+				0E5F5E832C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift in Sources */,
 				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,
 				947DC5E62AC1CB07002C1D7C /* HomeChips+TrackingTests.swift in Sources */,
 				6D01A3C62C08443B00089BA8 /* HomeLocalisationTests.swift in Sources */,
@@ -16665,6 +16692,7 @@
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */,
 				B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */,
+				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
 				945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
