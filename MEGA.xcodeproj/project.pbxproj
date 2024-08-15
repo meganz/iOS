@@ -177,6 +177,8 @@
 		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
 		241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */; };
+		2434EC372C61BA810052D2F0 /* SortOrderType+VideoPlaylistMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2434EC362C61BA810052D2F0 /* SortOrderType+VideoPlaylistMapper.swift */; };
+		2434EC3D2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2434EC3C2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift */; };
 		24352DE42ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */; };
 		2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */; };
 		24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */; };
@@ -2925,6 +2927,8 @@
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
 		241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampRouter.swift; sourceTree = "<group>"; };
+		2434EC362C61BA810052D2F0 /* SortOrderType+VideoPlaylistMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SortOrderType+VideoPlaylistMapper.swift"; sourceTree = "<group>"; };
+		2434EC3C2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrderType_VideoPlaylistMapperTests.swift; sourceTree = "<group>"; };
 		24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVideoPlayerItemMetadataCommand.swift; sourceTree = "<group>"; };
 		2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewControllerTests.swift; sourceTree = "<group>"; };
 		24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentViewController.swift; sourceTree = "<group>"; };
@@ -6197,6 +6201,14 @@
 				240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		2434EC3B2C61C12F0052D2F0 /* SortOrder */ = {
+			isa = PBXGroup;
+			children = (
+				2434EC3C2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift */,
+			);
+			path = SortOrder;
 			sourceTree = "<group>";
 		};
 		24385D272BF09420002F0561 /* VideoPlaylist */ = {
@@ -10318,6 +10330,7 @@
 			children = (
 				B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */,
 				BFCD7D8D2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift */,
+				2434EC362C61BA810052D2F0 /* SortOrderType+VideoPlaylistMapper.swift */,
 			);
 			path = SortOrder;
 			sourceTree = "<group>";
@@ -11302,6 +11315,7 @@
 				C4B97D7E2B67924C00EBA9E5 /* FuncCallRecorder */,
 				C4B97D732B6781F900EBA9E5 /* RandomNumberGenerator */,
 				248A03182A79024700F183A2 /* Shared Views */,
+				2434EC3B2C61C12F0052D2F0 /* SortOrder */,
 				C4F06F762B691934005C1A3D /* UpgradeEncouragementShowTimeTracker */,
 				A874D305263FF683000861DB /* ViewControllers */,
 				99E1A9272A383E9700974FC9 /* Views */,
@@ -15948,6 +15962,7 @@
 				25F9329F2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift in Sources */,
 				B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */,
 				BFCD7D8E2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift in Sources */,
+				2434EC372C61BA810052D2F0 /* SortOrderType+VideoPlaylistMapper.swift in Sources */,
 				BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */,
 				2591C1382C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift in Sources */,
 				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
@@ -16785,6 +16800,7 @@
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
 				9486B8F12C3FDD3000D96762 /* SnackBarTests.swift in Sources */,
+				2434EC3D2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift in Sources */,
 				2590021D2C605778004A421C /* SpotlightContentIndexerActorTests.swift in Sources */,
 				C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */,
 				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,
