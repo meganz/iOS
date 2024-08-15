@@ -2,7 +2,7 @@
 import XCTest
 
 final class GetLinkStringTableViewCellTests: XCTestCase {
-    func testDispatch_onViewReady_configureViewCorrectly() throws {
+    @MainActor func testDispatch_onViewReady_configureViewCorrectly() throws {
         let title = "Test"
         let image = try XCTUnwrap(UIImage(systemName: "folder"))
         let isRightImageHidden = false

@@ -1,3 +1,4 @@
+@preconcurrency import Combine
 @testable import MEGA
 import MEGAAnalyticsiOS
 @testable import MEGADomain
@@ -393,8 +394,11 @@ final class PhotosViewModelTests: XCTestCase {
     }
 }
 
+@MainActor
 private class MockCameraUploadsSettingsViewRouter: Routing {
     private(set) var startCalled = 0
+    
+    nonisolated init() {}
     
     func start() {
         startCalled += 1

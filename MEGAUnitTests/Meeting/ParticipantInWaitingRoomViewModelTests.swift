@@ -13,7 +13,7 @@ final class ParticipantInWaitingRoomViewModelTests: XCTestCase {
     let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
     let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
     
-    func testAction_onViewReady_shouldUpdateNameAndAvatar() {
+    @MainActor func testAction_onViewReady_shouldUpdateNameAndAvatar() {
         let sut = makeSUT()
         test(viewModel: sut,
              actions: [.onViewReady],
@@ -23,7 +23,7 @@ final class ParticipantInWaitingRoomViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onAdmitButtonTapped_shouldCallAdmitButtonHandler() {
+    @MainActor func testAction_onAdmitButtonTapped_shouldCallAdmitButtonHandler() {
         let sut = makeSUT()
         test(viewModel: sut,
              actions: [.admitButtonTapped],
@@ -32,7 +32,7 @@ final class ParticipantInWaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(denyParticipantHandler_calledTimes, 0)
     }
     
-    func testAction_onDenyButtonTapped_shouldCallDenyButtonHandler() {
+    @MainActor func testAction_onDenyButtonTapped_shouldCallDenyButtonHandler() {
         let sut = makeSUT()
         test(viewModel: sut,
              actions: [.denyButtonTapped],

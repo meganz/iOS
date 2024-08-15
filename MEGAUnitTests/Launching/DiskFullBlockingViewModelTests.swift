@@ -3,6 +3,7 @@ import MEGAL10n
 import XCTest
 
 final class DiskFullBlockingViewModelTests: XCTestCase {
+    @MainActor
     func testAction_onViewLoaded_configView() {
         let mockDeviceModel = "iPod Touch"
         let sut = DiskFullBlockingViewModel(router: MockDiskFullBlockingViewRouter(), deviceModel: mockDeviceModel)
@@ -17,6 +18,7 @@ final class DiskFullBlockingViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewLoaded, expectedCommands: [.configView(expectedBlockingModel)])
     }
     
+    @MainActor
     func testAction_manage() {
         let mockDeviceModel = ""
         let mockRouter = MockDiskFullBlockingViewRouter()

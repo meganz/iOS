@@ -6,7 +6,7 @@ import XCTest
 
 final class SMSVerificationViewModelTests: XCTestCase {
     
-    func testAction_onViewReady_unblockAccount() {
+    @MainActor func testAction_onViewReady_unblockAccount() {
         let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(), checkSMSUseCase: MockCheckSMSUseCase())
         let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
                                            smsUseCase: sms,
@@ -17,6 +17,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.configView(.unblockAccount)])
     }
     
+    @MainActor
     func testAction_onViewReady_addNumber_achievementError() {
         let errors: [AchievementErrorEntity] = [.achievementsDisabled, .generic]
         let message = Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA
@@ -36,7 +37,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_loadRegionCodes_success_hasCurrentRegion() {
+    @MainActor func testAction_loadRegionCodes_success_hasCurrentRegion() {
         let region = RegionEntity(regionCode: "NZ", regionName: "New Zealand", callingCodes: ["64"])
         let list = RegionListEntity(currentRegion: region, allRegions: [region])
         let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(regionCodesResult: .success(list)),
@@ -54,7 +55,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
                                 .showRegion("New Zealand (+64)", callingCode: "+64")])
     }
     
-    func testAction_loadRegionCodes_success_doesNotHaveCurrentRegion() {
+    @MainActor func testAction_loadRegionCodes_success_doesNotHaveCurrentRegion() {
         let region = RegionEntity(regionCode: "NZ", regionName: "New Zealand", callingCodes: ["64"])
         let list = RegionListEntity(currentRegion: nil, allRegions: [region])
         let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(regionCodesResult: .success(list)),
@@ -70,7 +71,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
              expectedCommands: [.startLoading, .finishLoading])
     }
     
-    func testAction_loadRegionCodes_error() {
+    @MainActor func testAction_loadRegionCodes_error() {
         for error in GetSMSErrorEntity.allCases {
             let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(regionCodesResult: .failure(error)),
                                  checkSMSUseCase: MockCheckSMSUseCase())
@@ -85,7 +86,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_showRegionList() {
+    @MainActor func testAction_showRegionList() {
         let router = MockSMSVerificationViewRouter()
         let sut = SMSVerificationViewModel(router: router,
                                            smsUseCase: SMSUseCase(getSMSUseCase: MockGetSMSUseCase(), checkSMSUseCase: MockCheckSMSUseCase()),
@@ -96,7 +97,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         XCTAssertEqual(router.goToRegionList_calledTimes, 1)
     }
     
-    func testAction_cancel() {
+    @MainActor func testAction_cancel() {
         let router = MockSMSVerificationViewRouter()
         let sut = SMSVerificationViewModel(router: router,
                                            smsUseCase: SMSUseCase(getSMSUseCase: MockGetSMSUseCase(), checkSMSUseCase: MockCheckSMSUseCase()),
@@ -107,7 +108,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
     
-    func testAction_sendCodeToPhoneNumber_success() {
+    @MainActor func testAction_sendCodeToPhoneNumber_success() {
         let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(),
                              checkSMSUseCase: MockCheckSMSUseCase(sendToNumberResult: .success("+64273142791")))
         let router = MockSMSVerificationViewRouter()
@@ -129,7 +130,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         XCTAssertEqual(router.goToVerification_codeCalledTimes, 1)
     }
     
-    func testAction_sendCodeToPhoneNumber_error() {
+    @MainActor func testAction_sendCodeToPhoneNumber_error() {
         let errorMessageDict: [CheckSMSErrorEntity: String] =
         [.reachedDailyLimit: Strings.Localizable.youHaveReachedTheDailyLimit,
          .alreadyVerifiedWithCurrentAccount: Strings.Localizable.yourAccountIsAlreadyVerified,
@@ -152,7 +153,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_sendCodeToPhoneNumber_wrongFormatError() {
+    @MainActor func testAction_sendCodeToPhoneNumber_wrongFormatError() {
         let errorMessageDict: [CheckSMSErrorEntity: String] =
         [.wrongFormat: Strings.Localizable.pleaseEnterAValidPhoneNumber]
         

@@ -3,7 +3,8 @@ import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 
-protocol CookieSettingsRouting: Routing {
+@MainActor
+protocol CookieSettingsRouting: Routing, Sendable {
     func didTap(on source: CookieSettingsSource)
 }
 
@@ -12,6 +13,7 @@ enum CookieSettingsSource {
     case showPrivacyPolicy
 }
 
+@MainActor
 final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
     private weak var navigationController: UINavigationController?
     private weak var presenter: UIViewController?

@@ -1,11 +1,11 @@
 import Combine
-@testable import MEGA
+@testable @preconcurrency import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
-import XCTest
+@preconcurrency import XCTest
 
 final class MeetingContainerViewModelTests: XCTestCase {
     
@@ -49,13 +49,13 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_onViewReady() {
+    @MainActor func testAction_onViewReady() {
         let harness = Harness(chatRoom: .moderatorMeeting)
         test(viewModel: harness.sut, action: .onViewReady, expectedCommands: [])
         XCTAssert(harness.router.showMeetingUI_calledTimes == 1)
     }
     
-    func testAction_onViewReady_shouldTrackScreenEvent() {
+    @MainActor func testAction_onViewReady_shouldTrackScreenEvent() {
         let harness = Harness()
         test(viewModel: harness.sut, action: .onViewReady, expectedCommands: [])
         assertTrackAnalyticsEventCalled(
@@ -64,7 +64,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_hangCall_attendeeIsGuest() {
+    @MainActor func testAction_hangCall_attendeeIsGuest() {
         let harness = Harness(
             chatRoom: .moderatorMeeting,
             callUseCase: MockCallUseCase(call: .testCallEntity),
@@ -74,7 +74,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.showEndMeetingOptions_calledTimes == 1)
     }
     
-    func testAction_hangCall_attendeeIsParticipantOrModerator() {
+    @MainActor func testAction_hangCall_attendeeIsParticipantOrModerator() {
         let harness = Harness(
             chatRoom: .moderatorMeeting,
             callUseCase: MockCallUseCase(call: .testCallEntity)
@@ -83,23 +83,24 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.callManager.endCall_CalledTimes == 1)
     }
     
-    func testAction_backButtonTap() {
+    @MainActor func testAction_backButtonTap() {
         let harness = Harness(chatRoom: .moderatorMeeting)
         test(viewModel: harness.sut, action: .tapOnBackButton, expectedCommands: [])
         XCTAssert(harness.router.dismiss_calledTimes == 1)
     }
     
-    func testAction_ChangeMenuVisibility() {
+    @MainActor func testAction_ChangeMenuVisibility() {
         let harness = Harness(chatRoom: .moderatorMeeting)
         test(viewModel: harness.sut, action: .changeMenuVisibility, expectedCommands: [])
         XCTAssert(harness.router.toggleFloatingPanel_CalledTimes == 1)
     }
     
-    func testAction_shareLink_Success() async throws {
+    @MainActor func testAction_shareLink_Success() async throws {
         let harness = Harness(
             chatRoom: .standardPrivilegeMeeting,
             chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
         )
+        
         await test(viewModel: harness.sut, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         
         try await Task.sleep(nanoseconds: 500_000_000)
@@ -107,31 +108,31 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.shareLink_calledTimes == 1)
     }
     
-    func testAction_shareLink_Failure() {
+    @MainActor func testAction_shareLink_Failure() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
         test(viewModel: harness.sut, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         XCTAssert(harness.router.shareLink_calledTimes == 0)
     }
     
-    func testAction_displayParticipantInMainView() {
+    @MainActor func testAction_displayParticipantInMainView() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
         test(viewModel: harness.sut, action: .displayParticipantInMainView(.testParticipant), expectedCommands: [])
         XCTAssert(harness.router.displayParticipantInMainView_calledTimes == 1)
     }
     
-    func testAction_didDisplayParticipantInMainView() {
+    @MainActor func testAction_didDisplayParticipantInMainView() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
         test(viewModel: harness.sut, action: .didDisplayParticipantInMainView(.testParticipant), expectedCommands: [])
         XCTAssert(harness.router.didDisplayParticipantInMainView_calledTimes == 1)
     }
     
-    func testAction_didSwitchToGridView() {
+    @MainActor func testAction_didSwitchToGridView() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
         test(viewModel: harness.sut, action: .didSwitchToGridView, expectedCommands: [])
         XCTAssert(harness.router.didSwitchToGridView_calledTimes == 1)
     }
     
-    func testAction_showEndCallDialog() {
+    @MainActor func testAction_showEndCallDialog() {
         let harness = Harness(
             chatRoom: .standardPrivilegeMeeting,
             callUseCase: MockCallUseCase(call: .init(numberOfParticipants: 1, participants: [100]))
@@ -140,7 +141,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.didShowEndDialog_calledTimes == 1)
     }
     
-    func testAction_removeEndCallDialogWhenParticipantAdded() {
+    @MainActor func testAction_removeEndCallDialogWhenParticipantAdded() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
         test(
             viewModel: harness.sut,
@@ -150,7 +151,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.removeEndDialog_calledTimes == 1)
     }
     
-    func testAction_removeEndCallDialogAndEndCall() {
+    @MainActor func testAction_removeEndCallDialogAndEndCall() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
         test(
             viewModel: harness.sut,
@@ -160,7 +161,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.removeEndDialog_calledTimes == 1)
     }
     
-    func testAction_removeEndCallDialogWhenParticipantJoinWaitingRoom() {
+    @MainActor func testAction_removeEndCallDialogWhenParticipantJoinWaitingRoom() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
         test(
             viewModel: harness.sut,
@@ -170,7 +171,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.removeEndDialog_calledTimes == 1)
     }
     
-    func testAction_showJoinMegaScreen() {
+    @MainActor func testAction_showJoinMegaScreen() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
         test(
             viewModel: harness.sut,
@@ -180,7 +181,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.showJoinMegaScreen_calledTimes == 1)
     }
     
-    func testAction_OnViewReady_NoUserJoined() {
+    @MainActor func testAction_OnViewReady_NoUserJoined() {
         
         let expectation = expectation(description: "testAction_OnViewReady_NoUserJoined")
         
@@ -210,7 +211,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         subscription = nil
     }
     
-    func testAction_muteMicrophoneForMeetingsWhenLastParticipantLeft() {
+    @MainActor func testAction_muteMicrophoneForMeetingsWhenLastParticipantLeft() {
         let harness = Harness(
             callUseCase: MockCallUseCase(call: .withLocalAudio),
             chatRoomUseCase: .meeting,
@@ -221,7 +222,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertTrue(harness.callManager.muteCall_CalledTimes == 1)
     }
     
-    func testAction_muteMicrophoneForGroupWhenLastParticipantLeft() {
+    @MainActor func testAction_muteMicrophoneForGroupWhenLastParticipantLeft() {
         let harness = Harness(
             callUseCase: MockCallUseCase(call: .withLocalAudio),
             chatRoomUseCase: .group,
@@ -232,7 +233,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertTrue(harness.callManager.muteCall_CalledTimes == 1)
     }
     
-    func testAction_doNotMuteMicrophoneForOneToOneWhenLastParticipantLeft() {
+    @MainActor func testAction_doNotMuteMicrophoneForOneToOneWhenLastParticipantLeft() {
         
         let harness = Harness(
             callUseCase: MockCallUseCase(call: .withLocalAudio),
@@ -248,7 +249,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertTrue(harness.callManager.muteCall_CalledTimes == 0)
     }
     
-    func testAction_endCallForAll() {
+    @MainActor func testAction_endCallForAll() {
         let harness = Harness(chatRoom: ChatRoomEntity(chatType: .meeting))
         
         test(
@@ -259,7 +260,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.callManager.endCall_CalledTimes == 1)
     }
     
-    func testHangCall_forNonGuest_shouldResetCallToUnmute() {
+    @MainActor func testHangCall_forNonGuest_shouldResetCallToUnmute() {
         let harness = Harness(
             chatRoom: ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting),
             callUseCase: MockCallUseCase(call: .init(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)),
@@ -277,7 +278,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.callManager.muteCall_CalledTimes, 0)
     }
     
-    func testAction_mutedByClient_shouldShowMutedMessage() {
+    @MainActor func testAction_mutedByClient_shouldShowMutedMessage() {
         let harness = Harness(chatRoom: ChatRoomEntity(chatType: .meeting))
         
         test(
@@ -336,7 +337,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
-    func testCallUpdate_callWillEndReceivedUserIsModerator_shouldshowCallWillEndAlert() {
+    @MainActor func testCallUpdate_callWillEndReceivedUserIsModerator_shouldshowCallWillEndAlert() {
         let harness = Harness(
             chatRoom: ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         )
@@ -377,7 +378,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
         )
         
-        test(
+        await test(
             viewModel: harness.sut,
             action: .copyLinkTapped,
             expectedCommands: []
@@ -391,7 +392,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_copyLinkTappedLinkNotAvailable_pasteboardShouldNotContainLink() async {
         let harness = Harness()
         
-        test(
+        await test(
             viewModel: harness.sut,
             action: .copyLinkTapped,
             expectedCommands: []
@@ -408,7 +409,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
         )
         
-        test(
+        await test(
             viewModel: harness.sut,
             action: .sendLinkToChatTapped,
             expectedCommands: []
@@ -422,7 +423,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_sendLinkToChatTappedLinkNotAvailable_shouldNotCallRouterWithLink() async {
         let harness = Harness()
         
-        test(
+        await test(
             viewModel: harness.sut,
             action: .sendLinkToChatTapped,
             expectedCommands: []
@@ -433,7 +434,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.router.sendLinkToChat_calledTimes, 0)
     }
     
-    func testAction_inviteParticipantsTapped_shouldNotifyRouter() {
+    @MainActor func testAction_inviteParticipantsTapped_shouldNotifyRouter() {
         let harness = Harness()
         
         test(

@@ -30,6 +30,7 @@ final class OfflineViewModelTests: XCTestCase {
 
     // MARK: - Tests
 
+    @MainActor
     func testAction_addSubscriptions_shouldReceiveReloadUIInCaseOfTransferResultSuccess() {
         let sut = makeOfflineViewModelVMSut(
             transferUseCase: MockNodeTransferUseCase(
@@ -45,6 +46,7 @@ final class OfflineViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testAction_removeSubscriptions_shouldNotReceiveAnyCommands() {
         let sut = makeOfflineViewModelVMSut()
 
@@ -55,6 +57,7 @@ final class OfflineViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testAction_removeOfflineItems_shouldReceiveReloadUI() {
         let sut = makeOfflineViewModelVMSut()
         let mockItems: [URL] = []

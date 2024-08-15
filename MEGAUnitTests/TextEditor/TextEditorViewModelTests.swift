@@ -9,7 +9,7 @@ import XCTest
 
 final class TextEditorViewModelTests: XCTestCase {
 
-    func testAction_setUpView_View_Create_Edit() {
+    @MainActor func testAction_setUpView_View_Create_Edit() {
         let textFile = TextFile(fileName: "testAction_setUpView_View_Create_Edit")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -71,7 +71,7 @@ final class TextEditorViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_setUpView_Load_tempDownload_success_read_success() {
+    @MainActor func testAction_setUpView_Load_tempDownload_success_read_success() {
         let textFile = TextFile(fileName: "testAction_setUpView_Load_tempDownload_success_read_success")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -147,7 +147,7 @@ final class TextEditorViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_setUpView_Load_tempDownload_success_read_failed() {
+    @MainActor func testAction_setUpView_Load_tempDownload_success_read_failed() {
         let textFile = TextFile(fileName: "testAction_setUpView_Load_tempDownload_success_read_failed")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -200,7 +200,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_setUpView_Load_tempDownload_failed() {
+    @MainActor func testAction_setUpView_Load_tempDownload_failed() {
         let textFile = TextFile(fileName: "testAction_setUpView_Load_tempDownload_failed")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -253,7 +253,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
 
-    func testAction_saveText_edit_success() {
+    @MainActor func testAction_saveText_edit_success() {
         let textFile = TextFile(
             fileName: "testAction_saveText_edit_success",
             content: "test content",
@@ -307,7 +307,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_saveText_edit_failed() {
+    @MainActor func testAction_saveText_edit_failed() {
         let textFile = TextFile(
             fileName: "testAction_saveText_edit_failed",
             content: "test content",
@@ -344,7 +344,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_saveText_create_hasParent_duplicateName() {
+    @MainActor func testAction_saveText_create_hasParent_duplicateName() {
         let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_duplicateName")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -382,7 +382,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 0)
     }
     
-    func testAction_saveText_create_hasParent_uniqueName_success() {
+    @MainActor func testAction_saveText_create_hasParent_uniqueName_success() {
         let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_uniqueName_success")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, uploadFileResult: .success, filename: textFile.fileName)
@@ -414,7 +414,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
     }
     
-    func testAction_saveText_create_hasParent_uniqueName_failed() {
+    @MainActor func testAction_saveText_create_hasParent_uniqueName_failed() {
         let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_uniqueName_failed")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, uploadFileResult: .failure(.upload), filename: textFile.fileName)
@@ -446,7 +446,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
     }
 
-    func testAction_saveText_create_noParent_duplicateName() {
+    @MainActor func testAction_saveText_create_noParent_duplicateName() {
         let textFile = TextFile(fileName: "testAction_saveText_create_noParent_duplicateName")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -482,7 +482,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 1)
     }
     
-    func testAction_saveText_create_noParent_uniqueName_success() {
+    @MainActor func testAction_saveText_create_noParent_uniqueName_success() {
         let textFile = TextFile(fileName: "testAction_saveText_create_noParent_uniqueName_success")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, uploadFileResult: .success, filename: textFile.fileName)
@@ -512,7 +512,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
     }
     
-    func testAction_saveText_create_noParent_uniqueName_failed() {
+    @MainActor func testAction_saveText_create_noParent_uniqueName_failed() {
         let textFile = TextFile(fileName: "testAction_saveText_create_noParent_uniqueName_failed")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, uploadFileResult: .failure(.upload), filename: textFile.fileName)
@@ -542,7 +542,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
     }
     
-    func testAction_renameFile_create() {
+    @MainActor func testAction_renameFile_create() {
         let textFile = TextFile(fileName: "testAction_renameFile_create")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -575,7 +575,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_renameFileTo_create() {
+    @MainActor func testAction_renameFileTo_create() {
         let textFile = TextFile(fileName: "testAction_renameFileTo_create")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase(duplicate: false)
@@ -606,7 +606,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockUploadFileUC.newName, newName)
     }
 
-    func testAction_dismissTextEditorVC() {
+    @MainActor func testAction_dismissTextEditorVC() {
         let textFile = TextFile(fileName: "testAction_dismissTextEditorVC")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -633,7 +633,7 @@ final class TextEditorViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_editFile_view_editableSize() {
+    @MainActor func testAction_editFile_view_editableSize() {
         let textFile = TextFile(
             fileName: "testAction_editFile_view_editableSize",
             content: "test content",
@@ -678,7 +678,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_editFile_view_ineditableSize() {
+    @MainActor func testAction_editFile_view_ineditableSize() {
         let textFile = TextFile(
             fileName: "testAction_editFile_view_editableSize",
             content: "test content",
@@ -707,7 +707,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_editAfterOpen_view_editableSize() {
+    @MainActor func testAction_editAfterOpen_view_editableSize() {
         let textFile = TextFile(
             fileName: "testAction_editAfterOpen_view_editableSize",
             content: "test content",
@@ -752,7 +752,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_editAfterOpen_view_ineditableSize() {
+    @MainActor func testAction_editAfterOpen_view_ineditableSize() {
         let textFile = TextFile(
             fileName: "testAction_editAfterOpen_view_ineditableSize",
             content: "test content",
@@ -781,7 +781,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_editAfterOpen_load() {
+    @MainActor func testAction_editAfterOpen_load() {
         let textFile = TextFile(
             fileName: "testAction_editAfterOpen_load",
             content: "test content",
@@ -810,7 +810,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_showActions_view() {
+    @MainActor func testAction_showActions_view() {
         let textFile = TextFile(fileName: "testAction_showActions_view")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -837,7 +837,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.showActions_calledTimes, 1)
     }
     
-    func testAction_cancel_create_edit_contentChange() {
+    @MainActor func testAction_cancel_create_edit_contentChange() {
         let textFile = TextFile(fileName: "testAction_cancel_contentChange")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -866,7 +866,7 @@ final class TextEditorViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_cancel_create_noContentChange() {
+    @MainActor func testAction_cancel_create_noContentChange() {
         let textFile = TextFile(fileName: "testAction_cancel_create_noContentChange")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -891,7 +891,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
     }
     
-    func testAction_cancel_edit_noContentChange() {
+    @MainActor func testAction_cancel_edit_noContentChange() {
         let textFile = TextFile(fileName: "testAction_cancel_edit_noContentChange")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -934,7 +934,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_downloadToOffline_view() {
+    @MainActor func testAction_downloadToOffline_view() {
         let textFile = TextFile(fileName: "testAction_downloadToOffline_view")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -961,7 +961,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.showDownloadTransfer_calledTimes, 1)
     }
     
-    func testAction_importNode_view() {
+    @MainActor func testAction_importNode_view() {
         let textFile = TextFile(fileName: "testAction_importNode_view")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -986,7 +986,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.importNode_calledTimes, 1)
     }
     
-    func testAction_exportFile() {
+    @MainActor func testAction_exportFile() {
         let textFile = TextFile(fileName: "testAction_exportFile")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()

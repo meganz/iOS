@@ -5,7 +5,7 @@ import XCTest
 
 final class PSAViewModelTests: XCTestCase {
     
-    func testAction_onViewReady_fetchPSAEntity() {
+    @MainActor func testAction_onViewReady_fetchPSAEntity() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
         let router = PSAViewRouter(tabBarController: UITabBarController())
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
@@ -13,7 +13,7 @@ final class PSAViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [.configView(mocPSAEntity())])
     }
     
-    func testAction_shouldShowPSAView_AfterOneHourScenario() {
+    @MainActor func testAction_shouldShowPSAView_AfterOneHourScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
         let router = MockPSAViewRouter()
         let mocPreferenceUseCase = MockPreferenceUseCase()
@@ -23,7 +23,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertTrue(router.psaViewShown)
     }
     
-    func testAction_shouldShowPSAView_WithinOneHourScenario() {
+    @MainActor func testAction_shouldShowPSAView_WithinOneHourScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
         let router = MockPSAViewRouter()
         let mocPreferenceUseCase = MockPreferenceUseCase()
@@ -33,7 +33,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertFalse(router.psaViewShown)
     }
     
-    func testAction_shouldShowPSAView_SuccessScenario() {
+    @MainActor func testAction_shouldShowPSAView_SuccessScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
         let router = MockPSAViewRouter()
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
@@ -42,7 +42,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertTrue(router.psaViewShown)
     }
 
-    func testAction_shouldShowPSAView_genericErrorScenario() {
+    @MainActor func testAction_shouldShowPSAView_genericErrorScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .failure(.generic)))
         let router = MockPSAViewRouter()
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
@@ -51,7 +51,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertFalse(router.psaViewShown)
     }
 
-    func testAction_shouldShowPSAView_noDataAvailableScenario() {
+    @MainActor func testAction_shouldShowPSAView_noDataAvailableScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .failure(.noDataAvailable)))
         let router = MockPSAViewRouter()
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
@@ -60,7 +60,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertFalse(router.psaViewShown)
     }
 
-    func testAction_shouldShowPSAView_PSAAlreadyShownScenario() {
+    @MainActor func testAction_shouldShowPSAView_PSAAlreadyShownScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
         let mockPreference = MockPreferenceUseCase()
         mockPreference.dict[.lastPSARequestTimestamp] = Date().timeIntervalSince1970
@@ -71,7 +71,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertFalse(router.psaViewShown)
     }
 
-    func testAction_shouldShowPSAView_PSAURLScenario() {
+    @MainActor func testAction_shouldShowPSAView_PSAURLScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
         let router = MockPSAViewRouter()
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
@@ -80,7 +80,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertTrue(router.didOpenPSAURLString)
     }
     
-    func testAction_hidePSAViewScenario() {
+    @MainActor func testAction_hidePSAViewScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
         let router = MockPSAViewRouter()
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
@@ -89,7 +89,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertFalse(router.psaViewShown)
     }
     
-    func testAction_showPSAViewScenario() {
+    @MainActor func testAction_showPSAViewScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
         let router = MockPSAViewRouter()
         let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())

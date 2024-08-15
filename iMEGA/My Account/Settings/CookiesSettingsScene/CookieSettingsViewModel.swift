@@ -41,6 +41,7 @@ enum CookieSettingsAction: ActionType {
     case save
 }
 
+@MainActor
 final class CookieSettingsViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case configCookieSettings(CookiesBitmap)
@@ -117,7 +118,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     func dispatch(_ action: CookieSettingsAction) {
         switch action {
         case .configView:
-            configViewTask = Task { @MainActor in
+            configViewTask = Task {
                 await setUpExternalAds()
                 await cookieSettings()
                 setNumberOfSections()
@@ -158,8 +159,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             return
         }
         
-        showCookiePolicyURLTask = Task { @MainActor [weak self] in
-            guard let self else { return }
+        showCookiePolicyURLTask = Task {
             do {
                 let cookiePath = cookiePolicyURL.lastPathComponent
                 let sessionTransferURL = try await self.accountUseCase.sessionTransferURL(path: cookiePath)
@@ -237,7 +237,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             return
         }
         
-        Task { @MainActor in
+        Task {
             do {
                 var cookiesBitmap = CookiesBitmap(rawValue: 0)
                 cookiesBitmap.insert(.essential)

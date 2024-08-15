@@ -5,7 +5,7 @@ import XCTest
 
 final class CancellableTransferViewModelTests: XCTestCase {
 
-    func testAction_onViewReady() {
+    @MainActor func testAction_onViewReady() {
         let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, localFileURL: URL(fileURLWithPath: "PathToFile"), name: nil, appData: nil, priority: false, isFile: true, type: .download)
         let router = MockCancellableTransferRouter()
         let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), mediaUseCase: MockMediaUseCase(), analyticsEventUseCase: MockAnalyticsEventUseCase(), transfers: [transfer], transferType: .download)
@@ -14,7 +14,7 @@ final class CancellableTransferViewModelTests: XCTestCase {
         XCTAssert(router.prepareTransfersWidget_calledTimes == 1)
     }
     
-    func testAction_cancelTransfer() {
+    @MainActor func testAction_cancelTransfer() {
         let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, localFileURL: URL(fileURLWithPath: "PathToFile"), name: nil, appData: nil, priority: false, isFile: true, type: .download)
         let router = MockCancellableTransferRouter()
         let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), mediaUseCase: MockMediaUseCase(), analyticsEventUseCase: MockAnalyticsEventUseCase(), transfers: [transfer], transferType: .download)
@@ -22,19 +22,19 @@ final class CancellableTransferViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .didTapCancelButton, expectedCommands: [.cancelling])
     }
     
-    func test_sendDownloadAnalyticsStats_non_multimedia_nodes() {
+    @MainActor func test_sendDownloadAnalyticsStats_non_multimedia_nodes() {
         sendDownloadAnalyticsStats(multimediaNodes: [], nonMultimediaNodes: [NodeEntity(name: "node.jpg", handle: 1)], analyticsEventEntity: .download(.makeAvailableOffline))
     }
     
-    func test_sendDownloadAnalyticsStats_multimedia_nodes() {
+    @MainActor func test_sendDownloadAnalyticsStats_multimedia_nodes() {
         sendDownloadAnalyticsStats(multimediaNodes: [NodeEntity(name: "node.mp3", handle: 1)], nonMultimediaNodes: [], analyticsEventEntity: .download(.makeAvailableOfflinePhotosVideos))
     }
     
-    func test_sendDownloadAnalyticsStats_multimedia_and_non_multimedia_nodes() {
+    @MainActor func test_sendDownloadAnalyticsStats_multimedia_and_non_multimedia_nodes() {
         sendDownloadAnalyticsStats(multimediaNodes: [NodeEntity(name: "node.mp3", handle: 1)], nonMultimediaNodes: [NodeEntity(name: "node.jpg", handle: 2)], analyticsEventEntity: .download(.makeAvailableOffline))
     }
     
-    private func sendDownloadAnalyticsStats(multimediaNodes: [NodeEntity], nonMultimediaNodes: [NodeEntity], analyticsEventEntity: AnalyticsEventEntity) {
+    @MainActor private func sendDownloadAnalyticsStats(multimediaNodes: [NodeEntity], nonMultimediaNodes: [NodeEntity], analyticsEventEntity: AnalyticsEventEntity) {
         let analyticsEventUseCase = MockAnalyticsEventUseCase()
         
         let transfers = [multimediaNodes, nonMultimediaNodes].flatMap {$0}

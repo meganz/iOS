@@ -1,6 +1,6 @@
 import MEGADomain
 
-public class MockNotificationUseCase: NotificationsUseCaseProtocol {
+public final class MockNotificationUseCase: NotificationsUseCaseProtocol, @unchecked Sendable {
     private var lastReadNotification: NotificationIDEntity
     private let notifications: [NotificationEntity]
     private let unreadNotificationIDs: [NotificationIDEntity]

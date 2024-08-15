@@ -8,6 +8,7 @@ import XCTest
 
 final class AddPhoneNumberViewModelTests: XCTestCase {
     
+    @MainActor
     func testAction_onViewReady_achievementSuccess() {
         let hideDontShowAgains = [true, false]
         
@@ -24,6 +25,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testAction_onViewReady_achievementError() {
         let errors: [AchievementErrorEntity] = [.generic, .achievementsDisabled]
         let message = Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA
@@ -39,7 +41,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_addPhoneNumber() {
+    @MainActor func testAction_addPhoneNumber() {
         let router = MockAddPhoneNumberRouter()
         let sut = AddPhoneNumberViewModel(router: router,
                                           achievementUseCase: MockAchievementUseCase(),
@@ -49,7 +51,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         XCTAssertEqual(router.goToVerification_calledTimes, 1)
     }
     
-    func testAction_notNow() {
+    @MainActor func testAction_notNow() {
         let router = MockAddPhoneNumberRouter()
         let sut = AddPhoneNumberViewModel(router: router,
                                           achievementUseCase: MockAchievementUseCase(),
@@ -59,7 +61,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
     
-    func testAction_notShowAddPhoneNumberAgain() {
+    @MainActor func testAction_notShowAddPhoneNumberAgain() {
         let router = MockAddPhoneNumberRouter()
         
         let preference = MockPreferenceUseCase()

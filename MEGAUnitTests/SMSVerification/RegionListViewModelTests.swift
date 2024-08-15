@@ -20,7 +20,7 @@ final class RegionListViewModelTests: XCTestCase {
         return sections
     }()
     
-    func testAction_onViewReady() {
+    @MainActor func testAction_onViewReady() {
         let sut = RegionListViewModel(router: MockRegionListViewRouter(),
                                       regionCodes: sortedRegions,
                                       collation: collation)
@@ -29,7 +29,7 @@ final class RegionListViewModelTests: XCTestCase {
              expectedCommands: [.reloadIndexedRegions(indexedRegions, collation: collation)])
     }
     
-    func testAction_startSearching() {
+    @MainActor func testAction_startSearching() {
         let sut = RegionListViewModel(router: MockRegionListViewRouter(),
                                       regionCodes: sortedRegions,
                                       collation: collation)
@@ -38,7 +38,7 @@ final class RegionListViewModelTests: XCTestCase {
              expectedCommands: [.reloadSearchedRegions([auRegion, austriaRegion])])
     }
     
-    func testAction_finishSearching() {
+    @MainActor func testAction_finishSearching() {
         let sut = RegionListViewModel(router: MockRegionListViewRouter(),
                                       regionCodes: sortedRegions,
                                       collation: collation)
@@ -55,7 +55,7 @@ final class RegionListViewModelTests: XCTestCase {
              expectedCommands: [.reloadIndexedRegions(indexedRegions, collation: collation)])
     }
     
-    func testAction_didSelectRegion() {
+    @MainActor func testAction_didSelectRegion() {
         let router = MockRegionListViewRouter()
         let sut = RegionListViewModel(router: router,
                                       regionCodes: sortedRegions,

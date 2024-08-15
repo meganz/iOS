@@ -6,7 +6,7 @@ import XCTest
 
 final class MeetingParticipantInfoViewModelTests: XCTestCase {
     
-    func testAction_onViewReady_MyselfAsModerator_ParticipantIsAModeratorAndIsInContactList() {
+    @MainActor func testAction_onViewReady_MyselfAsModerator_ParticipantIsAModeratorAndIsInContactList() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
@@ -35,7 +35,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_MyselfAsModerator_ParticipantIsAModeratorAndNotInContactList() {
+    @MainActor func testAction_onViewReady_MyselfAsModerator_ParticipantIsAModeratorAndNotInContactList() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
@@ -64,7 +64,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_MyselfAsModerator_ParticipantIsNotAModeratorAndAlsoInContactList() {
+    @MainActor func testAction_onViewReady_MyselfAsModerator_ParticipantIsNotAModeratorAndAlsoInContactList() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
@@ -94,7 +94,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_MyselfAsModerator_ParticipantIsNotAModeratorAndNotInContactList() {
+    @MainActor func testAction_onViewReady_MyselfAsModerator_ParticipantIsNotAModeratorAndNotInContactList() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
@@ -124,7 +124,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_MyselfAsParticipant_ParticipantIsNotAModeratorAndAlsoInContactList() {
+    @MainActor func testAction_onViewReady_MyselfAsParticipant_ParticipantIsNotAModeratorAndAlsoInContactList() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
@@ -154,7 +154,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_MyselfAsParticipant_ParticipantIsNotAModeratorAndNotInContactList() {
+    @MainActor func testAction_onViewReady_MyselfAsParticipant_ParticipantIsNotAModeratorAndNotInContactList() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"), contactEmail: "test@email.com")
@@ -183,7 +183,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_ParticipantIsAGuest() {
+    @MainActor func testAction_onViewReady_ParticipantIsAGuest() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: nil)
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
@@ -335,7 +335,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         XCTAssert(router.muteParticipant_calledTimes == 1)
     }
     
-    func testAction_onViewReadyAndMyselfAsModerator_participantIsNotMutedAndNotInContactList() {
+    @MainActor func testAction_onViewReadyAndMyselfAsModerator_participantIsNotMutedAndNotInContactList() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, audio: .on, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))

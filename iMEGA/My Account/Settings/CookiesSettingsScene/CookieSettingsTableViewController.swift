@@ -44,7 +44,7 @@ class CookieSettingsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         viewModel.invokeCommand = { [weak self] command in
-            DispatchQueue.main.async { self?.executeCommand(command) }
+            self?.executeCommand(command)
         }
         
         configView()

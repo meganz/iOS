@@ -11,7 +11,7 @@ import XCTest
 
 final class GetNodeLinkViewModelTests: XCTestCase {
     
-    func testDispatch_onViewReadyAndAllNodeExported_returnCorrectCommands() {
+    @MainActor func testDispatch_onViewReadyAndAllNodeExported_returnCorrectCommands() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
             let nodes: [MEGANode] = [
@@ -35,7 +35,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatch_onViewReadyAndSomeNodesNotExported_returnCorrectCommands() {
+    @MainActor func testDispatch_onViewReadyAndSomeNodesNotExported_returnCorrectCommands() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
             let nodes: [MEGANode] = [
@@ -60,7 +60,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         }
     }
     
-    func testDispatch_onViewReadyAndNodeContainsSensitiveDescendant_returnCorrectCommands() {
+    @MainActor func testDispatch_onViewReadyAndNodeContainsSensitiveDescendant_returnCorrectCommands() {
         let nodes: [MEGANode] = [
             MockNode(handle: 1, isNodeExported: true),
             MockNode(handle: 2, isNodeExported: false)

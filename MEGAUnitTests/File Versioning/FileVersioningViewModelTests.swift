@@ -6,7 +6,7 @@ import XCTest
 final class FileVersioningViewModelTests: XCTestCase {
     let mockRouter = MockFileVersioningViewRouter()
     
-    func testAction_onViewLoaded() {
+    @MainActor func testAction_onViewLoaded() {
         let fileVersionsUseCase = MockFileVersionsUseCase(versions: 4,
                                                           versionsSize: 360000,
                                                           isFileVersionsEnabled: .success(true))
@@ -19,7 +19,7 @@ final class FileVersioningViewModelTests: XCTestCase {
              expectedCommands: [.updateSwitch(true), .updateFileVersions(4), .updateFileVersionsSize(360000)])
     }
     
-    func testAction_enableFileVersions() {
+    @MainActor func testAction_enableFileVersions() {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(false), enableFileVersions: .success(true))
         let sut = FileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
@@ -30,7 +30,7 @@ final class FileVersioningViewModelTests: XCTestCase {
              expectedCommands: [.updateSwitch(true)])
     }
     
-    func testAction_disableFileVersions_user_taps_yes_in_the_alert() {
+    @MainActor func testAction_disableFileVersions_user_taps_yes_in_the_alert() {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true),
                                                           enableFileVersions: .success(false))
         let sut = FileVersioningViewModel(router: mockRouter,
@@ -43,7 +43,7 @@ final class FileVersioningViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.showDisableAlert_calledTimes, 1)
     }
     
-    func testAction_disableFileVersions_user_taps_no_in_the_alert() {
+    @MainActor func testAction_disableFileVersions_user_taps_no_in_the_alert() {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true))
         mockRouter.tapYesDisableAlert = false
         let sut = FileVersioningViewModel(router: mockRouter,
@@ -56,7 +56,7 @@ final class FileVersioningViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.showDisableAlert_calledTimes, 1)
     }
     
-    func testAction_deletePreviousVersions_user_taps_yes_in_the_alert() {
+    @MainActor func testAction_deletePreviousVersions_user_taps_yes_in_the_alert() {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true),
                                                           deletePreviousFileVersions: .success(true))
         let sut = FileVersioningViewModel(router: mockRouter,
@@ -69,7 +69,7 @@ final class FileVersioningViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.showDeletePreviousVersionsAlert_calledTimes, 1)
     }
     
-    func testAction_deletePreviousVersions_user_taps_no_in_the_alert() {
+    @MainActor func testAction_deletePreviousVersions_user_taps_no_in_the_alert() {
         mockRouter.tapYesDeletePreviousVersionsAlert = false
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true))
         let sut = FileVersioningViewModel(router: mockRouter,

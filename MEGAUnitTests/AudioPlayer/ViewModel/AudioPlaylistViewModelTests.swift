@@ -8,7 +8,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     lazy var viewModel = AudioPlaylistViewModel(configEntity: AudioPlayerConfigEntity(parentNode: MEGANode(), playerHandler: playerHandler),
                                                 router: router)
     
-    func testAudioPlayerActions() throws {
+    @MainActor func testAudioPlayerActions() throws {
         test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands: [.reloadTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, selectedIndexPaths: []),
                                                                               .title(title: "")])
         
@@ -34,7 +34,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .didDraggEnd, expectedCommands: [.reload(items: [track1])])
     }
     
-    func testRouterActions() {
+    @MainActor func testRouterActions() {
         test(viewModel: viewModel, action: .dismiss, expectedCommands: [])
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }

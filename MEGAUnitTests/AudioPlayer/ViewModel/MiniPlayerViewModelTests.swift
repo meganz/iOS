@@ -7,6 +7,7 @@ import XCTest
 
 final class MiniPlayerViewModelTests: XCTestCase {
     
+    @MainActor
     func testAudioPlayerActions() {
         let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT()
         
@@ -20,6 +21,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(mockPlayerHandler.removePlayerListener_calledTimes, 1)
     }
 
+    @MainActor
     func testDispatch_onViewDidLoadWhenPlayerAlreadyInitialized_configuresPlayerProperly() {
         let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT()
         var receivedCommands = [MiniPlayerViewModel.Command]()
@@ -35,6 +37,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(mockPlayerHandler.refreshCurrentItemState_calledTimes, 1)
     }
     
+    @MainActor
     func testDispatch_onViewDidLoadWhenPlayerShouldInitialized_preparePlayerOfflineDismissViewWhenInvalidOfflinePaths() {
         let (viewModel, mockRouter, _, _, _, _) = makeSUT(playerType: .offline, shouldInitializePlayer: true, relatedFileLinks: ["non-related-file-link"])
         var receivedCommands = [MiniPlayerViewModel.Command]()
@@ -96,7 +99,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             }
     }
     
-    func testDispatch_deinit_logoutFolderLink() {
+    @MainActor func testDispatch_deinit_logoutFolderLink() {
         let (viewModel, _, _, _, mockNodeInfouseCase, _) = makeSUT(playerType: .folderLink, isRouterFolderLinkPresenter: false)
         
         test(viewModel: viewModel, action: .deinit, expectedCommands: [])
@@ -104,6 +107,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(mockNodeInfouseCase.folderLinkLogout_callTimes, 1)
     }
     
+    @MainActor
     func testDispatch_showPlayerAllCases_removePlayerListener() {
         PlayerType.allCases.enumerated()
             .forEach { (index, playerType) in
@@ -115,7 +119,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             }
     }
     
-    func testDispatch_showPlayerWithDefaultPlayerType_showsFullScreenPlayer() {
+    @MainActor func testDispatch_showPlayerWithDefaultPlayerType_showsFullScreenPlayer() {
         let (viewModel, mockRouter, _, _, _, _) = makeSUT()
         
         test(viewModel: viewModel, action: .showPlayer(MockNode(handle: 1), nil), expectedCommands: [])
@@ -123,6 +127,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.showPlayer_calledTimes, 1)
     }
     
+    @MainActor
     func testDispatch_showPlayerWithNonDefaultPlayerType_showsFullScreenPlayer() {
         PlayerType.allCases.enumerated()
             .filter { $1 != .default }
@@ -135,7 +140,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             }
     }
     
-    func testDispatch_onClose_stopStreamignInfoServer() {
+    @MainActor func testDispatch_onClose_stopStreamignInfoServer() {
         let (viewModel, _, _, _, _, mockStreamingInfoUseCase) = makeSUT()
         
         test(viewModel: viewModel, action: .onClose, expectedCommands: [])
@@ -143,7 +148,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(mockStreamingInfoUseCase.stopServer_calledTimes, 1)
     }
     
-    func testDispatch_onClose_dismissView() {
+    @MainActor func testDispatch_onClose_dismissView() {
         let (viewModel, mockRouter, _, _, _, _) = makeSUT()
         
         test(viewModel: viewModel, action: .onClose, expectedCommands: [])
@@ -151,7 +156,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismiss_calledTimes, 1)
     }
     
-    func testDispatch_onCloseWithFolderLinkWhenFolderLinkAndPresenterIsNotFolderLink_logoutFolderLink() {
+    @MainActor func testDispatch_onCloseWithFolderLinkWhenFolderLinkAndPresenterIsNotFolderLink_logoutFolderLink() {
         let (viewModel, _, _, _, mockNodeInfoUseCase, _) = makeSUT(playerType: .folderLink, isRouterFolderLinkPresenter: false)
         
         test(viewModel: viewModel, action: .onClose, expectedCommands: [])

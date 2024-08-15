@@ -8,7 +8,7 @@ import XCTest
 
 class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
-    func testAction_onViewLoaded() {
+    @MainActor func testAction_onViewLoaded() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -41,7 +41,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
     }
     
-    func testAction_onViewLoaded_activeCall() {
+    @MainActor func testAction_onViewLoaded_activeCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity(clientSessions: [ChatSessionEntity(statusType: .inProgress)])
         let callUseCase = MockCallUseCase(call: call)
@@ -77,7 +77,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         }
     }
     
-    func testAction_onViewReady_localUserHasRaisedHand() {
+    @MainActor func testAction_onViewReady_localUserHasRaisedHand() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity(raiseHandsList: [100])
         let callUseCase = MockCallUseCase(call: call)
@@ -106,7 +106,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_onViewReady_localUserHasNotRaisedHand() {
+    @MainActor func testAction_onViewReady_localUserHasNotRaisedHand() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -135,7 +135,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_tapOnView() {
+    @MainActor func testAction_tapOnView() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -162,7 +162,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_tapOnLayoutButton() {
+    @MainActor func testAction_tapOnLayoutButton() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -190,7 +190,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_tapOnBackButton() {
+    @MainActor func testAction_tapOnBackButton() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -218,7 +218,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssert(remoteVideoUseCase.disableAllRemoteVideos_CalledTimes == 1)
     }
     
-    func testAction_orientationOrModeChange_isIPhoneLandscape_inSpeakerMode() {
+    @MainActor func testAction_orientationOrModeChange_isIPhoneLandscape_inSpeakerMode() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -251,7 +251,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_orientationOrModeChange_noIPhoneLandscape_inSpeakerMode() {
+    @MainActor func testAction_orientationOrModeChange_noIPhoneLandscape_inSpeakerMode() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -284,7 +284,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_orientationOrModeChange_noIPhoneLandscape_noSpeakerMode() {
+    @MainActor func testAction_orientationOrModeChange_noIPhoneLandscape_noSpeakerMode() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -317,7 +317,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_orientationOrModeChange_isIPhoneLandscape_noSpeakerMode() {
+    @MainActor func testAction_orientationOrModeChange_isIPhoneLandscape_noSpeakerMode() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -350,6 +350,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_singleParticipantsAdded() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -388,6 +389,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_TwoParticipantsAdded() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -426,6 +428,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_MultipleParticipantsAdded() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -464,6 +467,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_singleParticipantsRemoved() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -502,6 +506,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_TwoParticipantsRemoved() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -540,6 +545,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_MultipleParticipantsRemoved() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -578,6 +584,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_SingleParticipantsAddedAndRemovedAtTheSameTime() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -619,6 +626,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_TwoParticipantsAddedAndRemovedAtTheSameTime() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -660,6 +668,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_MultipleParticipantsAddedAndRemovedAtTheSameTime() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -1384,6 +1393,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     private func verifyParticipantsStatus(viewModel: MeetingParticipantsLayoutViewModel, actions: [CallViewAction], relaysCommand: MeetingParticipantsLayoutViewModel.Command) async {
         let nameExpectation = expectation(description: "Wait for names fetching task")
         let commandExpectation = expectation(description: "Relays command")

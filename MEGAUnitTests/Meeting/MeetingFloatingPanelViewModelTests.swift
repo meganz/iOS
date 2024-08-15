@@ -91,7 +91,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         return viewModel
     }
     
-    func testAction_onViewReady_isMyselfModerator_isGroupMeeting() {
+    @MainActor func testAction_onViewReady_isMyselfModerator_isGroupMeeting() {
         let viewModel = makeSUT()
         test(
             viewModel: viewModel,
@@ -111,7 +111,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
-    func testAction_onViewAppear_selectWaitingRoomList() {
+    @MainActor func testAction_onViewAppear_selectWaitingRoomList() {
         let viewModel = MeetingFloatingPanelViewModel.make(selectWaitingRoomList: true,
                                                            headerConfigFactory: headerConfigFactory)
         test(viewModel: viewModel,
@@ -121,7 +121,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_selectParticipantsInCall_isOneToOneCall_reloadViewDataForOneToOne() {
+    @MainActor func testAction_selectParticipantsInCall_isOneToOneCall_reloadViewDataForOneToOne() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
         
         let viewModel = MeetingFloatingPanelViewModel.make(chatRoom: chatRoom,
@@ -143,7 +143,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_selectParticipantsInCall_isGroupCallAndModerator_reloadViewDataForGroupCallModerator() {
+    @MainActor func testAction_selectParticipantsInCall_isGroupCallAndModerator_reloadViewDataForGroupCallModerator() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group, isOpenInviteEnabled: false)
         
         let viewModel = MeetingFloatingPanelViewModel.make(chatRoom: chatRoom,
@@ -155,7 +155,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_selectParticipantsInCall_isGroupCallAndNoModerator_reloadViewDataForGroupCallNoModerator() {
+    @MainActor func testAction_selectParticipantsInCall_isGroupCallAndNoModerator_reloadViewDataForGroupCallNoModerator() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: false)
         
         let viewModel = MeetingFloatingPanelViewModel.make(chatRoom: chatRoom,
@@ -167,7 +167,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_selectParticipantsInCall_isGroupCallAndOpenInvite_reloadViewDataForGroupCallEnabledOpenInvite() {
+    @MainActor func testAction_selectParticipantsInCall_isGroupCallAndOpenInvite_reloadViewDataForGroupCallEnabledOpenInvite() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: true)
         
         let viewModel = MeetingFloatingPanelViewModel.make(chatRoom: chatRoom,
@@ -179,7 +179,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_selectParticipantsNotInCall_isGroupCallAndModerator_reloadViewDataForGroupCallModerator() {
+    @MainActor func testAction_selectParticipantsNotInCall_isGroupCallAndModerator_reloadViewDataForGroupCallModerator() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group, isOpenInviteEnabled: false)
         
         let viewModel = MeetingFloatingPanelViewModel.make(chatRoom: chatRoom,
@@ -199,7 +199,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_selectParticipantsNotInCall_isGroupCallAndModerator_reloadViewDataForGroupCallNoModerator() {
+    @MainActor func testAction_selectParticipantsNotInCall_isGroupCallAndModerator_reloadViewDataForGroupCallNoModerator() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: false)
         
         let viewModel = MeetingFloatingPanelViewModel.make(chatRoom: chatRoom,
@@ -211,7 +211,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_selectParticipantsNotInCall_isGroupCallAndOpenInvite_reloadViewDataForGroupCallEnabledOpenInvite() {
+    @MainActor func testAction_selectParticipantsNotInCall_isGroupCallAndOpenInvite_reloadViewDataForGroupCallEnabledOpenInvite() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: true)
         
         let viewModel = MeetingFloatingPanelViewModel.make(chatRoom: chatRoom,
@@ -223,7 +223,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_selectParticipantsInWaitingRoom_isMeetingAndModerator_reloadViewDataForMeetingModerator() {
+    @MainActor func testAction_selectParticipantsInWaitingRoom_isMeetingAndModerator_reloadViewDataForMeetingModerator() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting, isWaitingRoomEnabled: true)
         
         let viewModel = MeetingFloatingPanelViewModel.make(chatRoom: chatRoom,
@@ -246,7 +246,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_selectParticipantsInWaitingRoom_isMeetingAndNonModerator_reloadViewDataForMeetingNoModerator() {
+    @MainActor func testAction_selectParticipantsInWaitingRoom_isMeetingAndNonModerator_reloadViewDataForMeetingNoModerator() {
         let chatRoom = ChatRoomEntity(
             ownPrivilege: .standard,
             chatType: .meeting,
@@ -272,7 +272,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_onViewReady_isMyselfModerator_isOneToOneMeeting() {
+    @MainActor func testAction_onViewReady_isMyselfModerator_isOneToOneMeeting() {
         let canInviteParticipants = false // one or one calls do not allow inviting
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
         let callUseCase = MockCallUseCase(call: CallEntity())
@@ -309,7 +309,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
-    func testAction_onViewReady_isMyselfParticipant_isGroupMeeting() {
+    @MainActor func testAction_onViewReady_isMyselfParticipant_isGroupMeeting() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let callUseCase = MockCallUseCase(call: CallEntity())
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
@@ -329,7 +329,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
-    func testAction_onViewReady_isMyselfParticipant_isOneToOneMeeting() {
+    @MainActor func testAction_onViewReady_isMyselfParticipant_isOneToOneMeeting() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .oneToOne)
         let callUseCase = MockCallUseCase(call: CallEntity())
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
@@ -348,7 +348,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
-    func testAction_onViewReady_isMyselfParticipant_allowNonHostToAddParticipantsEnabled() {
+    @MainActor func testAction_onViewReady_isMyselfParticipant_allowNonHostToAddParticipantsEnabled() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting, isOpenInviteEnabled: true)
         let callUseCase = MockCallUseCase(call: CallEntity())
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
@@ -368,7 +368,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
-    func testAction_shareLink_Success() async throws {
+
+    @MainActor func testAction_shareLink_Success() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let call = CallEntity()
         let containerRouter = MockMeetingContainerRouter()
@@ -389,7 +390,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(containerRouter.shareLink_calledTimes == 1)
     }
     
-    func testAction_shareLink_Failure() {
+    @MainActor func testAction_shareLink_Failure() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let callUseCase = MockCallUseCase(call: CallEntity())
         let containerRouter = MockMeetingContainerRouter()
@@ -405,7 +406,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(containerRouter.shareLink_calledTimes == 0)
     }
     
-    func testAction_inviteParticipants() {
+    @MainActor func testAction_inviteParticipants() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
@@ -416,7 +417,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
-    func testAction_inviteParticipants_showAllContactsAlreadyAddedAlert() {
+    @MainActor func testAction_inviteParticipants_showAllContactsAlreadyAddedAlert() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
@@ -428,7 +429,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
     }
     
-    func testAction_inviteParticipants_showNoAvailableContactsAlert() {
+    @MainActor func testAction_inviteParticipants_showNoAvailableContactsAlert() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .blocked)
@@ -439,7 +440,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.showNoAvailableContactsAlert_CalledTimes == 1)
     }
     
-    func testAction_inviteParticipants_singleContactBlocked() {
+    @MainActor func testAction_inviteParticipants_singleContactBlocked() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .blocked)
@@ -450,7 +451,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.inviteParticipants_calledTimes == 0)
     }
     
-    func testAction_inviteParticipants_singleContactVisible() {
+    @MainActor func testAction_inviteParticipants_singleContactVisible() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
@@ -461,6 +462,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
+    @MainActor
     func testAction_inviteParticipants_singleAddedContactAndABlockedContact() {
         let router = MockMeetingFloatingPanelRouter()
         let mockAccountUseCase = MockAccountUseCase(contacts: [
@@ -493,7 +495,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
-    func testAction_contextMenuTap() {
+    @MainActor func testAction_contextMenuTap() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let callUseCase = MockCallUseCase(call: CallEntity())
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
@@ -509,7 +511,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.showContextMenu_calledTimes == 1)
     }
     
-    func testAction_ChangeModerator() {
+    @MainActor func testAction_ChangeModerator() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -634,7 +636,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
-    func testAction_seeMoreParticipantsInWaitingRoomTapped_navigateToView() {
+    @MainActor func testAction_seeMoreParticipantsInWaitingRoomTapped_navigateToView() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .oneToOne)
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
@@ -653,7 +655,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.showWaitingRoomParticipantsList_calledTimes == 1)
     }
     
-    func testAction_callAbsentParticipant_callIndividualParticipant() {
+    @MainActor func testAction_callAbsentParticipant_callIndividualParticipant() {
         let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, chatType: .oneToOne)
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
@@ -674,7 +676,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(participant.absentParticipantState == .calling)
     }
     
-    func testAction_AllowUsersJoinCall_usersJoin() {
+    @MainActor func testAction_AllowUsersJoinCall_usersJoin() {
         let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
