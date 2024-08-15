@@ -5,40 +5,50 @@ import XCTest
 
 final class HideFilesAndFoldersViewModelTests: XCTestCase {
     
-    func testHideNodes_proLevels_shouldShowOnboardingOnlyForFreeAccount() async {
-        let expectations = [(validAccount: false, onboardingCalled: 1),
-                            (validAccount: true, onboardingCalled: 0)]
+    @MainActor
+    func testHide_invalidProProOrBussinessAccount_shouldShowSeeUpgradePlansOnboarding() async {
+        let router = MockHideFilesAndFoldersRouter()
+        let accountUseCase = MockAccountUseCase(
+            hasValidProOrUnexpiredBusinessAccount: false)
         
-        let results = await withTaskGroup(of: Bool.self) { group in
-            expectations.forEach { expectation in
-                group.addTask {
-                    let router = MockHideFilesAndFoldersRouter()
-                    let accountUseCase = MockAccountUseCase(
-                        hasValidProOrUnexpiredBusinessAccount: expectation.validAccount)
-                    
-                    let sut = HideFilesAndFoldersViewModel(nodes: [],
-                                                           router: router,
-                                                           accountUseCase: accountUseCase,
-                                                           nodeActionUseCase: MockNodeActionUseCase())
-                    
-                    await sut.hideNodes()
-                    
-                    return router.showHiddenFilesAndFoldersOnboardingCalled == expectation.onboardingCalled
-                }
-            }
-            
-            return await group.reduce(into: [Bool](), {
-                $0.append($1)
-            })
-        }
+        let sut = HideFilesAndFoldersViewModel(nodes: [NodeEntity(handle: 1)],
+                                               router: router,
+                                               accountUseCase: accountUseCase,
+                                               nodeActionUseCase: MockNodeActionUseCase(),
+                                               contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase())
         
-        XCTAssertTrue(results.allSatisfy { $0 })
+        await sut.hide()
+        
+        XCTAssertEqual(router.showSeeUpgradePlansOnboardingCalled, 1)
     }
     
     @MainActor
-    func testHideNodes_nonFreeAccount_shouldHideNodesAndShowSuccessMessageWithCount() async throws {
+    func testHide_validAccountNotOnboardedBefore_shouldShowFirstTimeOnboardingAndHandleOnboardCorrectly() async throws {
         let router = MockHideFilesAndFoldersRouter()
         let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+        let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
+            sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
+        let node = NodeEntity(handle: 1)
+        let nodeActionUseCase = MockNodeActionUseCase(
+            hideUnhideResult: [node.handle: .success(node)])
+        
+        let sut = makeSUT(nodes: [node],
+                          router: router,
+                          accountUseCase: accountUseCase,
+                          nodeActionUseCase: nodeActionUseCase,
+                          contentConsumptionUserAttributeUseCase: contentConsumptionUseCase)
+        
+        await sut.hide()
+        
+        XCTAssertEqual(router.showShowFirstTimeOnboardingCalled, 1)
+    }
+    
+    @MainActor
+    func testHideNodes_validAccountAndUserAlreadyOnboarded_shouldHideNodesAndShowSuccessMessageWithCount() async throws {
+        let router = MockHideFilesAndFoldersRouter()
+        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+        let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
+            sensitiveNodesUserAttributeEntity: .init(onboarded: true, showHiddenNodes: false))
         let firstSuccessNode = NodeEntity(handle: 5)
         let secondSuccessNode = NodeEntity(handle: 34)
         let failedNode = NodeEntity(handle: 76)
@@ -50,41 +60,28 @@ final class HideFilesAndFoldersViewModelTests: XCTestCase {
         let sut = makeSUT(nodes: [firstSuccessNode, secondSuccessNode, failedNode],
                           router: router,
                           accountUseCase: accountUseCase,
-                          nodeActionUseCase: nodeActionUseCase)
+                          nodeActionUseCase: nodeActionUseCase,
+                          contentConsumptionUserAttributeUseCase: contentConsumptionUseCase)
         
-        await sut.hideNodes()
+        await sut.hide()
         
         XCTAssertEqual(router.showItemsHiddenSuccessfullyCounts.count, 1)
         XCTAssertEqual(try XCTUnwrap(router.showItemsHiddenSuccessfullyCounts.first), 2)
     }
     
+    @MainActor
     private func makeSUT(
         nodes: [NodeEntity] = [],
         router: some HideFilesAndFoldersRouting = MockHideFilesAndFoldersRouter(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
-        nodeActionUseCase: some NodeActionUseCaseProtocol = MockNodeActionUseCase()
+        nodeActionUseCase: some NodeActionUseCaseProtocol = MockNodeActionUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase()
     ) -> HideFilesAndFoldersViewModel {
-        HideFilesAndFoldersViewModel(nodes: nodes,
-                                     router: router,
-                                     accountUseCase: accountUseCase,
-                                     nodeActionUseCase: nodeActionUseCase)
-    }
-}
-
-private class MockHideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
-    private(set) var nodes: [NodeEntity]?
-    private(set) var showHiddenFilesAndFoldersOnboardingCalled = 0
-    private(set) var showItemsHiddenSuccessfullyCounts = [Int]()
-    
-    func hideNodes(_ nodes: [NodeEntity]) {
-        self.nodes = nodes
-    }
-    
-    func showHiddenFilesAndFoldersOnboarding() {
-        showHiddenFilesAndFoldersOnboardingCalled += 1
-    }
-    
-    func showItemsHiddenSuccessfully(count: Int) {
-        showItemsHiddenSuccessfullyCounts.append(count)
+        HideFilesAndFoldersViewModel(
+            nodes: nodes,
+            router: router,
+            accountUseCase: accountUseCase,
+            nodeActionUseCase: nodeActionUseCase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
     }
 }

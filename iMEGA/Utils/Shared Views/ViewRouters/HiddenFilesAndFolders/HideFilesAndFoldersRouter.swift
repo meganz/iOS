@@ -2,8 +2,17 @@ import MEGADomain
 import MEGASDKRepo
 import SwiftUI
 
-struct HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
+protocol HideFilesAndFoldersRouting {
+    func hideNodes(_ nodes: [NodeEntity])
+    func showSeeUpgradePlansOnboarding()
+    func showFirstTimeOnboarding(nodes: [NodeEntity])
+    func showItemsHiddenSuccessfully(count: Int)
+    func dismissOnboarding(animated: Bool, completion: (() -> Void)?)
+}
+
+final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     private weak var presenter: UIViewController?
+    private weak var onboardingViewController: UIViewController?
     
     init(presenter: UIViewController?) {
         self.presenter = presenter
@@ -12,33 +21,62 @@ struct HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     func hideNodes(_ nodes: [NodeEntity]) {
         Task { @MainActor in
             let viewModel = makeViewModel(nodes: nodes)
-            await viewModel.hideNodes()
+            await viewModel.hide()
         }
     }
     
-    func showHiddenFilesAndFoldersOnboarding() {
-        presenter?.present(makeOnboardingViewController(),
-                           animated: true)
+    @MainActor
+    func showSeeUpgradePlansOnboarding() {
+        showHiddenFilesAndFoldersOnboarding(
+            primaryButtonViewModel: HiddenFilesSeeUpgradePlansOnboardingButtonViewModel(
+                hideFilesAndFoldersRouter: self,
+                upgradeAccountRouter: UpgradeAccountRouter())
+        )
+    }
+    
+    @MainActor
+    func showFirstTimeOnboarding(nodes: [NodeEntity]) {
+        showHiddenFilesAndFoldersOnboarding(
+            primaryButtonViewModel: FirstTimeOnboardingPrimaryButtonViewModel(
+                nodes: nodes,
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hideFilesAndFoldersRouter: self)
+        )
     }
     
     func showItemsHiddenSuccessfully(count: Int) {
         // This will be done in future ticket
     }
     
-    private func makeOnboardingViewController() -> UIViewController {
-        let onboardingView = HiddenFilesFoldersOnboardingView {
-            presenter?.navigationController?.presentedViewController?.dismiss(animated: true, completion: {
-                UpgradeAccountRouter().presentUpgradeTVC()
-            })
-        }
-        return UIHostingController(rootView: onboardingView)
+    @MainActor
+    func dismissOnboarding(animated: Bool, completion: (() -> Void)?) {
+        onboardingViewController?.dismiss(animated: true, completion: completion)
     }
     
+    @MainActor
+    private func showHiddenFilesAndFoldersOnboarding(
+        primaryButtonViewModel: some HiddenFilesOnboardingPrimaryButtonViewModelProtocol
+    ) {
+        let onboardingViewController = UIHostingController(rootView: HiddenFilesFoldersOnboardingView(
+            primaryButton: HiddenFilesOnboardingButtonView(
+                viewModel: primaryButtonViewModel)
+        ))
+        self.onboardingViewController = onboardingViewController
+        presenter?.present(onboardingViewController,
+                           animated: true)
+    }
+    
+    @MainActor
     private func makeViewModel(nodes: [NodeEntity]) -> HideFilesAndFoldersViewModel {
         HideFilesAndFoldersViewModel(
             nodes: nodes,
             router: self,
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            nodeActionUseCase: NodeActionUseCase(repo: NodeActionRepository.newRepo))
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo),
+            nodeActionUseCase: NodeActionUseCase(
+                repo: NodeActionRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo))
     }
 }
