@@ -429,6 +429,12 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
     
+    func tests_didTapHideNodes_trackAnalyticsEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapHideNodes,
+            expectedEvent: CloudDriveHideNodeMenuItemEvent())
+    }
+    
     func testNodesForDisplayMode_cloudDrive_shouldUseCorrectFilterForNonRecursiveSearch() async {
         let parentNode = MockNode(handle: 89)
         let expectedNodes = [MockNode(handle: 1), MockNode(handle: 3)]
@@ -577,7 +583,9 @@ class CloudDriveViewModelTests: XCTestCase {
     
     private func trackAnalyticsEventTest(
         action: CloudDriveAction,
-        expectedEvent: EventIdentifier
+        expectedEvent: EventIdentifier,
+        file: StaticString = #file, 
+        line: UInt = #line
     ) {
         let mockTracker = MockTracker()
         let sut = makeSUT(tracker: mockTracker)
@@ -586,7 +594,9 @@ class CloudDriveViewModelTests: XCTestCase {
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
-            with: [expectedEvent]
+            with: [expectedEvent],
+            file: file,
+            line: line
         )
     }
     

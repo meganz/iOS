@@ -28,6 +28,17 @@ final class PhotoBrowserViewModelTests: XCTestCase {
             with: [PhotoPreviewSaveToDeviceMenuToolbarEvent()])
     }
     
+    func testTrackHideNodeMenuEvent_called_shouldTrackCorrectEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        
+        sut.trackHideNodeMenuEvent()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [ImagePreviewHideNodeMenuToolBarEvent()])
+    }
+    
     private func makeSUT(
         tracker: some AnalyticsTracking = MockTracker()
     ) -> PhotoBrowserViewModel {

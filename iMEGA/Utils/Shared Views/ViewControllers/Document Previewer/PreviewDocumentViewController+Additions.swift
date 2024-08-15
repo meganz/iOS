@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -73,6 +74,7 @@ extension PreviewDocumentViewController {
     }
     
     @objc func hideNode(_ node: MEGANode) {
+        DIContainer.tracker.trackAnalyticsEvent(with: DocumentPreviewHideNodeMenuItemEvent())
         HideFilesAndFoldersRouter(presenter: self)
             .hideNodes([node.toNodeEntity()])
     }

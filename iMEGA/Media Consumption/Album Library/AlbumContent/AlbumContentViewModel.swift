@@ -16,6 +16,7 @@ enum AlbumContentAction: ActionType {
     case configureContextMenu(isSelectHidden: Bool)
     case shareLink
     case removeLink
+    case hideNodes
 }
 
 final class AlbumContentViewModel: ViewModelType {
@@ -98,7 +99,7 @@ final class AlbumContentViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             tracker.trackAnalyticsEvent(with: AlbumContentScreenEvent())
-            loadingTask = Task {
+            loadingTask = Task { @MainActor in
                 await addNewAlbumPhotosIfNeeded()
                 await loadNodes()
             }
@@ -109,13 +110,11 @@ final class AlbumContentViewModel: ViewModelType {
         case .showAlbumCoverPicker:
             showAlbumCoverPicker()
         case .deletePhotos(let photos):
-            deletePhotosTask = Task {
+            deletePhotosTask = Task { @MainActor in
                 await deletePhotos(photos)
             }
         case .deleteAlbum:
-            deleteAlbumTask = Task {
-                await deleteAlbum()
-            }
+            deleteAlbum()
         case .configureContextMenu(let isSelectHidden):
             isPhotoSelectionHidden = isSelectHidden
             invokeCommand?(.rebuildContextMenu)
@@ -124,6 +123,8 @@ final class AlbumContentViewModel: ViewModelType {
             router.showShareLink(album: album)
         case .removeLink:
             removeSharedLink()
+        case .hideNodes:
+            tracker.trackAnalyticsEvent(with: AlbumContentHideNodeMenuItemEvent())
         }
     }
     
@@ -176,12 +177,12 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     func renameAlbum(with name: String) {
-        Task { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self else { return }
             
             do {
-                let newName = try await self.albumModificationUseCase.rename(album: album.id, with: name)
-                await self.onAlbumRenameSuccess(with: newName)
+                let newName = try await albumModificationUseCase.rename(album: album.id, with: name)
+                onAlbumRenameSuccess(with: newName)
             } catch {
                 MEGALogError("Error renaming user album: \(error.localizedDescription)")
             }
@@ -251,7 +252,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func addAdditionalPhotos(_ photos: [NodeEntity]) {
-        addAdditionalPhotosTask = Task {
+        addAdditionalPhotosTask = Task { @MainActor in
             await addPhotos(photos)
         }
     }
@@ -288,7 +289,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func reloadAlbum() {
-        loadingTask = Task {
+        loadingTask = Task { @MainActor in
             await loadNodes()
         }
     }
@@ -380,9 +381,8 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
-    @MainActor
-    private func deleteAlbum() async {
-        deleteAlbumTask = Task {
+    private func deleteAlbum() {
+        deleteAlbumTask = Task { @MainActor in
             let albumIds = await albumModificationUseCase.delete(albums: [album.id])
             
             if albumIds.first == album.id {

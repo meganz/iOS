@@ -750,6 +750,24 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(config.sharedLinkStatus, .exported(isExported))
     }
     
+    func testDispatchHideNodes_shouldTrackActionEvent() {
+        let tracker = MockTracker()
+        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
+                             NodeEntity(name: "sample2.gif", handle: 2)]
+        let sut = makeAlbumContentViewModel(
+            album: albumEntity,
+            tracker: tracker)
+        
+        test(viewModel: sut, action: .hideNodes, expectedCommands: [])
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                AlbumContentHideNodeMenuItemEvent()
+            ]
+        )
+    }
+    
     // MARK: - Helpers
     
     private func makeAlbumContentViewModel(

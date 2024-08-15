@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -120,8 +121,16 @@ struct CloudDriveViewControllerFactory {
         
         let nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
             viewController: navController,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController)
-        )
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController),
+            nodeActionListener: { action in
+                switch action {
+                case .hide:
+                    tracker.trackAnalyticsEvent(with: CloudDriveHideNodeMenuItemEvent())
+                default:
+                    break
+                }
+            })
+        
         let router = HomeSearchResultRouter(
             navigationController: navController,
             nodeActionViewControllerDelegate: nodeActionViewControllerDelegate,

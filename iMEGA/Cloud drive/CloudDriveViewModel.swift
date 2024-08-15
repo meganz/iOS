@@ -15,6 +15,7 @@ enum CloudDriveAction: ActionType {
     case didTapNewFolder
     case didTapNewTextFile
     case didOpenAddMenu
+    case didTapHideNodes
 }
 
 @objc final class CloudDriveViewModel: NSObject, ViewModelType {
@@ -187,6 +188,8 @@ enum CloudDriveAction: ActionType {
             trackNewTextFileEvent()
         case .didOpenAddMenu:
             trackOpenAddMenuEvent()
+        case .didTapHideNodes:
+            trackHideNodeMenuEvent()
         }
     }
     
@@ -208,6 +211,10 @@ enum CloudDriveAction: ActionType {
     
     private func trackOpenAddMenuEvent() {
         tracker.trackAnalyticsEvent(with: CloudDriveAddMenuEvent())
+    }
+    
+    private func trackHideNodeMenuEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveHideNodeMenuItemEvent())
     }
     
     private func update(sortType: SortOrderType) {

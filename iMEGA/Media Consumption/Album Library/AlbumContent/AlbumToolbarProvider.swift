@@ -324,8 +324,11 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
     }
     
     private func hide(nodes: [NodeEntity]) {
+        viewModel.dispatch(.hideNodes)
+        
         HideFilesAndFoldersRouter(presenter: self)
             .hideNodes(nodes)
+        
         endEditingMode()
     }
     

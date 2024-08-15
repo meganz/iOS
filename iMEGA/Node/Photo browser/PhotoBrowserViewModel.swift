@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAPresentation
 
 @objc final class PhotoBrowserViewModel: NSObject {
@@ -15,5 +16,9 @@ import MEGAPresentation
     @objc func trackAnalyticsSaveToDeviceMenuToolbarEvent() {
         tracker.trackAnalyticsEvent(
             with: DIContainer.photoPreviewSaveToDeviceMenuToolbarEvent)
+    }
+    
+    @objc func trackHideNodeMenuEvent() {
+        tracker.trackAnalyticsEvent(with: ImagePreviewHideNodeMenuToolBarEvent())
     }
 }
