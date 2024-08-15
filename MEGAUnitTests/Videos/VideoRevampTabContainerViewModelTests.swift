@@ -42,13 +42,13 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     }
     
     func testDispatch_navigationBarActionDidSelectSortMenuAction_saveSortOrderPreferenceForVideoPlaylists() {
-        let selectedSortType = anySortOrderType()
+        let selectedSortType: SortOrderType = .newest
         let (sut, sortOrderPreferenceUseCase, _) = makeSUT()
         sut.syncModel.currentTab = .playlist
         
         sut.dispatch(.navigationBarAction(.didSelectSortMenuAction(sortType: selectedSortType)))
         
-        XCTAssertEqual(sortOrderPreferenceUseCase.messages, [ .save(sortOrder: selectedSortType.toSortOrderEntity(), for: .homeVideoPlaylists) ])
+        XCTAssertEqual(sortOrderPreferenceUseCase.messages, [ .save(sortOrder: selectedSortType.toVideoPlaylistSortOrderEntity(), for: .homeVideoPlaylists) ])
     }
     
     // MARK: - Dispatch.navigationBarAction.didReceivedDisplayMenuAction

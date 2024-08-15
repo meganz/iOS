@@ -85,7 +85,8 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             }
         case .navigationBarAction(.didSelectSortMenuAction(let sortOrderType)):
             let keyEntity: SortOrderPreferenceKeyEntity = syncModel.currentTab == .all ? .homeVideos : .homeVideoPlaylists
-            sortOrderPreferenceUseCase.save(sortOrder: sortOrderType.toSortOrderEntity(), for: keyEntity)
+            let sortOrderEntity = sortOrderEntity(from: sortOrderType, for: syncModel.currentTab)
+            sortOrderPreferenceUseCase.save(sortOrder: sortOrderEntity, for: keyEntity)
         case .navigationBarAction(.didTapSelectAll):
             syncModel.isAllSelected = !syncModel.isAllSelected
         case .navigationBarAction(.didTapCancel):
@@ -103,6 +104,15 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
         }
     }
     
+    private func sortOrderEntity(from sortOrderType: SortOrderType, for currentTab: VideosTab) -> SortOrderEntity {
+        switch syncModel.currentTab {
+        case .all:
+            sortOrderType.toSortOrderEntity()
+        case .playlist:
+            sortOrderType.toVideoPlaylistSortOrderEntity()
+        }
+    }
+    
     private func loadSortOrderType() {
         syncModel.videoRevampSortOrderType = sortOrderPreferenceUseCase
             .sortOrder(for: .homeVideos)
@@ -113,7 +123,6 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     
     private func monitorSortOrderSubscription() {
         sortOrderPreferenceUseCase.monitorSortOrder(for: .homeVideos)
-            .map { $0.toSortOrderType().toSortOrderEntity() }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
@@ -123,7 +132,7 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             .store(in: &subscriptions)
         
         sortOrderPreferenceUseCase.monitorSortOrder(for: .homeVideoPlaylists)
-            .map { $0.toSortOrderType().toSortOrderEntity() }
+            .map { $0.toVideoPlaylistSortOrderEntity() }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
