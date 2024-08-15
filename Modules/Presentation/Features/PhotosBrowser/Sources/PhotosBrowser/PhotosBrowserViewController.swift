@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 import UIKit
@@ -31,8 +32,6 @@ public final class PhotosBrowserViewController: UIViewController {
             self?.executeCommand(command)
         }
         
-        viewModel.dispatch(.buildNavigationBar)
-        viewModel.dispatch(.buildBottomToolBar)
         viewModel.dispatch(.onViewReady)
     }
     
@@ -40,17 +39,15 @@ public final class PhotosBrowserViewController: UIViewController {
     
     private func executeCommand(_ command: PhotosBrowserViewModel.Command) {
         switch command {
-        case .buildBottomToolBar:
-            buildBottomToolBar()
-        case .buildNavigationBar:
-            buildNavigationBar()
         case .onViewReady:
-            break
+            buildNavigationBar()
+            buildBottomToolBar()
         }
     }
     
     private func buildBottomToolBar() {
         toolbar = UIToolbar()
+        toolbar.backgroundColor = TokenColors.Background.surface1
         view.addSubview(toolbar)
         
         toolbar.translatesAutoresizingMaskIntoConstraints = false
@@ -61,11 +58,12 @@ public final class PhotosBrowserViewController: UIViewController {
         ])
         
         let config = ToolbarConfigurationFactory.configuration(on: viewModel.config.displayMode)
-        config.configure(toolbar: toolbar, with: viewModel.config.toolbarImages, in: self)
+        config.configure(toolbar: toolbar, in: self)
     }
     
     private func buildNavigationBar() {
         navigationBar = UINavigationBar()
+        navigationBar.backgroundColor = TokenColors.Background.surface1
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(navigationBar)
         

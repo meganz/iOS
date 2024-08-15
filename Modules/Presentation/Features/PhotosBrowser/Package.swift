@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../MEGAPresentation"),
+        .package(path: "../../../Presentation/MEGAAssets"),
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
@@ -25,6 +26,7 @@ let package = Package(
         .target(
             name: "PhotosBrowser",
             dependencies: ["MEGADomain",
+                           "MEGAAssets",
                            "MEGAPresentation",
                            "MEGASwiftUI",
                            "MEGADesignToken"],
@@ -33,6 +35,7 @@ let package = Package(
             name: "PhotosBrowserTests",
             dependencies: ["PhotosBrowser",
                            "MEGAPresentation",
+                           "MEGAAssets",
                            "MEGATest",
                            .product(name: "MEGAPresentationMock", package: "MEGAPresentation")],
             swiftSettings: settings)

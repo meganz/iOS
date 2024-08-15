@@ -6,8 +6,7 @@ extension RecentsViewController {
         guard let node = nodes.first else { return nil }
         
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .photosBrowser) {
-            let images: [UIImage] = [UIImage.thumbnailsThin, UIImage(systemName: "play.rectangle"), UIImage.export].compactMap { $0 }
-            let config = PhotosBrowserConfiguration(displayMode: .recents, toolbarImages: images)
+            let config = PhotosBrowserConfiguration(displayMode: .recents)
             let photoBrowserViewModel = PhotosBrowserViewModel(config: config)
             let photosBrowserViewController = PhotosBrowserViewController(viewModel: photoBrowserViewModel)
             

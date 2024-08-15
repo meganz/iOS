@@ -2,8 +2,6 @@ import Foundation
 import MEGAPresentation
 
 public enum PhotosBrowserAction: ActionType {
-    case buildNavigationBar
-    case buildBottomToolBar
     case onViewReady
 }
 
@@ -15,8 +13,6 @@ public final class PhotosBrowserViewModel: ViewModelType {
     }
     
     public enum Command: CommandType, Equatable {
-        case buildBottomToolBar
-        case buildNavigationBar
         case onViewReady
     }
     
@@ -24,10 +20,6 @@ public final class PhotosBrowserViewModel: ViewModelType {
     
     public func dispatch(_ action: PhotosBrowserAction) {
         switch action {
-        case .buildNavigationBar:
-            invokeCommand?(.buildNavigationBar)
-        case .buildBottomToolBar:
-            invokeCommand?(.buildBottomToolBar)
         case .onViewReady:
             invokeCommand?(.onViewReady)
         }

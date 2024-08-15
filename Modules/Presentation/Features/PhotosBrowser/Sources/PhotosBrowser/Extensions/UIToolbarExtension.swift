@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIToolbar {
-    func configure(with images: [UIImage], actions: [UIAction], target: PhotosBrowserViewController) {
+    func configure(with images: [UIImage], actions: [UIAction]) {
         var barButtonItems: [UIBarButtonItem] = []
         
         for (index, image) in images.enumerated() {
