@@ -101,8 +101,8 @@ extension ContactDetailsViewController {
         UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.mnz_red(for: traitCollection)
     }
     
-    @objc var primaryTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
+    @objc var primaryIconColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary : .label
     }
 }
 

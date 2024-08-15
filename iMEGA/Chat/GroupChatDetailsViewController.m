@@ -527,9 +527,9 @@
             
         case GroupChatDetailsSectionArchiveChat:
             cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
-            cell.leftImageView.tintColor = self.chatRoom.isArchived ? [self iconRedColor] : [self iconPrimaryColor];
+            cell.leftImageView.tintColor = [self iconPrimaryColor];
             cell.nameLabel.text = self.chatRoom.isArchived ? LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : LocalizedString(@"archiveChat", @"Title of button to archive chats.");
-            [cell setDestructive:self.chatRoom.isArchived];
+            [cell setDestructive:NO];
             break;
             
         case GroupChatDetailsSectionLeaveGroup: {
