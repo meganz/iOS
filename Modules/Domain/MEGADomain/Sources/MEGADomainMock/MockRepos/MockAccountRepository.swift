@@ -25,6 +25,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let _isSmsAllowed: Bool
     private let _isAchievementsEnabled: Bool
     private let _plans: [PlanEntity]
+    private let _currentProPlan: AccountPlanEntity?
+    private let _currentSubscription: AccountSubscriptionEntity?
 
     // MARK: - Result Handlers
     private let getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity>
@@ -89,7 +91,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         rootStorage: Int64 = 0,
         rubbishBinStorage: Int64 = 0,
         incomingSharesStorage: Int64 = 0,
-        backupStorage: Int64 = 0
+        backupStorage: Int64 = 0,
+        currentProPlan: AccountPlanEntity? = nil,
+        currentSubscription: AccountSubscriptionEntity? = nil
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -102,6 +106,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _isBilledProPlan = isBilledProPlan
         _isAchievementsEnabled = isAchievementsEnabled
         _plans = plans
+        _currentProPlan = currentProPlan
+        _currentSubscription = currentSubscription
         _accountCreationDate = accountCreationDate
         _isSmsAllowed = isSmsAllowed
         _contacts = contacts
@@ -170,6 +176,14 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public func isBilledProPlan() -> Bool {
         _isBilledProPlan
+    }
+    
+    public var currentProPlan: AccountPlanEntity? {
+        _currentProPlan
+    }
+    
+    public func currentSubscription() -> AccountSubscriptionEntity? {
+        _currentSubscription
     }
     
     public var accountCreationDate: Date? {

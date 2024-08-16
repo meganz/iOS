@@ -28,7 +28,9 @@ final class AccountUseCaseTests: XCTestCase {
         bandwidthOverquotaDelay: Int64 = 0,
         isExpiredAccount: Bool = false,
         isInGracePeriod: Bool = false,
-        accountType: AccountTypeEntity = .free
+        accountType: AccountTypeEntity = .free,
+        currentProPlan: AccountPlanEntity? = nil,
+        currentSubscription: AccountSubscriptionEntity? = nil
     ) -> AccountUseCase<MockAccountRepository> {
         let repository = MockAccountRepository(
             currentUser: currentUser,
@@ -53,7 +55,9 @@ final class AccountUseCaseTests: XCTestCase {
             multiFactorAuthCheckResult: multiFactorAuthCheckResult,
             isUpgradeSecuritySuccess: isUpgradeSecuritySuccess,
             bandwidthOverquotaDelay: bandwidthOverquotaDelay,
-            accountType: accountType
+            accountType: accountType,
+            currentProPlan: currentProPlan,
+            currentSubscription: currentSubscription
         )
         return AccountUseCase(repository: repository)
     }
@@ -383,6 +387,31 @@ final class AccountUseCaseTests: XCTestCase {
 
         let result = await sut.currentAccountPlan()
         XCTAssertNil(result, "Expected to find no plan for type .proI but got a plan.")
+    }
+    
+    func testCurrentProPlan_noExistingProPlan_shouldReturnNil() {
+        let sut = makeSUT(currentProPlan: nil)
+        
+        XCTAssertNil(sut.currentProPlan)
+    }
+    
+    func testCurrentProPlan_hasExistingProPlan_shouldReturnProPlan() {
+        let expectedProPlan = AccountPlanEntity(isProPlan: true, subscriptionId: "123ABC")
+        let sut = makeSUT(currentProPlan: expectedProPlan)
+        
+        XCTAssertEqual(sut.currentProPlan, expectedProPlan)
+    }
+    
+    func testCurrentSubscription_noExistingSubscription_shouldReturnNil() {
+        let sut = makeSUT(currentSubscription: nil)
+        XCTAssertNil(sut.currentSubscription())
+    }
+    
+    func testCurrentSubscription_hasExistingSubscription_shouldReturnNil() {
+        let expectedSubscription = AccountSubscriptionEntity(id: "123ABC")
+        let sut = makeSUT(currentSubscription: expectedSubscription)
+        
+        XCTAssertEqual(sut.currentSubscription(), expectedSubscription)
     }
 }
 

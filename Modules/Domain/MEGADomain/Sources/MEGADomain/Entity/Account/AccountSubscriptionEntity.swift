@@ -28,3 +28,9 @@ public struct AccountSubscriptionEntity: Sendable {
        self.features = features
    }
 }
+
+extension AccountSubscriptionEntity: Equatable {
+    public static func == (lhs: AccountSubscriptionEntity, rhs: AccountSubscriptionEntity) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
