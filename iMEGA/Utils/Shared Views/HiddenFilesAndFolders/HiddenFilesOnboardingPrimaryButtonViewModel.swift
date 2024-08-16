@@ -1,5 +1,7 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 
 protocol HiddenFilesOnboardingPrimaryButtonViewModelProtocol {
     var buttonTitle: String { get }
@@ -11,8 +13,10 @@ struct HiddenFilesSeeUpgradePlansOnboardingButtonViewModel: HiddenFilesOnboardin
     let buttonAction: (@MainActor () async -> Void)
     
     init(hideFilesAndFoldersRouter: some HideFilesAndFoldersRouting,
-         upgradeAccountRouter: some UpgradeAccountRouting) {
+         upgradeAccountRouter: some UpgradeAccountRouting,
+         tracker: some AnalyticsTracking) {
         buttonAction = {
+            tracker.trackAnalyticsEvent(with: HiddenNodeUpgradeUpgradeButtonPressedEvent())
             hideFilesAndFoldersRouter.dismissOnboarding(animated: true, completion: {
                 upgradeAccountRouter.presentUpgradeTVC()
             })
@@ -29,17 +33,21 @@ struct FirstTimeOnboardingPrimaryButtonViewModel: HiddenFilesOnboardingPrimaryBu
     private let nodes: [NodeEntity]
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let hideFilesAndFoldersRouter: any HideFilesAndFoldersRouting
+    private let tracker: any AnalyticsTracking
     
     init(nodes: [NodeEntity],
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-         hideFilesAndFoldersRouter: some HideFilesAndFoldersRouting) {
+         hideFilesAndFoldersRouter: some HideFilesAndFoldersRouting,
+         tracker: some AnalyticsTracking) {
         self.nodes = nodes
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.hideFilesAndFoldersRouter = hideFilesAndFoldersRouter
+        self.tracker = tracker
     }
     
     @MainActor
     private func onboard() async {
+        tracker.trackAnalyticsEvent(with: HiddenNodeOnboardingContinueButtonPressedEvent())
         do {
             try await contentConsumptionUserAttributeUseCase.saveSensitiveSetting(onboarded: true)
         } catch {

@@ -1,4 +1,6 @@
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
 
@@ -30,7 +32,9 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         showHiddenFilesAndFoldersOnboarding(
             primaryButtonViewModel: HiddenFilesSeeUpgradePlansOnboardingButtonViewModel(
                 hideFilesAndFoldersRouter: self,
-                upgradeAccountRouter: UpgradeAccountRouter())
+                upgradeAccountRouter: UpgradeAccountRouter(),
+                tracker: DIContainer.tracker),
+            screenEvent: HideNodeUpgradeScreenEvent()
         )
     }
     
@@ -41,7 +45,9 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
                 nodes: nodes,
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
-                hideFilesAndFoldersRouter: self)
+                hideFilesAndFoldersRouter: self,
+                tracker: DIContainer.tracker),
+            screenEvent: HideNodeOnboardingScreenEvent()
         )
     }
     
@@ -56,11 +62,15 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     
     @MainActor
     private func showHiddenFilesAndFoldersOnboarding(
-        primaryButtonViewModel: some HiddenFilesOnboardingPrimaryButtonViewModelProtocol
+        primaryButtonViewModel: some HiddenFilesOnboardingPrimaryButtonViewModelProtocol,
+        screenEvent: some ScreenViewEventIdentifier
     ) {
         let onboardingViewController = UIHostingController(rootView: HiddenFilesFoldersOnboardingView(
             primaryButton: HiddenFilesOnboardingButtonView(
-                viewModel: primaryButtonViewModel)
+                viewModel: primaryButtonViewModel),
+            viewModel: HiddenFilesFoldersOnboardingViewModel(
+                tracker: DIContainer.tracker,
+                screenEvent: screenEvent)
         ))
         self.onboardingViewController = onboardingViewController
         presenter?.present(onboardingViewController,
