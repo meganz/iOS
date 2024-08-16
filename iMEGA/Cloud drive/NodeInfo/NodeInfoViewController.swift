@@ -42,10 +42,7 @@ enum DetailsSectionRow {
     func nodeInfoViewController(_ nodeInfoViewController: NodeInfoViewController, presentParentNode node: MEGANode)
 }
 
-class NodeInfoViewController: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
-    
+class NodeInfoViewController: UITableViewController {
     private var node = MEGANode()
     private var folderInfo: MEGAFolderInfo?
     private var delegate: (any NodeInfoViewControllerDelegate)?
@@ -112,8 +109,15 @@ class NodeInfoViewController: UIViewController {
             cacheNodePropertiesSoThatTableViewChangesAreAtomic()
             reloadData()
         }
+
+        addKeyboardNotificationsFromDescriptionCell()
     }
-    
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeKeyboardNotificationsFromDescriptionCell()
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
@@ -420,12 +424,7 @@ class NodeInfoViewController: UIViewController {
             )
         )
 
-        let descriptionController = NodeDescriptionCellController(
-            viewModel: descriptionViewModel,
-            controller: self
-        )
-
-        return .description(descriptionController)
+        return .description(NodeDescriptionCellController(viewModel: descriptionViewModel))
     }
 
     // MARK: - TableView cells
@@ -580,17 +579,36 @@ class NodeInfoViewController: UIViewController {
         }
         return cell
     }
+
+    private func removeKeyboardNotificationsFromDescriptionCell() {
+        nodeDescriptionCellControllerWithSection()?.0.removeKeyboardNotifications()
+    }
+
+    private func addKeyboardNotificationsFromDescriptionCell() {
+        guard let (controller, section) = nodeDescriptionCellControllerWithSection() else { return }
+        controller.addKeyboardNotifications(tableView: tableView, indexPath: IndexPath(row: 0, section: section))
+    }
+
+    private func nodeDescriptionCellControllerWithSection() -> (NodeDescriptionCellController, Int)? {
+        cachedSections.enumerated().compactMap {
+            if case .description(let controller) = $0.element {
+                return (controller, $0.offset)
+            } else {
+                return nil
+            }
+        }.first
+    }
 }
 
 // MARK: - UITableViewDataSource
 
-extension NodeInfoViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+extension NodeInfoViewController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         let sectionCount = cachedSections.count
         return sectionCount
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch cachedSections[section] {
         case .info:
             return cachedInfoRows.count
@@ -607,7 +625,7 @@ extension NodeInfoViewController: UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch cachedSections[indexPath.section] {
         case .info:
@@ -643,11 +661,14 @@ extension NodeInfoViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension NodeInfoViewController: UITableViewDelegate {
+extension NodeInfoViewController {
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        var topDistance: CGFloat = 30.0
         if case .description(let controller) = cachedSections[section] {
             return controller.tableView(tableView, viewForHeaderInSection: section)
+        } else if case .description = cachedSections[safe: section - 1] {
+            topDistance = 1
         }
 
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
@@ -658,25 +679,25 @@ extension NodeInfoViewController: UITableViewDelegate {
         
         switch cachedSections[section] {
         case .details:
-            header.configure(title: Strings.Localizable.details, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: Strings.Localizable.details, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .link:
-            header.configure(title: Strings.Localizable.link, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: Strings.Localizable.link, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .versions:
-            header.configure(title: Strings.Localizable.versions.localizedUppercase, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: Strings.Localizable.versions.localizedUppercase, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .sharing:
-            header.configure(title: Strings.Localizable.shareWith.localizedUppercase, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: Strings.Localizable.shareWith.localizedUppercase, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .pendingSharing:
-            header.configure(title: Strings.Localizable.pending.localizedUppercase, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: Strings.Localizable.pending.localizedUppercase, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .removeSharing:
-            header.configure(title: nil, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: nil, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         default:
-            header.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: nil, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         }
 
         return header
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if case .description(let controller) = cachedSections[section],
            let view = controller.tableView(tableView, viewForFooterInSection: section) {
             return view
@@ -696,7 +717,7 @@ extension NodeInfoViewController: UITableViewDelegate {
         return footer
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch cachedSections[indexPath.section] {
         case .details:
             switch cachedDetailRows[indexPath.row] {
@@ -719,9 +740,7 @@ extension NodeInfoViewController: UITableViewDelegate {
             }
         case .pendingSharing:
             showAlertForRemovingPendingShare(forIndexPat: indexPath)
-        case .description(let controller):
-            controller.tableView(tableView, didSelectRowAt: indexPath)
-        case .info:
+        case .info, .description:
             break
         }
         
