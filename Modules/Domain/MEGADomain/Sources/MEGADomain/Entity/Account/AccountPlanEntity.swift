@@ -22,3 +22,10 @@ public struct AccountPlanEntity: Sendable {
        self.subscriptionId = subscriptionId
    }
 }
+
+extension AccountPlanEntity: Equatable {
+    public static func == (lhs: AccountPlanEntity, rhs: AccountPlanEntity) -> Bool {
+        return lhs.accountType == rhs.accountType && 
+               lhs.subscriptionId == lhs.subscriptionId
+    }
+}

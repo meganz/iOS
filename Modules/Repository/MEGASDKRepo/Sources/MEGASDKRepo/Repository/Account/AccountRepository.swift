@@ -86,6 +86,18 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
             $0.type == currentAccountDetails?.proLevel && $0.subscriptionCycle == currentAccountDetails?.subscriptionCycle
         })
     }
+    
+    public var currentProPlan: AccountPlanEntity? {
+        accountProPlans()?.first
+    }
+    
+    public func currentSubscription() -> AccountSubscriptionEntity? {
+        guard let subscriptions = accountSubscriptions(),
+              let currentProPlan else {
+            return nil
+        }
+        return subscriptions.first(where: { $0.id == currentProPlan.subscriptionId })
+    }
 
     // MARK: - User and session management
     public func currentUser() async -> UserEntity? {

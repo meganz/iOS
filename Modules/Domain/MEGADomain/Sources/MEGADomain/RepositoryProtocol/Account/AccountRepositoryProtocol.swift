@@ -32,7 +32,17 @@ public protocol AccountRepositoryProtocol: Sendable {
     ///
     /// - Returns: A Boolean value indicating whether the current Pro plan is associated with any subscription.
     func isBilledProPlan() -> Bool
+    
+    /// Retrieves the Pro plan from the current account details, if it exists.
+    /// - Returns: AccountPlanEntity value if there is an existing pro plan on the list of plans. It is guaranteed
+    /// that a user can only have 0 or 1 Pro plan at any given time. Therefore, this
+    /// property will return either a value or nil if no Pro plan is found.
+    var currentProPlan: AccountPlanEntity? { get }
 
+    /// Retrieves the current subscription that matches the currentProPlan.
+    /// - Returns: AccountSubscriptionEntity value if there is an existing billed pro plan and its subscription data is available, otherwise, nil.
+    func currentSubscription() -> AccountSubscriptionEntity?
+    
     // Account operations
     func contacts() -> [UserEntity]
     func totalNodesCount() -> UInt64

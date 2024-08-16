@@ -72,6 +72,66 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertFalse(sut2.isNewAccount)
     }
     
+    func testCurrentProPlan_noExistingProPlans_shouldReturnNil() {
+        let accountDetails = AccountDetailsEntity.build(plans: [])
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertNil(sut.currentProPlan)
+    }
+    
+    func testCurrentProPlan_hasAccountProPlanOnList_shouldReturnProPlan() {
+        let accountProPlan = AccountPlanEntity(isProPlan: true)
+        let accountDetails = AccountDetailsEntity.build(plans: [accountProPlan])
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertEqual(sut.currentProPlan, accountProPlan)
+    }
+    
+    func testCurrentSubscription_noExistingSubscription_shouldReturnNil() {
+        let accountDetails = AccountDetailsEntity.build(
+            subscriptions: [],
+            plans: [AccountPlanEntity(isProPlan: false, subscriptionId: nil)]
+        )
+        
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertNil(sut.currentSubscription())
+    }
+    
+    func testCurrentSubscription_hasMatchingSubscription_shouldReturnSubscription() {
+        let subscriptionId = "123ABC"
+        let expectedSubscription = AccountSubscriptionEntity(id: subscriptionId)
+        let accountDetails = AccountDetailsEntity.build(
+            subscriptions: [
+                expectedSubscription
+            ],
+            plans: [
+                AccountPlanEntity(isProPlan: true, subscriptionId: subscriptionId),
+                AccountPlanEntity(isProPlan: false, subscriptionId: nil)
+            ]
+        )
+        
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertEqual(sut.currentSubscription(), expectedSubscription)
+    }
+    
+    func testCurrentSubscription_hasNoMatchingSubscription_shouldReturnNil() {
+        let accountDetails = AccountDetailsEntity.build(
+            subscriptions: [
+                AccountSubscriptionEntity(id: "123ABC")
+            ],
+            plans: [
+                AccountPlanEntity(isProPlan: true, subscriptionId: "456DEF"),
+                AccountPlanEntity(isProPlan: false, subscriptionId: nil)
+            ]
+        )
+        
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertNil(sut.currentSubscription())
+    }
+    
     func testAccountCreationDate_whenNil_shouldReturnNil() {
         let (sut, _) = makeSUT()
         XCTAssertNil(sut.accountCreationDate)
@@ -444,6 +504,7 @@ final class AccountRepositoryTests: XCTestCase {
         incomingNodes: [MockNode] = [],
         currentSize: Int64 = 0,
         accountDetails: MockMEGAAccountDetails? = nil,
+        accountDetailsEntity: AccountDetailsEntity? = nil,
         upgradeSecurityClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
         accountDetailsClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
         requestResult: MockSdkRequestResult = .failure(MockError.failingError)
@@ -476,11 +537,15 @@ final class AccountRepositoryTests: XCTestCase {
         
         let currentUserSource = CurrentUserSource(sdk: mockSdk)
         
-        currentUserSource.setAccountDetails(
-            (accountDetails ?? defaultAccountDetails(type: .free, nodeSizes: nodeSizes))
-                .toAccountDetailsEntity()
-        )
-        
+        if let accountDetailsEntity {
+            currentUserSource.setAccountDetails(accountDetailsEntity)
+        } else {
+            currentUserSource.setAccountDetails(
+                (accountDetails ?? defaultAccountDetails(type: .free, nodeSizes: nodeSizes))
+                    .toAccountDetailsEntity()
+            )
+        }
+
         return (AccountRepository(
             sdk: mockSdk,
             currentUserSource: currentUserSource,

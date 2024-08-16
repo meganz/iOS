@@ -17,6 +17,8 @@ public protocol AccountUseCaseProtocol: Sendable {
     var isSmsAllowed: Bool { get }
     var isAchievementsEnabled: Bool { get }
     func currentAccountPlan() async -> PlanEntity?
+    var currentProPlan: AccountPlanEntity? { get }
+    func currentSubscription() -> AccountSubscriptionEntity?
     
     // User and session management
     func currentUser() async -> UserEntity?
@@ -115,6 +117,14 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     
     public func currentAccountPlan() async -> PlanEntity? {
         await repository.currentAccountPlan()
+    }
+    
+    public var currentProPlan: AccountPlanEntity? {
+        repository.currentProPlan
+    }
+    
+    public func currentSubscription() -> AccountSubscriptionEntity? {
+        repository.currentSubscription()
     }
 
     // MARK: - User and session management
