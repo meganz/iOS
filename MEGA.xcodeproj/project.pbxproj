@@ -55,6 +55,9 @@
 		0E5F5E832C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E822C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift */; };
 		0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E852C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift */; };
 		0E5F5E8D2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E8C2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift */; };
+		0E5F5EAA2C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EA92C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift */; };
+		0E5F5EAD2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */; };
+		0E5F5EB02C6EB9050037A99C /* Preview_AnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */; };
 		0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */; };
 		0E72E1262A2841CE00C900F9 /* EnforceCopyrightWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */; };
 		0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */; };
@@ -2810,6 +2813,9 @@
 		0E5F5E822C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E5F5E852C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHideFilesAndFoldersRouter.swift; sourceTree = "<group>"; };
 		0E5F5E8C2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeOnboardingPrimaryButtonViewModelTests.swift; sourceTree = "<group>"; };
+		0E5F5EA92C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingViewModel.swift; sourceTree = "<group>"; };
+		0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingViewModelTests.swift; sourceTree = "<group>"; };
+		0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_AnalyticsTracking.swift; sourceTree = "<group>"; };
 		0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepositoryTests.swift; sourceTree = "<group>"; };
 		0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningView.swift; sourceTree = "<group>"; };
 		0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModel.swift; sourceTree = "<group>"; };
@@ -5741,6 +5747,8 @@
 		0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */ = {
 			isa = PBXGroup;
 			children = (
+				0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */,
+				0E5F5EA92C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift */,
 				0E5F5E7B2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift */,
 				0E5F5E7E2C6C39630037A99C /* HiddenFilesOnboardingPrimaryButtonViewModel.swift */,
 				0E385A7C2BB3C66700261892 /* HideFilesAndFoldersRouter.swift */,
@@ -5798,6 +5806,18 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		0E5F5EAB2C6EAF9D0037A99C /* HiddenFilesAndFolders */ = {
+			isa = PBXGroup;
+			children = (
+				0E5F5E842C6C61170037A99C /* Mocks */,
+				0E5F5E8C2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift */,
+				0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */,
+				0E5F5E822C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift */,
+				0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */,
+			);
+			path = HiddenFilesAndFolders;
+			sourceTree = "<group>";
+		};
 		0E72E11F2A27EC8D00C900F9 /* CopyrightWarning */ = {
 			isa = PBXGroup;
 			children = (
@@ -5818,7 +5838,6 @@
 		0EBF706F2BAB874B009AAFB0 /* HiddenFilesAndFolders */ = {
 			isa = PBXGroup;
 			children = (
-				0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */,
 			);
 			path = HiddenFilesAndFolders;
 			sourceTree = "<group>";
@@ -5834,11 +5853,7 @@
 		0EE5AC142B1E930C00BCDD88 /* SharedViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				0E5F5E842C6C61170037A99C /* Mocks */,
 				0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */,
-				0E5F5E8C2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift */,
-				0E5F5E822C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift */,
-				0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */,
 				0EE396F72B87E4B200927E7E /* NodeActionViewModelTests.swift */,
 				6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */,
 			);
@@ -6386,6 +6401,7 @@
 			isa = PBXGroup;
 			children = (
 				0E3A30A62C659B9400C91BD0 /* Preview_AlbumCoverUseCase.swift */,
+				0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */,
 				0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */,
 				0EDF33372BC7371800EEF8F8 /* Preview_NodeUseCase.swift */,
 				0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */,
@@ -11147,7 +11163,6 @@
 		B5CC2AA62995F8EC00A966A0 /* ViewRouters */ = {
 			isa = PBXGroup;
 			children = (
-				0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */,
 				9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */,
 				B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */,
 			);
@@ -11525,6 +11540,7 @@
 			children = (
 				5B8281451E7BE7FA0079C1BB /* Cells */,
 				C467AD4D26A8651400AFE4D2 /* DynamicType */,
+				0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */,
 				948028382B6C272E002B4EB4 /* Info */,
 				B6730B0B2735F46D00A9CF5F /* Shared Controls */,
 				9458610A2926963200866F03 /* Snackbar */,
@@ -11946,6 +11962,7 @@
 				1240A49E27DD544B00627262 /* CloudDrive */,
 				2FF3F9B3260AECA600015050 /* DeepLinking */,
 				A81971E226FDBE4E007DC7B1 /* File Versioning */,
+				0E5F5EAB2C6EAF9D0037A99C /* HiddenFilesAndFolders */,
 				5DFC8DC324ECF35C00DDA006 /* Home */,
 				94227F6A2B6D47FF009D586F /* Info */,
 				B6AF22DD26097F200008FF72 /* Launching */,
@@ -15114,6 +15131,7 @@
 				9D3563D028B54EEE00CB3365 /* HelpViewRouter.swift in Sources */,
 				5D64660824890BEA006030A5 /* HexColor.swift in Sources */,
 				0EBF70712BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift in Sources */,
+				0E5F5EAA2C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift in Sources */,
 				0E5F5E7C2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift in Sources */,
 				0E5F5E7F2C6C39630037A99C /* HiddenFilesOnboardingPrimaryButtonViewModel.swift in Sources */,
 				0E385A7D2BB3C66700261892 /* HideFilesAndFoldersRouter.swift in Sources */,
@@ -15721,6 +15739,7 @@
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
 				B6A0CF1A28A08D1B00D7F52E /* PreferenceUseCase+Additions.swift in Sources */,
 				0E3A30A72C659B9400C91BD0 /* Preview_AlbumCoverUseCase.swift in Sources */,
+				0E5F5EB02C6EB9050037A99C /* Preview_AnalyticsTracking.swift in Sources */,
 				0E81A8D52BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift in Sources */,
 				0EDF33382BC7371800EEF8F8 /* Preview_NodeUseCase.swift in Sources */,
 				0E2586F52C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift in Sources */,
@@ -16640,6 +16659,7 @@
 				2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
+				0E5F5EAD2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift in Sources */,
 				0E5F5E832C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift in Sources */,
 				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,
 				947DC5E62AC1CB07002C1D7C /* HomeChips+TrackingTests.swift in Sources */,

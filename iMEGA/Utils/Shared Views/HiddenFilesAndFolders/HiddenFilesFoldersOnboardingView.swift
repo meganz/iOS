@@ -6,6 +6,7 @@ import SwiftUI
 struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
     @Environment(\.dismiss) private var dismiss
     let primaryButton: PrimaryButtonView
+    let viewModel: HiddenFilesFoldersOnboardingViewModel
     
     var body: some View {
         OnboardingNavigationBar {
@@ -19,6 +20,11 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
                 }
             }
             .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
+        } dismissAction: {
+            dismissAction()
+        }
+        .onAppear {
+            viewModel.onViewAppear()
         }
     }
     
@@ -68,9 +74,7 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
             primaryButton
                 .frame(minWidth: 288)
             
-            Button {
-                dismiss()
-            } label: {
+            Button(action: dismissAction) {
                 Text(Strings.Localizable.notNow)
                     .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.gray848484.swiftUI)
                     .font(.title3)
@@ -80,16 +84,22 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
             }
         }
     }
+    
+    private func dismissAction() {
+        viewModel.onDismissButtonTapped()
+        dismiss()
+    }
 }
 
 private struct OnboardingNavigationBar<Content: View>: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.dismiss) private var dismiss
     
     private let content: () -> Content
+    let dismissAction: (() -> Void)
     
-    public init(@ViewBuilder content: @escaping () -> Content) {
+    public init(@ViewBuilder content: @escaping () -> Content, dismissAction: @escaping (() -> Void)) {
         self.content = content
+        self.dismissAction = dismissAction
     }
     
     var body: some View {
@@ -131,7 +141,7 @@ private struct OnboardingNavigationBar<Content: View>: View {
     
     private func dismissButton() -> some View {
         Button {
-            dismiss()
+            dismissAction()
         } label: {
             Text(Strings.Localizable.cancel)
                 .font(.body)
@@ -183,12 +193,22 @@ private struct OnboardingItemView: View {
 }
 
 #Preview {
-    HiddenFilesFoldersOnboardingView(primaryButton: Button("See Plans", action: {}))
+    HiddenFilesFoldersOnboardingView(
+        primaryButton: Button("See Plans", action: {}),
+        viewModel: HiddenFilesFoldersOnboardingViewModel(
+            tracker: Preview_AnalyticsTracking(),
+            screenEvent: Preview_ScreenEvent()
+        ))
 }
 
 #Preview {
-    HiddenFilesFoldersOnboardingView(primaryButton: Button("Continue", action: {}))
-        .preferredColorScheme(.dark)
+    HiddenFilesFoldersOnboardingView(
+        primaryButton: Button("Continue", action: {}),
+        viewModel: HiddenFilesFoldersOnboardingViewModel(
+            tracker: Preview_AnalyticsTracking(),
+            screenEvent: Preview_ScreenEvent()
+        ))
+    .preferredColorScheme(.dark)
 }
 
 #Preview {
