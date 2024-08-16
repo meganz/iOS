@@ -8,19 +8,13 @@
     
     self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     
-    [self setup];
+    [self updateAppearance];
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    [self setup];
-}
-
-#pragma mark - Private
-
-- (void)setup {
-    self.timeAgoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    [self updateAppearance];
 }
 
 @end

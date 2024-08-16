@@ -26,7 +26,6 @@ typedef NS_ENUM(NSInteger, Segment) {
 @property (nonatomic, strong) NSMutableArray *incomingContactRequestArray;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *contactRequestsSegmentedControl;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic) NSUInteger remainingOperations;
 
@@ -98,10 +97,6 @@ typedef NS_ENUM(NSInteger, Segment) {
 }
 
 #pragma mark - Private
-
-- (void)updateAppearance {
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-}
 
 - (void)internetConnectionChanged {
     [self.tableView reloadData];
