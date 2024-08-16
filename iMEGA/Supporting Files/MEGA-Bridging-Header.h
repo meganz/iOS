@@ -74,6 +74,8 @@
 #import "ContactLinkQRViewController.h"
 #import "ContactsViewController.h"
 #import "ContactTableViewCell.h"
+#import "ContactRequestsTableViewCell.h"
+#import "ContactRequestsViewController.h"
 #import "CreateAccountViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "DisplayMode.h"
