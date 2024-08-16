@@ -120,6 +120,7 @@ final class NodeDescriptionViewModelTests: XCTestCase {
     func testFooter_withAccessToUpdateNodeDescription_shouldReturnNil() {
         fullAccessNodeTypes.forEach {
             let sut = makeSUT(accessType: $0)
+            XCTAssertFalse(sut.hasReadOnlyAccess)
             XCTAssertNil(sut.footer)
         }
     }
@@ -127,22 +128,26 @@ final class NodeDescriptionViewModelTests: XCTestCase {
     func testFooter_withNoAccessToUpdateNodeDescription_shouldReturnFooterText() {
         readOnlyAccessNodeTypes.forEach {
             let sut = makeSUT(accessType: $0)
+            XCTAssertTrue(sut.hasReadOnlyAccess)
             XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
         }
     }
 
     func testFooter_withNodeInRubbishBin_shouldReturnFooterText() {
         let sut = makeSUT(isNodeInRubbishBin: true)
+        XCTAssertTrue(sut.hasReadOnlyAccess)
         XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
     }
 
     func testFooter_withNodeIsBackupsNode_shouldReturnFooterText() {
         let sut = makeSUT(isBackupsNode: true)
+        XCTAssertTrue(sut.hasReadOnlyAccess)
         XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
     }
 
     func testFooter_withNodeABackupsRootNode_shouldReturnFooterText() {
         let sut = makeSUT(isBackupsRootNode: true)
+        XCTAssertTrue(sut.hasReadOnlyAccess)
         XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
     }
 

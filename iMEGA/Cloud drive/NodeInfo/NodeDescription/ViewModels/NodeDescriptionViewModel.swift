@@ -19,11 +19,11 @@ final class NodeDescriptionViewModel {
         }
     }
 
-    private let node: NodeEntity
+    private(set) var node: NodeEntity
     private let nodeUseCase: any NodeUseCaseProtocol
     private let backupUseCase: any BackupsUseCaseProtocol
 
-    private var hasReadOnlyAccess: Bool {
+    var hasReadOnlyAccess: Bool {
         let nodeAccessLevel = nodeUseCase.nodeAccessLevel(nodeHandle: node.handle)
 
         return nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
@@ -60,5 +60,9 @@ final class NodeDescriptionViewModel {
         self.node = node
         self.nodeUseCase = nodeUseCase
         self.backupUseCase = backupUseCase
+    }
+
+    func updateNode(node: NodeEntity) {
+        self.node = node
     }
 }

@@ -3,19 +3,20 @@ import SwiftUI
 
 struct NodeDescriptionFooterView: View {
     @Environment(\.colorScheme) private var colorScheme
-
-    let leadingText: String?
-    let trailingText: String?
+    @StateObject var viewModel: NodeDescriptionFooterViewModel
 
     var body: some View {
+        VStack(spacing: 0) {
+            NodeDescriptionSeparatorView()
+            textView
+        }
+    }
+
+    private var textView: some View {
         HStack {
-            if let leadingText {
-                view(for: leadingText)
-            }
+            view(for: viewModel.leadingText ?? "")
             Spacer()
-            if let trailingText {
-                view(for: trailingText)
-            }
+            view(for: viewModel.trailingText ?? "")
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 6)
