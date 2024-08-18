@@ -14,14 +14,19 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
     private let favouriteNodesUseCase: any FavouriteNodesUseCaseProtocol
     private let widgetCentre: any WidgetCentreProtocol
     
-    enum WidgetType: CaseIterable {
+    enum WidgetType: CaseIterable, Sendable {
         case recents
         case favourites
     }
     
+    enum WidgetManagerStatus: Sendable {
+        case uninitialised
+        case initialised
+    }
+    private typealias WidgetManagerStatusContinuation = AsyncStream<WidgetManagerStatus>.Continuation
     private let updateWidgetContentSubject = PassthroughSubject<WidgetType, Never>()
-    
-    @Atomic 
+
+    @Atomic
     private var task: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
@@ -41,8 +46,6 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         self.widgetCentre = WidgetCenter.shared
         super.init()
-        
-        $task.mutate { $0 = monitorAllWidgetChanges() }
     }
 
     init(
@@ -63,8 +66,6 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
         self.widgetCentre = widgetCentre
         
         super.init()
-        
-        $task.mutate { $0 = monitorAllWidgetChanges() }
     }
 
     @objc public static func reloadAllWidgetsContent() {
@@ -78,9 +79,22 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
         WidgetCenter.shared.reloadTimelines(ofKind: kind)
         #endif
     }
+        
+    @objc func startWidgetManager() async {
+        
+        let (stream, continuation) = AsyncStream.makeStream(of: WidgetManagerStatus.self, bufferingPolicy: .bufferingNewest(1))
+        continuation.yield(.uninitialised)
+        $task.mutate { $0 = monitorAllWidgetChanges(continuation: continuation) }
+        
+        _ = await stream.first(where: { $0 == .initialised })
+    }
     
-    @objc func createWidgetItemData() {
+    @objc func reloadWidgetItemData() {
         WidgetType.allCases.forEach(updateWidgetContentSubject.send(_:))
+    }
+    
+    @objc func stopWidgetManager() {
+        $task.mutate { $0 = nil }
     }
 
     @objc func updateWidgetContent(with nodeList: MEGANodeList) {
@@ -123,39 +137,61 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
         #endif
     }
     
-    private func monitorAllWidgetChanges() -> Task<Void, Never> {
+    private func monitorAllWidgetChanges(continuation: WidgetManagerStatusContinuation) -> Task<Void, Never> {
         Task {
             await withTaskGroup(of: Void.self) { taskGroup in
-                taskGroup.addTasksUnlessCancelled(for: WidgetType.allCases, priority: .background) { [weak self] type in
+                let cases = WidgetType.allCases
+                let taskStartedStream = AsyncStream.makeStream(of: WidgetType.self, bufferingPolicy: .bufferingNewest(cases.count))
+
+                taskGroup.addTasksUnlessCancelled(for: cases, priority: .background) { [weak self] type in
                     guard let self else { return }
-                    
                     switch type {
                     case .favourites:
-                        await monitorFavouriteContentUpdate()
+                        await monitorFavouriteContentUpdate(
+                            taskStartedContinuation: taskStartedStream.continuation)
                     case .recents:
-                        await monitorRecentsContentUpdate()
+                        await monitorRecentsContentUpdate(
+                            taskStartedContinuation: taskStartedStream.continuation)
                     }
                 }
+                
+                // Ensure all monitors have started, and then initialise manager to start receiving requests
+                var uniqueWidgetTypes = cases
+                for await widgetType in taskStartedStream.stream {
+                    uniqueWidgetTypes.remove(object: widgetType)
+                    if uniqueWidgetTypes.isEmpty {
+                        taskStartedStream.continuation.finish()
+                        break
+                    }
+                }
+                
+                continuation.yield(.initialised)
+                continuation.finish()
             }
         }
     }
     
-    private func monitorFavouriteContentUpdate() async {
-        
-        let createFavouriteWidgetNodes = updateWidgetContentSubject.filter { $0 == .favourites }
+    private func monitorFavouriteContentUpdate(taskStartedContinuation: AsyncStream<WidgetType>.Continuation) async {
+        let createFavouriteWidgetNodes = updateWidgetContentSubject
+            .filter { $0 == .favourites }
             .debounceImmediate(for: .seconds(1), scheduler: DispatchQueue.global(qos: .background))
             .values
+        
+        taskStartedContinuation.yield(.favourites)
         
         for await _ in createFavouriteWidgetNodes {
             await createFavouritesItemsData()
         }
     }
     
-    private func monitorRecentsContentUpdate() async {
+    private func monitorRecentsContentUpdate(taskStartedContinuation: AsyncStream<WidgetType>.Continuation) async {
         
-        let createFavouriteWidgetNodes = updateWidgetContentSubject.filter { $0 == .recents }
+        let createFavouriteWidgetNodes = updateWidgetContentSubject
+            .filter { $0 == .recents }
             .debounceImmediate(for: .seconds(1), scheduler: DispatchQueue.global(qos: .background))
             .values
+        
+        taskStartedContinuation.yield(.recents)
         
         for await _ in createFavouriteWidgetNodes {
             await createRecentItemsData()
@@ -185,7 +221,6 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
     }
 
     private func createFavouritesItemsData() async {
-        
         do {
             let favouriteItems = try await favouriteNodesUseCase.allFavouriteNodes(searchString: nil, excludeSensitives: true, limit: MEGAQuickAccessWidgetMaxDisplayItems)
                 .map { FavouriteItemEntity(base64Handle: $0.base64Handle, name: $0.name, timestamp: Date()) }
