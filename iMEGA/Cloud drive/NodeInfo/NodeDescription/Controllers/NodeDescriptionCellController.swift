@@ -83,7 +83,8 @@ final class NodeDescriptionCellController: NSObject {
             tableView.beginUpdates()
 
             if keyboardState == .didShow {
-                footerViewModel.description = footerViewModel.description ?? viewModel.description.text
+                footerViewModel.description = footerViewModel.description
+                ?? (viewModel.description.isPlaceholder ? "" : viewModel.description.text)
                 footerViewModel.showTrailingText()
             } else {
                 footerViewModel.trailingText = nil

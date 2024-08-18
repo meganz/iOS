@@ -12,7 +12,7 @@ struct NodeDescriptionTextView: View {
         TextField(
             "",
             text: $viewModel.descriptionString,
-            prompt: placeholderView,
+            prompt: isFocused ? nil : placeholderView,
             axis: .vertical
         )
         .lineLimit(5)
