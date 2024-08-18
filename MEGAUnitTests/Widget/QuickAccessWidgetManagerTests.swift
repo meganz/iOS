@@ -30,6 +30,8 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
             let sut = sut(
                 favouriteItemsUseCase: favouriteItemsUseCase
             )
+            
+            await sut.startWidgetManager()
 
             let mockNodes: [MockNode] = [
                 .init(handle: 1, name: "first", changeType: changeType, isFavourite: true)
@@ -87,6 +89,8 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
             recentItemsUseCase: recentItemsUseCase
         )
         
+        await sut.startWidgetManager()
+        
         let mockNodes: [MockNode] = [
             .init(handle: 1, name: "first", nodeType: .folder, changeType: .attributes, isFavourite: true)
         ]
@@ -128,6 +132,8 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
             let sut = sut(
                 recentItemsUseCase: recentItemsUseCase
             )
+            
+            await sut.startWidgetManager()
 
             let mockNodes: [MockNode] = [
                 .init(handle: 1, name: "first", changeType: changeType, isFavourite: true)

@@ -1504,23 +1504,25 @@
             // of NewCloudDrive flag async and store in UserDefaults,
             // then wee use it sync later on in the app. Only then we construct MainTabBarController
             // We clean the cache when user logs out in the Helper.cleanAccount
-            
+            __weak typeof(self) weakSelf = self;
             [self cacheCloudDriveAbTestsAndThen: ^{
                 if (!_isAccountFirstLogin) {
-                    [self showMainTabBar];
-                    if (self.openChatLater) {
-                        [self.mainTBC openChatRoomNumber:self.openChatLater];
+                    [weakSelf showMainTabBar];
+                    if (weakSelf.openChatLater) {
+                        [weakSelf.mainTBC openChatRoomNumber:weakSelf.openChatLater];
                     }
                 }
                 
                 [MEGASdk.shared getAccountDetails];
-                [self refreshAccountDetails];
+                [weakSelf refreshAccountDetails];
                 
-                [self.quickAccessWidgetManager createWidgetItemData];
+                [weakSelf.quickAccessWidgetManager startWidgetManagerWithCompletionHandler:^{
+                    [weakSelf.quickAccessWidgetManager reloadWidgetItemData];
+                }];
                 
-                [self presentAccountExpiredViewIfNeeded];
+                [weakSelf presentAccountExpiredViewIfNeeded];
                 
-                [self configAppWithNewCookieSettings];
+                [weakSelf configAppWithNewCookieSettings];
             }];
             break;
         }
@@ -1529,7 +1531,7 @@
             // if logout (not if localLogout) or session killed in other client
             BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
             [MEGAPurchase.sharedInstance removeAllProducts];
-
+            [self.quickAccessWidgetManager stopWidgetManager];
             if (request.flag || sessionInvalidateInOtherClient) {
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];

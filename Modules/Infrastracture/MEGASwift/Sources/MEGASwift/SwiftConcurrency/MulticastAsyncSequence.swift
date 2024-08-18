@@ -7,7 +7,7 @@ import Foundation
 public actor MulticastAsyncSequence<Element: Sendable> {
         
     /// A strategy that handles exhaustion of a buffer’s capacity.
-    public enum BufferingPolicy {
+    public enum BufferingPolicy: Sendable {
         
         /// Continue to add to the buffer, without imposing a limit on the number
         /// of buffered elements.
