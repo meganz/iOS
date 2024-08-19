@@ -1,10 +1,10 @@
-import Combine
+@preconcurrency import Combine
 import Foundation
 import MEGADomain
 import MEGASwift
 import Network
 
-public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
+public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol, Sendable {
     public static var newRepo: NetworkMonitorRepository {
         NetworkMonitorRepository()
     }
@@ -12,7 +12,6 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
     private let monitor: NWPathMonitor
     private let queue: DispatchQueue
     private let isConnectedPassThroughSubject = PassthroughSubject<Bool, Never>()
-    private var networkPathChangedHandler: ((Bool) -> Void)?
     
     public var connectionChangedStream: AnyAsyncSequence<Bool> {
         isConnectedPassThroughSubject
@@ -20,8 +19,14 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
             .eraseToAnyAsyncSequence()
     }
     
-    public init(monitor: NWPathMonitor = NWPathMonitor(),
-                queue: DispatchQueue = DispatchQueue(label: "NetworkMonitor")) {
+    public var networkPathChangedPublisher: AnyPublisher<Bool, Never> {
+        isConnectedPassThroughSubject.eraseToAnyPublisher()
+    }
+    
+    public init(
+        monitor: NWPathMonitor = NWPathMonitor(),
+        queue: DispatchQueue = DispatchQueue(label: "NetworkMonitor")
+    ) {
         self.monitor = monitor
         self.queue = queue
         startMonitoring()
@@ -31,20 +36,15 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
         monitor.cancel()
     }
     
-    public func networkPathChanged(completion: @escaping (Bool) -> Void) {
-        networkPathChangedHandler = completion
-    }
-    
     public func isConnected() -> Bool {
         monitor.currentPath.status == .satisfied
     }
     
     private func startMonitoring() {
-        monitor.pathUpdateHandler = { [weak self] in
-            guard let self else { return }
-            let isConnected = $0.status == .satisfied
-            isConnectedPassThroughSubject.send(isConnected)
-            networkPathChangedHandler?(isConnected)
+        monitor.pathUpdateHandler = { [weak self] path in
+            guard let self = self else { return }
+            let isConnected = path.status == .satisfied
+            self.isConnectedPassThroughSubject.send(isConnected)
         }
         monitor.start(queue: queue)
     }

@@ -230,7 +230,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         startConversationViewModel?.invokeCommand = { [weak self] command in
             asyncOnMain {
                 switch command {
-                case .networkAvailablityUpdate(let networkAvailable):
+                case .networkAvailabilityUpdate(let networkAvailable):
                     self?.startConversationItem.isEnabled = networkAvailable
                 }
             }

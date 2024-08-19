@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -28,17 +29,24 @@ protocol HomeUploadingViewModelType {
 }
 
 final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingViewModelInputs {
+    private var cancellable: Set<AnyCancellable> = []
+    
     // MARK: - HomeUploadingViewModelInputs
 
     func viewIsReady() {
-        self.contextMenuManager = ContextMenuManager(uploadAddMenuDelegate: self,
-                                                     createContextMenuUseCase: createContextMenuUseCase)
+        self.contextMenuManager = ContextMenuManager(
+            uploadAddMenuDelegate: self,
+            createContextMenuUseCase: createContextMenuUseCase
+        )
         notifyUpdate?(self.outputs)
         
-        networkMonitorUseCase.networkPathChanged { [weak self] _ in
-            guard let self else { return }
-            self.notifyUpdate?(self.outputs)
-        }
+        networkMonitorUseCase.networkPathChangedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.notifyUpdate?(self.outputs)
+            }
+            .store(in: &cancellable)
     }
 
     func didTapUploadFromPhotoAlbum() {

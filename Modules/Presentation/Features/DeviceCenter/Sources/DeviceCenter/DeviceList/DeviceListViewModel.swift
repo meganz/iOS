@@ -181,12 +181,12 @@ public final class DeviceListViewModel: ObservableObject {
     }
     
     private func monitorNetworkChanges() {
-        networkMonitorUseCase.networkPathChanged { [weak self] hasNetworkConnection in
-            guard let self else { return }
-            Task { @MainActor in
-                self.hasNetworkConnection = hasNetworkConnection
+        networkMonitorUseCase.networkPathChangedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] hasNetworkConnection in
+                self?.hasNetworkConnection = hasNetworkConnection
             }
-        }
+            .store(in: &cancellable)
     }
     
     func updateInternetConnectionStatus() {
