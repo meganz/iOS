@@ -51,7 +51,7 @@ extension VideoConfig {
             videoThumbnailDurationTextBackgroundColor: Color.black.opacity(0.2),
             disabledColor: TokenColors.Text.disabled.swiftUI,
             checkmarkColor: TokenColors.Support.success.swiftUI,
-            bottomSheetBackgroundColor: TokenColors.Background.surface1.swiftUI, 
+            bottomSheetBackgroundColor: TokenColors.Background.surface1.swiftUI,
             bottomSheetHeaderBackgroundColor: TokenColors.Background.surface1.swiftUI,
             bottomSheetCellSelectedBackgroundColor: TokenColors.Background.surface1.swiftUI,
             videoFilterChipActiveForegroundColor: TokenColors.Text.inverseAccent.swiftUI,
@@ -73,7 +73,8 @@ extension VideoConfig {
                     pageBackgroundColor: TokenColors.Background.page.swiftUI,
                     textColor: TokenColors.Text.primary.swiftUI,
                     iconColor: TokenColors.Icon.secondary.swiftUI
-                )
+                ),
+                recentsEmptyStateImage: MEGAAssetsImageProvider.image(named: "recentsEmptyState")!
             ),
             listView: .init(
                 header: .init(

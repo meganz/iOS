@@ -70,7 +70,8 @@ extension VideoConfig {
                     pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear,
                     textColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary,
                     iconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.secondary
-                )
+                ),
+                recentsEmptyStateImage: UIImage.recentsEmptyState
             ),
             listView: .init(
                 header: .init(

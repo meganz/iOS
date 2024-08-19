@@ -10,6 +10,8 @@ struct MockVideoRevampRouter: VideoRevampRouting {
     
     func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void) { }
     
+    func openRecentlyWatchedVideos() { }
+    
     func popScreen() { }
     
     func build() -> UIViewController { UIViewController() }
