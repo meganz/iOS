@@ -1,10 +1,10 @@
 import Foundation
 
-public protocol NodeIconUsecaseProtocol {
+public protocol NodeIconUsecaseProtocol: Sendable {
     func iconData(for node: NodeEntity) -> Data
 }
 
-public struct NodeIconUseCase<T: NodeIconRepositoryProtocol>: NodeIconUsecaseProtocol {
+public struct NodeIconUseCase<T: NodeIconRepositoryProtocol>: NodeIconUsecaseProtocol, Sendable {
     
     private let nodeIconRepo: T
     

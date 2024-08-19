@@ -11,6 +11,7 @@ struct VideoCellPreviewEntity: Equatable {
     let size: String
     let isExported: Bool
     let label: NodeLabelTypeEntity?
+    let hasThumbnail: Bool
     
     var shouldShowCircleImage: Bool {
         isExported
@@ -39,7 +40,8 @@ extension VideoCellPreviewEntity {
         title: "",
         size: "",
         isExported: false,
-        label: nil
+        label: nil,
+        hasThumbnail: true
     )
 }
 

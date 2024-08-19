@@ -15,6 +15,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
+    private let nodeIconUseCase: any NodeIconUsecaseProtocol
     private let router: any VideoRevampRouting
     private let presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
     private let syncModel: VideoRevampSyncModel
@@ -26,7 +27,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private lazy var contextMenuManager = ContextMenuManager(
         displayMenuDelegate: self,
         quickActionsMenuDelegate: self,
-        createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo), 
+        createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
         videoPlaylistMenuDelegate: self
     )
     
@@ -50,6 +51,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         router: some VideoRevampRouting,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        nodeIconUseCase: some NodeIconUsecaseProtocol,
         videoSelection: VideoSelection,
         selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter,
         syncModel: VideoRevampSyncModel
@@ -59,6 +61,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.nodeIconUseCase = nodeIconUseCase
         self.videoPlaylistUseCase = videoPlaylistUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.router = router
@@ -106,6 +109,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            nodeIconUseCase: nodeIconUseCase,
             router: router,
             sharedUIState: sharedUIState,
             videoSelection: videoSelection,

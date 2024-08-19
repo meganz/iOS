@@ -72,7 +72,8 @@ class VideoCellPreviewEntityTests: XCTestCase {
             title: "title",
             size: "size",
             isExported: isExported,
-            label: label
+            label: label,
+            hasThumbnail: true
         )
     }
     

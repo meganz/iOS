@@ -16,7 +16,7 @@ extension ThumbnailLoaderFactory {
                 thumbnailUseCase: makeThumbnailUseCase(mode: mode),
                 featureFlagProvider: featureFlagProvider)
         } else {
-            makeThumbnailLoader(config: .general, 
+            makeThumbnailLoader(config: .general,
                                 thumbnailUseCase: makeThumbnailUseCase(mode: mode),
                                 featureFlagProvider: featureFlagProvider)
         }

@@ -74,6 +74,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
             router: MockVideoRevampRouter(),
             presentationConfig: VideoPlaylistContentSnackBarPresentationConfig(shouldShowSnackBar: false, text: nil),
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: "any-data".data(using: .utf8)!),
             videoSelection: videoSelection,
             selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection),
             syncModel: VideoRevampSyncModel()

@@ -39,7 +39,7 @@ struct VideoRevampRouter: VideoRevampRouting {
         )
         let videoPlaylistUseCase = VideoPlaylistUseCase(
             fileSearchUseCase: fileSearchUseCase,
-            userVideoPlaylistsRepository: userVideoPlaylistsRepo, 
+            userVideoPlaylistsRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase
         )
         let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
@@ -65,8 +65,9 @@ struct VideoRevampRouter: VideoRevampRouting {
                 preferenceUseCase: PreferenceUseCase.default,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
+            nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: sdk)),
             videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled),
-            router: self,
+            router: self, 
             featureFlagProvider: DIContainer.featureFlagProvider
         )
         return viewController
@@ -161,6 +162,7 @@ struct VideoRevampRouter: VideoRevampRouting {
                 preferenceUseCase: PreferenceUseCase.default,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
+            nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: MEGASdk.shared)),
             videoSelection: videoSelection,
             selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection),
             syncModel: syncModel

@@ -47,6 +47,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let nodeIconUseCase: any NodeIconUsecaseProtocol
 
     private let videoConfig: VideoConfig
     let router: any VideoRevampRouting
@@ -66,6 +67,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        nodeIconUseCase: some NodeIconUsecaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol
@@ -77,6 +79,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.nodeIconUseCase = nodeIconUseCase
         self.videoConfig = videoConfig
         self.router = router
         self.videoToolbarViewModel = VideoToolbarViewModel()
@@ -137,9 +140,10 @@ final class VideoRevampTabContainerViewController: UIViewController {
             syncModel: viewModel.syncModel,
             videoSelection: viewModel.videoSelection,
             videoPlaylistUseCase: videoPlaylistUseCase,
-            videoPlaylistContentUseCase: videoPlaylistContentUseCase, 
+            videoPlaylistContentUseCase: videoPlaylistContentUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            nodeIconUseCase: nodeIconUseCase,
             videoConfig: videoConfig,
             router: router
         )
@@ -293,7 +297,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         if navigationItem.searchController == nil {
             navigationItem.searchController = searchController
         }
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
                                                backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
                                                traitCollection: traitCollection)
     }
@@ -471,7 +475,7 @@ extension VideoRevampTabContainerViewController: TraitEnvironmentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
                                                backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
                                                traitCollection: traitCollection)
     }
