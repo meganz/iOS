@@ -1,83 +1,147 @@
+import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import XCTest
 
 final class NetworkMonitorUseCaseTests: XCTestCase {
+    private var cancellable: Set<AnyCancellable> = []
+    
+    private func makeSUT(
+        connected: Bool = false,
+        connectedViaWiFi: Bool = false,
+        connectionChangedStream: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        networkPathChangedPublisher: AnyPublisher<Bool, Never> = Just(false).eraseToAnyPublisher()
+    ) -> NetworkMonitorUseCase {
+        let repo = MockNetworkMonitorRepository(
+            connected: connected,
+            connectedViaWiFi: connectedViaWiFi,
+            connectionChangedStream: connectionChangedStream,
+            networkPathChangedPublisher: networkPathChangedPublisher
+        )
+        return NetworkMonitorUseCase(repo: repo)
+    }
+    
+    private func evaluatePublisher(
+        _ publisher: AnyPublisher<Bool, Never>,
+        expectedValues: [Bool],
+        expectationDescription: String
+    ) {
+        let expectation = self.expectation(description: expectationDescription)
+        expectation.expectedFulfillmentCount = expectedValues.count
+        
+        var receivedValues: [Bool] = []
+        
+        publisher
+            .sink { value in
+                receivedValues.append(value)
+                expectation.fulfill()
+            }
+            .store(in: &cancellable)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(receivedValues, expectedValues)
+    }
 
-    func testNetworkIsConnected() {
-        let repo = MockNetworkMonitorRepository(connected: true)
-        let sut = NetworkMonitorUseCase(repo: repo)
-        sut.networkPathChanged { result in
-            XCTAssertTrue(result)
-        }
+    func testNetworkPathChangedPublisher_whenConnected_shouldReturnTrue() {
+        let sut = makeSUT(
+            connected: true,
+            networkPathChangedPublisher: Just(true).eraseToAnyPublisher()
+        )
+        
+        evaluatePublisher(
+            sut.networkPathChangedPublisher,
+            expectedValues: [true],
+            expectationDescription: "Network is connected"
+        )
     }
     
-    func testNetworkIsNotConnected() {
-        let repo = MockNetworkMonitorRepository(connected: false)
-        let sut = NetworkMonitorUseCase(repo: repo)
-        sut.networkPathChanged { result in
-            XCTAssertFalse(result)
-        }
+    func testNetworkPathChangedPublisher_whenNotConnected_shouldReturnFalse() {
+        let sut = makeSUT(
+            connected: false,
+            networkPathChangedPublisher: Just(false).eraseToAnyPublisher()
+        )
+        
+        evaluatePublisher(
+            sut.networkPathChangedPublisher,
+            expectedValues: [false],
+            expectationDescription: "Network is not connected"
+        )
     }
     
-    func testNetworkChangedFromNotConnectedToConnected() {
-        var repo = MockNetworkMonitorRepository(connected: false)
-        var sut = NetworkMonitorUseCase(repo: repo)
-        sut.networkPathChanged { result in
-            XCTAssertFalse(result)
-        }
-        repo.connected = true
-        sut = NetworkMonitorUseCase(repo: repo)
-        sut.networkPathChanged { result in
-            XCTAssertTrue(result)
-        }
+    func testNetworkPathChangedPublisher_networkChangedFromNotConnectedToConnected_success() {
+        let initialPublisher = PassthroughSubject<Bool, Never>()
+        let sut = makeSUT(networkPathChangedPublisher: initialPublisher.eraseToAnyPublisher())
+        
+        let expectation = self.expectation(description: "Network changed from not connected to connected")
+        expectation.expectedFulfillmentCount = 2
+        
+        var receivedValues: [Bool] = []
+        
+        sut.networkPathChangedPublisher
+            .sink { value in
+                receivedValues.append(value)
+                expectation.fulfill()
+            }
+            .store(in: &cancellable)
+        
+        initialPublisher.send(false)
+        initialPublisher.send(true)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(receivedValues, [false, true])
     }
     
-    func testNetworkChangedFromConnectedToNotConnected() {
-        var repo = MockNetworkMonitorRepository(connected: true)
-        var sut = NetworkMonitorUseCase(repo: repo)
-        sut.networkPathChanged { result in
-            XCTAssertTrue(result)
-        }
-        repo.connected = false
-        sut = NetworkMonitorUseCase(repo: repo)
-        sut.networkPathChanged { result in
-            XCTAssertFalse(result)
-        }
+    func testNetworkPathChangedPublisher_networkChangedFromConnectedToNotConnected_success() {
+        let initialPublisher = PassthroughSubject<Bool, Never>()
+        let sut = makeSUT(networkPathChangedPublisher: initialPublisher.eraseToAnyPublisher())
+        
+        let expectation = self.expectation(description: "Network changed from connected to not connected")
+        expectation.expectedFulfillmentCount = 2
+        
+        var receivedValues: [Bool] = []
+        
+        sut.networkPathChangedPublisher
+            .sink { value in
+                receivedValues.append(value)
+                expectation.fulfill()
+            }
+            .store(in: &cancellable)
+        
+        initialPublisher.send(true)
+        initialPublisher.send(false)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(receivedValues, [true, false])
     }
     
     func testConnectionChangedStream_onNetworkChanges_shouldChange() async {
         var expectedResults = [true, false, true]
-        let connectionChanged =  AsyncStream { continuation in
+        let connectionChanged = AsyncStream { continuation in
             for expectedResult in expectedResults {
                 continuation.yield(expectedResult)
             }
             continuation.finish()
         }.eraseToAnyAsyncSequence()
         
-        let networkMonitorRepository = MockNetworkMonitorRepository(connectionChangedStream: connectionChanged)
-        let sut = NetworkMonitorUseCase(repo: networkMonitorRepository)
+        let sut = makeSUT(connectionChangedStream: connectionChanged)
+        
+        var receivedResults = [Bool]()
         
         for await isConnected in sut.connectionChangedStream {
-            XCTAssertEqual(isConnected, expectedResults.removeFirst())
+            receivedResults.append(isConnected)
         }
+        
+        XCTAssertEqual(receivedResults, [true, false, true])
     }
     
-    func testIsConnectedViaWiFi_whenConnectedViaWiFi_returnsTrue() {
-        let repository = MockNetworkMonitorRepository(connectedViaWiFi: true)
-        let sut = NetworkMonitorUseCase(repo: repository)
-        
-        let isConnected = sut.isConnectedViaWiFi()
-        
-        XCTAssertTrue(isConnected)
+    func testIsConnectedViaWiFi_whenConnectedViaWiFi_shouldReturnTrue() {
+        let sut = makeSUT(connectedViaWiFi: true)
+        XCTAssertTrue(sut.isConnectedViaWiFi())
     }
     
-    func testIsConnectedViaWiFi_whenConnectedViaWiFi_returnsFalse() {
-        let repository = MockNetworkMonitorRepository(connectedViaWiFi: false)
-        let sut = NetworkMonitorUseCase(repo: repository)
-        
-        let isConnected = sut.isConnectedViaWiFi()
-        
-        XCTAssertFalse(isConnected)
+    func testIsConnectedViaWiFi_whenNotConnectedViaWiFi_shouldReturnFalse() {
+        let sut = makeSUT(connectedViaWiFi: false)
+        XCTAssertFalse(sut.isConnectedViaWiFi())
     }
 }

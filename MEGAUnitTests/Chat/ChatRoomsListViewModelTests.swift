@@ -13,13 +13,19 @@ import XCTest
 
 final class ChatRoomsListViewModelTests: XCTestCase {
     var subscription: AnyCancellable?
-    let chatsListMock = [ChatListItemEntity(chatId: 1, title: "Chat1"),
-                         ChatListItemEntity(chatId: 3, title: "Chat2"),
-                         ChatListItemEntity(chatId: 67, title: "Chat3")]
-    let meetingsListMock = [ChatListItemEntity(chatId: 11, title: "Meeting 1", meeting: true),
-                            ChatListItemEntity(chatId: 14, title: "Meeting 2", meeting: true),
-                            ChatListItemEntity(chatId: 51, title: "Meeting 3", meeting: true)]
+    let chatsListMock = [
+        ChatListItemEntity(chatId: 1, title: "Chat1"),
+        ChatListItemEntity(chatId: 3, title: "Chat2"),
+        ChatListItemEntity(chatId: 67, title: "Chat3")
+    ]
+    let meetingsListMock = [
+        ChatListItemEntity(chatId: 11, title: "Meeting 1", meeting: true),
+        ChatListItemEntity(chatId: 14, title: "Meeting 2", meeting: true),
+        ChatListItemEntity(chatId: 51, title: "Meeting 3", meeting: true)
+    ]
     
+    private var cancellables: Set<AnyCancellable> = []
+
     func test_remoteChatStatusChange() {
         let userHandle: HandleEntity = 100
         let chatUseCase = MockChatUseCase(myUserHandle: userHandle)
@@ -45,14 +51,22 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     func testAction_networkNotReachable() {
-        let networkUseCase = MockNetworkMonitorUseCase(connected: false)
-        let viewModel = makeChatRoomsListViewModel(
-            networkMonitorUseCase: networkUseCase
+        let networkUseCase = MockNetworkMonitorUseCase(
+            connected: false,
+            networkPathChangedPublisher: Just(false).eraseToAnyPublisher()
         )
+        let viewModel = makeChatRoomsListViewModel(networkMonitorUseCase: networkUseCase)
         
-        networkUseCase.networkPathChanged(completion: { _ in
-            XCTAssert(viewModel.isConnectedToNetwork == networkUseCase.isConnected())
-        })
+        let expectation = self.expectation(description: "Network is not reachable")
+        
+        networkUseCase.networkPathChangedPublisher
+            .sink { _ in
+                XCTAssert(viewModel.isConnectedToNetwork == networkUseCase.isConnected())
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+        
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testAction_addChatButtonTapped() {
@@ -629,5 +643,4 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     func edit(scheduledMeeting: ScheduledMeetingEntity) {
         editMeeting_calledTimes += 1
     }
-    
 }

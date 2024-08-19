@@ -35,6 +35,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let chatViewType: ChatViewType
+    private var cancellable: Set<AnyCancellable> = []
     
     lazy var contextMenuManager = ContextMenuManager(
         chatMenuDelegate: self,
@@ -751,12 +752,12 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func monitorNetworkChanges() {
-        networkMonitorUseCase.networkPathChanged { [weak self] isConnectedToNetwork in
-            guard let self else { return }
-            Task { @MainActor in
-                self.isConnectedToNetwork = isConnectedToNetwork
+        networkMonitorUseCase.networkPathChangedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isConnectedToNetwork in
+                self?.isConnectedToNetwork = isConnectedToNetwork
             }
-        }
+            .store(in: &cancellable)
     }
     
     private func monitorActiveCallChanges() {

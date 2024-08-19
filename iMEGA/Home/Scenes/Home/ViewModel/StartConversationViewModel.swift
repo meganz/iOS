@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 import MEGAPresentation
@@ -7,11 +8,12 @@ enum StartConversationAction: ActionType {
 }
 
 enum StartConversationCommand: CommandType, Equatable {
-    case networkAvailablityUpdate(_ isNetworkAvailable: Bool)
+    case networkAvailabilityUpdate(_ isNetworkAvailable: Bool)
 }
 
 final class StartConversationViewModel: ViewModelType {
-
+    private var cancellable: Set<AnyCancellable> = []
+    
     var invokeCommand: ((StartConversationCommand) -> Void)?
 
     func dispatch(_ action: StartConversationAction) {
@@ -21,10 +23,13 @@ final class StartConversationViewModel: ViewModelType {
     }
     
     private func registerNetworkListener() {
-        networkMonitorUseCase.networkPathChanged { [weak self] (connected) in
-            guard let self else { return }
-            self.invokeCommand?(.networkAvailablityUpdate(connected))
-        }
+        networkMonitorUseCase.networkPathChangedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] hasNetworkConnection in
+                guard let self else { return }
+                self.invokeCommand?(.networkAvailabilityUpdate(hasNetworkConnection))
+            }
+            .store(in: &cancellable)
     }
     
     // MARK: - Properties
