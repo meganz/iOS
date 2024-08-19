@@ -15,7 +15,7 @@ final class NodeDescriptionFooterViewModel: ObservableObject {
     }
 
     func showTrailingText() {
-        let numberOfCharacters = description?.unicodeScalars.count ?? 0
+        let numberOfCharacters = description?.utf16.count ?? 0
         trailingText = "\(numberOfCharacters)/\(maxCharactersAllowed)"
     }
 }

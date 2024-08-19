@@ -37,8 +37,8 @@ final class NodeDescriptionTextViewModel: ObservableObject {
             descriptionString.removeLast()
             saveDescription(descriptionString)
         } else {
-            if newValue.unicodeScalars.count > maxCharactersAllowed {
-                descriptionString = String(newValue.prefix(maxCharactersAllowed))
+            if newValue.utf16.count > maxCharactersAllowed {
+                descriptionString = String(decoding: newValue.utf16.prefix(maxCharactersAllowed), as: UTF16.self)
             }
             descriptionUpdated(descriptionString)
         }

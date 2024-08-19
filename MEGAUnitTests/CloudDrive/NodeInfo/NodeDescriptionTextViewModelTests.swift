@@ -39,6 +39,14 @@ final class NodeDescriptionTextViewModelTests: XCTestCase {
         XCTAssertEqual(sut.descriptionString, "Excee")
     }
 
+    func testUpdatedDescriptionString_withEmojiAndExceedingCharacters_shouldTruncate() {
+        let sut = makeSUT(maxCharactersAllowed: 5)
+
+        sut.updatedDescriptionString(newValue: "🇧🇩hi")
+
+        XCTAssertEqual(sut.descriptionString, "🇧🇩h")
+    }
+
     func testUpdatedDescriptionString_withValidCharacters_shouldUpdate() {
         var updatedDescription = ""
         let sut = makeSUT(descriptionUpdated: { updatedDescription = $0 })
