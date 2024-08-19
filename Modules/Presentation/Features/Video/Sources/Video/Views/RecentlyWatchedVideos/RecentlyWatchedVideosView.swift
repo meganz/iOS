@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 import SwiftUI
 
 struct RecentlyWatchedVideosView: View {
@@ -13,7 +14,7 @@ struct RecentlyWatchedVideosView: View {
         VideoListEmptyView(
             videoConfig: .preview,
             image: videoConfig.recentsEmptyStateImage,
-            text: "No recent activity" // CC-7877
+            text: Strings.Localizable.Videos.RecentlyWatched.emptyState
         )
     }
 }

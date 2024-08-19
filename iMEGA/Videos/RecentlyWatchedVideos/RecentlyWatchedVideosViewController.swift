@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 import MEGAUIKit
 import UIKit
 import Video
@@ -25,7 +26,7 @@ final class RecentlyWatchedVideosViewController: UIViewController {
     
     private func setupNavigationBar() {
         forceNavigationBarUpdateIfNeeded()
-        title = "Recently watched" // CC-7877
+        title = Strings.Localizable.Videos.RecentlyWatched.navigationBarTitle
         setupBarButtonItem()
     }
     
