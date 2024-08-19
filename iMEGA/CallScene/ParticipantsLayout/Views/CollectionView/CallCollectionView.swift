@@ -99,7 +99,14 @@ class CallCollectionView: UICollectionView {
             return
         }
         
-        cell.updateAudioDetected(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected)
+        cell.updateAudioDetectedAndBorderColor(
+            audioEnabled: participant.audio == .on,
+            audioDetected: participant.audioDetected,
+            isPinned: cell.isParticipantPinnedInSpeakerLayout(
+                participant: participant,
+                layoutMode: layoutMode
+            )
+        )
     }
     
     func updateParticipantRaiseHand(_ participant: CallParticipantEntity, at index: Int) {
