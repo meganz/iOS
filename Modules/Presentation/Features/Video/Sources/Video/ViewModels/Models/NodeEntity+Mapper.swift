@@ -13,7 +13,8 @@ extension NodeEntity {
             title: name,
             size: FileSizeFormatter.memoryStyleString(fromByteCount: Int64(size)),
             isExported: isExported,
-            label: label
+            label: label,
+            hasThumbnail: hasThumbnail
         )
     }
 }

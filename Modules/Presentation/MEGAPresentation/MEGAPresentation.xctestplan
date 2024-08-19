@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "865F244C-BFE1-49F4-819D-E39D11047181",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "MEGAPresentation",
+          "name" : "MEGAPresentation"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MEGAPresentationTests",
+        "name" : "MEGAPresentationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

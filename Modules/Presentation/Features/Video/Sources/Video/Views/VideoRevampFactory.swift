@@ -45,12 +45,13 @@ public class VideoRevampFactory {
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        nodeIconUseCase: some NodeIconUsecaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
         
         let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo)
-        let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase)
+        let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase, nodeIconUseCase: nodeIconUseCase)
         let videoListViewModel = VideoListViewModel(
             syncModel: syncModel, 
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
@@ -103,6 +104,7 @@ public class VideoRevampFactory {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
+        nodeIconUseCase: some NodeIconUsecaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
         videoSelection: VideoSelection,
@@ -111,12 +113,13 @@ public class VideoRevampFactory {
         syncModel: VideoRevampSyncModel
     ) -> UIViewController {
         let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo)
-        let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase)
+        let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase, nodeIconUseCase: nodeIconUseCase)
         let viewModel = VideoPlaylistContentViewModel(
             videoPlaylistEntity: previewEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentUseCase,
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
-                thumbnailLoader: thumbnailLoader),
+                thumbnailLoader: thumbnailLoader
+            ),
             sharedUIState: sharedUIState,
             presentationConfig: presentationConfig,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
@@ -147,11 +150,18 @@ public class VideoRevampFactory {
 }
 
 extension VideoRevampFactory {
-    private static func makeThumbnailLoader(sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol) -> any ThumbnailLoaderProtocol {
+    private static func makeThumbnailLoader(
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        nodeIconUseCase: some NodeIconUsecaseProtocol
+    ) -> any ThumbnailLoaderProtocol {
         ThumbnailLoaderFactory.makeThumbnailLoader(
-            config: .sensitive(sensitiveNodeUseCase: sensitiveNodeUseCase),
+            config: .sensitiveWithFallbackIcon(
+                sensitiveNodeUseCase: sensitiveNodeUseCase,
+                nodeIconUseCase: nodeIconUseCase
+            ),
             thumbnailUseCase: ThumbnailUseCase(
-                repository: ThumbnailRepository.newRepo)
+                repository: ThumbnailRepository.newRepo
+            )
         )
     }
 }

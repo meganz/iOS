@@ -1,6 +1,7 @@
+import MEGADesignToken
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
-import MEGAPresentation
 
 struct VideoThumbnailView: View {
     
@@ -17,16 +18,18 @@ struct VideoThumbnailView: View {
     
     @ViewBuilder
     private var thumbnailImageView: some View {
-        if previewEntity.imageContainer.type == .placeholder {
-            videoConfig.colorAssets.videoThumbnailImageViewPlaceholderBackgroundColor
-                .frame(width: 150, height: 150)
-        } else {
+        if previewEntity.hasThumbnail {
             previewEntity.imageContainer.image
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cornerRadius(4)
                 .sensitive(previewEntity.imageContainer)
+        } else {
+            FileTypeIconThumbnailView(image: previewEntity.imageContainer.image)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .cornerRadius(4)
+                .sensitive(.opacity)
         }
     }
     
@@ -60,4 +63,28 @@ struct VideoThumbnailView: View {
 
 #Preview {
     VideoThumbnailView(previewEntity: .all(title: .short), videoConfig: .preview)
+}
+
+#Preview {
+    VideoThumbnailView(previewEntity: .all(title: .short, hasThumbnail: false), videoConfig: .preview)
+}
+
+private struct FileTypeIconThumbnailView: View {
+
+    let image: Image
+
+    var body: some View {
+        ZStack {
+            TokenColors.Background.surface2.swiftUI
+            image
+                .resizable()
+                .frame(width: 46, height: 52, alignment: .center)
+            Color.black.opacity(0.2)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+#Preview {
+    FileTypeIconThumbnailView(image: Image(systemName: "film.fill"))
 }

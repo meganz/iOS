@@ -10,7 +10,8 @@ extension VideoCellPreviewEntity {
         title: "The Office Season 8 Episode 23 | Turf War",
         size: "2.00 GB",
         isExported: false,
-        label: nil
+        label: nil,
+        hasThumbnail: true
     )
     
     static let favorite = VideoCellPreviewEntity(
@@ -20,7 +21,8 @@ extension VideoCellPreviewEntity {
         title: "Item that has favorite",
         size: "2.00 GB",
         isExported: false,
-        label: nil
+        label: nil,
+        hasThumbnail: true
     )
     
     static let hasPublicLink = VideoCellPreviewEntity(
@@ -30,7 +32,8 @@ extension VideoCellPreviewEntity {
         title: "Item that has public link",
         size: "2.00 GB",
         isExported: true,
-        label: nil
+        label: nil,
+        hasThumbnail: true
     )
     
     static let hasLabel = VideoCellPreviewEntity(
@@ -40,17 +43,19 @@ extension VideoCellPreviewEntity {
         title: "Item that has label",
         size: "2.00 GB",
         isExported: false,
-        label: .purple
+        label: nil,
+        hasThumbnail: true
     )
     
-    static func all(title: TitleType) -> VideoCellPreviewEntity { VideoCellPreviewEntity(
+    static func all(title: TitleType, hasThumbnail: Bool = true) -> VideoCellPreviewEntity { VideoCellPreviewEntity(
         isFavorite: true,
         imageContainer: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 1000, height: 1000)),
         duration: "00:36:00",
         title: title.rawValue,
         size: "2.00 GB",
-        isExported: true,
-        label: .blue
+        isExported: true, 
+        label: nil,
+        hasThumbnail: hasThumbnail
     ) }
     
     enum TitleType: String {
