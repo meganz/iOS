@@ -221,6 +221,7 @@
 		24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */; };
 		24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */; };
 		24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */; };
+		24B101822C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B101812C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift */; };
 		24B261C22AB16A06006F23BE /* CancellableTransferFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */; };
 		24B6276F2A8F687E00AD588C /* NodeInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */; };
 		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
@@ -2992,6 +2993,7 @@
 		24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaylistShiftStrategyProtocol.swift; sourceTree = "<group>"; };
 		24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManager.swift; sourceTree = "<group>"; };
 		24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManagerTests.swift; sourceTree = "<group>"; };
+		24B101812C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyWatchedVideosViewController.swift; sourceTree = "<group>"; };
 		24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferFactoryTests.swift; sourceTree = "<group>"; };
 		24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
@@ -6316,6 +6318,7 @@
 			isa = PBXGroup;
 			children = (
 				244CEFCD2B257AB500147302 /* Infrastructure */,
+				24B101802C6B38CF006193CF /* RecentlyWatchedVideos */,
 				24385D272BF09420002F0561 /* VideoPlaylist */,
 				241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */,
 				240C98A82BD04738008C9F98 /* VideoRevampTabContainerViewController+NodeActionViewControllerDelegate.swift */,
@@ -6416,6 +6419,14 @@
 				249B71D92ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift */,
 			);
 			path = "Shared Controls";
+			sourceTree = "<group>";
+		};
+		24B101802C6B38CF006193CF /* RecentlyWatchedVideos */ = {
+			isa = PBXGroup;
+			children = (
+				24B101812C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift */,
+			);
+			path = RecentlyWatchedVideos;
 			sourceTree = "<group>";
 		};
 		24B261C02AB169F2006F23BE /* ViewEntity */ = {
@@ -15856,6 +15867,7 @@
 				94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */,
 				5D7792DA2506116100378D87 /* RecentActionViewModel.swift in Sources */,
 				83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */,
+				24B101822C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift in Sources */,
 				5D08568F2505E2140030AEE3 /* RecentNodeRouter.swift in Sources */,
 				5B5C7B29264A92410087200D /* RecentsPreference.swift in Sources */,
 				9449D42C2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift in Sources */,

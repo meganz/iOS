@@ -18,6 +18,7 @@ public protocol VideoRevampRouting: Routing {
     func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity, presentationConfig: VideoPlaylistContentSnackBarPresentationConfig)
     func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void)
     func popScreen()
+    func openRecentlyWatchedVideos()
 }
 
 extension VideoRevampRouting {

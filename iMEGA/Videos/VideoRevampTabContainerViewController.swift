@@ -286,7 +286,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     @objc private func recentlyWatchedVideosButtonItemTapped() {
-        // CC-7811
+        router.openRecentlyWatchedVideos()
     }
     
     private func configureSearchBar() {

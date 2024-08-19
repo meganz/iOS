@@ -12,6 +12,8 @@ struct Preview_VideoRevampRouter: VideoRevampRouting {
     
     func popScreen() { }
     
+    func openRecentlyWatchedVideos() { }
+    
     func build() -> UIViewController { UIViewController() }
     
     func start() { }

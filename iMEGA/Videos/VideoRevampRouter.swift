@@ -190,4 +190,10 @@ struct VideoRevampRouter: VideoRevampRouting {
     func popScreen() {
         navigationController?.popViewController(animated: true)
     }
+    
+    func openRecentlyWatchedVideos() {
+        let viewController = RecentlyWatchedVideosViewController(videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled))
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }

@@ -16,9 +16,14 @@ extension VideoConfig {
         
         public struct EmptyView: Equatable {
             let color: ColorPalette
+            let recentsEmptyStateImage: UIImage
             
-            public init(color: ColorPalette) {
+            public init(
+                color: ColorPalette,
+                recentsEmptyStateImage: UIImage
+            ) {
                 self.color = color
+                self.recentsEmptyStateImage = recentsEmptyStateImage
             }
             
             public struct ColorPalette: Equatable {
@@ -108,4 +113,8 @@ extension VideoConfig {
             }
         }
     }
+}
+
+extension VideoConfig {
+    var recentsEmptyStateImage: UIImage { recentlyWatchedAssets.emptyView.recentsEmptyStateImage }
 }
