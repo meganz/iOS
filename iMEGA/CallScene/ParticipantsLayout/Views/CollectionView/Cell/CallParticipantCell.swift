@@ -44,13 +44,16 @@ class CallParticipantCell: UICollectionViewCell {
             case .speaker:
                 nameLabel.superview?.isHidden = true
                 micImageView.superview?.layer.cornerRadius = 12
-                if participant.isSpeakerPinned {
-                    borderColor = UIColor.whiteFFFFFF
-                    borderWidth = 1
-                }
             }
             
-            updateAudioDetected(audioEnabled: participant.audio == .on, audioDetected: participant.audioDetected)
+            updateAudioDetectedAndBorderColor(
+                audioEnabled: participant.audio == .on,
+                audioDetected: participant.audioDetected,
+                isPinned: isParticipantPinnedInSpeakerLayout(
+                    participant: participant,
+                    layoutMode: layoutMode
+                )
+            )
             updateRaiseHand(participant.raisedHand)
         } else {
             nameLabel.isHidden = true
@@ -75,7 +78,11 @@ class CallParticipantCell: UICollectionViewCell {
         }
     }
     
-    func updateAudioDetected(audioEnabled: Bool, audioDetected: Bool) {
+    func updateAudioDetectedAndBorderColor(
+        audioEnabled: Bool,
+        audioDetected: Bool,
+        isPinned: Bool
+    ) {
         if audioDetected {
             borderColor = UIColor.green00C29A
             borderWidth = 1
@@ -83,7 +90,12 @@ class CallParticipantCell: UICollectionViewCell {
             micImageView.image = .micActive
         } else {
             updateMic(audioEnabled: audioEnabled, audioDetected: audioDetected)
-            borderWidth = 0
+            if isPinned {
+                borderColor = UIColor.whiteFFFFFF
+                borderWidth = 1
+            } else {
+                borderWidth = 0
+            }
         }
     }
     
@@ -94,6 +106,10 @@ class CallParticipantCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         participant = nil
+    }
+    
+    func isParticipantPinnedInSpeakerLayout(participant: CallParticipantEntity, layoutMode: ParticipantsLayoutMode) ->  Bool {
+        participant.isSpeakerPinned && layoutMode == .speaker
     }
 }
 
