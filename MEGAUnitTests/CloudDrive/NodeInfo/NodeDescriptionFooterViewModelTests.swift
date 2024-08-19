@@ -20,6 +20,16 @@ final class NodeDescriptionFooterViewModelTests: XCTestCase {
         XCTAssertEqual(sut.trailingText, "15/300")
     }
 
+    func testShowTrailingText_withInitialValueAsEmoji_shouldMatchResults() {
+        let sut = NodeDescriptionFooterViewModel(
+            leadingText: "",
+            description: "🇧🇩",
+            maxCharactersAllowed: 300
+        )
+        sut.showTrailingText()
+        XCTAssertEqual(sut.trailingText, "4/300")
+    }
+
     func testShowTrailingText_withUpdatedDescription_shouldMatchResults() {
         let sut = NodeDescriptionFooterViewModel(
             leadingText: "",
