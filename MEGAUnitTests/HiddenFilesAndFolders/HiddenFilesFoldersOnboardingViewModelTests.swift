@@ -40,10 +40,12 @@ final class HiddenFilesFoldersOnboardingViewModelTests: XCTestCase {
 
     private func makeSUT(
         tracker: some AnalyticsTracking = MockTracker(),
-        screenEvent: some ScreenViewEventIdentifier = HideNodeOnboardingScreenEvent()
+        screenEvent: some ScreenViewEventIdentifier = HideNodeOnboardingScreenEvent(),
+        dismissEvent: some ButtonPressedEventIdentifier = HiddenNodeOnboardingCloseButtonPressedEvent()
     ) -> HiddenFilesFoldersOnboardingViewModel {
         HiddenFilesFoldersOnboardingViewModel(
             tracker: tracker,
-            screenEvent: screenEvent)
+            screenEvent: screenEvent, 
+            dismissEvent: dismissEvent)
     }
 }

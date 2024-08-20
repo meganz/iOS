@@ -197,7 +197,8 @@ private struct OnboardingItemView: View {
         primaryButton: Button("See Plans", action: {}),
         viewModel: HiddenFilesFoldersOnboardingViewModel(
             tracker: Preview_AnalyticsTracking(),
-            screenEvent: Preview_ScreenEvent()
+            screenEvent: Preview_ScreenEvent(), 
+            dismissEvent: Preview_ButtonPressedEvent()
         ))
 }
 
@@ -206,7 +207,8 @@ private struct OnboardingItemView: View {
         primaryButton: Button("Continue", action: {}),
         viewModel: HiddenFilesFoldersOnboardingViewModel(
             tracker: Preview_AnalyticsTracking(),
-            screenEvent: Preview_ScreenEvent()
+            screenEvent: Preview_ScreenEvent(),
+            dismissEvent: Preview_ButtonPressedEvent()
         ))
     .preferredColorScheme(.dark)
 }

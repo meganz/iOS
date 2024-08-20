@@ -278,6 +278,8 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func hide(node: MEGANode) {
+        viewModel.trackHideNodeMenuEvent()
+        
         HideFilesAndFoldersRouter(presenter: self)
             .hideNodes([node.toNodeEntity()])
     }
