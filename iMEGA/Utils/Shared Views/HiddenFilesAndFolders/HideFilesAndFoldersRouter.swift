@@ -34,7 +34,8 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
                 hideFilesAndFoldersRouter: self,
                 upgradeAccountRouter: UpgradeAccountRouter(),
                 tracker: DIContainer.tracker),
-            screenEvent: HideNodeUpgradeScreenEvent()
+            screenEvent: HideNodeUpgradeScreenEvent(), 
+            dismissEvent: HiddenNodeUpgradeCloseButtonPressedEvent()
         )
     }
     
@@ -47,7 +48,8 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
                     repo: UserAttributeRepository.newRepo),
                 hideFilesAndFoldersRouter: self,
                 tracker: DIContainer.tracker),
-            screenEvent: HideNodeOnboardingScreenEvent()
+            screenEvent: HideNodeOnboardingScreenEvent(), 
+            dismissEvent: HiddenNodeOnboardingCloseButtonPressedEvent()
         )
     }
     
@@ -63,14 +65,16 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     @MainActor
     private func showHiddenFilesAndFoldersOnboarding(
         primaryButtonViewModel: some HiddenFilesOnboardingPrimaryButtonViewModelProtocol,
-        screenEvent: some ScreenViewEventIdentifier
+        screenEvent: some ScreenViewEventIdentifier,
+        dismissEvent: some ButtonPressedEventIdentifier
     ) {
         let onboardingViewController = UIHostingController(rootView: HiddenFilesFoldersOnboardingView(
             primaryButton: HiddenFilesOnboardingButtonView(
                 viewModel: primaryButtonViewModel),
             viewModel: HiddenFilesFoldersOnboardingViewModel(
                 tracker: DIContainer.tracker,
-                screenEvent: screenEvent)
+                screenEvent: screenEvent, 
+                dismissEvent: dismissEvent)
         ))
         self.onboardingViewController = onboardingViewController
         presenter?.present(onboardingViewController,
