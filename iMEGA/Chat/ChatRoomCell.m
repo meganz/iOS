@@ -79,7 +79,14 @@
     self.chatLastTime.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:LocalizedString(@"archived", @"Title of flag of archived chats.")];
-    self.unreadView.backgroundColor = chatRoomsTypeArchived ? [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_redForTraitCollection:self.traitCollection];
+    if (chatRoomsTypeArchived) {
+        self.unreadView.hidden = YES;
+        self.unreadCount.hidden = YES;
+    } else {
+        self.unreadCount.hidden = NO;
+        self.unreadView.hidden = NO;
+        self.unreadView.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+    }
     self.unreadCount.textColor = UIColor.mnz_whiteFFFFFF;
     
     self.onCallDuration.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
@@ -115,11 +122,10 @@
 
 - (void)configureCellForArchivedChat {
     self.chatLastMessage.textColor = UIColor.secondaryLabelColor;
-    
-    self.unreadView.hidden = NO;
-    self.unreadView.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.unreadView.hidden = YES;
     self.unreadCount.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium];
     self.unreadCount.text = LocalizedString(@"archived", @"Title of flag of archived chats.");
+    self.unreadCount.hidden = YES;
     self.unreadCountLabelHorizontalMarginConstraint.constant = 7;
     self.activeCallImageView.hidden = YES;
 }
