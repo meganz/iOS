@@ -4,11 +4,11 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
-protocol RenameViewRouting: Routing {
+protocol RenameViewRouting: Routing, Sendable {
     func renamingFinished(with result: Result<Void, any Error>)
 }
 
-struct RenameViewModel {
+struct RenameViewModel: Sendable {
     private let router: any RenameViewRouting
     private let renameEntity: RenameActionEntity
     private let renameUseCase: any RenameUseCaseProtocol

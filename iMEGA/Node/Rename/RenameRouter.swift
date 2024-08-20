@@ -2,16 +2,15 @@ import DeviceCenter
 import MEGADomain
 import MEGAPresentation
 
-final class RenameRouter: Routing, RenameViewRouting {
+struct RenameRouter: Routing, RenameViewRouting, Sendable {
     private weak var presenter: UIViewController?
-    private weak var baseViewController: UIViewController?
     private let renameEntity: RenameActionEntity
     private let renameUseCase: any RenameUseCaseProtocol
 
     init(
         presenter: UIViewController,
         renameEntity: RenameActionEntity,
-        renameUseCase: any RenameUseCaseProtocol
+        renameUseCase: some RenameUseCaseProtocol
     ) {
         self.presenter = presenter
         self.renameEntity = renameEntity
@@ -39,8 +38,6 @@ final class RenameRouter: Routing, RenameViewRouting {
     
     func start() {
         let viewController = build()
-        baseViewController = viewController
-        
         presenter?.present(viewController, animated: true)
     }
     

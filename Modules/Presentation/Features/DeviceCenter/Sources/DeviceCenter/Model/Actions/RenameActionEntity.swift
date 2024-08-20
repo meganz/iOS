@@ -1,8 +1,8 @@
 import MEGADomain
 
-public typealias RenamingFinished = () -> Void
+public typealias RenamingFinished = @Sendable () -> Void
 
-public struct RenameActionEntity {
+public struct RenameActionEntity: Sendable {
     public let oldName: String
     public let otherNamesInContext: [String]
     public let actionType: RenameActionType
@@ -11,14 +11,14 @@ public struct RenameActionEntity {
     public let alertPlaceholder: String
     public let renamingFinished: RenamingFinished
     
-    public enum RenameErrorType {
+    public enum RenameErrorType: Sendable {
         case invalidCharacters
         case duplicatedName
         case nameTooLong
         case none
     }
 
-    public enum RenameActionType {
+    public enum RenameActionType: Sendable {
         case device(deviceId: String, maxCharacters: Int)
     }
 
