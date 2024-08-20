@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -69,22 +69,10 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="weight" value="bold"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="25" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZw-YY-bXH">
-                                                <rect key="frame" x="44" y="135" width="2" height="0.0"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="viewAndEditProfile" translatesAutoresizingMaskIntoConstraints="NO" id="Zd2-ds-fPD">
-                                                <rect key="frame" x="16" y="123" width="24" height="24"/>
-                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcr-fM-O6t">
                                                 <rect key="frame" x="16" y="36" width="30" height="109"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <connections>
-                                                    <action selector="viewAndEditProfileTouchUpInside:" destination="EN7-B0-mf8" eventType="touchUpInside" id="un4-40-LTw"/>
-                                                </connections>
                                             </button>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOe-An-q3u">
                                                 <rect key="frame" x="0.0" y="147.5" width="414" height="0.5"/>
@@ -103,16 +91,11 @@
                                             <constraint firstItem="10p-Ba-INI" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YqG-fz-6ti" secondAttribute="trailing" id="MNJ-sH-KJk"/>
                                             <constraint firstAttribute="trailing" secondItem="wKG-M1-Umc" secondAttribute="trailing" constant="30" id="Pc3-Zs-V7B"/>
                                             <constraint firstItem="wKG-M1-Umc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YqG-fz-6ti" secondAttribute="trailing" constant="20" id="PdU-YS-MAS"/>
-                                            <constraint firstItem="Hcr-fM-O6t" firstAttribute="bottom" secondItem="fZw-YY-bXH" secondAttribute="bottom" constant="10" id="QFO-hH-StO"/>
-                                            <constraint firstItem="fZw-YY-bXH" firstAttribute="trailing" secondItem="Hcr-fM-O6t" secondAttribute="trailing" id="Ru4-dc-tGK"/>
                                             <constraint firstItem="7za-S6-P7g" firstAttribute="trailing" secondItem="wKG-M1-Umc" secondAttribute="trailing" constant="4" id="SoS-8s-JCz"/>
                                             <constraint firstItem="YqG-fz-6ti" firstAttribute="top" secondItem="wKG-M1-Umc" secondAttribute="top" id="TD7-A3-CSH"/>
-                                            <constraint firstItem="fZw-YY-bXH" firstAttribute="leading" secondItem="Zd2-ds-fPD" secondAttribute="trailing" constant="4" id="TxD-B3-nYK"/>
                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="wKG-M1-Umc" secondAttribute="bottom" constant="10" id="X6w-nK-s9n"/>
                                             <constraint firstItem="uOe-An-q3u" firstAttribute="top" secondItem="Hcr-fM-O6t" secondAttribute="bottom" constant="2.5" id="ZVC-0a-r0J"/>
-                                            <constraint firstItem="Zd2-ds-fPD" firstAttribute="leading" secondItem="Hcr-fM-O6t" secondAttribute="leading" id="dlW-Gw-IAK"/>
                                             <constraint firstItem="7za-S6-P7g" firstAttribute="bottom" secondItem="wKG-M1-Umc" secondAttribute="bottom" constant="4" id="g32-LB-FLG"/>
-                                            <constraint firstItem="fZw-YY-bXH" firstAttribute="centerY" secondItem="Zd2-ds-fPD" secondAttribute="centerY" id="gDj-OC-hpT"/>
                                             <constraint firstAttribute="bottom" secondItem="uOe-An-q3u" secondAttribute="bottom" id="hpC-RL-xbl"/>
                                             <constraint firstItem="wKG-M1-Umc" firstAttribute="top" secondItem="eYn-oF-AZu" secondAttribute="top" constant="27" id="mRN-2t-GzH"/>
                                             <constraint firstItem="Hcr-fM-O6t" firstAttribute="top" secondItem="YqG-fz-6ti" secondAttribute="bottom" constant="9" id="oWk-sK-hIZ"/>
@@ -421,9 +404,6 @@
                         <outlet property="tableFooterLabel" destination="3a0-Df-3mq" id="gyK-EJ-eOU"/>
                         <outlet property="tableFooterView" destination="JUo-jI-gO6" id="4g1-J9-aYK"/>
                         <outlet property="tableView" destination="Yui-UF-WIL" id="dT7-Ok-gtJ"/>
-                        <outlet property="viewAndEditProfileButton" destination="Hcr-fM-O6t" id="EwZ-AC-WyZ"/>
-                        <outlet property="viewAndEditProfileImageView" destination="Zd2-ds-fPD" id="hIH-rP-6nv"/>
-                        <outlet property="viewAndEditProfileLabel" destination="fZw-YY-bXH" id="OMf-Ef-rGd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E84-JO-55A" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -449,7 +429,6 @@
         <image name="addPhoneNumberSmall" width="60" height="60"/>
         <image name="myAccountIcon" width="31" height="28"/>
         <image name="userManagement" width="50" height="50.5"/>
-        <image name="viewAndEditProfile" width="24" height="24"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

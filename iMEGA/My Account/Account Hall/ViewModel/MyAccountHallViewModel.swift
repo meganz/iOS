@@ -106,10 +106,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     // MARK: Feature flags
     func isNotificationCenterEnabled() -> Bool { true }
     
-    var isCancelSubscriptionFeatureFlagEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .cancelSubscription)
-    }
-    
     // MARK: - Dispatch actions
     
     func dispatch(_ action: MyAccountHallAction) {
@@ -228,8 +224,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         switch MyAccountMegaSection(rawValue: indexPath.row) {
         case .plan:
             shouldShowCell = showPlanRow
-        case .myAccount:
-            shouldShowCell = isCancelSubscriptionFeatureFlagEnabled
         case .achievements:
             shouldShowCell = myAccountHallUseCase.isAchievementsEnabled
         default: break

@@ -49,10 +49,6 @@ final class ProfileViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    var isCancelSubscriptionFeatureFlagEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .cancelSubscription)
-    }
-    
     // Internal State
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let accountUseCase: any AccountUseCaseProtocol
@@ -118,17 +114,15 @@ final class ProfileViewModel: ViewModelType {
     private var shouldShowCancelSubscriptionSection: Bool {
         // This property checks if the user should be shown the cancel subscription section.
         // The conditions are as follows:
-        // 1. The cancel subscription feature flag is enabled.
-        // 2. The user has a standard pro plan (Lite, Pro I, II, III).
-        // 3. The user is subscribed to a Pro plan.
-        // 4. The user has one and only one pro billed account.
+        // 1. The user has a standard pro plan (Lite, Pro I, II, III).
+        // 2. The user is subscribed to a Pro plan.
+        // 3. The user has one and only one pro billed account.
         //
         // We validate if the current Pro plan is associated with any subscription because a user may have
         // a one-off plan (e.g., via vouchers). In such cases, the user has a standard pro plan, but
         // since this is not a recurring purchase, the current pro plan is not associated with any
         // subscription and therefore we are not able to cancel the subscription, so we should hide the
         // cancel subscription button.
-        isCancelSubscriptionFeatureFlagEnabled &&
         accountUseCase.isStandardProAccount() &&
         accountUseCase.isBilledProPlan() &&
         !accountUseCase.hasMultipleBilledProPlans()

@@ -16,10 +16,6 @@ extension MyAccountHallViewController {
     }
     
     @objc func didTapProfileView() {
-        if !viewModel.isCancelSubscriptionFeatureFlagEnabled {
-            showProfileView()
-        }
-        
         viewModel.dispatch(.didTapAccountHeader)
     }
     
@@ -106,7 +102,7 @@ extension MyAccountHallViewController {
             configNavigationBar()
             configPlanDisplay()
             configTableFooterView()
-            configViewAndEditProfileMenu()
+            configProfileHeaderMenu()
             setUserAvatar()
             setUserFullName()
             tableView?.reloadData()
@@ -154,12 +150,7 @@ extension MyAccountHallViewController {
         tableView?.tableFooterView = tableFooterView
     }
     
-    private func configViewAndEditProfileMenu() {
-        let isCancelSubscriptionFeatureFlagEnabled = viewModel.isCancelSubscriptionFeatureFlagEnabled
-        viewAndEditProfileLabel?.isHidden = isCancelSubscriptionFeatureFlagEnabled
-        viewAndEditProfileButton?.isHidden = isCancelSubscriptionFeatureFlagEnabled
-        viewAndEditProfileImageView?.isHidden = isCancelSubscriptionFeatureFlagEnabled
-        
+    private func configProfileHeaderMenu() {
         let profileTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfileView))
         profileView?.gestureRecognizers = [profileTapGesture]
     }

@@ -162,7 +162,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
                     return upgradePlanSetupCell(indexPath)
                 }
             case MyAccountMegaSection.myAccount.rawValue:
-                return viewModel.isCancelSubscriptionFeatureFlagEnabled ? myAccountSetupCell(indexPath) : UITableViewCell()
+                return myAccountSetupCell(indexPath)
             default:
                 break
             }
