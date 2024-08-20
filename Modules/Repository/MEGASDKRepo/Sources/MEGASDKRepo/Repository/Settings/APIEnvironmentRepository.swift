@@ -4,15 +4,19 @@ import MEGASdk
 
 public struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
     public static var newRepo: APIEnvironmentRepository {
-        APIEnvironmentRepository(sdk: .sharedSdk, folderSdk: .sharedFolderLinkSdk, credentialRepository: CredentialRepository.newRepo)
+        APIEnvironmentRepository(
+            sdk: .sharedSdk,
+            folderSdk: .sharedFolderLinkSdk,
+            credentialRepository: CredentialRepository.newRepo,
+            preferenceRepository: PreferenceRepository.newRepo
+        )
     }
     
     private let sdk: MEGASdk
     private let folderSdk: MEGASdk
     private let credentialRepository: any CredentialRepositoryProtocol
-    
-    @PreferenceWrapper(key: .apiEnvironment, defaultValue: 0, useCase: PreferenceUseCase(repository: PreferenceRepository.newRepo))
-    private var apiEnvironment: Int
+    private let preferenceRepository: any PreferenceRepositoryProtocol
+    private var apiEnvironment: PreferenceWrapper<Int>
     
     private enum Constants {
         static let productionSDKUrl = "https://g.api.mega.co.nz/"
@@ -21,13 +25,20 @@ public struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
         static let sandbox3SDKUrl = "https://api-sandbox3.developers.mega.co.nz/"
     }
     
-    public init(sdk: MEGASdk, folderSdk: MEGASdk, credentialRepository: any CredentialRepositoryProtocol) {
+    public init(
+        sdk: MEGASdk,
+        folderSdk: MEGASdk,
+        credentialRepository: some CredentialRepositoryProtocol,
+        preferenceRepository: some PreferenceRepositoryProtocol
+    ) {
         self.sdk = sdk
         self.folderSdk = folderSdk
         self.credentialRepository = credentialRepository
+        self.preferenceRepository = preferenceRepository
+        self.apiEnvironment = PreferenceWrapper(key: .apiEnvironment, defaultValue: 0, useCase: PreferenceUseCase(repository: preferenceRepository))
     }
     
-    public func changeAPIURL(_ environment: APIEnvironmentEntity, onUserSessionAvailable: () -> Void) {
+    public mutating func changeAPIURL(_ environment: APIEnvironmentEntity, onUserSessionAvailable: () -> Void) {
         switch environment {
         case .production:
             sdk.changeApiUrl(Constants.productionSDKUrl, disablepkp: false)
@@ -43,7 +54,7 @@ public struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
             folderSdk.changeApiUrl(Constants.sandbox3SDKUrl, disablepkp: true)
         }
         
-        apiEnvironment = environment.toEnvironmentCode()
+        apiEnvironment.wrappedValue = environment.toEnvironmentCode()
         
         if let sessionId = credentialRepository.sessionId() {
             sdk.fastLogin(withSession: sessionId)

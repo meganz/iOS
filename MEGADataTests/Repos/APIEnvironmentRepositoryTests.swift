@@ -1,4 +1,3 @@
-import ChatRepoMock
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -9,9 +8,7 @@ import XCTest
 final class APIEnvironmentRepositoryTests: XCTestCase {
     let sdk = MockSdk()
     let folderSdk = MockFolderSdk()
-    let chatSdk = MockChatSDK()
     var repo: APIEnvironmentRepository!
-    var disablepkp: Bool!
     
     private enum Constants {
         static let productionSDKUrl = "https://g.api.mega.co.nz/"
@@ -21,50 +18,43 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
     }
     
     override func setUpWithError() throws {
-        disablepkp = false
-        
-        repo = APIEnvironmentRepository(sdk: sdk,
-                                folderSdk: folderSdk,
-                                credentialRepository: MockCredentialRepository.newRepo)
+        repo = APIEnvironmentRepository(
+            sdk: sdk,
+            folderSdk: folderSdk,
+            credentialRepository: MockCredentialRepository.newRepo,
+            preferenceRepository: MockPreferenceRepository.newRepo
+        )
     }
     
     func testChangeAPIURL_production() throws {
         repo.changeAPIURL(.production) {}
         XCTAssertEqual(sdk.apiURL, Constants.productionSDKUrl)
-        disablepkp = try XCTUnwrap(sdk.disablepkp)
-        XCTAssertFalse(disablepkp)
+        XCTAssertFalse(try XCTUnwrap(sdk.disablepkp))
         XCTAssertEqual(folderSdk.apiURL, Constants.productionSDKUrl)
-        disablepkp = try XCTUnwrap(folderSdk.disablepkp)
-        XCTAssertFalse(disablepkp)
+        XCTAssertFalse(try XCTUnwrap(folderSdk.disablepkp))
     }
     
     func testChangeAPIURL_staging() throws {
         repo.changeAPIURL(.staging) {}
         XCTAssertEqual(sdk.apiURL, Constants.stagingSDKUrl)
-        disablepkp = try XCTUnwrap(sdk.disablepkp)
-        XCTAssertFalse(disablepkp)
+        XCTAssertFalse(try XCTUnwrap(sdk.disablepkp))
         XCTAssertEqual(folderSdk.apiURL, Constants.stagingSDKUrl)
-        disablepkp = try XCTUnwrap(folderSdk.disablepkp)
-        XCTAssertFalse(disablepkp)
+        XCTAssertFalse(try XCTUnwrap(folderSdk.disablepkp))
     }
     
     func testChangeAPIURL_bt1444() throws {
         repo.changeAPIURL(.bt1444) {}
         XCTAssertEqual(sdk.apiURL, Constants.bt1444SDKUrl)
-        disablepkp = try XCTUnwrap(sdk.disablepkp)
-        XCTAssertTrue(disablepkp)
+        XCTAssertTrue(try XCTUnwrap(sdk.disablepkp))
         XCTAssertEqual(folderSdk.apiURL, Constants.bt1444SDKUrl)
-        disablepkp = try XCTUnwrap(folderSdk.disablepkp)
-        XCTAssertTrue(disablepkp)
+        XCTAssertTrue(try XCTUnwrap(folderSdk.disablepkp))
     }
      
     func testChangeAPIURL_sandbox() throws {
         repo.changeAPIURL(.sandbox3) {}
         XCTAssertEqual(sdk.apiURL, Constants.sandbox3SDKUrl)
-        disablepkp = try XCTUnwrap(sdk.disablepkp)
-        XCTAssertTrue(disablepkp)
+        XCTAssertTrue(try XCTUnwrap(sdk.disablepkp))
         XCTAssertEqual(folderSdk.apiURL, Constants.sandbox3SDKUrl)
-        disablepkp = try XCTUnwrap(folderSdk.disablepkp)
-        XCTAssertTrue(disablepkp)
+        XCTAssertTrue(try XCTUnwrap(folderSdk.disablepkp))
     }
 }
