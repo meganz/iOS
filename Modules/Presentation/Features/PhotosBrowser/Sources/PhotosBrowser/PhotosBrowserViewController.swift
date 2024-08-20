@@ -26,7 +26,9 @@ public final class PhotosBrowserViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.red
+        buildNavigationBar()
+        buildBottomToolBar()
+        configPhotosBrowserCollectionView()
         
         viewModel.invokeCommand = { [weak self] command in
             self?.executeCommand(command)
@@ -39,9 +41,7 @@ public final class PhotosBrowserViewController: UIViewController {
     
     private func executeCommand(_ command: PhotosBrowserViewModel.Command) {
         switch command {
-        case .onViewReady:
-            buildNavigationBar()
-            buildBottomToolBar()
+        case .onViewReady: break
         }
     }
     
@@ -78,5 +78,24 @@ public final class PhotosBrowserViewController: UIViewController {
         config.configure(navigationItem: navigationItem, in: self)
         
         navigationBar.items = [navigationItem]
+    }
+    
+    private func configPhotosBrowserCollectionView() {
+        let content = PhotosBrowserCollectionView(viewModel: PhotosBrowserCollectionViewModel())
+        let host = UIHostingController(rootView: content)
+        addChild(host)
+        
+        host.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(host.view)
+        
+        NSLayoutConstraint.activate([
+            host.view.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+            host.view.bottomAnchor.constraint(equalTo: toolbar.topAnchor),
+            host.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        
+        host.view.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
+        host.didMove(toParent: self)
     }
 }

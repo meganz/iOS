@@ -1,14 +1,14 @@
 import UIKit
 
 extension UIToolbar {
-    func configure(with images: [UIImage], actions: [UIAction]) {
+    func configure(with toolbarItems: [PhotosBrowserToolbarItem]) {
         var barButtonItems: [UIBarButtonItem] = []
         
-        for (index, image) in images.enumerated() {
-            let button = UIBarButtonItem(image: image, primaryAction: actions[index])
+        for (index, item) in toolbarItems.enumerated() {
+            let button = UIBarButtonItem(image: item.image, primaryAction: item.action)
             
             barButtonItems.append(button)
-            if index < images.count - 1 {
+            if index < toolbarItems.count - 1 {
                 barButtonItems.append(UIBarButtonItem.flexibleSpace())
             }
         }
