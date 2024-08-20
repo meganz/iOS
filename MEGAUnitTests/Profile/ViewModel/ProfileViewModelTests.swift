@@ -280,7 +280,6 @@ final class ProfileViewModelTests: XCTestCase {
         isBilledProPlan: Bool = false,
         hasMultipleBilledProPlan: Bool = false,
         tracker: some AnalyticsTracking = MockTracker(),
-        featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [.cancelSubscription: true]),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: ProfileViewModel, router: MockProfileViewRouter) {
@@ -304,7 +303,6 @@ final class ProfileViewModelTests: XCTestCase {
         return (
             ProfileViewModel(
                 accountUseCase: accountUseCase,
-                featureFlagProvider: featureFlagProvider,
                 tracker: tracker,
                 router: router
             ),

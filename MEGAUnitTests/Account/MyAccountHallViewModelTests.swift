@@ -295,22 +295,12 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.calculateCellHeight(at: indexPath), 0)
     }
     
-    func testCalculateCellHeight_myAccountSection_featureFlagIsEnabled_shouldNotBeZero() {
-        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.random,
-                               featureFlagProvider: MockFeatureFlagProvider(list: [.cancelSubscription: true]))
+    func testCalculateCellHeight_myAccountSection_shouldNotBeZero() {
+        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.random)
         let indexPath = IndexPath(row: MyAccountMegaSection.myAccount.rawValue,
                                   section: MyAccountSection.mega.rawValue)
         
         XCTAssertNotEqual(sut.calculateCellHeight(at: indexPath), 0)
-    }
-    
-    func testCalculateCellHeight_myAccountSection_featureFlagIsDisabled_shouldBeZero() {
-        let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.random,
-                               featureFlagProvider: MockFeatureFlagProvider(list: [.cancelSubscription: false]))
-        let indexPath = IndexPath(row: MyAccountMegaSection.myAccount.rawValue,
-                                  section: MyAccountSection.mega.rawValue)
-        
-        XCTAssertEqual(sut.calculateCellHeight(at: indexPath), 0)
     }
     
     func test_didTapMyAccountButton_tracksAnalyticsEvent() {

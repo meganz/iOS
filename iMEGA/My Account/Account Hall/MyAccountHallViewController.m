@@ -39,14 +39,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.viewAndEditProfileLabel.text = LocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
-    self.viewAndEditProfileButton.accessibilityLabel = LocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
-    
     [self registerCustomCells];
         
     self.avatarImageView.image = self.avatarImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.qrCodeImageView.image = self.qrCodeImageView.image.imageFlippedForRightToLeftLayoutDirection;
-    self.viewAndEditProfileImageView.image = self.viewAndEditProfileImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.addPhoneNumberImageView.image = self.addPhoneNumberImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     UITapGestureRecognizer *tapAvatarGestureRecognizer = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(avatarTapped:)];
@@ -127,16 +123,11 @@
     UIColor *primaryTextColor = [UIColor cellTitleColorFor:self.traitCollection];
     
     if (UIColor.isDesignTokenEnabled) {
-        UIImage *editIcon = [[UIImage imageNamed:@"viewAndEditProfile"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate].imageFlippedForRightToLeftLayoutDirection;
-        self.viewAndEditProfileImageView.image = editIcon;
-        self.viewAndEditProfileImageView.tintColor = [UIColor mnz_navigationBarTintFor:self.traitCollection];
-        self.viewAndEditProfileLabel.textColor = primaryTextColor;
         self.nameLabel.textColor = primaryTextColor;
         self.addPhoneNumberTitle.textColor = primaryTextColor;
         self.addPhoneNumberDescription.textColor = primaryTextColor;
         self.qrCodeImageView.image = [UIImage imageNamed:@"qrCode"].imageFlippedForRightToLeftLayoutDirection;
     } else {
-        self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         // qrCodeIcon should be deleted on assets when design token is permanently applied. It is only used here.
         self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
     }
@@ -203,10 +194,6 @@
     contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [self presentViewController:contactLinkVC animated:YES completion:nil];
-}
-
-- (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
-    [self showProfileView];
 }
 
 - (IBAction)didTapAddPhoneNumberView {
