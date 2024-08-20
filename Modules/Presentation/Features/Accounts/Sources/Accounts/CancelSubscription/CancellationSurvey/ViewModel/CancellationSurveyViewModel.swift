@@ -12,10 +12,10 @@ final class CancellationSurveyViewModel: ObservableObject {
     let otherReasonID = CancellationSurveyReason.otherReason.id
     let minimumTextRequired = 10
     let maximumTextRequired = 120
-    private var router: any CancellationSurveyRouting
+    private let cancelAccountPlanRouter: any CancelAccountPlanRouting
     
-    init(router: some CancellationSurveyRouting) {
-        self.router = router
+    init(cancelAccountPlanRouter: some CancelAccountPlanRouting) {
+        self.cancelAccountPlanRouter = cancelAccountPlanRouter
     }
     
     @MainActor
@@ -46,6 +46,7 @@ final class CancellationSurveyViewModel: ObservableObject {
     
     func didTapDontCancelButton() {
         dismissView()
+        cancelAccountPlanRouter.dismissCancellationFlow()
     }
     
     func didTapCancelSubscriptionButton() {
@@ -53,14 +54,14 @@ final class CancellationSurveyViewModel: ObservableObject {
             showNoReasonSelectedError = true
             return
         }
-        
+
         if selectedReason.isOtherReason,
             otherReasonText.isEmpty {
             isOtherFieldFocused = true
             return
         }
 
-        router.showAppleManageSubscriptions()
+        cancelAccountPlanRouter.showAppleManageSubscriptions()
     }
     
     private func dismissView() {

@@ -197,9 +197,11 @@ extension ProfileViewModel {
     private func showCancelAccountPlan() {
         Task { @MainActor in
             guard let currentAccountDetails = accountUseCase.currentAccountDetails,
-                  let currentPlan = await accountUseCase.currentAccountPlan() else { return }
+                  let currentPlan = await accountUseCase.currentAccountPlan(),
+                  let currentSubscription = accountUseCase.currentSubscription() else { return }
             
             router.showCancelAccountPlan(
+                currentSubscription: currentSubscription,
                 currentPlan: currentPlan,
                 accountDetails: currentAccountDetails,
                 assets: CancelAccountPlanAssets(

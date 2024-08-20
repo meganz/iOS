@@ -5,34 +5,40 @@ import StoreKit
 import SwiftUI
 
 public protocol CancelAccountPlanRouting: Routing {
-    func dismiss()
-    func showCancellationSteps()
+    func dismissCancellationFlow()
+    func showAppleManageSubscriptions()
 }
 
 public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private weak var baseViewController: UIViewController?
-    private weak var presenter: UIViewController?
+    private weak var navigationController: UINavigationController?
+    private let currentSubscription: AccountSubscriptionEntity
     private let accountDetails: AccountDetailsEntity
     private let currentPlan: PlanEntity
     private let assets: CancelAccountPlanAssets
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var appleIDSubscriptionsURL: URL? {
         URL(string: "https://apps.apple.com/account/subscriptions")
     }
     
+    /// CancelAccountPlanRouter is used to manage redirections of the cancel subscription flow
+    /// - Parameter currentSubscription: Holds the current active subscription
+    /// - Parameter accountDetails: Contains the account details of the user
+    /// - Parameter currentPlan: Holds the current subscribed plan
+    /// - Parameter assets: Contains the Image names of the assets
+    /// - Parameter navigationController: Holds the navigation that pushes the presenter of `CancelAccountPlanRouter`. Manages the redirections.
     public init(
+        currentSubscription: AccountSubscriptionEntity,
         accountDetails: AccountDetailsEntity,
         currentPlan: PlanEntity,
         assets: CancelAccountPlanAssets,
-        presenter: UIViewController,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        navigationController: UINavigationController
     ) {
+        self.currentSubscription = currentSubscription
         self.accountDetails = accountDetails
         self.currentPlan = currentPlan
         self.assets = assets
-        self.presenter = presenter
-        self.featureFlagProvider = featureFlagProvider
+        self.navigationController = navigationController
     }
     
     public func build() -> UIViewController {
@@ -43,6 +49,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         )
         
         let viewModel = CancelAccountPlanViewModel(
+            currentSubscription: currentSubscription, 
             currentPlanName: accountDetails.proLevel.toAccountTypeDisplayName(),
             currentPlanStorageUsed: String.memoryStyleString(fromByteCount: accountDetails.storageUsed),
             featureListHelper: featureListHelper, 
@@ -59,50 +66,15 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     
     public func start() {
         let viewController = build()
-        presenter?.present(viewController, animated: true)
+        navigationController?.topViewController?.present(viewController, animated: true)
     }
     
-    public func dismiss() {
-        presenter?.dismiss(animated: true)
-    }
-    
-    public func showCancellationSteps() {
-        guard let billedPlan = accountDetails.plans.first(where: { $0.isProPlan }),
-              let currentSubscription = accountDetails.subscriptions.first(where: { $0.id == billedPlan.subscriptionId }) else { return }
-        
-        switch currentSubscription.paymentMethodId {
-        case .itunes:
-            isCancellationSurveyEnabled ? showCancellationSurvey() : showAppleManageSubscriptions()
-        case .googleWallet: showGoogleCancellationSteps()
-        default: showWebClientCancellationSteps()
-        }
-    }
-    
-    private var isCancellationSurveyEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .subscriptionCancellationSurvey)
-    }
-    
-    private func showGoogleCancellationSteps() {
-        CancelSubscriptionStepsRouter(
-            type: .google,
-            presenter: baseViewController
-        ).start()
+    public func dismissCancellationFlow() {
+        navigationController?.topViewController?.dismiss(animated: true)
+        navigationController?.popViewController(animated: false)
     }
 
-    private func showWebClientCancellationSteps() {
-        CancelSubscriptionStepsRouter(
-            type: .webClient,
-            presenter: baseViewController
-        ).start()
-    }
-
-    private func showCancellationSurvey() {
-        CancellationSurveyRouter(
-            presenter: baseViewController
-        ).start()
-    }
-    
-    private func showAppleManageSubscriptions() {
+    public func showAppleManageSubscriptions() {
         guard let scene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
             .first(where: { $0.activationState == .foregroundActive }),

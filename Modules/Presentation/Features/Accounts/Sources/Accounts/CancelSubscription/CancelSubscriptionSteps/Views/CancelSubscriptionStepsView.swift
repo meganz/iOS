@@ -4,8 +4,9 @@ import MEGASwiftUI
 import SwiftUI
 
 struct CancelSubscriptionStepsView: View {
-    @Environment(\.colorScheme) var colorScheme
-    @ObservedObject var viewModel: CancelSubscriptionStepsViewModel
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.presentationMode) private var presentationMode
+    @StateObject var viewModel: CancelSubscriptionStepsViewModel
     
     private var bodyBackgroundColor: Color {
         colorScheme == .dark ? Color.black : Color.white
@@ -48,6 +49,11 @@ struct CancelSubscriptionStepsView: View {
         .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : bodyBackgroundColor)
         .task {
             viewModel.setupStepList()
+        }
+        .onChange(of: viewModel.shouldDismiss) { shouldDismiss in
+            if shouldDismiss {
+                presentationMode.wrappedValue.dismiss()
+            }
         }
     }
     
