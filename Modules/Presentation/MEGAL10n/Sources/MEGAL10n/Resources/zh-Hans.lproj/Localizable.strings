@@ -3988,6 +3988,10 @@
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="已删除“[A]”";
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="从播放列表中移除";
+/* Recently watched videos page title */
+"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+/* Recently watched videos empty page content text */
+"videos.recentlyWatched.emptyState"="无近期动态";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室里没有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4221,9 +4225,9 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. 点按<b>取消订阅</b>。";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="我们很遗憾看到您离开！您能告诉我们您取消订阅的原因吗？";
 /* Cancel subscription survey header subtitle */
-"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+"accounts.cancelSubscriptionSurvey.header.subtitle"="您的订阅将被立即取消，并且当您的目前会员方案到期后，您将被转为免费的MEGA帐户。请注意：取消订阅不会删除您的帐户。";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="我只是暂时需要这个方案，并且不再使用它";
 /* Cancel subscription survey reason with id 2 */
@@ -4245,11 +4249,13 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="我不想要订阅或自动付费";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="我允许MEGA联系我进一步讨论此话题";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="不取消";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="请选择取消订阅的原因";
+/* Cancel subscription survey error message when field is empty */
+"accounts.cancelSubscriptionSurvey.error.enterDetails"="输入详细信息";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="隐藏的项目";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4275,7 +4281,9 @@
 /* Text displayed in the description field when no description is present, in read-write mode. */
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="添加说明";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
-"call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+"call.meeting.empty.shareOptionsDialog.title"="共享此链接或邀请参与者加入您";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="共享此链接以邀请其他人";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="分享会议链接";
 /* Title for copy link button in Empty meeting share options dialog */

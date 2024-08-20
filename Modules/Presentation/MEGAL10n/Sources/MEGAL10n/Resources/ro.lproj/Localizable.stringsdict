@@ -2702,6 +2702,22 @@
         <string>Bonusul expiră în %d zile.</string>
       </dict>
     </dict>
+    <key>accounts.cancelSubscriptionSurvey.error.minimumRequiredCharacterCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Message must be at least %d character</string>
+        <key>other</key>
+        <string>Message must be at least %d characters</string>
+      </dict>
+    </dict>
     <key>share.message.uploadedToDestinationFolder</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
