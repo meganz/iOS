@@ -9,6 +9,7 @@ public enum AccountTypeEntity: CaseIterable, Sendable {
     case starter
     case basic
     case essential
+    case feature
     
     static let lowerTierPlans: [AccountTypeEntity] = [.starter, .basic, .essential]
 

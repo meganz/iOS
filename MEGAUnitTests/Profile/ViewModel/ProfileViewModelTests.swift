@@ -255,6 +255,13 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    func testShouldShowCancelSubscriptionSection_whenCurrentUserHasMultipleBilledProPlans_shouldNotIncludeSubscriptionSection() {
+        testSubscriptionSectionVisibility(
+            hasMultipleBilledProPlan: true,
+            shouldBeShown: false
+        )
+    }
+    
     func testShouldShowCancelSubscriptionSection_whenNotStandardProAccountAndSuscription_shouldNotIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(shouldBeShown: false)
     }
@@ -271,6 +278,7 @@ final class ProfileViewModelTests: XCTestCase {
         multiFactorAuthCheckDelay: TimeInterval = 0,
         isStandardProAccount: Bool = false,
         isBilledProPlan: Bool = false,
+        hasMultipleBilledProPlan: Bool = false,
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [.cancelSubscription: true]),
         file: StaticString = #filePath,
@@ -280,6 +288,7 @@ final class ProfileViewModelTests: XCTestCase {
         let accountPlan = PlanEntity(type: accountType)
         let accountUseCase = MockAccountUseCase(
             isBilledProPlan: isBilledProPlan,
+            hasMultipleBilledProPlan: hasMultipleBilledProPlan,
             isStandardProAccount: isStandardProAccount,
             currentAccountDetails: currentAccountDetails,
             email: email,
@@ -426,13 +435,15 @@ final class ProfileViewModelTests: XCTestCase {
     private func testSubscriptionSectionVisibility(
         isStandardProAccount: Bool = false,
         isBilledProPlan: Bool = false,
+        hasMultipleBilledProPlan: Bool = false,
         shouldBeShown: Bool,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
         let (sut, _) = makeSUT(
             isStandardProAccount: isStandardProAccount,
-            isBilledProPlan: isBilledProPlan
+            isBilledProPlan: isBilledProPlan,
+            hasMultipleBilledProPlan: hasMultipleBilledProPlan
         )
         sut.dispatch(.onViewDidLoad)
 

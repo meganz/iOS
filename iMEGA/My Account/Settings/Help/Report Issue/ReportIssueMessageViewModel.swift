@@ -59,6 +59,8 @@ private extension AccountTypeEntity {
             return "Basic"
         case .essential:
             return "Essential"
+        case .feature:
+            return "Feature"
         }
     }
 }

@@ -150,6 +150,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         
         return subscriptions.contains { $0.id == subscriptionId }
     }
+    
+    public func hasMultipleBilledProPlans() -> Bool {
+        accountSubscriptions()?.filter { $0.accountType != .feature }.count ?? 0 > 1
+    }
 
     // MARK: - Account operations
     public func contacts() -> [UserEntity] {

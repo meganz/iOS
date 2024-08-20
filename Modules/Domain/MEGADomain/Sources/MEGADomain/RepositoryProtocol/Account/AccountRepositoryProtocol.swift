@@ -32,6 +32,13 @@ public protocol AccountRepositoryProtocol: Sendable {
     ///
     /// - Returns: A Boolean value indicating whether the current Pro plan is associated with any subscription.
     func isBilledProPlan() -> Bool
+    /// Checks if the user has more than one Billed Pro plan associated with their account.
+    ///
+    /// This function examines the user's account details to determine if there are multiple Billed Pro plans
+    /// currently associated with the account.
+    ///
+    /// - Returns: A Boolean value indicating whether the user has more than one Billed Pro plan associated with their account.
+    func hasMultipleBilledProPlans() -> Bool
     
     /// Retrieves the Pro plan from the current account details, if it exists.
     /// - Returns: AccountPlanEntity value if there is an existing pro plan on the list of plans. It is guaranteed
