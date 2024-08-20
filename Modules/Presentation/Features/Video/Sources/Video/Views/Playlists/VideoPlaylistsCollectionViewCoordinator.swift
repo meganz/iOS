@@ -9,7 +9,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
     }
     
     /// Row Item type to support diffable data source diffing while protecting `VideoPlaylistEntity` agasint the `DiffableDataSource` API.
-    private struct RowItem: Hashable {
+    private struct RowItem: Hashable, Sendable {
         let videoPlaylist: VideoPlaylistEntity
         
         init(videoPlaylist: VideoPlaylistEntity) {
@@ -37,6 +37,13 @@ final class VideoPlaylistsCollectionViewCoordinator {
     private typealias DiffableDataSource = UICollectionViewDiffableDataSource<Section, Item>
     private typealias DiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<Section, Item>
     private typealias Item = RowItem
+    private var reloadSnapshotTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    
+    deinit {
+        reloadSnapshotTask?.cancel()
+    }
     
     init(_ representer: VideoPlaylistsCollectionViewRepresenter) {
         self.representer = representer
@@ -61,10 +68,15 @@ final class VideoPlaylistsCollectionViewCoordinator {
     }
     
     func reloadData(with videoPlaylists: [VideoPlaylistEntity]) {
+        reloadSnapshotTask = Task { await reloadData(with: videoPlaylists) }
+    }
+    
+    private func reloadData(with videoPlaylists: [VideoPlaylistEntity]) async {
         var snapshot = DiffableDataSourceSnapshot()
         snapshot.appendSections([.videoPlaylists])
         snapshot.appendItems(videoPlaylists.map(RowItem.init(videoPlaylist:)), toSection: .videoPlaylists)
-        dataSource?.apply(snapshot)
+        guard !Task.isCancelled else { return }
+        await dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     // MARK: - Cell setup

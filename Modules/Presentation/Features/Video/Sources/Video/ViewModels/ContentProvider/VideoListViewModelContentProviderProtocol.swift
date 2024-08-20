@@ -11,10 +11,5 @@ protocol VideoListViewModelContentProviderProtocol: Sendable {
     ///   - durationFilterOptionType: Filters nodes based on duration criteria, only including nodes that match this.
     ///   - locationFilterOptionType: Filters nodes based on location criteria, only including nodes that match this.
     /// - Returns: List of nodes to be displayed in VideoListView
-    func search(by searchText: String, sortOrderType: SortOrderEntity?, durationFilterOptionType: DurationChipFilterOptionType, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity]
-}
-extension VideoListViewModelContentProviderProtocol {
-    func search(by searchText: String = "", sortOrderType: SortOrderEntity?, durationFilterOptionType: DurationChipFilterOptionType, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity] {
-        try await search(by: searchText, sortOrderType: sortOrderType, durationFilterOptionType: durationFilterOptionType, locationFilterOptionType: locationFilterOptionType)
-    }
+    func search(by searchText: String, sortOrderType: SortOrderEntity, durationFilterOptionType: DurationChipFilterOptionType, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity]
 }

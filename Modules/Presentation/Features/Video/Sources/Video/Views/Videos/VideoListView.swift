@@ -30,15 +30,8 @@ struct VideoListView: View {
             content
                 .overlay(placeholder)
         }
-        .task {
-            await viewModel.onViewAppear()
-        }
-        .task {
-            await viewModel.listenSearchTextChange()
-        }
-        .task {
-            await viewModel.listenNodesUpdate()
-        }
+        .task { await viewModel.onViewAppear() }
+        .onDisappear { viewModel.onViewDisappear() }
         .sheet(isPresented: $viewModel.isSheetPresented) {
             bottomView()
                 .onDisappear {
@@ -115,9 +108,6 @@ struct VideoListView: View {
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)
-        .onDisappear {
-            viewModel.onViewDissapeared()
-        }
     }
     
     private func chipsView() -> some View {

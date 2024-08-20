@@ -1,6 +1,6 @@
 import MEGAL10n
 
-enum DurationChipFilterOptionType: CaseIterable {
+enum DurationChipFilterOptionType: CaseIterable, Sendable {
     case allDurations
     case lessThan10Seconds
     case between10And60Seconds

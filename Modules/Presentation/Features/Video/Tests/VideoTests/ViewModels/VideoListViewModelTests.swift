@@ -7,9 +7,7 @@ import MEGATest
 import XCTest
 
 final class VideoListViewModelTests: XCTestCase {
-    
-    private var cancellables = Set<AnyCancellable>()
-    
+        
     func testInit_whenInit_doesNotExecuteSearchOnUseCase() async {
         let (_, _, photoLibraryUseCase, _) = makeSUT()
         
@@ -29,70 +27,79 @@ final class VideoListViewModelTests: XCTestCase {
     func testMonitorSortOrderChanged_whenHasNoSortOrderChanged_doesNotReloadVideos() async {
         // Arrange
         let (sut, _, photoLibraryUseCase, syncModel) = makeSUT()
-        
+        var subscriptions = Set<AnyCancellable>()
         let sortOrderExp = expectation(description: "sort order changed")
         sortOrderExp.isInverted = true
-        let cancellable = syncModel.$videoRevampSortOrderType
+        syncModel.$videoRevampSortOrderType
             .dropFirst()
             .sink { _ in
                 sortOrderExp.fulfill()
             }
-        
+            .store(in: &subscriptions)
+
         let messagesExp = expectation(description: "spy expectation")
-        var receivedMessages: [MockPhotoLibraryUseCase.Message]?
+        var receivedMessages: [MockPhotoLibraryUseCase.Message] = []
         messagesExp.assertForOverFulfill = false
-        let cancellable2 = await photoLibraryUseCase.$messages
+        await photoLibraryUseCase.$messages
+            .filter(\.isNotEmpty)
             .sink { messages in
                 receivedMessages = messages
                 messagesExp.fulfill()
             }
+            .store(in: &subscriptions)
         
         // Act
-        await sut.reloadVideosOnSortOrderChangedTask?.value
+        trackTaskCancellation { await sut.onViewAppear() }
+        
         await fulfillment(of: [sortOrderExp, messagesExp], timeout: 0.5)
         
         // Assert
-        XCTAssertTrue(receivedMessages?.notContains(.media) == true)
+        XCTAssertEqual(receivedMessages, [.media])
         
-        cancellable.cancel()
-        cancellable2.cancel()
+        subscriptions = []
     }
     
     @MainActor
     func testMonitorSortOrderChanged_whenHasSortOrderChanged_reloadVideos() async throws {
         // Arrange
         let (sut, _, photoLibraryUseCase, syncModel) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
-        syncModel.videoRevampSortOrderType = .favouriteAsc
+
+        let onViewAppearTaskStarted = expectation(description: "onViewAppear task started")
+        trackTaskCancellation {
+            onViewAppearTaskStarted.fulfill()
+            await sut.onViewAppear()
+        }
+        await fulfillment(of: [onViewAppearTaskStarted], timeout: 0.5)
         
-        let sortOrderExp = expectation(description: "sort order changed")
-        sortOrderExp.assertForOverFulfill = false
-        let cancellable = syncModel.$videoRevampSortOrderType
-            .dropFirst()
+        let sortOrderExp = expectation(description: "Expected favouriteAsc and labelDesc sort order change events")
+        
+        var subscriptions = Set<AnyCancellable>()
+        syncModel.$videoRevampSortOrderType
+            .compactMap { $0 }
             .sink { _ in
                 sortOrderExp.fulfill()
             }
+            .store(in: &subscriptions)
         
         let messagesExp = expectation(description: "spy expectation")
+        messagesExp.expectedFulfillmentCount = 2
         var receivedMessages: [MockPhotoLibraryUseCase.Message]?
-        messagesExp.assertForOverFulfill = false
-        let cancellable2 = await photoLibraryUseCase.$messages
-            .dropFirst()
+        await photoLibraryUseCase.$messages
+            .filter(\.isNotEmpty)
             .sink { messages in
                 receivedMessages = messages
                 messagesExp.fulfill()
             }
+            .store(in: &subscriptions)
         
         // Act
         syncModel.videoRevampSortOrderType = .labelDesc
-        await sut.reloadVideosOnSortOrderChangedTask?.value
-        
+    
         // Assert
-        XCTAssertTrue(receivedMessages?.contains(.media) == true)
+        await fulfillment(of: [sortOrderExp, messagesExp], timeout: 1)
         
-        cancellable.cancel()
-        cancellable2.cancel()
-        sut.reloadVideosOnSortOrderChangedTask?.cancel()
-        await fulfillment(of: [sortOrderExp, messagesExp], timeout: 0.5)
+        XCTAssertEqual(receivedMessages, [.media, .media])
+        subscriptions = []
     }
     
     // MARK: - init.subscribeToEditingMode
@@ -157,47 +164,58 @@ final class VideoListViewModelTests: XCTestCase {
     @MainActor
     func testOnViewAppear_whenCalled_executeSearchUseCase() async {
         let (sut, _, photoLibraryUseCase, _) = makeSUT()
+        var subscriptions = Set<AnyCancellable>()
+        var receivedMessages: [MockPhotoLibraryUseCase.Message] = []
+        let messagesExp = expectation(description: "spy expectation")
+        await photoLibraryUseCase.$messages
+            .filter(\.isNotEmpty)
+            .sink { messages in
+                receivedMessages = messages
+                messagesExp.fulfill()
+            }
+            .store(in: &subscriptions)
         
-        await sut.onViewAppear()
+        trackTaskCancellation { await sut.onViewAppear() }
         
-        let messages = await photoLibraryUseCase.messages
-        XCTAssertTrue(messages.contains(.media), "Expect to search")
+        await fulfillment(of: [messagesExp], timeout: 1)
+
+        XCTAssertTrue(receivedMessages.contains(.media), "Expect to search")
     }
-    
-    @MainActor
-    func testOnViewAppear_whenCalledOnFailedLoadVideos_executesSearchUseCaseInOrder() async {
-        let (sut, _, photoLibraryUseCase, _) = makeSUT()
-        
-        await sut.onViewAppear()
-        
-        let messages = await photoLibraryUseCase.messages
-        XCTAssertEqual(messages, [ .media ])
-    }
-    
-    @MainActor
-    func testOnViewAppear_whenCalledOnSuccessfullyLoadVideos_executesSearchUseCaseInOrder() async {
-        let (sut, _, photoLibraryUseCase, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
-        
-        await sut.onViewAppear()
-        
-        let messages = await photoLibraryUseCase.messages
-        XCTAssertEqual(messages, [ .media ])
-    }
-    
+
     @MainActor
     func testOnViewAppear_whenError_showsErrorView() async {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
         
-        await sut.onViewAppear()
+        let messagesExp = expectation(description: "spy expectation")
+        let cancellation = sut.$viewState
+            .filter { $0 == .error }
+            .sink { viewState in
+                XCTAssertEqual(viewState, .error)
+                messagesExp.fulfill()
+            }
+
+        trackTaskCancellation { await sut.onViewAppear() }
         
-        XCTAssertEqual(sut.viewState, .error)
+        await fulfillment(of: [messagesExp], timeout: 1)
+        cancellation.cancel()
     }
     
     @MainActor
     func testOnViewAppear_whenNoErrors_showsEmptyItemView() async {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: []))
         
-        await sut.onViewAppear()
+        let messagesExp = expectation(description: "spy expectation")
+        let cancellation = sut.$viewState
+            .filter { $0 == .empty }
+            .sink { viewState in
+                XCTAssertEqual(viewState, .empty)
+                messagesExp.fulfill()
+            }
+
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await fulfillment(of: [messagesExp], timeout: 1)
+        cancellation.cancel()
         
         XCTAssertEqual(sut.videos.isEmpty, true)
     }
@@ -207,7 +225,18 @@ final class VideoListViewModelTests: XCTestCase {
         let foundVideos = [ anyNode(id: 1, mediaType: .video), anyNode(id: 2, mediaType: .video) ]
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: foundVideos))
         
-        await sut.onViewAppear()
+        let messagesExp = expectation(description: "spy expectation")
+        let cancellation = sut.$viewState
+            .filter { $0 == .loaded }
+            .sink { viewState in
+                XCTAssertEqual(viewState, .loaded)
+                messagesExp.fulfill()
+            }
+
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await fulfillment(of: [messagesExp], timeout: 1)
+        cancellation.cancel()
         
         XCTAssertEqual(sut.videos, foundVideos)
     }
@@ -217,19 +246,20 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
         var viewStates: [VideoListViewModel.ViewState] = []
         let exp = expectation(description: "view state subscription")
-        exp.assertForOverFulfill = false
+        exp.expectedFulfillmentCount = 3
         let cancellable = sut.$viewState
             .sink { viewState in
                 viewStates.append(viewState)
                 exp.fulfill()
             }
         
-        await sut.onViewAppear()
-        
+        trackTaskCancellation { await sut.onViewAppear() }
+
+        await fulfillment(of: [exp], timeout: 0.5)
+
         XCTAssertEqual(viewStates, [ .partial, .loading, .empty ])
         
         cancellable.cancel()
-        await fulfillment(of: [exp], timeout: 0.5)
     }
     
     @MainActor
@@ -237,19 +267,18 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, _, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: false))
         var viewStates: [VideoListViewModel.ViewState] = []
         let exp = expectation(description: "view state subscription")
-        exp.assertForOverFulfill = false
+        exp.expectedFulfillmentCount = 3
         let cancellable = sut.$viewState
             .sink { viewState in
                 viewStates.append(viewState)
                 exp.fulfill()
             }
         
-        await sut.onViewAppear()
+        trackTaskCancellation { await sut.onViewAppear() }
         
-        XCTAssertEqual(viewStates, [ .partial, .loading, .error ])
-        
-        cancellable.cancel()
         await fulfillment(of: [exp], timeout: 0.5)
+        XCTAssertEqual(viewStates, [ .partial, .loading, .error ])
+        cancellable.cancel()
     }
     
     // MARK: - listenNodesUpdate
@@ -264,27 +293,28 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .image),
             anyNode(id: 2, mediaType: .image)
         ]
+        let (stream, continuation) = AsyncStream<[NodeEntity]>.makeStream()
         let (sut, _, _, _) = makeSUT(
             fileSearchUseCase: MockFilesSearchUseCase(
-                nodeUpdates: [nonVideosUpdateNodes].async.eraseToAnyAsyncSequence()
+                nodeUpdates: stream.eraseToAnyAsyncSequence()
             ),
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
         
-        var receivedVideos: [NodeEntity] = []
         let exp = expectation(description: "wait for subscription")
         let cancellable = sut.$videos
+            .filter(\.isNotEmpty)
             .sink { videos in
-                receivedVideos = videos
+                XCTAssertEqual(videos, videoNodes)
                 exp.fulfill()
             }
         
-        trackTaskCancellation { await sut.listenNodesUpdate() }
-
-        await fulfillment(of: [exp], timeout: 0.5)
+        trackTaskCancellation { await sut.onViewAppear() }
         
-        XCTAssertEqual(receivedVideos, videoNodes)
+        continuation.yield(nonVideosUpdateNodes)
+        continuation.finish()
+        
+        await fulfillment(of: [exp], timeout: 1)
         cancellable.cancel()
     }
     
@@ -304,25 +334,19 @@ final class VideoListViewModelTests: XCTestCase {
             ),
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: initialVideoNodes)
         )
-        await sut.onViewAppear()
         
-        var receivedVideos: [NodeEntity] = []
         let exp = expectation(description: "wait for subscription")
-        exp.assertForOverFulfill = false
         let cancellable = sut.$videos
+            .filter(\.isNotEmpty)
             .sink { videos in
-                receivedVideos = videos
+                XCTAssertEqual(videos, updatedVideoNodes)
                 exp.fulfill()
             }
         
-        trackTaskCancellation { await sut.listenNodesUpdate() }
+        trackTaskCancellation { await sut.onViewAppear() }
 
-        await sut.reloadVideosTask?.value
-        await fulfillment(of: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 1)
         
-        XCTAssertEqual(receivedVideos.count, 2)
-        XCTAssertEqual(receivedVideos.first, updatedVideoNodes.first)
-        XCTAssertEqual(receivedVideos.last, initialVideoNodes.last)
         cancellable.cancel()
     }
     
@@ -342,23 +366,19 @@ final class VideoListViewModelTests: XCTestCase {
             ),
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: initialVideoNodes)
         )
-        await sut.onViewAppear()
         
-        var receivedVideos: [NodeEntity] = []
         let exp = expectation(description: "wait for subscription")
-        exp.assertForOverFulfill = false
         let cancellable = sut.$videos
+            .filter(\.isNotEmpty)
             .sink { videos in
-                receivedVideos = videos
+                XCTAssertEqual(videos, updatedVideoNodes)
                 exp.fulfill()
             }
         
-        trackTaskCancellation { await sut.listenNodesUpdate() }
-        await sut.reloadVideosTask?.value
+        trackTaskCancellation { await sut.onViewAppear() }
+        
         await fulfillment(of: [exp], timeout: 0.5)
         
-        XCTAssertEqual(receivedVideos.count, 2)
-        XCTAssertEqual(receivedVideos, initialVideoNodes)
         cancellable.cancel()
     }
     
@@ -377,9 +397,7 @@ final class VideoListViewModelTests: XCTestCase {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
         
-        trackTaskCancellation { await sut.listenSearchTextChange() }
-        
-        syncModel.searchText = "any search text"
+        trackTaskCancellation { await sut.onViewAppear() }
         
         let exp = expectation(description: "search message found")
         let cancellation = await photoLibraryUseCase.$messages
@@ -388,6 +406,9 @@ final class VideoListViewModelTests: XCTestCase {
                 XCTAssertEqual(messages, [ .media ])
                 exp.fulfill()
             }
+
+        syncModel.searchText = "any search text"
+
         await fulfillment(of: [exp], timeout: 1.0)
         cancellation.cancel()
     }
@@ -409,9 +430,7 @@ final class VideoListViewModelTests: XCTestCase {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
         
-        let task = Task {
-            await sut.listenSearchTextChange()
-        }
+        trackTaskCancellation { await sut.onViewAppear() }
         syncModel.searchText = "any search text"
         let exp = expectation(description: "search message found")
         let cancellation = await photoLibraryUseCase.$messages
@@ -420,9 +439,9 @@ final class VideoListViewModelTests: XCTestCase {
         
         await fulfillment(of: [exp], timeout: 1.0)
         cancellation.cancel()
-        task.cancel()
         
         let videosExp = expectation(description: "wait for videos")
+        var cancellables = Set<AnyCancellable>()
         var capturedValues = [NodeEntity]()
         sut.$videos
             .sink {
@@ -431,8 +450,10 @@ final class VideoListViewModelTests: XCTestCase {
             }
             .store(in: &cancellables)
         await fulfillment(of: [videosExp], timeout: 1.0)
+        
         XCTAssertEqual(sut.viewState, .loaded, "Should not show error when success search")
         XCTAssertTrue(capturedValues.isNotEmpty)
+        cancellables = []
     }
     
     // MARK: - Cell Selection
@@ -446,18 +467,28 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
+        let videosExp = expectation(description: "wait for videos")
+        let cancellable = sut.$videos
+            .filter(\.isNotEmpty)
+            .sink { videos in
+                XCTAssertEqual(Set(videos), Set(videoNodes))
+                videosExp.fulfill()
+            }
         
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await fulfillment(of: [videosExp], timeout: 1.0)
+
         sut.toggleSelectAllVideos()
         
         XCTAssertTrue(sut.selection.allSelected)
-        XCTAssertEqual(Set(sut.videos), Set(videoNodes))
         
         sut.toggleSelectAllVideos()
         
         XCTAssertFalse(sut.selection.allSelected)
         XCTAssertTrue(sut.selection.videos.isEmpty)
         XCTAssertTrue(sut.videos.isNotEmpty)
+        cancellable.cancel()
     }
     
     // MARK: - didFinishSelectFilterOption
@@ -480,7 +511,6 @@ final class VideoListViewModelTests: XCTestCase {
             .receive(on: DispatchQueue.main)
             .sink { selectedLocationFilterOption in
                 XCTAssertEqual(selectedLocationFilterOption, selectedFilterOptionType.stringValue)
-                XCTAssertEqual(sut.selectedLocationFilterOptionType, LocationChipFilterOptionType(rawValue: selectedFilterOptionType.stringValue))
                 XCTAssertFalse(sut.isSheetPresented)
                 exp.fulfill()
             }
@@ -517,7 +547,6 @@ final class VideoListViewModelTests: XCTestCase {
             .receive(on: DispatchQueue.main)
             .sink { selectedDurationFilterOption in
                 XCTAssertEqual(selectedDurationFilterOption, selectedFilterOptionType.stringValue)
-                XCTAssertEqual(sut.selectedDurationFilterOptionType, DurationChipFilterOptionType(rawValue: selectedFilterOptionType.stringValue))
                 XCTAssertFalse(sut.isSheetPresented)
                 exp.fulfill()
             }
@@ -554,7 +583,6 @@ final class VideoListViewModelTests: XCTestCase {
             .receive(on: DispatchQueue.main)
             .sink { selectedLocationFilterOption in
                 XCTAssertEqual(selectedLocationFilterOption, previousFilterOptionType.stringValue)
-                XCTAssertEqual(sut.selectedLocationFilterOptionType, LocationChipFilterOptionType(rawValue: previousFilterOptionType.stringValue))
                 XCTAssertFalse(sut.isSheetPresented)
                 exp1.fulfill()
             }
@@ -579,7 +607,6 @@ final class VideoListViewModelTests: XCTestCase {
             .receive(on: DispatchQueue.main)
             .sink { selectedLocationFilterOption in
                 XCTAssertEqual(selectedLocationFilterOption, selectedFilterOptionType.stringValue)
-                XCTAssertEqual(sut.selectedLocationFilterOptionType, LocationChipFilterOptionType(rawValue: selectedFilterOptionType.stringValue))
                 XCTAssertFalse(sut.isSheetPresented)
                 exp2.fulfill()
             }
@@ -620,7 +647,6 @@ final class VideoListViewModelTests: XCTestCase {
             .receive(on: DispatchQueue.main)
             .sink { selectedDurationFilterOption in
                 XCTAssertEqual(selectedDurationFilterOption, previousFilterOptionType.stringValue)
-                XCTAssertEqual(sut.selectedDurationFilterOptionType, DurationChipFilterOptionType(rawValue: previousFilterOptionType.stringValue))
                 XCTAssertFalse(sut.isSheetPresented)
                 exp1.fulfill()
             }
@@ -645,7 +671,6 @@ final class VideoListViewModelTests: XCTestCase {
             .receive(on: DispatchQueue.main)
             .sink { selectedDurationFilterOption in
                 XCTAssertEqual(selectedDurationFilterOption, selectedFilterOptionType.stringValue)
-                XCTAssertEqual(sut.selectedDurationFilterOptionType, DurationChipFilterOptionType(rawValue: selectedFilterOptionType.stringValue))
                 XCTAssertFalse(sut.isSheetPresented)
                 exp2.fulfill()
             }
@@ -712,21 +737,24 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video, duration: 241), // between4And20Minutes
             anyNode(id: 2, mediaType: .video, duration: 1200) // moreThan20Minutes
         ]
-        let (sut, _, photoLibraryUseCase, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
-        let messages = await photoLibraryUseCase.messages
-        
-        XCTAssertEqual(messages, [ .media ])
-        XCTAssertEqual(sut.videos, videoNodes)
-        
         sut.selectedDurationFilterOption = DurationChipFilterOptionType.allDurations.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
+        trackTaskCancellation { await sut.onViewAppear() }
         
-        let messages2 = await photoLibraryUseCase.messages
-        XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
-        XCTAssertEqual(sut.videos, videoNodes)
+        let videosExp = expectation(description: "wait for videos")
+        let cancellable = sut.$videos
+            .filter(\.isNotEmpty)
+            .sink { videos in
+                XCTAssertEqual(Set(videos), Set(videoNodes))
+                videosExp.fulfill()
+            }
+        
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await fulfillment(of: [videosExp], timeout: 1.0)
+        cancellable.cancel()
     }
     
     @MainActor
@@ -738,41 +766,63 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
-        let messages = await photoLibraryUseCase.messages
         
+        let expectedVideos = { (expectedVideos: [NodeEntity]) in
+            let videosExp = self.expectation(description: "wait for videos")
+            let cancellable = sut.$videos
+                .first(where: { Set($0) == Set(expectedVideos) })
+                .sink { _ in videosExp.fulfill() }
+            await self.fulfillment(of: [videosExp], timeout: 1.0)
+            cancellable.cancel()
+        }
+                
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await expectedVideos(videoNodes)
+        
+        let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
-        XCTAssertEqual(sut.videos, videoNodes)
         
         sut.selectedDurationFilterOption = DurationChipFilterOptionType.lessThan10Seconds.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
         
+        await expectedVideos(videoNodes.filter { $0.duration < 10 })
+
         let messages2 = await photoLibraryUseCase.messages
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
-        XCTAssertTrue(sut.videos.allSatisfy { $0.duration < 10 })
     }
     
     @MainActor
     func testFilter_whenFilterByDuration_between10And60Seconds_shouldFilterVideosByDuration() async throws {
+        
         let videoNodes = [
             anyNode(id: 1, mediaType: .video, duration: 11), // between10And60Seconds
             anyNode(id: 2, mediaType: .video, duration: 1200) // moreThan20Minutes
         ]
+        
         let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
-        let messages = await photoLibraryUseCase.messages
         
+        let expectedVideos = { (expectedVideos: [NodeEntity]) in
+            let videosExp = self.expectation(description: "wait for videos")
+            let cancellable = sut.$videos
+                .first(where: { Set($0) == Set(expectedVideos) })
+                .sink { _ in videosExp.fulfill() }
+            await self.fulfillment(of: [videosExp], timeout: 1.0)
+            cancellable.cancel()
+        }
+        
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await expectedVideos(videoNodes)
+        let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
-        XCTAssertEqual(sut.videos, videoNodes)
         
         sut.selectedDurationFilterOption = DurationChipFilterOptionType.between10And60Seconds.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
         
+        await expectedVideos(videoNodes.filter { $0.duration >= 10 && $0.duration < 60 })
         let messages2 = await photoLibraryUseCase.messages
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
-        XCTAssertTrue(sut.videos.allSatisfy { $0.duration >= 10 && $0.duration < 60 })
     }
     
     @MainActor
@@ -784,18 +834,27 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
-        let messages = await photoLibraryUseCase.messages
         
+        let expectedVideos = { (expectedVideos: [NodeEntity]) in
+            let videosExp = self.expectation(description: "wait for videos")
+            let cancellable = sut.$videos
+                .first(where: { Set($0) == Set(expectedVideos) })
+                .sink { _ in videosExp.fulfill() }
+            await self.fulfillment(of: [videosExp], timeout: 1.0)
+            cancellable.cancel()
+        }
+        
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await expectedVideos(videoNodes)
+        let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
-        XCTAssertEqual(sut.videos, videoNodes)
         
         sut.selectedDurationFilterOption = DurationChipFilterOptionType.between1And4Minutes.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
-        
+
+        await expectedVideos(videoNodes.filter { $0.duration >= 60 && $0.duration < 240 })
         let messages2 = await photoLibraryUseCase.messages
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
-        XCTAssertTrue(sut.videos.allSatisfy { $0.duration >= 60 && $0.duration < 240 })
     }
     
     @MainActor
@@ -807,18 +866,27 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
-        let messages = await photoLibraryUseCase.messages
         
+        let expectedVideos = { (expectedVideos: [NodeEntity]) in
+            let videosExp = self.expectation(description: "wait for videos")
+            let cancellable = sut.$videos
+                .first(where: { Set($0) == Set(expectedVideos) })
+                .sink { _ in videosExp.fulfill() }
+            await self.fulfillment(of: [videosExp], timeout: 1.0)
+            cancellable.cancel()
+        }
+        
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await expectedVideos(videoNodes)
+        let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
-        XCTAssertEqual(sut.videos, videoNodes)
         
         sut.selectedDurationFilterOption = DurationChipFilterOptionType.between4And20Minutes.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
-        
+        await expectedVideos(videoNodes.filter { $0.duration >= 240 && $0.duration < 1200 })
+
         let messages2 = await photoLibraryUseCase.messages
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
-        XCTAssertTrue(sut.videos.allSatisfy { $0.duration >= 240 && $0.duration < 1200 })
     }
     
     @MainActor
@@ -830,18 +898,29 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
+        
+        let expectedVideos = { (expectedVideos: [NodeEntity]) in
+            let videosExp = self.expectation(description: "wait for videos")
+            let cancellable = sut.$videos
+                .first(where: { Set($0) == Set(expectedVideos) })
+                .sink { _ in videosExp.fulfill() }
+            await self.fulfillment(of: [videosExp], timeout: 1.0)
+            cancellable.cancel()
+        }
+        
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await expectedVideos(videoNodes)
         let messages = await photoLibraryUseCase.messages
         
         XCTAssertEqual(messages, [ .media ])
         XCTAssertEqual(sut.videos, videoNodes)
         
         sut.selectedDurationFilterOption = DurationChipFilterOptionType.moreThan20Minutes.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
         
+        await expectedVideos(videoNodes.filter { $0.duration >= 1200 })
         let messages2 = await photoLibraryUseCase.messages
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
-        XCTAssertTrue(sut.videos.allSatisfy { $0.duration >= 1200 })
     }
     
     @MainActor
@@ -850,18 +929,32 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 1, mediaType: .video),
             anyNode(id: 2, mediaType: .video)
         ]
+        let cloudDriveNodes = [
+            anyNode(id: 1, mediaType: .video)
+        ]
         let (sut, _, photoLibraryUseCase, _) = makeSUT(
-            photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
+            photoLibraryUseCase: MockPhotoLibraryUseCase(
+                allPhotosFromCloudDriveOnly: cloudDriveNodes, 
+                allVideos: videoNodes
+            )
         )
-        await sut.onViewAppear()
-        let messages = await photoLibraryUseCase.messages
         
+        let expectedVideos = { (expectedVideos: [NodeEntity]) in
+            let videosExp = self.expectation(description: "wait for videos")
+            let cancellable = sut.$videos
+                .first(where: { Set($0) == Set(expectedVideos) })
+                .sink { _ in videosExp.fulfill() }
+            await self.fulfillment(of: [videosExp], timeout: 1.0)
+            cancellable.cancel()
+        }
+        
+        trackTaskCancellation { await sut.onViewAppear() }
+        await expectedVideos(videoNodes)
+        let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
-        XCTAssertEqual(sut.videos, videoNodes)
         
         sut.selectedLocationFilterOption = LocationChipFilterOptionType.cloudDrive.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
-        
+        await expectedVideos(cloudDriveNodes)
         let messages2 = await photoLibraryUseCase.messages
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
     }
@@ -875,18 +968,27 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        await sut.onViewAppear()
-        let messages = await photoLibraryUseCase.messages
         
+        let expectedVideos = { (expectedVideos: [NodeEntity]) in
+            let videosExp = self.expectation(description: "wait for videos")
+            let cancellable = sut.$videos
+                .first(where: { Set($0) == Set(expectedVideos) })
+                .sink { _ in videosExp.fulfill() }
+            await self.fulfillment(of: [videosExp], timeout: 1.0)
+            cancellable.cancel()
+        }
+        
+        trackTaskCancellation { await sut.onViewAppear() }
+        
+        await expectedVideos(videoNodes)
+        let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
-        XCTAssertEqual(sut.videos, videoNodes)
         
         sut.selectedLocationFilterOption = LocationChipFilterOptionType.sharedItems.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
         
+        await expectedVideos([])
         let messages2 = await photoLibraryUseCase.messages
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
-        XCTAssertTrue(sut.videos.isEmpty)
     }
     
     // MARK: - actionSheetTitle
@@ -909,30 +1011,6 @@ final class VideoListViewModelTests: XCTestCase {
             
             XCTAssertEqual(sut.actionSheetTitle, chip.title, "Expect to render correct title, but failed at index: \(index)")
         }
-    }
-    
-    // MARK: - selectedLocationFilterOption
-    
-    func testSelectedLocationFilterOption_onValueChanged_reflectSelectedLocationFilterOptionType() async throws {
-        let (sut, _, _, _) = makeSUT(
-            photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
-        )
-        
-        sut.selectedLocationFilterOption = LocationChipFilterOptionType.allLocation.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
-        
-        XCTAssertEqual(sut.selectedLocationFilterOptionType, .allLocation)
-    }
-    
-    func testSelectedLocationFilterOption_onValueChanged_reflectsSelectedLocationFilterOptionType() async throws {
-        let (sut, _, _, _) = makeSUT(
-            photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
-        )
-        
-        sut.selectedDurationFilterOption = DurationChipFilterOptionType.allDurations.stringValue
-        try await Task.sleep(nanoseconds: 1_000_000)
-        
-        XCTAssertEqual(sut.selectedDurationFilterOptionType, .allDurations)
     }
     
     // MARK: - Helpers
@@ -960,7 +1038,7 @@ final class VideoListViewModelTests: XCTestCase {
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
         return (sut, fileSearchUseCase, photoLibraryUseCase, syncModel)
     }
     
@@ -968,7 +1046,7 @@ final class VideoListViewModelTests: XCTestCase {
         NodeEntity(
             changeTypes: changeTypes,
             nodeType: .file,
-            name: "\(name)-\(id).mov",
+            name: "\(name)-\(id).\(mediaType == .video ? "mov" : "png")",
             handle: id,
             isFile: true,
             hasThumbnail: true,

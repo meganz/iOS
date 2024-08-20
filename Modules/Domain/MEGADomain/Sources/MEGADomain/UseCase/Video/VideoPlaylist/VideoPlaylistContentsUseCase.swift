@@ -93,6 +93,7 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
     public func monitorUserVideoPlaylistContent(for videoPlaylist: VideoPlaylistEntity) -> AnyAsyncSequence<[NodeEntity]> {
         switch videoPlaylist.type {
         case .favourite:
+            // NOTE: There is a hang here, this will be addressed in CC-7904
             merge(
                 updatedVideoNodes().map { _ in () },
                 sensitiveNodeUseCase.folderSensitivityChanged())

@@ -15,21 +15,18 @@ final class VideoListViewModel: ObservableObject {
         case error
     }
     
-    private let fileSearchUseCase: any FilesSearchUseCaseProtocol
+    enum MonitorSearchRequest {
+        /// Request invalidate results and perform search request immediately
+        case invalidate
+        /// Reinitialise results and perform search request when a change has occurred since before
+        case reinitialise
+    }
+    
     let thumbnailLoader: any ThumbnailLoaderProtocol
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     
     private(set) var syncModel: VideoRevampSyncModel
-    private(set) var reloadVideosOnSortOrderChangedTask: Task<Void, Never>? {
-        didSet { oldValue?.cancel() }
-    }
-    private(set) var reloadVideosTask: Task<Void, Never>?
-    private(set) var reloadfilteredVideosTask: Task<Void, Never>? {
-        didSet { oldValue?.cancel() }
-    }
-    
     private(set) var selection: VideoSelection
-    private var subscriptions = Set<AnyCancellable>()
     
     @Published private(set) var videos = [NodeEntity]()
     @Published private(set) var chips: [ChipContainerViewModel] = [ FilterChipType.location, .duration ]
@@ -45,12 +42,28 @@ final class VideoListViewModel: ObservableObject {
     @Published var isSheetPresented = false
     @Published var selectedLocationFilterOption: String = LocationChipFilterOptionType.allLocation.stringValue
     @Published var selectedDurationFilterOption: String = DurationChipFilterOptionType.allDurations.stringValue
-    
-    private(set) var selectedLocationFilterOptionType: LocationChipFilterOptionType = .allLocation
-    private(set) var selectedDurationFilterOptionType: DurationChipFilterOptionType = .allDurations
-    private let contentProvider: any VideoListViewModelContentProviderProtocol
-
     var newlySelectedChip: ChipContainerViewModel?
+
+    private var selectedLocationFilterOptionType: LocationChipFilterOptionType { .init(rawValue: selectedLocationFilterOption) ?? .allLocation }
+    private var selectedDurationFilterOptionType: DurationChipFilterOptionType { .init(rawValue: selectedDurationFilterOption) ?? .allDurations }
+    private let contentProvider: any VideoListViewModelContentProviderProtocol
+    private let monitorSearchRequestsSubject = CurrentValueSubject<MonitorSearchRequest, Never>(.invalidate)
+    private let fileSearchUseCase: any FilesSearchUseCaseProtocol
+    private var subscriptions = Set<AnyCancellable>()
+
+    private var searchTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    
+    private var monitorNodeUpdatesTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    
+    deinit {
+        searchTask = nil
+        monitorNodeUpdatesTask = nil
+    }
+    
     init(
         syncModel: VideoRevampSyncModel,
         contentProvider: some VideoListViewModelContentProviderProtocol,
@@ -70,73 +83,94 @@ final class VideoListViewModel: ObservableObject {
         subscribeToEditingMode()
         subscribeToAllSelected()
         subscribeToChipFilterOptions()
-        monitorSortOrderChanged()
+        
+        monitorNodeUpdatesTask = Task { @MainActor in await monitorNodeUpdates() }
     }
     
     @MainActor
     func onViewAppear() async {
-        do {
-            if viewState == .partial {
-                viewState = .loading
-            }
-            try await loadVideos(sortOrderType: syncModel.videoRevampSortOrderType)
-            try Task.checkCancellation()
-        } catch is CancellationError {
-            // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
-        } catch {
-            viewState = videos.isEmpty ? .error : .loaded
-        }
+        await monitorSearchChanges()
     }
     
-    private func monitorSortOrderChanged() {
-        syncModel.$videoRevampSortOrderType
-            .removeDuplicates()
-            .dropFirst()
-            .sink { [weak self] sortOrderType in
-                guard let self else {
-                    return
-                }
-                reloadVideosOnSortOrderChangedTask = Task { @MainActor in
-                    try? await self.loadVideos(searchText: self.syncModel.searchText, sortOrderType: sortOrderType)
-                }
-            }
-            .store(in: &subscriptions)
+    func onViewDisappear() {
+        monitorSearchRequestsSubject.send(.reinitialise)
     }
-    
+            
     @MainActor
-    func listenSearchTextChange() async {
-        let sequence = syncModel
-            .$searchText
-            .debounce(for: .seconds(0.3), scheduler: DispatchQueue.main)
-            .compactMap { $0 }
+    private func monitorSearchChanges() async {
+        // Observe Sort Order Changes
+        let sortOrder = syncModel.$videoRevampSortOrderType
+            .map { $0 ?? .defaultAsc }
+            .removeDuplicates()
+        
+        // Observe Search Text Changes
+        let searchText = syncModel.$searchText
+            .debounceImmediate(for: .milliseconds(500), scheduler: DispatchQueue.global(qos: .userInteractive))
+            .removeDuplicates()
+        
+        // Observe Location Filter Changes
+        let locationFilter = $selectedLocationFilterOption
+            .map { LocationChipFilterOptionType(rawValue: $0) ?? .allLocation }
+            .removeDuplicates()
+
+        // Observe Duration Filter Changes
+        let durationFilter = $selectedDurationFilterOption
+            .map { DurationChipFilterOptionType(rawValue: $0) ?? .allDurations }
+            .removeDuplicates()
+        
+        let queryParamSequence = searchText.combineLatest(sortOrder, locationFilter, durationFilter)
+            
+        let asyncSequence = monitorSearchRequestsSubject
+            .compactMap { monitorSearchRequest in
+                switch monitorSearchRequest {
+                case .invalidate:
+                    queryParamSequence
+                        .eraseToAnyPublisher()
+                case .reinitialise:
+                    queryParamSequence
+                        .dropFirst()
+                        .eraseToAnyPublisher()
+                }
+            }
+            .switchToLatest()
             .values
         
-        for await value in sequence {
-            do {
-                try Task.checkCancellation()
-                try await loadVideos(searchText: value, sortOrderType: syncModel.videoRevampSortOrderType)
-            } catch is CancellationError {
-                break
-            } catch {
-                // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
-            }
+        for await (searchText, sortOrder, locationFilter, durationFilter) in asyncSequence {
+            performSearch(searchText: searchText, sortOrderType: sortOrder, selectedLocationFilterOptionType: locationFilter, selectedDurationFilterOptionType: durationFilter)
         }
     }
     
     @MainActor
-    func listenNodesUpdate() async {
-        for await _ in fileSearchUseCase
-            .nodeUpdates
-            .filter({ nodes in nodes.contains { $0.mediaType == .video } }) {
-            await updateVideos()
+    private func monitorNodeUpdates() async {
+        for await _ in fileSearchUseCase.nodeUpdates.filter({ nodes in nodes.contains(where: \.name.fileExtensionGroup.isVideo) }) {
+            monitorSearchRequestsSubject.send(.invalidate)
         }
     }
     
-    func onViewDissapeared() {
-        reloadVideosTask?.cancel()
-        reloadVideosTask = nil
+    @MainActor
+    private func performSearch(searchText: String = "", sortOrderType: SortOrderEntity, selectedLocationFilterOptionType: LocationChipFilterOptionType, selectedDurationFilterOptionType: DurationChipFilterOptionType) {
+        if viewState == .partial {
+            viewState = .loading
+        }
+        
+        searchTask = Task {
+            do {
+                try await loadVideos(searchText: searchText,
+                                     sortOrderType: sortOrderType,
+                                     selectedLocationFilterOptionType: selectedLocationFilterOptionType,
+                                     selectedDurationFilterOptionType: selectedDurationFilterOptionType)
+                
+                try Task.checkCancellation()
+                
+                viewState = videos.isNotEmpty ? .loaded : .empty
+            } catch is CancellationError {
+                // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
+            } catch {
+                viewState = videos.isEmpty ? .error : .loaded
+            }
+        }
     }
-    
+        
     func toggleSelectAllVideos() {
         let allSelectedCurrently = selection.videos.count == videos.count
         selection.allSelected = !allSelectedCurrently
@@ -151,19 +185,10 @@ final class VideoListViewModel: ObservableObject {
     }
     
     @MainActor
-    private func loadVideos(searchText: String = "", sortOrderType: SortOrderEntity? = .defaultAsc) async throws {
+    private func loadVideos(searchText: String = "", sortOrderType: SortOrderEntity = .defaultAsc, selectedLocationFilterOptionType: LocationChipFilterOptionType, selectedDurationFilterOptionType: DurationChipFilterOptionType) async throws {
         try Task.checkCancellation()
-        self.videos = try await contentProvider.search(by: searchText, sortOrderType: sortOrderType, durationFilterOptionType: selectedDurationFilterOptionType, locationFilterOptionType: selectedLocationFilterOptionType)
-        viewState = videos.isNotEmpty ? .loaded : .empty
-    }
-    
-    @MainActor
-    private func updateVideos() async {
-        do {
-            try await loadVideos(sortOrderType: syncModel.videoRevampSortOrderType)
-        } catch {
-            // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
-        }
+        self.videos = try await contentProvider
+            .search(by: searchText, sortOrderType: sortOrderType, durationFilterOptionType: selectedDurationFilterOptionType, locationFilterOptionType: selectedLocationFilterOptionType)
     }
     
     private func subscribeToEditingMode() {
@@ -219,41 +244,16 @@ final class VideoListViewModel: ObservableObject {
     }
     
     private func subscribeToChipFilterOptions() {
-        $selectedLocationFilterOption
-            .dropFirst()
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] rawValue in
-                guard let self else {
-                    return
-                }
-                selectedLocationFilterOptionType = LocationChipFilterOptionType(rawValue: rawValue) ?? .allLocation
-                reloadVideosInTask()
-                isSheetPresented = false
-            }
-            .store(in: &subscriptions)
         
-        $selectedDurationFilterOption
-            .dropFirst()
+        let selectedDurationFilterOptionChangePublisher = $selectedDurationFilterOption.dropFirst()
+        let selectedLocationFilterOptionChangePublisher = $selectedLocationFilterOption.dropFirst()
+        
+        selectedDurationFilterOptionChangePublisher
+            .merge(with: selectedLocationFilterOptionChangePublisher)
             .removeDuplicates()
+            .map { _ in false } // Trigger auto dismissal of sheet, on filter change
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] rawValue in
-                guard let self else {
-                    return
-                }
-                selectedDurationFilterOptionType = DurationChipFilterOptionType(rawValue: rawValue) ?? .allDurations
-                reloadVideosInTask()
-                isSheetPresented = false
-            }
-            .store(in: &subscriptions)
-    }
-    
-    private func reloadVideosInTask() {
-        reloadfilteredVideosTask = Task { @MainActor [weak self]  in
-            guard let self else { return }
-            try? Task.checkCancellation()
-            try? await loadVideos(sortOrderType: syncModel.videoRevampSortOrderType)
-        }
+            .assign(to: &$isSheetPresented)
     }
     
     var filterOptions: [String] {
