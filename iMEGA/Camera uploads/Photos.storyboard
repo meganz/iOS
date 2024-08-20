@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,71 +23,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CHq-ed-0ka">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="770"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="255" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="nyf-uB-Tb3">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="255" verticalCompressionResistancePriority="749" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-Ea-Sdu">
-                                                        <rect key="frame" x="8" y="12" width="398" height="33"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="999" text="Loading…" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZiR-gp-d1i">
-                                                                <rect key="frame" x="0.0" y="0.0" width="74" height="33"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="998" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Hs5-aX-s89">
-                                                                <rect key="frame" x="78" y="0.0" width="0.0" height="33"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3z-Mc-fCp">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="24"/>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LTG-PV-qaW">
-                                                                        <rect key="frame" x="0.0" y="29" width="0.0" height="4"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="4" id="qvL-GF-eYX"/>
-                                                                        </constraints>
-                                                                        <color key="trackTintColor" red="0.83137254901960778" green="0.83137254901960778" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                                <integer key="value" value="2"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                                                        </userDefinedRuntimeAttributes>
-                                                                    </progressView>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="999" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhm-WP-YFw" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                                <rect key="frame" x="345" y="0.0" width="53" height="33"/>
-                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                                <state key="normal" title="Enable"/>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="body"/>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
-                                                                </userDefinedRuntimeAttributes>
-                                                                <connections>
-                                                                    <action selector="enableCameraUploadsTouchUpInside:" destination="3GS-cK-Hw6" eventType="touchUpInside" id="aj5-O0-EUk"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="S4Z-Ea-Sdu" firstAttribute="leading" secondItem="nyf-uB-Tb3" secondAttribute="leading" constant="8" id="7xj-dk-5Jg"/>
-                                                    <constraint firstItem="S4Z-Ea-Sdu" firstAttribute="top" secondItem="nyf-uB-Tb3" secondAttribute="top" constant="12" id="Aqq-zy-s8m"/>
-                                                    <constraint firstAttribute="trailing" secondItem="S4Z-Ea-Sdu" secondAttribute="trailing" constant="8" id="uuq-QO-hvq"/>
-                                                </constraints>
-                                            </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YK9-Bg-gst">
-                                                <rect key="frame" x="0.0" y="50" width="414" height="0.0"/>
-                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ta-Ix-lgL">
-                                                <rect key="frame" x="0.0" y="50" width="414" height="720"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="770"/>
                                                 <subviews>
                                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="548" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Isg-Gr-mnR">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="720"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="770"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bcX-sw-OPy" customClass="MEGACollectionViewFlowLayout">
                                                             <size key="itemSize" width="120" height="120"/>
@@ -229,18 +169,11 @@
                         <outlet property="actionBarButtonItem" destination="wpV-mF-Nm9" id="G5P-wD-QWj"/>
                         <outlet property="deleteBarButtonItem" destination="bVv-a0-Fx7" id="BwD-Lu-tJf"/>
                         <outlet property="downloadBarButtonItem" destination="mZb-63-wxw" id="I4p-73-knY"/>
-                        <outlet property="enableCameraUploadsButton" destination="zhm-WP-YFw" id="OZt-j7-0eb"/>
                         <outlet property="moveBarButtonItem" destination="k2g-A4-j6f" id="sR6-Zh-J43"/>
                         <outlet property="photoContainerView" destination="4Ta-Ix-lgL" id="IwW-Cr-dta"/>
-                        <outlet property="photosBannerView" destination="YK9-Bg-gst" id="IBd-Mm-J8D"/>
                         <outlet property="photosCollectionView" destination="Isg-Gr-mnR" id="apN-It-bKY"/>
-                        <outlet property="photosUploadedLabel" destination="s3z-Mc-fCp" id="MEP-6E-Odf"/>
-                        <outlet property="photosUploadedProgressView" destination="LTG-PV-qaW" id="7QC-xy-ZSK"/>
-                        <outlet property="progressStackView" destination="Hs5-aX-s89" id="JE0-dm-vCl"/>
                         <outlet property="selectAllBarButtonItem" destination="gRA-OU-vS7" id="icK-jO-9bw"/>
                         <outlet property="shareLinkBarButtonItem" destination="84D-T8-1ui" id="4Mx-PC-8YH"/>
-                        <outlet property="stateLabel" destination="ZiR-gp-d1i" id="bn5-7e-Dba"/>
-                        <outlet property="stateView" destination="nyf-uB-Tb3" id="bIY-EK-Yoh"/>
                         <outlet property="toolbar" destination="qZy-vw-98U" id="kqk-6K-svX"/>
                     </connections>
                 </viewController>
@@ -342,11 +275,6 @@
             <point key="canvasLocation" x="1738" y="1160"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="zhm-WP-YFw">
-            <size key="intrinsicContentSize" width="53" height="33"/>
-        </designable>
-    </designables>
     <resources>
         <image name="cameraUploadsIcon" width="27" height="20"/>
         <image name="link" width="28" height="28"/>

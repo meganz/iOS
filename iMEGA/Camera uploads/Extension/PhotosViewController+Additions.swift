@@ -6,10 +6,15 @@ import MEGAPresentation
 import MEGASDKRepo
 
 extension PhotosViewController {
+    
+    var permissionHandler: any DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
     var permissionRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
-        
+    
     @IBAction func moreAction(_ sender: UIBarButtonItem) {
         let nodeActionsViewController = NodeActionViewController(nodes: selection.nodes, delegate: self, displayMode: .photosTimeline, sender: sender)
         present(nodeActionsViewController, animated: true, completion: nil)
@@ -132,15 +137,6 @@ extension PhotosViewController {
     
     @objc func isTimelineActive() -> Bool {
         parentPhotoAlbumsController?.isTimelineActive() ?? false
-    }
-    
-    @objc func setupBannerViewColor(backgroundView: UIView, label: UILabel, button: UIButton) {
-        guard UIColor.isDesignTokenEnabled() else {
-            return
-        }
-        backgroundView.backgroundColor = TokenColors.Background.page
-        label.textColor = TokenColors.Text.primary
-        button.tintColor = TokenColors.Text.success
     }
 }
 

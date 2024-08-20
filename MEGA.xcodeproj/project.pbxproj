@@ -1809,7 +1809,6 @@
 		B566759A2A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56675992A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift */; };
 		B56717502A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B567174F2A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift */; };
 		B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */; };
-		B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */; };
 		B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */; };
 		B571B21C2A8CC3BC00B8F112 /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */; };
 		B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57496E82A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift */; };
@@ -1841,7 +1840,6 @@
 		B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */; };
 		B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4CFC22C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift */; };
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
-		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
 		B5C640822B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */; };
 		B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
@@ -4620,7 +4618,6 @@
 		B56675992A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareDestinationTableViewController+TableViewDataSource.swift"; sourceTree = "<group>"; };
 		B567174F2A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDestinationTableViewCell.swift; sourceTree = "<group>"; };
 		B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModelTests.swift; sourceTree = "<group>"; };
-		B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Banner.swift"; sourceTree = "<group>"; };
 		B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+UpgradeSecurity.swift"; sourceTree = "<group>"; };
 		B56FD4D42AC2D42D00055006 /* Accounts */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Accounts; sourceTree = "<group>"; };
 		B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
@@ -4653,7 +4650,6 @@
 		B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewModelTests.swift; sourceTree = "<group>"; };
 		B5B4CFC22C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEncourageGuestUserToJoinMegaRouter.swift; sourceTree = "<group>"; };
 		B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
-		B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBannerViewProvider.swift; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
 		B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CookieSettingsTableViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepositoryTests.swift; sourceTree = "<group>"; };
@@ -11163,8 +11159,6 @@
 			children = (
 				25EB2E922B0597ED00823B3D /* CameraUploadStatus */,
 				0E8C7E772AE2166900D408EB /* EnableCameraUploadsBannerButtonView.swift */,
-				B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */,
-				B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */,
 			);
 			path = Banner;
 			sourceTree = "<group>";
@@ -15735,7 +15729,6 @@
 				B6524E5F274B2D2900DB4160 /* PhotoMonthCard.swift in Sources */,
 				B6524E60274B2D2900DB4160 /* PhotoMonthCardViewModel.swift in Sources */,
 				B67507C7276852B00034F951 /* PhotoMonthSection.swift in Sources */,
-				B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */,
 				B67507AF276689530034F951 /* PhotoScrollPositioning.swift in Sources */,
 				B67507D12769520C0034F951 /* PhotoScrollTracker.swift in Sources */,
 				B677DC1D2787D60700EC30AC /* PhotoSectionHeader.swift in Sources */,
@@ -15746,7 +15739,6 @@
 				12397E2C2820C75900A30CCC /* PhotosPageViewController.swift in Sources */,
 				25D360B92BB5257200ACFDA4 /* PhotosRepository+Additions.swift in Sources */,
 				B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */,
-				B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */,
 				32303CF428657BA1005DF060 /* PhotosViewController+ContextMenu.swift in Sources */,
 				6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */,
 				C45F9819264AA9980004DCA5 /* PhotosViewController+MyAvatar.swift in Sources */,
