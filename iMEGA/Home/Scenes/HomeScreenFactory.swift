@@ -36,7 +36,6 @@ final class HomeScreenFactory: NSObject {
 
     func createHomeScreen(
         from tabBarController: MainTabBarController,
-        newHomeSearchResultsEnabled: Bool,
         tracker: some AnalyticsTracking,
         enableItemMultiSelection: Bool = false // set to true to enable multi-select [not used now in the home search results]
     ) -> UIViewController {
@@ -116,7 +115,6 @@ final class HomeScreenFactory: NSObject {
         let searchResultViewController = makeSearchResultViewController(
             with: navigationController,
             bridge: bridge,
-            newHomeSearchResultsEnabled: newHomeSearchResultsEnabled,
             tracker: tracker,
             viewModeStore: viewModeStore,
             enableItemMultiSelection: enableItemMultiSelection
@@ -161,68 +159,6 @@ final class HomeScreenFactory: NSObject {
     }
 
     func makeSearchResultViewController(
-        with navigationController: UINavigationController,
-        bridge: SearchResultsBridge,
-        newHomeSearchResultsEnabled: Bool,
-        tracker: some AnalyticsTracking,
-        viewModeStore: some ViewModeStoringObjC,
-        enableItemMultiSelection: Bool
-    ) -> UIViewController {
-        
-        if newHomeSearchResultsEnabled {
-            return makeNewSearchResultsViewController(
-                with: navigationController,
-                bridge: bridge,
-                tracker: tracker,
-                viewModeStore: viewModeStore,
-                enableItemMultiSelection: enableItemMultiSelection
-            )
-        } else {
-            return makeLegacySearchResultsViewController(
-                with: navigationController,
-                bridge: bridge,
-                tracker: tracker
-            )
-        }
-    }
-    
-    private func nodeActionListener(_ tracker: any AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
-        { action in
-            switch action {
-            case .saveToPhotos:
-                tracker.trackAnalyticsEvent(with: SearchResultSaveToDeviceMenuItemEvent())
-            case .manageLink, .shareLink:
-                tracker.trackAnalyticsEvent(with: SearchResultShareMenuItemEvent())
-            default:
-                {}() // we do not track other events here yet
-            }
-        }
-    }
-    
-    func makeRouter(
-        navController: UINavigationController,
-        tracker: some AnalyticsTracking
-    ) -> some NodeRouting {
-        HomeSearchResultRouter(
-            navigationController: navController,
-            nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                viewController: navController,
-                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController),
-                nodeActionListener: nodeActionListener(tracker)
-            ),
-            backupsUseCase: makeBackupsUseCase(),
-            nodeUseCase: makeNodeUseCase()
-        )
-    }
-    
-    func makeBackupsUseCase() -> some BackupsUseCaseProtocol {
-         BackupsUseCase(
-            backupsRepository: BackupsRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo
-         )
-    }
-    
-    private func makeNewSearchResultsViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
         tracker: some AnalyticsTracking,
@@ -298,7 +234,7 @@ final class HomeScreenFactory: NSObject {
         let vm = SearchResultsViewModel(
             resultsProvider: makeResultsProvider(
                 parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
-                searchBridge: searchBridge, 
+                searchBridge: searchBridge,
                 navigationController: navigationController
             ),
             bridge: searchBridge,
@@ -314,19 +250,55 @@ final class HomeScreenFactory: NSObject {
                             guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) else {
                                 return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
                             }
-
+                            
                             return TokenColors.Icon.secondary.swiftUI
                         }
                     )
                 }
             ),
             layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
-            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter), 
+            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home
         )
         return UIHostingController(
             rootView: SearchResultsView(viewModel: vm)
         )
+    }
+    
+    private func nodeActionListener(_ tracker: any AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
+        { action in
+            switch action {
+            case .saveToPhotos:
+                tracker.trackAnalyticsEvent(with: SearchResultSaveToDeviceMenuItemEvent())
+            case .manageLink, .shareLink:
+                tracker.trackAnalyticsEvent(with: SearchResultShareMenuItemEvent())
+            default:
+                {}() // we do not track other events here yet
+            }
+        }
+    }
+    
+    func makeRouter(
+        navController: UINavigationController,
+        tracker: some AnalyticsTracking
+    ) -> some NodeRouting {
+        HomeSearchResultRouter(
+            navigationController: navController,
+            nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                viewController: navController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController),
+                nodeActionListener: nodeActionListener(tracker)
+            ),
+            backupsUseCase: makeBackupsUseCase(),
+            nodeUseCase: makeNodeUseCase()
+        )
+    }
+    
+    func makeBackupsUseCase() -> some BackupsUseCaseProtocol {
+         BackupsUseCase(
+            backupsRepository: BackupsRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+         )
     }
 
     func makeResultsProvider(
@@ -454,68 +426,5 @@ final class HomeScreenFactory: NSObject {
             fileSearchRepo: FilesSearchRepository.newRepo,
             videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo)
         )
-    }
-
-    private func makeLegacySearchResultsViewController(
-        with navigationController: UINavigationController,
-        bridge: SearchResultsBridge,
-        tracker: some AnalyticsTracking
-    ) -> UIViewController {
-        let searchResultViewModel = HomeSearchResultViewModel(
-            fileSearchUseCase: makeFilesSearchUseCase(),
-            searchFileHistoryUseCase: SearchFileHistoryUseCase(
-                fileSearchHistoryRepository: .live
-            ),
-            nodeDetailUseCase: makeNodeDetailUseCase(),
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-            router: makeRouter(
-                navController: navigationController,
-                tracker: tracker
-            ),
-            tracker: tracker,
-            featureFlagProvider: DIContainer.featureFlagProvider,
-            sdk: sdk
-        )
-        
-        let homeSearchResultViewController = HomeSearchResultViewController()
-        homeSearchResultViewController.viewModel = searchResultViewModel
-        homeSearchResultViewController.resultTableViewDataSource
-        = TableViewProxy<HomeSearchResultFileViewModel>(
-            cellIdentifier: "SearchResultFile",
-            emptyStateConfiguration: .searchResult,
-            configureCell: { cell, model in
-                (cell as? SearchResultFileTableViewCell)?.configure(with: model)
-            },
-            selectionAction: { selectedNode in
-                searchResultViewModel.didSelectNode(selectedNode.handle)
-            }
-        )
-        
-        homeSearchResultViewController.hintTableViewDataSource = TableViewProxy<HomeSearchHintViewModel>(
-            cellIdentifier: "SearchHint",
-            emptyStateConfiguration: .searchHints,
-            configureCell: { cell, model in
-                (cell as? SearchHintTableViewCell)?.configure(with: model)
-            },
-            selectionAction: { selectedSearchHint in
-                searchResultViewModel.didSelectHint(selectedSearchHint.text)
-            }
-        )
-        // setting up the bridge connection instead of just connecting delegates
-        homeSearchResultViewController.searchHintSelectDelegate = bridge
-        
-        bridge.didClearTrampoline = { [weak homeSearchResultViewController] in
-            homeSearchResultViewController?.didClearText()
-        }
-        
-        bridge.didInputTextTrampoline = { [weak homeSearchResultViewController] text in
-            homeSearchResultViewController?.didInputText(text)
-        }
-        
-        bridge.didHighlightTrampoline = { [weak homeSearchResultViewController] in
-            homeSearchResultViewController?.didHighlightSearchBar()
-        }
-        
-        return homeSearchResultViewController
     }
 }

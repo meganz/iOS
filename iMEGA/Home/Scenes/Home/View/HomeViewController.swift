@@ -125,20 +125,11 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
             displayMenuDelegate: self,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         )
-        searchBarView.shouldShowContextButton = newSearchEnabled
+        searchBarView.shouldShowContextButton = true
         
         if AudioPlayerManager.shared.isPlayerAlive() {
             let streamingInfoUseCase = StreamingInfoUseCase()
             streamingInfoUseCase.startServer()
-        }
-    }
-    
-    func updateIsNewSearchEnabled(_ enabled: Bool) {
-        // we should show the context menu that can switch the
-        // layout only when new home search is enabled
-        newSearchEnabled = enabled
-        if searchBarView != nil {
-            searchBarView.shouldShowContextButton = newSearchEnabled
         }
     }
     
@@ -409,9 +400,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     private func setupSearchBarView(_ searchBarView: MEGASearchBarView) {
         searchBarView.delegate = self
         searchBarView.editingDelegate = searchResultsBridge
-        searchResultsBridge.didSelectTextTrampoline = {[weak searchBarView] text in
-            searchBarView?.didSelect(searchText: text)
-        }
     }
 
     private func setupBannerCollection() {
@@ -732,14 +720,6 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             }
         }
         router.didTap(on: .nodeCustomActions(node), with: selectionAction)
-    }
-}
-
-// MARK: - HomeSearchControllerDelegate
-
-extension HomeViewController: HomeSearchControllerDelegate {
-    func didSelect(searchText: String) {
-        navigationItem.searchController?.searchBar.text = searchText
     }
 }
 

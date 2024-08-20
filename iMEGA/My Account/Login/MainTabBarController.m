@@ -25,7 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadTabViewControllers];
-    [self setupHomeSearchForABTestingWithCompletionHandler:^{}];
     [MEGAChatSdk.shared addChatDelegate:self];
     [MEGASdk.shared addMEGAGlobalDelegate:self];
 }

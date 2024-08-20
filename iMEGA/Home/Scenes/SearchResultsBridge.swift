@@ -5,10 +5,7 @@
 /// not have to change too much in the existing implementation of search results which will go away eventually
 
 import Search 
-class SearchResultsBridge: MEGASearchBarViewEditingDelegate, HomeSearchControllerDelegate {
-    func didSelect(searchText: String) {
-        didSelectTextTrampoline?(searchText)
-    }
+class SearchResultsBridge: MEGASearchBarViewEditingDelegate {
     
     func didHighlightSearchBar() {
         didHighlightTrampoline?()
@@ -38,7 +35,6 @@ class SearchResultsBridge: MEGASearchBarViewEditingDelegate, HomeSearchControlle
     var hideKeyboardTrampoline: (() -> Void)?
     var didFinishSearchingTrampoline: (() -> Void)?
     var didHighlightTrampoline: (() -> Void)?
-    var didSelectTextTrampoline: ((String) -> Void)?
     var didInputTextTrampoline: ((String) -> Void)?
     var didClearTrampoline: (() -> Void)?
     var updateBottomInsetTrampoline: ((CGFloat) -> Void)?
