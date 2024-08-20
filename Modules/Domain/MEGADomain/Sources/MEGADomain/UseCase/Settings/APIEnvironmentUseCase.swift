@@ -1,5 +1,5 @@
 public protocol APIEnvironmentUseCaseProtocol {
-    func changeAPIURL(_ environment: APIEnvironmentEntity)
+    mutating func changeAPIURL(_ environment: APIEnvironmentEntity)
 }
 
 public struct APIEnvironmentUseCase: APIEnvironmentUseCaseProtocol {
@@ -11,7 +11,7 @@ public struct APIEnvironmentUseCase: APIEnvironmentUseCaseProtocol {
         self.chatURLRepository = chatURLRepository
     }
     
-    public func changeAPIURL(_ environment: APIEnvironmentEntity) {
+    public mutating func changeAPIURL(_ environment: APIEnvironmentEntity) {
         apiEnvironmentRepository.changeAPIURL(environment) {
             chatURLRepository.refreshUrls()
         }
