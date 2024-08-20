@@ -38,7 +38,6 @@ final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
                                                                 for: indexPath) as? PhotoGridViewCell else {
                 return UICollectionViewCell()
             }
-            
             self.configureCell(cell: cell, indexPath: indexPath, asset: asset)
             return cell
         }
