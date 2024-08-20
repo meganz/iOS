@@ -178,8 +178,12 @@ final class ProfileViewModelTests: XCTestCase {
     
     @MainActor
     func testAction_cancelSubscription_shouldPresentCancelAccountPlan() async {
-        let planType: AccountTypeEntity = .proI
-        let (sut, router) = makeSUT(accountType: planType)
+        let planType: AccountTypeEntity = [.proI, .proII, .proIII, .lite].randomElement() ?? .proI
+        let subscription = PaymentMethodEntity.allCases.filter { $0 != .none }.randomElement() ?? .itunes
+        let (sut, router) = makeSUT(
+            accountType: planType,
+            currentSubscription: AccountSubscriptionEntity(id: "123ABC", paymentMethodId: subscription)
+        )
         
         sut.dispatch(.cancelSubscription)
 
@@ -188,7 +192,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(router.showCancelAccountPlan_calledTimes, 1, "Expected showCancelAccountPlan to be called once.")
     }
     
-    func test_cancelSubscription_tracksAnalyticsEvent() {
+    func testAction_cancelSubscription_tracksAnalyticsEvent() {
         let mockTracker = MockTracker()
         let (sut, _) = makeSUT(tracker: mockTracker)
         
@@ -259,6 +263,7 @@ final class ProfileViewModelTests: XCTestCase {
     
     private func makeSUT(
         accountType: AccountTypeEntity = .free,
+        currentSubscription: AccountSubscriptionEntity? = nil,
         email: String = "test@email.com",
         smsState: SMSStateEntity = .notAllowed,
         isMasterBusinessAccount: Bool = false,
@@ -282,7 +287,8 @@ final class ProfileViewModelTests: XCTestCase {
             smsState: smsState,
             multiFactorAuthCheckResult: multiFactorAuthCheckResult,
             multiFactorAuthCheckDelay: 1.0,
-            accountPlan: accountPlan
+            accountPlan: accountPlan,
+            currentSubscription: currentSubscription
         )
         let router = MockProfileViewRouter()
         

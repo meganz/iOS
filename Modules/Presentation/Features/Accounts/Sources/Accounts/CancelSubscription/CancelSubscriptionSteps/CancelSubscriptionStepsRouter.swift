@@ -21,10 +21,7 @@ public final class CancelSubscriptionStepsRouter: CancelSubscriptionStepsRouting
     
     public func build() -> UIViewController {
         let helper = CancelSubscriptionStepsHelper(type: type)
-        let viewModel = CancelSubscriptionStepsViewModel(
-            helper: helper,
-            router: self
-        )
+        let viewModel = CancelSubscriptionStepsViewModel(helper: helper)
         
         let hostingController = UIHostingController(
             rootView: CancelSubscriptionStepsView(viewModel: viewModel)

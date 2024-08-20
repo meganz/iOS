@@ -11,15 +11,8 @@ final class CancelSubscriptionStepsViewModelTests: XCTestCase {
         )
     }
     
-    private func makeSUT(data: CancelSubscriptionData) -> (CancelSubscriptionStepsViewModel, MockCancelSubscriptionStepsRouter) {
-        let router = MockCancelSubscriptionStepsRouter()
-        
-        let sut = CancelSubscriptionStepsViewModel(
-            helper: MockCancelSubscriptionStepsHelper(data: data),
-            router: router
-        )
-        
-        return (sut, router)
+    private func makeSUT(data: CancelSubscriptionData) -> CancelSubscriptionStepsViewModel {
+        CancelSubscriptionStepsViewModel(helper: MockCancelSubscriptionStepsHelper(data: data))
     }
 
     func testSetupStepList_setsCorrectData() async {
@@ -33,7 +26,7 @@ final class CancelSubscriptionStepsViewModelTests: XCTestCase {
             sections: [expectedSection]
         )
         
-        let (sut, _) = makeSUT(data: cancelSubscriptionData)
+        let sut = makeSUT(data: cancelSubscriptionData)
 
         await sut.setupStepList()
 
@@ -45,11 +38,19 @@ final class CancelSubscriptionStepsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.sections.first?.steps.first?.text, expectedStep.text)
     }
 
-    func testDismiss_callsRouterDismiss() {
-        let (sut, router) = makeSUT(data: emptyData)
-
-        sut.dismiss()
-
-        XCTAssertEqual(router.dismiss_calledTimes, 1)
+    func testDismiss_shouldDismissReturnTrue() async {
+        let sut = makeSUT(data: emptyData)
+        let exp = expectation(description: "Should dismiss view")
+        let shouldDismissSubscription = sut.$shouldDismiss
+            .dropFirst()
+            .sink { shouldDismiss in
+                XCTAssertTrue(shouldDismiss)
+                exp.fulfill()
+            }
+        
+        await sut.dismiss()
+        
+        await fulfillment(of: [exp], timeout: 0.5)
+        shouldDismissSubscription.cancel()
     }
 }

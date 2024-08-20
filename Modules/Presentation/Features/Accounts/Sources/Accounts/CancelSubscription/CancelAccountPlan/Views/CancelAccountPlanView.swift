@@ -40,6 +40,18 @@ struct CancelAccountPlanView: View {
         .task {
             viewModel.setupFeatureList()
         }
+        .sheet(isPresented: $viewModel.showCancellationSurvey) {
+            CancellationSurveyView(
+                viewModel: CancellationSurveyViewModel(cancelAccountPlanRouter: viewModel.router)
+            )
+        }
+        .sheet(isPresented: $viewModel.showCancellationSteps) {
+            CancelSubscriptionStepsView(
+                viewModel: CancelSubscriptionStepsViewModel(
+                    helper: CancelSubscriptionStepsHelper(type: viewModel.cancellationStepsSubscriptionType)
+                )
+            )
+        }
     }
     
     @ViewBuilder
@@ -129,7 +141,7 @@ struct CancelAccountPlanView: View {
             }
             
             SecondaryActionButtonView(title: Strings.Localizable.Cancellation.Subscription.Continue.Cancellation.Button.title) {
-                viewModel.showCancelSubscriptionSteps()
+                viewModel.didTapContinueCancellation()
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

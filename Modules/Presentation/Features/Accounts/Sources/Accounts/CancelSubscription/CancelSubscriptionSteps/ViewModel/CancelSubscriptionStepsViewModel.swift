@@ -2,18 +2,13 @@ import SwiftUI
 
 final class CancelSubscriptionStepsViewModel: ObservableObject {
     private let cancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol
-    private let router: CancelSubscriptionStepsRouting
-    
+    @Published var shouldDismiss: Bool = false
     @Published var title: String = ""
     @Published var message: String = ""
     @Published var sections: [StepSection] = []
-        
-    init(
-        helper: CancelSubscriptionStepsHelperProtocol,
-        router: CancelSubscriptionStepsRouting
-    ) {
+    
+    init(helper: CancelSubscriptionStepsHelperProtocol) {
         self.cancelSubscriptionStepsHelper = helper
-        self.router = router
     }
     
     @MainActor
@@ -24,7 +19,8 @@ final class CancelSubscriptionStepsViewModel: ObservableObject {
         sections = cancellationData.sections
     }
     
+    @MainActor
     func dismiss() {
-        router.dismiss()
+        shouldDismiss = true
     }
 }
