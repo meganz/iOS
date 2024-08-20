@@ -1,3 +1,5 @@
+import MEGADomain
+import MEGASDKRepo
 import SwiftUI
 
 final class CancellationSurveyViewModel: ObservableObject {
@@ -12,12 +14,27 @@ final class CancellationSurveyViewModel: ObservableObject {
     let otherReasonID = CancellationSurveyReason.otherReason.id
     let minimumTextRequired = 10
     let maximumTextRequired = 120
+    private(set) var subscription: AccountSubscriptionEntity
+    private let subscriptionsUsecase: any SubscriptionsUsecaseProtocol
     private let cancelAccountPlanRouter: any CancelAccountPlanRouting
+    var submitReasonTask: Task<Void, Never>?
     
-    init(cancelAccountPlanRouter: some CancelAccountPlanRouting) {
+    init(
+        subscription: AccountSubscriptionEntity,
+        subscriptionsUsecase: some SubscriptionsUsecaseProtocol,
+        cancelAccountPlanRouter: some CancelAccountPlanRouting
+    ) {
+        self.subscription = subscription
+        self.subscriptionsUsecase = subscriptionsUsecase
         self.cancelAccountPlanRouter = cancelAccountPlanRouter
     }
     
+    deinit {
+        submitReasonTask?.cancel()
+        submitReasonTask = nil
+    }
+    
+    // MARK: - Setup
     @MainActor
     func setupRandomizedReasonList() {
         let otherReasonItem = CancellationSurveyReason.eight
@@ -29,26 +46,36 @@ final class CancellationSurveyViewModel: ObservableObject {
         cancellationSurveyReasonList = randomizedList
     }
     
+    // MARK: - Reason selection
     @MainActor
     func selectReason(_ reason: CancellationSurveyReason) {
         selectedReason = reason
-        isOtherFieldFocused = !reason.isOtherReason
+        isOtherFieldFocused = false
         showNoReasonSelectedError = false
+    }
+    
+    var formattedReasonString: String? {
+        guard let selectedReason else { return nil }
+        return selectedReason.isOtherReason ? otherReasonText : "\(selectedReason.id) - \(selectedReason.title)"
     }
     
     func isReasonSelected(_ reason: CancellationSurveyReason) -> Bool {
         selectedReason?.id == reason.id
     }
     
+    // MARK: - Button action
+    @MainActor
     func didTapCancelButton() {
-        dismissView()
+        shouldDismiss = true
     }
     
+    @MainActor
     func didTapDontCancelButton() {
-        dismissView()
+        shouldDismiss = true
         cancelAccountPlanRouter.dismissCancellationFlow()
     }
     
+    @MainActor
     func didTapCancelSubscriptionButton() {
         guard let selectedReason else {
             showNoReasonSelectedError = true
@@ -56,17 +83,21 @@ final class CancellationSurveyViewModel: ObservableObject {
         }
 
         if selectedReason.isOtherReason,
-            otherReasonText.isEmpty {
+           otherReasonText.isEmpty {
             isOtherFieldFocused = true
             return
         }
 
-        cancelAccountPlanRouter.showAppleManageSubscriptions()
-    }
-    
-    private func dismissView() {
-        Task { @MainActor in
-            shouldDismiss = true
+        isOtherFieldFocused = false
+        
+        submitReasonTask = Task { [weak self] in
+            guard let self else { return }
+            try? await subscriptionsUsecase.cancelSubscriptions(
+                reason: formattedReasonString,
+                subscriptionId: subscription.id,
+                canContact: allowToBeContacted
+            )
+            cancelAccountPlanRouter.showAppleManageSubscriptions()
         }
     }
 }
