@@ -3988,6 +3988,10 @@
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” usunięty";
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="Usuń z listy odtwarzania";
+/* Recently watched videos page title */
+"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+/* Recently watched videos empty page content text */
+"videos.recentlyWatched.emptyState"="Brak aktywności";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="W poczekalni nie ma nikogo";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4221,9 +4225,9 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Kliknij <b>Anuluj subskrypcję</b>.";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="We’re sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
 /* Cancel subscription survey header subtitle */
-"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Twoja subskrypcja zostanie natychmiast anulowana, a po wygaśnięciu bieżącego plan zostaniesz przeniesiony na bezpłatne konto MEGA. Uwaga: Anulowanie subskrypcja nie spowoduje usunięcia konto.";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Potrzebowałem tego planu tymczasowo i już z niego nie korzystam";
 /* Cancel subscription survey reason with id 2 */
@@ -4245,11 +4249,13 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="Nie chcę subskrypcji ani automatycznego rozliczania";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="Pozwalam MEGA skontaktować się ze mną w celu dalszej rozmowy na ten temat";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="Nie anuluj";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Wybierz powód anulowania subskrypcji";
+/* Cancel subscription survey error message when field is empty */
+"accounts.cancelSubscriptionSurvey.error.enterDetails"="Wprowadź szczegóły";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Ukryte elementy";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4275,7 +4281,9 @@
 /* Text displayed in the description field when no description is present, in read-write mode. */
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Dodaj opis";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
-"call.meeting.empty.shareOptionsDialog.title"="Udostępnij ten link lub dodaj uczestników, aby do Ciebie dołączyli";
+"call.meeting.empty.shareOptionsDialog.title"="Udostępnij ten link lub zaproś uczestników do przyłączenia się do Ciebie";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Share this link to invite others";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Udostępnij link do spotkania";
 /* Title for copy link button in Empty meeting share options dialog */

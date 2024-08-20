@@ -485,9 +485,9 @@
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Xin xem lại quyền hạn của bạn đối với thư mục này";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Lưu vào Ổ Mây";
+"Import to Cloud Drive"="Lưu vào Ổ Mây";
 /* Message shown when a file has been imported */
-"fileImported"="Tệp tin đã được lưu vào Ổ mây";
+"fileImported"="Tệp tin đã được lưu vào Ổ Mây";
 /* Message shown when some files have been imported */
 "filesImported"="Các tệp tin đã được lưu vào Ổ Mây";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
@@ -551,7 +551,7 @@
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Các mục ẩn";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
-"cameraUploads.albums.albumLink.sensitive.alert.message.single"="Có các mục ẩn trong album này. Việc thực[w]hiện chia[w]sẻ album sẽ làm các mục ẩn hiển[w]thị cho những người bạn chia[w]sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ[w]Mây của bạn.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="Có các mục ẩn trong album này. Việc thực hiện chia sẻ album sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Có các mục ẩn nằm trong một hoặc nhiều album này. Việc thực hiện chia sẻ album sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Không có tài khoản email nào được thiết lập cho máy này";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Chính[w]Sách Dữ[w]Liệu và Riêng[w]Tư";
+"privacyPolicyLabel"="Chính Sách Dữ Liệu và Riêng Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Chính Sách Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -3919,17 +3919,17 @@
 /* Videos: videos filter title for location */
 "videos.tab.all.filter.location.title.location"="Định vị";
 /* Videos: videos filter option for all locations */
-"videos.tab.all.filter.location.option.allLocations"="Tất cả các vị trí";
+"videos.tab.all.filter.location.option.allLocations"="Tất cả các vị trí";
 /* Videos: videos filter option for cloud drive */
 "videos.tab.all.filter.location.option.cloudDrive"="Ổ Mây";
 /* Videos: videos filter option for Camera uploads */
 "videos.tab.all.filter.location.option.cameraUploads"="Đăng tải camêra";
 /* Videos: videos filter option for shared items */
-"videos.tab.all.filter.location.option.sharedItems"="Các Mục Chia Sẻ";
+"videos.tab.all.filter.location.option.sharedItems"="Các mục chia sẻ";
 /* Videos: videos filter title for duration */
 "videos.tab.all.filter.duration.title.duration"="Thời lượng";
 /* Videos: videos filter option for all duration */
-"videos.tab.all.filter.duration.option.allDurations"="Tất cả thời[w]lượng";
+"videos.tab.all.filter.duration.option.allDurations"="Tất cả thời lượng";
 /* Videos: videos filter option for less than 10 seconds */
 "videos.tab.all.filter.duration.option.lessThan10Seconds"="Ít hơn 10 giây";
 /* Videos: videos filter option for between 10 and 60 seconds */
@@ -3941,7 +3941,7 @@
 /* Videos: videos filter option for more than 20 minutes */
 "videos.tab.all.filter.duration.option.moreThan20Minutes"="Hơn 20 phút";
 /* Videos: video playlist content empty state */
-"videos.tab.playlist.content.emptyState"="Không tìm thấy danh[w]sách phát nào";
+"videos.tab.playlist.content.emptyState"="Không tìm thấy danh sách phát nào";
 /* Videos: video playlist add new playlist button text description */
 "videos.tab.playlist.content.newPlaylist"="Tạo danh sách phát mới";
 /* Videos: video playlist playlist cell title */
@@ -3965,9 +3965,9 @@
 /* Used in video playlist content to add videos to video playlist */
 "videos.tab.playlist.playlistContent.menu.addVideos"="Thêm video";
 /* Used in video playlist content to delete playlist */
-"videos.tab.playlist.playlistContent.menu.deletePlaylist"="Xóa danh[w]sách phát";
+"videos.tab.playlist.playlistContent.menu.deletePlaylist"="Xóa danh sách phát";
 /* Used in video playlist content action sheet when about to remove videos from playlist */
-"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Loại khỏi danh[w]sách phát?";
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Loại khỏi danh sách phát?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Thêm";
 /* Used for adding videos to video playlist add button in video playlist content */
@@ -3979,15 +3979,19 @@
 /* Videos: video playlist rename alert button title */
 "videos.tab.playlist.content.alert.button.rename"="Đổi tên";
 /* Videos: video playlist rename error message */
-"videos.tab.playlist.content.snackbar.renamingFailed"="Đổi tên không thành[w]công";
+"videos.tab.playlist.content.snackbar.renamingFailed"="Đổi tên không thành công";
 /* Videos: video playlist delete playlist alert title */
-"videos.tab.playlist.content.alert.title.deletePlaylist"="Xóa danh[w]sách phát?";
+"videos.tab.playlist.content.alert.title.deletePlaylist"="Xóa danh sách phát?";
 /* Videos: video playlist delete playlist alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Danh sách phát sẽ bị xóa nhưng các nội dung có bên trong sẽ vẫn giữ lại trên Dòng thời gian của bạn.";
 /* Videos: video playlist delete playlist snack bar message */
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” đã bị xóa";
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="Loại khỏi danh sách phát";
+/* Recently watched videos page title */
+"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+/* Recently watched videos empty page content text */
+"videos.recentlyWatched.emptyState"="Không có hoạt động gần đây";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Không có ai ở trong phòng chờ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4071,7 +4075,7 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Chỉ có 100 người mới có thể tham[w]gia cuộc gọi. Bất kỳ người tham[w]gia nào thêm sẽ chỉ có thể gửi và nhận tin[w]nhắn. Yêu[w]cầu ban tổ[w]chức nâng[w]cấp lên Pro để loại bỏ hạn[w]chế này.";
+"meetings.contact-picker.warning.over-limit.non-host"="Chỉ có 100 người mới có thể tham gia cuộc gọi. Bất kỳ người tham gia nào thêm sẽ chỉ có thể gửi và nhận tin nhắn. Yêu cầu ban tổ chức nâng cấp lên Pro để loại bỏ hạn chế này.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Nâng cấp lên Pro để cuộc gọi không giới hạn";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
@@ -4083,19 +4087,19 @@
 /* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
 "calls.freePlanLimitWarning.waitingRoomList.banner.message"="Chỉ có 100 người mới có thể tham[w]gia cuộc gọi. Bất kỳ người tham[w]gia nào thêm sẽ chỉ có thể gửi và nhận tin[w]nhắn. Yêu[w]cầu ban tổ[w]chức nâng[w]cấp lên Pro để loại bỏ hạn[w]chế này.";
 /* Hidden files and folders onboarding title */
-"onboarding.hiddenFilesAndFolders.title"="Tệp[w]tin và thư[w]mục ẩn";
+"onboarding.hiddenFilesAndFolders.title"="Tệp tin và thư mục ẩn";
 /* Hidden files and folders onboarding content hide important title */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Ẩn đi các tệp[w]tin và thư[w]mục quan[w]trọng";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Ẩn đi các tệp tin và thư mục quan trọng";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Bạn có thể giấu đi các tệp[w]tin và thư[w]mục riêng[w]tư của mình. Chỉ có bạn mới có thể hiện những mục đó lại, bằng cách thực[w]hiện từng cái riêng[w]lẻ hoặc bật hiển[w]thị các mục đã ẩn đi trong phần thiết[w]đặt.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Bạn có thể giấu đi các tệp tin và thư mục riêng tư của mình. Chỉ có bạn mới có thể hiện những mục đó lại, bằng cách thực hiện từng cái riêng lẻ hoặc bật hiển thị các mục đã ẩn đi trong phần thiết đặt.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Loại trừ khỏi Dòng thời[w]gian";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Loại trừ khỏi Dòng thời gian";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Các mục đã ẩn đi chỉ có thể truy[w]cập thông qua Ổ[w]Mây và sẽ không xuất[w]hiện trong Ảnh, Album hoặc Sử[w]dụng gần[w]đây của bạn.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Các mục đã ẩn đi chỉ có thể truy cập thông qua Ổ Mây và sẽ không xuất hiện trong Ảnh, Album hoặc Sử dụng gần đây của bạn.";
 /* Hidden files and folders onboarding content out of sight title */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Ra khỏi tầm nhìn";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Bạn tự quyết[w]định khi bạn muốn các tệp[w]tin ẩn đi được hiển[w]thị. Có một mục lựa[w]chọn mới trong thiết[w]đặt để hiển[w]thị các mục ẩn tạm[w]thời.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Bạn tự quyết định khi bạn muốn các tệp tin ẩn đi được hiển thị. Có một mục lựa chọn mới trong thiết đặt để hiển thị các mục ẩn tạm thời.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Tài khoản của tôi";
 /* Free plan title */
@@ -4107,7 +4111,7 @@
 /* Limited transfer limit title */
 "account.transferQuota.freePlan.limited"="Bị giới hạn";
 /* Cancel account subscription title */
-"account.subscription.cancel.title"="Hủy Gói Đăng Ký Dịch Vụ";
+"account.subscription.cancel.title"="Hủy gói đăng ký";
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="Không thể lưu tệp tin";
 /* The alert message shown when asking user if they want to make media node offline. */
@@ -4221,9 +4225,9 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Chạm vào <b>Hủy đăng ký</b>.";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="Chúng tôi rất tiếc khi thấy bạn rời khỏi dịch vụ! Bạn có thể cho chúng tôi biết lý do tại sao bạn hủy gói đăng ký được không?";
 /* Cancel subscription survey header subtitle */
-"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Gói đăng ký của bạn sẽ bị hủy ngay lập tức và bạn sẽ chuyển thành tài khoản MEGA miễn phí khi gói hiện tại của bạn hết hạn. Lưu ý: Việc hủy gói đăng ký sẽ không xóa tài khoản của bạn.";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Tôi chỉ sử dụng cái này tạm thời và không còn nhu cầu nữa";
 /* Cancel subscription survey reason with id 2 */
@@ -4245,11 +4249,13 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="Tôi không muốn có gói đăng ký hoặc bị tính phí tự động";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="Tôi cho phép MEGA liên hệ với tôi để bàn thêm về chủ đề này";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="Đừng hủy";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Chọn một lý do mà bạn hủy gói đăng ký";
+/* Cancel subscription survey error message when field is empty */
+"accounts.cancelSubscriptionSurvey.error.enterDetails"="Nhập chi tiết";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Các mục ẩn";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4275,7 +4281,9 @@
 /* Text displayed in the description field when no description is present, in read-write mode. */
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Thêm miêu tả";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
-"call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+"call.meeting.empty.shareOptionsDialog.title"="Chia sẻ đường liên kết này hoặc mời thêm người để cùng tham gia với bạn";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Chia sẻ đường liên kết này để mời thêm người";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Chia sẻ đường liên kết cuộc họp";
 /* Title for copy link button in Empty meeting share options dialog */

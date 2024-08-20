@@ -1307,7 +1307,7 @@
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Trimite contacte";
 /*  */
-"done"="Gata";
+"done"="Terminat";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="Activează previzualizările îmbogățite ale URL-urilor";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1531,7 +1531,7 @@
 /* Label for recovery key button */
 "backupRecoveryKey"="Fă backup cheii de recuperare";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordText"="Te rugăm să îți testezi parola mai jos pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, vei pierde accesul la datele tale MEGA. [A]Află mai multe[/A]";
+"testPasswordText"="Testați parola de mai jos pentru a vă asigura că o amintiți. Dacă vă pierdeți parola, veți pierde accesul la datele MEGA. [A]Aflați mai multe[/A]";
 /* Title text for the account confirmation. */
 "confirm"="Confirmă";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
@@ -2307,7 +2307,7 @@
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Exportă linkul și cheia de decriptare separat.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
-"Learn more"="Află mai multe";
+"Learn more"="Aflați mai multe";
 /* Text indicating the date until a link will be valid */
 "Link expires %@"="Link-ul expiră pe %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
@@ -3669,7 +3669,7 @@
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participanții adăugați de non-gazde în timpul apelurilor nu vor fi trimiși în sala de așteptare.";
 /* Schedule meeting waiting room warning banner learn more */
-"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Află mai multe";
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Aflați mai multe";
 /* Album saved to cloud drive alert message */
 "albumLink.alert.message.albumSavedToCloudDrive"="„%@” a fost salvat în Unitatea cloud";
 /* Album failed to save to cloud drive alert message */
@@ -3697,17 +3697,17 @@
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
 "transferQuotaError.downloadLimitedQuota.title"="Cotă de transfer disponibilă limitată";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
-"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe[/A] despre cota de transfer.";
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Aflați mai multe[/A] despre cota de transfer.";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
 "transferQuotaError.downloadLimitedQuota.proAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer în acest cont. Pentru a obține mai multă cotă, achiziționați un abonament nou sau dacă aveți un abonament recurent la MEGA, puteți aștepta reînnoirea abonamentului.";
 /* Title of the dialog for transfer quota error with exceeded quota */
 "transferQuotaError.downloadExceededQuota.title"="Cotă de transfer depășită";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
-"transferQuotaError.downloadExceededQuota.freeAccount.message"="Nu puteți continua descărcarea, deoarece nu aveți nicio cotă de transfer rămasă pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe[/A] despre cota de transfer.";
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="Nu puteți continua descărcarea, deoarece nu aveți nicio cotă de transfer rămasă pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Aflați mai multe[/A] despre cota de transfer.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.downloadExceededQuota.proAccount.message"="Nu poți continua descărcarea deoarece nu mai ai suficientă cotă de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou abonament sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea abonamentului.";
 /* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
-"transferQuotaError.streamingExceededQuota.freeAccount.message"="Media dvs. a încetat redarea, deoarece nu mai aveți nicio cotă de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe [/A] despre cota de transfer.";
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Media dvs. a încetat redarea, deoarece nu mai aveți nicio cotă de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Aflați mai multe [/A] despre cota de transfer.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.streamingExceededQuota.proAccount.message"="Media dvs. a încetat să se redea, deoarece nu mai aveți nicio cotă de transfer rămasă în acest cont. Pentru a obține mai multă cotă, achiziționați un abonament nou sau dacă aveți un abonament recurent la MEGA, puteți aștepta reînnoirea abonamentului.";
 /* Meeting waiting room leave button */
@@ -3877,7 +3877,7 @@
 /* Alert button for user accepting call screen recording */
 "calls.screenRecording.alert.action.accept"="Bine, am înțeles";
 /* Alert button for user accepting call screen recording */
-"calls.screenRecording.alert.action.learnMore"="Află mai multe";
+"calls.screenRecording.alert.action.learnMore"="Aflați mai multe";
 /* Notification message about someone started to record call screen */
 "calls.screenRecording.notification.recording.started"="%@ a început înregistrarea";
 /* Notification message about someone stopped to record call screen */
@@ -3988,6 +3988,10 @@
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="„[A]” șters";
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="Eliminați din listă de redare";
+/* Recently watched videos page title */
+"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+/* Recently watched videos empty page content text */
+"videos.recentlyWatched.emptyState"="Nicio activitate recentă";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Nu este nimeni în sala de așteptare";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4221,9 +4225,9 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="5. Atingeți <b>Anulați abonamentul</b>.";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="Ne pare rău să vă vedem plecând. Puteți să ne spuneți de ce vă anulați abonamentul?";
 /* Cancel subscription survey header subtitle */
-"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Abonamentul dvs. va fi anulat imediat și veți fi mutat într-un cont MEGA gratuit când expiră abonamentul curent. Notă: Anularea abonamentului nu vă va șterge contul.";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Aveam nevoie de acest abonament temporar și nu îl mai folosesc";
 /* Cancel subscription survey reason with id 2 */
@@ -4245,11 +4249,13 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="Nu doresc un abonament sau facturare automată";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="Permit MEGA să mă contacteze pentru a vorbi mai departe despre acest subiect";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="Nu anulați";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Selectați un motiv pentru anularea abonamentului";
+/* Cancel subscription survey error message when field is empty */
+"accounts.cancelSubscriptionSurvey.error.enterDetails"="Introduceți detalii";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Elemente ascunse";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4275,7 +4281,9 @@
 /* Text displayed in the description field when no description is present, in read-write mode. */
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Adăugați o descriere";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
-"call.meeting.empty.shareOptionsDialog.title"="Share this link or add participants to join you";
+"call.meeting.empty.shareOptionsDialog.title"="Partajați acest link sau invitați participanții să vi se alăture";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Partajați acest link pentru a invita și alte persoane";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Partajați linkul întâlnirii";
 /* Title for copy link button in Empty meeting share options dialog */

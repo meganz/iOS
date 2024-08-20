@@ -1539,7 +1539,7 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Exporter la Clé de récupération";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Poursuivre la déconnexion";
+"proceedToLogout"="Vous déconnecter";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="Vous êtes sur le point de vous déconnecter. Veuillez essayer votre mot de passe pour vous assurer que vous en souvenez. Si vous perdez votre mot de passe, vous perdrez l’accès à vos données MEGA.";
 /* state previous to import a file */
@@ -3988,6 +3988,10 @@
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="« [A] » a été supprimé";
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="Supprimer de la liste de lecture";
+/* Recently watched videos page title */
+"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+/* Recently watched videos empty page content text */
+"videos.recentlyWatched.emptyState"="Aucune activité récente";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="La salle d’attente est vide";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4221,9 +4225,9 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="5. Touchez <b>Annuler l’abonnement</b>.";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We are sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="Nous sommes désolés de vous voir partir. Pouvez-vous nous indiquer pourquoi vous annulez votre abonnement ?";
 /* Cancel subscription survey header subtitle */
-"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Votre abonnement sera annulé immédiatement et votre compte sera transformé en compte MEGA gratuit après expiration de votre abonnement actuel. Note : l’annulation de votre abonnement ne supprimera pas votre compte.";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="J’avais besoin de cet abonnement temporairement et ne l’utilise plus";
 /* Cancel subscription survey reason with id 2 */
@@ -4245,11 +4249,13 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="Je ne veux pas d’abonnement ni de facturation automatique";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="J’autorise MEGA à me contacter pour discuter de ce sujet";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="Ne pas annuler";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Sélectionnez une raison d’annulation de votre abonnement";
+/* Cancel subscription survey error message when field is empty */
+"accounts.cancelSubscriptionSurvey.error.enterDetails"="Saisissez des détails";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Éléments cachés";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4276,6 +4282,8 @@
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Ajoutez une description";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
 "call.meeting.empty.shareOptionsDialog.title"="Partagez ce lien ou invitez des participants à vous rejoindre";
+/* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Partagez ce lien pour inviter d’autres personnes";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Partager le lien de la réunion";
 /* Title for copy link button in Empty meeting share options dialog */
