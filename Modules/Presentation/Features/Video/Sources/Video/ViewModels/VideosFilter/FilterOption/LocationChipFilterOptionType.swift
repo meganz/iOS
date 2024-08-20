@@ -1,6 +1,6 @@
 import MEGAL10n
 
-enum LocationChipFilterOptionType: CaseIterable {
+enum LocationChipFilterOptionType: CaseIterable, Sendable {
     case allLocation
     case cloudDrive
     case cameraUploads

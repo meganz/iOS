@@ -8,7 +8,7 @@ struct VideoListViewModelContentProvider: VideoListViewModelContentProviderProto
         self.photoLibraryUseCase = photoLibraryUseCase
     }
     
-    func search(by searchText: String = "", sortOrderType: SortOrderEntity?, durationFilterOptionType: DurationChipFilterOptionType, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity] {
+    func search(by searchText: String = "", sortOrderType: SortOrderEntity, durationFilterOptionType: DurationChipFilterOptionType, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity] {
         let filteredLocationVideos = try await videos(by: searchText, sortOrderType: sortOrderType, locationFilterOptionType: locationFilterOptionType)
         try Task.checkCancellation()
         return videosFiltered(by: durationFilterOptionType, videos: filteredLocationVideos)
@@ -24,12 +24,12 @@ extension VideoListViewModelContentProvider {
         return videos.filter(durationFilter)
     }
     
-    private func videos(by searchText: String, sortOrderType: SortOrderEntity?, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity] {
+    private func videos(by searchText: String, sortOrderType: SortOrderEntity, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity] {
         let filteredLocationVideos = try await photoLibraryUseCase.media(
             for: filterOptionEntity(for: locationFilterOptionType),
             excludeSensitive: nil,
             searchText: searchText,
-            sortOrder: sortOrderType ?? .defaultAsc
+            sortOrder: sortOrderType
         )
         
         try Task.checkCancellation()

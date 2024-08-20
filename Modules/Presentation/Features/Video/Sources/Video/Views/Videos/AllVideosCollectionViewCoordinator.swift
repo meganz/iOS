@@ -9,7 +9,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     }
     
     /// Row Item type to support diffable data source diffing while protecting `NodeEntity` agasint the `DiffableDataSource` API.
-    private struct RowItem: Hashable {
+    private struct RowItem: Hashable, Sendable {
         let node: NodeEntity
         
         init(node: NodeEntity) {
@@ -34,6 +34,13 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     private typealias DiffableDataSource = UICollectionViewDiffableDataSource<Section, Item>
     private typealias DiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<Section, Item>
     private typealias Item = RowItem
+    private var reloadSnapshotTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    
+    deinit {
+        reloadSnapshotTask?.cancel()
+    }
     
     init(_ representer: AllVideosCollectionViewRepresenter) {
         self.representer = representer
@@ -79,10 +86,15 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     }
     
     func reloadData(with videos: [NodeEntity]) {
+        reloadSnapshotTask = Task { await reloadData(with: videos) }
+    }
+    
+    private func reloadData(with videos: [NodeEntity]) async {
         var snapshot = DiffableDataSourceSnapshot()
         snapshot.appendSections([.allVideos])
         snapshot.appendItems(videos.map(RowItem.init(node:)), toSection: .allVideos)
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        guard !Task.isCancelled else { return }
+        await dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     // MARK: - Cell setup
