@@ -42,7 +42,7 @@ struct CancelAccountPlanView: View {
         }
         .sheet(isPresented: $viewModel.showCancellationSurvey) {
             CancellationSurveyView(
-                viewModel: CancellationSurveyViewModel(cancelAccountPlanRouter: viewModel.router)
+                viewModel: viewModel.makeCancellationSurveyViewModel()
             )
         }
         .sheet(isPresented: $viewModel.showCancellationSteps) {

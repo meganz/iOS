@@ -2,6 +2,7 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 public final class CancelAccountPlanViewModel: ObservableObject {
     let currentPlanName: String
@@ -67,5 +68,12 @@ public final class CancelAccountPlanViewModel: ObservableObject {
             // Show cancellation step for either google or webclient subscriptions
             showCancellationSteps = true
         }
+    }
+    
+    func makeCancellationSurveyViewModel() -> CancellationSurveyViewModel {
+        CancellationSurveyViewModel(
+            subscription: currentSubscription,
+            subscriptionsUsecase: SubscriptionsUsecase(repo: SubscriptionsRepository.newRepo),
+            cancelAccountPlanRouter: router)
     }
 }
