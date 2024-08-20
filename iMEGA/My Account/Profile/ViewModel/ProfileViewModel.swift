@@ -121,6 +121,7 @@ final class ProfileViewModel: ViewModelType {
         // 1. The cancel subscription feature flag is enabled.
         // 2. The user has a standard pro plan (Lite, Pro I, II, III).
         // 3. The user is subscribed to a Pro plan.
+        // 4. The user has one and only one pro billed account.
         //
         // We validate if the current Pro plan is associated with any subscription because a user may have
         // a one-off plan (e.g., via vouchers). In such cases, the user has a standard pro plan, but
@@ -129,7 +130,8 @@ final class ProfileViewModel: ViewModelType {
         // cancel subscription button.
         isCancelSubscriptionFeatureFlagEnabled &&
         accountUseCase.isStandardProAccount() &&
-        accountUseCase.isBilledProPlan()
+        accountUseCase.isBilledProPlan() &&
+        !accountUseCase.hasMultipleBilledProPlans()
     }
 }
 

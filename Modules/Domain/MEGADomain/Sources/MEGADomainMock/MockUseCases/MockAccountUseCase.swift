@@ -18,6 +18,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _isLoggedIn: Bool
     private let _hasValidProAccount: Bool
     private let _isBilledProPlan: Bool
+    private let _hasMultipleBilledProPlan: Bool
     private let _currentProPlan: AccountPlanEntity?
     private let _currentSubscription: AccountSubscriptionEntity?
     private let _isStandardProAccount: Bool
@@ -42,6 +43,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         isLoggedIn: Bool = true,
         hasValidProAccount: Bool = false,
         isBilledProPlan: Bool = false,
+        hasMultipleBilledProPlan: Bool = false,
         isStandardProAccount: Bool = false,
         accountCreationDate: Date? = nil,
         contacts: [UserEntity] = [],
@@ -76,6 +78,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         _hasValidProAccount = hasValidProAccount
         _isStandardProAccount = isStandardProAccount
         _isBilledProPlan = isBilledProPlan
+        _hasMultipleBilledProPlan = hasMultipleBilledProPlan
         _currentProPlan = currentProPlan
         _currentSubscription = currentSubscription
         _accountCreationDate = accountCreationDate
@@ -188,6 +191,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public func isStandardProAccount() -> Bool {
         _isStandardProAccount
+    }
+    
+    public func hasMultipleBilledProPlans() -> Bool {
+        _hasMultipleBilledProPlan
     }
     
     // MARK: - Account operations

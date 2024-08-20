@@ -34,6 +34,7 @@ public protocol AccountUseCaseProtocol: Sendable {
     /// Check if the current Pro Plan is associated with any subscription.
     /// - Returns: `true` if the current Pro Plan is associated with an active subscription.
     func isBilledProPlan() -> Bool
+    func hasMultipleBilledProPlans() -> Bool
     
     func isStandardProAccount() -> Bool
 
@@ -153,6 +154,10 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     
     public func isBilledProPlan() -> Bool {
         repository.isBilledProPlan()
+    }
+    
+    public func hasMultipleBilledProPlans() -> Bool {
+        repository.hasMultipleBilledProPlans()
     }
     
     public func hasValidProOrUnexpiredBusinessAccount() -> Bool {

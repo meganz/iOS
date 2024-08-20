@@ -24,6 +24,8 @@ extension MEGAAccountType {
             return .basic
         case .essential:
             return .essential
+        case .feature:
+            return .feature
         @unknown default:
             return .free
         }
@@ -53,6 +55,8 @@ extension AccountTypeEntity {
             return .basic
         case .essential:
             return .essential
+        case .feature:
+            return .feature
         }
     }
     

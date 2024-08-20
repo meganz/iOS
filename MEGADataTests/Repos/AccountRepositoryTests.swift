@@ -132,6 +132,38 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertNil(sut.currentSubscription())
     }
     
+    func testMultipleProSubscriptions_whenUserHasMultipleBilledSubscriptions_shouldReturnTrue() {
+        let accountDetails = AccountDetailsEntity.build(
+            subscriptions: [
+                AccountSubscriptionEntity(id: "123ABC", accountType: .lite),
+                AccountSubscriptionEntity(id: "456DEF", accountType: .proI)
+            ],
+            plans: [
+                AccountPlanEntity(isProPlan: true, subscriptionId: "456DEF")
+            ]
+        )
+        
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertTrue(sut.hasMultipleBilledProPlans())
+    }
+    
+    func testMultipleProSubscriptions_whenUserHasBilledAndFeatureSubscriptions_shouldReturnFalse() {
+        let accountDetails = AccountDetailsEntity.build(
+            subscriptions: [
+                AccountSubscriptionEntity(id: "123ABC", accountType: .feature),
+                AccountSubscriptionEntity(id: "456DEF", accountType: .proI)
+            ],
+            plans: [
+                AccountPlanEntity(isProPlan: true, subscriptionId: "456DEF")
+            ]
+        )
+        
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertFalse(sut.hasMultipleBilledProPlans())
+    }
+    
     func testAccountCreationDate_whenNil_shouldReturnNil() {
         let (sut, _) = makeSUT()
         XCTAssertNil(sut.accountCreationDate)
@@ -567,7 +599,7 @@ final class AccountRepositoryTests: XCTestCase {
         nodeSizes: [UInt64: Int64]
     ) -> MockMEGAAccountDetails {
         MockMEGAAccountDetails(
-            type: .free,
+            type: type.toMEGAAccountType(),
             nodeSizes: nodeSizes
         )
     }
