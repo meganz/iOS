@@ -2,17 +2,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, WarningViewModel, PhotoAlbumContainerViewController, PhotosViewModel, ContextMenuManager;
-
-typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
-    MEGACameraUploadsStateDisabled,
-    MEGACameraUploadsStateUploading,
-    MEGACameraUploadsStateCompleted,
-    MEGACameraUploadsStateNoInternetConnection,
-    MEGACameraUploadsStateEmpty,
-    MEGACameraUploadsStateLoading,
-    MEGACameraUploadsStateEnableVideo
-};
+@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, PhotoAlbumContainerViewController, PhotosViewModel, ContextMenuManager;
 
 @interface PhotosViewController : UIViewController <MEGATransferDelegate, MEGAGlobalDelegate>
 
@@ -21,7 +11,6 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 @property (nonatomic, nullable, strong) MyAvatarManager *myAvatarManager;
 @property (strong, nonatomic) PhotoSelectionAdapter *selection;
 @property (strong, nonatomic) PhotoLibraryContentViewModel *photoLibraryContentViewModel;
-@property (strong, nonatomic) WarningViewModel *warningViewModel;
 
 @property (weak,   nonatomic) PhotoAlbumContainerViewController *parentPhotoAlbumsController;
 @property (assign, nonatomic) BOOL shouldShowRightBarButton;
@@ -37,7 +26,6 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic, strong, nullable) UIView *emptyStateView;
 
-- (void)reloadHeader;
 - (void)reloadPhotos;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
 - (void)didSelectedPhotoCountChange:(NSInteger)count;

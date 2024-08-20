@@ -33,13 +33,6 @@
 
 @interface PhotosViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *stateView;
-@property (weak, nonatomic) IBOutlet UIButton *enableCameraUploadsButton;
-@property (weak, nonatomic) IBOutlet UIProgressView *photosUploadedProgressView;
-@property (weak, nonatomic) IBOutlet UILabel *photosUploadedLabel;
-@property (weak, nonatomic) IBOutlet UILabel *stateLabel;
-@property (weak, nonatomic) IBOutlet UIStackView *progressStackView;
-
 @property (weak, nonatomic) IBOutlet UIView *photoContainerView;
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
 
@@ -50,8 +43,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionBarButtonItem;
 
-@property (nonatomic) MEGACameraUploadsState currentState;
-
 @property (nonatomic) NSLayoutConstraint *stateViewHeightConstraint;
 @end
 
@@ -60,19 +51,11 @@
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.enableCameraUploadsButton setTitle:LocalizedString(@"enable", @"") forState:UIControlStateNormal];
-    
-    [self objcWrapper_configPhotosBannerView];
-    
-    self.currentState = MEGACameraUploadsStateCompleted;
-    
     [self configureContextMenuManager];
     [self configPhotoContainerView];
     [self updateAppearance];
     [self setupBarButtons];
     [self updateNavigationTitleBar];
-    
-    [self setupBannerViewColorWithBackgroundView:self.stateView label:self.stateLabel button:self.enableCameraUploadsButton];
 }
 
 - (void)setupBarButtons {
@@ -99,19 +82,6 @@
     [self refreshMyAvatar];
     
     [self setupNavigationBarButtons];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    [self setupStateViewHeight];
-}
-
-- (void)setupStateViewHeight {
-    NSLayoutConstraint *heightConstraint = [self configureStackViewHeightWithView:self.stateView perviousConstraint:self.stateViewHeightConstraint];
-    if (heightConstraint != nil) {
-        self.stateViewHeightConstraint = heightConstraint;
-    }
-    [self.view layoutIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -149,9 +119,6 @@
             [self setupNavigationBarButtons];
         }
     }
-    
-    [self updateBannerViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
-    [self setupStateViewHeight];
 }
 
 #pragma mark - config views
@@ -178,171 +145,14 @@
     return _selection;
 }
 
-- (WarningViewModel *)warningViewModel {
-    if (_warningViewModel == nil) {
-        _warningViewModel = [self createWarningViewModel];
-    }
-    
-    return _warningViewModel;
-}
-
-#pragma mark - uploads state
-
-- (void)reloadHeader {
-    MEGALogDebug(@"[Camera Upload] reload photos view header");
-    
-    if (!MEGAReachabilityManager.isReachable) {
-        self.currentState = MEGACameraUploadsStateNoInternetConnection;
-        
-        return;
-    }
-    
-    if (!CameraUploadManager.isCameraUploadEnabled) {
-        if ([self.viewModel hasNoPhotos]) {
-            self.currentState = MEGACameraUploadsStateEmpty;
-        } else {
-            self.currentState = MEGACameraUploadsStateDisabled;
-        }
-        return;
-    }
-    
-    [self loadUploadStats];
-}
-
-- (void)loadUploadStats {
-    if (self.currentState != MEGACameraUploadsStateUploading && self.currentState != MEGACameraUploadsStateCompleted) {
-        self.currentState = MEGACameraUploadsStateLoading;
-    }
-    
-    [CameraUploadManager.shared loadCurrentUploadStatsWithCompletion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
-        if (error || uploadStats == nil) {
-            MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
-            return;
-        }
-        
-        MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", (unsigned long)uploadStats.pendingFilesCount, (unsigned long)uploadStats.finishedFilesCount, (unsigned long)uploadStats.totalFilesCount);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.currentState = uploadStats.pendingFilesCount > 0 ? MEGACameraUploadsStateUploading : MEGACameraUploadsStateCompleted;
-            [self configUploadProgressByStats:uploadStats];
-            [self loadEnableVideoStateIfNeeded];
-        });
-    }];
-}
-
-- (void)configUploadProgressByStats:(UploadStats *)uploadStats {
-    self.photosUploadedProgressView.progress = uploadStats.progress;
-    
-    NSString *progressText;
-    if (uploadStats.pendingFilesCount == 1) {
-        if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
-            progressText = LocalizedString(@"Upload paused because of no WiFi, 1 file pending", @"");
-        } else {
-            progressText = LocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
-        }
-    } else {
-        if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
-            progressText = [NSString stringWithFormat:LocalizedString(@"Upload paused because of no WiFi, %lu files pending", @""), uploadStats.pendingFilesCount];
-        } else {
-            progressText = [NSString stringWithFormat:LocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
-        }
-    }
-    self.photosUploadedLabel.text = progressText;
-}
-
-- (void)loadEnableVideoStateIfNeeded {
-    if (self.currentState != MEGACameraUploadsStateCompleted || CameraUploadManager.isVideoUploadEnabled) {
-        return;
-    }
-    
-    [CameraUploadManager.shared loadUploadStatsForMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
-        if (error) {
-            MEGALogError(@"[Camera Upload] error when to load record count for video %@", error);
-            return;
-        }
-        
-        if (uploadStats.pendingFilesCount == 0) {
-            return;
-        }
-        
-        MEGALogDebug(@"[Camera Upload] %lu video count loaded", (unsigned long)uploadStats.pendingFilesCount);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.currentState = MEGACameraUploadsStateEnableVideo;
-            [self configStateLabelByVideoPendingCount:uploadStats.pendingFilesCount];
-        });
-    }];
-}
-
-- (void)configStateLabelByVideoPendingCount:(NSUInteger)count {
-    NSString *videoMessage;
-    if (count == 1) {
-        videoMessage = LocalizedString(@"Photos uploaded, video uploads are off, 1 video not uploaded", @"");
-    } else {
-        videoMessage = [NSString stringWithFormat:LocalizedString(@"Photos uploaded, video uploads are off, %lu videos not uploaded", @""), (unsigned long)count];
-    }
-    
-    self.stateLabel.text = videoMessage;
-}
-
-- (void)setCurrentState:(MEGACameraUploadsState)currentState {
-    if (_currentState == currentState) {
-        return;
-    }
-    
-    self.stateView.hidden = NO;
-    self.stateLabel.hidden = NO;
-    self.stateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    self.progressStackView.hidden = YES;
-    self.enableCameraUploadsButton.hidden = YES;
-    
-    switch (currentState) {
-        case MEGACameraUploadsStateDisabled:
-            self.stateLabel.text = LocalizedString(@"enableCameraUploadsButton", @"");
-            self.enableCameraUploadsButton.hidden = NO;
-            break;
-        case MEGACameraUploadsStateUploading:
-            self.stateLabel.hidden = YES;
-            self.progressStackView.hidden = NO;
-            break;
-        case MEGACameraUploadsStateCompleted:
-            self.stateLabel.text = LocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
-            break;
-        case MEGACameraUploadsStateNoInternetConnection:
-            if ([self.viewModel hasNoPhotos]) {
-                self.stateView.hidden = YES;
-            } else {
-                self.stateLabel.text = LocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-            }
-            break;
-        case MEGACameraUploadsStateEmpty:
-            self.stateView.hidden = YES;
-            break;
-        case MEGACameraUploadsStateLoading:
-            self.stateLabel.text = LocalizedString(@"loading", @"");
-            break;
-        case MEGACameraUploadsStateEnableVideo:
-            self.stateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-            self.enableCameraUploadsButton.hidden = NO;
-            break;
-    }
-    
-    self.stateView.hidden = YES;
-
-    _currentState = currentState;
-}
-
 #pragma mark - Private
 
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.systemBackgroundColor;
-    
-    self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    
-    self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }
 
 - (void)reloadPhotos {
     [self updateNavigationTitleBar];
-    [self reloadHeader];
     [self setupNavigationBarButtons];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self objcWrapper_updatePhotoLibrary];
@@ -379,23 +189,10 @@
         self.editBarButtonItem.enabled = NO;
     }
     
-    [self reloadHeader];
     [self handleEmptyStateReload];
 }
 
 #pragma mark - IBAction
-
-- (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
-    if (self.isEditing) {
-        [self setEditing:NO animated:NO];
-    }
-    
-    if (self.currentState == MEGACameraUploadsStateEnableVideo && !CameraUploadManager.isVideoUploadEnabled) {
-        [self pushVideoUploadSettings];
-    } else {
-        [self pushCameraUploadSettings];
-    }
-}
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [self objcWrapper_configPhotoLibrarySelectAll];
@@ -465,39 +262,10 @@
 
 #pragma mark - View transitions
 
-- (void)showCameraUploadBoardingScreen {
-    CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
-    boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
-    boardingAlertVC.viewTitle = LocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
-    boardingAlertVC.detail = LocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", @"");
-    boardingAlertVC.firstButtonTitle = LocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
-    boardingAlertVC.dismissButtonTitle = LocalizedString(@"notNow", @"");
-    
-    boardingAlertVC.firstCompletion = ^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self pushCameraUploadSettings];
-        }];
-    };
-    
-    boardingAlertVC.dismissCompletion = ^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-        CameraUploadManager.cameraUploadEnabled = NO;
-    };
-    
-    [self presentViewController:boardingAlertVC animated:YES completion:nil];
-    CameraUploadManager.boardingScreenLastShowedDate = NSDate.date;
-}
-
 - (void)pushCameraUploadSettings {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
     CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
-}
-
-- (void)pushVideoUploadSettings {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
-    UIViewController *videoUploadsController = [storyboard instantiateViewControllerWithIdentifier:@"VideoUploadsTableViewControllerID"];
-    [self.navigationController pushViewController:videoUploadsController animated:YES];
 }
 
 #pragma mark - DZNEmptyDataSetSource

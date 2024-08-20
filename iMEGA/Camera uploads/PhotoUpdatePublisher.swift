@@ -23,7 +23,6 @@ import MEGASwift
     // MARK: - Update subscriptions
     
     @objc func setupSubscriptions() {
-        subscribleToCameraUploadStatsChange()
         subscribleToPhotoLibraryUpdate()
         
         photoLibraryPublisher.subscribeToSelectedPhotosChange { [weak self] in
@@ -51,18 +50,6 @@ import MEGASwift
     }
     
     // MARK: Private
-    
-    private func subscribleToCameraUploadStatsChange() {
-        NotificationCenter.default
-            .publisher(for: Notification.Name.MEGACameraUploadStatsChanged)
-            .throttle(for: .seconds(Constants.headerReloadInterval), scheduler: DispatchQueue.main, latest: true)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.photosVC?.reloadHeader()
-            }
-            .store(in: &subscriptions)
-    }
-    
     private func subscribleToPhotoLibraryUpdate() {
         photoLibrarySubject
             .debounceImmediate(for: .seconds(Constants.photoUpdateDebounceInterval), scheduler: DispatchQueue.main)
