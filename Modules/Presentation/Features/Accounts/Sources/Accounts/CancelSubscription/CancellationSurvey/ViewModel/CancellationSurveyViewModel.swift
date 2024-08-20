@@ -10,6 +10,8 @@ final class CancellationSurveyViewModel: ObservableObject {
     @Published var showNoReasonSelectedError: Bool = false
     
     let otherReasonID = CancellationSurveyReason.otherReason.id
+    let minimumTextRequired = 10
+    let maximumTextRequired = 120
     private var router: any CancellationSurveyRouting
     
     init(router: some CancellationSurveyRouting) {
@@ -47,8 +49,14 @@ final class CancellationSurveyViewModel: ObservableObject {
     }
     
     func didTapCancelSubscriptionButton() {
-        guard selectedReason != nil else {
+        guard let selectedReason else {
             showNoReasonSelectedError = true
+            return
+        }
+        
+        if selectedReason.isOtherReason,
+            otherReasonText.isEmpty {
+            isOtherFieldFocused = true
             return
         }
 

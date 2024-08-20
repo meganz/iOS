@@ -4254,6 +4254,8 @@
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="Don’t cancel";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Select a reason to cancel your subscription";
+/* Cancel subscription survey error message when field is empty */
+"accounts.cancelSubscriptionSurvey.error.enterDetails"="Enter details";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Hidden items";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
