@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -30,7 +31,7 @@ struct CancellationSurveyView: View {
                         headerView
                             .padding(.bottom, 15)
                         
-                        errorView
+                        noReasonSelectedErrorView
                             .padding(.bottom, 15)
                         
                         cancellationReasonListView
@@ -97,7 +98,7 @@ struct CancellationSurveyView: View {
     }
     
     @ViewBuilder
-    private var errorView: some View {
+    private var noReasonSelectedErrorView: some View {
         if viewModel.showNoReasonSelectedError {
             Text(Strings.Localizable.Accounts.CancelSubscriptionSurvey.Error.selectAReason)
                 .font(.footnote)
@@ -126,7 +127,14 @@ struct CancellationSurveyView: View {
             BorderedTextEditorView(
                 textInput: $viewModel.otherReasonText,
                 isFocused: $viewModel.isOtherFieldFocused,
-                maxCharacterLimit: 120
+                config: BorderedTextEditorView.ViewConfig(
+                    maxCharacterLimit: viewModel.maximumTextRequired,
+                    minCharacterLimit: viewModel.minimumTextRequired,
+                    isRequired: true,
+                    errorWarningIcon: MEGAAssetsImageProvider.image(named: "errorWarning"),
+                    lessThanMinimumCharError: Strings.Localizable.Accounts.CancelSubscriptionSurvey.Error.minimumRequiredCharacterCount(viewModel.minimumTextRequired),
+                    emptyFieldError: Strings.Localizable.Accounts.CancelSubscriptionSurvey.Error.enterDetails
+                )
             )
             .id(viewModel.otherReasonID)
         }
