@@ -227,11 +227,3 @@ extension MEGASearchBarView: UITextFieldDelegate {
         return true
     }
 }
-
-// MARK: - HomeSearchControllerDelegate
-
-extension MEGASearchBarView: HomeSearchControllerDelegate {
-    func didSelect(searchText: String) {
-        searchField.text = searchText
-    }
-}

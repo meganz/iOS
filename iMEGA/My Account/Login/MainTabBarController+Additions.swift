@@ -8,14 +8,9 @@ import MEGASDKRepo
 import MEGAUIKit
 
 extension MainTabBarController {
-    private var shouldUseNewHomeSearchResults: Bool {
-        true
-    }
-
     @objc func makeHomeViewController() -> UIViewController {
         HomeScreenFactory().createHomeScreen(
             from: self,
-            newHomeSearchResultsEnabled: shouldUseNewHomeSearchResults,
             tracker: DIContainer.tracker
         )
     }
@@ -43,44 +38,6 @@ extension MainTabBarController {
         configProgressView()
         showPSAViewIfNeeded()
         updateUI()
-    }
-    
-    @MainActor
-    func newSearchEnabled() async -> Bool {
-        let isNewHomeSearchABTestEnabled = await DIContainer.abTestProvider.abTestVariant(for: .newSearch) == .variantA
-        
-        let isNewHomeSearchFeatureFlagEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newHomeSearch)
-        
-        return isNewHomeSearchABTestEnabled || isNewHomeSearchFeatureFlagEnabled
-    }
-
-    @objc func setupHomeSearchForABTesting() async {
-        await updateHomeSearchForABTesting(
-            isNewHomeSearchEnabled: newSearchEnabled()
-        )
-    }
-
-    @MainActor
-    func updateHomeSearchForABTesting(
-        isNewHomeSearchEnabled: Bool
-    ) async {
-        guard let nav = defaultViewControllers[2] as? MEGANavigationController,
-              let homeVC = nav.viewControllers.first as? HomeViewController,
-              let viewModeStore = homeVC.viewModeStore
-        else {
-            return
-        }
-
-        let searchResultVC = HomeScreenFactory().makeSearchResultViewController(
-            with: nav,
-            bridge: homeVC.searchResultsBridge,
-            newHomeSearchResultsEnabled: isNewHomeSearchEnabled,
-            tracker: DIContainer.tracker,
-            viewModeStore: viewModeStore,
-            enableItemMultiSelection: false // not enabled in the home search results
-        )
-        homeVC.searchResultViewController = searchResultVC
-        homeVC.updateIsNewSearchEnabled(isNewHomeSearchEnabled)
     }
     
     private func makeCloudDriveViewController() -> UIViewController? {
@@ -264,18 +221,10 @@ extension MainTabBarController {
         let cloudDriveTabIndex = TabType.cloudDrive.rawValue
         selectedIndex = cloudDriveTabIndex
         
-        guard let navigationController = children[safe: cloudDriveTabIndex] as? MEGANavigationController else { return }
-        guard UserDefaults.standard.bool(forKey: Helper.cloudDriveABTestCacheKey()) ||
-                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDrive),
-              
-        let newCloudDriveViewController = navigationController.viewControllers.first as? NewCloudDriveViewController,
+        guard let navigationController = children[safe: cloudDriveTabIndex] as? MEGANavigationController,
+              let newCloudDriveViewController = navigationController.viewControllers.first as? NewCloudDriveViewController,
               let parentNode = newCloudDriveViewController.parentNode else {
-            guard let cdViewController = navigationController.viewControllers.first as? CloudDriveViewController else {
-                assertionFailure("The first tabbar VC must be a CloudDriveViewController")
-                return
-            }
-            
-            cdViewController.presentScanDocument()
+            assertionFailure("The first tabbar VC must be a NewCloudDriveViewController")
             return
         }
         

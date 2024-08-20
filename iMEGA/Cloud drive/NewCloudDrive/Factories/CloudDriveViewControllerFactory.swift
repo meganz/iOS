@@ -203,11 +203,9 @@ struct CloudDriveViewControllerFactory {
     }
     
     private func useNewCloudDrive(config: NodeBrowserConfig) -> Bool {
-        let featureEnabled = userDefaults.bool(forKey: Helper.cloudDriveABTestCacheKey()) ||
-        featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDrive)
         // disable new Cloud Drive for recents as it's very different
         // config with sections, the ticket to implement the needed behaviour: [FM-1691]
-        return featureEnabled && config.displayMode != .recents
+        config.displayMode != .recents
     }
     
     /// build bare is return a plain UIViewController, bare-less version returns one wrapped in the UINavigationController

@@ -6,23 +6,15 @@ extension AppDelegate {
     
     @objc func handleQuickUploadAction() {
         mainTBC?.selectedIndex = TabType.cloudDrive.rawValue
-        guard let navigationController = mainTBC?.children.first as? UINavigationController else { return }
-        
-        guard UserDefaults.standard.bool(forKey: Helper.cloudDriveABTestCacheKey()) ||
-                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDrive),
-        let newCloudDriveViewController = navigationController.viewControllers.first as? NewCloudDriveViewController else {
-            guard let cdViewController = navigationController.viewControllers.first as? CloudDriveViewController else {
-                assertionFailure("The first tabbar VC must be a CloudDriveViewController")
-                return
-            }
-            
-            cdViewController.presentUploadOptions()
+        guard let navigationController = mainTBC?.children.first as? UINavigationController,
+                let cdViewController = navigationController.viewControllers.first as? NewCloudDriveViewController else {
+            assertionFailure("The first tabbar VC must be a NewCloudDriveViewController")
             return
         }
         
         let router = buildRouter(
             navigationController: navigationController,
-            viewModeProvider: newCloudDriveViewController.viewModeProvider.viewMode
+            viewModeProvider: cdViewController.viewModeProvider.viewMode
         )
         // Needs to retain the router because it holds the dependencies (ContextMenuManager and delegate) that are needed for the Quicks Upload feature to work.
         quickUploadActionRouter = router

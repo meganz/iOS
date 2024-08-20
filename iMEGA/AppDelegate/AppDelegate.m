@@ -1500,30 +1500,25 @@
             
             BOOL _isAccountFirstLogin = isAccountFirstLogin;
             
-            // We should have fetched ab test flags at this point, so we can cache the value
-            // of NewCloudDrive flag async and store in UserDefaults,
-            // then wee use it sync later on in the app. Only then we construct MainTabBarController
-            // We clean the cache when user logs out in the Helper.cleanAccount
             __weak typeof(self) weakSelf = self;
-            [self cacheCloudDriveAbTestsAndThen: ^{
-                if (!_isAccountFirstLogin) {
-                    [weakSelf showMainTabBar];
-                    if (weakSelf.openChatLater) {
-                        [weakSelf.mainTBC openChatRoomNumber:weakSelf.openChatLater];
-                    }
+            
+            if (!_isAccountFirstLogin) {
+                [weakSelf showMainTabBar];
+                if (weakSelf.openChatLater) {
+                    [weakSelf.mainTBC openChatRoomNumber:weakSelf.openChatLater];
                 }
-                
-                [MEGASdk.shared getAccountDetails];
-                [weakSelf refreshAccountDetails];
-                
-                [weakSelf.quickAccessWidgetManager startWidgetManagerWithCompletionHandler:^{
-                    [weakSelf.quickAccessWidgetManager reloadWidgetItemData];
-                }];
-                
-                [weakSelf presentAccountExpiredViewIfNeeded];
-                
-                [weakSelf configAppWithNewCookieSettings];
+            }
+            
+            [MEGASdk.shared getAccountDetails];
+            [weakSelf refreshAccountDetails];
+            
+            [weakSelf.quickAccessWidgetManager startWidgetManagerWithCompletionHandler:^{
+                [weakSelf.quickAccessWidgetManager reloadWidgetItemData];
             }];
+            
+            [weakSelf presentAccountExpiredViewIfNeeded];
+            
+            [weakSelf configAppWithNewCookieSettings];
             break;
         }
             
