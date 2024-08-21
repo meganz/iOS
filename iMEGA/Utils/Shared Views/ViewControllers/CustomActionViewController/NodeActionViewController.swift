@@ -13,6 +13,10 @@ import MEGASwift
     @objc optional func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any)
 }
 
+@objc protocol NodeActionAccessoryViewControllerDelegate {
+    @objc optional func nodeAccessoryAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType)
+}
+
 class NodeActionViewController: ActionSheetViewController {
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
@@ -27,6 +31,7 @@ class NodeActionViewController: ActionSheetViewController {
     
     var sender: Any
     var delegate: any NodeActionViewControllerDelegate
+    weak var accessoryActionDelegate: (any NodeActionAccessoryViewControllerDelegate)?
     
     private var viewMode: ViewModePreferenceEntity?
     
@@ -305,6 +310,9 @@ class NodeActionViewController: ActionSheetViewController {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         cell.configureCell(action: action)
+        cell.accessoryTappedHandler = { [weak self] in
+            self?.accessoryTapped(type: action.type)
+        }
         return cell
     }
     
@@ -312,11 +320,12 @@ class NodeActionViewController: ActionSheetViewController {
         guard let action = actions[indexPath.row] as? NodeAction else {
             return
         }
-        dismiss(animated: true, completion: {
-            if self.nodes.count == 1, let node = self.nodes.first {
-                self.delegate.nodeAction?(self, didSelect: action.type, for: node, from: self.sender)
+        dismiss(animated: true, completion: { [weak self] in
+            guard let self else { return }
+            if nodes.count == 1, let node = nodes.first {
+                delegate.nodeAction?(self, didSelect: action.type, for: node, from: sender)
             } else {
-                self.delegate.nodeAction?(self, didSelect: action.type, forNodes: self.nodes, from: self.sender)
+                delegate.nodeAction?(self, didSelect: action.type, forNodes: nodes, from: sender)
             }
         })
     }
@@ -457,5 +466,9 @@ class NodeActionViewController: ActionSheetViewController {
         
         titleLabel.alpha = 0.5
         subtitleLabel.alpha = 0.5
+    }
+    
+    private func accessoryTapped(type: MegaNodeActionType) {
+        accessoryActionDelegate?.nodeAccessoryAction?(self, didSelect: type)
     }
 }

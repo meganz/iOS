@@ -5,7 +5,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 
-@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager, CloudDriveViewModel, WarningViewModel;
+@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager, CloudDriveViewModel, WarningViewModel, DefaultNodeActionAccessoryDelegate;
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
@@ -63,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) CloudDriveViewModel *viewModel;
 @property (weak, nonatomic) IBOutlet UIStackView *containerStackView;
 @property (nonatomic, assign) NSInteger viewModePreference_ObjC;
+@property (strong, nonatomic) DefaultNodeActionAccessoryDelegate *defaultNodeActionAccessoryDelegate;
 // This creator closure is used to replace the
 // viewModeStore instance for the mock one, between init and viewDidLoad calls.
 // We can't inject in the init, as view is defined in Storyboard
