@@ -4,15 +4,16 @@ import UIKit
 
 final class NodeDescriptionTextContentView: UIView, UIContentView {
     var configuration: any UIContentConfiguration
-    private let textView = UITextView()
     private let viewModel: NodeDescriptionTextContentViewModel
-
+    private let textView: AutoGrowingTextView
+    
     init(
         configuration: some UIContentConfiguration,
         viewModel: NodeDescriptionTextContentViewModel
     ) {
         self.configuration = configuration
         self.viewModel = viewModel
+        self.textView = AutoGrowingTextView(frame: .zero, updatedLayout: viewModel.updatedLayout)
 
         super.init(frame: .zero)
 
@@ -26,7 +27,6 @@ final class NodeDescriptionTextContentView: UIView, UIContentView {
 
     private func configure(editingDisabled: Bool) {
         textView.font = UIFont.preferredFont(forTextStyle: .body)
-        textView.isScrollEnabled = false
         textView.returnKeyType = .done
         textView.delegate = self
         textView.isEditable = !editingDisabled
@@ -79,6 +79,7 @@ extension NodeDescriptionTextContentView: UITextViewDelegate {
         guard viewModel.shouldChangeTextIn(in: range, currentText: textViewText, replacementText: text) else {
             let replacementText = viewModel.truncateAndReplaceText(in: range, of: textViewText, with: text)
             textView.text = replacementText ?? textViewText
+            viewModel.descriptionUpdated(textView.text)
             return false
         }
 

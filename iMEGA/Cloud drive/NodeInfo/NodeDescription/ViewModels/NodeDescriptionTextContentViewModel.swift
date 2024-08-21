@@ -1,4 +1,5 @@
 import Foundation
+import MEGASwift
 
 final class NodeDescriptionTextContentViewModel {
     let textViewEdgeInsets: UIEdgeInsets
@@ -6,6 +7,7 @@ final class NodeDescriptionTextContentViewModel {
 
     let descriptionUpdated: (String) -> Void
     let saveDescription: (String) -> Void
+    let updatedLayout: (() -> Void) -> Void
     private let maxCharactersAllowed: Int
 
     init(
@@ -13,13 +15,15 @@ final class NodeDescriptionTextContentViewModel {
         editingDisabled: Bool,
         textViewEdgeInsets: UIEdgeInsets,
         descriptionUpdated: @escaping (String) -> Void,
-        saveDescription: @escaping (String) -> Void
+        saveDescription: @escaping (String) -> Void,
+        updatedLayout: @escaping (() -> Void) -> Void
     ) {
         self.maxCharactersAllowed = maxCharactersAllowed
         self.editingDisabled = editingDisabled
         self.textViewEdgeInsets = textViewEdgeInsets
         self.descriptionUpdated = descriptionUpdated
         self.saveDescription = saveDescription
+        self.updatedLayout = updatedLayout
     }
 
     /// Determines if editing should end based on the given text.
@@ -34,7 +38,7 @@ final class NodeDescriptionTextContentViewModel {
         currentText: String,
         replacementText: String
     ) -> Bool {
-        let newLength = currentText.count - range.length + replacementText.count
+        let newLength = currentText.utf16.count - range.length + replacementText.utf16.count
         guard newLength > maxCharactersAllowed else { return true }
         return false
     }
@@ -46,14 +50,12 @@ final class NodeDescriptionTextContentViewModel {
     ) -> String? {
         guard let stringRange = Range(targetRange, in: currentText) else { return nil }
 
-        let maxReplaceableLength = maxCharactersAllowed - (currentText.count - targetRange.length)
-        guard maxReplaceableLength > 0 else { return nil }
+        let maxReplaceableLength = maxCharactersAllowed - (currentText.utf16.count - targetRange.length)
+        guard maxReplaceableLength > 0,
+              let truncatedText = newText.utf16ValidatedTruncation(to: maxReplaceableLength) else {
+            return nil
+        }
 
-        // Ensure that allowedEndIndex does not exceed newText's length
-        let endIndex = min(maxReplaceableLength, newText.count)
-        let allowedEndIndex = newText.index(newText.startIndex, offsetBy: endIndex)
-
-        let truncatedText = String(newText[..<allowedEndIndex])
         return currentText.replacingCharacters(in: stringRange, with: truncatedText)
     }
 }
