@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SharedAlbumEntity: Sendable, Equatable {
+public struct SharedCollectionEntity: Sendable, Equatable {
     public let `set`: SetEntity
     public let setElements: [SetElementEntity]
     
@@ -10,6 +10,6 @@ public struct SharedAlbumEntity: Sendable, Equatable {
     }
 }
 
-extension SharedAlbumEntity: Identifiable {
+extension SharedCollectionEntity: Identifiable {
     public var id: HandleEntity { `set`.handle }
 }

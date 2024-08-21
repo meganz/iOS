@@ -2,18 +2,18 @@ import MEGADomain
 
 public final class MockPublicAlbumUseCase: PublicAlbumUseCaseProtocol {
 
-    private let publicAlbumResult: Result<SharedAlbumEntity, Error>
+    private let publicAlbumResult: Result<SharedCollectionEntity, Error>
     private let nodes: [NodeEntity]
     
     public private(set) var stopAlbumLinkPreviewCalled = 0
     
-    public init(publicAlbumResult: Result<SharedAlbumEntity, Error> = .failure(GenericErrorEntity()),
+    public init(publicAlbumResult: Result<SharedCollectionEntity, Error> = .failure(GenericErrorEntity()),
                 nodes: [NodeEntity] = []) {
         self.publicAlbumResult = publicAlbumResult
         self.nodes = nodes
     }
     
-    public func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity {
+    public func publicAlbum(forLink link: String) async throws -> SharedCollectionEntity {
         try await withCheckedThrowingContinuation {
             $0.resume(with: publicAlbumResult)
         }

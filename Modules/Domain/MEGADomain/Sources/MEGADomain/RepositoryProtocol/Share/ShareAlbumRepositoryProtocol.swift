@@ -7,7 +7,7 @@ public protocol ShareAlbumRepositoryProtocol: RepositoryProtocol, Sendable {
     /// - Parameter link: public album link to retrieve Set and Set elements
     ///
     /// Request all information about the public Set (attributes and Elements) and cache copies of it until preview mode is stopped
-    func publicAlbumContents(forLink link: String) async throws -> SharedAlbumEntity
+    func publicAlbumContents(forLink link: String) async throws -> SharedCollectionEntity
     /// Stop album link preview
     ///
     /// Clear the cached Set and SetElements for album link in preview (publicAlbumContents)
