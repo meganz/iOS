@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-protocol NodeInfoUseCaseProtocol {
+protocol NodeInfoUseCaseProtocol: Sendable {
     func node(fromHandle: HandleEntity) -> MEGANode?
     func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
     func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
@@ -16,7 +16,7 @@ protocol NodeInfoUseCaseProtocol {
 }
 
 final class NodeInfoUseCase: NodeInfoUseCaseProtocol {
-    private var nodeInfoRepository: any NodeInfoRepositoryProtocol
+    private let nodeInfoRepository: any NodeInfoRepositoryProtocol
     
     init(nodeInfoRepository: some NodeInfoRepositoryProtocol = NodeInfoRepository()) {
         self.nodeInfoRepository = nodeInfoRepository
