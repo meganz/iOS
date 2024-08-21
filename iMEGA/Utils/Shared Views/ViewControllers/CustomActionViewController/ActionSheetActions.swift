@@ -363,10 +363,17 @@ extension NodeAction {
     }
     
     class func hideAction(showProTag: Bool = false) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.Hide.title,
-                   image: UIImage.eyeOff,
-                   type: .hide,
-                   showProTag: showProTag)
+        let helpButton = {
+            let accessoryButton = UIButton(frame: .init(x: 0, y: 0, width: 24, height: 24))
+            accessoryButton.setImage(.helpCircleThinMedium, for: .normal)
+            return accessoryButton
+        }
+        return NodeAction(
+            title: Strings.Localizable.General.MenuAction.Hide.title,
+            accessoryView: showProTag ? nil : helpButton(),
+            image: UIImage.eyeOff,
+            type: .hide,
+            showProTag: showProTag)
     }
     
     class func unHideAction() -> NodeAction {

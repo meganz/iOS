@@ -58,6 +58,7 @@
 		0E5F5EAA2C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EA92C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift */; };
 		0E5F5EAD2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */; };
 		0E5F5EB02C6EB9050037A99C /* Preview_AnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */; };
+		0E6607C22C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */; };
 		0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */; };
 		0E72E1262A2841CE00C900F9 /* EnforceCopyrightWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */; };
 		0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */; };
@@ -2822,6 +2823,7 @@
 		0E5F5EA92C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingViewModel.swift; sourceTree = "<group>"; };
 		0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingViewModelTests.swift; sourceTree = "<group>"; };
 		0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_AnalyticsTracking.swift; sourceTree = "<group>"; };
+		0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNodeActionAccessoryDelegate.swift; sourceTree = "<group>"; };
 		0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepositoryTests.swift; sourceTree = "<group>"; };
 		0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningView.swift; sourceTree = "<group>"; };
 		0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModel.swift; sourceTree = "<group>"; };
@@ -13119,6 +13121,7 @@
 		C45C2FA425C94D5800315369 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
+				0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */,
 				C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */,
 				5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */,
 			);
@@ -14948,6 +14951,7 @@
 				BFB463ED2433FD9C00FB90B9 /* Date+Additions.swift in Sources */,
 				83DBDDE929D7310500CF433B /* DatePickerView.swift in Sources */,
 				837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */,
+				0E6607C22C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift in Sources */,
 				0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */,
 				9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */,
 				83DBDDE129D730AE00CF433B /* DetailDisclosureView.swift in Sources */,

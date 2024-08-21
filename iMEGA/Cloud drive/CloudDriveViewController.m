@@ -252,6 +252,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     return _viewModel;
 }
 
+- (DefaultNodeActionAccessoryDelegate *)defaultNodeActionAccessoryDelegate {
+    if (_defaultNodeActionAccessoryDelegate == nil) {
+        _defaultNodeActionAccessoryDelegate = [DefaultNodeActionAccessoryDelegate new];
+    }
+    return _defaultNodeActionAccessoryDelegate;
+}
+
 #pragma mark - Layout
 
 - (void)initTable {

@@ -3,6 +3,8 @@ import MEGAL10n
 
 class ActionSheetCell: UITableViewCell {
 
+    var accessoryTappedHandler: (() -> Void)?
+    
     func configureCell(action: BaseAction) {
         NSLayoutConstraint.activate([heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0)])
         textLabel?.text = action.title
@@ -11,6 +13,7 @@ class ActionSheetCell: UITableViewCell {
             accessoryView = newFeatureBadgeView(badge)
         } else {
             accessoryView = action.accessoryView
+            attachAccessoryAction()
         }
         if action.syncIconAndTextColor {
             imageView?.image = action.image?.withRenderingMode(.alwaysTemplate)
@@ -51,5 +54,15 @@ class ActionSheetCell: UITableViewCell {
         badgeLabel.center = badgeView.center
         
         return badgeView
+    }
+    
+    private func attachAccessoryAction() {
+        guard let accessoryControl = accessoryView as? UIControl else { return }
+        
+        accessoryControl.addTarget(self, action: #selector(accessoryTapped(sender:)), for: .touchUpInside)
+    }
+    
+    @objc private func accessoryTapped(sender: UIControl) {
+        accessoryTappedHandler?()
     }
 }
