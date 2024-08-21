@@ -101,7 +101,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            publicAlbumUseCase: MockPublicAlbumUseCase(publicAlbumResult: .failure(SharedAlbumErrorEntity.couldNotBeReadOrDecrypted)),
+            publicAlbumUseCase: MockPublicAlbumUseCase(publicAlbumResult: .failure(SharedCollectionErrorEntity.couldNotBeReadOrDecrypted)),
             tracker: tracker)
 
         sut.onViewAppear()

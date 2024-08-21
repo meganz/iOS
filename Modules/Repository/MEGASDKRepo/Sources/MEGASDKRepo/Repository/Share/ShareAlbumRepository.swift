@@ -74,13 +74,13 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
                     let errorEntity: Error
                     switch error.type {
                     case .apiENoent:
-                        errorEntity = SharedAlbumErrorEntity.resourceNotFound
+                        errorEntity = SharedCollectionErrorEntity.resourceNotFound
                     case .apiEInternal:
-                        errorEntity = SharedAlbumErrorEntity.couldNotBeReadOrDecrypted
+                        errorEntity = SharedCollectionErrorEntity.couldNotBeReadOrDecrypted
                     case .apiEArgs:
-                        errorEntity = SharedAlbumErrorEntity.malformed
+                        errorEntity = SharedCollectionErrorEntity.malformed
                     case .apiEAccess:
-                        errorEntity = SharedAlbumErrorEntity.permissionError
+                        errorEntity = SharedCollectionErrorEntity.permissionError
                     default:
                         errorEntity = GenericErrorEntity()
                     }

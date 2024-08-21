@@ -83,7 +83,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
     }
     
     func testPublicAlbumContents_onSDKNotOkKnownError_shouldThrowCorrectError() async {
-        let testCase = [(MEGAErrorType.apiENoent, SharedAlbumErrorEntity.resourceNotFound),
+        let testCase = [(MEGAErrorType.apiENoent, SharedCollectionErrorEntity.resourceNotFound),
                         (.apiEInternal, .couldNotBeReadOrDecrypted),
                         (.apiEArgs, .malformed),
                         (.apiEAccess, .permissionError)
@@ -99,7 +99,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
                         _ = try await sut.publicAlbumContents(forLink: "public_link")
                         return false
                     } catch {
-                        return error as? SharedAlbumErrorEntity == testCase.1
+                        return error as? SharedCollectionErrorEntity == testCase.1
                     }
                 }
             }
