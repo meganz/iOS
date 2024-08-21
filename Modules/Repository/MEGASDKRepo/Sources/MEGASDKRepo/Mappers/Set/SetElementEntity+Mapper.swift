@@ -20,7 +20,7 @@ fileprivate extension SetElementEntity {
             ownerId: setElement.ownerId,
             order: setElement.order,
             nodeId: setElement.nodeId,
-            modificationTime: setElement.timestamp,
+            modificationTime: setElement.timestamp ?? Date(),
             name: setElement.name ?? "",
             changeTypes: setElement.changes().toChangeTypeEntity()
         )
