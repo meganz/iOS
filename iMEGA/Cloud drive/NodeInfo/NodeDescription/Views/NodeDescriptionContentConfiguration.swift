@@ -2,23 +2,26 @@ import UIKit
 
 struct NodeDescriptionContentConfiguration: UIContentConfiguration {
     let description: NodeDescriptionViewModel.Description
-    let editingDisabled: Bool
-    let maxCharactersAllowed: Int
-    let descriptionUpdated: (String) -> Void
-    let saveDescription: (String) -> Void
+    private let editingDisabled: Bool
+    private let maxCharactersAllowed: Int
+    private let descriptionUpdated: (String) -> Void
+    private let saveDescription: (String) -> Void
+    private let updatedLayout: (() -> Void) -> Void
 
     init(
         description: NodeDescriptionViewModel.Description,
         editingDisabled: Bool,
         maxCharactersAllowed: Int,
         descriptionUpdated: @escaping (String) -> Void,
-        saveDescription: @escaping (String) -> Void
+        saveDescription: @escaping (String) -> Void,
+        updatedLayout: @escaping (() -> Void) -> Void
     ) {
         self.description = description
         self.editingDisabled = editingDisabled
         self.maxCharactersAllowed = maxCharactersAllowed
         self.descriptionUpdated = descriptionUpdated
         self.saveDescription = saveDescription
+        self.updatedLayout = updatedLayout
     }
 
     func makeContentView() -> any UIView & UIContentView {
@@ -27,9 +30,10 @@ struct NodeDescriptionContentConfiguration: UIContentConfiguration {
             viewModel: NodeDescriptionTextContentViewModel(
                 maxCharactersAllowed: maxCharactersAllowed,
                 editingDisabled: editingDisabled,
-                textViewEdgeInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16),
+                textViewEdgeInsets: UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16),
                 descriptionUpdated: descriptionUpdated,
-                saveDescription: saveDescription
+                saveDescription: saveDescription,
+                updatedLayout: updatedLayout
             )
         )
     }

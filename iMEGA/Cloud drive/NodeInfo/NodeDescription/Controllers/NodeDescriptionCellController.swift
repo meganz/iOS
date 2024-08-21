@@ -109,27 +109,47 @@ extension NodeDescriptionCellController: UITableViewDataSource {
         cell.selectionStyle = .none
         cell.backgroundColor = cellBackground(traitCollection: tableView.traitCollection)
         addKeyboardNotifications(tableView: tableView, indexPath: indexPath)
-        cell.contentConfiguration = NodeDescriptionContentConfigurationFactory.makeContentConfiguration(
-            viewModel: viewModel,
+        cell.contentConfiguration = makeContentConfiguration(tableView: tableView, cellForRowAt: indexPath)
+        return cell
+    }
+
+    private func makeContentConfiguration(
+        tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> NodeDescriptionContentConfiguration {
+        NodeDescriptionContentConfiguration(
+            description: viewModel.description,
+            editingDisabled: viewModel.hasReadOnlyAccess,
             maxCharactersAllowed: maxCharactersAllowed
         ) { [weak self, weak tableView] text in
             guard let self, let tableView else { return }
-            UIView.performWithoutAnimation { [weak self] in
-                tableView.beginUpdates()
-
-                self?.footerViewModel.description = text
-                self?.footerViewModel.showTrailingText()
-
-                tableView.endUpdates()
-            }
-
-            scrollToBottom(tableView: tableView, indexPath: indexPath)
+            update(footerText: text, andScrollTo: indexPath, tableView: tableView)
         } saveDescription: { updatedDescription in
             MEGALogDebug("Updated description is \(updatedDescription)")
             // SAO-1730: Save node description
+        } updatedLayout: { [weak self, weak tableView] updates in
+            guard let self, let tableView else { return }
+            updateAndScroll(to: indexPath, tableView: tableView, updates: updates)
+        }
+    }
+
+    private func update(footerText: String, andScrollTo indexPath: IndexPath, tableView: UITableView) {
+        updateAndScroll(to: indexPath, tableView: tableView) { [weak self] in
+            guard let self else { return }
+            footerViewModel.description = footerText
+            footerViewModel.showTrailingText()
+        }
+    }
+
+    private func updateAndScroll(to indexPath: IndexPath, tableView: UITableView, updates: () -> Void) {
+        UIView.performWithoutAnimation {
+            tableView.beginUpdates()
+            updates()
+            tableView.endUpdates()
         }
 
-        return cell
+        guard footerViewModel.trailingText != nil else { return }
+        scrollToBottom(tableView: tableView, indexPath: indexPath)
     }
 }
 

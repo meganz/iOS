@@ -3,7 +3,7 @@ import XCTest
 
 final class NodeDescriptionTextContentViewModelTests: XCTestCase {
 
-    func testInitState_whenSet_shouldMatchResults() {
+    func testInitState_whenSet_shouldMatchGivenParameters() {
         let textViewEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         let sut = makeSUT(editingDisabled: true, textViewEdgeInsets: textViewEdgeInsets)
         XCTAssertTrue(sut.editingDisabled)
@@ -60,12 +60,66 @@ final class NodeDescriptionTextContentViewModelTests: XCTestCase {
         XCTAssertNil(updatedText)
     }
 
+    func testTruncateAndReplaceText_whenWithinLimitWithEmoji_shouldReturnUpdatedText() {
+        let sut = makeSUT(maxCharactersAllowed: 20)
+        let updatedText = sut.truncateAndReplaceText(
+            in: NSRange(location: 0, length: 7),
+            of: "current",
+            with: "🚀"
+        )
+        XCTAssertEqual(updatedText, "🚀")
+    }
+
+    func testTruncateAndReplaceText_whenExceedingLimitWithEmoji_shouldReturnTruncatedText() {
+        let sut = makeSUT(maxCharactersAllowed: 5)
+        let updatedText = sut.truncateAndReplaceText(
+            in: NSRange(location: 0, length: 7),
+            of: "current",
+            with: "🚀🌍🌕"
+        )
+        XCTAssertEqual(updatedText, "🚀🌍")
+    }
+
+    func testTruncateAndReplaceText_whenReplacingWithEmojiSequence_shouldReturnValidTruncation() {
+        let sut = makeSUT(maxCharactersAllowed: 2)
+        let updatedText = sut.truncateAndReplaceText(
+            in: NSRange(location: 0, length: 2),
+            of: "Hi",
+            with: "🚀"
+        )
+        XCTAssertEqual(updatedText, "🚀")
+    }
+
+    func testDescriptionUpdatedClosure_whenTriggered_shouldCallClosure() {
+        var wasCalled = false
+        let sut = makeSUT(descriptionUpdated: { _ in wasCalled = true })
+        sut.descriptionUpdated("Test")
+        XCTAssertTrue(wasCalled)
+    }
+
+    func testSaveDescriptionClosure_whenTriggered_shouldCallClosure() {
+        var wasCalled = false
+        let sut = makeSUT(saveDescription: { _ in wasCalled = true })
+        sut.saveDescription("Test")
+        XCTAssertTrue(wasCalled)
+    }
+
+    func testUpdatedLayoutClosure_whenTriggered_shouldCallClosure() {
+        var wasCalled = false
+        let sut = makeSUT(updatedLayout: { _ in wasCalled = true })
+        sut.updatedLayout({})
+        XCTAssertTrue(wasCalled)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
         maxCharactersAllowed: Int = 300,
         editingDisabled: Bool = true,
         textViewEdgeInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
+        descriptionUpdated: @escaping (String) -> Void = { _ in },
+        saveDescription: @escaping (String) -> Void = { _ in },
+        updatedLayout: @escaping (() -> Void) -> Void = { _ in },
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> NodeDescriptionTextContentViewModel {
@@ -73,8 +127,9 @@ final class NodeDescriptionTextContentViewModelTests: XCTestCase {
             maxCharactersAllowed: maxCharactersAllowed,
             editingDisabled: editingDisabled,
             textViewEdgeInsets: textViewEdgeInsets,
-            descriptionUpdated: { _ in },
-            saveDescription: { _ in }
+            descriptionUpdated: descriptionUpdated,
+            saveDescription: saveDescription,
+            updatedLayout: updatedLayout
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
