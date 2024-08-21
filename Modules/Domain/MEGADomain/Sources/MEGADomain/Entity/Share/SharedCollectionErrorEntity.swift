@@ -1,6 +1,4 @@
-import Foundation
-
-public enum SharedAlbumErrorEntity: Error {
+public enum SharedCollectionErrorEntity: Error {
     case resourceNotFound
     case couldNotBeReadOrDecrypted
     case malformed

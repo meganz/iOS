@@ -20,13 +20,13 @@ final class PublicAlbumUseCaseTests: XCTestCase {
     }
     
     func testPublicAlbumContents_albumLoadFailed_shouldThrowError() async {
-        let expectedError = SharedAlbumErrorEntity.couldNotBeReadOrDecrypted
+        let expectedError = SharedCollectionErrorEntity.couldNotBeReadOrDecrypted
         let shareAlbumRepository = MockShareAlbumRepository(publicAlbumContentsResult: .failure(expectedError))
         let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
         
         do {
             _ = try await sut.publicAlbum(forLink: "public_album_link")
-        } catch let error as SharedAlbumErrorEntity {
+        } catch let error as SharedCollectionErrorEntity {
             XCTAssertEqual(error, expectedError)
         } catch {
             XCTFail("Incorrect error caught")
