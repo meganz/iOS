@@ -821,8 +821,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     private func makeSharedAlbumEntity(set: SetEntity = SetEntity(handle: 1),
-                                       setElements: [SetElementEntity] = []) -> SharedAlbumEntity {
-        SharedAlbumEntity(set: set, setElements: setElements)
+                                       setElements: [SetElementEntity] = []) -> SharedCollectionEntity {
+        SharedCollectionEntity(set: set, setElements: setElements)
     }
     
     private func makeSetElements() -> [SetElementEntity] {

@@ -4,7 +4,7 @@ public final class MockShareAlbumRepository: ShareAlbumRepositoryProtocol, @unch
     public static let newRepo = MockShareAlbumRepository()
     private let shareAlbumResults: [HandleEntity: Result<String?, Error>]
     private let disableAlbumShareResult: Result<Void, Error>
-    private let publicAlbumContentsResult: Result<SharedAlbumEntity, Error>
+    private let publicAlbumContentsResult: Result<SharedCollectionEntity, Error>
     private let publicPhotoResults: [HandleEntity: Result<NodeEntity, Error>]
     private let copyPublicPhotosResult: Result<[NodeEntity], Error>
     
@@ -13,7 +13,7 @@ public final class MockShareAlbumRepository: ShareAlbumRepositoryProtocol, @unch
     public init(
         shareAlbumResults: [HandleEntity: Result<String?, Error>] = [:],
         disableAlbumShareResult: Result<Void, Error> = .failure(GenericErrorEntity()),
-        publicAlbumContentsResult: Result<SharedAlbumEntity, Error> = .failure(GenericErrorEntity()),
+        publicAlbumContentsResult: Result<SharedCollectionEntity, Error> = .failure(GenericErrorEntity()),
         publicPhotoResults: [HandleEntity: Result<NodeEntity, Error>] = [:],
         copyPublicPhotosResult: Result<[NodeEntity], Error> = .failure(GenericErrorEntity())
     ) {
@@ -39,7 +39,7 @@ public final class MockShareAlbumRepository: ShareAlbumRepositoryProtocol, @unch
         }
     }
     
-    public func publicAlbumContents(forLink link: String) async throws -> SharedAlbumEntity {
+    public func publicAlbumContents(forLink link: String) async throws -> SharedCollectionEntity {
         try await withCheckedThrowingContinuation {
             $0.resume(with: publicAlbumContentsResult)
         }

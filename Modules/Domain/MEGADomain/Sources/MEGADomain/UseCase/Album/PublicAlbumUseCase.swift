@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol PublicAlbumUseCaseProtocol {
-    func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity
+    func publicAlbum(forLink link: String) async throws -> SharedCollectionEntity
     func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity]
     func stopAlbumLinkPreview()
 }
@@ -13,7 +13,7 @@ public struct PublicAlbumUseCase<S: ShareAlbumRepositoryProtocol>: PublicAlbumUs
         self.shareAlbumRepository = shareAlbumRepository
     }
     
-    public func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity {
+    public func publicAlbum(forLink link: String) async throws -> SharedCollectionEntity {
         try await shareAlbumRepository.publicAlbumContents(forLink: link)
     }
     

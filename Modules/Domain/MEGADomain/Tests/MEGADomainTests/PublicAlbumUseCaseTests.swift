@@ -9,14 +9,14 @@ final class PublicAlbumUseCaseTests: XCTestCase {
                            SetElementEntity(handle: 45),
                            SetElementEntity(handle: 89)
         ]
-        let sharedAlbumEntity = SharedAlbumEntity(set: SetEntity(handle: 5),
-                                                  setElements: setElements)
-        let shareAlbumRepository = MockShareAlbumRepository(publicAlbumContentsResult: .success(sharedAlbumEntity))
+        let sharedCollectionEntity = SharedCollectionEntity(set: SetEntity(handle: 5),
+                                                                      setElements: setElements)
+        let shareAlbumRepository = MockShareAlbumRepository(publicAlbumContentsResult: .success(sharedCollectionEntity))
         let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
         
         let publicAlbum = try await sut.publicAlbum(forLink: "public_album_link")
         
-        XCTAssertEqual(publicAlbum, sharedAlbumEntity)
+        XCTAssertEqual(publicAlbum, sharedCollectionEntity)
     }
     
     func testPublicAlbumContents_albumLoadFailed_shouldThrowError() async {

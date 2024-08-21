@@ -54,7 +54,7 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         }
     }
     
-    public func publicAlbumContents(forLink link: String) async throws -> SharedAlbumEntity {
+    public func publicAlbumContents(forLink link: String) async throws -> SharedCollectionEntity {
         await publicAlbumNodeProvider.clearCache()
         
         return try await withAsyncThrowingValue { completion in
@@ -67,9 +67,9 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
                         completion(.failure(GenericErrorEntity()))
                         return
                     }
-                    let sharedAlbum = SharedAlbumEntity(set: set.toSetEntity(),
-                                                        setElements: request.elementsInSet?.toSetElementsEntities() ?? [])
-                    completion(.success(sharedAlbum))
+                    let sharedCollectionEntity = SharedCollectionEntity(set: set.toSetEntity(),
+                                                                            setElements: request.elementsInSet?.toSetElementsEntities() ?? [])
+                    completion(.success(sharedCollectionEntity))
                 case .failure(let error):
                     let errorEntity: Error
                     switch error.type {
