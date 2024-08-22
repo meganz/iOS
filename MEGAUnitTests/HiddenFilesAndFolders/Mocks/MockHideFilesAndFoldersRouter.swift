@@ -21,6 +21,10 @@ class MockHideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         showShowFirstTimeOnboardingCalled += 1
     }
     
+    func showOnboardingInfo() {
+        
+    }
+    
     func dismissOnboarding(animated: Bool, completion: (() -> Void)?) {
         dismissCompletion = completion
         dismissCalled += 1
