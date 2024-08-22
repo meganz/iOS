@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "fastlane"
 gem "fastlane-plugin-json"
 gem "dotenv"
+gem "xcov"
 gem "xcpretty-json-formatter"
 gem "nokogiri"
 

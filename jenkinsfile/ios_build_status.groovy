@@ -175,6 +175,7 @@ pipeline {
                                 RUN_UNIT_TESTS_STEP_REACHED = 'true'
                             }
                             sh "bundle exec fastlane run_tests_app"
+                            sh "bundle exec fastlane get_coverage"
                         })
                     }
                 }
