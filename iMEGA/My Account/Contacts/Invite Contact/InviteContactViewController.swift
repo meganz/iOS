@@ -64,11 +64,9 @@ class InviteContactViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        forceResetNavigationBar()
         navigationController?.presentationController?.delegate = self
         setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.inviteContact)
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -80,6 +78,10 @@ class InviteContactViewController: UIViewController {
     }
     
     // MARK: - Private
+    
+    private func forceResetNavigationBar() {
+        AppearanceManager.forceResetNavigationBar(traitCollection)
+    }
     
     private func updateAppearance() {
         if UIColor.isDesignTokenEnabled() {
@@ -131,6 +133,7 @@ class InviteContactViewController: UIViewController {
         }
 
         tracker.trackAddFromContactsTapped()
+        AppearanceManager.setTranslucentNavigationBar()
         present(contactPickerViewController, animated: true, completion: nil)
     }
 
@@ -177,8 +180,13 @@ extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
 
 extension InviteContactViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+        forceResetNavigationBar()
         let phoneNumbers = contacts.extractPhoneNumbers()
         presentComposeControllerForPhoneNumbers(phoneNumbers)
+    }
+    
+    func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
+        forceResetNavigationBar()
     }
 }
 

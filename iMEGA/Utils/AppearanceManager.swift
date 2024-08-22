@@ -165,6 +165,23 @@ class AppearanceManager: NSObject {
         }
     }
     
+    
+    /// This method and `forceResetNavigationBar` were introduced
+    /// to fix the issue of navigation bar's transparency
+    /// in `CNContactPickerViewController`
+    class func setTranslucentNavigationBar() {
+        UINavigationBar.appearance().isTranslucent = true
+    }
+    
+    
+    /// This is the associated method with `setTranslucentNavigationBar`
+    /// which is used to reset the global navigation bar to the state
+    /// before the global navigation bar is changed.
+    /// - Parameter traitCollection: The `trailCollection` in which the navigation bar appearance is changed.
+    class func forceResetNavigationBar(_ traitCollection: UITraitCollection) {
+        AppearanceManager.setupNavigationBarAppearance(traitCollection)
+    }
+    
     // MARK: - Private
     
     private class func setupNavigationBarAppearance(_ traitCollection: UITraitCollection) {
