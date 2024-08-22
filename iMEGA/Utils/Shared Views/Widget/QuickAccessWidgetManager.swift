@@ -27,9 +27,7 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
     private let updateWidgetContentSubject = PassthroughSubject<WidgetType, Never>()
 
     @Atomic
-    private var task: Task<Void, Never>? {
-        didSet { oldValue?.cancel() }
-    }
+    private var task: Task<Void, Never>?
     
     deinit {
         task?.cancel()
@@ -94,7 +92,10 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
     }
     
     @objc func stopWidgetManager() {
-        $task.mutate { $0 = nil }
+        $task.mutate {
+            $0?.cancel()
+            $0 = nil
+        }
     }
 
     @objc func updateWidgetContent(with nodeList: MEGANodeList) {
@@ -180,6 +181,9 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
         taskStartedContinuation.yield(.favourites)
         
         for await _ in createFavouriteWidgetNodes {
+            guard !Task.isCancelled else {
+                break
+            }
             await createFavouritesItemsData()
         }
     }
@@ -194,6 +198,9 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
         taskStartedContinuation.yield(.recents)
         
         for await _ in createFavouriteWidgetNodes {
+            guard !Task.isCancelled else {
+                break
+            }
             await createRecentItemsData()
         }
     }
@@ -201,6 +208,7 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
     private func createRecentItemsData() async {
         do {
             let recentActions = try await recentNodesUseCase.recentActionBuckets(limitCount: MEGAQuickAccessWidgetMaxDisplayItems)
+            try Task.checkCancellation()
             var recentItems = [RecentItemEntity]()
             recentActions.forEach { (bucket) in
                 bucket.nodes.forEach({ (node) in
@@ -225,7 +233,11 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
             let favouriteItems = try await favouriteNodesUseCase.allFavouriteNodes(searchString: nil, excludeSensitives: true, limit: MEGAQuickAccessWidgetMaxDisplayItems)
                 .map { FavouriteItemEntity(base64Handle: $0.base64Handle, name: $0.name, timestamp: Date()) }
             
+            try Task.checkCancellation()
+            
             try await favouriteItemsUseCase.createFavouriteItems(favouriteItems)
+            
+            try Task.checkCancellation()
             
             reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
         } catch {
