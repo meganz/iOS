@@ -1,7 +1,7 @@
 import Foundation
 import MEGASwift
 
-protocol OfflineInfoRepositoryProtocol {
+protocol OfflineInfoRepositoryProtocol: Sendable {
     func info(fromFiles: [String]?) -> [AudioPlayerItem]?
     func localPath(fromNode: MEGANode) -> URL?
 }

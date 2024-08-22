@@ -1,29 +1,48 @@
 import MEGADomain
+import MEGASwift
 
-final class AudioPlayerConfigEntity {
-    // Nodes, File Links, Folder Links
-    var node: MEGANode?
-    var isFolderLink = false
+final class AudioPlayerConfigEntity: @unchecked Sendable {
+    private let _node: Atomic<MEGANode?> = Atomic(wrappedValue: nil)
+    private let _allNodes: Atomic<[MEGANode]?> = Atomic(wrappedValue: nil)
     
-    var fileLink: String?
+    // Nodes, File Links, Folder Links
+    var node: MEGANode? {
+        get {
+            _node.wrappedValue
+        }
+        set {
+            _node.mutate { $0 = newValue }
+        }
+    }
+    
+    let isFolderLink: Bool
+    
+    let fileLink: String?
     
     /// Assign these two property for download audio file from chat entry point scenario
-    var messageId: HandleEntity?
-    var chatId: HandleEntity?
+    let messageId: HandleEntity?
+    let chatId: HandleEntity?
     
     // Offline Files
-    var relatedFiles: [String]?
+    let relatedFiles: [String]?
     
     // Playlist
-    var parentNode: MEGANode?
+    let parentNode: MEGANode?
     
     // Playlist for All Nodes from Explorer entry point
-    var allNodes: [MEGANode]?
+    var allNodes: [MEGANode]? {
+        get {
+            _allNodes.wrappedValue
+        }
+        set {
+            _allNodes.mutate { $0 = newValue }
+        }
+    }
     
     // Common properties
-    var playerHandler: any AudioPlayerHandlerProtocol
-    var shouldResetPlayer = false
-    var isFromSharedItem: Bool
+    let playerHandler: any AudioPlayerHandlerProtocol
+    let shouldResetPlayer: Bool
+    let isFromSharedItem: Bool
     
     init(
         node: MEGANode? = nil,
@@ -38,17 +57,17 @@ final class AudioPlayerConfigEntity {
         shouldResetPlayer: Bool = false,
         isFromSharedItem: Bool = false
     ) {
-        self.node = node
         self.isFolderLink = isFolderLink
         self.fileLink = fileLink
         self.messageId = messageId
         self.chatId = chatId
         self.relatedFiles = relatedFiles
         self.parentNode = parentNode
-        self.allNodes = allNodes
         self.playerHandler = playerHandler
         self.shouldResetPlayer = shouldResetPlayer
         self.isFromSharedItem = isFromSharedItem
+        self._node.mutate { $0 = node }
+        self._allNodes.mutate { $0 = allNodes }
     }
     
     var isFileLink: Bool {

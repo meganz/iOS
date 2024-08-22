@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 
+@MainActor
 final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private let configEntity: AudioPlayerConfigEntity
     private let presenter: UIViewController

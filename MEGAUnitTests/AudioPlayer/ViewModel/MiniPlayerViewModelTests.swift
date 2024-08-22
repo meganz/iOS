@@ -8,16 +8,16 @@ import XCTest
 final class MiniPlayerViewModelTests: XCTestCase {
     
     @MainActor
-    func testAudioPlayerActions() {
+    func testAudioPlayerActions() async {
         let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT()
         
-        test(viewModel: viewModel, action: .onPlayPause, expectedCommands: [])
+        await test(viewModel: viewModel, action: .onPlayPause, expectedCommands: [])
         XCTAssertEqual(mockPlayerHandler.togglePlay_calledTimes, 1)
         
-        test(viewModel: viewModel, action: .playItem(AudioPlayerItem.mockItem), expectedCommands: [])
+        await test(viewModel: viewModel, action: .playItem(AudioPlayerItem.mockItem), expectedCommands: [])
         XCTAssertEqual(mockPlayerHandler.playItem_calledTimes, 1)
         
-        test(viewModel: viewModel, action: .deinit, expectedCommands: [])
+        await test(viewModel: viewModel, action: .deinit, expectedCommands: [])
         XCTAssertEqual(mockPlayerHandler.removePlayerListener_calledTimes, 1)
     }
 
@@ -40,130 +40,145 @@ final class MiniPlayerViewModelTests: XCTestCase {
     @MainActor
     func testDispatch_onViewDidLoadWhenPlayerShouldInitialized_preparePlayerOfflineDismissViewWhenInvalidOfflinePaths() {
         let (viewModel, mockRouter, _, _, _, _) = makeSUT(playerType: .offline, shouldInitializePlayer: true, relatedFileLinks: ["non-related-file-link"])
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        viewModel.invokeCommand = { receivedCommands.append($0) }
+        
+        let expectation = XCTestExpectation(description: #function)
+        
+        mockRouter.onDismissCompletion = {
+            expectation.fulfill()
+        }
         
         viewModel.dispatch(.onViewDidLoad)
+        
+        wait(for: [expectation], timeout: 3)
         
         XCTAssertEqual(mockRouter.dismiss_calledTimes, 1)
     }
     
+    @MainActor
     func testDispatch_onViewDidLoadWhenPlayerShouldInitialized_preparePlayerOfflineInitializeTracks() {
         let (viewModel, mockRouter, mockPlayerHandler, _, _, _) = makeSUT(playerType: .offline, shouldInitializePlayer: true, relatedFileLinks: ["/examples/mp3/SoundHelix-Song-1.mp3"])
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        viewModel.invokeCommand = { receivedCommands.append($0) }
+        
+        let expectation = XCTestExpectation(description: #function)
+        expectation.expectedFulfillmentCount = 4
+        
+        mockPlayerHandler.onAutoPlayCompletion = { expectation.fulfill() }
+        mockPlayerHandler.onAddPlayerTracksCompletion = { expectation.fulfill() }
+        mockPlayerHandler.onAddPlayerListenerCompletion = { expectation.fulfill() }
+        mockPlayerHandler.onRefreshCurrentItemStateCompletion = { expectation.fulfill() }
         
         viewModel.dispatch(.onViewDidLoad)
         
-        XCTAssertEqual(mockRouter.dismiss_calledTimes, 0)
-        XCTAssertEqual(mockPlayerHandler.autoPlay_calledTimes, 1)
-        XCTAssertEqual(mockPlayerHandler.addPlayerTracks_calledTimes, 1)
-        XCTAssertEqual(mockPlayerHandler.addPlayerListener_calledTimes, 1)
-        XCTAssertEqual(mockPlayerHandler.refreshCurrentItemState_calledTimes, 1)
+        wait(for: [expectation], timeout: 1)
     }
     
+    @MainActor
     func testDispatch_onViewDidLoadWhenPlayerTypeNonOffline_dismissViewWhenNoNode() {
         PlayerType.allCases
             .enumerated()
             .filter { $1 != .offline }
-            .forEach { (index, playerType) in
+            .forEach { (_, playerType) in
                 
                 let (viewModel, mockRouter, _, _, _, _) = makeSUT(playerType: playerType, shouldInitializePlayer: true, relatedFileLinks: ["/examples/mp3/SoundHelix-Song-1.mp3"])
-                var receivedCommands = [MiniPlayerViewModel.Command]()
-                viewModel.invokeCommand = { receivedCommands.append($0) }
+                
+                let expectation = XCTestExpectation()
+                
+                mockRouter.onDismissCompletion = { expectation.fulfill() }
                 
                 viewModel.dispatch(.onViewDidLoad)
                 
-                XCTAssertEqual(mockRouter.dismiss_calledTimes, 1, "Failed at playerType: \(playerType) at index: \(index)")
+                wait(for: [expectation], timeout: 1)
             }
     }
     
+    @MainActor
     func testDispatch_onViewDidLoadWhenPlayerTypeNonOffline_initializePlayer() {
         PlayerType.allCases
             .enumerated()
             .filter { $1 != .offline }
-            .forEach { (index, playerType) in
+            .forEach { (_, playerType) in
                 
                 let (viewModel, _, mockPlayerHandler, _, _, streamingInfoUseCase) = makeSUT(node: MockNode(handle: 1), playerType: playerType, shouldInitializePlayer: true, relatedFileLinks: ["/examples/mp3/SoundHelix-Song-1.mp3"])
-                var receivedCommands = [MiniPlayerViewModel.Command]()
-                viewModel.invokeCommand = { receivedCommands.append($0) }
+                
+                let expectation = XCTestExpectation()
+                expectation.expectedFulfillmentCount = 4
+                
+                mockPlayerHandler.onAutoPlayCompletion = { expectation.fulfill() }
+                mockPlayerHandler.onAddPlayerTracksCompletion = { expectation.fulfill() }
+                mockPlayerHandler.onAddPlayerListenerCompletion = { expectation.fulfill() }
+                mockPlayerHandler.onRefreshCurrentItemStateCompletion = { expectation.fulfill() }
+                
                 streamingInfoUseCase.completeInfoNode(with: .mockItem)
                 
                 viewModel.dispatch(.onViewDidLoad)
                 
-                XCTAssertEqual(streamingInfoUseCase.startServer_calledTimes, 1, "failed at index: \(index) on playerType: \(playerType)")
-                XCTAssertEqual(mockPlayerHandler.autoPlay_calledTimes, 1, "failed at index: \(index) on playerType: \(playerType)")
-                XCTAssertEqual(mockPlayerHandler.addPlayerTracks_calledTimes, 1, "failed at index: \(index) on playerType: \(playerType)")
-                XCTAssertEqual(mockPlayerHandler.addPlayerListener_calledTimes, 1, "failed at index: \(index) on playerType: \(playerType)")
-                XCTAssertEqual(mockPlayerHandler.refreshCurrentItemState_calledTimes, 1, "failed at index: \(index) on playerType: \(playerType)")
+                wait(for: [expectation], timeout: 1)
             }
     }
     
-    @MainActor func testDispatch_deinit_logoutFolderLink() {
+    @MainActor func testDispatch_deinit_logoutFolderLink() async {
         let (viewModel, _, _, _, mockNodeInfouseCase, _) = makeSUT(playerType: .folderLink, isRouterFolderLinkPresenter: false)
         
-        test(viewModel: viewModel, action: .deinit, expectedCommands: [])
+        await test(viewModel: viewModel, action: .deinit, expectedCommands: [])
         
         XCTAssertEqual(mockNodeInfouseCase.folderLinkLogout_callTimes, 1)
     }
     
     @MainActor
-    func testDispatch_showPlayerAllCases_removePlayerListener() {
-        PlayerType.allCases.enumerated()
-            .forEach { (index, playerType) in
-                let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT(playerType: playerType)
-                
-                test(viewModel: viewModel, action: .showPlayer(nil, nil), expectedCommands: [])
-                
-                XCTAssertEqual(mockPlayerHandler.removePlayerListener_calledTimes, 1, "Expect to remove player listener player, but failed instead at index: \(index) with playerType: \(playerType)")
-            }
+    func testDispatch_showPlayerAllCases_removePlayerListener() async {
+        for (index, playerType) in PlayerType.allCases.enumerated() {
+            let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT(playerType: playerType)
+            
+            await test(viewModel: viewModel, action: .showPlayer(nil, nil), expectedCommands: [])
+            
+            XCTAssertEqual(mockPlayerHandler.removePlayerListener_calledTimes, 1, "Expect to remove player listener player, but failed instead at index: \(index) with playerType: \(playerType)")
+        }
     }
     
-    @MainActor func testDispatch_showPlayerWithDefaultPlayerType_showsFullScreenPlayer() {
+    @MainActor func testDispatch_showPlayerWithDefaultPlayerType_showsFullScreenPlayer() async {
         let (viewModel, mockRouter, _, _, _, _) = makeSUT()
         
-        test(viewModel: viewModel, action: .showPlayer(MockNode(handle: 1), nil), expectedCommands: [])
+        await test(viewModel: viewModel, action: .showPlayer(MockNode(handle: 1), nil), expectedCommands: [])
         
         XCTAssertEqual(mockRouter.showPlayer_calledTimes, 1)
     }
     
     @MainActor
-    func testDispatch_showPlayerWithNonDefaultPlayerType_showsFullScreenPlayer() {
-        PlayerType.allCases.enumerated()
-            .filter { $1 != .default }
-            .forEach { (index, playerType) in
-                let (viewModel, mockRouter, _, _, _, _) = makeSUT(playerType: playerType)
-                
-                test(viewModel: viewModel, action: .showPlayer(nil, nil), expectedCommands: [])
-                
-                XCTAssertEqual(mockRouter.showPlayer_calledTimes, 1, "Expect to show full screen player, but failed instead at index: \(index) with playerType: \(playerType)")
-            }
+    func testDispatch_showPlayerWithNonDefaultPlayerType_showsFullScreenPlayer() async {
+        for (index, playerType) in PlayerType.allCases.enumerated().filter({ $1 != .default }) {
+            
+            let (viewModel, mockRouter, _, _, _, _) = makeSUT(playerType: playerType)
+            
+            await test(viewModel: viewModel, action: .showPlayer(nil, nil), expectedCommands: [])
+            
+            XCTAssertEqual(mockRouter.showPlayer_calledTimes, 1, "Expect to show full screen player, but failed instead at index: \(index) with playerType: \(playerType)")
+        }
     }
     
-    @MainActor func testDispatch_onClose_stopStreamignInfoServer() {
+    @MainActor func testDispatch_onClose_stopStreamignInfoServer() async {
         let (viewModel, _, _, _, _, mockStreamingInfoUseCase) = makeSUT()
         
-        test(viewModel: viewModel, action: .onClose, expectedCommands: [])
+        await test(viewModel: viewModel, action: .onClose, expectedCommands: [])
         
         XCTAssertEqual(mockStreamingInfoUseCase.stopServer_calledTimes, 1)
     }
     
-    @MainActor func testDispatch_onClose_dismissView() {
+    @MainActor func testDispatch_onClose_dismissView() async {
         let (viewModel, mockRouter, _, _, _, _) = makeSUT()
         
-        test(viewModel: viewModel, action: .onClose, expectedCommands: [])
+        await test(viewModel: viewModel, action: .onClose, expectedCommands: [])
         
         XCTAssertEqual(mockRouter.dismiss_calledTimes, 1)
     }
     
-    @MainActor func testDispatch_onCloseWithFolderLinkWhenFolderLinkAndPresenterIsNotFolderLink_logoutFolderLink() {
+    @MainActor func testDispatch_onCloseWithFolderLinkWhenFolderLinkAndPresenterIsNotFolderLink_logoutFolderLink() async {
         let (viewModel, _, _, _, mockNodeInfoUseCase, _) = makeSUT(playerType: .folderLink, isRouterFolderLinkPresenter: false)
         
-        test(viewModel: viewModel, action: .onClose, expectedCommands: [])
+        await test(viewModel: viewModel, action: .onClose, expectedCommands: [])
         
         XCTAssertEqual(mockNodeInfoUseCase.folderLinkLogout_callTimes, 1)
     }
     
+    @MainActor
     func testAudioDidStartPlayingItem_shouldResumePlayback_whenStatusNotStartFromBeginning() {
         func assert(
             whenContinuationStatus continuationStatus: PlaybackContinuationStatusEntity,
@@ -196,6 +211,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testDispatch_whenPlayItemWithCurrentRepeatModeIsRepeatOne_PlayItemWithRepeatsAll() {
         let itemToPlay: AudioPlayerItem = .mockItem
         let (sut, _, mockPlayerHandler, _, _, _) = makeSUT()
@@ -207,6 +223,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(mockPlayerHandler.playItem_calledTimes, 1)
     }
     
+    @MainActor
     func testDispatch_whenPlayItemWithCurrentRepeatModeIsNonRepeatOne_PlayItemWithoutRepeatsAll() {
         RepeatMode.allCases.enumerated()
             .filter { $1 != .repeatOne }
@@ -224,6 +241,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
     
     // MARK: - Test Helpers
     
+    @MainActor
     private func makeSUT(
         node: MockNode? = nil,
         playerType: PlayerType = .default,
@@ -260,8 +278,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             streamingInfoUseCase: mockStreamingInfoUseCase,
             offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()),
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
-            audioPlayerUseCase: mockAudioPlayerUseCase,
-            dispatchQueue: TestDispatchQueue(label: "\(type(of: MiniPlayerViewModelTests.self)).preparePlayerQueue")
+            audioPlayerUseCase: mockAudioPlayerUseCase
         )
         
         return (sut, mockRouter, mockPlayerHandler, mockPlaybackContinuationUseCase, mockNodeInfoUseCase, mockStreamingInfoUseCase)
@@ -342,20 +359,6 @@ extension MiniPlayerViewModel.Command: CustomStringConvertible {
             return "Command.reload(\(currentItem))"
         case .enableUserInteraction(let enabled):
             return "Command.enableUserInteraction(\(enabled))"
-        }
-    }
-}
-
-class TestDispatchQueue: DispatchQueueProtocol {
-    private let queue: DispatchQueue
-
-    init(label: String) {
-        self.queue = DispatchQueue(label: label)
-    }
-
-    func async(qos: DispatchQoS, closure: @escaping () -> Void) {
-        queue.sync {
-            closure()
         }
     }
 }

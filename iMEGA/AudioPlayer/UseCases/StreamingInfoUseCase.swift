@@ -1,6 +1,6 @@
 import MEGADomain
 
-protocol StreamingInfoUseCaseProtocol {
+protocol StreamingInfoUseCaseProtocol: Sendable {
     func startServer()
     func stopServer()
     func info(from folderLinkNode: MEGANode) -> AudioPlayerItem?
@@ -10,7 +10,7 @@ protocol StreamingInfoUseCaseProtocol {
 
 final class StreamingInfoUseCase: StreamingInfoUseCaseProtocol {
     
-    private var streamingInfoRepository: any StreamingInfoRepositoryProtocol
+    private let streamingInfoRepository: any StreamingInfoRepositoryProtocol
     
     init(streamingInfoRepository: some StreamingInfoRepositoryProtocol = StreamingInfoRepository()) {
         self.streamingInfoRepository = streamingInfoRepository

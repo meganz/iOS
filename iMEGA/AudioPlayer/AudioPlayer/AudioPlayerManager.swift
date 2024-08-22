@@ -261,6 +261,7 @@ import MEGASDKRepo
         player?.playerTracksContains(url: url) ?? false
     }
     
+    @MainActor
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
         CrashlyticsLogger.log(category: .audioPlayer, "Initializing Full Screen Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing: filePaths)), isFolderLink: \(isFolderLink), messageId: \(messageId), chatId: \(chatId), allNodes: \(String(describing: allNodes))")
         let configEntity = AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, messageId: messageId, chatId: chatId, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self, isFromSharedItem: isFromSharedItem)
@@ -280,6 +281,7 @@ import MEGASDKRepo
         audioPlayerRouter.start()
     }
     
+    @MainActor
     private func makeAudioPlayerViewController(configEntity: AudioPlayerConfigEntity, router: some AudioPlayerViewRouting) -> AudioPlayerViewController? {
         guard let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(identifier: "AudioPlayerViewControllerID", creator: { coder in
             let makeViewModel: () -> AudioPlayerViewModel = {
@@ -314,6 +316,7 @@ import MEGASDKRepo
         return vc
     }
     
+    @MainActor
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool, isFromSharedItem: Bool) {
         CrashlyticsLogger.log(category: .audioPlayer, "Initializing Mini Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing: filePaths)), isFolderLink: \(isFolderLink)")
         if shouldReloadPlayerInfo {
@@ -381,6 +384,7 @@ import MEGASDKRepo
         }
     }
     
+    @MainActor
     func addDelegate(_ delegate: any AudioPlayerPresenterProtocol) {
         player?.add(presenterListener: delegate)
         
@@ -454,11 +458,13 @@ import MEGASDKRepo
         player?.resetCurrentItem()
     }
     
+    @MainActor
     private func isFolderSDKLogoutRequired() -> Bool {
         guard let miniPlayerRouter = miniPlayerRouter else { return false }
         return miniPlayerRouter.isFolderSDKLogoutRequired()
     }
     
+    @MainActor
     private func folderSDKLogoutIfNeeded() {
         if isFolderSDKLogoutRequired() {
             if nodeInfoUseCase == nil {

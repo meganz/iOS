@@ -1,6 +1,7 @@
 import Foundation
+import MEGASwift
 
-public protocol PlaybackContinuationUseCaseProtocol {
+public protocol PlaybackContinuationUseCaseProtocol: Sendable {
     func status(for fingerprint: FingerprintEntity) -> PlaybackContinuationStatusEntity
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity)
     func playbackStopped(
@@ -23,7 +24,7 @@ public final class PlaybackContinuationUseCase<
         public static var minimumContinuationPlaybackTime: TimeInterval { 15.minutes }
     }
     
-    private var currentPreference: PlaybackContinuationPreferenceStatusEntity?
+    private let currentPreference: Atomic<PlaybackContinuationPreferenceStatusEntity?> = Atomic(wrappedValue: nil)
     
     private let previousSessionRepo: T
     
@@ -37,7 +38,7 @@ public final class PlaybackContinuationUseCase<
             return .startFromBeginning
         }
         
-        guard let currentPreference else { return .displayDialog(playbackTime: previousTimeInterval) }
+        guard let currentPreference = currentPreference.wrappedValue else { return .displayDialog(playbackTime: previousTimeInterval) }
         
         switch currentPreference {
         case .restartFromBeginning: return .startFromBeginning
@@ -46,7 +47,7 @@ public final class PlaybackContinuationUseCase<
     }
     
     public func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {
-        currentPreference = preferenceStatus
+        currentPreference.mutate { $0 = preferenceStatus }
     }
     
     public func playbackStopped(

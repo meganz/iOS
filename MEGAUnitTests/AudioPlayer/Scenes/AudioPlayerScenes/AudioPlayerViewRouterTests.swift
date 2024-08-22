@@ -8,6 +8,7 @@ import XCTest
 
 final class AudioPlayerViewRouterTests: XCTestCase {
     
+    @MainActor
     func testBuild_whenNodeIsFolderLink_configCorrectDelegate() {
         let (sut, _, _, _, _, _, _) = makeSUT(nodeOriginType: .folderLink)
         
@@ -16,6 +17,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         assertThatCorrectDelegateConfiguredWhenNodeIsFromFolderLink(on: sut)
     }
     
+    @MainActor
     func testBuild_whenNodeIsFileLink_configCorrectDelegate() {
         let (sut, _, _, _, _, _, _) = makeSUT(nodeOriginType: .fileLink, fileLink: anyFileLink())
         
@@ -24,6 +26,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         assertThatCorrectDelegateConfiguredWhenNodeIsFromFileLink(on: sut)
     }
     
+    @MainActor
     func testBuild_whenNodeIsFromChat_configCorrectDelegate() {
         let expectedChatId = anyHandleEntity()
         let expectedMessageId = anyHandleEntity()
@@ -34,6 +37,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         assertThatCorrectDelegateConfiguredWhenNodeIsFromChat(on: sut, expectedChatId, expectedMessageId)
     }
     
+    @MainActor
     func testStart_presentBuildedView() {
         let (sut, presenter, _, _, _, _, _) = makeSUT()
         
@@ -42,7 +46,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(presenter.presentCallCount, 1)
     }
     
-    func testShowMiniPlayer_withNode_showsMiniPlayer() {
+    @MainActor func testShowMiniPlayer_withNode_showsMiniPlayer() {
         let (sut, _, _, mockPlayerHandler, _, _, _) = makeSUT()
         sut.start()
         
@@ -51,7 +55,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(mockPlayerHandler.initMiniPlayerCallCount, 1)
     }
     
-    func testShowMiniPlayer_withouthNode_showsMiniPlayer() {
+    @MainActor func testShowMiniPlayer_withouthNode_showsMiniPlayer() {
         let (sut, _, _, mockPlayerHandler, _, _, _) = makeSUT()
         sut.start()
         
@@ -60,7 +64,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(mockPlayerHandler.initMiniPlayerCallCount, 1)
     }
     
-    func testShowMiniPlayer_withFile_showsMiniPlayer() {
+    @MainActor func testShowMiniPlayer_withFile_showsMiniPlayer() {
         let (sut, _, _, mockPlayerHandler, _, _, _) = makeSUT()
         sut.start()
         
@@ -69,7 +73,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(mockPlayerHandler.initMiniPlayerCallCount, 1)
     }
     
-    func testGoToPlaylist_whenCalled_startsPlaylistRouter() {
+    @MainActor func testGoToPlaylist_whenCalled_startsPlaylistRouter() {
         let (sut, _, _, _, audioPlaylistViewRouter, _, _) = makeSUT()
         
         sut.goToPlaylist()
@@ -77,7 +81,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(audioPlaylistViewRouter.start_calledTimes, 1)
     }
     
-    func testDismiss_whenCalled_dismissView() {
+    @MainActor func testDismiss_whenCalled_dismissView() {
         let (sut, _, _, _, _, audioPlayerViewController, _) = makeSUT(audioPlayerViewController: MockViewController())
         
         sut.dismiss()
@@ -85,7 +89,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(audioPlayerViewController.dismissCallCount, 1)
     }
     
-    func testShowAction_whenCalled_presentNodeActionView() {
+    @MainActor func testShowAction_whenCalled_presentNodeActionView() {
         let (sut, _, _, _, _, audioPlayerViewController, _) = makeSUT(audioPlayerViewController: MockViewController())
         
         sut.showAction(for: MockNode(handle: 1), sender: "any-sender")
@@ -93,8 +97,8 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(audioPlayerViewController.presentCallCount, 1)
     }
     
-    func testHideActionSelected_shouldTrackEvent() {
-        let (sut, _, _, _, _, audioPlayerViewController, tracker) = makeSUT(audioPlayerViewController: MockViewController())
+    @MainActor func testHideActionSelected_shouldTrackEvent() {
+        let (sut, _, _, _, _, _, tracker) = makeSUT(audioPlayerViewController: MockViewController())
         
         _ = sut.build()
         
@@ -105,16 +109,17 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(
+    @MainActor private func makeSUT(
         nodeOriginType originType: AudioPlayerConfigEntity.NodeOriginType = .folderLink,
         fileLink: String? = nil,
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
         relatedFiles: [String]? = nil,
-        audioPlayerViewController: MockViewController = MockViewController(),
+        audioPlayerViewController: MockViewController? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: AudioPlayerViewRouter, presenter: MockViewController, configEntity: AudioPlayerConfigEntity, mockPlayerHandler: MockAudioPlayerHandler, audioPlaylistViewRouter: MockAudioPlaylistViewRouter, baseViewController: MockViewController, tracker: MockTracker) {
+        let audioPlayerViewController = audioPlayerViewController ?? MockViewController()
         let currentContextViewController = MockViewController()
         let audioPlaylistViewRouter = MockAudioPlaylistViewRouter()
         let tracker = MockTracker()
@@ -136,6 +141,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         return (sut, currentContextViewController, configEntity, mockPlayerHandler, audioPlaylistViewRouter, audioPlayerViewController, tracker)
     }
     
+    @MainActor
     private func assertThatCorrectDelegateConfiguredWhenNodeIsFromFolderLink(on sut: AudioPlayerViewRouter, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertNotNil(sut.nodeActionViewControllerDelegate, file: file, line: line)
         XCTAssertTrue(sut.nodeActionViewControllerDelegate?.isNodeFromFolderLink == true, file: file, line: line)
@@ -144,6 +150,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(sut.nodeActionViewControllerDelegate?.chatId, .invalid, file: file, line: line)
     }
     
+    @MainActor
     private func assertThatCorrectDelegateConfiguredWhenNodeIsFromFileLink(on sut: AudioPlayerViewRouter, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertNotNil(sut.fileLinkActionViewControllerDelegate, file: file, line: line)
         XCTAssertNil(sut.nodeActionViewControllerDelegate, file: file, line: line)
@@ -151,6 +158,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(sut.nodeActionViewControllerDelegate?.chatId, nil, file: file, line: line)
     }
     
+    @MainActor
     private func assertThatCorrectDelegateConfiguredWhenNodeIsFromChat(on sut: AudioPlayerViewRouter, _ expectedMessageId: HandleEntity, _ expectedChatId: HandleEntity, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertNotNil(sut.nodeActionViewControllerDelegate, file: file, line: line)
         XCTAssertEqual(sut.nodeActionViewControllerDelegate?.messageId, expectedMessageId, file: file, line: line)

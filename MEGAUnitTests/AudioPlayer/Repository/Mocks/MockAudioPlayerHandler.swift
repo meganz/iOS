@@ -19,7 +19,11 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var onMoveItem_calledTimes = 0
     var onDeleteItems_calledTimes = 0
     var addPlayer_calledTimes = 0
-    var addPlayerTracks_calledTimes = 0
+    var addPlayerTracks_calledTimes = 0 {
+        didSet {
+            onAddPlayerTracksCompletion?()
+        }
+    }
     var addPlayerListener_calledTimes = 0
     var removePlayerListener_calledTimes = 0
     var playItem_calledTimes = 0
@@ -30,6 +34,12 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var autoPlay_calledTimes = 0
     var closePlayer_calledTimes = 0
     var repeatMode = RepeatMode.none
+    
+    var onAutoPlayCompletion: (() -> Void)?
+    var onAddPlayerTracksCompletion: (() -> Void)?
+    var onAddPlayerListenerCompletion: (() -> Void)?
+    var onRefreshCurrentItemStateCompletion: (() -> Void)?
+    var onPlayerResumePlaybackCompletion: (() -> Void)?
     
     private var _isPlayerDefined = false
     
@@ -54,6 +64,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     func addPlayer(listener: any AudioPlayerObserversProtocol) {
         addPlayerListener_calledTimes += 1
+        onAddPlayerListenerCompletion?()
     }
     
     func removePlayer(listener: any AudioPlayerObserversProtocol) {
@@ -78,6 +89,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     func playerResumePlayback(from timeInterval: TimeInterval) {
         playerResumePlayback_Calls.append(timeInterval)
+        onPlayerResumePlaybackCompletion?()
     }
     
     func playerProgressDragEventBegan() {
@@ -165,9 +177,11 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func currentRepeatMode() -> RepeatMode { repeatMode }
     func refreshCurrentItemState() {
         refreshCurrentItemState_calledTimes += 1
+        onRefreshCurrentItemStateCompletion?()
     }
     func autoPlay(enable: Bool) {
         autoPlay_calledTimes += 1
+        onAutoPlayCompletion?()
     }
     func audioInterruptionDidStart() {}
     func audioInterruptionDidEndNeedToResume(_ resume: Bool) {}

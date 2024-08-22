@@ -346,7 +346,7 @@ class CloudDriveViewModelTests: XCTestCase {
                           featureFlagProvider: featureFlagProvider,
                           nodeSensitivityChecker: nodeSensitiveChecker)
 
-        test(viewModel: sut, action: .updateParentNode(updatedParentNode),
+        await test(viewModel: sut, action: .updateParentNode(updatedParentNode),
              expectedCommands: [.reloadNavigationBarItems])
         
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)

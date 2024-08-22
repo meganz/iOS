@@ -1,4 +1,4 @@
-public enum PlaybackContinuationPreferenceStatusEntity: Equatable {
+public enum PlaybackContinuationPreferenceStatusEntity: Equatable, Sendable {
     case restartFromBeginning
     case resumePreviousSession
 }

@@ -1,4 +1,5 @@
 extension MEGANode {
+    @MainActor
     @objc func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: NSNumber?, chatId: NSNumber?, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
         
         // fixes [CC-5598] as we were passing in all nodes instead of just audio ones

@@ -3,7 +3,7 @@ import MEGADomain
 import MEGASDKRepo
 import MEGASwift
 
-protocol NodeInfoRepositoryProtocol {
+protocol NodeInfoRepositoryProtocol: Sendable {
     func path(fromHandle: HandleEntity) -> URL?
     func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]?
     func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]?
@@ -25,14 +25,10 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private let sdk: MEGASdk
     private let folderSDK: MEGASdk
     private let megaStore: MEGAStore
-    private var streamingInfoRepository: any StreamingInfoRepositoryProtocol
-    private var offlineFileInfoRepository: any OfflineInfoRepositoryProtocol
-   
-    @PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder, useCase: PreferenceUseCase.default)
-    private var sortingPreference: SortingPreference
-    
-    @PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc, useCase: PreferenceUseCase.default)
-    private var sortingType: MEGASortOrderType
+    private let streamingInfoRepository: any StreamingInfoRepositoryProtocol
+    private let offlineFileInfoRepository: any OfflineInfoRepositoryProtocol
+    private let sortingPreference: PreferenceWrapper<SortingPreference> = PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder, useCase: PreferenceUseCase.default)
+    private let sortingType: PreferenceWrapper<MEGASortOrderType> = PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc, useCase: PreferenceUseCase.default)
     
     init(
         sdk: MEGASdk = MEGASdk.shared,
@@ -73,9 +69,9 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         var sortType: Int = MEGASortOrderType.defaultAsc.rawValue
         
         context.performAndWait {
-            sortType = sortingPreference == .perFolder ?
+            sortType = sortingPreference.wrappedValue == .perFolder ?
             megaStore.fetchCloudAppearancePreference(handle: parent, context: context)?.sortType?.intValue ?? MEGASortOrderType.defaultAsc.rawValue :
-                                                    sortingType.rawValue
+            sortingType.wrappedValue.rawValue
         }
         
         return sortType
