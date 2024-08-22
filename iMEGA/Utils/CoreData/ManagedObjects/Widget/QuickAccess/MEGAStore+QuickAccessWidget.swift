@@ -43,8 +43,11 @@ extension MEGAStore {
             return
         }
         
-        let batchInsert = buildBatchInsertRequest(for: items)
-        performBatchInsertRequest(batchInsert, completion: completion)
+        stack.performBackgroundTask { [weak self] context in
+            guard let self else { return }
+            let batchInsert = buildBatchInsertRequest(for: items)
+            performBatchInsertRequest(batchInsert, context: context, completion: completion)
+        }
     }
     
     private func buildBatchInsertRequest(for items: [RecentItemEntity]) -> NSBatchInsertRequest {
@@ -110,33 +113,37 @@ extension MEGAStore {
             return
         }
         
-        var insertIndex = 0
-        let batchInsert = NSBatchInsertRequest(entity: QuickAccessWidgetFavouriteItem.entity()) { (managedObject: NSManagedObject) -> Bool in
-            guard insertIndex < items.count else { return true }
-            let entity = items[insertIndex]
-            
-            if let favouriteItem = managedObject as? QuickAccessWidgetFavouriteItem {
-                favouriteItem.handle = entity.base64Handle
-                favouriteItem.name = entity.name
-                favouriteItem.timestamp = entity.timestamp
+        stack.performBackgroundTask { [weak self] context in
+            var insertIndex = 0
+            let batchInsert = NSBatchInsertRequest(entity: QuickAccessWidgetFavouriteItem.entity()) { (managedObject: NSManagedObject) -> Bool in
+                guard insertIndex < items.count else { return true }
+                let entity = items[insertIndex]
+                
+                if let favouriteItem = managedObject as? QuickAccessWidgetFavouriteItem {
+                    favouriteItem.handle = entity.base64Handle
+                    favouriteItem.name = entity.name
+                    favouriteItem.timestamp = entity.timestamp
+                }
+                
+                insertIndex += 1
+                return false
             }
             
-            insertIndex += 1
-            return false
+            self?.performBatchInsertRequest(batchInsert, context: context, completion: completion)
         }
-        
-        performBatchInsertRequest(batchInsert, completion: completion)
     }
     
-    private func performBatchInsertRequest(_ request: NSBatchInsertRequest, completion: ((Result<Void, GetFavouriteNodesErrorEntity>) -> Void)? = nil) {
-        stack.performBackgroundTask { context in
-            do {
-                try context.execute(request)
-                completion?(.success(()))
-            } catch {
-                MEGALogError("error when to batch insert items \(error)")
-                completion?(.failure(.megaStore))
-            }
+    private func performBatchInsertRequest(
+        _ request: NSBatchInsertRequest,
+        context: NSManagedObjectContext,
+        completion: ((Result<Void, GetFavouriteNodesErrorEntity>) -> Void)? = nil
+    ) {
+        do {
+            try context.execute(request)
+            completion?(.success(()))
+        } catch {
+            MEGALogError("error when to batch insert items \(error)")
+            completion?(.failure(.megaStore))
         }
     }
     
