@@ -18,7 +18,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
         chatSDK
-            .getAllScheduledMeetings()
+            .getAllScheduledMeetings()?
             .compactMap { (scheduledMeeting: MEGAChatScheduledMeeting) -> ScheduledMeetingEntity? in
                 guard
                     !scheduledMeeting.isCancelled,
@@ -27,9 +27,9 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 else {
                     return nil
                 }
-
+                
                 return scheduledMeeting.toScheduledMeetingEntity()
-            }
+            } ?? []
     }
     
     public func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity] {
@@ -41,7 +41,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     }
     
     public func scheduledMeeting(for scheduledMeetingId: ChatIdEntity, chatId: ChatIdEntity) -> ScheduledMeetingEntity? {
-        chatSDK.scheduledMeeting(chatId, scheduledId: scheduledMeetingId).toScheduledMeetingEntity()
+        chatSDK.scheduledMeeting(chatId, scheduledId: scheduledMeetingId)?.toScheduledMeetingEntity()
     }
     
     public func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity) async throws -> [ScheduledMeetingOccurrenceEntity] {
