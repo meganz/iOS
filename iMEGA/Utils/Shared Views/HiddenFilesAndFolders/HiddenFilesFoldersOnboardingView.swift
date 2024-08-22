@@ -9,7 +9,7 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
     let viewModel: HiddenFilesFoldersOnboardingViewModel
     
     var body: some View {
-        OnboardingNavigationBar {
+        navigationBar {
             GeometryReader { geometry in
                 ScrollView {
                     contentView()
@@ -20,11 +20,20 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
                 }
             }
             .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
-        } dismissAction: {
-            dismissAction()
         }
         .onAppear {
             viewModel.onViewAppear()
+        }
+    }
+    
+    @ViewBuilder
+    private func navigationBar(@ViewBuilder content: @escaping () -> some View) -> some View {
+        if viewModel.showNavigationBar {
+            OnboardingNavigationBar(
+                content: content,
+                dismissAction: dismissAction)
+        } else {
+            content()
         }
     }
     
@@ -46,8 +55,6 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
                 }
                 
                 buttons()
-                    .padding(.top, 43)
-                    .padding(.bottom, 47)
             }
             .padding(.horizontal, TokenSpacing._9)
         }
@@ -70,19 +77,28 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
     }
     
     private func buttons() -> some View {
-        VStack(spacing: TokenSpacing._5) {
-            primaryButton
-                .frame(minWidth: 288)
-            
-            Button(action: dismissAction) {
-                Text(Strings.Localizable.notNow)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.gray848484.swiftUI)
-                    .font(.title3)
-                    .frame(minWidth: 288, minHeight: 50)
-                    .background(.clear)
-                    .contentShape(Rectangle())
+        Group {
+            if viewModel.showPrimaryButtonOnly {
+                primaryButton
+                    .padding(.bottom, 35)
+            } else {
+                VStack(spacing: TokenSpacing._5) {
+                    primaryButton
+                    
+                    Button(action: dismissAction) {
+                        Text(Strings.Localizable.notNow)
+                            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.gray848484.swiftUI)
+                            .font(.title3)
+                            .frame(minHeight: 50)
+                            .background(.clear)
+                            .contentShape(Rectangle())
+                    }
+                }
+                .padding(.bottom, 47)
             }
         }
+        .frame(minWidth: 288)
+        .padding(.top, 43)
     }
     
     private func dismissAction() {
@@ -196,8 +212,9 @@ private struct OnboardingItemView: View {
     HiddenFilesFoldersOnboardingView(
         primaryButton: Button("See Plans", action: {}),
         viewModel: HiddenFilesFoldersOnboardingViewModel(
+            showPrimaryButtonOnly: true,
             tracker: Preview_AnalyticsTracking(),
-            screenEvent: Preview_ScreenEvent(), 
+            screenEvent: Preview_ScreenEvent(),
             dismissEvent: Preview_ButtonPressedEvent()
         ))
 }
@@ -206,6 +223,7 @@ private struct OnboardingItemView: View {
     HiddenFilesFoldersOnboardingView(
         primaryButton: Button("Continue", action: {}),
         viewModel: HiddenFilesFoldersOnboardingViewModel(
+            showPrimaryButtonOnly: false,
             tracker: Preview_AnalyticsTracking(),
             screenEvent: Preview_ScreenEvent(),
             dismissEvent: Preview_ButtonPressedEvent()

@@ -8,6 +8,7 @@ protocol HideFilesAndFoldersRouting {
     func hideNodes(_ nodes: [NodeEntity])
     func showSeeUpgradePlansOnboarding()
     func showFirstTimeOnboarding(nodes: [NodeEntity])
+    func showOnboardingInfo()
     func showItemsHiddenSuccessfully(count: Int)
     func dismissOnboarding(animated: Bool, completion: (() -> Void)?)
 }
@@ -29,18 +30,29 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     
     @MainActor
     func showSeeUpgradePlansOnboarding() {
+        let viewModel = HiddenFilesFoldersOnboardingViewModel(
+            showPrimaryButtonOnly: false,
+            tracker: DIContainer.tracker,
+            screenEvent: HideNodeUpgradeScreenEvent(),
+            dismissEvent: HiddenNodeUpgradeCloseButtonPressedEvent())
+        
         showHiddenFilesAndFoldersOnboarding(
             primaryButtonViewModel: HiddenFilesSeeUpgradePlansOnboardingButtonViewModel(
                 hideFilesAndFoldersRouter: self,
                 upgradeAccountRouter: UpgradeAccountRouter(),
                 tracker: DIContainer.tracker),
-            screenEvent: HideNodeUpgradeScreenEvent(), 
-            dismissEvent: HiddenNodeUpgradeCloseButtonPressedEvent()
+            viewModel: viewModel
         )
     }
     
     @MainActor
     func showFirstTimeOnboarding(nodes: [NodeEntity]) {
+        let viewModel = HiddenFilesFoldersOnboardingViewModel(
+            showPrimaryButtonOnly: false,
+            tracker: DIContainer.tracker,
+            screenEvent: HideNodeOnboardingScreenEvent(),
+            dismissEvent: HiddenNodeOnboardingCloseButtonPressedEvent())
+        
         showHiddenFilesAndFoldersOnboarding(
             primaryButtonViewModel: FirstTimeOnboardingPrimaryButtonViewModel(
                 nodes: nodes,
@@ -48,8 +60,20 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
                     repo: UserAttributeRepository.newRepo),
                 hideFilesAndFoldersRouter: self,
                 tracker: DIContainer.tracker),
-            screenEvent: HideNodeOnboardingScreenEvent(), 
-            dismissEvent: HiddenNodeOnboardingCloseButtonPressedEvent()
+            viewModel: viewModel
+        )
+    }
+    
+    @MainActor
+    func showOnboardingInfo() {
+        let viewModel = HiddenFilesFoldersOnboardingViewModel(
+            showPrimaryButtonOnly: true,
+            showNavigationBar: false)
+        
+        showHiddenFilesAndFoldersOnboarding(
+            primaryButtonViewModel: HiddenFilesCloseOnboardingPrimaryButtonViewModel(
+                hideFilesAndFoldersRouter: self),
+            viewModel: viewModel
         )
     }
     
@@ -65,16 +89,12 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     @MainActor
     private func showHiddenFilesAndFoldersOnboarding(
         primaryButtonViewModel: some HiddenFilesOnboardingPrimaryButtonViewModelProtocol,
-        screenEvent: some ScreenViewEventIdentifier,
-        dismissEvent: some ButtonPressedEventIdentifier
+        viewModel: HiddenFilesFoldersOnboardingViewModel
     ) {
         let onboardingViewController = UIHostingController(rootView: HiddenFilesFoldersOnboardingView(
             primaryButton: HiddenFilesOnboardingButtonView(
                 viewModel: primaryButtonViewModel),
-            viewModel: HiddenFilesFoldersOnboardingViewModel(
-                tracker: DIContainer.tracker,
-                screenEvent: screenEvent, 
-                dismissEvent: dismissEvent)
+            viewModel: viewModel
         ))
         self.onboardingViewController = onboardingViewController
         presenter?.present(onboardingViewController,

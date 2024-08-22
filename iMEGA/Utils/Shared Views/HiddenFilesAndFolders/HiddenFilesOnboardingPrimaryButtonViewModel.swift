@@ -57,3 +57,14 @@ struct FirstTimeOnboardingPrimaryButtonViewModel: HiddenFilesOnboardingPrimaryBu
         hideFilesAndFoldersRouter.hideNodes(nodes)
     }
 }
+
+struct HiddenFilesCloseOnboardingPrimaryButtonViewModel: HiddenFilesOnboardingPrimaryButtonViewModelProtocol {
+    let buttonTitle = Strings.Localizable.close
+    let buttonAction: (@MainActor () async -> Void)
+    
+    init(hideFilesAndFoldersRouter: some HideFilesAndFoldersRouting) {
+        buttonAction = {
+            hideFilesAndFoldersRouter.dismissOnboarding(animated: true, completion: nil)
+        }
+    }
+}
