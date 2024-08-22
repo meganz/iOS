@@ -8,8 +8,8 @@ class ShareAlbumUseCaseTests: XCTestCase {
         do {
             _ = try await sut.shareAlbumLink(AlbumEntity(id: 2, type: .favourite))
         } catch {
-            XCTAssertEqual(error as? ShareAlbumErrorEntity,
-                           ShareAlbumErrorEntity.invalidAlbumType)
+            XCTAssertEqual(error as? ShareCollectionErrorEntity,
+                           ShareCollectionErrorEntity.invalidCollectionType)
         }
     }
     
@@ -60,8 +60,8 @@ class ShareAlbumUseCaseTests: XCTestCase {
         do {
             try await sut.removeSharedLink(forAlbum: AlbumEntity(id: 2, type: .favourite))
         } catch {
-            XCTAssertEqual(error as? ShareAlbumErrorEntity,
-                           ShareAlbumErrorEntity.invalidAlbumType)
+            XCTAssertEqual(error as? ShareCollectionErrorEntity,
+                           ShareCollectionErrorEntity.invalidCollectionType)
         }
     }
     
