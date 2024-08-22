@@ -37,6 +37,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### get_coverage
+
+```sh
+[bundle exec] fastlane get_coverage
+```
+
+
+
 ### parse_and_upload_code_coverage
 
 ```sh

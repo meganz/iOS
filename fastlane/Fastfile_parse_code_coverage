@@ -5,39 +5,55 @@ import("Fastfile_parse_warnings_and_errors")
   #   - mr: MR number that can be found in the url.
   #         Example: If the link for the MR is https://url/-/merge_requests/4447 - The MR number is 4447
   #   - token: Token required to post the message to the MR
+
+  lane :get_coverage do 
+    output_path = ENV["CODE_COVERAGE_OUTPUT"]
+
+    run_xcov(output_directory: output_path)
+  end
+
   lane :parse_and_upload_code_coverage do | options |
-    json_path = ENV["CODE_COVERAGE_JSON_PATH"]
-    fastlane_relative_json_path = File.join(File.expand_path('..', Dir.pwd), json_path)
-    markdown_path = ENV["CODE_COVERAGE_MARKDOWN_PATH"]
-    fastlane_relative_markdown_path = File.join(File.expand_path('..', Dir.pwd), markdown_path)
-    fastlane_relative_json_directory_path = File.dirname(fastlane_relative_json_path)
-    fastlane_relative_mardown_directory_path = File.dirname(fastlane_relative_markdown_path)
+    output_path = ENV["CODE_COVERAGE_OUTPUT"]
+    
+    json_path = "#{output_path}/report.json"
 
-    FileUtils.mkdir_p(fastlane_relative_json_directory_path) unless Dir.exist?(fastlane_relative_json_directory_path)
-    FileUtils.mkdir_p(fastlane_relative_mardown_directory_path) unless Dir.exist?(fastlane_relative_mardown_directory_path)
-
-    generate_json_for_code_coverage(file_path: fastlane_relative_json_path)
     code_coverage_markdown = generate_markdown_for_code_coverage(json_path: json_path)
-    File.open(fastlane_relative_markdown_path, "w+") { |file| file.write(code_coverage_markdown) }
+   
+    markdown_path = ENV["CODE_COVERAGE_MARKDOWN_PATH"]
+
+    FileUtils.touch(markdown_path)
+    File.open(markdown_path, "w+") { |file| file.write(code_coverage_markdown) }
+
     post_code_coverage_markdown_to_mr(mr: options[:mr], token: options[:token], markdown_path: markdown_path)
   end
 
-  private_lane :generate_json_for_code_coverage do|options|
-    sh "xcrun xccov view --report #{get_latest_xcresult_file} --json > #{options[:file_path]}"
+  desc "Run xcov"
+  private_lane :run_xcov do |options|
+    xcov(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      output_directory: options[:output_directory],
+      ignore_file_path: ".xcovignore",
+      derived_data_path: "derivedData",
+      json_report: true
+    )
   end
 
   private_lane :generate_markdown_for_code_coverage do |options|
-    code_coverage_json = read_json(json_path: options[:json_path])
+    json_path = options[:json_path]
+    code_coverage_json = read_json(json_path: "xcov_output/report.json")
     coverage_text = <<~TEXT
-    ## Unit test coverage result
-    Target | Percentage
-    ---    | ---
+      ## Unit test coverage result excluding View & ViewController files
+      Target | Percentage
+      ---    | ---
     TEXT
+  
     code_coverage_json[:targets].each do |target|
-      coverage = target[:lineCoverage] * 100
-      coverage_text << "#{target[:name]} | #{coverage.round(2)}%\n"
+      target_name = target[:name]
+      target_coverage = (target[:coverage] * 100).round(2)
+      coverage_text << "#{target_name} | #{target_coverage}%\n"
     end
-
+    coverage_text << "Average | #{(code_coverage_json[:coverage] * 100).round(2)}%\n"
     coverage_text
   end
 
@@ -47,7 +63,7 @@ import("Fastfile_parse_warnings_and_errors")
     post_markdown_to_mr(
       merge_request_url: merge_request_url,
       token: options[:token],
-      markdown_path: options[:markdown_path]
+      markdown_path: "fastlane/#{options[:markdown_path]}"
     )
   end
 

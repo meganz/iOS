@@ -222,6 +222,7 @@ GEM
       xcpretty (~> 0.2, >= 0.0.7)
     xcpretty-travis-formatter (1.0.1)
       xcpretty (~> 0.2, >= 0.0.7)
+    xcresult (0.2.1)
 
 PLATFORMS
   arm64-darwin-23
@@ -233,6 +234,7 @@ DEPENDENCIES
   fastlane-plugin-firebase_app_distribution
   fastlane-plugin-json
   nokogiri
+  xcov
   xcpretty-json-formatter
 
 BUNDLED WITH

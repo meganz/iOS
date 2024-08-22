@@ -1,0 +1,44 @@
+# Generic Views and ViewControllers:
+
+- .*ViewController.swift
+- .*View.swift
+- .*ViewController.m
+- .*ViewController.h
+- .*View.m
+- .*View.h
+
+# AppDelegate:
+
+- AppDelegate+Account.swift
+- AppDelegate+Additions.swift
+- AppDelegate+Ads.swift
+- AppDelegate+QuickUploadAction.swift
+- AppDelegate+SaveNode.swift
+- AppDelegate.h
+- AppDelegate.m
+- AppDelegateConfigurator.swift
+
+# Generic ViewController extensions:
+
+- .*Router.swift
+- .*Cell.swift
+- .*NavigationBar.swift
+- .*ViewController+Additions.swift
+
+# MEGAAppColor:
+
+- MEGAAppColor.swift
+- MEGAAppColor+Account.swift
+- MEGAAppColor+Chat.swift
+- MEGAAppColor+Components.swift
+- MEGAAppColor+Photos.swift
+- MEGAAppColor+PSA.swift
+- MEGAAppColor+SharedItems.swift
+- MEGAAppColor+Videos.swift
+
+# Custom ViewControllers:
+
+- CustomModalAlertViewController+Contacts.swift
+- SharedItemsViewController+TabSelection.swift
+
+
