@@ -58,6 +58,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
                                           isIncoming: false,
                                           isBackupNode: isBackupNode,
                                           sender: sender)
+        vc.accessoryActionDelegate = nodeAccessoryActionDelegate
         navigationController.present(vc, animated: true, completion: nil)
     }
     

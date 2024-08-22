@@ -1,11 +1,12 @@
 import Foundation
 
-@objc final class DefaultNodeActionAccessoryDelegate: NSObject, NodeActionAccessoryViewControllerDelegate {
+@objc final class DefaultNodeAccessoryActionDelegate: NSObject, NodeAccessoryActionDelegate {
+    @MainActor
     func nodeAccessoryAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType) {
         switch action {
         case .hide:
-            // CC-7939: Show onboarding info
-            nodeAction.dismiss(animated: true, completion: nil)
+            HideFilesAndFoldersRouter(presenter: nodeAction)
+                .showOnboardingInfo()
         default: break
         }
     }

@@ -145,6 +145,13 @@
     return _selection;
 }
 
+- (DefaultNodeAccessoryActionDelegate *)defaultNodeAccessoryActionDelegate {
+    if (_defaultNodeAccessoryActionDelegate == nil) {
+        _defaultNodeAccessoryActionDelegate = [DefaultNodeAccessoryActionDelegate new];
+    }
+    return _defaultNodeAccessoryActionDelegate;
+}
+
 #pragma mark - Private
 
 - (void)updateAppearance {

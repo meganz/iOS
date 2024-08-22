@@ -12,6 +12,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
     lazy var selection = PhotoSelectionAdapter(sdk: .shared)
+    lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     lazy var rightBarButtonItem = UIBarButtonItem(
         image: UIImage.selectAllItems,

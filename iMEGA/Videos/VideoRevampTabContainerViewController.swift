@@ -40,6 +40,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
         return controller
     }()
     
+    private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
+    
     private let viewModel: VideoRevampTabContainerViewModel
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
@@ -374,7 +376,10 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func nodeActionViewController(with selectedVideos: [MEGANode], from sender: UIBarButtonItem) -> NodeActionViewController {
-        NodeActionViewController(nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, sender: sender)
+        let viewController = NodeActionViewController(
+            nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, sender: sender)
+        viewController.accessoryActionDelegate = nodeAccessoryActionDelegate
+        return viewController
     }
     
     private var selectedVideos: [MEGANode] {

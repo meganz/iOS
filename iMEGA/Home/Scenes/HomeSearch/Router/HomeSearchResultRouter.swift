@@ -33,6 +33,7 @@ final class HomeSearchResultRouter: NodeRouting {
     private var nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate
     
     private lazy var nodeOpener = NodeOpener(navigationController: navigationController)
+    private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     private let backupsUseCase: any BackupsUseCaseProtocol
     
@@ -74,6 +75,7 @@ final class HomeSearchResultRouter: NodeRouting {
             isFromSharedItem: isFromSharedItem,
             sender: button
         ) else { return }
+        nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     

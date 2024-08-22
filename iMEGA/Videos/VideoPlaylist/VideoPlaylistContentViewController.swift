@@ -30,6 +30,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
         videoPlaylistMenuDelegate: self
     )
+    private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     private(set) var sharedUIState = VideoPlaylistContentSharedUIState()
     private var subscriptions = Set<AnyCancellable>()
@@ -342,7 +343,10 @@ final class VideoPlaylistContentViewController: UIViewController {
     }
     
     private func nodeActionViewController(with selectedVideos: [MEGANode], from sender: UIBarButtonItem) -> NodeActionViewController {
-        NodeActionViewController(nodes: selectedVideos, delegate: self, displayMode: .videoPlaylistContent, sender: sender)
+        let viewController = NodeActionViewController(
+            nodes: selectedVideos, delegate: self, displayMode: .videoPlaylistContent, sender: sender)
+        viewController.accessoryActionDelegate = nodeAccessoryActionDelegate
+        return viewController
     }
     
     private var selectedVideos: [MEGANode] {

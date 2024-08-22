@@ -10,6 +10,7 @@ struct VideoRevampRouter: VideoRevampRouting {
     let isDesignTokenEnabled: Bool
     
     private let syncModel = VideoRevampSyncModel()
+    private let nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     private var videoConfig: VideoConfig {
         .live(isDesignTokenEnabled: isDesignTokenEnabled)
@@ -109,6 +110,7 @@ struct VideoRevampRouter: VideoRevampRouting {
             isBackupNode: isBackupNode,
             sender: sender
         )
+        viewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         
         navigationController.present(viewController, animated: true, completion: nil)
     }

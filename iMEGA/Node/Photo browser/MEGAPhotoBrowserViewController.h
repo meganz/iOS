@@ -4,7 +4,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MEGAPhotoBrowserViewController, PhotoBrowserDataProvider, PhotoBrowserViewModel;
+@class MEGAPhotoBrowserViewController, PhotoBrowserDataProvider, PhotoBrowserViewModel, DefaultNodeAccessoryActionDelegate;
 
 typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
     MEGAPhotoModeThumbnail = 0,
@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 
 @property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
 @property (nonatomic, strong, nullable) UIView *snackBarContainer;
+@property (strong, nonatomic) DefaultNodeAccessoryActionDelegate *defaultNodeAccessoryActionDelegate;
 
 - (void)reloadUI;
 - (void)configureNodeIntoImage:(MEGANode *) node nodeIndex:(NSUInteger) index;

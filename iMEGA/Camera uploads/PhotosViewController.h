@@ -2,7 +2,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, PhotoAlbumContainerViewController, PhotosViewModel, ContextMenuManager;
+@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, PhotoAlbumContainerViewController, PhotosViewModel, ContextMenuManager, DefaultNodeAccessoryActionDelegate;
 
 @interface PhotosViewController : UIViewController <MEGATransferDelegate, MEGAGlobalDelegate>
 
@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic, strong, nullable) UIView *emptyStateView;
+@property (strong, nonatomic) DefaultNodeAccessoryActionDelegate *defaultNodeAccessoryActionDelegate;
 
 - (void)reloadPhotos;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
