@@ -29,7 +29,7 @@ public struct ShareAlbumUseCase: ShareAlbumUseCaseProtocol {
     
     public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
         guard album.type == .user else {
-            throw ShareAlbumErrorEntity.invalidAlbumType
+            throw ShareCollectionErrorEntity.invalidCollectionType
         }
         return try await shareAlbumRepository.shareAlbumLink(album)
     }
@@ -49,7 +49,7 @@ public struct ShareAlbumUseCase: ShareAlbumUseCaseProtocol {
     
     public func removeSharedLink(forAlbum album: AlbumEntity) async throws {
         guard album.type == .user else {
-            throw ShareAlbumErrorEntity.invalidAlbumType
+            throw ShareCollectionErrorEntity.invalidCollectionType
         }
         try await shareAlbumRepository.removeSharedLink(forAlbumId: album.id)
     }

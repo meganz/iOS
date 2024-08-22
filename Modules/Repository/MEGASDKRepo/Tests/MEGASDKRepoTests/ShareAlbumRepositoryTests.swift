@@ -27,7 +27,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         do {
             _ = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
         } catch {
-            XCTAssertEqual(error as? ShareAlbumErrorEntity, ShareAlbumErrorEntity.buisinessPastDue)
+            XCTAssertEqual(error as? ShareCollectionErrorEntity, ShareCollectionErrorEntity.buisinessPastDue)
         }
     }
     
@@ -54,7 +54,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         do {
             try await sut.removeSharedLink(forAlbumId: 1)
         } catch {
-            XCTAssertEqual(error as? ShareAlbumErrorEntity, ShareAlbumErrorEntity.buisinessPastDue)
+            XCTAssertEqual(error as? ShareCollectionErrorEntity, ShareCollectionErrorEntity.buisinessPastDue)
         }
     }
     

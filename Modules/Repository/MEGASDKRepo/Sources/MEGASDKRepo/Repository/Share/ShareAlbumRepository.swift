@@ -28,7 +28,7 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
                     completion(.success(request.link))
                 case .failure(let error):
                     if error.type == .apiEBusinessPastDue {
-                        completion(.failure(ShareAlbumErrorEntity.buisinessPastDue))
+                        completion(.failure(ShareCollectionErrorEntity.buisinessPastDue))
                     } else {
                         completion(.failure(GenericErrorEntity()))
                     }
@@ -45,7 +45,7 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
                     completion(.success)
                 case .failure(let error):
                     if error.type == .apiEBusinessPastDue {
-                        completion(.failure(ShareAlbumErrorEntity.buisinessPastDue))
+                        completion(.failure(ShareCollectionErrorEntity.buisinessPastDue))
                     } else {
                         completion(.failure(GenericErrorEntity()))
                     }
