@@ -56,6 +56,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         ])
     }
     
+    @MainActor
     func testDispatchOnViewReady_photosCoverThumbnailLoaded_shouldSetAlbumCoverAndCount() async throws {
         let testCases: [(isHiddenNodesOn: Bool, excludeSensitives: Bool)] = [
             (isHiddenNodesOn: false, excludeSensitives: false),
@@ -84,7 +85,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
                 featureFlagProvider: MockFeatureFlagProvider(
                     list: [.albumPhotoCache: true, .hiddenNodes: isHiddenNodesOn]))
             
-            test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            await test(viewModel: sut, action: .onViewReady, expectedCommands: [
                 .setLabels(title: albumName,
                            subtitle: Strings.Localizable.General.Format.Count.items(albumPhotos.count)),
                 .setThumbnail(path: thumbnailURL.path)
@@ -97,6 +98,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testDispatchOnViewReady_photosLoaded_shouldSetCountAndPlaceholder() async throws {
         let albumName = "Test"
         let album = AlbumEntity(id: 5, name: albumName, type: .user)
@@ -109,7 +111,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
             featureFlagProvider: MockFeatureFlagProvider(
                 list: [.albumPhotoCache: true]))
         
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+        await test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .setLabels(title: albumName,
                        subtitle: Strings.Localizable.General.Format.Count.items(0)),
             .setPlaceholderThumbnail

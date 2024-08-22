@@ -1,6 +1,6 @@
 import Combine
 
-public protocol AudioPlayerUseCaseProtocol: AnyObject {
+public protocol AudioPlayerUseCaseProtocol: AnyObject, Sendable {
     func registerMEGADelegate() async
     func unregisterMEGADelegate() async
     func reloadItemPublisher() -> AnyPublisher<[NodeEntity], Never>

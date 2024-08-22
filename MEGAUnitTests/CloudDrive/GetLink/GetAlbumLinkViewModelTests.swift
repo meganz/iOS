@@ -143,7 +143,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             await sut.loadingTask?.value
             
             let updatedCell = try XCTUnwrap(sut.cellViewModel(indexPath: updatedIndexPath) as? GetLinkStringCellViewModel)
-            test(viewModel: updatedCell, action: .onViewReady, expectedCommands: [
+            await test(viewModel: updatedCell, action: .onViewReady, expectedCommands: [
                 .configView(title: link, leftImage: UIImage.linkGetLink, isRightImageViewHidden: true)
             ])
         }

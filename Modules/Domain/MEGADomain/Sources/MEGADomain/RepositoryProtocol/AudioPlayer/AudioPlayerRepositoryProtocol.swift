@@ -1,6 +1,6 @@
 import Combine
 
-public protocol AudioPlayerRepositoryProtocol: RepositoryProtocol {
+public protocol AudioPlayerRepositoryProtocol: RepositoryProtocol, Sendable {
     var reloadItemPublisher: AnyPublisher<[NodeEntity], Never> { get }
     
     func registerMEGADelegate() async

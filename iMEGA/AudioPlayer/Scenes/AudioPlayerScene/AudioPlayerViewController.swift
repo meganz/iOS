@@ -58,7 +58,7 @@ final class AudioPlayerViewController: UIViewController {
         super.viewDidLoad()
         
         viewModel.invokeCommand = { [weak self] command in
-            DispatchQueue.main.async { self?.executeCommand(command) }
+            self?.executeCommand(command)
         }
         
         viewModel.dispatch(.onViewDidLoad)

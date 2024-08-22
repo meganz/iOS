@@ -2552,7 +2552,6 @@
 		C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390CC256587BF0026F215 /* MEGASlider.swift */; };
 		C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390D62565BB840026F215 /* MEGASelectedButton.swift */; };
 		C453AB7F256E7AE8005E4E1B /* NodeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */; };
-		C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4575F30265FA3D500D527DC /* MockDispatchQueue.swift */; };
 		C4575F34265FEC3100D527DC /* NodeOwnerInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */; };
 		C458D94825CC23D300D1A496 /* AudioPlayer+Notifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458D94725CC23D300D1A496 /* AudioPlayer+Notifiers.swift */; };
 		C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2DE725D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift */; };
@@ -5366,7 +5365,6 @@
 		C45390CC256587BF0026F215 /* MEGASlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASlider.swift; sourceTree = "<group>"; };
 		C45390D62565BB840026F215 /* MEGASelectedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASelectedButton.swift; sourceTree = "<group>"; };
 		C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoUseCase.swift; sourceTree = "<group>"; };
-		C4575F30265FA3D500D527DC /* MockDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDispatchQueue.swift; sourceTree = "<group>"; };
 		C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeOwnerInfoTableViewCell.swift; sourceTree = "<group>"; };
 		C458D94725CC23D300D1A496 /* AudioPlayer+Notifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Notifiers.swift"; sourceTree = "<group>"; };
 		C45A2DE725D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlayerViewRouter.swift; sourceTree = "<group>"; };
@@ -13009,7 +13007,6 @@
 			isa = PBXGroup;
 			children = (
 				24EF67092B358A37002F1380 /* AudioPlayer */,
-				C4575F2F265FA3C000D527DC /* DispatchQueue */,
 				C47E7C0025D18FC800DB6FF5 /* Repository */,
 				C45A2E0625D2B9C200915A83 /* Routers */,
 				24F231562A5FB313000BFBBA /* Scenes */,
@@ -13065,14 +13062,6 @@
 				C44D6DF625701415003D1723 /* AudioPlaylistViewRouter.swift */,
 			);
 			path = AudioPlaylistScene;
-			sourceTree = "<group>";
-		};
-		C4575F2F265FA3C000D527DC /* DispatchQueue */ = {
-			isa = PBXGroup;
-			children = (
-				C4575F30265FA3D500D527DC /* MockDispatchQueue.swift */,
-			);
-			path = DispatchQueue;
 			sourceTree = "<group>";
 		};
 		C45A2DF325D2B93B00915A83 /* ViewModel */ = {
@@ -16722,7 +16711,6 @@
 				948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */,
 				94E33C9A2C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift in Sources */,
 				94D4E9EB2C359F7100B07C3B /* MockCXProvider.swift in Sources */,
-				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */,
 				B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */,
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,

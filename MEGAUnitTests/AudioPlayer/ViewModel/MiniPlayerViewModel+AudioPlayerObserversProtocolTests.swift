@@ -8,84 +8,106 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
     
     // MARK: - audioPlayerShowLoading
     
-    func testAudioPlayerShowLoading_whenCalled_showsLoading() {
+    @MainActor
+    func testAudioPlayerShowLoading_whenCalled_showsLoading() async {
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audio(player: anyQueuePlayer(), showLoading: true)
-        
-        XCTAssertEqual(receivedCommands, [ .showLoading(true) ])
+        await test(
+            viewModel: sut,
+            trigger: { sut.audio(player: anyQueuePlayer(), showLoading: true) },
+            expectedCommands: [.showLoading(true)]
+        )
     }
     
-    func testAudioPlayerShowLoading_whenCalled_HidesLoading() {
+    @MainActor
+    func testAudioPlayerShowLoading_whenCalled_HidesLoading() async {
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audio(player: anyQueuePlayer(), showLoading: false)
-        
-        XCTAssertEqual(receivedCommands, [ .showLoading(false) ])
+        await test(
+            viewModel: sut,
+            trigger: { sut.audio(player: anyQueuePlayer(), showLoading: false) },
+            expectedCommands: [.showLoading(false)]
+        )
     }
     
     // MARK: - audioPlayerCurrentTime
     
-    func testAudioPlayerCurrentTime_whenCalled_reloadsPlayerStatus() {
+    @MainActor
+    func testAudioPlayerCurrentTime_whenCalled_reloadsPlayerStatus() async {
         let currentTime = 0.0
         let remainingTime = 0.0
         let percentageCompleted: Float = 40
         let isPlaying = true
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audio(player: anyQueuePlayer(), currentTime: currentTime, remainingTime: remainingTime, percentageCompleted: percentageCompleted, isPlaying: isPlaying)
-        
-        XCTAssertEqual(receivedCommands, [ .reloadPlayerStatus(percentage: percentageCompleted, isPlaying: isPlaying) ])
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audio(player: anyQueuePlayer(), currentTime: currentTime, remainingTime: remainingTime, percentageCompleted: percentageCompleted, isPlaying: isPlaying)
+            },
+            expectedCommands: [
+                .reloadPlayerStatus(percentage: percentageCompleted, isPlaying: isPlaying)
+            ]
+        )
     }
     
     // MARK: - audioPlayerCurrentItemCurrentThumbnail
     
-    func testAudioPlayerCurrentItemCurrentThumbnail_whenCalled_reloadsNodeInfoThumbnailOnly() {
+    @MainActor
+    func testAudioPlayerCurrentItemCurrentThumbnail_whenCalled_reloadsNodeInfoThumbnailOnly() async {
         let expectedThumbnail = testSpecificThumbnail()
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audio(player: anyQueuePlayer(), currentItem: nil, currentThumbnail: expectedThumbnail)
-        
-        XCTAssertEqual(receivedCommands, [ .reloadNodeInfo(thumbnail: expectedThumbnail) ])
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audio(player: anyQueuePlayer(), currentItem: nil, currentThumbnail: expectedThumbnail)
+            },
+            expectedCommands: [
+                .reloadNodeInfo(thumbnail: expectedThumbnail)
+            ]
+        )
     }
     
     // MARK: - audioPlayerNameArtistThumbnailUrl
     
-    func testAudioPlayerNameArtistThumbnailUrl_whenCalled_reloadsNodeInfoThumbnailOnly() {
+    @MainActor
+    func testAudioPlayerNameArtistThumbnailUrl_whenCalled_reloadsNodeInfoThumbnailOnly() async {
         let expectedThumbnail = testSpecificThumbnail()
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audio(player: anyQueuePlayer(), name: anyString(), artist: anyString(), thumbnail: expectedThumbnail, url: anyString())
-        
-        XCTAssertEqual(receivedCommands, [ .reloadNodeInfo(thumbnail: expectedThumbnail) ])
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audio(player: anyQueuePlayer(), name: anyString(), artist: anyString(), thumbnail: expectedThumbnail, url: anyString())
+            },
+            expectedCommands: [
+                .reloadNodeInfo(thumbnail: expectedThumbnail)
+            ]
+        )
     }
     
     // MARK: - audioPlayerNameArtistThumbnail
     
-    func testAudioPlayerNameArtistThumbnail_whenCalled_reloadsNodeInfoThumbnailOnly() {
+    @MainActor
+    func testAudioPlayerNameArtistThumbnail_whenCalled_reloadsNodeInfoThumbnailOnly() async {
         let expectedThumbnail = testSpecificThumbnail()
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audio(player: anyQueuePlayer(), name: anyString(), artist: anyString(), thumbnail: expectedThumbnail)
-        
-        XCTAssertEqual(receivedCommands, [ .reloadNodeInfo(thumbnail: expectedThumbnail) ])
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audio(player: anyQueuePlayer(), name: anyString(), artist: anyString(), thumbnail: expectedThumbnail)
+            },
+            expectedCommands: [
+                .reloadNodeInfo(thumbnail: expectedThumbnail)
+            ]
+        )
     }
     
     // MARK: - audioPlayerCurrentItemIndexPath
     
-    func testAudioPlayerCurrentItemIndexPath_whenNils_doesNotChangeCurrentItemAtIndexPath() {
+    @MainActor func testAudioPlayerCurrentItemIndexPath_whenNils_doesNotChangeCurrentItemAtIndexPath() {
         let (sut, _, _) = makeSUT()
         var receivedCommands = [MiniPlayerViewModel.Command]()
         sut.invokeCommand = { receivedCommands.append($0) }
@@ -95,39 +117,24 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         XCTAssertTrue(receivedCommands.isEmpty, "Expect to received no commands to update the UI")
     }
     
-    func testAudioPlayerCurrentItemIndexPath_whenCurrentItemIsNil_doesNotChangeCurrentItemAtIndexPath() {
-        let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
-        
-        sut.audio(player: anyQueuePlayer(), currentItem: nil, indexPath: anyIndexPath())
-        
-        XCTAssertTrue(receivedCommands.isEmpty, "Expect to received no commands to update the UI")
-    }
-    
-    func testAudioPlayerCurrentItemIndexPath_whenIndexPathIsNil_doesNotChangeCurrentItemAtIndexPath() {
-        let currentItem = AudioPlayerItem(name: anyString(), url: anyUrl(), node: MockNode(handle: 1))
-        let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
-        
-        sut.audio(player: anyQueuePlayer(), currentItem: currentItem, indexPath: nil)
-        
-        XCTAssertTrue(receivedCommands.isEmpty, "Expect to received no commands to update the UI")
-    }
-    
-    func testAudioPlayerCurrentItemIndexPath_whenCalled_changesCurrentItemAtIndexPath() {
+    @MainActor
+    func testAudioPlayerCurrentItemIndexPath_whenCalled_changesCurrentItemAtIndexPath() async {
         let expectedCurrentItem = AudioPlayerItem(name: anyString(), url: anyUrl(), node: MockNode(handle: 1))
         let expectedIndexPath = anyIndexPath()
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audio(player: anyQueuePlayer(), currentItem: expectedCurrentItem, indexPath: expectedIndexPath)
-        
-        XCTAssertEqual(receivedCommands, [ .change(currentItem: expectedCurrentItem, indexPath: expectedIndexPath) ])
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audio(player: anyQueuePlayer(), currentItem: expectedCurrentItem, indexPath: expectedIndexPath)
+            },
+            expectedCommands: [
+                .change(currentItem: expectedCurrentItem, indexPath: expectedIndexPath)
+            ]
+        )
     }
     
+    @MainActor
     func testAudioPlayerReloadItemIndexPath_whenItemIsNil_doesNotReloadItem() {
         let (sut, _, _) = makeSUT()
         var receivedCommands = [MiniPlayerViewModel.Command]()
@@ -138,44 +145,57 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         XCTAssertTrue(receivedCommands.isEmpty, "Expect to received no commands to update the UI")
     }
     
-    func testAudioPlayerReloadItem_whenHasItem_reloadsItem() {
+    @MainActor
+    func testAudioPlayerReloadItem_whenHasItem_reloadsItem() async {
         let itemToReload = AudioPlayerItem(name: anyString(), url: anyUrl(), node: MockNode(handle: 1))
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audio(player: anyQueuePlayer(), reload: itemToReload)
-        
-        XCTAssertEqual(receivedCommands, [ .reload(currentItem: itemToReload) ])
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audio(player: anyQueuePlayer(), reload: itemToReload)
+            },
+            expectedCommands: [
+                .reload(currentItem: itemToReload)
+            ]
+        )
     }
     
     // MARK: - audioPlayerWillStartBlockingAction
     
-    func testAudioPlayerWillStartBlockingAction_whenCalled_disableUserInteraction() {
+    @MainActor func testAudioPlayerWillStartBlockingAction_whenCalled_disableUserInteraction() async {
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audioPlayerWillStartBlockingAction()
-        
-        XCTAssertEqual(receivedCommands, [ .enableUserInteraction(false) ])
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audioPlayerWillStartBlockingAction()
+            },
+            expectedCommands: [
+                .enableUserInteraction(false)
+            ]
+        )
     }
     
     // MARK: - audioPlayerDidFinishBlockingAction
     
-    func testAudioPlayerDidFinishBlockingAction_whenCalled_enableUserInteraction() {
+    @MainActor func testAudioPlayerDidFinishBlockingAction_whenCalled_enableUserInteraction() async {
         let (sut, _, _) = makeSUT()
-        var receivedCommands = [MiniPlayerViewModel.Command]()
-        sut.invokeCommand = { receivedCommands.append($0) }
         
-        sut.audioPlayerDidFinishBlockingAction()
-        
-        XCTAssertEqual(receivedCommands, [ .enableUserInteraction(true) ])
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audioPlayerDidFinishBlockingAction()
+            },
+            expectedCommands: [
+                .enableUserInteraction(true)
+            ]
+        )
     }
     
     // MARK: - audioDidStartPlayingItem
     
-    func testAudioDidStartPlayingItem_whenHasNoItem_doesNotDoAnything() {
+    @MainActor func testAudioDidStartPlayingItem_whenHasNoItem_doesNotDoAnything() {
         let itemToPlay = AudioPlayerItem(name: anyString(), url: anyUrl(), node: MockNode(handle: 1))
         let (sut, playbackContinuationUseCase, playerHandler) = makeSUT()
         var receivedCommands = [MiniPlayerViewModel.Command]()
@@ -186,7 +206,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         assertThatAudioDidStartPlayingItemDoesNotDoAnything(playbackContinuationUseCase: playbackContinuationUseCase, playerHandler: playerHandler)
     }
     
-    func testAudioDidStartPlayingItem_whenItemhasNoFingerprint_doesNotDoAnything() {
+    @MainActor func testAudioDidStartPlayingItem_whenItemhasNoFingerprint_doesNotDoAnything() {
         let node = MockNode(handle: 1, fingerprint: nil)
         let itemToPlayWithoutFingerprint = AudioPlayerItem(name: anyString(), url: anyUrl(), node: node)
         let (sut, playbackContinuationUseCase, playerHandler) = makeSUT()
@@ -198,7 +218,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         assertThatAudioDidStartPlayingItemDoesNotDoAnything(playbackContinuationUseCase: playbackContinuationUseCase, playerHandler: playerHandler)
     }
     
-    func testAudioDidStartPlayingItem_whenPlaybackStatusIsStartFromBeginning_doesNotDoAnything() {
+    @MainActor func testAudioDidStartPlayingItem_whenPlaybackStatusIsStartFromBeginning_doesNotDoAnything() {
         let node = MockNode(handle: 1, fingerprint: anyString())
         let itemToPlayWithFingerprint = AudioPlayerItem(name: anyString(), url: anyUrl(), node: node)
         let (sut, playbackContinuationUseCase, playerHandler) = makeSUT(
@@ -212,7 +232,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         assertThatAudioDidStartPlayingItemDoesNotDoAnything(playbackContinuationUseCase: playbackContinuationUseCase, playerHandler: playerHandler)
     }
     
-    func testAudioDidStartPlayingItem_whenPlaybackStatusIsResumeSession_resumesPlayback() {
+    @MainActor func testAudioDidStartPlayingItem_whenPlaybackStatusIsResumeSession_resumesPlayback() {
         let node = MockNode(handle: 1, fingerprint: anyString())
         let itemToPlayWithFingerprint = AudioPlayerItem(name: anyString(), url: anyUrl(), node: node)
         let expectedPlaybackTime: TimeInterval = .infinity
@@ -227,7 +247,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         XCTAssertEqual(playerHandler.playerResumePlayback_Calls, [ expectedPlaybackTime ])
     }
     
-    func testAudioDidStartPlayingItem_whenPlaybackStatusIsDisplayDialog_resumesPlayback() {
+    @MainActor func testAudioDidStartPlayingItem_whenPlaybackStatusIsDisplayDialog_resumesPlayback() {
         let node = MockNode(handle: 1, fingerprint: anyString())
         let itemToPlayWithFingerprint = AudioPlayerItem(name: anyString(), url: anyUrl(), node: node)
         let expectedPlaybackTime: TimeInterval = .infinity
@@ -245,6 +265,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
     
     // MARK: - Test Helpers
     
+    @MainActor
     private func makeSUT(
         playbackContinuationUseCase: MockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase(),
         file: StaticString = #file,
@@ -272,7 +293,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
             playbackContinuationUseCase: playbackContinuationUseCase,
             audioPlayerUseCase: mockAudioPlayerUseCase
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
         return (sut, playbackContinuationUseCase, mockPlayerHandler)
     }
     

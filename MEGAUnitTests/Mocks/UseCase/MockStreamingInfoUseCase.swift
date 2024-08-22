@@ -2,7 +2,7 @@
 import MEGADomain
 import MEGASDKRepoMock
 
-final class MockStreamingInfoUseCase: StreamingInfoUseCaseProtocol {
+final class MockStreamingInfoUseCase: StreamingInfoUseCaseProtocol, @unchecked Sendable {
     private(set) var startServer_calledTimes = 0
     private(set) var stopServer_calledTimes = 0
     

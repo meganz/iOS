@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASDKRepo
 
-protocol StreamingInfoRepositoryProtocol {
+protocol StreamingInfoRepositoryProtocol: Sendable {
     func serverStart()
     func serverStop()
     func info(fromFolderLinkNode: MEGANode) -> AudioPlayerItem?

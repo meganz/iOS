@@ -1,10 +1,11 @@
 import Foundation
+import MEGASwift
 
 @propertyWrapper
-public final class PreferenceWrapper<T> {
+public final class PreferenceWrapper<T>: @unchecked Sendable {
     private let key: PreferenceKeyEntity
     private let defaultValue: T
-    
+    private let lock = NSLock()
     public var useCase: any PreferenceUseCaseProtocol
     
     public var existed: Bool {
@@ -21,15 +22,15 @@ public final class PreferenceWrapper<T> {
     public var projectedValue: PreferenceWrapper<T> { self }
     
     public func remove() {
-        useCase[key] = Optional<T>.none
+        lock.withLock { useCase[key] =  Optional<T>.none }
     }
     
     public var wrappedValue: T {
         get {
-            useCase[key] ?? defaultValue
+            lock.withLock { useCase[key] ?? defaultValue }
         }
         set {
-            useCase[key] = newValue
+            lock.withLock { useCase[key] = newValue }
         }
     }
 }

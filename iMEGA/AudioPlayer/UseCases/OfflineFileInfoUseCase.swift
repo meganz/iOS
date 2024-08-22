@@ -1,12 +1,12 @@
 import Foundation
 
-protocol OfflineFileInfoUseCaseProtocol {
+protocol OfflineFileInfoUseCaseProtocol: Sendable {
     func info(from files: [String]?) -> [AudioPlayerItem]?
 }
 
 final class OfflineFileInfoUseCase: OfflineFileInfoUseCaseProtocol {
     
-    private var offlineInfoRepository: any OfflineInfoRepositoryProtocol
+    private let offlineInfoRepository: any OfflineInfoRepositoryProtocol
     
     init(offlineInfoRepository: some OfflineInfoRepositoryProtocol = OfflineInfoRepository()) {
         self.offlineInfoRepository = offlineInfoRepository

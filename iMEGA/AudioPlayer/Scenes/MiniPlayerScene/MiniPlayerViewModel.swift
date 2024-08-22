@@ -13,14 +13,16 @@ enum MiniPlayerAction: ActionType {
     case showPlayer(MEGANode?, String?)
 }
 
+@MainActor
 protocol MiniPlayerViewRouting: Routing {
     func dismiss()
     func showPlayer(node: MEGANode?, filePath: String?)
     func isAFolderLinkPresenter() -> Bool
 }
 
+@MainActor
 final class MiniPlayerViewModel: ViewModelType {
-    enum Command: CommandType, Equatable {
+    enum Command: CommandType, Equatable, Sendable {
         case reloadNodeInfo(thumbnail: UIImage?)
         case reloadPlayerStatus(percentage: Float, isPlaying: Bool)
         case initTracks(currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool)
@@ -31,15 +33,14 @@ final class MiniPlayerViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private var configEntity: AudioPlayerConfigEntity
-    private var shouldInitializePlayer: Bool = false
+    private let configEntity: AudioPlayerConfigEntity
+    private let shouldInitializePlayer: Bool
     private let router: any MiniPlayerViewRouting
     private let nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
     private let streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?
     private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
-    private let dispatchQueue: any DispatchQueueProtocol
     private let sdk: MEGASdk
     
     private var subscriptions = Set<AnyCancellable>()
@@ -55,8 +56,8 @@ final class MiniPlayerViewModel: ViewModelType {
          offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?,
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
          audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
-         sdk: MEGASdk = .shared,
-         dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global()) {
+         sdk: MEGASdk = .shared
+    ) {
         self.configEntity = configEntity
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase
@@ -64,7 +65,6 @@ final class MiniPlayerViewModel: ViewModelType {
         self.offlineInfoUseCase = offlineInfoUseCase
         self.playbackContinuationUseCase = playbackContinuationUseCase
         self.audioPlayerUseCase = audioPlayerUseCase
-        self.dispatchQueue = dispatchQueue
         self.sdk = sdk
         self.shouldInitializePlayer = configEntity.shouldResetPlayer
         
@@ -75,18 +75,19 @@ final class MiniPlayerViewModel: ViewModelType {
     func dispatch(_ action: MiniPlayerAction) {
         switch action {
         case .onViewDidLoad:
-            Task {
-                guard let node = configEntity.node, let nodeInfoUseCase else { return }
+            Task.detached { [weak self] in
+                guard let self, let node = configEntity.node, let nodeInfoUseCase else { return }
                 let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
                 if isTakenDown {
-                    closeMiniPlayer()
-                    deInitActions()
+                    await closeMiniPlayer()
+                    await deInitActions()
                     return
                 }
                 
                 await audioPlayerUseCase.registerMEGADelegate()
             }
-            invokeCommand?(.showLoading(shouldInitializePlayer))
+                
+            invoke(command: .showLoading(shouldInitializePlayer))
             determinePlayerSetupOnViewDidLoad()
         case .onPlayPause:
             configEntity.playerHandler.playerTogglePlay()
@@ -104,28 +105,36 @@ final class MiniPlayerViewModel: ViewModelType {
         }
     }
     
+    private func invoke(command: Command) {
+        invokeCommand?(command)
+    }
+    
     private func determinePlayerSetupOnViewDidLoad() {
         guard shouldInitializePlayer else {
             configurePlayer()
             return
         }
         
-        dispatchQueue.async(qos: .userInteractive) { [weak self] in
-            self?.preparePlayer()
+        Task.detached {
+            await self.preparePlayer(isOffline: self.configEntity.playerType == .offline)
         }
     }
     
-    private func preparePlayer() {
-        guard configEntity.playerType == .offline else {
-            preparePlayerForNonOfflinePlayerType()
+    private nonisolated func preparePlayer(isOffline: Bool) async {
+        guard isOffline else {
+            await preparePlayerForNonOfflinePlayerType()
             return
         }
-        preparePlayerForOfflinePlayerType()
+        await preparePlayerForOfflinePlayerType()
     }
     
-    private func preparePlayerForOfflinePlayerType() {
+    private func dismiss() {
+        router.dismiss()
+    }
+    
+    private nonisolated func preparePlayerForOfflinePlayerType() async {
         guard let offlineFilePaths = configEntity.relatedFiles else {
-            router.dismiss()
+            await dismiss()
             return
         }
         
@@ -134,16 +143,16 @@ final class MiniPlayerViewModel: ViewModelType {
             currentItem.url.path == configEntity.fileLink,
             currentItem.node == configEntity.node
         else {
-            initialize(with: offlineFilePaths)
+            await initialize(with: offlineFilePaths)
             return
         }
-        configurePlayer()
+        await configurePlayer()
         configEntity.playerHandler.resetCurrentItem()
     }
     
-    private func preparePlayerForNonOfflinePlayerType() {
+    private nonisolated func preparePlayerForNonOfflinePlayerType() async {
         guard let node = configEntity.node else {
-            router.dismiss()
+            await dismiss()
             return
         }
         
@@ -155,10 +164,10 @@ final class MiniPlayerViewModel: ViewModelType {
             let currentItem = configEntity.playerHandler.playerCurrentItem(),
             currentItem.node == node
         else {
-            initialize(with: node)
+            await initialize(with: node)
             return
         }
-        configurePlayer()
+        await configurePlayer()
         configEntity.playerHandler.resetCurrentItem()
     }
     
@@ -179,63 +188,63 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Node Init
     
-    private func initialize(with node: MEGANode) {
+    private nonisolated func initialize(with node: MEGANode) async {
         if configEntity.isFileLink {
             guard let track = streamingInfoUseCase?.info(from: node) else {
-                router.dismiss()
+                await dismiss()
                 return
             }
             CrashlyticsLogger.log(category: .audioPlayer, "File link - Initializing with single file track: \(track)")
-            initialize(tracks: [track], currentTrack: track)
+            await initialize(tracks: [track], currentTrack: track)
         } else {
             guard let children = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
                   let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
                 
                 guard let track = streamingInfoUseCase?.info(from: node) else {
-                    router.dismiss()
+                    await dismiss()
                     return
                 }
                 CrashlyticsLogger.log(category: .audioPlayer, "Not file link - Initializing with single file track: \(track)")
-                initialize(tracks: [track], currentTrack: track)
+                await initialize(tracks: [track], currentTrack: track)
                 return
             }
             CrashlyticsLogger.log(category: .audioPlayer, "Not file link - Initializing with multiple tracks: \(children)")
-            initialize(tracks: children, currentTrack: currentTrack)
+            await initialize(tracks: children, currentTrack: currentTrack)
         }
     }
     
     // MARK: - Offline Files Init
     
-    private func initialize(with offlineFilePaths: [String]) {
+    private nonisolated func initialize(with offlineFilePaths: [String]) async {
         guard
             let files = offlineInfoUseCase?.info(from: offlineFilePaths),
             let currentFilePath = configEntity.fileLink,
             let currentTrack = files.first(where: { $0.url.path == currentFilePath })
         else {
-            router.dismiss()
+            await dismiss()
             return
         }
-        initialize(tracks: files, currentTrack: currentTrack)
+        await initialize(tracks: files, currentTrack: currentTrack)
     }
     
     // MARK: - Private functions
     
-    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
-        let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
+    private nonisolated func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) async {
+        let mutableTracks = await shift(tracks: tracks, startItem: currentTrack)
         CrashlyticsLogger.log(category: .audioPlayer, "Initializing with player type: \(configEntity.playerType), tracks: \(tracks)")
-        resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
+        await resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
         configEntity.playerHandler.autoPlay(enable: configEntity.playerType != .fileLink)
         configEntity.playerHandler.addPlayer(tracks: mutableTracks)
-        configurePlayer()
+        await configurePlayer()
     }
 
-    private func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) -> [AudioPlayerItem] {
+    private nonisolated func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) async -> [AudioPlayerItem] {
         guard tracks.contains(startItem) else { return tracks }
         return tracks.shifted(tracks.firstIndex(of: startItem) ?? 0)
     }
     
-    private func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) {
+    private nonisolated func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) async {
         switch configEntity.playerType {
         case .default:
             if let currentNode = configEntity.playerHandler.playerCurrentItem()?.node {
@@ -283,53 +292,72 @@ final class MiniPlayerViewModel: ViewModelType {
             nodeInfoUseCase?.folderLinkLogout()
         }
         
-        Task {
-            await audioPlayerUseCase.unregisterMEGADelegate()
+        Task.detached { [weak audioPlayerUseCase] in
+            await audioPlayerUseCase?.unregisterMEGADelegate()
         }
     }
 }
 
+@MainActor
 extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
-    func audio(player: AVQueuePlayer, showLoading: Bool) {
-        invokeCommand?(.showLoading(showLoading))
+    nonisolated func audio(player: AVQueuePlayer, showLoading: Bool) {
+        Task { @MainActor in
+            invokeCommand?(.showLoading(showLoading))
+        }
     }
     
-    func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool) {
-        if remainingTime > 0.0 { invokeCommand?(.showLoading(false)) }
-        invokeCommand?(.reloadPlayerStatus(percentage: percentageCompleted, isPlaying: isPlaying))
+    nonisolated func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool) {
+        Task { @MainActor in
+            if remainingTime > 0.0 { invokeCommand?(.showLoading(false)) }
+            invokeCommand?(.reloadPlayerStatus(percentage: percentageCompleted, isPlaying: isPlaying))
+        }
     }
     
-    func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?) {
-        invokeCommand?(.reloadNodeInfo(thumbnail: currentThumbnail))
+    nonisolated func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?) {
+        Task { @MainActor in
+            invokeCommand?(.reloadNodeInfo(thumbnail: currentThumbnail))
+        }
     }
     
-    func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
-        invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
+    nonisolated func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
+        Task { @MainActor in
+            invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
+        }
     }
     
-    func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?) {
-        invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
+    nonisolated func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?) {
+        Task { @MainActor in
+            invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
+        }
     }
     
-    func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?) {
-        guard let currentItem = currentItem, let indexPath = indexPath else { return }
-        invokeCommand?(.change(currentItem: currentItem, indexPath: indexPath))
+    nonisolated func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?) {
+        Task { @MainActor in
+            guard let currentItem = currentItem, let indexPath = indexPath else { return }
+            invokeCommand?(.change(currentItem: currentItem, indexPath: indexPath))
+        }
     }
     
-    func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {
-        guard let currentItem = item else { return }
-        invokeCommand?(.reload(currentItem: currentItem))
+    nonisolated func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {
+        Task { @MainActor in
+            guard let currentItem = item else { return }
+            invokeCommand?(.reload(currentItem: currentItem))
+        }
     }
     
-    func audioPlayerWillStartBlockingAction() {
-        invokeCommand?(.enableUserInteraction(false))
+    nonisolated func audioPlayerWillStartBlockingAction() {
+        Task { @MainActor in
+            invokeCommand?(.enableUserInteraction(false))
+        }
     }
     
-    func audioPlayerDidFinishBlockingAction() {
-        invokeCommand?(.enableUserInteraction(true))
+    nonisolated func audioPlayerDidFinishBlockingAction() {
+        Task { @MainActor in
+            invokeCommand?(.enableUserInteraction(true))
+        }
     }
     
-    func audioDidStartPlayingItem(_ item: AudioPlayerItem?) {
+    nonisolated func audioDidStartPlayingItem(_ item: AudioPlayerItem?) {
         guard let item, let fingerprint = item.node?.toNodeEntity().fingerprint else {
             return
         }

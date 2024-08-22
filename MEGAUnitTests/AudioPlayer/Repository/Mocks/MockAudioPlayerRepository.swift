@@ -1,8 +1,8 @@
-import Combine
+@preconcurrency import Combine
 @testable import MEGA
 import MEGADomain
 
-final class MockAudioPlayerRepository: AudioPlayerRepositoryProtocol {
+final class MockAudioPlayerRepository: AudioPlayerRepositoryProtocol, @unchecked Sendable {
     var reloadItemPublisher: AnyPublisher<[NodeEntity], Never> { _reloadItemPublisher.eraseToAnyPublisher() }
     
     private let _reloadItemPublisher: PassthroughSubject<[NodeEntity], Never>
