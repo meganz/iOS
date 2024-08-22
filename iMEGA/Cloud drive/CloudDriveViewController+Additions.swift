@@ -97,7 +97,7 @@ extension CloudDriveViewController {
         }
         
         let nodeActionsViewController = NodeActionViewController(nodes: nodes, delegate: self, displayMode: displayMode, isIncoming: isIncomingShareChildView, containsABackupNode: displayMode == .backup, isFromSharedItem: isFromSharedItem, sender: sender)
-        nodeActionsViewController.accessoryActionDelegate = defaultNodeActionAccessoryDelegate
+        nodeActionsViewController.accessoryActionDelegate = defaultNodeAccessoryActionDelegate
         
         present(nodeActionsViewController, animated: true, completion: nil)
     }
@@ -198,7 +198,7 @@ extension CloudDriveViewController {
     
     @objc func showNodeActionsForNode(_ node: MEGANode, isIncoming: Bool, isBackupNode: Bool, sender: Any) {
         let nodeActions = NodeActionViewController(node: node, delegate: self, displayMode: displayMode, isIncoming: isIncoming, isBackupNode: isBackupNode, isFromSharedItem: isFromSharedItem, sender: sender)
-        nodeActions.accessoryActionDelegate = defaultNodeActionAccessoryDelegate
+        nodeActions.accessoryActionDelegate = defaultNodeAccessoryActionDelegate
         present(nodeActions, animated: true)
     }
     

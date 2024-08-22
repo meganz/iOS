@@ -6,6 +6,7 @@ import MEGAUIKit
 
 class ExplorerBaseViewController: UIViewController {
     lazy var toolbar = UIToolbar()
+    lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     private var explorerToolbarConfigurator: ExplorerToolbarConfigurator?
     
     var isToolbarShown: Bool {
@@ -205,6 +206,7 @@ class ExplorerBaseViewController: UIViewController {
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let containsABackupNode = backupsUC.hasBackupNode(in: selectedNodes.toNodeEntities())
         let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: displayMode, containsABackupNode: containsABackupNode, sender: button)
+        nodeActionsViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     

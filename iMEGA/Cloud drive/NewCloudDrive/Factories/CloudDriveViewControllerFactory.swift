@@ -661,7 +661,8 @@ struct CloudDriveViewControllerFactory {
                     nodeBrowserViewModel?.setEditMode(editing)
                 }),
                 actionFactory: ToolbarActionFactory(),
-                nodeUseCase: nodeUseCase
+                nodeUseCase: nodeUseCase,
+                nodeAccessoryActionDelegate: DefaultNodeAccessoryActionDelegate()
             ),
             backButtonTitle: titleFor(
                 nodeSource,

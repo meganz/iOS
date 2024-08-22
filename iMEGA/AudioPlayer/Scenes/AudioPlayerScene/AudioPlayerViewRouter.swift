@@ -14,6 +14,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     
     private(set) var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
     private(set) var fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate?
+    private(set) var nodeAccessoryActionDelegate: (any NodeAccessoryActionDelegate)?
     
     var baseViewController: UIViewController?
     
@@ -38,6 +39,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: vc),
                 nodeActionListener: nodeActionListener(tracker)
             )
+            nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
         case .fileLink:
             fileLinkActionViewControllerDelegate = FileLinkActionViewControllerDelegate(
                 link: configEntity.fileLink ?? "",
@@ -112,6 +114,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             isBackupNode: isBackupNode,
             isFromSharedItem: configEntity.isFromSharedItem,
             sender: sender)
+        nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }

@@ -25,6 +25,7 @@ struct CloudDriveBottomToolbarItemsFactory {
     let nodeActionHandler: NodeActionsDelegateHandler
     let actionFactory: any ToolbarActionFactoryProtocol
     let nodeUseCase: any NodeUseCaseProtocol
+    let nodeAccessoryActionDelegate: any NodeAccessoryActionDelegate
     
     private func megaNodes(from nodeEntities: [NodeEntity]) -> [MEGANode] {
         nodeEntities.compactMap {
@@ -146,6 +147,7 @@ struct CloudDriveBottomToolbarItemsFactory {
             containsABackupNode: displayMode == .backup,
             sender: sender
         )
+        nodeActionsViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         parent.present(nodeActionsViewController, animated: true, completion: nil)
     }
     

@@ -60,6 +60,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
                 return actionsToReturn
             }
         }
+        class MockNodeAccessoryActionDelegate: NodeAccessoryActionDelegate { }
 
         let sut: CloudDriveBottomToolbarItemsFactory
         let actionFactory = MockToolbarActionFactory()
@@ -77,7 +78,8 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
                 sdk: MockSdk(),
                 nodeActionHandler: actionHandler,
                 actionFactory: actionFactory,
-                nodeUseCase: nodeUseCase
+                nodeUseCase: nodeUseCase,
+                nodeAccessoryActionDelegate: MockNodeAccessoryActionDelegate()
             )
         }
         

@@ -452,7 +452,8 @@ extension MEGAPhotoBrowserViewController {
         
         let isBackUpNode = BackupsOCWrapper().isBackupNode(node)
         let controller = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isInVersionsView: isPreviewingVersion(), isBackupNode: isBackUpNode, isFromSharedItem: self.isFromSharedItem, sender: sender)
-    
+        controller.accessoryActionDelegate = defaultNodeAccessoryActionDelegate
+        
         present(controller, animated: true)
     }
     

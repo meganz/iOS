@@ -252,11 +252,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     return _viewModel;
 }
 
-- (DefaultNodeActionAccessoryDelegate *)defaultNodeActionAccessoryDelegate {
-    if (_defaultNodeActionAccessoryDelegate == nil) {
-        _defaultNodeActionAccessoryDelegate = [DefaultNodeActionAccessoryDelegate new];
+- (DefaultNodeAccessoryActionDelegate *)defaultNodeAccessoryActionDelegate {
+    if (_defaultNodeAccessoryActionDelegate == nil) {
+        _defaultNodeAccessoryActionDelegate = [DefaultNodeAccessoryActionDelegate new];
     }
-    return _defaultNodeActionAccessoryDelegate;
+    return _defaultNodeAccessoryActionDelegate;
 }
 
 #pragma mark - Layout

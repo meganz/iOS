@@ -7,7 +7,8 @@ final class RecentNodeRouter {
     private weak var navigationController: UINavigationController?
 
     private var completionAction: ((MEGANode, MegaNodeActionType) -> Void)?
-
+    private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
+    
     // MARK: - Lifecycles
 
     init(navigationController: UINavigationController?) {
@@ -30,7 +31,7 @@ final class RecentNodeRouter {
             isBackupNode: isBackupNode,
             sender: self
         )
-        
+        nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
 

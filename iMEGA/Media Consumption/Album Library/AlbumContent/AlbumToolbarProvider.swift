@@ -133,6 +133,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                                                                  delegate: self,
                                                                  displayMode: viewModel.isFavouriteAlbum ? .photosFavouriteAlbum : .photosAlbum,
                                                                  sender: button)
+        nodeActionsViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     

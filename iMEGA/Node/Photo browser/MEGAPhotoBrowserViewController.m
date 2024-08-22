@@ -271,6 +271,13 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     return _viewModel;
 }
 
+- (DefaultNodeAccessoryActionDelegate *)defaultNodeAccessoryActionDelegate {
+    if (_defaultNodeAccessoryActionDelegate == nil) {
+        _defaultNodeAccessoryActionDelegate = [DefaultNodeAccessoryActionDelegate new];
+    }
+    return _defaultNodeAccessoryActionDelegate;
+}
+
 #pragma mark - Status bar
 
 - (BOOL)prefersStatusBarHidden {

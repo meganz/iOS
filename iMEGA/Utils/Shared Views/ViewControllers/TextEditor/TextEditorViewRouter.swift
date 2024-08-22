@@ -17,6 +17,7 @@ final class TextEditorViewRouter: NSObject {
     private var parentHandle: HandleEntity?
     private var nodeEntity: NodeEntity?
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
+    private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     @objc convenience init(
         textFile: TextFile,
@@ -147,6 +148,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
         let nodeActionViewController = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, isFromSharedItem: isFromSharedItem, sender: button)
+        nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
