@@ -9,7 +9,21 @@ import MEGASDKRepo
 import SwiftUI
 import UserNotifications
 
-extension MEGALinkManager {
+@objc public protocol MEGALinkManagerProtocol: AnyObject {
+    @objc static var adapterLinkURL: URL? { get set }
+    @objc static func processLinkURL(_ url: URL)
+}
+
+extension MEGALinkManager: MEGALinkManagerProtocol {
+    public static var adapterLinkURL: URL? {
+        get {
+            MEGALinkManager.linkURL
+        }
+        set {
+            MEGALinkManager.linkURL = newValue
+        }
+    }
+        
     @objc class func downloadFileLinkAfterLogin() {
         guard let linkUrl = URL(string: MEGALinkManager.linkSavedString) else { return }
         let transferViewEntity = CancellableTransfer(fileLinkURL: linkUrl, name: nil, appData: nil, priority: false, isFile: true, type: .downloadFileLink)
