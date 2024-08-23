@@ -51,6 +51,11 @@ public struct Shimmer: ViewModifier {
                     }
                 }
             }
+            .onDisappear {
+                if isActive {
+                    stopShimmering()
+                }
+            }
             .onChange(of: isActive) { newValue in
                 if newValue {
                     startShimmering()
