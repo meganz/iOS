@@ -1,23 +1,28 @@
 @testable import MEGA
+import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
 final class NodeInfoViewControllerTests: XCTestCase {
 
     func testDisplay_whenTeardown_doesNotHaveMemoryLeak() {
-        let storyboard =  UIStoryboard(name: "Node", bundle: nil)
-        guard let nodeInfoNavigationController = storyboard.instantiateViewController(withIdentifier: "NodeInfoNavigationControllerID") as? UINavigationController,
-              let sut = nodeInfoNavigationController.viewControllers.first as? NodeInfoViewController else {
-            XCTFail("Expect to create \(type(of: NodeInfoViewController.self)) instance, but fail.")
-            return
-        }
         let anyMegaNode = MockNode(handle: 1)
         let anyViewController = UIViewController()
         let nodeActionDelegate = NodeActionViewControllerGenericDelegate(
             viewController: anyViewController,
             moveToRubbishBinViewModel: MockMoveToRubbishBinViewModel()
         )
-        
+        let viewModel = NodeInfoViewModel(
+            withNode: anyMegaNode,
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+        )
+
+        let sut = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(
+            identifier: "NodeInfoViewControllerID"
+        ) { coder in
+            NodeInfoViewController(coder: coder, viewModel: viewModel, delegate: nodeActionDelegate)
+        }
+
         sut.display(anyMegaNode, withDelegate: nodeActionDelegate)
         
         trackForMemoryLeaks(on: sut)

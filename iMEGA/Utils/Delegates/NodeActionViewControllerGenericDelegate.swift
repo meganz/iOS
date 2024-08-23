@@ -204,16 +204,13 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     }
 
     private func showNodeInfo(_ node: MEGANode) {
-        let nodeInfoNavigationController = NodeInfoViewController.instantiate(
-            withViewModel: .init(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider),
+        let nodeInfoControllers = NodeInfoViewController.makeInstance(
+            with: NodeInfoViewModel(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider),
             delegate: nil
         )
-        
-        guard let nodeInfoVC = nodeInfoNavigationController.viewControllers.first as? NodeInfoViewController else {
-            return
-        }
-        nodeInfoVC.display(node, withDelegate: self)
-        viewController?.present(nodeInfoNavigationController, animated: true, completion: nil)
+
+        nodeInfoControllers.nodeInfoViewController.display(node, withDelegate: self)
+        viewController?.present(nodeInfoControllers.navigationController, animated: true, completion: nil)
     }
     
     private func showNodeVersions(_ node: MEGANode) {

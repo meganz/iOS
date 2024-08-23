@@ -30,6 +30,9 @@ final class NodeDescriptionTextContentView: UIView, UIContentView {
         textView.returnKeyType = .done
         textView.delegate = self
         textView.isEditable = !editingDisabled
+        if #available(iOS 17.0, *) {
+            textView.inlinePredictionType = .no
+        }
 
         if let configuration = nodeDescriptionConfiguration() {
             textView.text = configuration.description.text
@@ -51,14 +54,19 @@ final class NodeDescriptionTextContentView: UIView, UIContentView {
 
 extension NodeDescriptionTextContentView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if let configuration = nodeDescriptionConfiguration(), configuration.description.isPlaceholder {
+        textView.textColor = textColor(isPlaceholderText: false)
+
+        if let configuration = nodeDescriptionConfiguration(),
+           configuration.description.isPlaceholder,
+            textView.text == configuration.description.text {
             textView.text = nil
-            textView.textColor = textColor(isPlaceholderText: false)
         }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        if let configuration = nodeDescriptionConfiguration(), configuration.description.isPlaceholder {
+        if let configuration = nodeDescriptionConfiguration(), 
+            configuration.description.isPlaceholder,
+            textView.text?.isEmpty == true {
             textView.text = configuration.description.text
             textView.textColor = textColor(isPlaceholderText: true)
         }
