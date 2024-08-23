@@ -8,14 +8,18 @@ enum EnterMeetingLinkViewAction: ActionType {
 final class EnterMeetingLinkViewModel: ViewModelType {
     enum Command: CommandType { }
     
+    private let linkManager: any MEGALinkManagerProtocol.Type
+    
     // MARK: - Private properties
     private let router: any EnterMeetingLinkRouting
     // MARK: - Internel properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: some EnterMeetingLinkRouting) {
+    init(router: some EnterMeetingLinkRouting, 
+         linkManager: any MEGALinkManagerProtocol.Type = MEGALinkManager.self) {
         self.router = router
+        self.linkManager = linkManager
     }
     
     // MARK: - Dispatch action
@@ -25,8 +29,8 @@ final class EnterMeetingLinkViewModel: ViewModelType {
             let url = URL(string: link)
             
             if let url = url, (url as NSURL).mnz_type() == .publicChatLink {
-                MEGALinkManager.linkURL = url
-                MEGALinkManager.processLinkURL(url)
+                linkManager.adapterLinkURL = url
+                linkManager.processLinkURL(url)
             } else {
                 router.showLinkError()
             }

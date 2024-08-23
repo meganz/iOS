@@ -1782,6 +1782,7 @@
 		B5120F4A2A16050A00A56354 /* ShareAttachmentCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */; };
 		B5120F4C2A16053A00A56354 /* ShareAttachmentCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F4B2A16053A00A56354 /* ShareAttachmentCellViewModel.swift */; };
 		B513F0452B7E1CBC002DC6F7 /* NotificationsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B513F0442B7E1CBB002DC6F7 /* NotificationsViewRouter.swift */; };
+		B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514C5942C730F5000659719 /* MockLinkManager.swift */; };
 		B51616492B83361900C6E842 /* Notifications in Frameworks */ = {isa = PBXBuildFile; productRef = B51616482B83361900C6E842 /* Notifications */; };
 		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
 		B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */; };
@@ -1811,6 +1812,8 @@
 		B566759A2A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56675992A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift */; };
 		B56717502A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B567174F2A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift */; };
 		B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */; };
+		B569A2C52C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569A2C42C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift */; };
+		B569A2C72C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569A2C62C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift */; };
 		B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */; };
 		B571B21C2A8CC3BC00B8F112 /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */; };
 		B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57496E82A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift */; };
@@ -4593,6 +4596,7 @@
 		B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellView.swift; sourceTree = "<group>"; };
 		B5120F4B2A16053A00A56354 /* ShareAttachmentCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellViewModel.swift; sourceTree = "<group>"; };
 		B513F0442B7E1CBB002DC6F7 /* NotificationsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewRouter.swift; sourceTree = "<group>"; };
+		B514C5942C730F5000659719 /* MockLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLinkManager.swift; sourceTree = "<group>"; };
 		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
 		B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+SharedItem.swift"; sourceTree = "<group>"; };
 		B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextImageView.swift; sourceTree = "<group>"; };
@@ -4618,6 +4622,8 @@
 		B56675992A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareDestinationTableViewController+TableViewDataSource.swift"; sourceTree = "<group>"; };
 		B567174F2A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDestinationTableViewCell.swift; sourceTree = "<group>"; };
 		B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModelTests.swift; sourceTree = "<group>"; };
+		B569A2C42C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEnterMeetingLinkRouter.swift; sourceTree = "<group>"; };
+		B569A2C62C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewModelTests.swift; sourceTree = "<group>"; };
 		B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+UpgradeSecurity.swift"; sourceTree = "<group>"; };
 		B56FD4D42AC2D42D00055006 /* Accounts */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Accounts; sourceTree = "<group>"; };
 		B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
@@ -9142,6 +9148,7 @@
 		8336E3F72906B442000F1E9F /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				B569A2C32C6E0376005A96AD /* CallScene */,
 				9949C3642A72424C000C299B /* ChatRoomAvatar */,
 				BFFB13312908A54500A6B2CA /* Mocks */,
 				B5B4CFC12C3E7CCE00783135 /* Router */,
@@ -11096,6 +11103,14 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		B569A2C32C6E0376005A96AD /* CallScene */ = {
+			isa = PBXGroup;
+			children = (
+				B569A2C62C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift */,
+			);
+			path = CallScene;
+			sourceTree = "<group>";
+		};
 		B582965627C5DF28004DD7A5 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
@@ -12978,6 +12993,8 @@
 		BFFB13312908A54500A6B2CA /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				B569A2C42C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift */,
+				B514C5942C730F5000659719 /* MockLinkManager.swift */,
 				9422B9F12A41A55C007AA5D1 /* MockPermissionAlertRouter.swift */,
 			);
 			path = Mocks;
@@ -16642,6 +16659,7 @@
 				B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
 				0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */,
+				B569A2C72C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift in Sources */,
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
@@ -16717,8 +16735,10 @@
 				94D4E9EB2C359F7100B07C3B /* MockCXProvider.swift in Sources */,
 				C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */,
 				B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */,
+				B569A2C52C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift in Sources */,
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
+				B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */,
 				945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
