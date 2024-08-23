@@ -42,40 +42,137 @@ enum DetailsSectionRow {
     func nodeInfoViewController(_ nodeInfoViewController: NodeInfoViewController, presentParentNode node: MEGANode)
 }
 
-class NodeInfoViewController: UITableViewController {
-    private var node = MEGANode()
+/// A view controller that acts as a wrapper for `NodeInfoViewController`
+/// to ensure that the table view content does not spill over the safe area.
+///
+/// This class is responsible for embedding the `NodeInfoViewController`'s view
+/// within its own view hierarchy and managing its presentation and dismissal logic.
+final class NodeInfoWrapperViewController: UIViewController {
+    private let nodeInfoViewController: NodeInfoViewController
+
+    init(with nodeInfoViewController: NodeInfoViewController) {
+        self.nodeInfoViewController = nodeInfoViewController
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        configureUI()
+        addNodeInfoAsChild()
+        configurePresentAndDismiss()
+    }
+
+    private func addNodeInfoAsChild() {
+        addChild(nodeInfoViewController)
+
+        guard let subview = nodeInfoViewController.view else { return }
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(subview)
+
+        let safeAreaLayoutGuide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            subview.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            subview.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            subview.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            subview.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+
+        nodeInfoViewController.didMove(toParent: self)
+    }
+
+    private func configureUI() {
+        view.backgroundColor = TokenColors.Background.page
+        title = Strings.Localizable.info
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: Strings.Localizable.close,
+            style: .plain,
+            target: self,
+            action: #selector(dismissView)
+        )
+    }
+
+    private func configurePresentAndDismiss() {
+        nodeInfoViewController.presentViewController = { [weak self] viewControllerToPresent in
+            guard let self else { return }
+            present(viewControllerToPresent, animated: true)
+        }
+
+        nodeInfoViewController.dismissViewController = { [weak self] completion in
+            guard let self else { return }
+            dismiss(animated: true, completion: completion)
+        }
+    }
+}
+
+final class NodeInfoViewController: UITableViewController {
+    private var node: MEGANode
     private var folderInfo: MEGAFolderInfo?
     private var delegate: (any NodeInfoViewControllerDelegate)?
     private var nodeVersions: [MEGANode] = []
     
-    private var viewModel: NodeInfoViewModel?
+    private let viewModel: NodeInfoViewModel
     private var cachedSections: [NodeInfoTableViewSection] = []
     private var cachedPendingShares: [MEGAShare] = []
     private var cachedActiveShares: [MEGAShare] = []
     private var cachedDetailRows: [DetailsSectionRow] = []
     private var cachedInfoRows: [InfoSectionRow] = []
 
+    var presentViewController: ((UIViewController) -> Void)?
+    var dismissViewController: ((_ completion: (() -> Void)?) -> Void)?
+
     private var isContactVerified: Bool {
-        viewModel?.isContactVerified() == true
+        viewModel.isContactVerified()
     }
 
     private var shouldDisplayContactVerificationInfo: Bool {
-        viewModel?.shouldDisplayContactVerificationInfo == true
+        viewModel.shouldDisplayContactVerificationInfo
+    }
+
+    init?(
+        coder: NSCoder,
+        viewModel: NodeInfoViewModel,
+        delegate: (any NodeInfoViewControllerDelegate)?
+    ) {
+        self.viewModel = viewModel
+        self.node = viewModel.node
+        self.nodeVersions = viewModel.node.mnz_versions()
+        self.delegate = delegate
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Lifecycle
 
-    @objc class func instantiate(withViewModel viewModel: NodeInfoViewModel,
-                                 delegate: (any NodeInfoViewControllerDelegate)?) -> MEGANavigationController {
-        guard let nodeInfoVC = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(withIdentifier: "NodeInfoViewControllerID") as? NodeInfoViewController else {
-            fatalError("Could not instantiate NodeInfoViewController")
+    @objc class func instantiate(
+        withViewModel viewModel: NodeInfoViewModel,
+        delegate: (any NodeInfoViewControllerDelegate)?
+    ) -> MEGANavigationController {
+        makeInstance(with: viewModel, delegate: delegate).navigationController
+    }
+
+    class func makeInstance(
+        with viewModel: NodeInfoViewModel,
+        delegate: (any NodeInfoViewControllerDelegate)?
+    ) -> (navigationController: MEGANavigationController, nodeInfoViewController: NodeInfoViewController) {
+        let nodeInfoVC = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(
+            identifier: "NodeInfoViewControllerID"
+        ) { coder in
+            NodeInfoViewController(coder: coder, viewModel: viewModel, delegate: delegate)
         }
+
+        let navigationController = MEGANavigationController(
+            rootViewController: NodeInfoWrapperViewController(with: nodeInfoVC)
+        )
         
-        nodeInfoVC.viewModel = viewModel
-        nodeInfoVC.node = viewModel.node
-        nodeInfoVC.delegate = delegate
-        nodeInfoVC.nodeVersions = viewModel.node.mnz_versions()
-        return MEGANavigationController.init(rootViewController: nodeInfoVC)
+        return (navigationController, nodeInfoVC)
     }
 
     // MARK: - Public Interface
@@ -87,10 +184,7 @@ class NodeInfoViewController: UITableViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = Strings.Localizable.info
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .plain, target: self, action: #selector(closeButtonTapped))
-        
+
         sdk.add(self)
         
         tableView.sectionHeaderTopPadding = 0
@@ -99,7 +193,11 @@ class NodeInfoViewController: UITableViewController {
                                  forCellReuseIdentifier: "NodeInfoVerifyAccountTableViewCell")
         NodeDescriptionCellController.registerCell(for: tableView)
     }
-    
+
+    deinit {
+        sdk.remove(self)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -166,7 +264,7 @@ class NodeInfoViewController: UITableViewController {
             warningAlertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
                 self.navigationController?.popViewController(animated: true)
             }))
-            present(warningAlertController, animated: true, completion: nil)
+            presentViewController?(warningAlertController)
             return
         }
         
@@ -184,8 +282,7 @@ class NodeInfoViewController: UITableViewController {
     
     private func showParentNode() {
         if let parentNode = sdk.parentNode(for: node) {
-            sdk.remove(self)
-            dismiss(animated: true) {
+            dismissViewController? {
                 self.delegate?.nodeInfoViewController(self, presentParentNode: parentNode)
             }
         } else {
@@ -199,12 +296,7 @@ class NodeInfoViewController: UITableViewController {
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {
-        viewModel?.openSharedDialog()
-    }
-    
-    @objc private func closeButtonTapped() {
-        sdk.remove(self)
-        dismiss(animated: true, completion: nil)
+        viewModel.openSharedDialog()
     }
     
     private func currentVersionRemoved() {
@@ -246,7 +338,7 @@ class NodeInfoViewController: UITableViewController {
             }))
         }))
         
-        present(removePendingShareAlertController, animated: true, completion: nil)
+        presentViewController?(removePendingShareAlertController)
     }
     
     private func prepareShareFolderPermissionsAlertController(fromIndexPat indexPath: IndexPath) {
@@ -286,7 +378,7 @@ class NodeInfoViewController: UITableViewController {
             sender: cell.permissionsImageView
         )
         
-        present(permissionsActionSheet, animated: true, completion: nil)
+        presentViewController?(permissionsActionSheet)
     }
     
     private func shareNode(withLevel level: MEGAShareType, forUser user: MEGAUser, atIndexPath indexPath: IndexPath) {
@@ -319,15 +411,22 @@ class NodeInfoViewController: UITableViewController {
     private func cacheNodePropertiesSoThatTableViewChangesAreAtomic() {
         cachedPendingShares = pendingOutShares()
         cachedActiveShares = activeOutShares()
-        cachedSections = sections()
+        cachedSections = sections(descriptionCellController: descriptionCellController())
         cachedDetailRows = detailRows()
         cachedInfoRows = infoRows()
+    }
+
+    private func descriptionCellController() -> NodeDescriptionCellController? {
+        cachedSections.compactMap { section in
+            guard case .description(let controller) = section else { return nil }
+            return controller
+        }.first
     }
 
     private func showVerifyCredentials() {
         guard let navigationController else { return }
 
-        viewModel?.openVerifyCredentials(
+        viewModel.openVerifyCredentials(
             from: navigationController,
             completion: { [weak self] in
                 guard let self else { return }
@@ -339,13 +438,28 @@ class NodeInfoViewController: UITableViewController {
     
     // MARK: - TableView Data Source
 
-    private func sections() -> [NodeInfoTableViewSection] {
+    /**
+     This method returns an array of `NodeInfoTableViewSection` representing the different sections to be displayed in the table view based on the node's properties and the view model state.
+
+     - Parameters:
+     - descriptionCellController: An optional `NodeDescriptionCellController` responsible for managing and displaying the description section in the table view. This controller handles all the table view data source and delegate methods related to the node description. If a `NodeDescriptionCellController` was previously created, it can be passed to this method to avoid creating a new instance, thus reusing the existing controller. If not provided, a new one will be created.
+
+     - Returns: An array of `NodeInfoTableViewSection` containing the sections to be displayed in the table view.
+     */
+    private func sections(descriptionCellController: NodeDescriptionCellController?) -> [NodeInfoTableViewSection] {
         var sections = [NodeInfoTableViewSection]()
         sections.append(.info)
         sections.append(.details)
 
-        if viewModel?.shouldShowNodeDescription == true {
-            sections.append(makeNodeDescriptionSection())
+        if viewModel.shouldShowNodeDescription {
+            let descriptionSection: NodeInfoTableViewSection
+            if let descriptionCellController {
+                descriptionSection = .description(descriptionCellController)
+            } else {
+                descriptionSection = makeNodeDescriptionSection()
+            }
+
+            sections.append(descriptionSection)
         }
 
         if !node.mnz_isInRubbishBin() {
@@ -437,7 +551,7 @@ class NodeInfoViewController: UITableViewController {
         cell.configure(forNode: node,
                        isNodeInRubbish: node.mnz_isInRubbishBin(),
                        folderInfo: folderInfo,
-                       isUndecryptedFolder: viewModel?.isNodeUndecryptedFolder == true)
+                       isUndecryptedFolder: viewModel.isNodeUndecryptedFolder)
         return cell
     }
     
@@ -734,7 +848,7 @@ extension NodeInfoViewController {
             node.mnz_removeSharing()
         case .sharing:
             if indexPath.row == 0 {
-                viewModel?.openSharedDialog()
+                viewModel.openSharedDialog()
             } else {
                 prepareShareFolderPermissionsAlertController(fromIndexPat: indexPath)
             }
