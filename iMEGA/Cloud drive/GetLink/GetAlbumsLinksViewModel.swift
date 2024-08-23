@@ -11,7 +11,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     var numberOfSections: Int { sectionViewModels.count }
     
     private let albums: [AlbumEntity]
-    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
+    private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var sectionViewModels = [GetLinkSectionViewModel]()
@@ -24,12 +24,12 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     }
 
     init(albums: [AlbumEntity],
-         shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
+         shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
          tracker: some AnalyticsTracking,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.albums = albums
-        self.shareAlbumUseCase = shareAlbumUseCase
+        self.shareCollectionUseCase = shareCollectionUseCase
         self.sectionViewModels = sectionViewModels
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
@@ -112,7 +112,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
             return
         }
         
-        let sharedLinks = await shareAlbumUseCase.shareLink(forAlbums: albums)
+        let sharedLinks = await shareCollectionUseCase.shareLink(forAlbums: albums)
         
         guard !Task.isCancelled else {
             return
@@ -133,7 +133,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
 
         do {
-            let result = try await shareAlbumUseCase.doesAlbumsContainSensitiveElement(for: excludeExportedAlbums)
+            let result = try await shareCollectionUseCase.doesCollectionsContainSensitiveElement(for: excludeExportedAlbums)
             continuation.yield(result ? .notDetermined : .noSensitiveContent)
         } catch {
             MEGALogError("[\(type(of: self))]: determineIfAlbumsContainSensitiveNodes returned \(error.localizedDescription)")

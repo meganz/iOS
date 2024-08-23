@@ -37,7 +37,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
             albumCoverUseCase: makeAlbumCoverUseCase())
         return GetAlbumLinkViewModel(
             album: album,
-            shareAlbumUseCase: makeShareAlbumUseCase(),
+            shareCollectionUseCase: makeShareCollectionUseCase(),
             sectionViewModels: initialSections.initialLinkSectionViewModels,
             tracker: DIContainer.tracker)
     }
@@ -51,13 +51,13 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
             albumCoverUseCase: makeAlbumCoverUseCase())
         return GetAlbumsLinkViewModel(
             albums: albums,
-            shareAlbumUseCase: makeShareAlbumUseCase(),
+            shareCollectionUseCase: makeShareCollectionUseCase(),
             sectionViewModels: initialSections.initialLinkSectionViewModels,
             tracker: DIContainer.tracker)
     }
     
-    private func makeShareAlbumUseCase() -> some ShareAlbumUseCaseProtocol {
-        ShareAlbumUseCase(
+    private func makeShareCollectionUseCase() -> some ShareCollectionUseCaseProtocol {
+        ShareCollectionUseCase(
             shareAlbumRepository: ShareAlbumRepository.newRepo,
             userAlbumRepository: UserAlbumRepository.newRepo,
             nodeRepository: NodeRepository.newRepo)

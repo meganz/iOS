@@ -720,7 +720,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     @MainActor func testAction_removeLink_shouldShowSuccessAfterRemoved() {
         let userAlbum = AlbumEntity(id: 1, type: .user)
         let sut = makeAlbumContentViewModel(album: userAlbum,
-                                            shareAlbumUseCase: MockShareAlbumUseCase(removeSharedAlbumLinkResult: .success))
+                                            shareCollectionUseCase: MockShareCollectionUseCase(removeSharedCollectionLinkResult: .success))
         
         test(viewModel: sut, action: .removeLink, expectedCommands: [
             .showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1)))
@@ -775,7 +775,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         albumContentsUseCase: some AlbumContentsUseCaseProtocol = MockAlbumContentUseCase(),
         albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
-        shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
+        shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
         router: some AlbumContentRouting = MockAlbumContentRouting(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel? = nil,
@@ -785,7 +785,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                               albumContentsUseCase: albumContentsUseCase,
                               albumModificationUseCase: albumModificationUseCase,
                               photoLibraryUseCase: photoLibraryUseCase,
-                              shareAlbumUseCase: shareAlbumUseCase,
+                              shareCollectionUseCase: shareCollectionUseCase,
                               router: router,
                               newAlbumPhotosToAdd: newAlbumPhotosToAdd,
                               alertViewModel: alertViewModel ?? makeAlertViewModel(),

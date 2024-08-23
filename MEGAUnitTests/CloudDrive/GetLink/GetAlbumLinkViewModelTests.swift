@@ -69,7 +69,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false))
             let tracker = MockTracker()
             let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareAlbumUseCase: MockShareAlbumUseCase(doesAlbumsContainSensitiveElement: [album.id: false]),
+                                                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: [album.id: false]),
                                                 tracker: tracker,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -120,12 +120,12 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                         itemHandle: album.id)
             ]
             let link = "the shared link"
-            let shareAlbumUseCase = MockShareAlbumUseCase(
-                shareAlbumLinkResult: .success(link),
-                doesAlbumsContainSensitiveElement: [album.id: false])
+            let shareCollectionUseCase = MockShareCollectionUseCase(
+                shareCollectionLinkResult: .success(link),
+                doesCollectionsContainSensitiveElement: [album.id: false])
 
             let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareAlbumUseCase: shareAlbumUseCase,
+                                                shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -163,10 +163,10 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                         itemHandle: album.id)
             ]
             let link = "/collection/link#key"
-            let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link),
-                                                          doesAlbumsContainSensitiveElement: [album.id: false])
+            let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
+                                                          doesCollectionsContainSensitiveElement: [album.id: false])
             let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareAlbumUseCase: shareAlbumUseCase,
+                                                shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             await test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
@@ -215,10 +215,10 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test"))],
                                         itemHandle: album.id)
             ]
-            let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link),
-                                                          doesAlbumsContainSensitiveElement: [album.id: false])
+            let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
+                                                          doesCollectionsContainSensitiveElement: [album.id: false])
             let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareAlbumUseCase: shareAlbumUseCase,
+                                                shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -254,10 +254,10 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
                                         itemHandle: album.id)
             ]
-            let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link),
-                                                          doesAlbumsContainSensitiveElement: [album.id: false])
+            let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
+                                                          doesCollectionsContainSensitiveElement: [album.id: false])
             let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareAlbumUseCase: shareAlbumUseCase,
+                                                shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -290,11 +290,11 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test"))],
                                         itemHandle: album.id)
             ]
-            let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link),
-                                                          doesAlbumsContainSensitiveElement: [album.id: false])
+            let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
+                                                          doesCollectionsContainSensitiveElement: [album.id: false])
 
             let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareAlbumUseCase: shareAlbumUseCase,
+                                                shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -333,11 +333,11 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
                                         itemHandle: album.id)
             ]
-            let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link),
-                                                          doesAlbumsContainSensitiveElement: [album.id: false])
+            let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
+                                                          doesCollectionsContainSensitiveElement: [album.id: false])
 
             let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareAlbumUseCase: shareAlbumUseCase,
+                                                shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -377,11 +377,11 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
                                         itemHandle: album.id)
             ]
-            let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link),
-                                                          doesAlbumsContainSensitiveElement: [album.id: false])
+            let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
+                                                          doesCollectionsContainSensitiveElement: [album.id: false])
 
             let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareAlbumUseCase: shareAlbumUseCase,
+                                                shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -409,7 +409,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         
         let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false))
         let sut = makeGetAlbumLinkViewModel(album: album,
-                                            shareAlbumUseCase: MockShareAlbumUseCase(doesAlbumsContainSensitiveElement: [album.id: true]),
+                                            shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: [album.id: true]),
                                             hiddenNodesFeatureFlagActive: true)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -440,9 +440,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let sut = makeGetAlbumLinkViewModel(
             album: album,
-            shareAlbumUseCase: MockShareAlbumUseCase(
-                shareAlbumLinkResult: .success("link-\(album.id)"),
-                doesAlbumsContainSensitiveElement: [album.id: true]),
+            shareCollectionUseCase: MockShareCollectionUseCase(
+                shareCollectionLinkResult: .success("link-\(album.id)"),
+                doesCollectionsContainSensitiveElement: [album.id: true]),
             sectionViewModels: sections,
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
@@ -474,8 +474,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let sut = makeGetAlbumLinkViewModel(
             album: album,
-            shareAlbumUseCase: MockShareAlbumUseCase(
-                doesAlbumsContainSensitiveElement: [album.id: true]),
+            shareCollectionUseCase: MockShareCollectionUseCase(
+                doesCollectionsContainSensitiveElement: [album.id: true]),
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
         
@@ -502,13 +502,13 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     
     private func makeGetAlbumLinkViewModel(
         album: AlbumEntity,
-        shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
+        shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
         sectionViewModels: [GetLinkSectionViewModel] = [],
         tracker: some AnalyticsTracking = MockTracker(),
         hiddenNodesFeatureFlagActive: Bool = true
     ) -> GetAlbumLinkViewModel {
         GetAlbumLinkViewModel(album: album,
-                              shareAlbumUseCase: shareAlbumUseCase,
+                              shareCollectionUseCase: shareCollectionUseCase,
                               sectionViewModels: sectionViewModels,
                               tracker: tracker,
                               featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodesFeatureFlagActive]))

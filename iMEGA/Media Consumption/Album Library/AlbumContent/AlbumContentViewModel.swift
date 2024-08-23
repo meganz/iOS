@@ -41,7 +41,7 @@ final class AlbumContentViewModel: ViewModelType {
     private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let router: any AlbumContentRouting
-    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
+    private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
     
     private var loadingTask: Task<Void, Never>?
@@ -73,7 +73,7 @@ final class AlbumContentViewModel: ViewModelType {
         albumContentsUseCase: any AlbumContentsUseCaseProtocol,
         albumModificationUseCase: any AlbumModificationUseCaseProtocol,
         photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
-        shareAlbumUseCase: any ShareAlbumUseCaseProtocol,
+        shareCollectionUseCase: any ShareCollectionUseCaseProtocol,
         router: some AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel,
@@ -84,7 +84,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumContentsUseCase = albumContentsUseCase
         self.albumModificationUseCase = albumModificationUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
-        self.shareAlbumUseCase = shareAlbumUseCase
+        self.shareCollectionUseCase = shareCollectionUseCase
         self.router = router
         self.alertViewModel = alertViewModel
         self.tracker = tracker
@@ -427,7 +427,7 @@ final class AlbumContentViewModel: ViewModelType {
         Task { @MainActor [weak self] in
             guard let self else { return }
             do {
-                try await shareAlbumUseCase.removeSharedLink(forAlbum: album)
+                try await shareCollectionUseCase.removeSharedLink(forAlbum: album)
                 invokeCommand?(.showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1))))
             } catch {
                 MEGALogError("Error removing album link for album: \(album.id)")

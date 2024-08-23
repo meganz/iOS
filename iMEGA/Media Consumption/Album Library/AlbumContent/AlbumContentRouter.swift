@@ -65,7 +65,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumContentsUseCase: albumContentsUseCase,
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             photoLibraryUseCase: photoLibraryUseCase,
-            shareAlbumUseCase: ShareAlbumUseCase(
+            shareCollectionUseCase: ShareCollectionUseCase(
                 shareAlbumRepository: ShareAlbumRepository.newRepo,
                 userAlbumRepository: UserAlbumRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo
