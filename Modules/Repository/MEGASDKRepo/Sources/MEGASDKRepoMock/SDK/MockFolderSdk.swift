@@ -4,6 +4,7 @@ public final class MockFolderSdk: MEGASdk {
     public var apiURL: String?
     public var disablepkp: Bool?
     private var nodes: [MEGANode]
+    private var transferDelegates: [any MEGATransferDelegate] = []
     
     public private(set) var folderLinkLogoutCallCount = 0
     public private(set) var loginToFolderLinkCallCount = 0
@@ -62,4 +63,19 @@ public final class MockFolderSdk: MEGASdk {
     }
     
     public override func getDownloadUrl(_ node: MEGANode, singleUrl: Bool, delegate: MEGARequestDelegate) { }
+    
+    public override func add(_ delegate: any MEGATransferDelegate) {
+        transferDelegates.append(delegate)
+    }
+    
+    public override func remove(_ delegate: any MEGATransferDelegate) {
+        transferDelegates.removeAll { $0 === delegate }
+    }
+    
+    // MARK: - Simulate delegate callback
+    public func simulateOnTransferFinish(_ transfer: MEGATransfer, error: MEGAError) {
+        transferDelegates.forEach {
+            $0.onTransferFinish?(self, transfer: transfer, error: error)
+        }
+    }
 }

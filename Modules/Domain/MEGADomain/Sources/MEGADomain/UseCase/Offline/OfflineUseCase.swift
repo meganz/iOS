@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol OfflineUseCaseProtocol {
+public protocol OfflineUseCaseProtocol: Sendable {
     /// Returns the relative path to the documents directory for the given URL.
     /// - Parameter url: The URL for which to get the relative path.
     /// - Returns: The relative path to the documents directory.

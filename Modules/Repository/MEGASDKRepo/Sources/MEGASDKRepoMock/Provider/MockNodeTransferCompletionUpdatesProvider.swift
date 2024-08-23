@@ -1,11 +1,12 @@
 import MEGADomain
+import MEGASDKRepo
 import MEGASwift
 
-public struct MockNodeTransferUseCase: NodeTransferUseCaseProtocol {
+public final class MockNodeTransferCompletionUpdatesProvider: NodeTransferCompletionUpdatesProviderProtocol {
     private let stream: AsyncStream<TransferEntity>
     private let continuation: AsyncStream<TransferEntity>.Continuation
     
-    public var nodeTransferCompletionUpdates: AnyAsyncSequence<TransferEntity> {
+    public var nodeTransferUpdates: AnyAsyncSequence<TransferEntity> {
         stream.eraseToAnyAsyncSequence()
     }
     

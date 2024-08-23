@@ -3,11 +3,12 @@ import MEGADomain
 import MEGAPresentation
 
 enum OfflineViewAction: ActionType {
-    case addSubscriptions
-    case removeSubscriptions
+    case onViewAppear
+    case onViewWillDisappear
     case removeOfflineItems(_ items: [URL])
 }
 
+@MainActor
 final class OfflineViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case reloadUI
@@ -16,8 +17,12 @@ final class OfflineViewModel: NSObject, ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     private let transferUseCase: any NodeTransferUseCaseProtocol
     private let offlineUseCase: any OfflineUseCaseProtocol
-    private var subscriptions = Set<AnyCancellable>()
     private let megaStore: MEGAStore
+    private var nodeDownloadMonitoringTask: Task<Void, any Error>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
     
     // MARK: - Init
     init(
@@ -34,10 +39,10 @@ final class OfflineViewModel: NSObject, ViewModelType {
     
     func dispatch(_ action: OfflineViewAction) {
         switch action {
-        case .addSubscriptions:
-            registerTransferDelegates()
-        case .removeSubscriptions:
-            deRegisterTransferDelegates()
+        case .onViewAppear:
+            startMonitoringNodeDownloadCompletionUpdates()
+        case .onViewWillDisappear:
+            stopMonitoringNodeDownloadCompletionUpdates()
         case .removeOfflineItems(let items):
             removeOfflineItems(items)
             
@@ -46,42 +51,19 @@ final class OfflineViewModel: NSObject, ViewModelType {
     
     // MARK: - Subscriptions
     
-    private func registerTransferDelegates() {
-        Task { [weak self] in
-            guard let self else { return }
-            await transferUseCase.registerMEGATransferDelegate()
-            await transferUseCase.registerMEGASharedFolderTransferDelegate()
-            setUpSubscription()
-        }
-    }
-    
-    private func deRegisterTransferDelegates() {
-        Task.detached { [weak self] in
-            guard let self else { return }
-            await transferUseCase.deRegisterMEGATransferDelegate()
-            await transferUseCase.deRegisterMEGASharedFolderTransferDelegate()
-            subscriptions.removeAll()
-        }
-    }
-    
-    private func setUpSubscription() {
-        transferUseCase.transferResultPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                guard let self else { return }
-                handleTransferResult(result)
+    private func startMonitoringNodeDownloadCompletionUpdates() {
+        nodeDownloadMonitoringTask = Task { [weak self, transferUseCase] in
+            for await _ in transferUseCase.nodeTransferCompletionUpdates.filter({ $0.type == .download }) {
+                try Task.checkCancellation()
+                self?.invokeCommand?(.reloadUI)
             }
-            .store(in: &subscriptions)
-    }
-    
-    private func handleTransferResult(_ result: Result<TransferEntity, TransferErrorEntity>) {
-        guard case .success(let request) = result,
-              request.type == .download else {
-            return
         }
-        invokeCommand?(.reloadUI)
     }
     
+    private func stopMonitoringNodeDownloadCompletionUpdates() {
+        nodeDownloadMonitoringTask = nil
+    }
+
     /// Removes the specified offline items.
     /// - Parameter items: An array of URLs representing the offline items to be removed.
     private func removeOfflineItems(_ items: [URL]) {

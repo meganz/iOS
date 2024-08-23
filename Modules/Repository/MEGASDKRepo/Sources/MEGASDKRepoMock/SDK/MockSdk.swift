@@ -56,6 +56,7 @@ public final class MockSdk: MEGASdk {
     private let nodeFingerprint: String?
     private let nodeSizes: [MEGAHandle: Int64]
     private let folderInfo: MEGAFolderInfo?
+    private var transferDelegates: [any MEGATransferDelegate] = []
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -87,7 +88,9 @@ public final class MockSdk: MEGASdk {
     
     public var hasGlobalDelegate = false
     public var hasRequestDelegate = false
-    public var hasTransferDelegate = false
+    public var hasTransferDelegate: Bool {
+        transferDelegates.isNotEmpty
+    }
     public var addMEGADelegateCallCount = 0
     public var removeMEGADelegateCallCount = 0
     public var apiURL: String?
@@ -298,11 +301,11 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func add(_ delegate: any MEGATransferDelegate) {
-        hasTransferDelegate = true
+        transferDelegates.append(delegate)
     }
     
     public override func remove(_ delegate: any MEGATransferDelegate) {
-        hasTransferDelegate = false
+        transferDelegates.removeAll { $0 === delegate }
     }
     
     public override func add(_ delegate: any MEGADelegate) {
@@ -792,6 +795,13 @@ public final class MockSdk: MEGASdk {
             delegate.onRequestFinish?(self, request: request, error: MEGAError())
         case .failure(let error):
             delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: error)
+        }
+    }
+    
+    // MARK: - Simulate delegate callback
+    public func simulateOnTransferFinish(_ transfer: MEGATransfer, error: MEGAError) {
+        transferDelegates.forEach {
+            $0.onTransferFinish?(self, transfer: transfer, error: error)
         }
     }
 }
