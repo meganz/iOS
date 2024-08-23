@@ -6,7 +6,7 @@ extension VideoConfig {
     
     static func live(isDesignTokenEnabled: Bool) -> VideoConfig { VideoConfig(
         videoListAssets: VideoConfig.VideoListAssets(
-            noResultVideoImage: UIImage.noResultsVideo,
+            noResultVideoImage: UIImage.noResultsVideoV2,
             checkmarkImage: UIImage.turquoiseCheckmark,
             chipDownArrowImage: UIImage.filterChipDownArrow
         ),

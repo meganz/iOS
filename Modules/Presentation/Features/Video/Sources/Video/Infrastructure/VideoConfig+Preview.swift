@@ -8,7 +8,7 @@ extension VideoConfig {
     /// Internal Video SPM module Dependencies helper for SwiftUI
     static let preview = VideoConfig(
         videoListAssets: VideoListAssets(
-            noResultVideoImage: MEGAAssetsImageProvider.image(named: "noResultsVideo")!,
+            noResultVideoImage: MEGAAssetsImageProvider.image(named: "noResultsVideoV2")!,
             checkmarkImage: MEGAAssetsImageProvider.image(named: "turquoise_checkmark")!,
             chipDownArrowImage: MEGAAssetsImageProvider.image(named: "filterChipDownArrow")!
         ),
