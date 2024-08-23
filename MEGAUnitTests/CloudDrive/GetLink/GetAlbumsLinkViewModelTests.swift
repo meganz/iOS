@@ -71,7 +71,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             let tracker = MockTracker()
             let sut = makeGetAlbumsLinkViewModel(
                 albums: albums,
-                shareAlbumUseCase: MockShareAlbumUseCase(doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
                 tracker: tracker,
                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -103,7 +103,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             let tracker = MockTracker()
             let sut = makeGetAlbumsLinkViewModel(
                 albums: albums,
-                shareAlbumUseCase: MockShareAlbumUseCase(doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
                 tracker: tracker,
                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -142,9 +142,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             }
             let links = [firstAlbum.id: "link1", secondAlbum.id: "link2"]
             let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                                 shareAlbumUseCase: MockShareAlbumUseCase(
-                                                    shareAlbumsLinks: links,
-                                                    doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                 shareCollectionUseCase: MockShareCollectionUseCase(
+                                                    shareCollectionsLinks: links,
+                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
                                                  sectionViewModels: sections,
                                                  hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -169,9 +169,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             }
             let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
             let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                                 shareAlbumUseCase: MockShareAlbumUseCase(
-                                                    shareAlbumsLinks: links,
-                                                    doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                 shareCollectionUseCase: MockShareCollectionUseCase(
+                                                    shareCollectionsLinks: links,
+                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
                                                  sectionViewModels: sections,
                                                  hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             let expectedRowReloads = sections.indices.map {
@@ -201,9 +201,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             }
             let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
             let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                                 shareAlbumUseCase: MockShareAlbumUseCase(
-                                                    shareAlbumsLinks: links,
-                                                    doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                 shareCollectionUseCase: MockShareCollectionUseCase(
+                                                    shareCollectionsLinks: links,
+                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
                                                  sectionViewModels: sections,
                                                  hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -234,9 +234,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             let expectedLink = "link-to-copy"
             let links = [album.id: expectedLink]
             let sut = makeGetAlbumsLinkViewModel(albums: albums,
-                                                 shareAlbumUseCase: MockShareAlbumUseCase(
-                                                    shareAlbumsLinks: links,
-                                                    doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                 shareCollectionUseCase: MockShareCollectionUseCase(
+                                                    shareCollectionsLinks: links,
+                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
                                                  sectionViewModels: sections,
                                                  hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -257,7 +257,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let sut = makeGetAlbumsLinkViewModel(
             albums: albums,
-            shareAlbumUseCase: MockShareAlbumUseCase(doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+            shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
         
@@ -297,9 +297,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let sut = makeGetAlbumsLinkViewModel(
             albums: albums,
-            shareAlbumUseCase: MockShareAlbumUseCase(
-                shareAlbumsLinks: Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") }),
-                doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+            shareCollectionUseCase: MockShareCollectionUseCase(
+                shareCollectionsLinks: Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") }),
+                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
             sectionViewModels: sections,
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
@@ -341,9 +341,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let sut = makeGetAlbumsLinkViewModel(
             albums: albums,
-            shareAlbumUseCase: MockShareAlbumUseCase(
-                shareAlbumsLinks: Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") }),
-                doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+            shareCollectionUseCase: MockShareCollectionUseCase(
+                shareCollectionsLinks: Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") }),
+                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
             sectionViewModels: sections,
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
@@ -371,8 +371,8 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let sut = makeGetAlbumsLinkViewModel(
             albums: albums,
-            shareAlbumUseCase: MockShareAlbumUseCase(
-                doesAlbumsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+            shareCollectionUseCase: MockShareCollectionUseCase(
+                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
         
@@ -410,13 +410,13 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     
     private func makeGetAlbumsLinkViewModel(
         albums: [AlbumEntity] = [],
-        shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
+        shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
         sectionViewModels: [GetLinkSectionViewModel] = [],
         tracker: some AnalyticsTracking = MockTracker(),
         hiddenNodesFeatureFlagActive: Bool = false
     ) -> GetAlbumsLinkViewModel {
         GetAlbumsLinkViewModel(albums: albums,
-                               shareAlbumUseCase: shareAlbumUseCase,
+                               shareCollectionUseCase: shareCollectionUseCase,
                                sectionViewModels: sectionViewModels,
                                tracker: tracker,
                                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodesFeatureFlagActive]))

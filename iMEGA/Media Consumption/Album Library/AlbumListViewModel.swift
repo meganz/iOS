@@ -40,7 +40,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     private let usecase: any AlbumListUseCaseProtocol
     private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
-    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
+    private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
@@ -54,7 +54,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     init(usecase: some AlbumListUseCaseProtocol,
          albumModificationUseCase: some AlbumModificationUseCaseProtocol,
-         shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
+         shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
          tracker: some AnalyticsTracking,
          monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
@@ -63,7 +63,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
-        self.shareAlbumUseCase = shareAlbumUseCase
+        self.shareCollectionUseCase = shareCollectionUseCase
         self.tracker = tracker
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
@@ -146,7 +146,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             defer { cancelAlbumRemoveShareLinkTask() }
             
             let removeLinkAlbumIds = Set(albums.map { $0.id })
-            let successfullyRemoveLinkAlbumIds = await shareAlbumUseCase.removeSharedLink(forAlbums: albums)
+            let successfullyRemoveLinkAlbumIds = await shareCollectionUseCase.removeSharedLink(forAlbums: albums)
             let diff = Set(removeLinkAlbumIds).subtracting(Set(successfullyRemoveLinkAlbumIds))
             
             if diff.count == 0 {

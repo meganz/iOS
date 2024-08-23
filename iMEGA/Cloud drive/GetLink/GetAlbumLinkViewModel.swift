@@ -20,7 +20,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     }
     
     private let album: AlbumEntity
-    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
+    private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var sectionViewModels = [GetLinkSectionViewModel]()
@@ -33,13 +33,13 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     }
     
     init(album: AlbumEntity,
-         shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
+         shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
          tracker: some AnalyticsTracking,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
         self.album = album
-        self.shareAlbumUseCase = shareAlbumUseCase
+        self.shareCollectionUseCase = shareCollectionUseCase
         self.sectionViewModels = sectionViewModels
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
@@ -117,7 +117,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     
     private func loadAlbumLink(continuation: Continuation) async {
         do { 
-            if let albumLink = try await shareAlbumUseCase.shareAlbumLink(album),
+            if let albumLink = try await shareCollectionUseCase.shareCollectionLink(album),
                !Task.isCancelled {
                 await updateLink(albumLink)
             }
@@ -138,7 +138,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
         
         do {
-            let result = try await shareAlbumUseCase.doesAlbumsContainSensitiveElement(for: [album])
+            let result = try await shareCollectionUseCase.doesCollectionsContainSensitiveElement(for: [album])
             continuation.yield(result ? .notDetermined : .noSensitiveContent)
         } catch {
             MEGALogError("[\(type(of: self))]: determineIfAlbumsContainSensitiveNodes returned \(error.localizedDescription)")

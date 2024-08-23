@@ -2,11 +2,11 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
-class ShareAlbumUseCaseTests: XCTestCase {
+class ShareCollectionUseCaseTests: XCTestCase {
     func testShareAlbum_onNonUserAlbum_shouldThrowInvalidAlbumType() async {
         let sut = sut(shareAlbumRepository: MockShareAlbumRepository())
         do {
-            _ = try await sut.shareAlbumLink(AlbumEntity(id: 2, type: .favourite))
+            _ = try await sut.shareCollectionLink(AlbumEntity(id: 2, type: .favourite))
         } catch {
             XCTAssertEqual(error as? ShareCollectionErrorEntity,
                            ShareCollectionErrorEntity.invalidCollectionType)
@@ -18,7 +18,7 @@ class ShareAlbumUseCaseTests: XCTestCase {
         let album = AlbumEntity(id: 5, type: .user)
         let repository = MockShareAlbumRepository(shareAlbumResults: [album.id: .success(expectedLink)])
         let sut = sut(shareAlbumRepository: repository)
-        let result = try await sut.shareAlbumLink(album)
+        let result = try await sut.shareCollectionLink(album)
         XCTAssertEqual(result, expectedLink)
     }
     
@@ -93,7 +93,7 @@ class ShareAlbumUseCaseTests: XCTestCase {
         let albumsToTest = [
             AlbumEntity(id: 1, type: .user)
         ]
-        let result = try await sut.doesAlbumsContainSensitiveElement(for: albumsToTest)
+        let result = try await sut.doesCollectionsContainSensitiveElement(for: albumsToTest)
         XCTAssertTrue(result)
     }
     
@@ -111,24 +111,24 @@ class ShareAlbumUseCaseTests: XCTestCase {
         let albumsToTest = [
             AlbumEntity(id: 1, type: .user)
         ]
-        let result = try await sut.doesAlbumsContainSensitiveElement(for: albumsToTest)
+        let result = try await sut.doesCollectionsContainSensitiveElement(for: albumsToTest)
         XCTAssertFalse(result)
     }
     
     func testDoesAlbumsContainSensitiveElement_whenNoAlbumsProvided_shouldReturnFalse() async throws {
         let sut = sut()
-        let result = try await sut.doesAlbumsContainSensitiveElement(for: [])
+        let result = try await sut.doesCollectionsContainSensitiveElement(for: [])
         XCTAssertFalse(result)
     }
 }
 
-extension ShareAlbumUseCaseTests {
+extension ShareCollectionUseCaseTests {
     private func sut(
         shareAlbumRepository: some ShareAlbumRepositoryProtocol = MockShareAlbumRepository(),
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
         nodeRepository: some NodeRepositoryProtocol = MockNodeRepository()
-    ) -> ShareAlbumUseCase {
-        ShareAlbumUseCase(
+    ) -> ShareCollectionUseCase {
+        ShareCollectionUseCase(
             shareAlbumRepository: shareAlbumRepository,
             userAlbumRepository: userAlbumRepository,
             nodeRepository: nodeRepository

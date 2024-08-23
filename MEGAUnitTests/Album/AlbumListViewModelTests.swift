@@ -592,7 +592,7 @@ final class AlbumListViewModelTests: XCTestCase {
                       AlbumEntity(id: HandleEntity(2), name: "DEF", coverNode: nil, count: 2, type: .user)]
         
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = albumListViewModel(shareAlbumUseCase: MockShareAlbumUseCase(successfullyRemoveSharedAlbumLinkIds: [HandleEntity(1), HandleEntity(2)]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(shareCollectionUseCase: MockShareCollectionUseCase(successfullyRemoveSharedCollectionLinkIds: [HandleEntity(1), HandleEntity(2)]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
         XCTAssertNil(sut.albumHudMessage)
         sut.onAlbumShareLinkRemoveConfirm(albums)
@@ -613,7 +613,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let succesfullyDeleteAlbum = albums[0]
         
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = albumListViewModel(shareAlbumUseCase: MockShareAlbumUseCase(successfullyRemoveSharedAlbumLinkIds: [succesfullyDeleteAlbum.id]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(shareCollectionUseCase: MockShareCollectionUseCase(successfullyRemoveSharedCollectionLinkIds: [succesfullyDeleteAlbum.id]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
         XCTAssertNil(sut.albumHudMessage)
         sut.onAlbumShareLinkRemoveConfirm(albums)
@@ -846,7 +846,7 @@ final class AlbumListViewModelTests: XCTestCase {
     private func albumListViewModel(
         usecase: some AlbumListUseCaseProtocol = MockAlbumListUseCase(),
         albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
-        shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
+        shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
@@ -856,7 +856,7 @@ final class AlbumListViewModelTests: XCTestCase {
         AlbumListViewModel(
             usecase: usecase,
             albumModificationUseCase: albumModificationUseCase,
-            shareAlbumUseCase: shareAlbumUseCase,
+            shareCollectionUseCase: shareCollectionUseCase,
             tracker: tracker,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,

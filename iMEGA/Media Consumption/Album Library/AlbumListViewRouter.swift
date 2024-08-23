@@ -69,7 +69,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled
             ),
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
-            shareAlbumUseCase: ShareAlbumUseCase(
+            shareCollectionUseCase: ShareCollectionUseCase(
                 shareAlbumRepository: ShareAlbumRepository.newRepo,
                 userAlbumRepository: UserAlbumRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo
