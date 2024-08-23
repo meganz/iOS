@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockChatListItemCacheUseCase: ChatListItemCacheUseCaseProtocol {
+public final class MockChatListItemCacheUseCase: ChatListItemCacheUseCaseProtocol, @unchecked Sendable {
     private let chatListItemDescription: ChatListItemDescriptionEntity?
     private let chatListItemAvatar: ChatListItemAvatarEntity?
     
