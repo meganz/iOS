@@ -841,7 +841,7 @@
                 }
                     
                 case MEGAErrorTypeApiENoent: {
-                    if (request.type == MEGARequestTypeFetchNodes) {
+                    if (request.type == MEGARequestTypeFetchNodes || request.type == MEGARequestTypeLogin) {
                         [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
                     }
                     break;
