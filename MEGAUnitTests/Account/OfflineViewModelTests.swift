@@ -7,11 +7,9 @@ import XCTest
 @testable import MEGA
 
 final class OfflineViewModelTests: XCTestCase {
-
     // MARK: - Helpers
     
-    private class MockMEGAStore: MEGAStore {}
-
+    @MainActor
     private func makeOfflineViewModelVMSut(
         transferUseCase: NodeTransferUseCaseProtocol = MockNodeTransferUseCase(),
         offlineUseCase: OfflineUseCaseProtocol = MockOfflineUseCase(),
@@ -24,37 +22,90 @@ final class OfflineViewModelTests: XCTestCase {
             offlineUseCase: offlineUseCase,
             megaStore: megaStore
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000)
         return sut
     }
+    
+    private class MockMEGAStore: MEGAStore {}
 
     // MARK: - Tests
 
     @MainActor
-    func testAction_addSubscriptions_shouldReceiveReloadUIInCaseOfTransferResultSuccess() {
-        let sut = makeOfflineViewModelVMSut(
-            transferUseCase: MockNodeTransferUseCase(
-                _transferResult: .success(
-                    .init()
-                )
-            )
-        )
-        test(
-            viewModel: sut,
-            action: OfflineViewAction.addSubscriptions,
-            expectedCommands: [.reloadUI]
-        )
+    func testAction_onViewAppear_shouldReloadUIWhenNodeDownloadCompletionUpdatesAvaliable() async {
+        // given
+        let nodeTransferUseCase = MockNodeTransferUseCase()
+        let sut = makeOfflineViewModelVMSut(transferUseCase: nodeTransferUseCase)
+        
+        let expectation = expectation(description: #function)
+        var receivedCommand: OfflineViewModel.Command?
+        
+        sut.invokeCommand = {
+            receivedCommand = $0
+            expectation.fulfill()
+        }
+        
+        // when
+        sut.dispatch(.onViewAppear)
+        
+        nodeTransferUseCase.yield(TransferEntity(type: .download, nodeHandle: 1))
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        // then
+        XCTAssertEqual(receivedCommand, .reloadUI)
+    }
+    
+    @MainActor
+    func testAction_onViewAppear_shouldNotReloadUIWhenNodeTransferIsNotDownload() async {
+        // given
+        let nodeTransferUseCase = MockNodeTransferUseCase()
+        let sut = makeOfflineViewModelVMSut(transferUseCase: nodeTransferUseCase)
+        
+        let expectation = expectation(description: #function)
+        expectation.isInverted = true
+        var receivedCommand: OfflineViewModel.Command?
+        
+        sut.invokeCommand = {
+            receivedCommand = $0
+            expectation.fulfill()
+        }
+        
+        // when
+        sut.dispatch(.onViewAppear)
+        
+        nodeTransferUseCase.yield(TransferEntity(type: .upload, nodeHandle: 1))
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        // then
+        XCTAssertNil(receivedCommand)
     }
 
     @MainActor
-    func testAction_removeSubscriptions_shouldNotReceiveAnyCommands() {
-        let sut = makeOfflineViewModelVMSut()
-
-        test(
-            viewModel: sut,
-            action: OfflineViewAction.removeSubscriptions,
-            expectedCommands: []
-        )
+    func testAction_onViewWillDisappear_shouldNotReceiveAnyCommands() async {
+        // given
+        let nodeTransferUseCase = MockNodeTransferUseCase()
+        let sut = makeOfflineViewModelVMSut(transferUseCase: nodeTransferUseCase)
+        
+        let expectation = expectation(description: #function)
+        expectation.isInverted = true
+        var receivedCommand: OfflineViewModel.Command?
+        
+        sut.invokeCommand = {
+            receivedCommand = $0
+            expectation.fulfill()
+        }
+        
+        // when
+        sut.dispatch(.onViewAppear)
+        sut.dispatch(.onViewWillDisappear)
+        
+        nodeTransferUseCase.yield(TransferEntity(type: .download, nodeHandle: 1))
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        // then
+        XCTAssertNil(receivedCommand)
     }
 
     @MainActor

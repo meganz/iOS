@@ -43,12 +43,12 @@ extension OfflineViewController {
         navigationItem.title = title
     }
     
-    @objc func addSubscriptions() {
-        viewModel.dispatch(.addSubscriptions)
+    @objc func dispatchOnViewAppearAction() {
+        viewModel.dispatch(.onViewAppear)
     }
     
-    @objc func removeSubscriptions() {
-        viewModel.dispatch(.removeSubscriptions)
+    @objc func dispatchOnViewWillDisappearAction() {
+        viewModel.dispatch(.onViewWillDisappear)
     }
     
     @objc func removeOfflineItems(_ items: [URL]) {

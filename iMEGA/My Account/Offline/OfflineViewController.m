@@ -97,7 +97,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
     
     [self observeViewMode];
-    [self addSubscriptions];
+    [self dispatchOnViewAppearAction];
     
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [MEGASdk.sharedFolderLink retryPendingConnections];
@@ -145,7 +145,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
-    [self removeSubscriptions];
+    [self dispatchOnViewWillDisappearAction];
     
     if (self.offlineTableView.tableView.isEditing) {
         self.selectedItems = nil;

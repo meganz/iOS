@@ -1,52 +1,26 @@
-@preconcurrency import Combine
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 public final class NodeTransferRepository: NSObject, NodeTransferRepositoryProtocol {
     public static var newRepo: NodeTransferRepository {
         NodeTransferRepository(
-            sdk: MEGASdk.sharedSdk,
-            sharedFolderSdk: MEGASdk.sharedFolderLinkSdk
+            nodeTransferCompletionUpdatesProvider: NodeTransferCompletionUpdatesProvider(
+                sdk: MEGASdk.sharedSdk,
+                sharedFolderSdk: MEGASdk.sharedFolderLinkSdk
+            )
         )
     }
     
-    private let sdk: MEGASdk
-    private let sharedFolderSdk: MEGASdk
-    
-    private let transferResultSourcePublisher = PassthroughSubject<Result<TransferEntity, TransferErrorEntity>, Never>()
-    public var transferResultPublisher: AnyPublisher<Result<TransferEntity, TransferErrorEntity>, Never> {
-        transferResultSourcePublisher.eraseToAnyPublisher()
+    public var nodeTransferCompletionUpdates: AnyAsyncSequence<TransferEntity> {
+        nodeTransferCompletionUpdatesProvider.nodeTransferUpdates
     }
     
-    public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk) {
-        self.sdk = sdk
-        self.sharedFolderSdk = sharedFolderSdk
-    }
+    private let nodeTransferCompletionUpdatesProvider: any NodeTransferCompletionUpdatesProviderProtocol
     
-    public func registerMEGATransferDelegate() async {
-        sdk.add(self as (any MEGATransferDelegate))
-    }
-    
-    public func deRegisterMEGATransferDelegate() async {
-        sdk.remove(self as (any MEGATransferDelegate))
-    }
-    
-    public func registerMEGASharedFolderTransferDelegate() async {
-        sharedFolderSdk.add(self as (any MEGATransferDelegate))
-    }
-    
-    public func deRegisterMEGASharedFolderTransferDelegate() async {
-        sharedFolderSdk.remove(self as (any MEGATransferDelegate))
-    }
-}
-
-// MARK: - MEGATransferDelegate
-extension NodeTransferRepository: MEGATransferDelegate {
-    public func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        guard error.type == .apiOk else {
-            transferResultSourcePublisher.send(.failure(error.toTransferErrorEntity() ?? .generic))
-            return
-        }
-        transferResultSourcePublisher.send(.success(transfer.toTransferEntity()))
+    public init(
+        nodeTransferCompletionUpdatesProvider: some NodeTransferCompletionUpdatesProviderProtocol
+    ) {
+        self.nodeTransferCompletionUpdatesProvider = nodeTransferCompletionUpdatesProvider
     }
 }
