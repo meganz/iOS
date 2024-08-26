@@ -120,12 +120,15 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             chatRoom: chatRoom,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
+            sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),
+            chatRoomUpdateUseCase: ChatRoomUpdateUseCase(repository: ChatRoomUpdateRepository(chatRoomUpdateProvider: ChatRoomUpdateProvider(sdk: .sharedChatSdk, chatId: chatRoom.chatId))),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             selectWaitingRoomList: selectWaitingRoomList,
             headerConfigFactory: MeetingFloatingPanelHeaderConfigFactory(infoBannerFactory: MeetingFloatingPanelBannerFactory()),
             featureFlags: DIContainer.featureFlagProvider,
+            notificationCenter: NotificationCenter.default,
             presentUpgradeFlow: showUpgradeFlow
         )
         

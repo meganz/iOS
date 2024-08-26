@@ -29,6 +29,7 @@ public protocol CallUseCaseProtocol: Sendable {
     func disableAudioMonitor(forCall call: CallEntity)
     func raiseHand(forCall call: CallEntity) async throws
     func lowerHand(forCall call: CallEntity) async throws
+    func isParticipantRaisedHand(_ participantId: HandleEntity, forCallInChatId chatId: ChatIdEntity) -> Bool
 }
 
 public protocol CallCallbacksUseCaseProtocol: AnyObject, Sendable {
@@ -194,6 +195,11 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, 
     
     public func lowerHand(forCall call: CallEntity) async throws {
         try await repository.lowerHand(forCall: call)
+    }
+    
+    public func isParticipantRaisedHand(_ participantId: HandleEntity, forCallInChatId chatId: ChatIdEntity) -> Bool {
+        guard let call = repository.call(for: chatId) else { return false }
+        return call.raiseHandsList.contains(participantId)
     }
 }
 

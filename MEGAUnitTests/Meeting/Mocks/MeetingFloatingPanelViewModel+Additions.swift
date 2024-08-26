@@ -41,6 +41,8 @@ extension MeetingFloatingPanelViewModel {
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
+        sessionUpdateUseCase: some SessionUpdateUseCaseProtocol = MockSessionUpdateUseCase(),
+        chatRoomUpdateUseCase: some ChatRoomUpdateUseCaseProtocol = MockChatRoomUpdateUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
@@ -53,12 +55,15 @@ extension MeetingFloatingPanelViewModel {
             chatRoom: chatRoom,
             callUseCase: callUseCase, 
             callUpdateUseCase: callUpdateUseCase,
+            sessionUpdateUseCase: sessionUpdateUseCase, 
+            chatRoomUpdateUseCase: chatRoomUpdateUseCase,
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: chatUseCase,
             selectWaitingRoomList: selectWaitingRoomList,
             headerConfigFactory: headerConfigFactory,
-            featureFlags: MockFeatureFlagProvider(list: .init()),
+            featureFlags: MockFeatureFlagProvider(list: .init()), 
+            notificationCenter: NotificationCenter.default,
             presentUpgradeFlow: {_ in }
         )
     }

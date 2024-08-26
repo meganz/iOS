@@ -2,16 +2,16 @@ import MEGADomain
 import MEGASwift
 
 public struct MockCallUpdateUseCase: CallUpdateUseCaseProtocol {
-    private let monitorCallUpdateSequenceResult: AnyAsyncThrowingSequence<CallEntity, any Error>
+    private let monitorCallUpdateSequenceResult: AnyAsyncSequence<CallEntity>
 
     public init(
-        monitorCallUpdateSequenceResult: AnyAsyncThrowingSequence<CallEntity, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+        monitorCallUpdateSequenceResult: AnyAsyncSequence<CallEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.monitorCallUpdateSequenceResult = monitorCallUpdateSequenceResult
     }
     
-    public func monitorOnCallUpdate() -> AnyAsyncThrowingSequence<CallEntity, any Error> {
+    public func monitorOnCallUpdate() -> AnyAsyncSequence<CallEntity> {
         monitorCallUpdateSequenceResult
-            .eraseToAnyAsyncThrowingSequence()
+            .eraseToAnyAsyncSequence()
     }
 }

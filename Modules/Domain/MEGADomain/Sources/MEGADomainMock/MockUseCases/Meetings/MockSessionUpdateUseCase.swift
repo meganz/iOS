@@ -2,16 +2,16 @@ import MEGADomain
 import MEGASwift
 
 public struct MockSessionUpdateUseCase: SessionUpdateUseCaseProtocol {
-    private let monitorSessionUpdateSequenceResult: AnyAsyncThrowingSequence<ChatSessionEntity, any Error>
+    private let monitorSessionUpdateSequenceResult: AnyAsyncSequence<ChatSessionEntity>
 
     public init(
-        monitorSessionUpdateSequenceResult: AnyAsyncThrowingSequence<ChatSessionEntity, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+        monitorSessionUpdateSequenceResult: AnyAsyncSequence<ChatSessionEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.monitorSessionUpdateSequenceResult = monitorSessionUpdateSequenceResult
     }
     
-    public func monitorOnSessionUpdate() -> AnyAsyncThrowingSequence<ChatSessionEntity, any Error> {
+    public func monitorOnSessionUpdate() -> AnyAsyncSequence<ChatSessionEntity> {
         monitorSessionUpdateSequenceResult
-            .eraseToAnyAsyncThrowingSequence()
+            .eraseToAnyAsyncSequence()
     }
 }
