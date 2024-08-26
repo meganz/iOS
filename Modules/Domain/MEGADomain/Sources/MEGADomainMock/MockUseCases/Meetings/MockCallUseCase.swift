@@ -22,6 +22,7 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     public var disableAudioMonitor_CalledTimes = 0
     public var raiseHand_CalledTimes = 0
     public var lowerHand_CalledTimes = 0
+    public var isParticipantRaisedHand_CalledTimes = 0
 
     public var call: CallEntity?
     public var callCompletion: Result<CallEntity, CallErrorEntity>
@@ -32,6 +33,7 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     public var chatRoom: ChatRoomEntity?
     var video: Bool = false
     var audio: Bool = false
+    var participantRaisedHand: Bool = false
     var chatSession: ChatSessionEntity?
     var participantHandle: HandleEntity = .invalid
     public var callWaitingRoomUsersUpdateSubject = PassthroughSubject<CallEntity, Never>()
@@ -174,6 +176,11 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     
     public func lowerHand(forCall call: MEGADomain.CallEntity) async throws {
         lowerHand_CalledTimes += 1
+    }
+    
+    public func isParticipantRaisedHand(_ participantId: MEGADomain.HandleEntity, forCallInChatId chatId: MEGADomain.ChatIdEntity) -> Bool {
+        isParticipantRaisedHand_CalledTimes += 1
+        return participantRaisedHand
     }
 }
 

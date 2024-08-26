@@ -306,7 +306,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 )
             ]
         )
-        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
     @MainActor func testAction_onViewReady_isMyselfParticipant_isGroupMeeting() {
@@ -345,7 +344,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 .configView(canInviteParticipants: false, isOneToOneCall: chatRoom.chatType == .oneToOne, isMeeting: chatRoom.chatType == .meeting, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: false),
                 .reloadViewData(participantsListView: listView(hostControlsRows: [], selectedTab: .inCall, participants: [CallParticipantEntity.myself(handle: 100, userName: "", chatRoom: chatRoom, raisedHand: false)], existsWaitingRoom: false, currentUserHandle: 100))
              ])
-        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
     @MainActor func testAction_onViewReady_isMyselfParticipant_allowNonHostToAddParticipantsEnabled() {
@@ -368,7 +366,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
-
     @MainActor func testAction_shareLink_Success() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let call = CallEntity()
@@ -596,44 +593,88 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
-    func testAction_updateAllowNonHostToAddParticipants_allowNonHostToAddParticipantsEnabled() {
-        let chatRoomUseCase = MockChatRoomUseCase(allowNonHostToAddParticipantsEnabled: true)
-        let viewModel = MeetingFloatingPanelViewModel.make(chatRoomUseCase: chatRoomUseCase,
-                                                           headerConfigFactory: headerConfigFactory)
-        
-        let expectation = expectation(description: "testAction_updateAllowNonHostToAddParticipants")
-        viewModel.invokeCommand = { command in
-            switch command {
+    @MainActor func testOnChatRoomUpdate_updateToEnabledAllowNonHostToAddParticipants_allowNonHostToAddParticipantsShouldBeEnabled() async throws {
+        let harness = Harness.withMonitorOnChatRoomUpdates()
+        harness.sut.invokeCommand = {
+            switch $0 {
             case .updateAllowNonHostToAddParticipants(let enabled):
                 XCTAssertTrue(enabled)
-                expectation.fulfill()
             default:
-                break
+                XCTFail("Invoked unexpected command: \($0)")
             }
         }
-        
-        viewModel.dispatch(.allowNonHostToAddParticipants(enabled: false))
-        waitForExpectations(timeout: 10)
+        let chatRoom = ChatRoomEntity(changeType: .openInvite, isOpenInviteEnabled: true)
+        try await harness.sendChatRoomUpdate(chatRoom)
     }
     
-    func testAction_updateAllowNonHostToAddParticipants_allowNonHostToAddParticipantsDisabled() {
-        let chatRoomUseCase = MockChatRoomUseCase(allowNonHostToAddParticipantsEnabled: false)
-        let viewModel = MeetingFloatingPanelViewModel.make(chatRoomUseCase: chatRoomUseCase,
-                                                           headerConfigFactory: headerConfigFactory)
-        
-        let expectation = expectation(description: "testAction_updateAllowNonHostToAddParticipants")
-        viewModel.invokeCommand = { command in
-            switch command {
+    @MainActor func testOnChatRoomUpdate_updateToDisabledAllowNonHostToAddParticipants_allowNonHostToAddParticipantsShouldBeDisabled() async throws {
+        let harness = Harness.withMonitorOnChatRoomUpdates()
+        harness.sut.invokeCommand = {
+            switch $0 {
             case .updateAllowNonHostToAddParticipants(let enabled):
                 XCTAssertFalse(enabled)
-                expectation.fulfill()
             default:
+                XCTFail("Invoked unexpected command: \($0)")
+            }
+        }
+        let chatRoom = ChatRoomEntity(changeType: .openInvite, isOpenInviteEnabled: false)
+        try await harness.sendChatRoomUpdate(chatRoom)
+    }
+    
+    @MainActor func testOnChatRoomUpdate_ownPrivilegeUpdatedToModerator_myPrivilegeMustBeUpdated() async throws {
+        let harness = Harness.withMonitorChatRoomAndSessionUpdates()
+        await harness.joinAllParticipants()
+        let expectation = XCTestExpectation()
+        var moderatorPrivilege: Bool?
+        
+        harness.sut.invokeCommand = {
+            switch $0 {
+            case .configView(_, _, _, _, let isMyselfAModerator):
+                moderatorPrivilege = isMyselfAModerator
+                expectation.fulfill()
+            case .reloadViewData:
                 break
+            default:
+                XCTFail("Invoked unexpected command: \($0)")
             }
         }
         
-        viewModel.dispatch(.allowNonHostToAddParticipants(enabled: true))
-        waitForExpectations(timeout: 10)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, changeType: .ownPrivilege)
+        try await harness.sendChatRoomUpdate(chatRoom)
+        await fulfillment(of: [expectation], timeout: 1)
+        if let moderatorPrivilege {
+            XCTAssertTrue(moderatorPrivilege)
+        } else {
+            XCTFail("Expected moderatorPrivilege to be set")
+        }
+    }
+    
+    @MainActor func testOnChatRoomUpdate_ownPrivilegeUpdatedToStandard_myPrivilegeMustBeUpdated() async throws {
+        let harness = Harness.withMonitorChatRoomAndSessionUpdates()
+        await harness.joinAllParticipants()
+        let expectation = XCTestExpectation()
+        var moderatorPrivilege: Bool?
+        
+        harness.sut.invokeCommand = {
+            switch $0 {
+            case .configView(_, _, _, _, let isMyselfAModerator):
+                moderatorPrivilege = isMyselfAModerator
+                expectation.fulfill()
+            case .reloadViewData:
+                break
+            default:
+                XCTFail("Invoked unexpected command: \($0)")
+            }
+        }
+        
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, changeType: .ownPrivilege)
+        try await harness.sendChatRoomUpdate(chatRoom)
+        await fulfillment(of: [expectation], timeout: 1)
+        if let moderatorPrivilege {
+            XCTAssertFalse(moderatorPrivilege)
+        } else {
+            XCTFail("Expected moderatorPrivilege to be set")
+        }
     }
     
     @MainActor func testAction_seeMoreParticipantsInWaitingRoomTapped_navigateToView() {
@@ -756,50 +797,96 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         }
     }
     
-    func testEvent_callUpdateRaiseHandChanges_oneParticipantRaiseHand_participantsRaiseHandMustBeUpdated() async throws {
-        let harness = Harness.withMonitorCallUpdates()
-        harness.joinAllParticipants()
-        let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: [102])
-        try await harness.sendCallUpdate(call)
-        XCTAssertTrue(harness.raiseHandFlagsMustMatch(forCall: call))
+    @MainActor func testOnCallUpdate_raiseHandChanges_oneParticipantRaiseHand_participantsRaiseHandListMustMatch() async throws {
+        let harness = Harness.withMonitorCallAndSessionUpdates()
+        await harness.joinAllParticipants()
+        let raiseHandList: [HandleEntity] = [102]
+        let expectation = XCTestExpectation()
+        var participantsUpdated: [CallParticipantEntity] = []
+        harness.sut.invokeCommand = {
+            switch $0 {
+            case .reloadViewData(let participantsListView):
+                participantsUpdated = participantsListView.participants
+                expectation.fulfill()
+            default:
+                XCTFail("Invoked unexpected command: \($0)")
+            }
+        }
+        
+        try await harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
+        await fulfillment(of: [expectation], timeout: 1)
+        harness.raiseHandParticipantsMustMatch(raiseHandsList: raiseHandList, withUpdatedParticipants: participantsUpdated.filter { $0.raisedHand })
     }
     
-    func testEvent_callUpdateRaiseHandChanges_moreThanOneParticipantRaiseHand_participantsRaiseHandMustBeUpdated() async throws {
-        let harness = Harness.withMonitorCallUpdates()
-        harness.joinAllParticipants()
-        let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: [102, 103])
-        try await harness.sendCallUpdate(call)
-        XCTAssertTrue(harness.raiseHandFlagsMustMatch(forCall: call))
+    @MainActor func testOnCallUpdate_raiseHandChanges_moreThanOneParticipantRaiseHand_participantsRaiseHandListMustMatch() async throws {
+        let harness = Harness.withMonitorCallAndSessionUpdates()
+        await harness.joinAllParticipants()
+        let raiseHandList: [HandleEntity] = [102, 103]
+        let expectation = XCTestExpectation()
+        var participantsUpdated: [CallParticipantEntity] = []
+        harness.sut.invokeCommand = {
+            switch $0 {
+            case .reloadViewData(let participantsListView):
+                participantsUpdated = participantsListView.participants
+                expectation.fulfill()
+            default:
+                XCTFail("Invoked unexpected command: \($0)")
+            }
+        }
+        
+        try await harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
+        await fulfillment(of: [expectation], timeout: 1)
+        harness.raiseHandParticipantsMustMatch(raiseHandsList: raiseHandList, withUpdatedParticipants: participantsUpdated.filter { $0.raisedHand })
     }
     
-    func testEvent_callUpdateRaiseHandChanges_participantLowerHand_participantsRaiseHandMustBeUpdated() async throws {
-        let harness = Harness.withMonitorCallUpdates()
-        harness.joinAllParticipants()
-        let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: [])
-        try await harness.sendCallUpdate(call)
-        XCTAssertTrue(harness.raiseHandFlagsMustMatch(forCall: call))
+    @MainActor func testOnCallUpdate_raiseHandChanges_participantLowerHand_participantsRaiseHandListMustMatch() async throws {
+        let harness = Harness.withMonitorCallAndSessionUpdates()
+        await harness.joinAllParticipants()
+        let raiseHandList: [HandleEntity] = []
+        let expectation = XCTestExpectation()
+        var participantsUpdated: [CallParticipantEntity] = []
+        harness.sut.invokeCommand = {
+            switch $0 {
+            case .reloadViewData(let participantsListView):
+                participantsUpdated = participantsListView.participants
+                expectation.fulfill()
+            default:
+                XCTFail("Invoked unexpected command: \($0)")
+            }
+        }
+        
+        try await harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
+        await fulfillment(of: [expectation], timeout: 1)
+        harness.raiseHandParticipantsMustMatch(raiseHandsList: raiseHandList, withUpdatedParticipants: participantsUpdated.filter { $0.raisedHand })
     }
     
-    class Harness {
+    final class Harness: Sendable {
         let sut: MeetingFloatingPanelViewModel
-        
-        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1)
-        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2)
-        let thirdParticipant = CallParticipantEntity(participantId: 103, clientId: 3)
-        
-        lazy var callParticipants = [firstParticipant, secondParticipant, thirdParticipant]
                 
-        var continuation: AsyncStream<CallEntity>.Continuation?
+        let callSessions = [
+            ChatSessionEntity(statusType: .inProgress, peerId: 101, clientId: 1, changeType: .status),
+            ChatSessionEntity(statusType: .inProgress, peerId: 102, clientId: 2, changeType: .status),
+            ChatSessionEntity(statusType: .inProgress, peerId: 103, clientId: 3, changeType: .status)
+        ]
+
+        var callUpdateContinuation: AsyncStream<CallEntity>.Continuation?
+        var sessionUpdateContinuation: AsyncStream<ChatSessionEntity>.Continuation?
+        var chatRoomUpdateContinuation: AsyncStream<ChatRoomEntity>.Continuation?
         let chatRoom: ChatRoomEntity
         let router: MockMeetingFloatingPanelRouter
         let callUseCase: MockCallUseCase
-        
+
         init(
             router: MockMeetingFloatingPanelRouter = .init(),
             containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
             chatRoom: ChatRoomEntity = ChatRoomEntity(),
             callUseCase: MockCallUseCase = .init(),
             callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
+            callUpdateContinuation: AsyncStream<CallEntity>.Continuation? = nil,
+            chatRoomUpdateUseCase: some ChatRoomUpdateUseCaseProtocol = MockChatRoomUpdateUseCase(),
+            chatRoomUpdateContinuation: AsyncStream<ChatRoomEntity>.Continuation? = nil,
+            sessionUpdateUseCase: some SessionUpdateUseCaseProtocol = MockSessionUpdateUseCase(),
+            sessionUpdateContinuation: AsyncStream<ChatSessionEntity>.Continuation? = nil,
             accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
             chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
             chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
@@ -809,6 +896,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             self.chatRoom = chatRoom
             self.router = router
             self.callUseCase = callUseCase
+            self.callUpdateContinuation = callUpdateContinuation
+            self.chatRoomUpdateContinuation = chatRoomUpdateContinuation
+            self.sessionUpdateContinuation = sessionUpdateContinuation
             
             self.sut = .init(
                 router: router,
@@ -816,49 +906,120 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
                 callUpdateUseCase: callUpdateUseCase,
+                sessionUpdateUseCase: sessionUpdateUseCase, 
+                chatRoomUpdateUseCase: chatRoomUpdateUseCase,
                 accountUseCase: accountUseCase,
                 chatRoomUseCase: chatRoomUseCase,
                 chatUseCase: chatUseCase,
                 selectWaitingRoomList: selectWaitingRoomList,
                 headerConfigFactory: headerConfigFactory,
                 featureFlags: MockFeatureFlagProvider(list: .init()),
+                notificationCenter: NotificationCenter.default,
                 presentUpgradeFlow: { _ in }
             )
         }
         
-        static func withMonitorCallUpdates() -> Harness {
-            let (stream, continuation) = AsyncStream
-                .makeStream(of: CallEntity.self)
-            let callUpdateUseCase = MockCallUpdateUseCase(monitorCallUpdateSequenceResult: AnyAsyncThrowingSequence(stream))
-            
+        static func withMonitorCallAndSessionUpdates() -> Harness {
+            let (callUpdateUseCase, callUpdateContinuation) = Harness.createCallUpdatesUseCase()
+            let (sessionUpdateUseCase, sessionUpdateContinuation) = Harness.createSessionUpdatesUseCase()
             let harness = Harness(
-                callUpdateUseCase: callUpdateUseCase
+                callUpdateUseCase: callUpdateUseCase,
+                callUpdateContinuation: callUpdateContinuation,
+                sessionUpdateUseCase: sessionUpdateUseCase,
+                sessionUpdateContinuation: sessionUpdateContinuation
             )
-            
-            harness.continuation = continuation
             harness.sut.monitorOnCallUpdate()
+            harness.sut.monitorOnSessionUpdate()
             return harness
         }
         
-        func raiseHandFlagsMustMatch(forCall call: CallEntity) -> Bool {
-            let raiseHandIndex = callParticipants.partition(by: { $0.raisedHand })
-            let notRaiseHandParticipants = Array(callParticipants[..<raiseHandIndex])
-            let raiseHandParticipants = Array(callParticipants[raiseHandIndex...])
+        static func withMonitorChatRoomAndSessionUpdates() -> Harness {
+            let (chatRoomUpdateUseCase, chatRoomUpdateContinuation) = Harness.createChatRoomUpdatesUseCase()
+            let (sessionUpdateUseCase, sessionUpdateContinuation) = Harness.createSessionUpdatesUseCase()
+            let harness = Harness(
+                chatRoomUpdateUseCase: chatRoomUpdateUseCase,
+                chatRoomUpdateContinuation: chatRoomUpdateContinuation,
+                sessionUpdateUseCase: sessionUpdateUseCase,
+                sessionUpdateContinuation: sessionUpdateContinuation
+            )
+            harness.sut.monitorOnChatRoomUpdate()
+            harness.sut.monitorOnSessionUpdate()
+            return harness
+        }
+        
+        static func withMonitorOnChatRoomUpdates() -> Harness {
+            let (chatRoomUpdateUseCase, chatRoomUpdateContinuation) = Harness.createChatRoomUpdatesUseCase()
+            let harness = Harness(
+                chatRoomUpdateUseCase: chatRoomUpdateUseCase,
+                chatRoomUpdateContinuation: chatRoomUpdateContinuation
+            )
+            harness.sut.monitorOnChatRoomUpdate()
+            return harness
+        }
+        
+        static func withMonitorOnSessionUpdates() -> Harness {
+            let (sessionUpdateUseCase, sessionUpdateContinuation) = Harness.createSessionUpdatesUseCase()
+            let harness = Harness(
+                sessionUpdateUseCase: sessionUpdateUseCase,
+                sessionUpdateContinuation: sessionUpdateContinuation
+            )
+            harness.sut.monitorOnSessionUpdate()
+            return harness
+        }
+        
+        static func createSessionUpdatesUseCase() -> (MockSessionUpdateUseCase, AsyncStream<ChatSessionEntity>.Continuation) {
+            let (stream, continuation) = AsyncStream
+                .makeStream(of: ChatSessionEntity.self)
+            let sessionUpdateUseCase = MockSessionUpdateUseCase(monitorSessionUpdateSequenceResult: AnyAsyncSequence(stream))
             
-            let raiseHandIdsAreEqual = call.raiseHandsList == raiseHandParticipants.map { $0.participantId }
-            
-            let doesNotContainNotRaiseHandIds = !notRaiseHandParticipants.map { $0.participantId }.contains { call.raiseHandsList.contains($0)}
-            
-            return raiseHandIdsAreEqual && doesNotContainNotRaiseHandIds
+            return (sessionUpdateUseCase, continuation)
+        }
+        
+        static func createChatRoomUpdatesUseCase() -> (MockChatRoomUpdateUseCase, AsyncStream<ChatRoomEntity>.Continuation) {
+            let (stream, continuation) = AsyncStream
+                .makeStream(of: ChatRoomEntity.self)
+            let chatRoomUpdateUseCase = MockChatRoomUpdateUseCase(monitorChatRoomUpdateSequenceResult: AnyAsyncSequence(stream))
+
+            return (chatRoomUpdateUseCase, continuation)
+        }
+        
+        static func createCallUpdatesUseCase() -> (MockCallUpdateUseCase, AsyncStream<CallEntity>.Continuation) {
+            let (stream, continuation) = AsyncStream
+                .makeStream(of: CallEntity.self)
+            let callUpdateUseCase = MockCallUpdateUseCase(monitorCallUpdateSequenceResult: AnyAsyncSequence(stream))
+
+            return (callUpdateUseCase, continuation)
+        }
+        
+        func sendRaiseHandsCallUpdate(raiseHandsList: [HandleEntity]) async throws {
+            let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: raiseHandsList)
+            try await sendCallUpdate(call)
         }
         
         func sendCallUpdate(_ call: CallEntity) async throws {
-            continuation?.yield(call)
-            try await Task.sleep(nanoseconds: 1_000_000)
+            callUpdateContinuation?.yield(call)
+            try await Task.sleep(nanoseconds: 500_000_000)
         }
         
-        func joinAllParticipants() {
-            callParticipants.forEach { sut.participantJoined(participant: $0) }
+        func sendSessionUpdate(_ session: ChatSessionEntity) async throws {
+            sessionUpdateContinuation?.yield(session)
+            try await Task.sleep(nanoseconds: 500_000_000)
+        }
+        
+        func sendChatRoomUpdate(_ chatRoom: ChatRoomEntity) async throws {
+            chatRoomUpdateContinuation?.yield(chatRoom)
+            try await Task.sleep(nanoseconds: 500_000_000)
+        }
+        
+        // MARK: - Test Helpers
+        func raiseHandParticipantsMustMatch(raiseHandsList: [HandleEntity], withUpdatedParticipants raisedHandParticipants: [CallParticipantEntity]) {
+            XCTAssertEqual(raiseHandsList, raisedHandParticipants.map { $0.participantId })
+        }
+        
+        func joinAllParticipants() async {
+            for session in callSessions {
+                try? await sendSessionUpdate(session)
+            }
         }
     }
     

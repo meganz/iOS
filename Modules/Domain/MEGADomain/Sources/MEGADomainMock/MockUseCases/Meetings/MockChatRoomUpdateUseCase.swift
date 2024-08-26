@@ -2,16 +2,16 @@ import MEGADomain
 import MEGASwift
 
 public struct MockChatRoomUpdateUseCase: ChatRoomUpdateUseCaseProtocol {
-    private let monitorChatRoomUpdateSequenceResult: AnyAsyncThrowingSequence<ChatRoomEntity, any Error>
+    private let monitorChatRoomUpdateSequenceResult: AnyAsyncSequence<ChatRoomEntity>
 
     public init(
-        monitorChatRoomUpdateSequenceResult: AnyAsyncThrowingSequence<ChatRoomEntity, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+        monitorChatRoomUpdateSequenceResult: AnyAsyncSequence<ChatRoomEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.monitorChatRoomUpdateSequenceResult = monitorChatRoomUpdateSequenceResult
     }
     
-    public func monitorOnChatRoomUpdate() -> AnyAsyncThrowingSequence<ChatRoomEntity, any Error> {
+    public func monitorOnChatRoomUpdate() -> AnyAsyncSequence<ChatRoomEntity> {
         monitorChatRoomUpdateSequenceResult
-            .eraseToAnyAsyncThrowingSequence()
+            .eraseToAnyAsyncSequence()
     }
 }

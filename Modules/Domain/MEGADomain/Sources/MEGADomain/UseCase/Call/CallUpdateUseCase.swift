@@ -1,7 +1,7 @@
 import MEGASwift
 
 public protocol CallUpdateUseCaseProtocol: Sendable {
-    func monitorOnCallUpdate() -> AnyAsyncThrowingSequence<CallEntity, any Error>
+    func monitorOnCallUpdate() -> AnyAsyncSequence<CallEntity>
 }
 
 public struct CallUpdateUseCase<T: CallUpdateRepositoryProtocol>: CallUpdateUseCaseProtocol {
@@ -11,8 +11,8 @@ public struct CallUpdateUseCase<T: CallUpdateRepositoryProtocol>: CallUpdateUseC
         self.repository = repository
     }
 
-    public func monitorOnCallUpdate() -> AnyAsyncThrowingSequence<CallEntity, any Error> {
+    public func monitorOnCallUpdate() -> AnyAsyncSequence<CallEntity> {
         repository.callUpdate
-            .eraseToAnyAsyncThrowingSequence()
+            .eraseToAnyAsyncSequence()
     }
 }

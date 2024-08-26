@@ -1,10 +1,10 @@
 import MEGASwift
 
 public protocol ChatRoomUpdateUseCaseProtocol: Sendable {
-    func monitorOnChatRoomUpdate() -> AnyAsyncThrowingSequence<ChatRoomEntity, any Error>
+    func monitorOnChatRoomUpdate() -> AnyAsyncSequence<ChatRoomEntity>
 }
 
-public struct ChatRoomUpdateUseCase<T: ChatRoomUpdateRepositoryProtocol>: ChatRoomUpdateUseCaseProtocol  {
+public struct ChatRoomUpdateUseCase<T: ChatRoomUpdateRepositoryProtocol>: ChatRoomUpdateUseCaseProtocol {
     
     private let repository: T
     
@@ -12,8 +12,8 @@ public struct ChatRoomUpdateUseCase<T: ChatRoomUpdateRepositoryProtocol>: ChatRo
         self.repository = repository
     }
 
-    public func monitorOnChatRoomUpdate() -> AnyAsyncThrowingSequence<ChatRoomEntity, any Error> {
+    public func monitorOnChatRoomUpdate() -> AnyAsyncSequence<ChatRoomEntity> {
         repository.chatRoomUpdate
-            .eraseToAnyAsyncThrowingSequence()
+            .eraseToAnyAsyncSequence()
     }
 }
