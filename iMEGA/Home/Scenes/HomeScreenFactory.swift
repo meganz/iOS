@@ -262,6 +262,7 @@ final class HomeScreenFactory: NSObject {
         )
         return UIHostingController(
             rootView: SearchResultsView(viewModel: vm)
+                .designTokenBackground(true)
         )
     }
     
