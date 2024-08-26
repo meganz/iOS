@@ -39,9 +39,7 @@ final class NodeDescriptionCellController: NSObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self, weak tableView] keyboardState in
                 guard let self,
-                      let tableView,
-                      let cell = tableView.cellForRow(at: indexPath),
-                      cell.containsFirstResponder() else {
+                      let tableView else {
                     return
                 }
                 updateUI(for: keyboardState, tableView: tableView, indexPath: indexPath)
@@ -92,7 +90,9 @@ final class NodeDescriptionCellController: NSObject {
 
             tableView.endUpdates()
 
-            if keyboardState == .didShow {
+            if keyboardState == .didShow,
+               let cell = tableView.cellForRow(at: indexPath),
+               cell.containsFirstResponder() {
                 scrollToBottom(tableView: tableView, indexPath: indexPath)
             }
         }

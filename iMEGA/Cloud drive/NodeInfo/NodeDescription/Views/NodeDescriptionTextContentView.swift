@@ -26,6 +26,8 @@ final class NodeDescriptionTextContentView: UIView, UIContentView {
     }
 
     private func configure(editingDisabled: Bool) {
+        backgroundColor = .clear
+        textView.backgroundColor = .clear
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.returnKeyType = .done
         textView.delegate = self
