@@ -36,7 +36,9 @@
     self.circularShapeLayer.strokeStart = 0.0f;
     self.circularShapeLayer.strokeEnd = 0.0f;
     [self.logoImageView.layer addSublayer:self.circularShapeLayer];
-    
+
+    [self setupActivityIndicatorColor];
+
     [self.activityIndicatorView startAnimating];
 }
 
