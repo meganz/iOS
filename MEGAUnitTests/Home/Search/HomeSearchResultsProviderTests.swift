@@ -1,5 +1,6 @@
 import ConcurrencyExtras
 @testable import MEGA
+import MEGADesignToken
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -515,7 +516,61 @@ class HomeSearchResultsProviderTests: XCTestCase {
             )
         )
     }
-    
+
+    func testSearchConfig_WhenTodayIsSelectedAsModifyDateFilter_shouldMatchResults() {
+        assertSearchConfig(
+            expectedAsset: searchEmptyStateAsset(),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            isSearchActive: false,
+            searchChipEntity: .today(calendar: .current, currentDate: .now)
+        )
+    }
+
+    func testSearchConfig_WhenLastSevenDaysIsSelectedAsModifyDateFilter_shouldMatchResults() {
+        assertSearchConfig(
+            expectedAsset: searchEmptyStateAsset(),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            isSearchActive: false,
+            searchChipEntity: .last7Days(calendar: .current, currentDate: .now)
+        )
+    }
+
+    func testSearchConfig_WhenLastThirtyDaysIsSelectedAsModifyDateFilter_shouldMatchResults() {
+        assertSearchConfig(
+            expectedAsset: searchEmptyStateAsset(),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            isSearchActive: false,
+            searchChipEntity: .last30Days(calendar: .current, currentDate: .now)
+        )
+    }
+
+    func testSearchConfig_WhenThisYearIsSelectedAsModifyDateFilter_shouldMatchResults() {
+        assertSearchConfig(
+            expectedAsset: searchEmptyStateAsset(),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            isSearchActive: false,
+            searchChipEntity: .thisYear(calendar: .current, currentDate: .now)
+        )
+    }
+
+    func testSearchConfig_WhenLastYearIsSelectedAsModifyDateFilter_shouldMatchResults() {
+        assertSearchConfig(
+            expectedAsset: searchEmptyStateAsset(),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            isSearchActive: false,
+            searchChipEntity: .lastYear(currentDate: .now)
+        )
+    }
+
+    func testSearchConfig_WhenOlderDateIsSelectedAsModifyDateFilter_shouldMatchResults() {
+        assertSearchConfig(
+            expectedAsset: searchEmptyStateAsset(),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            isSearchActive: false,
+            searchChipEntity: .older(currentDate: .now)
+        )
+    }
+
     func testSearch_whenLastItemIndexIsAtTheLoadMorePoint_shouldFillMoreItems() async {
         // given
         let nodes = NodeEntity.entities(startHandle: 1, endHandle: 150)
@@ -793,6 +848,22 @@ class HomeSearchResultsProviderTests: XCTestCase {
 
     private func makeEmptyAsset(with title: String) -> SearchConfig.EmptyViewAssets {
         .init(image: Image(systemName: "person"), title: title, titleTextColor: { _ in .red })
+    }
+
+    private func searchEmptyStateAsset() -> SearchConfig.EmptyViewAssets {
+        let titleTextColor: (ColorScheme) -> Color = { colorScheme in
+            guard UIColor.isDesignTokenEnabled() else {
+                return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
+            }
+
+            return TokenColors.Icon.secondary.swiftUI
+        }
+
+        return .init(
+            image: Image(.searchEmptyState),
+            title: Strings.Localizable.Home.Search.Empty.noChipSelected,
+            titleTextColor: titleTextColor
+        )
     }
 }
 

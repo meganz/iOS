@@ -546,8 +546,11 @@ public class SearchResultsViewModel: ObservableObject {
         // we show contextual, chip-related empty screen only when there
         // is not text query
         if query.query.isEmpty {
+            // node format takes priority when showing empty assets.
+            let chip = appliedChips.first { $0.type.isNodeFormatChip || $0.type.isNodeTypeChip } ?? appliedChips.first
+
             // this assumes only one chip at most can be applied at any given time
-            return config.emptyViewAssetFactory(appliedChips.first, query).emptyViewModel
+            return config.emptyViewAssetFactory(chip, query).emptyViewModel
         }
         
         // when there is non-empty text query (and no results of course) ,
