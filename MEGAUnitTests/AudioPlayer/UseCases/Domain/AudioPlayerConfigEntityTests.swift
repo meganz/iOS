@@ -73,7 +73,7 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
     }
     
     func testIsFileLink_WhenRelatedFilesExist_ReturnsFalse() {
-        let sut = makeSUT(relatedFiles: ["relatedFile1", "relatedFile2"])
+        let sut = makeSUT(relatedFiles: ["relatedFile1.mp3", "relatedFile2.mp3"])
         
         let result = sut.isFileLink
         
@@ -99,7 +99,7 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
     }
     
     func testPlayerType_WhenRelatedFilesExist_ReturnsOffline() {
-        let sut = makeSUT(relatedFiles: ["relatedFile1", "relatedFile2"])
+        let sut = makeSUT(relatedFiles: ["relatedFile1.mp3", "relatedFile2.mp3"])
         
         let result = sut.playerType
         
@@ -138,6 +138,35 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
         let result = sut.nodeOriginType
         
         XCTAssertEqual(result, .chat)
+    }
+    
+    // MARK: - relatedFiles
+    
+    func testRelatedFiles_whenRelatedFilesIsAudioFiles_doesNotFilterRelatedFiles() {
+        let expectedRelatedFiles = ["relatedFile1.mp3", "relatedFile2.mp3"]
+        let sut = makeSUT(relatedFiles: expectedRelatedFiles)
+        
+        let result = sut.relatedFiles
+        
+        XCTAssertEqual(result, expectedRelatedFiles)
+    }
+    
+    func testRelatedFiles_whenRelatedFilesNonAudioFiles_filterRelatedFiles() {
+        let expectedRelatedFiles = ["relatedFile1.mov", "relatedFile2.mov", "relatedFile3.jpeg", "relatedFile4.txt"]
+        let sut = makeSUT(relatedFiles: expectedRelatedFiles)
+        
+        let result = sut.relatedFiles
+        
+        XCTAssertEqual(result?.isEmpty, true)
+    }
+    
+    func testRelatedFiles_whenRelatedFilesMixAudioAndNonAudio_filterRelatedFiles() {
+        let expectedRelatedFiles = ["relatedFile1.mp3", "relatedFile2.mov", "relatedFile3.jpeg", "relatedFile4.txt"]
+        let sut = makeSUT(relatedFiles: expectedRelatedFiles)
+        
+        let result = sut.relatedFiles
+        
+        XCTAssertEqual(result, [ expectedRelatedFiles[0] ])
     }
     
     // MARK: - Helpers
