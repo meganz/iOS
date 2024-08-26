@@ -72,6 +72,20 @@ final class NodeInfoViewModelTests: XCTestCase {
         let node = MockNode(handle: 100, description: nil)
         assertShouldShowNodeDescription(node: node, expectedResult: true)
     }
+    
+    func testNodeInfoLocationViewModel_whenNodeIsNotVisualMedia_shouldReturnNil() {
+        let node = MockNode(handle: 1, name: "test.txt")
+        let sut = makeSUT(node: node)
+        XCTAssertNil(sut.nodeInfoLocationViewModel)
+    }
+    
+    func testNodeInfoLocationViewModel_whenNodeIsVisualMedia_shouldReturnViewModel() {
+        for fileExtension in ["mp4", "png", "mov", "jpeg"] {
+            let node = MockNode(handle: 1, name: "test.\(fileExtension)")
+            let sut = makeSUT(node: node)
+            XCTAssertNotNil(sut.nodeInfoLocationViewModel)
+        }
+    }
 
     private func makeSUT(
         node: MockNode = MockNode(handle: 0),

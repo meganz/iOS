@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAPresentation
+import MEGARepo
 
 @objc final class NodeInfoViewModel: NSObject {
     private let router = SharedItemsViewRouter()
@@ -14,6 +15,15 @@ import MEGAPresentation
     var shouldShowNodeDescription: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .nodeDescription)
     }
+    
+    private(set) lazy var nodeInfoLocationViewModel: NodeInfoLocationViewModel? = {
+        guard node.name?.fileExtensionGroup.isVisualMedia ?? false else {
+            return nil
+        }
+        return NodeInfoLocationViewModel(
+            nodeEntity: node.toNodeEntity(),
+            geoCoderUseCase: GeoCoderUseCase(geoCoderRepository: GeoCoderRepository.newRepo))
+    }()
 
     init(
         withNode node: MEGANode,

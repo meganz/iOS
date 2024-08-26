@@ -1,6 +1,6 @@
 import CoreLocation
 
-public struct LocationInfoMapMarker<ID: Hashable>: Identifiable {
+public struct LocationInfoMapMarker<ID: Hashable>: Identifiable, Equatable {
     
     public let id: ID
     public let location: CLLocation
