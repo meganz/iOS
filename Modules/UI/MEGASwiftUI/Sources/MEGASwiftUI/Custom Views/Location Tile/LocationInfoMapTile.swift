@@ -5,7 +5,7 @@ import SwiftUI
 
 public struct LocationInfoMapTile<ID: Hashable>: View {
 
-    public enum ViewState {
+    public enum ViewState: Equatable {
         case loading
         case loaded(LocationInfoMapMarker<ID>)
         case empty(icon: Image, label: String)
@@ -29,6 +29,7 @@ public struct LocationInfoMapTile<ID: Hashable>: View {
                 emptyContent(icon: icon, label: label)
             }
         }
+        .animation(.easeIn, value: viewState)
     }
     
     @ViewBuilder
@@ -48,7 +49,8 @@ public struct LocationInfoMapTile<ID: Hashable>: View {
         HStack(spacing: 8) {
             icon
             Text(label)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI :             Color(UIColor.lightGray))
+                .font(.caption)
+                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : Color(UIColor.lightGray))
         }.frame(maxWidth: .infinity, alignment: .leading)
     }
     

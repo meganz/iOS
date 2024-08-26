@@ -1484,6 +1484,8 @@
 "versions"="Versions";
 /* Title label of a node property. */
 "cloudDrive.info.node.location"="Location";
+/* Title label of when there is no location info available. */
+"cloudDrive.info.node.noLocation"="No location information";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Total size";
 /* Refers to the type of a file or folder. */

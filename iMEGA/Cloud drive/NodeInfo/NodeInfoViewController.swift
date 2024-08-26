@@ -9,6 +9,7 @@ import UIKit
 enum NodeInfoTableViewSection {
     case info
     case details
+    case location
     case description(NodeDescriptionCellController)
     case link
     case versions
@@ -191,6 +192,7 @@ final class NodeInfoViewController: UITableViewController {
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         tableView.register(HostingTableViewCell<NodeInfoVerifyAccountTableViewCell>.self,
                                  forCellReuseIdentifier: "NodeInfoVerifyAccountTableViewCell")
+        tableView.register(HostingTableViewCell<NodeInfoLocationView>.self, forCellReuseIdentifier: "NodeInfoLocationView")
         NodeDescriptionCellController.registerCell(for: tableView)
     }
 
@@ -461,6 +463,10 @@ final class NodeInfoViewController: UITableViewController {
 
             sections.append(descriptionSection)
         }
+        
+        if viewModel.nodeInfoLocationViewModel != nil {
+            sections.append(.location)
+        }
 
         if !node.mnz_isInRubbishBin() {
             if sdk.accessLevel(for: node) == .accessOwner && !node.isTakenDown() {
@@ -583,6 +589,19 @@ final class NodeInfoViewController: UITableViewController {
         cell.host(upgradeCellView, parent: self)
         cell.selectionStyle = .none
         cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        return cell
+    }
+    
+    private func locationCell(_ indexPath: IndexPath) -> HostingTableViewCell<NodeInfoLocationView> {
+        guard let nodeInfoLocationViewModel = viewModel.nodeInfoLocationViewModel,
+            let cell = tableView?.dequeueReusableCell(withIdentifier: "NodeInfoLocationView", for: indexPath) as? HostingTableViewCell<NodeInfoLocationView> else {
+            return HostingTableViewCell<NodeInfoLocationView>()
+        }
+        
+        cell.host(NodeInfoLocationView(viewModel: nodeInfoLocationViewModel), parent: self)
+        cell.selectionStyle = .none
+        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        
         return cell
     }
     
@@ -725,17 +744,17 @@ extension NodeInfoViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch cachedSections[section] {
         case .info:
-            return cachedInfoRows.count
+            cachedInfoRows.count
         case .details:
-            return cachedDetailRows.count
+            cachedDetailRows.count
         case .sharing:
-            return cachedActiveShares.count + 1
+            cachedActiveShares.count + 1
         case .pendingSharing:
-            return cachedPendingShares.count
-        case .link, .versions, .removeSharing:
-            return 1
+            cachedPendingShares.count
+        case .location, .link, .versions, .removeSharing:
+            1
         case .description(let controller):
-            return controller.tableView(tableView, numberOfRowsInSection: section)
+            controller.tableView(tableView, numberOfRowsInSection: section)
         }
     }
     
@@ -753,6 +772,8 @@ extension NodeInfoViewController {
             }
         case .details:
             return detailCell(forIndexPath: indexPath)
+        case .location:
+            return locationCell(indexPath)
         case .link:
             return linkCell(forIndexPath: indexPath)
         case .versions:
@@ -781,7 +802,7 @@ extension NodeInfoViewController {
         var topDistance: CGFloat = 30.0
         if case .description(let controller) = cachedSections[section] {
             return controller.tableView(tableView, viewForHeaderInSection: section)
-        } else if case .description = cachedSections[safe: section - 1] {
+        } else if section == 0 {
             topDistance = 1
         }
 
@@ -794,6 +815,8 @@ extension NodeInfoViewController {
         switch cachedSections[section] {
         case .details:
             header.configure(title: Strings.Localizable.details, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        case .location:
+            header.configure(title: Strings.Localizable.CloudDrive.Info.Node.location, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .link:
             header.configure(title: Strings.Localizable.link, topDistance: topDistance, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .versions:
@@ -821,7 +844,13 @@ extension NodeInfoViewController {
             return UIView(frame: .zero)
         }
         footer.setPreferredBackgroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_secondaryBackground(for: traitCollection))
-        let isTopSeparatorVisible = if case .description = cachedSections[section] { false } else { true }
+
+        let isTopSeparatorVisible = switch cachedSections[section] {
+        case .location, .description:
+            false
+        default:
+            true
+        }
         footer.configure(
             title: nil,
             topDistance: 5.0,
@@ -854,7 +883,7 @@ extension NodeInfoViewController {
             }
         case .pendingSharing:
             showAlertForRemovingPendingShare(forIndexPat: indexPath)
-        case .info, .description:
+        case .location, .info, .description:
             break
         }
         

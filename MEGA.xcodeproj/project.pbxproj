@@ -265,6 +265,8 @@
 		257F0B292AE9EC7B00216F79 /* PhotoLibraryZoomControlScrollTrackedOffsetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F0B282AE9EC7B00216F79 /* PhotoLibraryZoomControlScrollTrackedOffsetViewModifier.swift */; };
 		257F0B452AEB22F200216F79 /* PhotoLibraryCollectionViewLayoutChangesMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F0B442AEB22F200216F79 /* PhotoLibraryCollectionViewLayoutChangesMonitor.swift */; };
 		257F0B522AEEFB6400216F79 /* PhotoDateSection+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F0B512AEEFB6400216F79 /* PhotoDateSection+Additions.swift */; };
+		258DC6632C782DFF007B0025 /* NodeInfoLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258DC6622C782DFF007B0025 /* NodeInfoLocationView.swift */; };
+		258DC66D2C789604007B0025 /* NodeInfoLocationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258DC66C2C789604007B0025 /* NodeInfoLocationViewModelTests.swift */; };
 		2590021D2C605778004A421C /* SpotlightContentIndexerActorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */; };
 		2591C1382C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */; };
 		2592C2A22AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */; };
@@ -312,6 +314,7 @@
 		25EB2E982B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E972B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift */; };
 		25EB2E9A2B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E992B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift */; };
 		25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */; };
+		25EF84152C7818DB00D289CB /* NodeInfoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EF84142C7818DB00D289CB /* NodeInfoLocationViewModel.swift */; };
 		25EF926C2C44EAB000FB73A6 /* ThumbnailLoaderFactory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EF926B2C44EAB000FB73A6 /* ThumbnailLoaderFactory+Extension.swift */; };
 		25EF92792C4527F000FB73A6 /* ThumbnailLoaderProtocol+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EF92782C4527F000FB73A6 /* ThumbnailLoaderProtocol+Additions.swift */; };
 		25F4EC772C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */; };
@@ -3032,6 +3035,8 @@
 		257F0B282AE9EC7B00216F79 /* PhotoLibraryZoomControlScrollTrackedOffsetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomControlScrollTrackedOffsetViewModifier.swift; sourceTree = "<group>"; };
 		257F0B442AEB22F200216F79 /* PhotoLibraryCollectionViewLayoutChangesMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCollectionViewLayoutChangesMonitor.swift; sourceTree = "<group>"; };
 		257F0B512AEEFB6400216F79 /* PhotoDateSection+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoDateSection+Additions.swift"; sourceTree = "<group>"; };
+		258DC6622C782DFF007B0025 /* NodeInfoLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoLocationView.swift; sourceTree = "<group>"; };
+		258DC66C2C789604007B0025 /* NodeInfoLocationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoLocationViewModelTests.swift; sourceTree = "<group>"; };
 		2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActorTests.swift; sourceTree = "<group>"; };
 		2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActor.swift; sourceTree = "<group>"; };
 		2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+SnackBarPresenting.swift"; sourceTree = "<group>"; };
@@ -3074,6 +3079,7 @@
 		25EB2E972B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBannerStatusViewPresenterProtocol.swift; sourceTree = "<group>"; };
 		25EB2E992B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift"; sourceTree = "<group>"; };
 		25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferWidgetResponder.swift; sourceTree = "<group>"; };
+		25EF84142C7818DB00D289CB /* NodeInfoLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoLocationViewModel.swift; sourceTree = "<group>"; };
 		25EF926B2C44EAB000FB73A6 /* ThumbnailLoaderFactory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThumbnailLoaderFactory+Extension.swift"; sourceTree = "<group>"; };
 		25EF92782C4527F000FB73A6 /* ThumbnailLoaderProtocol+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThumbnailLoaderProtocol+Additions.swift"; sourceTree = "<group>"; };
 		25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveContentAcknowledgementStatus.swift; sourceTree = "<group>"; };
@@ -6690,6 +6696,15 @@
 			path = CameraUploadStatus;
 			sourceTree = "<group>";
 		};
+		25EF84132C7818C000D289CB /* NodeLocation */ = {
+			isa = PBXGroup;
+			children = (
+				258DC6622C782DFF007B0025 /* NodeInfoLocationView.swift */,
+				25EF84142C7818DB00D289CB /* NodeInfoLocationViewModel.swift */,
+			);
+			path = NodeLocation;
+			sourceTree = "<group>";
+		};
 		25EF927A2C45295C00FB73A6 /* ThumbnailLoader */ = {
 			isa = PBXGroup;
 			children = (
@@ -8725,6 +8740,7 @@
 		6D01A3C82C084F2800089BA8 /* NodeInfo */ = {
 			isa = PBXGroup;
 			children = (
+				258DC66C2C789604007B0025 /* NodeInfoLocationViewModelTests.swift */,
 				6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */,
 			);
 			path = NodeInfo;
@@ -9285,6 +9301,7 @@
 			children = (
 				833003A224DAFF5600053B23 /* Cells */,
 				BF0BD6012C5306C7003E608A /* NodeDescription */,
+				25EF84132C7818C000D289CB /* NodeLocation */,
 				834EFDC124D9B373004BFECA /* Node.storyboard */,
 				834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */,
 				B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */,
@@ -15525,6 +15542,8 @@
 				833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */,
 				833003A424DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift in Sources */,
 				8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */,
+				258DC6632C782DFF007B0025 /* NodeInfoLocationView.swift in Sources */,
+				25EF84152C7818DB00D289CB /* NodeInfoLocationViewModel.swift in Sources */,
 				8333E51F24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift in Sources */,
 				9DAC1B632951589F00562475 /* NodeInfoRepository.swift in Sources */,
 				5D7792DC250613B200378D87 /* NodeInfoRouter.swift in Sources */,
@@ -16790,6 +16809,7 @@
 				BF7A73862C5846F400EB40F3 /* NodeDescriptionViewModelTests.swift in Sources */,
 				0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */,
 				BFE556FD27E183B40028EF1F /* NodeHandle+Additions_Tests.swift in Sources */,
+				258DC66D2C789604007B0025 /* NodeInfoLocationViewModelTests.swift in Sources */,
 				24B6276F2A8F687E00AD588C /* NodeInfoRepositoryTests.swift in Sources */,
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
 				245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */,
