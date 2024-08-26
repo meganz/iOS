@@ -223,6 +223,32 @@ final class FilesSearchRepositoryTests: XCTestCase {
         XCTAssertEqual(mockSdk.searchQueryParameters, expectedSearchQuery)
     }
     
+    func testSearch_recurisveNonSensitiveNodesOnParentMarkedAsSensitiveOrInheritingSensitive_shouldReturnEmptyListWithoutCallingSDK() async throws {
+        for (isMarkedSensitive, isInheritingSensitive) in [(isMarkedSensitive: true, isInheritingSensitive: false),
+                                                           (isMarkedSensitive: false, isInheritingSensitive: true)] {
+            let parent = MockNode(handle: 1, isMarkedSensitive: isMarkedSensitive)
+            let mockSdk = MockSdk(nodes: [parent], isNodeInheritingSensitivity: isInheritingSensitive)
+            let repo = FilesSearchRepository(sdk: mockSdk)
+            
+            let result: NodeListEntity = try await repo.search(
+                filter: .recursive(
+                    searchText: "",
+                    searchTargetLocation: .parentNode(parent.toNodeEntity()),
+                    supportCancel: false,
+                    sortOrderType: anySortOrderType(),
+                    formatType: anyFormatType(),
+                    sensitiveFilterOption: .nonSensitiveOnly)
+            )
+            
+            XCTAssertTrue(result.toNodeEntities().isEmpty,
+                          "Expected empty list for isMarkedSensitive: \(isMarkedSensitive) and isInheritingSensitive: \(isInheritingSensitive)")
+            XCTAssertEqual(mockSdk.searchNonRecursivelyWithFilterCallCount, 0,
+                           "Expected no recursive calls for isMarkedSensitive: \(isMarkedSensitive) and isInheritingSensitive: \(isInheritingSensitive)")
+            XCTAssertEqual(mockSdk.searchWithFilterCallCount, 0,
+                           "Expected no search calls for isMarkedSensitive: \(isMarkedSensitive) and isInheritingSensitive: \(isInheritingSensitive)")
+        }
+    }
+    
     // MARK: Private
     
     private func photoNodes() -> [MockNode] {
@@ -236,5 +262,13 @@ final class FilesSearchRepositoryTests: XCTestCase {
     private func videoNodes() -> [MockNode] {
         [MockNode(handle: 1, name: "1.mp4"),
          MockNode(handle: 2, name: "2.mov")]
+    }
+    
+    private func anySortOrderType() -> SortOrderEntity {
+        SortOrderEntity.allCases.randomElement() ??  .creationAsc
+    }
+    
+    private func anyFormatType() -> NodeFormatEntity {
+        .photo
     }
 }

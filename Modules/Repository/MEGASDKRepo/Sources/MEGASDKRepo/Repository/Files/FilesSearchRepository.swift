@@ -80,7 +80,16 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
 extension FilesSearchRepository {
     
     private func search(with filter: SearchFilterEntity, page: SearchPageEntity? = nil, cancelToken: ThreadSafeCancelToken = ThreadSafeCancelToken(), completion: @escaping (Result<NodeListEntity, any Error>) -> Void) {
-                        
+        // Don't call search if we don't want sensitive items and the parent is marked as sensitive
+        if filter.recursive,
+           filter.sensitiveFilterOption == .nonSensitiveOnly,
+           case let .parentNode(parentNode) = filter.searchTargetLocation,
+           let parentNode = sdk.node(forHandle: parentNode.handle),
+           parentNode.isMarkedSensitive || sdk.isNodeInheritingSensitivity(parentNode) {
+            completion(.success(NodeListEntity.emptyNodeList))
+            return
+        }
+        
         let searchOperation = SearchWithFilterOperation(
             sdk: sdk,
             filter: filter.toMEGASearchFilter(),

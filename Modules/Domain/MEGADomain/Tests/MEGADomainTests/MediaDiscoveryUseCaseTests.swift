@@ -125,31 +125,45 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
     func testShouldReload_onShouldProcessNodesUpdateReturnFalse_shouldReturnFalse() {
         let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: false)
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: MockFilesSearchRepository.newRepo, nodeUpdateRepository: nodeUpdateRepository)
+        
         XCTAssertFalse(useCase.shouldReload(parentNode: NodeEntity(handle: 1), loadedNodes: [NodeEntity(handle: 2)], updatedNodes: [NodeEntity(handle: 3)]))
     }
 
     func testShouldReload_onUpdateNodeMovedToTrash_shouldReturnTrue() {
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: MockFilesSearchRepository.newRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
+        
         XCTAssertTrue(useCase.shouldReload(parentNode: NodeEntity(handle: 1), loadedNodes: [NodeEntity(handle: 2)], updatedNodes: [NodeEntity(changeTypes: .parent, nodeType: .rubbish, handle: 2)]))
     }
 
     func testShouldReload_onNoUpdates_shouldReturnFalse() {
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: MockFilesSearchRepository.newRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
+        
         XCTAssertFalse(useCase.shouldReload(parentNode: NodeEntity(handle: 1), loadedNodes: [NodeEntity(handle: 2)], updatedNodes: []))
     }
 
     func testShouldReload_onUpdatesWithNewNode_shouldReturnTrue() {
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: MockFilesSearchRepository.newRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
+        
         XCTAssertTrue(useCase.shouldReload(parentNode: NodeEntity(handle: 1), loadedNodes: [], updatedNodes: [NodeEntity(changeTypes: .new, handle: 2)]))
     }
 
     func testShouldReload_onUpdatesWithModifiedAttributes_shouldReturnTrue() {
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: MockFilesSearchRepository.newRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
+        
         XCTAssertTrue(useCase.shouldReload(parentNode: NodeEntity(handle: 1), loadedNodes: [], updatedNodes: [NodeEntity(changeTypes: .attributes, handle: 2)]))
     }
 
     func testShouldReload_onUpdatesWithModifiedParent_shouldReturnTrue() {
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: MockFilesSearchRepository.newRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
-        XCTAssertTrue(useCase.shouldReload(parentNode: NodeEntity(handle: 1), loadedNodes: [], updatedNodes: [NodeEntity(changeTypes: .attributes, handle: 2)]))
+        
+        XCTAssertTrue(useCase.shouldReload(parentNode: NodeEntity(handle: 1), loadedNodes: [], updatedNodes: [NodeEntity(changeTypes: .parent, handle: 2)]))
+    }
+    
+    func testShouldReload_onUpdatesContainsParentNodeSensitivity_shouldReturnTrue() {
+        let parentNode =  NodeEntity(handle: 1)
+        let parentNodeSensitivityUpdate = NodeEntity(changeTypes: .sensitive, handle: parentNode.handle)
+        let useCase = MediaDiscoveryUseCase(filesSearchRepository: MockFilesSearchRepository.newRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
+        
+        XCTAssertTrue(useCase.shouldReload(parentNode: parentNode, loadedNodes: [], updatedNodes: [parentNodeSensitivityUpdate]))
     }
 }
