@@ -1545,6 +1545,7 @@
 		9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */; };
 		9956B7672B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9956B7662B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift */; };
 		9959F75D2A93460B00225D71 /* WeekNumberInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */; };
+		995C81DF2C7C31AF00FDCCA6 /* LaunchViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
 		99620A052B44D65E00AE5ADF /* MEGAAppColor+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */; };
 		9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */; };
@@ -1558,6 +1559,7 @@
 		998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */; };
 		9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
+		99C0CE6D2C7BFEC100778F53 /* LaunchViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */; };
 		99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */; };
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
 		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
@@ -4367,6 +4369,7 @@
 		998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantsListViewModelTests.swift; sourceTree = "<group>"; };
 		998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantViewModelTests.swift; sourceTree = "<group>"; };
 		998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomParticipantViewModel+Additions.swift"; sourceTree = "<group>"; };
+		99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaunchViewController+Addition.swift"; sourceTree = "<group>"; };
 		99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomControlsView.swift; sourceTree = "<group>"; };
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
@@ -13556,6 +13559,7 @@
 				77B3AE0E215D0588008E889A /* InitialLaunchViewController.m */,
 				E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */,
 				41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */,
+				99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */,
 				E8C289FB1BF65B7800F7A034 /* LaunchViewController.h */,
 				E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */,
 			);
@@ -15204,6 +15208,7 @@
 				BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */,
 				83B4FC6B292407A300364F04 /* KeyRotationView.swift in Sources */,
 				5D1B240D24AF669D00ACE1C5 /* LabelStyleFactory.swift in Sources */,
+				99C0CE6D2C7BFEC100778F53 /* LaunchViewController+Addition.swift in Sources */,
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
 				9439F10D2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift in Sources */,
@@ -16385,6 +16390,7 @@
 				940F4DED2A80F4C400FB940A /* ItemListViewController+Additions.swift in Sources */,
 				94478A432A80F43B003B9BCE /* ItemListViewController.m in Sources */,
 				8340CAFF284E52F5007C3B39 /* ItemView.swift in Sources */,
+				995C81DF2C7C31AF00FDCCA6 /* LaunchViewController+Addition.swift in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */,
