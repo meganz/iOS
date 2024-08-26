@@ -61,7 +61,7 @@ final class AudioPlayerConfigEntity: @unchecked Sendable {
         self.fileLink = fileLink
         self.messageId = messageId
         self.chatId = chatId
-        self.relatedFiles = relatedFiles
+        self.relatedFiles = relatedFiles?.filter(\.fileExtensionGroup.isAudio)
         self.parentNode = parentNode
         self.playerHandler = playerHandler
         self.shouldResetPlayer = shouldResetPlayer
