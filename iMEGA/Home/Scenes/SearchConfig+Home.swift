@@ -114,11 +114,7 @@ extension SearchConfig {
 
                 guard let chip else {
                     guard !query.isSearchActive else {
-                        return .init(
-                            image: Image(.searchEmptyState),
-                            title: Strings.Localizable.Home.Search.Empty.noChipSelected, 
-                            titleTextColor: titleTextColor
-                        )
+                        return searchEmptyState(with: titleTextColor)
                     }
 
                     return defaultEmptyViewAsset()
@@ -180,6 +176,13 @@ extension SearchConfig {
                         titleTextColor: titleTextColor
                     )
                 default:
+                    break
+                }
+
+                switch chip.type {
+                case .timeFrame:
+                    return searchEmptyState(with: titleTextColor)
+                default:
                     return defaultEmptyViewAsset()
                 }
             },
@@ -220,6 +223,16 @@ extension SearchConfig {
                 checkmarkBackgroundTintColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : UIColor.turquoise.swiftUI
             ),
             contextPreviewFactory: contextPreviewFactory
+        )
+    }
+
+    private static func searchEmptyState(
+        with titleTextColor: @escaping (ColorScheme) -> Color
+    ) -> SearchConfig.EmptyViewAssets {
+        .init(
+            image: Image(.searchEmptyState),
+            title: Strings.Localizable.Home.Search.Empty.noChipSelected,
+            titleTextColor: titleTextColor
         )
     }
 }
