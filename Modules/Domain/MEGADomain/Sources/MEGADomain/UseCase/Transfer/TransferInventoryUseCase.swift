@@ -2,7 +2,9 @@ import Foundation
 
 // MARK: - Use case protocol -
 public protocol TransferInventoryUseCaseProtocol {
+    @available(*, deprecated, message: "Use async version instead")
     func transfers(filteringUserTransfers: Bool) -> [TransferEntity]
+    func transfers(filteringUserTransfers: Bool) async -> [TransferEntity]
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
@@ -27,6 +29,15 @@ public struct TransferInventoryUseCase<T: TransferInventoryRepositoryProtocol, U
             return filterUserTransfers(transfers)
         } else {
             return transfers
+        }
+    }
+    
+    public func transfers(filteringUserTransfers: Bool) async -> [TransferEntity] {
+        let transfers = await transferInventoryRepository.transfers()
+        return if filteringUserTransfers {
+            filterUserTransfers(transfers)
+        } else {
+            transfers
         }
     }
 
