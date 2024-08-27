@@ -1,6 +1,6 @@
 import Combine
 
-public protocol ChatLinkUseCaseProtocol {
+public protocol ChatLinkUseCaseProtocol: Sendable {
     func queryChatLink(for chatRoom: ChatRoomEntity) async throws -> String
     func createChatLink(for chatRoom: ChatRoomEntity) async throws -> String
     func removeChatLink(for chatRoom: ChatRoomEntity) async throws
