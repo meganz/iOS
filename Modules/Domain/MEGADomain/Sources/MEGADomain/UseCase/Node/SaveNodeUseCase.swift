@@ -10,7 +10,7 @@ public protocol SaveNodeUseCaseProtocol {
 
 /// When saving media node (photo/video) to Photos, in case of failure we'd like to give user a chance to make that node to offline so they can access later rather than just showing error.
 /// This `SaveMediaToPhotoFailureHandling` is to delegate all UI and related logic to other layers since it's not a concern of Domain layer
-@objc public protocol SaveMediaToPhotoFailureHandling {
+@objc public protocol SaveMediaToPhotoFailureHandling: Sendable {
     /// Check if we should move node to offline
     /// - Returns: return true to indicate that node should be moved to offline. Otherwise, don't
     func shouldFallbackToMakingOffline() async -> Bool
