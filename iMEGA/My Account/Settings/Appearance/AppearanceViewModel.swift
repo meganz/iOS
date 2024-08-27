@@ -41,6 +41,7 @@ class AppearanceViewModel {
         $mediaDiscoveryShouldIncludeSubfolderSetting.useCase = preferenceUseCase
     }
     
+    @MainActor
     func fetchSettingValue(for setting: SettingValue) async -> Bool {
         switch setting {
         case .showHiddenItems:
