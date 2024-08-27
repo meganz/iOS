@@ -1,16 +1,17 @@
 import MEGADomain
+import MEGASwift
 
-public final class MockImportPublicAlbumUseCase: ImportPublicAlbumUseCaseProtocol {
+public final class MockImportPublicAlbumUseCase: ImportPublicAlbumUseCaseProtocol, @unchecked Sendable {
     private let importAlbumResult: Result<Void, Error>
     
-    public private(set) var photosToImport: [NodeEntity]?
+    @Atomic public var photosToImport: [NodeEntity]?
     
     public init(importAlbumResult: Result<Void, Error> = .failure(GenericErrorEntity())) {
         self.importAlbumResult = importAlbumResult
     }
     
     public func importAlbum(name: String, photos: [NodeEntity], parentFolder: NodeEntity) async throws {
-        photosToImport = photos
+        $photosToImport.mutate { $0 = photos }
         
         return try await withCheckedThrowingContinuation {
             $0.resume(with: importAlbumResult)
