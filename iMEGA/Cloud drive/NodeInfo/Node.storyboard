@@ -147,6 +147,9 @@
                                                                         <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption1"/>
                                                                         <userDefinedRuntimeAttribute type="string" keyPath="weight" value="bold"/>
                                                                     </userDefinedRuntimeAttributes>
+                                                                    <connections>
+                                                                        <action selector="shareButtonTapped:" destination="eVU-Az-Tf5" eventType="touchUpInside" id="DGu-iS-S7v"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                         </stackView>
