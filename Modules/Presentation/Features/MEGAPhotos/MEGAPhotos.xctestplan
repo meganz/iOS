@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "734ABE7F-EE74-4068-8F23-F3A1BB2C113F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MEGAPhotosTests",
+        "name" : "MEGAPhotosTests"
+      }
+    }
+  ],
+  "version" : 1
+}

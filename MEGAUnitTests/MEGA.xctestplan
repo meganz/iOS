@@ -239,6 +239,13 @@
         "identifier" : "PhotosBrowserTests",
         "name" : "PhotosBrowserTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/MEGAPhotos",
+        "identifier" : "MEGAPhotosTests",
+        "name" : "MEGAPhotosTests"
+      }
     }
   ],
   "version" : 1
