@@ -89,11 +89,6 @@
 
 @property (weak, nonatomic) IBOutlet UIStackView *optionsStackView;
 
-@property (weak, nonatomic) IBOutlet UIView *tableViewFooter;
-@property (weak, nonatomic) IBOutlet UILabel *noContactsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
-@property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
-
 @property (strong, nonatomic) MEGAUser *detailUser;
 @property (strong, nonatomic) NSString *currentSearch;
 
@@ -284,11 +279,15 @@
         case ContactsModeChatStartConversation: {
             self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
-            if (self.visibleUsersArray.count == 0) {
+            BOOL isEmpty = self.visibleUsersArray.count == 0;
+            if (isEmpty) {
                 self.noContactsLabel.text = LocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
                 self.noContactsDescriptionLabel.text = LocalizedString(@"Invite contacts and start chatting securely with MEGA’s encrypted chat.", @"Text encouraging the user to invite contacts to MEGA");
                 self.inviteContactButton.titleLabel.text = LocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             }
+            
+            [self showEmptyScreen:isEmpty];
+            [self hideToolbar:isEmpty];
             break;
         }
             
@@ -335,11 +334,13 @@
 }
 
 - (void)showInviteToolbarButton {
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    self.inviteBarButtonItem.title = LocalizedString(@"inviteContact", @"");
-    [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
-    self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.inviteBarButtonItem];
-    [self.navigationController setToolbarHidden:NO];
+    if ([self shouldProceedShowingInviteToolbarButton]) {
+        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        self.inviteBarButtonItem.title = LocalizedString(@"inviteContact", @"");
+        [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
+        self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.inviteBarButtonItem];
+        [self.navigationController setToolbarHidden:NO];
+    }
 }
 
 - (void)reloadUI {
@@ -458,13 +459,10 @@
         self.tableView.tableHeaderView = self.contactsTableViewHeader;
     } else if (self.contactsMode == ContactsModeChatStartConversation) {
         self.recentsArray = [MEGAChatSdk.shared recentChatsWithMax:3];
-        
-        if (self.visibleUsersArray.count == 0) {
-            self.tableView.tableFooterView = self.tableViewFooter;
-        } else {
-            self.tableView.tableFooterView = UIView.new;
-        }
+        BOOL isEmpty = self.visibleUsersArray.count == 0;
         [self showInviteToolbarButton];
+        [self showEmptyScreen:isEmpty];
+        [self hideToolbar:isEmpty];
     } else if (self.contactsMode == ContactsModeChatNamingGroup) {
         self.tableView.tableHeaderView = self.chatNamingGroupTableViewHeader;
     }
@@ -1311,7 +1309,6 @@
     self.allowNonHostToAddParticipantsSwitch.selected = !self.allowNonHostToAddParticipantsSwitch.selected;
 }
 
-
 - (IBAction)inviteContactTouchUpInside:(UIButton *)sender {
     [self.viewModel trackInviteEmptyScreenTapped];
     [self executeInvite:sender];
@@ -1573,7 +1570,12 @@
         return headerView;
     }
     if (section == 1 && self.contactsMode == ContactsModeChatStartConversation) {
-        [headerView configureWithTitle:LocalizedString(@"Recents", @"Title for the recents section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+        if ([self hideRecentsSectionHeaderWithIsEmpty:self.visibleUsersArray.count == 0]) {
+            [headerView configureWithTitle:nil topDistance:1.00 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+        }
+        else {
+            [headerView configureWithTitle:LocalizedString(@"Recents", @"Title for the recents section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+        }
         return headerView;
     }
     if ((section == 2 && self.contactsMode == ContactsModeChatStartConversation) || (section == 1 && self.contactsMode > ContactsModeChatStartConversation)) {

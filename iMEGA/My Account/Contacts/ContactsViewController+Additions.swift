@@ -97,6 +97,80 @@ extension ContactsViewController {
         ])
     }
     
+    func goToInvite() {
+        self.inviteContactTouchUp(inside: nil)
+    }
+    
+    private var newChatEmptyStatesEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .chatEmptyStates)
+    }
+    
+    // in new chat empty screens [MEET-4054] we are hiding the tool bar
+    // and simplifying UI when users have no contacts
+    @objc
+    func hideToolbar(_ hide: Bool) {
+        guard newChatEmptyStatesEnabled else {
+            return
+        }
+        navigationController?.isToolbarHidden = hide
+    }
+    
+    @objc
+    var newEmptyChatScreenMode: Bool {
+        newChatEmptyStatesEnabled && contactsMode == .chatStartConversation
+    }
+    
+    @objc
+    func hideRecentsSectionHeader(isEmpty: Bool) -> Bool {
+        newEmptyChatScreenMode && isEmpty
+    }
+    
+    @objc
+    func shouldProceedShowingInviteToolbarButton() -> Bool {
+        !newEmptyChatScreenMode
+    }
+    
+    func createNewEmptyView() -> UIView? {
+        let view = NewChatRoomsEmptyView(
+            state: ChatRoomsEmptyViewStateFactory(
+                newEmptyStates: true,
+                designTokenEnabled: UIColor.isDesignTokenEnabled()
+            ).newChatContactsEmptyScreen(
+                goToInvite: { [weak self] in
+                    self?.goToInvite()
+                }
+            )
+        )
+        let hostingVC = UIHostingController(rootView: view)
+        return hostingVC.view
+    }
+    
+    @objc
+    func showEmptyScreen(_ show: Bool) {
+        if show {
+            tableView.tableFooterView = tableViewFooter
+            if newEmptyChatScreenMode {
+                tableViewFooter.subviews.forEach {
+                    $0.isHidden = true
+                }
+                if let newEmptyView = createNewEmptyView() {
+                    self.createNewChatEmptyView = newEmptyView
+                    tableViewFooter.addSubview(newEmptyView)
+                    tableViewFooter.wrap(newEmptyView, excludeConstraints: [.bottom])
+                }
+            } else {
+                tableViewFooter.subviews.forEach {
+                    $0.isHidden = false
+                }
+                if self.createNewChatEmptyView != nil {
+                    self.createNewChatEmptyView.removeFromSuperview()
+                }
+            }
+        } else {
+            tableView.tableFooterView = UIView()
+        }
+    }
+    
     func dismissBanner() {
         viewModel.dismissedBannerWarning = true
         handleContactsNotVerifiedHeaderVisibility()
@@ -135,10 +209,18 @@ extension ContactsViewController {
         return emails.map { NSString(string: $0) }
     }
     
+    var tableBackgroundColor: UIColor {
+        if newChatEmptyStatesEnabled {
+            TokenColors.Background.page
+        } else {
+            TokenColors.Background.surface1
+        }
+    }
+    
     @objc
     func updateAppearance() {
         if UIColor.isDesignTokenEnabled() {
-            let bgColor = TokenColors.Background.surface1
+            let bgColor = tableBackgroundColor
             
             view.backgroundColor = bgColor
             tableView.backgroundColor = bgColor

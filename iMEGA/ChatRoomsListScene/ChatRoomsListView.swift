@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ChatRoomsListView: View {
     @ObservedObject var viewModel: ChatRoomsListViewModel
-    
+
     var body: some View {
         VStack(spacing: 0) {
             ChatTabsSelectorView(
@@ -23,10 +23,7 @@ struct ChatRoomsListView: View {
             }
             
             if let offlineEmptyState = viewModel.noNetworkEmptyViewState() {
-                ChatRoomsEmptyView(
-                    emptyViewState: offlineEmptyState,
-                    isDesignTokenEnabled: isDesignTokenEnabled
-                )
+                emptyView(state: offlineEmptyState)
             } else {
                 content()
             }
@@ -76,6 +73,15 @@ struct ChatRoomsListView: View {
     }
     
     @ViewBuilder
+    func emptyView(state: ChatRoomsEmptyViewState) -> some View {
+        if viewModel.showNewEmptyScreen {
+            NewChatRoomsEmptyView(state: state)
+        } else {
+            ChatRoomsEmptyView(emptyViewState: state)
+        }
+    }
+    
+    @ViewBuilder
     private func searchBarView() -> some View {
         SearchBarView(
             text: $viewModel.searchText,
@@ -97,11 +103,9 @@ struct ChatRoomsListView: View {
                     }
                     
                     if chatRooms.isNotEmpty {
-                        if !viewModel.isSearchActive, let contactsOnMega = viewModel.contactsOnMegaViewState {
-                            ChatRoomsTopRowView(state: contactsOnMega)
-                                .onTapGesture {
-                                    contactsOnMega.action()
-                                }
+                        if !viewModel.isSearchActive {
+                            ChatRoomsTopRowView(state: viewModel.contactsOnMegaViewState)
+                                .onTapGesture(perform: viewModel.contactsOnMegaViewState.action)
                                 .listRowInsets(EdgeInsets())
                                 .padding(10)
                                 .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
@@ -118,9 +122,8 @@ struct ChatRoomsListView: View {
                 .overlay(
                     VStack {
                         if let emptyViewState = viewModel.emptyViewState() {
-                            ChatRoomsEmptyView(
-                                emptyViewState: emptyViewState,
-                                isDesignTokenEnabled: isDesignTokenEnabled
+                            emptyView(
+                                state: emptyViewState
                             )
                         }
                     }
@@ -180,10 +183,7 @@ struct ChatRoomsListView: View {
                 .overlay(
                     VStack {
                         if let emptyViewState = viewModel.emptyViewState() {
-                            ChatRoomsEmptyView(
-                                emptyViewState: emptyViewState,
-                                isDesignTokenEnabled: isDesignTokenEnabled
-                            )
+                            emptyView(state: emptyViewState)
                         }
                     },
                     alignment: .center

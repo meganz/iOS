@@ -2,6 +2,10 @@ import SwiftUI
 
 public extension View {
     var isDesignTokenEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        designTokenEnabled()
     }
+}
+
+public func designTokenEnabled() -> Bool {
+    DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
 }

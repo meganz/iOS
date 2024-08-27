@@ -29,7 +29,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             permissionHandler: permissionHandler,
             permissionAlertRouter: PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler),
             chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo),
-            retryPendingConnectionsUseCase: RetryPendingConnectionsUseCase(repo: RetryPendingConnectionsRepository.newRepo)
+            retryPendingConnectionsUseCase: RetryPendingConnectionsUseCase(repo: RetryPendingConnectionsRepository.newRepo),
+            urlOpener: { UIApplication.shared.open($0) }
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)

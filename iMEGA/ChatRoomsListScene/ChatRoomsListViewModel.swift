@@ -72,15 +72,11 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var displayPastMeetings: [ChatRoomViewModel]?
     @Published var displayFutureMeetings: [FutureMeetingSection]?
     
-    var contactsOnMegaViewState: ChatRoomsTopRowViewState? {
-        if chatViewMode == .chats {
-            ChatRoomsTopRowViewState.contactsOnMega(
-                designTokenEnabled: UIColor.isDesignTokenEnabled(),
-                action: {[weak self] in self?.topRowViewTapped() }
-            )
-        } else {
-            nil
-        }
+    var contactsOnMegaViewState: ChatRoomsTopRowViewState {
+        ChatRoomsTopRowViewState.contactsOnMega(
+            designTokenEnabled: UIColor.isDesignTokenEnabled(),
+            action: {[weak self] in self?.goToInviteContact() }
+        )
     }
     
     @Published var activeCallViewModel: ActiveCallViewModel?
@@ -135,8 +131,14 @@ final class ChatRoomsListViewModel: ObservableObject {
         (currentTip == .startMeeting || (currentTip == .recurringOrStartMeeting && !presentingRecurringMeetingTip))
     }
     
+    var showNewEmptyScreen: Bool {
+        featureFlagProvider.newChatEmptyScreen
+    }
+    
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
     let emptyViewStateFactory: ChatRoomsEmptyViewStateFactory
+    let urlOpener: (URL) -> Void
+    
     init(
         router: some ChatRoomsListRouting,
         chatUseCase: any ChatUseCaseProtocol,
@@ -152,7 +154,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        urlOpener: @escaping (URL) -> Void
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -173,9 +176,11 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.featureFlagProvider = featureFlagProvider
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
+        self.urlOpener = urlOpener
         
         self.emptyViewStateFactory = .init(
-            newEmptyStates: featureFlagProvider.isFeatureFlagEnabled(for: .chatEmptyStates)
+            newEmptyStates: featureFlagProvider.newChatEmptyScreen,
+            designTokenEnabled: UIColor.isDesignTokenEnabled()
         )
         
         configureTitle()
@@ -192,18 +197,35 @@ final class ChatRoomsListViewModel: ObservableObject {
             emptyViewStateFactory.searchEmptyViewState()
         } else {
             emptyViewStateFactory.emptyChatRoomsViewState(
+                hasArchivedChats: hasArchivedChats,
+                hasContacts: accountUseCase.contacts().count > 0,
                 chatViewMode: chatViewMode,
                 contactsOnMega: contactsOnMegaViewState,
-                archivedChats: archiveChatsViewState(),
-                bottomButtonAction: { [weak self] in 
+                archivedChats: archiveChatsViewState,
+                newChatAction: {[weak self] in
                     guard let self else { return }
                     if self.chatViewMode == .chats {
                         self.addChatButtonTapped()
                     }
                 },
-                bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
+                inviteFriendAction: {[weak self] in
+                    guard let self else { return }
+                    if self.chatViewMode == .chats {
+                        self.goToInviteContact()
+                    }
+                },
+                linkTappedAction: linkTappedAction,
+                bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : []
             )
         }
+    }
+    
+    func linkTappedAction() {
+        guard let link = URL(string: "https://mega.io/chatandmeetings") else {
+            return
+        }
+        urlOpener(link)
+        tracker.trackAnalyticsEvent(with: InviteFriendsLearnMorePressedEvent())
     }
     
     @MainActor
@@ -250,11 +272,13 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     func contextMenuConfiguration() -> CMConfigEntity {
-        CMConfigEntity(menuType: .menu(type: .chat),
+        CMConfigEntity(
+            menuType: .menu(type: .chat),
                        isDoNotDisturbEnabled: globalDNDNotificationControl.isGlobalDNDEnabled,
                        timeRemainingToDeactiveDND: globalDNDNotificationControl.timeRemainingToDeactiveDND ?? "",
                        chatStatus: chatUseCase.chatStatus(),
-                       isArchivedChatsVisible: chatUseCase.archivedChatListCount() > 0)
+                       isArchivedChatsVisible: hasArchivedChats
+        )
     }
     
     func selectChatMode(_ mode: ChatViewMode) {
@@ -275,12 +299,17 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatUseCase.changeChatStatus(to: status)
     }
     
-    func archiveChatsViewState() -> ChatRoomsTopRowViewState? {
-        let count = chatUseCase.archivedChatListCount()
-        guard count > 0 else { return nil }
-        
-        return ChatRoomsTopRowViewState.archivedChatsViewState(
-            count: count,
+    var archivedChatsCount: UInt {
+        chatUseCase.archivedChatListCount()
+    }
+    
+    var hasArchivedChats: Bool {
+        archivedChatsCount > 0
+    }
+    
+    var archiveChatsViewState: ChatRoomsTopRowViewState {
+        ChatRoomsTopRowViewState.archivedChatsViewState(
+            count: archivedChatsCount,
             action: { [weak self] in
                 self?.router.showArchivedChatRooms()
             }
@@ -293,9 +322,10 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
         
         return emptyViewStateFactory.noNetworkEmptyViewState(
+            hasArchivedChats: hasArchivedChats,
             chatViewMode: chatViewMode,
             contactsOnMega: contactsOnMegaViewState,
-            archivedChats: archiveChatsViewState()
+            archivedChats: archiveChatsViewState
         )
     }
     
@@ -698,8 +728,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func startMeetingMenu() -> ChatRoomsEmptyBottomButtonMenu {
-        ChatRoomsEmptyBottomButtonMenu(
+    private func startMeetingMenu() -> MenuButtonModel.Menu {
+        .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting,
             image: .startMeeting
         ) { [weak self] in
@@ -708,8 +738,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func joinMeetingMenu() -> ChatRoomsEmptyBottomButtonMenu {
-        ChatRoomsEmptyBottomButtonMenu(
+    private func joinMeetingMenu() -> MenuButtonModel.Menu {
+        .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting,
             image: .joinAMeeting
         ) { [weak self] in
@@ -718,8 +748,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func scheduleMeetingMenu() -> ChatRoomsEmptyBottomButtonMenu {
-        ChatRoomsEmptyBottomButtonMenu(
+    private func scheduleMeetingMenu() -> MenuButtonModel.Menu {
+        .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting,
             image: .scheduleMeeting
         ) { [weak self] in
@@ -795,7 +825,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func topRowViewTapped() {
+    private func goToInviteContact() {
         router.showInviteContactScreen()
     }
     
@@ -946,5 +976,11 @@ extension ChatRoomsListViewModel: PushNotificationControlProtocol {
     
     func pushNotificationSettingsLoaded() {
         refreshContextMenu()
+    }
+}
+
+extension FeatureFlagProviderProtocol {
+    var newChatEmptyScreen: Bool {
+        isFeatureFlagEnabled(for: .chatEmptyStates)
     }
 }
