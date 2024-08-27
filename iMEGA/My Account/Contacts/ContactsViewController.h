@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsBottomSeparatorView;
 @property (weak, nonatomic) IBOutlet UIImageView *addGroupAvatarImageView;
-
+@property (strong, nonatomic) UIView *createNewChatEmptyView;
 @property (nonatomic) ContactsMode contactsMode;
 @property (nonatomic) ChatOptionType chatOptionType;
 @property (strong, nonatomic) ContactsViewModel*viewModel;
@@ -68,11 +68,16 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 @property (strong, nonatomic) NSSet<id> *subscriptions;
 @property (nonatomic, weak) id<ContactsViewControllerDelegate> contactsViewControllerDelegate;
+@property (weak, nonatomic) IBOutlet UIView *tableViewFooter;
+
+@property (weak, nonatomic) IBOutlet UILabel *noContactsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
 
 - (void)shareNodesWithLevel:(MEGAShareType)shareType nodes:(NSArray *)nodes;
 - (void)shareNodesWithLevel:(MEGAShareType)shareType;
 - (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton;
 - (void)addItemsToList:(NSArray<ItemListModel *> *)items;
 - (void)reloadUI;
-
+- (IBAction)inviteContactTouchUpInside:(UIButton *)sender;
 @end

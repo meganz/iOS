@@ -4302,3 +4302,13 @@
 "call.shareOptions.share"="Share";
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="Cancel";
+/* Title for empty chats tab */
+"chat.chats.emptyState.v2.title"="Keep conversations private";
+/* Description for empty chats tab */
+"chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private.";
+/* Description for empty chats tab. Tappable link */
+"chat.chats.emptyState.v2.description.link"="[Learn more](mega://learnmore)";
+/* Title for invite button on the empty chat screen */
+"chat.chats.emptyState.v2.button.invite.title"="Invite a friend";
+/* Description in new chat screen empty screen mode when user has no contacts */
+"chat.newChat.emptyState.description"="With top notch security and verification codes, reach out without fear of scams, data mining, or stolen information";

@@ -47,7 +47,7 @@ class InviteContactViewController: UIViewController {
         addFromContactsLabel.text = Strings.Localizable.addFromContacts
         enterEmailLabel.text = Strings.Localizable.enterEmail
         scanQrCodeLabel.text = Strings.Localizable.scanCode
-        moreLabel.text = Strings.Localizable.more
+        moreLabel.text = Strings.Localizable.Invite.ContactLink.Share.title
 
         let contactLinkCreateDelegate = MEGAContactLinkCreateRequestDelegate { (request) in
             guard let base64Handle = MEGASdk.base64Handle(forHandle: request.nodeHandle) else { return }

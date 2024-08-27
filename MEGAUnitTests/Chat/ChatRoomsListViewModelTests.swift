@@ -78,20 +78,6 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssert(router.presentStartConversation_calledTimes == 1)
     }
     
-    func testSelectChatMode_inviteContactNow_shouldMatch() throws {
-        let router = MockChatRoomsListRouter()
-        let viewModel = makeChatRoomsListViewModel(router: router, chatViewMode: .meetings)
-        viewModel.selectChatMode(.chats)
-        XCTAssertEqual(viewModel.contactsOnMegaViewState?.description, Strings.Localizable.inviteContactNow)
-    }
-    
-    func testSelectMeetingsMode_inviteContactNow_shouldMatch() throws {
-        let router = MockChatRoomsListRouter()
-        let viewModel = makeChatRoomsListViewModel(router: router, chatViewMode: .meetings)
-        viewModel.selectChatMode(.meetings)
-        XCTAssertNil(viewModel.contactsOnMegaViewState?.description)
-    }
-    
     func testSelectChatsMode_inputAsChats_viewModelsShouldMatch() {
         let mockList = chatsListMock
         let viewModel = makeChatRoomsListViewModel(
@@ -529,7 +515,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
             tracker: tracker,
-            featureFlagProvider: featureFlagProvider
+            featureFlagProvider: featureFlagProvider,
+            urlOpener: {_ in }
         )
         return sut
     }
