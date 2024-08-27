@@ -7,7 +7,7 @@ public struct PrimaryActionButtonView: View {
     private let action: (() -> Void)
     
     @Environment(\.colorScheme) var colorScheme
-    private var textColor: Color {
+    private var backgroundColor: Color {
         colorScheme == .dark ? Color(red: 0, green: 0.76, blue: 0.60) : Color(red: 0, green: 0.65, blue: 0.52)
     }
     public init(title: String, action: @escaping () -> Void) {
@@ -25,7 +25,7 @@ public struct PrimaryActionButtonView: View {
                 )
                 .font(.title3)
                 .background(
-                    isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : textColor
+                    isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : backgroundColor
                 )
                 .cornerRadius(10)
                 .contentShape(Rectangle())
