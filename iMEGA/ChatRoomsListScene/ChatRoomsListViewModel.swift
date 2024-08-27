@@ -186,6 +186,13 @@ final class ChatRoomsListViewModel: ObservableObject {
         configureTitle()
     }
     
+    var hasContacts: Bool {
+        // we filter only visible to not show removed contacts
+        accountUseCase
+            .contacts()
+            .contains { $0.visibility == .visible }
+    }
+    
     func emptyViewState() -> ChatRoomsEmptyViewState? {
         guard isChatRoomEmpty else {
             return nil
@@ -198,7 +205,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         } else {
             emptyViewStateFactory.emptyChatRoomsViewState(
                 hasArchivedChats: hasArchivedChats,
-                hasContacts: accountUseCase.contacts().count > 0,
+                hasContacts: hasContacts,
                 chatViewMode: chatViewMode,
                 contactsOnMega: contactsOnMegaViewState,
                 archivedChats: archiveChatsViewState,
@@ -206,18 +213,32 @@ final class ChatRoomsListViewModel: ObservableObject {
                     guard let self else { return }
                     if self.chatViewMode == .chats {
                         self.addChatButtonTapped()
+                        self.trackNewChatTapped()
                     }
                 },
                 inviteFriendAction: {[weak self] in
                     guard let self else { return }
                     if self.chatViewMode == .chats {
                         self.goToInviteContact()
+                        self.trackInviteFriend()
                     }
                 },
                 linkTappedAction: linkTappedAction,
                 bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : []
             )
         }
+    }
+    
+    private func trackNewChatTapped() {
+        tracker.trackAnalyticsEvent(with: ChatTabFABPressedEvent())
+    }
+    
+    private func trackInviteFriend() {
+        tracker.trackAnalyticsEvent(with: InviteFriendsPressedEvent())
+    }
+    
+    func trackScreenAppearance() {
+        tracker.trackAnalyticsEvent(with: ChatScreenEvent())
     }
     
     func linkTappedAction() {
@@ -284,6 +305,9 @@ final class ChatRoomsListViewModel: ObservableObject {
     func selectChatMode(_ mode: ChatViewMode) {
         guard mode != chatViewMode else { return }
         chatViewMode = mode
+        if mode == .chats {
+            tracker.trackAnalyticsEvent(with: ChatsTabEvent())
+        }
         fetchChats()
     }
     

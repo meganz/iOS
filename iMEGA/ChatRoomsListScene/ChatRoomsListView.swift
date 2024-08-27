@@ -37,6 +37,9 @@ struct ChatRoomsListView: View {
         .onDisappear {
             viewModel.cancelLoading()
         }
+        .onLoad {
+            viewModel.trackScreenAppearance()
+        }
         .background(
             GeometryReader { geo in
                 Color.clear
