@@ -4,21 +4,16 @@
 
 #import "SVProgressHUD.h"
 
-#import "Helper.h"
 #import "MEGAQLPreviewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
-#import "CloudDriveViewController.h"
-#import "MainTabBarController.h"
 #import "SearchInPdfViewController.h"
 #import "SendToViewController.h"
 #import "MEGALinkManager.h"
 
 #import "MEGANode+MNZCategory.h"
-#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
@@ -162,9 +157,12 @@
 
 - (void)loadPreview {
     NSURL *url = [self documentUrl];
-    self.textContent = [[NSString alloc] initWithContentsOfFile:url.path usedEncoding:nil error:nil];
-    if (self.textContent != nil
-        && [FileExtensionGroupOCWrapper verifyIsEditableText:url.path]) {
+
+    if ([FileExtensionGroupOCWrapper verifyIsEditableText:url.path]) {
+        self.textContent = [[NSString alloc] initWithContentsOfFile:url.path usedEncoding:nil error:nil];
+    }
+    
+    if (self.textContent != nil) {
         [self loadTextView];
     } else if ([url.pathExtension isEqualToString:@"pdf"]) {
         [self loadPdfKit:url];
