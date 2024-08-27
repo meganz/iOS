@@ -4312,3 +4312,9 @@
 "chat.chats.emptyState.v2.button.invite.title"="Invite a friend";
 /* Description in new chat screen empty screen mode when user has no contacts */
 "chat.newChat.emptyState.description"="With top notch security and verification codes, reach out without fear of scams, data mining, or stolen information";
+/* Toast message shown to the user when the node description is added */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Description added";
+/* Toast message shown to the user when the node description is removed */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description removed";
+/* Toast message shown to the user when the node description is updated */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Description updated";

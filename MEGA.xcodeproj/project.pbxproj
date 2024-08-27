@@ -2351,6 +2351,8 @@
 		BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */; };
 		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
 		BF8CB0402C34F63900119979 /* NodeSensitivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CB03F2C34F63900119979 /* NodeSensitivityChecker.swift */; };
+		BF8DD11C2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */; };
+		BF8DD11F2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DD11E2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift */; };
 		BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
 		BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */; };
 		BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */; };
@@ -5195,6 +5197,8 @@
 		BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModelTests.swift; sourceTree = "<group>"; };
 		BF8B02EB28359EDD009AC794 /* callEnded.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = callEnded.wav; sourceTree = "<group>"; };
 		BF8CB03F2C34F63900119979 /* NodeSensitivityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSensitivityChecker.swift; sourceTree = "<group>"; };
+		BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoWrapperViewController.swift; sourceTree = "<group>"; };
+		BF8DD11E2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeInfoWrapperViewController+SnackBarPresenting.swift"; sourceTree = "<group>"; };
 		BF90C7A626040930006061F8 /* UserStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreRepository.swift; sourceTree = "<group>"; };
 		BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsView.swift; sourceTree = "<group>"; };
 		BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNDTurnOnOption.swift; sourceTree = "<group>"; };
@@ -9319,6 +9323,8 @@
 				834EFDC124D9B373004BFECA /* Node.storyboard */,
 				834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */,
 				B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */,
+				BF8DD11E2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift */,
+				BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */,
 				94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */,
 				837B73AD24DD7EAA00321368 /* NodeVersionsViewController.h */,
 				837B73AE24DD7EAA00321368 /* NodeVersionsViewController.m */,
@@ -15592,6 +15598,8 @@
 				94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */,
 				834EFDBF24D9AF64004BFECA /* NodeInfoViewController.swift in Sources */,
 				B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */,
+				BF8DD11F2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift in Sources */,
+				BF8DD11C2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift in Sources */,
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
 				5D6092A6255D609F005FA3E4 /* NodeLabelActionUseCase.swift in Sources */,
 				5D0B42B6250618070057D49B /* NodeLinkRouter.swift in Sources */,

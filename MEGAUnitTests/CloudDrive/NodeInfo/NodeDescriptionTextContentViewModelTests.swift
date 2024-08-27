@@ -125,7 +125,8 @@ final class NodeDescriptionTextContentViewModelTests: XCTestCase {
     ) -> NodeDescriptionTextContentViewModel {
         let sut = NodeDescriptionTextContentViewModel(
             maxCharactersAllowed: maxCharactersAllowed,
-            editingDisabled: editingDisabled,
+            editingDisabled: editingDisabled, 
+            placeholderText: "",
             textViewEdgeInsets: textViewEdgeInsets,
             descriptionUpdated: descriptionUpdated,
             saveDescription: saveDescription,

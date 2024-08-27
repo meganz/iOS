@@ -4,6 +4,7 @@ import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 final class NodeDescriptionCellController: NSObject {
     private static let reuseIdentifier = "NodeDescriptionCellID"
     private let maxCharactersAllowed = 300
@@ -120,13 +121,16 @@ extension NodeDescriptionCellController: UITableViewDataSource {
         NodeDescriptionContentConfiguration(
             description: viewModel.description,
             editingDisabled: viewModel.hasReadOnlyAccess,
-            maxCharactersAllowed: maxCharactersAllowed
+            maxCharactersAllowed: maxCharactersAllowed, 
+            placeholderText: viewModel.placeholderTextForReadWriteMode
         ) { [weak self, weak tableView] text in
             guard let self, let tableView else { return }
             update(footerText: text, andScrollTo: indexPath, tableView: tableView)
-        } saveDescription: { updatedDescription in
-            MEGALogDebug("Updated description is \(updatedDescription)")
-            // SAO-1730: Save node description
+        } saveDescription: { description in
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                await viewModel.save(descriptionString: description)
+            }
         } updatedLayout: { [weak self, weak tableView] updates in
             guard let self, let tableView else { return }
             updateAndScroll(to: indexPath, tableView: tableView, updates: updates)
