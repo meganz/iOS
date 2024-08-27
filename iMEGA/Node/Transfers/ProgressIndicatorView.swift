@@ -30,7 +30,12 @@ final class ProgressIndicatorView: UIView {
     private var transfersPaused: Bool {
         UserDefaults.standard.bool(forKey: "TransfersPaused")
     }
-
+    private var configureDataTask: Task<Void, any Error>? {
+        willSet {
+            configureDataTask?.cancel()
+        }
+    }
+    
     private var isWidgetForbidden = false
     @objc var overquota = false {
         didSet {
@@ -122,6 +127,7 @@ final class ProgressIndicatorView: UIView {
     @objc func hideWidget() {
         isWidgetForbidden = true
         isHidden = true
+        configureDataTask = nil
     }
 
     @objc func dismissWidget() {
@@ -230,15 +236,25 @@ extension ProgressIndicatorView {
     }
 
     @objc func configureData() {
-        guard !isWidgetForbidden else {
+        configureDataTask = Task {
+            try await configureData()
+        }
+    }
+    
+    private func configureData() async throws {
+        try Task.checkCancellation()
+        
+        guard !self.isWidgetForbidden else {
             isHidden = true
             return
         }
 
         transfers.removeAll()
-        transfers = transferInventoryUseCase.transfers(filteringUserTransfers: true) +
+        transfers = await transferInventoryUseCase.transfers(filteringUserTransfers: true) +
         sharedFolderTransferInventoryUseCase.transfers(filteringUserTransfers: true)
 
+        try Task.checkCancellation()
+        
         if let failedTransfer = transferInventoryUseCase.completedTransfers(filteringUserTransfers: true)
             .first(where: { $0.state != .complete && $0.state != .cancelled }) {
             updateStateBadge(for: failedTransfer)
