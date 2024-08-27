@@ -5,6 +5,7 @@ import MEGAL10n
 import MEGATest
 import XCTest
 
+@MainActor
 final class NodeDescriptionViewModelTests: XCTestCase {
 
     var readOnlyAccessNodeTypes: [NodeAccessTypeEntity] {
@@ -46,7 +47,6 @@ final class NodeDescriptionViewModelTests: XCTestCase {
     }
 
     func testDescription_whenNodeDescriptionIsEmptyAndHasAccessToUpdateDescription_shouldMatchReadOnlyString() {
-        let node = NodeEntity()
         fullAccessNodeTypes.forEach {
             let sut = makeSUT(description: "", accessType: $0)
             XCTAssertEqual(
@@ -151,6 +151,35 @@ final class NodeDescriptionViewModelTests: XCTestCase {
         XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
     }
 
+    func testUpdateDescriptionString_whenDescriptionAddedSuccessfully_shouldReturnStateAsAdded() async {
+        let sut = makeSUT(description: nil) { result in
+            XCTAssertEqual(result, .added)
+        }
+
+        await sut.save(descriptionString: "Hello World!")
+    }
+
+    func testUpdateDescriptionString_whenDescriptionUpdatedSuccessfully_shouldReturnStateAsUpdated() async {
+        let sut = makeSUT {
+            XCTAssertEqual($0, .updated)
+        }
+        await sut.save(descriptionString: "Hello World!")
+    }
+
+    func testUpdateDescriptionString_whenDescriptionRemovedSuccessfully_shouldReturnStateAsRemoved() async {
+        let sut = makeSUT {
+            XCTAssertEqual($0, .removed)
+        }
+        await sut.save(descriptionString: "")
+    }
+
+    func testUpdateDescriptionString_whenUseCaseReturnsFailure_shouldReturnNil() async {
+        let sut = makeSUT(nodeDescriptionResult: .failure(NSError(domain: "", code: 0))) {
+            XCTAssertNil($0)
+        }
+        await sut.save(descriptionString: "")
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
@@ -159,6 +188,8 @@ final class NodeDescriptionViewModelTests: XCTestCase {
         isNodeInRubbishBin: Bool = false,
         isBackupsNode: Bool = false,
         isBackupsRootNode: Bool = false,
+        nodeDescriptionResult: Result<NodeEntity, any Error> = .success(NodeEntity()),
+        descriptionSaved: @escaping (NodeDescriptionViewModel.SavedState) -> Void = { _ in },
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> NodeDescriptionViewModel {
@@ -173,7 +204,9 @@ final class NodeDescriptionViewModelTests: XCTestCase {
         let sut = NodeDescriptionViewModel(
             node: NodeEntity(description: description),
             nodeUseCase: nodeUseCase,
-            backupUseCase: backupUseCase
+            backupUseCase: backupUseCase,
+            nodeDescriptionUseCase: MockNodeDescriptionUseCase(result: nodeDescriptionResult), 
+            descriptionSaved: descriptionSaved
         )
         trackForMemoryLeaks(on: sut)
         return sut

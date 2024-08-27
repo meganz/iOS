@@ -67,9 +67,8 @@ extension NodeDescriptionTextContentView: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if let configuration = nodeDescriptionConfiguration(), 
-            configuration.description.isPlaceholder,
             textView.text?.isEmpty == true {
-            textView.text = configuration.description.text
+            textView.text = viewModel.placeholderText
             textView.textColor = textColor(isPlaceholderText: true)
         }
     }

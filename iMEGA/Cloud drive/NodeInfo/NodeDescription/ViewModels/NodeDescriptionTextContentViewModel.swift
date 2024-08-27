@@ -4,7 +4,7 @@ import MEGASwift
 final class NodeDescriptionTextContentViewModel {
     let textViewEdgeInsets: UIEdgeInsets
     let editingDisabled: Bool
-
+    let placeholderText: String
     let descriptionUpdated: (String) -> Void
     let saveDescription: (String) -> Void
     let updatedLayout: (() -> Void) -> Void
@@ -13,6 +13,7 @@ final class NodeDescriptionTextContentViewModel {
     init(
         maxCharactersAllowed: Int,
         editingDisabled: Bool,
+        placeholderText: String,
         textViewEdgeInsets: UIEdgeInsets,
         descriptionUpdated: @escaping (String) -> Void,
         saveDescription: @escaping (String) -> Void,
@@ -20,6 +21,7 @@ final class NodeDescriptionTextContentViewModel {
     ) {
         self.maxCharactersAllowed = maxCharactersAllowed
         self.editingDisabled = editingDisabled
+        self.placeholderText = placeholderText
         self.textViewEdgeInsets = textViewEdgeInsets
         self.descriptionUpdated = descriptionUpdated
         self.saveDescription = saveDescription
