@@ -39,6 +39,7 @@ public protocol AccountUseCaseProtocol: Sendable {
     func isStandardProAccount() -> Bool
 
     // Account operations
+    // this will return also deleted contacts, need to filter by `visibility` to get current ones
     func contacts() -> [UserEntity]
     func totalNodesCount() -> UInt64
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
