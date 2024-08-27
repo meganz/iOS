@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol SaveAlbumToFolderUseCaseProtocol {
+public protocol SaveAlbumToFolderUseCaseProtocol: Sendable {
     /// Create subfolder (using album name) in parent folder and copy the public photos
     /// into it.
     /// - Parameter albumName: album name that be used as the folder name

@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol ImportPublicAlbumUseCaseProtocol {
+public protocol ImportPublicAlbumUseCaseProtocol: Sendable {
     /// Import public photos into album
     ///
     /// Create a folder with the album name in parent folder. The photos will be copied to the new folder

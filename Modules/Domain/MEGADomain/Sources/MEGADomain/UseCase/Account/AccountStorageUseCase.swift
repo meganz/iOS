@@ -1,5 +1,5 @@
 // MARK: - Use case protocol
-public protocol AccountStorageUseCaseProtocol {
+public protocol AccountStorageUseCaseProtocol: Sendable {
     /// Determines whether not the given sequence of nodes will  exceed the active users storage quota limit.
     /// - Parameter nodes: Sequence of nodes to possibly be imported into account
     /// - Returns: True, if storage quote will exceed if the given nodes are added to the user account, else false.

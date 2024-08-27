@@ -8,6 +8,7 @@ import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 final class ImportAlbumViewModel: ObservableObject {
     enum Constants {
         static let disabledOpacity = 0.3
@@ -27,7 +28,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var showSnackBarSubscription: AnyCancellable?
     private var renamedAlbum: String?
-
+    
     // Public State
     private(set) var importAlbumTask: Task<Void, Never>?
     private(set) var reservedAlbumNames: [String]?
@@ -125,7 +126,6 @@ final class ImportAlbumViewModel: ObservableObject {
         tracker.trackAnalyticsEvent(with: DIContainer.albumImportScreenEvent)
     }
     
-    @MainActor
     func loadPublicAlbum() async {
         publicLinkStatus = .inProgress
         if decryptionKeyRequired() {
@@ -135,7 +135,6 @@ final class ImportAlbumViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func loadWithNewDecryptionKey() async {
         guard monitorUseCase.isConnected() else {
             showNoInternetConnection = true
@@ -149,7 +148,7 @@ final class ImportAlbumViewModel: ObservableObject {
         publicLinkWithDecryptionKey = linkWithDecryption
         await loadPublicAlbum()
     }
-            
+    
     func enablePhotoLibraryEditMode(_ enable: Bool) {
         photoLibraryContentViewModel.selection.editMode = enable ? .active : .inactive
     }
@@ -162,7 +161,6 @@ final class ImportAlbumViewModel: ObservableObject {
         photoLibraryContentViewModel.toggleSelectAllPhotos()
     }
     
-    @MainActor
     func importAlbum() async {
         tracker.trackAnalyticsEvent(with: DIContainer.albumImportSaveToCloudDriveButtonEvent)
         guard monitorUseCase.isConnected() else {
@@ -189,7 +187,6 @@ final class ImportAlbumViewModel: ObservableObject {
         showImportAlbumLocation.toggle()
     }
     
-    @MainActor
     func saveToPhotos() async {
         tracker.trackAnalyticsEvent(with: DIContainer.albumImportSaveToDeviceButtonEvent)
         guard monitorUseCase.isConnected() else {
@@ -197,7 +194,7 @@ final class ImportAlbumViewModel: ObservableObject {
             return
         }
         let photosToSave = photoLibraryContentViewModel.photosToAction
-                
+        
         guard photosToSave.isNotEmpty else {
             return
         }
@@ -216,7 +213,7 @@ final class ImportAlbumViewModel: ObservableObject {
         transferWidgetResponder?.showWidgetIfNeeded()
         
         showSnackBar(message: Strings.Localizable.General.SaveToPhotos.started(photosToSave.count))
-
+        
         do {
             try await saveMediaUseCase.saveToPhotos(nodes: photosToSave)
         } catch {
@@ -224,7 +221,7 @@ final class ImportAlbumViewModel: ObservableObject {
             showSnackBar(message: error.localizedDescription)
         }
     }
-
+    
     func renameAlbum(newName: String) {
         guard monitorUseCase.isConnected() else {
             showNoInternetConnection = true
@@ -234,7 +231,6 @@ final class ImportAlbumViewModel: ObservableObject {
         showImportAlbumLocation.toggle()
     }
     
-    @MainActor
     func monitorNetworkConnection() async {
         for await isConnected in monitorUseCase.connectionChangedStream {
             guard [AlbumPublicLinkStatus.loaded, .invalid].notContains(publicLinkStatus) else {
@@ -252,7 +248,6 @@ final class ImportAlbumViewModel: ObservableObject {
         return reservedNames.contains(name)
     }
     
-    @MainActor
     private func loadPublicAlbumContents() async {
         do {
             let publicAlbum = try await publicAlbumUseCase.publicAlbum(forLink: albumLink)
@@ -408,20 +403,20 @@ final class ImportAlbumViewModel: ObservableObject {
             guard let self else { return }
             defer { cancelImportAlbumTask() }
             
-            await toggleLoading()
+            toggleLoading()
             do {
                 try await importPublicAlbumUseCase.importAlbum(name: albumName,
                                                                photos: photos,
                                                                parentFolder: folder)
-                await toggleLoading()
+                toggleLoading()
                 
                 let message = isSelectionEnabled ?
-                    Strings.Localizable.AlbumLink.Alert.Message.filesSaveToCloudDrive(photos.count) :
-                    Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(albumName)
-                await showSnackBar(message: message)
+                Strings.Localizable.AlbumLink.Alert.Message.filesSaveToCloudDrive(photos.count) :
+                Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(albumName)
+                showSnackBar(message: message)
             } catch {
-                await toggleLoading()
-                await showSnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumFailedToSaveToCloudDrive(albumName))
+                toggleLoading()
+                showSnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumFailedToSaveToCloudDrive(albumName))
                 MEGALogError("[Import Album] Error importing album. Error: \(error)")
             }
         }
@@ -432,7 +427,6 @@ final class ImportAlbumViewModel: ObservableObject {
         importAlbumTask = nil
     }
     
-    @MainActor
     private func showSnackBar(message: String) {
         guard let snackBarViewModel else {
             snackBarViewModel = makeSnackBarViewModel(message: message)
@@ -442,7 +436,6 @@ final class ImportAlbumViewModel: ObservableObject {
         snackBarViewModel.update(snackBar: SnackBar(message: message))
     }
     
-    @MainActor
     private func toggleLoading() {
         showLoading.toggle()
     }

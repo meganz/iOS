@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol PublicAlbumUseCaseProtocol {
+public protocol PublicAlbumUseCaseProtocol: Sendable {
     func publicAlbum(forLink link: String) async throws -> SharedCollectionEntity
     func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity]
     func stopAlbumLinkPreview()

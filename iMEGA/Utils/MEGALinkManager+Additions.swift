@@ -48,6 +48,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes.toMEGANodes(in: .sharedFolderLinkSdk))
     }
     
+    @MainActor
     @objc class func showCollectionLinkView() {
         guard let publicLink = albumPublicLink() else {
             MEGALinkManager.showLinkNotValid()

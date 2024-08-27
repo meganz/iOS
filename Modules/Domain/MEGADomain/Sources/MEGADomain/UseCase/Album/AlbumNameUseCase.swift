@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol AlbumNameUseCaseProtocol {
+public protocol AlbumNameUseCaseProtocol: Sendable {
     func userAlbumNames() async -> [String]
 }
 
