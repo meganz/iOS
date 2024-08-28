@@ -465,6 +465,56 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         )
     }
     
+    func test_didLoadView_tracksScreenEvent() {
+        let mockTracker = MockTracker()
+        let viewModel = makeChatRoomsListViewModel(
+            tracker: mockTracker
+        )
+        
+        viewModel.trackScreenAppearance()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [
+                ChatScreenEvent()
+            ]
+        )
+    }
+    
+    func test_EmptyChats_tapInvite_tracksEvent() throws {
+        let mockTracker = MockTracker()
+        let viewModel = makeChatRoomsListViewModel(
+            tracker: mockTracker,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.chatEmptyStates: true])
+        )
+        let emptyState = try XCTUnwrap(viewModel.emptyViewState())
+        let title = Strings.Localizable.Chat.Chats.EmptyState.V2.Button.Invite.title
+        let button = try XCTUnwrap(emptyState.bottomButtonWith(title: title))
+        button.triggerAction()
+        XCTAssertTrackedAnalyticsEventsEqual(mockTracker.trackedEventIdentifiers, [InviteFriendsPressedEvent()])
+    }
+    
+    func test_EmptyChats_tapNewChat_tracksEvent() throws {
+        let mockTracker = MockTracker()
+        let viewModel = makeChatRoomsListViewModel(
+            tracker: mockTracker,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.chatEmptyStates: true])
+        )
+        let emptyState = try XCTUnwrap(viewModel.emptyViewState())
+        let title = Strings.Localizable.Chat.Chats.EmptyState.Button.title
+        let button = try XCTUnwrap(emptyState.bottomButtonWith(title: title))
+        button.triggerAction()
+        XCTAssertTrackedAnalyticsEventsEqual(mockTracker.trackedEventIdentifiers, [ChatRoomsStartConversationMenuEvent()])
+    }
+    
+    func test_TabSwitching_changeToChats_tracksEvent() {
+        let mockTracker = MockTracker()
+        let viewModel = makeChatRoomsListViewModel(tracker: mockTracker)
+        viewModel.selectChatMode(.meetings)
+        viewModel.selectChatMode(.chats)
+        XCTAssertTrackedAnalyticsEventsEqual(mockTracker.trackedEventIdentifiers, [ChatsTabEvent()])
+    }
+    
     // MARK: - Private methods
     
     private func pastDate(bySubtractHours numberOfHours: Int) -> Date? {

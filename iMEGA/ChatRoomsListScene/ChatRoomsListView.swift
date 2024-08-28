@@ -23,7 +23,7 @@ struct ChatRoomsListView: View {
             }
             
             if let offlineEmptyState = viewModel.noNetworkEmptyViewState() {
-                emptyView(state: offlineEmptyState)
+                ChatRoomsEmptyView(emptyViewState: offlineEmptyState)
             } else {
                 content()
             }
