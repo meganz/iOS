@@ -1301,6 +1301,7 @@
             
         case EventAccountConfirmation:
             self.newAccount = YES;
+            break;
             
         case EventFatalError:
             [self handleFatalErrorWithEvent:event];
