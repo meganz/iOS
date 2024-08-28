@@ -60,8 +60,8 @@ struct UserPlaylistCellContent: View {
         } else {
             ThumbnailLayerView(
                 videoConfig: videoConfig,
-                imageContainers: previewEntity.imageContainers,
-                centerBackgroundImage: videoConfig.rowAssets.rectangleVideoStackPlaylistImage
+                thumbnail: previewEntity.thumbnail,
+                videoPlaylistType: previewEntity.type
             )
             .frame(width: 142, height: 80, alignment: .center)
             .clipShape(RoundedRectangle(cornerRadius: 4))

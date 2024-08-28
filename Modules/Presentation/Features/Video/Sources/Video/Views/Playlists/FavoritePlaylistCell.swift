@@ -41,8 +41,8 @@ struct FavoritePlaylistCell: View {
         } else {
             ThumbnailLayerView(
                 videoConfig: videoConfig,
-                imageContainers: viewModel.previewEntity.imageContainers,
-                centerBackgroundImage: videoConfig.rowAssets.favouritePlaylistThumbnailImage
+                thumbnail: viewModel.previewEntity.thumbnail,
+                videoPlaylistType: viewModel.previewEntity.type
             )
             .frame(width: 142, height: 80, alignment: .center)
             .clipShape(RoundedRectangle(cornerRadius: 4))
@@ -81,20 +81,23 @@ struct FavoritePlaylistCell: View {
 struct ThumbnailLayerView: View {
     
     let videoConfig: VideoConfig
-    let imageContainers: [any ImageContaining]
-    let centerBackgroundImage: UIImage
+    let thumbnail: VideoPlaylistThumbnail
+    let videoPlaylistType: VideoPlaylistEntityType
     
     var body: some View {
         ZStack {
             videoConfig.colorAssets.emptyFavoriteThumbnailBackgroundColor
             
-            if imageContainers.isEmpty {
-                emptyThumbnailView()
-            } else {
+            switch thumbnail.type {
+            case .empty:
+                emptyPlaylistCoverThumbnailView(with: centerBackgroundImage)
+            case .allVideosHasNoThumbnails:
+                allVideosHasNoThumbnailsThumbnailView()
+            case .normal:
                 VideoPlaylistThumbnailView(
                     videoConfig: videoConfig,
                     viewContext: .playlistCell,
-                    imageContainers: imageContainers
+                    imageContainers: thumbnail.imageContainers
                 )
                 
                 playlistIcon()
@@ -104,7 +107,16 @@ struct ThumbnailLayerView: View {
         }
     }
     
-    private func emptyThumbnailView() -> some View {
+    @ViewBuilder
+    private func allVideosHasNoThumbnailsThumbnailView() -> some View {
+        if let image = thumbnail.imageContainers.first?.image {
+            emptyPlaylistCoverThumbnailView(with: image)
+        } else {
+            EmptyView()
+        }
+    }
+    
+    private func emptyPlaylistCoverThumbnailView(with image: Image) -> some View {
         VStack(spacing: 0) {
             HStack {
                 playlistIcon()
@@ -113,13 +125,23 @@ struct ThumbnailLayerView: View {
             .padding(.top, -16)
             .padding(.trailing, 4)
             
-            Image(uiImage: centerBackgroundImage)
+            image
+                .renderingMode(.template)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 32, height: 32)
                 .foregroundStyle(videoConfig.colorAssets.emptyFavoriteThumbnaillImageForegroundColor)
         }
         .padding(0)
+    }
+    
+    private var centerBackgroundImage: Image {
+        switch videoPlaylistType {
+        case .favourite:
+            Image(uiImage: videoConfig.rowAssets.favouritePlaylistThumbnailImage)
+        case .user:
+            Image(uiImage: videoConfig.rowAssets.rectangleVideoStackPlaylistImage)
+        }
     }
     
     private func playlistIcon() -> some View {
@@ -133,8 +155,11 @@ struct ThumbnailLayerView: View {
 #Preview {
     func makeNullViewModel() -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
-            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(thumbnailLoader: Preview_ThumbnailLoader()),
-            videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(), 
+            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
+                thumbnailLoader: Preview_ThumbnailLoader(),
+                fallbackImageContainer: ImageContainer(image: Image("square"), type: .thumbnail)
+            ),
+            videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
             videoPlaylistEntity: videoPlaylistEntity(),
             onTapMoreOptions: { _ in }

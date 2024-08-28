@@ -17,7 +17,8 @@ final class VideoPlaylistEntity_Mapper_Tests: XCTestCase {
             let videos: [NodeEntity] = []
             let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, creationTime: Date(), modificationTime: Date(), sharedLinkStatus: .exported(false))
             
-            let previewEntity = sut.toVideoPlaylistCellPreviewEntity(thumbnailContainers: [], videosCount: videos.count, durationText: duration)
+            let thumbnail = VideoPlaylistThumbnail(type: .empty, imageContainers: [])
+            let previewEntity = sut.toVideoPlaylistCellPreviewEntity(videoPlaylistThumbnail: thumbnail, videosCount: videos.count, durationText: duration)
             
             assertThatMappingDeliversCorrectFormat(on: sut, forResult: previewEntity, at: index, duration: duration, name: name)
             XCTAssertEqual(previewEntity.count, Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist, "failed at index: \(index) for value: \(previewEntity.count)")
@@ -33,7 +34,8 @@ final class VideoPlaylistEntity_Mapper_Tests: XCTestCase {
             let thumbnailContainers = videos.map { _ in anyImageContainer() }
             let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, creationTime: Date(), modificationTime: Date(), sharedLinkStatus: .exported(false))
             
-            let previewEntity = sut.toVideoPlaylistCellPreviewEntity(thumbnailContainers: thumbnailContainers, videosCount: videos.count, durationText: duration)
+            let thumbnail = VideoPlaylistThumbnail(type: .normal, imageContainers: thumbnailContainers)
+            let previewEntity = sut.toVideoPlaylistCellPreviewEntity(videoPlaylistThumbnail: thumbnail, videosCount: videos.count, durationText: duration)
             
             assertThatMappingDeliversCorrectFormat(on: sut, forResult: previewEntity, at: index, duration: duration, name: name)
             XCTAssertEqual(previewEntity.count, "1" + " " + Strings.Localizable.video, "failed at index: \(index) for value: \(previewEntity.count)")
@@ -49,7 +51,8 @@ final class VideoPlaylistEntity_Mapper_Tests: XCTestCase {
             let thumbnailContainers = videos.map { _ in anyImageContainer() }
             let sut = VideoPlaylistEntity(id: 1, name: name, count: videos.count, type: type, creationTime: Date(), modificationTime: Date(), sharedLinkStatus: .exported(false))
             
-            let previewEntity = sut.toVideoPlaylistCellPreviewEntity(thumbnailContainers: thumbnailContainers, videosCount: videos.count, durationText: duration)
+            let thumbnail = VideoPlaylistThumbnail(type: .normal, imageContainers: thumbnailContainers)
+            let previewEntity = sut.toVideoPlaylistCellPreviewEntity(videoPlaylistThumbnail: thumbnail, videosCount: videos.count, durationText: duration)
             
             assertThatMappingDeliversCorrectFormat(on: sut, forResult: previewEntity, at: index, duration: duration, name: name)
             XCTAssertEqual(previewEntity.count, "2" + " " + Strings.Localizable.videos, "failed at index: \(index) for value: \(previewEntity.count)")

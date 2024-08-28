@@ -36,29 +36,20 @@ struct PlaylistContentHeaderView: View {
     
     private var thumbnailView: some View {
         Group {
-            if previewEntity.imageContainers.isEmpty {
-                emptyThumbnailView()
-            } else {
+            switch previewEntity.thumbnail.type {
+            case .empty:
+                emptyPlaylistCoverThumbnailView(with: emptyThumbnailImage)
+            case .allVideosHasNoThumbnails:
+                allVideosHasNoThumbnailsThumbnailView()
+            case .normal:
                 VideoPlaylistThumbnailView(
                     videoConfig: videoConfig,
                     viewContext: .playlistContentHeader,
-                    imageContainers: previewEntity.imageContainers
+                    imageContainers: previewEntity.thumbnail.imageContainers
                 )
             }
         }
         .frame(width: 142, height: 80)
-    }
-    
-    private func emptyThumbnailView() -> some View {
-        Group {
-            emptyThumbnailImage
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 32, height: 32)
-                .foregroundStyle(videoConfig.colorAssets.emptyFavoriteThumbnaillImageForegroundColor)
-        }
-        .frame(width: 142, height: 80)
-        .background(videoConfig.colorAssets.emptyFavoriteThumbnailBackgroundColor.cornerRadius(4))
     }
     
     private var emptyThumbnailImage: Image {
@@ -71,13 +62,35 @@ struct PlaylistContentHeaderView: View {
         return Image(uiImage: image.withRenderingMode(.alwaysTemplate))
     }
     
+    @ViewBuilder
+    private func allVideosHasNoThumbnailsThumbnailView() -> some View {
+        if let image = previewEntity.thumbnail.imageContainers.first?.image {
+            emptyPlaylistCoverThumbnailView(with: image)
+        } else {
+            EmptyView()
+        }
+    }
+    
+    private func emptyPlaylistCoverThumbnailView(with image: Image) -> some View {
+        Group {
+            image
+                .renderingMode(.template)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 32, height: 32)
+                .foregroundStyle(videoConfig.colorAssets.emptyFavoriteThumbnaillImageForegroundColor)
+        }
+        .frame(width: 142, height: 80)
+        .background(videoConfig.colorAssets.emptyFavoriteThumbnailBackgroundColor.cornerRadius(4))
+    }
+    
     private var textVStackSpacing: CGFloat {
-        previewEntity.imageContainers.isEmpty ? TokenSpacing._1 : TokenSpacing._4
+        previewEntity.isEmpty ? TokenSpacing._1 : TokenSpacing._4
     }
     
     @ViewBuilder
     private var secondaryInformationView: some View {
-        if previewEntity.imageContainers.isEmpty {
+        if previewEntity.isEmpty {
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
                 .font(.caption)
                 .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
@@ -165,7 +178,7 @@ private func view(imageContainers: [any ImageContaining], isExported: Bool, play
     PlaylistContentHeaderView(
         videoConfig: .preview,
         previewEntity: VideoPlaylistCellPreviewEntity(
-            imageContainers: imageContainers,
+            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
             count: "24 Videos",
             duration: "3:05:20",
             title: "Magic of Disney’s Animal Kingdom",

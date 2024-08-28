@@ -142,7 +142,7 @@ struct PlaylistContentView: View {
                 )
             }
             
-            if previewEntity.imageContainers.isEmpty {
+            if previewEntity.thumbnail.type == .empty {
                 Spacer()
                 videoEmptyView()
                 Spacer()
@@ -198,7 +198,7 @@ struct PlaylistContentView: View {
     PlaylistContentView(
         videoConfig: .preview,
         previewEntity: VideoPlaylistCellPreviewEntity(
-            imageContainers: [],
+            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
             count: "24 Videos",
             duration: "3:05:20",
             title: "Magic of Disney’s Animal Kingdom",
@@ -218,7 +218,7 @@ struct PlaylistContentView: View {
     PlaylistContentView(
         videoConfig: .preview,
         previewEntity: VideoPlaylistCellPreviewEntity(
-            imageContainers: [],
+            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
             count: "24 Videos",
             duration: "3:05:20",
             title: "Magic of Disney’s Animal Kingdom",
@@ -239,7 +239,7 @@ struct PlaylistContentView: View {
     PlaylistContentView(
         videoConfig: .preview,
         previewEntity: VideoPlaylistCellPreviewEntity(
-            imageContainers: [],
+            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
             count: "",
             duration: "",
             title: "Favourites",
@@ -259,7 +259,7 @@ struct PlaylistContentView: View {
     PlaylistContentView(
         videoConfig: .preview,
         previewEntity: VideoPlaylistCellPreviewEntity(
-            imageContainers: [],
+            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
             count: "",
             duration: "",
             title: "Magic of Disney’s Animal Kingdom",

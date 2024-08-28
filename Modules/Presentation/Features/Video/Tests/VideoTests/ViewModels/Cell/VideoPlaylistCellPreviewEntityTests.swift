@@ -20,7 +20,7 @@ final class VideoPlaylistCellPreviewEntityTests: XCTestCase {
     
     private func makeSUT(type: VideoPlaylistEntityType) -> VideoPlaylistCellPreviewEntity {
         VideoPlaylistCellPreviewEntity(
-            imageContainers: [],
+            thumbnail: VideoPlaylistThumbnail(type: .empty, imageContainers: []),
             count: "any",
             duration: "any",
             title: "any",

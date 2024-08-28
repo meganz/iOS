@@ -43,7 +43,7 @@ extension VideoConfig {
             addPlaylistButtonBackgroundColor: isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color.videoPlaylistAddButtonBackground,
             toolbarBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.mainBar,
             navigationBgColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.mainBar,
-            emptyFavoriteThumbnailBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : Color.videoPlaylistEmptyFavoriteThumbnailBackground,
+            emptyFavoriteThumbnailBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface3.swiftUI : Color.videoPlaylistEmptyFavoriteThumbnailBackground,
             emptyFavoriteThumbnaillImageForegroundColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.videoPlaylistEmptyFavoriteThumbnaillImageForeground,
             videoThumbnailImageViewPlaceholderBackgroundColor: MEGAAppColor.Videos.videoThumbnailImageViewPlaceholderBackgroundColor.color,
             videoThumbnailDurationTextBackgroundColor: MEGAAppColor.Videos.videoThumbnailDurationTextBackgroundColor.color,
@@ -112,7 +112,8 @@ extension VideoConfig {
                 )
             ),
             favouritesEmptyStateImage: UIImage.favouritesEmptyState,
-            noResultVideoPlaylistImage: UIImage.rectangleVideoStackOutline
+            noResultVideoPlaylistImage: UIImage.rectangleVideoStackOutline,
+            videoPlaylistThumbnailFallbackImage: UIImage.videoPlaylistThumbnailFallback
         )
     )}
 }

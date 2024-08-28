@@ -4,9 +4,9 @@ import MEGAPresentation
 
 extension VideoPlaylistEntity {
     
-    func toVideoPlaylistCellPreviewEntity(thumbnailContainers: [any ImageContaining], videosCount: Int, durationText: String) -> VideoPlaylistCellPreviewEntity {
+    func toVideoPlaylistCellPreviewEntity(videoPlaylistThumbnail: VideoPlaylistThumbnail, videosCount: Int, durationText: String) -> VideoPlaylistCellPreviewEntity {
         VideoPlaylistCellPreviewEntity(
-            imageContainers: thumbnailContainers,
+            thumbnail: videoPlaylistThumbnail,
             count: countText(videosCount: videosCount),
             duration: durationText,
             title: name,

@@ -5,7 +5,7 @@ extension VideoPlaylistCellPreviewEntity {
     
     static func preview(isExported: Bool, imageContainers: [any ImageContaining] = []) -> VideoPlaylistCellPreviewEntity {
         VideoPlaylistCellPreviewEntity(
-            imageContainers: imageContainers,
+            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
             count: "48 videos",
             duration: "02:11:21",
             title: "My custom playlist",
