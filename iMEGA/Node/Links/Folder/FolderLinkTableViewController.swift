@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
@@ -111,8 +112,8 @@ extension FolderLinkTableViewController: UITableViewDataSource {
             fatalError("Could not instantiate NodeCollectionViewCell")
         }
         
-        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        cell.infoLabel.textColor = UIColor.label
+        cell.backgroundColor = TokenColors.Background.page
+        cell.infoLabel.textColor = TokenColors.Text.secondary
         
         if let node = getNode(at: indexPath) {
             config(cell, by: node, at: indexPath)
@@ -138,7 +139,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         
         cell.thumbnailPlayImageView.isHidden = node.name?.fileExtensionGroup.isVideo != true
         cell.nameLabel.text = node.name
-        cell.nameLabel.textColor = UIColor.label
+        cell.nameLabel.textColor = TokenColors.Text.primary
         cell.node = node
         
         if tableView.isEditing {
