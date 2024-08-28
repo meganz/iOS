@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASwift
 
+@MainActor
 @objc final class ItemCollectionViewCellViewModel: NSObject {
     
     @Published private(set) var isSensitive: Bool = false
@@ -54,11 +55,10 @@ import MEGASwift
         }
     }
     
-    @MainActor
-    private func loadThumbnail() async {
-        
+    private nonisolated func loadThumbnail() async {
+        guard !Task.isCancelled else { return }
         guard hasThumbnail else {
-            thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
+            await setThumbnailImage(UIImage(data: nodeIconUseCase.iconData(for: node)))
             return
         }
         
@@ -67,7 +67,7 @@ import MEGASwift
             if let cached = thumbnailUseCase.cachedThumbnail(for: node, type: .thumbnail) {
                 thumbnailEntity = cached
             } else {
-                thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
+                await setThumbnailImage(UIImage(data: nodeIconUseCase.iconData(for: node)))
                 thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
             }
             
@@ -75,34 +75,37 @@ import MEGASwift
                 thumbnailEntity.url.path()
             } else {
                 thumbnailEntity.url.path
-            }
-            
-            guard let image = UIImage(contentsOfFile: imagePath) else {
-                return
-            }
-            
-            self.thumbnail = image
+            }            
+            await setThumbnailImage(UIImage(contentsOfFile: imagePath))
         } catch {
             MEGALogError("[\(type(of: self))] Error loading thumbnail: \(error)")
         }
     }
     
-    @MainActor
-    private func applySensitiveConfiguration() async {
+    private nonisolated func applySensitiveConfiguration() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
-            isSensitive = false
+            await setIsSensitive(false)
             return
         }
         
         guard !node.isMarkedSensitive else {
-            isSensitive = true
+            await setIsSensitive(true)
             return
         }
         
         do {
-            isSensitive = try await nodeUseCase.isInheritingSensitivity(node: node)
+            await setIsSensitive(try nodeUseCase.isInheritingSensitivity(node: node))
         } catch {
             MEGALogError("Error checking if node is inheriting sensitivity: \(error)")
         }
+    }
+    
+    private func setIsSensitive(_ newValue: Bool) async {
+        isSensitive = newValue
+    }
+    
+    private func setThumbnailImage(_ newImage: UIImage?) async {
+        guard !Task.isCancelled else { return }
+        thumbnail = newImage
     }
 }

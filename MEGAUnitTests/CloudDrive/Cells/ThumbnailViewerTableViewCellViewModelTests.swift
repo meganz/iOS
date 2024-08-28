@@ -9,6 +9,7 @@ import XCTest
 
 final class ThumbnailViewerTableViewCellViewModelTests: XCTestCase {
     
+    @MainActor
     func testItemForIndex_indexWithinRange_shouldReturnViewModel() {
         let nodes = [
             NodeEntity(handle: 1),
@@ -24,6 +25,7 @@ final class ThumbnailViewerTableViewCellViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testItemForIndex_indexOutsideRange_shouldReturnNil() {
         let nodes = [
             NodeEntity(handle: 1),
@@ -41,6 +43,8 @@ final class ThumbnailViewerTableViewCellViewModelTests: XCTestCase {
 }
 
 extension ThumbnailViewerTableViewCellViewModelTests {
+    
+    @MainActor
     func sut(nodes: [NodeEntity] = [],
              nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
              featureFlagHiddenNodes: Bool = false) -> ThumbnailViewerTableViewCellViewModel {
