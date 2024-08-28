@@ -1,4 +1,4 @@
-public enum NetworkQuality: Int {
-    case bad = 0
+public enum NetworkQuality: Sendable {
+    case bad
     case good
 }

@@ -97,6 +97,10 @@ public struct CallEntity: Sendable {
     public let waitingRoom: WaitingRoomEntity?
     public let waitingRoomHandleList: [HandleEntity]
     public let raiseHandsList: [HandleEntity]
+    public let auxHandle: HandleEntity
+    public let peeridCallCompositionChange: HandleEntity
+    public let networkQuality: NetworkQuality
+
     public let uuid: UUID
     
     public init(
@@ -124,6 +128,9 @@ public struct CallEntity: Sendable {
         waitingRoom: WaitingRoomEntity?,
         waitingRoomHandleList: [HandleEntity],
         raiseHandsList: [HandleEntity],
+        auxHandle: HandleEntity,
+        networkQuality: NetworkQuality,
+        peeridCallCompositionChange: HandleEntity,
         uuid: UUID
     ) {
         self.status = status
@@ -150,6 +157,9 @@ public struct CallEntity: Sendable {
         self.waitingRoom = waitingRoom
         self.waitingRoomHandleList = waitingRoomHandleList
         self.raiseHandsList = raiseHandsList
+        self.auxHandle = auxHandle
+        self.networkQuality = networkQuality
+        self.peeridCallCompositionChange = peeridCallCompositionChange
         self.uuid = uuid
     }
     

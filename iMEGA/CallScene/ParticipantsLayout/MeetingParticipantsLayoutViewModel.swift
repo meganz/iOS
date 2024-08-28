@@ -2,6 +2,7 @@ import Combine
 import CombineSchedulers
 import Foundation
 import MEGADomain
+import MEGAFoundation
 import MEGAL10n
 import MEGAPresentation
 import MEGASwift
@@ -179,6 +180,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var userImageUseCase: any UserImageUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
+    private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
+    private let chatRoomUpdateUseCase: any ChatRoomUpdateUseCaseProtocol
+    
     private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
@@ -208,10 +213,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private var reconnecting1on1Subscription: AnyCancellable?
     
-    private(set) var callSessionUpdateSubscription: AnyCancellable?
-    private var callUpdateSubscription: AnyCancellable?
-    private var raiseHandSubscription: AnyCancellable?
-    
+    private var currentRaiseHandHandles: [HandleEntity] = []
+    private let debouncer = Debouncer(delay: 0.5)
+
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     private var layoutUpdateChannel: ParticipantLayoutUpdateChannel
@@ -233,6 +237,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         userImageUseCase: some UserImageUseCaseProtocol,
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
+        sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
+        chatRoomUpdateUseCase: some ChatRoomUpdateUseCaseProtocol,
         callManager: some CallManagerProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         chatRoom: ChatRoomEntity,
@@ -255,6 +262,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.userImageUseCase = userImageUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.callUpdateUseCase = callUpdateUseCase
+        self.sessionUpdateUseCase = sessionUpdateUseCase
+        self.chatRoomUpdateUseCase = chatRoomUpdateUseCase
         self.callManager = callManager
         self.featureFlagProvider = featureFlagProvider
         self.chatRoom = chatRoom
@@ -264,7 +274,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.cameraEnabled = call.hasLocalVideo
         super.init()
         self.$callsSoundNotificationPreference.useCase = preferenceUseCase
-        setupOnCallUpdateListeners()
         
         self.layoutUpdateChannel.getCurrentLayout = { [weak self] in
             guard let self else { return .grid }
@@ -284,28 +293,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     deinit {
         cancelReconnecting1on1Subscription()
-        callUseCase.stopListeningForCall()
         avatarRefetchTasks?.forEach { $0.cancel() }
         callWillEndTimer?.invalidate()
-    }
-    
-    private func setupOnCallUpdateListeners() {
-        let calUpdatePublisher = callUseCase.onCallUpdate()
-        
-        callUpdateSubscription = calUpdatePublisher
-            .filter { $0.changeType != .callRaiseHand }
-            .receive(on: scheduler)
-            .sink { [weak self] call in
-                self?.onCallUpdate(call)
-            }
-        
-        raiseHandSubscription = calUpdatePublisher
-            .filter { $0.changeType == .callRaiseHand }
-            .receive(on: scheduler)
-            .debounce(for: .seconds(0.5), scheduler: scheduler)
-            .sink { [weak self] call in
-                self?.callRaiseHandChanged(for: call)
-            }
     }
     
     private func initTimerIfNeeded(with duration: Int) {
@@ -578,10 +567,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                         
                         let participantNamesResult = try await [addedParticipantNamesAsyncTask, removedParticipantNamesAsyncTask]
                         
-                        await self.handle(addedParticipantCount: handlerCollectionType.addedHandlers.count,
-                                          removedParticipantCount: handlerCollectionType.removedHandlers.count,
-                                          addedParticipantNames: participantNamesResult[0],
-                                          removedParticipantNames: participantNamesResult[1])
+                        handle(
+                            addedParticipantCount: handlerCollectionType.addedHandlers.count,
+                            removedParticipantCount: handlerCollectionType.removedHandlers.count,
+                            addedParticipantNames: participantNamesResult[0],
+                            removedParticipantNames: participantNamesResult[1]
+                        )
                     } catch {
                         MEGALogError("Failed to load participants name \(error)")
                     }
@@ -598,57 +589,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         )
     }
     
-    private func configureCallSessionsListener() {
-        guard callSessionUpdateSubscription == nil else { return }
-        callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
-            .sink { [weak self] session, _ in
-                guard let self, session.changeType == .onRecording else { return }
-                invokeCommand?(.hideRecording(!session.onRecording))
-            }
-    }
-    
     // MARK: - Dispatch action
     func dispatch(_ action: CallViewAction) {
         switch action {
         case .onViewLoaded:
-            if let updatedCall = callUseCase.call(for: chatRoom.chatId) {
-                call = updatedCall
-            }
-            if chatRoom.chatType == .meeting {
-                invokeCommand?(
-                    .configView(title: chatRoom.title ?? "",
-                                subtitle: "",
-                                isUserAGuest: accountUseCase.isGuest,
-                                isOneToOne: false)
-                )
-                initTimerIfNeeded(with: Int(call.duration))
-            } else {
-                invokeCommand?(
-                    .configView(title: chatRoom.title ?? "",
-                                subtitle: initialSubtitle(),
-                                isUserAGuest: accountUseCase.isGuest,
-                                isOneToOne: isOneToOne)
-                )
-            }
-            callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
-            configureCallSessionsListener()
-            remoteVideoUseCase.addRemoteVideoListener(self)
-            if isActiveCall() {
-                DispatchQueue.main.async {
-                    self.callUseCase.createActiveSessions()
-                }
-            } else {
-                if (chatRoom.chatType == .meeting || chatRoom.chatType == .group) && (call.numberOfParticipants == 0 || call.numberOfParticipants == 1 && call.status == .inProgress) {
-                    invokeCommand?(.showWaitingForOthersMessage)
-                    showEmptyCallShareOptionsViewIfNeeded()
-                }
-            }
-            localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
-            if !isOneToOne {
-                addMeetingParticipantStatusPipelineSubscription()
-            }
-            hasBeenInProgress = call.status == .inProgress
-            invokeCommand?(.updateBarButtons)
+            onViewLoaded()
         case .onViewReady:
             fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
                 self?.invokeCommand?(.updateMyAvatar(image))
@@ -669,7 +614,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .tapOnOptionsMenuButton(let presenter, let sender):
             containerViewModel?.dispatch(.showOptionsMenu(presenter: presenter, sender: sender, isMyselfModerator: chatRoom.ownPrivilege == .moderator))
         case .tapOnBackButton:
-            callUseCase.stopListeningForCall()
             timer?.invalidate()
             callWillEndTimer?.invalidate()
             remoteVideoUseCase.disableAllRemoteVideos()
@@ -779,7 +723,34 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
+    var cameraAndShareButtonsInNavBar: Bool {
+        moreButtonVisibleInCallControls(
+            isOneToOne: isOneToOne
+        )
+    }
+    
+    var showRightNavBarItems: Bool {
+        !isOneToOne
+    }
+    
+    var floatingPanelShown: Bool {
+        containerViewModel?.floatingPanelShown ?? false
+    }
+    
+    var cameraEnabled: Bool {
+        didSet {
+            invokeCommand?(.enableSwitchCameraButton)
+        }
+    }
+    
+    /// Keeps sync between nav bar share link button visibility and empty call share options view. If one is visible the other one must be hidden.
+    var shareLinkBarButtonHidden: Bool = false
+    
     // MARK: - Private
+    
+    private var isOneToOne: Bool {
+        chatRoom.chatType == .oneToOne
+    }
     
     private func didSetSpeakerParticipant(_ speakerParticipant: CallParticipantEntity) {
         invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
@@ -787,8 +758,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func showEmptyCallMessageIfNeeded() {
-        if let call = callUseCase.call(for: chatRoom.chatId),
-           call.numberOfParticipants == 1,
+        if call.numberOfParticipants == 1,
            call.participants.first == accountUseCase.currentUserHandle {
             invokeCommand?(hasParticipantJoinedBefore ? .showNoOneElseHereMessage : .showWaitingForOthersMessage)
         }
@@ -1087,7 +1057,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                         avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
                     )
                     let image = await avatarHandler.avatar(for: base64Handle)
-                    await updateAvatar(handle: handle, image: image)
+                    updateAvatar(handle: handle, image: image)
                 }
             } catch {
                 MEGALogDebug("Failed to fetch avatar for \(handle) with \(error)")
@@ -1184,30 +1154,63 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         updateParticipantAudioLevel(participant)
     }
     
-    private func onCallUpdate(_ call: CallEntity) {
-        switch call.changeType {
-        case .callWillEnd:
-            manageCallWillEnd(for: call)
-        case .localAVFlags:
-            cameraEnabled = call.hasLocalVideo
-        case .status:
-            // earliest moment to get initial list of raised hands
-            if call.status == .inProgress {
-                MEGALogDebug("[RaiseHand] list from callComposition: \(call.raiseHandsList)")
-                // read and cache call here to get most recent raised hands list, used
-                // when user joins and there are already some hands raised in the call
-                self.call = call
-            }
-        default:
-            break
+    private func onViewLoaded() {
+        if let updatedCall = callUseCase.call(for: chatRoom.chatId) {
+            call = updatedCall
         }
+        if chatRoom.chatType == .meeting {
+            invokeCommand?(
+                .configView(title: chatRoom.title ?? "",
+                            subtitle: "",
+                            isUserAGuest: accountUseCase.isGuest,
+                            isOneToOne: false)
+            )
+            initTimerIfNeeded(with: Int(call.duration))
+        } else {
+            invokeCommand?(
+                .configView(title: chatRoom.title ?? "",
+                            subtitle: initialSubtitle(),
+                            isUserAGuest: accountUseCase.isGuest,
+                            isOneToOne: isOneToOne)
+            )
+        }
+        
+        monitorOnCallUpdate()
+        monitorOnSessionUpdate()
+        monitorOnChatRoomUpdate()
+        
+        remoteVideoUseCase.addRemoteVideoListener(self)
+        if isActiveCall() {
+            call.clientSessions.forEach {
+                let participant = participantForSession($0)
+                participantJoined(participant: participant)
+            }
+        } else {
+            if (chatRoom.chatType == .meeting || chatRoom.chatType == .group) && (call.numberOfParticipants == 0 || call.numberOfParticipants == 1 && call.status == .inProgress) {
+                invokeCommand?(.showWaitingForOthersMessage)
+                showEmptyCallShareOptionsViewIfNeeded()
+            }
+        }
+        localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
+        if !isOneToOne {
+            addMeetingParticipantStatusPipelineSubscription()
+        }
+        hasBeenInProgress = call.status == .inProgress
+        invokeCommand?(.updateBarButtons)
     }
     
+    private func participantForSession(_ session: ChatSessionEntity) -> CallParticipantEntity {
+        CallParticipantEntity(
+            session: session,
+            chatRoom: chatRoom,
+            privilege: chatRoomUseCase.peerPrivilege(forUserHandle: session.peerId, chatRoom: chatRoom),
+            raisedHand: call.raiseHandsList.contains(session.peerId)
+        )
+    }
+    
+    // MARK: Raise hand
+    
     private func callRaiseHandChanged(for call: CallEntity) {
-        let raiseHandListBefore = self.call.raiseHandsList
-        
-        self.call = call
-        
         let updater = RaiseHandUpdater(
             snackBarFactory: RaiseHandSnackBarFactory(
                 viewRaisedHandsHandler: viewRaisedHands,
@@ -1228,17 +1231,19 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         
         updater.update(
             callParticipants: callParticipants,
-            raiseHandListBefore: raiseHandListBefore,
+            raiseHandListBefore: currentRaiseHandHandles,
             raiseHandListAfter: call.raiseHandsList,
             localUserHandle: chatUseCase.myUserHandle()
         )
+        
+        currentRaiseHandHandles = call.raiseHandsList
     }
     
-    func viewRaisedHands() {
+    private func viewRaisedHands() {
         showParticipantList()
     }
     
-    func showParticipantList() {
+    private func showParticipantList() {
         // we show menus if needed (navbar, drawer etc)
         invokeCommand?(.switchMenusVisibilityToShownIfNeeded)
         // and then transition to long form of navbar to show list of participants,
@@ -1246,7 +1251,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         containerViewModel?.dispatch(.transitionToLongForm)
     }
     
-    func lowerRaisedHand() {
+    private func lowerRaisedHand() {
         Task {
             do {
                 try await self.callUseCase.lowerHand(forCall: call)
@@ -1255,6 +1260,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
         }
     }
+    
+    // MARK: Call end/destroyed
     
     /// Call will end alert is shown for moderators and countdown for all participants.
     /// Both can not be shown at same time, so countdown is presented for moderators when they choose one action in the alert.
@@ -1288,11 +1295,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
-    var cameraEnabled: Bool {
-        didSet {
-            invokeCommand?(.enableSwitchCameraButton)
-        }
-    }
+    // MARK: Invite participants
     
     private func showEmptyCallShareOptionsViewIfNeeded() {
         if !isOneToOne && call.numberOfParticipants <= 1 && !hasParticipantJoinedBefore {
@@ -1314,9 +1317,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.updateBarButtons)
         }
     }
-    
-    /// Keeps sync between nav bar share link button visibility and empty call share options view. If one is visible the other one must be hidden.
-    var shareLinkBarButtonHidden: Bool = false
 }
 
 struct CallDurationInfo {
@@ -1324,9 +1324,219 @@ struct CallDurationInfo {
     let baseDate: Date
 }
 
-// MARK: - CallCallbacksUseCaseProtocol
+// MARK: - On Call Update
 
-extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
+extension MeetingParticipantsLayoutViewModel {
+    func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        Task { [weak self] in
+            for await call in callUpdates {
+                self?.onCallUpdate(call)
+            }
+        }
+    }
+
+    private func onCallUpdate(_ call: CallEntity) {
+        self.call = call
+        switch call.changeType {
+        case .callWillEnd:
+            manageCallWillEnd(for: call)
+        case .localAVFlags:
+            cameraEnabled = call.hasLocalVideo
+            if call.auxHandle != .invalid {
+                mutedByClient(handle: call.auxHandle)
+            }
+            localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
+        case .networkQuality:
+            networkQualityChanged(call.networkQuality)
+        case .outgoingRingingStop:
+            outgoingRingingStopReceived(call)
+        case .status:
+            switch call.status {
+            case .connecting:
+                connecting()
+            case .inProgress:
+                inProgress()
+            case .terminatingUserParticipation, .destroyed:
+                callTerminated(call)
+            default:
+                break
+            }
+        case .callComposition:
+            guard call.peeridCallCompositionChange != accountUseCase.currentUserHandle && call.status == .inProgress else {
+                return
+            }
+            switch call.callCompositionChange {
+            case .peerRemoved:
+                participantRemoved(with: call.peeridCallCompositionChange)
+            case .peerAdded:
+                participantAdded(with: call.peeridCallCompositionChange)
+            default:
+                break
+            }
+        case .callRaiseHand:
+            debouncer.start { @MainActor [weak self] in
+                self?.callRaiseHandChanged(for: call)
+            }
+        default:
+            break
+        }
+    }
+    
+    private func callTerminated(_ call: CallEntity) {
+        timer?.invalidate()
+        callWillEndTimer?.invalidate()
+        if reconnecting {
+            tonePlayer.play(tone: .callEnded)
+            containerViewModel?.dispatch(.dismissCall(completion: {
+                SVProgressHUD.showError(withStatus: Strings.Localizable.Meetings.Reconnecting.failed)
+            }))
+        }
+    }
+    
+    private func participantAdded(with handle: HandleEntity) {
+        meetingParticipantStatusPipeline.addParticipant(withHandle: handle)
+        containerViewModel?.dispatch(.participantAdded)
+    }
+    
+    private func participantRemoved(with handle: HandleEntity) {
+        meetingParticipantStatusPipeline.removeParticipant(withHandle: handle)
+        containerViewModel?.dispatch(.participantRemoved)
+    }
+    
+    private func connecting() {
+        guard hasBeenInProgress else { return }
+        if !reconnecting {
+            reconnecting = true
+            tonePlayer.play(tone: .reconnecting)
+            invokeCommand?(.reconnecting)
+            invokeCommand?(.hideEmptyRoomMessage)
+        }
+    }
+    
+    private func inProgress() {
+        hasBeenInProgress = true
+        if reconnecting {
+            invokeCommand?(.reconnected)
+            reconnecting = false
+            if callParticipants.isEmpty {
+                invokeCommand?(.showNoOneElseHereMessage)
+            }
+        }
+    }
+    
+    private func localAvFlagsUpdated(video: Bool, audio: Bool) {
+        if localVideoEnabled != video {
+            if localVideoEnabled {
+                localVideoUseCase.removeLocalVideo(for: chatRoom.chatId, callbacksDelegate: self)
+            } else {
+                localVideoUseCase.addLocalVideo(for: chatRoom.chatId, callbacksDelegate: self)
+            }
+            localVideoEnabled = video
+            invokeCommand?(.switchLocalVideo(localVideoEnabled))
+        }
+        invokeCommand?(.updateHasLocalAudio(audio))
+    }
+    
+    private func networkQualityChanged(_ quality: NetworkQuality) {
+        switch quality {
+        case .bad:
+            invokeCommand?(.showBadNetworkQuality)
+        case .good:
+            invokeCommand?(.hideBadNetworkQuality)
+        }
+    }
+    
+    private func outgoingRingingStopReceived(_ call: CallEntity) {
+        if isOneToOne && call.numberOfParticipants == 1 {
+            callManager.endCall(in: chatRoom, endForAll: false)
+            self.tonePlayer.play(tone: .callEnded)
+        }
+    }
+    
+    private func mutedByClient(handle: HandleEntity) {
+        guard let participant = callParticipants.first(where: { $0.clientId == handle }), let name = participant.name else {
+            return
+        }
+        containerViewModel?.dispatch(.showMutedBy(name))
+    }
+}
+
+// MARK: - On Chat Room Update
+
+extension MeetingParticipantsLayoutViewModel {
+    func monitorOnChatRoomUpdate() {
+        let chatRoomUpdates = chatRoomUpdateUseCase.monitorOnChatRoomUpdate()
+        Task { [weak self] in
+            for await chatRoom in chatRoomUpdates {
+                self?.onChatRoomUpdate(chatRoom)
+            }
+        }
+    }
+    
+    private func onChatRoomUpdate(_ chatRoom: ChatRoomEntity) {
+        self.chatRoom = chatRoom
+        switch chatRoom.changeType {
+        case .ownPrivilege:
+            ownPrivilegeUpdated()
+        case .title:
+            chatTitleUpdated()
+        default:
+            break
+        }
+    }
+    
+    private func ownPrivilegeUpdated() {
+        if chatRoom.ownPrivilege == .moderator {
+            invokeCommand?(.ownPrivilegeChangedToModerator)
+        }
+    }
+    
+    private func chatTitleUpdated() {
+        guard let title = chatRoom.title else { return }
+        invokeCommand?(.updateName(title))
+    }
+}
+
+// MARK: - Session Update
+
+extension MeetingParticipantsLayoutViewModel {
+    func monitorOnSessionUpdate() {
+        let sessionUpdates = sessionUpdateUseCase.monitorOnSessionUpdate()
+        Task { [weak self] in
+            for await session in sessionUpdates {
+                self?.onSessionUpdate(session)
+            }
+        }
+    }
+    
+    private func onSessionUpdate(_ session: ChatSessionEntity) {
+        let participant = participantForSession(session)
+        switch session.changeType {
+        case .status:
+            switch session.statusType {
+            case .inProgress:
+                participantJoined(participant: participant)
+            case .destroyed:
+                participantLeft(participant: participant)
+            default:
+                break
+            }
+        case .remoteAvFlags:
+            updateParticipant(participant)
+        case .audioLevel:
+            audioLevel(for: participant)
+        case .onHiRes:
+            highResolutionChanged(for: participant)
+        case .onLowRes:
+            lowResolutionChanged(for: participant)
+        case .onRecording:
+            invokeCommand?(.hideRecording(!session.onRecording))
+        default:
+            break
+        }
+    }
+
     func participantJoined(participant: CallParticipantEntity) {
         removeEmptyCallShareOptionsViewIfNeeded()
         self.hasParticipantJoinedBefore = true
@@ -1529,118 +1739,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 switchVideoResolutionLowToHigh(for: participantWithAudio, in: chatRoom.chatId)
             }
         }
-    }
-    
-    func callTerminated(_ call: CallEntity) {
-        callUseCase.stopListeningForCall()
-        timer?.invalidate()
-        callWillEndTimer?.invalidate()
-        if reconnecting {
-            tonePlayer.play(tone: .callEnded)
-            containerViewModel?.dispatch(.dismissCall(completion: {
-                SVProgressHUD.showError(withStatus: Strings.Localizable.Meetings.Reconnecting.failed)
-            }))
-        }
-    }
-    
-    func participantAdded(with handle: HandleEntity) {
-        dispatch(.addParticipant(withHandle: handle))
-        containerViewModel?.dispatch(.participantAdded)
-    }
-    
-    func participantRemoved(with handle: HandleEntity) {
-        dispatch(.removeParticipant(withHandle: handle))
-        containerViewModel?.dispatch(.participantRemoved)
-    }
-    
-    func connecting() {
-        guard hasBeenInProgress else { return }
-        if !reconnecting {
-            reconnecting = true
-            tonePlayer.play(tone: .reconnecting)
-            invokeCommand?(.reconnecting)
-            invokeCommand?(.hideEmptyRoomMessage)
-        }
-    }
-    
-    func inProgress() {
-        hasBeenInProgress = true
-        if reconnecting {
-            invokeCommand?(.reconnected)
-            reconnecting = false
-            if callParticipants.isEmpty {
-                invokeCommand?(.showNoOneElseHereMessage)
-            }
-        }
-    }
-    
-    func localAvFlagsUpdated(video: Bool, audio: Bool) {
-        if localVideoEnabled != video {
-            if localVideoEnabled {
-                localVideoUseCase.removeLocalVideo(for: chatRoom.chatId, callbacksDelegate: self)
-            } else {
-                localVideoUseCase.addLocalVideo(for: chatRoom.chatId, callbacksDelegate: self)
-            }
-            localVideoEnabled = video
-            invokeCommand?(.switchLocalVideo(localVideoEnabled))
-        }
-        invokeCommand?(.updateHasLocalAudio(audio))
-    }
-    
-    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
-        if self.chatRoom.ownPrivilege != chatRoom.ownPrivilege && privilege == .moderator {
-            invokeCommand?(.ownPrivilegeChangedToModerator)
-        }
-        self.chatRoom = chatRoom
-    }
-    
-    func chatTitleChanged(chatRoom: ChatRoomEntity) {
-        self.chatRoom = chatRoom
-        guard let title = chatRoom.title else { return }
-        invokeCommand?(.updateName(title))
-    }
-    
-    func networkQualityChanged(_ quality: NetworkQuality) {
-        switch quality {
-        case .bad:
-            invokeCommand?(.showBadNetworkQuality)
-        case .good:
-            invokeCommand?(.hideBadNetworkQuality)
-        }
-    }
-    
-    func outgoingRingingStopReceived() {
-        guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
-        self.call = call
-        if isOneToOne && call.numberOfParticipants == 1 {
-            callManager.endCall(in: chatRoom, endForAll: false)
-            self.tonePlayer.play(tone: .callEnded)
-        }
-    }
-    
-    func mutedByClient(handle: HandleEntity) {
-        guard let participant = callParticipants.first(where: { $0.clientId == handle }), let name = participant.name else {
-            return
-        }
-        containerViewModel?.dispatch(.showMutedBy(name))
-    }
-    
-    var cameraAndShareButtonsInNavBar: Bool {
-        moreButtonVisibleInCallControls(
-            isOneToOne: isOneToOne
-        )
-    }
-    
-    var isOneToOne: Bool {
-        chatRoom.chatType == .oneToOne
-    }
-    
-    var showRightNavBarItems: Bool {
-        !isOneToOne
-    }
-    
-    var floatingPanelShown: Bool {
-        containerViewModel?.floatingPanelShown ?? false
     }
 }
 

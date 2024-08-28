@@ -604,7 +604,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             }
         }
         let chatRoom = ChatRoomEntity(changeType: .openInvite, isOpenInviteEnabled: true)
-        try await harness.sendChatRoomUpdate(chatRoom)
+        try await harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
     }
     
     @MainActor func testOnChatRoomUpdate_updateToDisabledAllowNonHostToAddParticipants_allowNonHostToAddParticipantsShouldBeDisabled() async throws {
@@ -618,7 +618,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             }
         }
         let chatRoom = ChatRoomEntity(changeType: .openInvite, isOpenInviteEnabled: false)
-        try await harness.sendChatRoomUpdate(chatRoom)
+        try await harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
     }
     
     @MainActor func testOnChatRoomUpdate_ownPrivilegeUpdatedToModerator_myPrivilegeMustBeUpdated() async throws {
@@ -640,7 +640,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         }
         
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, changeType: .ownPrivilege)
-        try await harness.sendChatRoomUpdate(chatRoom)
+        try await harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
         await fulfillment(of: [expectation], timeout: 1)
         if let moderatorPrivilege {
             XCTAssertTrue(moderatorPrivilege)
@@ -668,7 +668,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         }
         
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, changeType: .ownPrivilege)
-        try await harness.sendChatRoomUpdate(chatRoom)
+        try await harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
         await fulfillment(of: [expectation], timeout: 1)
         if let moderatorPrivilege {
             XCTAssertFalse(moderatorPrivilege)
@@ -869,9 +869,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             ChatSessionEntity(statusType: .inProgress, peerId: 103, clientId: 3, changeType: .status)
         ]
 
-        var callUpdateContinuation: AsyncStream<CallEntity>.Continuation?
-        var sessionUpdateContinuation: AsyncStream<ChatSessionEntity>.Continuation?
-        var chatRoomUpdateContinuation: AsyncStream<ChatRoomEntity>.Continuation?
+        let callUpdateUseCase: MockCallUpdateUseCase
+        let chatRoomUpdateUseCase: MockChatRoomUpdateUseCase
+        let sessionUpdateUseCase: MockSessionUpdateUseCase
         let chatRoom: ChatRoomEntity
         let router: MockMeetingFloatingPanelRouter
         let callUseCase: MockCallUseCase
@@ -881,12 +881,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
             chatRoom: ChatRoomEntity = ChatRoomEntity(),
             callUseCase: MockCallUseCase = .init(),
-            callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
-            callUpdateContinuation: AsyncStream<CallEntity>.Continuation? = nil,
-            chatRoomUpdateUseCase: some ChatRoomUpdateUseCaseProtocol = MockChatRoomUpdateUseCase(),
-            chatRoomUpdateContinuation: AsyncStream<ChatRoomEntity>.Continuation? = nil,
-            sessionUpdateUseCase: some SessionUpdateUseCaseProtocol = MockSessionUpdateUseCase(),
-            sessionUpdateContinuation: AsyncStream<ChatSessionEntity>.Continuation? = nil,
+            callUpdateUseCase: MockCallUpdateUseCase = MockCallUpdateUseCase(),
+            chatRoomUpdateUseCase: MockChatRoomUpdateUseCase = MockChatRoomUpdateUseCase(),
+            sessionUpdateUseCase: MockSessionUpdateUseCase = MockSessionUpdateUseCase(),
             accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
             chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
             chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
@@ -896,9 +893,10 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             self.chatRoom = chatRoom
             self.router = router
             self.callUseCase = callUseCase
-            self.callUpdateContinuation = callUpdateContinuation
-            self.chatRoomUpdateContinuation = chatRoomUpdateContinuation
-            self.sessionUpdateContinuation = sessionUpdateContinuation
+            
+            self.callUpdateUseCase = callUpdateUseCase
+            self.chatRoomUpdateUseCase = chatRoomUpdateUseCase
+            self.sessionUpdateUseCase = sessionUpdateUseCase
             
             self.sut = .init(
                 router: router,
@@ -920,95 +918,34 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         }
         
         static func withMonitorCallAndSessionUpdates() -> Harness {
-            let (callUpdateUseCase, callUpdateContinuation) = Harness.createCallUpdatesUseCase()
-            let (sessionUpdateUseCase, sessionUpdateContinuation) = Harness.createSessionUpdatesUseCase()
-            let harness = Harness(
-                callUpdateUseCase: callUpdateUseCase,
-                callUpdateContinuation: callUpdateContinuation,
-                sessionUpdateUseCase: sessionUpdateUseCase,
-                sessionUpdateContinuation: sessionUpdateContinuation
-            )
+            let harness = Harness()
             harness.sut.monitorOnCallUpdate()
             harness.sut.monitorOnSessionUpdate()
             return harness
         }
         
         static func withMonitorChatRoomAndSessionUpdates() -> Harness {
-            let (chatRoomUpdateUseCase, chatRoomUpdateContinuation) = Harness.createChatRoomUpdatesUseCase()
-            let (sessionUpdateUseCase, sessionUpdateContinuation) = Harness.createSessionUpdatesUseCase()
-            let harness = Harness(
-                chatRoomUpdateUseCase: chatRoomUpdateUseCase,
-                chatRoomUpdateContinuation: chatRoomUpdateContinuation,
-                sessionUpdateUseCase: sessionUpdateUseCase,
-                sessionUpdateContinuation: sessionUpdateContinuation
-            )
+            let harness = Harness()
             harness.sut.monitorOnChatRoomUpdate()
             harness.sut.monitorOnSessionUpdate()
             return harness
         }
         
         static func withMonitorOnChatRoomUpdates() -> Harness {
-            let (chatRoomUpdateUseCase, chatRoomUpdateContinuation) = Harness.createChatRoomUpdatesUseCase()
-            let harness = Harness(
-                chatRoomUpdateUseCase: chatRoomUpdateUseCase,
-                chatRoomUpdateContinuation: chatRoomUpdateContinuation
-            )
+            let harness = Harness()
             harness.sut.monitorOnChatRoomUpdate()
             return harness
         }
         
         static func withMonitorOnSessionUpdates() -> Harness {
-            let (sessionUpdateUseCase, sessionUpdateContinuation) = Harness.createSessionUpdatesUseCase()
-            let harness = Harness(
-                sessionUpdateUseCase: sessionUpdateUseCase,
-                sessionUpdateContinuation: sessionUpdateContinuation
-            )
+            let harness = Harness()
             harness.sut.monitorOnSessionUpdate()
             return harness
         }
         
-        static func createSessionUpdatesUseCase() -> (MockSessionUpdateUseCase, AsyncStream<ChatSessionEntity>.Continuation) {
-            let (stream, continuation) = AsyncStream
-                .makeStream(of: ChatSessionEntity.self)
-            let sessionUpdateUseCase = MockSessionUpdateUseCase(monitorSessionUpdateSequenceResult: AnyAsyncSequence(stream))
-            
-            return (sessionUpdateUseCase, continuation)
-        }
-        
-        static func createChatRoomUpdatesUseCase() -> (MockChatRoomUpdateUseCase, AsyncStream<ChatRoomEntity>.Continuation) {
-            let (stream, continuation) = AsyncStream
-                .makeStream(of: ChatRoomEntity.self)
-            let chatRoomUpdateUseCase = MockChatRoomUpdateUseCase(monitorChatRoomUpdateSequenceResult: AnyAsyncSequence(stream))
-
-            return (chatRoomUpdateUseCase, continuation)
-        }
-        
-        static func createCallUpdatesUseCase() -> (MockCallUpdateUseCase, AsyncStream<CallEntity>.Continuation) {
-            let (stream, continuation) = AsyncStream
-                .makeStream(of: CallEntity.self)
-            let callUpdateUseCase = MockCallUpdateUseCase(monitorCallUpdateSequenceResult: AnyAsyncSequence(stream))
-
-            return (callUpdateUseCase, continuation)
-        }
-        
         func sendRaiseHandsCallUpdate(raiseHandsList: [HandleEntity]) async throws {
             let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: raiseHandsList)
-            try await sendCallUpdate(call)
-        }
-        
-        func sendCallUpdate(_ call: CallEntity) async throws {
-            callUpdateContinuation?.yield(call)
-            try await Task.sleep(nanoseconds: 500_000_000)
-        }
-        
-        func sendSessionUpdate(_ session: ChatSessionEntity) async throws {
-            sessionUpdateContinuation?.yield(session)
-            try await Task.sleep(nanoseconds: 500_000_000)
-        }
-        
-        func sendChatRoomUpdate(_ chatRoom: ChatRoomEntity) async throws {
-            chatRoomUpdateContinuation?.yield(chatRoom)
-            try await Task.sleep(nanoseconds: 500_000_000)
+            try await callUpdateUseCase.sendCallUpdate(call)
         }
         
         // MARK: - Test Helpers
@@ -1018,7 +955,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         
         func joinAllParticipants() async {
             for session in callSessions {
-                try? await sendSessionUpdate(session)
+                try? await sessionUpdateUseCase.sendSessionUpdate(session)
             }
         }
     }
