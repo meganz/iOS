@@ -1,8 +1,6 @@
 import Combine
 
 public protocol CallRepositoryProtocol: Sendable {
-    func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol)
-    func stopListeningForCall()
     func call(for chatId: HandleEntity) -> CallEntity?
     func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, localizedCameraName: String?) async throws -> CallEntity
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity
@@ -15,7 +13,6 @@ public protocol CallRepositoryProtocol: Sendable {
     func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [UInt64])
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64)
     func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64)
-    func createActiveSessions()
     func localAvFlagsChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
     func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
     func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
@@ -29,25 +26,4 @@ public protocol CallRepositoryProtocol: Sendable {
     func disableAudioMonitor(forCall call: CallEntity)
     func raiseHand(forCall call: CallEntity) async throws
     func lowerHand(forCall call: CallEntity) async throws
-}
-
-public protocol CallCallbacksRepositoryProtocol: Sendable {
-    func createdSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
-    func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
-    func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
-    func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
-    func callTerminated(_ call: CallEntity)
-    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity)
-    func participantAdded(with handle: HandleEntity)
-    func participantRemoved(with handle: HandleEntity)
-    func connecting()
-    func inProgress()
-    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
-    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity)
-    func localAvFlagsUpdated(video: Bool, audio: Bool)
-    func chatTitleChanged(chatRoom: ChatRoomEntity)
-    func networkQualityChanged(_ quality: NetworkQuality)
-    func outgoingRingingStopReceived()
-    func waitingRoomUsersAllow(with handles: [HandleEntity])
-    func mutedByClient(handle: HandleEntity)
 }

@@ -2,18 +2,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 
-class MockCallRepository: CallRepositoryProtocol {
-    func startListeningForCallInChat(
-        _ chatId: HandleEntity,
-        callbacksDelegate: CallCallbacksRepositoryProtocol
-    ) {
-        
-    }
-    
-    func stopListeningForCall() {
-        
-    }
-    
+final class MockCallRepository: CallRepositoryProtocol {    
     func call(for chatId: HandleEntity) -> CallEntity? {
         nil
     }
@@ -59,10 +48,6 @@ class MockCallRepository: CallRepositoryProtocol {
     }
     
     func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
-        
-    }
-    
-    func createActiveSessions() {
         
     }
     
