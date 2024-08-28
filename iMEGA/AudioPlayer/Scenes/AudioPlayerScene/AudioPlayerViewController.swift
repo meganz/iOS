@@ -63,6 +63,8 @@ final class AudioPlayerViewController: UIViewController {
         
         viewModel.dispatch(.onViewDidLoad)
         navigationController?.delegate = self
+        
+        configureActivityIndicatorViewColor()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -107,6 +109,12 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     // MARK: - Private functions
+    
+    private func configureActivityIndicatorViewColor() {
+        if UIColor.isDesignTokenEnabled() {
+            activityIndicatorView.color = TokenColors.Icon.secondary
+        }
+    }
     
     private func removeDelegates() {
         if navigationController?.delegate === self {
