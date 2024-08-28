@@ -213,7 +213,6 @@ final class ChatRoomsListViewModel: ObservableObject {
                     guard let self else { return }
                     if self.chatViewMode == .chats {
                         self.addChatButtonTapped()
-                        self.trackNewChatTapped()
                     }
                 },
                 inviteFriendAction: {[weak self] in
@@ -227,10 +226,6 @@ final class ChatRoomsListViewModel: ObservableObject {
                 bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : []
             )
         }
-    }
-    
-    private func trackNewChatTapped() {
-        tracker.trackAnalyticsEvent(with: ChatTabFABPressedEvent())
     }
     
     private func trackInviteFriend() {

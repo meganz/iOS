@@ -170,7 +170,7 @@ struct ChatRoomsEmptyViewStateFactory {
         )
     }
     
-    private func bottomButtons(
+    private func emptyChatBottomButtons(
         hasContacts: Bool,
         inviteAction: @escaping () -> Void,
         newChatAction: @escaping () -> Void
@@ -235,7 +235,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 archivedChats: archivedChats
             ),
             center: center(),
-            bottomButtons: bottomButtons(
+            bottomButtons: emptyChatBottomButtons(
                 hasContacts: hasContacts,
                 inviteAction: inviteFriendAction,
                 newChatAction: newChatAction
