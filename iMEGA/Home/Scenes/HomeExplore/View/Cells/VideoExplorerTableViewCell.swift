@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAUIKit
 import UIKit
 
@@ -17,6 +18,11 @@ class VideoExplorerTableViewCell: UITableViewCell {
         super.awakeFromNib()
         moreButtonDefaultWidth = moreButtonWidthConstraint.constant
         videoTitleLabel.lineBreakMode = .byTruncatingMiddle
+        contentView.backgroundColor = TokenColors.Background.page
+        videoTitleLabel.textColor = TokenColors.Text.primary
+        parentFolderNameLabel.textColor = TokenColors.Text.secondary
+        durationLabel.textColor = TokenColors.Text.secondary
+        moreButton.tintColor = TokenColors.Icon.secondary
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
