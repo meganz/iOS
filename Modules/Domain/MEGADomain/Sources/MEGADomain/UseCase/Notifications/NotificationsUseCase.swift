@@ -1,4 +1,4 @@
-public protocol NotificationsUseCaseProtocol {
+public protocol NotificationsUseCaseProtocol: Sendable {
     func fetchLastReadNotification() async throws -> NotificationIDEntity
     func updateLastReadNotification(notificationId: NotificationIDEntity) async throws
     func fetchEnabledNotifications() -> [NotificationIDEntity]
