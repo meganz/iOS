@@ -2,24 +2,37 @@ import MEGADomain
 import MEGAPresentation
 
 protocol VideoPlaylistThumbnailLoaderProtocol: Sendable {
-    func loadThumbnails(for videos: [NodeEntity]) async -> [(any ImageContaining)]
+    func loadThumbnails(for videos: [NodeEntity]) async -> VideoPlaylistThumbnail
 }
 
 struct VideoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoaderProtocol {
     
     private let maxThumbnailToBeDisplayedCount = 4
     private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let fallbackImageContainer: (any ImageContaining)
     private typealias TaskGroupThumbnails = TaskGroup<(order: Int, imageContainer: (any ImageContaining)?)>
     
-    init(thumbnailLoader: any ThumbnailLoaderProtocol) {
+    init(
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        fallbackImageContainer: some ImageContaining
+    ) {
         self.thumbnailLoader = thumbnailLoader
+        self.fallbackImageContainer = fallbackImageContainer
     }
     
-    func loadThumbnails(for videos: [NodeEntity]) async -> [(any ImageContaining)] {
-        await withTaskGroup(of: TaskGroupThumbnails.Element.self) { taskGroup -> [(any ImageContaining)] in
-
-            let thumbnailToBeDisplayed = min(maxThumbnailToBeDisplayedCount, videos.count)
-            var iterator = videos.enumerated().makeIterator()
+    func loadThumbnails(for videos: [NodeEntity]) async -> VideoPlaylistThumbnail {
+        if videos.isEmpty {
+            return VideoPlaylistThumbnail(type: .empty, imageContainers: [])
+        }
+        
+        if videos.allSatisfy({ !$0.hasThumbnail }) {
+            return VideoPlaylistThumbnail(type: .allVideosHasNoThumbnails, imageContainers: [fallbackImageContainer])
+        }
+        
+        return await withTaskGroup(of: TaskGroupThumbnails.Element.self) { taskGroup -> VideoPlaylistThumbnail in
+            let onlyHasThumbailVideos = videos.filter(\.hasThumbnail)
+            let thumbnailToBeDisplayed = min(maxThumbnailToBeDisplayedCount, onlyHasThumbailVideos.count)
+            var iterator = onlyHasThumbailVideos.enumerated().makeIterator()
             let loadNext = { ( taskGroup: inout TaskGroupThumbnails) -> Bool in
                 guard let (order, video) = iterator.next() else {
                     return false
@@ -51,8 +64,10 @@ struct VideoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoaderProtocol {
             
             taskGroup.cancelAll()
             
-            return results.sorted { a, b in a.order < b.order }
+            let imageContainers = results.sorted { a, b in a.order < b.order }
                 .map(\.imageContainer)
+            
+            return VideoPlaylistThumbnail(type: .normal, imageContainers: imageContainers)
         }
     }
 }

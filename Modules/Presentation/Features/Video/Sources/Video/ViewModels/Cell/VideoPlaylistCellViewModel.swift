@@ -41,10 +41,10 @@ final class VideoPlaylistCellViewModel: ObservableObject {
     private func loadThumbnails(for videos: [NodeEntity]) async {
         let sortOrder = sortOrderPreferenceUseCase.sortOrder(for: .videoPlaylistContent)
         let sortedVideos = await VideoPlaylistContentSorter.sort(videos, by: sortOrder)
-        let imageContainers = await videoPlaylistThumbnailLoader.loadThumbnails(for: sortedVideos)
+        let thumbnail = await videoPlaylistThumbnailLoader.loadThumbnails(for: sortedVideos)
         
         previewEntity = videoPlaylistEntity.toVideoPlaylistCellPreviewEntity(
-            thumbnailContainers: imageContainers,
+            videoPlaylistThumbnail: thumbnail,
             videosCount: videos.count,
             durationText: durationText(from: videos)
         )

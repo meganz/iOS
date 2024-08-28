@@ -118,7 +118,11 @@ public class VideoRevampFactory {
             videoPlaylistEntity: previewEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentUseCase,
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
-                thumbnailLoader: thumbnailLoader
+                thumbnailLoader: thumbnailLoader,
+                fallbackImageContainer: ImageContainer(
+                    image: Image(uiImage: videoConfig.playlistContentAssets.videoPlaylistThumbnailFallbackImage),
+                    type: .thumbnail
+                )
             ),
             sharedUIState: sharedUIState,
             presentationConfig: presentationConfig,

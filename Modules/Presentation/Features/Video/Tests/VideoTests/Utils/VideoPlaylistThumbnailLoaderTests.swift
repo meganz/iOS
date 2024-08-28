@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 import MEGAPresentationMock
 import MEGATest
 import SwiftUI
@@ -10,65 +11,128 @@ final class VideoPlaylistThumbnailLoaderTests: XCTestCase {
     
     // MARK: - loadThumbnails
     
-    func testLoadThumbnails_whenNoCachedThumbnailsThumbnailAndErrors_deliversEmptyResult() async {
+    func testLoadThumbnails_whenEmptyVideos_deliversEmptyThumbnail() async {
         let allVideos: [NodeEntity] = []
         let thumbnailLoader = MockThumbnailLoader()
         
-        let sut = makeSUT(thumbnailLoader: thumbnailLoader)
+        let sut = makeSUT(
+            thumbnailLoader: thumbnailLoader,
+            fallbackImageContainer: fallbackImageContainer()
+        )
         
-        let imageContainers = await sut.loadThumbnails(for: allVideos)
+        let thumbnail = await sut.loadThumbnails(for: allVideos)
         
-        imageContainers.enumerated().forEach { (index, imageContainer) in
-            XCTAssertEqual(imageContainer.image, Image(systemName: "square.fill"), "Failed at index: \(index), with data: \(imageContainer)")
-        }
+        XCTAssertEqual(thumbnail.type, .empty)
+        XCTAssertTrue(thumbnail.imageContainers.isEmpty)
     }
     
-    func testLoadThumbnails_whenHasCachedThumbnailThumbnailAndErrors_deliversImage() async {
+    func testLoadThumbnails_whenAllVideosHasNoThumbnail_deliverFallbackThumbnail() async {
         let allVideos: [NodeEntity] = [
-            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true)
+            NodeEntity(name: "video 1.mp4", handle: 1, hasThumbnail: false),
+            NodeEntity(name: "video 2.mp4", handle: 2, hasThumbnail: false),
+            NodeEntity(name: "video 3.mp4", handle: 3, hasThumbnail: false)
         ]
-        let thumbnailEntity = ThumbnailEntity(url: anyImageURL(), type: .thumbnail)
-        let thumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
-            loadThumbnailResult: .failure(GenericErrorEntity()),
-            loadPreviewResult: .failure(GenericErrorEntity()),
-            loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
-        )
         let thumbnailLoader = MockThumbnailLoader()
-
-        let sut = makeSUT(thumbnailLoader: thumbnailLoader)
         
-        let imageContainers = await sut.loadThumbnails(for: allVideos)
+        let sut = makeSUT(
+            thumbnailLoader: thumbnailLoader,
+            fallbackImageContainer: fallbackImageContainer()
+        )
         
-        imageContainers.enumerated().forEach { (index, imageContainer) in
+        let thumbnail = await sut.loadThumbnails(for: allVideos)
+        
+        XCTAssertEqual(thumbnail.type, .allVideosHasNoThumbnails)
+        XCTAssertEqual(thumbnail.imageContainers.count, 1)
+        XCTAssertEqual(thumbnail.imageContainers.first?.type, fallbackImageContainer().type)
+        XCTAssertEqual(thumbnail.imageContainers.first?.image, fallbackImageContainer().image)
+    }
+    
+    func testLoadThumbnails_whenHasImage_deliversImage() async {
+        let allVideos: [NodeEntity] = [
+            NodeEntity(name: "video 1.mp4", handle: 1, hasThumbnail: true)
+        ]
+        let loadImageResultContainers: [any ImageContaining] = [
+            ImageContainer(image: Image(systemName: "square"), type: .thumbnail)
+        ]
+        let thumbnailLoader = MockThumbnailLoader(
+            loadImage: loadImageResultContainers.async.eraseToAnyAsyncSequence()
+        )
+        
+        let sut = makeSUT(
+            thumbnailLoader: thumbnailLoader,
+            fallbackImageContainer: fallbackImageContainer()
+        )
+        
+        let thumbnail = await sut.loadThumbnails(for: allVideos)
+        
+        XCTAssertEqual(thumbnail.imageContainers.count, 1)
+        thumbnail.imageContainers.enumerated().forEach { (index, imageContainer) in
             XCTAssertNotNil(imageContainer, "Failed at index: \(index), with data: \(imageContainer)")
         }
     }
     
-    func testLoadThumbnails_whenSuccessLoadThumbnail_deliversLoadedImage() async {
+    func testLoadThumbnails_whenHasTwoVideosOneHasThumbnailOneHasNoThumbnail_deliversThumbnailOnlyForVideosThatHasThumbnail() async {
         let allVideos: [NodeEntity] = [
-            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true)
+            NodeEntity(name: "video 1.mp4", handle: 1, hasThumbnail: true),
+            NodeEntity(name: "video 2.mp4", handle: 2, hasThumbnail: false)
         ]
-        let thumbnailEntity = ThumbnailEntity(url: anyImageURL(), type: .thumbnail)
-        let thumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
-            loadThumbnailResult: .success(thumbnailEntity)
+        let loadImageResultContainers: [any ImageContaining] = [
+            ImageContainer(image: Image(systemName: "square"), type: .thumbnail)
+        ]
+        let thumbnailLoader = MockThumbnailLoader(
+            loadImage: loadImageResultContainers.async.eraseToAnyAsyncSequence()
         )
-        let thumbnailLoader = MockThumbnailLoader()
-
-        let sut = makeSUT(thumbnailLoader: thumbnailLoader)
-    
-        let imageContainers = await sut.loadThumbnails(for: allVideos).compactMap { $0 }
         
-        imageContainers.enumerated().forEach { (index, imageContainer) in
-            XCTAssertNotNil(imageContainer, "Failed at index: \(index), with data: \(imageContainer)")
-        }
+        let sut = makeSUT(
+            thumbnailLoader: thumbnailLoader,
+            fallbackImageContainer: fallbackImageContainer()
+        )
+        
+        let thumbnail = await sut.loadThumbnails(for: allVideos)
+        
+        XCTAssertEqual(thumbnail.imageContainers.count, 1)
+        XCTAssertEqual(thumbnail.type, .normal)
+    }
+    
+    func testLoadThumbnails_whenHasThreeVideosTwoHasThumbnailOneHasNoThumbnail_deliversThumbnailOnlyForVideosThatHasThumbnail() async {
+        let allVideos: [NodeEntity] = [
+            NodeEntity(name: "video 1.mp4", handle: 1, hasThumbnail: true),
+            NodeEntity(name: "video 2.mp4", handle: 2, hasThumbnail: true),
+            NodeEntity(name: "video 3.mp4", handle: 3, hasThumbnail: false)
+        ]
+        let loadImageResultContainers: [any ImageContaining] = [
+            ImageContainer(image: Image(systemName: "square"), type: .thumbnail)
+        ]
+        let thumbnailLoader = MockThumbnailLoader(
+            loadImage: loadImageResultContainers.async.eraseToAnyAsyncSequence()
+        )
+        
+        let sut = makeSUT(
+            thumbnailLoader: thumbnailLoader,
+            fallbackImageContainer: fallbackImageContainer()
+        )
+        
+        let thumbnail = await sut.loadThumbnails(for: allVideos)
+        
+        XCTAssertEqual(thumbnail.imageContainers.count, 2)
+        XCTAssertEqual(thumbnail.type, .normal)
     }
     
     // MARK: - Helpers
     
-    private func makeSUT(thumbnailLoader: MockThumbnailLoader) -> VideoPlaylistThumbnailLoader {
-        VideoPlaylistThumbnailLoader(thumbnailLoader: thumbnailLoader)
+    private func makeSUT(thumbnailLoader: MockThumbnailLoader, fallbackImageContainer: (any ImageContaining)) -> VideoPlaylistThumbnailLoader {
+        VideoPlaylistThumbnailLoader(
+            thumbnailLoader: thumbnailLoader,
+            fallbackImageContainer: fallbackImageContainer
+        )
+    }
+    
+    private func fallbackImageContainer() -> (any ImageContaining) {
+        ImageContainer(image: fallbackImage, type: .thumbnail)
+    }
+    
+    private var fallbackImage: Image {
+        Image(uiImage: VideoConfig.preview.playlistContentAssets.videoPlaylistThumbnailFallbackImage)
     }
     
     private func anyImageURL() -> URL {

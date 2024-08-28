@@ -45,7 +45,7 @@ extension VideoConfig {
             addPlaylistButtonBackgroundColor: TokenColors.Icon.accent.swiftUI,
             toolbarBackgroundColor: Color(uiColor: MEGAAssetsColorProvider.color(named: "navigationBgColor")!),
             navigationBgColor: Color(uiColor: MEGAAssetsColorProvider.color(named: "navigationBgColor")!),
-            emptyFavoriteThumbnailBackgroundColor: TokenColors.Background.surface2.swiftUI,
+            emptyFavoriteThumbnailBackgroundColor: TokenColors.Background.surface3.swiftUI,
             emptyFavoriteThumbnaillImageForegroundColor: TokenColors.Icon.secondary.swiftUI,
             videoThumbnailImageViewPlaceholderBackgroundColor: Color.black,
             videoThumbnailDurationTextBackgroundColor: Color.black.opacity(0.2),
@@ -115,7 +115,8 @@ extension VideoConfig {
                 )
             ),
             favouritesEmptyStateImage: MEGAAssetsImageProvider.image(named: "favouritesEmptyState")!,
-            noResultVideoPlaylistImage: MEGAAssetsImageProvider.image(named: "rectangleVideoStackOutline")!
+            noResultVideoPlaylistImage: MEGAAssetsImageProvider.image(named: "rectangleVideoStackOutline")!,
+            videoPlaylistThumbnailFallbackImage: MEGAAssetsImageProvider.image(named: "videoPlaylistThumbnailFallbackImage")!
         )
     )
 }

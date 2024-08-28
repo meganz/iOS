@@ -46,7 +46,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         await sut.onViewAppear()
         
         let previewEntity = sut.previewEntity
-        previewEntity.imageContainers.enumerated().forEach { (index, imageContainer) in
+        previewEntity.thumbnail.imageContainers.enumerated().forEach { (index, imageContainer) in
             XCTAssertEqual(imageContainer.image, Image(systemName: "square.fill"), "Failed at index: \(index), with data: \(imageContainer)")
         }
     }
@@ -63,7 +63,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         await sut.onViewAppear()
         
         let previewEntity = sut.previewEntity
-        previewEntity.imageContainers.enumerated().forEach { (index, imageContainer) in
+        previewEntity.thumbnail.imageContainers.enumerated().forEach { (index, imageContainer) in
             XCTAssertNotNil(imageContainer, "Failed at index: \(index), with data: \(imageContainer)")
         }
     }
@@ -79,7 +79,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         await sut.onViewAppear()
         
         let previewEntity = sut.previewEntity
-        previewEntity.imageContainers.enumerated().forEach { (index, imageContainer) in
+        previewEntity.thumbnail.imageContainers.enumerated().forEach { (index, imageContainer) in
             XCTAssertNotNil(imageContainer, "Failed at index: \(index), with data: \(imageContainer)")
         }
     }
@@ -264,6 +264,6 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.previewEntity.count, "\(videoPlaylist.count) Videos", file: file, line: line)
         XCTAssertEqual(sut.previewEntity.isExported, videoPlaylist.isLinkShared, file: file, line: line)
         XCTAssertEqual(sut.previewEntity.duration, "01:00", file: file, line: line)
-        XCTAssertEqual(sut.previewEntity.imageContainers.count, videoPlaylist.count, file: file, line: line)
+        XCTAssertEqual(sut.previewEntity.thumbnail.imageContainers.count, videoPlaylist.count, file: file, line: line)
     }
 }

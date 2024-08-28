@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 import SwiftUI
 import UIKit
 
@@ -141,8 +142,13 @@ final class VideoPlaylistsCollectionViewCoordinator {
     private func cellViewModel(for rowItem: RowItem) -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
-                thumbnailLoader: representer.viewModel.thumbnailLoader),
-            videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase, 
+                thumbnailLoader: representer.viewModel.thumbnailLoader,
+                fallbackImageContainer: ImageContainer(
+                    image: Image(uiImage: videoConfig.playlistContentAssets.videoPlaylistThumbnailFallbackImage),
+                    type: .thumbnail
+                )
+            ),
+            videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase,
             sortOrderPreferenceUseCase: representer.viewModel.sortOrderPreferenceUseCase,
             videoPlaylistEntity: rowItem.videoPlaylist,
             onTapMoreOptions: { [weak self] in

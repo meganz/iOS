@@ -137,10 +137,10 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     @MainActor
     private func loadThumbnails(for videos: [NodeEntity]) async {
-        let imageContainers = await videoPlaylistThumbnailLoader.loadThumbnails(for: videos)
+        let thumbnail = await videoPlaylistThumbnailLoader.loadThumbnails(for: videos)
         
         headerPreviewEntity = videoPlaylistEntity.toVideoPlaylistCellPreviewEntity(
-            thumbnailContainers: imageContainers.compactMap { $0 },
+            videoPlaylistThumbnail: thumbnail,
             videosCount: videos.count,
             durationText: durationText(from: videos)
         )
