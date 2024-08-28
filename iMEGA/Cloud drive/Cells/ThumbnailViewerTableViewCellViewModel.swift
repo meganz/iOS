@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 import MEGAPresentation
 
+@MainActor
 @objc final class ThumbnailViewerTableViewCellViewModel: NSObject {
     
     private let thumbnailViewModels: [ItemCollectionViewCellViewModel]

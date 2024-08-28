@@ -10,6 +10,7 @@ import XCTest
 
 final class ItemCollectionViewCellViewModelTests: XCTestCase {
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodeIsSensitive_shouldSetIsSensitiveTrue() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
@@ -31,7 +32,8 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         
         subscription.cancel()
     }
-        
+     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOffAndNodeIsSensitive_shouldSetIsSensitiveFalse() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
 
@@ -56,6 +58,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodeInheritedSensitivity_shouldSetIsSensitiveTrue() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
 
@@ -78,7 +81,8 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         
         subscription.cancel()
     }
-        
+     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOffAndNodeInheritedSensitivity_shouldSetIsSensitiveFalse() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
 
@@ -103,6 +107,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
 
+    @MainActor
     func testConfigureCell_whenCalledMoreThanOnce_shouldReturnSameTask() {
         
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
@@ -118,6 +123,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertEqual(taskFirstCall, taskSecondCall)
     } 
     
+    @MainActor
     func testThumbnailLoading_whenNodeHasValidThumbnail_shouldReturnCachedImage() async throws {
         let imageUrl = try makeImageURL()
         let node = NodeEntity(handle: 1, hasThumbnail: true, isMarkedSensitive: true)
@@ -136,6 +142,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
     
+    @MainActor
     func testThumbnailLoading_whenNodeHasThumbnailAndFailsToLoad_shouldReturnFileTypeImage() async throws {
         let imageData = try XCTUnwrap(UIImage(systemName: "heart.fill")?.pngData())
         let node = NodeEntity(nodeType: .file, name: "test.txt", handle: 1, hasThumbnail: true, isMarkedSensitive: true)
@@ -154,6 +161,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
 }
 
 extension ItemCollectionViewCellViewModelTests {
+    @MainActor
     func sut(node: NodeEntity,
              nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
              nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
