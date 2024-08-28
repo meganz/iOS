@@ -10,7 +10,6 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, @unchecked 
     }
     
     private let chatSdk: MEGAChatSdk
-    @Atomic private var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
     
     @Atomic private var callId: HandleEntity?
     @Atomic private var call: CallEntity?
@@ -26,25 +25,6 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, @unchecked 
     
     public init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
-    }
-
-    public func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol) {
-        if let call = chatSdk.chatCall(forChatId: chatId) {
-            self.$call.mutate { $0 = call.toCallEntity() }
-            self.$callId.mutate { $0 = call.callId }
-        }
-        
-        chatSdk.add(self as any MEGAChatCallDelegate)
-        chatSdk.add(self as any MEGAChatDelegate)
-        self.$callbacksDelegate.mutate { $0 = callbacksDelegate }
-    }
-    
-    public func stopListeningForCall() {
-        chatSdk.remove(self as any MEGAChatCallDelegate)
-        chatSdk.remove(self as any MEGAChatDelegate)
-        self.$call.mutate { $0 = nil }
-        self.$callId.mutate { $0 = .invalid }
-        self.$callbacksDelegate.mutate { $0 = nil }
     }
     
     public func call(for chatId: HandleEntity) -> CallEntity? {
@@ -102,15 +82,6 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, @unchecked 
             notRinging: notRinging,
             localizedCameraName: localizedCameraName
         )
-    }
-    
-    public func createActiveSessions() {
-        guard let call, !call.clientSessions.isEmpty, let chatRoom = chatSdk.chatRoom(forChatId: call.chatId) else {
-            return
-        }
-        call.clientSessions.forEach {
-            callbacksDelegate?.createdSession($0, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: $0.peerId).toChatRoomPrivilegeEntity())
-        }
     }
     
     public func hangCall(for callId: HandleEntity) {
@@ -336,140 +307,6 @@ private final class CallUpdateListener: NSObject, MEGAChatCallDelegate {
             return
         }
         source.send(call.toCallEntity())
-    }
-}
-
-extension CallRepository: MEGAChatCallDelegate {
-    
-    public func onChatSessionUpdate(_ api: MEGAChatSdk, chatId: UInt64, callId: UInt64, session: MEGAChatSession) {
-        if self.callId != callId {
-            return
-        }
-        
-        guard let chatRoom = api.chatRoom(forChatId: chatId) else { return }
-        
-        if session.hasChanged(.status) {
-            switch session.status {
-            case .inProgress:
-                callbacksDelegate?.createdSession(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
-            case .destroyed:
-                callbacksDelegate?.destroyedSession(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
-            default:
-                break
-            }
-        }
-        
-        if session.status == .inProgress {
-            if session.hasChanged(.remoteAvFlags) {
-                callbacksDelegate?.avFlagsUpdated(for: session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
-            }
-            
-            if session.hasChanged(.audioLevel) {
-                callbacksDelegate?.audioLevel(for: session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
-            }
-            
-            if session.hasChanged(.onHiRes) {
-                callbacksDelegate?.onHiResSessionChanged(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
-            }
-            
-            if session.hasChanged(.onLowRes) {
-                callbacksDelegate?.onLowResSessionChanged(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
-            }
-        }
-    }
-    
-    public func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
-        guard callId == call.callId else {
-            return
-        }
-        
-        self.$call.mutate { $0 = call.toCallEntity() }
-        
-        if call.hasChanged(for: .localAVFlags) {
-            callbacksDelegate?.localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
-            if call.auxHandle != .invalid {
-                callbacksDelegate?.mutedByClient(handle: call.auxHandle)
-            }
-        }
-        
-        if call.hasChanged(for: .networkQuality) {
-            switch call.networkQuality {
-            case .bad:
-                callbacksDelegate?.networkQualityChanged(.bad)
-            case .good:
-                callbacksDelegate?.networkQualityChanged(.good)
-            @unknown default:
-                break
-            }
-        }
-        
-        if call.hasChanged(for: .outgoingRingingStop) {
-            callbacksDelegate?.outgoingRingingStopReceived()
-        }
-        
-        switch call.status {
-        case .undefined:
-            break
-        case .initial:
-            break
-        case .connecting:
-            callbacksDelegate?.connecting()
-        case .joining:
-            break
-        case .inProgress:
-            if call.hasChanged(for: .status) {
-                callbacksDelegate?.inProgress()
-            }
-            
-            if call.hasChanged(for: .callComposition) {
-                if call.peeridCallCompositionChange == chatSdk.myUserHandle {
-                    return
-                }
-                switch call.callCompositionChange {
-                case .peerAdded:
-                    callbacksDelegate?.participantAdded(with: call.peeridCallCompositionChange)
-                case .peerRemoved:
-                    callbacksDelegate?.participantRemoved(with: call.peeridCallCompositionChange)
-                default:
-                    break
-                }
-            }
-            
-            if call.hasChanged(for: .waitingRoomUsersAllow) {
-                guard let usersHandle = call.waitingRoomHandleList.toHandleEntityArray() else { return }
-                callbacksDelegate?.waitingRoomUsersAllow(with: usersHandle)
-            }
-        case .terminatingUserParticipation, .destroyed:
-            callbacksDelegate?.callTerminated(call.toCallEntity())
-        case .userNoPresent:
-            break
-        case .waitingRoom:
-            break
-        @unknown default:
-            fatalError("Call status has an unkown status")
-        }
-    }
-}
-
-extension CallRepository: MEGAChatDelegate {
-    public func onChatListItemUpdate(_ api: MEGAChatSdk, item: MEGAChatListItem) {
-        guard let chatId = call?.chatId,
-              item.chatId == chatId else {
-            return
-        }
-        
-        switch item.changes {
-        case .ownPrivilege:
-            guard let chatRoom = chatSdk.chatRoom(forChatId: chatId) else {
-                return
-            }
-            callbacksDelegate?.ownPrivilegeChanged(to: item.ownPrivilege.toChatRoomPrivilegeEntity(), in: chatRoom.toChatRoomEntity())
-        case .title:
-            guard let chatRoom = chatSdk.chatRoom(forChatId: item.chatId) else { return }
-            callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom.toChatRoomEntity())
-        default:
-            break
-        }
     }
 }
 

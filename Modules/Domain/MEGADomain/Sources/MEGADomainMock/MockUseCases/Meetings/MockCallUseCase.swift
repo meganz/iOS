@@ -3,9 +3,6 @@ import MEGADomain
 
 public final class MockCallUseCase: CallUseCaseProtocol {
     
-    public var startListeningForCall_CalledTimes = 0
-    var stopListeningForCall_CalledTimes = 0
-    public var createActiveSessions_calledTimes = 0
     public var hangCall_CalledTimes = 0
     var endCall_CalledTimes = 0
     public var addPeer_CalledTimes = 0
@@ -28,7 +25,6 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     public var callCompletion: Result<CallEntity, CallErrorEntity>
     var answerCallCompletion: Result<CallEntity, CallErrorEntity>
     
-    public var callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
     var networkQuality: NetworkQuality = .bad
     public var chatRoom: ChatRoomEntity?
     var video: Bool = false
@@ -55,14 +51,6 @@ public final class MockCallUseCase: CallUseCaseProtocol {
         self.muteParticipantCompletion = muteParticipantCompletion
     }
     
-    public func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
-        startListeningForCall_CalledTimes += 1
-    }
-    
-    public func stopListeningForCall() {
-        stopListeningForCall_CalledTimes += 1
-    }
-    
     public func call(for chatId: HandleEntity) -> CallEntity? {
         call
     }
@@ -83,10 +71,6 @@ public final class MockCallUseCase: CallUseCaseProtocol {
         case .failure(let failure):
             throw failure
         }
-    }
-    
-    public func createActiveSessions() {
-        createActiveSessions_calledTimes += 1
     }
     
     public func hangCall(for callId: HandleEntity) {
@@ -181,101 +165,5 @@ public final class MockCallUseCase: CallUseCaseProtocol {
     public func isParticipantRaisedHand(_ participantId: MEGADomain.HandleEntity, forCallInChatId chatId: MEGADomain.ChatIdEntity) -> Bool {
         isParticipantRaisedHand_CalledTimes += 1
         return participantRaisedHand
-    }
-}
-
-extension MockCallUseCase: CallCallbacksRepositoryProtocol {
-    
-    public func createdSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        guard let chatSession = chatSession, let chat = self.chatRoom else {
-            return
-        }
-        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
-    }
-    
-    public func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        guard let chatSession = chatSession, let chat = self.chatRoom else {
-            return
-        }
-        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
-    }
-    
-    public func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        guard let chatSession = chatSession, let chat = self.chatRoom else {
-            return
-        }
-        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
-    }
-    
-    public func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        guard let chatSession = chatSession, let chat = self.chatRoom else {
-            return
-        }
-        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
-    }
-    
-    public func callTerminated(_ call: CallEntity) {
-        callbacksDelegate?.callTerminated(call)
-    }
-    
-    public func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
-        guard let chatRoom = self.chatRoom else {
-            return
-        }
-        callbacksDelegate?.ownPrivilegeChanged(to: chatRoom.ownPrivilege, in: chatRoom)
-    }
-    
-    public func participantAdded(with handle: HandleEntity) {
-        callbacksDelegate?.participantAdded(with: participantHandle)
-    }
-    
-    public func participantRemoved(with handle: HandleEntity) {
-        callbacksDelegate?.participantRemoved(with: participantHandle)
-    }
-    
-    public func connecting() {
-        callbacksDelegate?.connecting()
-    }
-    
-    public func inProgress() {
-        callbacksDelegate?.inProgress()
-    }
-    
-    public func onHiResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        guard let chatSession = chatSession, let chat = self.chatRoom else {
-            return
-        }
-        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
-    }
-    
-    public func onLowResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        guard let chatSession = chatSession, let chat = self.chatRoom else {
-            return
-        }
-        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege, raisedHand: false))
-    }
-    
-    public func localAvFlagsUpdated(video: Bool, audio: Bool) {
-        callbacksDelegate?.localAvFlagsUpdated(video: video, audio: audio)
-    }
-    
-    public func chatTitleChanged(chatRoom: ChatRoomEntity) {
-        callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom)
-    }
-    
-    public func networkQualityChanged(_ quality: NetworkQuality) {
-        callbacksDelegate?.networkQualityChanged(networkQuality)
-    }
-    
-    public func outgoingRingingStopReceived() {
-        callbacksDelegate?.outgoingRingingStopReceived()
-    }
-    
-    public func waitingRoomUsersAllow(with handles: [HandleEntity]) {
-        callbacksDelegate?.waitingRoomUsersAllow(with: handles)
-    }
-    
-    public func mutedByClient(handle: HandleEntity) {
-        callbacksDelegate?.mutedByClient(handle: handle)
     }
 }

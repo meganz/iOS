@@ -3,12 +3,9 @@ import Foundation
 import MEGASwift
 
 public protocol CallUseCaseProtocol: Sendable {
-    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T)
-    func stopListeningForCall()
     func call(for chatId: HandleEntity) -> CallEntity?
     func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, localizedCameraName: String?) async throws -> CallEntity
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity
-    func createActiveSessions()
     func hangCall(for callId: HandleEntity)
     func endCall(for callId: HandleEntity)
     func addPeer(toCall call: CallEntity, peerId: HandleEntity)
@@ -32,74 +29,11 @@ public protocol CallUseCaseProtocol: Sendable {
     func isParticipantRaisedHand(_ participantId: HandleEntity, forCallInChatId chatId: ChatIdEntity) -> Bool
 }
 
-public protocol CallCallbacksUseCaseProtocol: AnyObject, Sendable {
-    func participantJoined(participant: CallParticipantEntity)
-    func participantLeft(participant: CallParticipantEntity)
-    func waitingRoomUsersAllow(with handles: [HandleEntity])
-    func updateParticipant(_ participant: CallParticipantEntity)
-    func highResolutionChanged(for participant: CallParticipantEntity)
-    func lowResolutionChanged(for participant: CallParticipantEntity)
-    func audioLevel(for participant: CallParticipantEntity)
-    func callTerminated(_ call: CallEntity)
-    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity)
-    func participantAdded(with handle: HandleEntity)
-    func participantRemoved(with handle: HandleEntity)
-    func connecting()
-    func inProgress()
-    func localAvFlagsUpdated(video: Bool, audio: Bool)
-    func chatTitleChanged(chatRoom: ChatRoomEntity)
-    func networkQualityChanged(_ quality: NetworkQuality)
-    func outgoingRingingStopReceived()
-    func mutedByClient(handle: HandleEntity)
-}
-
-// Default implementation for optional callbacks
-public extension CallCallbacksUseCaseProtocol {
-    func highResolutionChanged(for participant: CallParticipantEntity) { }
-    func lowResolutionChanged(for participant: CallParticipantEntity) { }
-    func audioLevel(for participant: CallParticipantEntity) { }
-    func callTerminated(_ call: CallEntity) { }
-    func participantAdded(with handle: HandleEntity) { }
-    func participantRemoved(with handle: HandleEntity) { }
-    func connecting() { }
-    func inProgress() { }
-    func localAvFlagsUpdated(video: Bool, audio: Bool) { }
-    func chatTitleChanged(chatRoom: ChatRoomEntity) { }
-    func networkQualityChanged(_ quality: NetworkQuality) { }
-    func outgoingRingingStopReceived() { }
-    func waitingRoomUsersAllow(with handles: [HandleEntity]) { }
-    func mutedByClient(handle: HandleEntity) { }
-}
-
-public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, @unchecked Sendable {
-    private let lock = NSLock()
-    
+public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, Sendable {
     private let repository: T
-    
-    private weak var _callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
-    
-    private var callbacksDelegate: (any CallCallbacksUseCaseProtocol)? {
-        get {
-            lock.withLock { _callbacksDelegate }
-        }
-        
-        set {
-            lock.withLock { _callbacksDelegate = newValue }
-        }
-    }
 
     public init(repository: T) {
         self.repository = repository
-    }
-    
-    public func startListeningForCallInChat<S: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: S) {
-        repository.startListeningForCallInChat(chatId, callbacksDelegate: self)
-        self.callbacksDelegate = callbacksDelegate
-    }
-    
-    public func stopListeningForCall() {
-        self.callbacksDelegate = nil
-        repository.stopListeningForCall()
     }
     
     public func call(for chatId: HandleEntity) -> CallEntity? {
@@ -111,10 +45,6 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, 
     
     public func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, localizedCameraName: String?) async throws -> CallEntity {
         try await repository.startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, localizedCameraName: localizedCameraName)
-    }
-
-    public func createActiveSessions() {
-        repository.createActiveSessions()
     }
     
     public func hangCall(for callId: HandleEntity) {
@@ -200,129 +130,5 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, 
     public func isParticipantRaisedHand(_ participantId: HandleEntity, forCallInChatId chatId: ChatIdEntity) -> Bool {
         guard let call = repository.call(for: chatId) else { return false }
         return call.raiseHandsList.contains(participantId)
-    }
-}
-
-extension CallUseCase: CallCallbacksRepositoryProtocol {
-
-    public func createdSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.participantJoined(
-            participant:
-                CallParticipantEntity(
-                    session: session,
-                    chatRoom: chatRoom,
-                    privilege: privilege,
-                    raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
-                )
-        )
-    }
-    
-    public func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.participantLeft(
-            participant:
-                CallParticipantEntity(
-                    session: session,
-                    chatRoom: chatRoom,
-                    privilege: privilege,
-                    raisedHand: false
-                )
-        )
-    }
-    
-    public func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.updateParticipant(
-            CallParticipantEntity(
-                session: session,
-                chatRoom: chatRoom,
-                privilege: privilege,
-                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
-            )
-        )
-    }
-    
-    public func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.audioLevel(
-            for: CallParticipantEntity(
-                session: session,
-                chatRoom: chatRoom,
-                privilege: privilege,
-                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
-            )
-        )
-    }
-    
-    private func raisedHand(for participantId: HandleEntity, forCallInChatRoom chatRoom: ChatRoomEntity) -> Bool {
-        guard let call = repository.call(for: chatRoom.chatId) else { return false }
-        return call.raiseHandsList.contains(participantId)
-    }
-    
-    public func callTerminated(_ call: CallEntity) {
-        callbacksDelegate?.callTerminated(call)
-    }
-    
-    public func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
-        callbacksDelegate?.ownPrivilegeChanged(to: privilege, in: chatRoom)
-    }
-    
-    public func participantAdded(with handle: HandleEntity) {
-        callbacksDelegate?.participantAdded(with: handle)
-    }
-    
-    public func participantRemoved(with handle: HandleEntity) {
-        callbacksDelegate?.participantRemoved(with: handle)
-    }
-    
-    public func connecting() {
-        callbacksDelegate?.connecting()
-    }
-    
-    public func inProgress() {
-        callbacksDelegate?.inProgress()
-    }
-    
-    public func onHiResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.highResolutionChanged(
-            for: CallParticipantEntity(
-                session: session,
-                chatRoom: chatRoom,
-                privilege: privilege,
-                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
-            )
-        )
-    }
-    
-    public func onLowResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
-        callbacksDelegate?.lowResolutionChanged(
-            for: CallParticipantEntity(
-                session: session,
-                chatRoom: chatRoom,
-                privilege: privilege,
-                raisedHand: raisedHand(for: session.peerId, forCallInChatRoom: chatRoom)
-            )
-        )
-    }
-    
-    public func localAvFlagsUpdated(video: Bool, audio: Bool) {
-        callbacksDelegate?.localAvFlagsUpdated(video: video, audio: audio)
-    }
-    
-    public func chatTitleChanged(chatRoom: ChatRoomEntity) {
-        callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom)
-    }
-    
-    public func networkQualityChanged(_ quality: NetworkQuality) {
-        callbacksDelegate?.networkQualityChanged(quality)
-    }
-    
-    public func outgoingRingingStopReceived() {
-        callbacksDelegate?.outgoingRingingStopReceived()
-    }
-    
-    public func waitingRoomUsersAllow(with handles: [HandleEntity]) {
-        callbacksDelegate?.waitingRoomUsersAllow(with: handles)
-    }
-    
-    public func mutedByClient(handle: HandleEntity) {
-        callbacksDelegate?.mutedByClient(handle: handle)
     }
 }

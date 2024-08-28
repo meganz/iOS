@@ -135,10 +135,6 @@ final class WaitingRoomViewModel: ObservableObject {
         fetchInitialValues()
     }
     
-    deinit {
-        callUseCase.stopListeningForCall()
-    }
-    
     // MARK: - Public
     
     func createMeetingDate(locale: Locale = .autoupdatingCurrent) -> String {
@@ -397,7 +393,6 @@ final class WaitingRoomViewModel: ObservableObject {
     
     private func dismiss() {
         removeLocalVideo()
-        callUseCase.stopListeningForCall()
         router.dismiss { [weak self] in
             guard let self else { return }
             if accountUseCase.isGuest {
@@ -418,7 +413,6 @@ final class WaitingRoomViewModel: ObservableObject {
 
     private func showRespondAlert(_ block: (@escaping () -> Void) -> Void) {
         onCallUpdateSubscription?.cancel()
-        callUseCase.stopListeningForCall()
         dismissCall()
         block { [weak self] in
             guard let self else { return }

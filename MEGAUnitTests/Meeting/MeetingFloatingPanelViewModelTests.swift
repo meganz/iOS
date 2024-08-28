@@ -108,7 +108,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 .microphoneMuted(muted: true)
             ]
         )
-        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
     @MainActor func testAction_onViewAppear_selectWaitingRoomList() {
@@ -325,7 +324,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 .reloadParticipantsList(participants: []),
                 .microphoneMuted(muted: true)
              ])
-        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
     @MainActor func testAction_onViewReady_isMyselfParticipant_isOneToOneMeeting() {
@@ -363,7 +361,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 .reloadParticipantsList(participants: []),
                 .microphoneMuted(muted: true)
              ])
-        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
     @MainActor func testAction_shareLink_Success() async throws {
