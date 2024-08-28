@@ -97,6 +97,7 @@ public class VideoRevampFactory {
         return UIHostingController(rootView: view)
     }
     
+    @MainActor
     public static func makeVideoContentContainerView(
         videoConfig: VideoConfig,
         previewEntity: VideoPlaylistEntity,

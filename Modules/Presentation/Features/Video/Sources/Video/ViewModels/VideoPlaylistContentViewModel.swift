@@ -15,6 +15,7 @@ public protocol VideoPlaylistContentViewModelSelectionDelegate: AnyObject {
     func didChangeAllSelectedValue(allSelected: Bool, videos: [NodeEntity])
 }
 
+@MainActor
 final class VideoPlaylistContentViewModel: ObservableObject {
     
     private(set) var videoPlaylistEntity: VideoPlaylistEntity
@@ -91,7 +92,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         subscribeToDidSelectMoveVideoInVideoPlaylistContentToRubbishBinAction()
     }
     
-    @MainActor
     func onViewAppeared() async {
         configureSnackBar()
         await monitorUserVideoPlaylist()
@@ -102,7 +102,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         sharedUIState.snackBarText = presentationConfig?.text ?? ""
     }
     
-    @MainActor
     private func monitorUserVideoPlaylist() async {
         do {
             let sortOrderChangedSequence = sortOrderPreferenceUseCase.monitorSortOrder(for: . videoPlaylistContent)
@@ -135,7 +134,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     private func loadThumbnails(for videos: [NodeEntity]) async {
         let thumbnail = await videoPlaylistThumbnailLoader.loadThumbnails(for: videos)
         
@@ -156,7 +154,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         return TimeInterval(playlistDuration).timeString
     }
     
-    @MainActor
     private func handle(_ error: any Error) {
         guard let videoPlaylistError = error as? VideoPlaylistErrorEntity else {
             shouldShowError = true
@@ -178,7 +175,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         [.defaultAsc, .defaultDesc, .modificationAsc, .modificationDesc].contains(sortOrder)
     }
     
-    @MainActor
     func addVideosToVideoPlaylist(videos: [NodeEntity]) async {
         guard videos.isNotEmpty else {
             return
@@ -204,14 +200,12 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             .replacingOccurrences(of: "[A]", with: videoPlaylistName)
     }
     
-    @MainActor
     func subscribeToAllSelected() async {
         for await value in sharedUIState.$isAllSelected.values {
             selectionDelegate?.didChangeAllSelectedValue(allSelected: value, videos: videos)
         }
     }
     
-    @MainActor
     func subscribeToSelectedDisplayActionChanged() async {
         for await action in sharedUIState.$selectedQuickActionEntity.values {
             switch action {
@@ -223,7 +217,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func subscribeToSelectedVideoPlaylistActionChanged() async {
         for await action in sharedUIState.$selectedVideoPlaylistActionEntity.values {
             switch action {
@@ -237,7 +230,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func monitorVideoPlaylists() async {
         
         for await _ in videoPlaylistsUseCase.videoPlaylistsUpdatedAsyncSequence.prepend(()) {
@@ -255,7 +247,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         renameVideoPlaylistAlertViewModel.validator = { validator.validateWhenRenamed(into: $0) }
     }
         
-    @MainActor
     private func loadVideoPlaylistsNames() async {
         let systemVideoPlaylistNames = [Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites]
         let userVideoPlaylistNames = await videoPlaylistsUseCase.userVideoPlaylists().map(\.name)
@@ -331,7 +322,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func deleteVideosFromVideoPlaylist(showSnackBar: Bool = true) async throws {
         do {
             guard let selectedVideos else {

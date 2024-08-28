@@ -154,6 +154,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertTrue(videoPlaylistModificationUseCase.messages.isEmpty)
     }
     
+    @MainActor
     func testAddVideosToVideoPlaylist_addVideosFailed_shouldNotShowSnackBar() async {
         let allVideos: [NodeEntity] = []
         let videoPlaylistEntity = VideoPlaylistEntity(
@@ -351,6 +352,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     
     // MARK: - renameVideoPlaylist
     
+    @MainActor
     func testRenameVideoPlaylist_emptyOrNil_doesNotRenameVideoPlaylist() async {
         let videoPlaylistEntity = videoPlaylist(id: 1, type: .user)
         let invalidNames: [String?] = [nil, ""]
@@ -366,6 +368,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testRenameVideoPlaylist_whenRenameInvalidPlaylist_doesNotRenameVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let invalidPlaylistType = VideoPlaylistEntityType.favourite
@@ -381,6 +384,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertTrue(videoPlaylistModificationUseCase.messages.notContains(.updateVideoPlaylistName))
     }
     
+    @MainActor
     func testRenameVideoPlaylist_whenCalled_renameVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
@@ -395,6 +399,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertEqual(videoPlaylistModificationUseCase.messages, [ .updateVideoPlaylistName ])
     }
     
+    @MainActor
     func testRenameVideoPlaylist_whenRenameSuccessfully_renameActualPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
@@ -410,6 +415,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.headerPreviewEntity.title, videoPlaylistName)
     }
     
+    @MainActor
     func testRenameVideoPlaylist_whenRenameFailed_showsRenameError() async {
         let newName =  "new name"
         let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "old name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
@@ -429,6 +435,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     
     // MARK: - deleteVideoPlaylist
     
+    @MainActor
     func testDeleteVideoPlaylist_whenVideoPlaylistIsSystem_doNotDeleteVideoPlaylist() async {
         let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _, _, _, _, videoPlaylistModificationUseCase, _) = makeSUT(
@@ -442,6 +449,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertTrue(videoPlaylistModificationUseCase.messages.isEmpty)
     }
     
+    @MainActor
     func testDeleteVideoPlaylist_whenVideoPlaylistIsUser_deletesVideoPlaylist() async {
         let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _, _, _, _, videoPlaylistModificationUseCase, _) = makeSUT(
@@ -455,6 +463,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertEqual(videoPlaylistModificationUseCase.messages, [ .deleteVideoPlaylist ])
     }
     
+    @MainActor
     func testDeleteVideoPlaylist_whenDeleteFailed_doesNotPopScreen() async {
         let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _, _, _, _, _, _) = makeSUT(
@@ -592,6 +601,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     
     // MARK: - didTapCancelOnDeleteVideosFromVideoPlaylistActionSheet
     
+    @MainActor
     func testDidTapCancelOnDeleteVideosFromVideoPlaylistActionSheet_whenCalled_clearSelectedVideos() {
         let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _, _, _, _, _, _) = makeSUT(
@@ -603,6 +613,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         XCTAssertNil(sut.selectedVideos)
     }
     
+    @MainActor
     func testDidTapCancelOnDeleteVideosFromVideoPlaylistActionSheet_whenHasSelectedVideos_clearSelectedVideos() {
         let videoPlaylistEntity = VideoPlaylistEntity(id: 1, name: "a video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(
@@ -845,6 +856,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
     
     // MARK: - Helpers
     
+    @MainActor
     private func makeSUT(
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase = MockVideoPlaylistContentUseCase(),
@@ -927,6 +939,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         return message.replacingOccurrences(of: "[A]", with: videoPlaylistName)
     }
     
+    @MainActor
     private func assertThatDeleteVideosFromVideoPlaylistClearSelectedVideos(
         on sut: VideoPlaylistContentViewModel,
         file: StaticString = #filePath,
