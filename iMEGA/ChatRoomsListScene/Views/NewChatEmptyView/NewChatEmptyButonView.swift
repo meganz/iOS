@@ -5,10 +5,10 @@ import SwiftUI
 struct MenuCapableButton: View {
     var state: MenuButtonModel
     
-    var height: CGFloat? = 50
-    var maxWidth: CGFloat? = 288
-    var cornerRadius: CGFloat = 10
-    var font: Font = .headline
+    let height: CGFloat? = 50
+    let maxWidth: CGFloat? = 288
+    let cornerRadius: CGFloat = 10
+    let font: Font = .headline.bold()
     
     var body: some View {
         switch state.interaction {
@@ -34,6 +34,7 @@ struct MenuCapableButton: View {
             }
         } label: {
             text
+                .font(font)
         }
     }
     
@@ -42,6 +43,7 @@ struct MenuCapableButton: View {
             action()
         } label: {
             text
+                .font(font)
         }
     }
     

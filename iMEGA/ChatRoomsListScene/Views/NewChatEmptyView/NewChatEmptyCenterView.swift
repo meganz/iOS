@@ -17,7 +17,7 @@ struct NewChatRoomsEmptyCenterView: View {
             }
             
             Text(state.title)
-                .font(.headline.bold())
+                .font(.body.bold())
                 .padding(.bottom, 5)
                 .foregroundColor(TokenColors.Text.primary.swiftUI)
             
@@ -32,6 +32,7 @@ struct NewChatRoomsEmptyCenterView: View {
                         state.linkTapped?()
                         return .handled
                     })
+                    .font(.callout)
                     .tint(TokenColors.Text.secondary.swiftUI)
                     .foregroundColor(TokenColors.Text.secondary.swiftUI)
             }
