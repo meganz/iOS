@@ -39,6 +39,9 @@ fileprivate extension CallEntity {
             waitingRoom: call.waitingRoom.toWaitingRoomEntity(),
             waitingRoomHandleList: call.waitingRoomHandleList.toHandleEntityArray() ?? [],
             raiseHandsList: call.raiseHandsList.toHandleEntityArray() ?? [],
+            auxHandle: call.auxHandle,
+            networkQuality: call.networkQuality == .bad ? .bad : .good,
+            peeridCallCompositionChange: call.peeridCallCompositionChange,
             uuid: call.uuid
         )
     }

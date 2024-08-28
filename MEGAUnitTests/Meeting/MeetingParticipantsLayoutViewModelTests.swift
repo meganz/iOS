@@ -37,13 +37,12 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 .updateHasLocalAudio(false),
                 .updateBarButtons
              ])
-        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
     }
     
     @MainActor func testAction_onViewLoaded_activeCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
-        let call = CallEntity(clientSessions: [ChatSessionEntity(statusType: .inProgress)])
+        let call = CallEntity(clientSessions: [ChatSessionEntity(statusType: .inProgress, peerId: 1)])
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
@@ -51,30 +50,31 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let harness = Harness(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(),
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
         )
         
+        let participant = CallParticipantEntity(participantId: 1)
         test(viewModel: harness.sut,
              action: .onViewLoaded,
              expectedCommands: [
                 .configView(title: chatRoom.title ?? "", subtitle: "", isUserAGuest: false, isOneToOne: false),
+                .removeEmptyCallShareOptionsView,
+                .updateBarButtons,
+                .updateParticipants([participant]),
+                .disableSwitchLayoutModeButton(disable: false),
                 .updateHasLocalAudio(false),
-                .updateBarButtons
+                .updateBarButtons,
+                .updateParticipants([participant]),
+                .disableSwitchLayoutModeButton(disable: false),
+                .reloadParticipantAt(0, [participant]),
+                .updateParticipants([participant]),
+                .updatePageControl(1),
+                .hideEmptyRoomMessage
              ])
-        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
-            XCTAssert(callUseCase.createActiveSessions_calledTimes == 1)
-        } else {
-            XCTFail("Expected to time out!")
-        }
     }
     
     @MainActor func testAction_onViewReady_localUserHasRaisedHand() {
@@ -710,81 +710,25 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
-    func testCallback_outgoingRingingStop_hangOneToOne() {
+    func testCallUpdate_outgoingRingingStop_isOneToOneAndJustMyself_callMustBeEnded() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
-        let call = CallEntity(numberOfParticipants: 1)
-        let callUseCase = MockCallUseCase(call: call)
-        callUseCase.chatRoom = chatRoom
-        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let callManager = MockCallManager()
-        
-        let harness = Harness(
-            containerViewModel: containerViewModel,
-            callUseCase: callUseCase,
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            remoteVideoUseCase: remoteVideoUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            userImageUseCase: MockUserImageUseCase(),
-            callManager: callManager,
-            chatRoom: chatRoom,
-            call: call
-        )
-        callUseCase.callbacksDelegate = harness.sut
-        callUseCase.outgoingRingingStopReceived()
-        XCTAssert(callManager.endCall_CalledTimes == 1)
+        let harness = Harness(chatRoom: chatRoom)
+        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 1))
+        XCTAssert(harness.callManager.endCall_CalledTimes == 1)
     }
     
-    func testCallback_outgoingRingingStop_doNotHangGroupCall() {
+    func testCallUpdate_outgoingRingingStop_isOneToOneAndBothInCall_callNotMustBeEnded() async throws {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
+        let harness = Harness(chatRoom: chatRoom)
+        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 2))
+        XCTAssert(harness.callManager.endCall_CalledTimes == 0)
+    }
+    
+    func testCallUpdate_outgoingRingingStop_isNotOneToOne_callNotMustBeEnded() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group)
-        let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: call)
-        callUseCase.chatRoom = chatRoom
-        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        
-        let harness = Harness(
-            containerViewModel: containerViewModel,
-            callUseCase: callUseCase,
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            remoteVideoUseCase: remoteVideoUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            userImageUseCase: MockUserImageUseCase(),
-            chatRoom: chatRoom,
-            call: call
-        )
-        callUseCase.callbacksDelegate = harness.sut
-        callUseCase.outgoingRingingStopReceived()
-        XCTAssert(callUseCase.hangCall_CalledTimes == 0)
-    }
-    
-    func testCallback_outgoingRingingStop_doNotHangMeeting() {
-        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
-        let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: call)
-        callUseCase.chatRoom = chatRoom
-        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        
-        let harness = Harness(
-            containerViewModel: containerViewModel,
-            callUseCase: callUseCase,
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            remoteVideoUseCase: remoteVideoUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            userImageUseCase: MockUserImageUseCase(),
-            chatRoom: chatRoom,
-            call: call
-        )
-        callUseCase.callbacksDelegate = harness.sut
-        callUseCase.outgoingRingingStopReceived()
-        XCTAssert(callUseCase.hangCall_CalledTimes == 0)
+        let harness = Harness(chatRoom: chatRoom)
+        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 1))
+        XCTAssert(harness.callManager.endCall_CalledTimes == 0)
     }
     
     func testAction_participantAdded_downloadAvatar() {
@@ -1207,10 +1151,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertTrue(harness.sut.callParticipants[0].isScreenShareCell)
     }
     
-    func testCallUpdate_localUserRaiseHand() {
-        let callUseCase = MockCallUseCase()
+    @MainActor func testCallUpdate_localUserRaiseHand() async throws {
         let harness = Harness(
-            callUseCase: callUseCase,
             chatUseCase: MockChatUseCase(myUserHandle: 100)
         )
         
@@ -1229,15 +1171,12 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 XCTFail("Unexpected command")
             }
         }
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [100]))
-
-        wait(for: [exp0, exp1])
+        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [100]))
+        await fulfillment(of: [exp0, exp1], timeout: 3)
     }
     
-    func testCallUpdate_localUserNotRaiseHand() {
-        let callUseCase = MockCallUseCase()
+    @MainActor func testCallUpdate_localUserNotRaiseHand() async throws {
         let harness = Harness(
-            callUseCase: callUseCase,
             chatUseCase: MockChatUseCase(myUserHandle: 100)
         )
         
@@ -1256,16 +1195,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 XCTFail("Unexpected command")
             }
         }
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101, 32]))
+        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101, 32]))
 
-        wait(for: [exp0, exp1])
+        await fulfillment(of: [exp0, exp1], timeout: 3)
     }
     
-    func testCallUpdate_remoteUserRaiseHand() {
-        let callUseCase = MockCallUseCase()
-        let harness = Harness(
-            callUseCase: callUseCase
-        )
+    @MainActor func testCallUpdate_remoteUserRaiseHand() async throws {
+        let harness = Harness()
         
         let remoteUserRaiseHandExpectation = expectation(description: "remote user raise hand icon visible after onChatCallUpdate with remote user handle in the raise hands list")
 
@@ -1286,63 +1222,45 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         
         XCTAssertFalse(harness.sut.callParticipants[0].raisedHand)
 
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
+        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
 
-        wait(for: [remoteUserRaiseHandExpectation], timeout: 3)
+        await fulfillment(of: [remoteUserRaiseHandExpectation], timeout: 3)
     }
     
-    func testCallUpdate_remoteUserLowHand() {
-        let callUseCase = MockCallUseCase()
-        let scheduler = DispatchQueue.test
-        let harness = Harness(
-            scheduler: scheduler.eraseToAnyScheduler(),
-            callUseCase: callUseCase
-        )
+    @MainActor func testCallUpdate_remoteUserLowHand() async throws {
+        let harness = Harness()
 
-        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, name: "1", raisedHand: true)
-        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, name: "2", raisedHand: false)
-        harness.sut.participantJoined(participant: firstParticipant)
-        harness.sut.participantJoined(participant: secondParticipant)
+        try await harness.sessionUpdateUseCase.sendSessionUpdate(ChatSessionEntity(statusType: .inProgress, peerId: 101, clientId: 1, changeType: .status))
+        try await harness.sessionUpdateUseCase.sendSessionUpdate(ChatSessionEntity(statusType: .inProgress, peerId: 102, clientId: 2, changeType: .status))
         
-        var receiveCommands = [MeetingParticipantsLayoutViewModel.Command]()
+        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
+
+        let remoteUserLowHandExpectation = expectation(description: "remote user low hand icon hidden after onChatCallUpdate without remote user handle in the raise hands list")
+        let snackBarNilExpectation = expectation(description: "nil snack bar after user lower hand")
+
         harness.sut.invokeCommand = { command in
-            receiveCommands.append(command)
+            switch command {
+            case .updateParticipantRaisedHandAt(let index, _):
+                XCTAssertFalse(harness.sut.callParticipants[index].raisedHand)
+                remoteUserLowHandExpectation.fulfill()
+            case .updateSnackBar(let snackBar):
+                XCTAssertNil(snackBar)
+                snackBarNilExpectation.fulfill()
+            default:
+                break
+            }
         }
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
-        scheduler.advance(by: .milliseconds(600))
-        guard
-            case .updateParticipantRaisedHandAt = receiveCommands[0],
-            case .updateSnackBar(let snackBar) = receiveCommands[1],
-            case .updateLocalRaisedHandHidden(let hidden) = receiveCommands[2]
-        else {
-            XCTFail("received incorrect commands")
-            return
-        }
+        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: []))
         
-        XCTAssertNotNil(snackBar)
-        XCTAssertTrue(hidden)
-        
-        receiveCommands.removeAll()
-        
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: []))
-        scheduler.advance(by: .milliseconds(600))
-        
-        guard
-            case .updateParticipantRaisedHandAt = receiveCommands[0],
-            case .updateSnackBar = receiveCommands[1],
-            case .updateLocalRaisedHandHidden(let hidden) = receiveCommands[2]
-        else {
-            XCTFail("received incorrect commands")
-            return
-        }
-        
-        XCTAssertTrue(hidden)
-            
+        await fulfillment(of: [remoteUserLowHandExpectation, snackBarNilExpectation], timeout: 3)
     }
         
-    class Harness {
+    final class Harness: Sendable {
         let scheduler: AnySchedulerOf<DispatchQueue>
+        let callUpdateUseCase: MockCallUpdateUseCase
+        let sessionUpdateUseCase: MockSessionUpdateUseCase
+        let callManager: MockCallManager
         let sut: MeetingParticipantsLayoutViewModel
         init(
             containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
@@ -1359,7 +1277,10 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             userImageUseCase: some UserImageUseCaseProtocol = MockUserImageUseCase(),
             analyticsEventUseCase: some AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
             megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-            callManager: some CallManagerProtocol = MockCallManager(),
+            callUpdateUseCase: MockCallUpdateUseCase = MockCallUpdateUseCase(),
+            chatRoomUpdateUseCase: MockChatRoomUpdateUseCase = MockChatRoomUpdateUseCase(),
+            sessionUpdateUseCase: MockSessionUpdateUseCase = MockSessionUpdateUseCase(),
+            callManager: MockCallManager = MockCallManager(),
             featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
             chatRoom: ChatRoomEntity = ChatRoomEntity(),
             call: CallEntity = CallEntity(),
@@ -1367,6 +1288,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             cameraSwitcher: some CameraSwitching = MockCameraSwitcher()
         ) {
             self.scheduler = scheduler
+            self.callUpdateUseCase = callUpdateUseCase
+            self.sessionUpdateUseCase = sessionUpdateUseCase
+            self.callManager = callManager
             self.sut = .init(
                 containerViewModel: containerViewModel,
                 scheduler: scheduler,
@@ -1382,6 +1306,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 userImageUseCase: userImageUseCase,
                 analyticsEventUseCase: analyticsEventUseCase,
                 megaHandleUseCase: megaHandleUseCase,
+                callUpdateUseCase: callUpdateUseCase,
+                sessionUpdateUseCase: sessionUpdateUseCase,
+                chatRoomUpdateUseCase: chatRoomUpdateUseCase,
                 callManager: callManager,
                 featureFlagProvider: featureFlagProvider,
                 chatRoom: chatRoom,
@@ -1390,6 +1317,10 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 layoutUpdateChannel: .init(),
                 cameraSwitcher: cameraSwitcher
             )
+            
+            sut.monitorOnCallUpdate()
+            sut.monitorOnSessionUpdate()
+            sut.monitorOnChatRoomUpdate()
         }
     }
     

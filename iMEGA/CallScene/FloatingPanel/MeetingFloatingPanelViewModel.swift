@@ -66,9 +66,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var callParticipants = [CallParticipantEntity]()
     private var callParticipantsNotInCall = [CallParticipantEntity]()
     private var callParticipantsInWaitingRoom = [CallParticipantEntity]()
-    private var onCallUpdateTask: Task<Void, Never>?
-    private var onSessionUpdateTask: Task<Void, Never>?
-    private var onChatRoomUpdateTask: Task<Void, Never>?
     private var seeWaitingRoomListNotificationTask: Task<Void, Never>?
     private let presentUpgradeFlow: (AccountDetailsEntity) -> Void
     // store state of the fact that user dismissed upsell banner
@@ -150,12 +147,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.featureFlagProvider = featureFlags
         self.notificationCenter = notificationCenter
         self.presentUpgradeFlow = presentUpgradeFlow
-    }
-    
-    deinit {
-        cancelMonitorOnCallUpdate()
-        cancelMonitorOnChatRoomUpdate()
-        cancelMonitorOnSessionUpdate()
     }
     
     func dispatch(_ action: MeetingFloatingPanelAction) {
@@ -486,7 +477,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     func monitorOnCallUpdate() {
         let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
-        onCallUpdateTask = Task { [weak self] in
+        Task { [weak self] in
             for await call in callUpdates {
                 self?.onCallUpdate(call)
             }
@@ -512,16 +503,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    private func cancelMonitorOnCallUpdate() {
-        onCallUpdateTask?.cancel()
-        onCallUpdateTask = nil
-    }
-    
     // MARK: - Chat Room Update
     
     func monitorOnChatRoomUpdate() {
         let chatRoomUpdates = chatRoomUpdateUseCase.monitorOnChatRoomUpdate()
-        onChatRoomUpdateTask = Task { [weak self] in
+        Task { [weak self] in
             for await chatRoom in chatRoomUpdates {
                 self?.onChatRoomUpdate(chatRoom)
             }
@@ -549,16 +535,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    private func cancelMonitorOnChatRoomUpdate() {
-        onChatRoomUpdateTask?.cancel()
-        onChatRoomUpdateTask = nil
-    }
-    
     // MARK: - Session Update
     
     func monitorOnSessionUpdate() {
         let sessionUpdates = sessionUpdateUseCase.monitorOnSessionUpdate()
-        onSessionUpdateTask = Task { [weak self] in
+        Task { [weak self] in
             for await session in sessionUpdates {
                 self?.onSessionUpdate(session)
             }
@@ -596,11 +577,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         default:
             break
         }
-    }
-    
-    private func cancelMonitorOnSessionUpdate() {
-        onSessionUpdateTask?.cancel()
-        onSessionUpdateTask = nil
     }
     
     // MARK: Local av flags

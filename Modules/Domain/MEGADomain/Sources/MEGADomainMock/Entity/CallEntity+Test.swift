@@ -29,6 +29,9 @@ public extension CallEntity {
         waitingRoom: WaitingRoomEntity? = nil,
         waitingRoomHandleList: [HandleEntity] = [],
         raiseHandsList: [HandleEntity] = [],
+        auxHandle: HandleEntity = .invalid,
+        networkQuality: NetworkQuality = .good,
+        peeridCallCompositionChange: HandleEntity = .invalid,
         uuid: UUID = .testUUID,
         isTesting: Bool = true
     ) {
@@ -57,6 +60,9 @@ public extension CallEntity {
             waitingRoom: waitingRoom,
             waitingRoomHandleList: waitingRoomHandleList,
             raiseHandsList: raiseHandsList,
+            auxHandle: auxHandle,
+            networkQuality: networkQuality,
+            peeridCallCompositionChange: peeridCallCompositionChange,
             uuid: uuid
         )
     }
