@@ -22,6 +22,7 @@ public struct SecondaryActionButtonView: View {
                 title: title,
                 isDesignTokenEnabled: isDesignTokenEnabled
             )
+            .font(.title3)
         }
         .shadow(color: isDesignTokenEnabled ? .clear : Color.black.opacity(0.15), radius: 4, y: 1) // Shadow should be removed when design token is permanently applied as it won't be needed.
     }
@@ -53,7 +54,6 @@ public struct SecondaryActionButtonViewText: View {
             .frame(maxWidth: .infinity)
             .frame(height: 50)
             .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.accent.swiftUI : textColor)
-            .font(.title3)
             .background(isDesignTokenEnabled ? TokenColors.Button.secondary.swiftUI : background)
             .cornerRadius(10)
             .contentShape(Rectangle())

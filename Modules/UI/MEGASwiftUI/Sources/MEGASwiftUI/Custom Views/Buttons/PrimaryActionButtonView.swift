@@ -23,6 +23,7 @@ public struct PrimaryActionButtonView: View {
                 title: title,
                 isDesignTokenEnabled: isDesignTokenEnabled
             )
+            .font(.title3)
         }
     }
 }
@@ -55,7 +56,6 @@ public struct PrimaryActionButtonViewText: View {
             .foregroundColor(
                 isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : .white
             )
-            .font(.title3)
             .background(
                 isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : backgroundColor
             )
