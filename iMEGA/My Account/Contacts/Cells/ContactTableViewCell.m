@@ -125,10 +125,7 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            self.permissionsImageView.hidden = YES;
-            self.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-            self.nameLabel.text = LocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list");
-            self.shareLabel.hidden = YES;
+            [self prepareAddContactsCell];
         } else {
             NSString *userName = [self userNameForUser:user];
             if (userName) {
