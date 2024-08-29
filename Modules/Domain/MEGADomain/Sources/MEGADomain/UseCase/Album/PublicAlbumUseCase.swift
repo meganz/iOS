@@ -6,22 +6,22 @@ public protocol PublicAlbumUseCaseProtocol: Sendable {
     func stopAlbumLinkPreview()
 }
 
-public struct PublicAlbumUseCase<S: ShareAlbumRepositoryProtocol>: PublicAlbumUseCaseProtocol {
-    private let shareAlbumRepository: S
+public struct PublicAlbumUseCase<S: ShareCollectionRepositoryProtocol>: PublicAlbumUseCaseProtocol {
+    private let shareCollectionRepository: S
     
-    public init(shareAlbumRepository: S) {
-        self.shareAlbumRepository = shareAlbumRepository
+    public init(shareCollectionRepository: S) {
+        self.shareCollectionRepository = shareCollectionRepository
     }
     
     public func publicAlbum(forLink link: String) async throws -> SharedCollectionEntity {
-        try await shareAlbumRepository.publicAlbumContents(forLink: link)
+        try await shareCollectionRepository.publicCollectionContents(forLink: link)
     }
     
     public func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity] {
         return await withTaskGroup(of: NodeEntity?.self) { group in
             photos.forEach { photoElement in
                 group.addTask {
-                    try? await shareAlbumRepository.publicPhoto(photoElement)
+                    try? await shareCollectionRepository.publicNode(photoElement)
                 }
             }
             return await group.reduce(into: [NodeEntity]()) {
@@ -31,6 +31,6 @@ public struct PublicAlbumUseCase<S: ShareAlbumRepositoryProtocol>: PublicAlbumUs
     }
     
     public func stopAlbumLinkPreview() {
-        shareAlbumRepository.stopAlbumLinkPreview()
+        shareCollectionRepository.stopCollectionLinkPreview()
     }
 }

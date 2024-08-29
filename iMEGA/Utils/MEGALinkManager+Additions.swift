@@ -57,7 +57,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         let sdk: MEGASdk = .sharedSdk
         let nodeProvider: some PublicAlbumNodeProviderProtocol = PublicAlbumNodeProvider.shared
         let userAlbumRepository = UserAlbumRepository.newRepo
-        let shareAlbumRepository = ShareAlbumRepository(
+        let shareAlbumRepository = ShareCollectionRepository(
             sdk: sdk,
             publicAlbumNodeProvider: nodeProvider)
         
@@ -73,7 +73,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         let vm = ImportAlbumViewModel(
             publicLink: publicLink,
             publicAlbumUseCase: PublicAlbumUseCase(
-                shareAlbumRepository: shareAlbumRepository),
+                shareCollectionRepository: shareAlbumRepository),
             albumNameUseCase: AlbumNameUseCase(
                 userAlbumRepository: UserAlbumRepository.newRepo),
             accountStorageUseCase: AccountStorageUseCase(accountRepository: AccountRepository.newRepo),

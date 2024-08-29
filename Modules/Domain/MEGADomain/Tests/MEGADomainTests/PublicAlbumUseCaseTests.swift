@@ -11,8 +11,8 @@ final class PublicAlbumUseCaseTests: XCTestCase {
         ]
         let sharedCollectionEntity = SharedCollectionEntity(set: SetEntity(handle: 5),
                                                                       setElements: setElements)
-        let shareAlbumRepository = MockShareAlbumRepository(publicAlbumContentsResult: .success(sharedCollectionEntity))
-        let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        let shareCollectionRepository = MockShareCollectionRepository(publicCollectionContentsResult: .success(sharedCollectionEntity))
+        let sut = makePublicAlbumUseCase(shareCollectionRepository: shareCollectionRepository)
         
         let publicAlbum = try await sut.publicAlbum(forLink: "public_album_link")
         
@@ -21,8 +21,8 @@ final class PublicAlbumUseCaseTests: XCTestCase {
     
     func testPublicAlbumContents_albumLoadFailed_shouldThrowError() async {
         let expectedError = SharedCollectionErrorEntity.couldNotBeReadOrDecrypted
-        let shareAlbumRepository = MockShareAlbumRepository(publicAlbumContentsResult: .failure(expectedError))
-        let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        let shareCollectionRepository = MockShareCollectionRepository(publicCollectionContentsResult: .failure(expectedError))
+        let sut = makePublicAlbumUseCase(shareCollectionRepository: shareCollectionRepository)
         
         do {
             _ = try await sut.publicAlbum(forLink: "public_album_link")
@@ -43,8 +43,8 @@ final class PublicAlbumUseCaseTests: XCTestCase {
         ]
         let photoElements = [SetElementEntity(handle: photoOneId),
                              SetElementEntity(handle: photoTwoId)]
-        let shareAlbumRepository = MockShareAlbumRepository(publicPhotoResults: photoResults)
-        let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        let shareCollectionRepository = MockShareCollectionRepository(publicNodeResults: photoResults)
+        let sut = makePublicAlbumUseCase(shareCollectionRepository: shareCollectionRepository)
         
         let photos = await sut.publicPhotos(photoElements)
         
@@ -52,18 +52,18 @@ final class PublicAlbumUseCaseTests: XCTestCase {
     }
     
     func testStopAlbumLinkPreview_called_shouldStopAlbumLinkPreview() {
-        let shareAlbumRepository = MockShareAlbumRepository()
-        let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        let shareCollectionRepository = MockShareCollectionRepository()
+        let sut = makePublicAlbumUseCase(shareCollectionRepository: shareCollectionRepository)
         
         sut.stopAlbumLinkPreview()
         
-        XCTAssertEqual(shareAlbumRepository.stopAlbumLinkPreviewCalled, 1)
+        XCTAssertEqual(shareCollectionRepository.stopCollectionLinkPreviewCalled, 1)
     }
     
     // MARK: - Helpers
     
-    private func makePublicAlbumUseCase(shareAlbumRepository: some ShareAlbumRepositoryProtocol = MockShareAlbumRepository()
+    private func makePublicAlbumUseCase(shareCollectionRepository: some ShareCollectionRepositoryProtocol = MockShareCollectionRepository()
     ) -> some PublicAlbumUseCaseProtocol {
-        PublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        PublicAlbumUseCase(shareCollectionRepository: shareCollectionRepository)
     }
 }

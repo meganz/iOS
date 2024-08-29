@@ -14,7 +14,7 @@ public protocol SaveAlbumToFolderUseCaseProtocol: Sendable {
 }
 
 public struct SaveAlbumToFolderUseCase<T: NodeActionRepositoryProtocol,
-                                       U: ShareAlbumRepositoryProtocol,
+                                       U: ShareCollectionRepositoryProtocol,
                                        V: NodeRepositoryProtocol>: SaveAlbumToFolderUseCaseProtocol {
     private let nodeActionRepository: T
     private let shareAlbumRepository: U
@@ -36,8 +36,8 @@ public struct SaveAlbumToFolderUseCase<T: NodeActionRepositoryProtocol,
         let albumFolder = try await nodeActionRepository.createFolder(name: albumFolderName,
                                                                       parent: parent)
         try Task.checkCancellation()
-        return try await shareAlbumRepository.copyPublicPhotos(toFolder: albumFolder,
-                                                               photos: photos)
+        return try await shareAlbumRepository.copyPublicNodes(toFolder: albumFolder,
+                                                               nodes: photos)
     }
     
     // MARK: - Private

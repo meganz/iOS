@@ -2,9 +2,9 @@ import MEGADomain
 import MEGASdk
 import MEGASwift
 
-public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
-    public static var newRepo: ShareAlbumRepository {
-        ShareAlbumRepository(sdk: MEGASdk.sharedSdk,
+public struct ShareCollectionRepository: ShareCollectionRepositoryProtocol {
+    public static var newRepo: ShareCollectionRepository {
+        ShareCollectionRepository(sdk: MEGASdk.sharedSdk,
                              publicAlbumNodeProvider: PublicAlbumNodeProvider.shared)
     }
     
@@ -17,7 +17,7 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         self.publicAlbumNodeProvider = publicAlbumNodeProvider
     }
     
-    public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
+    public func shareCollectionLink(_ album: AlbumEntity) async throws -> String? {
         if album.isLinkShared {
             return sdk.publicLinkForExportedSet(bySid: album.id)
         }
@@ -37,7 +37,7 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         })
     }
     
-    public func removeSharedLink(forAlbumId id: HandleEntity) async throws {
+    public func removeSharedLink(forCollectionId id: HandleEntity) async throws {
         try await withAsyncThrowingValue { completion in
             sdk.disableExportSet(id, delegate: RequestDelegate { result in
                 switch result {
@@ -54,7 +54,7 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         }
     }
     
-    public func publicAlbumContents(forLink link: String) async throws -> SharedCollectionEntity {
+    public func publicCollectionContents(forLink link: String) async throws -> SharedCollectionEntity {
         await publicAlbumNodeProvider.clearCache()
         
         return try await withAsyncThrowingValue { completion in
@@ -90,29 +90,29 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         }
     }
     
-    public func stopAlbumLinkPreview() {
+    public func stopCollectionLinkPreview() {
         sdk.stopPublicSetPreview()
     }
     
-    public func publicPhoto(_ photo: SetElementEntity) async throws -> NodeEntity? {
-        try await publicAlbumNodeProvider.publicPhotoNode(for: photo)?.toNodeEntity()
+    public func publicNode(_ collection: SetElementEntity) async throws -> NodeEntity? {
+        try await publicAlbumNodeProvider.publicPhotoNode(for: collection)?.toNodeEntity()
     }
     
-    public func copyPublicPhotos(toFolder folder: NodeEntity, photos: [NodeEntity]) async throws -> [NodeEntity] {
-        guard photos.isNotEmpty else { return [] }
-        guard let albumFolder = sdk.node(forHandle: folder.handle) else {
+    public func copyPublicNodes(toFolder folder: NodeEntity, nodes: [NodeEntity]) async throws -> [NodeEntity] {
+        guard nodes.isNotEmpty else { return [] }
+        guard let collectionFolder = sdk.node(forHandle: folder.handle) else {
             throw NodeErrorEntity.nodeNotFound
         }
         
-        let photoNodes = await publicAlbumPhotos(photos)
-        guard photoNodes.isNotEmpty, !Task.isCancelled else {
+        let collectionNodes = await publicCollectionNodes(nodes)
+        guard collectionNodes.isNotEmpty, !Task.isCancelled else {
             return []
         }
         
         return try await withThrowingTaskGroup(of: NodeEntity.self, body: { group in
-            photoNodes.forEach { photoNode in
+            collectionNodes.forEach { collectionNode in
                 group.addTask {
-                    return try await copyPhotoToFolder(albumFolder, photo: photoNode)
+                    return try await copyNodeToFolder(collectionFolder, node: collectionNode)
                 }
             }
             return try await group.reduce(into: [NodeEntity](), {
@@ -121,9 +121,9 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         })
     }
     
-    private func copyPhotoToFolder(_ folder: MEGANode, photo: MEGANode) async throws -> NodeEntity {
+    private func copyNodeToFolder(_ folder: MEGANode, node: MEGANode) async throws -> NodeEntity {
         try await withAsyncThrowingValue { completion in
-            sdk.copy(photo, newParent: folder, delegate: RequestDelegate { result in
+            sdk.copy(node, newParent: folder, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
                     guard let node = sdk.node(forHandle: request.nodeHandle)?.toNodeEntity() else {
@@ -138,15 +138,15 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         }
     }
     
-    private func publicAlbumPhotos(_ photos: [NodeEntity]) async -> [MEGANode] {
+    private func publicCollectionNodes(_ nodes: [NodeEntity]) async -> [MEGANode] {
         await withTaskGroup(of: MEGANode?.self, body: { group in
-            photos.forEach { photo in
+            nodes.forEach { node in
                 group.addTask {
-                    await publicAlbumNodeProvider.node(for: photo.handle)
+                    await publicAlbumNodeProvider.node(for: node.handle)
                 }
             }
             return await group.reduce(into: [MEGANode](), {
-                if let photo = $1 { $0.append(photo) }
+                if let node = $1 { $0.append(node) }
             })
         })
     }

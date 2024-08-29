@@ -9,7 +9,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let expectedLink = "the_shared_link"
         let mockSdk = MockSdk(link: expectedLink)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
-        let result = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
+        let result = try await sut.shareCollectionLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
         XCTAssertEqual(result, expectedLink)
     }
     
@@ -17,7 +17,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let expectedLink = "the_existing_shared_link"
         let mockSdk = MockSdk(link: expectedLink)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
-        let result = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)))
+        let result = try await sut.shareCollectionLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)))
         XCTAssertEqual(result, expectedLink)
     }
     
@@ -25,7 +25,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBusinessPastDue)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            _ = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
+            _ = try await sut.shareCollectionLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
         } catch {
             XCTAssertEqual(error as? ShareCollectionErrorEntity, ShareCollectionErrorEntity.buisinessPastDue)
         }
@@ -35,7 +35,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBlocked)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            _ = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
+            _ = try await sut.shareCollectionLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
         } catch let error as GenericErrorEntity {
             XCTAssertNotNil(error)
         } catch {
@@ -45,14 +45,14 @@ class ShareAlbumRepositoryTests: XCTestCase {
     
     func testDisableAlbumShare_onSuccess_shouldComplete() async throws {
         let sut = makeShareAlbumRepository(sdk: MockSdk())
-        try await sut.removeSharedLink(forAlbumId: 1)
+        try await sut.removeSharedLink(forCollectionId: 1)
     }
     
     func testDisableAlbumShare_onBuisinessPastDue_shouldThrowError() async {
         let mockSdk = MockSdk(megaSetError: .apiEBusinessPastDue)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            try await sut.removeSharedLink(forAlbumId: 1)
+            try await sut.removeSharedLink(forCollectionId: 1)
         } catch {
             XCTAssertEqual(error as? ShareCollectionErrorEntity, ShareCollectionErrorEntity.buisinessPastDue)
         }
@@ -62,7 +62,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBlocked)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            try await sut.removeSharedLink(forAlbumId: 1)
+            try await sut.removeSharedLink(forCollectionId: 1)
         } catch let error as GenericErrorEntity {
             XCTAssertNotNil(error)
         } catch {
@@ -76,7 +76,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
                                    MockMEGASetElement(handle: 89)]
         let sdk = MockSdk(megaSets: [expectedSet], megaSetElements: expectedSetElements)
         let sut = makeShareAlbumRepository(sdk: sdk)
-        let result = try await sut.publicAlbumContents(forLink: "public_link")
+        let result = try await sut.publicCollectionContents(forLink: "public_link")
         XCTAssertEqual(result.set, expectedSet.toSetEntity())
         XCTAssertEqual(result.setElements, expectedSetElements.toSetElementsEntities())
         XCTAssertEqual(sdk.stopPublicSetPreviewCalled, 1)
@@ -93,10 +93,10 @@ class ShareAlbumRepositoryTests: XCTestCase {
             testCase.forEach { testCase in
                 group.addTask {
                     let mockSdk = MockSdk(megaSetError: testCase.0)
-                    let sut = ShareAlbumRepository(sdk: mockSdk,
+                    let sut = ShareCollectionRepository(sdk: mockSdk,
                                                    publicAlbumNodeProvider: MockPublicAlbumNodeProvider())
                     do {
-                        _ = try await sut.publicAlbumContents(forLink: "public_link")
+                        _ = try await sut.publicCollectionContents(forLink: "public_link")
                         return false
                     } catch {
                         return error as? SharedCollectionErrorEntity == testCase.1
@@ -113,7 +113,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBlocked)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            _ = try await sut.publicAlbumContents(forLink: "public_link")
+            _ = try await sut.publicCollectionContents(forLink: "public_link")
         } catch let error as GenericErrorEntity {
             XCTAssertNotNil(error)
         } catch {
@@ -127,7 +127,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let sdk = MockSdk(megaSets: [expectedSet])
         
         let sut = makeShareAlbumRepository(sdk: sdk, publicAlbumNodeProvider: provider)
-        let result = try await sut.publicAlbumContents(forLink: "public_link")
+        let result = try await sut.publicCollectionContents(forLink: "public_link")
         XCTAssertEqual(result.set, expectedSet.toSetEntity())
         XCTAssertTrue(result.setElements.isEmpty)
         
@@ -138,7 +138,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let sdk = MockSdk()
         let sut = makeShareAlbumRepository(sdk: sdk)
         
-        sut.stopAlbumLinkPreview()
+        sut.stopCollectionLinkPreview()
         
         XCTAssertEqual(sdk.stopPublicSetPreviewCalled, 1)
     }
@@ -149,7 +149,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let provider = MockPublicAlbumNodeProvider(nodes: [expectedNode])
         let sut = makeShareAlbumRepository(publicAlbumNodeProvider: provider)
         
-        let result = try await sut.publicPhoto(SetElementEntity(handle: 6, nodeId: handle))
+        let result = try await sut.publicNode(SetElementEntity(handle: 6, nodeId: handle))
         
         XCTAssertEqual(result, expectedNode.toNodeEntity())
     }
@@ -157,8 +157,8 @@ class ShareAlbumRepositoryTests: XCTestCase {
     func testCopyPublicPhotos_noPhotos_shouldReturnEmpty() async throws {
         let sut = makeShareAlbumRepository()
         
-        let copiedPhotos = try await sut.copyPublicPhotos(toFolder: NodeEntity(handle: 1),
-                                                          photos: [])
+        let copiedPhotos = try await sut.copyPublicNodes(toFolder: NodeEntity(handle: 1),
+                                                          nodes: [])
         XCTAssertTrue(copiedPhotos.isEmpty)
     }
     
@@ -166,8 +166,8 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let sut = makeShareAlbumRepository()
         
         do {
-            _ = try await sut.copyPublicPhotos(toFolder: NodeEntity(handle: 1),
-                                               photos: [NodeEntity(handle: 1)])
+            _ = try await sut.copyPublicNodes(toFolder: NodeEntity(handle: 1),
+                                               nodes: [NodeEntity(handle: 1)])
             XCTFail("Should have thrown nodeNotFound")
         } catch {
             XCTAssertEqual(error as? NodeErrorEntity, NodeErrorEntity.nodeNotFound)
@@ -187,8 +187,8 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let sut = makeShareAlbumRepository(sdk: sdk,
                                            publicAlbumNodeProvider: provider)
         
-        let copiedPhotos = try await sut.copyPublicPhotos(toFolder: folder.toNodeEntity(),
-                                                          photos: publicPhotos.toNodeEntities())
+        let copiedPhotos = try await sut.copyPublicNodes(toFolder: folder.toNodeEntity(),
+                                                          nodes: publicPhotos.toNodeEntities())
         
         XCTAssertEqual(Set(copiedPhotos), Set(copiedNodes.toNodeEntities()))
     }
@@ -198,8 +198,8 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let sdk = MockSdk(nodes: [folder])
         let sut = makeShareAlbumRepository(sdk: sdk)
         
-        let copiedPhotos = try await sut.copyPublicPhotos(toFolder: folder.toNodeEntity(),
-                                                          photos: [NodeEntity(handle: 3)])
+        let copiedPhotos = try await sut.copyPublicNodes(toFolder: folder.toNodeEntity(),
+                                                          nodes: [NodeEntity(handle: 3)])
         
         XCTAssertTrue(copiedPhotos.isEmpty)
     }
@@ -213,8 +213,8 @@ class ShareAlbumRepositoryTests: XCTestCase {
                                            publicAlbumNodeProvider: provider)
         
         do {
-            _ = try await sut.copyPublicPhotos(toFolder: folder.toNodeEntity(),
-                                               photos: publicPhotos.toNodeEntities())
+            _ = try await sut.copyPublicNodes(toFolder: folder.toNodeEntity(),
+                                               nodes: publicPhotos.toNodeEntities())
             XCTFail("Should have thrown nodeNotFound")
         } catch {
             XCTAssertEqual(error as? NodeErrorEntity, NodeErrorEntity.nodeNotFound)
@@ -230,8 +230,8 @@ class ShareAlbumRepositoryTests: XCTestCase {
                                            publicAlbumNodeProvider: provider)
         
         do {
-            _ = try await sut.copyPublicPhotos(toFolder: folder.toNodeEntity(),
-                                               photos: publicPhotos.toNodeEntities())
+            _ = try await sut.copyPublicNodes(toFolder: folder.toNodeEntity(),
+                                               nodes: publicPhotos.toNodeEntities())
             XCTFail("Should have thrown nodeCopyFailed")
         } catch {
             XCTAssertEqual(error as? CopyOrMoveErrorEntity, CopyOrMoveErrorEntity.nodeCopyFailed)
@@ -241,7 +241,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
     // MARK: - Private
     private func makeShareAlbumRepository(sdk: MEGASdk = MockSdk(),
                                           publicAlbumNodeProvider: any PublicAlbumNodeProviderProtocol = MockPublicAlbumNodeProvider()
-    ) -> ShareAlbumRepository {
-        ShareAlbumRepository(sdk: sdk, publicAlbumNodeProvider: publicAlbumNodeProvider)
+    ) -> ShareCollectionRepository {
+        ShareCollectionRepository(sdk: sdk, publicAlbumNodeProvider: publicAlbumNodeProvider)
     }
 }
