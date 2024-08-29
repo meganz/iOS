@@ -205,7 +205,12 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
 
     private func showNodeInfo(_ node: MEGANode) {
         let nodeInfoControllers = NodeInfoViewController.makeInstance(
-            with: NodeInfoViewModel(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider),
+            with: NodeInfoViewModel(withNode: node, 
+                                    nodeUseCase: NodeUseCase(
+                                        nodeDataRepository: NodeDataRepository.newRepo,
+                                        nodeValidationRepository: NodeValidationRepository.newRepo,
+                                        nodeRepository: NodeRepository.newRepo),
+                                    featureFlagProvider: DIContainer.featureFlagProvider),
             delegate: nil
         )
 

@@ -6,7 +6,13 @@ import MEGASDKRepo
 
 extension PreviewDocumentViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
-        return NodeInfoViewModel(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider)
+        return NodeInfoViewModel(
+            withNode: node,
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
+            featureFlagProvider: DIContainer.featureFlagProvider)
     }
     
     @objc func downloadFileLink() {

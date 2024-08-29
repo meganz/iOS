@@ -119,6 +119,10 @@ final class NodeInfoViewController: UITableViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.invokeCommand = { [weak self] command in
+            self?.executeCommand(command)
+        }
 
         sdk.add(self)
         
@@ -128,6 +132,8 @@ final class NodeInfoViewController: UITableViewController {
                                  forCellReuseIdentifier: "NodeInfoVerifyAccountTableViewCell")
         tableView.register(HostingTableViewCell<NodeInfoLocationView>.self, forCellReuseIdentifier: "NodeInfoLocationView")
         NodeDescriptionCellController.registerCell(for: tableView)
+        
+        viewModel.dispatch(.viewDidLoad)
     }
 
     deinit {
@@ -150,12 +156,21 @@ final class NodeInfoViewController: UITableViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeKeyboardNotificationsFromDescriptionCell()
+        viewModel.dispatch(.viewDidDisappear)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
+            reloadData()
+        }
+    }
+    
+    private func executeCommand(_ command: NodeInfoViewModel.Command) {
+        switch command {
+        case .reloadSections:
+            cacheNodePropertiesSoThatTableViewChangesAreAtomic()
             reloadData()
         }
     }
@@ -232,7 +247,7 @@ final class NodeInfoViewController: UITableViewController {
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {
-        viewModel.openSharedDialog()
+        Task { await viewModel.openSharedDialog() }
     }
     
     private func currentVersionRemoved() {
@@ -817,7 +832,7 @@ extension NodeInfoViewController {
             node.mnz_removeSharing()
         case .sharing:
             if indexPath.row == 0 {
-                viewModel.openSharedDialog()
+                Task { await viewModel.openSharedDialog() }
             } else {
                 prepareShareFolderPermissionsAlertController(fromIndexPat: indexPath)
             }
