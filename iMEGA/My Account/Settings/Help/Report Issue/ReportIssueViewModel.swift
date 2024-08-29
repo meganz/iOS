@@ -31,6 +31,7 @@ final class ReportIssueViewModel: ObservableObject {
     @Published var isConnected = true
     @Published var showingReportIssueActionSheet = false
     @Published var showingReportIssueAlert = false
+    @Published var isNotReachingMinimumCharacter = false
     
     var isSendLogFileToggleOn = true
     
