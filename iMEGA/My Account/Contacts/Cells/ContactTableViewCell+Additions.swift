@@ -68,4 +68,11 @@ extension ContactTableViewCell {
     @objc func removePendingShareIconColor() -> UIColor {
         UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
     }
+    
+    @objc func prepareAddContactsCell() {
+        permissionsImageView.isHidden = true
+        avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.inviteContactShare : UIImage.inviteToChat
+        nameLabel.text = Strings.Localizable.addContactButton
+        shareLabel.isHidden = true
+    }
 }
