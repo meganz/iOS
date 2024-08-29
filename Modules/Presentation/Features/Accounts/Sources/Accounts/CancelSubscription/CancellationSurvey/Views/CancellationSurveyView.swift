@@ -62,6 +62,7 @@ struct CancellationSurveyView: View {
         .ignoresSafeArea(edges: [.top, .bottom])
         .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : .clear)
         .onAppear {
+            viewModel.trackViewOnAppear()
             viewModel.setupRandomizedReasonList()
         }
     }

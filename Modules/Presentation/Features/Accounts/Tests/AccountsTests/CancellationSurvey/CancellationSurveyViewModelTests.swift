@@ -1,8 +1,11 @@
 @testable import Accounts
 import AccountsMock
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
 import MEGATest
 import XCTest
 
@@ -133,11 +136,62 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.showAppleManageSubscriptions_calledTimes, 1, file: file, line: line)
     }
     
+    func testTracker_viewOnAppear_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker)
+        
+        sut.trackViewOnAppear()
+
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyScreenEvent()]
+        )
+    }
+    
+    @MainActor func testTracker_didTapCancelButton_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker)
+        
+        sut.didTapCancelButton()
+
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyCancelViewButtonEvent()]
+        )
+    }
+    
+    @MainActor func testTracker_didTapDontCancelButton_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker)
+        
+        sut.didTapDontCancelButton()
+
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyDontCancelButtonEvent()]
+        )
+    }
+    
+    @MainActor func testTracker_didTapCancelSubscriptionButton_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker)
+        sut.selectedReason = randomReason
+        sut.otherReasonText = "This is a test reason"
+        
+        sut.didTapCancelSubscriptionButton()
+
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyCancelSubscriptionButtonEvent()]
+        )
+    }
+
     // MARK: - Helper
     private func makeSUT(
         currentSubscription: AccountSubscriptionEntity = AccountSubscriptionEntity(),
         requestResult: Result<Void, AccountErrorEntity> = .failure(.generic),
         mockRouter: MockCancelAccountPlanRouter = MockCancelAccountPlanRouter(),
+        mockTracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CancellationSurveyViewModel {
@@ -145,7 +199,8 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         let sut = CancellationSurveyViewModel(
             subscription: currentSubscription,
             subscriptionsUsecase: subscriptionsUsecase,
-            cancelAccountPlanRouter: mockRouter
+            cancelAccountPlanRouter: mockRouter,
+            tracker: mockTracker
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)
