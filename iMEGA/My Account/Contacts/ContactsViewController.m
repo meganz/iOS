@@ -333,8 +333,8 @@
     }
 }
 
-- (void)showInviteToolbarButton {
-    if ([self shouldProceedShowingInviteToolbarButton]) {
+- (void)showInviteToolbarButtonIfNeeded {
+    if ([self shouldShowInviteToolbarButtonWithIsEmpty:[self isListEmpty]]) {
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         self.inviteBarButtonItem.title = LocalizedString(@"inviteContact", @"");
         [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
@@ -459,8 +459,8 @@
         self.tableView.tableHeaderView = self.contactsTableViewHeader;
     } else if (self.contactsMode == ContactsModeChatStartConversation) {
         self.recentsArray = [MEGAChatSdk.shared recentChatsWithMax:3];
-        BOOL isEmpty = self.visibleUsersArray.count == 0;
-        [self showInviteToolbarButton];
+        BOOL isEmpty = [self isListEmpty];
+        [self showInviteToolbarButtonIfNeeded];
         [self showEmptyScreen:isEmpty];
         [self hideToolbar:isEmpty];
     } else if (self.contactsMode == ContactsModeChatNamingGroup) {
@@ -468,6 +468,10 @@
     }
     
     [self addSearchBarController];
+}
+
+- (BOOL)isListEmpty {
+    return self.visibleUsersArray.count == 0;
 }
 
 - (void)populateStartConversationOptions {
@@ -1570,7 +1574,7 @@
         return headerView;
     }
     if (section == 1 && self.contactsMode == ContactsModeChatStartConversation) {
-        if ([self hideRecentsSectionHeaderWithIsEmpty:self.visibleUsersArray.count == 0]) {
+        if ([self hideRecentsSectionHeaderWithIsEmpty:self.recentsArray.count == 0]) {
             [headerView configureWithTitle:nil topDistance:1.00 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
         }
         else {
