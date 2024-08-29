@@ -73,5 +73,7 @@ struct DeviceCenterItemView: View {
         .onTapGesture {
             viewModel.showDetail()
         }
+        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+        .frame(minHeight: 60)
     }
 }
