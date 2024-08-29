@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
@@ -25,6 +26,7 @@ struct SearchableView<WrappedView: View>: View {
             .background(colorScheme == .dark ? searchAssets.darkBGColor : searchAssets.lightBGColor)
             wrappedView
         }
+        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
     }
     
     public init(wrappedView: WrappedView, searchText: Binding<String>, isEditing: Binding<Bool>, isFilteredListEmpty: Bool, searchAssets: SearchAssets, emptyStateAssets: EmptyStateAssets) {
