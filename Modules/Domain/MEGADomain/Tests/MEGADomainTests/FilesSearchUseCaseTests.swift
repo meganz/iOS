@@ -5,7 +5,7 @@ import XCTest
 
 final class FilesSearchUseCaseTests: XCTestCase {
     
-    func testSearchWithFilter_shouldReturnAllPhotosNodes() {
+    func testSearchWithFilter_shouldReturnAllPhotosNodes() async throws {
         let expectedNodes = [
             NodeEntity(name: "sample1.raw", handle: 1, isFile: true, hasThumbnail: true),
             NodeEntity(name: "sample2.raw", handle: 6, isFile: true, hasThumbnail: false),
@@ -22,15 +22,18 @@ final class FilesSearchUseCaseTests: XCTestCase {
         let sut = makeSUT(
             filesSearchRepository: MockFilesSearchRepository(nodesForLocation: [.rootNode: allNodes])
         )
-        let expectation = expectation(description: "search triggers completion block")
-        sut.search(filter: .recursive(searchText: "", searchTargetLocation: .folderTarget(.rootNode), supportCancel: false, sortOrderType: .none, formatType: .photo, sensitiveFilterOption: .disabled), cancelPreviousSearchIfNeeded: false) { results, _ in
-            guard let results else { XCTFail("Search results shouldn't be nil"); return }
-            
-            XCTAssertEqual(results, expectedNodes)
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 1)
+        let results: [NodeEntity] = try await sut.search(
+            filter: .recursive(
+                searchText: "",
+                searchTargetLocation: .folderTarget(.rootNode),
+                supportCancel: false,
+                sortOrderType: .none,
+                formatType: .photo,
+                sensitiveFilterOption: .disabled
+            ),
+            cancelPreviousSearchIfNeeded: false
+        )
+        XCTAssertEqual(results, expectedNodes)
     }
     
     func testSearchWithFilterAsync_shouldReturnAllPhotosNodes() async throws {

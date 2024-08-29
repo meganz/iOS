@@ -10,13 +10,6 @@ public protocol FilesSearchUseCaseProtocol: Sendable {
     /// - Parameters:
     ///   - filter: SearchFilterEntity contains all necessary information to build search query.
     ///   - cancelPreviousSearchIfNeeded: Indicates if the previous search should be cancelled before starting a new one.
-    ///   - completion: Completion block to handle result from the request
-    func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void)
-    
-    /// Search files and folders by name. It will return a list of nodes based on the criteria provided in the params.
-    /// - Parameters:
-    ///   - filter: SearchFilterEntity contains all necessary information to build search query.
-    ///   - cancelPreviousSearchIfNeeded: Indicates if the previous search should be cancelled before starting a new one.
     /// - Returns: List of NodeEntities that match the criteria provided.
     func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity]
     
@@ -47,14 +40,6 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     ) {
         self.repo = repo
         self.nodeRepository = nodeRepository
-    }
-    
-    public func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
-        if cancelPreviousSearchIfNeeded {
-            repo.cancelSearch()
-        }
-        
-        repo.search(filter: filter, completion: completion)
     }
     
     public func search(filter: SearchFilterEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> NodeListEntity {

@@ -62,17 +62,6 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
             .first { node in node.handle == id }
     }
     
-    public func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
-        Task {
-            do {
-                let nodes: [NodeEntity] = try await search(filter: filter)
-                completion(nodes, false)
-            } catch {
-                completion(nil, true)
-            }
-        }
-    }
-    
     public func search(filter: SearchFilterEntity, page: SearchPageEntity) async throws -> [NodeEntity] {
         let results: [NodeEntity] = try await search(filter: filter)
         guard page.startingOffset >= 0, page.pageSize > 0 else {
