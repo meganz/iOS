@@ -207,18 +207,10 @@ extension ContactsViewController {
         return emails.map { NSString(string: $0) }
     }
     
-    var tableBackgroundColor: UIColor {
-        if newChatEmptyStatesEnabled {
-            TokenColors.Background.page
-        } else {
-            TokenColors.Background.surface1
-        }
-    }
-    
     @objc
     func updateAppearance() {
         if UIColor.isDesignTokenEnabled() {
-            let bgColor = tableBackgroundColor
+            let bgColor = TokenColors.Background.page
             
             view.backgroundColor = bgColor
             tableView.backgroundColor = bgColor
