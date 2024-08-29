@@ -1447,6 +1447,7 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            [api setAccountAuth:api.accountAuth];
             [self postLoginNotification];
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
@@ -1467,7 +1468,6 @@
             [MEGASdk.shared fetchNodes];
             [QuickAccessWidgetManager reloadAllWidgetsContent];
             [[MEGAPurchase sharedInstance] requestPricing];
-            [api setAccountAuth:api.accountAuth];
             break;
         }
             
