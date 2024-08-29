@@ -4,7 +4,7 @@ import XCTest
 
 class ShareCollectionUseCaseTests: XCTestCase {
     func testShareAlbum_onNonUserAlbum_shouldThrowInvalidAlbumType() async {
-        let sut = sut(shareAlbumRepository: MockShareAlbumRepository())
+        let sut = sut(shareAlbumRepository: MockShareCollectionRepository())
         do {
             _ = try await sut.shareCollectionLink(AlbumEntity(id: 2, type: .favourite))
         } catch {
@@ -16,7 +16,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
     func testShareAlbum_onUserAlbum_shouldReturnPublicLink() async throws {
         let expectedLink = "public_link"
         let album = AlbumEntity(id: 5, type: .user)
-        let repository = MockShareAlbumRepository(shareAlbumResults: [album.id: .success(expectedLink)])
+        let repository = MockShareCollectionRepository(shareCollectionResults: [album.id: .success(expectedLink)])
         let sut = sut(shareAlbumRepository: repository)
         let result = try await sut.shareCollectionLink(album)
         XCTAssertEqual(result, expectedLink)
@@ -30,7 +30,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
         let shareAlbumResults: [HandleEntity: Result<String?, Error>] = [
             firstUserAlbum.id: .success(firstAlbumPublicLink),
             secondUserAlbum.id: .success(secondAlbumPublicLink)]
-        let repository = MockShareAlbumRepository(shareAlbumResults: shareAlbumResults)
+        let repository = MockShareCollectionRepository(shareCollectionResults: shareAlbumResults)
        
         let sut = sut(shareAlbumRepository: repository)
         let albums = [firstUserAlbum, secondUserAlbum]
@@ -46,7 +46,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
         let shareAlbumResults: [HandleEntity: Result<String?, Error>] = [
             firstUserAlbum.id: .success(firstAlbumPublicLink),
             secondUserAlbum.id: .failure(GenericErrorEntity())]
-        let repository = MockShareAlbumRepository(shareAlbumResults: shareAlbumResults)
+        let repository = MockShareCollectionRepository(shareCollectionResults: shareAlbumResults)
        
         let sut = sut(shareAlbumRepository: repository)
         let albums = [firstUserAlbum, secondUserAlbum]
@@ -56,7 +56,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
     }
     
     func testDisableShare_onNonUserAlbum_shouldThrowInvalidAlbumType() async {
-        let sut = sut(shareAlbumRepository: MockShareAlbumRepository())
+        let sut = sut(shareAlbumRepository: MockShareCollectionRepository())
         do {
             try await sut.removeSharedLink(forAlbum: AlbumEntity(id: 2, type: .favourite))
         } catch {
@@ -66,13 +66,13 @@ class ShareCollectionUseCaseTests: XCTestCase {
     }
     
     func testDisableShare_onUserAlbum_shouldComplete() async throws {
-        let repository = MockShareAlbumRepository(disableAlbumShareResult: .success)
+        let repository = MockShareCollectionRepository(disableCollectionShareResult: .success)
         let sut = sut(shareAlbumRepository: repository)
         try await sut.removeSharedLink(forAlbum: AlbumEntity(id: 5, type: .user))
     }
     
     func testRemoveSharedLink_onMultipleUserAlbum_shouldComplete() async {
-        let repository = MockShareAlbumRepository(disableAlbumShareResult: .success)
+        let repository = MockShareCollectionRepository(disableCollectionShareResult: .success)
         let sut = sut(shareAlbumRepository: repository)
         let albums = [AlbumEntity(id: 5, type: .user), AlbumEntity(id: 6, type: .user)]
         let albumIds = await sut.removeSharedLink(forAlbums: albums)
@@ -124,7 +124,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
 
 extension ShareCollectionUseCaseTests {
     private func sut(
-        shareAlbumRepository: some ShareAlbumRepositoryProtocol = MockShareAlbumRepository(),
+        shareAlbumRepository: some ShareCollectionRepositoryProtocol = MockShareCollectionRepository(),
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
         nodeRepository: some NodeRepositoryProtocol = MockNodeRepository()
     ) -> ShareCollectionUseCase {

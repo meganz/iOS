@@ -22,9 +22,9 @@ final class SaveAlbumToFolderUseCaseTests: XCTestCase {
         let albumFolder = NodeEntity(name: albumName, handle: 64, isFolder: true)
         let nodeActionRepository = MockNodeActionRepository(createFolderResult: .success(albumFolder))
         let copiedPhotos = makePhotos()
-        let shareAlbumRepository = MockShareAlbumRepository(copyPublicPhotosResult: .success(copiedPhotos))
+        let shareCollectionRepository = MockShareCollectionRepository(copyPublicNodesResult: .success(copiedPhotos))
         let sut = makeSaveAlbumToFolderUseCase(nodeActionRepository: nodeActionRepository,
-                                               shareAlbumRepository: shareAlbumRepository)
+                                               shareCollectionRepository: shareCollectionRepository)
         
         let photos = try await sut.saveToFolder(albumName: albumName,
                                                 photos: makePhotos(),
@@ -37,9 +37,9 @@ final class SaveAlbumToFolderUseCaseTests: XCTestCase {
         let albumFolder = NodeEntity(name: albumName, handle: 64, isFolder: true)
         let nodeActionRepository = MockNodeActionRepository(createFolderResult: .success(albumFolder))
         let failure = CopyOrMoveErrorEntity.nodeCopyFailed
-        let shareAlbumRepository = MockShareAlbumRepository(copyPublicPhotosResult: .failure(failure))
+        let shareCollectionRepository = MockShareCollectionRepository(copyPublicNodesResult: .failure(failure))
         let sut = makeSaveAlbumToFolderUseCase(nodeActionRepository: nodeActionRepository,
-                                               shareAlbumRepository: shareAlbumRepository)
+                                               shareCollectionRepository: shareCollectionRepository)
         
         await XCTAsyncAssertThrowsError(try await sut.saveToFolder(albumName: "New Album",
                                                                    photos: makePhotos(),
@@ -58,9 +58,9 @@ final class SaveAlbumToFolderUseCaseTests: XCTestCase {
         let albumFolder = NodeEntity(name: expectedFolderName, handle: 64, isFolder: true)
         let nodeActionRepository = MockNodeActionRepository(createFolderResult: .success(albumFolder))
         let copiedPhotos = makePhotos()
-        let shareAlbumRepository = MockShareAlbumRepository(copyPublicPhotosResult: .success(copiedPhotos))
+        let shareCollectionRepository = MockShareCollectionRepository(copyPublicNodesResult: .success(copiedPhotos))
         let sut = makeSaveAlbumToFolderUseCase(nodeActionRepository: nodeActionRepository,
-                                               shareAlbumRepository: shareAlbumRepository,
+                                               shareCollectionRepository: shareCollectionRepository,
                                                nodeRepository: nodeRepository)
         
         let photos = try await sut.saveToFolder(albumName: albumName,
@@ -75,11 +75,11 @@ final class SaveAlbumToFolderUseCaseTests: XCTestCase {
     
     private func makeSaveAlbumToFolderUseCase(
         nodeActionRepository: some NodeActionRepositoryProtocol = MockNodeActionRepository(),
-        shareAlbumRepository: some ShareAlbumRepositoryProtocol = MockShareAlbumRepository(),
+        shareCollectionRepository: some ShareCollectionRepositoryProtocol = MockShareCollectionRepository(),
         nodeRepository: some NodeRepositoryProtocol = MockNodeRepository()
     ) -> some SaveAlbumToFolderUseCaseProtocol {
         SaveAlbumToFolderUseCase(nodeActionRepository: nodeActionRepository,
-                                 shareAlbumRepository: shareAlbumRepository,
+                                 shareAlbumRepository: shareCollectionRepository,
                                  nodeRepository: nodeRepository)
     }
     

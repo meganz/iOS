@@ -70,7 +70,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             ),
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             shareCollectionUseCase: ShareCollectionUseCase(
-                shareAlbumRepository: ShareAlbumRepository.newRepo,
+                shareAlbumRepository: ShareCollectionRepository.newRepo,
                 userAlbumRepository: UserAlbumRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo
             ),

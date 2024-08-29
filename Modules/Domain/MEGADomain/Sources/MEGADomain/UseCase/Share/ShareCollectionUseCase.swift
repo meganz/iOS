@@ -14,12 +14,12 @@ public protocol ShareCollectionUseCaseProtocol: Sendable {
 }
 
 public struct ShareCollectionUseCase: ShareCollectionUseCaseProtocol {
-    private let shareAlbumRepository: any ShareAlbumRepositoryProtocol
+    private let shareAlbumRepository: any ShareCollectionRepositoryProtocol
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let nodeRepository: any NodeRepositoryProtocol
     
     public init(
-        shareAlbumRepository: some ShareAlbumRepositoryProtocol,
+        shareAlbumRepository: some ShareCollectionRepositoryProtocol,
         userAlbumRepository: some UserAlbumRepositoryProtocol,
         nodeRepository: some NodeRepositoryProtocol) {
         self.shareAlbumRepository = shareAlbumRepository
@@ -31,7 +31,7 @@ public struct ShareCollectionUseCase: ShareCollectionUseCaseProtocol {
         guard album.type == .user else {
             throw ShareCollectionErrorEntity.invalidCollectionType
         }
-        return try await shareAlbumRepository.shareAlbumLink(album)
+        return try await shareAlbumRepository.shareCollectionLink(album)
     }
     
     public func shareLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity: String] {
@@ -51,7 +51,7 @@ public struct ShareCollectionUseCase: ShareCollectionUseCaseProtocol {
         guard album.type == .user else {
             throw ShareCollectionErrorEntity.invalidCollectionType
         }
-        try await shareAlbumRepository.removeSharedLink(forAlbumId: album.id)
+        try await shareAlbumRepository.removeSharedLink(forCollectionId: album.id)
     }
     
     public func removeSharedLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity] {

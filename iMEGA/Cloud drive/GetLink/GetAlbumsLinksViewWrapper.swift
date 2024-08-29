@@ -58,7 +58,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
     
     private func makeShareCollectionUseCase() -> some ShareCollectionUseCaseProtocol {
         ShareCollectionUseCase(
-            shareAlbumRepository: ShareAlbumRepository.newRepo,
+            shareAlbumRepository: ShareCollectionRepository.newRepo,
             userAlbumRepository: UserAlbumRepository.newRepo,
             nodeRepository: NodeRepository.newRepo)
     }
