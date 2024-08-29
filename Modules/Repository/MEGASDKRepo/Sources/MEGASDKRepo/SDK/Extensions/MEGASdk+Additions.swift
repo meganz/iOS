@@ -1,5 +1,7 @@
 import MEGASdk
 
+private let sdkDelegateQueue = DispatchQueue(label: "nz.mega.MEGASDKRepo.MEGASdkAdditions")
+
 public extension MEGASdk {
     /// Associates a `NSMutableArray` of completed transfers with every **instance** of `MEGASdk`
     private static var completedTransfers = [ObjectIdentifier: NSMutableArray]()
@@ -33,7 +35,7 @@ public extension MEGASdk {
     @objc static var isLoggedIn: Bool {
         CurrentUserSource.shared.isLoggedIn
     }
-
+    
     @objc func removeMEGADelegateAsync(_ delegate: any MEGADelegate) {
         Task.detached {
             MEGASdk.sharedSdk.remove(delegate)
@@ -46,9 +48,15 @@ public extension MEGASdk {
         }
     }
     
+    @objc func addMEGAGlobalDelegateAsync(_ delegate: any MEGAGlobalDelegate, queueType: ListenerQueueType) {
+        sdkDelegateQueue.async { [weak self] in
+            self?.add(delegate, queueType: queueType)
+        }
+    }
+    
     @objc func removeMEGAGlobalDelegateAsync(_ delegate: any MEGAGlobalDelegate) {
-        Task.detached {
-            MEGASdk.sharedSdk.remove(delegate)
+        sdkDelegateQueue.async { [weak self] in
+            self?.remove(delegate)
         }
     }
     

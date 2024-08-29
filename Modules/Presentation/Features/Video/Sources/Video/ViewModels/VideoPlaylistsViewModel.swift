@@ -6,6 +6,22 @@ import MEGAPresentation
 import MEGASwiftUI
 
 final class VideoPlaylistsViewModel: ObservableObject {
+    
+    enum ViewState: Equatable {
+        case partial
+        case loading
+        case loaded
+        case empty
+        case error
+    }
+    
+    enum MonitorSearchRequest {
+        /// Request invalidate results and perform search request immediately
+        case invalidate
+        /// Reinitialise results and perform search request when a change has occurred since before
+        case reinitialise
+    }
+    
     let thumbnailLoader: any ThumbnailLoaderProtocol
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
@@ -25,11 +41,9 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     @Published var shouldShowRenamePlaylistAlert = false
     @Published var shouldShowDeletePlaylistAlert = false
-    
-    @Published private(set) var shouldShowPlaceHolderView = false
-    @Published private(set) var shouldShowVideosEmptyView = false
-    
-    var selectedVideoPlaylistEntity: VideoPlaylistEntity?
+    @Published private(set) var viewState: ViewState = .partial
+
+    private var selectedVideoPlaylistEntity: VideoPlaylistEntity?
     @Published var isSheetPresented = false
     
     private(set) var newlyCreatedVideoPlaylist: VideoPlaylistEntity?
@@ -46,10 +60,13 @@ final class VideoPlaylistsViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private(set) var loadVideoPlaylistsOnSearchTextChangedTask: Task<Void, Never>?
     private(set) var createVideoPlaylistTask: Task<Void, Never>?
-    private(set) var monitorSortOrderChangedTask: Task<Void, Never>?
     private(set) var renameVideoPlaylistTask: Task<Void, Never>?
     private let contentProvider: any VideoPlaylistsViewModelContentProviderProtocol
-    
+    private let monitorSearchRequestsSubject = CurrentValueSubject<MonitorSearchRequest, Never>(.invalidate)
+
+    private var monitorVideoPlaylistsUpdatesTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     init(
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
@@ -87,9 +104,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
         
         assignVideoPlaylistNameValidator()
         assignVideoPlaylistRenameValidator()
-        listenSearchTextChange()
-        monitorSortOrderChanged()
-        subscribeToItemsStateForEmptyState()
+        
+        monitorVideoPlaylistsUpdatesTask = Task { @MainActor in await monitorVideoPlaylistsUpdates() }
     }
     
     private func assignVideoPlaylistNameValidator() {
@@ -108,65 +124,75 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     @MainActor
     func onViewAppeared() async {
-        await loadVideoPlaylists()
-        await monitorVideoPlaylists()
+        await monitorSearchChanges()
     }
    
     @MainActor
-    private func monitorVideoPlaylists() async {
+    private func monitorVideoPlaylistsUpdates() async {
         for await _ in videoPlaylistsUseCase.videoPlaylistsUpdatedAsyncSequence {
             guard !Task.isCancelled else {
                 break
             }
-            await loadVideoPlaylists()
+            await contentProvider.invalidateContent()
+            monitorSearchRequestsSubject.send(.invalidate)
+        }
+    }
+        
+    @MainActor
+    private func monitorSearchChanges() async {
+        
+        let sortOrder = syncModel.$videoRevampVideoPlaylistsSortOrderType
+            .removeDuplicates()
+
+        let scheduler = DispatchQueue(label: "VideoPlaylistsSearchMonitor", qos: .userInteractive)
+        let searchText = syncModel.$searchText
+            .removeDuplicates()
+            .debounceImmediate(for: .milliseconds(500), scheduler: scheduler)
+        
+        let queryParamSequence = searchText.combineLatest(sortOrder)
+        
+        let asyncSequence = monitorSearchRequestsSubject
+            .map { monitorSearchRequest in
+                switch monitorSearchRequest {
+                case .invalidate:
+                    queryParamSequence
+                        .eraseToAnyPublisher()
+                case .reinitialise:
+                    queryParamSequence
+                        .dropFirst()
+                        .eraseToAnyPublisher()
+                }
+            }
+            .switchToLatest()
+            .values
+        
+        for await (searchText, sortOrder) in asyncSequence {
+            performSearch(searchText: searchText, sortOrderType: sortOrder)
+        }
+    }
+    
+    private func performSearch(searchText: String, sortOrderType: SortOrderEntity) {
+        
+        if viewState == .partial {
+            viewState = .loading
+        }
+        
+        loadVideoPlaylistsOnSearchTextChangedTask = Task { @MainActor in
+            do {
+                try await loadVideoPlaylists(searchText: searchText, sortOrder: sortOrderType)
+                try Task.checkCancellation()
+                viewState = videoPlaylists.isNotEmpty ? .loaded : .empty
+            } catch is CancellationError {
+                // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
+            } catch {
+                viewState = videoPlaylists.isEmpty ? .error : .loaded
+            }
         }
     }
     
     @MainActor
-    private func loadVideoPlaylists(sortOrder: SortOrderEntity? = nil) async {
-        shouldShowPlaceHolderView = videoPlaylists.isEmpty
-        
-        videoPlaylists = await contentProvider.loadVideoPlaylists(
-            sortOrder: sortOrder ?? syncModel.videoRevampVideoPlaylistsSortOrderType)
-        
-        shouldShowPlaceHolderView = false
-    }
-    
-    private func monitorSortOrderChanged() {
-        syncModel.$videoRevampVideoPlaylistsSortOrderType
-            .debounce(for: .seconds(0.3), scheduler: monitorSortOrderChangedDispatchQueue)
-            .removeDuplicates()
-            .dropFirst()
-            .sink { [weak self] sortOrderType in
-                guard let self else { return }
-                self.monitorSortOrderChangedTask = Task { @MainActor in
-                    guard !Task.isCancelled else {
-                        return
-                    }
-                    await self.loadVideoPlaylists(sortOrder: sortOrderType)
-                }
-            }
-            .store(in: &subscriptions)
-    }
-    
-    private func listenSearchTextChange() {
-        syncModel
-            .$searchText
-            .debounce(for: .seconds(0.3), scheduler: DispatchQueue.main)
-            .sink { [weak self] value in
-                guard let self else { return }
-                if value.isEmpty {
-                    loadVideoPlaylistsOnSearchTextChangedTask = Task { @MainActor [weak self] in
-                        guard !Task.isCancelled, let self else {
-                            return
-                        }
-                        await loadVideoPlaylists()
-                    }
-                } else {
-                    videoPlaylists = videoPlaylists.filter { $0.name.localizedCaseInsensitiveContains(value) }
-                }
-            }
-            .store(in: &subscriptions)
+    private func loadVideoPlaylists(searchText: String, sortOrder: SortOrderEntity) async throws {
+        videoPlaylists = try await contentProvider.loadVideoPlaylists(searchText: searchText, sortOrder: sortOrder)
     }
     
     func createUserVideoPlaylist(with name: String?) {
@@ -186,6 +212,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         cancelCreateVideoPlaylistTask()
         cancelRenameVideoPlaylistTask()
         newlyCreatedVideoPlaylist = nil
+        monitorSearchRequestsSubject.send(.reinitialise)
     }
     
     private func cancelCreateVideoPlaylistTask() {
@@ -287,24 +314,23 @@ final class VideoPlaylistsViewModel: ObservableObject {
         )
     }
     
-    func deleteVideoPlaylist(_ videoPlaylist: VideoPlaylistEntity) async {
-        let deletedVideoPlaylists = await videoPlaylistModificationUseCase.delete(videoPlaylists: [ videoPlaylist ])
+    @MainActor
+    func deleteSelectedVideoPlaylist() async {
+        
+        guard let selectedVideoPlaylistEntity else {
+            return
+        }
+        
+        let deletedVideoPlaylists = await videoPlaylistModificationUseCase
+            .delete(videoPlaylists: [selectedVideoPlaylistEntity])
+        
         guard deletedVideoPlaylists.isNotEmpty else {
             return
         }
-        let message = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.playlistNameDeleted
-        syncModel.snackBarMessage = message.replacingOccurrences(of: "[A]", with: videoPlaylist.name)
-        syncModel.shouldShowSnackBar = true
-    }
-    
-    private func subscribeToItemsStateForEmptyState() {
-        let isEmptyStream = $videoPlaylists.map(\.isEmpty).dropFirst()
-        let isLoadingStream = $shouldShowPlaceHolderView.dropFirst()
         
-        Publishers.CombineLatest(isEmptyStream, isLoadingStream)
-            .map { $0 && !$1 }
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$shouldShowVideosEmptyView)
+        let message = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.playlistNameDeleted
+        syncModel.snackBarMessage = message
+            .replacingOccurrences(of: "[A]", with: selectedVideoPlaylistEntity.name)
+        syncModel.shouldShowSnackBar = true
     }
 }

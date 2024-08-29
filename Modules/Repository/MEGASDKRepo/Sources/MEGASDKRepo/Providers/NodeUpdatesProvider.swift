@@ -16,10 +16,12 @@ public struct NodeUpdatesProvider: NodeUpdatesProviderProtocol {
             let delegate = NodeUpdateGlobalDelegate {
                 continuation.yield($0)
             }
+            
+            sdk.addMEGAGlobalDelegateAsync(delegate, queueType: .globalBackground)
+            
             continuation.onTermination = { @Sendable _ in
-                sdk.remove(delegate)
+                sdk.removeMEGAGlobalDelegateAsync(delegate)
             }
-            sdk.add(delegate, queueType: .globalBackground)
         }
         .eraseToAnyAsyncSequence()
     }
@@ -31,10 +33,10 @@ public struct NodeUpdatesProvider: NodeUpdatesProviderProtocol {
     }
 }
 
-private class NodeUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate {
-    private let onNodesUpdate: ([NodeEntity]) -> Void
+private final class NodeUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate, Sendable {
+    private let onNodesUpdate: @Sendable ([NodeEntity]) -> Void
     
-    public init(onUpdate: @escaping ([NodeEntity]) -> Void) {
+    public init(onUpdate: @Sendable @escaping ([NodeEntity]) -> Void) {
         self.onNodesUpdate = onUpdate
         super.init()
     }

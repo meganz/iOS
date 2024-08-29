@@ -73,10 +73,8 @@ struct PlaylistView: View {
         HStack {
             Button(Strings.Localizable.cancel) { }
             Button(Strings.Localizable.delete) {
-                if let selectedVideoPlaylist = viewModel.selectedVideoPlaylistEntity {
-                    Task {
-                        await viewModel.deleteVideoPlaylist(selectedVideoPlaylist)
-                    }
+                Task {
+                    await viewModel.deleteSelectedVideoPlaylist()
                 }
             }
             .keyboardShortcut(.defaultAction)
@@ -156,10 +154,11 @@ struct PlaylistView: View {
     
     @ViewBuilder
     private var contentView: some View {
-        if viewModel.shouldShowVideosEmptyView {
-            emptyView
-        } else {
+        switch viewModel.viewState {
+        case .partial, .loading, .loaded:
             listView
+        case .empty, .error:
+            emptyView
         }
     }
     
@@ -219,7 +218,7 @@ struct PlaylistView: View {
     }
     
     private var placeholder: some View {
-        VideoListPlaceholderView(videoConfig: videoConfig, isActive: viewModel.shouldShowPlaceHolderView)
+        VideoListPlaceholderView(videoConfig: videoConfig, isActive: viewModel.viewState == .loading)
     }
 }
 

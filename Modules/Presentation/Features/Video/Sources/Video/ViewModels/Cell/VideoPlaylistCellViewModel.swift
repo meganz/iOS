@@ -46,22 +46,14 @@ final class VideoPlaylistCellViewModel: ObservableObject {
         previewEntity = videoPlaylistEntity.toVideoPlaylistCellPreviewEntity(
             videoPlaylistThumbnail: thumbnail,
             videosCount: videos.count,
-            durationText: durationText(from: videos)
+            durationText: await videos.durationText()
         )
         
         secondaryInformationViewType = videos.count == 0 ? .emptyPlaylist : .information
         
         isLoading = false
     }
-    
-    private func durationText(from videos: [NodeEntity]) -> String {
-        let playlistDuration = videos
-            .map(\.duration)
-            .reduce(0, +)
         
-        return TimeInterval(playlistDuration).timeString
-    }
-    
     func onTappedMoreOptions() {
         onTapMoreOptions(videoPlaylistEntity)
     }

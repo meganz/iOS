@@ -124,9 +124,8 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
         return switch playlist.type {
         case .favourite:
             try await photoLibraryUseCase.media(
-                for: [.allLocations, .videos],
+                for: [.allLocations, .videos, .favourites],
                 excludeSensitive: excludeSensitive)
-            .filter(\.isFavourite)
         default:
             await userVideoPlaylistVideos(by: playlist.id, excludeSensitive: excludeSensitive)
                 .map(\.video)

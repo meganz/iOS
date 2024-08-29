@@ -28,9 +28,12 @@ public struct SetAndElementUpdatesProvider: SetAndElementUpdatesProviderProtocol
         AsyncStream { continuation in
             let delegate = SetUpdateGlobalDelegate(filterBy: filteredBy) { continuation.yield($0) }
             
-            continuation.onTermination = { @Sendable _ in sdk.remove(delegate) }
+            sdk.addMEGAGlobalDelegateAsync(delegate, queueType: .globalBackground)
             
-            sdk.add(delegate, queueType: .globalBackground)
+            continuation.onTermination = { @Sendable _ in
+                sdk.removeMEGAGlobalDelegateAsync(delegate)
+            }
+            
         }.eraseToAnyAsyncSequence()
     }
     
@@ -38,18 +41,21 @@ public struct SetAndElementUpdatesProvider: SetAndElementUpdatesProviderProtocol
         AsyncStream { continuation in
             let delegate = SetElementUpdateGlobalDelegate { continuation.yield($0) }
             
-            continuation.onTermination = { @Sendable _ in sdk.remove(delegate) }
-            
-            sdk.add(delegate, queueType: .globalBackground)
+            sdk.addMEGAGlobalDelegateAsync(delegate, queueType: .globalBackground)
+
+            continuation.onTermination = { @Sendable _ in
+                sdk.removeMEGAGlobalDelegateAsync(delegate)
+            }
         }.eraseToAnyAsyncSequence()
     }
 }
 
-private class SetUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate {
+private final class SetUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate, Sendable {
     
-    private let filterBy: [SetTypeEntity], onUpdate: ([SetEntity]) -> Void
+    private let filterBy: [SetTypeEntity]
+    private let onUpdate: @Sendable ([SetEntity]) -> Void
 
-    public init(filterBy: [SetTypeEntity], onUpdate: @escaping ([SetEntity]) -> Void) {
+    public init(filterBy: [SetTypeEntity], onUpdate: @Sendable @escaping ([SetEntity]) -> Void) {
         self.filterBy = filterBy
         self.onUpdate = onUpdate
         super.init()
@@ -69,11 +75,11 @@ private class SetUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate {
     }
 }
 
-private class SetElementUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate {
+private final class SetElementUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate, Sendable {
     
-    private let onUpdate: ([SetElementEntity]) -> Void
+    private let onUpdate: @Sendable ([SetElementEntity]) -> Void
 
-    public init(onUpdate: @escaping ([SetElementEntity]) -> Void) {
+    public init(onUpdate: @Sendable @escaping ([SetElementEntity]) -> Void) {
         self.onUpdate = onUpdate
         super.init()
     }
