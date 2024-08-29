@@ -4,7 +4,7 @@ import Foundation
     @MainActor
     func nodeAccessoryAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType) {
         switch action {
-        case .hide:
+        case .hide, .unhide:
             HideFilesAndFoldersRouter(presenter: nodeAction)
                 .showOnboardingInfo()
         default: break
