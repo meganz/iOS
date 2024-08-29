@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol CopyrightUseCaseProtocol {
+public protocol CopyrightUseCaseProtocol: Sendable {
     /// Determine if copyright should be approved
     ///
     /// Copyright could have been accepted from other platform or from previous install

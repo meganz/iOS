@@ -8,6 +8,7 @@ import XCTest
 final class EnforceCopyrightWarningViewModelTests: XCTestCase {
     private var subscription = Set<AnyCancellable>()
     
+    @MainActor
     func testDetermineViewState_noAutoApproval_shouldReturnDeclined() async {
         let copyrightUseCase = MockCopyrightUseCase(shouldAutoApprove: false)
         let sut = makeEnforceCopyrightWarningViewModel(copyrightUseCase: copyrightUseCase)
@@ -18,6 +19,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewStatus, .declined)
     }
     
+    @MainActor
     func testDetermineViewState_agreedBefore_shouldReturnAgreed() async {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.agreedCopywriteWarning: true])
         let copyrightUseCase = MockCopyrightUseCase(shouldAutoApprove: false)
@@ -29,6 +31,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewStatus, .agreed)
     }
     
+    @MainActor
     func testDetermineViewState_copyrightShouldAutoApprove_shouldSetToAgreedReturnAgreed() async throws {
         let preferenceUseCase = MockPreferenceUseCase()
         let copyrightUseCase = MockCopyrightUseCase(shouldAutoApprove: true)
@@ -42,6 +45,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewStatus, .agreed)
     }
     
+    @MainActor
     func testIsTermsAgreed_onAgreed_shouldSetPreferenceAndEmitAgreedViewStatus() throws {
         let preferenceUseCase = MockPreferenceUseCase()
         let sut = makeEnforceCopyrightWarningViewModel(preferenceUseCase: preferenceUseCase)
@@ -62,6 +66,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
         XCTAssertTrue(isAgreed)
     }
     
+    @MainActor
     func testCopyrightMessage_shouldBeCombinedFromTwoParts() {
         let sut = makeEnforceCopyrightWarningViewModel()
         
@@ -70,7 +75,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func makeEnforceCopyrightWarningViewModel(
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         copyrightUseCase: some CopyrightUseCaseProtocol = MockCopyrightUseCase()
