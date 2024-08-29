@@ -140,19 +140,12 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         headerPreviewEntity = videoPlaylistEntity.toVideoPlaylistCellPreviewEntity(
             videoPlaylistThumbnail: thumbnail,
             videosCount: videos.count,
-            durationText: durationText(from: videos)
+            durationText: await videos.durationText()
         )
         
         secondaryInformationViewType = videos.count == 0 ? .emptyPlaylist : .information
     }
     
-    private func durationText(from videos: [NodeEntity]) -> String {
-        let playlistDuration = videos
-            .map(\.duration)
-            .reduce(0, +)
-        
-        return TimeInterval(playlistDuration).timeString
-    }
     
     private func handle(_ error: any Error) {
         guard let videoPlaylistError = error as? VideoPlaylistErrorEntity else {

@@ -104,9 +104,10 @@ final class VideoListViewModel: ObservableObject {
             .removeDuplicates()
         
         // Observe Search Text Changes
+        let scheduler = DispatchQueue(label: "VideoListSearchMonitor", qos: .userInteractive)
         let searchText = syncModel.$searchText
-            .debounceImmediate(for: .milliseconds(500), scheduler: DispatchQueue.global(qos: .userInteractive))
             .removeDuplicates()
+            .debounceImmediate(for: .milliseconds(500), scheduler: scheduler)
         
         // Observe Location Filter Changes
         let locationFilter = $selectedLocationFilterOption

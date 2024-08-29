@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -12,10 +12,11 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    func testInit_whenInit_doesNotLoadVideoPlaylists() {
+    func testInit_whenInit_doesNotLoadVideoPlaylists() async {
         let (_, videoPlaylistUseCase, _, _) = makeSUT()
         
-        XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty)
+        let invocations = await videoPlaylistUseCase.invocationsStore.invocations
+        XCTAssertTrue(invocations.isEmpty)
     }
     
     // MARK: - OnViewAppear
@@ -24,10 +25,21 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     func testOnViewAppeared_whenCalled_loadVideoPlaylists() async {
         let (sut, videoPlaylistUseCase, _, _) = makeSUT()
         
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         
-        XCTAssertTrue(videoPlaylistUseCase.messages.contains(.systemVideoPlaylists))
-        XCTAssertTrue(videoPlaylistUseCase.messages.contains(.userVideoPlaylists))
+        let exp = expectation(description: "Received all messages")
+        let cancellable = await videoPlaylistUseCase
+            .invocationsStore
+            .$invocations
+            .filter { $0.count >= 2 }
+            .sink { messages in
+                XCTAssertTrue(messages.contains(.systemVideoPlaylists))
+                XCTAssertTrue(messages.contains(.userVideoPlaylists))
+                exp.fulfill()
+            }
+        
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
     }
     
     @MainActor
@@ -38,10 +50,18 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             ])
         )
         
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         
-        XCTAssertFalse(sut.videoPlaylists.isEmpty)
-        XCTAssertTrue((sut.videoPlaylists.first?.isSystemVideoPlaylist) != nil)
+        let exp = expectation(description: "playlists recieved")
+        let cancellable = sut.$videoPlaylists
+            .filter(\.isNotEmpty)
+            .sink { playlists in
+                XCTAssertNotNil(playlists.first?.isSystemVideoPlaylist)
+                exp.fulfill()
+            }
+        
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
     }
     
     @MainActor
@@ -51,21 +71,20 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
                 VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
         )
-        var loadingStates: [Bool] = []
+        var states: [VideoPlaylistsViewModel.ViewState] = []
         let exp = expectation(description: "loading state subscription")
-        exp.assertForOverFulfill = false
-        let cancellable = sut.$shouldShowPlaceHolderView
-            .sink { isLoading in
-                loadingStates.append(isLoading)
+        exp.expectedFulfillmentCount = 3
+        let cancellable = sut.$viewState
+            .sink { state in
+                states.append(state)
                 exp.fulfill()
             }
         
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         
-        XCTAssertEqual(loadingStates, [ false, true, false ])
-        
-        cancellable.cancel()
         await fulfillment(of: [exp], timeout: 0.5)
+        XCTAssertEqual(states, [ .partial, .loading, .loaded ])
+        cancellable.cancel()
     }
     
     func testInit_inInitialState() {
@@ -96,8 +115,9 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         sut.createUserVideoPlaylist(with: videoPlaylistName)
         await sut.createVideoPlaylistTask?.value
-        
-        XCTAssertEqual(videoPlaylistUseCase.messages, [ .createVideoPlaylist(name: videoPlaylistName) ])
+        let invocations = await videoPlaylistUseCase.invocationsStore.invocations
+
+        XCTAssertEqual(invocations, [ .createVideoPlaylist(name: videoPlaylistName) ])
     }
     
     func testCreateUserVideoPlaylist_whenCreatedSuccessfully_setsNewlyCreatedPlaylist() async {
@@ -148,26 +168,29 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
                 VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
         )
-        syncModel.videoRevampVideoPlaylistsSortOrderType = .modificationAsc
+        
+        trackTaskCancellation { await sut.onViewAppeared() }
+        
         let exp = expectation(description: "load video playlists")
-        exp.expectedFulfillmentCount = 3
-        var receivedMessages = [MockVideoPlaylistUseCase.Message]()
-        videoPlaylistUseCase.$publishedMessage
+        exp.expectedFulfillmentCount = 6
+        var receivedMessages = [MockVideoPlaylistUseCase.Invocation]()
+        let cancellable = await videoPlaylistUseCase
+            .invocationsStore
+            .$invocations
+            .drop(while: \.isEmpty)
             .sink { messages in
                 receivedMessages = messages
                 exp.fulfill()
             }
-            .store(in: &subscriptions)
         
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        try? await Task.sleep(nanoseconds: 1_500_000_000)
         syncModel.videoRevampVideoPlaylistsSortOrderType = .modificationDesc
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        try? await Task.sleep(nanoseconds: 1_500_000_000)
         syncModel.videoRevampVideoPlaylistsSortOrderType = .modificationAsc
-        await sut.monitorSortOrderChangedTask?.value
-        await fulfillment(of: [exp], timeout: 3.0)
-        
-        XCTAssertTrue(receivedMessages.contains(.systemVideoPlaylists))
-        sut.monitorSortOrderChangedTask?.cancel()
+        await fulfillment(of: [exp], timeout: 1)
+        XCTAssertEqual(receivedMessages.filter { $0 == .systemVideoPlaylists }.count, 3)
+        XCTAssertEqual(receivedMessages.filter { $0 == .userVideoPlaylists }.count, 3)
+        cancellable.cancel()
     }
     
     @MainActor
@@ -180,6 +203,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let (sut, _, syncModel, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(userVideoPlaylistsResult: unsortedVideoPlaylists)
         )
+        trackTaskCancellation { await sut.onViewAppeared() }
         
         syncModel.videoRevampVideoPlaylistsSortOrderType = .modificationAsc
         let exp = expectation(description: "load video playlists")
@@ -197,15 +221,13 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         syncModel.videoRevampVideoPlaylistsSortOrderType = .modificationDesc
         try? await Task.sleep(nanoseconds: 1_000_000_000)
         syncModel.videoRevampVideoPlaylistsSortOrderType = .modificationAsc
-        await sut.monitorSortOrderChangedTask?.value
-        await fulfillment(of: [exp], timeout: 3.0)
+        await fulfillment(of: [exp], timeout: 1)
         
         XCTAssertEqual(receivedVideoPlaylists.map(\.id), [
             aMonthAgoPlaylist.id,
             aWeekAgoPlaylist.id,
             yesterdayPlaylist.id
         ])
-        sut.monitorSortOrderChangedTask?.cancel()
     }
     
     @MainActor
@@ -286,19 +308,16 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         sut.didSelectMoreOptionForItem(invalidVideoPlaylist)
         
-        XCTAssertNil(sut.selectedVideoPlaylistEntity)
         XCTAssertFalse(sut.isSheetPresented)
     }
     
     func testDidSelectMoreOptionForItem_selectedVideoPlaylist_setsSelectedsVideoPlaylistEntity() {
         let selectedVideoPlaylist = VideoPlaylistEntity(id: 1, name: "video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT()
-        XCTAssertNil(sut.selectedVideoPlaylistEntity)
         XCTAssertFalse(sut.isSheetPresented)
         
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
-        XCTAssertEqual(sut.selectedVideoPlaylistEntity, selectedVideoPlaylist)
         XCTAssertTrue(sut.isSheetPresented)
     }
     
@@ -320,7 +339,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             ),
             featureFlagProvider: MockFeatureFlagProvider(list: [ .videoPlaylistSharing: false ])
         )
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
@@ -345,7 +364,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             ),
             featureFlagProvider: MockFeatureFlagProvider(list: [ .videoPlaylistSharing: true ])
         )
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
@@ -370,7 +389,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             ),
             featureFlagProvider: MockFeatureFlagProvider(list: [ .videoPlaylistSharing: true ])
         )
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
@@ -408,7 +427,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             sut.renameVideoPlaylist(with: invalidName)
             await sut.renameVideoPlaylistTask?.value
             
-            XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty, "failed at index: \(index)")
+            let invocations = await videoPlaylistUseCase.invocationsStore.invocations
+            XCTAssertTrue(invocations.isEmpty, "failed at index: \(index)")
         }
     }
     
@@ -421,7 +441,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         sut.renameVideoPlaylist(with: videoPlaylistName)
         await sut.renameVideoPlaylistTask?.value
         
-        XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty)
+        let invocations = await videoPlaylistUseCase.invocationsStore.invocations
+        XCTAssertTrue(invocations.isEmpty)
     }
     
     func testRenameVideoPlaylist_nameIsNil_doesNotRenameVideoPlaylist() async {
@@ -432,7 +453,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         sut.renameVideoPlaylist(with: nil)
         await sut.renameVideoPlaylistTask?.value
         
-        XCTAssertTrue(videoPlaylistUseCase.messages.isEmpty)
+        let invocations = await videoPlaylistUseCase.invocationsStore.invocations
+        XCTAssertTrue(invocations.isEmpty)
     }
     
     func testRenameVideoPlaylist_whenCalled_renameVideoPlaylist() async {
@@ -446,7 +468,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         sut.renameVideoPlaylist(with: videoPlaylistName)
         await sut.renameVideoPlaylistTask?.value
         
-        XCTAssertEqual(videoPlaylistUseCase.messages, [ .updateVideoPlaylistName ])
+        let invocations = await videoPlaylistUseCase.invocationsStore.invocations
+        XCTAssertEqual(invocations, [ .updateVideoPlaylistName ])
     }
     
     @MainActor
@@ -460,21 +483,30 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let selectedVideoPlaylist = initialUserVideoPlaylists[0]
         var updatedVideoPlaylist = selectedVideoPlaylist
         updatedVideoPlaylist.name = "renamed"
+        
         let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(
                 updateVideoPlaylistNameResult: .success(()),
                 userVideoPlaylistsResult: initialUserVideoPlaylists
             )
         )
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
+        
+        let exp = expectation(description: "Playlists loaded")
+        let cancellable = sut.$viewState
+            .first(where: { $0 == .loaded })
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        await fulfillment(of: [exp], timeout: 1)
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
         sut.renameVideoPlaylist(with: "renamed")
         await sut.renameVideoPlaylistTask?.value
+        cancellable.cancel()
         
         XCTAssertTrue(sut.videoPlaylists.contains(updatedVideoPlaylist))
-        XCTAssertNil(sut.selectedVideoPlaylistEntity)
-        assertThatCleanUpTemporaryVariablesAfterRenaming(on: sut)
     }
     
     @MainActor
@@ -491,7 +523,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
                 ]
             )
         )
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
         sut.renameVideoPlaylist(with: videoPlaylistName)
@@ -500,11 +532,11 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.videoPlaylists.notContains(updatedVideoPlaylist))
         XCTAssertEqual(syncModel.snackBarMessage, Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.renamingFailed)
         XCTAssertTrue(syncModel.shouldShowSnackBar)
-        assertThatCleanUpTemporaryVariablesAfterRenaming(on: sut)
     }
     
     // MARK: - deleteVideoPlaylist
     
+    @MainActor
     func testDeleteVideoPlaylist_whenCalled_deletesVideoPlaylist() async {
         let videoPlaylists =  [
             VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
@@ -519,12 +551,14 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
                 deleteVideoPlaylistResult: videoPlaylists.filter { $0.id != videoPlaylistToDelete.id }
             )
         )
+        sut.didSelectMoreOptionForItem(videoPlaylistToDelete)
         
-        await sut.deleteVideoPlaylist(videoPlaylistToDelete)
+        await sut.deleteSelectedVideoPlaylist()
         
         XCTAssertEqual(videoPlaylistModificationUseCase.messages, [ .deleteVideoPlaylist ])
     }
     
+    @MainActor
     func testDeleteVideoPlaylist_whenSuccessfullyDelete_showsMessage() async {
         let videoPlaylists =  [
             VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
@@ -539,8 +573,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
                 deleteVideoPlaylistResult: videoPlaylists.filter { $0.id != videoPlaylistToDelete.id }
             )
         )
-        
-        await sut.deleteVideoPlaylist(videoPlaylistToDelete)
+        sut.didSelectMoreOptionForItem(videoPlaylistToDelete)
+        await sut.deleteSelectedVideoPlaylist()
         
         let message = Strings.Localizable.Videos.Tab.Playlist.Content.Snackbar.playlistNameDeleted
         let snackBarMessage = message.replacingOccurrences(of: "[A]", with: videoPlaylistToDelete.name)
@@ -599,23 +633,21 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         // Arrange
         let (sut, _, _, _) = makeSUT(videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: []))
         
-        var receivedValues: [Bool]?
+        var receivedValues: [VideoPlaylistsViewModel.ViewState] = []
         let exp = expectation(description: "should not show empty view")
-        exp.assertForOverFulfill = false
-        let cancellable = sut.$shouldShowVideosEmptyView
-            .dropFirst()
-            .filter { !$0 }
+        exp.expectedFulfillmentCount = 3
+        let cancellable = sut.$viewState
             .receive(on: DispatchQueue.main)
             .sink {
-                receivedValues?.append($0)
+                receivedValues.append($0)
                 exp.fulfill()
             }
         
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         await fulfillment(of: [exp], timeout: 0.5)
         
         // Assert
-        XCTAssertFalse(receivedValues?.contains(false) == true)
+        XCTAssertEqual(receivedValues, [.partial, .loading, .empty])
         
         cancellable.cancel()
     }
@@ -629,21 +661,16 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             ])
         )
         
-        var receivedValue = false
         let exp = expectation(description: "should show empty view")
-        exp.assertForOverFulfill = false
-        let cancellable = sut.$shouldShowVideosEmptyView
-            .dropFirst()
-            .sink { shouldShow in
-                receivedValue = shouldShow
+        let cancellable = sut.$viewState
+            .filter { $0 == .loaded }
+            .sink { viewState in
+                XCTAssertNotEqual(viewState, .empty)
                 exp.fulfill()
             }
         
-        await sut.onViewAppeared()
+        trackTaskCancellation { await sut.onViewAppeared() }
         await fulfillment(of: [exp], timeout: 0.5)
-        
-        // Assert
-        XCTAssertFalse(receivedValue)
         
         cancellable.cancel()
     }
@@ -678,13 +705,9 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
                 videoPlaylistsUseCase: videoPlaylistUseCase),
             monitorSortOrderChangedDispatchQueue: DispatchQueue.main
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
-        trackForMemoryLeaks(on: videoPlaylistUseCase, file: file, line: line)
+        trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
+        trackForMemoryLeaks(on: videoPlaylistUseCase, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
         return (sut, videoPlaylistUseCase, syncModel, videoPlaylistModificationUseCase)
-    }
-    
-    private func assertThatCleanUpTemporaryVariablesAfterRenaming(on sut: VideoPlaylistsViewModel, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertNil(sut.selectedVideoPlaylistEntity, file: file, line: line)
     }
     
     private func videoPlaylist(id: HandleEntity, creationTime: Date, modificationTime: Date) -> VideoPlaylistEntity {

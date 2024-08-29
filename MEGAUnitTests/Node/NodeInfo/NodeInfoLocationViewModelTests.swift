@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGASwiftUI
+import MEGATest
 import SwiftUI
 import XCTest
 

@@ -9,10 +9,16 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
             .eraseToAnyAsyncSequence()
     }
     
-    @Atomic public var messages = [Message]()
-    @Published public var publishedMessage = [Message]()
+    public actor InvocationsStore {
+        @Published public var invocations = [Invocation]()
+        
+        func append(_ invocation: Invocation) {
+            invocations.append(invocation)
+        }
+    }
+    public let invocationsStore = InvocationsStore()
     
-    public enum Message: Equatable {
+    public enum Invocation: Equatable, Sendable {
         case systemVideoPlaylists
         case userVideoPlaylists
         case createVideoPlaylist(name: String?)
@@ -38,23 +44,23 @@ public final class MockVideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     }
     
     public func systemVideoPlaylists() async throws -> [VideoPlaylistEntity] {
-        $messages.mutate { $0.append(.systemVideoPlaylists) }
-        publishedMessage.append(.systemVideoPlaylists)
+        await invocationsStore.append(.systemVideoPlaylists)
         return systemVideoPlaylistsResult
     }
     
     public func userVideoPlaylists() async -> [VideoPlaylistEntity] {
-        $messages.mutate { $0.append(.userVideoPlaylists) }
+        await invocationsStore.append(.userVideoPlaylists)
         return userVideoPlaylistsResult
     }
     
     public func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {
-        $messages.mutate { $0.append(.createVideoPlaylist(name: name)) }
+        await invocationsStore.append(.createVideoPlaylist(name: name))
+
         return try createVideoPlaylistResult.get()
     }
     
     public func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws {
-        $messages.mutate { $0.append(.updateVideoPlaylistName) }
+        await invocationsStore.append(.updateVideoPlaylistName)
         try updateVideoPlaylistNameResult.get()
     }
 }
