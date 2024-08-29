@@ -1,4 +1,4 @@
-public protocol FileVersionsUseCaseProtocol {
+public protocol FileVersionsUseCaseProtocol: Sendable {
     func isFileVersionsEnabled() async throws -> Bool
     func enableFileVersions(_ enable: Bool) async throws -> Bool
     func rootNodeFileVersionCount() -> Int64

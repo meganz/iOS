@@ -12,6 +12,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         NameCollisionEntity(parentHandle: parentHandle, name: "Node3", isFile: Bool.random())
     ]
     
+    @MainActor
     func testAcion_cancel() {
         let router = MockNameCollisionRouter()
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: MockNameCollisionUseCase(), fileVersionsUseCase: MockFileVersionsUseCase(), accountUseCase: MockAccountUseCase(), transfers: nil, nodes: nil, collisions: [], collisionType: .upload)
@@ -20,6 +21,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         XCTAssert(router.dismiss_calledTimes == 1)
     }
     
+    @MainActor
     func testAction_copyWithoutNameCollisionsSuccess() {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions, copiedNodes: copyMoveHandles)
@@ -33,6 +35,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testAction_copyWithoutNameCollisionsFail() {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions)
@@ -46,6 +49,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testAction_copyWithNameCollisions() {
         let router = MockNameCollisionRouter()
         var resolvedCollisions = [NameCollisionEntity]()
@@ -64,6 +68,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testAction_moveWithoutNameCollisionsSuccess() {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions, movedNodes: copyMoveHandles)
@@ -77,6 +82,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testAction_moveWithoutNameCollisionsFail() {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions)
@@ -90,6 +96,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testAction_uploadWithoutNameCollisionsSuccess() {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions, copiedNodes: copyMoveHandles)

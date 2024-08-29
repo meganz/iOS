@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGAPresentation
 
-protocol NameCollisionViewRouting: Routing {
+protocol NameCollisionViewRouting: Routing, Sendable {
     func showNameCollisionsView()
     func resolvedUploadCollisions(_ transfers: [CancellableTransfer])
     func dismiss()
@@ -10,6 +10,7 @@ protocol NameCollisionViewRouting: Routing {
     func showProgressIndicator()
 }
 
+@MainActor
 final class NameCollisionViewModel: ObservableObject {
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nameCollisionUseCase: any NameCollisionUseCaseProtocol
@@ -260,7 +261,7 @@ final class NameCollisionViewModel: ObservableObject {
 #if MAIN_APP_TARGET
         do {
             guard !accountsUseCase.isOverQuota else {
-                await showOverQuotaPopup()
+                showOverQuotaPopup()
                 return
             }
 
@@ -364,7 +365,6 @@ final class NameCollisionViewModel: ObservableObject {
             }
         }
     }
-
 
 #if MAIN_APP_TARGET
     @MainActor
