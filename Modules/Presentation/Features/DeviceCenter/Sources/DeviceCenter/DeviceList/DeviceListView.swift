@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -40,6 +41,7 @@ struct DeviceListContentView: View {
                         viewModel: deviceViewModel,
                         selectedViewModel: $selectedViewModel
                     )
+                    .listRowInsets(EdgeInsets())
                 }
             } else {
                 Section(header: Text(viewModel.deviceListAssets.currentDeviceTitle)) {
@@ -48,6 +50,7 @@ struct DeviceListContentView: View {
                             viewModel: currentDeviceVM,
                             selectedViewModel: $selectedViewModel
                         )
+                        .listRowInsets(EdgeInsets())
                     }
                 }
                 
@@ -58,12 +61,14 @@ struct DeviceListContentView: View {
                                 viewModel: deviceViewModel,
                                 selectedViewModel: $selectedViewModel
                             )
+                            .listRowInsets(EdgeInsets())
                         }
                     }
                 }
             }
         }
         .listStyle(.plain)
+        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
         .onReceive(viewModel.refreshDevicesPublisher) { _ in
             Task {
                 let userDevices = await self.viewModel.fetchUserDevices()

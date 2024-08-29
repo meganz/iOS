@@ -41,9 +41,11 @@ struct BackupListContentView: View {
                             viewModel: backupViewModel,
                             selectedViewModel: $selectedBackupViewModel
                         )
+                        .listRowInsets(EdgeInsets())
                     }
                 }
                 .listStyle(.plain)
+                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
             }.toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     DeviceCenterMenu(
