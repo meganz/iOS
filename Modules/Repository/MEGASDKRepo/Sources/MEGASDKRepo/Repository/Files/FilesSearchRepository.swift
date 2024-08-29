@@ -38,17 +38,6 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
         sdk.remove(self)
     }
     
-    public func search(filter: SearchFilterEntity, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
-        search(with: filter) { result in
-            switch result {
-            case .success(let nodes):
-                completion(nodes.toNodeEntities(), false)
-            case .failure:
-                completion(nil, true)
-            }
-        }
-    }
-    
     public func search(filter: SearchFilterEntity, page: SearchPageEntity) async throws -> [NodeEntity] {
         let nodeList: NodeListEntity = try await search(with: filter, page: page)
         return nodeList.toNodeEntities()
