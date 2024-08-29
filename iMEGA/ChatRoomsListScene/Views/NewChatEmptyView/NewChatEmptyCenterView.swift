@@ -28,6 +28,7 @@ struct NewChatRoomsEmptyCenterView: View {
                 )
                 // line below is needed for tappable link to work
                     .textSelection(.enabled)
+                    .multilineTextAlignment(.center)
                     .environment(\.openURL, OpenURLAction { _ in
                         state.linkTapped?()
                         return .handled
