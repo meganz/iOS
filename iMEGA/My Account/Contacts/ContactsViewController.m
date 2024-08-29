@@ -1578,12 +1578,12 @@
             [headerView configureWithTitle:nil topDistance:1.00 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
         }
         else {
-            [headerView configureWithTitle:LocalizedString(@"Recents", @"Title for the recents section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+            [headerView configureWithTitle:LocalizedString(@"Recents", @"Title for the recents section") topDistance:2 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
         }
         return headerView;
     }
     if ((section == 2 && self.contactsMode == ContactsModeChatStartConversation) || (section == 1 && self.contactsMode > ContactsModeChatStartConversation)) {
-        [headerView configureWithTitle:LocalizedString(@"contactsTitle", @"Title of the Contacts section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:LocalizedString(@"contactsTitle", @"Title of the Contacts section") topDistance:2 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
         return headerView;
     }
     

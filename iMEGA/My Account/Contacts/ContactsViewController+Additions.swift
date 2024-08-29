@@ -30,7 +30,7 @@ extension ContactsViewController {
         case .folderSharedWith:
             return Strings.Localizable.sharedWith
         case .chatStartConversation:
-            return Strings.Localizable.startConversation
+            return Strings.Localizable.Chat.NewChat.title
         case .scheduleMeeting, .chatAddParticipant:
             return Strings.Localizable.addParticipants
         case .chatAttachParticipant:
