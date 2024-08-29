@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGAL10n
+import MEGAUIKit
 import UIKit
 
 /// A view controller that acts as a wrapper for `NodeInfoViewController`
@@ -64,8 +65,19 @@ final class NodeInfoWrapperViewController: UIViewController {
             title: Strings.Localizable.close,
             style: .plain,
             target: self,
-            action: #selector(dismissView)
+            action: #selector(dismissScreen)
         )
+    }
+
+    @objc private func dismissScreen() {
+        if nodeInfoViewController.hasPendingNodeDescriptionChanges?() == true,
+           let saveNodeDescriptionChanges = nodeInfoViewController.saveNodeDescriptionChanges {
+            showNodeDescriptionAlert(saveDescription: saveNodeDescriptionChanges) {
+                self.dismissView()
+            }
+        } else {
+            dismissView()
+        }
     }
 
     private func configurePresentAndDismiss() {
@@ -85,5 +97,47 @@ final class NodeInfoWrapperViewController: UIViewController {
             guard let self else { return }
             showSnackBar(with: savedState.localizedString)
         }
+    }
+
+    private func showNodeDescriptionAlert(
+        saveDescription: @escaping () async -> NodeDescriptionCellControllerModel.SavedState?,
+        close: @escaping () -> Void
+    ) {
+        let alert = UIAlertController(
+            title: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.ClosePopup.title,
+            message: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.ClosePopup.message,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(
+            title: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.ClosePopup.discardButtonTitle,
+            handler: close
+        )
+
+        alert.addAction(
+            title: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.ClosePopup.keepEditingButtonTitle
+        )
+
+        alert.addAction(
+            title: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.ClosePopup.saveAndCloseButtonTitle,
+            style: .cancel,
+            handler: { [weak self] in
+                Task { @MainActor [weak self] in
+                    guard let savedState = await saveDescription(), let self else {
+                        close()
+                        return
+                    }
+
+                    switch savedState {
+                    case .added, .removed, .updated:
+                        close()
+                    case .error:
+                        showSnackBar(with: savedState.localizedString)
+                    }
+                }
+            }
+        )
+
+        present(alert, animated: true)
     }
 }

@@ -151,33 +151,108 @@ final class NodeDescriptionViewModelTests: XCTestCase {
         XCTAssertEqual(sut.footer, Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.readonly)
     }
 
-    func testUpdateDescriptionString_whenDescriptionAddedSuccessfully_shouldReturnStateAsAdded() async {
-        let sut = makeSUT(description: nil) { result in
-            XCTAssertEqual(result, .added)
-        }
-
-        await sut.save(descriptionString: "Hello World!")
+    func testHasPendingChanges_whenInitInvoked_shouldReturnFalse() {
+        let sut = makeSUT()
+        XCTAssertFalse(sut.hasPendingChanges())
     }
 
-    func testUpdateDescriptionString_whenDescriptionUpdatedSuccessfully_shouldReturnStateAsUpdated() async {
-        let sut = makeSUT {
-            XCTAssertEqual($0, .updated)
-        }
-        await sut.save(descriptionString: "Hello World!")
+    func testHasPendingChanges_whenTextChanged_shouldReturnTrue() {
+        let sut = makeSUT()
+        sut.cellViewModel.descriptionUpdated("updated description")
+        XCTAssertTrue(sut.hasPendingChanges())
     }
 
-    func testUpdateDescriptionString_whenDescriptionRemovedSuccessfully_shouldReturnStateAsRemoved() async {
-        let sut = makeSUT {
-            XCTAssertEqual($0, .removed)
-        }
-        await sut.save(descriptionString: "")
+    func testSavePendingChanges_whenInitInvoked_shouldReturnNil() async {
+        let sut = makeSUT()
+        let result = await sut.savePendingChanges()
+        XCTAssertNil(result)
     }
 
-    func testUpdateDescriptionString_whenUseCaseReturnsFailure_shouldReturnNil() async {
+    func testSavePendingChanges_whenNoPendingChanges_shouldReturnNil() async {
+        let sut = makeSUT(description: "description")
+        sut.cellViewModel.descriptionUpdated("description")
+        let result = await sut.savePendingChanges()
+        XCTAssertNil(result)
+    }
+
+    func testSavePendingChanges_whenError_shouldReturnErrorAndCallDescriptionSavedWithError() async {
         let sut = makeSUT(nodeDescriptionResult: .failure(NSError(domain: "", code: 0))) {
-            XCTAssertNil($0)
+            XCTAssertEqual($0, .error)
         }
-        await sut.save(descriptionString: "")
+        sut.cellViewModel.descriptionUpdated("description")
+        let result = await sut.savePendingChanges()
+        XCTAssertEqual(result, .error)
+    }
+
+    func testSavePendingChanges_whenAdded_shouldReturnAdded() async {
+        let sut = makeSUT(description: nil)
+        sut.cellViewModel.descriptionUpdated("description")
+        let result = await sut.savePendingChanges()
+        XCTAssertEqual(result, .added)
+    }
+
+    func testSavePendingChanges_whenUpdated_shouldReturnUpdated() async {
+        let sut = makeSUT(description: "description")
+        sut.cellViewModel.descriptionUpdated("updated description")
+        let result = await sut.savePendingChanges()
+        XCTAssertEqual(result, .updated)
+    }
+
+    func testSavePendingChanges_whenRemoved_shouldReturnRemoved() async {
+        let sut = makeSUT(description: "description")
+        sut.cellViewModel.descriptionUpdated("")
+        let result = await sut.savePendingChanges()
+        XCTAssertEqual(result, .removed)
+    }
+
+    func testFooterViewModel_whenDescriptionUpdated_shouldMatchTheTrailingTextAndScrollToCell() {
+        let sut = makeSUT(description: "", maxCharactersAllowed: 20)
+        var scrollToCellTriggered = false
+        sut.scrollToCell = {
+            scrollToCellTriggered = true
+        }
+        sut.cellViewModel.descriptionUpdated("description added")
+        XCTAssertEqual(sut.footerViewModel.trailingText, "17/20")
+        XCTAssertTrue(scrollToCellTriggered)
+    }
+
+    func testFooterViewModel_whenDoneButtonTappedAndDescriptionAdded_shouldSaveDescription() async {
+        await assertFooterViewModel(
+            initialDescription: "",
+            updatedDescription: "description",
+            expectedResult: .added
+        )
+    }
+
+    func testFooterViewModel_whenDoneButtonTappedAndDescriptionRemoved_shouldSaveDescription() async {
+        await assertFooterViewModel(
+            initialDescription: "description",
+            updatedDescription: "",
+            expectedResult: .removed
+        )
+    }
+
+    func testFooterViewModel_whenDoneButtonTappedAndDescriptionUpdated_shouldSaveDescription() async {
+        await assertFooterViewModel(
+            initialDescription: "description",
+            updatedDescription: "description updated",
+            expectedResult: .updated
+        )
+    }
+
+    func testIsTextViewFocused_whenChangedFromNotFocusedToFocused_shouldShowTrailingText() {
+        let sut = makeSUT(description: "description added", maxCharactersAllowed: 20)
+        XCTAssertNil(sut.footerViewModel.trailingText)
+        sut.cellViewModel.isTextViewFocused(true)
+        XCTAssertEqual(sut.footerViewModel.trailingText, "17/20")
+    }
+
+    func testIsTextViewFocused_whenChangedFromFocusedToNotFocused_shouldShowTrailingText() {
+        let sut = makeSUT(description: "description added", maxCharactersAllowed: 20)
+        sut.cellViewModel.isTextViewFocused(true)
+        XCTAssertEqual(sut.footerViewModel.trailingText, "17/20")
+        sut.cellViewModel.isTextViewFocused(false)
+        XCTAssertNil(sut.footerViewModel.trailingText)
     }
 
     // MARK: - Helpers
@@ -188,11 +263,12 @@ final class NodeDescriptionViewModelTests: XCTestCase {
         isNodeInRubbishBin: Bool = false,
         isBackupsNode: Bool = false,
         isBackupsRootNode: Bool = false,
+        maxCharactersAllowed: Int = 300,
         nodeDescriptionResult: Result<NodeEntity, any Error> = .success(NodeEntity()),
-        descriptionSaved: @escaping (NodeDescriptionViewModel.SavedState) -> Void = { _ in },
+        descriptionSaved: @escaping (NodeDescriptionCellControllerModel.SavedState) -> Void = { _ in },
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> NodeDescriptionViewModel {
+    ) -> NodeDescriptionCellControllerModel {
         let nodeUseCase = MockNodeDataUseCase(
             nodeAccessLevelVariable: accessType,
             isNodeInRubbishBin: { _ in isNodeInRubbishBin }
@@ -201,15 +277,33 @@ final class NodeDescriptionViewModelTests: XCTestCase {
             isBackupsNode: isBackupsNode,
             isBackupsRootNode: isBackupsRootNode
         )
-        let sut = NodeDescriptionViewModel(
+        let sut = NodeDescriptionCellControllerModel(
             node: NodeEntity(description: description),
             nodeUseCase: nodeUseCase,
             backupUseCase: backupUseCase,
-            nodeDescriptionUseCase: MockNodeDescriptionUseCase(result: nodeDescriptionResult), 
+            nodeDescriptionUseCase: MockNodeDescriptionUseCase(result: nodeDescriptionResult),
+            maxCharactersAllowed: maxCharactersAllowed,
+            refreshUI: { block in block() },
             descriptionSaved: descriptionSaved
         )
         trackForMemoryLeaks(on: sut)
         return sut
+    }
+
+    private func assertFooterViewModel(
+        initialDescription: String,
+        updatedDescription: String,
+        expectedResult: NodeDescriptionCellControllerModel.SavedState
+    ) async {
+        let exp = expectation(description: "wait to save description")
+        let sut = makeSUT(description: initialDescription) {
+            XCTAssertEqual($0, expectedResult)
+            exp.fulfill()
+        }
+
+        sut.cellViewModel.descriptionUpdated(updatedDescription)
+        sut.cellViewModel.saveDescription(updatedDescription)
+        await fulfillment(of: [exp], timeout: 1.0)
     }
 }
 

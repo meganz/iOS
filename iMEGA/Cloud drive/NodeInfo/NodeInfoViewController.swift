@@ -58,7 +58,9 @@ final class NodeInfoViewController: UITableViewController {
 
     var presentViewController: ((UIViewController) -> Void)?
     var dismissViewController: ((_ completion: (() -> Void)?) -> Void)?
-    var showSavedDescriptionState: ((NodeDescriptionViewModel.SavedState) -> Void)?
+    var showSavedDescriptionState: ((NodeDescriptionCellControllerModel.SavedState) -> Void)?
+    var hasPendingNodeDescriptionChanges: (() -> Bool)?
+    var saveNodeDescriptionChanges: (() async -> NodeDescriptionCellControllerModel.SavedState?)?
 
     private var isContactVerified: Bool {
         viewModel.isContactVerified()
@@ -480,7 +482,7 @@ final class NodeInfoViewController: UITableViewController {
     }
 
     private func makeNodeDescriptionSection() -> NodeInfoTableViewSection {
-        let descriptionViewModel = NodeDescriptionViewModel(
+        let descriptionViewModel = NodeDescriptionCellControllerModel(
             node: node.toNodeEntity(),
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
@@ -493,11 +495,18 @@ final class NodeInfoViewController: UITableViewController {
             ),
             nodeDescriptionUseCase: NodeDescriptionUseCase(
                 repository: NodeDescriptionRepository.newRepo
-            )
-        ) { [weak self] savedState in
-            guard let self else { return }
-            showSavedDescriptionState?(savedState)
-        }
+            )) { [weak self] code in
+                guard let self else { return }
+                tableView.beginUpdates()
+                code()
+                tableView.endUpdates()
+            } descriptionSaved: { [weak self] savedState in
+                guard let self else { return }
+                showSavedDescriptionState?(savedState)
+            }
+
+        hasPendingNodeDescriptionChanges = { descriptionViewModel.hasPendingChanges() }
+        saveNodeDescriptionChanges = { await descriptionViewModel.savePendingChanges() }
 
         return .description(NodeDescriptionCellController(viewModel: descriptionViewModel))
     }
@@ -759,6 +768,8 @@ extension NodeInfoViewController {
             return controller.tableView(tableView, viewForHeaderInSection: section)
         } else if section == 0 {
             topDistance = 1
+        } else if section > 0, case .description(let controller) = cachedSections[section - 1] {
+            topDistance = controller.viewModel.hasReadOnlyAccess ? topDistance : 5
         }
 
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
