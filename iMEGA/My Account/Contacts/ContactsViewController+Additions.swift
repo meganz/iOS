@@ -108,11 +108,9 @@ extension ContactsViewController {
     // in new chat empty screens [MEET-4054] we are hiding the tool bar
     // and simplifying UI when users have no contacts
     @objc
-    func hideToolbar(_ hide: Bool) {
-        guard newChatEmptyStatesEnabled else {
-            return
-        }
-        navigationController?.isToolbarHidden = hide
+    func hideToolbar(_ isEmpty: Bool) {
+        // reuse shouldShowInviteToolbarButton as they should be both hidden/shown at the same time
+        navigationController?.isToolbarHidden = !shouldShowInviteToolbarButton(isEmpty: isEmpty)
     }
     
     @objc
@@ -126,8 +124,8 @@ extension ContactsViewController {
     }
     
     @objc
-    func shouldProceedShowingInviteToolbarButton() -> Bool {
-        !newEmptyChatScreenMode
+    func shouldShowInviteToolbarButton(isEmpty: Bool) -> Bool {
+        !newEmptyChatScreenMode || !isEmpty
     }
     
     func createNewEmptyView() -> UIView? {
