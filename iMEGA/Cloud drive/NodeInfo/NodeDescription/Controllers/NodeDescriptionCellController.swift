@@ -2,59 +2,50 @@ import Combine
 import MEGADesignToken
 import MEGASwift
 import MEGASwiftUI
+import MEGAUIKit
 import SwiftUI
 
 @MainActor
 final class NodeDescriptionCellController: NSObject {
-    private static let reuseIdentifier = "NodeDescriptionCellID"
-    private let maxCharactersAllowed = 300
-    private let viewModel: NodeDescriptionViewModel
-    private var keyboardSubscriptions: NodeDescriptionKeyboardSubscriptions?
-    private var subscriptions = Set<AnyCancellable>()
-    private lazy var footerViewModel = NodeDescriptionFooterViewModel(
-        leadingText: viewModel.footer,
-        description: viewModel.description.isPlaceholder ? nil : viewModel.description.text,
-        maxCharactersAllowed: maxCharactersAllowed
-    )
+    private var keyboardShownSubscription: AnyCancellable?
+    let viewModel: NodeDescriptionCellControllerModel
 
-    init(viewModel: NodeDescriptionViewModel) {
+    init(viewModel: NodeDescriptionCellControllerModel) {
         self.viewModel = viewModel
         super.init()
     }
 
     static func registerCell(for tableView: UITableView) {
         tableView.register(
-            UITableViewCell.self,
-            forCellReuseIdentifier: NodeDescriptionCellController.reuseIdentifier
+            NodeDescriptionViewCell.self,
+            forCellReuseIdentifier: NodeDescriptionViewCell.reuseIdentifier
         )
     }
 
     func addKeyboardNotifications(tableView: UITableView, indexPath: IndexPath) {
-        guard keyboardSubscriptions == nil else { return }
+        guard keyboardShownSubscription == nil else { return }
 
-        let keyboardSubscriptions = NodeDescriptionKeyboardSubscriptions()
-        self.keyboardSubscriptions = keyboardSubscriptions
-
-        keyboardSubscriptions
-            .publisher
+        keyboardShownSubscription = NotificationCenter
+            .default
+            .publisher(for: UIResponder.keyboardDidShowNotification)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self, weak tableView] keyboardState in
-                guard let self,
-                      let tableView else {
-                    return
-                }
-                updateUI(for: keyboardState, tableView: tableView, indexPath: indexPath)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                scrollToBottom(tableView: tableView, indexPath: indexPath)
             }
-            .store(in: &subscriptions)
     }
 
     func removeKeyboardNotifications() {
-        subscriptions.forEach { $0.cancel() }
-        subscriptions = []
-        keyboardSubscriptions = nil
+        keyboardShownSubscription?.cancel()
+        keyboardShownSubscription = nil
     }
 
     private func scrollToBottom(tableView: UITableView, indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath),
+              cell.containsFirstResponder() else {
+            return
+        }
+
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
 
         // scrollToRow does not consider the footer. So need add the height of the footer to content offset
@@ -62,41 +53,6 @@ final class NodeDescriptionCellController: NSObject {
         var contentOffset = tableView.contentOffset
         contentOffset.y += footerRect.height
         tableView.setContentOffset(contentOffset, animated: false)
-    }
-
-    private func cellBackground(traitCollection: UITraitCollection) -> UIColor {
-        UIColor.isDesignTokenEnabled()
-        ? TokenColors.Background.page
-        : traitCollection.userInterfaceStyle == .dark
-        ? UIColor.black2C2C2E
-        : UIColor.whiteFFFFFF
-    }
-
-    private func updateUI(
-        for keyboardState: NodeDescriptionKeyboardSubscriptions.KeyboardSubscription,
-        tableView: UITableView,
-        indexPath: IndexPath
-    ) {
-        UIView.performWithoutAnimation { [weak self] in
-            guard let self else { return }
-            tableView.beginUpdates()
-
-            if keyboardState == .didShow {
-                footerViewModel.description = footerViewModel.description
-                ?? (viewModel.description.isPlaceholder ? "" : viewModel.description.text)
-                footerViewModel.showTrailingText()
-            } else {
-                footerViewModel.trailingText = nil
-            }
-
-            tableView.endUpdates()
-
-            if keyboardState == .didShow,
-               let cell = tableView.cellForRow(at: indexPath),
-               cell.containsFirstResponder() {
-                scrollToBottom(tableView: tableView, indexPath: indexPath)
-            }
-        }
     }
 }
 
@@ -106,54 +62,19 @@ extension NodeDescriptionCellController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Self.reuseIdentifier, for: indexPath)
-        cell.selectionStyle = .none
-        cell.backgroundColor = cellBackground(traitCollection: tableView.traitCollection)
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: NodeDescriptionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? NodeDescriptionViewCell else {
+            return UITableViewCell()
+        }
+        viewModel.scrollToCell = { [weak self, weak tableView] in
+            guard let self, let tableView else { return }
+            scrollToBottom(tableView: tableView, indexPath: indexPath)
+        }
         addKeyboardNotifications(tableView: tableView, indexPath: indexPath)
-        cell.contentConfiguration = makeContentConfiguration(tableView: tableView, cellForRowAt: indexPath)
+        cell.viewModel = viewModel.cellViewModel
         return cell
-    }
-
-    private func makeContentConfiguration(
-        tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> NodeDescriptionContentConfiguration {
-        NodeDescriptionContentConfiguration(
-            description: viewModel.description,
-            editingDisabled: viewModel.hasReadOnlyAccess,
-            maxCharactersAllowed: maxCharactersAllowed, 
-            placeholderText: viewModel.placeholderTextForReadWriteMode
-        ) { [weak self, weak tableView] text in
-            guard let self, let tableView else { return }
-            update(footerText: text, andScrollTo: indexPath, tableView: tableView)
-        } saveDescription: { description in
-            Task { @MainActor [weak self] in
-                guard let self else { return }
-                await viewModel.save(descriptionString: description)
-            }
-        } updatedLayout: { [weak self, weak tableView] updates in
-            guard let self, let tableView else { return }
-            updateAndScroll(to: indexPath, tableView: tableView, updates: updates)
-        }
-    }
-
-    private func update(footerText: String, andScrollTo indexPath: IndexPath, tableView: UITableView) {
-        updateAndScroll(to: indexPath, tableView: tableView) { [weak self] in
-            guard let self else { return }
-            footerViewModel.description = footerText
-            footerViewModel.showTrailingText()
-        }
-    }
-
-    private func updateAndScroll(to indexPath: IndexPath, tableView: UITableView, updates: () -> Void) {
-        UIView.performWithoutAnimation {
-            tableView.beginUpdates()
-            updates()
-            tableView.endUpdates()
-        }
-
-        guard footerViewModel.trailingText != nil else { return }
-        scrollToBottom(tableView: tableView, indexPath: indexPath)
     }
 }
 
@@ -163,6 +84,6 @@ extension NodeDescriptionCellController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        NodeDescriptionFooterView(viewModel: self.footerViewModel).toUIView()
+        NodeDescriptionFooterView(viewModel: self.viewModel.footerViewModel).toUIView()
     }
 }

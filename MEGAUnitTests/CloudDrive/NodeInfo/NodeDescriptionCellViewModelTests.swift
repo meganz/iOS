@@ -104,33 +104,28 @@ final class NodeDescriptionTextContentViewModelTests: XCTestCase {
         XCTAssertTrue(wasCalled)
     }
 
-    func testUpdatedLayoutClosure_whenTriggered_shouldCallClosure() {
-        var wasCalled = false
-        let sut = makeSUT(updatedLayout: { _ in wasCalled = true })
-        sut.updatedLayout({})
-        XCTAssertTrue(wasCalled)
-    }
-
     // MARK: - Helpers
 
     private func makeSUT(
         maxCharactersAllowed: Int = 300,
         editingDisabled: Bool = true,
         textViewEdgeInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
+        description: @escaping () -> NodeDescriptionCellControllerModel.Description? = { .content("") },
         descriptionUpdated: @escaping (String) -> Void = { _ in },
         saveDescription: @escaping (String) -> Void = { _ in },
-        updatedLayout: @escaping (() -> Void) -> Void = { _ in },
+        isTextViewFocused: @escaping (Bool) -> Void = { _ in },
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> NodeDescriptionTextContentViewModel {
-        let sut = NodeDescriptionTextContentViewModel(
+    ) -> NodeDescriptionCellViewModel {
+        let sut = NodeDescriptionCellViewModel(
             maxCharactersAllowed: maxCharactersAllowed,
             editingDisabled: editingDisabled, 
             placeholderText: "",
-            textViewEdgeInsets: textViewEdgeInsets,
+            textViewEdgeInsets: textViewEdgeInsets, 
+            description: description,
             descriptionUpdated: descriptionUpdated,
-            saveDescription: saveDescription,
-            updatedLayout: updatedLayout
+            saveDescription: saveDescription, 
+            isTextViewFocused: isTextViewFocused
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

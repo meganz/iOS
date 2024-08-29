@@ -4320,6 +4320,18 @@
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description removed";
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Description updated";
+/* Title of the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title" = "Confirm close?";
+/* Message in the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message" = "Do you want to save changes you made to the description?";
+/* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle" = "Discard changes";
+/* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle" = "Keep editing";
+/* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle" = "Save and close";
+/* Toast message shown to the user when the node description update failed. */
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Error updating description, try again";
 /* New chat page title*/
 "chat.newChat.title"="New chat";
 /* Visual media search history section title */

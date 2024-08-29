@@ -1,13 +1,14 @@
 import Foundation
 import MEGASwift
 
-final class NodeDescriptionTextContentViewModel {
+final class NodeDescriptionCellViewModel {
     let textViewEdgeInsets: UIEdgeInsets
     let editingDisabled: Bool
     let placeholderText: String
+    let description: () -> NodeDescriptionCellControllerModel.Description?
     let descriptionUpdated: (String) -> Void
     let saveDescription: (String) -> Void
-    let updatedLayout: (() -> Void) -> Void
+    let isTextViewFocused: (Bool) -> Void
     private let maxCharactersAllowed: Int
 
     init(
@@ -15,17 +16,19 @@ final class NodeDescriptionTextContentViewModel {
         editingDisabled: Bool,
         placeholderText: String,
         textViewEdgeInsets: UIEdgeInsets,
+        description: @escaping () -> NodeDescriptionCellControllerModel.Description?,
         descriptionUpdated: @escaping (String) -> Void,
         saveDescription: @escaping (String) -> Void,
-        updatedLayout: @escaping (() -> Void) -> Void
+        isTextViewFocused: @escaping (Bool) -> Void
     ) {
         self.maxCharactersAllowed = maxCharactersAllowed
         self.editingDisabled = editingDisabled
         self.placeholderText = placeholderText
         self.textViewEdgeInsets = textViewEdgeInsets
+        self.description = description
         self.descriptionUpdated = descriptionUpdated
         self.saveDescription = saveDescription
-        self.updatedLayout = updatedLayout
+        self.isTextViewFocused = isTextViewFocused
     }
 
     /// Determines if editing should end based on the given text.
