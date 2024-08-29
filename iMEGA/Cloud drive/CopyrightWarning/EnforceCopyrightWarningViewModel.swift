@@ -3,6 +3,7 @@ import Foundation
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 final class EnforceCopyrightWarningViewModel: ObservableObject {
     enum CopyrightWarningViewStatus {
         case unknown
@@ -15,7 +16,7 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
     
     private let copyrightUseCase: any CopyrightUseCaseProtocol
     @PreferenceWrapper(key: .agreedCopywriteWarning, defaultValue: false)
-    private var agreedCopywriteWarning: Bool
+    private var agreedCopyrightWarning: Bool
     private var subscriptions = Set<AnyCancellable>()
     
     var copyrightMessage: String {
@@ -25,20 +26,18 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
     init(preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
          copyrightUseCase: some CopyrightUseCaseProtocol) {
         self.copyrightUseCase = copyrightUseCase
-        $agreedCopywriteWarning.useCase = preferenceUseCase
-        subscribeToTermsAggreed()
+        $agreedCopyrightWarning.useCase = preferenceUseCase
+        subscribeToTermsAgreed()
     }
     
-    @MainActor
     func determineViewState() async {
-        if agreedCopywriteWarning {
+        if agreedCopyrightWarning {
             viewStatus = .agreed
         } else {
             await checkCopyrightAgreedBefore()
         }
     }
     
-    @MainActor
     private func checkCopyrightAgreedBefore() async {
         if await copyrightUseCase.shouldAutoApprove() {
             agreeToCopyright()
@@ -47,21 +46,18 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     private func agreeToCopyright() {
-        agreedCopywriteWarning = true
+        agreedCopyrightWarning = true
         viewStatus = .agreed
     }
     
-    private func subscribeToTermsAggreed() {
+    private func subscribeToTermsAgreed() {
         $isTermsAgreed
             .dropFirst()
             .filter { $0 }
             .sink { [weak self] _ in
                 guard let self else { return }
-                Task { [weak self] in
-                    await self?.agreeToCopyright()
-                }
+                agreeToCopyright()
             }.store(in: &subscriptions)
     }
 }
