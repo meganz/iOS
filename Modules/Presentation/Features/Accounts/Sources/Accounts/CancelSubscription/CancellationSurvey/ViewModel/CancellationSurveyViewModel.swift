@@ -1,4 +1,6 @@
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
 
@@ -17,16 +19,19 @@ final class CancellationSurveyViewModel: ObservableObject {
     private(set) var subscription: AccountSubscriptionEntity
     private let subscriptionsUsecase: any SubscriptionsUsecaseProtocol
     private let cancelAccountPlanRouter: any CancelAccountPlanRouting
+    private let tracker: any AnalyticsTracking
     var submitReasonTask: Task<Void, Never>?
     
     init(
         subscription: AccountSubscriptionEntity,
         subscriptionsUsecase: some SubscriptionsUsecaseProtocol,
-        cancelAccountPlanRouter: some CancelAccountPlanRouting
+        cancelAccountPlanRouter: some CancelAccountPlanRouting,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.subscription = subscription
         self.subscriptionsUsecase = subscriptionsUsecase
         self.cancelAccountPlanRouter = cancelAccountPlanRouter
+        self.tracker = tracker
     }
     
     deinit {
@@ -44,6 +49,10 @@ final class CancellationSurveyViewModel: ObservableObject {
         randomizedList.append(otherReasonItem)
         
         cancellationSurveyReasonList = randomizedList
+    }
+    
+    func trackViewOnAppear() {
+        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyScreenEvent())
     }
     
     // MARK: - Reason selection
@@ -67,12 +76,14 @@ final class CancellationSurveyViewModel: ObservableObject {
     @MainActor
     func didTapCancelButton() {
         shouldDismiss = true
+        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyCancelViewButtonEvent())
     }
     
     @MainActor
     func didTapDontCancelButton() {
         shouldDismiss = true
         cancelAccountPlanRouter.dismissCancellationFlow()
+        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyDontCancelButtonEvent())
     }
     
     @MainActor
@@ -89,6 +100,8 @@ final class CancellationSurveyViewModel: ObservableObject {
         }
 
         isOtherFieldFocused = false
+        
+        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyCancelSubscriptionButtonEvent())
         
         submitReasonTask = Task { [weak self] in
             guard let self else { return }
