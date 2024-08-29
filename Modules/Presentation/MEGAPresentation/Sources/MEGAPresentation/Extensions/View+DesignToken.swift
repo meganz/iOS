@@ -5,3 +5,7 @@ public extension View {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
     }
 }
+
+public func designTokenEnabled() -> Bool {
+    DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+}
