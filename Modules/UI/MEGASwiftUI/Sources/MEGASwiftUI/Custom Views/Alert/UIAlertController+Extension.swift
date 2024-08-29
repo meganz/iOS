@@ -1,4 +1,6 @@
 import Foundation
+import MEGADesignToken
+import MEGAPresentation
 import UIKit
 
 public extension UIAlertController {
@@ -32,7 +34,7 @@ public extension UIAlertController {
                     alert.title = errorItem.title.isEmpty ? viewModel.title : errorItem.title
                     if errorItem.description.isNotEmpty {
                         alert.message = errorItem.description
-                        textField.textColor = UIColor.systemRed
+                        textField.textColor = designTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
                     } else {
                         alert.message = viewModel.message
                     }
