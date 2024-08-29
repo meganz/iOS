@@ -17,7 +17,13 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
-        NodeInfoViewModel(withNode: node, featureFlagProvider: DIContainer.featureFlagProvider)
+        NodeInfoViewModel(
+            withNode: node,
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
+            featureFlagProvider: DIContainer.featureFlagProvider)
     }
     
     func subtitle(fromDate date: Date) -> String {

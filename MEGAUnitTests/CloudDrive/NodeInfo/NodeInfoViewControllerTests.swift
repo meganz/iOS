@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomainMock
 import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
@@ -14,6 +15,7 @@ final class NodeInfoViewControllerTests: XCTestCase {
         )
         let viewModel = NodeInfoViewModel(
             withNode: anyMegaNode,
+            nodeUseCase: MockNodeDataUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:])
         )
 

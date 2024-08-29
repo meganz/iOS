@@ -94,7 +94,7 @@ extension XCTestCase {
         
         // Fulfil the expectation if we don't expect any commands invoked from the view model
         if expectedCommands.isEmpty {
-            commandExpectation.fulfill()
+            commandExpectation.isInverted = true
         }
         
         // Subscribe the invoke command event

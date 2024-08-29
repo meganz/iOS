@@ -2,9 +2,22 @@ import MEGADomain
 import MEGAPresentation
 import MEGARepo
 
-@objc final class NodeInfoViewModel: NSObject {
+enum NodeInfoAction: ActionType {
+    case viewDidLoad
+    case viewDidDisappear
+}
+
+@objc final class NodeInfoViewModel: NSObject, ViewModelType {
+
+    var invokeCommand: ((Command) -> Void)?
+    
+    enum Command: CommandType {
+        case reloadSections
+    }
+    
     private let router = SharedItemsViewRouter()
     private let shareUseCase: (any ShareUseCaseProtocol)?
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     let shouldDisplayContactVerificationInfo: Bool
@@ -16,44 +29,66 @@ import MEGARepo
         featureFlagProvider.isFeatureFlagEnabled(for: .nodeDescription)
     }
     
-    private(set) lazy var nodeInfoLocationViewModel: NodeInfoLocationViewModel? = {
-        guard node.name?.fileExtensionGroup.isVisualMedia ?? false else {
-            return nil
-        }
-        return NodeInfoLocationViewModel(
-            nodeEntity: node.toNodeEntity(),
-            geoCoderUseCase: GeoCoderUseCase(geoCoderRepository: GeoCoderRepository.newRepo))
-    }()
+    private(set) var nodeInfoLocationViewModel: NodeInfoLocationViewModel?
+    private var loadNodeInfoLocationTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
 
     init(
         withNode node: MEGANode,
         shareUseCase: (any ShareUseCaseProtocol)? = nil,
+        nodeUseCase: some NodeUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         isNodeUndecryptedFolder: Bool = false,
         shouldDisplayContactVerificationInfo: Bool = false,
         completion: (() -> Void)? = nil
     ) {
         self.shareUseCase = shareUseCase
+        self.nodeUseCase = nodeUseCase
         self.node = node
         self.featureFlagProvider = featureFlagProvider
         self.isNodeUndecryptedFolder = isNodeUndecryptedFolder
         self.shouldDisplayContactVerificationInfo = shouldDisplayContactVerificationInfo
     }
     
+    func dispatch(_ action: NodeInfoAction) {
+        switch action {
+        case .viewDidLoad:
+            loadNodeInfoLocationTask = Task { await loadNodeInfoLocationViewModel() }
+        case .viewDidDisappear:
+            loadNodeInfoLocationTask = nil
+        }
+    }
+    
     @MainActor
-    func openSharedDialog() {
+    func loadNodeInfoLocationViewModel() async {
+        
+        guard
+            nodeInfoLocationViewModel == nil,
+            node.name?.fileExtensionGroup.isVisualMedia ?? false,
+            await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node.handle) == .owner else {
+            return
+        }
+        
+        nodeInfoLocationViewModel = NodeInfoLocationViewModel(
+            nodeEntity: node.toNodeEntity(),
+            geoCoderUseCase: GeoCoderUseCase(geoCoderRepository: GeoCoderRepository.newRepo))
+        
+        invokeCommand?(.reloadSections)
+    }
+    
+    @MainActor
+    func openSharedDialog() async {
         guard node.isFolder() else {
             router.showShareFoldersContactView(withNodes: [node])
             return
         }
         
-        Task {
-            do {
-                _ = try await shareUseCase?.createShareKeys(forNodes: [node.toNodeEntity()])
-                router.showShareFoldersContactView(withNodes: [node])
-            } catch {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-            }
+        do {
+            _ = try await shareUseCase?.createShareKeys(forNodes: [node.toNodeEntity()])
+            router.showShareFoldersContactView(withNodes: [node])
+        } catch {
+            SVProgressHUD.showError(withStatus: error.localizedDescription)
         }
     }
 

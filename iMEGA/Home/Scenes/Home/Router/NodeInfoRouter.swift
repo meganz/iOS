@@ -30,6 +30,10 @@ final class NodeInfoRouter: NSObject {
                 shareRepository: ShareRepository.newRepo,
                 filesSearchRepository: FilesSearchRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
             featureFlagProvider: DIContainer.featureFlagProvider,
             shouldDisplayContactVerificationInfo: MEGASdk.shared.isContactVerificationWarningEnabled
         )
