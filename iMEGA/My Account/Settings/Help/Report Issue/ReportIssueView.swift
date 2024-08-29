@@ -8,7 +8,7 @@ struct ReportIssueView: View {
     
     var body: some View {
         ZStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 navigationBar
                 
                 if !viewModel.isConnected {
@@ -21,15 +21,38 @@ struct ReportIssueView: View {
                 
                 Spacer()
                 
-                TextEditorView(text: $viewModel.details,
-                               placeholder: Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder)
+                TextEditorView(
+                    text: $viewModel.details
+                        .onChange({ _ in
+                            viewModel.isNotReachingMinimumCharacter = false
+                        }),
+                    placeholder: Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
+                )
                 
-                if viewModel.areLogsEnabled {
-                    TextWithToggleView(text: Strings.Localizable.Help.ReportIssue.sendLogFile, toggle: $viewModel.isSendLogFileToggleOn)
-                    Spacer()
-                }
+                VStack(spacing: 0) {
+                    ErrorView(
+                        error: Strings.Localizable.Help.ReportIssue.MinCharacterNotReach.error
+                    )
+                    .frame(height: 38)
+                    .opacity(viewModel.isNotReachingMinimumCharacter ? 1 : 0)
+                        
+                    if viewModel.areLogsEnabled {
+                        TextWithToggleView(text: Strings.Localizable.Help.ReportIssue.sendLogFile, toggle: $viewModel.isSendLogFileToggleOn
+                        )
+                        .padding(.bottom, 38)
+                    }
+                }.background(
+                    isDesignTokenEnabled
+                    ? TokenColors.Background.page.swiftUI 
+                    : Color.backgroundRegularPrimaryElevated
+                )
             }
-            .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color(.secondarySystemBackground))
+            
+            .background(
+                isDesignTokenEnabled
+                ? TokenColors.Background.surface1.swiftUI
+                : UIColor.navigationBg.swiftUI
+            )
             .blur(radius: viewModel.isUploadingLog ? 1 : 0)
             .allowsHitTesting(viewModel.isUploadingLog ? false : true)
             .task {
@@ -43,7 +66,6 @@ struct ReportIssueView: View {
                 }
             }
         }
-        .ignoresSafeArea(edges: .bottom)
         .alert(isPresented: $viewModel.showingReportIssueAlert) {
             let alertData = viewModel.reportIssueAlertData()
             if let secondaryButtonAlert = alertData.secondaryButtonTitle {
@@ -98,6 +120,10 @@ struct ReportIssueView: View {
     
     private var rightNavigationBarButton: some View {
         Button(Strings.Localizable.send) {
+            guard viewModel.details.count > 10 else {
+                viewModel.isNotReachingMinimumCharacter = true
+                return
+            }
             Task {
                 await viewModel.createTicket()
             }

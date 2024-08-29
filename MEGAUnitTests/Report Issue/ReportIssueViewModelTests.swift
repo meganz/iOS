@@ -101,7 +101,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     func testDismissReport_detailsSameAsPlaceholder_dismissCalledOnce() async {
         let (sut, router) = makeSUT()
         
-        sut.details = "Describe the issue"
+        sut.details = "Describe the issue with at least 10 characters"
         await sut.dismissReport()
         
         XCTAssertEqual(router.dismiss_calledTimes, 1)
@@ -118,7 +118,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     func testShouldDisableSendButton_detailsEqualToPlaceholder_isTrue() {
         let (sut, _) = makeSUT()
         
-        sut.details = "Describe the issue"
+        sut.details = "Describe the issue with at least 10 characters"
         
         XCTAssertTrue(sut.shouldDisableSendButton)
     }
