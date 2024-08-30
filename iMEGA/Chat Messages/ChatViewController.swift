@@ -209,6 +209,10 @@ class ChatViewController: MessagesViewController {
         
         super.viewDidLoad()
         
+        if UIColor.isDesignTokenEnabled() {
+            messagesCollectionView.backgroundColor = TokenColors.Background.page
+        }
+
         chatRoomDelegate.chatViewController = self
         configureMessageCollectionView()
         update()
