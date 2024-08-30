@@ -14,6 +14,8 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     var endCallResult_ToReturn = false
     var muteCallResult_ToReturn = false
     var configureWebRTCAudioSession_CalledTimes = 0
+    
+    var incomingCallForUnknownChat: IncomingCallForUnknownChat?
 
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
         startCall_CalledTimes += 1

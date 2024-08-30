@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGASwift
 
 public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     public static var newRepo: MockChatRoomRepository = MockChatRoomRepository()
@@ -27,6 +28,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     private let chatRoomMessageLoadedPublisher: AnyPublisher<MEGADomain.ChatMessageEntity?, Never>
     private let hasScheduledMeetingChange: Bool
     private let userEmail: String?
+    private let monitorChatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)>
 
     public init(
         chatRoom: ChatRoomEntity? = nil,
@@ -51,7 +53,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         loadMessages: MEGADomain.ChatSourceEntity = .local,
         chatRoomMessageLoadedPublisher: AnyPublisher<MEGADomain.ChatMessageEntity?, Never> = Empty().eraseToAnyPublisher(),
         hasScheduledMeetingChange: Bool = false,
-        userEmail: String? = nil
+        userEmail: String? = nil,
+        monitorChatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.chatRoom = chatRoom
         self.peerHandles = peerHandles
@@ -76,6 +79,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         self.chatRoomMessageLoadedPublisher = chatRoomMessageLoadedPublisher
         self.hasScheduledMeetingChange = hasScheduledMeetingChange
         self.userEmail = userEmail
+        self.monitorChatConnectionStateUpdate = monitorChatConnectionStateUpdate
     }
     
     public func chatRoom(forChatId chatId: MEGADomain.HandleEntity) -> MEGADomain.ChatRoomEntity? {
@@ -227,5 +231,9 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     
     public func userEmail(for handle: MEGADomain.HandleEntity) async -> String? {
         userEmail
+    }
+    
+    public var chatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> {
+        monitorChatConnectionStateUpdate.eraseToAnyAsyncSequence()
     }
 }

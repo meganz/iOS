@@ -1,4 +1,5 @@
 import Combine
+import MEGASwift
 
 public protocol ChatRoomUseCaseProtocol: Sendable {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
@@ -35,6 +36,7 @@ public protocol ChatRoomUseCaseProtocol: Sendable {
     func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
     func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool
     func userEmail(for handle: HandleEntity) async -> String?
+    func monitorOnChatConnectionStateUpdate() -> AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error>
 }
 
 public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCaseProtocol, Sendable {
@@ -209,5 +211,10 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
     
     public func userEmail(for handle: HandleEntity) async -> String? {
         await chatRoomRepo.userEmail(for: handle)
+    }
+
+    public func monitorOnChatConnectionStateUpdate() -> AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error> {
+        chatRoomRepo.chatConnectionStateUpdate
+            .eraseToAnyAsyncThrowingSequence()
     }
 }

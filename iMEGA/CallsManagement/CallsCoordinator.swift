@@ -3,6 +3,7 @@ import ChatRepo
 import Combine
 import CombineSchedulers
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 
 protocol CallsCoordinatorFactoryProtocol {
@@ -90,6 +91,8 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callSessionUpdateSubscription: AnyCancellable?
     
+    var incomingCallForUnknownChat: IncomingCallForUnknownChat?
+    
     let scheduler: AnySchedulerOf<DispatchQueue>
 
     @PreferenceWrapper(key: .presentPasscodeLater, defaultValue: false, useCase: PreferenceUseCase.default)
@@ -129,6 +132,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         )
         
         onCallUpdateListener()
+        monitorOnChatConnectionStateUpdate()
     }
     
     // MARK: - Private
@@ -175,7 +179,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
                 sendAudioPlayerInterruptDidStartNotificationIfNeeded()
             }
         case .joining:
-            updateChatTitleForCall(call)
+            updateCallTitle(call.chatId)
             reportCallStartedConnectingIfNeeded(call)
             callUseCase.enableAudioMonitor(forCall: call)
             configureCallSessionsListener(forCall: call)
@@ -189,6 +193,50 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
             reportEndCall(call)
         default:
             break
+        }
+    }
+    
+    private func monitorOnChatConnectionStateUpdate() {
+        let chatConnectionsStateUpdate = chatRoomUseCase.monitorOnChatConnectionStateUpdate()
+        Task { [weak self] in
+            do {
+                for try await chatConnectionState in chatConnectionsStateUpdate {
+                    self?.onChatConnectionStateUpdate(
+                        chatId: chatConnectionState.chatId,
+                        connectionStatus: chatConnectionState.connectionStatus
+                    )
+                }
+            } catch {
+                MEGALogError("[CallsCoordinator] monitorOnChatConnectionStateUpdate failed: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func onChatConnectionStateUpdate(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus) {
+        guard let incomingCallForUnknownChat,
+              incomingCallForUnknownChat.chatId == chatId,
+              connectionStatus == .online else {
+            return
+        }
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else {
+            MEGALogDebug("[CallsCoordinator] Report end call for incoming call in new chat room that could not be fetched")
+            providerDelegate?.provider.reportCall(
+                with: incomingCallForUnknownChat.callUUID,
+                endedAt: nil,
+                reason: .failed
+            )
+            return
+        }
+        callManager.addIncomingCall(
+            withUUID: incomingCallForUnknownChat.callUUID,
+            chatRoom: chatRoom
+        )
+        updateCallTitle(chatId)
+        MEGALogDebug("[CallsCoordinator] Call in new chat room title updated after chat connection state changed to online")
+        
+        if let answeredCompletion = incomingCallForUnknownChat.answeredCompletion {
+            MEGALogDebug("[CallKit] [CallsCoordinator] Call in new chat room answered after chat room connected to online")
+            answeredCompletion()
         }
     }
     
@@ -225,8 +273,8 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         return callUUID
     }
     
-    private func updateChatTitleForCall(_ call: CallEntity) {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+    private func updateCallTitle(_ chatId: ChatIdEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId),
               let chatTitle = chatRoom.title,
               let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
         
@@ -370,11 +418,6 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
     }
     
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else {
-            MEGALogError("[CallKit] Provider report new incoming call in chat room that does not exists")
-            return
-        }
-        
         guard userIsNotParticipatingInCall(inChat: chatId) else {
             MEGALogDebug("[CallKit] Provider avoid reporting new incoming call as user is already participating in a call with the same chatId")
             /// According to Apple forums https://forums.developer.apple.com/forums/thread/117939
@@ -384,20 +427,26 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         }
         
         var incomingCallUUID: UUID
-        
-        if let callInProgressUUID = callManager.callUUID(forChatRoom: chatRoom) {
-            MEGALogDebug("[CallKit] Provider report new incoming call that already exists")
-            incomingCallUUID = callInProgressUUID
+        var update: CXCallUpdate
+        if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) {
+            if let callInProgressUUID = callManager.callUUID(forChatRoom: chatRoom) {
+                MEGALogDebug("[CallKit] Provider report new incoming call that already exists")
+                incomingCallUUID = callInProgressUUID
+            } else {
+                MEGALogDebug("[CallKit] Provider report new incoming call")
+                incomingCallUUID = uuidFactory()
+                callManager.addIncomingCall(
+                    withUUID: incomingCallUUID,
+                    chatRoom: chatRoom
+                )
+            }
+            update = callUpdateFactory.createCallUpdate(title: chatRoom.title ?? "Unknown")
         } else {
-            MEGALogDebug("[CallKit] Provider report new incoming call")
+            MEGALogDebug("[CallKit] Provider report new incoming call in chat room that does not exists, save and wait for chat connection")
             incomingCallUUID = uuidFactory()
-            callManager.addIncomingCall(
-                withUUID: incomingCallUUID,
-                chatRoom: chatRoom
-            )
+            update = callUpdateFactory.createCallUpdate(title: Strings.Localizable.connecting)
+            incomingCallForUnknownChat = IncomingCallForUnknownChat(chatId: chatId, callUUID: incomingCallUUID)
         }
-        
-        let update = callUpdateFactory.createCallUpdate(title: chatRoom.title ?? "Unknown")
         
         providerDelegate?.provider.reportNewIncomingCall(with: incomingCallUUID, update: update) { [weak self] error in
             guard error == nil else {

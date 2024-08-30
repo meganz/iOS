@@ -61,15 +61,21 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         MEGALogDebug("[CallKit] Provider perform answer call action")
-        guard let callsCoordinator, let callManager,
-              let callActionSync = callManager.call(forUUID: action.callUUID) else {
-            action.fail()
+        guard let callManager,
+              let callActionSync = callManager.call(forUUID: action.callUUID)
+        else {
+            if callsCoordinator?.incomingCallForUnknownChat != nil {
+                MEGALogDebug("[CallKit] Provider saving answer call action for a call in a new chat that is not ready yet. It will be answered when chatRoom connectionStatus becomes online")
+                callsCoordinator?.incomingCallForUnknownChat?.answeredCompletion = { [weak self] in
+                    self?.answerCall(forAction: action)
+                }
+            } else {
+                MEGALogError("[CallKit] Provider fail to answer call because no chat found for incoming call")
+                action.fail()
+            }
             return
         }
-        Task { @MainActor in
-            let success = await callsCoordinator.answerCall(callActionSync)
-            manageActionSuccess(action, success: success)
-        }
+        answerCall(forAction: action)
     }
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
@@ -129,6 +135,21 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
             callsCoordinator?.disablePassCodeIfNeeded()
         } else {
             action.fail()
+        }
+    }
+    
+    private func answerCall(forAction action: CXAnswerCallAction) {
+        guard let callsCoordinator,
+              let callManager,
+              let callActionSync = callManager.call(forUUID: action.callUUID)
+        else {
+            MEGALogError("[CallKit] Provider perform answer call action fail because coordinator, manager or action sync not found")
+            action.fail()
+            return
+        }
+        Task { @MainActor in
+            let success = await callsCoordinator.answerCall(callActionSync)
+            manageActionSuccess(action, success: success)
         }
     }
 }

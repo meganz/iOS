@@ -21,7 +21,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
             repository: ScheduledMeetingRepository(chatSDK: .shared)
         ),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository(sdk: .shared)
+            chatRoomRepo: ChatRoomRepository.newRepo
         ),
         createAttributedStringForBoldTags: @escaping (String) -> NSAttributedString?,
         alternateMessage: @escaping () -> NSAttributedString?

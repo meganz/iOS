@@ -7,11 +7,11 @@ public protocol ChatConnectionStateUpdateProviderProtocol: Sendable {
     ///
     /// - Returns: `AnyAsyncSequence` that will call chatSdk.add on creation and chatSdk.remove onTermination of `AsyncStream`.
     /// It will yield `(HandleEntity, ChatConnectionStatus)` item until sequence terminated
-    var updates: AnyAsyncSequence<(HandleEntity, ChatConnectionStatus)> { get }
+    var updates: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> { get }
 }
 
 public struct ChatConnectionStateUpdateProvider: ChatConnectionStateUpdateProviderProtocol {
-    public var updates: AnyAsyncSequence<(HandleEntity, ChatConnectionStatus)> {
+    public var updates: AnyAsyncSequence<(chatId: HandleEntity, connectionStatus: ChatConnectionStatus)> {
         AsyncStream { continuation in
             let delegate = ChatConnectionStateUpdateGlobalDelegate {
                 continuation.yield(($0, $1))

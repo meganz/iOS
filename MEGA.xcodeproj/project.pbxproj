@@ -1246,6 +1246,7 @@
 		83DE6D2129894956000503CC /* SeeMoreOccurrencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DE6D2029894956000503CC /* SeeMoreOccurrencesView.swift */; };
 		83DE9D0828EC376F00F24DF4 /* ChatRoomsListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DE9D0728EC376F00F24DF4 /* ChatRoomsListRouter.swift */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
+		83E10DB52C80BB9C00B4CD5E /* IncomingCallForUnknownChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E10DB42C80BB9C00B4CD5E /* IncomingCallForUnknownChat.swift */; };
 		83E135F8292E5209004EAA0D /* ChatRoomNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E135F6292E5209004EAA0D /* ChatRoomNotificationsView.swift */; };
 		83E135F9292E520A004EAA0D /* ChatRoomNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E135F7292E5209004EAA0D /* ChatRoomNotificationsViewModel.swift */; };
 		83E27AEA27ABD8640086E11E /* MeetingCreatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */; };
@@ -4082,6 +4083,7 @@
 		83DE9D0728EC376F00F24DF4 /* ChatRoomsListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListRouter.swift; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
+		83E10DB42C80BB9C00B4CD5E /* IncomingCallForUnknownChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallForUnknownChat.swift; sourceTree = "<group>"; };
 		83E135F6292E5209004EAA0D /* ChatRoomNotificationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomNotificationsView.swift; sourceTree = "<group>"; };
 		83E135F7292E5209004EAA0D /* ChatRoomNotificationsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomNotificationsViewModel.swift; sourceTree = "<group>"; };
 		83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingCreatingViewController.xib; sourceTree = "<group>"; };
@@ -8957,8 +8959,8 @@
 			children = (
 				83E8097C2BC0055F00E1B3FF /* CallKit */,
 				839108C82C63C94000B4E4A9 /* Helpers */,
+				83E10DB32C80BB7D00B4CD5E /* Model */,
 				83E3443A2BCE9F2B006A2E3D /* VoIP */,
-				837D0F382BC7E23000C629AE /* CallActionSync.swift */,
 				83E809682BBEA2C000E1B3FF /* CallManagerProtocol.swift */,
 				83CCA0D32BF782580072FC53 /* CallsCoordinator.swift */,
 				83E809792BC000EE00E1B3FF /* CallsCoordinatorProtocol.swift */,
@@ -10107,6 +10109,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		83E10DB32C80BB7D00B4CD5E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				837D0F382BC7E23000C629AE /* CallActionSync.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		83E135F5292E5178004EAA0D /* ChatRoomNotifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -10191,6 +10201,7 @@
 			children = (
 				83E8096A2BBEA2F700E1B3FF /* CallKitCallManager.swift */,
 				83E809732BBFF52500E1B3FF /* CallKitProviderDelegate.swift */,
+				83E10DB42C80BB9C00B4CD5E /* IncomingCallForUnknownChat.swift */,
 			);
 			path = CallKit;
 			sourceTree = "<group>";
@@ -15234,6 +15245,7 @@
 				328C15362A3975C8002499CE /* ImportAlbumView.swift in Sources */,
 				328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
+				83E10DB52C80BB9C00B4CD5E /* IncomingCallForUnknownChat.swift in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
 				C4B4B1692B27CAF900F78710 /* InputView+Additions.swift in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
