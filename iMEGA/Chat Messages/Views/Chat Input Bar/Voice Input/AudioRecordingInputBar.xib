@@ -17,7 +17,6 @@
             <subviews>
                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4pH-4S-81F">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iN0-l3-epB">
                     <rect key="frame" x="0.0" y="-34" width="414" height="236"/>
@@ -200,7 +199,6 @@
                         </label>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="7Q4-5E-Job"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="fXk-hP-wk8" firstAttribute="centerX" secondItem="H0B-HU-26G" secondAttribute="trailing" id="4O9-Wd-pVb"/>
                         <constraint firstItem="3Xd-Sa-NXk" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7bW-4X-Rxf"/>
