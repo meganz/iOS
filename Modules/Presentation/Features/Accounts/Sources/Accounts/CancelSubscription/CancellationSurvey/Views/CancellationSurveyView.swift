@@ -9,9 +9,7 @@ struct CancellationSurveyView: View {
     @Environment(\.presentationMode) private var presentationMode
     @StateObject private var viewModel: CancellationSurveyViewModel
     
-    init(
-         viewModel: @autoclosure @escaping () -> CancellationSurveyViewModel
-     ) {
+    init(viewModel: @autoclosure @escaping () -> CancellationSurveyViewModel) {
          _viewModel = StateObject(wrappedValue: viewModel())
      }
 
@@ -128,6 +126,7 @@ struct CancellationSurveyView: View {
             BorderedTextEditorView(
                 textInput: $viewModel.otherReasonText,
                 isFocused: $viewModel.isOtherFieldFocused,
+                showMinLimitOrEmptyError: $viewModel.showMinLimitOrEmptyOtherFieldError,
                 config: BorderedTextEditorView.ViewConfig(
                     maxCharacterLimit: viewModel.maximumTextRequired,
                     minCharacterLimit: viewModel.minimumTextRequired,
@@ -138,6 +137,11 @@ struct CancellationSurveyView: View {
                 )
             )
             .id(viewModel.otherReasonID)
+            .onChange(of: viewModel.dismissKeyboard) { dismiss in
+                guard dismiss else { return }
+                hideKeyboard()
+                viewModel.dismissKeyboard = false
+            }
         }
     }
     

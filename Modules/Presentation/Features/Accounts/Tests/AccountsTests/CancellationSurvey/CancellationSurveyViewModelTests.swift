@@ -102,15 +102,41 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     }
     
     @MainActor func testDidTapCancelSubscriptionButton_otherReasonSelected_reasonTextIsEmpty_shouldSetIsOtherFieldFocusedToTrue() {
+        assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(reasonText: "")
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_otherReasonSelected_reasonTextIsLessThanMinLimit10_shouldSetIsOtherFieldFocusedToTrue() {
+        assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(reasonText: "Test")
+    }
+    
+    @MainActor private func assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(
+        reasonText: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
         let sut = makeSUT()
         sut.selectedReason = CancellationSurveyReason.otherReason
-        sut.otherReasonText = ""
+        sut.otherReasonText = reasonText
         
         sut.didTapCancelSubscriptionButton()
         
-        XCTAssertTrue(sut.isOtherFieldFocused)
+        XCTAssertTrue(sut.showMinLimitOrEmptyOtherFieldError, file: file, line: line)
+        XCTAssertNil(sut.submitSurveyTask, file: file, line: line)
     }
     
+    @MainActor func testDidTapCancelSubscriptionButton_otherReasonSelected_shouldHandleTextCountCorrectly() {
+        let sut = makeSUT()
+        sut.selectedReason = CancellationSurveyReason.otherReason
+        
+        sut.otherReasonText = String(repeating: "a", count: 121)
+        sut.didTapCancelSubscriptionButton()
+        XCTAssertNil(sut.submitSurveyTask, "The reason has reached the maximum limit of 120 characters. Submission should not proceed.")
+        
+        sut.otherReasonText = String(repeating: "a", count: 120)
+        sut.didTapCancelSubscriptionButton()
+        XCTAssertTrue(sut.dismissKeyboard, "The reason is within the 120-character limit. Should dismiss the keyboard and proceed with the submission.")
+    }
+
     @MainActor func testDidTapCancelSubscriptionButton_reasonSelected_cancellationRequesSuccess_shouldShowManageSubscription() async {
         await assertDidTapCancelSubscriptionButtonWithValidForm(requestResult: .success)
     }
@@ -131,8 +157,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         
         sut.didTapCancelSubscriptionButton()
         
-        await sut.submitReasonTask?.value
-        XCTAssertFalse(sut.isOtherFieldFocused, file: file, line: line)
+        await sut.submitSurveyTask?.value
         XCTAssertEqual(mockRouter.showAppleManageSubscriptions_calledTimes, 1, file: file, line: line)
     }
     
