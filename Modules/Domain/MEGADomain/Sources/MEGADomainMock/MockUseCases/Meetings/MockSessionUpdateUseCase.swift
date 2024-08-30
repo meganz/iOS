@@ -17,8 +17,7 @@ public struct MockSessionUpdateUseCase: SessionUpdateUseCaseProtocol {
             .eraseToAnyAsyncSequence()
     }
     
-    public func sendSessionUpdate(_ session: ChatSessionEntity) async throws {
+    public func sendSessionUpdate(_ session: ChatSessionEntity) {
         sessionUpdateContinuation.yield(session)
-        try await Task.sleep(nanoseconds: 500_000_000)
     }
 }

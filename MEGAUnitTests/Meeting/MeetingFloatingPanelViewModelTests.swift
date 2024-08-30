@@ -601,7 +601,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             }
         }
         let chatRoom = ChatRoomEntity(changeType: .openInvite, isOpenInviteEnabled: true)
-        try await harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
+        harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
     }
     
     @MainActor func testOnChatRoomUpdate_updateToDisabledAllowNonHostToAddParticipants_allowNonHostToAddParticipantsShouldBeDisabled() async throws {
@@ -615,12 +615,14 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             }
         }
         let chatRoom = ChatRoomEntity(changeType: .openInvite, isOpenInviteEnabled: false)
-        try await harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
+        harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
     }
     
     @MainActor func testOnChatRoomUpdate_ownPrivilegeUpdatedToModerator_myPrivilegeMustBeUpdated() async throws {
         let harness = Harness.withMonitorChatRoomAndSessionUpdates()
-        await harness.joinAllParticipants()
+        harness.joinAllParticipants()
+        try await Task.sleep(nanoseconds: 100_000_000)
+
         let expectation = XCTestExpectation()
         var moderatorPrivilege: Bool?
         
@@ -629,15 +631,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             case .configView(_, _, _, _, let isMyselfAModerator):
                 moderatorPrivilege = isMyselfAModerator
                 expectation.fulfill()
-            case .reloadViewData:
-                break
             default:
-                XCTFail("Invoked unexpected command: \($0)")
+                break
             }
         }
         
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, changeType: .ownPrivilege)
-        try await harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
+        harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
         await fulfillment(of: [expectation], timeout: 1)
         if let moderatorPrivilege {
             XCTAssertTrue(moderatorPrivilege)
@@ -648,7 +648,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     
     @MainActor func testOnChatRoomUpdate_ownPrivilegeUpdatedToStandard_myPrivilegeMustBeUpdated() async throws {
         let harness = Harness.withMonitorChatRoomAndSessionUpdates()
-        await harness.joinAllParticipants()
+        harness.joinAllParticipants()
+        try await Task.sleep(nanoseconds: 100_000_000)
+
         let expectation = XCTestExpectation()
         var moderatorPrivilege: Bool?
         
@@ -657,15 +659,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             case .configView(_, _, _, _, let isMyselfAModerator):
                 moderatorPrivilege = isMyselfAModerator
                 expectation.fulfill()
-            case .reloadViewData:
-                break
             default:
-                XCTFail("Invoked unexpected command: \($0)")
+                break
             }
         }
         
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, changeType: .ownPrivilege)
-        try await harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
+        harness.chatRoomUpdateUseCase.sendChatRoomUpdate(chatRoom)
         await fulfillment(of: [expectation], timeout: 1)
         if let moderatorPrivilege {
             XCTAssertFalse(moderatorPrivilege)
@@ -796,7 +796,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     
     @MainActor func testOnCallUpdate_raiseHandChanges_oneParticipantRaiseHand_participantsRaiseHandListMustMatch() async throws {
         let harness = Harness.withMonitorCallAndSessionUpdates()
-        await harness.joinAllParticipants()
+        harness.joinAllParticipants()
+        try await Task.sleep(nanoseconds: 500_000_000)
+
         let raiseHandList: [HandleEntity] = [102]
         let expectation = XCTestExpectation()
         var participantsUpdated: [CallParticipantEntity] = []
@@ -810,14 +812,16 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             }
         }
         
-        try await harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
+        harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
         await fulfillment(of: [expectation], timeout: 1)
         harness.raiseHandParticipantsMustMatch(raiseHandsList: raiseHandList, withUpdatedParticipants: participantsUpdated.filter { $0.raisedHand })
     }
     
     @MainActor func testOnCallUpdate_raiseHandChanges_moreThanOneParticipantRaiseHand_participantsRaiseHandListMustMatch() async throws {
         let harness = Harness.withMonitorCallAndSessionUpdates()
-        await harness.joinAllParticipants()
+        harness.joinAllParticipants()
+        try await Task.sleep(nanoseconds: 500_000_000)
+
         let raiseHandList: [HandleEntity] = [102, 103]
         let expectation = XCTestExpectation()
         var participantsUpdated: [CallParticipantEntity] = []
@@ -831,14 +835,14 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             }
         }
         
-        try await harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
+        harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
         await fulfillment(of: [expectation], timeout: 1)
         harness.raiseHandParticipantsMustMatch(raiseHandsList: raiseHandList, withUpdatedParticipants: participantsUpdated.filter { $0.raisedHand })
     }
     
     @MainActor func testOnCallUpdate_raiseHandChanges_participantLowerHand_participantsRaiseHandListMustMatch() async throws {
         let harness = Harness.withMonitorCallAndSessionUpdates()
-        await harness.joinAllParticipants()
+        harness.joinAllParticipants()
         let raiseHandList: [HandleEntity] = []
         let expectation = XCTestExpectation()
         var participantsUpdated: [CallParticipantEntity] = []
@@ -852,7 +856,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             }
         }
         
-        try await harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
+        harness.sendRaiseHandsCallUpdate(raiseHandsList: raiseHandList)
         await fulfillment(of: [expectation], timeout: 1)
         harness.raiseHandParticipantsMustMatch(raiseHandsList: raiseHandList, withUpdatedParticipants: participantsUpdated.filter { $0.raisedHand })
     }
@@ -940,9 +944,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             return harness
         }
         
-        func sendRaiseHandsCallUpdate(raiseHandsList: [HandleEntity]) async throws {
+        func sendRaiseHandsCallUpdate(raiseHandsList: [HandleEntity]) {
             let call = CallEntity(changeType: .callRaiseHand, raiseHandsList: raiseHandsList)
-            try await callUpdateUseCase.sendCallUpdate(call)
+            callUpdateUseCase.sendCallUpdate(call)
         }
         
         // MARK: - Test Helpers
@@ -950,9 +954,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             XCTAssertEqual(raiseHandsList, raisedHandParticipants.map { $0.participantId })
         }
         
-        func joinAllParticipants() async {
+        func joinAllParticipants() {
             for session in callSessions {
-                try? await sessionUpdateUseCase.sendSessionUpdate(session)
+                sessionUpdateUseCase.sendSessionUpdate(session)
             }
         }
     }

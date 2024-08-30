@@ -17,8 +17,7 @@ public struct MockChatRoomUpdateUseCase: ChatRoomUpdateUseCaseProtocol {
             .eraseToAnyAsyncSequence()
     }
     
-    public func sendChatRoomUpdate(_ chatRoom: ChatRoomEntity) async throws {
+    public func sendChatRoomUpdate(_ chatRoom: ChatRoomEntity) {
         chatRoomUpdateContinuation.yield(chatRoom)
-        try await Task.sleep(nanoseconds: 500_000_000)
     }
 }

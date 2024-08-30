@@ -710,24 +710,31 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
     }
     
-    func testCallUpdate_outgoingRingingStop_isOneToOneAndJustMyself_callMustBeEnded() async throws {
+    func testCallUpdate_outgoingRingingStop_isOneToOneAndJustMyself_callMustBeEnded() async {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
-        let harness = Harness(chatRoom: chatRoom)
-        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 1))
+        let expectation = expectation(description: "Call ended called expectation")
+        let callManager = MockCallManager {
+            expectation.fulfill()
+        }
+        let harness = Harness(callManager: callManager, chatRoom: chatRoom)
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 1))
+        await fulfillment(of: [expectation], timeout: 0.1)
         XCTAssert(harness.callManager.endCall_CalledTimes == 1)
     }
     
     func testCallUpdate_outgoingRingingStop_isOneToOneAndBothInCall_callNotMustBeEnded() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
         let harness = Harness(chatRoom: chatRoom)
-        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 2))
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 2))
+        try await Task.sleep(nanoseconds: 100_000_000)
         XCTAssert(harness.callManager.endCall_CalledTimes == 0)
     }
     
     func testCallUpdate_outgoingRingingStop_isNotOneToOne_callNotMustBeEnded() async throws {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group)
         let harness = Harness(chatRoom: chatRoom)
-        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 1))
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 1))
+        try await Task.sleep(nanoseconds: 100_000_000)
         XCTAssert(harness.callManager.endCall_CalledTimes == 0)
     }
     
@@ -1151,7 +1158,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertTrue(harness.sut.callParticipants[0].isScreenShareCell)
     }
     
-    @MainActor func testCallUpdate_localUserRaiseHand() async throws {
+    @MainActor func testCallUpdate_localUserRaiseHand() async {
         let harness = Harness(
             chatUseCase: MockChatUseCase(myUserHandle: 100)
         )
@@ -1171,11 +1178,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 XCTFail("Unexpected command")
             }
         }
-        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [100]))
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [100]))
         await fulfillment(of: [exp0, exp1], timeout: 3)
     }
     
-    @MainActor func testCallUpdate_localUserNotRaiseHand() async throws {
+    @MainActor func testCallUpdate_localUserNotRaiseHand() async {
         let harness = Harness(
             chatUseCase: MockChatUseCase(myUserHandle: 100)
         )
@@ -1195,12 +1202,12 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 XCTFail("Unexpected command")
             }
         }
-        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101, 32]))
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101, 32]))
 
         await fulfillment(of: [exp0, exp1], timeout: 3)
     }
     
-    @MainActor func testCallUpdate_remoteUserRaiseHand() async throws {
+    @MainActor func testCallUpdate_remoteUserRaiseHand() async {
         let harness = Harness()
         
         let remoteUserRaiseHandExpectation = expectation(description: "remote user raise hand icon visible after onChatCallUpdate with remote user handle in the raise hands list")
@@ -1222,7 +1229,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         
         XCTAssertFalse(harness.sut.callParticipants[0].raisedHand)
 
-        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
 
         await fulfillment(of: [remoteUserRaiseHandExpectation], timeout: 3)
     }
@@ -1230,10 +1237,12 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     @MainActor func testCallUpdate_remoteUserLowHand() async throws {
         let harness = Harness()
 
-        try await harness.sessionUpdateUseCase.sendSessionUpdate(ChatSessionEntity(statusType: .inProgress, peerId: 101, clientId: 1, changeType: .status))
-        try await harness.sessionUpdateUseCase.sendSessionUpdate(ChatSessionEntity(statusType: .inProgress, peerId: 102, clientId: 2, changeType: .status))
+        harness.sessionUpdateUseCase.sendSessionUpdate(ChatSessionEntity(statusType: .inProgress, peerId: 101, clientId: 1, changeType: .status))
+        harness.sessionUpdateUseCase.sendSessionUpdate(ChatSessionEntity(statusType: .inProgress, peerId: 102, clientId: 2, changeType: .status))
         
-        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
+
+        try await Task.sleep(nanoseconds: 1_000_000_000)
 
         let remoteUserLowHandExpectation = expectation(description: "remote user low hand icon hidden after onChatCallUpdate without remote user handle in the raise hands list")
         let snackBarNilExpectation = expectation(description: "nil snack bar after user lower hand")
@@ -1251,9 +1260,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             }
         }
         
-        try await harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: []))
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: []))
         
-        await fulfillment(of: [remoteUserLowHandExpectation, snackBarNilExpectation], timeout: 3)
+        await fulfillment(of: [remoteUserLowHandExpectation, snackBarNilExpectation], timeout: 1)
     }
         
     final class Harness: Sendable {
