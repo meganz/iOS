@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 import SwiftUI
 
 struct NewChatRoomsEmptyCenterView: View {
@@ -21,11 +22,14 @@ struct NewChatRoomsEmptyCenterView: View {
                 .padding(.bottom, 5)
                 .foregroundColor(TokenColors.Text.primary.swiftUI)
             
-            if  let description = state.description {
-                joinedWithLink(
-                    text: description,
-                    link: state.descriptionLink
+            if let description = state.description {
+                TaggableText(
+                    description,
+                    underline: true,
+                    tappable: true,
+                    linkColor: { _ in TokenColors.Text.secondary }
                 )
+                .multilineTextAlignment(.center)
                 // line below is needed for tappable link to work
                     .textSelection(.enabled)
                     .multilineTextAlignment(.center)
@@ -37,18 +41,6 @@ struct NewChatRoomsEmptyCenterView: View {
                     .tint(TokenColors.Text.secondary.swiftUI)
                     .foregroundColor(TokenColors.Text.secondary.swiftUI)
             }
-        }
-    }
-    
-    /// simple implementation to (conditionally) handle tappable inline links (using OpenURLAction)  with underline
-    private func joinedWithLink(
-        text: String,
-        link: String?
-    ) -> Text {
-        if let link {
-            Text(LocalizedStringKey(text)) + Text(" ") + Text(LocalizedStringKey(link)).underline()
-        } else {
-            Text(LocalizedStringKey(text))
         }
     }
 }

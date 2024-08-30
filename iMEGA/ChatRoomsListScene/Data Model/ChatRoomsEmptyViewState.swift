@@ -19,7 +19,6 @@ struct ChatRoomsEmptyCenterViewState {
     var title: String
     var titleBold: Bool = false
     var description: String?
-    var descriptionLink: String?
     var linkTapped: (() -> Void)?
 }
 

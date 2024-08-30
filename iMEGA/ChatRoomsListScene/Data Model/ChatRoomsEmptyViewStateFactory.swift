@@ -222,7 +222,6 @@ struct ChatRoomsEmptyViewStateFactory {
                 title: Strings.Localizable.Chat.Chats.EmptyState.V2.title,
                 titleBold: true,
                 description: Strings.Localizable.Chat.Chats.EmptyState.V2.description,
-                descriptionLink: Strings.Localizable.Chat.Chats.EmptyState.V2.Description.link,
                 linkTapped: linkTappedAction
             )
         }
@@ -253,7 +252,6 @@ struct ChatRoomsEmptyViewStateFactory {
                 title: Strings.Localizable.Chat.Chats.EmptyState.V2.Button.Invite.title,
                 titleBold: true,
                 description: Strings.Localizable.Chat.NewChat.EmptyState.description,
-                descriptionLink: nil,
                 linkTapped: nil
             ),
             bottomButtons: [

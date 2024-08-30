@@ -7,18 +7,26 @@ struct TaggableText: View {
     
     var text: String
     var underline: Bool
+    var tappable: Bool
     var linkColor: (ColorScheme) -> UIColor
     
-    init(_ text: String, underline: Bool, linkColor: @escaping (ColorScheme) -> UIColor) {
+    init(
+        _ text: String,
+        underline: Bool,
+        tappable: Bool = false,
+        linkColor: @escaping (ColorScheme) -> UIColor
+    ) {
         self.text = text
         self.underline = underline
         self.linkColor = linkColor
+        self.tappable = tappable
     }
     
     var processedText: AttributedString {
         text.createAttributedStringForAccentTags(
             linkColor: { linkColor(colorScheme) },
-            underline: underline
+            underline: underline,
+            tappable: tappable
         )
     }
     
