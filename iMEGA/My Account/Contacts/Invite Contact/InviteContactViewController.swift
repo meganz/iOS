@@ -43,7 +43,7 @@ class InviteContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = Strings.Localizable.inviteContact
+        navigationItem.title = Strings.Localizable.InviteContact.title
         addFromContactsLabel.text = Strings.Localizable.addFromContacts
         enterEmailLabel.text = Strings.Localizable.enterEmail
         scanQrCodeLabel.text = Strings.Localizable.scanCode

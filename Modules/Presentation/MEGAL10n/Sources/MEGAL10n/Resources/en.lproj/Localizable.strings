@@ -4334,3 +4334,5 @@
 "chat.newChat.title"="New chat";
 /* Visual media search history section title */
 "photos.searchHistory.section.title"="Recently searched";
+/* Title of the invite contact page*/
+"inviteContact.title" = "Invite";
