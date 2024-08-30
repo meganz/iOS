@@ -1,6 +1,14 @@
 import MEGADesignToken
 import SwiftUI
 
+/// `BorderedTextEditorView` is a customized TextView that enforces character limits and manages validation for empty fields.
+/// Validation behavior is determined by the provided `ViewConfig`.
+///
+/// - Maximum Character Limit: If the limit is greater than 0, a red counter and border will automatically appear as an error indicator if the input exceeds the specified limit.
+/// - Minimum Character Limit: If the limit is greater than 0, `errorState` will be set to `lessThanMinCharLimit` if the input is below the minimum.
+/// Displaying the error message is triggered manually by the caller by setting `showMinLimitOrEmptyError` to true, typically through a validation action like tapping a button.
+/// - Empty Field: If `isRequired` is set to true, `errorState` will be set to `emptyField` if the text input is empty.
+/// Similar to the minimum limit validation, the error message display must be manually triggered by setting `showMinLimitOrEmptyError` to true.
 public struct BorderedTextEditorView: View {
     public struct ViewConfig {
         /// Configures maximum character limit of the field.
@@ -57,15 +65,18 @@ public struct BorderedTextEditorView: View {
     @State private var errorState: ErrorState = .none
     @Binding var textInput: String
     @Binding var isFocused: Bool
+    @Binding var showMinLimitOrEmptyError: Bool
     private let config: ViewConfig
     
     public init(
         textInput: Binding<String>,
         isFocused: Binding<Bool>,
+        showMinLimitOrEmptyError: Binding<Bool>,
         config: ViewConfig
     ) {
         _textInput = textInput
         _isFocused = isFocused
+        _showMinLimitOrEmptyError = showMinLimitOrEmptyError
         self.config = config
     }
     
@@ -86,22 +97,33 @@ public struct BorderedTextEditorView: View {
                         .padding(2)
                         .background(.clear)
                         .onChange(of: textInput) { text in
-                            if config.isRequired, text.isEmpty {
-                                errorState = .emptyField
-                            } else if shouldShowMaxLimit, text.count > config.maxCharacterLimit {
+                            if shouldShowMaxLimit && text.count > config.maxCharacterLimit {
                                 errorState = .reachedMaxCharLimit
-                            } else if shouldCheckMinLimit, text.count < config.minCharacterLimit {
-                                errorState = .lessThanMinCharLimit
                             } else {
-                                errorState = .none
+                                switch errorState {
+                                case .lessThanMinCharLimit:
+                                    if shouldCheckMinLimit && text.count >= config.minCharacterLimit {
+                                        errorState = .none
+                                    }
+                                case .emptyField:
+                                    if config.isRequired && !text.isEmpty {
+                                        errorState = .none
+                                    }
+                                default:
+                                    errorState = .none
+                                }
                             }
+
                         }
-                        .onChange(of: isFocused) { isFocused in
-                            if isFocused,
-                               config.isRequired,
-                               textInput.isEmpty {
+                        .onChange(of: showMinLimitOrEmptyError) { showError in
+                            guard showError else { return }
+                            
+                            if config.isRequired, textInput.isEmpty {
                                 errorState = .emptyField
+                            } else if shouldCheckMinLimit, textInput.count < config.minCharacterLimit {
+                                errorState = .lessThanMinCharLimit
                             }
+                            showMinLimitOrEmptyError = false
                         }
                     
                     clearTextButton
@@ -191,7 +213,7 @@ public struct BorderedTextEditorView: View {
 
 #Preview {
     Group {
-        BorderedTextEditorView(textInput: .constant("Show character counter"), isFocused: .constant(true), config: BorderedTextEditorView.ViewConfig(maxCharacterLimit: 120))
-        BorderedTextEditorView(textInput: .constant("No character counter footer"), isFocused: .constant(false), config: BorderedTextEditorView.ViewConfig(maxCharacterLimit: 0))
+        BorderedTextEditorView(textInput: .constant("Show character counter"), isFocused: .constant(true), showMinLimitOrEmptyError: .constant(false), config: BorderedTextEditorView.ViewConfig(maxCharacterLimit: 120))
+        BorderedTextEditorView(textInput: .constant("No character counter footer"), isFocused: .constant(false), showMinLimitOrEmptyError: .constant(false), config: BorderedTextEditorView.ViewConfig(maxCharacterLimit: 0))
     }
 }

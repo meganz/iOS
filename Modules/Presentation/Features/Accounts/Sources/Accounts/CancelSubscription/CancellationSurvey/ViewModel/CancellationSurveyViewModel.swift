@@ -12,6 +12,8 @@ final class CancellationSurveyViewModel: ObservableObject {
     @Published var isOtherFieldFocused: Bool = false
     @Published var allowToBeContacted: Bool = false
     @Published var showNoReasonSelectedError: Bool = false
+    @Published var showMinLimitOrEmptyOtherFieldError: Bool = false
+    @Published var dismissKeyboard: Bool = false
     
     let otherReasonID = CancellationSurveyReason.otherReason.id
     let minimumTextRequired = 10
@@ -20,7 +22,7 @@ final class CancellationSurveyViewModel: ObservableObject {
     private let subscriptionsUsecase: any SubscriptionsUsecaseProtocol
     private let cancelAccountPlanRouter: any CancelAccountPlanRouting
     private let tracker: any AnalyticsTracking
-    var submitReasonTask: Task<Void, Never>?
+    var submitSurveyTask: Task<Void, Never>?
     
     init(
         subscription: AccountSubscriptionEntity,
@@ -35,8 +37,8 @@ final class CancellationSurveyViewModel: ObservableObject {
     }
     
     deinit {
-        submitReasonTask?.cancel()
-        submitReasonTask = nil
+        submitSurveyTask?.cancel()
+        submitSurveyTask = nil
     }
     
     // MARK: - Setup
@@ -93,24 +95,30 @@ final class CancellationSurveyViewModel: ObservableObject {
             return
         }
 
-        if selectedReason.isOtherReason,
-           otherReasonText.isEmpty {
-            isOtherFieldFocused = true
-            return
+        if selectedReason.isOtherReason {
+            guard !otherReasonText.isEmpty && 
+                    otherReasonText.count >= minimumTextRequired else {
+                showMinLimitOrEmptyOtherFieldError = true
+                return
+            }
+            
+            guard otherReasonText.count <= maximumTextRequired else { return }
+            
+            dismissKeyboard = true
         }
-
-        isOtherFieldFocused = false
         
         tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyCancelSubscriptionButtonEvent())
         
-        submitReasonTask = Task { [weak self] in
+        submitSurveyTask = Task { [weak self] in
             guard let self else { return }
+            
+            cancelAccountPlanRouter.showAppleManageSubscriptions()
+            
             try? await subscriptionsUsecase.cancelSubscriptions(
                 reason: formattedReasonString,
                 subscriptionId: subscription.id,
                 canContact: allowToBeContacted
             )
-            cancelAccountPlanRouter.showAppleManageSubscriptions()
         }
     }
 }
