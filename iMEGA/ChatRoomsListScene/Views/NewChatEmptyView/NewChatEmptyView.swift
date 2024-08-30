@@ -10,6 +10,7 @@ struct NewChatRoomsEmptyView: View {
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
+                .frame(maxHeight: 100)
             
             NewChatRoomsEmptyCenterView(state: state.center)
                 .padding(.leading, 30)
