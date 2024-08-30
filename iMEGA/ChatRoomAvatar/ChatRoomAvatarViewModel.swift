@@ -35,7 +35,6 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                   let primaryAvatar = UIImage(data: primaryAvatar) {
             return .one(primaryAvatar)
         } else {
-            isAvatarLoaded = false
             return .placeHolder("circle.fill")
         }
     }
@@ -80,7 +79,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             try await fetchAvatar()
             isAvatarLoaded = true
         } catch {
-            MEGALogDebug("Unable to fetch avatar for \(chatRoom.chatId) - \(error.localizedDescription)")
+            MEGALogWarning("[ChatRoomAvatar] Unable to fetch avatar for \(megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) ?? "") - \(error.localizedDescription)")
         }
     }
     
@@ -97,7 +96,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                     do {
                         try await self.fetchAvatar(forceDownload: true)
                     } catch {
-                        MEGALogDebug("Updating Avatar task failed for handles \(userHandles)")
+                        MEGALogWarning("[ChatRoomAvatar] Updating Avatar task failed for handles \(userHandles)")
                     }
                 }
             }
@@ -107,7 +106,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     private func fetchAvatar(forceDownload: Bool = false) async throws {
         if chatRoom.chatType != .oneToOne {
             if chatRoom.peerCount == 0 {
-                await createEmptyGroupAvatar()
+                try await createEmptyGroupAvatar()
             } else if chatRoom.peers.count == 1 {
                 try await createOnePeerAvatar(forceDownload: forceDownload)
             } else {
@@ -118,21 +117,21 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
     }
     
-    private func createEmptyGroupAvatar() async {
+    private func createEmptyGroupAvatar() async throws {
         guard let emptyGroupAvatar = createAvatar(usingName: title) else { return }
-        await updateAvatar(primary: emptyGroupAvatar, secondary: nil)
+        try await updateAvatar(primary: emptyGroupAvatar, secondary: nil)
     }
     
     private func createOnePeerAvatar(forceDownload: Bool) async throws {
         let primaryUserHandle = chatRoom.peers[0].handle
         
         if let localPrimaryAvatar = try await createAvatar(withHandle: primaryUserHandle) {
-            await updateAvatar(primary: localPrimaryAvatar, secondary: nil)
+            try await updateAvatar(primary: localPrimaryAvatar, secondary: nil)
         }
                 
         let primaryAvatar = try await userAvatar(forHandle: primaryUserHandle, forceDownload: forceDownload)
         if let primaryImage = UIImage(contentsOfFile: primaryAvatar) {
-            await updateAvatar(primary: primaryImage, secondary: nil)
+            try await updateAvatar(primary: primaryImage, secondary: nil)
         }
     }
     
@@ -142,23 +141,23 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         
         let primaryDefaultAvatar = try await createAvatar(withHandle: primaryUserHandle)
         let secondaryDefaultAvatar = try await createAvatar(withHandle: secondaryUserHandle)
-        await updateAvatar(primary: primaryDefaultAvatar, secondary: secondaryDefaultAvatar)
+        try await updateAvatar(primary: primaryDefaultAvatar, secondary: secondaryDefaultAvatar)
                 
         let primaryAvatar = try await userAvatar(forHandle: primaryUserHandle, forceDownload: forceDownload)
         let secondaryAvatar = try await userAvatar(forHandle: secondaryUserHandle, forceDownload: forceDownload)
         let primaryImage = UIImage(contentsOfFile: primaryAvatar) ?? primaryDefaultAvatar
         let secondaryImage = UIImage(contentsOfFile: secondaryAvatar) ?? secondaryDefaultAvatar
-        await updateAvatar(primary: primaryImage, secondary: secondaryImage)
+        try await updateAvatar(primary: primaryImage, secondary: secondaryImage)
     }
     
     private func createOneToOneAvatar(forceDownload: Bool) async throws {
         if let defaultAvatar = try await createAvatar(withHandle: peerHandle) {
-            await updateAvatar(primary: defaultAvatar, secondary: nil)
+            try await updateAvatar(primary: defaultAvatar, secondary: nil)
         }
                 
         let oneToOneAvatar = try await userAvatar(forHandle: peerHandle, forceDownload: forceDownload)
         if let primaryImage = UIImage(contentsOfFile: oneToOneAvatar) {
-            await updateAvatar(primary: primaryImage, secondary: nil)
+            try await updateAvatar(primary: primaryImage, secondary: nil)
         }
     }
         
@@ -216,9 +215,9 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
     }
     
-    @MainActor 
-    private func updateAvatar(primary: UIImage?, secondary: UIImage?) {
-        guard !Task.isCancelled else { return }
+    @MainActor
+    private func updateAvatar(primary: UIImage?, secondary: UIImage?) throws {
+        try Task.checkCancellation()
         
         let newChatRoomAvatar = ChatListItemAvatarEntity(
             primaryAvatarData: primary?.pngData(),
