@@ -6,7 +6,9 @@ import MEGASwift
 
 public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: ChatRoomRepository {
-        ChatRoomRepository(sdk: MEGAChatSdk.sharedChatSdk)
+        ChatRoomRepository(sdk: .sharedChatSdk,
+                           chatConnectionStateUpdateProvider: ChatConnectionStateUpdateProvider(sdk: .sharedChatSdk)
+        )
     }
     
     private let sdk: MEGAChatSdk
@@ -14,8 +16,14 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
     @Atomic private var chatRoomMessageLoadedListeners = [ChatRoomMessageLoadedListener]()
     @Atomic private var openChatRooms = Set<HandleEntity>()
     
-    public init(sdk: MEGAChatSdk) {
+    private let chatConnectionStateUpdateProvider: any ChatConnectionStateUpdateProviderProtocol
+
+    public init(
+        sdk: MEGAChatSdk,
+        chatConnectionStateUpdateProvider: some ChatConnectionStateUpdateProviderProtocol
+    ) {
         self.sdk = sdk
+        self.chatConnectionStateUpdateProvider = chatConnectionStateUpdateProvider
     }
     
     public func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity? {
@@ -355,6 +363,9 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
                 })
             }
         }
+    }
+    public var chatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> {
+        chatConnectionStateUpdateProvider.updates
     }
 }
 

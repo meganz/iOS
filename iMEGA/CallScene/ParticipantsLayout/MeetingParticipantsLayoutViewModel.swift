@@ -170,7 +170,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private let chatUseCase: any ChatUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
-    private var callSessionUseCase: any CallSessionUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
     private let remoteVideoUseCase: any CallRemoteVideoUseCaseProtocol
@@ -227,7 +226,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         scheduler: AnySchedulerOf<DispatchQueue>,
         chatUseCase: some ChatUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
-        callSessionUseCase: some CallSessionUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
         remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol,
@@ -252,7 +250,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.scheduler = scheduler
         self.containerViewModel = containerViewModel
         self.callUseCase = callUseCase
-        self.callSessionUseCase = callSessionUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.remoteVideoUseCase = remoteVideoUseCase

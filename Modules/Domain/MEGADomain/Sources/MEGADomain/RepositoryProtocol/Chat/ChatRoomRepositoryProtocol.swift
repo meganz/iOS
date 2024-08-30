@@ -1,4 +1,5 @@
 import Combine
+import MEGASwift
 
 public protocol ChatRoomRepositoryProtocol: RepositoryProtocol, Sendable {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
@@ -37,4 +38,6 @@ public protocol ChatRoomRepositoryProtocol: RepositoryProtocol, Sendable {
     func chatRoomMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
     func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
     func userEmail(for handle: HandleEntity) async -> String?
+    /// - Returns: `AnyAsyncSequence` that will yield `(ChatIdEntity, ChatConnectionStatus)` items until sequence terminated.
+    var chatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> { get }
 }

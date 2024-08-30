@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGASwift
 
 public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     private let publicLinkCompletion: Result<String, ChatLinkErrorEntity>
@@ -33,7 +34,8 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var chatMessageLoadedSubject = PassthroughSubject<ChatMessageEntity?, Never>()
     var chatMessageScheduledMeetingChange: ChatMessageScheduledMeetingChangeType = .none
     private let shouldOpenWaitRoom: Bool
-    
+    private let monitorChatConnectionStateUpdate: AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error>
+
     public init(
         chatRoomEntity: ChatRoomEntity? = nil,
         peerPrivilege: ChatRoomPrivilegeEntity = .unknown,
@@ -47,7 +49,8 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         waitingRoomEnabled: Bool = false,
         contactEmail: String? = nil,
         participantsUpdatedSubjectWithChatRoom: PassthroughSubject<ChatRoomEntity, Never> = PassthroughSubject<ChatRoomEntity, Never>(),
-        userStatusEntity: ChatStatusEntity = ChatStatusEntity.invalid
+        userStatusEntity: ChatStatusEntity = ChatStatusEntity.invalid,
+        monitorChatConnectionStateUpdate: AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
     ) {
         self.chatRoomEntity = chatRoomEntity
         self.peerPrivilege = peerPrivilege
@@ -62,6 +65,7 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         self.contactEmail = contactEmail
         self.participantsUpdatedSubjectWithChatRoom = participantsUpdatedSubjectWithChatRoom
         self.userStatusEntity = userStatusEntity
+        self.monitorChatConnectionStateUpdate = monitorChatConnectionStateUpdate
     }
     
     public func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
@@ -217,5 +221,9 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     public func userEmail(for handle: HandleEntity) async -> String? {
         contactEmail
+    }
+    
+    public func monitorOnChatConnectionStateUpdate() -> AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error> {
+        monitorChatConnectionStateUpdate.eraseToAnyAsyncThrowingSequence()
     }
 }
