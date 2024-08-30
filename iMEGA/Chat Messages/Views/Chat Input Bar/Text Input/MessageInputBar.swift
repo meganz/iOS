@@ -131,6 +131,9 @@ class MessageInputBar: UIView {
         if UIColor.isDesignTokenEnabled() {
             setSendButtonColor()
         }
+        backgroundColor = UIColor.isDesignTokenEnabled()
+            ? TokenColors.Background.page
+            : .systemBackground
     }
     
     override var intrinsicContentSize: CGSize {

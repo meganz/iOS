@@ -59,6 +59,9 @@ class AudioRecordingInputBar: UIView {
             self.recordTimeLabel.text = timeString
             self.audioWavesView.updateAudioView(withLevel: level)
         }
+        backgroundColor = UIColor.isDesignTokenEnabled()
+            ? TokenColors.Background.page
+            : .systemBackground
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
