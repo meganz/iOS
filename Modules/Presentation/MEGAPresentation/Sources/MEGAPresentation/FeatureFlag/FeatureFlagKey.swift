@@ -12,4 +12,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case nodeDescription = "Node Description"
     case photosBrowser = "New Photos Browser"
     case chatEmptyStates = "Chat Empty States"
+    case visualMediaSearch = "Search Albums and Photos"
 }

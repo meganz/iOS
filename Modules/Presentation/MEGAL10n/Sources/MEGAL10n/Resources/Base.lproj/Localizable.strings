@@ -4322,3 +4322,5 @@
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Description updated";
 /* New chat page title*/
 "chat.newChat.title"="New chat";
+/* Visual media search history section title */
+"photos.searchHistory.section.title"="Recently searched";

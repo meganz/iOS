@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPhotos
 import MEGAPresentation
 import MEGASDKRepo
 import MEGAUIKit
@@ -21,7 +22,17 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             pageTabHostingController?.view?.isUserInteractionEnabled = !newValue
         }
     }
-    
+    private let isVisualMediaSearchFeatureEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .visualMediaSearch)
+    private lazy var searchResultsViewController = VisualMediaSearchResultsViewController(
+        viewModel: VisualMediaSearchResultsViewModel(
+            visualMediaSearchHistoryUseCase: VisualMediaSearchHistoryUseCase()))
+    private lazy var searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: searchResultsViewController)
+        controller.searchResultsUpdater = searchResultsViewController
+        controller.delegate = self
+        controller.obscuresBackgroundDuringPresentation = false
+        return controller
+    }()
     private lazy var pageController: PhotosPageViewController = {
         PhotosPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }()
@@ -64,6 +75,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.Photo.Navigation.title)
+        configureSearchBar()
         setUpPagerTabView()
         setUpPageViewController()
         
@@ -146,6 +158,12 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             if pageTabViewModel.selectedTab == .album {
                 updateBarButtons()
             }
+            if isVisualMediaSearchFeatureEnabled {
+                AppearanceManager.forceSearchBarUpdate(
+                    searchController.searchBar,
+                    backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                    traitCollection: traitCollection)
+            }
         }
     }
     
@@ -194,6 +212,12 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         
         photoViewController?.parentPhotoAlbumsController = self
         photoViewController?.configureMyAvatarManager()
+    }
+    
+    private func configureSearchBar() {
+        guard isVisualMediaSearchFeatureEnabled else { return }
+        navigationItem.searchController = searchController
+        extendedLayoutIncludesOpaqueBars = true
     }
     
     private func setUpPagerTabView() {
@@ -348,5 +372,13 @@ extension PhotoAlbumContainerViewController {
     @objc func configureAdsVisibility() {
         guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
         mainTabBar.configureAdsVisibility()
+    }
+}
+
+// MARK: - UISearchControllerDelegate
+
+extension PhotoAlbumContainerViewController: UISearchControllerDelegate {
+    func presentSearchController(_ searchController: UISearchController) {
+        searchController.showsSearchResultsController = true
     }
 }
