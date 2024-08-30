@@ -3,6 +3,10 @@ import MEGADomain
 
 final class MockCallManager: CallManagerProtocol {
     
+    init(expectationClosure: (() -> Void)? = nil) {
+        self.expectationClosure = expectationClosure
+    }
+    
     struct Incoming: Equatable {
         var uuid: UUID
         var chatRoom: ChatRoomEntity
@@ -21,6 +25,8 @@ final class MockCallManager: CallManagerProtocol {
     var updateCallMuted_CalledTimes = 0
     var addIncomingCall_CalledTimes = 0
     
+    var expectationClosure: (() -> Void)?
+    
     func startCall(with actionSync: CallActionSync) {
         startCall_CalledTimes += 1
     }
@@ -31,6 +37,7 @@ final class MockCallManager: CallManagerProtocol {
     
     func endCall(in chatRoom: ChatRoomEntity, endForAll: Bool) {
         endCall_CalledTimes += 1
+        expectationClosure?()
     }
     
     func muteCall(in chatRoom: MEGADomain.ChatRoomEntity, muted: Bool) {

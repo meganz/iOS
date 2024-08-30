@@ -17,8 +17,7 @@ public struct MockCallUpdateUseCase: CallUpdateUseCaseProtocol {
             .eraseToAnyAsyncSequence()
     }
     
-    public func sendCallUpdate(_ call: CallEntity) async throws {
+    public func sendCallUpdate(_ call: CallEntity) {
         callUpdateContinuation.yield(call)
-        try await Task.sleep(nanoseconds: 500_000_000)
     }
 }
