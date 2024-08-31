@@ -13,4 +13,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case photosBrowser = "New Photos Browser"
     case chatEmptyStates = "Chat Empty States"
     case visualMediaSearch = "Search Albums and Photos"
+    case addVideosToVideoPlaylist = "Add videos to video playlist"
 }
