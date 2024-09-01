@@ -19,7 +19,8 @@ let package = Package(
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../../../Presentation/MEGAL10n")
+        .package(path: "../../../Presentation/MEGAL10n"),
+        .package(path: "../../../Presentation/MEGAAssets")
     ],
     targets: [
         .target(
@@ -28,7 +29,8 @@ let package = Package(
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "MEGADomain",
-                "MEGAL10n"
+                "MEGAL10n",
+                "MEGAAssets"
             ],
             swiftSettings: settings),
         .testTarget(

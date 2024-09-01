@@ -4336,3 +4336,5 @@
 "photos.searchHistory.section.title"="Recently searched";
 /* Title of the invite contact page*/
 "inviteContact.title" = "Invite";
+/* Visual media search history empty description */
+"photos.searchHistory.empty.description"="Try searching for any media files.";

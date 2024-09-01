@@ -184,15 +184,29 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             XCTFail("Expected save invocation")
         }
     }
+    
+    @MainActor
+    func testSelectedRecentlySearch_onChange_shouldUpdateSearchBarTextFieldUpdaterSearchText() {
+        let searchBarTextFieldUpdater = SearchBarTextFieldUpdater()
+        
+        let sut = makeSUT(searchBarTextFieldUpdater: searchBarTextFieldUpdater)
+        
+        let selectedRecentlySearchQuery = "2024"
+        sut.selectedRecentlySearched = selectedRecentlySearchQuery
+        
+        XCTAssertEqual(searchBarTextFieldUpdater.searchBarText, selectedRecentlySearchQuery)
+    }
 
     @MainActor
     private func makeSUT(
+        searchBarTextFieldUpdater: SearchBarTextFieldUpdater = SearchBarTextFieldUpdater(),
         visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol = MockVisualMediaSearchHistoryUseCase(),
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(150),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> VisualMediaSearchResultsViewModel {
         let sut = VisualMediaSearchResultsViewModel(
+            searchBarTextFieldUpdater: searchBarTextFieldUpdater,
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
             searchDebounceTime: searchDebounceTime)
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)

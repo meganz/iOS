@@ -5,7 +5,7 @@ import SwiftUI
 public struct VisualMediaSearchResultsView: View {
     @StateObject private var viewModel: VisualMediaSearchResultsViewModel
     
-    public init(
+    init(
         viewModel: @autoclosure @escaping () -> VisualMediaSearchResultsViewModel
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
@@ -33,9 +33,11 @@ public struct VisualMediaSearchResultsView: View {
     private var content: some View {
         switch viewModel.viewState {
         case .recentlySearched(let items):
-            VisualMediaSearchHistoryView(searchedItems: items)
+            VisualMediaSearchHistoryView(
+                searchedItems: items,
+                selectedRecentlySearched: $viewModel.selectedRecentlySearched)
         case .empty:
-            EmptyView()
+            EmptySearchView()
         default:
             LoadingSpinner()
         }
@@ -45,5 +47,6 @@ public struct VisualMediaSearchResultsView: View {
 #Preview {
     VisualMediaSearchResultsView(
         viewModel: VisualMediaSearchResultsViewModel(
+            searchBarTextFieldUpdater: SearchBarTextFieldUpdater(),
             visualMediaSearchHistoryUseCase: Preview_VisualMediaSearchHistoryUseCase()))
 }
