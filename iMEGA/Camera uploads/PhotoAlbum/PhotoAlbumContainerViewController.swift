@@ -23,12 +23,11 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         }
     }
     private let isVisualMediaSearchFeatureEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .visualMediaSearch)
-    private lazy var searchResultsViewController = VisualMediaSearchResultsViewController(
-        viewModel: VisualMediaSearchResultsViewModel(
-            visualMediaSearchHistoryUseCase: VisualMediaSearchHistoryUseCase()))
+    private lazy var searchBarTextFieldUpdater = SearchBarTextFieldUpdater()
     private lazy var searchController: UISearchController = {
-        let controller = UISearchController(searchResultsController: searchResultsViewController)
-        controller.searchResultsUpdater = searchResultsViewController
+        let resultController = VisualMediaSearchResultsViewControllerFactory.makeViewController(searchBarTextFieldUpdater: searchBarTextFieldUpdater)
+        let controller = UISearchController(searchResultsController: resultController)
+        controller.searchResultsUpdater = resultController
         controller.delegate = self
         controller.obscuresBackgroundDuringPresentation = false
         return controller
@@ -218,6 +217,15 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         guard isVisualMediaSearchFeatureEnabled else { return }
         navigationItem.searchController = searchController
         extendedLayoutIncludesOpaqueBars = true
+        
+        searchBarTextFieldUpdater.$searchBarText
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] searchBarText in
+                guard let searchBar = self?.navigationItem.searchController?.searchBar,
+                      searchBar.text != searchBarText else { return }
+                searchBar.text = searchBarText
+            }.store(in: &subscriptions)
     }
     
     private func setUpPagerTabView() {

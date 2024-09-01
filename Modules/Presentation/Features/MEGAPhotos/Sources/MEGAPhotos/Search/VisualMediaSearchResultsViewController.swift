@@ -1,9 +1,9 @@
 import SwiftUI
 
-public class VisualMediaSearchResultsViewController: UIHostingController<VisualMediaSearchResultsView> {
+class VisualMediaSearchResultsViewController: UIHostingController<VisualMediaSearchResultsView> {
     private let viewModel: VisualMediaSearchResultsViewModel
     
-    public init(viewModel: VisualMediaSearchResultsViewModel) {
+    init(viewModel: VisualMediaSearchResultsViewModel) {
         self.viewModel = viewModel
         super.init(rootView: VisualMediaSearchResultsView(viewModel: viewModel))
     }
@@ -16,7 +16,7 @@ public class VisualMediaSearchResultsViewController: UIHostingController<VisualM
 // MARK: - UISearchResultsUpdating
 
 extension VisualMediaSearchResultsViewController: UISearchResultsUpdating {
-    public func updateSearchResults(for searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
         viewModel.searchText = searchText
     }

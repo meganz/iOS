@@ -3,7 +3,7 @@ import Foundation
 import MEGADomain
 
 @MainActor
-public class VisualMediaSearchResultsViewModel: ObservableObject {
+class VisualMediaSearchResultsViewModel: ObservableObject {
     enum ViewState: Equatable {
         case loading
         case empty
@@ -12,6 +12,7 @@ public class VisualMediaSearchResultsViewModel: ObservableObject {
     }
     @Published private(set) var viewState: ViewState = .loading
     @Published var searchText = ""
+    @Published var selectedRecentlySearched: String?
     
     private let visualMediaSearchHistoryUseCase: any VisualMediaSearchHistoryUseCaseProtocol
     private let searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride
@@ -23,12 +24,16 @@ public class VisualMediaSearchResultsViewModel: ObservableObject {
         didSet { oldValue?.cancel() }
     }
     
-    public init(visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol,
-                searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(300),
-                debounceQueue: DispatchQueue = DispatchQueue(label: "nz.mega.VisualMediaSearchDebounceQueue", qos: .userInitiated)) {
+    init(searchBarTextFieldUpdater: SearchBarTextFieldUpdater,
+         visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol,
+         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(300),
+         debounceQueue: DispatchQueue = DispatchQueue(label: "nz.mega.VisualMediaSearchDebounceQueue", qos: .userInitiated)) {
         self.visualMediaSearchHistoryUseCase = visualMediaSearchHistoryUseCase
         self.searchDebounceTime = searchDebounceTime
         self.debounceQueue = debounceQueue
+        
+        $selectedRecentlySearched
+            .assign(to: &searchBarTextFieldUpdater.$searchBarText)
     }
     
     func monitorSearchResults() async {
