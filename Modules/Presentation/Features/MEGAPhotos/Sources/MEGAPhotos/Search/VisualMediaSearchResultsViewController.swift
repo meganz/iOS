@@ -21,3 +21,13 @@ extension VisualMediaSearchResultsViewController: UISearchResultsUpdating {
         viewModel.searchText = searchText
     }
 }
+
+// MARK: - UISearchBarDelegate
+
+extension VisualMediaSearchResultsViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        Task {
+            await viewModel.saveSearch()
+        }
+    }
+}

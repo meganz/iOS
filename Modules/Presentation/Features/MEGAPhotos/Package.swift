@@ -20,7 +20,8 @@ let package = Package(
         .package(path: "../../Infrastracture/MEGATest"),
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../../Presentation/MEGAL10n"),
-        .package(path: "../../../Presentation/MEGAAssets")
+        .package(path: "../../../Presentation/MEGAAssets"),
+        .package(path: "../../Repository/MEGARepo")
     ],
     targets: [
         .target(
@@ -30,7 +31,8 @@ let package = Package(
                 "MEGADesignToken",
                 "MEGADomain",
                 "MEGAL10n",
-                "MEGAAssets"
+                "MEGAAssets",
+                "MEGARepo"
             ],
             swiftSettings: settings),
         .testTarget(

@@ -1,46 +1,38 @@
 import MEGADomain
 
 public struct MockVisualMediaSearchHistoryUseCase: VisualMediaSearchHistoryUseCaseProtocol {
-    public enum Invocations: Equatable, Sendable {
-        case searchQueryHistory
-        case save(entries: [SearchTextHistoryEntryEntity])
+    public enum Invocation: Equatable, Sendable {
+        case history
+        case add(entry: SearchTextHistoryEntryEntity)
     }
     private actor State {
-        var invocations: [Invocations] = []
+        var invocations: [Invocation] = []
         
-        func addInvocation(_ invocation: Invocations) {
+        func addInvocation(_ invocation: Invocation) {
             invocations.append(invocation)
         }
     }
     private let state = State()
-    private let searchQueryHistoryResult: Result<[SearchTextHistoryEntryEntity], any Error>
-    private let storeEntityResult: Result<Void, any Error>
+    private let searchQueryHistoryEntries: [SearchTextHistoryEntryEntity]
     
     public init(
-        searchQueryHistoryResult: Result<[SearchTextHistoryEntryEntity], any Error> = .failure(GenericErrorEntity()),
-        storeEntityResult: Result<Void, any Error> = .failure(GenericErrorEntity())
+        searchQueryHistoryEntries: [SearchTextHistoryEntryEntity] = []
     ) {
-        self.searchQueryHistoryResult = searchQueryHistoryResult
-        self.storeEntityResult = storeEntityResult
+        self.searchQueryHistoryEntries = searchQueryHistoryEntries
     }
     
-    public func searchQueryHistory() async throws -> [SearchTextHistoryEntryEntity] {
-        await state.addInvocation(.searchQueryHistory)
-        return try await withCheckedThrowingContinuation {
-            $0.resume(with: searchQueryHistoryResult)
-        }
+    public func history() async -> [SearchTextHistoryEntryEntity] {
+        await state.addInvocation(.history)
+        return searchQueryHistoryEntries.sorted { $0.searchDate > $1.searchDate }
     }
     
-    public func save(entries: [SearchTextHistoryEntryEntity]) async throws {
-        await state.addInvocation(.save(entries: entries))
-        return try await withCheckedThrowingContinuation {
-            $0.resume(with: storeEntityResult)
-        }
+    public func add(entry: SearchTextHistoryEntryEntity) async {
+        await state.addInvocation(.add(entry: entry))
     }
 }
 
 extension MockVisualMediaSearchHistoryUseCase {
-    public var invocations: [Invocations] {
+    public var invocations: [Invocation] {
         get async {
             await state.invocations
         }

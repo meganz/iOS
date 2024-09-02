@@ -28,6 +28,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         let resultController = VisualMediaSearchResultsViewControllerFactory.makeViewController(searchBarTextFieldUpdater: searchBarTextFieldUpdater)
         let controller = UISearchController(searchResultsController: resultController)
         controller.searchResultsUpdater = resultController
+        controller.searchBar.delegate = resultController
         controller.delegate = self
         controller.obscuresBackgroundDuringPresentation = false
         return controller

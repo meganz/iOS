@@ -8,9 +8,9 @@ import XCTest
 final class VisualMediaSearchResultsViewModelTests: XCTestCase {
 
     @MainActor
-    func testUpdateSearchResults_emptyNoHistoryItems_shouldSetViewModeToEmpty() {
+    func testMonitorSearchResults_emptyNoHistoryItems_shouldSetViewModeToEmpty() {
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
-            searchQueryHistoryResult: .success([]))
+            searchQueryHistoryEntries: [])
         let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
         
         let exp = expectation(description: "recently searched items view state")
@@ -26,10 +26,10 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testUpdateSearchResults_emptyHistoryItemsFound_shouldSetViewModeToRecentSearchedItems() throws {
+    func testMonitorSearchResults_historyQueryItemsFound_shouldSetViewModeToRecentSearchedItems() throws {
         let historyItems = try makeHistoryEntries()
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
-            searchQueryHistoryResult: .success(historyItems))
+            searchQueryHistoryEntries: historyItems)
         
         let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
         
@@ -53,148 +53,76 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testUpdateSearchResult_emptyRetrievedHistoryAfterFirstSearch_shouldShowHistoryItemWhenSearchCleared() {
+    func testMonitorSearchResult_searchUpdated_shouldShowEmptyThenLoadingWithSearchResultsWhenCompleted() async throws {
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
-            searchQueryHistoryResult: .success([]))
-        
+            searchQueryHistoryEntries: [])
+
         let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
-    
-        let emptyExp = expectation(description: "empty state shown")
-        let loadingWithSearchResults = expectation(description: "loading and search result shown")
-        loadingWithSearchResults.expectedFulfillmentCount = 2
-        let recentlySearchedExp = expectation(description: "recently searched items view state")
-       
-        let lastSearch = "3"
-        
+
+        let emptyExp = expectation(description: "Empty Shown")
+        let loadingExp = expectation(description: "loading shown")
+        let searchResultsExp = expectation(description: "loading and search result shown")
+
         let subscription = viewStateUpdates(on: sut) {
             switch $0 {
             case .empty: emptyExp.fulfill()
-            case .loading, .searchResults: loadingWithSearchResults.fulfill()
-            case .recentlySearched(let items):
-                XCTAssertEqual(items.map(\.query), [lastSearch])
-                recentlySearchedExp.fulfill()
-            }
-        }
-        
-        trackTaskCancellation { await sut.monitorSearchResults() }
-        
-        wait(for: [emptyExp], timeout: 0.2)
-        
-        sut.searchText = "1"
-        sut.searchText = "2"
-        sut.searchText = lastSearch
-        
-        wait(for: [loadingWithSearchResults], timeout: 0.2)
-        
-        sut.searchText = ""
-    
-        wait(for: [recentlySearchedExp], timeout: 0.2)
-        subscription.cancel()
-    }
-    
-    @MainActor
-    func testUpdateSearchResults_historyLoadedAndSearchEntered_shouldSetViewStatesCorrectlyAndKeepRecentlySearchedItemWithHistoryItems() throws {
-        let historyItems = try makeHistoryEntries()
-        let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
-            searchQueryHistoryResult: .success(historyItems))
-        
-        let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
-        
-        let recentlySearchedFirstExp = expectation(description: "recently searched history items")
-        let recentlySearchedSecondExp = expectation(description: "recently searched items with last search as latest")
-        let loadingWithSearchResults = expectation(description: "loading and search result shown")
-        loadingWithSearchResults.expectedFulfillmentCount = 2
-        
-        let lastEnteredSearchItem = "last"
-        let historyItemQueries = historyItems.sortedByDateQueries()
-        var expectedItems = Array(historyItemQueries.prefix(5))
-        expectedItems.insert(lastEnteredSearchItem, at: 0)
-        
-        var recentSearchedExpectedItems = [
-            historyItemQueries,
-            expectedItems
-        ]
-        var recentExpectationsToFull = [recentlySearchedFirstExp, recentlySearchedSecondExp]
-        
-        let subscription = viewStateUpdates(on: sut) {
-            switch $0 {
-            case .empty: XCTFail("Empty should not have been shown")
-            case .loading, .searchResults: loadingWithSearchResults.fulfill()
-            case .recentlySearched(let items):
-                XCTAssertEqual(items.map(\.query), recentSearchedExpectedItems.removeFirst())
-                recentExpectationsToFull.removeFirst().fulfill()
-            }
-        }
-        
-        trackTaskCancellation { await sut.monitorSearchResults() }
-        
-        wait(for: [recentlySearchedFirstExp], timeout: 0.2)
-    
-        sut.searchText = lastEnteredSearchItem
-        
-        wait(for: [loadingWithSearchResults], timeout: 0.2)
-        
-        sut.searchText = ""
-        
-        wait(for: [recentlySearchedSecondExp], timeout: 0.2)
-        
-        subscription.cancel()
-    }
-    
-    @MainActor
-    func testOnViewDisappear_recentItems_shouldStoreRecentItems() async throws {
-        let historyItems = try makeHistoryEntries()
-        let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
-            searchQueryHistoryResult: .success(historyItems))
-        
-        let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
-        
-        let loadingWithSearchResults = expectation(description: "loading and search result shown")
-        loadingWithSearchResults.expectedFulfillmentCount = 2
-        let recentlySearchedExp = expectation(description: "recently searched items shown")
-        
-        let subscription = viewStateUpdates(on: sut) {
-            switch $0 {
-            case .loading, .searchResults: loadingWithSearchResults.fulfill()
-            case .recentlySearched(let items):
-                XCTAssertEqual(items.map(\.query), historyItems.sortedByDateQueries())
-                recentlySearchedExp.fulfill()
+            case .loading: loadingExp.fulfill()
+            case .searchResults: searchResultsExp.fulfill()
             default: XCTFail("Unexpected view state \($0)")
             }
         }
-    
+
         trackTaskCancellation { await sut.monitorSearchResults() }
-        
-        await fulfillment(of: [recentlySearchedExp], timeout: 0.2)
-        
-        let searchTerm = "Search"
-        sut.searchText = searchTerm
-       
-        await fulfillment(of: [loadingWithSearchResults], timeout: 0.2)
+
+        await fulfillment(of: [emptyExp], timeout: 0.2)
+
+        sut.searchText = "Search"
+
+        await fulfillment(of: [loadingExp, searchResultsExp], timeout: 0.2)
         subscription.cancel()
-        
-        await sut.onViewDisappear()
-        
-        let expectedItems = latestSearchQueries(from: historyItems, lastSearch: searchTerm)
-        let invocations = await visualMediaSearchHistoryUseCase.invocations
-        XCTAssertEqual(invocations.count, 2)
-        if case .save(let entries) = invocations.last {
-            XCTAssertEqual(entries.map(\.query), expectedItems)
-        } else {
-            XCTFail("Expected save invocation")
-        }
     }
     
     @MainActor
-    func testSelectedRecentlySearch_onChange_shouldUpdateSearchBarTextFieldUpdaterSearchText() {
-        let searchBarTextFieldUpdater = SearchBarTextFieldUpdater()
+    func testUpdateSearchResult_emptyRetrievedHistoryAfterFirstSearch_shouldShowHistoryItemWhenSearchCleared() {
+        let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
+            searchQueryHistoryEntries: [])
         
-        let sut = makeSUT(searchBarTextFieldUpdater: searchBarTextFieldUpdater)
+        let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
         
-        let selectedRecentlySearchQuery = "2024"
-        sut.selectedRecentlySearched = selectedRecentlySearchQuery
+        let exp = expectation(description: "search results")
         
-        XCTAssertEqual(searchBarTextFieldUpdater.searchBarText, selectedRecentlySearchQuery)
+        let subscription = viewStateUpdates(on: sut) {
+            XCTAssertEqual($0, .searchResults)
+            exp.fulfill()
+        }
+        
+        trackTaskCancellation { await sut.monitorSearchResults() }
+        
+        sut.searchText = "1"
+        sut.searchText = "2"
+        sut.searchText = "queenstown trip"
+        
+        wait(for: [exp], timeout: 0.2)
+        
+        subscription.cancel()
+    }
+    
+    @MainActor
+    func testSaveSearch_searchTextNotEmpty_shouldAddItemToSearchHistory() async {
+        let lastSearch = "queenstown trip"
+        let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase()
+        let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
+        sut.searchText = lastSearch
+        
+        await sut.saveSearch()
+        
+        let invocations = await visualMediaSearchHistoryUseCase.invocations
+        XCTAssertEqual(invocations.count, 1)
+        if case .add(let entry) = invocations.last {
+            XCTAssertEqual(entry.query, lastSearch)
+        } else {
+            XCTFail("Expected addSearchHistory invocation")
+        }
     }
 
     @MainActor
@@ -238,6 +166,6 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
 
 private extension Sequence where Element == SearchTextHistoryEntryEntity {
     func sortedByDateQueries() -> [String] {
-        sorted(by: { $0.searchDate > $1.searchDate }).toSearchHistoryItems().map(\.query)
+        sorted(by: { $0.searchDate > $1.searchDate }).map(\.query)
     }
 }
