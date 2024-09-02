@@ -72,7 +72,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         
         let vm = ImportAlbumViewModel(
             publicLink: publicLink,
-            publicAlbumUseCase: PublicAlbumUseCase(
+            publicCollectionUseCase: PublicCollectionUseCase(
                 shareCollectionRepository: shareAlbumRepository),
             albumNameUseCase: AlbumNameUseCase(
                 userAlbumRepository: UserAlbumRepository.newRepo),

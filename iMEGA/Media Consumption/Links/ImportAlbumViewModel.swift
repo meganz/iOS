@@ -14,7 +14,7 @@ final class ImportAlbumViewModel: ObservableObject {
         static let disabledOpacity = 0.3
     }
     // Private State
-    private let publicAlbumUseCase: any PublicAlbumUseCaseProtocol
+    private let publicCollectionUseCase: any PublicCollectionUseCaseProtocol
     private let albumNameUseCase: any AlbumNameUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let importPublicAlbumUseCase: any ImportPublicAlbumUseCaseProtocol
@@ -88,7 +88,7 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     init(publicLink: URL,
-         publicAlbumUseCase: some PublicAlbumUseCaseProtocol,
+         publicCollectionUseCase: some PublicCollectionUseCaseProtocol,
          albumNameUseCase: some AlbumNameUseCaseProtocol,
          accountStorageUseCase: some AccountStorageUseCaseProtocol,
          importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol,
@@ -99,7 +99,7 @@ final class ImportAlbumViewModel: ObservableObject {
          tracker: some AnalyticsTracking,
          monitorUseCase: some NetworkMonitorUseCaseProtocol) {
         self.publicLink = publicLink
-        self.publicAlbumUseCase = publicAlbumUseCase
+        self.publicCollectionUseCase = publicCollectionUseCase
         self.albumNameUseCase = albumNameUseCase
         self.accountStorageUseCase = accountStorageUseCase
         self.importPublicAlbumUseCase = importPublicAlbumUseCase
@@ -119,7 +119,7 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     deinit {
-        publicAlbumUseCase.stopAlbumLinkPreview()
+        publicCollectionUseCase.stopCollectionLinkPreview()
     }
     
     func onViewAppear() {
@@ -250,10 +250,10 @@ final class ImportAlbumViewModel: ObservableObject {
     
     private func loadPublicAlbumContents() async {
         do {
-            let publicAlbum = try await publicAlbumUseCase.publicAlbum(forLink: albumLink)
+            let publicAlbum = try await publicCollectionUseCase.publicCollection(forLink: albumLink)
             try Task.checkCancellation()
             publicAlbumName = publicAlbum.set.name
-            let photos = await publicAlbumUseCase.publicPhotos(publicAlbum.setElements)
+            let photos = await publicCollectionUseCase.publicNodes(publicAlbum.setElements)
             try Task.checkCancellation()
             photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
             publicLinkStatus = .loaded
