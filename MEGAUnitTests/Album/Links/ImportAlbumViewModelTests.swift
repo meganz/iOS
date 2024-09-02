@@ -34,7 +34,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
 
         let sut = makeImportAlbumViewModel(
             publicLink: try requireDecryptionKeyAlbumLink,
-            publicAlbumUseCase: MockPublicAlbumUseCase(),
+            publicCollectionUseCase: MockPublicCollectionUseCase(),
             tracker: tracker)
         
         sut.onViewAppear()
@@ -57,12 +57,12 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let photos = try makePhotos()
         let albumName = "New album (5)"
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2, name: albumName))
-        let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
+        let albumUseCase = MockPublicCollectionUseCase(publicAlbumResult: .success(sharedAlbumEntity),
                                                   nodes: photos)
         let tracker = MockTracker()
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            publicAlbumUseCase: albumUseCase,
+            publicCollectionUseCase: albumUseCase,
             tracker: tracker)
 
         sut.onViewAppear()
@@ -104,7 +104,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            publicAlbumUseCase: MockPublicAlbumUseCase(publicAlbumResult: .failure(SharedCollectionErrorEntity.couldNotBeReadOrDecrypted)),
+            publicCollectionUseCase: MockPublicCollectionUseCase(publicAlbumResult: .failure(SharedCollectionErrorEntity.couldNotBeReadOrDecrypted)),
             tracker: tracker)
 
         sut.onViewAppear()
@@ -138,7 +138,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testLoadPublicAlbum_onTaskCancellationError_shouldNotSetStatusToInvalid() async throws {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            publicAlbumUseCase: MockPublicAlbumUseCase(publicAlbumResult: .failure(CancellationError())))
+            publicCollectionUseCase: MockPublicCollectionUseCase(publicAlbumResult: .failure(CancellationError())))
         
         await sut.loadPublicAlbum()
         
@@ -151,12 +151,12 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let albumName = "New album (5)"
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 5, name: albumName))
         let photos = try makePhotos()
-        let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
+        let albumUseCase = MockPublicCollectionUseCase(publicAlbumResult: .success(sharedAlbumEntity),
                                                   nodes: photos)
         let tracker = MockTracker()
         let sut = makeImportAlbumViewModel(
             publicLink: link,
-            publicAlbumUseCase: albumUseCase,
+            publicCollectionUseCase: albumUseCase,
             tracker: tracker)
         sut.publicLinkStatus = .requireDecryptionKey
         sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
@@ -193,7 +193,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testLoadWithNewDecryptionKey_invalidKeyEntered_shouldSetStatusToInvalid() async throws {
         let sut = makeImportAlbumViewModel(
-            publicLink: try requireDecryptionKeyAlbumLink, publicAlbumUseCase: MockPublicAlbumUseCase())
+            publicLink: try requireDecryptionKeyAlbumLink, publicCollectionUseCase: MockPublicCollectionUseCase())
         sut.publicLinkStatus = .requireDecryptionKey
         sut.publicLinkDecryptionKey = "<<<<"
         
@@ -251,7 +251,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let publicAlbumUseCase = makePublicAlbumUseCase(nodes: try makePhotos())
 
         let sut = makeImportAlbumViewModel(publicLink: try requireDecryptionKeyAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         XCTAssertTrue(sut.isToolbarButtonsDisabled)
         
         sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
@@ -276,7 +276,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let publicAlbumUseCase = makePublicAlbumUseCase()
 
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         XCTAssertTrue(sut.isToolbarButtonsDisabled)
         
         await sut.loadPublicAlbum()
@@ -289,7 +289,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let publicAlbumUseCase = makePublicAlbumUseCase(nodes: try makePhotos())
         
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         XCTAssertEqual(sut.selectButtonOpacity, 0.3, accuracy: 0.1)
         
         await sut.loadPublicAlbum()
@@ -306,10 +306,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testSelectButtonOpacity_noPhotos_shouldUseCorrectOpacity() async throws {
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(
+        let publicAlbumUseCase = MockPublicCollectionUseCase(
             publicAlbumResult: .success(sharedAlbumEntity))
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         XCTAssertEqual(sut.selectButtonOpacity, 0.3, accuracy: 0.1)
         
         await sut.loadPublicAlbum()
@@ -323,7 +323,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             handle: 3,
             name: "valid album name")
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         await sut.loadPublicAlbum()
         
         await sut.importAlbum()
@@ -337,7 +337,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             handle: 3,
             name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         await sut.loadPublicAlbum()
    
         await sut.importAlbum()
@@ -355,7 +355,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: true)
         
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            accountStorageUseCase: accountStorageUseCase)
         await sut.loadPublicAlbum()
         
@@ -374,7 +374,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: false)
         
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            accountStorageUseCase: accountStorageUseCase)
         await sut.loadPublicAlbum()
         XCTAssertFalse(sut.showStorageQuotaWillExceed)
@@ -422,7 +422,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
 
         let importPublicAlbumUseCase = MockImportPublicAlbumUseCase(importAlbumResult: .success)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            importPublicAlbumUseCase: importPublicAlbumUseCase)
         await sut.loadPublicAlbum()
         
@@ -450,13 +450,13 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testImportFolderLocation_onFolderSelectedAndImportFails_shouldShowErrorInSnackbar() async throws {
         let albumName = "New Album (1)"
         let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: albumName))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
+        let publicAlbumUseCase = MockPublicCollectionUseCase(publicAlbumResult: .success(album),
                                                         nodes: try makePhotos())
         let importPublicAlbumUseCase = MockImportPublicAlbumUseCase(
             importAlbumResult: .failure(GenericErrorEntity()))
         
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            importPublicAlbumUseCase: importPublicAlbumUseCase)
         await sut.loadPublicAlbum()
         
@@ -493,7 +493,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             importAlbumResult: .success)
         let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: "Test", nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            importPublicAlbumUseCase: importPublicAlbumUseCase)
         await sut.loadPublicAlbum()
         
@@ -538,7 +538,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let newAlbumName = "The new album name"
         let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: "Test", nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            importPublicAlbumUseCase: MockImportPublicAlbumUseCase(
                                             importAlbumResult: .success))
         await sut.loadPublicAlbum()
@@ -559,7 +559,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let albumNameUseCase = MockAlbumNameUseCase(userAlbumNames: userAlbumNames)
         let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: "Test", nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            albumNameUseCase: albumNameUseCase)
         await sut.loadPublicAlbum()
         
@@ -573,7 +573,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let albumName = "Test"
         let publicAlbumUseCase = makePublicAlbumUseCase(name: albumName, nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         let expectedAlertViewModel = TextFieldAlertViewModel(title: Strings.Localizable.AlbumLink.Alert.RenameAlbum.title,
                                                              affirmativeButtonTitle: Strings.Localizable.rename,
                                                              affirmativeButtonInitiallyEnabled: false,
@@ -601,7 +601,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testsShouldShowEmptyAlbumView_noPhotos_shouldReturnTrue() async throws {
         let publicAlbumUseCase = makePublicAlbumUseCase(handle: 1)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         XCTAssertFalse(sut.shouldShowEmptyAlbumView)
         
         await sut.loadPublicAlbum()
@@ -614,7 +614,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testsShouldShowEmptyAlbumView_photosLoaded_shouldReturnFalse() async throws {
         let publicAlbumUseCase = makePublicAlbumUseCase(nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         
         await sut.loadPublicAlbum()
         
@@ -626,7 +626,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testIsShareLinkButtonDisabled_onAlbumLoaded_shouldEnableShareButtonEvenIfNoPhotosLoaded() async throws {
         let publicAlbumUseCase = makePublicAlbumUseCase()
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase)
+                                           publicCollectionUseCase: publicAlbumUseCase)
         XCTAssertTrue(sut.isShareLinkButtonDisabled)
         
         await sut.loadPublicAlbum()
@@ -646,7 +646,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let publicAlbumUseCase = makePublicAlbumUseCase()
         let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            saveMediaUseCase: saveToPhotosUseCase,
                                            transferWidgetResponder: transferWidgetResponder,
                                            permissionHandler: permissionHandler)
@@ -682,7 +682,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let publicAlbumUseCase = makePublicAlbumUseCase(nodes: multiplePhotos)
         let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            saveMediaUseCase: saveToPhotosUseCase,
                                            transferWidgetResponder: transferWidgetResponder,
                                            permissionHandler: permissionHandler)
@@ -713,7 +713,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let publicAlbumUseCase = makePublicAlbumUseCase()
         let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            saveMediaUseCase: saveToPhotosUseCase,
                                            transferWidgetResponder: transferWidgetResponder,
                                            permissionHandler: permissionHandler)
@@ -763,14 +763,14 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     @MainActor
     func testStopAlbumLinkPreview_deinit_shouldBeCalled() async throws {
-        let publicAlbumUseCase = MockPublicAlbumUseCase()
+        let publicAlbumUseCase = MockPublicCollectionUseCase()
         var sut: ImportAlbumViewModel? = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                                                  publicAlbumUseCase: publicAlbumUseCase)
+                                                                  publicCollectionUseCase: publicAlbumUseCase)
         await sut?.loadPublicAlbum()
         
         sut = nil
         
-        XCTAssertEqual(publicAlbumUseCase.stopAlbumLinkPreviewCalled, 1)
+        XCTAssertEqual(publicAlbumUseCase.stopCollectionLinkPreviewCalled, 1)
     }
     
     @MainActor
@@ -812,10 +812,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testMonitorNetworkConnection_onAlbumInvalidAlbum_shouldNotUpdateConnection() async throws {
         let connectionStream = makeConnectionMonitorStream(statuses: [false, true, false])
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .failure(GenericErrorEntity()))
+        let publicAlbumUseCase = MockPublicCollectionUseCase(publicAlbumResult: .failure(GenericErrorEntity()))
         let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           publicCollectionUseCase: publicAlbumUseCase,
                                            monitorUseCase: monitorUseCase)
         
         sut.$isConnectedToNetworkUntilContentLoaded
@@ -833,7 +833,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     @MainActor
     private func makeImportAlbumViewModel(publicLink: URL,
-                                          publicAlbumUseCase: some PublicAlbumUseCaseProtocol = MockPublicAlbumUseCase(),
+                                          publicCollectionUseCase: some PublicCollectionUseCaseProtocol = MockPublicCollectionUseCase(),
                                           albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
                                           accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
                                           importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
@@ -848,7 +848,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     ) -> ImportAlbumViewModel {
         let sut = ImportAlbumViewModel(
             publicLink: publicLink,
-            publicAlbumUseCase: publicAlbumUseCase,
+            publicCollectionUseCase: publicCollectionUseCase,
             albumNameUseCase: albumNameUseCase,
             accountStorageUseCase: accountStorageUseCase,
             importPublicAlbumUseCase: importPublicAlbumUseCase,
@@ -885,9 +885,9 @@ final class ImportAlbumViewModelTests: XCTestCase {
         ]
     }
     
-    private func makePublicAlbumUseCase(handle: HandleEntity = 1, name: String = "valid album name", nodes: [NodeEntity] = []) -> some PublicAlbumUseCaseProtocol {
+    private func makePublicAlbumUseCase(handle: HandleEntity = 1, name: String = "valid album name", nodes: [NodeEntity] = []) -> some PublicCollectionUseCaseProtocol {
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 1, name: name))
-        return MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity), nodes: nodes)
+        return MockPublicCollectionUseCase(publicAlbumResult: .success(sharedAlbumEntity), nodes: nodes)
     }
     
     private func makeConnectionMonitorStream(statuses: [Bool]) -> AnyAsyncSequence<Bool> {

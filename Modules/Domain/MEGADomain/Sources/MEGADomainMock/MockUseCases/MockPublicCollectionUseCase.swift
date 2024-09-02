@@ -1,11 +1,12 @@
 import MEGADomain
+import MEGASwift
 
-public final class MockPublicAlbumUseCase: PublicAlbumUseCaseProtocol {
+public final class MockPublicCollectionUseCase: PublicCollectionUseCaseProtocol, @unchecked Sendable {
 
     private let publicAlbumResult: Result<SharedCollectionEntity, Error>
     private let nodes: [NodeEntity]
     
-    public private(set) var stopAlbumLinkPreviewCalled = 0
+    @Atomic public var stopCollectionLinkPreviewCalled = 0
     
     public init(publicAlbumResult: Result<SharedCollectionEntity, Error> = .failure(GenericErrorEntity()),
                 nodes: [NodeEntity] = []) {
@@ -13,17 +14,17 @@ public final class MockPublicAlbumUseCase: PublicAlbumUseCaseProtocol {
         self.nodes = nodes
     }
     
-    public func publicAlbum(forLink link: String) async throws -> SharedCollectionEntity {
+    public func publicCollection(forLink link: String) async throws -> SharedCollectionEntity {
         try await withCheckedThrowingContinuation {
             $0.resume(with: publicAlbumResult)
         }
     }
     
-    public func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity] {
+    public func publicNodes(_ elements: [SetElementEntity]) async -> [NodeEntity] {
         nodes
     }
     
-    public func stopAlbumLinkPreview() {
-        stopAlbumLinkPreviewCalled += 1
+    public func stopCollectionLinkPreview() {
+        $stopCollectionLinkPreviewCalled.mutate { $0 += 1 }
     }
 }
