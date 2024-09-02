@@ -129,17 +129,20 @@ extension ContactsViewController {
     }
     
     func createNewEmptyView() -> UIView? {
+        let state = ChatRoomsEmptyViewStateFactory(
+            newEmptyStates: true,
+            designTokenEnabled: UIColor.isDesignTokenEnabled()
+        ).newChatContactsEmptyScreen(
+            goToInvite: { [weak self] in
+                self?.goToInvite()
+            }
+        )
         let view = NewChatRoomsEmptyView(
-            state: ChatRoomsEmptyViewStateFactory(
-                newEmptyStates: true,
-                designTokenEnabled: UIColor.isDesignTokenEnabled()
-            ).newChatContactsEmptyScreen(
-                goToInvite: { [weak self] in
-                    self?.goToInvite()
-                }
-            )
+            state: state,
+            maxHeight: 0.0
         )
         let hostingVC = UIHostingController(rootView: view)
+        hostingVC.view.backgroundColor = .clear
         return hostingVC.view
     }
     
@@ -211,7 +214,6 @@ extension ContactsViewController {
     func updateAppearance() {
         if UIColor.isDesignTokenEnabled() {
             let bgColor = TokenColors.Background.page
-            
             view.backgroundColor = bgColor
             tableView.backgroundColor = bgColor
             
