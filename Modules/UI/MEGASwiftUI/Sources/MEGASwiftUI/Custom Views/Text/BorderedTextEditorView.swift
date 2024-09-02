@@ -96,8 +96,13 @@ public struct BorderedTextEditorView: View {
                     TextEditorWithDoneKeyboardView(text: $textInput, isFocused: $isFocused)
                         .padding(2)
                         .background(.clear)
+                        .onAppear {
+                            if hasReachedMaxLimit {
+                                errorState = .reachedMaxCharLimit
+                            }
+                        }
                         .onChange(of: textInput) { text in
-                            if shouldShowMaxLimit && text.count > config.maxCharacterLimit {
+                            if hasReachedMaxLimit {
                                 errorState = .reachedMaxCharLimit
                             } else {
                                 switch errorState {
@@ -200,6 +205,10 @@ public struct BorderedTextEditorView: View {
     
     private var shouldCheckMinLimit: Bool {
         config.minCharacterLimit > 0
+    }
+    
+    private var hasReachedMaxLimit: Bool {
+        shouldShowMaxLimit && textInput.count > config.maxCharacterLimit
     }
     
     private var borderColor: Color {
