@@ -22,11 +22,6 @@ public struct VisualMediaSearchResultsView: View {
             .task {
                 await viewModel.monitorSearchResults()
             }
-            .onDisappear {
-                Task {
-                    await viewModel.onViewDisappear()
-                }
-            }
     }
     
     @ViewBuilder

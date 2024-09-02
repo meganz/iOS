@@ -18,8 +18,6 @@ class VisualMediaSearchResultsViewModel: ObservableObject {
     private let searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride
     private let debounceQueue: DispatchQueue
     
-    private let searchHistoryDataProvider = SearchHistoryDataProvider()
-    
     private var searchTask: Task<Void, any Error>? {
         didSet { oldValue?.cancel() }
     }
@@ -46,16 +44,16 @@ class VisualMediaSearchResultsViewModel: ObservableObject {
         }
     }
     
-    func onViewDisappear() async {
-        guard await !searchHistoryDataProvider.isEmpty else { return }
+    func saveSearch() async {
+        guard searchText.isNotEmpty else { return }
         
-        try? await visualMediaSearchHistoryUseCase.save(entries: searchHistoryDataProvider.recentSearches)
+        await visualMediaSearchHistoryUseCase.add(entry: .init(id: UUID(), query: searchText, searchDate: Date()))
     }
     
     private func performSearch(searchText: String) {
         searchTask = Task {
             guard searchText.isNotEmpty else {
-                await loadRecentlySearchedItems()
+                try await loadRecentlySearchedItems()
                 return
             }
             
@@ -67,28 +65,20 @@ class VisualMediaSearchResultsViewModel: ObservableObject {
             
             // Perform search here and populate result in enum
             
-            await searchHistoryDataProvider.addRecentSearch(searchText)
-            
-            try Task.checkCancellation()
             viewState = .searchResults
         }
     }
     
-    private func loadRecentlySearchedItems() async {
-        guard await searchHistoryDataProvider.isEmpty else {
-            viewState = await .recentlySearched(items: searchHistoryDataProvider.historyItems())
-            return
-        }
+    private func loadRecentlySearchedItems() async throws {
+        let searchHistoryItems = await visualMediaSearchHistoryUseCase.history()
         
-        guard let historyEntries = try? await visualMediaSearchHistoryUseCase.searchQueryHistory(),
-              historyEntries.isNotEmpty else {
-            viewState = .empty
-            return
-        }
-        await searchHistoryDataProvider.addRecentSearches(historyEntries)
+        try Task.checkCancellation()
         
-        guard !Task.isCancelled else { return }
-        viewState = await .recentlySearched(items: searchHistoryDataProvider.historyItems())
+        viewState = if searchHistoryItems.isNotEmpty {
+            .recentlySearched(items: searchHistoryItems.toSearchHistoryItems())
+        } else {
+            .empty
+        }
     }
     
     private func shouldShowLoading() -> Bool {
@@ -98,31 +88,5 @@ class VisualMediaSearchResultsViewModel: ObservableObject {
         case .empty, .recentlySearched: true
         default: false
         }
-    }
-}
-
-private actor SearchHistoryDataProvider {
-    private let maxSearchSearchHistoryCount = 6
-    
-    var recentSearches: [SearchTextHistoryEntryEntity] = []
-    
-    var isEmpty: Bool {
-        recentSearches.isEmpty
-    }
-    
-    func addRecentSearches(_ searches: [SearchTextHistoryEntryEntity]) {
-        recentSearches.append(contentsOf: searches)
-        recentSearches.sort { $0.searchDate > $1.searchDate }
-        recentSearches = Array(recentSearches.prefix(maxSearchSearchHistoryCount))
-    }
-    
-    func addRecentSearch(_ searchText: String) {
-        recentSearches.insert(.init(id: UUID(), query: searchText, searchDate: Date()), at: 0)
-        guard recentSearches.count > maxSearchSearchHistoryCount else { return }
-        recentSearches.removeLast()
-    }
-    
-    func historyItems() -> [SearchHistoryItem] {
-        recentSearches.toSearchHistoryItems()
     }
 }
