@@ -64,7 +64,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(commands, [.configPlanDisplay])
     }
     
-    @MainActor func testAction_addSubscriptions() {
+    @MainActor
+    func testAction_addSubscriptions() {
         let (sut, _) = makeSUT()
         
         test(viewModel: sut,
@@ -72,7 +73,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
              expectedCommands: [])
     }
     
-    @MainActor func testAction_removeSubscriptions() {
+    @MainActor
+    func testAction_removeSubscriptions() {
         let (sut, _) = makeSUT()
         
         test(viewModel: sut,
@@ -80,6 +82,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
              expectedCommands: [])
     }
     
+    @MainActor
     func testInitAccountDetails_shouldHaveCorrectDetails() {
         let expectedAccountDetails = AccountDetailsEntity.random
         let (sut, _) = makeSUT(currentAccountDetails: expectedAccountDetails)
@@ -108,28 +111,33 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertFalse(result, "Promos should not be available when notifications are not enabled, even if the notification center feature flag is true.")
     }
 
+    @MainActor
     func testIsMasterBusinessAccount_shouldBeTrue() {
         let (sut, _) = makeSUT(isMasterBusinessAccount: true)
         XCTAssertTrue(sut.isMasterBusinessAccount)
     }
     
+    @MainActor
     func testIsMasterBusinessAccount_shouldBeFalse() {
         let (sut, _) = makeSUT(isMasterBusinessAccount: false)
         XCTAssertFalse(sut.isMasterBusinessAccount)
     }
     
-    @MainActor func testAction_didTapUpgradeButton_showUpgradeView() {
+    @MainActor
+    func testAction_didTapUpgradeButton_showUpgradeView() {
         let (sut, _) = makeSUT()
         
         test(viewModel: sut, actions: [MyAccountHallAction.didTapUpgradeButton], expectedCommands: [])
     }
     
+    @MainActor
     func testIsFeatureFlagEnabled_onNotificationCenterUIEnabled_shouldBeEnabled() {
         let (sut, _) = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true]))
         XCTAssertTrue(sut.isNotificationCenterEnabled())
     }
     
-    @MainActor func testDidTapDeviceCenterButton_whenButtonIsTapped_navigatesToDeviceCenter() {
+    @MainActor
+    func testDidTapDeviceCenterButton_whenButtonIsTapped_navigatesToDeviceCenter() {
         let (sut, router) = makeSUT()
         
         test(viewModel: sut,
@@ -139,7 +147,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(router.navigateToDeviceCenter_calledTimes, 1)
     }
     
-    @MainActor func testDidTapCameraUploadsAction_whenCameraUploadActionTapped_callsRouterOnce() {
+    @MainActor
+    func testDidTapCameraUploadsAction_whenCameraUploadActionTapped_callsRouterOnce() {
         let deviceCenterBridge = DeviceCenterBridge()
         let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
         
@@ -154,7 +163,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapRenameAction_whenRenameActionTapped_callsRouterOnce() {
+    @MainActor
+    func testDidTapRenameAction_whenRenameActionTapped_callsRouterOnce() {
         let deviceCenterBridge = DeviceCenterBridge()
         let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
         
@@ -232,18 +242,21 @@ final class MyAccountHallViewModelTests: XCTestCase {
         return sut.arePromosAvailable
     }
     
+    @MainActor
     func testShowPlanRow_businessAccount_shouldBeFalse() {
         let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: .business))
         
         XCTAssertFalse(sut.showPlanRow)
     }
     
+    @MainActor
     func testShowPlanRow_proFlexiAccount_shouldBeFalse() {
         let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.build(proLevel: .proFlexi))
         
         XCTAssertFalse(sut.showPlanRow)
     }
     
+    @MainActor
     func testShowPlanRow_freeOrProAccount_shouldBeTrue() {
         let accountTypes: [AccountTypeEntity] = [.free, .proI, .proII, .proIII]
         accountTypes.enumerated().forEach { (index, accountType) in
@@ -253,6 +266,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCalculateCellHeight_planSection_showPlanRowIsTrue_shouldNotBeZero() {
         let accountTypes: [AccountTypeEntity] = [.free, .proI, .proII, .proIII]
         let indexPath = IndexPath(row: MyAccountMegaSection.plan.rawValue,
@@ -265,6 +279,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCalculateCellHeight_planSection_showPlanRowIsFalse_shouldBeZero() {
         let accountTypes: [AccountTypeEntity] = [.proFlexi, .business]
         let indexPath = IndexPath(row: MyAccountMegaSection.plan.rawValue,
@@ -277,6 +292,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCalculateCellHeight_achievementSection_isAchievementEnabledTrue_shouldNotBeZero() {
         let indexPath = IndexPath(row: MyAccountMegaSection.achievements.rawValue,
                                   section: MyAccountSection.mega.rawValue)
@@ -286,6 +302,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertNotEqual(sut.calculateCellHeight(at: indexPath), 0)
     }
     
+    @MainActor
     func testCalculateCellHeight_achievementSection_isAchievementEnabledFalse_shouldBeZero() {
         let indexPath = IndexPath(row: MyAccountMegaSection.achievements.rawValue,
                                   section: MyAccountSection.mega.rawValue)
@@ -295,6 +312,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.calculateCellHeight(at: indexPath), 0)
     }
     
+    @MainActor
     func testCalculateCellHeight_myAccountSection_shouldNotBeZero() {
         let (sut, _) = makeSUT(currentAccountDetails: AccountDetailsEntity.random)
         let indexPath = IndexPath(row: MyAccountMegaSection.myAccount.rawValue,
@@ -303,6 +321,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertNotEqual(sut.calculateCellHeight(at: indexPath), 0)
     }
     
+    @MainActor
     func test_didTapMyAccountButton_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapMyAccountButton,
@@ -310,6 +329,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_didTapAccountHeader_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapAccountHeader,
@@ -317,6 +337,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_viewDidLoad_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .viewDidLoad,
@@ -324,6 +345,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_viewDidTapUpgradeButton_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapUpgradeButton,
@@ -331,6 +353,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testTransferUsed_shouldReturnCorrectValue() {
         let expectedTransferUsed: Int64 = 5000
         let accountDetails = AccountDetailsEntity.build(transferUsed: expectedTransferUsed)
@@ -339,12 +362,13 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.transferUsed, expectedTransferUsed)
     }
     
-    func testTransferUsed_whenAccountDetailsNil_shouldReturnZero() {
+    @MainActor func testTransferUsed_whenAccountDetailsNil_shouldReturnZero() {
         let (sut, _) = makeSUT(currentAccountDetails: nil)
         
         XCTAssertEqual(sut.transferUsed, 0)
     }
     
+    @MainActor
     func testTransferMax_shouldReturnCorrectValue() {
         let expectedTransferMax: Int64 = 10000
         let accountDetails = AccountDetailsEntity.build(transferMax: expectedTransferMax)
@@ -353,12 +377,14 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.transferMax, expectedTransferMax)
     }
     
+    @MainActor
     func testTransferMax_whenAccountDetailsNil_shouldReturnZero() {
         let (sut, _) = makeSUT(currentAccountDetails: nil)
         
         XCTAssertEqual(sut.transferMax, 0)
     }
     
+    @MainActor
     func testStorageUsed_shouldReturnCorrectValue() {
         let expectedStorageUsed: Int64 = 7500
         let accountDetails = AccountDetailsEntity.build(storageUsed: expectedStorageUsed)
@@ -367,12 +393,14 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.storageUsed, expectedStorageUsed)
     }
     
+    @MainActor
     func testStorageUsed_whenAccountDetailsNil_shouldReturnZero() {
         let (sut, _) = makeSUT(currentAccountDetails: nil)
         
         XCTAssertEqual(sut.storageUsed, 0)
     }
     
+    @MainActor
     func testStorageMax_shouldReturnCorrectValue() {
         let expectedStorageMax: Int64 = 20000
         let accountDetails = AccountDetailsEntity.build(storageMax: expectedStorageMax)
@@ -381,12 +409,14 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.storageMax, expectedStorageMax)
     }
     
+    @MainActor
     func testStorageMax_whenAccountDetailsNil_shouldReturnZero() {
         let (sut, _) = makeSUT(currentAccountDetails: nil)
         
         XCTAssertEqual(sut.storageMax, 0)
     }
     
+    @MainActor
     func testIsBusinessAccount_shouldBeTrue() {
         let accountDetails = AccountDetailsEntity.build(proLevel: .business)
         let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
@@ -394,6 +424,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isBusinessAccount)
     }
     
+    @MainActor
     func testIsBusinessAccount_shouldBeFalse() {
         let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
         let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
@@ -401,6 +432,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isBusinessAccount)
     }
     
+    @MainActor
     func testIsProFlexiAccount_shouldBeTrue() {
         let accountDetails = AccountDetailsEntity.build(proLevel: .proFlexi)
         let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
@@ -408,6 +440,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isProFlexiAccount)
     }
     
+    @MainActor
     func testIsProFlexiAccount_shouldBeFalse() {
         let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
         let (sut, _) = makeSUT(currentAccountDetails: accountDetails)
@@ -415,6 +448,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isProFlexiAccount)
     }
     
+    @MainActor
     func testRubbishBinFormattedStorageUsed_shouldReturnFormattedString() {
         let expectedRubbishBinStorageUsed: Int64 = 2048
         let expectedFormattedString = "2 KB"
@@ -424,6 +458,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.rubbishBinFormattedStorageUsed, expectedFormattedString)
     }
     
+    @MainActor
     private func makeSUT(
         isMasterBusinessAccount: Bool = false,
         isAchievementsEnabled: Bool = false,
@@ -461,6 +496,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func trackAnalyticsEventTest(
         action: MyAccountHallAction,
         expectedEvent: EventIdentifier

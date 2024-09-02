@@ -1,6 +1,6 @@
 import Combine
 
-public protocol MyAccountHallUseCaseProtocol {
+public protocol MyAccountHallUseCaseProtocol: Sendable {
     var currentUserHandle: HandleEntity? { get }
     var isMasterBusinessAccount: Bool { get }
     var isAchievementsEnabled: Bool { get }

@@ -58,7 +58,6 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         self.noInternetConnectionPresenter = noInternetConnectionPresenter
     }
     
-    @MainActor
     private func pushCDViewController(
         _ node: NodeEntity, 
         isBackup: Bool,
@@ -77,26 +76,22 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         _ node: NodeEntity,
         warningMessage: String?
     ) {
-        Task {
-            await pushCDViewController(
-                node,
-                isBackup: true,
-                warningMessage: warningMessage
-            )
-        }
+        pushCDViewController(
+            node,
+            isBackup: true,
+            warningMessage: warningMessage
+        )
     }
 
     private func didTapShowInCloudDriveAction(
         _ node: NodeEntity,
         warningMessage: String?
     ) {
-        Task {
-            await pushCDViewController(
-                node,
-                isBackup: false,
-                warningMessage: warningMessage
-            )
-        }
+        pushCDViewController(
+            node,
+            isBackup: false,
+            warningMessage: warningMessage
+        )
     }
     
     private func createCloudDriveVCForNode(

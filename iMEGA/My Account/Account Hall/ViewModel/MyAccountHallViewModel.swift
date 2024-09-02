@@ -38,6 +38,7 @@ enum MyAccountHallAction: ActionType {
     case didTapAccountHeader
 }
 
+@MainActor
 final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     enum Command: CommandType, Equatable {
@@ -237,9 +238,8 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         $accountDetails.mutate { currentValue in
             currentValue = details
         }
-        Task { @MainActor in
-            currentPlanName = details?.proLevel.toAccountTypeDisplayName() ?? ""
-        }
+        
+        currentPlanName = details?.proLevel.toAccountTypeDisplayName() ?? ""
     }
     
     private func loadContent(_ target: MyAccountHallLoadTarget) async {
@@ -258,19 +258,19 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     private func fetchPlanList() async {
         planList = await purchaseUseCase.accountPlanProducts()
-        await configPlanDisplay()
+        configPlanDisplay()
     }
     
     private func fetchAccountDetails(showActivityIndicator: Bool) async {
-        await setIsUpdatingAccountDetails(showActivityIndicator)
+        setIsUpdatingAccountDetails(showActivityIndicator)
         
         do {
             let accountDetails = try await myAccountHallUseCase.refreshCurrentAccountDetails()
             setAccountDetails(accountDetails)
-            await setIsUpdatingAccountDetails(false)
-            await configPlanDisplay()
+            setIsUpdatingAccountDetails(false)
+            configPlanDisplay()
         } catch {
-            await setIsUpdatingAccountDetails(false)
+            setIsUpdatingAccountDetails(false)
             MEGALogError("[Account Hall] Error loading account details. Error: \(error)")
         }
     }
@@ -286,7 +286,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
             unreadNotificationsCount = await notificationsUseCase.unreadNotificationIDs().count
         }
 
-        await reloadNotificationCounts()
+        reloadNotificationCounts()
     }
     
     private func fetchAvailablePromos() async {
@@ -298,17 +298,14 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     // MARK: UI
-    @MainActor
     private func reloadNotificationCounts() {
         invokeCommand?(.reloadCounts)
     }
     
-    @MainActor
     private func configPlanDisplay() {
         invokeCommand?(.configPlanDisplay)
     }
     
-    @MainActor
     private func setIsUpdatingAccountDetails(_ isUpdating: Bool) {
         isUpdatingAccountDetails = isUpdating
     }
@@ -323,9 +320,9 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     private func deRegisterRequestDelegates() {
-        Task.detached { [weak self] in
-            await self?.myAccountHallUseCase.deRegisterMEGARequestDelegate()
-            await self?.myAccountHallUseCase.deRegisterMEGAGlobalDelegate()
+        Task.detached { [myAccountHallUseCase] in
+            await myAccountHallUseCase.deRegisterMEGARequestDelegate()
+            await myAccountHallUseCase.deRegisterMEGAGlobalDelegate()
         }
     }
     
@@ -377,7 +374,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
                     }
                     
                     setAccountDetails(account)
-                    await configPlanDisplay()
+                    configPlanDisplay()
                 }
             }
             .store(in: &subscriptions)
