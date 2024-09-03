@@ -22,6 +22,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private var abTestProvider: any ABTestProviderProtocol
     private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
@@ -63,6 +64,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         accountDetails: AccountDetailsEntity,
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         viewType: UpgradeAccountPlanViewType,
@@ -70,6 +72,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     ) {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
+        self.subscriptionsUseCase = subscriptionsUseCase
         self.accountDetails = accountDetails
         self.abTestProvider = abTestProvider
         self.tracker = tracker
@@ -459,7 +462,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     func cancelActiveCancellableSubscription() async {
         do {
-            try await purchaseUseCase.cancelCreditCardSubscriptions(reason: nil)
+            try await subscriptionsUseCase.cancelSubscriptions()
             await refreshAccountDetails()
         } catch {
             MEGALogError("[Upgrade Account] Unable to cancel active subscription")

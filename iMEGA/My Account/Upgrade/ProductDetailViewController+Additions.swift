@@ -1,8 +1,19 @@
 import MEGADesignToken
 import MEGADomain
+import MEGASDKRepo
 
 extension ProductDetailViewController {
     
+    // MARK: - Token colors
+    @objc var whiteTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+    }
+
+    @objc var defaultBackgroundColor: UIColor {
+        TokenColors.Background.page
+    }
+    
+    // MARK: - Additional functions
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -19,12 +30,17 @@ extension ProductDetailViewController {
         NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
     }
     
-    // MARK: - Token colors
-    @objc var whiteTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
-    }
-
-    @objc var defaultBackgroundColor: UIColor {
-        TokenColors.Background.page
+    @objc func cancelCreditCardSubscriptionsBeforeContinuePurchasingProduct(_ product: SKProduct) {
+        Task {
+            let subscriptionsUseCase = SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo)
+            
+            do {
+                try await subscriptionsUseCase.cancelSubscriptions()
+            } catch {
+                MEGALogError("[Upgrade Account] Unable to cancel active subscription: \(error.localizedDescription)")
+            }
+            
+            MEGAPurchase.sharedInstance().purchaseProduct(product)
+        }
     }
 }

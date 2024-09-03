@@ -19,19 +19,19 @@ final class CancellationSurveyViewModel: ObservableObject {
     let minimumTextRequired = 10
     let maximumTextRequired = 120
     private(set) var subscription: AccountSubscriptionEntity
-    private let subscriptionsUsecase: any SubscriptionsUsecaseProtocol
+    private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let cancelAccountPlanRouter: any CancelAccountPlanRouting
     private let tracker: any AnalyticsTracking
     var submitSurveyTask: Task<Void, Never>?
     
     init(
         subscription: AccountSubscriptionEntity,
-        subscriptionsUsecase: some SubscriptionsUsecaseProtocol,
+        subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
         cancelAccountPlanRouter: some CancelAccountPlanRouting,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.subscription = subscription
-        self.subscriptionsUsecase = subscriptionsUsecase
+        self.subscriptionsUseCase = subscriptionsUseCase
         self.cancelAccountPlanRouter = cancelAccountPlanRouter
         self.tracker = tracker
     }
@@ -114,7 +114,7 @@ final class CancellationSurveyViewModel: ObservableObject {
             
             cancelAccountPlanRouter.showAppleManageSubscriptions()
             
-            try? await subscriptionsUsecase.cancelSubscriptions(
+            try? await subscriptionsUseCase.cancelSubscriptions(
                 reason: formattedReasonString,
                 subscriptionId: subscription.id,
                 canContact: allowToBeContacted

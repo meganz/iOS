@@ -10,7 +10,6 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     
     public var restorePurchaseCalled = 0
     public var purchasePlanCalled = 0
-    public var cancelCreditCardSubscriptions = 0
     public var registerRestoreDelegateCalled = 0
     public var deRegisterRestoreDelegateCalled = 0
     public var registerPurchaseDelegateCalled = 0
@@ -50,10 +49,6 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     
     public func purchasePlan(_ plan: PlanEntity) async {
         purchasePlanCalled += 1
-    }
-    
-    public func cancelCreditCardSubscriptions(reason: String?) async throws {
-        cancelCreditCardSubscriptions += 1
     }
     
     public func restorePurchase() {
