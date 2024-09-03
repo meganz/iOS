@@ -11,9 +11,6 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel)
     func dismiss(animated: Bool, completion: (() -> Void)?)
     func toggleFloatingPanel(containerViewModel: MeetingContainerViewModel)
-    func showEndMeetingOptions(presenter: UIViewController,
-                               meetingContainerViewModel: MeetingContainerViewModel,
-                               sender: UIButton)
     func showOptionsMenu(presenter: UIViewController, sender: UIBarButtonItem, isMyselfModerator: Bool, containerViewModel: MeetingContainerViewModel)
     func showShareChatLinkActivity(presenter: UIViewController?, sender: AnyObject, link: String, metadataItemSource: ChatLinkPresentationItemSource, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?)
     func renameChat()
@@ -203,16 +200,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             meetingParticipantsRouter?.showNavigation()
             return
         }
-    }
-    
-    func showEndMeetingOptions(presenter: UIViewController,
-                               meetingContainerViewModel: MeetingContainerViewModel,
-                               sender: UIButton) {
-        EndMeetingOptionsRouter(
-            presenter: presenter,
-            meetingContainerViewModel: meetingContainerViewModel,
-            sender: sender
-        ).start()
     }
     
     func showOptionsMenu(presenter: UIViewController,

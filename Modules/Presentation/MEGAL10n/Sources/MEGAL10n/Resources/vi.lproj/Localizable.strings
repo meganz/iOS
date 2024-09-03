@@ -1961,7 +1961,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Nhập địa chỉ email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Bạn có một lời đang chờ bạn hồi âm trên MEGA Chat. Đăng ký một tài khoản trên MEGA và nhận 20 GB không gian lưu trữ miễn phí vô thời hạn.";
+"contact.invite.message"="Xin chào, tham gia với tôi trên MEGA và tận hưởng không gian lưu trữ & công cụ giao tiếp được mã hóa miễn phí và an toàn.";
 /* Destination folder name of chat files */
 "My chat files"="Tệp đã gửi trong chát";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2631,9 +2631,9 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Tham gia vào dịch vụ lưu trữ điện toán đám mây lớn và an ninh nhất với nền tảng cộng tác toàn cầu.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Nhận 20 GB miễn phí";
+"meetings.joinMega.paragraph2.title"="Nhận lấy không gian lưu trữ đám mây miễn phí";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="Đăng ký ngay và tận hưởng các tính năng cộng tác hữu dụng và miễn phí.";
+"meetings.joinMega.paragraph2.description"="Đăng ký ngay và tận hưởng không gian lưu trữ hào phóng và các tính năng cộng tác hữu dụng và miễn phí.";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Bạn đã được chọn là người chủ trì mới";
 /* This message is shown when calling and the receiver is not picking up the call */

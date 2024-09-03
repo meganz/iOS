@@ -1961,7 +1961,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Voer e-mailadres in";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Er wacht een MEGA Gespreksverzoek. Registreer een account op MEGA en ontvang 20 GB gratis levenslange opslag.";
+"contact.invite.message"="Hallo, doe mee op MEGA en genieten van gratis, veilige gecodeerde opslag en communicatie.";
 /* Destination folder name of chat files */
 "My chat files"="Mijn gesprek bestanden";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2631,9 +2631,9 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Word lid van het grootste veilige cloud opslag- en samenwerkingsplatform ter wereld.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Krijg 20 GB gratis";
+"meetings.joinMega.paragraph2.title"="Ontvang gratis cloudopslag";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="Meld u nu aan en profiteer gratis van geavanceerde samenwerkingsfuncties.";
+"meetings.joinMega.paragraph2.description"="Meld u nu aan en geniet gratis van royale opslagruimte en geavanceerde samenwerkingskenmerken.";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="U bent de nieuwe gastvrouw/gastheer";
 /* This message is shown when calling and the receiver is not picking up the call */

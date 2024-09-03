@@ -230,16 +230,7 @@ final class MeetingContainerViewModel: ViewModelType {
     
     // MARK: - Private
     private func hangCall(presenter: UIViewController?, sender: UIButton?) {
-        if !accountUseCase.isGuest {
-            callManager.endCall(in: chatRoom, endForAll: false)
-        } else {
-            guard let presenter = presenter, let sender = sender else {
-                return
-            }
-            router.showEndMeetingOptions(presenter: presenter,
-                                         meetingContainerViewModel: self,
-                                         sender: sender)
-        }
+        callManager.endCall(in: chatRoom, endForAll: false)
     }
     
     private func endCallForAll() {
@@ -435,6 +426,7 @@ final class MeetingContainerViewModel: ViewModelType {
         guard call.changeType == .status else { return }
         switch call.status {
         case .terminatingUserParticipation, .destroyed:
+            manageCallTerminatedForGuestUserIfNeeded(call)
             manageCallTerminatedErrorIfNeeded(call)
         default:
             break
@@ -467,6 +459,14 @@ final class MeetingContainerViewModel: ViewModelType {
             }
         default:
             router.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    private func manageCallTerminatedForGuestUserIfNeeded(_ call: CallEntity) {
+        if call.status == .terminatingUserParticipation && accountUseCase.isGuest {
+            self.dispatch(.endGuestUserCall {
+                self.dispatch(.showJoinMegaScreen)
+            })
         }
     }
     
