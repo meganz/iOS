@@ -13,25 +13,25 @@ public protocol ImportPublicAlbumUseCaseProtocol: Sendable {
     func importAlbum(name: String, photos: [NodeEntity], parentFolder: NodeEntity) async throws
 }
 
-public struct ImportPublicAlbumUseCase<T: SaveAlbumToFolderUseCaseProtocol,
+public struct ImportPublicAlbumUseCase<T: SaveCollectionToFolderUseCaseProtocol,
                                        U: UserAlbumRepositoryProtocol>: ImportPublicAlbumUseCaseProtocol {
-    private let saveAlbumToFolderUseCase: T
+    private let saveCollectionToFolderUseCase: T
     private let userAlbumRepository: U
     
-    public init(saveAlbumToFolderUseCase: T,
+    public init(saveCollectionToFolderUseCase: T,
                 userAlbumRepository: U) {
-        self.saveAlbumToFolderUseCase = saveAlbumToFolderUseCase
+        self.saveCollectionToFolderUseCase = saveCollectionToFolderUseCase
         self.userAlbumRepository = userAlbumRepository
     }
     
     public func importAlbum(name: String, photos: [NodeEntity], parentFolder: NodeEntity) async throws {
-        let copiedPhotos = try await saveAlbumToFolderUseCase.saveToFolder(albumName: name,
-                                                                           photos: photos,
+        let copiedNodes = try await saveCollectionToFolderUseCase.saveToFolder(collectionName: name,
+                                                                           nodes: photos,
                                                                            parent: parentFolder)
         try Task.checkCancellation()
         let album = try await userAlbumRepository.createAlbum(name)
         try Task.checkCancellation()
         _ = try await userAlbumRepository.addPhotosToAlbum(by: album.id,
-                                                           nodes: copiedPhotos)
+                                                           nodes: copiedNodes)
     }
 }

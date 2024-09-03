@@ -8,9 +8,9 @@ final class ImportPublicAlbumUseCaseTests: XCTestCase {
     
     func testImportAlbum_saveFolderFails_shouldThrowException() async {
         let failure = CreateFolderErrorEntity.businessExpired
-        let saveAlbumToFolderUseCase = MockSaveAlbumToFolderUseCase(
+        let saveCollectionToFolderUseCase = MockSaveCollectionToFolderUseCase(
             saveToFolderResult: .failure(failure))
-        let sut = makeSaveAlbumToFolderUseCase(saveAlbumToFolderUseCase: saveAlbumToFolderUseCase)
+        let sut = makeImportPublicAlbumUseCase(saveCollectionToFolderUseCase: saveCollectionToFolderUseCase)
         await XCTAsyncAssertThrowsError(try await sut.importAlbum(name: albumName,
                                                                   photos: [],
                                                                   parentFolder: parentFolder)
@@ -21,13 +21,13 @@ final class ImportPublicAlbumUseCaseTests: XCTestCase {
     
     func testImportAlbum_onSaveToFolderAndAlbumPhotosAdded_shouldCompleteWithoutError() async throws {
         let photos = makePhotos()
-        let saveAlbumToFolderUseCase = MockSaveAlbumToFolderUseCase(
+        let saveCollectionToFolderUseCase = MockSaveCollectionToFolderUseCase(
             saveToFolderResult: .success(photos))
         let createdAlbum = SetEntity(handle: 1, name: albumName)
         let addPhotosResult = AlbumElementsResultEntity(success: UInt(photos.count), failure: 0)
         let userRepository = MockUserAlbumRepository(createAlbumResult: .success(createdAlbum),
                                                      addPhotosResult: .success(addPhotosResult))
-        let sut = makeSaveAlbumToFolderUseCase(saveAlbumToFolderUseCase: saveAlbumToFolderUseCase,
+        let sut = makeImportPublicAlbumUseCase(saveCollectionToFolderUseCase: saveCollectionToFolderUseCase,
                                                userAlbumRepository: userRepository)
         
         try await sut.importAlbum(name: albumName,
@@ -36,11 +36,11 @@ final class ImportPublicAlbumUseCaseTests: XCTestCase {
     }
     
     func testImportAlbum_onAlbumCreationFailed_shouldThrowError() async {
-        let saveAlbumToFolderUseCase = MockSaveAlbumToFolderUseCase(
+        let saveCollectionToFolderUseCase = MockSaveCollectionToFolderUseCase(
             saveToFolderResult: .success(makePhotos()))
         
         let userRepository = MockUserAlbumRepository(createAlbumResult: .failure(GenericErrorEntity()))
-        let sut = makeSaveAlbumToFolderUseCase(saveAlbumToFolderUseCase: saveAlbumToFolderUseCase,
+        let sut = makeImportPublicAlbumUseCase(saveCollectionToFolderUseCase: saveCollectionToFolderUseCase,
                                                userAlbumRepository: userRepository)
         
         await XCTAsyncAssertThrowsError(try await sut.importAlbum(name: albumName,
@@ -52,12 +52,12 @@ final class ImportPublicAlbumUseCaseTests: XCTestCase {
     }
     
     func testImportAlbum_onAlbumPhotosAddedFailed_shouldThrowError() async {
-        let saveAlbumToFolderUseCase = MockSaveAlbumToFolderUseCase(
+        let saveCollectionToFolderUseCase = MockSaveCollectionToFolderUseCase(
             saveToFolderResult: .success(makePhotos()))
         
         let userRepository = MockUserAlbumRepository(createAlbumResult: .success(SetEntity(handle: 5)),
                                                      addPhotosResult: .failure(GenericErrorEntity()))
-        let sut = makeSaveAlbumToFolderUseCase(saveAlbumToFolderUseCase: saveAlbumToFolderUseCase,
+        let sut = makeImportPublicAlbumUseCase(saveCollectionToFolderUseCase: saveCollectionToFolderUseCase,
                                                userAlbumRepository: userRepository)
         
         await XCTAsyncAssertThrowsError(try await sut.importAlbum(name: albumName,
@@ -70,11 +70,11 @@ final class ImportPublicAlbumUseCaseTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSaveAlbumToFolderUseCase(
-        saveAlbumToFolderUseCase: some SaveAlbumToFolderUseCaseProtocol = MockSaveAlbumToFolderUseCase(),
+    private func makeImportPublicAlbumUseCase(
+        saveCollectionToFolderUseCase: some SaveCollectionToFolderUseCaseProtocol = MockSaveCollectionToFolderUseCase(),
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository()
     ) -> some ImportPublicAlbumUseCaseProtocol {
-        ImportPublicAlbumUseCase(saveAlbumToFolderUseCase: saveAlbumToFolderUseCase,
+        ImportPublicAlbumUseCase(saveCollectionToFolderUseCase: saveCollectionToFolderUseCase,
                                  userAlbumRepository: userAlbumRepository)
     }
     

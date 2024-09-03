@@ -64,9 +64,9 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         let nodeRepository: NodeRepository = .newRepo
         
         let importAlbumUseCase = ImportPublicAlbumUseCase(
-            saveAlbumToFolderUseCase: SaveAlbumToFolderUseCase(
+            saveCollectionToFolderUseCase: SaveCollectionToFolderUseCase(
                 nodeActionRepository: NodeActionRepository.newRepo,
-                shareAlbumRepository: shareAlbumRepository,
+                shareCollectionRepository: shareAlbumRepository,
                 nodeRepository: nodeRepository),
             userAlbumRepository: userAlbumRepository)
         
