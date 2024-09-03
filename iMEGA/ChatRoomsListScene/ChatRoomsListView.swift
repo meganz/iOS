@@ -78,7 +78,10 @@ struct ChatRoomsListView: View {
     @ViewBuilder
     func emptyView(state: ChatRoomsEmptyViewState) -> some View {
         if viewModel.showNewEmptyScreen {
-            NewChatRoomsEmptyView(state: state)
+            NewChatRoomsEmptyView(
+                state: state,
+                topPadding: 100
+            )
         } else {
             ChatRoomsEmptyView(emptyViewState: state)
         }

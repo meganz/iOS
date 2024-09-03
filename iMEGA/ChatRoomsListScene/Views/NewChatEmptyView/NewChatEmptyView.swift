@@ -4,7 +4,7 @@ import SwiftUI
 
 struct NewChatRoomsEmptyView: View {
     var state: ChatRoomsEmptyViewState
-    var maxHeight: CGFloat = 50
+    var topPadding: CGFloat = 0
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -13,12 +13,9 @@ struct NewChatRoomsEmptyView: View {
         VStack(
             spacing: 0
         ) {
-            // making sure description is not clipped in:
-            // 1. iPhone landscape
-            // 2. ContactsViewController table footer view
-            if maxHeight > 0 && verticalSizeClass != .compact {
+            if topPadding > 0 && verticalSizeClass != .compact {
                 Spacer()
-                    .frame(maxHeight: maxHeight)
+                    .frame(height: topPadding)
             } else {
                 Spacer()
             }

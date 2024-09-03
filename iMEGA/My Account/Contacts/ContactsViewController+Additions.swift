@@ -139,7 +139,7 @@ extension ContactsViewController {
         )
         let view = NewChatRoomsEmptyView(
             state: state,
-            maxHeight: 0.0
+            topPadding: 55.0
         )
         let hostingVC = UIHostingController(rootView: view)
         hostingVC.view.backgroundColor = .clear
