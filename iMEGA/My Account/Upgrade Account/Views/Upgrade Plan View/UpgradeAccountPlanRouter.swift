@@ -33,7 +33,8 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
             accountDetails: accountDetails,
             accountUseCase: accountUseCase,
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            viewType: viewType, 
+            subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
+            viewType: viewType,
             router: self
         )
         

@@ -220,10 +220,10 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CancellationSurveyViewModel {
-        let subscriptionsUsecase = MockSubscriptionsUsecase(requestResult: requestResult)
+        let subscriptionsUseCase = MockSubscriptionsUseCase(requestResult: requestResult)
         let sut = CancellationSurveyViewModel(
             subscription: currentSubscription,
-            subscriptionsUsecase: subscriptionsUsecase,
+            subscriptionsUseCase: subscriptionsUseCase,
             cancelAccountPlanRouter: mockRouter,
             tracker: mockTracker
         )

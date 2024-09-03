@@ -4,7 +4,6 @@ public protocol AccountPlanPurchaseRepositoryProtocol: RepositoryProtocol, Senda
     func accountPlanProducts() async -> [PlanEntity]
     func restorePurchase()
     func purchasePlan(_ plan: PlanEntity) async
-    func cancelCreditCardSubscriptions(reason: String?) async throws
     
     var successfulRestorePublisher: AnyPublisher<Void, Never> { get }
     var incompleteRestorePublisher: AnyPublisher<Void, Never> { get }

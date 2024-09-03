@@ -221,15 +221,20 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         planList: [PlanEntity] = [],
         viewType: UpgradeAccountPlanViewType = .upgrade
     ) -> UpgradeAccountPlanViewModel {
+        let mockSubscriptionsUseCase = MockSubscriptionsUseCase()
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         let mockAccountUseCase = MockAccountUseCase(currentAccountDetails: currentAccountDetails)
         let sut = UpgradeAccountPlanViewModel(
             accountDetails: accountDetails,
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
+            subscriptionsUseCase: mockSubscriptionsUseCase,
             viewType: viewType,
             router: MockUpgradeAccountPlanRouter()
         )
+        trackForMemoryLeaks(on: mockSubscriptionsUseCase)
+        trackForMemoryLeaks(on: mockPurchaseUseCase)
+        trackForMemoryLeaks(on: sut)
         return sut
     }
 }

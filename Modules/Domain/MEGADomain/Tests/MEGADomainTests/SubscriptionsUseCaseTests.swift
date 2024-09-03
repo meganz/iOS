@@ -4,32 +4,34 @@ import MEGATest
 import XCTest
 
 final class SubscriptionsUseCaseTests: XCTestCase {
+    private func makeSUT(requestResult: Result<Void, AccountErrorEntity>) -> SubscriptionsUseCase {
+        let mockRepo = MockSubscriptionRepository(requestResult: requestResult)
+        return SubscriptionsUseCase(repo: mockRepo)
+    }
+    
+    private func testCancelSubscription(expectedResult: Result<Void, AccountErrorEntity>) async throws {
+        let sut = makeSUT(requestResult: expectedResult)
+        
+        return try await sut.cancelSubscriptions(
+            reason: "Test reason",
+            subscriptionId: "123ABC",
+            canContact: Bool.random()
+        )
+    }
 
     func testCancelSubscriptions_successRequest_shouldNotThrowError() async {
-        let mockRepo = MockSubscriptionRepository(requestResult: .success)
-        let sut = SubscriptionsUsecase(repo: mockRepo)
-        
         await XCTAsyncAssertNoThrow(
-            try await sut.cancelSubscriptions(
-                reason: "Test reason",
-                subscriptionId: "123ABC",
-                canContact: Bool.random()
-            )
+            try await testCancelSubscription(expectedResult: .success)
         )
     }
     
     func testCancelSubscriptions_failedRequest_shouldThrowGenericError() async {
-        let mockRepo = MockSubscriptionRepository(requestResult: .failure(.generic))
-        let sut = SubscriptionsUsecase(repo: mockRepo)
+        let error: AccountErrorEntity = .generic
         
         await XCTAsyncAssertThrowsError(
-            try await sut.cancelSubscriptions(
-                reason: "Test reason",
-                subscriptionId: "123ABC",
-                canContact: Bool.random()
-            )
+            try await testCancelSubscription(expectedResult: .failure(error))
         ) { errorThrown in
-            XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+            XCTAssertEqual(errorThrown as? AccountErrorEntity, error)
         }
     }
 }

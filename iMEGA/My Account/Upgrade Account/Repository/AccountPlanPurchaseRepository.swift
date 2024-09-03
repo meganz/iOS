@@ -67,19 +67,6 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         purchase.purchaseProduct(productPlan)
     }
     
-    func cancelCreditCardSubscriptions(reason: String?) async throws {
-        try await withAsyncThrowingValue { (completion: @escaping (Result<Void, Error>) -> Void) in
-            sdk.creditCardCancelSubscriptions(reason, delegate: RequestDelegate(completion: { result in
-                switch result {
-                case .failure:
-                    completion(.failure(AccountErrorEntity.generic))
-                case .success:
-                    completion(.success)
-                }
-            }))
-        }
-    }
-    
     func accountPlanProducts() async -> [PlanEntity] {
         guard let products = purchase.products as? [SKProduct] else { return [] }
 

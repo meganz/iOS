@@ -165,12 +165,8 @@
     
     if (canCancelSubscription) {
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"no", @"") style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"yes", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [MEGASdk.shared creditCardCancelSubscriptions:nil delegate:[RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nullable request, MEGAError * _Nullable error) {
-                if (!error) {
-                    [[MEGAPurchase sharedInstance] purchaseProduct:product];
-                }
-            }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"yes", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {            
+            [self cancelCreditCardSubscriptionsBeforeContinuePurchasingProduct:product];
         }]];
     } else {
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];

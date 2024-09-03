@@ -613,13 +613,15 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     func testCancelActiveSubscription_shouldCancelSubscription_shouldSuccessValidateSubscription() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionStatus: .valid, subscriptionMethodId: cancellableSubscriptionMethod)
         let expectedAccountPlan = AccountDetailsEntity.build(proLevel: .proI, subscriptionStatus: .none, subscriptionMethodId: .balance)
-        let (sut, mockPurchaseUseCase) = makeSUT(
+        let mockSubscriptionsUseCase = MockSubscriptionsUseCase(requestResult: .success)
+        let (sut, _) = makeSUT(
+            subscriptionsUseCase: mockSubscriptionsUseCase,
             accountDetails: details,
             accountDetailsResult: .success(expectedAccountPlan)
         )
         
         await sut.cancelActiveCancellableSubscription()
-        XCTAssertTrue(mockPurchaseUseCase.cancelCreditCardSubscriptions == 1)
+        XCTAssertTrue(mockSubscriptionsUseCase.cancelSubscriptions_calledTimes == 1)
         
         do {
             try sut.validateActiveSubscriptions()
@@ -708,7 +710,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Ads
-    
+    @MainActor
     func testSetupExternalAds_adsEnabledAndExternalAdsDisabled_shouldBeFalse() async {
         let (sut, _) = makeSUT(
             accountDetails: AccountDetailsEntity.build(proLevel: .free),
@@ -720,6 +722,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isExternalAdsActive)
     }
     
+    @MainActor
     func testSetupExternalAds_adsEnabledAndExternalAdsEnabled_shouldBeTrue() async {
         let (sut, _) = makeSUT(
             accountDetails: AccountDetailsEntity.build(proLevel: .free),
@@ -759,11 +762,12 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     
     func testViewLoad_shouldTrackScreenViewEvent() {
         let harness = Harness()
-        
+        harness.testViewOnLoad()
     }
     
     // MARK: - Helper
     func makeSUT(
+        subscriptionsUseCase: SubscriptionsUseCaseProtocol = MockSubscriptionsUseCase(requestResult: .failure(.generic)),
         accountDetails: AccountDetailsEntity,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [PlanEntity] = [],
@@ -771,6 +775,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         tracker: MockTracker = MockTracker(),
         viewType: UpgradeAccountPlanViewType = .upgrade
     ) -> (UpgradeAccountPlanViewModel, MockAccountPlanPurchaseUseCase) {
+        let mockSubscriptionsUseCase = MockSubscriptionsUseCase(requestResult: .success)
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         let mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
         let router = MockUpgradeAccountPlanRouter()
@@ -778,6 +783,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             accountDetails: accountDetails,
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
+            subscriptionsUseCase: subscriptionsUseCase,
             abTestProvider: abTestProvider,
             tracker: tracker,
             viewType: viewType,

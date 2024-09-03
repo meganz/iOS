@@ -73,7 +73,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     func makeCancellationSurveyViewModel() -> CancellationSurveyViewModel {
         CancellationSurveyViewModel(
             subscription: currentSubscription,
-            subscriptionsUsecase: SubscriptionsUsecase(repo: SubscriptionsRepository.newRepo),
+            subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
             cancelAccountPlanRouter: router)
     }
 }

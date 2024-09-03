@@ -597,10 +597,6 @@ public final class MockSdk: MEGASdk {
         _accountDetails(self, delegate)
     }
     
-    public override func creditCardCancelSubscriptions(_ reason: String?, delegate: MEGARequestDelegate) {
-        processRequestResult(delegate: delegate)
-    }
-    
     public override func creditCardCancelSubscriptions(_ reason: String?, subscriptionId: String?, canContact: Bool, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }

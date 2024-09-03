@@ -161,27 +161,4 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         sut.failedPurchase(expectedError.errorCode, message: expectedError.errorMessage)
         wait(for: [exp], timeout: 1)
     }
-    
-    // MARK: - Cancel active subscriptions
-    func testCancelCreditCardSubscription_successRequest_shouldNotThrowError() async throws {
-        let mockSdk = MockSdk(requestResult: .success(MockRequest(handle: 1)))
-        let sut = AccountPlanPurchaseRepository(purchase: MockMEGAPurchase(), sdk: mockSdk)
-        
-        do {
-            try await sut.cancelCreditCardSubscriptions(reason: nil)
-        } catch {
-            XCTFail("Error is not expected.")
-        }
-    }
-    
-    func testCancelCreditCardSubscription_receiveError_shouldThrowGenericError() async throws {
-        let mockSdk = MockSdk(requestResult: .failure(MockError.failingError))
-        let sut = AccountPlanPurchaseRepository(purchase: MockMEGAPurchase(), sdk: mockSdk)
-        
-        do {
-            try await sut.cancelCreditCardSubscriptions(reason: nil)
-        } catch {
-            XCTAssertEqual(error as? AccountErrorEntity, AccountErrorEntity.generic)
-        }
-    }
 }
