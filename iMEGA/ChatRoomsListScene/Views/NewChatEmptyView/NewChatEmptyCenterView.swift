@@ -8,7 +8,7 @@ struct NewChatRoomsEmptyCenterView: View {
     let state: ChatRoomsEmptyCenterViewState
     
     var body: some View {
-        VStack {
+        VStack(spacing: 24) {
             if verticalSizeClass != .compact {
                 Image(state.image)
                     .resizable()
@@ -19,7 +19,6 @@ struct NewChatRoomsEmptyCenterView: View {
             
             Text(state.title)
                 .font(.body.bold())
-                .padding(.bottom, 5)
                 .foregroundColor(TokenColors.Text.primary.swiftUI)
             
             if let description = state.description {
@@ -31,15 +30,14 @@ struct NewChatRoomsEmptyCenterView: View {
                 )
                 .multilineTextAlignment(.center)
                 // line below is needed for tappable link to work
-                    .textSelection(.enabled)
-                    .multilineTextAlignment(.center)
-                    .environment(\.openURL, OpenURLAction { _ in
-                        state.linkTapped?()
-                        return .handled
-                    })
-                    .font(.callout)
-                    .tint(TokenColors.Text.secondary.swiftUI)
-                    .foregroundColor(TokenColors.Text.secondary.swiftUI)
+                .textSelection(.enabled)
+                .environment(\.openURL, OpenURLAction { _ in
+                    state.linkTapped?()
+                    return .handled
+                })
+                .font(.callout)
+                .tint(TokenColors.Text.secondary.swiftUI)
+                .foregroundColor(TokenColors.Text.secondary.swiftUI)
             }
         }
     }
