@@ -86,6 +86,9 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         Task {
             do {
                 try await AppStore.showManageSubscriptions(in: scene)
+                
+                /// Dismiss cancellation flow after closing Manage subscription page
+                dismissCancellationFlow()
             } catch {
                 openAppleIDSubscriptionsPage()
             }
