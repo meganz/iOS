@@ -1961,7 +1961,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Wprowadź adres e-mail";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Masz oczekujące żądanie czatu MEGA. Zarejestruj konto na MEGA i uzyskaj 20 GB darmowej przestrzeni dyskowej na cały okres użytkowania.";
+"contact.invite.message"="Cześć, dołącz do mnie na MEGA i ciesz się darmową, bezpiecznią szyfrowany pamięcią i komunikacją.";
 /* Destination folder name of chat files */
 "My chat files"="Moje pliki czatu";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2631,9 +2631,9 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Dołącz do największej na świecie platformy bezpiecznego przechowywania danych i współpracy w chmurze.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Uzyskaj 20 GB za darmo";
+"meetings.joinMega.paragraph2.title"="Uzyskaj bezpłatną pamięć w chmurze";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="Zarejestruj się teraz i korzystaj z zaawansowanych funkcji współpracy za darmo.";
+"meetings.joinMega.paragraph2.description"="Zarejestruj się teraz i ciesz się dużą pamięcią i zaawansowanymi funkcjami współpracy za darmo.";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Jesteś nowym prowadzącym";
 /* This message is shown when calling and the receiver is not picking up the call */

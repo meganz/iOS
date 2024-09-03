@@ -2228,7 +2228,6 @@
 		BF2675E92A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675E82A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift */; };
 		BF29179D2A9D8DD800A59D12 /* ChatRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF29179C2A9D8DD800A59D12 /* ChatRepo */; };
 		BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */; };
-		BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */; };
 		BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */; };
 		BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */; };
 		BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30EF3D2BB56942004B5EBF /* NoInternetViewModelTests.swift */; };
@@ -2439,10 +2438,6 @@
 		BFAFB17F252AD1D9003ADFE3 /* DocAndAudioListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */; };
 		BFAFB1A0252C0A66003ADFE3 /* NodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */; };
 		BFB076572B8EE91D00FE6962 /* ContextMenuWithButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB076562B8EE91D00FE6962 /* ContextMenuWithButtonView.swift */; };
-		BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */; };
-		BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */; };
-		BFB33D90263B922F006E203D /* EndMeetingOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8C263B922F006E203D /* EndMeetingOptionsRouter.swift */; };
-		BFB33D91263B922F006E203D /* EndMeetingOptionsViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFB33D8D263B922F006E203D /* EndMeetingOptionsViewViewController.xib */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E82433394500FB90B9 /* ChatMessage.swift */; };
 		BFB463EB2433FD6A00FB90B9 /* MegaDataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463EA2433FD6A00FB90B9 /* MegaDataFormatter.swift */; };
@@ -5089,7 +5084,6 @@
 		BF2675DC2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationFrequencyOption.swift; sourceTree = "<group>"; };
 		BF2675E82A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingSelectedFrequencyDetails.swift; sourceTree = "<group>"; };
 		BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInProgressTimeReporting.swift; sourceTree = "<group>"; };
-		BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingFloatingPanelViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatMessage+Additions.swift"; sourceTree = "<group>"; };
 		BF30EF3D2BB56942004B5EBF /* NoInternetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetViewModelTests.swift; sourceTree = "<group>"; };
@@ -5278,10 +5272,6 @@
 		BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocAndAudioListSource.swift; sourceTree = "<group>"; };
 		BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeTableViewCell.xib; sourceTree = "<group>"; };
 		BFB076562B8EE91D00FE6962 /* ContextMenuWithButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuWithButtonView.swift; sourceTree = "<group>"; };
-		BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewModel.swift; sourceTree = "<group>"; };
-		BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewViewController.swift; sourceTree = "<group>"; };
-		BFB33D8C263B922F006E203D /* EndMeetingOptionsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsRouter.swift; sourceTree = "<group>"; };
-		BFB33D8D263B922F006E203D /* EndMeetingOptionsViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EndMeetingOptionsViewViewController.xib; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E82433394500FB90B9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		BFB463EA2433FD6A00FB90B9 /* MegaDataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaDataFormatter.swift; sourceTree = "<group>"; };
@@ -10131,7 +10121,6 @@
 			children = (
 				2F879C4D2629251200D2FA78 /* EncourageGuestUserToJoinMegaScene */,
 				831889532ADEC5A600658277 /* EndCallDialog */,
-				BFB33D89263B922F006E203D /* EndMeetingOptions */,
 				83850A3B26B2AACC00C62304 /* EnterMeetingLinkScene */,
 				BF66DFDB2613E73E00066F35 /* FloatingPanel */,
 				83135B262862120F0015AE2F /* HangOrEndCallScene */,
@@ -12857,17 +12846,6 @@
 			path = ParticpiantInfo;
 			sourceTree = "<group>";
 		};
-		BFB33D89263B922F006E203D /* EndMeetingOptions */ = {
-			isa = PBXGroup;
-			children = (
-				BFB33D8C263B922F006E203D /* EndMeetingOptionsRouter.swift */,
-				BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */,
-				BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */,
-				BFB33D8D263B922F006E203D /* EndMeetingOptionsViewViewController.xib */,
-			);
-			path = EndMeetingOptions;
-			sourceTree = "<group>";
-		};
 		BFB464172435831900FB90B9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -13005,7 +12983,6 @@
 				998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */,
 				998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */,
 				BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */,
-				BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */,
 				BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */,
 				BFC9B6B62A282151009AA403 /* FutureMeetingSectionTests.swift */,
 				BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */,
@@ -14190,7 +14167,6 @@
 				83784A202B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib in Resources */,
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
-				BFB33D91263B922F006E203D /* EndMeetingOptionsViewViewController.xib in Resources */,
 				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
 				BF5E33922558D2890055395E /* FileExplorerGridCell.xib in Resources */,
 				C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */,
@@ -15073,9 +15049,6 @@
 				2FDDC6242630DE100060E02A /* EncourageGuestUserToJoinMegaViewModel.swift in Sources */,
 				BF5455E92844377600544A53 /* EndCallDialog.swift in Sources */,
 				BFE3BA40285BD6F9003949FF /* EndCallDialogType.swift in Sources */,
-				BFB33D90263B922F006E203D /* EndMeetingOptionsRouter.swift in Sources */,
-				BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */,
-				BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */,
 				0E72E1262A2841CE00C900F9 /* EnforceCopyrightWarningView.swift in Sources */,
 				0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */,
 				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
@@ -16728,7 +16701,6 @@
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
 				274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */,
 				B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */,
-				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
 				0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */,
 				B569A2C72C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift in Sources */,
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,

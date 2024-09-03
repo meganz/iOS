@@ -1961,7 +1961,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="メールアドレスを入力";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="待機中のMEGAチャット要求があります。MEGAにアカウントをご登録いただくと、20 GBの生涯無料ストレージが得られます。";
+"contact.invite.message"="こんにちは。MEGAに参加して、安全に暗号化されたストレージとコミュニケーションを、無料で楽しみましょう。";
 /* Destination folder name of chat files */
 "My chat files"="私のチャットファイル";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2631,9 +2631,9 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="世界最大の安全なクラウドストレージとコラボレーションプラットフォームにご参加ください。";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="20 GBを無料で入手";
+"meetings.joinMega.paragraph2.title"="無料クラウドストレージを入手";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="今すぐ登録して、高度なコラボレーション機能を無料でお楽しみください。";
+"meetings.joinMega.paragraph2.description"="今すぐ登録して、大容量ストレージと高度なコラボレーション機能を無料でお楽しみください。";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="あなたは新しい主催者です";
 /* This message is shown when calling and the receiver is not picking up the call */

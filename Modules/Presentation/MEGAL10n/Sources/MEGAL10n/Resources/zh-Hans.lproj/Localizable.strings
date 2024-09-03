@@ -1961,7 +1961,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="输入电子邮件地址";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="您有一条MEGA chat消息等待查收。注册MEGA帐户即可获得20 GB永久免费存储空间。";
+"contact.invite.message"="嗨，与我一起加入MEGA，享受免费、安全加密的存储和交流。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2631,9 +2631,9 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="加入全球最大的安全云存储和协作平台。";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="获得20 GB免费存储空间";
+"meetings.joinMega.paragraph2.title"="获取免费云端存储";
 /* Guest user join Mega: paragraph 2 description */
-"meetings.joinMega.paragraph2.description"="立即注册并免费享受全球领先的协作平台。";
+"meetings.joinMega.paragraph2.description"="立即注册，并免费享受充足的存储空间和高级协作功能。";
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="您是新的主持人";
 /* This message is shown when calling and the receiver is not picking up the call */

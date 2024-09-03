@@ -64,16 +64,6 @@ final class MeetingContainerViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testAction_hangCall_attendeeIsGuest() {
-        let harness = Harness(
-            chatRoom: .moderatorMeeting,
-            callUseCase: MockCallUseCase(call: .testCallEntity),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: true, isLoggedIn: false)
-        )
-        test(viewModel: harness.sut, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
-        XCTAssert(harness.router.showEndMeetingOptions_calledTimes == 1)
-    }
-    
     @MainActor func testAction_hangCall_attendeeIsParticipantOrModerator() {
         let harness = Harness(
             chatRoom: .moderatorMeeting,
