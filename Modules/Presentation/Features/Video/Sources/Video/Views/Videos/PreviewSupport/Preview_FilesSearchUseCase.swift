@@ -51,6 +51,6 @@ struct Preview_PhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
     }
     
     func media(for filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool?, searchText: String?, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
-        []
+        [ .preview ]
     }
 }
