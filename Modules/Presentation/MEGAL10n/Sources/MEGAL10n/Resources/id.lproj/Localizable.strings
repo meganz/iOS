@@ -85,7 +85,7 @@
 /* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Sudah punya akun?";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Buat Akun";
+"createAccount"="Daftar";
 /* Message on login screen for Create Account */
 "account.login.newToMega"="Baru di MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Anda harus setuju bahwa anda memahami bahaya kehilangan kata sandi anda";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Alamat email ini telah mendaftarkan akun dengan MEGA";
+"emailAlreadyRegistered"="Alamat email ini telah mendaftar untuk akun dengan MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Menunggu konfirmasi email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -707,7 +707,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Tidak ada alamat email tersedia pada perangkat anda";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Privacy and Data Policy";
+"privacyPolicyLabel"="Kebijakan Privasi dan Data";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Kebijakan Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -975,9 +975,9 @@
 /*  */
 "howItWorks"="Cara kerja";
 /*  */
-"howItWorksMain"="Teman anda harus mendaftar akun gratis MEGA dan [S]install setidaknya satu aplikasi klien MEGA [/S] (antara Aplikasi Desktop MEGA atau salah satu Aplikasi Mobile MEGA kami)";
+"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
 /*  */
-"howItWorksSecondary"="Anda dapat mengabarkan teman anda melalui metoda apapun. Anda akan menerima kuota jika anda telah memasukan email teman anda disini sebelum mereka mendaftar dengan email tersebut.";
+"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Anda tidak akan menerima kredit untuk mengundang seseorang yang telah menggunakan MEGA sebelumnya dan anda tidak akan dikabari tentang penolakkan tersebut.";
 /* Header of block with achievements bonuses. */
@@ -1484,6 +1484,8 @@
 "versions"="Versi";
 /* Title label of a node property. */
 "cloudDrive.info.node.location"="Lokasi";
+/* Title label of when there is no location info available. */
+"cloudDrive.info.node.noLocation"="Tidak ada informasi lokasi";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Ukuran total";
 /* Refers to the type of a file or folder. */
@@ -1657,7 +1659,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Foto Anda di Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Unggahan Kamera adalah fitur penting untuk perangkat seluler apa pun dan kami telah melindungi anda. Buat akun anda sekarang.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Unggahan kamera adalah fitur penting untuk perangkat seluler apa pun dan kami siap membantu anda. Mendaftar untuk akun sekarang.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Siapkan MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2913,7 +2915,9 @@
 /* Title of the dialog button to discard a report. */
 "help.reportIssue.discardReport"="Buang Laporan";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describe"="Harap jelaskan masalah yang anda temui. Semakin banyak detail yang anda berikan, semakin mudah bagi kami untuk menyelesaikannya. Kiriman anda akan ditinjau oleh tim pengembangan kami.";
+"help.reportIssue.describe"="Your feedback helps us improve MEGA. Please clearly describe the issue you’ve experienced. The more details you provide, the easier it will be for us to resolve.";
+/* Label to indicate that users' input has not reached the required minimum characters */
+"help.reportIssue.minCharacterNotReach.error"="Description must be at least 10 characters";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
 "help.reportIssue.sendLogFile"="Kirim Log File";
 /* Title to indicate that the bug report is being uploaded to our support team. */
@@ -2933,7 +2937,7 @@
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Masalah ini tidak akan dilaporkan jika anda membatalkan pengunggahan.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describeIssue.placeholder"="Jelaskan masalahnya";
+"help.reportIssue.describeIssue.placeholder"="Describe the issue with at least 10 characters";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Tidak dapat terhubung ke internet. Periksa koneksi anda dan coba lagi.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
@@ -3107,7 +3111,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Akun MEGA anda telah ditangguhkan karena dugaan berulang pelanggaran hak cipta. Ini berarti anda tidak dapat mengakses akun atau data anda di dalamnya.\n\nPeriksa kotak masuk email anda untuk informasi lebih lanjut tentang cara mengajukan pemberitahuan balasan.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.\n\nAnda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftarkan akun MEGA baru.";
+"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to sign up for a new MEGA account.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Buka aplikasi MEGA dan masuk untuk melanjutkan.";
 /* Account Storage title label of used storage size */
@@ -3915,7 +3919,7 @@
 /* Videos: video tab title playlists */
 "videos.tab.title.playlist"="Daftar putar";
 /* Videos: video content empty state */
-"videos.tab.all.content.emptyState"="Tidak ada video";
+"videos.tab.all.content.emptyState"="Video tidak ditemukan";
 /* Videos: videos filter title for location */
 "videos.tab.all.filter.location.title.location"="Lokasi";
 /* Videos: videos filter option for all locations */
@@ -4300,3 +4304,37 @@
 "call.shareOptions.share"="Bagikan";
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="Batal";
+/* Title for empty chats tab */
+"chat.chats.emptyState.v2.title"="Keep conversations private";
+/* Description for empty chats tab */
+"chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private. [A]Learn more[/A]";
+/* Title for invite button on the empty chat screen */
+"chat.chats.emptyState.v2.button.invite.title"="Undang teman";
+/* Description in new chat screen empty screen mode when user has no contacts */
+"chat.newChat.emptyState.description"="With top-notch security and verification codes, reach out without fear of scams, data mining, or information theft";
+/* Toast message shown to the user when the node description is added */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Deskripsi ditambahkan";
+/* Toast message shown to the user when the node description is removed */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description removed";
+/* Toast message shown to the user when the node description is updated */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Deskripsi diperbarui";
+/* Title of the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+/* Message in the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
+/* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="Membuang perubahan";
+/* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="Terus ubah";
+/* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Save and close";
+/* Toast message shown to the user when the node description update failed. */
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Error updating description, try again";
+/* New chat page title */
+"chat.newChat.title"="Obrolan baru";
+/* Visual media search history section title */
+"photos.searchHistory.section.title"="Pencarian baru-baru ini";
+/* Title of the invite contact page */
+"inviteContact.title"="Undang";
+/* Visual media search history empty description */
+"photos.searchHistory.empty.description"="Try searching for any media files.";

@@ -85,7 +85,7 @@
 /* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Avez-vous déjà un compte ?";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Créer un compte";
+"createAccount"="M’inscrire";
 /* Message on login screen for Create Account */
 "account.login.newToMega"="Première fois sur MEGA ?";
 /* Button title which triggers the action to join meeting as Guest */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Vous devez attester que vous comprenez le danger que représente la perte de votre mot de passe";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Un compte MEGA a déjà été créé avec cette adresse courriel";
+"emailAlreadyRegistered"="Cette adresse e-mail est déjà inscrite pour un compte avec MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="En attente de la confirmation par courriel.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -501,7 +501,7 @@
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Les Téléversements de l’appareil photo sont activés";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Les Téléversements de l’appareil photo sont terminés";
+"cameraUploadsComplete"="Les téléversements de l’appareil photo sont terminés";
 /* Message shown while uploading files. Singular. */
 "cameraUploadsPendingFile"="Téléversement en cours, 1 fichier en attente";
 /* Message shown while uploading files. Plural. */
@@ -975,9 +975,9 @@
 /*  */
 "howItWorks"="Fonctionnement";
 /*  */
-"howItWorksMain"="Votre amie ou ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application client MEGA[/S] (soit l’appli MEGA pour ordinateur, soit l’une de nos applis MEGA mobiles)";
+"howItWorksMain"="Votre ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application MEGA[/S] (soit l’appli MEGA pour ordinateur, soit l’une de nos applis MEGA mobiles)";
 /*  */
-"howItWorksSecondary"="Vous pouvez contacter votre amie ou ami de n’importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l’adresse courriel de votre amie ou ami avant que cette personne ne s’inscrive avec cette adresse.";
+"howItWorksSecondary"="Vous pouvez informer votre ami par n'importe quelle méthode. Vous gagnerez la prime si vous avez saisi le courriel de votre ami ici avant qu'il ne s'inscriive avec cette adresse.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu’un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
 /* Header of block with achievements bonuses. */
@@ -1484,6 +1484,8 @@
 "versions"="Versions";
 /* Title label of a node property. */
 "cloudDrive.info.node.location"="Emplacement";
+/* Title label of when there is no location info available. */
+"cloudDrive.info.node.noLocation"="Aucun renseignement sur la position";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Taille totale";
 /* Refers to the type of a file or folder. */
@@ -1657,7 +1659,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Vos photos dans le nuage";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Le téléversement de l’appareil photo est une fonction essentielle de tout appareil mobile et nous nous en occupons pour vous. Créez votre compte maintenant.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Les téléversements de lappareil photo sont une fonction essentielle de tout appareil mobile et nous avons ce qu'il vous faut. Ouvrez un compte dès maintenant.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Configurer MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2913,7 +2915,9 @@
 /* Title of the dialog button to discard a report. */
 "help.reportIssue.discardReport"="Abandonner le signalement";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describe"="Veuillez décrire clairement le problème que vous avez rencontré. Plus vous donnerez de détails, plus il nous sera facile de le résoudre. Votre envoi sera examiné par notre équipe de développement.";
+"help.reportIssue.describe"="Votre rétroaction nous aide à améliorer MEGA. Décrivez clairement le problème que vous avez rencontré. Plus vous fournirez de détails, plus facile sera la résolution.";
+/* Label to indicate that users' input has not reached the required minimum characters */
+"help.reportIssue.minCharacterNotReach.error"="La description doit comporter au moins 10 caractères";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
 "help.reportIssue.sendLogFile"="Envoyer le fichier journal";
 /* Title to indicate that the bug report is being uploaded to our support team. */
@@ -2933,7 +2937,7 @@
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Ce problème ne sera pas signalé si vous en annulez le téléversement.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describeIssue.placeholder"="Décrivez le problème";
+"help.reportIssue.describeIssue.placeholder"="Décrivez le problème en 10 caractères, au moins";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Impossible de se connecter à Internet. Vérifiez votre connexion et réessayer.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
@@ -3839,7 +3843,7 @@
 /* Upgrade account screen content message about pro plan featuring the Back up and rewind */
 "onboarding.upgradeAccount.content.backupAndRewind.message"="Ayez l’esprit tranquille en sauvegardant et synchronisant vos données. De plus, le Retour en arrière vous permet de rétablir n’importe quelle version antérieure de vos dossiers, jusqu’à 180 jours.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="RPV MEGA VPN";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="Protégez votre vie privée en ligne grâce à notre RPV à haut débit";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
@@ -3853,9 +3857,9 @@
 /* Upgrade account screen content title about pro plan's other benefits */
 "onboarding.upgradeAccount.content.plusBenefits.title"="Et l’accès à ces avantages intéressants :";
 /* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• RPV MEGA VPN\n• Appels et réunions sans restrictions";
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Appels et réunions sans restrictions";
 /* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• RPV MEGA VPN\n• Appels et réunions sans restrictions\n• Sans publicités";
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Appels et réunions sans restrictions\n• Sans publicités";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Passer à un abonnement Pro";
 /* Camera uploads banner enable state title */
@@ -3915,7 +3919,7 @@
 /* Videos: video tab title playlists */
 "videos.tab.title.playlist"="Listes de lecture";
 /* Videos: video content empty state */
-"videos.tab.all.content.emptyState"="Aucune vidéo";
+"videos.tab.all.content.emptyState"="Aucune vidéo n’a été trouvée";
 /* Videos: videos filter title for location */
 "videos.tab.all.filter.location.title.location"="Emplacement";
 /* Videos: videos filter option for all locations */
@@ -3957,7 +3961,7 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterNewName"="Saisissez un nouveau nom.";
 /* Used in create video playlist popup system video playlist name validation */
-"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="Le nom de cette liste de lecture n'est pas autorisé";
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="Saisissez un nom différent";
 /* Used in create video playlist popup user video playlist name validation */
@@ -3989,7 +3993,7 @@
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="Supprimer de la liste de lecture";
 /* Recently watched videos page title */
-"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+"videos.recentlyWatched.navigationBarTitle"="Regardées récemment";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Aucune activité récente";
 /* Calls: Floating panel participants empty list waiting room state */
@@ -4129,7 +4133,7 @@
 /* Rewind for pro users, where %d is the number of days that marks the rewind limit */
 "rewind.for.pro.users"="Jusqu’à %d jours";
 /* MEGA VPN title */
-"mega.vpn.title"="RPV MEGA VPN";
+"mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
 "callAndMeeting.duration.title"="Durée des appels et réunions";
 /* Call and meeting duration for free users */
@@ -4300,3 +4304,37 @@
 "call.shareOptions.share"="Partager";
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="Annuler";
+/* Title for empty chats tab */
+"chat.chats.emptyState.v2.title"="Assurer la confidentialité des conversations";
+/* Description for empty chats tab */
+"chat.chats.emptyState.v2.description"="Toutes vos conversations de groupe, tous vos messages et appels sont protégés par notre chiffrement à divulgation nulle de connaissance. [A]En apprendre davantage[/A]";
+/* Title for invite button on the empty chat screen */
+"chat.chats.emptyState.v2.button.invite.title"="Inviter des amis";
+/* Description in new chat screen empty screen mode when user has no contacts */
+"chat.newChat.emptyState.description"="Grâce à une sécurité de premier ordre avec codes de vérification, communiquez sans craindre les escroqueries, l’exploration des données, ni le vol de renseignements.";
+/* Toast message shown to the user when the node description is added */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Une description a été ajoutée";
+/* Toast message shown to the user when the node description is removed */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description supprimée";
+/* Toast message shown to the user when the node description is updated */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="La description a été mise à jour";
+/* Title of the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirmer la fermeture?";
+/* Message in the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Voulez-vous enregistrer les modifications que vous avez apportées à la description?";
+/* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="Abandonner les changements";
+/* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="Poursuivre la modification";
+/* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Enregistrer et fermer";
+/* Toast message shown to the user when the node description update failed. */
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Erreur lors de la mise à jour de la description, réessayez";
+/* New chat page title */
+"chat.newChat.title"="Nouvelle conversation";
+/* Visual media search history section title */
+"photos.searchHistory.section.title"="Cherché récemment";
+/* Title of the invite contact page */
+"inviteContact.title"="Inviter";
+/* Visual media search history empty description */
+"photos.searchHistory.empty.description"="Try searching for any media files.";
