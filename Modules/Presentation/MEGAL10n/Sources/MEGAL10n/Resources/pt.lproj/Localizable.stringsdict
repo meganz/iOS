@@ -2713,9 +2713,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Message must be at least %d character</string>
+        <string>A mensagem deve ter pelo menos %d caractere</string>
+        <key>many</key>
+        <string>A mensagem deve ter pelo menos %d de caracteres</string>
         <key>other</key>
-        <string>Message must be at least %d characters</string>
+        <string>A mensagem deve ter pelo menos %d caracteres</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>

@@ -63,7 +63,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Wyloguj się";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Zostałeś wylogowany z innej lokalizacji";
+"loggedOutFromAnotherLocation"="Zostałeś wylogowany z tego urządzenia z innej lokalizacji";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nie może połączyć się bezpiecznie przez SSL. Być może korzystasz z publicznej sieci Wi-Fi z dodatkowymi wymaganiami.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
@@ -85,7 +85,7 @@
 /* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Masz już konto?";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Utwórz konto";
+"createAccount"="Zarejestruj się";
 /* Message on login screen for Create Account */
 "account.login.newToMega"="Pierwszy raz na MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Musisz zgodzić się, że rozumiesz niebezpieczeństwo utraty hasła";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Podany adres e-mail został już użyty podczas rejestracji";
+"emailAlreadyRegistered"="Ten adres email zarejestrował już konto w MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Oczekiwanie na potwierdzenie adresu e-mail.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -975,9 +975,9 @@
 /*  */
 "howItWorks"="Jak to działa";
 /*  */
-"howItWorksMain"="Twój znajomy musi zarejestrować darmowe konto na MEGA i [S]zainstalować przynajmniej jedną aplikację kliencką MEGA[/S] (albo Aplikację MEGA Desktop, albo jedną z naszych Aplikacji MEGA Mobile)";
+"howItWorksMain"="Twój znajomy musi założyć darmowe konto w MEGA i [S]Zainstaluj co najmniej jedną aplikację MEGA[/S] (albo Aplikacja MEGA Desktop, albo jedna z naszych aplikacji mobilnych MEGA)";
 /*  */
-"howItWorksSecondary"="Możesz powiadomić znajomego dowolnym sposobem. Zdobędziesz nowe limity tylko gdy wpiszesz e-maile znajomych tutaj.";
+"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Promocja darmowych limitów nie obejmuje sytuacji kiedy zapraszasz osoby, które już wcześniej posiadały konto na MEGA.";
 /* Header of block with achievements bonuses. */
@@ -1484,6 +1484,8 @@
 "versions"="Wersje";
 /* Title label of a node property. */
 "cloudDrive.info.node.location"="Lokalizacja";
+/* Title label of when there is no location info available. */
+"cloudDrive.info.node.noLocation"="Brak informacji o lokalizacji";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Całkowity rozmiar";
 /* Refers to the type of a file or folder. */
@@ -1543,7 +1545,7 @@
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="Za chwilę się wylogujesz, sprawdź swoje hasło, aby je zapamiętać. Jeśli zgubisz hasło, utracisz dostęp do swoich danych MEGA.";
 /* state previous to import a file */
-"loading"="Pobieranie danych…";
+"loading"="Ładowanie…";
 /*  */
 "next"="Dalej";
 /* Button title to allow the user ignore something */
@@ -1657,7 +1659,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Twoje zdjęcia w chmurze";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Przesyłanie z kamery to podstawowa funkcja każdego urządzenia mobilnego, a my jesteśmy objęci. Utwórz teraz swoje konto.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Przesyłanie z aparatu jest niezbędną funkcją każdego urządzenia mobilnego, a my zapewniamy Ci ochronę. Zarejestruj się teraz, aby założyć konto.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Skonfiguruj MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2913,7 +2915,9 @@
 /* Title of the dialog button to discard a report. */
 "help.reportIssue.discardReport"="Anuluj raport";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describe"="Opisz jasno napotkany problem. Im więcej informacji podasz, tym łatwiej będzie nam je rozwiązać. Twoje zgłoszenie zostanie sprawdzone przez nasz zespół programistów.";
+"help.reportIssue.describe"="Twoja opinia pomaga nam ulepszyć MEGA. Proszę jasno opisać problem, którego doświadczyłeś. Im więcej szczegółów podasz, tym łatwiej będzie nam je rozwiązać.";
+/* Label to indicate that users' input has not reached the required minimum characters */
+"help.reportIssue.minCharacterNotReach.error"="Opis musi zawierać co najmniej 10 znaków";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
 "help.reportIssue.sendLogFile"="Wyślij plik dziennika";
 /* Title to indicate that the bug report is being uploaded to our support team. */
@@ -2933,7 +2937,7 @@
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Ten problem nie zostanie zgłoszony, jeśli zrezygnujesz z przesyłania pliku.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describeIssue.placeholder"="Opisz problem";
+"help.reportIssue.describeIssue.placeholder"="Opisz problem z co najmniej 10 znakami";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Nie można połączyć się z Internetem. Sprawdź swoje połączenie i spróbuj ponownie.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
@@ -3107,7 +3111,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Twoje konto MEGA zostało zawieszone z powodu powtarzających się zarzutów naruszenia praw autorskich. Oznacza to, że nie możesz uzyskać dostępu do swojego konto ani danych na nim.\n\nSprawdź swoją skrzynkę email, aby uzyskać więcej informacji o tym, jak złożyć zawiadomienie.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Twoje konto zostało zamknięte z powodu naruszenia Warunków świadczenia usług MEGA.\n\nNie będziesz w stanie odzyskać dostępu do przechowywanych danych ani uzyskać autoryzacji do rejestracji nowego konta MEGA.";
+"account.suspension.message.nonCopyright"="Twoje konto zostało zamknięte z powodu naruszenia Warunków korzystania z usługi MEGA.\n\nNie będziesz mógł odzyskać dostępu do przechowywanych danych ani uzyskać uprawnienia do założenia nowego konto MEGA.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Otwórz aplikację MEGA i zaloguj się, aby kontynuować.";
 /* Account Storage title label of used storage size */
@@ -3915,7 +3919,7 @@
 /* Videos: video tab title playlists */
 "videos.tab.title.playlist"="Listy odtwarzania";
 /* Videos: video content empty state */
-"videos.tab.all.content.emptyState"="Brak filmów";
+"videos.tab.all.content.emptyState"="Nie znaleziono filmów";
 /* Videos: videos filter title for location */
 "videos.tab.all.filter.location.title.location"="Lokalizacja";
 /* Videos: videos filter option for all locations */
@@ -3957,7 +3961,7 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterNewName"="Wprowadź nową nazwę";
 /* Used in create video playlist popup system video playlist name validation */
-"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="Ta nazwa listy odtwarzania jest niedozwolona";
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="Wprowadź inną nazwę";
 /* Used in create video playlist popup user video playlist name validation */
@@ -3989,7 +3993,7 @@
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="Usuń z listy odtwarzania";
 /* Recently watched videos page title */
-"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+"videos.recentlyWatched.navigationBarTitle"="Ostatnio oglądane";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Brak aktywności";
 /* Calls: Floating panel participants empty list waiting room state */
@@ -4225,7 +4229,7 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Kliknij <b>Anuluj subskrypcję</b>.";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We’re sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="Przykro nam, że odchodzisz! Czy możesz nam powiedzieć, dlaczego anulujesz subskrypcja?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Twoja subskrypcja zostanie natychmiast anulowana, a po wygaśnięciu bieżącego plan zostaniesz przeniesiony na bezpłatne konto MEGA. Uwaga: Anulowanie subskrypcja nie spowoduje usunięcia konto.";
 /* Cancel subscription survey reason with id 1 */
@@ -4283,7 +4287,7 @@
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
 "call.meeting.empty.shareOptionsDialog.title"="Udostępnij ten link lub zaproś uczestników do przyłączenia się do Ciebie";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
-"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Share this link to invite others";
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Udostępnij ten link, aby zaprosić innych";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Udostępnij link do spotkania";
 /* Title for copy link button in Empty meeting share options dialog */
@@ -4300,3 +4304,37 @@
 "call.shareOptions.share"="Udostępnij";
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="Anuluj";
+/* Title for empty chats tab */
+"chat.chats.emptyState.v2.title"="Utrzymuj rozmowę w prywatności";
+/* Description for empty chats tab */
+"chat.chats.emptyState.v2.description"="Wszystkie Twoje wiadomości, czat grupowe i połączenia są chronione naszym szyfrowanie z zerową wiedzą i pozostają prywatne. [A]Dowiedz się więcej[/A]";
+/* Title for invite button on the empty chat screen */
+"chat.chats.emptyState.v2.button.invite.title"="Zaproś znajomego";
+/* Description in new chat screen empty screen mode when user has no contacts */
+"chat.newChat.emptyState.description"="Dzięki najwyższej klasy kodom bezpieczeństwa i weryfikacji, kontaktuj się bez obawy o oszustwa, eksplorację danych lub kradzież informacji";
+/* Toast message shown to the user when the node description is added */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Opis dodany";
+/* Toast message shown to the user when the node description is removed */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Opis usunięty";
+/* Toast message shown to the user when the node description is updated */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Opis zaktualizowany";
+/* Title of the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Zamknąć?";
+/* Message in the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Czy chcesz zapisać zmiany wprowadzone w opisie?";
+/* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="Odrzucić zmiany";
+/* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="Kontynuuj edycję";
+/* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Zapisz i zamknij";
+/* Toast message shown to the user when the node description update failed. */
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Błąd aktualizacji opisu, spróbuj ponownie";
+/* New chat page title */
+"chat.newChat.title"="Nowy czat";
+/* Visual media search history section title */
+"photos.searchHistory.section.title"="Ostatnio wyszukiwane";
+/* Title of the invite contact page */
+"inviteContact.title"="Zaproszenie";
+/* Visual media search history empty description */
+"photos.searchHistory.empty.description"="Try searching for any media files.";

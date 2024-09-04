@@ -3612,10 +3612,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>يجب أن تكون الرسالة على الأقل %d محرف</string>
         <key>one</key>
-        <string>Message must be at least %d character</string>
+        <string>يجب أن تكون الرسالة على الأقل %d محرف</string>
+        <key>two</key>
+        <string>يجب أن تكون الرسالة على الأقل %d محرفين</string>
+        <key>few</key>
+        <string>يجب أن تكون الرسالة على الأقل %d محرفاً</string>
+        <key>many</key>
+        <string>يجب أن تكون الرسالة على الأقل %d محرف</string>
         <key>other</key>
-        <string>Message must be at least %d characters</string>
+        <string>يجب أن تكون الرسالة على الأقل %d محرف</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>

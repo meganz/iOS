@@ -63,7 +63,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Disconnesso";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Sei stato disconnesso su questo dispositivo da un’altra posizione";
+"loggedOutFromAnotherLocation"="La disconnessione di questo dispositivo è stata decisa da un'altra posizione";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA non riesce a connettersi in sicurezza tramite SSL. Potresti essere collegato ad un WiFi pubblico che richiede requisiti addizionali.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
@@ -85,7 +85,7 @@
 /* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Hai gia un conto?";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Crea un Account";
+"createAccount"="Iscriviti";
 /* Message on login screen for Create Account */
 "account.login.newToMega"="Nuovo su MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Devi essere d'accordo che capisci il pericolo della perdita della password";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Questo indirizzo e-mail è già utilizzato in MEGA";
+"emailAlreadyRegistered"="This email address has already signed up for an account with MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="In attesa della conferma dell'email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -975,9 +975,9 @@
 /*  */
 "howItWorks"="Come funziona";
 /*  */
-"howItWorksMain"="Il tuo amico deve registrare un account gratuito su MEGA ed [S]installare almeno un'app di MEGA[/S] (l'app per desktop o una delle nostre app per mobile)";
+"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
 /*  */
-"howItWorksSecondary"="Puoi notificare il tuo amico con qualsiasi metodo. Guadagnerai la quota se hai inserito la mail del tuo amico qui prima che si registrasse con quella email.";
+"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Non riceverai bonus se inviti qualcuno che ha già usato MEGA in precedenza e non verrai notificato di un rifiuto.";
 /* Header of block with achievements bonuses. */
@@ -1484,6 +1484,8 @@
 "versions"="Versioni";
 /* Title label of a node property. */
 "cloudDrive.info.node.location"="Posizione";
+/* Title label of when there is no location info available. */
+"cloudDrive.info.node.noLocation"="Nessuna informazione sulla posizione";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Dimensione Totale";
 /* Refers to the type of a file or folder. */
@@ -1657,7 +1659,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Le tue foto nel Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="I Caricamenti da fotocamera sono una feature essenziale per qualsiasi dispositivo mobile e possiamo farlo per te. Crea il tuo account adesso.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera uploads is an essential feature for any mobile device and we have got you covered. Sign up for an account now.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Imposta MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2913,7 +2915,9 @@
 /* Title of the dialog button to discard a report. */
 "help.reportIssue.discardReport"="Scarta report";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describe"="Per favore, descrivi chiaramente il problema che hai riscontrato. Più dettagli fornirai più sarà facile per noi risolvere il problema. Il tuo messaggio verrà controllato dal nostro team di sviluppo.";
+"help.reportIssue.describe"="Your feedback helps us improve MEGA. Please clearly describe the issue you’ve experienced. The more details you provide, the easier it will be for us to resolve.";
+/* Label to indicate that users' input has not reached the required minimum characters */
+"help.reportIssue.minCharacterNotReach.error"="Description must be at least 10 characters";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
 "help.reportIssue.sendLogFile"="Invia file log";
 /* Title to indicate that the bug report is being uploaded to our support team. */
@@ -2933,7 +2937,7 @@
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Questo problema non verrà segnalato se annulli il suo upload.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describeIssue.placeholder"="Descrivi il problema";
+"help.reportIssue.describeIssue.placeholder"="Describe the issue with at least 10 characters";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Impossibile connettersi ad Internet. Controlla la tua connessione e riprova.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
@@ -3107,7 +3111,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Il tuo account MEGA è stato sospeso a causa di ripetute accuse di violazione del copyright. Ciò significa che non puoi accedere al tuo account o ai dati al suo interno.\n\nControlla la tua casella di posta elettronica per ulteriori informazioni su come presentare una contro-notifica.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Il tuo account MEGA è stato chiuso a causa di una violazione dei Termini di servizio di MEGA.\n\nNon puoi riottenere accesso ai dati che hai archiviato o registrare un nuovo account.";
+"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to sign up for a new MEGA account.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Apri l'app di MEGA ed effettua il login per continuare.";
 /* Account Storage title label of used storage size */
@@ -3915,7 +3919,7 @@
 /* Videos: video tab title playlists */
 "videos.tab.title.playlist"="Playlist";
 /* Videos: video content empty state */
-"videos.tab.all.content.emptyState"="Nessun video";
+"videos.tab.all.content.emptyState"="Nessun video trovato";
 /* Videos: videos filter title for location */
 "videos.tab.all.filter.location.title.location"="Posizione";
 /* Videos: videos filter option for all locations */
@@ -4300,3 +4304,37 @@
 "call.shareOptions.share"="Condividi";
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="Annulla";
+/* Title for empty chats tab */
+"chat.chats.emptyState.v2.title"="Keep conversations private";
+/* Description for empty chats tab */
+"chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private. [A]Learn more[/A]";
+/* Title for invite button on the empty chat screen */
+"chat.chats.emptyState.v2.button.invite.title"="Invita un amico";
+/* Description in new chat screen empty screen mode when user has no contacts */
+"chat.newChat.emptyState.description"="With top-notch security and verification codes, reach out without fear of scams, data mining, or information theft";
+/* Toast message shown to the user when the node description is added */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Descrizione aggiunta";
+/* Toast message shown to the user when the node description is removed */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description removed";
+/* Toast message shown to the user when the node description is updated */
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Descrizione aggiornata";
+/* Title of the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+/* Message in the popup that appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
+/* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="Annulla cambiamenti";
+/* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="Continua a modificare";
+/* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Save and close";
+/* Toast message shown to the user when the node description update failed. */
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Error updating description, try again";
+/* New chat page title */
+"chat.newChat.title"="Nuova chat";
+/* Visual media search history section title */
+"photos.searchHistory.section.title"="Ricerche recenti";
+/* Title of the invite contact page */
+"inviteContact.title"="Invita";
+/* Visual media search history empty description */
+"photos.searchHistory.empty.description"="Try searching for any media files.";

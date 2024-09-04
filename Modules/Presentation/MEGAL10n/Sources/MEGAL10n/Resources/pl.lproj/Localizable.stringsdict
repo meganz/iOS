@@ -3013,9 +3013,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Message must be at least %d character</string>
+        <string>Wiadomość musi zawierać co najmniej %d znaki</string>
+        <key>few</key>
+        <string>Wiadomość musi zawierać co najmniej %d znaki</string>
+        <key>many</key>
+        <string>Wiadomość musi zawierać co najmniej %d znaki</string>
         <key>other</key>
-        <string>Message must be at least %d characters</string>
+        <string>Wiadomość musi zawierać co najmniej %d znak</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
