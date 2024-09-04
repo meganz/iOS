@@ -1,6 +1,7 @@
 import Foundation
+import MEGASwift
 
-public protocol UploadFileRepositoryProtocol {
+public protocol UploadFileRepositoryProtocol: Sendable {
     /// Checks if a file with the given name exists under the specified parent folder.
     ///
     /// - Parameters:
@@ -44,12 +45,8 @@ public protocol UploadFileRepositoryProtocol {
     ///   - progress: A closure called to update the progress of the upload.
     /// - Returns: The transfer entity representing the upload.
     /// - Throws: An error if the upload fails.
-    func uploadSupportFile(
-        _ url: URL,
-        start: @escaping (TransferEntity) -> Void,
-        progress: @escaping (TransferEntity) -> Void
-    ) async throws -> TransferEntity
-
+    func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent>
+    
     /// Cancels a specified transfer.
     ///
     /// - Parameter transfer: The transfer entity to cancel.
