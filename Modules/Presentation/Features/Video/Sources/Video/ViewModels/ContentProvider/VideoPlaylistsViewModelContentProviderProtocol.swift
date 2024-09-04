@@ -70,14 +70,12 @@ actor VideoPlaylistsViewModelContentProvider: VideoPlaylistsViewModelContentProv
     
     private func loadVideoPlaylists(sortOrder: SortOrderEntity) async throws -> [VideoPlaylistEntity] {
         
-        async let systemVideoPlaylists = loadSystemVideoPlaylists()
-        async let userVideoPlaylists = videoPlaylistsUseCase.userVideoPlaylists()
-        
-        let playlists = try await systemVideoPlaylists + userVideoPlaylists
+        let systemVideoPlaylists = try await loadSystemVideoPlaylists()
+        let userVideoPlaylists = await videoPlaylistsUseCase.userVideoPlaylists()
         
         try Task.checkCancellation()
         
-        return VideoPlaylistsSorter.sort(playlists, by: sortOrder)
+        return systemVideoPlaylists + VideoPlaylistsSorter.sort(userVideoPlaylists, by: sortOrder)
     }
     
     private func filter(playlists: [VideoPlaylistEntity], searchText: String) -> [VideoPlaylistEntity] {
