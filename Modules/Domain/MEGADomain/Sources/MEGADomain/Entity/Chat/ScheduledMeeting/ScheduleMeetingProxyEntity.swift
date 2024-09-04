@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ScheduleMeetingProxyEntity {
+public struct ScheduleMeetingProxyEntity: Sendable {
     public let title: String
     public let description: String
     public let participantHandleList: [HandleEntity]

@@ -52,11 +52,15 @@ final class ScheduleMeetingViewController: UIViewController {
     }
     
     @objc func submitButtonItemTapped() {
-        viewModel.submitButtonTapped()
+        Task {
+            await viewModel.submitButtonTapped()
+        }
     }
     
     @objc func cancelButtonItemTapped() {
-        viewModel.cancelDidTap()
+        Task {
+            await viewModel.cancelDidTap()
+        }
     }
     
     private func configureSubview() {

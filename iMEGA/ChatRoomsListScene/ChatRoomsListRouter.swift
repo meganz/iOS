@@ -73,6 +73,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         ).start()
     }
     
+    @MainActor
     func presentScheduleMeeting() {
         guard let navigationController else { return }
         let viewConfiguration = ScheduleMeetingNewViewConfiguration(
@@ -258,6 +259,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         SVProgressHUD.showSuccess(withStatus: message)
     }
     
+    @MainActor
     func edit(scheduledMeeting: ScheduledMeetingEntity) {
         guard let navigationController else { return }
         let viewConfiguration = ScheduleMeetingUpdateViewConfiguration(

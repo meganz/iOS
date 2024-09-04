@@ -3,6 +3,7 @@ import MEGADomain
 import MEGASDKRepo
 import SwiftUI
 
+@MainActor
 final class ScheduleMeetingRouter {
     private(set) var presenter: UINavigationController
     private(set) weak var baseViewController: UINavigationController?
@@ -63,7 +64,6 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
         SVProgressHUD.dismiss()
     }
     
-    @MainActor
     func dismiss(animated: Bool) async {
         await withCheckedContinuation { continuation in
             presenter.dismiss(animated: animated) {
@@ -72,7 +72,6 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
         }
     }
     
-    @MainActor
     func showSuccess(message: String) {
         SVProgressHUD.showSuccess(withStatus: message)
     }
@@ -108,7 +107,6 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
         }
     }
     
-    @MainActor
     func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
         guard let baseViewController else { return nil }
         let router = ScheduleMeetingCreationRecurrenceOptionsRouter(presenter: baseViewController, rules: rules, startDate: startDate)
@@ -116,7 +114,6 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
         return router.$rules.eraseToAnyPublisher()
     }
     
-    @MainActor
     func showEndRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
         guard let baseViewController else { return nil }
         let router = ScheduleMeetingEndRecurrenceOptionsRouter(presenter: baseViewController, rules: rules, startDate: startDate)
