@@ -71,17 +71,38 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.isSelectable = false
-        textView.textContainer.maximumNumberOfLines = 2
-        textView.textContainer.lineBreakMode = .byTruncatingTail
+        updateMaximumNumberOfLines(for: textView)
+        textView.textContainer.lineBreakMode = .byTruncatingMiddle
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textView.backgroundColor = backgroundColor
         removeContentInset(of: textView)
+        monitorSizeCategoryChanged(on: textView)
         return textView
     }
     
     private func removeContentInset(of textView: UITextView) {
         textView.textContainer.lineFragmentPadding = 0
         textView.textContainerInset = .zero
+    }
+    
+    private func monitorSizeCategoryChanged(on textView: UITextView) {
+        NotificationCenter.default.addObserver(
+            forName: UIContentSizeCategory.didChangeNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            updateMaximumNumberOfLines(for: textView)
+            textView.attributedText = createAttributedTitle()
+        }
+    }
+    
+    private func updateMaximumNumberOfLines(for textView: UITextView) {
+        switch UIApplication.shared.preferredContentSizeCategory {
+        case .extraSmall, .small, .medium, .large:
+            textView.textContainer.maximumNumberOfLines = 2
+        default:
+            textView.textContainer.maximumNumberOfLines = 1
+        }
     }
     
     func updateUIView(_ textView: UITextView, context: Context) {
