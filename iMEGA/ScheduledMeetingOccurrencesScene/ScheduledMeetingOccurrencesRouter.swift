@@ -77,6 +77,7 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
         }
     }
     
+    @MainActor
     func edit(
         occurrence: ScheduledMeetingOccurrenceEntity
     ) -> AnyPublisher<ScheduledMeetingOccurrenceEntity, Never> {

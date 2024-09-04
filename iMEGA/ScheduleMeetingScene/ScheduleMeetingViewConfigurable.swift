@@ -12,7 +12,7 @@ enum ScheduleMeetingViewConfigurationCompletion {
     case showMessageAndNavigateToInfo(message: String, scheduledMeeting: ScheduledMeetingEntity)
 }
 
-protocol ScheduleMeetingViewConfigurable {
+protocol ScheduleMeetingViewConfigurable: Sendable {
     var title: String { get }
     var type: ScheduleMeetingViewConfigurationType { get }
     var meetingName: String { get }
