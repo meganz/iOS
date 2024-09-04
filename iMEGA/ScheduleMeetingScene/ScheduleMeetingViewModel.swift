@@ -6,6 +6,7 @@ import MEGAL10n
 import MEGAPresentation
 import SwiftUI
 
+@MainActor
 protocol ScheduleMeetingRouting {
     func showSpinner()
     func hideSpinner()
@@ -20,6 +21,7 @@ protocol ScheduleMeetingRouting {
     func showUpgradeAccount(_ account: AccountDetailsEntity)
 }
 
+@MainActor
 final class ScheduleMeetingViewModel: ObservableObject {
     
     enum Constants {
@@ -159,7 +161,6 @@ final class ScheduleMeetingViewModel: ObservableObject {
         initShowWarningBannerSubscription()
     }
     
-    @MainActor
     func viewAppeared() async {
         // [MEET-3932] as part of migration from local, synchronous feature flags system,
         // to server backed, remote async system, we read and cache the value
@@ -169,28 +170,26 @@ final class ScheduleMeetingViewModel: ObservableObject {
         showLimitDurationViewIfNeeded()
     }
     
-    @MainActor
     func loadAndCacheFeatureFlagValue() async {
         chatMonetisationEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .chatMonetisation)
     }
     
     // MARK: - Public
-    func submitButtonTapped() {
+    func submitButtonTapped() async {
         if isNewMeeting {
             tracker.trackAnalyticsEvent(with: ScheduledMeetingCreateConfirmButtonEvent())
         }
-        Task {
-            do {
-                await showSpinner()
-                let scheduleMeetingProxy = makeScheduleMeetingProxyEntity()
-                let completion = try await viewConfiguration.submit(meeting: scheduleMeetingProxy)
-                await hideSpinner()
-                await dismiss()
-                await handle(completion: completion)
-            } catch {
-                MEGALogError("Unable to submit with error \(error)")
-                await hideSpinner()
-            }
+        
+        do {
+            showSpinner()
+            let scheduleMeetingProxy = makeScheduleMeetingProxyEntity()
+            let completion = try await viewConfiguration.submit(meeting: scheduleMeetingProxy)
+            hideSpinner()
+            await dismiss()
+            handle(completion: completion)
+        } catch {
+            MEGALogError("Unable to submit with error \(error)")
+            hideSpinner()
         }
     }
     
@@ -204,9 +203,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
         startDatePickerVisible = false
     }
     
-    func cancelDidTap() {
+    func cancelDidTap() async {
         guard !areDetailsUnchanged() else {
-            Task { await dismiss() }
+            await dismiss()
             return
         }
         
@@ -318,19 +317,16 @@ final class ScheduleMeetingViewModel: ObservableObject {
             })
             .store(in: &subscriptions)
     }
-    
-    @MainActor
+
     private func updated(occurrence: ScheduledMeetingOccurrenceEntity) {
         router.updated(occurrence: occurrence)
     }
     
-    @MainActor
     private func updated(meeting: ScheduledMeetingEntity) {
         router.updated(meeting: meeting)
     }
     
-    @MainActor
-    private func handle(completion: ScheduleMeetingViewConfigurationCompletion) async {
+    private func handle(completion: ScheduleMeetingViewConfigurationCompletion) {
         switch completion {
         case .showMessageForScheduleMeeting(let message, let scheduledMeeting):
             updated(meeting: scheduledMeeting)
@@ -365,10 +361,10 @@ final class ScheduleMeetingViewModel: ObservableObject {
     
     private func updateMeetingLinkToggle() {
         Task {
-            await meetingLinkToggleUI(enable: false)
+            meetingLinkToggleUI(enable: false)
             await viewConfiguration.updateMeetingLinkEnabled()
-            await meetingLink(enable: viewConfiguration.meetingLinkEnabled)
-            await meetingLinkToggleUI(enable: true)
+            meetingLink(enable: viewConfiguration.meetingLinkEnabled)
+            meetingLinkToggleUI(enable: true)
         }
     }
     
@@ -480,37 +476,30 @@ final class ScheduleMeetingViewModel: ObservableObject {
        return chatMonetisationEnabled && freeAccountUser && meetingLongerThanFreePlanLimit
     }
     
-    @MainActor
     private func meetingLinkToggleUI(enable: Bool) {
         meetingLinkToggleUIEnabled = enable
     }
     
-    @MainActor
     private func meetingLink(enable: Bool) {
         meetingLinkEnabled = enable
     }
 
-    @MainActor
     private func hideSpinner() {
         router.hideSpinner()
     }
     
-    @MainActor
     private func showSpinner() {
         router.showSpinner()
     }
     
-    @MainActor
     private func dismiss() async {
         await router.dismiss(animated: true)
     }
     
-    @MainActor
     private func showSuccess(message: String) {
         router.showSuccess(message: message)
     }
-    
-    @MainActor
+
     private func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {
         router.showMeetingInfo(for: scheduledMeeting)
     }
