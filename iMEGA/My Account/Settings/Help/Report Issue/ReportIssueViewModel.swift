@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 final class ReportIssueViewModel: ObservableObject {
     private let router: any ReportIssueViewRouting
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
@@ -59,53 +60,47 @@ final class ReportIssueViewModel: ObservableObject {
         }
         
         do {
-            let transfer = try await uploadLogFile(from: sourceUrl)
-            await handleUploadSuccess(transfer: transfer)
+            try await uploadLogFile(from: sourceUrl)
         } catch {
             await handleUploadFailure()
         }
     }
     
-    private func uploadLogFile(from sourceUrl: URL) async throws -> TransferEntity {
-        try await uploadFileUseCase.uploadSupportFile(sourceUrl) { [weak self] transfer in
-            guard let self else { return }
-            Task {
-                await self.updateCurrentTransfer(transfer)
-            }
-        } progress: { [weak self] transfer in
-            guard let self else { return }
-            Task {
-                await self.updateCurrentProgress(Float(transfer.transferredBytes) / Float(transfer.totalBytes))
+    private func uploadLogFile(from sourceUrl: URL) async throws {
+        let eventSequence = try await uploadFileUseCase.uploadSupportFile(sourceUrl)
+        for try await event in eventSequence {
+            switch event {
+            case .start(let transferEntity):
+                updateCurrentTransfer(transferEntity)
+            case .progress(let transferEntity):
+                updateCurrentProgress(Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes))
+            case .completion(let transferEntity):
+                await handleUploadSuccess(transfer: transferEntity)
             }
         }
     }
 
-    @MainActor
     private func updateCurrentTransfer(_ transfer: TransferEntity) {
         self.transfer = transfer
         isUploadingLog = true
     }
 
-    @MainActor
     private func updateCurrentProgress(_ progress: Float) {
         self.progress = progress
     }
     
-    @MainActor
     private func handleUploadSuccess(transfer: TransferEntity) async {
         progress = 1
         isUploadingLog = false
         await createTicketForSupport(filename: transfer.fileName)
     }
     
-    @MainActor
     private func handleUploadFailure() async {
         isUploadingLog = false
         reportAlertType = .uploadLogFileFailure
         showingReportIssueAlert = true
     }
     
-    @MainActor
     private func createTicketForSupport(filename: String? = nil) async {
         do {
             let formattedMessage = await getFormattedReportIssueMessage(details, filename: filename)
@@ -121,7 +116,6 @@ final class ReportIssueViewModel: ObservableObject {
         showingReportIssueAlert = true
     }
     
-    @MainActor
     private func getFormattedReportIssueMessage(_ message: String, filename: String? = nil) async -> String {
         let appMetaDataFactory = AppMetaDataFactory(bundle: .main)
         let deviceMetaDataFactory = DeviceMetaDataFactory(bundle: .main, locale: NSLocale.current as NSLocale)
@@ -139,7 +133,7 @@ final class ReportIssueViewModel: ObservableObject {
     
     func cancelUploadReport() async {
         guard let transfer else {
-            await dismissReport()
+            dismissReport()
             return
         }
         
@@ -148,22 +142,19 @@ final class ReportIssueViewModel: ObservableObject {
             MEGALogDebug("[Report issue] report canceled")
         } catch {
             MEGALogError("[Report issue] fail cancel the report")
-            await dismissReport()
+            dismissReport()
         }
     }
     
-    @MainActor
     func dismissReport() {
         router.dismiss()
     }
     
-    @MainActor
     func showCancelUploadReportAlert() {
         reportAlertType = .cancelUploadReport
         showingReportIssueAlert = true
     }
     
-    @MainActor
     func showReportIssueActionSheetIfNeeded() {
         showingReportIssueActionSheet = !(details.isEmpty || details == detailsPlaceholder)
         if !showingReportIssueActionSheet {
@@ -206,7 +197,6 @@ final class ReportIssueViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func monitorNetworkChanges() async {
         for await isConnected in monitorUseCase.connectionChangedStream {
             self.isConnected = isConnected

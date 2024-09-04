@@ -34,29 +34,32 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken, delegate: transferDelegate)
     }
     
-    public func uploadSupportFile(
-        _ url: URL,
-        start: @escaping (TransferEntity) -> Void,
-        progress: @escaping (TransferEntity) -> Void
-    ) async throws -> TransferEntity {
-        try await withAsyncThrowingValue { continuation in
-            sdk.startUploadForSupport(
-                withLocalPath: url.path,
-                isSourceTemporary: true,
-                delegate: TransferDelegate(
-                    start: start,
-                    progress: progress,
-                    completion: { result in
-                        switch result {
-                        case .success(let transfer):
-                            continuation(.success(transfer))
-                        case .failure(let error):
-                            continuation(.failure(error))
-                        }
-                    }
-                )
-            )
+    public func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent> {
+        let stream = AsyncThrowingStream<FileUploadEvent, Error> { continuation in
+            let start: (TransferEntity) -> Void = { transferEntity in
+                continuation.yield(.start(transferEntity))
+            }
+            
+            let progress: (TransferEntity) -> Void = { transferEntity in
+                continuation.yield(.progress(transferEntity))
+            }
+            
+            let completion: (Result<TransferEntity, TransferErrorEntity>) -> Void = { result in
+                switch result {
+                case .success(let transferEntity):
+                    continuation.yield(.completion(transferEntity))
+                    continuation.finish()
+                case .failure(let error):
+                    continuation.finish(throwing: error)
+                }
+            }
+            
+            let delegate = TransferDelegate(start: start, progress: progress, completion: completion)
+            
+            sdk.startUploadForSupport(withLocalPath: url.path, isSourceTemporary: true, delegate: delegate)
         }
+
+        return stream.eraseToAnyAsyncSequence()
     }
     
     public func cancel(transfer: TransferEntity) async throws {
