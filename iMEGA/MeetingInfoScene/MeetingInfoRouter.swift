@@ -137,6 +137,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
                           action: participantsAddingViewFactory.noAvailableContactsAlert)
     }
     
+    @MainActor
     func edit(meeting: ScheduledMeetingEntity) -> AnyPublisher<ScheduledMeetingEntity, Never> {
         let viewConfiguration = ScheduleMeetingUpdateViewConfiguration(
             scheduledMeeting: meeting,
