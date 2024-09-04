@@ -11,8 +11,8 @@ final class ReportIssueViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     private let defaultTransferEntity = TransferEntity(fileName: "test.log")
     
+    @MainActor
     private func makeSUT(
-        router: ReportIssueViewRouting = MockReportIssueViewRouter(),
         connectionChangedStream: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         connected: Bool = true,
         connectedViaWiFi: Bool = false,
@@ -26,6 +26,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         file: StaticString = #file,
         line: UInt = #line
     ) -> (ReportIssueViewModel, MockReportIssueViewRouter) {
+        let router: ReportIssueViewRouting = MockReportIssueViewRouter()
         let monitorUseCase = MockNetworkMonitorUseCase(
             connected: connected,
             connectedViaWiFi: connectedViaWiFi,
@@ -53,6 +54,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         return (sut, router as! MockReportIssueViewRouter)
     }
     
+    @MainActor
     private func assertAlertData(
         _ alertData: ReportIssueAlertDataModel,
         title: String,
@@ -89,24 +91,27 @@ final class ReportIssueViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testDismissReport_emptyDetails_dismissCalledOnce() async {
         let (sut, router) = makeSUT()
         
         sut.details = ""
-        await sut.dismissReport()
+        sut.dismissReport()
         
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
     
+    @MainActor
     func testDismissReport_detailsSameAsPlaceholder_dismissCalledOnce() async {
         let (sut, router) = makeSUT()
         
         sut.details = "Describe the issue with at least 10 characters"
-        await sut.dismissReport()
+        sut.dismissReport()
         
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
     
+    @MainActor
     func testShouldDisableSendButton_detailsEmpty_isTrue() {
         let (sut, _) = makeSUT()
         
@@ -115,6 +120,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldDisableSendButton)
     }
     
+    @MainActor
     func testShouldDisableSendButton_detailsEqualToPlaceholder_isTrue() {
         let (sut, _) = makeSUT()
         
@@ -123,12 +129,14 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldDisableSendButton)
     }
     
+    @MainActor
     func testShouldDisableSendButton_notConnected_isTrue() {
         let (sut, _) = makeSUT(connected: false)
         
         XCTAssertTrue(sut.shouldDisableSendButton)
     }
     
+    @MainActor
     func testShouldShowUploadLogFileView_uploadingLogAndLogsEnabledAndToggleOn_isTrue() {
         let (sut, _) = makeSUT()
         
@@ -139,6 +147,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowUploadLogFileView)
     }
     
+    @MainActor
     func testShouldShowUploadLogFileView_uploadingLogAndLogsNotEnabled_isFalse() {
         let (sut, _) = makeSUT()
         
@@ -149,6 +158,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowUploadLogFileView)
     }
     
+    @MainActor
     func testShouldShowUploadLogFileView_notUploadingLog_isFalse() {
         let (sut, _) = makeSUT()
         
@@ -159,6 +169,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowUploadLogFileView)
     }
     
+    @MainActor
     func testShouldShowUploadLogFileView_sendLogFileToggleOff_isFalse() {
         let (sut, _) = makeSUT()
         
@@ -169,6 +180,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowUploadLogFileView)
     }
     
+    @MainActor
     func testMonitorNetworkChanges_connectionChanges_isConnectedUpdated() async {
         var results = [false, true, true, false]
         let stream = AsyncStream { continuation in
@@ -190,6 +202,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         await sut.monitorNetworkChanges()
     }
     
+    @MainActor
     func testShouldDisableSendButton_allConditionsMet_isFalse() {
         let (sut, _) = makeSUT()
         
@@ -199,14 +212,16 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldDisableSendButton)
     }
 
+    @MainActor
     func testDismissReport_called_dismissCalledOnce() async {
         let (sut, router) = makeSUT()
         
-        await sut.dismissReport()
+        sut.dismissReport()
         
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
 
+    @MainActor
     func testSetAreLogsEnabled_toggle_isUpdated() {
         let (sut, _) = makeSUT()
         
@@ -217,6 +232,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertFalse(sut.areLogsEnabled)
     }
 
+    @MainActor
     func testSetIsSendLogFileToggleOn_toggle_isUpdated() {
         let (sut, _) = makeSUT()
         
@@ -227,6 +243,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isSendLogFileToggleOn)
     }
     
+    @MainActor
     func testCreateTicket_uploadSupportFileFails_showsAlert() async {
         let (sut, _) = makeSUT(
             uploadSupportFileResult: .success(defaultTransferEntity),
@@ -249,6 +266,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testUploadLogFileIfNeeded_sourceUrlNil_createsTicketWithoutUploading() async {
         let (sut, _) = makeSUT(
             uploadSupportFileResult: .success(defaultTransferEntity),
@@ -270,6 +288,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testUploadLogFileIfNeeded_logsEnabledAndToggleOn_uploadsFile() async {
         let (sut, _) = makeSUT(
             uploadSupportFileResult: .success(defaultTransferEntity),
@@ -298,6 +317,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertTrue(sut.reportAlertType == .createSupportTicketFinished)
     }
    
+    @MainActor
     func testUploadLogFileIfNeeded_logsNotEnabled_doesNotUploadFile() async {
         let uploadFileResult: Result<Void, TransferErrorEntity> = .success
         let (sut, _) = makeSUT(uploadFileResult: uploadFileResult)
@@ -310,6 +330,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isUploadingLog)
     }
    
+    @MainActor
     func testUploadLogFileIfNeeded_uploadFails_showsAlert() async {
         let (sut, _) = makeSUT(
             uploadSupportFileResult: .failure(.generic),
@@ -342,6 +363,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testCancelUploadReport_uploadInProgress_cancelSucceeds() async throws {
         let (sut, router) = makeSUT(
             uploadSupportFileResult: .success(defaultTransferEntity),
@@ -369,6 +391,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         await fulfillment(of: [createTicketExpectation], timeout: 3)
     }
 
+    @MainActor
     func testCancelUploadReport_uploadInProgress_cancelFails() async throws {
         let (sut, router) = makeSUT(
             uploadSupportFileResult: .success(defaultTransferEntity),
@@ -396,6 +419,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         await fulfillment(of: [createTicketExpectation], timeout: 3)
     }
     
+    @MainActor
     func testCancelUploadReport_noTransfer_dismissCalled() async {
         let (sut, router) = makeSUT()
         
@@ -409,29 +433,32 @@ final class ReportIssueViewModelTests: XCTestCase {
         await fulfillment(of: [noTransferExpectation], timeout: 2)
     }
 
+    @MainActor
     func testShowReportIssueActionSheetIfNeeded_discardable_showsActionSheet() async {
         let (sut, _) = makeSUT()
         sut.details = "Some issue details"
         
-        await sut.showReportIssueActionSheetIfNeeded()
+        sut.showReportIssueActionSheetIfNeeded()
         
         XCTAssertTrue(sut.showingReportIssueActionSheet)
     }
 
+    @MainActor
     func testShowReportIssueActionSheetIfNeeded_notDiscardable_dismissesReport() async {
         let (sut, router) = makeSUT()
         sut.details = ""
         
-        await sut.showReportIssueActionSheetIfNeeded()
+        sut.showReportIssueActionSheetIfNeeded()
         
         XCTAssertFalse(sut.showingReportIssueActionSheet)
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
 
+    @MainActor
     func testShowCancelUploadReportAlert_whenCalled_setsCorrectAlertTypeAndShowsAlert() async {
         let (sut, _) = makeSUT()
         
-        await sut.showCancelUploadReportAlert()
+        sut.showCancelUploadReportAlert()
         
         XCTAssertEqual(sut.reportAlertType, .cancelUploadReport)
         XCTAssertTrue(sut.showingReportIssueAlert)
@@ -444,6 +471,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testReportIssueAlertData_none_returnsEmptyAlertData() {
         let (sut, _) = makeSUT()
         
