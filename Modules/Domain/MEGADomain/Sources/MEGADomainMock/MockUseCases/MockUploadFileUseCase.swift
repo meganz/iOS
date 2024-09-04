@@ -1,9 +1,10 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
-public final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
+public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked Sendable {
     private let duplicate: Bool
-    public var newName: String?
+    @Atomic public var newName: String?
     private let uploadFileResult: (Result<Void, TransferErrorEntity>)?
     private let uploadSupportFileResult: (Result<TransferEntity, TransferErrorEntity>)?
     private let cancelTransferResult: (Result<Void, TransferErrorEntity>)
@@ -22,13 +23,14 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
         transfer: TransferEntity? = nil
     ) {
         self.duplicate = duplicate
-        self.newName = newName
         self.uploadFileResult = uploadFileResult
         self.uploadSupportFileResult = uploadSupportFileResult
         self.cancelTransferResult = cancelTransferResult
         self.filename = filename
         self.nodeEntity = nodeEntity
         self.transferEntity = transfer
+        
+        $newName.mutate { $0 = newName }
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
@@ -36,7 +38,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
     }
     
     public func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool {
-        newName = name
+        $newName.mutate { $0 = name }
         return duplicate
     }
     
@@ -65,6 +67,36 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
         case .failure(let error):
             throw error
         }
+    }
+    
+    public func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent> {
+        guard let transferEntity else {
+            throw TransferErrorEntity.generic
+        }
+        
+        let totalBytes: Int = 4
+        
+        let stream = AsyncThrowingStream<FileUploadEvent, Error> { continuation in
+            // Simulate start event
+            continuation.yield(.start(transferEntity))
+            
+            // Simulate progress events
+            for i in 1...totalBytes {
+                Task {
+                    try await Task.sleep(nanoseconds: UInt64(100_000_000))
+                    continuation.yield(.progress(
+                        TransferEntity(type: transferEntity.type, transferredBytes: i, totalBytes: totalBytes, path: transferEntity.path)
+                    ))
+                }
+            }
+            
+            // Simulate completion event
+            let completionEntity = transferEntity
+            continuation.yield(.completion(completionEntity))
+            continuation.finish()
+        }
+        
+        return stream.eraseToAnyAsyncSequence()
     }
     
     public func cancel(transfer: TransferEntity) async throws {

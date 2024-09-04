@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol SupportUseCaseProtocol {
+public protocol SupportUseCaseProtocol: Sendable {
     func createSupportTicket(withMessage message: String) async throws
 }
 
