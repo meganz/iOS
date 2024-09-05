@@ -38,7 +38,7 @@ struct CancelAccountPlanView: View {
         .ignoresSafeArea(edges: [.top, .bottom])
         .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : .clear)
         .task {
-            viewModel.setupFeatureList()
+            await viewModel.setupFeatureList()
         }
         .sheet(isPresented: $viewModel.showCancellationSurvey) {
             CancellationSurveyView(

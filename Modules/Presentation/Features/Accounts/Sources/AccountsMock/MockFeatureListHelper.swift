@@ -7,7 +7,7 @@ public struct MockFeatureListHelper: FeatureListHelperProtocol {
         self.features = features
     }
     
-    public func createCurrentFeatures() -> [FeatureDetails] {
+    public func createCurrentFeatures(baseStorage: Int) -> [Accounts.FeatureDetails] {
         features
     }
 }

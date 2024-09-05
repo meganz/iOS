@@ -6,7 +6,7 @@ public enum FeatureType {
 }
 
 public protocol FeatureListHelperProtocol {
-    func createCurrentFeatures() -> [FeatureDetails]
+    func createCurrentFeatures(baseStorage: Int) -> [FeatureDetails]
 }
 
 struct FeatureListHelper: FeatureListHelperProtocol {
@@ -24,12 +24,12 @@ struct FeatureListHelper: FeatureListHelperProtocol {
         }
     }
     
-    func createCurrentFeatures() -> [FeatureDetails] {
+    func createCurrentFeatures(baseStorage: Int) -> [FeatureDetails] {
         [
             FeatureDetails(
                 type: .storage,
                 title: Strings.Localizable.storage,
-                freeText: Strings.Localizable.Storage.Limit.capacity(20),
+                freeText: Strings.Localizable.Storage.Limit.capacity(baseStorage),
                 proText: currentPlan.storage
             ),
             FeatureDetails(

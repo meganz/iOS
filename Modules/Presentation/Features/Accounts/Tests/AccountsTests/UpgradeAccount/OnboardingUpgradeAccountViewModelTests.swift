@@ -307,6 +307,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         tracker: AnalyticsTracking = MockTracker(),
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         isAdsEnabled: Bool = false,
+        baseStorage: Int = 20,
         file: StaticString = #file,
         line: UInt = #line
     ) -> (OnboardingUpgradeAccountViewModel, MockAccountPlanPurchaseUseCase) {
@@ -318,6 +319,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
             accountUseCase: mockAccountUseCase,
             tracker: tracker, 
             isAdsEnabled: isAdsEnabled,
+            baseStorage: baseStorage,
             viewProPlanAction: {},
             router: router
         )

@@ -987,7 +987,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="พื้นที่เก็บข้อมูล %@";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="พื้นที่เก็บข้อมูล [B]20 GB[/B]";
+"account.storage.freePlan"="พื้นที่เก็บข้อมูล [B]%@ GB[/B]";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="ถ่ายโอน";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */

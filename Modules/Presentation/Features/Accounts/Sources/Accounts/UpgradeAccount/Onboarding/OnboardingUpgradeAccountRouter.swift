@@ -18,6 +18,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
     private let onboardingABvariant: ABTestVariant
     private let accountsConfig: AccountsConfig
     private let isAdsEnabled: Bool
+    private let baseStorage: Int
     private let viewProPlanAction: () -> Void
     
     public init(
@@ -28,6 +29,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
         presenter: UIViewController? = nil,
         accountsConfig: AccountsConfig,
         isAdsEnabled: Bool,
+        baseStorage: Int,
         viewProPlanAction: @escaping () -> Void
     ) {
         self.presenter = presenter
@@ -37,6 +39,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
         self.onboardingABvariant = onboardingABvariant
         self.accountsConfig = accountsConfig
         self.isAdsEnabled = isAdsEnabled
+        self.baseStorage = baseStorage
         self.viewProPlanAction = viewProPlanAction
     }
     
@@ -74,8 +77,9 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
         OnboardingUpgradeAccountViewModel(
             purchaseUseCase: purchaseUseCase,
             accountUseCase: accountUseCase, 
-            tracker: tracker, 
+            tracker: tracker,
             isAdsEnabled: isAdsEnabled,
+            baseStorage: baseStorage,
             viewProPlanAction: viewProPlanAction,
             router: self
         )
