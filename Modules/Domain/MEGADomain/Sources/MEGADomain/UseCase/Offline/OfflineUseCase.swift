@@ -10,9 +10,9 @@ public protocol OfflineUseCaseProtocol: Sendable {
     ///
     func relativePathToDocumentsDirectory(for url: URL) -> String
     
-    /// Removes the item at the specified URL.
+    /// Removes the item at the specified URL (async version)
     /// - Parameter url: The URL of the item to remove.
-    func removeItem(at url: URL) throws
+    func removeItem(at url: URL) async throws
 }
 
 public struct OfflineUseCase<T: FileSystemRepositoryProtocol>: OfflineUseCaseProtocol {
@@ -27,7 +27,7 @@ public struct OfflineUseCase<T: FileSystemRepositoryProtocol>: OfflineUseCasePro
         fileSystemRepository.relativePathToDocumentsDirectory(for: url)
     }
     
-    public func removeItem(at url: URL) throws {
-        try fileSystemRepository.removeItem(at: url)
+    public func removeItem(at url: URL) async throws {
+        try await fileSystemRepository.removeItem(at: url)
     }
 }
