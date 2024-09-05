@@ -1,5 +1,5 @@
 import AsyncAlgorithms
-import Combine
+@preconcurrency import Combine
 import Foundation
 import MEGADomain
 import MEGAPresentation
@@ -7,6 +7,7 @@ import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 class PhotoCellViewModel: ObservableObject {
 
     // MARK: public state
@@ -102,16 +103,15 @@ class PhotoCellViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func monitorInheritedSensitivityChanges() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               nodeUseCase != nil,
               !photo.isMarkedSensitive,
-              await $thumbnailContainer.values.contains(where: { $0.type != .placeholder }) else { return }
+              await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder }) else { return }
         
         do {
             for try await isInheritingSensitivity in monitorInheritedSensitivity(for: photo) {
-                await updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity))
+                updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity))
             }
         } catch {
             MEGALogError("[\(type(of: self))] failed to retrieve inherited sensitivity for photo: \(error.localizedDescription)")
@@ -120,16 +120,15 @@ class PhotoCellViewModel: ObservableObject {
     
     /// Monitor photo node and inherited sensitivity changes
     /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
-    @MainActor
     func monitorPhotoSensitivityChanges() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
         nodeUseCase != nil else { return }
         // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder
-        _ = await $thumbnailContainer.values.contains(where: { $0.type != .placeholder })
+        _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })
         
         do {
             for try await isSensitive in photoSensitivityChanges(for: photo) {
-                await updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isSensitive))
+                updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isSensitive))
             }
         } catch {
             MEGALogError("[\(type(of: self))] failed to retrieve inherited sensitivity for photo: \(error.localizedDescription)")
@@ -138,16 +137,15 @@ class PhotoCellViewModel: ObservableObject {
     
     private func loadThumbnail(type: ThumbnailTypeEntity) async throws {
         for await imageContainer in try await thumbnailLoader.loadImage(for: photo, type: type) {
-            await updateThumbnailContainerIfNeeded(imageContainer)
+            updateThumbnailContainerIfNeeded(imageContainer)
         }
     }
     
-    private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {
+    private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) {
         guard !isShowingThumbnail(container) else { return }
-        await updateThumbnailContainer(container)
+        updateThumbnailContainer(container)
     }
     
-    @MainActor
     private func updateThumbnailContainer(_ container: any ImageContaining) {
         thumbnailContainer = container
     }

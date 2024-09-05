@@ -6,6 +6,7 @@ import MEGASDKRepo
 import Search
 import SwiftUI
 
+@MainActor
 class NodeBrowserViewModel: ObservableObject {
 
     // Here, we retain for example context menu delegate handlers, that need to leave as long as this view model.
@@ -71,10 +72,14 @@ class NodeBrowserViewModel: ObservableObject {
     private let updateTransferWidgetHandler: () -> Void
     private let sortOrderProvider: () -> MEGADomain.SortOrderEntity
     private let onNodeStructureChanged: () -> Void
-    private var viewModePreferenceChangeNotificationTask: Task<Void, Never>?
     private var cloudDriveViewModeMonitoringService: any CloudDriveViewModeMonitoring
     private var nodeSensitivityChangesListenerTask: Task<Void, Never>?
-
+    private var viewModeMonitoringTask: Task<Void, Never>? {
+        willSet {
+            viewModeMonitoringTask?.cancel()
+        }
+    }
+    
     var cloudDriveContextMenuFactory: CloudDriveContextMenuFactory? {
         didSet {
             Task {
@@ -230,9 +235,9 @@ class NodeBrowserViewModel: ObservableObject {
         addNodesUpdateHandler()
         subscribeToViewModePreferenceChangeNotification()
     }
-
+    
     deinit {
-        cancelViewModePreferenceChangeNotification()
+        viewModeMonitoringTask?.cancel()
     }
 
     var viewModeAwareMediaDiscoveryViewModel: MediaDiscoveryContentViewModel? {
@@ -243,7 +248,7 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     func onLoadTask() async {
-        await storageFullAlertViewModel.showStorageAlertIfNeeded()
+        storageFullAlertViewModel.showStorageAlertIfNeeded()
         startObservingNodeSourceChanges()
     }
     
@@ -450,27 +455,17 @@ class NodeBrowserViewModel: ObservableObject {
         changeSortOrder(sortOrder.toSortOrderType())
     }
 
-    @MainActor
     private func refreshAndReloadResults() async {
         refresh()
         await searchResultsViewModel.reloadResults()
     }
 
     private func subscribeToViewModePreferenceChangeNotification() {
-        viewModePreferenceChangeNotificationTask = Task { [weak self] in
-            guard let viewModes = self?.cloudDriveViewModeMonitoringService.viewModes else { return }
-
-            for await updatedViewMode in viewModes {
-                await MainActor.run { [weak self] in
-                    self?.changeViewMode(updatedViewMode)
-                }
+        viewModeMonitoringTask = Task { [weak self, cloudDriveViewModeMonitoringService] in
+            for await updatedViewMode in cloudDriveViewModeMonitoringService.viewModes {
+                self?.changeViewMode(updatedViewMode)
             }
         }
-    }
-
-    private func cancelViewModePreferenceChangeNotification() {
-        viewModePreferenceChangeNotificationTask?.cancel()
-        viewModePreferenceChangeNotificationTask = nil
     }
 }
 

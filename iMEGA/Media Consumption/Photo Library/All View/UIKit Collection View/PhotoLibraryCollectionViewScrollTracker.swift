@@ -5,6 +5,7 @@ protocol PhotoLibraryCollectionViewScrolling: AnyObject {
     func position(at indexPath: IndexPath) -> PhotoScrollPosition?
 }
 
+@MainActor
 final class PhotoLibraryCollectionViewScrollTracker {
     private var subscriptions = Set<AnyCancellable>()
     private let libraryViewModel: PhotoLibraryContentViewModel

@@ -3,6 +3,7 @@ import MEGADomain
 import XCTest
 
 final class PhotoLibraryContentViewModelTests: XCTestCase {
+    @MainActor
     func testShouldShowPhotoLibraryPicker_contentModeThatsNotAlbumOrAlbumLink_shouldReturnFalse() {
         let modes = [PhotoLibraryContentMode.album, .albumLink]
         modes.forEach {
@@ -11,6 +12,7 @@ final class PhotoLibraryContentViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShouldShowPhotoLibraryPicker_contentModeAlbumOrAlbumLink_shouldReturnTrue() {
         let modes = [PhotoLibraryContentMode.library, .mediaDiscovery, .mediaDiscoveryFolderLink]
         modes.forEach {
@@ -19,6 +21,7 @@ final class PhotoLibraryContentViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testToggleSelectAllPhotos_onCalledAgain_shouldToggleBetweenSelectAllAndUnselectAll() throws {
         let photos = [NodeEntity(name: "a.png", handle: HandleEntity(1),
                                  modificationTime: try "2023-08-18T22:01:04Z".date),

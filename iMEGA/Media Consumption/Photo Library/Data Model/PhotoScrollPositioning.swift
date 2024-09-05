@@ -9,7 +9,3 @@ struct PhotoScrollPosition: Hashable {
 extension PhotoScrollPosition {
     static let top = PhotoScrollPosition(handle: .invalid, date: Date(timeIntervalSince1970: 1))
 }
-
-protocol PhotoScrollPositioning {
-    var position: PhotoScrollPosition? { get }
-}

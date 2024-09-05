@@ -13,6 +13,7 @@ enum PhotoLibrarySupplementaryElementKind: String {
 }
 
 @available(iOS 16.0, *)
+@MainActor
 final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var subscriptions = Set<AnyCancellable>()
     private let router: PhotoLibraryContentViewRouter

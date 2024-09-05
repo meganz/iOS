@@ -40,6 +40,7 @@ final class MockCloudDriveViewModeMonitoringService: CloudDriveViewModeMonitorin
 
 class NodeBrowserViewModelTests: XCTestCase {
     
+    @MainActor
     class Harness {
         
         static let titleBuilderProvidedValue = "CD title"
@@ -157,12 +158,14 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testRefreshTitle_readUsesTitleBuild_toSetTitle() {
         let harness = Harness(node: .rootNode)
         harness.sut.refreshTitle()
         XCTAssertEqual(harness.sut.title, Harness.titleBuilderProvidedValue)
     }
     
+    @MainActor
     func testViewMode_changingToList_setsSearchResultsViewModelLayout() {
         let harness = Harness(
             defaultViewMode: .thumbnail,
@@ -173,6 +176,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertEqual(harness.sut.searchResultsViewModel.layout, .list)
     }
     
+    @MainActor
     func testViewMode_changingToThumbnail_setsSearchResultsViewModelLayout() {
         let harness = Harness(
             defaultViewMode: .list,
@@ -183,6 +187,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertEqual(harness.sut.searchResultsViewModel.layout, .thumbnail)
     }
     
+    @MainActor
     func testViewMode_changingValue_thumbnail_callsViewModeSaver() {
         let harness = Harness(
             defaultViewMode: .list,
@@ -193,7 +198,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertEqual(harness.savedViewModes, [.thumbnail])
     }
     
-    func testViewMode_changingValue_list_callsViewModeSaver() {
+    @MainActor func testViewMode_changingValue_list_callsViewModeSaver() {
         let harness = Harness(
             defaultViewMode: .list,
             defaultLayout: .list,
@@ -203,7 +208,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertEqual(harness.savedViewModes, [.mediaDiscovery])
     }
     
-    func testViewMode_changingValue_mediaDiscovery_callsViewModeSaver() {
+    @MainActor func testViewMode_changingValue_mediaDiscovery_callsViewModeSaver() {
         let harness = Harness(
             defaultViewMode: .thumbnail,
             defaultLayout: .thumbnail,
@@ -213,6 +218,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertEqual(harness.savedViewModes, [.list])
     }
     
+    @MainActor
     func testViewMode_changingValue_mediaDiscovery_mediaDiscoveryViewNotNil() {
         let harness = Harness(
             defaultViewMode: .thumbnail,
@@ -224,6 +230,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertNotNil(harness.sut.viewModeAwareMediaDiscoveryViewModel)
     }
 
+    @MainActor
     func testViewState_whenEditing_shouldChangeToEditMode() {
         let harness = Harness(node: .init())
         harness.sut.toggleSelection()
@@ -234,6 +241,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testViewState_whenToggleSelectionToTrue_viewStateShouldBeInEditingState() {
         // given
         let harness = Harness(node: .init())
@@ -249,7 +257,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
     
-    func testViewState_whenToggleSelectionToFalse_viewStateShouldBeInRegularState() {
+    @MainActor func testViewState_whenToggleSelectionToFalse_viewStateShouldBeInRegularState() {
         // given
         let harness = Harness(node: .init())
         
@@ -264,6 +272,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testChangeSortOrder_forAllCases_shouldMatchExpectedResult() {
         [
             (.nameAscending, .defaultAsc),
@@ -282,6 +291,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testInitForSortOrder_forAllCases_shouldMatchExpectedResult() {
         MEGADomain.SortOrderEntity.allValid.forEach { sortOrder in
             let harness = Harness(node: .init(), sortOrderProvider: { sortOrder })
@@ -293,6 +303,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testUpdateTransferWidget() {
         var didUpdateTransferWidget = false
         let harness = Harness(node: .init(), updateTransferWidgetHandler: { didUpdateTransferWidget = true })
@@ -300,6 +311,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertTrue(didUpdateTransferWidget)
     }
 
+    @MainActor
     func testEditMode_whenChangingTheEditing_shouldAlsoChangeTheEditMode() {
         let harness = Harness(node: .init())
         let exp = expectation(description: "Wait for editing mode to be enabled")
@@ -320,6 +332,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         editModeSubscription.cancel()
     }
 
+    @MainActor
     func testOnNodesUpdateHandler_whenANodeIsRemovedFromTree_shouldInvokeOnRemove() async {
         let exp = expectation(description: "Wait for on remove to be triggered")
         let nodes: [NodeEntity] = [
@@ -331,17 +344,20 @@ class NodeBrowserViewModelTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 1.0)
     }
 
+    @MainActor
     func testMatches_whenNodeSourceIsSet_shouldMatchTheSource() {
         let node = NodeEntity(handle: 100)
         let harness = Harness(node: node)
         XCTAssertTrue(harness.sut.parentNodeMatches(node: node))
     }
 
+    @MainActor
     func testUpdateViewModeIfNeeded_whenViewModeIsNotChanged_shouldReturnOriginalValue() async {
         let harness = Harness(defaultViewMode: .list, node: NodeEntity(handle: 100))
         await assertViewMode(with: harness, expectedOrder: [.list, .list])
     }
 
+    @MainActor
     func testUpdateViewModeIfNeeded_whenViewModeIsChanged_shouldReturnUpdatedValue() async {
         let harness = Harness(
             defaultViewMode: .list,
@@ -350,6 +366,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         await assertViewMode(with: harness, expectedOrder: [.list, .thumbnail])
     }
     
+    @MainActor
     func testSortOrderChange() async {
         await withMainSerialExecutor {
             // given
@@ -399,14 +416,17 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testCloudDriveContextMenuFactory_whenSensitiveNodeIsTrue_shouldUpdateMenuViewFactoryWithHiddenAsTrue() async {
         await assertCloudDriveContextMenuFactory(withNodeAsSensitive: true)
     }
 
+    @MainActor
     func testCloudDriveContextMenuFactory_whenSensitiveNodeIsFalse_shouldUpdateMenuViewFactoryWithHiddenAsFalse() async {
         await assertCloudDriveContextMenuFactory(withNodeAsSensitive: false)
     }
 
+    @MainActor
     func assertCloudDriveContextMenuFactory(withNodeAsSensitive isSensitive: Bool) async {
         let node = NodeEntity(handle: 100)
         let harness = Harness(node: node)
@@ -424,6 +444,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         cancellable.cancel()
     }
 
+    @MainActor
     func testListenToNodeSensitivityChanges_whenNodeIsMarkedSensitiveDueToInheritedSensitivityChanges_shouldTriggerUpdate() async {
         await assertListenToNodeSensitivityChangesWhenInheritedSensitivityChanges(
             initialSensitivityState: false,
@@ -431,6 +452,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testListenToNodeSensitivityChanges_whenNodeIsMarkedInSensitiveDueToInheritedSensitivityChanges_shouldTriggerUpdate() async {
         await assertListenToNodeSensitivityChangesWhenInheritedSensitivityChanges(
             initialSensitivityState: true,
@@ -438,6 +460,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testListenToNodeSensitivityChanges_whenNodeIsMarkedSensitiveDueToSensitivityChangesForNode_shouldTriggerUpdate() async {
         await assertListenToNodeSensitivityChangesWhenSensitivityChangesForNode(
             initialSensitivityState: false,
@@ -445,6 +468,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testListenToNodeSensitivityChanges_whenNodeIsMarkedInSensitiveDueToSensitivityChangesForNode_shouldTriggerUpdate() async {
         await assertListenToNodeSensitivityChangesWhenSensitivityChangesForNode(
             initialSensitivityState: false,
@@ -452,6 +476,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     private func assertListenToNodeSensitivityChangesWhenSensitivityChangesForNode(
         initialSensitivityState: Bool,
         updatedSensitivityState: Bool
@@ -466,6 +491,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     private func assertListenToNodeSensitivityChangesWhenInheritedSensitivityChanges(
         initialSensitivityState: Bool,
         updatedSensitivityState: Bool
@@ -480,6 +506,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     private func assertListenToNodeSensitivityChanges(
         initialSensitivityState: Bool,
         updatedSensitivityState: Bool,
@@ -506,6 +533,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertEqual(updatedNodeSource?.parentNode?.isMarkedSensitive, updatedSensitivityState)
     }
 
+    @MainActor
     private func assertViewMode(with harness: Harness, expectedOrder: [ViewModePreferenceEntity]) async {
         await withMainSerialExecutor {
             let expectation = expectation(description: "wait for the view mode to update")
@@ -527,7 +555,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         }
     }
 
-    private func assertChangeSortOrder(
+    @MainActor private func assertChangeSortOrder(
         with sortOrderType: SortOrderType,
         expectedSortOrderEntity: MEGADomain.SortOrderEntity,
         file: StaticString = #filePath,
