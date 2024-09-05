@@ -23,6 +23,7 @@ enum ChatContentAction: ActionType {
     case returnToCallBannerButtonTapped
 }
 
+@MainActor
 final class ChatContentViewModel: ViewModelType {
     
     enum Command: CommandType, Equatable {
@@ -71,8 +72,14 @@ final class ChatContentViewModel: ViewModelType {
     private var callUpdateSubscription: AnyCancellable?
     private var endCallSubscription: AnyCancellable?
     private var noUserJoinedSubscription: AnyCancellable?
+    private var timerSubscription: AnyCancellable?
 
     private(set) lazy var tonePlayer = TonePlayer()
+    
+    private var updateNavigationBarTask: Task<Void, Never>?
+    private var callTimeTrackingTask: Task<Void, Never>?
+    private var updateContentTask: Task<Void, Never>?
+    private var chatCallUpdateTask: Task<Void, Never>?
 
     init(chatRoom: ChatRoomEntity,
          chatUseCase: some ChatUseCaseProtocol,
@@ -150,45 +157,52 @@ final class ChatContentViewModel: ViewModelType {
     // MARK: - Private
     
     private func updateContentIfNeeded() {
-        Task {
+        updateContentTask?.cancel()
+        updateContentTask = Task {
             let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
             
             guard let call = await chatUseCase.chatCall(for: chatRoom.chatId),
                   await chatUseCase.chatConnectionStatus(for: chatRoom.chatId) == .online else {
-                await updateReturnToCallCleanUpButton()
-                await updateStartOrJoinCallButton(scheduledMeetings)
+                updateReturnToCallCleanUpButton()
+                updateStartOrJoinCallButton(scheduledMeetings)
                 
                 return
             }
             
-            await onUpdate(for: call, with: scheduledMeetings)
+            onUpdate(for: call, with: scheduledMeetings)
         }
     }
     
     private func onChatCallUpdate(for call: CallEntity) {
-        Task {
+        chatCallUpdateTask?.cancel()
+        chatCallUpdateTask = Task {
             let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
-            await onUpdate(for: call, with: scheduledMeetings)
+            onUpdate(for: call, with: scheduledMeetings)
         }
     }
     
     private func onUpdateStartOrJoinCallButtons() {
         Task {
             let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
-            await updateStartOrJoinCallButton(scheduledMeetings)
+            updateStartOrJoinCallButton(scheduledMeetings)
         }
     }
     
-    private func onUpdateNavigationBarButtonItems(_ disableCalling: Bool,
-                                                  _ isVoiceRecordingInProgress: Bool) {
-        Task {
+    private func onUpdateNavigationBarButtonItems(
+        _ disableCalling: Bool,
+        _ isVoiceRecordingInProgress: Bool
+    ) {
+        updateNavigationBarTask?.cancel()
+        updateNavigationBarTask = Task {
             let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress)
-            await enableNavigationBarButtonItems(shouldEnable)
+            enableNavigationBarButtonItems(shouldEnable)
         }
     }
     
-    private func shouldEnableAudioVideoButtons(_ disableCalling: Bool,
-                                               _ isVoiceRecordingInProgress: Bool) async -> Bool {
+    private func shouldEnableAudioVideoButtons(
+        _ disableCalling: Bool,
+        _ isVoiceRecordingInProgress: Bool
+    ) async -> Bool {
         let connectionStatus = await chatUseCase.chatConnectionStatus(for: chatRoom.chatId)
         let call = await chatUseCase.chatCall(for: chatRoom.chatId)
         let privilege = chatRoom.ownPrivilege
@@ -201,7 +215,6 @@ final class ChatContentViewModel: ViewModelType {
         return shouldEnable
     }
     
-    @MainActor
     private func enableNavigationBarButtonItems(_ enable: Bool) {
         invokeCommand?(.enableAudioVideoButtons(enable))
     }
@@ -215,19 +228,21 @@ final class ChatContentViewModel: ViewModelType {
         }
     }
     
-    @MainActor
-    private func updateStartOrJoinCallButton( _ scheduledMeetings: [ScheduledMeetingEntity]) {
+    private func stopTimer() {
         timer?.invalidate()
+        timerSubscription?.cancel()
+    }
+    
+    private func updateStartOrJoinCallButton( _ scheduledMeetings: [ScheduledMeetingEntity]) {
+        stopTimer()
         invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
     }
     
-    @MainActor
     private func updateReturnToCallCleanUpButton() {
-        timer?.invalidate()
+        stopTimer()
         invokeCommand?(.tapToReturnToCallCleanUp)
     }
     
-    @MainActor
     private func onUpdate(for call: CallEntity?, with scheduledMeetings: [ScheduledMeetingEntity]) {
         guard let call, call.chatId == chatRoom.chatId else { return }
         
@@ -261,13 +276,18 @@ final class ChatContentViewModel: ViewModelType {
         if !(timer?.isValid ?? false) {
             let startTime = Date().timeIntervalSince1970
             updateTapToReturnToCallLabel(withStartTime: startTime)
-            
-            timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
-                guard let self, callUseCase.call(for: chatRoom.chatId)?.status != .connecting else { return }
-                updateTapToReturnToCallLabel(withStartTime: startTime)
-            }
-            
-            RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
+                        
+            timerSubscription = Timer.publish(every: 1, on: .current, in: .common)
+                .autoconnect()
+                .sink { [weak self] _ in
+                    guard let self else { return }
+                    callTimeTrackingTask?.cancel()
+                    callTimeTrackingTask = Task { [weak self] in
+                        guard let self else { return }
+                        guard self.callUseCase.call(for: self.chatRoom.chatId)?.status != .connecting else { return }
+                        self.updateTapToReturnToCallLabel(withStartTime: startTime)
+                    }
+                }
         }
     }
     
@@ -375,7 +395,7 @@ final class ChatContentViewModel: ViewModelType {
     private func checkPermissionsAndStartCall(isVideoEnabled: Bool, notRinging: Bool) {
         permissionRouter.requestPermissionsFor(videoCall: isVideoEnabled) { [weak self] in
             guard let self else { return }
-            timer?.invalidate()
+            stopTimer()
             manageStartOrJoinCall(videoCall: isVideoEnabled, notRinging: notRinging)
         }
     }
@@ -413,13 +433,14 @@ final class ChatContentViewModel: ViewModelType {
                 tonePlayer.play(tone: .callEnded)
                 analyticsEventUseCase.sendAnalyticsEvent(.meetings(.endCallWhenEmptyCallTimeout))
                 
-                // When ending call, CallKit decativation will interupt playing of tone.
+                // When ending call, CallKit deactivation will interrupt playing of tone.
                 // Adding a delay of 0.7 seconds so there is enough time to play the tone
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+                Task { [weak self] in
                     guard let self else { return }
-                    router.removeEndCallDialogIfNeeded()
-                    endCall(call)
-                    endCallSubscription = nil
+                    try await Task.sleep(nanoseconds: 700_000_000)
+                    self.router.removeEndCallDialogIfNeeded()
+                    self.endCall(call)
+                    self.endCallSubscription = nil
                 }
             }
     }
@@ -452,7 +473,7 @@ final class ChatContentViewModel: ViewModelType {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
-                Task { @MainActor in 
+                Task {
                     guard MeetingContainerRouter.isAlreadyPresented == false,
                           let call = await self.chatUseCase.chatCall(for: self.chatRoom.chatId) else { return }
                     self.showCallEndDialog(withCall: call)
