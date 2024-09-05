@@ -17,7 +17,7 @@ final class UpgradeAccountFactory: NSObject {
         return upgradeAccountNC
     }
     
-    @objc func createUpgradeAccountChooseAccountType() -> MEGANavigationController {
+    @objc func createUpgradeAccountChooseAccountType(accountBaseStorage: Int) -> MEGANavigationController {
         let upgradeAccountNC = createUpgradeAccountNC()
         upgradeAccountNC.modalPresentationStyle = .fullScreen
         
@@ -25,6 +25,7 @@ final class UpgradeAccountFactory: NSObject {
             fatalError("Could not access UpgradeTableViewController")
         }
         upgradeTVC.isChoosingTheAccountType = true
+        upgradeTVC.accountBaseStorage = accountBaseStorage as NSNumber
         
         return upgradeAccountNC
     }

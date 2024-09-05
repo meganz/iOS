@@ -9,6 +9,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     let currentPlanStorageUsed: String
     let featureListHelper: FeatureListHelperProtocol
     let router: CancelAccountPlanRouting
+    private let achievementUseCase: any AchievementUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let currentSubscription: AccountSubscriptionEntity
     @Published var showCancellationSurvey: Bool = false
@@ -23,6 +24,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         currentPlanName: String,
         currentPlanStorageUsed: String,
         featureListHelper: FeatureListHelperProtocol,
+        achievementUseCase: some AchievementUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking,
         router: CancelAccountPlanRouting
@@ -30,6 +32,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         self.currentSubscription = currentSubscription
         self.currentPlanName = currentPlanName
         self.currentPlanStorageUsed = currentPlanStorageUsed
+        self.achievementUseCase = achievementUseCase
         self.featureListHelper = featureListHelper
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
@@ -45,8 +48,15 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     }
     
     @MainActor
-    func setupFeatureList() {
-        features = featureListHelper.createCurrentFeatures()
+    func setupFeatureList() async {
+        do {
+            let bytesBaseStorage = try await achievementUseCase.baseStorage()
+            features = featureListHelper.createCurrentFeatures(
+                baseStorage: bytesBaseStorage.bytesToGigabytes()
+            )
+        } catch {
+            dismiss()
+        }
     }
     
     func dismiss() {
