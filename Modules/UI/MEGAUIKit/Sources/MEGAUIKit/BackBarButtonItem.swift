@@ -2,7 +2,7 @@ import UIKit
 
 // this is used to implement back buttons on the nav bar while keeping
 // the custom titles of screens or empty titles on the back buttons
-// It works with conjuction with MEGANavigationController which inspects
+// It works with conjunction with MEGANavigationController which inspects
 // navigationItem.backBarButtonItem to check if it's BackBarButtonItem and
 // then grabs menuTitle to construct menu items to pop to each view controller in the hierarchy
 public final class BackBarButtonItem: UIBarButtonItem {

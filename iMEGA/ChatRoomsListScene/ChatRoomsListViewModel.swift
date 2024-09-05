@@ -95,7 +95,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private var loadingTask: Task<Void, Never>?
     private var searchTask: Task<Void, Never>?
     private var meetingTipTask: Task<Void, Never>?
-
+    
     @Published var isSearchActive: Bool
     
     private var chatRooms: [ChatRoomViewModel]?
@@ -116,7 +116,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     @Published private(set) var shouldDisplayUnreadBadgeForChats = false
     @Published private(set) var shouldDisplayUnreadBadgeForMeetings = false
-
+    
     var presentingCreateMeetingTip: Bool {
         chatViewMode == .meetings && isConnectedToNetwork && currentTip == .createMeeting
     }
@@ -125,7 +125,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatViewMode == .meetings  && !isMeetingListScrolling && recurringMeetingTipOffsetY != nil &&
         (currentTip == .recurringMeeting || currentTip == .recurringOrStartMeeting)
     }
-
+    
     var presentingStartMeetingTip: Bool {
         chatViewMode == .meetings  && !isMeetingListScrolling && startMeetingTipOffsetY != nil &&
         (currentTip == .startMeeting || (currentTip == .recurringOrStartMeeting && !presentingRecurringMeetingTip))
@@ -136,7 +136,14 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
-    let emptyViewStateFactory: ChatRoomsEmptyViewStateFactory
+    
+    private lazy var emptyViewStateFactory: ChatRoomsEmptyViewStateFactory = {
+        ChatRoomsEmptyViewStateFactory(
+            newEmptyStates: featureFlagProvider.newChatEmptyScreen,
+            designTokenEnabled: UIColor.isDesignTokenEnabled()
+        )
+    }()
+    
     let urlOpener: (URL) -> Void
     
     init(
@@ -178,11 +185,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isFirstMeetingsLoad = true
         self.urlOpener = urlOpener
         
-        self.emptyViewStateFactory = .init(
-            newEmptyStates: featureFlagProvider.newChatEmptyScreen,
-            designTokenEnabled: UIColor.isDesignTokenEnabled()
-        )
-        
         configureTitle()
     }
     
@@ -209,27 +211,43 @@ final class ChatRoomsListViewModel: ObservableObject {
                 chatViewMode: chatViewMode,
                 contactsOnMega: contactsOnMegaViewState,
                 archivedChats: archiveChatsViewState,
-                newChatAction: {[weak self] in
-                    guard let self else { return }
-                    if self.chatViewMode == .chats {
-                        self.addChatButtonTapped()
-                    }
-                },
-                inviteFriendAction: {[weak self] in
-                    guard let self else { return }
-                    if self.chatViewMode == .chats {
-                        self.goToInviteContact()
-                        self.trackInviteFriend()
-                    }
-                },
-                linkTappedAction: linkTappedAction,
+                actions: emptyViewActions,
                 bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : []
             )
         }
     }
     
+    func startMeeting() {
+        tracker.trackAnalyticsEvent(with: StartMeetingNowPressedEvent())
+        router.presentCreateMeeting()
+    }
+    
+    func scheduleMeeting() {
+        tracker.trackAnalyticsEvent(with: ScheduleMeetingPressedEvent())
+        router.presentScheduleMeeting()
+    }
+    
+    func joinMeeting() {
+        tracker.trackAnalyticsEvent(with: JoinMeetingPressedEvent())
+        router.presentEnterMeeting()
+    }
+    
+    var emptyViewActions: ChatRoomsEmptyViewStateFactory.ChatEmptyViewActions {
+        .init(
+            startMeeting: startMeeting,
+            scheduleMeeting: scheduleMeeting,
+            inviteFriend: goToInviteContact,
+            newChat: addChatButtonTapped,
+            linkTappedAction: linkTappedAction
+        )
+    }
+    
     private func trackInviteFriend() {
         tracker.trackAnalyticsEvent(with: InviteFriendsPressedEvent())
+    }
+    
+    func trackNewMeetingsAddMenu() {
+        tracker.trackAnalyticsEvent(with: MeetingsAddMenuEvent())
     }
     
     func trackScreenAppearance() {
@@ -290,18 +308,19 @@ final class ChatRoomsListViewModel: ObservableObject {
     func contextMenuConfiguration() -> CMConfigEntity {
         CMConfigEntity(
             menuType: .menu(type: .chat),
-                       isDoNotDisturbEnabled: globalDNDNotificationControl.isGlobalDNDEnabled,
-                       timeRemainingToDeactiveDND: globalDNDNotificationControl.timeRemainingToDeactiveDND ?? "",
-                       chatStatus: chatUseCase.chatStatus(),
-                       isArchivedChatsVisible: hasArchivedChats
+            isDoNotDisturbEnabled: globalDNDNotificationControl.isGlobalDNDEnabled,
+            timeRemainingToDeactiveDND: globalDNDNotificationControl.timeRemainingToDeactiveDND ?? "",
+            chatStatus: chatUseCase.chatStatus(),
+            isArchivedChatsVisible: hasArchivedChats
         )
     }
     
     func selectChatMode(_ mode: ChatViewMode) {
         guard mode != chatViewMode else { return }
         chatViewMode = mode
-        if mode == .chats {
-            tracker.trackAnalyticsEvent(with: ChatsTabEvent())
+        switch mode {
+        case .chats: tracker.trackAnalyticsEvent(with: ChatsTabEvent())
+        case .meetings: tracker.trackAnalyticsEvent(with: MeetingsTabEvent())
         }
         fetchChats()
     }
@@ -358,7 +377,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @MainActor
     func updateTipOffsetY(for meeting: FutureMeetingRoomViewModel, meetingframeInGlobal: CGRect?) {
         guard currentTip != .showedAll else { return }
-
+        
         if isFirstScheduledMeeting(meeting) {
             if let meetingframeInGlobal = meetingframeInGlobal {
                 let offsetY = meetingframeInGlobal.midY - meetingListFrame.minY
@@ -389,7 +408,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             }
         }
     }
-        
+    
     func makeCreateMeetingTip() -> Tip {
         Tip(title: Strings.Localizable.Meetings.ScheduleMeeting.CreateMeetingTip.title,
             message: Strings.Localizable.Meetings.ScheduleMeeting.CreateMeetingTip.message,
@@ -684,7 +703,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             userImageUseCase: userImageUseCase,
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
-            megaHandleUseCase: megaHandleUseCase, 
+            megaHandleUseCase: megaHandleUseCase,
             callManager: CallKitCallManager.shared,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession())),
@@ -729,11 +748,11 @@ final class ChatRoomsListViewModel: ObservableObject {
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession())),
             scheduledMeetingUseCase: scheduledMeetingUseCase,
-            megaHandleUseCase: megaHandleUseCase, 
+            megaHandleUseCase: megaHandleUseCase,
             callManager: CallKitCallManager.shared,
             permissionAlertRouter: permissionAlertRouter,
             chatNotificationControl: chatNotificationControl,
-            chatListItemCacheUseCase: chatListItemCacheUseCase, 
+            chatListItemCacheUseCase: chatListItemCacheUseCase,
             chatListItemAvatar: chatListItemAvatar
         )
     }
@@ -750,32 +769,25 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func startMeetingMenu() -> MenuButtonModel.Menu {
         .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting,
-            image: .startMeeting
-        ) { [weak self] in
-            guard let self else { return }
-            router.presentCreateMeeting()
-        }
+            image: .startMeeting,
+            action: startMeeting
+        )
     }
     
     private func joinMeetingMenu() -> MenuButtonModel.Menu {
         .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting,
-            image: .joinAMeeting
-        ) { [weak self] in
-            guard let self else { return }
-            router.presentEnterMeeting()
-        }
+            image: .joinAMeeting,
+            action: joinMeeting
+        )
     }
     
     private func scheduleMeetingMenu() -> MenuButtonModel.Menu {
         .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting,
-            image: .scheduleMeeting
-        ) { [weak self] in
-            guard let self else { return }
-            tracker.trackAnalyticsEvent(with: ScheduleMeetingMenuItemEvent())
-            router.presentScheduleMeeting()
-        }
+            image: .scheduleMeeting,
+            action: scheduleMeeting
+        )
     }
     
     private func listenToChatStatusUpdate() {
@@ -845,6 +857,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func goToInviteContact() {
+        trackInviteFriend()
         router.showInviteContactScreen()
     }
     
@@ -949,12 +962,11 @@ extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
         
         switch action {
         case .startMeeting:
-            router.presentCreateMeeting()
+            startMeeting()
         case .joinMeeting:
-            router.presentEnterMeeting()
+            joinMeeting()
         case .scheduleMeeting:
-            tracker.trackAnalyticsEvent(with: ScheduleMeetingMenuItemEvent())
-            router.presentScheduleMeeting()
+            scheduleMeeting()
         }
     }
 }

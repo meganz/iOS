@@ -507,12 +507,12 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertTrackedAnalyticsEventsEqual(mockTracker.trackedEventIdentifiers, [ChatRoomsStartConversationMenuEvent()])
     }
     
-    func test_TabSwitching_changeToChats_tracksEvent() {
+    func test_TabSwitching_TracksEvents() {
         let mockTracker = MockTracker()
         let viewModel = makeChatRoomsListViewModel(tracker: mockTracker)
         viewModel.selectChatMode(.meetings)
         viewModel.selectChatMode(.chats)
-        XCTAssertTrackedAnalyticsEventsEqual(mockTracker.trackedEventIdentifiers, [ChatsTabEvent()])
+        XCTAssertTrackedAnalyticsEventsEqual(mockTracker.trackedEventIdentifiers, [MeetingsTabEvent(), ChatsTabEvent()])
     }
     
     // MARK: - Private methods
