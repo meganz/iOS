@@ -1,4 +1,4 @@
-public struct AccountRequestEntity {
+public struct AccountRequestEntity: Sendable {
     public var type: RequestTypeEntity
     public var file: String?
     public var userAttribute: UserAttributeEntity?

@@ -12,11 +12,7 @@ import StoreKit
     private lazy var baseConditionUseCase: any RatingRequestBaseConditionsUseCaseProtocol
     = RatingRequestBaseConditionsUseCase(
         preferenceUserCase: PreferenceUseCase.default,
-        accountRepo: AccountRepository(
-            sdk: sdk,
-            myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess.shared,
-            backupsRootFolderNodeAccess: BackupRootNodeAccess.shared
-        ),
+        accountRepo: AccountRepository.newRepo,
         currentAppVersion: currentAppVersion
     )
     private lazy var shareUseCase: some ShareUseCaseProtocol = ShareUseCase(

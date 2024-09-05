@@ -1,7 +1,6 @@
 import Foundation
 
-public struct UserAlertEntity {
-
+public struct UserAlertEntity: Sendable {
     public var identifier: UInt
     public var isSeen: Bool
     public var isRelevant: Bool

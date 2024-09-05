@@ -57,6 +57,8 @@ public final class MockSdk: MEGASdk {
     private let nodeSizes: [MEGAHandle: Int64]
     private let folderInfo: MEGAFolderInfo?
     private var transferDelegates: [any MEGATransferDelegate] = []
+    private var requestDelegates: [any MEGARequestDelegate] = []
+    private var globalDelegates: [any MEGAGlobalDelegate] = []
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -86,8 +88,11 @@ public final class MockSdk: MEGASdk {
         case updateSetName(sid: MEGAHandle, name: String)
     }
     
-    public var hasGlobalDelegate = false
-    public var hasRequestDelegate = false
+    private let shouldListGlobalDelegates: Bool
+    public var hasGlobalDelegate: Bool = false
+    public var hasRequestDelegate: Bool {
+        requestDelegates.isNotEmpty
+    }
     public var hasTransferDelegate: Bool {
         transferDelegates.isNotEmpty
     }
@@ -155,7 +160,8 @@ public final class MockSdk: MEGASdk {
                 shareAccessLevel: MEGAShareType = .accessUnknown,
                 nodeFingerprint: String? = nil,
                 nodeSizes: [MEGAHandle: Int64] = [:],
-                folderInfo: MEGAFolderInfo? = nil
+                folderInfo: MEGAFolderInfo? = nil,
+                shouldListGlobalDelegates: Bool = false
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -211,6 +217,7 @@ public final class MockSdk: MEGASdk {
         self.nodeFingerprint = nodeFingerprint
         self.nodeSizes = nodeSizes
         self.folderInfo = folderInfo
+        self.shouldListGlobalDelegates = shouldListGlobalDelegates
         super.init()
     }
     
@@ -281,23 +288,35 @@ public final class MockSdk: MEGASdk {
     
     public override func add(_ delegate: any MEGAGlobalDelegate) {
         hasGlobalDelegate = true
+        
+        if shouldListGlobalDelegates {
+            globalDelegates.append(delegate)
+        }
     }
     
-    public override func add(_ delegate: MEGAGlobalDelegate, queueType: ListenerQueueType) {
+    public override func add(_ delegate: any MEGAGlobalDelegate, queueType: ListenerQueueType) {
         hasGlobalDelegate = true
         delegateQueueType = queueType
+        
+        if shouldListGlobalDelegates {
+            globalDelegates.append(delegate)
+        }
     }
     
     public override func remove(_ delegate: any MEGAGlobalDelegate) {
         hasGlobalDelegate = false
+        
+        if shouldListGlobalDelegates {
+            globalDelegates.removeAll { $0 === delegate }
+        }
     }
     
     public override func add(_ delegate: any MEGARequestDelegate) {
-        hasRequestDelegate = true
+        requestDelegates.append(delegate)
     }
     
     public override func remove(_ delegate: any MEGARequestDelegate) {
-        hasRequestDelegate = false
+        requestDelegates.removeAll { $0 === delegate }
     }
     
     public override func add(_ delegate: any MEGATransferDelegate) {
@@ -798,6 +817,24 @@ public final class MockSdk: MEGASdk {
     public func simulateOnTransferFinish(_ transfer: MEGATransfer, error: MEGAError) {
         transferDelegates.forEach {
             $0.onTransferFinish?(self, transfer: transfer, error: error)
+        }
+    }
+    
+    public func simulateOnRequestFinish(_ request: MEGARequest, error: MEGAError) {
+        requestDelegates.forEach {
+            $0.onRequestFinish?(self, request: request, error: error)
+        }
+    }
+    
+    public func simulateOnUserAlertsUpdate(_ userAlertList: MEGAUserAlertList) {
+        globalDelegates.forEach {
+            $0.onUserAlertsUpdate?(self, userAlertList: userAlertList)
+        }
+    }
+    
+    public func simulateOnContactRequestsUpdate(_ contactRequestList: MEGAContactRequestList) {
+        globalDelegates.forEach {
+            $0.onContactRequestsUpdate?(self, contactRequestList: contactRequestList)
         }
     }
 }

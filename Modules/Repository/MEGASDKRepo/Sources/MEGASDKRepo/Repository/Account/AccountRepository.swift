@@ -1,4 +1,3 @@
-@preconcurrency import Combine
 import Foundation
 import MEGADomain
 import MEGASdk
@@ -9,32 +8,20 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     private let currentUserSource: CurrentUserSource
     private let myChatFilesFolderNodeAccess: NodeAccessProtocol
     private let backupsRootFolderNodeAccess: NodeAccessProtocol
-    
-    private let requestResultSourcePublisher = PassthroughSubject<Result<AccountRequestEntity, any Error>, Never>()
-    public var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, any Error>, Never> {
-        requestResultSourcePublisher.eraseToAnyPublisher()
-    }
-    
-    private let contactRequestSourcePublisher = PassthroughSubject<[ContactRequestEntity], Never>()
-    public var contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> {
-        contactRequestSourcePublisher.eraseToAnyPublisher()
-    }
-    
-    private let userAlertUpdateSourcePublisher = PassthroughSubject<[UserAlertEntity], Never>()
-    public var userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> {
-        userAlertUpdateSourcePublisher.eraseToAnyPublisher()
-    }
+    private let accountUpdatesProvider: any AccountUpdatesProviderProtocol
     
     public init(
         sdk: MEGASdk = MEGASdk.sharedSdk,
         currentUserSource: CurrentUserSource = .shared,
         myChatFilesFolderNodeAccess: NodeAccessProtocol,
-        backupsRootFolderNodeAccess: NodeAccessProtocol
+        backupsRootFolderNodeAccess: NodeAccessProtocol,
+        accountUpdatesProvider: some AccountUpdatesProviderProtocol
     ) {
         self.sdk = sdk
         self.currentUserSource = currentUserSource
         self.myChatFilesFolderNodeAccess = myChatFilesFolderNodeAccess
         self.backupsRootFolderNodeAccess = backupsRootFolderNodeAccess
+        self.accountUpdatesProvider = accountUpdatesProvider
     }
 
     // MARK: - User authentication status and identifiers
@@ -238,20 +225,16 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
 
     // MARK: - Account events and delegates
-    public func registerMEGARequestDelegate() async {
-        sdk.add(self as (any MEGARequestDelegate))
+    public var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> {
+        accountUpdatesProvider.onAccountRequestFinish
     }
     
-    public func deRegisterMEGARequestDelegate() async {
-        sdk.remove(self as (any MEGARequestDelegate))
+    public var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> {
+        accountUpdatesProvider.onUserAlertsUpdates
     }
     
-    public func registerMEGAGlobalDelegate() async {
-        sdk.add(self as (any MEGAGlobalDelegate))
-    }
-    
-    public func deRegisterMEGAGlobalDelegate() async {
-        sdk.remove(self as (any MEGAGlobalDelegate))
+    public var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> {
+        accountUpdatesProvider.onContactRequestsUpdates
     }
     
     public func multiFactorAuthCheck(email: String) async throws -> Bool {
@@ -356,27 +339,5 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     private func accountSubscriptions() -> [AccountSubscriptionEntity]? {
         guard let currentAccountDetails else { return nil }
         return currentAccountDetails.subscriptions
-    }
-}
-
-// MARK: - MEGARequestDelegate
-extension AccountRepository: MEGARequestDelegate {
-    public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        guard error.type == .apiOk else {
-            requestResultSourcePublisher.send(.failure(error))
-            return
-        }
-        requestResultSourcePublisher.send(.success(request.toAccountRequestEntity()))
-    }
-}
-
-// MARK: - MEGAGlobalDelegate
-extension AccountRepository: MEGAGlobalDelegate {
-    public func onUserAlertsUpdate(_ api: MEGASdk, userAlertList: MEGAUserAlertList) {
-        userAlertUpdateSourcePublisher.send(userAlertList.toUserAlertEntities())
-    }
-    
-    public func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
-        contactRequestSourcePublisher.send(contactRequestList.toContactRequestEntities())
     }
 }
