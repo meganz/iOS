@@ -15,6 +15,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
         return GetLinkViewController.instantiate(viewModel: viewModel)
     }
     
+    @MainActor
     private func makeViewModel(forAlbums albums: [AlbumEntity]) -> any GetLinkViewModelType {
         if albums.count == 1,
            let album = albums.first {
@@ -28,6 +29,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
     
     // MARK: - Private
     
+    @MainActor
     private func makeGetAlbumLinkViewModel(album: AlbumEntity) -> GetAlbumLinkViewModel {
         let initialSections = ShareAlbumLinkInitialSections(
             album: album,
@@ -42,6 +44,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
             tracker: DIContainer.tracker)
     }
     
+    @MainActor
     private func makeGetAlbumsLinkViewModel(albums: [AlbumEntity]) -> GetAlbumsLinkViewModel {
         let initialSections = ShareAlbumsLinkInitialSections(
             albums: albums,

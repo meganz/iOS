@@ -75,6 +75,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
                 monitorUserAlbumPhotosAsyncSequence: userAlbumPhotosAsyncSequence.eraseToAnyAsyncSequence())
             let ccUserAttributesUseCase = MockContentConsumptionUserAttributeUseCase(
                 sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: !excludeSensitives))
+            let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             let sut = makeSUT(
                 album: album,
                 thumbnailUseCase: MockThumbnailUseCase(
@@ -83,7 +84,8 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
                 contentConsumptionUserAttributeUseCase: ccUserAttributesUseCase,
                 albumCoverUseCase: MockAlbumCoverUseCase(albumCover: coverNode),
                 featureFlagProvider: MockFeatureFlagProvider(
-                    list: [.albumPhotoCache: true, .hiddenNodes: isHiddenNodesOn]))
+                    list: [.hiddenNodes: isHiddenNodesOn]),
+                albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
             
             await test(viewModel: sut, action: .onViewReady, expectedCommands: [
                 .setLabels(title: albumName,
@@ -104,12 +106,11 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         let album = AlbumEntity(id: 5, name: albumName, type: .user)
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
-       
+        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         let sut = makeSUT(
             album: album,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(
-                list: [.albumPhotoCache: true]))
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
         await test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .setLabels(title: albumName,
@@ -120,6 +121,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         await sut.loadingTask?.value
     }
     
+    @MainActor
     func testDispatch_cancelTasks_shouldCancelTasks() {
         let sut = makeSUT()
         
@@ -128,6 +130,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         XCTAssertNil(sut.loadingTask)
     }
     
+    @MainActor
     private func makeSUT(
         album: AlbumEntity = AlbumEntity(id: 1, type: .user),
         thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
@@ -135,6 +138,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         featureFlagProvider: any FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> GetLinkAlbumInfoCellViewModel {
@@ -144,7 +148,8 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
             monitorAlbumsUseCase: monitorAlbumsUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             albumCoverUseCase: albumCoverUseCase,
-            featureFlagProvider: featureFlagProvider)
+            featureFlagProvider: featureFlagProvider,
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
