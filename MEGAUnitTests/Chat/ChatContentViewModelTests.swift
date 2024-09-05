@@ -14,7 +14,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let chatUseCase = MockChatUseCase()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .startOrJoinCallCleanUp,
              expectedCommands: [.hideStartOrJoinCallButton(true)])
@@ -24,7 +24,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let chatUseCase = MockChatUseCase()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .updateCallNavigationBarButtons(false, false),
              expectedCommands: [.enableAudioVideoButtons(false)])
@@ -34,7 +34,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
@@ -50,7 +50,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil),
@@ -67,7 +67,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
@@ -83,7 +83,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil),
@@ -100,13 +100,11 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(isExistingActiveCall: true, currentChatConnectionStatus: .online)
         let callUseCase = MockCallUseCase(call: CallEntity(status: .userNoPresent))
-        let router = MockChatContentRouter()
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, router) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
-            router: router,
             callManager: callManager
         )
         
@@ -120,7 +118,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
@@ -139,7 +137,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
         let callManager = MockCallManager()
         callManager.addIncomingCall(withUUID: UUID(), chatRoom: chatRoom)
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
@@ -154,11 +152,9 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testReturnToCallBannerButtonTapped_showCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let router = MockChatContentRouter()
-        let sut = makeChatContentViewModel(
+        let (sut, router) = makeChatContentViewModel(
             chatRoom: chatRoom,
-            chatUseCase: chatUseCase,
-            router: router
+            chatUseCase: chatUseCase
         )
 
         test(viewModel: sut, action: .returnToCallBannerButtonTapped,
@@ -169,11 +165,9 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testReturnToCallBannerButtonTapped_WaitingRoomEnabledUserStandard_showCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let router = MockChatContentRouter()
-        let sut = makeChatContentViewModel(
+        let (sut, router) = makeChatContentViewModel(
             chatRoom: chatRoom,
-            chatUseCase: chatUseCase,
-            router: router
+            chatUseCase: chatUseCase
         )
 
         test(viewModel: sut, action: .returnToCallBannerButtonTapped,
@@ -184,11 +178,9 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testReturnToCallBannerButtonTapped_WaitingRoomEnabledUserModerator_showCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let router = MockChatContentRouter()
-        let sut = makeChatContentViewModel(
+        let (sut, router) = makeChatContentViewModel(
             chatRoom: chatRoom,
-            chatUseCase: chatUseCase,
-            router: router
+            chatUseCase: chatUseCase
         )
 
         test(viewModel: sut, action: .returnToCallBannerButtonTapped,
@@ -199,14 +191,12 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testStartOrJoinFloatingButtonTapped_startCall_openWaitingRoom() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let router = MockChatContentRouter()
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, router) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil),
             scheduledMeetingUseCase: MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()]),
-            router: router,
             callManager: callManager
         )
 
@@ -220,7 +210,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
@@ -238,7 +228,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let call = CallEntity(status: .userNoPresent)
         let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
@@ -256,7 +246,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let call = CallEntity(status: .userNoPresent)
         let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
@@ -269,14 +259,12 @@ final class ChatContentViewModelTests: XCTestCase {
     }
     
     @MainActor func testStartOrJoinFloatingButtonTapped_joinCallInProgressWaitingRoomEnabledUserStandard_openWaitingRoom() {
-        let router = MockChatContentRouter()
         let callManager = MockCallManager()
-        let sut = makeChatContentViewModel(
+        let (sut, router) = makeChatContentViewModel(
             chatRoom: ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true),
             chatUseCase: MockChatUseCase(currentChatConnectionStatus: .online),
             callUseCase: MockCallUseCase(call: CallEntity(status: .userNoPresent)),
             scheduledMeetingUseCase: MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()]),
-            router: router,
             callManager: callManager
         )
         
@@ -292,7 +280,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatUseCase = MockChatUseCase()
         chatUseCase.currentChatConnectionStatus = .online
         
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase
@@ -309,7 +297,7 @@ final class ChatContentViewModelTests: XCTestCase {
         chatUseCase.activeCallEntity = CallEntity()
         chatUseCase.currentChatConnectionStatus = .invalid
         
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.tapToReturnToCallCleanUp, .hideStartOrJoinCallButton(true)])
@@ -322,7 +310,7 @@ final class ChatContentViewModelTests: XCTestCase {
         chatUseCase.activeCallEntity = CallEntity(status: .joining, chatId: chatRoom.chatId)
         chatUseCase.currentChatConnectionStatus = .online
         
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.configNavigationBar,
@@ -340,7 +328,7 @@ final class ChatContentViewModelTests: XCTestCase {
         chatUseCase.activeCallEntity = callEntity
         chatUseCase.currentChatConnectionStatus = .online
         
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.configNavigationBar,
@@ -350,7 +338,6 @@ final class ChatContentViewModelTests: XCTestCase {
     }
     
     @MainActor func testUpdateContent_callInProgressLastPeerLeavesAndUserIsTheOnlyOneInTheCall_shouldShowEndCallDialog() {
-        let router = MockChatContentRouter()
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let chatUseCase = MockChatUseCase(myUserHandle: 100)
@@ -358,11 +345,10 @@ final class ChatContentViewModelTests: XCTestCase {
         chatUseCase.activeCallEntity = callEntity
         chatUseCase.currentChatConnectionStatus = .online
         
-        let sut = makeChatContentViewModel(
+        let (sut, router) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
-            scheduledMeetingUseCase: scheduledMeetingUseCase,
-            router: router
+            scheduledMeetingUseCase: scheduledMeetingUseCase
         )
         
         test(viewModel: sut, action: .updateContent,
@@ -381,7 +367,7 @@ final class ChatContentViewModelTests: XCTestCase {
         chatUseCase.activeCallEntity = callEntity
         chatUseCase.currentChatConnectionStatus = .online
         
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.configNavigationBar,
@@ -397,7 +383,7 @@ final class ChatContentViewModelTests: XCTestCase {
         chatUseCase.activeCallEntity = callEntity
         chatUseCase.currentChatConnectionStatus = .online
         
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.configNavigationBar,
@@ -408,7 +394,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testUpdateCallNavigationBarButtons_forWaitingRoomNonHost_shouldNotEnableAudioVideoButtons() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
         
         test(
             viewModel: sut,
@@ -422,7 +408,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testUpdateCallNavigationBarButtons_forWaitingRoomHost_shouldEnableAudioVideoButtons() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
         
         test(
             viewModel: sut,
@@ -436,7 +422,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testUpdateCallNavigationBarButtons_onPrivilegeChangeFromModeratorToStandard_shouldNotEnableAudioVideoButtons() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
         
         let newChatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
         test(
@@ -454,7 +440,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testUpdateCallNavigationBarButtons_onPrivilegeChangeFromStandardToModerator_shouldEnableAudioVideoButtons() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
         
         let newChatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
         test(
@@ -472,7 +458,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testInviteParticipants_onCallAndWaitingRoomEnabledAndModerator_shouldCallAllowUsersJoinCallAndMatchInvitedUsers() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
         let callUseCase = MockCallUseCase(call: CallEntity())
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let invitedParticipants: [HandleEntity] = [1]
         test(
@@ -488,7 +474,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testInviteParticipants_onCallAndWaitingRoomEnabledAndOpenInviteEnabled_shouldCallAllowUsersJoinCallAndMatchInvitedUsers() {
         let chatRoom = ChatRoomEntity(isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
         let callUseCase = MockCallUseCase(call: CallEntity())
-        let sut = makeChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let invitedParticipants: [HandleEntity] = [1]
         test(
@@ -504,7 +490,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testInviteParticipants_onNotCall_shouldNotCallAllowUsersJoinCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
         let callUseCase = MockCallUseCase(call: nil)
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             callUseCase: callUseCase
         )
@@ -522,7 +508,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testInviteParticipants_onWaitingRoomNotEnabled_shouldNotCallAllowUsersJoinCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: false)
         let callUseCase = MockCallUseCase(call: CallEntity())
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             callUseCase: callUseCase
         )
@@ -540,7 +526,7 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testInviteParticipants_onNotModeratorAndNotOpenInviteEnabled_shouldNotCallAllowUsersJoinCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isOpenInviteEnabled: false, isWaitingRoomEnabled: true)
         let callUseCase = MockCallUseCase(call: CallEntity())
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             callUseCase: callUseCase
         )
@@ -560,7 +546,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 100, changeType: .waitingRoomUsersAllow, waitingRoomHandleList: [1])
         let callUseCase = MockCallUseCase(call: call)
         let chatUseCase = MockChatUseCase(activeCallEntity: call, currentChatConnectionStatus: .online)
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase
@@ -587,7 +573,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let call = CallEntity(status: .inProgress, chatId: 100, changeType: .waitingRoomUsersAllow, waitingRoomHandleList: [2])
         let callUseCase = MockCallUseCase(call: call)
         let chatUseCase = MockChatUseCase(activeCallEntity: call, currentChatConnectionStatus: .online)
-        let sut = makeChatContentViewModel(
+        let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase
@@ -609,45 +595,50 @@ final class ChatContentViewModelTests: XCTestCase {
         XCTAssertEqual(callUseCase.addPeer_CalledTimes, 0)
     }
     
+    @MainActor
     func testDetermineNavBarRightItems_onIsEditing_shouldBeCancel() {
         let chatRoom = ChatRoomEntity()
-        let sut = makeChatContentViewModel(chatRoom: chatRoom)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
         
         let result = sut.determineNavBarRightItems(isEditing: true)
         
         XCTAssertEqual(result, .cancel)
     }
     
+    @MainActor
     func testDetermineNavBarRightItems_onIsNotEditingAndOneToOneChat_shouldBeVideoAndAudioCall() {
         let chatRoom = ChatRoomEntity(chatType: .oneToOne)
-        let sut = makeChatContentViewModel(chatRoom: chatRoom)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
         
         let result = sut.determineNavBarRightItems(isEditing: false)
         
         XCTAssertEqual(result, .videoAndAudioCall)
     }
     
+    @MainActor
     func testDetermineNavBarRightItems_onIsNotEditingAndNotOneToOneChatAndModerator_shouldBeAddParticipantAndAudioCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group)
-        let sut = makeChatContentViewModel(chatRoom: chatRoom)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
         
         let result = sut.determineNavBarRightItems(isEditing: false)
         
         XCTAssertEqual(result, .addParticipantAndAudioCall)
     }
     
+    @MainActor
     func testDetermineNavBarRightItems_onIsNotEditingAndNotOneToOneChatAndOpenInviteEnabled_shouldBeAddParticipantAndAudioCall() {
         let chatRoom = ChatRoomEntity(chatType: .group, isOpenInviteEnabled: true)
-        let sut = makeChatContentViewModel(chatRoom: chatRoom)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
         
         let result = sut.determineNavBarRightItems(isEditing: false)
         
         XCTAssertEqual(result, .addParticipantAndAudioCall)
     }
     
+    @MainActor
     func testDetermineNavBarRightItems_onIsNotEditingAndNotOneToOneChatAndNotModeratorAndOpenInviteNotEnabled_shouldBeAudioCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: false)
-        let sut = makeChatContentViewModel(chatRoom: chatRoom)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
         
         let result = sut.determineNavBarRightItems(isEditing: false)
         
@@ -656,21 +647,22 @@ final class ChatContentViewModelTests: XCTestCase {
     
     // MARK: - Private
     
-    private func makeChatContentViewModel(
+    @MainActor private func makeChatContentViewModel(
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         audioSessionUseCase: some AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
-        router: some ChatContentRouting = MockChatContentRouter(),
         permissionRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
         meetingNoUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callManager: some CallManagerProtocol = MockCallManager(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
-    ) -> ChatContentViewModel {
+    ) -> (ChatContentViewModel, MockChatContentRouter) {
+        let router = MockChatContentRouter()
+
         let sut = ChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
@@ -682,11 +674,11 @@ final class ChatContentViewModelTests: XCTestCase {
             permissionRouter: permissionRouter,
             analyticsEventUseCase: analyticsEventUseCase,
             meetingNoUserJoinedUseCase: meetingNoUserJoinedUseCase,
-            handleUseCase: handleUseCase, 
+            handleUseCase: handleUseCase,
             callManager: callManager,
             featureFlagProvider: featureFlagProvider
         )
-        return sut
+        return (sut, router)
     }
 }
 

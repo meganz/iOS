@@ -1,4 +1,4 @@
-public enum ChatConnectionStatus {
+public enum ChatConnectionStatus: Sendable {
     case invalid
     case offline
     case inProgress
