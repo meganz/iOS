@@ -152,6 +152,30 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         XCTAssertFalse(sut.syncModel.isSearchActive)
     }
     
+    // MARK: - Dispatch.searchBarAction.searchBarTextDidEndEditing
+    
+    func testDispatchSearchBarActionSearchBarTextDidEndEditing_whenUserIsInTheMiddleOfEditing_shouldNotResetSearchingState() {
+        let (sut, _, _) = makeSUT()
+        sut.syncModel.isSearchActive = true
+        sut.syncModel.searchText = "any"
+        
+        sut.dispatch(.searchBarAction(.searchBarTextDidEndEditing))
+        
+        XCTAssertTrue(sut.syncModel.isSearchActive)
+        XCTAssertEqual(sut.syncModel.searchText, "any")
+    }
+    
+    func testDispatchSearchBarActionSearchBarTextDidEndEditing_whenUserIsNotInTheMiddleOfEditing_shouldResetSearchingState() {
+        let (sut, _, _) = makeSUT()
+        sut.syncModel.isSearchActive = false
+        sut.syncModel.searchText = ""
+        
+        sut.dispatch(.searchBarAction(.searchBarTextDidEndEditing))
+        
+        XCTAssertFalse(sut.syncModel.isSearchActive)
+        XCTAssertEqual(sut.syncModel.searchText, "")
+    }
+    
     // MARK: - Dispatch.searchBarAction.becomeActive
     
     func testDispatch_searchBarActionBecomeActive_searchShouldActivate() {
