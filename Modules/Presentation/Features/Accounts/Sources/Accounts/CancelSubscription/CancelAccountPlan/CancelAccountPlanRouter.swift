@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import MEGASwift
 import StoreKit
 import SwiftUI
@@ -53,6 +54,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
             currentPlanName: accountDetails.proLevel.toAccountTypeDisplayName(),
             currentPlanStorageUsed: String.memoryStyleString(fromByteCount: accountDetails.storageUsed),
             featureListHelper: featureListHelper, 
+            achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
             tracker: DIContainer.tracker,
             router: self
         )

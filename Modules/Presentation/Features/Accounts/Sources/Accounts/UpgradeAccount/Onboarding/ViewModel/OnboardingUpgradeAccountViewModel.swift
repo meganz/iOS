@@ -19,6 +19,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private let router: OnboardingUpgradeAccountRouting
     private var proIIIPlanCardShownEventTracked: Bool = false
     let isAdsEnabled: Bool
+    private let baseStorage: Int
     
     @Published private(set) var shouldDismiss: Bool = false
     @Published private(set) var lowestProPlan: PlanEntity = PlanEntity()
@@ -49,6 +50,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         accountUseCase: some AccountUseCaseProtocol,
         tracker: some AnalyticsTracking,
         isAdsEnabled: Bool,
+        baseStorage: Int,
         viewProPlanAction: @escaping () -> Void,
         router: OnboardingUpgradeAccountRouting
     ) {
@@ -56,6 +58,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.tracker = tracker
         self.isAdsEnabled = isAdsEnabled
+        self.baseStorage = baseStorage
         self.viewProPlanAction = viewProPlanAction
         self.router = router
         
@@ -194,11 +197,11 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         setDefaultRecommendedSelectedPlan()
     }
     
-    private let freeAccountPlan = PlanEntity(
+    private lazy var freeAccountPlan = PlanEntity(
         type: .free,
         name: Strings.Localizable.Free.Plan.name,
         subscriptionCycle: .none,
-        storage: Strings.Localizable.Storage.Limit.capacity(20),
+        storage: Strings.Localizable.Storage.Limit.capacity(baseStorage),
         transfer: Strings.Localizable.Account.TransferQuota.FreePlan.limited,
         formattedPrice: Strings.Localizable.Free.Plan.Price.description
     )

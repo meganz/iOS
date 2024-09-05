@@ -23,6 +23,10 @@ public struct AchievementRepository: AchievementRepositoryProtocol {
         let achievementDetails = try await getAchievementDetails()
         return Measurement<UnitDataStorage>.bytes(of: achievementDetails.classStorage(for: type))
     }
+    
+    public func baseStorage() async throws -> Int64 {
+        try await getAchievementDetails().baseStorage
+    }
 
     public func getAchievementDetails() async throws -> AchievementDetailsEntity {
         try await withAsyncThrowingValue(in: { completion in

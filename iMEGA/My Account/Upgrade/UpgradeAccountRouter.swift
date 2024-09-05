@@ -46,12 +46,20 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
     
     func presentChooseAccountType() {
         guard let products = purchase.products, products.isNotEmpty else { return }
-        
+        let achievementsUseCase = AchievementUseCase(repo: AchievementRepository.newRepo)
+
         Task { @MainActor in
+            guard let baseStorage = try? await achievementsUseCase.baseStorage().bytesToGigabytes() else {
+                MEGALogError("Error fetching account base storage")
+                return
+            }
+            
             let onboardingVariant = await abTestProvider.abTestVariant(for: .onboardingUpsellingDialog)
-        
+            
             guard onboardingVariant != .baseline else {
-                presentUpgradeAccountChooseAccountType()
+                presentUpgradeAccountChooseAccountType(
+                    accountBaseStorage: baseStorage
+                )
                 return
             }
             
@@ -59,17 +67,22 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
             
             presentOnboardingUpsellingDialog(
                 onboardingVariant: onboardingVariant,
-                isAdsEnabled: isAdsEnabled
+                isAdsEnabled: isAdsEnabled,
+                baseStorage: baseStorage
             )
         }
     }
     
-    private func presentUpgradeAccountChooseAccountType() {
-        let upgradeAccountNC = UpgradeAccountFactory().createUpgradeAccountChooseAccountType()
+    private func presentUpgradeAccountChooseAccountType(accountBaseStorage: Int) {
+        let upgradeAccountNC = UpgradeAccountFactory().createUpgradeAccountChooseAccountType(accountBaseStorage: accountBaseStorage)
         UIApplication.mnz_presentingViewController().present(upgradeAccountNC, animated: true, completion: nil)
     }
     
-    private func presentOnboardingUpsellingDialog(onboardingVariant: ABTestVariant, isAdsEnabled: Bool) {
+    private func presentOnboardingUpsellingDialog(
+        onboardingVariant: ABTestVariant,
+        isAdsEnabled: Bool,
+        baseStorage: Int
+    ) {
         let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
         let accountsConfig = AccountsConfig(
             onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
@@ -100,6 +113,7 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
             presenter: UIApplication.mnz_presentingViewController(),
             accountsConfig: accountsConfig,
             isAdsEnabled: isAdsEnabled,
+            baseStorage: baseStorage,
             viewProPlanAction: {
                 UpgradeAccountRouter().presentNewPlanPage(viewType: .onboarding)
             }

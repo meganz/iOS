@@ -35,23 +35,14 @@ final class FeatureListHelperTests: XCTestCase {
             assets: assets
         )
     }
-
-    private func verifyRewindLimit(
-        for accountType: AccountTypeEntity,
-        expectedLimit: Int,
-        file: StaticString = #file,
-        line: UInt = #line
-    ) {
-        let expectedString = Strings.Localizable.Rewind.For.Pro.users(expectedLimit)
+    
+    private func createSutAndFeatures(
+        accountType: AccountTypeEntity = .proI,
+        baseStorage: Int = 20
+    ) -> (FeatureListHelper, [FeatureDetails]) {
         let sut = makeSUT(accountType: accountType)
-        
-        XCTAssertEqual(sut.rewindLimit, expectedLimit, file: file, line: line)
-        
-        let features = sut.createCurrentFeatures()
-        let rewindFeature = features.first { $0.type == .rewind }
-
-        XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil", file: file, line: line)
-        XCTAssertEqual(rewindFeature?.proText, expectedString, "Rewind feature pro text mismatch for \(accountType)", file: file, line: line)
+        let features = sut.createCurrentFeatures(baseStorage: baseStorage)
+        return (sut, features)
     }
     
     private func verifyRewindFeature(
@@ -60,8 +51,7 @@ final class FeatureListHelperTests: XCTestCase {
         file: StaticString = #file,
         line: UInt = #line
     ) {
-        let sut = makeSUT(accountType: accountType)
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures(accountType: accountType)
         let rewindFeature = features.first { $0.type == .rewind }
 
         XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil", file: file, line: line)
@@ -71,14 +61,12 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldReturnCorrectFeatureCount() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         XCTAssertEqual(features.count, 9, "Expected 9 features but got \(features.count)")
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectStorageFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let storageFeature = features.first { $0.type == .storage }
 
         XCTAssertNotNil(storageFeature, "Storage feature should not be nil")
@@ -88,8 +76,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectTransferFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let transferFeature = features.first { $0.type == .transfer }
 
         XCTAssertNotNil(transferFeature, "Transfer feature should not be nil")
@@ -99,8 +86,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectPasswordProtectedLinksFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let passwordProtectedLinksFeature = features.first { $0.type == .passwordProtectedLinks }
 
         XCTAssertNotNil(passwordProtectedLinksFeature, "Password Protected Links feature should not be nil")
@@ -110,8 +96,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectLinksWithExpiryDateFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let linksWithExpiryDateFeature = features.first { $0.type == .linksWithExpiryDate }
 
         XCTAssertNotNil(linksWithExpiryDateFeature, "Links With Expiry Date feature should not be nil")
@@ -121,8 +106,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectTransferSharingFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let transferSharingFeature = features.first { $0.type == .transferSharing }
 
         XCTAssertNotNil(transferSharingFeature, "Transfer Sharing feature should not be nil")
@@ -132,8 +116,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectRewindFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let rewindFeature = features.first { $0.type == .rewind }
 
         XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil")
@@ -143,8 +126,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectVPNFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let vpnFeature = features.first { $0.type == .vpn }
 
         XCTAssertNotNil(vpnFeature, "VPN feature should not be nil")
@@ -154,8 +136,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectCallsAndMeetingsDurationFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let callsAndMeetingsDurationFeature = features.first { $0.type == .callsAndMeetingsDuration }
 
         XCTAssertNotNil(callsAndMeetingsDurationFeature, "Calls and Meetings Duration feature should not be nil")
@@ -165,8 +146,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectCallsAndMeetingsParticipantsFeature() {
-        let sut = makeSUT()
-        let features = sut.createCurrentFeatures()
+        let (sut, features) = createSutAndFeatures()
         let callsAndMeetingsParticipantsFeature = features.first { $0.type == .callsAndMeetingsParticipants }
 
         XCTAssertNotNil(callsAndMeetingsParticipantsFeature, "Calls and Meetings Participants feature should not be nil")

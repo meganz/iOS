@@ -363,7 +363,7 @@
 }
 
 - (NSAttributedString *)freeStorageAttributedString {
-    NSString *freeStorageString = LocalizedString(@"account.storage.freePlan", @"Text listed that includes the amount of storage that a free user gets");
+    NSString *freeStorageString = [NSString stringWithFormat:LocalizedString(@"account.storage.freePlan", @"Text listed that includes the amount of storage that a free user gets"), self.accountBaseStorage];
     NSString *freeStorageValueString = [freeStorageString mnz_stringBetweenString:@"[B]" andString:@"[/B]"];
     freeStorageString = freeStorageString.mnz_removeWebclientFormatters;
     NSMutableAttributedString *freeStorageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self secondaryTextColor]}];
