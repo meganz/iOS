@@ -1,13 +1,13 @@
 import MEGADomain
 import MEGARepo
 
-public protocol FeatureFlagProviderProtocol {
+public protocol FeatureFlagProviderProtocol: Sendable {
     func isFeatureFlagEnabled(for: FeatureFlagKey) -> Bool
 }
 
 public struct FeatureFlagProvider: FeatureFlagProviderProtocol {
     public static var disableFeatureFlags: Bool = true
-    private var useCase: any FeatureFlagUseCaseProtocol
+    private let useCase: any FeatureFlagUseCaseProtocol
 
     init(useCase: any FeatureFlagUseCaseProtocol = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)) {
         self.useCase = useCase

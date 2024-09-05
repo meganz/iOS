@@ -2,7 +2,7 @@ import Foundation
 
 public typealias FeatureFlagName = String
 
-public struct FeatureFlagEntity {
+public struct FeatureFlagEntity: Sendable {
     public let name: FeatureFlagName
     public var isEnabled: Bool
     
