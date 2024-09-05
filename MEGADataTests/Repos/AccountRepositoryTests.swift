@@ -1,4 +1,3 @@
-import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGASDKRepo
@@ -10,7 +9,6 @@ import XCTest
 
 final class AccountRepositoryTests: XCTestCase {
     private let urlPath = "https://mega.nz"
-    private var subscriptions = Set<AnyCancellable>()
     
     func testCurrentUserHandle() {
         let expectedHandle = HandleEntity.random()
@@ -324,98 +322,45 @@ final class AccountRepositoryTests: XCTestCase {
         }
     }
     
-    func testRequestResultPublisher_onRequestFinish_whenApiOk_sendsSuccessResult() {
-        let apiOk = MockError(errorType: .apiOk)
-        let (sut, mockSdk) = makeSUT()
+    func testOnAccountRequestFinish_successRequest_shouldYieldElement() async {
+        let (sut, _) = makeSUT(
+            accountRequestUpdate: .success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil))
+        )
+        var iterator = sut.onAccountRequestFinish.makeAsyncIterator()
         
-        let exp = expectation(description: "Should receive success AccountRequestEntity")
-        let megaRequest = MEGARequest()
-        sut.requestResultPublisher
-            .sink { request in
-                switch request {
-                case .success(let result):
-                    XCTAssertEqual(result, megaRequest.toAccountRequestEntity())
-                case .failure:
-                    XCTFail("Request error is not expected.")
-                }
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        sut.onRequestFinish(mockSdk, request: megaRequest, error: apiOk)
-        wait(for: [exp], timeout: 1)
+        let result = await iterator.next()
+        await XCTAsyncAssertNoThrow(try result?.get())
     }
     
-    func testRequestResultPublisher_onRequestFinish_withError_sendsError() {
-        let apiError = MockError.failingError
-        let (sut, mockSdk) = makeSUT()
+    func testOnAccountRequestFinish_failedRequest_shouldYieldElement() async {
+        let (sut, _) = makeSUT(
+            accountRequestUpdate: .failure(MockError.failingError)
+        )
+        var iterator = sut.onAccountRequestFinish.makeAsyncIterator()
         
-        let exp = expectation(description: "Should receive success AccountRequestEntity")
-        sut.requestResultPublisher
-            .sink { request in
-                switch request {
-                case .success:
-                    XCTFail("Expecting an error but got a success.")
-                case .failure(let error):
-                    guard let err = error as? MEGAError else {
-                        XCTFail("Error can't cast as MEGAError")
-                        return
-                    }
-                    XCTAssertEqual(err.type, apiError.type)
-                }
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        sut.onRequestFinish(mockSdk, request: MEGARequest(), error: apiError)
-        wait(for: [exp], timeout: 1)
+        let result = await iterator.next()
+        XCTAssertThrowsError(try result?.get())
     }
     
-    func testContactRequestPublisher_onContactRequestsUpdate_sendsContactRequestList() {
-        let (sut, mockSdk) = makeSUT()
+    func testOnUserAlertsUpdates_onUpdate_shouldYieldElements() async {
+        let updates = [UserAlertEntity.random, UserAlertEntity.random]
+        let (sut, _) = makeSUT(userAlertsUpdates: updates)
+        var iterator = sut.onUserAlertsUpdates.makeAsyncIterator()
         
-        let exp = expectation(description: "Should receive ContactRequestEntity list")
-        let expectedContactRequest = ContactRequestEntity.random
-        sut.contactRequestPublisher
-            .sink { list in
-                XCTAssertEqual(list, [expectedContactRequest])
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        let mockContactRequestList = MockContactRequestList(contactRequests: [MockContactRequest(handle: expectedContactRequest.handle)])
-        sut.onContactRequestsUpdate(mockSdk, contactRequestList: mockContactRequestList)
-        wait(for: [exp], timeout: 1)
+        let result = await iterator.next()
+        XCTAssertEqual(result, updates)
     }
     
-    func testUserAlertPublisher_onUserAlertsUpdate_sendsUserAlertList() {
-        let (sut, mockSdk) = makeSUT()
+    func testOnContactRequestsUpdate_onUpdate_shouldYieldElements() async {
+        let updates = [ContactRequestEntity.random, ContactRequestEntity.random]
         
-        let exp = expectation(description: "Should receive UserAlertEntity list")
-        let expectedUserAlert = UserAlertEntity.random
-        sut.userAlertUpdatePublisher
-            .sink { list in
-                XCTAssertEqual(list, [expectedUserAlert])
-                exp.fulfill()
-            }.store(in: &subscriptions)
+        let (sut, _) = makeSUT(contactRequestsUpdates: updates)
+        var iterator = sut.onContactRequestsUpdates.makeAsyncIterator()
         
-        let mockUserAlertList = MockUserAlertList(alerts: [MockUserAlert(identifier: expectedUserAlert.identifier)])
-        sut.onUserAlertsUpdate(mockSdk, userAlertList: mockUserAlertList)
-        wait(for: [exp], timeout: 1)
+        let result = await iterator.next()
+        XCTAssertEqual(result, updates)
     }
     
-    func testOnRequestResultFinish_addDelegate_delegateShouldExist() async {
-        let (sut, mockSdk) = makeSUT()
-        await sut.registerMEGARequestDelegate()
-        
-        XCTAssertTrue(mockSdk.hasRequestDelegate)
-    }
-    
-    func testOnRequestResultFinish_removeDelegate_delegateShouldNotExist() async {
-        let (sut, mockSdk) = makeSUT()
-        
-        mockSdk.hasRequestDelegate = true
-        
-        await sut.deRegisterMEGARequestDelegate()
-        
-        XCTAssertFalse(mockSdk.hasRequestDelegate)
-    }
-
     func testGetMiscFlag_whenApiOk_shouldNotThrow() async {
         let (sut, _) = makeSUT(requestResult: .success(MockRequest(handle: 1)))
 
@@ -539,7 +484,10 @@ final class AccountRepositoryTests: XCTestCase {
         accountDetailsEntity: AccountDetailsEntity? = nil,
         upgradeSecurityClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
         accountDetailsClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
-        requestResult: MockSdkRequestResult = .failure(MockError.failingError)
+        requestResult: MockSdkRequestResult = .failure(MockError.failingError),
+        accountRequestUpdate: Result<AccountRequestEntity, any Error> = .failure(MockError.failingError),
+        userAlertsUpdates: [UserAlertEntity] = [],
+        contactRequestsUpdates: [ContactRequestEntity] = []
     ) -> (AccountRepository, MockSdk) {
         let incomingNodes = MockNodeList(nodes: incomingNodes)
         let myChatFilesRootNodeAccess = nodeAccess(for: myChatFilesNodeHandle)
@@ -577,12 +525,19 @@ final class AccountRepositoryTests: XCTestCase {
                     .toAccountDetailsEntity()
             )
         }
+        
+        let accountUpdatesProvider = MockAccountUpdatesProvider(
+            onAccountRequestFinish: SingleItemAsyncSequence(item: accountRequestUpdate).eraseToAnyAsyncSequence(),
+            onUserAlertsUpdates: SingleItemAsyncSequence(item: userAlertsUpdates).eraseToAnyAsyncSequence(),
+            onContactRequestsUpdates: SingleItemAsyncSequence(item: contactRequestsUpdates).eraseToAnyAsyncSequence()
+        )
 
         return (AccountRepository(
             sdk: mockSdk,
             currentUserSource: currentUserSource,
             myChatFilesFolderNodeAccess: myChatFilesRootNodeAccess,
-            backupsRootFolderNodeAccess: backupsRootNodeAccess
+            backupsRootFolderNodeAccess: backupsRootNodeAccess,
+            accountUpdatesProvider: accountUpdatesProvider
         ), mockSdk)
     }
     
