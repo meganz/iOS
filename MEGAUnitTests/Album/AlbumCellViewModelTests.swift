@@ -15,6 +15,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     private let album = AlbumEntity(id: 1, name: "Test", coverNode: NodeEntity(handle: 1), count: 15, type: .favourite)
     private var subscriptions = Set<AnyCancellable>()
     
+    @MainActor
     func testInit_setTitleNodesAndTitlePublishers() throws {
         let sut = makeAlbumCellViewModel(album: album)
         
@@ -24,11 +25,13 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isLoading)
     }
     
+    @MainActor
     func testInit_album_noCover_shouldSetCorrectThumbnail() {
         let sut = makeAlbumCellViewModel(album: AlbumEntity(id: 5, type: .user))
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(.placeholder), type: .placeholder)))
     }
     
+    @MainActor
     func testLoadAlbumThumbnail_onThumbnailLoaded_loadingStateIsCorrect() async throws {
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let thumbnailLoader = MockThumbnailLoader(loadImage: makeThumbnailAsyncSequence(container: thumbnailContainer))
@@ -52,6 +55,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertEqual(results, [true, false])
     }
     
+    @MainActor
     func testLoadAlbumThumbnail_onLoadThumbnail_thumbnailContainerIsUpdatedWithLoadedImageIfContainerIsCurrentlyPlaceholder() async throws {
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let thumbnailLoader = MockThumbnailLoader(loadImage: makeThumbnailAsyncSequence(container: thumbnailContainer))
@@ -63,6 +67,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
     }
     
+    @MainActor
     func testLoadAlbumThumbnail_onLoadThumbnailFailed_thumbnailIsNotUpdatedAndLoadedIsFalse() async throws {
         let sut = makeAlbumCellViewModel(album: album)
         let exp = expectation(description: "thumbnail should not change")
@@ -80,6 +85,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isLoading)
     }
     
+    @MainActor
     func testThumbnailContainer_cachedThumbnail_setThumbnailContainerWithoutPlaceholder() async throws {
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
@@ -103,6 +109,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertTrue(sut.thumbnailContainer.isEqual(thumbnailContainer))
     }
     
+    @MainActor
     func testLoadAlbumThumbnail_cachedThumbnail_shouldNotLoadThumbnailAgain() async throws {
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
@@ -125,6 +132,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isLoading)
     }
     
+    @MainActor
     func testIsSelected_whenUserTapOnAlbum_shouldBeSelected() {
         let selection = AlbumSelection()
         let sut = makeAlbumCellViewModel(album: album,
@@ -135,6 +143,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertTrue(selection.isAlbumSelected(album))
     }
     
+    @MainActor
     func testShouldShowEditStateOpacity_whenAlbumListEditingAndonUserAlbum_shouldReturnRightValue() {
         let selection = AlbumSelection()
         let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
@@ -160,6 +169,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, [0.0, 1.0])
     }
     
+    @MainActor
     func testShouldShowEditStateOpacity_whenAlbumListEditingAndonSystemAlbum_shouldReturnRightValue() {
         let selection = AlbumSelection()
         let systemAlbum = AlbumEntity(id: 4, name: "Gif", coverNode: NodeEntity(handle: 3),
@@ -185,6 +195,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, [0.0, 0.0])
     }
     
+    @MainActor
     func testOpacity_whenAlbumListEditingAndUserAlbum_shouldReturnRightValue() {
         let selection = AlbumSelection()
         let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
@@ -210,6 +221,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, [1.0, 1.0])
     }
     
+    @MainActor
     func testOpacity_whenAlbumListEditingAndSystemAlbum_shouldReturnRightValue() {
         let selection = AlbumSelection()
         let systemAlbum = AlbumEntity(id: 4, name: "Gif", coverNode: NodeEntity(handle: 3),
@@ -234,8 +246,9 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, [1.0, 0.5])
     }
     
-    func testOnAlbumTap_onUserAlbum_shouldToggleSelectionAndTrackEvent() {
-        [EditMode.active, .transient].forEach { editMode in
+    @MainActor
+    func testOnAlbumTap_onUserAlbum_shouldToggleSelectionAndTrackEvent() async {
+        for editMode in [EditMode.active, .transient] {
             let album = AlbumEntity(id: 4, type: .user)
             let tracker = MockTracker()
             let selection = AlbumSelection()
@@ -247,11 +260,11 @@ final class AlbumCellViewModelTests: XCTestCase {
             
             XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
             
-            sut.onAlbumTap()
+            await sut.onAlbumTap()
             
             XCTAssertTrue(sut.isSelected, "Failed on editMode: \(editMode)")
             
-            sut.onAlbumTap()
+            await sut.onAlbumTap()
             
             XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
             
@@ -265,7 +278,8 @@ final class AlbumCellViewModelTests: XCTestCase {
         }
     }
     
-    func testOnAlbumTap_whenUserTap_shouldSetCorrectValues() {
+    @MainActor
+    func testOnAlbumTap_whenUserTap_shouldSetCorrectValues() async {
         var selectedAlbum: AlbumEntity?
         let selectedAlbumBinding = Binding(get: {
             selectedAlbum
@@ -279,7 +293,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             tracker: tracker,
             selectedAlbum: selectedAlbumBinding)
         
-        sut.onAlbumTap()
+        await sut.onAlbumTap()
         
         XCTAssertEqual(selectedAlbum, gifAlbum)
         assertTrackAnalyticsEventCalled(
@@ -290,7 +304,8 @@ final class AlbumCellViewModelTests: XCTestCase {
         )
     }
     
-    func testOnAlbumTap_notInEditMode_shouldSendSelectedEvent() {
+    @MainActor
+    func testOnAlbumTap_notInEditMode_shouldSendSelectedEvent() async {
         let userAlbum = AlbumEntity(id: 5, type: .user,
                                     metaData: AlbumMetaDataEntity(
                                         imageCount: 6,
@@ -304,7 +319,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             selection: selection,
             tracker: tracker)
         
-        sut.onAlbumTap()
+        await sut.onAlbumTap()
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
@@ -314,8 +329,9 @@ final class AlbumCellViewModelTests: XCTestCase {
         )
     }
     
-    func testOnAlbumTap_whenUserTapOnAlbumCellInEditMode_ShouldNotToggleForSystemAlbums() {
-        [EditMode.active, .transient].forEach { editMode in
+    @MainActor
+    func testOnAlbumTap_whenUserTapOnAlbumCellInEditMode_ShouldNotToggleForSystemAlbums() async {
+        for editMode in [EditMode.active, .transient] {
             let selection = AlbumSelection()
             selection.editMode = editMode
             let tracker = MockTracker()
@@ -327,14 +343,15 @@ final class AlbumCellViewModelTests: XCTestCase {
             
             XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
             
-            sut.onAlbumTap()
+            await sut.onAlbumTap()
             
             XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
             XCTAssertTrue(tracker.trackedEventIdentifiers.isEmpty, "Failed on editMode: \(editMode)")
         }
     }
     
-    func testOnAlbumTap_whenUserTapOnAlbumAfterPhotosLoaded_shouldSendCorrectAnalyticsEvent() {
+    @MainActor
+    func testOnAlbumTap_whenUserTapOnAlbumAfterPhotosLoaded_shouldSendCorrectAnalyticsEvent() async {
         let albumId = HandleEntity(6554)
         let albumPhotos = [
             AlbumPhotoEntity(photo: NodeEntity(name: "test.jpg", handle: 1),
@@ -349,11 +366,12 @@ final class AlbumCellViewModelTests: XCTestCase {
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
         
         let tracker = MockTracker()
+        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         let sut = makeAlbumCellViewModel(
             album: .init(id: albumId, type: .user),
             monitorAlbumsUseCase: monitorAlbumsUseCase,
             tracker: tracker,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.albumPhotoCache: true]))
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
         let exp = expectation(description: "Album photos loaded")
         
@@ -369,11 +387,11 @@ final class AlbumCellViewModelTests: XCTestCase {
             cancelledExp.fulfill()
         }
         
-        wait(for: [exp], timeout: 0.2)
+        await fulfillment(of: [exp], timeout: 0.2)
         task.cancel()
-        wait(for: [cancelledExp], timeout: 0.2)
+        await fulfillment(of: [cancelledExp], timeout: 0.2)
         
-        sut.onAlbumTap()
+        await sut.onAlbumTap()
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
@@ -389,6 +407,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testFeatureFlagForShowingShareIconOnAlbum_whenTurnedOff_shouldNotShowShareLink() {
         
         let sut = makeAlbumCellViewModel(
@@ -397,6 +416,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isLinkShared)
     }
     
+    @MainActor
     func testMonitorAlbumPhotos_onPhotosReturned_shouldUpdateNodeCount() async {
         for await hiddenNodesFeatureFlag in [true, false].async {
             let albumId = HandleEntity(65)
@@ -407,13 +427,14 @@ final class AlbumCellViewModelTests: XCTestCase {
             let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
                 .eraseToAnyAsyncSequence()
             let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true,
-                                                                     .hiddenNodes: hiddenNodesFeatureFlag])
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodesFeatureFlag])
+            let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             let album = AlbumEntity(id: albumId, type: .user)
             
             let sut = makeAlbumCellViewModel(album: album,
                                              monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                             featureFlagProvider: featureFlagProvider)
+                                             featureFlagProvider: featureFlagProvider,
+                                             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
             
             let exp = expectation(description: "Should update count")
             
@@ -436,6 +457,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testMonitorAlbumPhotos_albumCoverRetrieved_shouldSetThumbnail() {
         let album = AlbumEntity(id: 65, coverNode: nil, type: .user)
         let coverNode = NodeEntity(handle: 1)
@@ -452,14 +474,14 @@ final class AlbumCellViewModelTests: XCTestCase {
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
         let albumCoverUseCase = MockAlbumCoverUseCase(albumCover: coverNode)
         
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: thumbnailLoader,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
             albumCoverUseCase: albumCoverUseCase,
-            featureFlagProvider: featureFlagProvider)
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         let exp = expectation(description: "Should update thumbnail with latest photo")
         
         let subscription = thumbnailContainerUpdates(on: sut) {
@@ -472,6 +494,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testMonitorAlbumPhotos_retrievedUserAlbumCoverNil_shouldSetPlaceholder() throws {
         let initialCover = NodeEntity(handle: 3)
         let album = AlbumEntity(id: 65, name: "User",
@@ -482,13 +505,13 @@ final class AlbumCellViewModelTests: XCTestCase {
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
         let albumCoverUseCase = MockAlbumCoverUseCase(albumCover: nil)
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         
         let sut = makeAlbumCellViewModel(album: album,
                                          thumbnailLoader: thumbnailLoader,
                                          monitorAlbumsUseCase: monitorAlbumsUseCase,
                                          albumCoverUseCase: albumCoverUseCase,
-                                         featureFlagProvider: featureFlagProvider)
+                                         albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
         let exp = expectation(description: "Should update thumbnail with latest photo")
         
@@ -502,6 +525,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testMonitorAlbumPhotos_userAlbumCoverNilNoPhotos_shouldNotUpdateAlbumCover() async throws {
         let album = AlbumEntity(id: 65, name: "User",
                                 coverNode: nil, count: 0, type: .user)
@@ -509,11 +533,11 @@ final class AlbumCellViewModelTests: XCTestCase {
         let monitorUserAlbumPhotos = SingleItemAsyncSequence<[AlbumPhotoEntity]>(item: [])
             .eraseToAnyAsyncSequence()
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         
         let sut = makeAlbumCellViewModel(album: album,
                                          monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         featureFlagProvider: featureFlagProvider)
+                                         albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
         let exp = expectation(description: "Should not update thumbnail with latest photo")
         exp.isInverted = true
@@ -529,17 +553,17 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testMonitorAlbumPhotos_coverSetThenPhotosRemoved_shouldSetToPlaceholder() async {
         let album = AlbumEntity(id: 65, name: "User",
                                 coverNode: nil, count: 0, type: .user)
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
-        
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         
         let sut = makeAlbumCellViewModel(album: album,
                                          monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         featureFlagProvider: featureFlagProvider)
+                                         albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         sut.thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         
         let exp = expectation(description: "Should update cover with placeholder")
@@ -556,6 +580,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testMonitorCoverPhotoSensitivity_coverMarkedAsSensitive_shouldNotUpdateImageContainerOnInheritSensitivityChange() {
         let cover = NodeEntity(handle: 65, isMarkedSensitive: true)
         let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
@@ -577,8 +602,10 @@ final class AlbumCellViewModelTests: XCTestCase {
         trackTaskCancellation { await sut.monitorCoverPhotoSensitivity() }
     
         wait(for: [exp], timeout: 0.5)
+        subscription.cancel()
     }
     
+    @MainActor
     func testMonitorCoverPhotoSensitivity_withAlbumCoverSensitivityUpdate_shouldUpdateImageContainerWithInitialResultThenMonitorUpdates() async throws {
         let cover = NodeEntity(handle: 65)
         let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
@@ -622,6 +649,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testMonitorCoverPhotoSensitivity_albumCoverSensitiveChange_shouldNotUpdateCoverIfContainerTheSame() async throws {
         let cover = NodeEntity(handle: 65, isMarkedSensitive: false)
         let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
@@ -658,6 +686,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testMonitorCoverPhotoSensitivity_thumbnailContainerPlaceholder_shouldNotUpdateImageContainerWithInheritedChanges() async throws {
         let cover = NodeEntity(handle: 65, isMarkedSensitive: false)
         let album = AlbumEntity(id: 45, coverNode: cover, type: .user)
@@ -695,6 +724,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     // MARK: - Helpers
     
+    @MainActor
     private func makeAlbumCellViewModel(
         album: AlbumEntity,
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
@@ -707,6 +737,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         selectedAlbum: Binding<AlbumEntity?> = .constant(nil),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AlbumCellViewModel {
@@ -720,7 +751,8 @@ final class AlbumCellViewModelTests: XCTestCase {
                                      selection: selection,
                                      tracker: tracker,
                                      selectedAlbum: selectedAlbum,
-                                     featureFlagProvider: featureFlagProvider)
+                                     featureFlagProvider: featureFlagProvider,
+                                     albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
@@ -732,6 +764,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             .eraseToAnyAsyncSequence()
     }
     
+    @MainActor
     private func thumbnailContainerUpdates(on sut: AlbumCellViewModel, action: @escaping (any ImageContaining) -> Void) -> AnyCancellable {
         sut.$thumbnailContainer
             .dropFirst()

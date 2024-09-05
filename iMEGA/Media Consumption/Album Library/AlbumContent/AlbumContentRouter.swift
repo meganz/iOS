@@ -29,7 +29,7 @@ struct AlbumContentRouter: AlbumContentRouting {
     func build() -> UIViewController {
         let albumContentsUpdateRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let filesSearchRepo = FilesSearchRepository.newRepo
-        let userAlbumRepo = userAlbumRepository()
+        let userAlbumRepo = UserAlbumRepository.newRepo
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsUpdateRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
@@ -108,7 +108,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumContentsRepo: AlbumContentsUpdateNotifierRepository.newRepo,
             mediaUseCase: mediaUseCase,
             fileSearchRepo: filesSearchRepo,
-            userAlbumRepo: userAlbumRepository(),
+            userAlbumRepo: UserAlbumRepository.newRepo,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             photoLibraryUseCase: makePhotoLibraryUseCase(),
             sensitiveNodeUseCase: SensitiveNodeUseCase(
@@ -160,13 +160,6 @@ struct AlbumContentRouter: AlbumContentRouting {
     }
     
     func start() {}
-    
-    private func userAlbumRepository() -> any UserAlbumRepositoryProtocol {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else {
-            return UserAlbumRepository.newRepo
-        }
-        return UserAlbumCacheRepository.newRepo
-    }
     
     private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {
         PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository(

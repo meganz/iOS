@@ -44,7 +44,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let filesSearchRepo = FilesSearchRepository.newRepo
         let albumContentsUpdatesRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
-        let userAlbumRepo = userAlbumRepository()
+        let userAlbumRepo = UserAlbumRepository.newRepo
         let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
         let photoLibraryUseCase = makePhotoLibraryUseCase()
         let hiddenNodesFeatureFlagEnabled = { @Sendable in DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
@@ -101,17 +101,10 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 sensitiveNodeUseCase: SensitiveNodeUseCase(
                     nodeRepository: NodeRepository.newRepo)),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
-            userAlbumRepository: userAlbumRepository(),
+            userAlbumRepository: UserAlbumCacheRepository.newRepo,
             photosRepository: PhotosRepository.sharedRepo,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo))
-    }
-    
-    private func userAlbumRepository() -> any UserAlbumRepositoryProtocol {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else {
-            return UserAlbumRepository.newRepo
-        }
-        return UserAlbumCacheRepository.newRepo
     }
     
     private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {
