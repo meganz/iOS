@@ -41,15 +41,23 @@ final class ChatRoomsEmptyViewStateFactoryTests: XCTestCase {
                 chatViewMode: chatViewMode,
                 contactsOnMega: contactsOnMega,
                 archivedChats: archivedChats,
-                newChatAction: { [weak self] in
-                    self?.newChatActionCallCount += 1
-                },
-                inviteFriendAction: { [weak self] in
-                    self?.inviteFriendActionCallCount += 1
-                },
-                linkTappedAction: { [weak self] in
-                    self?.linkTappedActionCallCount += 1
-                },
+                actions: .init(
+                    startMeeting: { [weak self] in
+                        self?.startMeetingActionCallCount += 1
+                    },
+                    scheduleMeeting: { [weak self] in
+                        self?.scheduleMeetingActionCallCount += 1
+                    },
+                    inviteFriend: { [weak self] in
+                        self?.inviteFriendActionCallCount += 1
+                    },
+                    newChat: { [weak self] in
+                        self?.newChatActionCallCount += 1
+                    },
+                    linkTappedAction: { [weak self] in
+                        self?.linkTappedActionCallCount += 1
+                    }
+                ),
                 bottomButtonMenus: []
             )
         }
@@ -59,15 +67,18 @@ final class ChatRoomsEmptyViewStateFactoryTests: XCTestCase {
                 self?.inviteFriendActionCallCount += 1
             }
         }
-        
+        var startMeetingActionCallCount = 0
+        var scheduleMeetingActionCallCount = 0
         var newChatActionCallCount = 0
         var inviteFriendActionCallCount = 0
         var linkTappedActionCallCount = 0
     }
     
-    // keep string here since it's very long and makes code unlegible
+    // keep string here since it's very long and makes code ineligible
     let inviteTitle = Strings.Localizable.Chat.Chats.EmptyState.V2.Button.Invite.title
     let newChatTitle = Strings.Localizable.Chat.Chats.EmptyState.Button.title
+    let startMeetingTitle = Strings.Localizable.Chat.Meetings.EmptyState.V2.Button.startMeetingNow
+    let scheduleMeetingTitle = Strings.Localizable.Chat.Meetings.EmptyState.V2.Button.scheduleMeeting
     
     func testChatEmpty_InviteButtonTapped_TriggersAction() throws {
         let harness = Harness()
@@ -106,6 +117,29 @@ final class ChatRoomsEmptyViewStateFactoryTests: XCTestCase {
     func testChatEmpty_CenterLinkTapped_ActionTriggered() {
         let harness = Harness()
         let state = harness.chatEmptyState()
+        state.center.linkTapped?()
+        XCTAssertEqual(harness.linkTappedActionCallCount, 1)
+    }
+    
+    func testMeetingEmpty_StartMeetingTapped_ActionTriggered() throws {
+        let harness = Harness()
+        let state = harness.chatEmptyState(chatViewMode: .meetings)
+        let button = try XCTUnwrap(state.bottomButtonWith(title: startMeetingTitle))
+        button.triggerAction()
+        XCTAssertEqual(harness.startMeetingActionCallCount, 1)
+    }
+    
+    func testMeetingEmpty_ScheduleMeetingTapped_ActionTriggered() throws {
+        let harness = Harness()
+        let state = harness.chatEmptyState(chatViewMode: .meetings)
+        let button = try XCTUnwrap(state.bottomButtonWith(title: scheduleMeetingTitle))
+        button.triggerAction()
+        XCTAssertEqual(harness.scheduleMeetingActionCallCount, 1)
+    }
+    
+    func testMeetingEmpty_CenterLinkTapped_ActionTriggered() {
+        let harness = Harness()
+        let state = harness.chatEmptyState(chatViewMode: .meetings)
         state.center.linkTapped?()
         XCTAssertEqual(harness.linkTappedActionCallCount, 1)
     }

@@ -20,13 +20,13 @@ struct NewChatRoomsEmptyView: View {
                 Spacer()
             }
             
-            VStack(spacing: 24) {
+            VStack(spacing: 16) {
                 NewChatRoomsEmptyCenterView(state: state.center)
                     .padding(.leading, 30)
                     .padding(.trailing, 30)
                     .frame(maxWidth: horizontalSizeClass == .regular ? 400 : .infinity)
                 
-                AdaptiveStack(spacing: 24) {
+                AdaptiveStack(spacing: 16) {
                     ForEach(state.bottomButtons) { button in
                         MenuCapableButton(state: button)
                     }

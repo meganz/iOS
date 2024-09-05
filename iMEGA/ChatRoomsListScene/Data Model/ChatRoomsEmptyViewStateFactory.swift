@@ -4,6 +4,23 @@ import SwiftUI
 struct ChatRoomsEmptyViewStateFactory {
     var newEmptyStates: Bool
     var designTokenEnabled: Bool
+    
+    struct ChatEmptyViewActions {
+        var startMeeting: () -> Void
+        var scheduleMeeting: () -> Void
+        var inviteFriend: () -> Void
+        var newChat: () -> Void
+        var linkTappedAction: () -> Void
+        
+        static let preview = ChatEmptyViewActions(
+            startMeeting: {},
+            scheduleMeeting: {},
+            inviteFriend: {},
+            newChat: {},
+            linkTappedAction: {}
+        )
+    }
+    
     init(
         newEmptyStates: Bool,
         designTokenEnabled: Bool
@@ -71,7 +88,7 @@ struct ChatRoomsEmptyViewStateFactory {
             .init(
                 image: .noInternetEmptyState,
                 title: isChatViewMode ?
-                    Strings.Localizable.Chat.Chats.EmptyState.title :
+                Strings.Localizable.Chat.Chats.EmptyState.title :
                     Strings.Localizable.Chat.Meetings.EmptyState.title,
                 description: isChatViewMode ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description
             )
@@ -95,21 +112,17 @@ struct ChatRoomsEmptyViewStateFactory {
         chatViewMode: ChatViewMode,
         contactsOnMega: ChatRoomsTopRowViewState,
         archivedChats: ChatRoomsTopRowViewState,
-        newChatAction: @escaping () -> Void,
-        inviteFriendAction: @escaping () -> Void,
-        linkTappedAction: @escaping () -> Void,
+        actions: ChatEmptyViewActions,
         bottomButtonMenus: [MenuButtonModel.Menu]
     ) -> ChatRoomsEmptyViewState {
-        if newEmptyStates && chatViewMode == .chats {
+        if newEmptyStates {
             newEmptyChatRoomsViewState(
                 hasArchivedChats: hasArchivedChats,
                 chatViewMode: chatViewMode,
                 hasContacts: hasContacts,
                 contactsOnMega: contactsOnMega,
                 archivedChats: archivedChats,
-                newChatAction: newChatAction,
-                inviteFriendAction: inviteFriendAction,
-                linkTappedAction: linkTappedAction
+                actions: actions
             )
         } else {
             legacyEmptyChatRoomsViewState(
@@ -117,7 +130,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 chatViewMode: chatViewMode,
                 contactsOnMega: contactsOnMega,
                 archivedChats: archivedChats,
-                bottomButtonAction: newChatAction,
+                bottomButtonAction: actions.newChat,
                 bottomButtonMenus: bottomButtonMenus
             )
         }
@@ -170,38 +183,91 @@ struct ChatRoomsEmptyViewStateFactory {
         )
     }
     
-    private func emptyChatBottomButtons(
+    private func chatsTabBottomButtons(
         hasContacts: Bool,
-        inviteAction: @escaping () -> Void,
-        newChatAction: @escaping () -> Void
+        actions: ChatEmptyViewActions
     ) -> [MenuButtonModel] {
         let invite = MenuButtonModel(
             theme: .dark,
             title: Strings.Localizable.Chat.Chats.EmptyState.V2.Button.Invite.title,
-            interaction: .action(inviteAction),
+            interaction: .action(actions.inviteFriend),
             isDesignTokenEnabled: designTokenEnabled
         )
         let newChat = MenuButtonModel(
             theme: .light,
             title: Strings.Localizable.Chat.Chats.EmptyState.Button.title,
-            interaction: .action(newChatAction),
+            interaction: .action(actions.newChat),
             isDesignTokenEnabled: designTokenEnabled
         )
         
-        let themes: [MenuButtonModel.Theme] = [
-            .dark, .light
-        ]
-        
-        let buttons = if hasContacts {
+        return if hasContacts {
             [newChat]
         } else {
             [invite, newChat]
         }
+    }
+    
+    private func meetingsTabBottomButtons(
+        actions: ChatEmptyViewActions
+    ) -> [MenuButtonModel] {
+        let startMeeting = MenuButtonModel(
+            theme: .dark,
+            title: Strings.Localizable.Chat.Meetings.EmptyState.V2.Button.startMeetingNow,
+            interaction: .action(actions.startMeeting),
+            isDesignTokenEnabled: designTokenEnabled
+        )
+        let scheduleMeeting = MenuButtonModel(
+            theme: .light,
+            title: Strings.Localizable.Chat.Meetings.EmptyState.V2.Button.scheduleMeeting,
+            interaction: .action(actions.scheduleMeeting),
+            isDesignTokenEnabled: designTokenEnabled
+        )
+        
+        return [startMeeting, scheduleMeeting]
+    }
+    
+    private func emptyChatBottomButtons(
+        chatViewMode: ChatViewMode,
+        hasContacts: Bool,
+        actions: ChatEmptyViewActions
+    ) -> [MenuButtonModel] {
+        let buttons: () -> [MenuButtonModel] = {
+            switch chatViewMode {
+            case .chats: chatsTabBottomButtons(hasContacts: hasContacts, actions: actions)
+            case .meetings: meetingsTabBottomButtons(actions: actions)
+            }
+        }
+        
+        let themes: [MenuButtonModel.Theme] = [.dark, .light]
         
         // zipping here to guarantee first button is dark
         // and second button is light, even if there's single button in the array
-        return zip(buttons, themes).map { button, theme in
+        return zip(buttons(), themes).map { button, theme in
             button.applying(theme: theme)
+        }
+    }
+    
+    private func center(
+        chatViewMode: ChatViewMode,
+        actions: ChatEmptyViewActions
+    ) -> ChatRoomsEmptyCenterViewState {
+        switch chatViewMode {
+        case .chats:
+                .init(
+                    image: .chatEmptyStateNew,
+                    title: Strings.Localizable.Chat.Chats.EmptyState.V2.title,
+                    titleBold: true,
+                    description: Strings.Localizable.Chat.Chats.EmptyState.V2.description,
+                    linkTapped: actions.linkTappedAction
+                )
+        case .meetings:
+                .init(
+                    image: .meetingsEmptyStateNew,
+                    title: Strings.Localizable.Chat.Meetings.EmptyState.V2.title,
+                    titleBold: true,
+                    description: Strings.Localizable.Chat.Meetings.EmptyState.V2.description,
+                    linkTapped: actions.linkTappedAction
+                )
         }
     }
     
@@ -211,33 +277,23 @@ struct ChatRoomsEmptyViewStateFactory {
         hasContacts: Bool,
         contactsOnMega: ChatRoomsTopRowViewState,
         archivedChats: ChatRoomsTopRowViewState,
-        newChatAction: @escaping () -> Void,
-        inviteFriendAction: @escaping () -> Void,
-        linkTappedAction: @escaping () -> Void
+        actions: ChatEmptyViewActions
     ) -> ChatRoomsEmptyViewState {
-        
-        func center() -> ChatRoomsEmptyCenterViewState {
-            .init(
-                image: .chatEmptyStateNew,
-                title: Strings.Localizable.Chat.Chats.EmptyState.V2.title,
-                titleBold: true,
-                description: Strings.Localizable.Chat.Chats.EmptyState.V2.description,
-                linkTapped: linkTappedAction
-            )
-        }
-        
-        return .init(
+        .init(
             topRows: topRows(
                 hasArchivedChats: hasArchivedChats,
                 showInviteRow: false,
                 contactsOnMega: contactsOnMega,
                 archivedChats: archivedChats
             ),
-            center: center(),
+            center: center(
+                chatViewMode: chatViewMode,
+                actions: actions
+            ),
             bottomButtons: emptyChatBottomButtons(
+                chatViewMode: chatViewMode,
                 hasContacts: hasContacts,
-                inviteAction: inviteFriendAction,
-                newChatAction: newChatAction
+                actions: actions
             )
         )
     }
@@ -304,9 +360,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 count: 1,
                 action: {}
             ),
-            newChatAction: {},
-            inviteFriendAction: {},
-            linkTappedAction: {},
+            actions: .preview,
             bottomButtonMenus: []
         )
     )
@@ -329,9 +383,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 count: 1,
                 action: {}
             ),
-            newChatAction: {},
-            inviteFriendAction: {},
-            linkTappedAction: {},
+            actions: .preview,
             bottomButtonMenus: []
         )
     )
@@ -354,9 +406,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 count: 1,
                 action: {}
             ),
-            newChatAction: {},
-            inviteFriendAction: {},
-            linkTappedAction: {},
+            actions: .preview,
             bottomButtonMenus: []
         )
     )
@@ -379,9 +429,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 count: 1,
                 action: {}
             ),
-            newChatAction: {},
-            inviteFriendAction: {},
-            linkTappedAction: {},
+            actions: .preview,
             bottomButtonMenus: []
         )
     )
@@ -404,9 +452,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 count: 1,
                 action: {}
             ),
-            newChatAction: {},
-            inviteFriendAction: {},
-            linkTappedAction: {},
+            actions: .preview,
             bottomButtonMenus: []
         )
     )
