@@ -14,11 +14,11 @@ class OfflineUseCaseTests: XCTestCase {
         XCTAssertEqual(result, expectedPath)
     }
     
-    func testRemoveItem_whenSuccess_shouldRemoveTheItem() throws {
+    func testRemoveItem_whenSuccess_shouldRemoveTheItem() async throws {
         let fileSystemRepository = MockFileSystemRepository()
         let sut = OfflineUseCase(fileSystemRepository: fileSystemRepository)
         
-        try sut.removeItem(at: url)
+        try await sut.removeItem(at: url)
         
         XCTAssertEqual(fileSystemRepository.removeFileURLs, [url])
     }

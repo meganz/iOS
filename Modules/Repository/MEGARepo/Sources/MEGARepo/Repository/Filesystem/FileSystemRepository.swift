@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
 public struct FileSystemRepository: FileSystemRepositoryProtocol {
     public static var newRepo: FileSystemRepository {
@@ -8,6 +9,7 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
     
     private let fileManager: FileManager
     private static var cachedDocumentDirectoryURL: URL?
+    private let queue = DispatchQueue(label: "nz.mega.MEGARepo.FileSystemRepository")
     
     public init(fileManager: FileManager) {
         self.fileManager = fileManager
@@ -58,6 +60,14 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
         try fileManager.removeItem(at: url)
     }
     
+    public func removeItem(at url: URL) async throws {
+        try await withAsyncThrowingValue { completion in
+            removeItemAsync(at: url) { result in
+                completion(result)
+            }
+        }
+    }
+    
     // MARK: - File attributes
     public func fileSize(at url: URL) -> UInt64? {
         url.attributes?[.size] as? UInt64
@@ -71,5 +81,18 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
         guard let documentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return "" }
         let relativePath = url.path.replacingOccurrences(of: documentsDirectoryURL.path.appending("/"), with: "")
         return relativePath
+    }
+    
+    // MARK: - Private
+    
+    private func removeItemAsync(at url: URL, completion: @escaping (Result<Void, Error>) -> Void) {
+        queue.async {
+            do {
+                try FileManager.default.removeItem(at: url)
+                completion(.success)
+            } catch {
+                completion(.failure(error))
+            }
+        }
     }
 }
