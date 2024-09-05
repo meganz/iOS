@@ -12,6 +12,7 @@ struct MockStorageFullAlertViewRouting: StorageFullAlertViewRouting {
 }
 
 final class StorageFullAlertViewModelTests: XCTestCase {
+    @MainActor
     class Harness {
         let sut: StorageFullAlertViewModel
         let router: MockStorageFullAlertViewRouting
@@ -22,9 +23,10 @@ final class StorageFullAlertViewModelTests: XCTestCase {
         }
     }
     
-    func testShowStorageAlertIfNeeded() async {
+    @MainActor
+    func testShowStorageAlertIfNeeded() {
         let harness = Harness()
-        await harness.sut.showStorageAlertIfNeeded()
+        harness.sut.showStorageAlertIfNeeded()
         XCTAssertEqual(harness.router.showStorageAlertIfNeededRecorder.callCount, 1)
     }
 }

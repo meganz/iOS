@@ -6,6 +6,7 @@ import XCTest
 
 final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
 
+    @MainActor
     func testOnPhotoSelect_whenDifferentPhotoSelected_shouldSetIsSelectedToTrue() throws {
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)

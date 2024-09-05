@@ -31,6 +31,7 @@ enum MediaDiscoveryContentViewState {
     case empty
 }
 
+@MainActor
 final class MediaDiscoveryContentViewModel: ObservableObject {
     @Published var showAutoMediaDiscoveryBanner = false
     @Published private(set) var viewState: MediaDiscoveryContentViewState = .normal

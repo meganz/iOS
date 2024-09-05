@@ -9,6 +9,7 @@ import XCTest
 final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     private var sut: PhotoLibraryModeAllGridViewModel!
 
+    @MainActor
     override func setUpWithError() throws {
         let nodes =  [
             NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2022-09-01T22:01:04Z".date),
@@ -24,6 +25,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         sut = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
     }
     
+    @MainActor
     func testInit_defaultValue() throws {
         XCTAssertEqual(sut.photoCategoryList.count, 3)
         XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-09-01T22:01:04Z".date.removeDay(timeZone: .GMT))
@@ -57,6 +59,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         XCTAssertEqual(sut.position, PhotoScrollPosition(handle: 0, date: try "2022-09-01T22:01:04Z".date))
     }
     
+    @MainActor
     func testZoomState_zoomInOneTime_daySection() throws {
         sut.zoomState.zoom(.in)
         
@@ -95,11 +98,13 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         XCTAssertEqual(sut.position, PhotoScrollPosition(handle: 0, date: try "2022-09-01T22:01:04Z".date))
     }
 
+    @MainActor
     func testZoomState_zoomInTwoTimes_daySection() throws {
         sut.zoomState.zoom(.in)
         try testZoomState_zoomInOneTime_daySection()
     }
     
+    @MainActor
     func testZoomState_zoomOutOneTime_monthSection() throws {
         sut.zoomState.zoom(.out)
         
@@ -135,11 +140,13 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         XCTAssertEqual(sut.position, PhotoScrollPosition(handle: 0, date: try "2022-09-01T22:01:04Z".date))
     }
     
+    @MainActor
     func testZoomState_zoomOutTwoTimes_monthSection() throws {
         sut.zoomState.zoom(.out)
         try testZoomState_zoomOutOneTime_monthSection()
     }
     
+    @MainActor
     func testZoomState_onChangeToThirteenScaleFactor_shouldChangeSelectionIsHidden() {
         let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
         let viewModel = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
@@ -148,6 +155,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         XCTAssertTrue(libraryViewModel.selection.isHidden)
     }
     
+    @MainActor
     func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasChanged_shouldTriggerShowEnableCameraUploadToEqualFalse() async {
         
         // Arrange
@@ -174,6 +182,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasNotChanged_shouldTriggerShowEnableCameraUploadToEqualTrue() async {
         
         // Arrange
@@ -190,7 +199,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
             .timeout(.seconds(1), scheduler: DispatchQueue.main)
             .last()
             .values
-            .first(where: { _ in true })
+            .first(where: { @Sendable _ in true })
         
         // Assert
         XCTAssertEqual(results, true)

@@ -1,6 +1,7 @@
 import Foundation
 
 extension MEGANode {
+    @MainActor
     @objc func pushCloudDriveForNode(_ node: MEGANode, displayMode: DisplayMode, navigationController: UINavigationController) {
         let factory = CloudDriveViewControllerFactory.make(
             nc: navigationController

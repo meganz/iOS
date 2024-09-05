@@ -8,6 +8,7 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
     private var sut: PhotoLibraryMonthViewModel!
     private var subscriptions = Set<AnyCancellable>()
     
+    @MainActor
     override func setUpWithError() throws {
         let nodes =  [
             NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
@@ -21,6 +22,7 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
         sut = PhotoLibraryMonthViewModel(libraryViewModel: libraryViewModel)
     }
     
+    @MainActor
     func testInit_defaultValue() throws {
         XCTAssertEqual(sut.photoCategoryList, sut.libraryViewModel.library.photosByMonthList)
         XCTAssertEqual(sut.photoCategoryList.count, 3)
@@ -31,6 +33,7 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
         XCTAssertNil(sut.position)
     }
     
+    @MainActor
     func testDidTapCategory_tappingMonthCard_goToDayMode() throws {
         let category = sut.photoCategoryList[2]
         XCTAssertEqual(category.categoryDate, try "2020-04-17T22:01:04Z".date.removeDay(timeZone: .GMT))
@@ -41,18 +44,21 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
         XCTAssertEqual(sut.libraryViewModel.selectedMode, .day)
     }
     
+    @MainActor
     func testChangingSelectedMode_switchingFromMonthToYearMode_goToYearMode() throws {
         sut.libraryViewModel.selectedMode = .year
         XCTAssertNil(sut.libraryViewModel.cardScrollPosition)
         XCTAssertNil(sut.libraryViewModel.photoScrollPosition)
     }
     
+    @MainActor
     func testChangingSelectedMode_switchingFromMonthToDayMode_goToDayMode() throws {
         sut.libraryViewModel.selectedMode = .day
         XCTAssertNil(sut.libraryViewModel.cardScrollPosition)
         XCTAssertNil(sut.libraryViewModel.photoScrollPosition)
     }
     
+    @MainActor
     func testChangingSelectedMode_switchingFromMonthToAllMode_goToAllMode() throws {
         var didFinishPhotoCardScrollPositionCalculationNotificationCount = 0
         

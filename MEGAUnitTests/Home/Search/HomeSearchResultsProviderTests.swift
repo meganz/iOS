@@ -420,17 +420,17 @@ class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(propertyIds, [.versioned, .linked])
     }
 
-    func testSearchConfig_whenSearchIsInactive_shouldMatchTheEmptyAsset() {
+    @MainActor func testSearchConfig_whenSearchIsInactive_shouldMatchTheEmptyAsset() {
         let emptyAsset = makeEmptyAsset(with: "Title")
         assertSearchConfig(expectedAsset: emptyAsset, defaultEmptyAsset: emptyAsset, isSearchActive: false)
     }
 
-    func testSearchConfig_whenSearchIsActive_shouldMatchHomeEmptyNoChipSelected() {
+    @MainActor func testSearchConfig_whenSearchIsActive_shouldMatchHomeEmptyNoChipSelected() {
         let expectedAsset = makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noChipSelected)
         assertSearchConfig(expectedAsset: expectedAsset, defaultEmptyAsset: makeEmptyAsset(with: "Title"))
     }
 
-    func testSearchConfig_whenChipIsDocs_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsDocs_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noDocuments),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -438,7 +438,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsAudio_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsAudio_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noAudio),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -446,7 +446,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsVideo_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsVideo_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noVideos),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -454,7 +454,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsImages_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsImages_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noImages),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -462,7 +462,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsFolders_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsFolders_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noFolders),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -470,7 +470,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsPDF_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsPDF_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noPdfs),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -478,7 +478,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsPresentation_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsPresentation_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noPresentations),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -486,7 +486,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsArchives_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsArchives_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noArchives),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -494,7 +494,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsSpreadsheets_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsSpreadsheets_shouldMatch() {
         assertSearchConfig(
             expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noSpreadsheets),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -502,7 +502,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_whenChipIsDefault_shouldMatch() {
+    @MainActor func testSearchConfig_whenChipIsDefault_shouldMatch() {
         let emptyAsset = makeEmptyAsset(with: "Title")
         assertSearchConfig(
             expectedAsset: emptyAsset,
@@ -517,7 +517,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_WhenTodayIsSelectedAsModifyDateFilter_shouldMatchResults() {
+    @MainActor func testSearchConfig_WhenTodayIsSelectedAsModifyDateFilter_shouldMatchResults() {
         assertSearchConfig(
             expectedAsset: searchEmptyStateAsset(),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -526,7 +526,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_WhenLastSevenDaysIsSelectedAsModifyDateFilter_shouldMatchResults() {
+    @MainActor func testSearchConfig_WhenLastSevenDaysIsSelectedAsModifyDateFilter_shouldMatchResults() {
         assertSearchConfig(
             expectedAsset: searchEmptyStateAsset(),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -535,7 +535,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_WhenLastThirtyDaysIsSelectedAsModifyDateFilter_shouldMatchResults() {
+    @MainActor func testSearchConfig_WhenLastThirtyDaysIsSelectedAsModifyDateFilter_shouldMatchResults() {
         assertSearchConfig(
             expectedAsset: searchEmptyStateAsset(),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -544,7 +544,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_WhenThisYearIsSelectedAsModifyDateFilter_shouldMatchResults() {
+    @MainActor func testSearchConfig_WhenThisYearIsSelectedAsModifyDateFilter_shouldMatchResults() {
         assertSearchConfig(
             expectedAsset: searchEmptyStateAsset(),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -553,7 +553,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_WhenLastYearIsSelectedAsModifyDateFilter_shouldMatchResults() {
+    @MainActor func testSearchConfig_WhenLastYearIsSelectedAsModifyDateFilter_shouldMatchResults() {
         assertSearchConfig(
             expectedAsset: searchEmptyStateAsset(),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -562,7 +562,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         )
     }
 
-    func testSearchConfig_WhenOlderDateIsSelectedAsModifyDateFilter_shouldMatchResults() {
+    @MainActor func testSearchConfig_WhenOlderDateIsSelectedAsModifyDateFilter_shouldMatchResults() {
         assertSearchConfig(
             expectedAsset: searchEmptyStateAsset(),
             defaultEmptyAsset: makeEmptyAsset(with: "Title"),
@@ -642,7 +642,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         
         do {
             // when
-            let resultEntity = try await harness.sut.refreshedSearchResults(queryRequest: .initial)
+            _ = try await harness.sut.refreshedSearchResults(queryRequest: .initial)
         } catch {
             guard case FileSearchResultErrorEntity.generic = error else {
                 XCTFail("The error should match the FileSearchResultErrorEntity.generic")
@@ -825,6 +825,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(filters.first?.sensitiveFilterOption, .disabled, file: file, line: line)
     }
 
+    @MainActor
     private func assertSearchConfig(
         expectedAsset: SearchConfig.EmptyViewAssets,
         defaultEmptyAsset: SearchConfig.EmptyViewAssets,

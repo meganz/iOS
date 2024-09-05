@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
+@MainActor
 final class PhotoLibraryFilterViewModel: ObservableObject {
     @Published var selectedMediaType = PhotosFilterType.allMedia
     @Published var selectedLocation = PhotosFilterLocation.allLocations
@@ -40,7 +41,6 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func applySavedFilters() async {
         guard isRememberPreferenceActive else { return }
         
@@ -121,7 +121,7 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
             appliedSavePreferences = selectedSavePreferences
         }
     }
-    
+
     func saveFilters() async {
         guard isRememberPreferenceActive else { return }
         
