@@ -9,6 +9,7 @@ enum GetLinkInfoCellAction: ActionType {
     case cancelTasks
 }
 
+@MainActor
 final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelType {
     enum Command: CommandType, Equatable {
         case setThumbnail(path: String)
@@ -25,6 +26,7 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     
     private(set) var loadingTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
@@ -35,46 +37,50 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
          monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol,
          albumCoverUseCase: some AlbumCoverUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()) {
         self.album = album
         self.thumbnailUseCase = thumbnailUseCase
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.albumCoverUseCase = albumCoverUseCase
         self.featureFlagProvider = featureFlagProvider
+        self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
     }
     
     deinit {
-        cancelTasks()
+        loadingTask = nil
     }
     
     func dispatch(_ action: GetLinkInfoCellAction) {
         switch action {
         case .onViewReady:
-            if featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) {
-                loadAlbumPhotos()
-            } else {
-                invokeCommand?(.setLabels(title: album.name,
-                                          subtitle: Strings.Localizable.General.Format.Count.items(album.count)))
-                loadThumbnail()
-            }
+            onViewReady()
         case .cancelTasks:
-            cancelTasks()
+            loadingTask = nil
         }
     }
     
-    private func loadThumbnail() {
+    private func onViewReady() {
+        loadingTask = Task {
+            if await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
+                await loadAlbumPhotos()
+            } else {
+                invokeCommand?(.setLabels(title: album.name,
+                                          subtitle: Strings.Localizable.General.Format.Count.items(album.count)))
+                await loadThumbnail()
+            }
+        }
+    }
+    
+    private func loadThumbnail() async {
         guard let coverNode = album.coverNode else {
             invokeCommand?(.setPlaceholderThumbnail)
             return
         }
-        loadingTask = Task { @MainActor [weak self] in
-            guard let self else { return }
-            await loadThumbnail(for: coverNode)
-        }
+        await loadThumbnail(for: coverNode)
     }
     
-    @MainActor
     private func loadThumbnail(for node: NodeEntity) async {
         do {
             let thumbnail = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
@@ -86,25 +92,19 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
         }
     }
     
-    private func loadAlbumPhotos() {
-        loadingTask = Task { @MainActor [weak self] in
-            guard let albumPhotoAsyncSequence = await self?.albumPhotoAsyncSequence() else { return }
-            
-            for await photos in albumPhotoAsyncSequence {
-                self?.updateLabels(photoCount: photos.count)
-                await self?.albumCover(for: photos)
-            }
+    private func loadAlbumPhotos() async {
+        for await photos in await albumPhotoAsyncSequence() {
+            updateLabels(photoCount: photos.count)
+            await albumCover(for: photos)
         }
     }
     
-    @MainActor
     private func albumPhotoAsyncSequence() async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
         let excludeSensitives = await excludeSensitives()
         return await monitorAlbumsUseCase.monitorUserAlbumPhotos(
             for: album, excludeSensitives: excludeSensitives, includeSensitiveInherited: false)
     }
     
-    @MainActor
     private func excludeSensitives() async -> Bool {
         if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
             await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
@@ -113,22 +113,16 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
         }
     }
     
-    @MainActor
     private func updateLabels(photoCount: Int) {
         invokeCommand?(.setLabels(title: album.name,
                                   subtitle: Strings.Localizable.General.Format.Count.items(photoCount)))
     }
     
-    @MainActor
     private func albumCover(for photos: [AlbumPhotoEntity]) async {
         if let albumCover = await albumCoverUseCase.albumCover(for: album, photos: photos) {
             await loadThumbnail(for: albumCover)
         } else {
             invokeCommand?(.setPlaceholderThumbnail)
         }
-    }
-    
-    private func cancelTasks() {
-        loadingTask = nil
     }
 }

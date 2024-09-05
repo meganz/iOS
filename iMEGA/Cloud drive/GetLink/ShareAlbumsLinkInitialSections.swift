@@ -22,6 +22,7 @@ struct ShareAlbumsLinkInitialSections {
         self.albumCoverUseCase = albumCoverUseCase
     }
     
+    @MainActor
     var initialLinkSectionViewModels: [GetLinkSectionViewModel] {
         albums.map {
             GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
