@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-public protocol ScheduledMeetingUseCaseProtocol {
+public protocol ScheduledMeetingUseCaseProtocol: Sendable {
     func scheduledMeetings() -> [ScheduledMeetingEntity]
     func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity]
     func scheduledMeetings(by chatId: ChatIdEntity) async -> [ScheduledMeetingEntity]
