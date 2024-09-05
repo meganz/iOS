@@ -71,6 +71,9 @@
 		0E826BDF2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */; };
 		0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */; };
 		0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */; };
+		0E8EABAB2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */; };
+		0E8EABBB2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */; };
+		0E8EABC92C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */; };
 		0E9301E02B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */; };
 		0E9301E22B044C62000306D9 /* PhotoTimelineEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */; };
 		0E9561602A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E95615F2A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift */; };
@@ -2838,6 +2841,9 @@
 		0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALinkManager+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+Additions.swift"; sourceTree = "<group>"; };
 		0E8C7E772AE2166900D408EB /* EnableCameraUploadsBannerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableCameraUploadsBannerButtonView.swift; sourceTree = "<group>"; };
+		0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRemoteFeatureFlagProvider.swift; sourceTree = "<group>"; };
+		0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAlbumRemoteFeatureFlagProvider.swift; sourceTree = "<group>"; };
+		0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRemoteFeatureFlagProviderTests.swift; sourceTree = "<group>"; };
 		0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableCameraUploadsEmptyView.swift; sourceTree = "<group>"; };
 		0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTimelineEmptyView.swift; sourceTree = "<group>"; };
 		0E95615F2A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentViewModelTests.swift; sourceTree = "<group>"; };
@@ -5852,6 +5858,14 @@
 			path = CopyrightWarning;
 			sourceTree = "<group>";
 		};
+		0E8EABB92C869F19001722F7 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
 		0EBF706F2BAB874B009AAFB0 /* HiddenFilesAndFolders */ = {
 			isa = PBXGroup;
 			children = (
@@ -5937,6 +5951,7 @@
 				12397E222820C4BC00A30CCC /* AlbumListViewModel.swift */,
 				127053A32822216800D64C21 /* AlbumListViewRouter.swift */,
 				3282016729AEDEE100C0E841 /* AlbumNameValidator.swift */,
+				0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */,
 				3256C38829A63A74001B0280 /* AlbumSelection.swift */,
 				25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */,
 			);
@@ -6895,6 +6910,7 @@
 			isa = PBXGroup;
 			children = (
 				328C15392A398998002499CE /* Links */,
+				0E8EABB92C869F19001722F7 /* Mock */,
 				3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */,
 				9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */,
 				3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */,
@@ -6902,6 +6918,7 @@
 				32EC280029B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift */,
 				328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */,
 				328201A129AF071A00C0E841 /* AlbumNameValidatorTests.swift */,
+				0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */,
 				3256C39429A8656C001B0280 /* AlbumSelectionTests.swift */,
 				94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */,
 				0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */,
@@ -14556,6 +14573,7 @@
 				0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */,
 				3282016829AEDEE100C0E841 /* AlbumNameValidator.swift in Sources */,
 				328C153D2A399579002499CE /* AlbumPublicLinkStatus.swift in Sources */,
+				0E8EABAB2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift in Sources */,
 				BFAB114D23CEA5C300BCE72D /* Albums.swift in Sources */,
 				3256C38929A63A74001B0280 /* AlbumSelection.swift in Sources */,
 				B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */,
@@ -16579,6 +16597,7 @@
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
 				0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */,
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
+				0E8EABC92C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
 				94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,
@@ -16733,6 +16752,7 @@
 				24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
+				0E8EABBB2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */,
 				24C577FF2AC18A9F00302849 /* MockAudioPlayerUseCase.swift in Sources */,

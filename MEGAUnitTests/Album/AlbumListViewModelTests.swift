@@ -700,12 +700,14 @@ final class AlbumListViewModelTests: XCTestCase {
             )
             let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
                 sensitiveNodesUserAttributeEntity: .init(onboarded: true, showHiddenNodes: showHiddenNodes))
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true,
-                                                                     .hiddenNodes: hiddenNodes])
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodes])
+            let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             
-            let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                         contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
-                                         featureFlagProvider: featureFlagProvider)
+            let sut = albumListViewModel(
+                monitorAlbumsUseCase: monitorAlbumsUseCase,
+                contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
+                featureFlagProvider: featureFlagProvider,
+                albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
             
             var subscriptions = Set<AnyCancellable>()
             
@@ -757,10 +759,10 @@ final class AlbumListViewModelTests: XCTestCase {
             monitorSystemAlbumsSequence: systemAsyncSequence,
             monitorUserAlbumsSequence: monitorUserAlbumsAsyncSequence
         )
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        
-        let sut = albumListViewModel(monitorAlbumsUseCase: monitorAlbumsUseCase,
-                                     featureFlagProvider: featureFlagProvider)
+        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
+        let sut = albumListViewModel(
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
         let exp = expectation(description: "Should load only user albums")
         let subscription = sut.$albums
@@ -792,11 +794,11 @@ final class AlbumListViewModelTests: XCTestCase {
             monitorSystemAlbumsSequence: SingleItemAsyncSequence(item: .success([])).eraseToAnyAsyncSequence(),
             monitorUserAlbumsSequence: userAlbumStream.eraseToAnyAsyncSequence()
         )
-        
+        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         let sut = albumListViewModel(
             monitorAlbumsUseCase: monitorAlbumsUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.albumPhotoCache: true]),
-            photoAlbumContainerViewModel: containerViewModel)
+            photoAlbumContainerViewModel: containerViewModel,
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
         var expectedUpdates = [true, false, true]
         let exp = expectation(description: "Should load only user albums")
@@ -851,7 +853,8 @@ final class AlbumListViewModelTests: XCTestCase {
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
-        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
+        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
     ) -> AlbumListViewModel {
         AlbumListViewModel(
             usecase: usecase,
@@ -862,7 +865,8 @@ final class AlbumListViewModelTests: XCTestCase {
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             alertViewModel: alertViewModel(),
             photoAlbumContainerViewModel: photoAlbumContainerViewModel,
-            featureFlagProvider: featureFlagProvider
+            featureFlagProvider: featureFlagProvider,
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider
         )
     }
 }
