@@ -16,7 +16,6 @@
 
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
-#import "MEGAMoveRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"

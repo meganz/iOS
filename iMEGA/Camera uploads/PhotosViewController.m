@@ -3,7 +3,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "EmptyStateView.h"
 #import "Helper.h"
-#import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
