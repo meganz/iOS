@@ -175,6 +175,92 @@ final class RaiseHandUpdaterTests: XCTestCase {
         XCTAssertEqual(harness.factory.insertedParticipants, [.testParticipant(participantId: 1)])
         XCTAssertEqual(harness.snackBarsReceived, [.testSnackBar])
     }
+    
+    func testLocalUserRaisedFromDifferentClient_OnlySingleUserInMeeting_FactoryGetsOnlyLocalUser() {
+        let harness = Harness()
+        
+        // As a user, I'm only one in the meeting but I joined from two clients
+        // and I do not want to see 'You and 1 other raised hand"
+        // but I want to see You raised your hand"
+        // so factory should have empty array of participants with raised hand
+        // true as local user raised hand
+        harness.sut.update(
+            callParticipants: [
+                .testParticipant(participantId: .localUserHandle)
+            ],
+            raiseHandListBefore: [],
+            raiseHandListAfter: [.localUserHandle],
+            localUserHandle: .localUserHandle
+        )
+        
+        XCTAssertEqual(harness.factory.insertedLocalRaisedHand, true)
+        XCTAssertEqual(harness.factory.insertedParticipants, [])
+    }
+    
+    func testLocalUserRaisedFromManyDifferentClient_OnlySingleUserInMeeting_FactoryGetsOnlyLocalUser() {
+        let harness = Harness()
+        harness.sut.update(
+            callParticipants: [
+                .testParticipant(participantId: .localUserHandle),
+                .testParticipant(participantId: .localUserHandle),
+                .testParticipant(participantId: .localUserHandle)
+            ],
+            raiseHandListBefore: [],
+            raiseHandListAfter: [.localUserHandle],
+            localUserHandle: .localUserHandle
+        )
+        
+        XCTAssertEqual(harness.factory.insertedLocalRaisedHand, true)
+        XCTAssertEqual(harness.factory.insertedParticipants, [])
+    }
+    
+    func testLocalUserRaisedFromDifferentClient_MoreUsersInMeeting_FactoryGetsOnlyLocalUser() {
+        let harness = Harness()
+        harness.sut.update(
+            callParticipants: [
+                .testParticipant(participantId: .localUserHandle),
+                .testParticipant(participantId: 2),
+                .testParticipant(participantId: 3)
+            ],
+            raiseHandListBefore: [],
+            raiseHandListAfter: [.localUserHandle],
+            localUserHandle: .localUserHandle
+        )
+        
+        XCTAssertEqual(harness.factory.insertedLocalRaisedHand, true)
+        XCTAssertEqual(harness.factory.insertedParticipants, [])
+    }
+    
+    func testLocalUserLoweredFromDifferentClient_SingleUserInMeeting_FactoryGetsOnlyLocalUserFalse() {
+        let harness = Harness()
+        harness.sut.update(
+            callParticipants: [
+                .testParticipant(participantId: .localUserHandle)
+            ],
+            raiseHandListBefore: [.localUserHandle],
+            raiseHandListAfter: [],
+            localUserHandle: .localUserHandle
+        )
+        
+        XCTAssertEqual(harness.factory.insertedLocalRaisedHand, false)
+        XCTAssertEqual(harness.factory.insertedParticipants, [])
+    }
+    
+    func testLocalUserHasRaisedHand_JoinedFromTwoClients_OtherUserRaises() {
+        let harness = Harness()
+        harness.sut.update(
+            callParticipants: [
+                .testParticipant(participantId: .localUserHandle),
+                .testParticipant(participantId: 1)
+            ],
+            raiseHandListBefore: [.localUserHandle],
+            raiseHandListAfter: [1, .localUserHandle],
+            localUserHandle: .localUserHandle
+        )
+        
+        XCTAssertEqual(harness.factory.insertedLocalRaisedHand, false)
+        XCTAssertEqual(harness.factory.insertedParticipants, [.testParticipant(participantId: 1)])
+    }
 }
 
 extension HandleEntity {
