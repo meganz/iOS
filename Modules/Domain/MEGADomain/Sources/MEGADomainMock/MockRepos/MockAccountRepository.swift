@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import MEGADomain
 import MEGASwift
@@ -41,16 +40,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let contactsRequestsCount: Int
     private let unseenUserAlertsCount: UInt
 
-    // MARK: - Delegate Management Counters
-    @Atomic public var registerMEGARequestDelegateCalled = 0
-    @Atomic public var deRegisterMEGARequestDelegateCalled = 0
-    @Atomic public var registerMEGAGlobalDelegateCalled = 0
-    @Atomic public var deRegisterMEGAGlobalDelegateCalled = 0
-
-    // MARK: - Publishers
-    public let requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never>
-    public let contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never>
-    public let userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never>
+    // MARK: - Account updates
+    public let onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>>
+    public let onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]>
+    public let onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]>
     
     // MARK: - Node Sizes
     public let rootStorage: Int64
@@ -84,9 +77,6 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         miscFlagsResult: Result<Void, AccountErrorEntity> = .failure(.generic),
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
         multiFactorAuthCheckResult: Result<Bool, AccountErrorEntity> = .failure(.generic),
-        requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> = Empty().eraseToAnyPublisher(),
-        contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> = Empty().eraseToAnyPublisher(),
-        userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> = Empty().eraseToAnyPublisher(),
         isUpgradeSecuritySuccess: Bool = false,
         bandwidthOverquotaDelay: Int64 = 0,
         accountType: AccountTypeEntity = .free,
@@ -95,7 +85,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         incomingSharesStorage: Int64 = 0,
         backupStorage: Int64 = 0,
         currentProPlan: AccountPlanEntity? = nil,
-        currentSubscription: AccountSubscriptionEntity? = nil
+        currentSubscription: AccountSubscriptionEntity? = nil,
+        onAccountRequestFinishUpdate: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -125,14 +118,14 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.sessionTransferURLResult = sessionTransferURLResult
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
         self.multiFactorAuthCheckResult = multiFactorAuthCheckResult
-        self.requestResultPublisher = requestResultPublisher
-        self.contactRequestPublisher = contactRequestPublisher
-        self.userAlertUpdatePublisher = userAlertUpdatePublisher
         self.accountType = accountType
         self.rootStorage = rootStorage
         self.rubbishBinStorage = rubbishBinStorage
         self.incomingSharesStorage = incomingSharesStorage
         self.backupStorage = backupStorage
+        self.onAccountRequestFinish = onAccountRequestFinishUpdate
+        self.onUserAlertsUpdates = onUserAlertsUpdates
+        self.onContactRequestsUpdates = onContactRequestsUpdates
     }
 
     // MARK: - AccountRepositoryProtocol Implementation
@@ -262,22 +255,6 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
 
     public func relevantUnseenUserAlertsCount() -> UInt {
         unseenUserAlertsCount
-    }
-
-    public func registerMEGARequestDelegate() async {
-        $registerMEGARequestDelegateCalled.mutate { $0 += 1 }
-    }
-
-    public func deRegisterMEGARequestDelegate() {
-        $deRegisterMEGARequestDelegateCalled.mutate { $0 += 1 }
-    }
-
-    public func registerMEGAGlobalDelegate() async {
-        $registerMEGAGlobalDelegateCalled.mutate { $0  += 1 }
-    }
-
-    public func deRegisterMEGAGlobalDelegate() async {
-        $deRegisterMEGAGlobalDelegateCalled.mutate { $0 += 1 }
     }
 
     public func rootStorageUsed() -> Int64 {

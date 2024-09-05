@@ -1,4 +1,4 @@
-public enum UserAlertTypeEntity: CaseIterable {
+public enum UserAlertTypeEntity: Sendable, CaseIterable {
     case incomingPendingContactRequest
     case incomingPendingContactCancelled
     case incomingPendingContactReminder

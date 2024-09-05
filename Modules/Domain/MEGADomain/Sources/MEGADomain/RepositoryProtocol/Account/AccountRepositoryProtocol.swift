@@ -1,5 +1,5 @@
-import Combine
 import Foundation
+import MEGASwift
 
 public protocol AccountRepositoryProtocol: Sendable {
     // User authentication status and identifiers
@@ -63,13 +63,9 @@ public protocol AccountRepositoryProtocol: Sendable {
     func relevantUnseenUserAlertsCount() -> UInt
 
     // Account events and delegates
-    var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> { get }
-    var contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> { get }
-    var userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> { get }
-    func registerMEGARequestDelegate() async
-    func deRegisterMEGARequestDelegate() async
-    func registerMEGAGlobalDelegate() async
-    func deRegisterMEGAGlobalDelegate() async
+    var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> { get }
+    var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> { get }
+    var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> { get }
     func multiFactorAuthCheck(email: String) async throws -> Bool
     
     // Node sizes

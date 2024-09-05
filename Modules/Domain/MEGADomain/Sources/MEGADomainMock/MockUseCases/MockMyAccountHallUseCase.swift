@@ -1,21 +1,17 @@
-import Combine
 import MEGADomain
+import MEGASwift
 
 final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
     private let contactRequestsCount: Int
     private let unseenUserAlertsCount: UInt
     private let _currentAccountDetails: AccountDetailsEntity
-    private let _requestResultPublisher: PassthroughSubject<Result<AccountRequestEntity, Error>, Never>
-    private let _contactRequestPublisher: PassthroughSubject<[ContactRequestEntity], Never>
-    private let _userAlertUpdatePublisher: PassthroughSubject<[UserAlertEntity], Never>
     private let _isMasterBusinessAccount: Bool
-    public var _isAchievementsEnabled: Bool
+    private let _isAchievementsEnabled: Bool
     private let _currentUserHandle: HandleEntity?
     
-    public var registerMEGARequestDelegateCalled = 0
-    public var deRegisterMEGARequestDelegateCalled = 0
-    public var registerMEGAGlobalDelegateCalled = 0
-    public var deRegisterMEGAGlobalDelegateCalled = 0
+    public let onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>>
+    public let onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]>
+    public let onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]>
     
     public init(
         contactRequestsCount: Int = 0,
@@ -24,19 +20,19 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
         isMasterBusinessAccount: Bool = false,
         isAchievementsEnabled: Bool = false,
         currentUserHandle: HandleEntity? = nil,
-        requestResultPublisher: PassthroughSubject<Result<AccountRequestEntity, Error>, Never> = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>(),
-        contactRequestPublisher: PassthroughSubject<[ContactRequestEntity], Never> = PassthroughSubject<[ContactRequestEntity], Never>(),
-        userAlertUpdatePublisher: PassthroughSubject<[UserAlertEntity], Never> = PassthroughSubject<[UserAlertEntity], Never>()
+        onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.contactRequestsCount = contactRequestsCount
         self.unseenUserAlertsCount = unseenUserAlertsCount
         _currentAccountDetails = currentAccountDetails
-        _requestResultPublisher = requestResultPublisher
-        _contactRequestPublisher = contactRequestPublisher
-        _userAlertUpdatePublisher = userAlertUpdatePublisher
         _isMasterBusinessAccount = isMasterBusinessAccount
         _isAchievementsEnabled = isAchievementsEnabled
         _currentUserHandle = currentUserHandle
+        self.onAccountRequestFinish = onAccountRequestFinish
+        self.onUserAlertsUpdates = onUserAlertsUpdates
+        self.onContactRequestsUpdates = onContactRequestsUpdates
     }
     
     public func incomingContactsRequestsCount() async -> Int {
@@ -55,18 +51,6 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
         _currentAccountDetails
     }
     
-    public func requestResultPublisher() -> AnyPublisher<Result<AccountRequestEntity, Error>, Never> {
-        _requestResultPublisher.eraseToAnyPublisher()
-    }
-    
-    public func contactRequestPublisher() -> AnyPublisher<[ContactRequestEntity], Never> {
-        _contactRequestPublisher.eraseToAnyPublisher()
-    }
-    
-    public func userAlertUpdatePublisher() -> AnyPublisher<[UserAlertEntity], Never> {
-        _userAlertUpdatePublisher.eraseToAnyPublisher()
-    }
-    
     public var currentUserHandle: HandleEntity? {
         _currentUserHandle
     }
@@ -77,21 +61,5 @@ final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
     
     public var isAchievementsEnabled: Bool {
         _isAchievementsEnabled
-    }
-    
-    public func registerMEGARequestDelegate() async {
-        registerMEGARequestDelegateCalled += 1
-    }
-    
-    public func deRegisterMEGARequestDelegate() {
-        deRegisterMEGARequestDelegateCalled += 1
-    }
-    
-    public func registerMEGAGlobalDelegate() async {
-        registerMEGAGlobalDelegateCalled += 1
-    }
-    
-    public func deRegisterMEGAGlobalDelegate() async {
-        deRegisterMEGAGlobalDelegateCalled += 1
     }
 }

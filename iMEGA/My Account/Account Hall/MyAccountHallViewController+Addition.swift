@@ -63,12 +63,12 @@ extension MyAccountHallViewController {
         viewModel.dispatch(.load(.promos))
     }
     
-    @objc func addSubscriptions() {
-        viewModel.dispatch(.addSubscriptions)
+    @objc func dispatchOnViewAppearAction() {
+        viewModel.dispatch(.viewWillAppear)
     }
     
-    @objc func removeSubscriptions() {
-        viewModel.dispatch(.removeSubscriptions)
+    @objc func dispatchOnViewWillDisappearAction() {
+        viewModel.dispatch(.viewWillDisappear)
     }
     
     // MARK: - Open sections programmatically
