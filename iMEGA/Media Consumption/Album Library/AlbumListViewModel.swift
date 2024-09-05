@@ -45,6 +45,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     
     private lazy var albumsSubject = PassthroughSubject<[AlbumEntity], Never>()
@@ -60,7 +61,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
         self.shareCollectionUseCase = shareCollectionUseCase
@@ -70,6 +72,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         self.featureFlagProvider = featureFlagProvider
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
+        self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
         super.init()
         setupSubscription()
         self.alertViewModel.action = { [weak self] newAlbumName in
@@ -290,7 +293,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func monitorAlbums() async throws {
-        guard !featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else {
+        guard await !albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else {
             await newAlbumMonitoring()
             return
         }
@@ -406,11 +409,14 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     // Throttle is not available in swift-async-algorithms package and will most likely only be available for iOS 16 and above due to the use of `Clock`.
     private func subscribeToAlbums() {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else { return }
-        
-        albumsSubject
-            .debounceImmediate(for: .seconds(0.3), scheduler: DispatchQueue.main)
-            .assign(to: &$albums)
+        Task { [weak self] in
+            guard let self,
+                  await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else { return }
+            
+            albumsSubject
+                .debounceImmediate(for: .seconds(0.3), scheduler: DispatchQueue.main)
+                .assign(to: &$albums)
+        }
     }
     
     @MainActor

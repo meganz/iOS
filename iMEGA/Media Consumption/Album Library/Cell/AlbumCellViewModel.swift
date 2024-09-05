@@ -1,5 +1,5 @@
 import AsyncAlgorithms
-import Combine
+@preconcurrency import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
@@ -7,6 +7,7 @@ import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 final class AlbumCellViewModel: ObservableObject {
     let album: AlbumEntity
     let selection: AlbumSelection
@@ -43,6 +44,7 @@ final class AlbumCellViewModel: ObservableObject {
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     
     private var subscriptions = Set<AnyCancellable>()
     private var albumMetaData: AlbumMetaDataEntity?
@@ -62,7 +64,8 @@ final class AlbumCellViewModel: ObservableObject {
         selection: AlbumSelection,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         selectedAlbum: Binding<AlbumEntity?>,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
     ) {
         self.thumbnailLoader = thumbnailLoader
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
@@ -75,6 +78,7 @@ final class AlbumCellViewModel: ObservableObject {
         self.tracker = tracker
         _selectedAlbum = selectedAlbum
         self.featureFlagProvider = featureFlagProvider
+        self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
         
         title = album.name
         numberOfNodes = album.count
@@ -90,7 +94,6 @@ final class AlbumCellViewModel: ObservableObject {
         subscribeToEditMode()
     }
     
-    @MainActor
     func loadAlbumThumbnail() async {
         guard let coverNode = album.coverNode,
               thumbnailContainer.type == .placeholder else {
@@ -102,7 +105,7 @@ final class AlbumCellViewModel: ObservableObject {
         await loadThumbnail(for: coverNode)
     }
     
-    func onAlbumTap() {
+    func onAlbumTap() async {
         guard !(isEditing && album.systemAlbum) else { return }
         
         if isEditing {
@@ -111,12 +114,11 @@ final class AlbumCellViewModel: ObservableObject {
             selectedAlbum = album
         }
         
-        trackAnalytics()
+        await trackAnalytics()
     }
     
-    @MainActor
     func monitorAlbumPhotos() async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache),
+        guard await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled(),
               album.type == .user else { return }
         
         for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album,
@@ -129,13 +131,12 @@ final class AlbumCellViewModel: ObservableObject {
     }
     
     /// Monitor inherited sensitivity changes for album cover photo
-    @MainActor
     func monitorCoverPhotoSensitivity() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               let coverNode = album.coverNode,
               !coverNode.isMarkedSensitive else { return }
         // Wait for initial thumbnail to load with sensitivity before checking inherited sensitivity updates
-        _ = await $thumbnailContainer.values.contains(where: { $0.type != .placeholder })
+        _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })
         do {
             for try await isInheritingSensitivity in sensitiveNodeUseCase.inheritedSensitivity(for: coverNode) {
                 let sensitiveImageContaining = thumbnailContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity)
@@ -149,7 +150,6 @@ final class AlbumCellViewModel: ObservableObject {
     
     // MARK: Private
     
-    @MainActor
     private func loadThumbnail(for node: NodeEntity) async {
         guard let imageContainer = try? await thumbnailLoader.loadImage(for: node, type: .thumbnail) else {
             isLoading = false
@@ -179,7 +179,6 @@ final class AlbumCellViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    @MainActor
     private func loadAlbumCover(from photos: [AlbumPhotoEntity]) async {
         let imageContainer = if let albumCover = await albumCoverUseCase.albumCover(for: album, photos: photos) {
             try? await thumbnailLoader.loadImage(for: albumCover, type: .thumbnail)
@@ -191,7 +190,6 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailContainer = imageContainer
     }
     
-    @MainActor
     private func excludeSensitives() async -> Bool {
         if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
             await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
@@ -200,13 +198,13 @@ final class AlbumCellViewModel: ObservableObject {
         }
     }
     
-    private func trackAnalytics() {
+    private func trackAnalytics() async {
         let selectionType: AlbumSelected.SelectionType = if isEditing {
             isSelected ? .multiadd : .multiremove
         } else {
             .single
         }
-        let event = if featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) {
+        let event = if await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
             AlbumSelectedEvent(
                 selectionType: selectionType,
                 imageCount: albumMetaData?.imageCount.toKotlinInt(),

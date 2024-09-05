@@ -66,7 +66,9 @@ struct AlbumCell: View {
             await viewModel.monitorAlbumPhotos()
         }
         .onTapGesture {
-            viewModel.onAlbumTap()
+            Task {
+                await viewModel.onAlbumTap()
+            }
         }
     }
     
