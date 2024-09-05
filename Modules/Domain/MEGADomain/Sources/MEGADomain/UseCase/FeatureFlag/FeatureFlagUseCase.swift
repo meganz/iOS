@@ -1,4 +1,4 @@
-public protocol FeatureFlagUseCaseProtocol {
+public protocol FeatureFlagUseCaseProtocol: Sendable {
     func savedFeatureFlags() -> [FeatureFlagEntity]
     func isFeatureFlagEnabled(for key: FeatureFlagName) -> Bool
     func configFeatureFlag(key: FeatureFlagName, isEnabled: Bool)
@@ -6,7 +6,7 @@ public protocol FeatureFlagUseCaseProtocol {
 }
 
 public struct FeatureFlagUseCase<T: FeatureFlagRepositoryProtocol>: FeatureFlagUseCaseProtocol {
-    private var repo: T
+    private let repo: T
     
     public init(repository: T) {
         repo = repository

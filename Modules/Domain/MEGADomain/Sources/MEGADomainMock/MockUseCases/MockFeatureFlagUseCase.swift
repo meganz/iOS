@@ -1,11 +1,12 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
-public final class MockFeatureFlagUseCase: FeatureFlagUseCaseProtocol {
-    public var savedFeatureList: [FeatureFlagEntity]
+public final class MockFeatureFlagUseCase: FeatureFlagUseCaseProtocol, @unchecked Sendable {
+    @Atomic public var savedFeatureList: [FeatureFlagEntity] = []
 
     public init(savedFeatureFlags: [FeatureFlagEntity] = []) {
-        savedFeatureList = savedFeatureFlags
+        $savedFeatureList.mutate { $0 = savedFeatureFlags }
     }
 
     public func savedFeatureFlags() -> [FeatureFlagEntity] {
@@ -20,14 +21,12 @@ public final class MockFeatureFlagUseCase: FeatureFlagUseCaseProtocol {
     public func configFeatureFlag(key: FeatureFlagName, isEnabled: Bool) {
         let newFeatureFlag = FeatureFlagEntity(name: key, isEnabled: isEnabled)
         
-        if let featureFlag = savedFeatureList.first(where: { $0.name == key }) {
-            savedFeatureList.remove(object: featureFlag)
-        }
-        savedFeatureList.append(newFeatureFlag)
+        removeFeatureFlag(key: key)
+        $savedFeatureList.mutate { $0.append(newFeatureFlag) }
     }
 
     public func removeFeatureFlag(key: FeatureFlagName) {
         guard let featureFlag = savedFeatureList.first(where: { $0.name == key }) else { return }
-        savedFeatureList.remove(object: featureFlag)
+        $savedFeatureList.mutate { $0.remove(object: featureFlag) }
     }
 }

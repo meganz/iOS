@@ -1,10 +1,11 @@
 import MEGAPresentation
+import MEGASwift
 
-public final class MockFeatureFlagProvider: FeatureFlagProviderProtocol {
-    private var list = [FeatureFlagKey: Bool]()
+public final class MockFeatureFlagProvider: FeatureFlagProviderProtocol, @unchecked Sendable {
+    @Atomic private var list = [FeatureFlagKey: Bool]()
 
     public init(list: [FeatureFlagKey: Bool]) {
-        self.list = list
+        $list.mutate {  $0 = list }
     }
     
     public func isFeatureFlagEnabled(for key: FeatureFlagKey) -> Bool {

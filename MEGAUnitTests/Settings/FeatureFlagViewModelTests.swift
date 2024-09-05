@@ -13,7 +13,7 @@ class FeatureFlagViewModelTests: XCTestCase {
         
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = savedFeatureFlagList
+        mockUseCase.$savedFeatureList.mutate { $0 = savedFeatureFlagList }
         
         sut.featureFlagList = featureListWithNewFeature
         sut.saveNewFeatureFlags()
@@ -30,7 +30,7 @@ class FeatureFlagViewModelTests: XCTestCase {
 
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = savedFeatureFlagList
+        mockUseCase.$savedFeatureList.mutate { $0 = savedFeatureFlagList }
 
         sut.featureFlagList = featureListWithNewFeature
         sut.saveNewFeatureFlags()
@@ -46,7 +46,7 @@ class FeatureFlagViewModelTests: XCTestCase {
 
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = savedFeatureFlagList
+        mockUseCase.$savedFeatureList.mutate { $0 = savedFeatureFlagList }
 
         sut.featureFlagList = featureListWithNewFeature
         sut.saveNewFeatureFlags()
@@ -60,7 +60,7 @@ class FeatureFlagViewModelTests: XCTestCase {
         
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = [savedFeature]
+        mockUseCase.$savedFeatureList.mutate { $0 = [savedFeature] }
 
         sut.saveFeatureFlag(featureFlag: newFeature)
 
@@ -73,7 +73,7 @@ class FeatureFlagViewModelTests: XCTestCase {
         
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = [existingFeature]
+        mockUseCase.$savedFeatureList.mutate { $0 = [existingFeature] }
 
         sut.saveFeatureFlag(featureFlag: FeatureFlagEntity(name: "Feature1", isEnabled: true))
 
@@ -88,7 +88,7 @@ class FeatureFlagViewModelTests: XCTestCase {
 
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = savedFeatureFlagList
+        mockUseCase.$savedFeatureList.mutate { $0 = savedFeatureFlagList }
 
         sut.featureFlagList = featureListWithRemovedFeature
         sut.cleanSavedFeatureFlags()
@@ -105,7 +105,7 @@ class FeatureFlagViewModelTests: XCTestCase {
 
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = savedFeatureFlagList
+        mockUseCase.$savedFeatureList.mutate { $0 = savedFeatureFlagList }
 
         sut.featureFlagList = featureListWithRemovedFeatures
         sut.cleanSavedFeatureFlags()
