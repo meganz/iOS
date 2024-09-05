@@ -885,6 +885,7 @@ extension AlbumListViewModelTests {
         return results
     }
     
+    @MainActor
     func wait(period: TimeInterval = 0.5) async {
         try? await Task.sleep(nanoseconds: UInt64(period * 1_000_000_000))
     }

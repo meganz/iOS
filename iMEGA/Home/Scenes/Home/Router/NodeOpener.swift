@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGASDKRepo
 
+@MainActor
 final class NodeOpener {
 
     private weak var navigationController: UINavigationController?

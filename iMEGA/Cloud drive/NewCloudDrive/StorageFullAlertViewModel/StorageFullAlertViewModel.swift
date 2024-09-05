@@ -1,7 +1,9 @@
+@MainActor
 protocol StorageFullAlertViewRouting {
     func showStorageAlertIfNeeded()
 }
 
+@MainActor
 final class StorageFullAlertViewModel {
     private let router: any StorageFullAlertViewRouting
     
@@ -9,7 +11,7 @@ final class StorageFullAlertViewModel {
         self.router = router
     }
     
-    func showStorageAlertIfNeeded() async {
+    func showStorageAlertIfNeeded() {
         router.showStorageAlertIfNeeded()
     }
 }

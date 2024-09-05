@@ -11,6 +11,7 @@ import MEGAUIKit
 import Search
 import SwiftUI
 
+@MainActor
 struct CloudDriveViewControllerFactory {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let abTestProvider: any ABTestProviderProtocol

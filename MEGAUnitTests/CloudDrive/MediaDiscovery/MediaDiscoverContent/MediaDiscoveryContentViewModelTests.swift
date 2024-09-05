@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -8,6 +8,7 @@ import XCTest
 
 class MediaDiscoveryContentViewModelTests: XCTestCase {
     
+    @MainActor
     func testOnViewAppear_shouldSendPageVisitedEvent() {
         
         // Arrange
@@ -21,6 +22,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertTrue(analyticsUseCase.hasPageVisitedCalled)
     }
     
+    @MainActor
     func testOnViewDisappear_shouldSendPageStayedEvent() {
         // Arrange
         let analyticsUseCase = MockMediaDiscoveryAnalyticsUseCase()
@@ -33,6 +35,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertTrue(analyticsUseCase.hasPageStayCalled)
     }
     
+    @MainActor
     func testLoadPhotosExcludeSensitiveNodes_whenContentModeIsMediaDiscoveryAndShowHiddenNodesOff_shouldExcludeTrue() async {
         
         for await showHiddenNodes in [false, true].async {
@@ -58,6 +61,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSubscribeToNodeChanges_whenChangeOccursToNodes_shouldReloadPhotos() async {
         // Arrange
         let expectedNodes = [NodeEntity(name: "test.png", handle: 1)]
@@ -76,11 +80,12 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
             .$library
             .map(\.allPhotos)
             .values
-            .first(where: { $0.count > 0 })
+            .first(where: { @Sendable in $0.count > 0 })
         
         XCTAssertEqual(expectedNodes, result)
     }
     
+    @MainActor
     func testSubscribeToNodeChanges_whenNoDiffereneceInChangeOccursToUpdatedNodes_shouldNotReloadPhotos() {
         // Arrange
         let expectedNodes = [NodeEntity(name: "test.png", handle: 1)]
@@ -109,6 +114,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertNil(result)
     }
     
+    @MainActor
     func testToggleAllSelected_toggleToOn_shouldReturnAllNodesAsSelected() async {
         // Arrange
         let expectedNodes = [
@@ -132,13 +138,14 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
             .timeout(.milliseconds(500), scheduler: DispatchQueue.main)
             .last()
             .values
-            .first(where: { _ in true })
+            .first(where: { @Sendable _ in true })
             
         // Assert
         XCTAssertEqual(3, delegate.selectedPhotosDelegateCalledWithCount)
         XCTAssertEqual(result?.map(\.value).sorted(by: { $0.handle < $1.handle}), expectedNodes)
     }
     
+    @MainActor
     func testToggleAllSelected_toggleToOnThenOff_shouldReturnAllNodesAsSelected() async {
         // Arrange
         let expectedNodes = [
@@ -159,13 +166,14 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
             .timeout(.milliseconds(500), scheduler: DispatchQueue.main)
             .last()
             .values
-            .first(where: { _ in true })
+            .first(where: { @Sendable _ in true })
 
         // Assert
         XCTAssertEqual(0, delegate.selectedPhotosDelegateCalledWithCount)
         XCTAssertEqual(result?.map(\.value), [])
     }
     
+    @MainActor
     func testLoadPhotos_returnsNonEmptyListOfNodes_shouldSetViewStateToNormal() async {
         // Arrange
         let expectedNodes = [
@@ -185,6 +193,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewState, .normal)
     }
     
+    @MainActor
     func testLoadPhotos_returnsEmptyListOfNodes_shouldSetViewStateToEmpty() async {
         // Arrange
         let expectedNodes: [NodeEntity] = []
@@ -200,6 +209,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewState, .empty)
     }
     
+    @MainActor
     func testSubscribeToSelectionHidden_whenSelectionRequestHiddenEqualsTrue_shouldNotifyDelegateIsHiddenEqualsTrue() async {
         // Arrange
         let expectedNodes = [NodeEntity(name: "test1.png", handle: 1)]
@@ -216,12 +226,13 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         _ = await sut.photoLibraryContentViewModel.selection.$isHidden
             .timeout(.milliseconds(300), scheduler: DispatchQueue.main)
             .values
-            .first(where: { $0 })
+            .first(where: { @Sendable in $0 })
 
         // Assert
         XCTAssertEqual(delegate.isMediaDiscoverySelectionDelegateIsHidden, true)
     }
     
+    @MainActor
     func testSubscribeToSelectionHidden_whenSelectionRequestHiddenEqualsFalse_shouldNotifyDelegateIsHiddenEqualsFalse() async {
         // Arrange
         let expectedNodes = [NodeEntity(name: "test1.png", handle: 1)]
@@ -238,12 +249,13 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         _ = await sut.photoLibraryContentViewModel.selection.$isHidden
             .timeout(.milliseconds(300), scheduler: DispatchQueue.main)
             .values
-            .first(where: { !$0 })
+            .first(where: { @Sendable in !$0 })
 
         // Assert
         XCTAssertEqual(delegate.isMediaDiscoverySelectionDelegateIsHidden, false)
     }
     
+    @MainActor
     func testSubscribeToSelectionHidden_whenSelectionRequestHiddenEqualsFalseAndSelectedModeIsNotAll_shouldNotifyDelegateIsHiddenEqualsTrue() async {
         // Arrange
         let expectedNodes = [NodeEntity(name: "test1.png", handle: 1)]
@@ -262,13 +274,14 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
             _ = await sut.photoLibraryContentViewModel.selection.$isHidden
                 .timeout(.milliseconds(300), scheduler: DispatchQueue.main)
                 .values
-                .first(where: { $0 })
+                .first(where: { @Sendable in $0 })
             
             // Assert
             XCTAssertEqual(delegate.isMediaDiscoverySelectionDelegateIsHidden, true, "Expect to return true, got \(String(describing: delegate.isMediaDiscoverySelectionDelegateIsHidden)) for mode: \(mode)")
         }
     }
     
+    @MainActor
     func testTappedMenuAction_whenViewStateIsInEmpty_shouldPassEventToDelegate() async {
         let delegate = MockMediaDiscoveryContentDelegate()
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: [])
@@ -285,6 +298,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
             }
     }
     
+    @MainActor
     func testLoadPhotos_whenSortOrderEqualsNewest_shouldSetNodesInOrderOfNewest() async {
         let loadedNodes = [
             NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
@@ -311,6 +325,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByNewest)
     }
     
+    @MainActor
     func testLoadPhotos_whenSortOrderEqualsOldest_shouldSetNodesInOrderOfOldest() async {
         let loadedNodes = [
             NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
@@ -337,6 +352,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByOldest)
     }
     
+    @MainActor
     func testLoadPhotos_mediaDiscoveryShouldIncludeSubfolderMediaNotSet_shouldSearchMediaRecuirsively() async {
         let loadedNodes = [
             NodeEntity(handle: 1),
@@ -354,6 +370,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertTrue(discoverRecursively ?? false)
     }
     
+    @MainActor
     func testLoadPhotos_mediaDiscoveryShouldIncludeSubfolderMediaOff_shouldNotSearchMediaRecuirsively() async {
         let loadedNodes = [
             NodeEntity(handle: 1),
@@ -371,6 +388,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertFalse(discoverRecursively ?? true)
     }
     
+    @MainActor
     func testUpdateSortOrder_existingOrderEqualsNewestAndUpdatesToOldest_shouldReturnNodesinOrderOfOldest() async {
         let loadedNodes = [
             NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
@@ -409,6 +427,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByOldest)
     }
     
+    @MainActor
     func testShowAutoMediaDiscoveryBanner_isNotAutomaticallyShownVisualMediaOnly_shouldNotShowBanner() {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.autoMediaDiscoveryBannerDismissed: false])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
@@ -416,6 +435,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertFalse(sut.showAutoMediaDiscoveryBanner)
     }
     
+    @MainActor
     func testShowAutoMediaDiscoveryBanner_autoMediaDiscoveryBannerDismissedOff_shouldShowAutoMediaDiscoveryBanner() {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.autoMediaDiscoveryBannerDismissed: false])
         let sut = makeSUT(isAutomaticallyShown: true,
@@ -425,6 +445,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertFalse(sut.autoMediaDiscoveryBannerDismissed)
     }
     
+    @MainActor
     func testAutoMediaDiscoveryBannerDismissed_onChange_shouldChangePreferenceUseCaseValue() throws {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.shouldDisplayMediaDiscoveryWhenMediaOnly: true,
                                                              .autoMediaDiscoveryBannerDismissed: false])
@@ -440,6 +461,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
 
 extension MediaDiscoveryContentViewModelTests {
     
+    @MainActor
     private func makeSUT(
         parentNode: NodeEntity = NodeEntity(),
         sortOrder: SortOrderType = .newest,

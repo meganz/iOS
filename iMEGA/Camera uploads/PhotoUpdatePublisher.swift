@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGASwift
 
+@MainActor
 @objc final class PhotoUpdatePublisher: NSObject {
     private enum Constants {
         static let headerReloadInterval = 1.3
@@ -31,10 +32,8 @@ import MEGASwift
         }
         
         photoLibraryPublisher.subscribeToPhotoSelectionHidden { [weak self] isPhotoSelectionHidden in
-            DispatchQueue.main.async {
-                self?.photosVC?.viewModel.isSelectHidden = isPhotoSelectionHidden
-                self?.photosVC?.setupNavigationBarButtons()
-            }
+            self?.photosVC?.viewModel.isSelectHidden = isPhotoSelectionHidden
+            self?.photosVC?.setupNavigationBarButtons()
         }
     }
     
