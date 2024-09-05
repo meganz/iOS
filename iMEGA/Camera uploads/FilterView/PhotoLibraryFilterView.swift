@@ -30,7 +30,9 @@ struct PhotoLibraryFilterView: View {
         )
         
         viewModel.applyFilters()
-        Task { await viewModel.saveFilters() }
+        Task {
+            await viewModel.saveFilters()
+        }
         isPresented.toggle()
     }
     

@@ -3,6 +3,7 @@ import MEGADomain
 import MEGASDKRepo
 import UIKit
 
+@MainActor
 protocol HomeRouterProtocol {
 
     func didTap(on source: HomeRoutingSource, with object: Any?)

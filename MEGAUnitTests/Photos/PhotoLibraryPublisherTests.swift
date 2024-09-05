@@ -2,6 +2,7 @@
 import XCTest
 
 final class PhotoLibraryPublisherTests: XCTestCase {
+    @MainActor
     func testSubscribeToPhotoSelectionHidden_onSelectionHiddenChange_shouldChangeClosureValue() {
         let viewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                      contentMode: .library)
@@ -19,6 +20,7 @@ final class PhotoLibraryPublisherTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    @MainActor
     func testSubscribeToPhotoSelectionHidden_onSelectionAndSelectedModeChange_shouldUseSelectionHiddenWhenOnAllSelectionMode() {
         let viewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                      contentMode: .library)

@@ -4,6 +4,7 @@ import MEGASDKRepo
 import SwiftUI
 import Video
 
+@MainActor
 struct FilesExplorerRouter {
     private weak var navigationController: UINavigationController?
     private let explorerType: ExplorerTypeEntity

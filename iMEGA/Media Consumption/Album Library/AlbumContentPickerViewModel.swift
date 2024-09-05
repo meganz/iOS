@@ -3,6 +3,7 @@ import Foundation
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 final class AlbumContentPickerViewModel: ObservableObject {
    
     private let album: AlbumEntity
@@ -25,7 +26,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
         Strings.Localizable.CameraUploads.Albums.Create.addItemsTo(album.name)
     }
     
-    @MainActor
     init(album: AlbumEntity,
          photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
          completion: @escaping (AlbumEntity, [NodeEntity]) -> Void,
@@ -48,7 +48,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
         photosLoadingTask?.cancel()
     }
     
-    @MainActor
     public func onDone() {
         let nodes: [NodeEntity] = photoLibraryContentViewModel.selection.photos.values.map { $0 }
         guard nodes.isNotEmpty else {
@@ -101,19 +100,18 @@ final class AlbumContentPickerViewModel: ObservableObject {
             do {
                 let cloudDrivePhotos = try await photoLibraryUseCase.media(for: [.cloudDrive, .allMedia], excludeSensitive: nil)
                 let cameraUploadPhotos = try await photoLibraryUseCase.media(for: [.cameraUploads, .allMedia], excludeSensitive: nil)
-                await hideFilter(cloudDrivePhotos.isEmpty || cameraUploadPhotos.isEmpty)
-                await updatePhotoSourceLocationIfRequired(filterLocation: filterLocation,
+                hideFilter(cloudDrivePhotos.isEmpty || cameraUploadPhotos.isEmpty)
+                updatePhotoSourceLocationIfRequired(filterLocation: filterLocation,
                                                           isCloudDriveEmpty: cloudDrivePhotos.isEmpty,
                                                           isCameraUploadsEmpty: cameraUploadPhotos.isEmpty)
-                await updatePhotoSourceLocationNavigationTitleIfRequired()
-                await updatePhotoLibraryContent(cloudDrivePhotos: cloudDrivePhotos, cameraUploadPhotos: cameraUploadPhotos)
+                updatePhotoSourceLocationNavigationTitleIfRequired()
+                updatePhotoLibraryContent(cloudDrivePhotos: cloudDrivePhotos, cameraUploadPhotos: cameraUploadPhotos)
             } catch {
                 MEGALogError("Error occurred when loading photos. \(error.localizedDescription)")
             }
         }
     }
     
-    @MainActor
     private func updatePhotoLibraryContent(cloudDrivePhotos: [NodeEntity], cameraUploadPhotos: [NodeEntity]) {
         let filteredPhotos = photoNodes(for: photoSourceLocation, from: cloudDrivePhotos, and: cameraUploadPhotos)
             .filter { $0.hasThumbnail }
@@ -121,7 +119,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
         photoLibraryContentViewModel.selection.editMode = .active
     }
     
-    @MainActor
     private func hideFilter(_ shouldHideFilter: Bool) {
         guard self.shouldRemoveFilter != shouldHideFilter else {
             return
@@ -129,7 +126,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
         self.shouldRemoveFilter = shouldHideFilter
     }
     
-    @MainActor
     private func updatePhotoSourceLocationIfRequired(filterLocation: PhotosFilterLocation, isCloudDriveEmpty: Bool,
                                                      isCameraUploadsEmpty: Bool) {
         var selectedFilterLocation = filterLocation
@@ -159,7 +155,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     private func updatePhotoSourceLocationNavigationTitleIfRequired() {
         guard photoSourceLocationNavigationTitle != photoSourceLocation.localization else {
             return

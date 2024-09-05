@@ -101,6 +101,8 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 0.1)
         
         XCTAssertTrue(receivedValue == false)
+        
+        cancellable.cancel()
     }
     
     @MainActor

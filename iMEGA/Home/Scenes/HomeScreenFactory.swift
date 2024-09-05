@@ -14,6 +14,7 @@ import MEGAUIKit
 import Search
 import SwiftUI
 
+@MainActor
 final class HomeScreenFactory: NSObject {
     
     private var sdk: MEGASdk {
@@ -33,7 +34,7 @@ final class HomeScreenFactory: NSObject {
             notificationCenter: notificationCenter
         )
     }
-
+    
     func createHomeScreen(
         from tabBarController: MainTabBarController,
         tracker: some AnalyticsTracking,

@@ -6,6 +6,7 @@ import MEGAPresentationMock
 import XCTest
 
 final class PhotoLibraryContentViewRouterTests: XCTestCase {
+    @MainActor
     func testOpenPhotoBrowser_photoSelected_shouldTrackSinglePhotoEvent() {
         let tracker = MockTracker()
         let sut = makeSUT(tracker: tracker)
@@ -18,6 +19,7 @@ final class PhotoLibraryContentViewRouterTests: XCTestCase {
             with: [PhotoItemSelectedEvent(selectionType: .single)])
     }
     
+    @MainActor
     private func makeSUT(
         contentMode: PhotoLibraryContentMode = .library,
         tracker: some AnalyticsTracking = MockTracker()

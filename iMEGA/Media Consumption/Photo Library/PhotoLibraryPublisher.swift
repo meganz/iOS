@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGADomain
 
+@MainActor
 final class PhotoLibraryPublisher {
     private var subscriptions = Set<AnyCancellable>()
     

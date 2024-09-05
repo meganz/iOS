@@ -6,6 +6,7 @@ import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
 
+@MainActor
 protocol PhotoLibraryContentViewRouting {
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard
     func card(for photoByMonth: PhotoByMonth) -> PhotoMonthCard

@@ -5,6 +5,7 @@ import MEGASDKRepo
 
 // This protocol was added to enable both new and legacy Cloud Drive screen use the same navigation mechanism
 // using NodeOpener to drill deeper into folders or files, and also use the same for context menu presentation
+@MainActor
 protocol NodeRouting {
     func didTapMoreAction(
         on node: HandleEntity,
