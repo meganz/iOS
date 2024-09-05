@@ -4,6 +4,8 @@ import SwiftUI
 
 protocol RaiseHandSnackBarProviding {
     func snackBar(
+        // this array should not contain local user's participantId
+        // to properly handle scenario when the same user connect from different clients
         participantsThatJustRaisedHands: [CallParticipantEntity],
         localRaisedHand: Bool
     ) -> SnackBar?

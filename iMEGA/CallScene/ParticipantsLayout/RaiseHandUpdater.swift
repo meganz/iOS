@@ -79,8 +79,13 @@ struct RaiseHandUpdater {
             raiseHandListAfter.contains(localUserHandle)
         )
         
-        let callParticipantsThatJustRaisedHands = callParticipants.filter {
+        let callParticipantsThatJustRaisedHands = callParticipants
+        .filter {
             diffed.hasRaisedHand(participantId: $0.participantId)
+        }
+        .filter {
+            // remove local user id in case same user raised hand on different client
+            $0.participantId != localUserHandle
         }
         
         // to show snack bar we need to check that
