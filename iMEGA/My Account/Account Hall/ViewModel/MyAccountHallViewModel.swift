@@ -25,11 +25,11 @@ enum MyAccountHallLoadTarget {
 
 enum MyAccountHallAction: ActionType {
     case viewDidLoad
+    case viewWillAppear
+    case viewWillDisappear
     case reloadUI
     case load(_ target: MyAccountHallLoadTarget)
     case didTapUpgradeButton
-    case addSubscriptions
-    case removeSubscriptions
     case didTapDeviceCenterButton
     case navigateToProfile
     case navigateToUsage
@@ -70,6 +70,9 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     private var subscriptions = Set<AnyCancellable>()
     var loadContentTask: Task<Void, Never>?
+    var onAccountRequestFinishUpdatesTask: Task<Void, any Error>?
+    var onUserAlertsUpdatesTask: Task<Void, any Error>?
+    var onContactRequestsUpdatesTask: Task<Void, any Error>?
     
     // MARK: Account Plan view
     @Published private(set) var currentPlanName: String = ""
@@ -102,6 +105,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     deinit {
         loadContentTask?.cancel()
+        loadContentTask = nil
     }
     
     // MARK: Feature flags
@@ -113,6 +117,10 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         switch action {
         case .viewDidLoad:
             trackAccountScreenEvent()
+        case .viewWillAppear:
+            startAccountUpdatesMonitoring()
+        case .viewWillDisappear:
+            stopAccountUpdatesMonitoring()
         case .reloadUI:
             invokeCommand?(.reloadUIContent)
         case .load(let target):
@@ -123,10 +131,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         case .didTapUpgradeButton:
             trackUpgradeAccountButtonTappedEvent()
             showUpgradeAccountPlanView()
-        case .addSubscriptions:
-            registerRequestDelegates()
-        case .removeSubscriptions:
-            deRegisterRequestDelegates()
         case .didTapDeviceCenterButton:
             router.navigateToDeviceCenter(
                 deviceCenterBridge: deviceCenterBridge,
@@ -310,55 +314,50 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         isUpdatingAccountDetails = isUpdating
     }
     
-    // MARK: Subscriptions
-    private func registerRequestDelegates() {
-        Task {
-            await myAccountHallUseCase.registerMEGARequestDelegate()
-            await myAccountHallUseCase.registerMEGAGlobalDelegate()
-            setupSubscriptions()
-        }
-    }
-    
-    private func deRegisterRequestDelegates() {
-        Task.detached { [myAccountHallUseCase] in
-            await myAccountHallUseCase.deRegisterMEGARequestDelegate()
-            await myAccountHallUseCase.deRegisterMEGAGlobalDelegate()
-        }
-    }
-    
-    private func setupSubscriptions() {
-        myAccountHallUseCase.requestResultPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
+    // MARK: Subscriptions and Account updates
+    private func startAccountUpdatesMonitoring() {
+        onAccountRequestFinishUpdatesTask = Task { [weak self, myAccountHallUseCase] in
+            for await resultRequest in myAccountHallUseCase.onAccountRequestFinish {
                 guard let self else { return }
-                handleRequestResult(result)
+                try Task.checkCancellation()
+                
+                handleRequestResult(resultRequest)
             }
-            .store(in: &subscriptions)
+        }
         
-        myAccountHallUseCase.contactRequestPublisher()
-            .map { $0.count }
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] newCount in
+        onUserAlertsUpdatesTask = Task { [weak self, myAccountHallUseCase] in
+            for await userAlerts in myAccountHallUseCase.onUserAlertsUpdates {
                 guard let self else { return }
-                incomingContactRequestsCount = newCount
-                invokeCommand?(.reloadCounts)
-            }
-            .store(in: &subscriptions)
-        
-        myAccountHallUseCase.userAlertUpdatePublisher()
-            .map { UInt($0.count) }
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] newCount in
-                guard let self else { return }
+                try Task.checkCancellation()
+                
                 $relevantUnseenUserAlertsCount.mutate { currentValue in
-                    currentValue = newCount
+                    currentValue = UInt(userAlerts.count)
                 }
                 invokeCommand?(.reloadCounts)
             }
-            .store(in: &subscriptions)
-        
+        }
+
+        onContactRequestsUpdatesTask = Task { [weak self, myAccountHallUseCase] in
+            for await contactRequests in myAccountHallUseCase.onContactRequestsUpdates {
+                guard let self else { return }
+                try Task.checkCancellation()
+                
+                incomingContactRequestsCount = contactRequests.count
+                invokeCommand?(.reloadCounts)
+            }
+        }
+    }
+    
+    private func stopAccountUpdatesMonitoring() {
+        onAccountRequestFinishUpdatesTask?.cancel()
+        onUserAlertsUpdatesTask?.cancel()
+        onContactRequestsUpdatesTask?.cancel()
+        onAccountRequestFinishUpdatesTask = nil
+        onUserAlertsUpdatesTask = nil
+        onContactRequestsUpdatesTask = nil
+    }
+    
+    private func setupSubscriptions() {
         NotificationCenter
             .default
             .publisher(for: .refreshAccountDetails)

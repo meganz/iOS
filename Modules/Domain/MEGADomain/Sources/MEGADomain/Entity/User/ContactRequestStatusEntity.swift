@@ -1,4 +1,4 @@
-public enum ContactRequestStatusEntity {
+public enum ContactRequestStatusEntity: Sendable {
     case unresolved
     case accepted
     case denied

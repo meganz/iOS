@@ -1,10 +1,9 @@
-import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import XCTest
 
 final class MyAccountHallUseCaseTests: XCTestCase {
-    private var subscriptions = Set<AnyCancellable>()
     
     func testContactRequestsCount_onViewAppear_shouldBeEqual() async {
         let contactsRequestsExpectedCount = 1
@@ -65,94 +64,59 @@ final class MyAccountHallUseCaseTests: XCTestCase {
         }
     }
     
-    func testRequestResultPublisher_shouldReturnSuccessResult() {
-        let requestResultPublisher = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>()
-        let mockRepo = MockAccountRepository(
-            requestResultPublisher: requestResultPublisher.eraseToAnyPublisher()
+    func testOnAccountRequestFinish_successRequest_shouldReturnSuccessRequest() async {
+        let sut = MyAccountHallUseCase(
+            repository: makeMockAccountRepository(accountRequestUpdate: .success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)))
         )
-        let sut = MyAccountHallUseCase(repository: mockRepo)
+        var iterator = sut.onAccountRequestFinish.makeAsyncIterator()
         
-        let successResult = AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)
-        let exp = expectation(description: "Should receive success AccountRequestEntity")
-        sut.requestResultPublisher()
-            .sink { request in
-                switch request {
-                case .success(let result):
-                    XCTAssertEqual(result, successResult)
-                case .failure:
-                    XCTFail("Request error is not expected.")
-                }
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        requestResultPublisher.send(.success(successResult))
-        wait(for: [exp], timeout: 1.0)
+        let result = await iterator.next()
+        await XCTAsyncAssertNoThrow(try result?.get())
     }
     
-    func testContactRequestPublisher_shouldReturnContactRequestEntityList() {
-        let contactRequestPublisher = PassthroughSubject<[ContactRequestEntity], Never>()
-        let mockRepo = MockAccountRepository(
-            contactRequestPublisher: contactRequestPublisher.eraseToAnyPublisher()
+    func testOnAccountRequestFinish_failedRequest_shouldReturnFailedRequest() async {
+        let sut = MyAccountHallUseCase(
+            repository: makeMockAccountRepository(accountRequestUpdate: .failure(AccountDetailsErrorEntity.generic))
         )
-        let sut = MyAccountHallUseCase(repository: mockRepo)
+        var iterator = sut.onAccountRequestFinish.makeAsyncIterator()
         
-        let expectedList = [ContactRequestEntity.random]
-        let exp = expectation(description: "Should receive ContactRequestEntity list")
-        sut.contactRequestPublisher()
-            .sink { list in
-                XCTAssertEqual(list, expectedList)
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        contactRequestPublisher.send(expectedList)
-        wait(for: [exp], timeout: 1.0)
+        let result = await iterator.next()
+        XCTAssertThrowsError(try result?.get())
     }
     
-    func testUserAlertPublisher_shouldReturnUserAlertEntityList() {
-        let userAlertUpdatePublisher = PassthroughSubject<[UserAlertEntity], Never>()
-        let mockRepo = MockAccountRepository(
-            userAlertUpdatePublisher: userAlertUpdatePublisher.eraseToAnyPublisher()
+    func testOnUserAlertsUpdates_onUpdate_shouldReturnUserAlerts() async {
+        let updates = [UserAlertEntity.random, UserAlertEntity.random]
+        let sut = MyAccountHallUseCase(
+            repository: makeMockAccountRepository(userAlertsUpdates: updates)
         )
-        let sut = MyAccountHallUseCase(repository: mockRepo)
+        var iterator = sut.onUserAlertsUpdates.makeAsyncIterator()
         
-        let expectedList = [UserAlertEntity.random]
-        let exp = expectation(description: "Should receive UserAlertEntity list")
-        sut.userAlertUpdatePublisher()
-            .sink { list in
-                XCTAssertEqual(list, expectedList)
-                exp.fulfill()
-            }.store(in: &subscriptions)
+        let result = await iterator.next()
+        XCTAssertEqual(result, updates)
+    }
+    
+    func testOnContactRequestsUpdates_onUpdate_shouldReturnContactRequests() async {
+        let updates = [ContactRequestEntity.random, ContactRequestEntity.random]
+        let sut = MyAccountHallUseCase(
+            repository: makeMockAccountRepository(contactRequestsUpdates: updates)
+        )
+        var iterator = sut.onContactRequestsUpdates.makeAsyncIterator()
         
-        userAlertUpdatePublisher.send(expectedList)
-        wait(for: [exp], timeout: 1.0)
+        let result = await iterator.next()
+        XCTAssertEqual(result, updates)
     }
     
-    func testRegisterMEGARequestDelegateCalled_shouldReturnTrue() async {
-        let mockRepo = MockAccountRepository()
-        let sut = MyAccountHallUseCase(repository: mockRepo)
-        await sut.registerMEGARequestDelegate()
-        XCTAssertTrue(mockRepo.registerMEGARequestDelegateCalled == 1)
+    // MARK: - Helper
+    private func makeMockAccountRepository(
+        accountRequestUpdate: Result<AccountRequestEntity, any Error> = .failure(AccountErrorEntity.generic),
+        userAlertsUpdates: [UserAlertEntity] = [],
+        contactRequestsUpdates: [ContactRequestEntity] = []
+    ) -> MockAccountRepository {
+
+        MockAccountRepository(
+            onAccountRequestFinishUpdate: SingleItemAsyncSequence(item: accountRequestUpdate).eraseToAnyAsyncSequence(),
+            onUserAlertsUpdates: SingleItemAsyncSequence(item: userAlertsUpdates).eraseToAnyAsyncSequence(),
+            onContactRequestsUpdates: SingleItemAsyncSequence(item: contactRequestsUpdates).eraseToAnyAsyncSequence()
+        )
     }
-    
-    func testDeRegisterMEGARequestDelegateCalled_shouldReturnTrue() async {
-        let mockRepo = MockAccountRepository()
-        let sut = MyAccountHallUseCase(repository: mockRepo)
-        await sut.deRegisterMEGARequestDelegate()
-        XCTAssertTrue(mockRepo.deRegisterMEGARequestDelegateCalled == 1)
-    }
-    
-    func testRegisterMEGAGlobalDelegateCalled_shouldReturnTrue() async {
-        let mockRepo = MockAccountRepository()
-        let sut = MyAccountHallUseCase(repository: mockRepo)
-        await sut.registerMEGAGlobalDelegate()
-        XCTAssertTrue(mockRepo.registerMEGAGlobalDelegateCalled == 1)
-    }
-    
-    func testDeRegisterMEGAGlobalDelegateCalled_shouldReturnTrue() async {
-        let mockRepo = MockAccountRepository()
-        let sut = MyAccountHallUseCase(repository: mockRepo)
-        await sut.deRegisterMEGAGlobalDelegate()
-        XCTAssertTrue(mockRepo.deRegisterMEGAGlobalDelegateCalled == 1)
-    }
-    
 }

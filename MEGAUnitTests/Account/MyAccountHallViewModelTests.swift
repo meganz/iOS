@@ -7,6 +7,7 @@ import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASDKRepoMock
+import MEGASwift
 import XCTest
 
 final class MyAccountHallViewModelTests: XCTestCase {
@@ -65,23 +66,180 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAction_addSubscriptions() {
+    func testAction_viewWillAppear_shouldStartAccountUpdatesMonitoring() {
         let (sut, _) = makeSUT()
         
-        test(viewModel: sut,
-             actions: [MyAccountHallAction.addSubscriptions],
-             expectedCommands: [])
+        var commands = [MyAccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+        
+        sut.dispatch(.viewWillAppear)
+        
+        XCTAssertNotNil(sut.onAccountRequestFinishUpdatesTask)
+        XCTAssertNotNil(sut.onUserAlertsUpdatesTask)
+        XCTAssertNotNil(sut.onContactRequestsUpdatesTask)
+        XCTAssertEqual(commands, [])
     }
     
     @MainActor
-    func testAction_removeSubscriptions() {
+    func testAction_viewWillDisappear_shouldStopAccountUpdatesMonitoring() {
         let (sut, _) = makeSUT()
         
-        test(viewModel: sut,
-             actions: [MyAccountHallAction.removeSubscriptions],
-             expectedCommands: [])
+        var commands = [MyAccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+        
+        sut.dispatch(.viewWillDisappear)
+        
+        XCTAssertNil(sut.onAccountRequestFinishUpdatesTask)
+        XCTAssertNil(sut.onUserAlertsUpdatesTask)
+        XCTAssertNil(sut.onContactRequestsUpdatesTask)
+        XCTAssertEqual(commands, [])
     }
     
+    @MainActor
+    func testAccountUpdatesMonitoring_onAccountRequestFinish_accountDetailsRequest_shouldHandleRequest() {
+        let commands = assertAccountRequestFinishCommands(
+            request: AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)
+        )
+
+        XCTAssertEqual(commands, [.reloadUIContent])
+    }
+    
+    @MainActor
+    func testAccountUpdatesMonitoring_onAccountRequestFinish_getAttrUserRequestWithFile_shouldHandleRequest() {
+        let commands = assertAccountRequestFinishCommands(
+            request: AccountRequestEntity(type: .getAttrUser, file: "Test file", userAttribute: nil, email: nil)
+        )
+        
+        XCTAssertEqual(commands, [.setUserAvatar])
+    }
+    
+    @MainActor
+    func testAccountUpdatesMonitoring_onAccountRequestFinish_getAttrUserRequestWithNoFile_shouldHandleRequest() {
+        let commands = assertAccountRequestFinishCommands(
+            request: AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: nil, email: nil),
+            isExpectationInverted: true
+        )
+        
+        XCTAssertEqual(commands, [])
+    }
+    
+    @MainActor
+    func testAccountUpdatesMonitoring_onAccountRequestFinish_getAttrUserRequestWithUserAttr_shouldHandleRequest() {
+        let userAttribute = [UserAttributeEntity.firstName, UserAttributeEntity.lastName].randomElement() ?? .firstName
+        let commands = assertAccountRequestFinishCommands(
+            request: AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: userAttribute, email: nil)
+        )
+        
+        XCTAssertEqual(commands, [.setName])
+    }
+    
+    @MainActor
+    func testAccountUpdatesMonitoring_onAccountRequestFinish_getAttrUserRequestWithFileAndUserAttr_shouldHandleRequest() {
+        let userAttribute = [UserAttributeEntity.firstName, UserAttributeEntity.lastName].randomElement() ?? .firstName
+        let commands = assertAccountRequestFinishCommands(
+            request: AccountRequestEntity(type: .getAttrUser, file: "Test file", userAttribute: userAttribute, email: nil),
+            expectedCommandCount: 2
+        )
+        
+        XCTAssertEqual(commands, [.setUserAvatar, .setName])
+    }
+    
+    @MainActor
+    func testAccountUpdatesMonitoring_onAccountRequestFinish_getAttrUserRequestWithNoFileAndNoUserAttr_shouldNotCallAnyCommand() {
+        let commands = assertAccountRequestFinishCommands(
+            request: AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: nil, email: nil),
+            isExpectationInverted: true
+        )
+        
+        XCTAssertEqual(commands, [])
+    }
+    
+    @MainActor
+    private func assertAccountRequestFinishCommands(
+        request: AccountRequestEntity,
+        expectedCommandCount: Int = 1,
+        isExpectationInverted: Bool = false
+    ) -> [MyAccountHallViewModel.Command] {
+        let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
+        let (sut, _) = makeSUT(onAccountRequestFinish: stream.eraseToAnyAsyncSequence())
+        
+        let expectation = expectation(description: #function)
+        expectation.expectedFulfillmentCount = expectedCommandCount
+        expectation.isInverted = isExpectationInverted
+        
+        var commands = [MyAccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+            expectation.fulfill()
+        }
+        sut.dispatch(.viewWillAppear)
+        
+        continuation.yield(.success(request))
+        continuation.finish()
+        
+        wait(for: [expectation], timeout: 1)
+        
+        return commands
+    }
+    
+    @MainActor
+    func testAccountUpdatesMonitoring_OnUserAlertsUpdates_updateAlertCounts() {
+        let (stream, continuation) = AsyncStream<[UserAlertEntity]>.makeStream()
+        let (sut, _) = makeSUT(onUserAlertsUpdates: stream.eraseToAnyAsyncSequence())
+        
+        let expectation = expectation(description: #function)
+        var commands = [MyAccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+            expectation.fulfill()
+        }
+        sut.dispatch(.viewWillAppear)
+        
+        // Set lower user alert count
+        sut.$relevantUnseenUserAlertsCount.mutate { currentValue in
+            currentValue = UInt.random(in: 1...5)
+        }
+        
+        let alerts = generateRandomUserAlerts(count: Int.random(in: 6...10))
+        continuation.yield(alerts)
+        continuation.finish()
+        
+        wait(for: [expectation], timeout: 1)
+        
+        XCTAssertEqual(sut.relevantUnseenUserAlertsCount, UInt(alerts.count))
+        XCTAssertEqual(commands, [.reloadCounts])
+    }
+    
+    @MainActor
+    func testAccountUpdatesMonitoring_onContactRequestsUpdates_updateContactRequestCounts() {
+        let (stream, continuation) = AsyncStream<[ContactRequestEntity]>.makeStream()
+        let (sut, _) = makeSUT(onContactRequestsUpdates: stream.eraseToAnyAsyncSequence())
+        
+        let expectation = expectation(description: #function)
+        var commands = [MyAccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+            expectation.fulfill()
+        }
+        sut.dispatch(.viewWillAppear)
+        
+        // Set lower contact request count
+        sut.incomingContactRequestsCount = Int.random(in: 1...5)
+        
+        let requests = generateRandomContactRequests(count: Int.random(in: 6...10))
+        continuation.yield(requests)
+        continuation.finish()
+        
+        wait(for: [expectation], timeout: 1)
+        
+        XCTAssertEqual(sut.incomingContactRequestsCount, requests.count)
+        XCTAssertEqual(commands, [.reloadCounts])
+    }
+
     @MainActor
     func testInitAccountDetails_shouldHaveCorrectDetails() {
         let expectedAccountDetails = AccountDetailsEntity.random
@@ -467,12 +625,18 @@ final class MyAccountHallViewModelTests: XCTestCase {
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [:]),
         deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge(),
         tracker: some AnalyticsTracking = MockTracker(),
-        rubbishBinStorage: Int64 = 0
+        rubbishBinStorage: Int64 = 0,
+        onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) -> (MyAccountHallViewModel, MockMyAccountHallRouter) {
         let myAccountHallUseCase = MockMyAccountHallUseCase(
             currentAccountDetails: currentAccountDetails ?? AccountDetailsEntity.random,
             isMasterBusinessAccount: isMasterBusinessAccount,
-            isAchievementsEnabled: isAchievementsEnabled
+            isAchievementsEnabled: isAchievementsEnabled,
+            onAccountRequestFinish: onAccountRequestFinish,
+            onUserAlertsUpdates: onUserAlertsUpdates,
+            onContactRequestsUpdates: onContactRequestsUpdates
         )
         
         let accountUseCase = MockAccountUseCase(rubbishBinStorage: rubbishBinStorage)
@@ -510,5 +674,25 @@ final class MyAccountHallViewModelTests: XCTestCase {
             trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
             with: [expectedEvent]
         )
+    }
+    
+    private func generateRandomUserAlerts(count: Int) -> [UserAlertEntity] {
+        guard count > 1 else { return [] }
+        
+        var list: [UserAlertEntity] = []
+        (1...count).forEach { _ in
+            list.append(UserAlertEntity.random)
+        }
+        return list
+    }
+    
+    private func generateRandomContactRequests(count: Int) -> [ContactRequestEntity] {
+        guard count > 1 else { return [] }
+        
+        var list: [ContactRequestEntity] = []
+        (1...count).forEach { _ in
+            list.append(ContactRequestEntity.random)
+        }
+        return list
     }
 }

@@ -34,12 +34,7 @@ protocol ReportIssueViewRouting: Routing {
         let uploadUseCase = UploadFileUseCase(uploadFileRepository: uploadRepo, fileSystemRepository: FileSystemRepository.newRepo, nodeRepository: NodeRepository.newRepo, fileCacheRepository: FileCacheRepository.newRepo)
         let monitorRepo = NetworkMonitorRepository.newRepo
         let monitorUseCase = NetworkMonitorUseCase(repo: monitorRepo)
-        let accountRepository = AccountRepository(
-            sdk: sdk,
-            myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess.shared,
-            backupsRootFolderNodeAccess: BackupRootNodeAccess.shared
-        )
-        let accountUseCase = AccountUseCase(repository: accountRepository)
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
         let supportUseCase = makeSupportUseCase(sdk: sdk, accountUseCase: accountUseCase)
         let viewModel = ReportIssueViewModel(router: self,
                                              uploadFileUseCase: uploadUseCase,

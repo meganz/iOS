@@ -63,7 +63,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self addSubscriptions];
+    [self dispatchOnViewAppearAction];
     
     [self loadContent];
     
@@ -73,7 +73,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [self removeSubscriptions];
+    [self dispatchOnViewWillDisappearAction];
     
     NSInteger index = self.navigationController.viewControllers.count-1;
     if (![self.navigationController.viewControllers[index] isKindOfClass:OfflineViewController.class] &&

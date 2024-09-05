@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ContactRequestEntity {
+public struct ContactRequestEntity: Sendable {
     public let handle: HandleEntity
     public let sourceEmail: String?
     public let sourceMessage: String?

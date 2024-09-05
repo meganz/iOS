@@ -1,4 +1,4 @@
-import Combine
+import MEGASwift
 
 public protocol MyAccountHallUseCaseProtocol: Sendable {
     var currentUserHandle: HandleEntity? { get }
@@ -10,14 +10,9 @@ public protocol MyAccountHallUseCaseProtocol: Sendable {
     var currentAccountDetails: AccountDetailsEntity? { get }
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
     
-    func requestResultPublisher() -> AnyPublisher<Result<AccountRequestEntity, Error>, Never>
-    func contactRequestPublisher() -> AnyPublisher<[ContactRequestEntity], Never>
-    func userAlertUpdatePublisher() -> AnyPublisher<[UserAlertEntity], Never>
-    
-    func registerMEGARequestDelegate() async
-    func deRegisterMEGARequestDelegate() async
-    func registerMEGAGlobalDelegate() async
-    func deRegisterMEGAGlobalDelegate() async
+    var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> { get }
+    var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> { get }
+    var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> { get }
 }
 
 public struct MyAccountHallUseCase<T: AccountRepositoryProtocol>: MyAccountHallUseCaseProtocol {
@@ -54,32 +49,16 @@ public struct MyAccountHallUseCase<T: AccountRepositoryProtocol>: MyAccountHallU
     public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
         try await repository.refreshCurrentAccountDetails()
     }
-
-    public func requestResultPublisher() -> AnyPublisher<Result<AccountRequestEntity, Error>, Never> {
-        repository.requestResultPublisher
+    
+    public var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> {
+        repository.onAccountRequestFinish
     }
     
-    public func contactRequestPublisher() -> AnyPublisher<[ContactRequestEntity], Never> {
-        repository.contactRequestPublisher
+    public var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> {
+        repository.onUserAlertsUpdates
     }
     
-    public func userAlertUpdatePublisher() -> AnyPublisher<[UserAlertEntity], Never> {
-        repository.userAlertUpdatePublisher
-    }
-    
-    public func registerMEGARequestDelegate() async {
-        await repository.registerMEGARequestDelegate()
-    }
-    
-    public func deRegisterMEGARequestDelegate() async {
-        await repository.deRegisterMEGARequestDelegate()
-    }
-    
-    public func registerMEGAGlobalDelegate() async {
-        await repository.registerMEGAGlobalDelegate()
-    }
-    
-    public func deRegisterMEGAGlobalDelegate() async {
-        await repository.deRegisterMEGAGlobalDelegate()
+    public var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> {
+        repository.onContactRequestsUpdates
     }
 }
