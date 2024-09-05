@@ -4,11 +4,7 @@
 
 @import MEGAL10nObjc;
 
-#ifdef MNZ_SHARE_EXTENSION
-#import "MEGAShare-Swift.h"
-#else
 #import "MEGA-Swift.h"
-#endif
 
 @interface MEGAMoveRequestDelegate ()
 
@@ -18,32 +14,15 @@
 @property (nonatomic) NSUInteger totalRequests;
 @property (nonatomic, copy) void (^completion)(void);
 
-@property (nonatomic) BOOL moveToTheRubbishBin;
-
 @end
 
 @implementation MEGAMoveRequestDelegate
 
 #pragma mark - Initialization
 
-- (instancetype)initWithFiles:(NSUInteger)files folders:(NSUInteger)folders completion:(void (^)(void))completion {
-    self = [super init];
-    if (self) {
-        _moveToTheRubbishBin = NO;
-        _numberOfFiles = files;
-        _numberOfFolders = folders;
-        _numberOfRequests = (_numberOfFiles + _numberOfFolders);
-        _totalRequests = (_numberOfFiles + _numberOfFolders);
-        _completion = completion;
-    }
-    
-    return self;
-}
-
 - (instancetype)initToMoveToTheRubbishBinWithFiles:(NSUInteger)files folders:(NSUInteger)folders completion:(void (^)(void))completion {
     self = [super init];
     if (self) {
-        _moveToTheRubbishBin = YES;
         _numberOfFiles = files;
         _numberOfFolders = folders;
         _numberOfRequests = (_numberOfFiles + _numberOfFolders);
@@ -77,45 +56,8 @@
     if (self.numberOfRequests == 0) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         
-        if (self.moveToTheRubbishBin) {
-            NSString *message = [RemovalConfirmationMessageGenerator messageForRemovedFiles:self.numberOfFiles andFolders:self.numberOfFolders];
-            [SVProgressHUD showImage:[UIImage imageNamed:@"rubbishBin"] status:message];
-        } else {
-            if (self.restore) {
-                [SVProgressHUD dismiss];
-            } else {
-                NSString *message;
-                if (self.numberOfFiles == 0) {
-                    if (self.numberOfFolders == 1) {
-                        message = LocalizedString(@"moveFolderMessage", @"Success message shown when you have moved 1 folder");
-                    } else {
-                        message = [NSString stringWithFormat:LocalizedString(@"moveFoldersMessage", @"Success message shown when you have moved {1+} folders"), self.numberOfFolders];
-                    }
-                } else if (self.numberOfFiles == 1) {
-                    if (self.numberOfFolders == 0) {
-                        message = LocalizedString(@"moveFileMessage", @"Success message shown when you have moved 1 file");
-                    } else if (self.numberOfFolders == 1) {
-                        message = LocalizedString(@"moveFileFolderMessage", @"Success message shown when you have moved 1 file and 1 folder");
-                    } else {
-                        message = [NSString stringWithFormat:LocalizedString(@"moveFileFoldersMessage", @"Success message shown when you have moved 1 file and {1+} folders"), self.numberOfFolders];
-                    }
-                } else {
-                    if (self.numberOfFolders == 0) {
-                        message = [NSString stringWithFormat:LocalizedString(@"moveFilesMessage", @"Success message shown when you have moved {1+} files"), self.numberOfFiles];
-                    } else if (self.numberOfFolders == 1) {
-                        message = [NSString stringWithFormat:LocalizedString(@"moveFilesFolderMessage", @"Success message shown when you have moved {1+} files and 1 folder"), self.numberOfFiles];
-                    } else {
-                        message = LocalizedString(@"moveFilesFoldersMessage", @"Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders");
-                        NSString *filesString = [NSString stringWithFormat:@"%tu", self.numberOfFiles];
-                        NSString *foldersString = [NSString stringWithFormat:@"%tu", self.numberOfFolders];
-                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-                    }
-                }
-                
-                [SVProgressHUD showSuccessWithStatus:message];
-            }
-        }
+        NSString *message = [RemovalConfirmationMessageGenerator messageForRemovedFiles:self.numberOfFiles andFolders:self.numberOfFolders];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"rubbishBin"] status:message];
         
         if (self.completion) {
             self.completion();
