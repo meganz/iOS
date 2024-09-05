@@ -40,25 +40,22 @@ extension MEGAPhotoBrowserViewController {
         scrollView: UIScrollView
     ) {
         SVProgressHUD.show()
-        scrollView.subviews.forEach({ $0.removeFromSuperview() })
+        scrollView.subviews.forEach { $0.removeFromSuperview() }
         cache.removeAllObjects()
         imageViewsZoomCache.removeAllObjects()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            SVProgressHUD.dismiss()
-        }
+        SVProgressHUD.dismiss(withDelay: 0.5)
     }
     
-    @objc func rootPesentingViewController() -> UIViewController? {
+    @objc func rootPresentingViewController() -> UIViewController? {
         var curPresentingVC = presentingViewController
-        var prePesentingVC: UIViewController?
+        var prePresentingVC: UIViewController?
         
         while curPresentingVC != nil {
-            prePesentingVC = curPresentingVC
+            prePresentingVC = curPresentingVC
             curPresentingVC = curPresentingVC?.presentingViewController
         }
         
-        return prePesentingVC
+        return prePresentingVC
     }
     
     @objc func playCurrentVideo() async {
@@ -78,8 +75,13 @@ extension MEGAPhotoBrowserViewController {
                 let alertController = UIAlertController(
                     title: Strings.Localizable.unknownError,
                     message: Strings.Localizable.somethingWentWrong,
-                    preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel))
+                    preferredStyle: .alert
+                )
+                let cancelAction = UIAlertAction(
+                    title: Strings.Localizable.ok,
+                    style: .cancel
+                )
+                alertController.addAction(cancelAction)
                 self.present(alertController, animated: true)
                 
                 let error = NSError.init(
@@ -97,12 +99,18 @@ extension MEGAPhotoBrowserViewController {
             let controller = UIAlertController(
                 title: Strings.Localizable.fileNotSupported,
                 message: Strings.Localizable.messageFileNotSupported,
-                preferredStyle: .alert)
-            controller.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel, handler: {[weak self] _ in
-                guard let self else { return }
-                self.view.layoutIfNeeded()
-                self.reloadUI()
-            }))
+                preferredStyle: .alert
+            )
+            let cancelAction = UIAlertAction(
+                title: Strings.Localizable.ok,
+                style: .cancel,
+                handler: { [weak self] _ in
+                    guard let self else { return }
+                    self.view.layoutIfNeeded()
+                    self.reloadUI()
+                }
+            )
+            controller.addAction(cancelAction)
             self.present(controller, animated: true)
         }
     }
@@ -129,7 +137,7 @@ extension MEGAPhotoBrowserViewController {
                     if case let .failure(error) = result, error != .cancelled {
                         SVProgressHUD.dismiss()
                         SVProgressHUD.show(
-                            UIImage.saveToPhotos,
+                            .saveToPhotos,
                             status: error.localizedDescription
                         )
                     }
@@ -139,11 +147,18 @@ extension MEGAPhotoBrowserViewController {
                 case .chatAttachment, .chatSharedFiles:
                     Task(priority: .userInitiated) {
                         do {
-                            try await saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId)
+                            try await saveMediaUseCase.saveToPhotosChatNode(
+                                handle: node.handle,
+                                messageId: self.messageId,
+                                chatId: self.chatId
+                            )
                         } catch let error as SaveMediaToPhotosErrorEntity {
                             if error != .cancelled {
                                 await SVProgressHUD.dismiss()
-                                SVProgressHUD.show(UIImage.saveToPhotos, status: error.localizedDescription)
+                                SVProgressHUD.show(
+                                    .saveToPhotos,
+                                    status: error.localizedDescription
+                                )
                             }
                         }
                     }
@@ -162,7 +177,7 @@ extension MEGAPhotoBrowserViewController {
                         } catch let error as SaveMediaToPhotosErrorEntity where error != .cancelled {
                             await SVProgressHUD.dismiss()
                             SVProgressHUD.show(
-                                UIImage.saveToPhotos,
+                                .saveToPhotos,
                                 status: error.localizedDescription
                             )
                         } catch {
@@ -264,16 +279,22 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func showRemoveLinkWarning(_ node: MEGANode) {
-        let router = ActionWarningViewRouter(presenter: self, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
-            SVProgressHUD.show()
-        }, onActionFinish: {
-            switch $0 {
-            case .success(let message):
-                SVProgressHUD.showSuccess(withStatus: message)
-            case .failure:
-                SVProgressHUD.dismiss()
+        let router = ActionWarningViewRouter(
+            presenter: self,
+            nodes: [node.toNodeEntity()],
+            actionType: .removeLink,
+            onActionStart: {
+                SVProgressHUD.show()
+            }, 
+            onActionFinish: {
+                switch $0 {
+                case .success(let message):
+                    SVProgressHUD.showSuccess(withStatus: message)
+                case .failure:
+                    SVProgressHUD.dismiss()
+                }
             }
-        })
+        )
         router.start()
     }
     
@@ -301,7 +322,7 @@ extension MEGAPhotoBrowserViewController {
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
     public func updateCurrentIndex(to newIndex: UInt) {
         if dataProvider.shouldUpdateCurrentIndex(toIndex: Int(newIndex)) {
-            dataProvider.currentIndex = Int(newIndex)
+            dataProvider.updateCurrentIndexTo(Int(newIndex))
             needsReload = true
             updateMessageId(to: newIndex)
         }
@@ -457,7 +478,15 @@ extension MEGAPhotoBrowserViewController {
         }
         
         let isBackUpNode = BackupsOCWrapper().isBackupNode(node)
-        let controller = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isInVersionsView: isPreviewingVersion(), isBackupNode: isBackUpNode, isFromSharedItem: self.isFromSharedItem, sender: sender)
+        let controller = NodeActionViewController(
+            node: node,
+            delegate: delegate,
+            displayMode: displayMode,
+            isInVersionsView: isPreviewingVersion(),
+            isBackupNode: isBackUpNode,
+            isFromSharedItem: self.isFromSharedItem,
+            sender: sender
+        )
         controller.accessoryActionDelegate = defaultNodeAccessoryActionDelegate
         
         present(controller, animated: true)
