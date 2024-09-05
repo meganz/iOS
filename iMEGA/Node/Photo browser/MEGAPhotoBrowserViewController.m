@@ -393,7 +393,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)showPhotoAtIndex:(NSInteger)index {
     if ([self.dataProvider shouldUpdateCurrentIndexToIndex:index]) {
-        self.dataProvider.currentIndex = index;
+        [self.dataProvider updateCurrentIndexTo:index];
         [self reloadUI];
     }
 }
@@ -431,7 +431,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (scrollView.tag == 1) {
         NSInteger newIndex = (scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
         if ([self.dataProvider shouldUpdateCurrentIndexToIndex:newIndex]) {
-            self.dataProvider.currentIndex = newIndex;
+            [self.dataProvider updateCurrentIndexTo:newIndex];
             [self resetZooms];
             [self reloadTitleWithCompletionHandler:^{}];
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
@@ -1199,7 +1199,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
     
-    UIViewController *presentingViewController = [self rootPesentingViewController];
+    UIViewController *presentingViewController = [self rootPresentingViewController];
     
     if (presentingViewController != nil) {
         [presentingViewController dismissViewControllerAnimated:YES completion:^{
