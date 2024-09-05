@@ -987,7 +987,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ Opslag";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB[/B] opslag";
+"account.storage.freePlan"="[B]%@ GB[/B] opslag";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Overdracht";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */

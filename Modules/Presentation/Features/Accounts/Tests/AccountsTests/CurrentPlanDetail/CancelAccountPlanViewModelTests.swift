@@ -3,6 +3,7 @@ import AccountsMock
 import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
 import XCTest
@@ -165,7 +166,8 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
             currentSubscription: currentSubscription,
             currentPlanName: currentPlanName,
             currentPlanStorageUsed: currentPlanStorageUsed,
-            featureListHelper: MockFeatureListHelper(features: features),
+            featureListHelper: MockFeatureListHelper(features: features), 
+            achievementUseCase: MockAchievementUseCase(),
             featureFlagProvider: featureFlagProvider,
             tracker: tracker,
             router: router

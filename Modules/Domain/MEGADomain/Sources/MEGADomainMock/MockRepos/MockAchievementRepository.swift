@@ -10,14 +10,17 @@ public struct MockAchievementRepository: AchievementRepositoryProtocol {
     let isAchievementsEnabled: Bool
     let storageResult: Measurement<UnitDataStorage>?
     let achievementDetailsResult: AchievementDetailsEntity?
+    let baseStorage: Int64
     
     public init(isAchievementsEnabled: Bool = true,
                 storageResult: Measurement<UnitDataStorage>? = nil,
-                achievementDetailsResult: AchievementDetailsEntity? = nil
+                achievementDetailsResult: AchievementDetailsEntity? = nil,
+                baseStorage: Int64 = 20
     ) {
         self.isAchievementsEnabled = isAchievementsEnabled
         self.storageResult = storageResult
         self.achievementDetailsResult = achievementDetailsResult
+        self.baseStorage = baseStorage
     }
     
     public func checkIsAchievementsEnabled() -> Bool {
@@ -29,6 +32,10 @@ public struct MockAchievementRepository: AchievementRepositoryProtocol {
         return storageResult
     }
 
+    public func baseStorage() async throws -> Int64 {
+        baseStorage
+    }
+    
     public func getAchievementDetails() async throws -> AchievementDetailsEntity {
         guard let achievementDetailsResult = achievementDetailsResult else { throw AchievementErrorEntity.generic }
         return achievementDetailsResult

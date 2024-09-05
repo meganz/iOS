@@ -37,3 +37,11 @@ extension Int {
         return ByteCountFormatter.string(fromByteCount: bytes, countStyle: .binary)
     }
 }
+
+extension Int64 {
+    public func bytesToGigabytes() -> Int {
+        let bytesInGB: Double = 1024 * 1024 * 1024  // 1 GB in bytes
+        let gigabytes = Double(self) / bytesInGB
+        return Int(gigabytes)
+    }
+}

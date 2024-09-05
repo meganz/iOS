@@ -33,6 +33,7 @@ final class OnboardingUpgradeAccountRouterTests: XCTestCase {
     func makeSUT(
         onboardingVariant: ABTestVariant,
         isAdsEnabled: Bool = false,
+        baseStorage: Int = 20,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> OnboardingUpgradeAccountRouter {
@@ -56,6 +57,7 @@ final class OnboardingUpgradeAccountRouterTests: XCTestCase {
             onboardingABvariant: onboardingVariant,
             accountsConfig: AccountsConfig(onboardingViewAssets: accountsConfig),
             isAdsEnabled: isAdsEnabled, 
+            baseStorage: baseStorage, 
             viewProPlanAction: {}
         )
         
