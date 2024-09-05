@@ -51,6 +51,8 @@ enum RaiseHandDiffing {
     /// callParticipantHandles is used to get the indexes of call participant _after mutation_
     static func applyingRaisedHands(
         // call participants array does not contain local user id, that's why it's added as last parameter
+        // except when the same user is connecting to the same call from multiple clients, then
+        // local user id can be present in the `raiseHandListBefore` or `raiseHandListAfter arrays [MEET-4188]
         callParticipantHandles: [HandleEntity],
         raiseHandListBefore: [HandleEntity],
         raiseHandListAfter: [HandleEntity],

@@ -162,4 +162,29 @@ final class RaiseHandDiffingTests: XCTestCase {
         XCTAssertFalse(harness.sut.hasRaisedHand(participantId: 3))
         XCTAssertFalse(harness.sut.hasRaisedHand(participantId: 1))
     }
+    
+    func testHasRaisedHand_SameUserOtherClientRaisesHand() {
+        let harness = Harness(
+            callParticipantHandles: [1],
+            raiseHandListBefore: [],
+            raiseHandListAfter: [1],
+            localUserParticipantId: 1
+        )
+        
+        let expected = RaiseHandDiffing.DiffResult(
+            changes: [
+                .init(
+                    handle: 1,
+                    raisedHand: true,
+                    index: 0
+                )
+            ],
+            shouldUpdateSnackBar: true
+        )
+        
+        XCTAssertEqual(
+            harness.sut,
+            expected
+        )
+    }
 }
