@@ -6,7 +6,6 @@
 #import "EmptyStateView.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
-#import "MEGAMoveRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"

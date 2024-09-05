@@ -13,7 +13,6 @@
 #import "MEGARequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAConstants.h"
-#import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAStore.h"
