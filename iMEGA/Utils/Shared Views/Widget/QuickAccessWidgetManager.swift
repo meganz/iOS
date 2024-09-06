@@ -215,13 +215,11 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
                     recentItems.append(RecentItemEntity(base64Handle: node.base64Handle, name: node.name, timestamp: bucket.date, isUpdate: bucket.isUpdate))
                 })
             }
-            self.recentItemsUseCase.resetRecentItems(by: recentItems) { [weak self] (result) in
-                switch result {
-                case .success:
-                    self?.reloadWidgetContentOfKind(kind: MEGARecentsQuickAccessWidget)
-                case .failure:
-                    MEGALogError("Error creating recent items data for widget")
-                }
+            do {
+                try await recentItemsUseCase.resetRecentItems(by: recentItems)
+                reloadWidgetContentOfKind(kind: MEGARecentsQuickAccessWidget)
+            } catch {
+                MEGALogError("Error creating recent items data for widget")
             }
         } catch {
             MEGALogError("Error creating recent items data for widget")

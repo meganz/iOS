@@ -1,27 +1,45 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
-class RecentItemsRepository: RecentItemsRepositoryProtocol {
-    
+final class RecentItemsRepository: RecentItemsRepositoryProtocol {
     private let store: MEGAStore
     
     init(store: MEGAStore) {
         self.store = store
     }
     
-    func deleteAllRecentItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
-        store.deleteQuickAccessRecentItems(completion: completion)
-    }
-    
     func insertRecentItem(_ item: RecentItemEntity) {
         store.insertQuickAccessRecentItem(withBase64Handle: item.base64Handle, name: item.name, isUpdate: item.isUpdate, timestamp: item.timestamp)
     }
-    
-    func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
-        store.batchInsertQuickAccessRecentItems(items, completion: completion)
-    }
-    
+        
     func fetchAllRecentItems() -> [RecentItemEntity] {
         store.fetchAllQuickAccessRecentItem()
+    }
+    
+    func deleteAllRecentItems() async throws {
+        try await withAsyncThrowingValue { completion in
+            store.deleteQuickAccessRecentItems { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func batchInsertRecentItems(_ items: [RecentItemEntity]) async throws {
+        try await withAsyncThrowingValue { completion in
+            store.batchInsertQuickAccessRecentItems(items) { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
     }
 }
