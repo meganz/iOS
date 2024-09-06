@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-public final class MockUserAttributeUseCase: UserAttributeUseCaseProtocol {
+public final class MockUserAttributeUseCase: UserAttributeUseCaseProtocol, @unchecked Sendable {
     public var userAttribute: [UserAttributeEntity: String]
     public var userAttributeContainer: [UserAttributeEntity: [String: String]]
     public var contentConsumption: ContentConsumptionEntity?
