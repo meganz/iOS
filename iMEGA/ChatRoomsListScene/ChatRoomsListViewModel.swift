@@ -20,6 +20,7 @@ enum ChatViewType {
     case archived
 }
 
+@MainActor
 final class ChatRoomsListViewModel: ObservableObject {
     let router: any ChatRoomsListRouting
     private let chatUseCase: any ChatUseCaseProtocol
@@ -92,7 +93,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private var loadingTask: Task<Void, Never>?
+    private var loadingTask: Task<Void, any Error>?
     private var searchTask: Task<Void, Never>?
     private var meetingTipTask: Task<Void, Never>?
     
@@ -262,7 +263,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         tracker.trackAnalyticsEvent(with: InviteFriendsLearnMorePressedEvent())
     }
     
-    @MainActor
     func askForNotificationsPermissionsIfNeeded() async {
         let shouldAsk = await permissionHandler.shouldAskForNotificationPermission()
         if shouldAsk {
@@ -367,14 +367,12 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    @MainActor
     func updateMeetingListFrame(_ meetingListframeInGlobal: CGRect) {
         meetingListFrame = meetingListframeInGlobal
         let trailingPadding = UIDevice.current.iPad ? 91.0 : 88.0
         createMeetingTipOffsetX = meetingListFrame.width / 2 - trailingPadding
     }
     
-    @MainActor
     func updateTipOffsetY(for meeting: FutureMeetingRoomViewModel, meetingframeInGlobal: CGRect?) {
         guard currentTip != .showedAll else { return }
         
@@ -455,17 +453,16 @@ final class ChatRoomsListViewModel: ObservableObject {
         loadingTask = Task {
             defer { cancelLoadingTask() }
             
-            await updateUnreadBadgeForChatsAndMeetings()
+            updateUnreadBadgeForChatsAndMeetings()
             
             if chatViewMode == .meetings {
-                await fetchMeetings()
+                try await fetchMeetings()
             } else {
                 await fetchNonMeetingChats()
             }
         }
     }
     
-    @MainActor
     private func updateUnreadBadgeForChatsAndMeetings() {
         let chats = chatUseCase.fetchNonMeetings() ?? []
         shouldDisplayUnreadBadgeForChats = chats.contains { $0.unreadCount != 0 }
@@ -499,19 +496,21 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
         chatRooms = newChatRooms
         
-        await filterChats()
+        filterChats()
     }
     
-    private func fetchMeetings() async {
+    private func fetchMeetings() async throws {
         guard isViewOnScreen else {
             MEGALogDebug("Unable to fetch chat list items")
             return
         }
         
-        fetchFutureScheduledMeetings()
+        try await fetchFutureScheduledMeetings()
     }
     
-    private func fetchFutureScheduledMeetings() {
+    /// There are some sync calls: `scheduledMeetings` of `scheduledMeetingUseCase`, map and filter operations.
+    /// Making this function nonisolated means it is not main actor isolated, hence avoid blocking main.
+    private nonisolated func fetchFutureScheduledMeetings() async throws {
         let scheduledMeetings = scheduledMeetingUseCase.scheduledMeetings()
         let futureScheduledMeetings = scheduledMeetings.filter {
             if $0.parentScheduledId != .invalid {
@@ -528,19 +527,17 @@ final class ChatRoomsListViewModel: ObservableObject {
             }
         }
         
-        Task {
-            let upcomingOccurrences = try await scheduledMeetingUseCase.upcomingOccurrences(forScheduledMeetings: futureScheduledMeetings)
-            let futureScheduledMeetingsWithOccurrences = filterScheduledMeetingsWithOccurrences(futureScheduledMeetings: futureScheduledMeetings, upcomingOccurrences: upcomingOccurrences)
-            
-            let futureScheduledMeetingsChatIds = futureScheduledMeetingsWithOccurrences.map(\.chatId)
-            await createPastMeetings(with: futureScheduledMeetingsChatIds)
-            
-            await populateFutureMeetings(from: futureScheduledMeetingsWithOccurrences, withUpcomingOccurrences: upcomingOccurrences)
-            await filterMeetings()
-        }
+        let upcomingOccurrences = try await scheduledMeetingUseCase.upcomingOccurrences(forScheduledMeetings: futureScheduledMeetings)
+        let futureScheduledMeetingsWithOccurrences = filterScheduledMeetingsWithOccurrences(futureScheduledMeetings: futureScheduledMeetings, upcomingOccurrences: upcomingOccurrences)
+        
+        let futureScheduledMeetingsChatIds = futureScheduledMeetingsWithOccurrences.map(\.chatId)
+        await createPastMeetings(with: futureScheduledMeetingsChatIds)
+        
+        await populateFutureMeetings(from: futureScheduledMeetingsWithOccurrences, withUpcomingOccurrences: upcomingOccurrences)
+        await filterMeetings()
     }
     
-    private func filterScheduledMeetingsWithOccurrences(futureScheduledMeetings: [ScheduledMeetingEntity], upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]) -> [ScheduledMeetingEntity] {
+    private nonisolated func filterScheduledMeetingsWithOccurrences(futureScheduledMeetings: [ScheduledMeetingEntity], upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]) -> [ScheduledMeetingEntity] {
         return futureScheduledMeetings.filter { meeting in
             let hasUpcomingOccurrences = upcomingOccurrences.keys.contains(meeting.scheduledId)
             return meeting.rules.frequency == .invalid || hasUpcomingOccurrences || (!hasUpcomingOccurrences && meeting.endDate >= Date())
@@ -565,7 +562,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         pastMeetings = newChatRooms
     }
     
-    @MainActor
     private func filterChats() {
         guard !Task.isCancelled else { return }
         
@@ -576,7 +572,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     private func filterMeetings() {
         guard !Task.isCancelled else { return }
         
@@ -589,7 +584,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     private func populateFutureMeetings(
         from meetings: [ScheduledMeetingEntity],
         withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
@@ -605,7 +599,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         populate(futureMeetingSection: filteredFutureMeetings)
     }
     
-    @MainActor
     private func merge(
         scheduledMeeting: ScheduledMeetingEntity,
         intoFutureMeetingSections futureMeetingSections: [FutureMeetingSection],
@@ -623,7 +616,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    @MainActor
     private func merge(
         futureMeetingViewModel: FutureMeetingRoomViewModel,
         intoFutureMeetingSections futureMeetingSections: [FutureMeetingSection],
@@ -643,7 +635,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         return result
     }
     
-    @MainActor
     private func populate(futureMeetingSection: [FutureMeetingSection]) {
         futureMeetings = futureMeetingSection.sorted(by: <)
         updateFirstRecurringMeetingAndHost()
@@ -651,7 +642,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         setFirstMeetingsLoad()
     }
     
-    @MainActor
     private func setFirstMeetingsLoad() {
         if isFirstMeetingsLoad {
             isFirstMeetingsLoad.toggle()
@@ -716,7 +706,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    @MainActor
     private func constructFutureMeetingViewModel(
         for scheduledMeetingEntity: ScheduledMeetingEntity,
         nextOccurrence: ScheduledMeetingOccurrenceEntity?
@@ -867,13 +856,9 @@ final class ChatRoomsListViewModel: ObservableObject {
             chatRooms.contains(where: { $0.chatType == .oneToOne || $0.chatType == .group })) ||
             (chatViewMode == .meetings &&
              chatRooms.contains(where: { $0.chatType == .meeting })) {
-            DispatchQueue.main.async {
-                self.fetchChats()
-            }
+            fetchChats()
         } else if chatListItems.contains(where: {$0.unreadCount != 0 }) {
-            Task { @MainActor in
-                updateUnreadBadgeForChatsAndMeetings()
-            }
+            updateUnreadBadgeForChatsAndMeetings()
         }
         if chatListItems.contains(where: { $0.changeType == .archived }) {
             refreshContextMenu()
