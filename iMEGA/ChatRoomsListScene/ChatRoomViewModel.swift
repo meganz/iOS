@@ -7,7 +7,8 @@ import MEGAPresentation
 import MEGASwift
 import MEGAUI
 
-final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
+@MainActor
+final class ChatRoomViewModel: ObservableObject, Identifiable {
     let chatListItem: ChatListItemEntity
     private let router: any ChatRoomsListRouting
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
@@ -22,6 +23,12 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private var chatNotificationControl: ChatNotificationControl
     private let permissionRouter: any PermissionAlertRouting
     private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
+    private let callInProgressTimeReporter: any CallInProgressTimeReporting
+    private var callInProgressTimeMonitorTask: Task<Void, Never>? {
+        willSet {
+            callInProgressTimeMonitorTask?.cancel()
+        }
+    }
     
     private(set) var description: String?
     private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
@@ -44,10 +51,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     let shouldShowUnreadCount: Bool
     let unreadCountString: String
     
-    var callDurationTotal: TimeInterval?
-    var callDurationCapturedTime: TimeInterval?
-    var timerSubscription: AnyCancellable?
-    
     init(
         chatListItem: ChatListItemEntity,
         router: some ChatRoomsListRouting,
@@ -65,7 +68,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         permissionRouter: some PermissionAlertRouting,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         chatListItemDescription: ChatListItemDescriptionEntity? = nil,
-        chatListItemAvatar: ChatListItemAvatarEntity? = nil
+        chatListItemAvatar: ChatListItemAvatarEntity? = nil,
+        callInProgressTimeReporter: some CallInProgressTimeReporting = CallInProgressTimeReporter()
     ) {
         self.chatListItem = chatListItem
         self.router = router
@@ -84,6 +88,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         self.description = chatListItemDescription?.description
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         self.shouldShowUnreadCount = chatListItem.unreadCount != 0
+        self.callInProgressTimeReporter = callInProgressTimeReporter
+        
         if chatListItem.unreadCount > 0 {
             self.unreadCountString = chatListItem.unreadCount > 99 ? "99+" : "\(chatListItem.unreadCount)"
         } else {
@@ -112,7 +118,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: chatListItem.chatId)
         if let call = callUseCase.call(for: chatListItem.chatId) {
-            configureCallInProgress(for: call)
+            startMonitoringCallInProgressTime(for: call)
         }
         monitorActiveCallChanges()
         
@@ -123,6 +129,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         
         contextMenuOptions = constructContextMenuOptions()
         loadChatRoomSearchString()
+    }
+    
+    deinit {
+        callInProgressTimeMonitorTask?.cancel()
     }
     
     // MARK: - Interface methods
@@ -143,7 +153,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         
         do {
             try Task.checkCancellation()
-            await sendObjectChangeNotification()
+            sendObjectChangeNotification()
         } catch {
             MEGALogDebug("Task cancelled for \(chatId) - won't send object change notification")
         }
@@ -333,7 +343,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         }
     }
     
-    @MainActor
     private func sendObjectChangeNotification() {
         objectWillChange.send()
     }
@@ -395,7 +404,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             .sink { [weak self] call in
                 guard let self, call.chatId == self.chatListItem.chatId else { return }
                 self.existsInProgressCallInChatRoom = call.status == .inProgress || call.status == .userNoPresent
-                self.configureCallInProgress(for: call)
+                self.startMonitoringCallInProgressTime(for: call)
                 self.contextMenuOptions = self.constructContextMenuOptions()
             }
             .store(in: &subscriptions)
@@ -728,17 +737,14 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         hybridDescription = ChatRoomHybridDescriptionViewState(sender: sender, image: image, duration: duration)
     }
     
-    @MainActor
-    private func updateDescription(withMessage message: String) {
+    private func updateDescription(withMessage message: String) async {
         guard !Task.isCancelled else { return }
         
         description = message
-        Task {
-            await chatListItemCacheUseCase.setDescription(
-                ChatListItemDescriptionEntity(description: message),
-                for: chatListItem
-            )
-        }
+        await chatListItemCacheUseCase.setDescription(
+            ChatListItemDescriptionEntity(description: message),
+            for: chatListItem
+        )
     }
     
     func startOrJoinMeetingTapped() {
@@ -789,6 +795,14 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private func prepareAndShowCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity) {
         audioSessionUseCase.enableLoudSpeaker()
         router.openCallView(for: call, in: chatRoom)
+    }
+    
+    private func startMonitoringCallInProgressTime(for call: CallEntity) {
+        callInProgressTimeMonitorTask = Task { [weak self, callInProgressTimeReporter] in
+            for await timeInterval in callInProgressTimeReporter.configureCallInProgress(for: call) {
+                self?.totalCallDuration = timeInterval
+            }
+        }
     }
 }
 

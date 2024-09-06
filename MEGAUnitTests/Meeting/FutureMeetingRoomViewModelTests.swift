@@ -15,6 +15,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     private let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatId: 100))
     private let callUseCase = MockCallUseCase(call: CallEntity(chatId: 100, callId: 1))
     
+    @MainActor
     func testComputedProperty_title() {
         let title = "Meeting Title"
         let scheduledMeeting = ScheduledMeetingEntity(title: title)
@@ -22,6 +23,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssert(viewModel.title == title)
     }
     
+    @MainActor
     func testComputedProperty_unreadChatsCount() {
         let unreadMessagesCount = 10
         let chatRoomEntity = ChatRoomEntity(unreadCount: unreadMessagesCount)
@@ -30,16 +32,19 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.unreadCountString == "\(unreadMessagesCount)")
     }
     
+    @MainActor
     func testComputedProperty_noUnreadChatsCount() {
         let viewModel = FutureMeetingRoomViewModel()
         XCTAssertTrue(viewModel.unreadCountString.isEmpty)
     }
     
+    @MainActor
     func testComputedProperty_noLastMessageTimestampAvailable() {
         let viewModel = FutureMeetingRoomViewModel()
         XCTAssertTrue(viewModel.lastMessageTimestamp == nil)
     }
     
+    @MainActor
     func testComputedProperty_lastMessageTimestampToday() {
         guard let date = Calendar
             .autoupdatingCurrent
@@ -53,6 +58,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.lastMessageTimestamp == "00:01")
     }
     
+    @MainActor
     func testComputedProperty_lastMessageYesterday() {
         guard let today = Calendar
             .autoupdatingCurrent
@@ -69,6 +75,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.lastMessageTimestamp == DateFormatter.fromTemplate("EEE").localisedString(from: yesterday))
     }
     
+    @MainActor
     func testComputedProperty_lastMessageReceivedSixDaysBack() {
         guard let today = Calendar
             .autoupdatingCurrent
@@ -85,6 +92,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.lastMessageTimestamp == DateFormatter.fromTemplate("EEE").localisedString(from: pastDate))
     }
     
+    @MainActor
     func testComputedProperty_lastMessageTimestampReceivedSevenDaysBack() {
         guard let today = Calendar
             .autoupdatingCurrent
@@ -101,6 +109,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.lastMessageTimestamp == DateFormatter.fromTemplate("ddyyMM").localisedString(from: pastDate))
     }
     
+    @MainActor
     func testComputedProperty_lastMessageTimestampReceivedMoreThanSevenDaysBack() {
         guard let today = Calendar
             .autoupdatingCurrent
@@ -117,6 +126,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.lastMessageTimestamp == DateFormatter.fromTemplate("ddyyMM").localisedString(from: pastDate))
     }
     
+    @MainActor
     func testStartOrJoinCallActionTapped_startCall() {
         chatUseCase.isCallInProgress = false
         let callManager = MockCallManager()
@@ -128,6 +138,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(callManager.startCall_CalledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinCallActionTapped_joinCallUserNoPresentCallKitNoRinging_startCallCalled() {
         chatUseCase.isCallInProgress = true
         callUseCase.call = CallEntity(status: .userNoPresent)
@@ -140,6 +151,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(callManager.startCall_CalledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinCallActionTapped_joinCallUserNoPresentCallKitRinging_answerCallCalled() {
         chatUseCase.isCallInProgress = true
         callUseCase.call = CallEntity(status: .userNoPresent)
@@ -153,6 +165,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(callManager.answerCall_CalledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinCallActionTapped_joinCallCallAlreadyParticipating_showCallUI() {
         chatUseCase.isCallInProgress = true
         callUseCase.call = CallEntity(status: .inProgress)
@@ -166,6 +179,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(router.openCallView_calledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinMeetingTapped_onExistsActiveCall_shouldPresentMeetingAlreadyExists() {
         let router = MockChatRoomsListRouter()
         let chatUseCase = MockChatUseCase(isExistingActiveCall: true)
@@ -176,6 +190,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(router.presentMeetingAlreadyExists_calledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinMeetingTapped_onNoActiveCallAndShouldOpenWaitRoom_shouldPresentWaitingRoom() {
         let router = MockChatRoomsListRouter()
         let chatRoomUseCase = MockChatRoomUseCase(shouldOpenWaitRoom: true)
@@ -186,6 +201,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(router.presentWaitingRoom_calledTimes == 1)
     }
     
+    @MainActor
     func testTime_forOneOffMeeting_shouldMatch() throws {
         let dateSet = try randomDateSet()
         let scheduledMeeting = ScheduledMeetingEntity(startDate: dateSet.startDate, endDate: dateSet.endDate)
@@ -193,6 +209,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         shouldMatch(time: time(for: dateSet), inFutureMeetingRoomViewModel: viewModel)
     }
     
+    @MainActor
     func testTime_forRecurringMeeting_shouldMatch() throws {
         let dateSet = try randomDateSet()
         let nextOccurrence = ScheduledMeetingOccurrenceEntity(startDate: dateSet.startDate, endDate: dateSet.endDate)
@@ -200,7 +217,8 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         shouldMatch(time: time(for: dateSet), inFutureMeetingRoomViewModel: viewModel)
     }
     
-    func  test_cancelMeetingWithMessagesInChat_stringsShouldMatch() {
+    @MainActor
+    func test_cancelMeetingWithMessagesInChat_stringsShouldMatch() {
         let viewModel = FutureMeetingRoomViewModel()
         viewModel.chatHasMessages = true
         let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
@@ -208,7 +226,8 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(cancelMeetingAlertData.primaryButtonTitle == Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withMessages)
     }
     
-    func  test_cancelMeetingWithoutMessagesInChat_stringsShouldMatch() {
+    @MainActor
+    func test_cancelMeetingWithoutMessagesInChat_stringsShouldMatch() {
         let viewModel = FutureMeetingRoomViewModel()
         viewModel.chatHasMessages = false
         let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
@@ -216,6 +235,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(cancelMeetingAlertData.primaryButtonTitle == Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withoutMessages)
     }
     
+    @MainActor
     func test_cancelScheduledMeeting_meetingCancelledSuccess() {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
         let viewModel = FutureMeetingRoomViewModel(router: router, scheduledMeetingUseCase: scheduledMeetingUseCase)
@@ -224,6 +244,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         evaluate { self.router.showSuccessMessage_calledTimes == 1 }
     }
     
+    @MainActor
     func test_cancelScheduledMeeting_meetingCancelledError() {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduleMeetingError: ScheduleMeetingErrorEntity.generic)
         let viewModel = FutureMeetingRoomViewModel(router: router, scheduledMeetingUseCase: scheduledMeetingUseCase)
@@ -231,6 +252,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         evaluate { self.router.showErrorMessage_calledTimes == 1 }
     }
     
+    @MainActor
     func testEditContextMenuOption_onOpenContextMenu_shouldShowEditOptionAtTheSecondPosition() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -242,6 +264,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(title, Strings.Localizable.edit)
     }
     
+    @MainActor
     func testEditContextMenuOption_onEdit_shouldTrackerEvent() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -258,6 +281,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testEditContextMenuOption_onEdit_shouldRouteToEditScreen() {
         let router = MockChatRoomsListRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
@@ -270,6 +294,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(router.editMeeting_calledTimes, 1)
     }
     
+    @MainActor
     func testCancelContextMenuOption_onCancel_shouldTrackerEvent() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -286,6 +311,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testUnreadCountString_forChatListItemUnreadCountLessThanZero_shouldBePositiveWithPlus() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(unreadCount: -1))
         let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
@@ -293,6 +319,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.unreadCountString, "1+")
     }
     
+    @MainActor
     func testUnreadCountString_forChatListItemUnreadCountGreaterThanZeroAndLessThan100_shouldBePositiveWithoutPlus() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(unreadCount: 50))
         let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
@@ -300,6 +327,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.unreadCountString, "50")
     }
     
+    @MainActor
     func testUnreadCountString_forChatListItemUnreadCountGreaterThan99_shouldBe99WithPlu() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(unreadCount: 123))
         let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
@@ -315,6 +343,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 5)
     }
     
+    @MainActor
     private func shouldMatch(time: String, inFutureMeetingRoomViewModel futureMeetingRoomViewModel: FutureMeetingRoomViewModel) {
         let predicate = NSPredicate { _, _ in
             futureMeetingRoomViewModel.time == time

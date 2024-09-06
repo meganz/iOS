@@ -4,10 +4,12 @@ import MEGADomainMock
 import XCTest
 
 final class FutureMeetingSectionTests: XCTestCase {
+    @MainActor
     func testFilter_withEmptySearchText_shouldBeNil() {
         XCTAssertNil(createFutureMeetingSection().filter(withSearchText: ""))
     }
     
+    @MainActor
     func testFilter_multipleItemInSection_shouldMatch() {
         let searchTexts = [randomString(length: 4), randomString(length: 7)]
         let chatIds: [UInt64] = createdRandomChatIds(count: searchTexts.count)
@@ -27,6 +29,7 @@ final class FutureMeetingSectionTests: XCTestCase {
         wait(for: [expectation], timeout: 10)
     }
     
+    @MainActor
     func testInsert_AtFirstIndex_shouldMatch() throws {
         let day1 = try XCTUnwrap(sampleDate(withDay: 1))
         let futureMeetingRoomViewModel = FutureMeetingRoomViewModel(scheduledMeeting: ScheduledMeetingEntity(startDate: day1, endDate: day1))
@@ -36,6 +39,7 @@ final class FutureMeetingSectionTests: XCTestCase {
         XCTAssertEqual(futureMeetingSection.items.first, futureMeetingRoomViewModel)
     }
     
+    @MainActor
     func testInsert_InTheMiddle_shouldMatch() throws {
         let day1 = try XCTUnwrap(sampleDate(withDay: 14))
         let futureMeetingRoomViewModel = FutureMeetingRoomViewModel(scheduledMeeting: ScheduledMeetingEntity(startDate: day1, endDate: day1))
@@ -50,6 +54,7 @@ final class FutureMeetingSectionTests: XCTestCase {
         XCTAssertEqual(futureMeetingSection.items[2], futureMeetingRoomViewModel)
     }
     
+    @MainActor
     func testInsert_atTheEnd_shouldMatch() throws {
         let day1 = try XCTUnwrap(sampleDate(withDay: 31))
         let futureMeetingRoomViewModel = FutureMeetingRoomViewModel(scheduledMeeting: ScheduledMeetingEntity(startDate: day1, endDate: day1))
@@ -61,6 +66,7 @@ final class FutureMeetingSectionTests: XCTestCase {
     
     // MARK: - Private methods
     
+    @MainActor
     private func createFutureMeetingSection(withDayRange dayRange: ClosedRange<Int> = 1...31, chatIds: [UInt64]? = nil) -> FutureMeetingSection {
         let chatIds: [UInt64] = chatIds ?? createdRandomChatIds(count: Int.random(in: 1...10))
         return createFutureMeetingSection(
@@ -108,6 +114,7 @@ final class FutureMeetingSectionTests: XCTestCase {
         (1...count).map { _ in Result.failure(GenericErrorEntity()) }
     }
     
+    @MainActor
     private func createFutureMeetingSection(
         withChatIds chatIds: [UInt64],
         chatRoomUsersDescriptionResults: [Result<String, Error>],
@@ -123,6 +130,7 @@ final class FutureMeetingSectionTests: XCTestCase {
         return section
     }
     
+    @MainActor
     private func createFutureMeetingRoomViewModel(
         withChatId chatId: UInt64,
         chatRoomUsersDescriptionResult: Result<String, Error>,
