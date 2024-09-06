@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASwift
 
+@MainActor
 @objc final class NodeTableViewCellViewModel: NSObject {
     
     @Published private(set) var isSensitive: Bool = false
@@ -44,6 +45,7 @@ import MEGASwift
     
     @discardableResult
     func configureCell() -> Task<Void, Never> {
+        self.task?.cancel()
         let task = Task { [weak self] in
             guard let self else { return }
             await applySensitiveConfiguration(for: nodes)
@@ -53,15 +55,13 @@ import MEGASwift
         return task
     }
     
-    @MainActor
-    private func loadThumbnail() async {
-        
+    private nonisolated func loadThumbnail() async {
         guard let node = nodes.first else {
             return
         }
         
         guard hasThumbnail else {
-            thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
+            await setThumbnailImage(UIImage(data: nodeIconUseCase.iconData(for: node)))
             return
         }
         
@@ -70,7 +70,7 @@ import MEGASwift
             if let cached = thumbnailUseCase.cachedThumbnail(for: node, type: .thumbnail) {
                 thumbnailEntity = cached
             } else {
-                thumbnail = UIImage(data: nodeIconUseCase.iconData(for: node))
+                await setThumbnailImage(UIImage(data: nodeIconUseCase.iconData(for: node)))
                 thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
             }
             
@@ -79,36 +79,44 @@ import MEGASwift
             } else {
                 thumbnailEntity.url.path
             }
-            
-            thumbnail = UIImage(contentsOfFile: imagePath)
+            await setThumbnailImage(UIImage(contentsOfFile: imagePath))
         } catch {
             MEGALogError("[ItemCollectionViewCellViewModel] Error loading thumbnail: \(error)")
         }
     }
     
-    @MainActor
     private func applySensitiveConfiguration(for nodes: [NodeEntity]) async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               shouldApplySensitiveBehaviour else {
-            isSensitive = false
+            await setIsSensitive(false)
             return
         }
         
         guard nodes.count == 1,
               let node = nodes.first else {
-            isSensitive = false
+            await setIsSensitive(false)
             return
         }
         
         guard !node.isMarkedSensitive else {
-            isSensitive = true
+            await setIsSensitive(true)
             return
         }
         
         do {
-            isSensitive = try await nodeUseCase.isInheritingSensitivity(node: node)
+            await setIsSensitive(try nodeUseCase.isInheritingSensitivity(node: node))
         } catch {
             MEGALogError("[\(type(of: self))] Error checking if node is inheriting sensitivity: \(error)")
         }
+    }
+    
+    private func setThumbnailImage(_ newImage: UIImage?) async {
+        guard !Task.isCancelled else { return }
+        thumbnail = newImage
+    }
+    
+    private func setIsSensitive(_ newValue: Bool) async {
+        guard !Task.isCancelled else { return }
+        isSensitive = newValue
     }
 }
