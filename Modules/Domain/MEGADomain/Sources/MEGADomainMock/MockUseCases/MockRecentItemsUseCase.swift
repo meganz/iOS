@@ -15,16 +15,15 @@ public struct MockRecentItemsUseCase: RecentItemsUseCaseProtocol {
     
     public init() { }
     
-    public func resetRecentItems(by items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func resetRecentItems(by items: [RecentItemEntity]) async throws {
         continuation.yield(.resetRecentItems(items))
-        completion(.success(()))
     }
     
     public func insertRecentItem(_ item: RecentItemEntity) {
         
     }
     
-    public func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func batchInsertRecentItems(_ items: [RecentItemEntity]) async throws {
         
     }
     
