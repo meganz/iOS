@@ -24,6 +24,7 @@ extension FutureMeetingRoomViewModel {
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         chatListItemAvatar: ChatListItemAvatarEntity? = nil,
+        callInProgressTimeReporter: some CallInProgressTimeReporting = MockCallInProgressTimeReporter(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -44,7 +45,8 @@ extension FutureMeetingRoomViewModel {
             tracker: tracker,
             chatNotificationControl: chatNotificationControl,
             chatListItemCacheUseCase: chatListItemCacheUseCase,
-            chatListItemAvatar: chatListItemAvatar
+            chatListItemAvatar: chatListItemAvatar,
+            callInProgressTimeReporter: callInProgressTimeReporter
         )
     }
 }

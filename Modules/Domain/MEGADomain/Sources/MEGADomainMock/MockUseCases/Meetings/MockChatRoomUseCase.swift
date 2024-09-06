@@ -1,8 +1,8 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 import MEGASwift
 
-public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
+public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable {
     private let publicLinkCompletion: Result<String, ChatLinkErrorEntity>
     var createChatRoomCompletion: Result<ChatRoomEntity, ChatRoomErrorEntity>?
     private let chatRoomEntity: ChatRoomEntity?

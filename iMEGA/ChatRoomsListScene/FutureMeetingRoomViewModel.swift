@@ -4,7 +4,8 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
-final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
+@MainActor
+final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     let scheduledMeeting: ScheduledMeetingEntity
     let nextOccurrence: ScheduledMeetingOccurrenceEntity?
     private let router: any ChatRoomsListRouting
@@ -20,16 +21,18 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private let callManager: any CallManagerProtocol
     private let permissionAlertRouter: any PermissionAlertRouting
     private let tracker: any AnalyticsTracking
-    
+    private let callInProgressTimeReporter: any CallInProgressTimeReporting
+    private var callInProgressTimeMonitorTask: Task<Void, Never>? {
+        willSet {
+            callInProgressTimeMonitorTask?.cancel()
+        }
+    }
     private var searchString: String?
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
     
     private var subscriptions = Set<AnyCancellable>()
     
-    var callDurationTotal: TimeInterval?
-    var callDurationCapturedTime: TimeInterval?
-    var timerSubscription: AnyCancellable?
     private var chatHasMessagesSubscription: AnyCancellable?
     var isFirstRecurringAndHost = false
     
@@ -97,7 +100,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         tracker: some AnalyticsTracking = DIContainer.tracker,
         chatNotificationControl: ChatNotificationControl,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
-        chatListItemAvatar: ChatListItemAvatarEntity? = nil
+        chatListItemAvatar: ChatListItemAvatarEntity? = nil,
+        callInProgressTimeReporter: some CallInProgressTimeReporting = CallInProgressTimeReporter()
     ) {
         
         self.scheduledMeeting = scheduledMeeting
@@ -116,6 +120,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         self.tracker = tracker
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
         self.isRecurring = scheduledMeeting.rules.frequency != .invalid
+        self.callInProgressTimeReporter = callInProgressTimeReporter
         
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
@@ -145,10 +150,14 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         loadFutureMeetingSearchString()
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: scheduledMeeting.chatId)
         if let call = callUseCase.call(for: scheduledMeeting.chatId) {
-            configureCallInProgress(for: call)
+            self.startMonitoringCallInProgressTime(for: call)
         }
         monitorActiveCallChanges()
         self.contextMenuOptions = constructContextMenuOptions()
+    }
+    
+    deinit {
+        callInProgressTimeMonitorTask?.cancel()
     }
     
     func contains(searchText: String) -> Bool {
@@ -312,7 +321,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
             .sink { [weak self] call in
                 guard let self, call.chatId == self.scheduledMeeting.chatId else { return }
                 self.existsInProgressCallInChatRoom = call.status == .inProgress || call.status == .userNoPresent
-                self.configureCallInProgress(for: call)
+                self.startMonitoringCallInProgressTime(for: call)
                 self.contextMenuOptions = self.constructContextMenuOptions()
             }
             .store(in: &subscriptions)
@@ -399,6 +408,14 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         formatter.dateFormat = .none
         formatter.timeStyle = .short
         return formatter
+    }
+    
+    private func startMonitoringCallInProgressTime(for call: CallEntity) {
+        callInProgressTimeMonitorTask = Task { [weak self, callInProgressTimeReporter] in
+            for await timeInterval in callInProgressTimeReporter.configureCallInProgress(for: call) {
+                self?.totalCallDuration = timeInterval
+            }
+        }
     }
 }
 
