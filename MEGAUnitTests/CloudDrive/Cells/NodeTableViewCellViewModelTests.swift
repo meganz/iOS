@@ -8,6 +8,7 @@ import XCTest
 
 final class NodeTableViewCellViewModelTests: XCTestCase {
     
+    @MainActor
     func testHasThumbnail_whenNodeCountIsOne_shouldReturnNodeHasThumbnailValue() {
         for hasThumbnail in [true, false] {
             let nodes = [
@@ -20,6 +21,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testHasThumbnail_whenNodeCountIsGreaterThanOne_shouldReturnFalse() {
         let nodes = [
             NodeEntity(handle: 1, hasThumbnail: true),
@@ -30,6 +32,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.hasThumbnail)
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodeIsSensitive_shouldSetIsSensitiveTrue() async {
         let nodes = [
             NodeEntity(handle: 1, isMarkedSensitive: true)
@@ -56,6 +59,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
         
+    @MainActor
     func testConfigureCell_whenFeatureFlagOffAndNodeIsSensitive_shouldSetIsSensitiveFalse() async {
         let nodes = [
             NodeEntity(handle: 1, isMarkedSensitive: true)
@@ -83,6 +87,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodeInheritedSensitivity_shouldSetIsSensitiveTrue() async {
         let nodes = [
             NodeEntity(handle: 1, isMarkedSensitive: false)
@@ -109,6 +114,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
         
+    @MainActor
     func testConfigureCell_whenFeatureFlagOffAndNodeInheritedSensitivity_shouldSetIsSensitiveFalse() async {
         let nodes = [
             NodeEntity(handle: 1, isMarkedSensitive: false)
@@ -136,6 +142,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodesCountGreaterOne_shouldSetIsSensitiveFalse() async {
         let nodes = [
             NodeEntity(handle: 1, isMarkedSensitive: true),
@@ -164,6 +171,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
         
+    @MainActor
     func testConfigureCell_withAllVariationsOfShouldApplySensitiveBehaviour_shouldSetExpectedResult() async {
         for await shouldApplySensitiveBehaviour in [true, false].async {
             
@@ -190,6 +198,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testThumbnailLoading_whenNodeHasValidThumbnail_shouldReturnCachedImage() async throws {
         let imageUrl = try makeImageURL()
         let node = NodeEntity(handle: 1, hasThumbnail: true, isMarkedSensitive: true)
@@ -208,6 +217,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
     
+    @MainActor
     func testThumbnailLoading_whenNodeHasThumbnailAndFailsToLoad_shouldReturnFileTypeImage() async throws {
         let imageData = try XCTUnwrap(UIImage(systemName: "heart.fill")?.pngData())
         let node = NodeEntity(nodeType: .file, name: "test.txt", handle: 1, hasThumbnail: true, isMarkedSensitive: true)
@@ -225,6 +235,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         XCTAssertEqual(result?.hashValue, imageData.hashValue)
     }
     
+    @MainActor
     func testThumbnailLoading_whenNodeHasThumbnailAndIsRecentsFlavour_shouldReturnFileTypeImageOnly() async throws {
         let imageData = try XCTUnwrap(UIImage(systemName: "heart.fill")?.pngData())
         let node = NodeEntity(nodeType: .file, name: "test.txt", handle: 1, hasThumbnail: true)
@@ -245,6 +256,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
 }
 
 extension NodeTableViewCellViewModelTests {
+    @MainActor
     func sut(nodes: [NodeEntity] = [],
              shouldApplySensitiveBehaviour: Bool = true,
              nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),

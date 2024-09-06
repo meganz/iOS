@@ -1,6 +1,6 @@
 import MEGADomain
 
-public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
+public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case albumPhotoCache = "Album and Photo Cache"
     case designToken = "MEGADesignToken"
     case videoRevamp = "Video Revamp"
