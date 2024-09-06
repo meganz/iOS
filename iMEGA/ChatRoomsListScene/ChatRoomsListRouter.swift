@@ -15,6 +15,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         self.tabBarController = tabBarController
     }
     
+    @MainActor
     func build() -> UIViewController {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         let permissionHandler = DevicePermissionsHandler.makeHandler()
