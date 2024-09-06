@@ -9,6 +9,7 @@ import XCTest
 
 final class ChatRoomViewModelTests: XCTestCase {
     
+    @MainActor
     func test_scheduledMeetingManagementMessage_meetingUpdatedMyself() async throws {
         let chatListItemEntity = ChatListItemEntity(lastMessageType: .scheduledMeeting, lastMessageSender: 1001)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), message: ChatMessageEntity())
@@ -21,6 +22,7 @@ final class ChatRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.description == Strings.Localizable.Meetings.Scheduled.ManagementMessages.updated("Me"))
     }
     
+    @MainActor
     func test_scheduledMeetingManagementMessage_meetingUpdatedByOthers() async throws {
         let chatListItemEntity = ChatListItemEntity(lastMessageType: .scheduledMeeting, lastMessageSender: 1002)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), message: ChatMessageEntity())
@@ -33,6 +35,7 @@ final class ChatRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.description == Strings.Localizable.Meetings.Scheduled.ManagementMessages.updated("Bob"))
     }
     
+    @MainActor
     func testStartOrJoinCall_isModeratorAndWaitingRoomEnabledAndCallNotActive_shouldStartCall() {
         let router = MockChatRoomsListRouter()
         let chatUseCase = MockChatUseCase(isCallActive: false)
@@ -46,6 +49,7 @@ final class ChatRoomViewModelTests: XCTestCase {
         XCTAssertTrue(router.openCallView_calledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinCall_isModeratorAndWaitingRoomEnabledAndCallActive_shouldJoinCall() {
         let router = MockChatRoomsListRouter()
         let chatUseCase = MockChatUseCase(isCallActive: true)
@@ -59,6 +63,7 @@ final class ChatRoomViewModelTests: XCTestCase {
         XCTAssertTrue(router.openCallView_calledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinCall_callNotExists_startCallCalled() {
         let callManager = MockCallManager()
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator))
@@ -69,6 +74,7 @@ final class ChatRoomViewModelTests: XCTestCase {
         XCTAssertTrue(callManager.startCall_CalledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinMeetingTapped_onExistsActiveCall_shouldPresentMeetingAlreadyExists() {
         let router = MockChatRoomsListRouter()
         let chatUseCase = MockChatUseCase(isExistingActiveCall: true)
@@ -79,6 +85,7 @@ final class ChatRoomViewModelTests: XCTestCase {
         XCTAssertTrue(router.presentMeetingAlreadyExists_calledTimes == 1)
     }
     
+    @MainActor
     func testStartOrJoinMeetingTapped_onNoActiveCallAndShouldOpenWaitRoom_shouldPresentWaitingRoom() {
         let router = MockChatRoomsListRouter()
         let chatRoomUseCase = MockChatRoomUseCase(shouldOpenWaitRoom: true)
@@ -90,18 +97,21 @@ final class ChatRoomViewModelTests: XCTestCase {
         XCTAssertTrue(router.presentWaitingRoom_calledTimes == 1)
     }
     
+    @MainActor
     func testUnreadCountString_forChatListItemUnreadCountLessThanZero_shouldBePositiveWithPlus() {
         let sut = ChatRoomViewModelFactory.make(chatListItem: ChatListItemEntity(unreadCount: -1))
         
         XCTAssertEqual(sut.unreadCountString, "1+")
     }
     
+    @MainActor
     func testUnreadCountString_forChatListItemUnreadCountGreaterThanZeroAndLessThan100_shouldBePositiveWithoutPlus() {
         let sut = ChatRoomViewModelFactory.make(chatListItem: ChatListItemEntity(unreadCount: 50))
         
         XCTAssertEqual(sut.unreadCountString, "50")
     }
     
+    @MainActor
     func testUnreadCountString_forChatListItemUnreadCountGreaterThan99_shouldBe99WithPlu() {
         let sut = ChatRoomViewModelFactory.make(chatListItem: ChatListItemEntity(unreadCount: 123))
         
@@ -110,6 +120,7 @@ final class ChatRoomViewModelTests: XCTestCase {
 }
 
 class ChatRoomViewModelFactory {
+    @MainActor
     static func make(
         chatListItem: ChatListItemEntity = ChatListItemEntity(),
         router: some ChatRoomsListRouting = MockChatRoomsListRouter(),

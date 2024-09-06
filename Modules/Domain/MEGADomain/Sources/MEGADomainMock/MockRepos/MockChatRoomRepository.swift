@@ -1,8 +1,8 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 import MEGASwift
 
-public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
+public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: MockChatRoomRepository = MockChatRoomRepository()
     
     private let chatRoom: ChatRoomEntity?
