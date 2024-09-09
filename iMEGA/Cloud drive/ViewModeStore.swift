@@ -108,7 +108,7 @@ final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
         }
     }
     
-    private var preferenceRepo: any PreferenceRepositoryProtocol
+    private let preferenceRepo: any PreferenceRepositoryProtocol
     private let megaStore: MEGAStore
     private let sdk: MEGASdk
     private let notificationCenter: NotificationCenter
@@ -127,14 +127,17 @@ final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
     
     private var savedPreference: ViewModePreferenceEntity? {
         guard
-            let preference: Int = preferenceRepo[MEGAViewModePreference],
+            let preference: Int = preferenceRepo.value(forKey: MEGAViewModePreference),
             let preferenceFromSettings = ViewModePreferenceEntity(rawValue: preference)
         else { return nil }
         return preferenceFromSettings
     }
     
     private func savePreference(preference: ViewModePreferenceEntity) {
-        preferenceRepo[MEGAViewModePreference] = preference.rawValue
+        preferenceRepo.setValue(
+            value: preference.rawValue,
+            forKey: MEGAViewModePreference
+        ) 
     }
     
     func viewMode(for location: ViewModeLocation) -> ViewModePreferenceEntity {

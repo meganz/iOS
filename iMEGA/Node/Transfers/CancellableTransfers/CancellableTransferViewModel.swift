@@ -7,7 +7,8 @@ protocol TransferWidgetRouting: Routing {
     func prepareTransfersWidget()
 }
 
-final class CancellableTransferViewModel: ViewModelType {
+@MainActor
+final class CancellableTransferViewModel: ViewModelType, Sendable {
     typealias routingProtocols = CancellableTransferRouting & TransferWidgetRouting
 
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
@@ -152,7 +153,7 @@ final class CancellableTransferViewModel: ViewModelType {
         }
     }
     
-    private func checkIfAllTransfersStartedTranferring() {
+    private func checkIfAllTransfersStartedTransferring() {
         guard folderTransfersStartedTransferring() else {
             return
         }
@@ -194,15 +195,16 @@ final class CancellableTransferViewModel: ViewModelType {
                                          fileName: transferViewEntity.name,
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: true,
-                                         startFirst: transferViewEntity.priority) { transferEntity in
-                transferViewEntity.state = transferEntity.state
+                                         startFirst: transferViewEntity.priority
+            ) { transferEntity in
+                transferViewEntity.setState(transferEntity.state)
                 self.continueFolderTransfersIfNeeded()
             } update: { _ in } completion: { [weak self]  result in
                 switch result {
                 case .success:
-                    transferViewEntity.state = .complete
+                    transferViewEntity.setState(.complete)
                 case .failure(let error):
-                    transferViewEntity.state = .failed
+                    transferViewEntity.setState(.failed)
                     self?.transferErrors.append(error)
                 }
                 self?.continueFolderTransfersIfNeeded()
@@ -222,28 +224,27 @@ final class CancellableTransferViewModel: ViewModelType {
                                          isSourceTemporary: true,
                                          startFirst: transferViewEntity.priority,
                                          start: nil) { transferEntity in
-                transferViewEntity.stage = transferEntity.stage
-                transferViewEntity.state = transferEntity.state
+                transferViewEntity.setStage(transferEntity.stage)
+                transferViewEntity.setState(transferEntity.state)
                 switch transferEntity.stage {
                 case .transferringFiles:
-                    self.checkIfAllTransfersStartedTranferring()
+                    self.checkIfAllTransfersStartedTransferring()
                 default:
                     break
                 }
             } completion: { [weak self]  result in
                 switch result {
                 case .success:
-                    transferViewEntity.state = .complete
+                    transferViewEntity.setState(.complete)
                 case .failure(let error):
-                    transferViewEntity.state = .failed
+                    transferViewEntity.setState(.failed)
                     self?.transferErrors.append(error)
-                    self?.checkIfAllTransfersStartedTranferring()
+                    self?.checkIfAllTransfersStartedTransferring()
                 }
             }
         }
     }
     
-    @MainActor
     private func downloadChatFile(transferViewEntity: CancellableTransfer) async {
         do {
             for try await status in try await downloadNodeUseCase.downloadChatFileToOffline(
@@ -256,14 +257,14 @@ final class CancellableTransferViewModel: ViewModelType {
             ) {
                 switch status {
                 case .start(let transferEntity):
-                    transferViewEntity.state = transferEntity.state
+                    transferViewEntity.setState(transferEntity.state)
                     continueFolderTransfersIfNeeded()
                 case .update:
                     continue
                 case .folderUpdate:
                     continue
                 case .finish(let transferEntity):
-                    transferViewEntity.state = transferEntity.state
+                    transferViewEntity.setState(transferEntity.state)
                 }
             }
         } catch let error as TransferErrorEntity {
@@ -291,14 +292,14 @@ final class CancellableTransferViewModel: ViewModelType {
                                                       filename: transferViewEntity.name,
                                                       appdata: transferViewEntity.appData,
                                                       startFirst: transferViewEntity.priority) { transferEntity in
-                transferViewEntity.state = transferEntity.state
+                transferViewEntity.setState(transferEntity.state)
                 self.continueFolderTransfersIfNeeded()
             } update: { _ in } completion: { [weak self] result in
                 switch result {
                 case .success(let transferEntity):
-                    transferViewEntity.state = transferEntity.state
+                    transferViewEntity.setState(transferEntity.state)
                 case .failure(let error):
-                    transferViewEntity.state = .failed
+                    transferViewEntity.setState(.failed)
                     if error != .alreadyDownloaded && error != .copiedFromTempFolder {
                         self?.transferErrors.append(error)
                     }
@@ -318,14 +319,14 @@ final class CancellableTransferViewModel: ViewModelType {
                                                       filename: transferViewEntity.name,
                                                       metaData: nil,
                                                       startFirst: transferViewEntity.priority) { transferEntity in
-            transferViewEntity.state = transferEntity.state
+            transferViewEntity.setState(transferEntity.state)
             self.manageTransfersCompletion()
         } update: { _ in } completion: { [weak self] result in
             switch result {
             case .success(let transferEntity):
-                transferViewEntity.state = transferEntity.state
+                transferViewEntity.setState(transferEntity.state)
             case .failure(let error):
-                transferViewEntity.state = .failed
+                transferViewEntity.setState(.failed)
                 if error != .alreadyDownloaded && error != .copiedFromTempFolder {
                     self?.transferErrors.append(error)
                 }
@@ -343,23 +344,23 @@ final class CancellableTransferViewModel: ViewModelType {
                                                       start: nil) { transferEntity in
                 switch transferEntity.stage {
                 case .transferringFiles:
-                    transferViewEntity.stage = transferEntity.stage
-                    transferViewEntity.state = transferEntity.state
-                    self.checkIfAllTransfersStartedTranferring()
+                    transferViewEntity.setStage(transferEntity.stage)
+                    transferViewEntity.setState(transferEntity.state)
+                    self.checkIfAllTransfersStartedTransferring()
                 default:
                     break
                 }
             } completion: { [weak self] result in
                 switch result {
                 case .success(let transferEntity):
-                    transferViewEntity.state = transferEntity.state
+                    transferViewEntity.setState(transferEntity.state)
                 case .failure(let error):
-                    transferViewEntity.state = .failed
+                    transferViewEntity.setState(.failed)
                     if error != .alreadyDownloaded && error != .copiedFromTempFolder {
                         self?.transferErrors.append(error)
                     }
                 }
-                self?.checkIfAllTransfersStartedTranferring()
+                self?.checkIfAllTransfersStartedTransferring()
             } folderUpdate: { [weak self] folderUpdate in
                 guard let self else { return }
                 switch folderUpdate.stage {
@@ -368,7 +369,7 @@ final class CancellableTransferViewModel: ViewModelType {
                 case .createTree:
                     self.invokeCommand?(.creatingFolders(createdFolders: folderUpdate.createdFolderCount, totalFolders: folderUpdate.folderCount))
                 case .transferringFiles:
-                    self.checkIfAllTransfersStartedTranferring()
+                    self.checkIfAllTransfersStartedTransferring()
                 default:
                     break
                 }

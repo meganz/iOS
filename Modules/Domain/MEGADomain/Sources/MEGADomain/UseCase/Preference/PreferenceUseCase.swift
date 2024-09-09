@@ -1,12 +1,12 @@
 import Foundation
 
 /// Preference use case should be mainly used inside `PreferenceWrapper` to manage preferences
-public protocol PreferenceUseCaseProtocol {
+public protocol PreferenceUseCaseProtocol: Sendable {
     subscript<T>(key: PreferenceKeyEntity) -> T? { get set }
 }
 
 public struct PreferenceUseCase<T: PreferenceRepositoryProtocol>: PreferenceUseCaseProtocol {
-    private var repo: T
+    private let repo: T
     
     public init(repository: T) {
         repo = repository
@@ -14,10 +14,10 @@ public struct PreferenceUseCase<T: PreferenceRepositoryProtocol>: PreferenceUseC
     
     public subscript<V>(key: PreferenceKeyEntity) -> V? {
         get {
-            repo[key.rawValue]
+            repo.value(forKey: key.rawValue)
         }
         set {
-            repo[key.rawValue] = newValue
+            repo.setValue(value: newValue, forKey: key.rawValue)
         }
     }
 }
