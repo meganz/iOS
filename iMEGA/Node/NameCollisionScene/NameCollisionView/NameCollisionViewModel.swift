@@ -145,7 +145,11 @@ final class NameCollisionViewModel: ObservableObject {
             collision.collisionAction = action
             if action == .rename {
                 transfers?.forEach({ transfer in
-                    transfer.name = nameCollisionUseCase.renameNode(named: collision.name as NSString, inParent: collision.parentHandle)
+                    let newName = nameCollisionUseCase.renameNode(
+                        named: collision.name as NSString,
+                        inParent: collision.parentHandle
+                    )
+                    transfer.setName(newName)
                 })
             }
             collisions[i] = collision
@@ -187,7 +191,7 @@ final class NameCollisionViewModel: ObservableObject {
             case .update, .replace, .merge:
                 break
             case .rename:
-                transfer.name = duplicatedItem.rename
+                transfer.setName(duplicatedItem.rename)
             case .cancel:
                 transfers.remove(object: transfer)
             }

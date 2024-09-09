@@ -1,5 +1,6 @@
-public protocol PreferenceRepositoryProtocol: RepositoryProtocol {
-    subscript<T>(key: String) -> T? { get set }
+public protocol PreferenceRepositoryProtocol: RepositoryProtocol, Sendable {
+    func value<T>(forKey key: String) -> T?
+    func setValue<T>(value: T?, forKey key: String)
 }
 
 public struct EmptyPreferenceRepository: PreferenceRepositoryProtocol {
@@ -7,14 +8,11 @@ public struct EmptyPreferenceRepository: PreferenceRepositoryProtocol {
         EmptyPreferenceRepository()
     }
     
-    // swiftlint:disable unused_setter_value
-    public subscript<T>(key: String) -> T? {
-        get {
-            nil
-        }
-        set {
-            // Empty
-        }
+    public func value<T>(forKey key: String) -> T? {
+        nil
     }
-    // swiftlint:enable unused_setter_value
+        
+    public func setValue<T>(value: T?, forKey key: String) {
+        
+    }
 }
