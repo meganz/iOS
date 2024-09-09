@@ -513,7 +513,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenCalled_updatesVideoPlaylist() async {
         let videoPlaylistNameToUpdate = "new-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, userVideoPlaylistRepository, _) = makeSUT()
         
         _ = try? await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
@@ -524,7 +524,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenRenameSystemVideoPlaylist_throwsError() async {
         let videoPlaylistNameToUpdate = "Old-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Old-name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.invalidOperation
         let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
@@ -533,7 +533,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenCalledWithSameName_throwsError() async {
         let videoPlaylistNameToUpdate = "Old-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.invalidOperation
         let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
@@ -542,7 +542,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenCalledWithSimilarNameButNotSame_updateVideoPlaylist() async {
         let videoPlaylistNameToUpdate = "old-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, userVideoPlaylistRepository, _) = makeSUT()
         
         _ = try? await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
@@ -553,7 +553,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenHasError_throwsError() async {
         let videoPlaylistNameToUpdate = "new-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.failedToUpdateVideoPlaylistName(name: videoPlaylistNameToUpdate)
         let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
@@ -563,7 +563,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
     func testUpdateVideoPlaylistName_whenSuccess_updatesVideoPlaylistNameSuccessfully() async {
         let videoPlaylistNameToUpdate = "new-name"
         let anyDate = Date()
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: anyDate, modificationTime: anyDate, sharedLinkStatus: .exported(false))
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "old-name", count: 0, type: .user, creationTime: anyDate, modificationTime: anyDate, sharedLinkStatus: .exported(false))
         let (sut, _, _, _) = makeSUT(updateVideoPlaylistNameResult: .success(()))
         
         await simulateUpdateVideoPlaylistNameCompletedSuccessfullyThenAssert(on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)

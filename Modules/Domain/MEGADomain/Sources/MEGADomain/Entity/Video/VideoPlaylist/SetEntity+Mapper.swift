@@ -1,7 +1,7 @@
 extension SetEntity {
     func toVideoPlaylistEntity(type: VideoPlaylistEntityType, sharedLinkStatus: SharedLinkStatusEntity = .exported(false), count: Int = 0) -> VideoPlaylistEntity {
         VideoPlaylistEntity(
-            id: handle,
+            setIdentifier: SetIdentifier(handle: handle),
             name: name,
             count: count,
             type: type,

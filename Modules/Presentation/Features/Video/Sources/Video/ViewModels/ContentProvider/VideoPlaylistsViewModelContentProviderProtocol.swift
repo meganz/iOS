@@ -91,7 +91,7 @@ actor VideoPlaylistsViewModelContentProvider: VideoPlaylistsViewModelContentProv
         
         return playlists.map { videoPlaylist -> VideoPlaylistEntity in
             VideoPlaylistEntity(
-                id: videoPlaylist.id,
+                setIdentifier: videoPlaylist.setIdentifier,
                 name: Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites,
                 count: videoPlaylist.count,
                 type: videoPlaylist.type,

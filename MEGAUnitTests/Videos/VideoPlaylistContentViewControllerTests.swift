@@ -84,7 +84,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
     }
     
     private func anyVideoPlaylist() -> VideoPlaylistEntity {
-        VideoPlaylistEntity(id: 1, name: "Preview", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Preview", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
     }
     
 }

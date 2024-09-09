@@ -135,7 +135,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     func testSecondaryInformationViewType_whenVideosCountNotZero_showInformationView() async {
         let nonZeroRandomCount = Int.random(in: 1...10000)
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: nonZeroRandomCount)
-        let videos = [ (0...nonZeroRandomCount).map { nodeEntity(name: "video-\($0)", handle: HandleEntity($0), hasThumbnail: true) } ].async.eraseToAnyAsyncSequence()
+        let videos = [ (0...nonZeroRandomCount).map { nodeEntity(name: "video-\($0)", handle: SetHandleEntity($0), hasThumbnail: true) } ].async.eraseToAnyAsyncSequence()
         let (sut, _) = await makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: videos)
@@ -202,9 +202,9 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         return (sut, videoPlaylistThumbnailLoader)
     }
     
-    private func videoPlaylistEntity(name: String, handle: HandleEntity, sharedLinkStatus: SharedLinkStatusEntity = .exported(false), type: VideoPlaylistEntityType = .user, count: Int = 0) -> VideoPlaylistEntity {
+    private func videoPlaylistEntity(name: String, handle: SetHandleEntity, sharedLinkStatus: SharedLinkStatusEntity = .exported(false), type: VideoPlaylistEntityType = .user, count: Int = 0) -> VideoPlaylistEntity {
         VideoPlaylistEntity(
-            id: handle,
+            setIdentifier: SetIdentifier(handle: handle),
             name: name,
             count: count,
             type: type,
@@ -214,7 +214,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         )
     }
     
-    private func nodeEntity(name: String, handle: HandleEntity, hasThumbnail: Bool, isPublic: Bool = false, isShare: Bool = false, isFavorite: Bool = false, label: NodeLabelTypeEntity = .blue, size: UInt64 = 1, duration: Int = 60) -> NodeEntity {
+    private func nodeEntity(name: String, handle: SetHandleEntity, hasThumbnail: Bool, isPublic: Bool = false, isShare: Bool = false, isFavorite: Bool = false, label: NodeLabelTypeEntity = .blue, size: UInt64 = 1, duration: Int = 60) -> NodeEntity {
         NodeEntity(
             changeTypes: .name,
             nodeType: .folder,
