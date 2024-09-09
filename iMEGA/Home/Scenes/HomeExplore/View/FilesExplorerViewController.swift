@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGASDKRepo
 
+@MainActor
 protocol FilesExplorerViewControllerDelegate: AnyObject {
     func updateSearchResults()
     func didScroll(scrollView: UIScrollView)

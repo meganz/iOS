@@ -30,20 +30,19 @@ struct FilesExplorerRouter {
         }
         
         let sdk = MEGASdk.shared
-        let transferListenerRepo = SDKTransferListenerRepository(sdk: sdk)
         let fileSearchRepo = FilesSearchRepository(sdk: sdk)
         let clipboardOperationRepo = SDKNodeClipboardOperationRepository(sdk: sdk)
         let useCase = FilesSearchUseCase(repo: fileSearchRepo,
                                          nodeRepository: NodeRepository.newRepo)
         let nodeClipboardOperationUseCase = NodeClipboardOperationUseCase(repo: clipboardOperationRepo)
-        let fileDownloadUseCase = FilesDownloadUseCase(repo: transferListenerRepo)
+        let nodeDownloadUpdatesUseCase = NodeDownloadUpdatesUseCase(repo: NodeTransferRepository.newRepo(includesSharedFolder: false))
         let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         
         let viewModel = FilesExplorerViewModel(
             explorerType: explorerType,
             router: self,
             useCase: useCase,
-            filesDownloadUseCase: fileDownloadUseCase,
+            nodeDownloadUpdatesUseCase: nodeDownloadUpdatesUseCase,
             nodeClipboardOperationUseCase: nodeClipboardOperationUseCase,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),

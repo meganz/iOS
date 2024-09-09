@@ -4,10 +4,14 @@ import MEGASwift
 
 public final class NodeTransferRepository: NSObject, NodeTransferRepositoryProtocol {
     public static var newRepo: NodeTransferRepository {
+        newRepo(includesSharedFolder: false)
+    }
+    
+    public static func newRepo(includesSharedFolder: Bool) -> NodeTransferRepository {
         NodeTransferRepository(
             nodeTransferCompletionUpdatesProvider: NodeTransferCompletionUpdatesProvider(
                 sdk: MEGASdk.sharedSdk,
-                sharedFolderSdk: MEGASdk.sharedFolderLinkSdk
+                sharedFolderSdk: includesSharedFolder ? MEGASdk.sharedFolderLinkSdk : nil
             )
         )
     }
