@@ -108,7 +108,7 @@ extension NotificationsTableViewController {
     }
     
     @objc func didTapNotification(at indexPath: IndexPath) {
-        guard viewModel.isPromoEnabled && indexPath.section == NotificationSection.promos.rawValue else { return }
+        guard indexPath.section == NotificationSection.promos.rawValue else { return }
         
         let notification = viewModel.promoList[indexPath.row]
         viewModel.dispatch(.didTapNotification(notification))

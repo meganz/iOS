@@ -136,8 +136,6 @@ extension MyAvatarViewModel {
     }
     
     private func refreshUnreadNotificationCount() {
-        guard isNotificationCenterEnabled() else { return }
-        
         refreshUnreadNotificationCountTask = Task {
             let newUnreadCount = await megaNotificationUseCase.unreadNotificationIDs().count
             
@@ -147,9 +145,6 @@ extension MyAvatarViewModel {
             await MainActor.run { notifyUpdate?(outputs) }
         }
     }
-    
-    // MARK: Feature flags
-    func isNotificationCenterEnabled() -> Bool { true }
 }
 
 // MARK: - MyAvatarViewModelType

@@ -251,8 +251,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     @MainActor
     func testArePromosAvailable_whenNotificationsEnabled_shouldReturnTrue() async throws {
         let (sut, _) = makeSUT(
-            enabledNotifications: [NotificationIDEntity(1), NotificationIDEntity(2), NotificationIDEntity(3)],
-            featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true])
+            enabledNotifications: [NotificationIDEntity(1), NotificationIDEntity(2), NotificationIDEntity(3)]
         )
         
         let result = await loadPromosAndGetAvailability(for: sut)
@@ -260,10 +259,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testArePromosAvailable_whenNotificationsNotEnabled_shouldReturnFalse() async throws {
-        let (sut, _) = makeSUT(
-            featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true])
-        )
+    func testArePromosAvailable_whenNoEnabledNotifications_shouldReturnFalse() async throws {
+        let (sut, _) = makeSUT(enabledNotifications: [])
         
         let result = await loadPromosAndGetAvailability(for: sut)
         XCTAssertFalse(result, "Promos should not be available when notifications are not enabled, even if the notification center feature flag is true.")
@@ -286,12 +283,6 @@ final class MyAccountHallViewModelTests: XCTestCase {
         let (sut, _) = makeSUT()
         
         test(viewModel: sut, actions: [MyAccountHallAction.didTapUpgradeButton], expectedCommands: [])
-    }
-    
-    @MainActor
-    func testIsFeatureFlagEnabled_onNotificationCenterUIEnabled_shouldBeEnabled() {
-        let (sut, _) = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true]))
-        XCTAssertTrue(sut.isNotificationCenterEnabled())
     }
     
     @MainActor
@@ -622,7 +613,6 @@ final class MyAccountHallViewModelTests: XCTestCase {
         isAchievementsEnabled: Bool = false,
         enabledNotifications: [NotificationIDEntity] = [],
         currentAccountDetails: AccountDetailsEntity? = nil,
-        featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [:]),
         deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge(),
         tracker: some AnalyticsTracking = MockTracker(),
         rubbishBinStorage: Int64 = 0,
@@ -652,7 +642,6 @@ final class MyAccountHallViewModelTests: XCTestCase {
                 purchaseUseCase: purchaseUseCase,
                 shareUseCase: shareUseCase,
                 notificationsUseCase: notificationUseCase,
-                featureFlagProvider: featureFlagProvider,
                 deviceCenterBridge: deviceCenterBridge,
                 tracker: tracker,
                 router: router
