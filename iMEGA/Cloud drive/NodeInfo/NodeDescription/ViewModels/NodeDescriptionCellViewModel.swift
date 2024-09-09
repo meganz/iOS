@@ -1,34 +1,66 @@
 import Foundation
+import MEGADesignToken
+import MEGAL10n
 import MEGASwift
 
 final class NodeDescriptionCellViewModel {
     let textViewEdgeInsets: UIEdgeInsets
-    let editingDisabled: Bool
-    let placeholderText: String
-    let description: () -> NodeDescriptionCellControllerModel.Description?
+    let editingDisabled: () -> Bool
     let descriptionUpdated: (String) -> Void
     let saveDescription: (String) -> Void
     let isTextViewFocused: (Bool) -> Void
     private let maxCharactersAllowed: Int
+    private let hasReadOnlyAccess: () -> Bool
+    private let descriptionProvider: () -> NodeDescriptionCellControllerModel.Description?
+    
+    var onUpdate: (() -> Void)?
 
     init(
         maxCharactersAllowed: Int,
-        editingDisabled: Bool,
-        placeholderText: String,
+        editingDisabled: @escaping () -> Bool,
         textViewEdgeInsets: UIEdgeInsets,
-        description: @escaping () -> NodeDescriptionCellControllerModel.Description?,
+        descriptionProvider: @escaping () -> NodeDescriptionCellControllerModel.Description?,
+        hasReadOnlyAccess: @escaping () -> Bool,
         descriptionUpdated: @escaping (String) -> Void,
         saveDescription: @escaping (String) -> Void,
         isTextViewFocused: @escaping (Bool) -> Void
     ) {
         self.maxCharactersAllowed = maxCharactersAllowed
         self.editingDisabled = editingDisabled
-        self.placeholderText = placeholderText
         self.textViewEdgeInsets = textViewEdgeInsets
-        self.description = description
+        self.descriptionProvider = descriptionProvider
+        self.hasReadOnlyAccess = hasReadOnlyAccess
         self.descriptionUpdated = descriptionUpdated
         self.saveDescription = saveDescription
         self.isTextViewFocused = isTextViewFocused
+    }
+    
+    /// The text to be displayed on the text view
+    /// - Parameter isEditing: Indicates whether the text view is being edited or not
+    /// - Returns: Proper text to display on the view
+    
+    func displayText(isEditing: Bool) -> String? {
+        guard let description = descriptionProvider() else { return nil }
+        if description.isPlaceholder {
+            // Upon node update, if the updated desc is empty and the description is being edited in the textview,
+            // we display "" instead of the placeholder.
+            if isEditing {
+                return ""
+            } else {
+                return placeholderText
+            }
+        } else {
+            return description.content
+        }
+    }
+    
+    var placeholderText: String {
+        hasReadOnlyAccess() ? Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly
+        : Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readWrite
+    }
+    
+    var isPlaceholder: Bool {
+        descriptionProvider()?.isPlaceholder == true
     }
 
     /// Determines if editing should end based on the given text.

@@ -1,5 +1,6 @@
 import Combine
 import MEGADesignToken
+import MEGADomain
 import MEGASwift
 import MEGASwiftUI
 import MEGAUIKit
@@ -31,7 +32,7 @@ final class NodeDescriptionCellController: NSObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
-                scrollToBottom(tableView: tableView, indexPath: indexPath)
+                scrollToBottomIfNeeded(tableView: tableView, indexPath: indexPath)
             }
     }
 
@@ -39,8 +40,12 @@ final class NodeDescriptionCellController: NSObject {
         keyboardShownSubscription?.cancel()
         keyboardShownSubscription = nil
     }
+    
+    func processNodeUpdate(_ updatedNode: NodeEntity) {
+        viewModel.updateDescription(with: updatedNode)
+    }
 
-    private func scrollToBottom(tableView: UITableView, indexPath: IndexPath) {
+    private func scrollToBottomIfNeeded(tableView: UITableView, indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath),
               cell.containsFirstResponder() else {
             return
@@ -70,7 +75,7 @@ extension NodeDescriptionCellController: UITableViewDataSource {
         }
         viewModel.scrollToCell = { [weak self, weak tableView] in
             guard let self, let tableView else { return }
-            scrollToBottom(tableView: tableView, indexPath: indexPath)
+            scrollToBottomIfNeeded(tableView: tableView, indexPath: indexPath)
         }
         addKeyboardNotifications(tableView: tableView, indexPath: indexPath)
         cell.viewModel = viewModel.cellViewModel
