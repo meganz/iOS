@@ -1,13 +1,21 @@
+import MEGASwiftUI
+
 protocol SnackBarPresenting where Self: UIViewController {
     func snackBarContainerView() -> UIView?
     func layout(snackBarView: UIView?)
 }
 
+protocol SnackBarObservablePresenting where Self: ObservableObject {
+    
+    @MainActor
+    func show(snack: SnackBar)
+}
+
 extension SnackBarPresenting {
     @MainActor
-    func presentSnackBar(viewController: UIViewController) {
-        view.addSubview(viewController.view)
-        layout(snackBarView: viewController.view)
+    func presentSnackBar(snackBarView: UIView) {
+        view.addSubview(snackBarView)
+        layout(snackBarView: snackBarView)
         
         showSnackBar()
     }
@@ -33,7 +41,7 @@ extension SnackBarPresenting {
     }
     
     @MainActor
-    func showSnackBar() {
+    private func showSnackBar() {
         guard let containerView = snackBarContainerView() else { return }
         
         containerView.alpha = 0.0

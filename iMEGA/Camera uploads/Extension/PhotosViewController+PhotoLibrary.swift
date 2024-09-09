@@ -6,8 +6,8 @@ extension PhotosViewController: PhotoLibraryProvider {
     // MARK: - config views
     @objc func objcWrapper_configPhotoLibraryView(in container: UIView) {
         let content = TimelineView(
-            cameraUploadStatusBannerViewModel: viewModel.timelineViewModel,
             photoLibraryContentViewModel: photoLibraryContentViewModel,
+            timelineViewModel: viewModel.timelineViewModel,
             router: PhotoLibraryContentViewRouter(contentMode: photoLibraryContentViewModel.contentMode),
             onFilterUpdate: { [weak self] type, location in
                 self?.viewModel.updateFilter(filterType: type, filterLocation: location)
