@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol CredentialRepositoryProtocol: RepositoryProtocol {
+public protocol CredentialRepositoryProtocol: RepositoryProtocol, Sendable {
     func sessionId() -> String?
     func clearSession()
     func clearEphemeralSession()
