@@ -2,6 +2,7 @@ import Combine
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI
 import UIKit

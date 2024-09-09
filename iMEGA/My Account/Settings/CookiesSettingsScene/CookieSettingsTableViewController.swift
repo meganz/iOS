@@ -2,6 +2,7 @@ import Foundation
 import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
+import MEGASwiftUI
 
 enum CookieSettingsSection: Int {
     case acceptCookies

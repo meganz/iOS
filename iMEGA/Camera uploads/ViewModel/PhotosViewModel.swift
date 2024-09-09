@@ -4,6 +4,8 @@ import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwiftUI
+import SwiftUI
 
 enum PhotosEmptyScreenViewType {
     case noMediaFound
@@ -39,8 +41,8 @@ final class PhotosViewModel: NSObject {
     }
     var isSelectHidden: Bool = false
     
-    let timelineViewModel: CameraUploadStatusBannerViewModel
-    
+    let timelineViewModel: TimeLineViewModel
+        
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
@@ -64,9 +66,11 @@ final class PhotosViewModel: NSObject {
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
-        self.timelineViewModel = CameraUploadStatusBannerViewModel(
-            monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            devicePermissionHandler: devicePermissionHandler)
+        self.timelineViewModel = TimeLineViewModel(
+            cameraUploadStatusBannerViewModel: CameraUploadStatusBannerViewModel(
+                monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+                devicePermissionHandler: devicePermissionHandler)
+        )
         self.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
@@ -220,7 +224,7 @@ final class PhotosViewModel: NSObject {
     }
     
     private func showCameraUploadStatusBanner() {
-        timelineViewModel.cameraUploadStatusShown = true
+        timelineViewModel.cameraUploadStatusBannerViewModel.cameraUploadStatusShown = true
     }
     
     private func monitorSortOrderSubscription() {

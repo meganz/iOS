@@ -6,6 +6,7 @@ import MEGAFoundation
 import MEGAL10n
 import MEGAPresentation
 import MEGASwift
+import MEGASwiftUI
 
 enum CallViewAction: ActionType {
     case onViewLoaded

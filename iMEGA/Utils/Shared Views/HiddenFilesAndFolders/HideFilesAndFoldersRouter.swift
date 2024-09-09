@@ -1,7 +1,9 @@
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwiftUI
 import SwiftUI
 
 protocol HideFilesAndFoldersRouting {
@@ -16,9 +18,17 @@ protocol HideFilesAndFoldersRouting {
 final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     private weak var presenter: UIViewController?
     private weak var onboardingViewController: UIViewController?
+    private let snackBarPresentation: SnackBarPresentation
     
-    init(presenter: UIViewController?) {
+    enum SnackBarPresentation {
+        case router(SnackBarRouter)
+        case observablePresenting(any SnackBarObservablePresenting)
+        case none
+    }
+    
+    init(presenter: UIViewController?, snackBarPresentation: SnackBarPresentation = .none) {
         self.presenter = presenter
+        self.snackBarPresentation = snackBarPresentation
     }
     
     func hideNodes(_ nodes: [NodeEntity]) {
@@ -77,8 +87,17 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         )
     }
     
+    @MainActor
     func showItemsHiddenSuccessfully(count: Int) {
-        // This will be done in future ticket
+        let snackBar = SnackBar(message: Strings.Localizable.Nodes.Action.hideItems(count))
+        switch snackBarPresentation {
+        case .observablePresenting(let presenter):
+            presenter.show(snack: snackBar)
+        case .router(let router):
+            router.present(snackBar: snackBar)
+        case .none:
+            break
+        }
     }
     
     @MainActor
