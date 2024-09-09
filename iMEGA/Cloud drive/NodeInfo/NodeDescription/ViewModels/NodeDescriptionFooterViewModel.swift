@@ -3,7 +3,7 @@ import SwiftUI
 
 final class NodeDescriptionFooterViewModel: ObservableObject {
     @Published var trailingText: String?
-    let leadingText: String?
+    var leadingText: String?
 
     var description: String
     private let maxCharactersAllowed: Int
