@@ -6,7 +6,7 @@ import MEGATest
 import XCTest
 
 @MainActor
-final class NodeDescriptionViewModelTests: XCTestCase {
+final class NodeDescriptionCellControllerModelTests: XCTestCase {
 
     var readOnlyAccessNodeTypes: [NodeAccessTypeEntity] {
         [.readWrite, .read, .unknown]
@@ -15,101 +15,24 @@ final class NodeDescriptionViewModelTests: XCTestCase {
     var fullAccessNodeTypes: [NodeAccessTypeEntity] {
         [.owner, .full]
     }
-
-    func testDescription_whenNodeDescriptionIsAbsentAndNoAccessToUpdateDescription_shouldMatchReadOnlyString() {
-        readOnlyAccessNodeTypes.forEach {
-            let sut = makeSUT(description: nil, accessType: $0)
-            XCTAssertEqual(
-                sut.description,
-                .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
-            )
-        }
+    
+    var saveStates: [NodeDescriptionCellControllerModel.SavedState] {
+        [.added, .updated, .removed, .error]
     }
 
-    func testDescription_whenNodeDescriptionIsEmptyAndNoAccessToUpdateDescription_shouldMatchReadOnlyString() {
-        readOnlyAccessNodeTypes.forEach {
-            let sut = makeSUT(description: "", accessType: $0)
-            XCTAssertEqual(
-                sut.description,
-                .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
-            )
-        }
+    func testHasReadonlyAccess_whenNodeIsInRubbishBin_shouldReturnTrue() {
+        let sut = makeSUT(isNodeInRubbishBin: true)
+        XCTAssertTrue(sut.hasReadOnlyAccess)
     }
-
-    func testDescription_whenNodeDescriptionIsAbsentAndHasAccessToUpdateDescription_shouldMatchReadOnlyString() {
-        fullAccessNodeTypes.forEach {
-            let sut = makeSUT(description: nil, accessType: $0)
-            XCTAssertEqual(
-                sut.description,
-                .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readWrite)
-            )
-        }
+    
+    func testHasReadonlyAccess_whenNodeIsBackupsNode_shouldReturnTrue() {
+        let sut = makeSUT(isBackupsNode: true)
+        XCTAssertTrue(sut.hasReadOnlyAccess)
     }
-
-    func testDescription_whenNodeDescriptionIsEmptyAndHasAccessToUpdateDescription_shouldMatchReadOnlyString() {
-        fullAccessNodeTypes.forEach {
-            let sut = makeSUT(description: "", accessType: $0)
-            XCTAssertEqual(
-                sut.description,
-                .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readWrite)
-            )
-        }
-    }
-
-    func testDescription_whenNodeDescriptionIsAbsentAndTheNodeIsInRubbishBin_shouldMatchReadOnlyString() {
-        let sut = makeSUT(description: nil, isNodeInRubbishBin: true)
-        XCTAssertEqual(
-            sut.description,
-            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
-        )
-    }
-
-    func testDescription_whenNodeDescriptionIsEmptyAndTheNodeIsInRubbishBin_shouldMatchReadOnlyString() {
-        let sut = makeSUT(description: nil, isNodeInRubbishBin: true)
-        XCTAssertEqual(
-            sut.description,
-            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
-        )
-    }
-
-    func testDescription_whenNodeDescriptionIsAbsentAndTheNodeIsBackupsNode_shouldMatchReadOnlyString() {
-        let sut = makeSUT(description: nil, isBackupsNode: true)
-        XCTAssertEqual(
-            sut.description,
-            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
-        )
-    }
-
-    func testDescription_whenNodeDescriptionIsEmptyAndTheNodeIsBackupsNode_shouldMatchReadOnlyString() {
-        let sut = makeSUT(description: nil, isBackupsNode: true)
-        XCTAssertEqual(
-            sut.description,
-            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
-        )
-    }
-
-    func testDescription_whenNodeDescriptionIsAbsentAndTheNodeIsBackupsRootNode_shouldMatchReadOnlyString() {
-        let sut = makeSUT(description: nil, isBackupsRootNode: true)
-        XCTAssertEqual(
-            sut.description,
-            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
-        )
-    }
-
-    func testDescription_whenNodeDescriptionIsEmptyAndTheNodeIsBackupsRootNode_shouldMatchReadOnlyString() {
-        let sut = makeSUT(description: nil, isBackupsRootNode: true)
-        XCTAssertEqual(
-            sut.description,
-            .placeholder(Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly)
-        )
-    }
-
-    func testDescription_hasNodeDescription_shouldReturnDescription() {
-        let description = "any description"
-        fullAccessNodeTypes.forEach {
-            let sut = makeSUT(description: description, accessType: $0)
-            XCTAssertEqual(sut.description, .content(description))
-        }
+    
+    func testHasReadonlyAccess_whenNodeIsBackupsRootNode_shouldReturnTrue() {
+        let sut = makeSUT(isBackupsRootNode: true)
+        XCTAssertTrue(sut.hasReadOnlyAccess)
     }
 
     func testHeader_whenInvoked_shouldMatch() {
@@ -204,13 +127,50 @@ final class NodeDescriptionViewModelTests: XCTestCase {
         let result = await sut.savePendingChanges()
         XCTAssertEqual(result, .removed)
     }
-
-    func testFooterViewModel_whenDescriptionUpdated_shouldMatchTheTrailingTextAndScrollToCell() {
-        let sut = makeSUT(description: "", maxCharactersAllowed: 20)
+    
+    func testFooterViewModel_whenDescriptionUpdated_withReadOnlyAccess_shouldShowLeadingTextAndHideTrailingTextAndNotScrollToCell() {
+        let sut = makeSUT(description: "", accessType: .read, maxCharactersAllowed: 20)
         var scrollToCellTriggered = false
         sut.scrollToCell = {
             scrollToCellTriggered = true
         }
+        sut.cellViewModel.descriptionUpdated("updated")
+        XCTAssertEqual(sut.footerViewModel.leadingText, "Read-only")
+        XCTAssertEqual(sut.footerViewModel.trailingText, nil)
+        XCTAssertFalse(scrollToCellTriggered)
+    }
+    
+    func testFooterViewModel_whenDescriptionUpdated_withReadWriteAccess_shouldShowLeadingTextAndHideTrailingTextAndNotScrollToCell() {
+        let sut = makeSUT(description: "", accessType: .readWrite, maxCharactersAllowed: 20)
+        var scrollToCellTriggered = false
+        sut.scrollToCell = {
+            scrollToCellTriggered = true
+        }
+        sut.cellViewModel.descriptionUpdated("updated")
+        XCTAssertEqual(sut.footerViewModel.leadingText, "Read-only")
+        XCTAssertEqual(sut.footerViewModel.trailingText, nil)
+        XCTAssertFalse(scrollToCellTriggered)
+    }
+
+    func testFooterViewModel_whenDescriptionUpdated_withOwnerAccess_whileEditing_shouldMatchTheTrailingTextAndScrollToCell() {
+        let sut = makeSUT(description: "", accessType: .owner, maxCharactersAllowed: 20)
+        var scrollToCellTriggered = false
+        sut.scrollToCell = {
+            scrollToCellTriggered = true
+        }
+        sut.cellViewModel.isTextViewFocused(true)
+        sut.cellViewModel.descriptionUpdated("description added")
+        XCTAssertEqual(sut.footerViewModel.trailingText, "17/20")
+        XCTAssertTrue(scrollToCellTriggered)
+    }
+    
+    func testFooterViewModel_whenDescriptionUpdated_whileEditing_shouldMatchTheTrailingTextAndScrollToCell() {
+        let sut = makeSUT(description: "", accessType: .full, maxCharactersAllowed: 20)
+        var scrollToCellTriggered = false
+        sut.scrollToCell = {
+            scrollToCellTriggered = true
+        }
+        sut.cellViewModel.isTextViewFocused(true)
         sut.cellViewModel.descriptionUpdated("description added")
         XCTAssertEqual(sut.footerViewModel.trailingText, "17/20")
         XCTAssertTrue(scrollToCellTriggered)
@@ -253,6 +213,28 @@ final class NodeDescriptionViewModelTests: XCTestCase {
         XCTAssertEqual(sut.footerViewModel.trailingText, "17/20")
         sut.cellViewModel.isTextViewFocused(false)
         XCTAssertNil(sut.footerViewModel.trailingText)
+    }
+    
+    func testUpdateDescription_whenDescriptionIsUpdated_shouldChangeDescription() {
+        let sut = makeSUT()
+        let node = NodeEntity(description: "testUpdateDescription")
+        sut.cellViewModel.isTextViewFocused(true)
+        sut.updateDescription(with: node)
+        XCTAssertEqual(sut.description.content, "testUpdateDescription")
+        
+        XCTAssertEqual(sut.footerViewModel.trailingText, "21/300")
+        XCTAssertNil(sut.footerViewModel.leadingText)
+    }
+    
+    func testSaveState_whenGetlocalizedString_shouldMatchLocalizedValue() {
+        let outputStrings = saveStates.map(\.localizedString)
+        let expectedStrings = [
+            Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.SavedState.descriptionAdded,
+            Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.SavedState.descriptionUpdated,
+            Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.SavedState.descriptionRemoved,
+            Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.SavedState.error
+        ]
+        XCTAssertEqual(outputStrings, expectedStrings)
     }
 
     // MARK: - Helpers

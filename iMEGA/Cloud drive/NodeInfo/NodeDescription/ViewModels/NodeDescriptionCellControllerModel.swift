@@ -22,33 +22,31 @@ final class NodeDescriptionCellControllerModel {
             }
         }
     }
-    
-    enum Description: Equatable {
-        case content(String)
-        case placeholder(String)
 
-        var text: String {
-            switch self {
-            case .content(let text): return text
-            case .placeholder(let text): return text
-            }
-        }
+    struct Description: Equatable {
+        let content: String?
 
         var isPlaceholder: Bool {
-            guard case .placeholder = self else { return false }
-            return true
+            content == nil || content == ""
         }
     }
 
     private let maxCharactersAllowed: Int
     private let textViewEdgeInsets = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
-    private(set) var node: NodeEntity
     private let nodeUseCase: any NodeUseCaseProtocol
     private let backupUseCase: any BackupsUseCaseProtocol
     private let nodeDescriptionUseCase: any NodeDescriptionUseCaseProtocol
     private let refreshUI: ((_ code: () -> Void) -> Void)
     let descriptionSaved: (SavedState) -> Void
 
+    private(set) var node: NodeEntity
+    
+    /// Indicates whether the description text is being focused
+    /// This is needed  for handling the footer state when node is updated
+    private var isEditing: Bool {
+        footerViewModel.trailingText != nil
+    }
+    
     /// A closure that checks if there are any pending description changes that is not saved yet.
     ///
     /// - Returns: `true` if there are pending changes, otherwise `false`.
@@ -61,14 +59,6 @@ final class NodeDescriptionCellControllerModel {
     ///
     var savePendingChanges: () async -> SavedState?
 
-    var placeholderTextForReadWriteMode: String {
-        Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readWrite
-    }
-
-    private var placeholderTextForReadOnlyMode: String {
-        Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.EmptyText.readOnly
-    }
-
     var hasReadOnlyAccess: Bool {
         let nodeAccessLevel = nodeUseCase.nodeAccessLevel(nodeHandle: node.handle)
 
@@ -79,11 +69,7 @@ final class NodeDescriptionCellControllerModel {
     }
 
     var description: Description {
-        guard let description = node.description, description.isNotEmpty else {
-            return .placeholder(hasReadOnlyAccess ? placeholderTextForReadOnlyMode : placeholderTextForReadWriteMode)
-        }
-
-        return .content(description)
+        .init(content: node.description)
     }
 
     var header: String {
@@ -100,31 +86,33 @@ final class NodeDescriptionCellControllerModel {
 
     private(set) lazy var footerViewModel = NodeDescriptionFooterViewModel(
         leadingText: footer,
-        description: description.isPlaceholder ? "" : description.text,
+        description: description.content ?? "",
         maxCharactersAllowed: maxCharactersAllowed
     )
 
     private(set) lazy var cellViewModel: NodeDescriptionCellViewModel = {
         NodeDescriptionCellViewModel(
             maxCharactersAllowed: maxCharactersAllowed,
-            editingDisabled: hasReadOnlyAccess,
-            placeholderText: placeholderTextForReadWriteMode,
-            textViewEdgeInsets: textViewEdgeInsets
-        ) { [weak self] in
-            guard let self else { return nil }
-            return description
-        } descriptionUpdated: { [weak self] text in
-            guard let self else { return }
-            descriptionUpdated(text)
-        } saveDescription: { [weak self] description in
-            Task { @MainActor [weak self] in
+            editingDisabled: { [weak self] in self?.hasReadOnlyAccess == true },
+            textViewEdgeInsets: textViewEdgeInsets,
+            descriptionProvider: { [weak self] in
+                guard let self else { return nil }
+                return description
+            }, hasReadOnlyAccess: { [weak self] in
+                self?.hasReadOnlyAccess == true
+            }, descriptionUpdated: { [weak self] text in
                 guard let self else { return }
-                await saveDescriptionIfNeeded(description)
+                descriptionUpdated(text)
+            }, saveDescription: { [weak self] description in
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    await saveDescriptionIfNeeded(description)
+                }
+            }, isTextViewFocused: { [weak self] focused in
+                guard let self else { return }
+                focused ? showCharacterCountAndScrollToCell() : hideCharacterCount()
             }
-        } isTextViewFocused: { [weak self] focused in
-            guard let self else { return }
-            focused ? showCharacterCountAndScrollToCell() : hideCharacterCount()
-        }
+        )
     }()
 
     init(
@@ -145,6 +133,33 @@ final class NodeDescriptionCellControllerModel {
         self.descriptionSaved = descriptionSaved
         self.hasPendingChanges = { false }
         self.savePendingChanges = { nil }
+    }
+    
+    private func descriptionUpdated(_ text: String) {
+        updateFooterViewAndScrollIfNeeded(with: text)
+        updateHasPendingChanges(with: text)
+        updateSavePendingChanges(with: text)
+    }
+    
+    func updateDescription(with node: NodeEntity) {
+        self.node = node
+        let description = node.description ?? ""
+        updateFooterView(description: description)
+        updateHasPendingChanges(with: description)
+        updateSavePendingChanges(with: description)
+        cellViewModel.onUpdate?()
+    }
+    
+    private func updateFooterView(description: String) {
+        footerViewModel.description = description
+        footerViewModel.leadingText = footer
+        if hasReadOnlyAccess {
+            footerViewModel.trailingText = nil
+        } else if isEditing {
+            footerViewModel.showTrailingText()
+        } else {
+            footerViewModel.trailingText = nil
+        }
     }
 
     private func update(descriptionString: String) async -> SavedState {
@@ -182,24 +197,18 @@ final class NodeDescriptionCellControllerModel {
         descriptionSaved(savedState)
     }
 
-    private func descriptionUpdated(_ text: String) {
-        updateFooterViewAndScrollIfNeeded(with: text)
-        updateHasPendingChanges(with: text)
-        updateSavePendingChanges(with: text)
-    }
-
     private func updateFooterViewAndScrollIfNeeded(with text: String) {
-        refreshUIAndScrollIfNeeded {
-            self.footerViewModel.description = text
-            self.footerViewModel.showTrailingText()
+        refreshUIAndScrollIfNeeded { [weak self] in
+            guard let self else { return }
+            updateFooterView(description: text)
         }
     }
 
     private func updateHasPendingChanges(with text: String) {
         hasPendingChanges = { [weak self] in
             guard let self else { return false }
-            guard description.isPlaceholder, text.isNotEmpty else { return text != description.text }
-            return true
+            // When description is nil or "" and text is also empty, there's no pending changes.
+            return description.isPlaceholder ? text.isNotEmpty : text != description.content
         }
     }
 
