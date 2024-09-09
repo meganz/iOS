@@ -93,10 +93,22 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     });
 }
 
+- (BOOL)avoidInstallingPopGesture{
+    return (
+            [NSStringFromClass(self.class) isEqualToString: @"MFMessageComposeViewController"] ||
+            [NSStringFromClass(self.class) isEqualToString: @"CKSMSComposeRemoteViewController"] ||
+            [NSStringFromClass(self.class) isEqualToString: @"CKSMSComposeController"]
+            );
+}
+
 - (void)fd_viewWillAppear:(BOOL)animated
 {
     // Forward to primary implementation.
     [self fd_viewWillAppear:animated];
+    
+    if ([self avoidInstallingPopGesture]) {
+        return;
+    }
     
     if (self.fd_willAppearInjectBlock) {
         self.fd_willAppearInjectBlock(self, animated);
@@ -107,6 +119,10 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 {
     // Forward to primary implementation.
     [self fd_viewWillDisappear:animated];
+    
+    if ([self avoidInstallingPopGesture]) {
+        return;
+    }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         UIViewController *viewController = self.navigationController.viewControllers.lastObject;
