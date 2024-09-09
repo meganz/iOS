@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol AuthUseCaseProtocol {
+public protocol AuthUseCaseProtocol: Sendable {
     func logout()
     func login(sessionId: String) async throws
     func sessionId() -> String?
