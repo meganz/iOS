@@ -9,15 +9,14 @@ import XCTest
 
 final class NotificationsViewModelTests: XCTestCase {
     
-    func testNumberOfSections_notificationsEnabled_twoSections() {
-        let (sut, _) = makeSUT(featureFlagList: [.notificationCenter: true])
+    func testNumberOfSections_shouldBeTwoSections() {
+        let (sut, _) = makeSUT()
         XCTAssertEqual(sut.numberOfSections, 2)
     }
     
     @MainActor
-    func testNotificationsSectionNumberOfRows_notificationsEnabled_matchNotificationsCount() async {
+    func testNotificationsSectionNumberOfRows_shouldMatchNotificationsCount() async {
         let (sut, _) = makeSUT(
-            featureFlagList: [.notificationCenter: true],
             notifications: [
                 NotificationEntity(id: NotificationIDEntity(1)),
                 NotificationEntity(id: NotificationIDEntity(2)),
@@ -35,7 +34,6 @@ final class NotificationsViewModelTests: XCTestCase {
     @MainActor
     func testFetchNotificationList_whenEnabledNotificationsChange_notificationsShouldBeUpdated() async {
         let (sut, notificationsUseCase) = makeSUT(
-            featureFlagList: [.notificationCenter: true],
             notifications: [
                 NotificationEntity(id: NotificationIDEntity(1)),
                 NotificationEntity(id: NotificationIDEntity(2)),
@@ -60,7 +58,6 @@ final class NotificationsViewModelTests: XCTestCase {
     @MainActor
     func testFetchNotificationList_shouldBeSortedByHighestToLowestID() async {
         let (sut, _) = makeSUT(
-            featureFlagList: [.notificationCenter: true],
             notifications: [
                 NotificationEntity(id: NotificationIDEntity(1)),
                 NotificationEntity(id: NotificationIDEntity(2)),
@@ -80,7 +77,6 @@ final class NotificationsViewModelTests: XCTestCase {
     @MainActor
     func testDoCurrentAndEnabledNotificationsDiffer_currentAndEnabledMatch_shouldReturnFalse() async {
         let (sut, _) = makeSUT(
-            featureFlagList: [.notificationCenter: true],
             notifications: [
                 NotificationEntity(id: NotificationIDEntity(1)),
                 NotificationEntity(id: NotificationIDEntity(2))
@@ -99,7 +95,6 @@ final class NotificationsViewModelTests: XCTestCase {
     @MainActor
     func testDoCurrentAndEnabledNotificationsDiffer_whenBothHaveDifferentNotifications_shouldReturnTrue() async {
         let (sut, notificationsUseCase) = makeSUT(
-            featureFlagList: [.notificationCenter: true],
             notifications: [
                 NotificationEntity(id: NotificationIDEntity(1)),
                 NotificationEntity(id: NotificationIDEntity(2))
@@ -121,7 +116,6 @@ final class NotificationsViewModelTests: XCTestCase {
     func testUpdateLastReadNotificationId_shouldUpdateLastReadId() async throws {
         let expectedLastReadId = NotificationIDEntity(3)
         let (sut, notificationsUseCase) = makeSUT(
-            featureFlagList: [.notificationCenter: true],
             notifications: [
                 NotificationEntity(id: NotificationIDEntity(1)),
                 NotificationEntity(id: NotificationIDEntity(2)),
@@ -143,7 +137,7 @@ final class NotificationsViewModelTests: XCTestCase {
     }
 
     @MainActor func testDidTapNotification_whenNotificationTapped_presentRedirectionURLLink() {
-        let (sut, _) = makeSUT(featureFlagList: [.notificationCenter: true])
+        let (sut, _) = makeSUT()
         let expectedURL = URL(string: "http://test")!
         let testNotification = NotificationEntity(
             id: NotificationIDEntity(1),
@@ -159,10 +153,7 @@ final class NotificationsViewModelTests: XCTestCase {
     
     func testClearImageCache_whenActionDispatched_cacheIsCleared() {
         let imageLoader = ImageLoader()
-        let (sut, _) = makeSUT(
-            featureFlagList: [.notificationCenter: true],
-            imageLoader: imageLoader
-        )
+        let (sut, _) = makeSUT(imageLoader: imageLoader)
 
         sut.dispatch(.clearImageCache)
         
@@ -172,10 +163,7 @@ final class NotificationsViewModelTests: XCTestCase {
     func testClearCache_whenCalled_shouldIncrementClearCacheCallCount() {
         let imageLoader = MockImageLoader()
         
-        let (sut, _) = makeSUT(
-            featureFlagList: [.notificationCenter: true],
-            imageLoader: imageLoader
-        )
+        let (sut, _) = makeSUT(imageLoader: imageLoader)
         
         sut.dispatch(.clearImageCache)
 
@@ -202,7 +190,6 @@ final class NotificationsViewModelTests: XCTestCase {
     }
     
     private func makeSUT(
-        featureFlagList: [FeatureFlagKey: Bool] = [:],
         lastReadNotification: NotificationIDEntity = NotificationIDEntity(0),
         notifications: [NotificationEntity] = [],
         enabledNotifications: [NotificationIDEntity] = [],
@@ -211,7 +198,6 @@ final class NotificationsViewModelTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (NotificationsViewModel, MockNotificationUseCase) {
-        let mockFeatureFlagProvider = MockFeatureFlagProvider(list: featureFlagList)
         let mockNotificationsUseCase = MockNotificationUseCase(
             lastReadNotification: lastReadNotification,
             enabledNotifications: enabledNotifications,
@@ -220,7 +206,6 @@ final class NotificationsViewModelTests: XCTestCase {
         )
         
         let sut = NotificationsViewModel(
-            featureFlagProvider: mockFeatureFlagProvider,
             notificationsUseCase: mockNotificationsUseCase,
             imageLoader: imageLoader
         )

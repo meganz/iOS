@@ -417,32 +417,25 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.viewModel.isPromoEnabled) {
-        switch (section) {
-            case NotificationSectionPromos:
-                return self.viewModel.promoSectionNumberOfRows;
-            case NotificationSectionUserAlerts:
-                return self.userAlertsArray.count;
-            default:
-                return 0;
-        }
+    switch (section) {
+        case NotificationSectionPromos:
+            return self.viewModel.promoSectionNumberOfRows;
+        case NotificationSectionUserAlerts:
+            return self.userAlertsArray.count;
+        default:
+            return 0;
     }
-    
-    return self.userAlertsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.viewModel.isPromoEnabled) {
-        switch (indexPath.section) {
-            case NotificationSectionPromos:
-                return [self promoCellWithIndexPath:indexPath];
-            case NotificationSectionUserAlerts:
-                return [self userAlertCellRowAtIndexPath:indexPath];
-            default:
-                return UITableViewCell.new;
-        }
+    switch (indexPath.section) {
+        case NotificationSectionPromos:
+            return [self promoCellWithIndexPath:indexPath];
+        case NotificationSectionUserAlerts:
+            return [self userAlertCellRowAtIndexPath:indexPath];
+        default:
+            return UITableViewCell.new;
     }
-    return [self userAlertCellRowAtIndexPath:indexPath];
 }
 
 - (UITableViewCell *)userAlertCellRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -471,7 +464,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if (self.viewModel.isPromoEnabled && indexPath.section == NotificationSectionPromos) {
+    if (indexPath.section == NotificationSectionPromos) {
         [self didTapNotificationAt:indexPath];
         return;
     }
