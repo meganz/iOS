@@ -1,19 +1,20 @@
 import MEGADomain
+import MEGASwift
 
-@objc final class CancellableTransfer: NSObject {
+@objc final class CancellableTransfer: NSObject, @unchecked Sendable {
     let handle: HandleEntity
     let parentHandle: HandleEntity
     let messageId: HandleEntity
     let chatId: HandleEntity
     let fileLinkURL: URL?
     let localFileURL: URL?
-    var name: String?
     let appData: String?
     let priority: Bool
     let isFile: Bool
     let type: CancellableTransferType
-    var state: TransferStateEntity = .none
-    var stage: TransferStageEntity = .none
+    @Atomic var name: String?
+    @Atomic var state: TransferStateEntity = .none
+    @Atomic var stage: TransferStageEntity = .none
     
     @objc init(handle: HandleEntity = .invalid, parentHandle: HandleEntity = .invalid, fileLinkURL: URL? = nil, localFileURL: URL? = nil, name: String?, appData: String? = nil, priority: Bool = false, isFile: Bool = true, type: CancellableTransferType) {
         self.handle = handle
@@ -22,11 +23,12 @@ import MEGADomain
         self.chatId = .invalid
         self.fileLinkURL = fileLinkURL
         self.localFileURL = localFileURL
-        self.name = name
         self.appData = appData
         self.priority = priority
         self.isFile = isFile
         self.type = type
+        super.init()
+        self.$name.mutate { $0 = name }
     }
     
     @objc init(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, fileLinkURL: URL? = nil, localFileURL: URL? = nil, name: String?, appData: String? = nil, priority: Bool = false, isFile: Bool = true, type: CancellableTransferType) {
@@ -36,11 +38,24 @@ import MEGADomain
         self.chatId = chatId
         self.fileLinkURL = fileLinkURL
         self.localFileURL = localFileURL
-        self.name = name
         self.appData = appData
         self.priority = priority
         self.isFile = isFile
         self.type = type
+        super.init()
+        self.$name.mutate { $0 = name }
+    }
+    
+    public func setState(_ newState: TransferStateEntity) {
+        $state.mutate { $0 = newState }
+    }
+    
+    public func setStage(_ newStage: TransferStageEntity) {
+        $stage.mutate { $0 = newStage }
+    }
+    
+    public func setName(_ newName: String?) {
+        $name.mutate { $0 = newName }
     }
     
     struct Factory {

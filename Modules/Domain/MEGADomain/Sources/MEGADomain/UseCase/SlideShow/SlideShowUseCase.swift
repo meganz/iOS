@@ -25,7 +25,7 @@ public final class SlideShowUseCase: SlideShowUseCaseProtocol {
     }
     
     public func loadConfiguration(forUser userId: HandleEntity) -> SlideShowConfigurationEntity {
-        let jsonData: Data? = preferenceRepo[preferenceKey(userId)]
+        let jsonData: Data? = preferenceRepo.value(forKey: preferenceKey(userId))
         guard let jsonData = jsonData,
               let config = try? JSONDecoder().decode(SlideShowConfigurationEntity.self, from: jsonData)
         else {
@@ -36,6 +36,6 @@ public final class SlideShowUseCase: SlideShowUseCaseProtocol {
     
     public func saveConfiguration(config: SlideShowConfigurationEntity, forUser userId: HandleEntity) throws {
         let jsonConfig = try JSONEncoder().encode(config)
-        preferenceRepo[preferenceKey(userId)] = jsonConfig
+        preferenceRepo.setValue(value: jsonConfig, forKey: preferenceKey(userId))
     }
 }
