@@ -2321,7 +2321,6 @@
 		BF7A73862C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A73852C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */; };
-		BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */; };
 		BF7EBD1C244D354A0015255F /* MeterTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD1B244D354A0015255F /* MeterTable.swift */; };
 		BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD1F244E50270015255F /* FingerLiftupGestureRecognizer.swift */; };
 		BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD25244E8B380015255F /* SIMD2+Additions.swift */; };
@@ -2517,7 +2516,6 @@
 		BFE6DBFC242DBA4A00E2E5B4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */; };
 		BFE6DBFE2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */; };
 		BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6E553255259FE00050DCA /* SortOrderType.swift */; };
-		BFEA015C256B4E8A00646606 /* FilesDownloadUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEA015B256B4E8A00646606 /* FilesDownloadUseCase.swift */; };
 		BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */; };
 		BFEAFF7C2565D57300646606 /* NodeClipboardOperationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */; };
 		BFEF8CAD2887A0F400F8F9F1 /* QASettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAC2887A0F400F8F9F1 /* QASettingsRouter.swift */; };
@@ -5156,7 +5154,6 @@
 		BF7A73852C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellControllerModelTests.swift; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
 		BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+MEGANode.swift"; sourceTree = "<group>"; };
-		BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKTransferListenerRepository.swift; sourceTree = "<group>"; };
 		BF7EBD1B244D354A0015255F /* MeterTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterTable.swift; sourceTree = "<group>"; };
 		BF7EBD1F244E50270015255F /* FingerLiftupGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerLiftupGestureRecognizer.swift; sourceTree = "<group>"; };
 		BF7EBD25244E8B380015255F /* SIMD2+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SIMD2+Additions.swift"; sourceTree = "<group>"; };
@@ -5339,7 +5336,6 @@
 		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+NavigationBar.swift"; sourceTree = "<group>"; };
 		BFE6E553255259FE00050DCA /* SortOrderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrderType.swift; sourceTree = "<group>"; };
-		BFEA015B256B4E8A00646606 /* FilesDownloadUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesDownloadUseCase.swift; sourceTree = "<group>"; };
 		BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodeClipboardOperationRepository.swift; sourceTree = "<group>"; };
 		BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeClipboardOperationUseCase.swift; sourceTree = "<group>"; };
 		BFEF8CAC2887A0F400F8F9F1 /* QASettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsRouter.swift; sourceTree = "<group>"; };
@@ -8416,7 +8412,6 @@
 			children = (
 				94712EF72A9C9F4000B5F2C9 /* NodeDetails */,
 				5D1E3C182531F2BE00BD7A07 /* Search */,
-				BFEA015B256B4E8A00646606 /* FilesDownloadUseCase.swift */,
 				BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */,
 				5D6092A5255D609F005FA3E4 /* NodeLabelActionUseCase.swift */,
 				B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */,
@@ -8658,7 +8653,6 @@
 				5D94D70D2513690700B103EC /* Node */,
 				BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */,
 				BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */,
-				BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */,
 				5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */,
 			);
 			path = SDK;
@@ -15078,7 +15072,6 @@
 				94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				B6A01BA9289A5E9200B503FD /* FileManager+Additions.swift in Sources */,
-				BFEA015C256B4E8A00646606 /* FilesDownloadUseCase.swift in Sources */,
 				5D6D95C0252039CD0098BCAC /* FileSearchHistoryRepository.swift in Sources */,
 				BF5E340E2559E2EC0055395E /* FilesExplorerContainerGridViewState.swift in Sources */,
 				BF5E34062559E2C10055395E /* FilesExplorerContainerListViewState.swift in Sources */,
@@ -15947,7 +15940,6 @@
 				5D94D702251368FB00B103EC /* SDKNodeClient.swift in Sources */,
 				BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */,
 				BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */,
-				BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */,
 				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
 				94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */,
 				940DE0272AB46245008C9DB5 /* SearchConfig+Home.swift in Sources */,

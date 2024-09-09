@@ -6,7 +6,7 @@ public protocol NodeTransferCompletionUpdatesProviderProtocol: Sendable {
     /// Node updates from `MEGATransferDelegate` `onTransferFinish` as an `AnyAsyncSequence`
     ///
     /// - Returns: `AnyAsyncSequence` that will call sdk.add on creation and sdk.remove onTermination of `AsyncStream`.
-    /// It will yield `TransferEntity` items until sequence terminated
+    /// It will yield  completed `TransferEntity` items until sequence terminated
     var nodeTransferUpdates: AnyAsyncSequence<TransferEntity> { get }
 }
 
@@ -19,18 +19,18 @@ public struct NodeTransferCompletionUpdatesProvider: NodeTransferCompletionUpdat
             
             continuation.onTermination = { _ in
                 sdk.remove(delegate)
-                sharedFolderSdk.remove(delegate)
+                sharedFolderSdk?.remove(delegate)
             }
             sdk.add(delegate)
-            sharedFolderSdk.add(delegate)
+            sharedFolderSdk?.add(delegate)
         }
         .eraseToAnyAsyncSequence()
     }
     
     private let sdk: MEGASdk
-    private let sharedFolderSdk: MEGASdk
+    private let sharedFolderSdk: MEGASdk?
     
-    public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk) {
+    public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk? = nil) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
     }
