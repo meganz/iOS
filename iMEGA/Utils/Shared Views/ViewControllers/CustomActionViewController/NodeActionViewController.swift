@@ -67,6 +67,7 @@ class NodeActionViewController: ActionSheetViewController {
     }()
     
     private var isUndecryptedFolder = false
+    @MainActor private var loadActions: (() async -> Void)?
     
     // MARK: - NodeActionViewController initializers
     
@@ -124,7 +125,7 @@ class NodeActionViewController: ActionSheetViewController {
         
         configurePresentationStyle(from: sender)
         
-        Task { @MainActor in
+        loadActions = { [self] in
             var selectionType: NodeSelectionType = .filesAndFolders
             let fileNodes = nodes.filter { $0.isFile() }
             if fileNodes.isEmpty {
@@ -238,7 +239,7 @@ class NodeActionViewController: ActionSheetViewController {
         super.init(nibName: nil, bundle: nil)
         
         configurePresentationStyle(from: sender)
-        Task { @MainActor in
+        loadActions = { [self] in
             let actions = NodeActionBuilder()
                 .setDisplayMode(self.displayMode)
                 .setIsPdf(node.name?.pathExtension == "pdf")
@@ -276,6 +277,17 @@ class NodeActionViewController: ActionSheetViewController {
         tableView.register(NodeActionTableViewCell.self,
                            forCellReuseIdentifier: String(describing: NodeActionTableViewCell.self))
         updateAppearance()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Node Action Items
+        if let loadActions {
+            Task {
+                await loadActions()
+                self.loadActions = nil
+            }
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -415,7 +427,7 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false) {
-        Task { @MainActor in
+        loadActions = { [self] in
             let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
             let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
             let isEditableTextFile = node.isFile() && node.name?.fileExtensionGroup.isEditableText == true
