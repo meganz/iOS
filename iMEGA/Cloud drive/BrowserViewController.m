@@ -51,6 +51,7 @@
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
 @property (nonatomic) UISearchController *searchController;
+@property (nonatomic, assign) BOOL isLoading;
 
 @end
 
@@ -283,6 +284,7 @@
 }
 
 - (void)reloadUI {
+    self.isLoading = YES;
     [self setParentNodeForBrowserAction];
     [self setNavigationBarTitle];
     __weak typeof(self) weakSelf = self;
@@ -291,6 +293,7 @@
             [weakSelf updateSearchBarVisibility];
             [weakSelf reloadToolbarItemsUI];
             [weakSelf.tableView reloadData];
+            weakSelf.isLoading = NO;
         });
     }];
 }
@@ -870,10 +873,14 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
-    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
-    
-    return emptyStateView;
+    if (self.browserAction == BrowserActionSelectVideo && self.isLoading) {
+        return [self browserActionSelectVideoPlaceholderView];
+    } else {
+        EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+        [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+        
+        return emptyStateView;
+    }
 }
 
 #pragma mark - Empty State
