@@ -6,7 +6,7 @@ import MEGASDKRepo
 extension OfflineViewController {
     @objc func createOfflineViewModel() -> OfflineViewModel {
         OfflineViewModel(
-            transferUseCase: NodeTransferUseCase(repo: NodeTransferRepository.newRepo),
+            transferUseCase: NodeTransferUseCase(repo: NodeTransferRepository.newRepo(includesSharedFolder: true)),
             offlineUseCase: OfflineUseCase(fileSystemRepository: FileSystemRepository.newRepo),
             megaStore: MEGAStore.shareInstance()
         )

@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     class var identifier: AnyHashable {
       return ObjectIdentifier(self)

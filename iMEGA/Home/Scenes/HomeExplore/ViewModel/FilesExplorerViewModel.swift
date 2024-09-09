@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import MEGADomain
 import MEGAFoundation
 import MEGAPresentation
@@ -11,6 +12,7 @@ enum FilesExplorerAction: ActionType {
     case downloadNode(MEGANode)
 }
 
+@MainActor
 final class FilesExplorerViewModel: ViewModelType {
     
     enum Command: CommandType {
@@ -34,13 +36,18 @@ final class FilesExplorerViewModel: ViewModelType {
     
     private let router: FilesExplorerRouter
     private let useCase: any FilesSearchUseCaseProtocol
-    private let filesDownloadUseCase: FilesDownloadUseCase
+    private let nodeDownloadUpdatesUseCase: any NodeDownloadUpdatesUseCaseProtocol
     private let nodeClipboardOperationUseCase: NodeClipboardOperationUseCase
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let explorerType: ExplorerTypeEntity
     private var contextMenuManager: ContextMenuManager?
     private let nodeProvider: any MEGANodeProviderProtocol
+    private var nodeDownloadCompletionMonitoringTask: Task<Void, Never>? {
+        willSet {
+            nodeDownloadCompletionMonitoringTask?.cancel()
+        }
+    }
     
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var viewConfiguration: any FilesExplorerViewConfiguration {
@@ -74,7 +81,7 @@ final class FilesExplorerViewModel: ViewModelType {
     required init(explorerType: ExplorerTypeEntity,
                   router: FilesExplorerRouter,
                   useCase: some FilesSearchUseCaseProtocol,
-                  filesDownloadUseCase: FilesDownloadUseCase,
+                  nodeDownloadUpdatesUseCase: some NodeDownloadUpdatesUseCaseProtocol,
                   nodeClipboardOperationUseCase: NodeClipboardOperationUseCase,
                   contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
                   createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
@@ -86,7 +93,7 @@ final class FilesExplorerViewModel: ViewModelType {
         self.nodeClipboardOperationUseCase = nodeClipboardOperationUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.filesDownloadUseCase = filesDownloadUseCase
+        self.nodeDownloadUpdatesUseCase = nodeDownloadUpdatesUseCase
         self.nodeProvider = nodeProvider
         self.featureFlagProvider = featureFlagProvider
                         
@@ -105,6 +112,7 @@ final class FilesExplorerViewModel: ViewModelType {
     deinit {
         monitorTask?.cancel()
         searchTask?.cancel()
+        nodeDownloadCompletionMonitoringTask?.cancel()
     }
     
     private func configureContextMenus() {
@@ -156,7 +164,6 @@ final class FilesExplorerViewModel: ViewModelType {
     }
     
     // MARK: search
-    @MainActor
     private func monitorNodeUpdates() async {
         for await _ in useCase.nodeUpdates {
             debouncer.start { @MainActor [weak self] in
@@ -165,7 +172,6 @@ final class FilesExplorerViewModel: ViewModelType {
         }
     }
     
-    @MainActor
     private func startSearching(_ text: String?) async {
         do {
             let nodes: [NodeEntity] = try await startSearch(
@@ -174,7 +180,7 @@ final class FilesExplorerViewModel: ViewModelType {
                 favouritesOnly: explorerType == .favourites)
             
             let megaNodes = await toMEGANode(from: nodes)
-            updateListenerForFilesDownload(withNodes: megaNodes)
+            updateListenerForFilesDownload(withNodes: nodes)
             invokeCommand?(.reloadNodes(nodes: megaNodes, searchText: text))
         } catch is CancellationError, NodeSearchResultErrorEntity.cancelled {
             MEGALogError("[Files Explorer] startSearching cancelled for type:\(explorerType)")
@@ -205,26 +211,22 @@ final class FilesExplorerViewModel: ViewModelType {
     }
     	
     private func toMEGANode(from nodes: [NodeEntity]) async -> [MEGANode] {
-        await withTaskGroup(of: (Int, MEGANode?).self, returning: [MEGANode].self) { taskGroup in
-            let nodeProvider = self.nodeProvider
-            for (index, node) in nodes.enumerated() {
-                _ = taskGroup.addTaskUnlessCancelled { (index, await nodeProvider.node(for: node.handle)) }
-            }
-            return await taskGroup
-                .reduce(into: Array(repeating: Optional<MEGANode>.none, count: nodes.count)) { $0[$1.0] = $1.1 }
-                .compactMap { $0 }
-        }
+        await nodes
+            .async
+            .compactMap { await self.nodeProvider.node(for: $0.handle) }
+            .reduce(into: [], { @Sendable in $0.append($1) })
 	}
     
     private func didSelect(node: MEGANode, allNodes: [MEGANode]) {
         router.didSelect(node: node, allNodes: allNodes)
     }
     
-    private func updateListenerForFilesDownload(withNodes nodes: [MEGANode]?) {
-        filesDownloadUseCase.addListener(nodes: nodes) { [weak self] node in
-            
-            guard let self else { return }
-            self.invokeCommand?(.onTransferCompleted(node))
+    private func updateListenerForFilesDownload(withNodes nodes: [NodeEntity]) {
+        nodeDownloadCompletionMonitoringTask = Task { [weak self, nodeDownloadUpdatesUseCase] in
+            for await node in nodeDownloadUpdatesUseCase.startMonitoringDownloadCompletion(for: nodes) {
+                guard let megaNode = await self?.nodeProvider.node(for: node.handle) else { continue }
+                self?.invokeCommand?(.onTransferCompleted(megaNode))
+            }
         }
     }
     
