@@ -1,7 +1,12 @@
 import Foundation
 
 public struct VideoPlaylistEntity: Identifiable, Hashable, Sendable {
-    public let id: HandleEntity
+    
+    public var id: SetHandleEntity {
+        setIdentifier.handle
+    }
+    
+    public let setIdentifier: SetIdentifier
     public var name: String
     public var coverNode: NodeEntity?
     public var count: Int
@@ -11,7 +16,7 @@ public struct VideoPlaylistEntity: Identifiable, Hashable, Sendable {
     public var sharedLinkStatus: SharedLinkStatusEntity
     
     public init(
-        id: HandleEntity,
+        setIdentifier: SetIdentifier,
         name: String,
         coverNode: NodeEntity? = nil,
         count: Int,
@@ -20,7 +25,7 @@ public struct VideoPlaylistEntity: Identifiable, Hashable, Sendable {
         modificationTime: Date,
         sharedLinkStatus: SharedLinkStatusEntity = .unavailable
     ) {
-        self.id = id
+        self.setIdentifier = setIdentifier
         self.name = name
         self.coverNode = coverNode
         self.count = count

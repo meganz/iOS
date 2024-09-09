@@ -46,7 +46,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     func testOnViewAppeared_whenCalled_setVideoPlaylists() async {
         let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
-                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+                VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
         )
         
@@ -68,7 +68,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     func testOnViewAppeared_whenLoadVideosSuccessfully_showsCorrectLoadingState() async {
         let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
-                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+                VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
         )
         var states: [VideoPlaylistsViewModel.ViewState] = []
@@ -108,7 +108,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     func testCreateUserVideoPlaylist_whenCalled_createsVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
-        let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let createdVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, videoPlaylistUseCase, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
         )
@@ -122,7 +122,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     func testCreateUserVideoPlaylist_whenCreatedSuccessfully_setsNewlyCreatedPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
-        let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let createdVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
         )
@@ -135,7 +135,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     func testCreateUserVideoPlaylist_whenCreatedSuccessfully_showsVideoPickerView() async {
         let videoPlaylistName =  "a video playlist name"
-        let createdVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let createdVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(createVideoPlaylistResult: .success(createdVideoPlaylist))
         )
@@ -165,7 +165,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     func testInit_whenValueChanged_loadsVideoPlaylists() async {
         let (sut, videoPlaylistUseCase, syncModel, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
-                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+                VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
         )
         
@@ -272,7 +272,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         ]
         let videoPlaylistName =  "a video playlist name"
         let createdVideoPlaylist = VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: videoPlaylistName,
             count: 0,
             type: .user,
@@ -303,7 +303,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     // MARK: - didSelectMoreOptionForItem
     
     func testDidSelectMoreOptionForItem_whenSelectInvalidVideoPlaylist_doNotShowSheet() async {
-        let invalidVideoPlaylist = VideoPlaylistEntity(id: 1, name: "new name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let invalidVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "new name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT()
         
         sut.didSelectMoreOptionForItem(invalidVideoPlaylist)
@@ -312,7 +312,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     func testDidSelectMoreOptionForItem_selectedVideoPlaylist_setsSelectedsVideoPlaylistEntity() {
-        let selectedVideoPlaylist = VideoPlaylistEntity(id: 1, name: "video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let selectedVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT()
         XCTAssertFalse(sut.isSheetPresented)
         
@@ -326,8 +326,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let creationTime = Date()
         let modificationTime = Date()
         let initialUserVideoPlaylists = [
-            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false)),
-            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true))
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false)),
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 3), name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true))
         ]
         let selectedVideoPlaylist = initialUserVideoPlaylists[0]
         var updatedVideoPlaylist = selectedVideoPlaylist
@@ -351,8 +351,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let creationTime = Date()
         let modificationTime = Date()
         let initialUserVideoPlaylists = [
-            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false)),
-            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true))
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false)),
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 3), name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true))
         ]
         let selectedVideoPlaylist = initialUserVideoPlaylists[0]
         var updatedVideoPlaylist = selectedVideoPlaylist
@@ -376,8 +376,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let creationTime = Date()
         let modificationTime = Date()
         let initialUserVideoPlaylists = [
-            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true)),
-            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false))
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(true)),
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 3), name: "sample user playlist 2", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: .exported(false))
         ]
         let selectedVideoPlaylist = initialUserVideoPlaylists[0]
         var updatedVideoPlaylist = selectedVideoPlaylist
@@ -459,7 +459,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     func testRenameVideoPlaylist_whenCalled_renameVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
-        let selectedVideoPlaylist = VideoPlaylistEntity(id: 1, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let selectedVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, videoPlaylistUseCase, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(updateVideoPlaylistNameResult: .success(()))
         )
@@ -477,8 +477,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let creationTime = Date()
         let modificationTime = Date()
         let initialUserVideoPlaylists = [
-            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime),
-            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "sample user playlist 1", count: 0, type: .user, creationTime: creationTime, modificationTime: modificationTime),
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 3), name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         ]
         let selectedVideoPlaylist = initialUserVideoPlaylists[0]
         var updatedVideoPlaylist = selectedVideoPlaylist
@@ -512,14 +512,14 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     @MainActor
     func testRenameVideoPlaylist_whenRenameFailed_showsRenameError() async {
         let videoPlaylistName =  "a video playlist name"
-        let selectedVideoPlaylist = VideoPlaylistEntity(id: 2, name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
-        let updatedVideoPlaylist = VideoPlaylistEntity(id: 2, name: "new name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let selectedVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let updatedVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "new name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, syncModel, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(
                 updateVideoPlaylistNameResult: .failure(GenericErrorEntity()),
                 userVideoPlaylistsResult: [
-                    VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
-                    VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+                    VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
+                    VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 3), name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
                 ]
             )
         )
@@ -539,8 +539,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     @MainActor
     func testDeleteVideoPlaylist_whenCalled_deletesVideoPlaylist() async {
         let videoPlaylists =  [
-            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
-            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 3), name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         ]
         let videoPlaylistToDelete = videoPlaylists[0]
         let (sut, _, _, videoPlaylistModificationUseCase) = makeSUT(
@@ -561,8 +561,8 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     @MainActor
     func testDeleteVideoPlaylist_whenSuccessfullyDelete_showsMessage() async {
         let videoPlaylists =  [
-            VideoPlaylistEntity(id: 2, name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
-            VideoPlaylistEntity(id: 3, name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "sample user playlist 1", count: 0, type: .user, creationTime: Date(), modificationTime: Date()),
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 3), name: "sample user playlist 2", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         ]
         let videoPlaylistToDelete = videoPlaylists[0]
         let (sut, _, syncModel, _) = makeSUT(
@@ -596,7 +596,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         ]
         let videoPlaylistName =  "a video playlist name"
         let createdVideoPlaylist = VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: videoPlaylistName,
             count: 0,
             type: .user,
@@ -657,7 +657,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         // Arrange
         let (sut, _, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(systemVideoPlaylistsResult: [
-                VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+                VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
             ])
         )
         
@@ -710,9 +710,13 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         return (sut, videoPlaylistUseCase, syncModel, videoPlaylistModificationUseCase)
     }
     
-    private func videoPlaylist(id: HandleEntity, creationTime: Date, modificationTime: Date) -> VideoPlaylistEntity {
+    private func assertThatCleanUpTemporaryVariablesAfterRenaming(on sut: VideoPlaylistsViewModel, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertNil(sut.selectedVideoPlaylistEntity, file: file, line: line)
+    }
+    
+    private func videoPlaylist(id: SetHandleEntity, creationTime: Date, modificationTime: Date) -> VideoPlaylistEntity {
         VideoPlaylistEntity(
-            id: id,
+            setIdentifier: SetIdentifier(handle: id),
             name: "name-\(id)",
             coverNode: nil,
             count: 0,
