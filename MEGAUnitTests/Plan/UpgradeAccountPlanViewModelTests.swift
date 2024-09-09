@@ -775,7 +775,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         tracker: MockTracker = MockTracker(),
         viewType: UpgradeAccountPlanViewType = .upgrade
     ) -> (UpgradeAccountPlanViewModel, MockAccountPlanPurchaseUseCase) {
-        let mockSubscriptionsUseCase = MockSubscriptionsUseCase(requestResult: .success)
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         let mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
         let router = MockUpgradeAccountPlanRouter()
