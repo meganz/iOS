@@ -281,6 +281,7 @@
 		25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FA32B0ED04C00050882 /* TimelineView.swift */; };
 		25A58FAF2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */; };
 		25A58FB52B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FB42B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift */; };
+		25A990FC2C8968AA00992256 /* TimeLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A990FB2C8968AA00992256 /* TimeLineViewModel.swift */; };
 		25AA545F2B27E1640094F2A2 /* AlbunListPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */; };
 		25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */; };
 		25AD36E92BD8848E004DCF3B /* NodeValidationRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */; };
@@ -1377,8 +1378,6 @@
 		9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */; };
 		945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */; };
 		94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */; };
-		9455CF532927F17200E6FB8F /* SnackBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */; };
-		9458610C292696B300866F03 /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458610B292696B300866F03 /* SnackBarView.swift */; };
 		9459229C2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459229B2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift */; };
 		945928F52AA23C1B0037694C /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 945928F42AA23C1B0037694C /* Search */; };
 		94598D751F0CD53A00B57144 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* Share.storyboard */; };
@@ -1435,8 +1434,6 @@
 		948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */; };
 		9482F73C2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */; };
 		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
-		9486B8EF2C3FDC1C00D96762 /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B8EE2C3FDC1C00D96762 /* SnackBar.swift */; };
-		9486B8F12C3FDD3000D96762 /* SnackBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B8F02C3FDD3000D96762 /* SnackBarTests.swift */; };
 		9486B9062C41738A00D96762 /* RaiseHandUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B9052C41738A00D96762 /* RaiseHandUpdater.swift */; };
 		9486B9092C429B8A00D96762 /* RaiseHandUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9486B9082C429B8A00D96762 /* RaiseHandUpdaterTests.swift */; };
 		94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94872E942C08886600DC76E6 /* UsageViewRouter.swift */; };
@@ -3051,6 +3048,7 @@
 		25A58FA32B0ED04C00050882 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusBannerViewModel.swift; sourceTree = "<group>"; };
 		25A58FB42B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadStatusProvider.swift; sourceTree = "<group>"; };
+		25A990FB2C8968AA00992256 /* TimeLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewModel.swift; sourceTree = "<group>"; };
 		25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbunListPlaceholderView.swift; sourceTree = "<group>"; };
 		25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeValidationRepository+Additions.swift"; sourceTree = "<group>"; };
 		25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentView.swift; sourceTree = "<group>"; };
@@ -4201,9 +4199,7 @@
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileLinkViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChangeNameViewController+Additions.swift"; sourceTree = "<group>"; };
-		9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarViewModel.swift; sourceTree = "<group>"; };
 		945657142B6148F800620DDF /* QuickActionsMenuDelegateHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionsMenuDelegateHandlerTests.swift; sourceTree = "<group>"; };
-		9458610B292696B300866F03 /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
 		9458AEE11FB9D3B800BABD58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9458AEE21FB9D40500BABD58 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9459229B2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupCellViewModelTests.swift; sourceTree = "<group>"; };
@@ -4254,8 +4250,6 @@
 		948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManagerTests.swift; sourceTree = "<group>"; };
 		9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserViewModelTests.swift; sourceTree = "<group>"; };
 		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
-		9486B8EE2C3FDC1C00D96762 /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
-		9486B8F02C3FDD3000D96762 /* SnackBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarTests.swift; sourceTree = "<group>"; };
 		9486B9052C41738A00D96762 /* RaiseHandUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandUpdater.swift; sourceTree = "<group>"; };
 		9486B9082C429B8A00D96762 /* RaiseHandUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandUpdaterTests.swift; sourceTree = "<group>"; };
 		94872E942C08886600DC76E6 /* UsageViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewRouter.swift; sourceTree = "<group>"; };
@@ -6608,6 +6602,7 @@
 				25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */,
 				25A58FB42B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift */,
 				25A58FA32B0ED04C00050882 /* TimelineView.swift */,
+				25A990FB2C8968AA00992256 /* TimeLineViewModel.swift */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -10396,11 +10391,8 @@
 		9458610A2926963200866F03 /* Snackbar */ = {
 			isa = PBXGroup;
 			children = (
-				9486B8EE2C3FDC1C00D96762 /* SnackBar.swift */,
 				943FF9F0292FD74A00B744C8 /* SnackBarPresenting.swift */,
 				943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */,
-				9458610B292696B300866F03 /* SnackBarView.swift */,
-				9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */,
 			);
 			path = Snackbar;
 			sourceTree = "<group>";
@@ -13010,7 +13002,6 @@
 				838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */,
 				BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */,
 				83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */,
-				9486B8F02C3FDD3000D96762 /* SnackBarTests.swift */,
 				8396E2A22ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift */,
 				8396E2A52ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift */,
 				99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */,
@@ -16050,11 +16041,8 @@
 				B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */,
 				B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */,
 				B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */,
-				9486B8EF2C3FDC1C00D96762 /* SnackBar.swift in Sources */,
 				943FF9F1292FD74A00B744C8 /* SnackBarPresenting.swift in Sources */,
 				943FF9F5292FEDA600B744C8 /* SnackBarRouter.swift in Sources */,
-				9458610C292696B300866F03 /* SnackBarView.swift in Sources */,
-				9455CF532927F17200E6FB8F /* SnackBarViewModel.swift in Sources */,
 				5B7273A1240D4F71005816AB /* SortingAndViewModeTableViewController.swift in Sources */,
 				5D568209252FEA9F00FE7F9C /* SortingOrder.swift in Sources */,
 				5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */,
@@ -16105,6 +16093,7 @@
 				BF943E9223554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				32A2AA092A283D85007FC630 /* TimelineFilter.swift in Sources */,
 				25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */,
+				25A990FC2C8968AA00992256 /* TimeLineViewModel.swift in Sources */,
 				8358A6E82925460800EE197C /* ToggleView.swift in Sources */,
 				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
 				94B09E562B84CC87007D6B84 /* ToolbarActionFactory.swift in Sources */,
@@ -16910,7 +16899,6 @@
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
-				9486B8F12C3FDD3000D96762 /* SnackBarTests.swift in Sources */,
 				2434EC3D2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift in Sources */,
 				2590021D2C605778004A421C /* SpotlightContentIndexerActorTests.swift in Sources */,
 				C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */,

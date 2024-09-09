@@ -69,7 +69,7 @@
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
     
-    [MEGASdk.shared addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegateAsync:self queueType:ListenerQueueTypeGlobalBackground];
     
     [self.photoUpdatePublisher setupSubscriptions];
     

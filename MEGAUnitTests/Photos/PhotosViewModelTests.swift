@@ -309,7 +309,7 @@ final class PhotosViewModelTests: XCTestCase {
         sut.cameraUploadStatusButtonViewModel.onTappedHandler?()
         
         XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
-        XCTAssertFalse(sut.timelineViewModel.cameraUploadStatusShown)
+        XCTAssertFalse(sut.timelineViewModel.cameraUploadStatusBannerViewModel.cameraUploadStatusShown)
     }
     
     @MainActor
@@ -322,7 +322,7 @@ final class PhotosViewModelTests: XCTestCase {
         sut.cameraUploadStatusButtonViewModel.onTappedHandler?()
         
         XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 0)
-        XCTAssertTrue(sut.timelineViewModel.cameraUploadStatusShown)
+        XCTAssertTrue(sut.timelineViewModel.cameraUploadStatusBannerViewModel.cameraUploadStatusShown)
     }
     
     @MainActor

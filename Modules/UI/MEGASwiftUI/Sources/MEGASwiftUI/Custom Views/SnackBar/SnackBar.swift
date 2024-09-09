@@ -1,55 +1,44 @@
 import MEGADesignToken
 import SwiftUI
 
-struct SnackBar: Equatable {
+public struct SnackBar: Equatable {
     
-    enum Layout {
+    public enum Layout {
         case crisscross
         case horizontal
     }
-    struct Action: Equatable {
-        var title: String
-        var handler: () -> Void
+    
+    public struct Action: Equatable {
+        public let title: String
+        public let handler: () -> Void
         
-        static func == (lhs: Action, rhs: Action) -> Bool {
-            lhs.title == rhs.title
+        public init(title: String, handler: @escaping () -> Void) {
+            self.title = title
+            self.handler = handler
         }
         
+        public static func == (lhs: Action, rhs: Action) -> Bool {
+            lhs.title == rhs.title
+        }
     }
     
-    struct Colors {
+    public struct Colors {
         typealias ColorProvider = (_ designTokenEnabled: Bool, _ scheme: ColorScheme) -> Color
         var titleForeground: ColorProvider
         var background: ColorProvider
         var buttonForeground: ColorProvider
         var shadow: ColorProvider
         
-        static var `default`: Colors {
+        public static var `default`: Colors {
             Colors(
-                titleForeground: { designTokenEnabled, colorScheme in
-                    if designTokenEnabled {
-                        TokenColors.Text.inverse.swiftUI
-                    } else {
-                        colorScheme == .light ? UIColor.whiteFFFFFF.swiftUI : UIColor.black000000.swiftUI
-                    }
-                },
-                background: { designTokenEnabled, colorScheme in
-                    if designTokenEnabled {
-                        TokenColors.Components.toastBackground.swiftUI
-                    } else {
-                        colorScheme == .light ? UIColor.gray3A3A3C.swiftUI : UIColor.whiteFFFFFF.swiftUI
-                    }
-                },
-                buttonForeground: { designTokenEnabled, _ in
-                    designTokenEnabled ? TokenColors.Link.inverse.swiftUI : MEGAAppColor.Green._00A886.color
-                },
-                shadow: { designTokenEnabled, _ in
-                    designTokenEnabled ? .clear : MEGAAppColor.Black._000000.color.opacity(0.1)
-                }
+                titleForeground: { _, _ in TokenColors.Text.inverse.swiftUI },
+                background: { _, _ in TokenColors.Components.toastBackground.swiftUI },
+                buttonForeground: { _, _ in TokenColors.Link.inverse.swiftUI },
+                shadow: { _, _ in .clear }
             )
         }
         
-        static var raiseHand: Colors {
+        public static var raiseHand: Colors {
             let base = Colors.default
             return .init(
                 titleForeground: base.titleForeground,
@@ -62,16 +51,23 @@ struct SnackBar: Equatable {
         }
     }
     
-    var message: String
-    var layout: Layout = .crisscross
-    var action: Action?
-    var colors: Colors = .default
+    public let message: String
+    public let layout: Layout
+    public let action: Action?
+    public let colors: Colors
+    
+    public init(message: String, layout: Layout = .crisscross, action: Action? = nil, colors: Colors = .default) {
+        self.message = message
+        self.layout = layout
+        self.action = action
+        self.colors = colors
+    }
     
     var isActionable: Bool {
         action != nil
     }
     
-    static func == (lhs: SnackBar, rhs: SnackBar) -> Bool {
+    public static func == (lhs: SnackBar, rhs: SnackBar) -> Bool {
         lhs.message == rhs.message && lhs.action == rhs.action
     }
     
@@ -80,7 +76,7 @@ struct SnackBar: Equatable {
     // knowing what was the original one
     // Used to trigger hiding of snack bar independently of the factory code that produced initial
     // snack bar actions
-    func withSupplementalAction(_ afterAction: @escaping () -> Void) -> Self {
+    public func withSupplementalAction(_ afterAction: @escaping () -> Void) -> Self {
         
         // if SnackBar has `action`, we execute `afterAction` after `action` was triggered
         // if SnackBar has no `action` we do not modify the snack bar

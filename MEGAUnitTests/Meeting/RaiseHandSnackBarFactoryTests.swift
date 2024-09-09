@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import XCTest
 
 final class RaiseHandSnackBarFactoryTests: XCTestCase {
