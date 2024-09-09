@@ -180,6 +180,24 @@ final class NodeInfoViewController: UITableViewController {
     private func reloadData() {
         tableView.reloadData()
     }
+    
+    /// Custom UI update method to respond to node updates
+    /// Call this method instead of `reloadData()`  when you want to handle node updates
+    private func reloadDataUponNodeUpdate() {
+        cacheNodePropertiesSoThatTableViewChangesAreAtomic()
+        handleNodeDescriptionUpdateIfNeeded()
+        
+        // We reload all the sections in the tableview, except for the `description` section
+        // because the built-in reloadSections will cause the sections to lose its first responder status
+        // while in fact we need to keep the first responder as is.
+        guard tableView.numberOfSections > 0, let (controller, descSection) = nodeDescriptionCellControllerWithSection() else {
+            tableView.reloadData()
+            return
+        }
+        let sectionsToReload = (tableView.indexPathsForVisibleRows ?? []).filter { $0.section != descSection }.map(\.section)
+        tableView.reloadSections(.init(sectionsToReload), with: .automatic)
+    }
+    
     // MARK: - Private methods
 
     private func updateAppearance() {
@@ -209,7 +227,7 @@ final class NodeInfoViewController: UITableViewController {
         })
     }
     
-    private func reloadOrShowWarningAfterActionOnNode() {
+    private func reloadOrShowWarningAfterNodeUpdate() {
         guard let nodeUpdated = sdk.node(forHandle: node.handle) else {
             let alertTitle = node.isFolder() ? Strings.Localizable.youNoLongerHaveAccessToThisFolderAlertTitle : Strings.Localizable.youNoLongerHaveAccessToThisFileAlertTitle
             
@@ -222,7 +240,7 @@ final class NodeInfoViewController: UITableViewController {
         }
         
         node = nodeUpdated
-        reloadData()
+        reloadDataUponNodeUpdate()
     }
     
     private func showNodeVersions() {
@@ -263,7 +281,7 @@ final class NodeInfoViewController: UITableViewController {
     
     private func nodeVersionRemoved() {
         nodeVersions = node.mnz_versions()
-        reloadData()
+        reloadDataUponNodeUpdate()
     }
     
     private func showAlertForRemovingPendingShare(forIndexPat indexPath: IndexPath) {
@@ -495,15 +513,18 @@ final class NodeInfoViewController: UITableViewController {
             ),
             nodeDescriptionUseCase: NodeDescriptionUseCase(
                 repository: NodeDescriptionRepository.newRepo
-            )) { [weak self] code in
+            ),
+            maxCharactersAllowed: 300,
+            refreshUI: { [weak self] code in
                 guard let self else { return }
                 tableView.beginUpdates()
                 code()
                 tableView.endUpdates()
-            } descriptionSaved: { [weak self] savedState in
+            }, descriptionSaved: { [weak self] savedState in
                 guard let self else { return }
                 showSavedDescriptionState?(savedState)
             }
+        )
 
         hasPendingNodeDescriptionChanges = { descriptionViewModel.hasPendingChanges() }
         saveNodeDescriptionChanges = { await descriptionViewModel.savePendingChanges() }
@@ -695,6 +716,11 @@ final class NodeInfoViewController: UITableViewController {
             }
         }.first
     }
+    
+    private func handleNodeDescriptionUpdateIfNeeded() {
+        guard let (descriptionController, _) = nodeDescriptionCellControllerWithSection() else { return }
+        descriptionController.processNodeUpdate(node.toNodeEntity())
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -870,11 +896,10 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
             
             if nodeUpdated.hasChangedType(.removed) {
                 if nodeUpdated.handle == node.handle {
-                    currentVersionRemoved()
+                    return currentVersionRemoved()
                 } else if nodeVersions.contains(where: { $0.handle == nodeUpdated.handle }) {
-                    nodeVersionRemoved()
+                    return nodeVersionRemoved()
                 }
-                break
             }
             
             if nodeUpdated.hasChangedType(.parent) && nodeUpdated.handle == node.handle {
@@ -886,15 +911,13 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
                     guard let newNode = sdk.node(forHandle: nodeUpdated.parentHandle) else { return }
                     node = newNode
                 }
+                
+                return reloadOrShowWarningAfterNodeUpdate()
             }
             
             if nodeUpdated.handle == node.handle {
-                reloadOrShowWarningAfterActionOnNode()
-                break
+                return reloadOrShowWarningAfterNodeUpdate()
             }
         }
-        
-        cacheNodePropertiesSoThatTableViewChangesAreAtomic()
-        reloadData()
     }
 }

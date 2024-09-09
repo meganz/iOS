@@ -10,16 +10,14 @@ final class NodeDescriptionViewCell: UITableViewCell {
     private var leadingConstraint: NSLayoutConstraint?
     private var trailingConstraint: NSLayoutConstraint?
 
+    // Due to the limitation of UITableView's deque reuse API, we can't inject viewModel at init time so
+    // viewModel has to be optional
     var viewModel: NodeDescriptionCellViewModel? {
         didSet {
-            guard let viewModel else { return }
-            if let description = viewModel.description() {
-                textView.text = description.text
-                textView.textColor = textColor(isPlaceholderText: description.isPlaceholder)
+            viewModel?.onUpdate = { [weak self] in
+                self?.updateUI()
             }
-
-            textView.isEditable = !viewModel.editingDisabled
-            updateInsets(viewModel.textViewEdgeInsets)
+            self.updateUI()
         }
     }
 
@@ -50,6 +48,14 @@ final class NodeDescriptionViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func updateUI() {
+        guard let viewModel else { return }
+        textView.isEditable = !viewModel.editingDisabled()
+        textView.text = viewModel.displayText(isEditing: textView.isFirstResponder)
+        textView.textColor = textColor(isPlaceholderText: viewModel.isPlaceholder)
+        updateInsets(viewModel.textViewEdgeInsets)
+    }
 
     private func configureUI() {
         selectionStyle = .none
@@ -67,13 +73,13 @@ final class NodeDescriptionViewCell: UITableViewCell {
             textView.inlinePredictionType = .no
         }
     }
-
+    
     private func textColor(isPlaceholderText: Bool) -> UIColor {
         UIColor.isDesignTokenEnabled()
         ? isPlaceholderText ? TokenColors.Text.secondary : TokenColors.Text.primary
         : isPlaceholderText ? UIColor.secondaryLabel : UIColor.label
     }
-
+    
     private func wrap(_ textView: UITextView, inside content: UIView) {
         textView.translatesAutoresizingMaskIntoConstraints = false
         content.addSubview(textView)
@@ -101,21 +107,18 @@ final class NodeDescriptionViewCell: UITableViewCell {
 extension NodeDescriptionViewCell: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         viewModel?.isTextViewFocused(true)
-        textView.textColor = textColor(isPlaceholderText: false)
+        textView.textColor = textColor(isPlaceholderText: viewModel?.isPlaceholder == true)
 
-        if let description = viewModel?.description(),
-           description.isPlaceholder,
-           textView.text == description.text {
+        if viewModel?.isPlaceholder == true {
             textView.text = nil
         }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
         viewModel?.isTextViewFocused(false)
-        if textView.text?.isEmpty == true,
-            let placeholderText = viewModel?.placeholderText {
-            textView.text = placeholderText
-            textView.textColor = textColor(isPlaceholderText: true)
+        if textView.text?.isEmpty == true, viewModel?.isPlaceholder == true {
+            textView.text = viewModel?.placeholderText
+            textView.textColor = textColor(isPlaceholderText: viewModel?.isPlaceholder == true)
         }
     }
 
