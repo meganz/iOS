@@ -182,7 +182,9 @@ extension InviteContactViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         forceResetNavigationBar()
         let phoneNumbers = contacts.extractPhoneNumbers()
-        presentComposeControllerForPhoneNumbers(phoneNumbers)
+        UIApplication.mnz_visibleViewController().dismiss(animated: true) { [weak self] in
+            self?.presentComposeControllerForPhoneNumbers(phoneNumbers)
+        }
     }
     
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
