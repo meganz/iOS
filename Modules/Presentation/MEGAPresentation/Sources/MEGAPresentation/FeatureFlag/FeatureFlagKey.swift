@@ -4,7 +4,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case albumPhotoCache = "Album and Photo Cache"
     case designToken = "MEGADesignToken"
     case videoRevamp = "Video Revamp"
-    case notificationCenter = "NotificationCenter"
     case hiddenNodes =  "Hidden Nodes"
     case videoPlaylistSharing = "Video Playlist Sharing"
     case recentlyWatchedVideos = "Recently Watched Videos"

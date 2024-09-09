@@ -24,7 +24,6 @@ struct NotificationsViewRouter: Routing {
         }
         
         let viewModel = NotificationsViewModel(
-            featureFlagProvider: DIContainer.featureFlagProvider,
             notificationsUseCase: notificationsUseCase,
             imageLoader: imageLoader
         )

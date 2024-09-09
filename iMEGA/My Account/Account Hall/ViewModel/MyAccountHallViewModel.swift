@@ -58,7 +58,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     var unreadNotificationsCount = 0
 
     private(set) var planList: [PlanEntity] = []
-    private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
@@ -85,7 +84,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
          purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
          shareUseCase: some ShareUseCaseProtocol,
          notificationsUseCase: some NotificationsUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          deviceCenterBridge: DeviceCenterBridge,
          tracker: some AnalyticsTracking,
          router: some MyAccountHallRouting) {
@@ -94,7 +92,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         self.purchaseUseCase = purchaseUseCase
         self.shareUseCase = shareUseCase
         self.notificationsUseCase = notificationsUseCase
-        self.featureFlagProvider = featureFlagProvider
         self.deviceCenterBridge = deviceCenterBridge
         self.tracker = tracker
         self.router = router
@@ -107,9 +104,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         loadContentTask?.cancel()
         loadContentTask = nil
     }
-    
-    // MARK: Feature flags
-    func isNotificationCenterEnabled() -> Bool { true }
     
     // MARK: - Dispatch actions
     
@@ -286,9 +280,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
             currentValue = relevantUnseenUserAlertsCount
         }
         
-        if isNotificationCenterEnabled() {
-            unreadNotificationsCount = await notificationsUseCase.unreadNotificationIDs().count
-        }
+        unreadNotificationsCount = await notificationsUseCase.unreadNotificationIDs().count
 
         reloadNotificationCounts()
     }
@@ -297,7 +289,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         $arePromosAvailable.mutate { [weak self] currentValue in
             guard let self else { return }
             let hasEnabledNotifications = notificationsUseCase.fetchEnabledNotifications().isNotEmpty
-            currentValue = isNotificationCenterEnabled() && hasEnabledNotifications
+            currentValue = hasEnabledNotifications
         }
     }
     

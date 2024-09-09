@@ -22,7 +22,6 @@ enum NotificationAction: ActionType {
         case presentURLLink(URL)
     }
     
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private(set) var promoList: [NotificationItem] = []
     private var unreadNotificationIds: [NotificationIDEntity] = []
@@ -30,25 +29,18 @@ enum NotificationAction: ActionType {
     let imageLoader: any ImageLoadingProtocol
     
     init(
-        featureFlagProvider: some FeatureFlagProviderProtocol,
         notificationsUseCase: some NotificationsUseCaseProtocol,
         imageLoader: some ImageLoadingProtocol
     ) {
-        self.featureFlagProvider = featureFlagProvider
         self.notificationsUseCase = notificationsUseCase
         self.imageLoader = imageLoader
         super.init()
     }
     
-    // MARK: - Feature flag
-    @objc var isPromoEnabled: Bool { true }
-    
     // MARK: - Sections
-    @objc var numberOfSections: Int {
-        // With Promos - Section 0: Promos, Section 1: User Alerts
-        // No Promos - Section 0: User Alerts
-        isPromoEnabled ? 2 : 1
-    }
+    
+    // Section 0: Promos, Section 1: User Alerts
+    @objc let numberOfSections = 2
     
     @objc var promoSectionNumberOfRows: Int {
         promoList.count
@@ -77,12 +69,6 @@ enum NotificationAction: ActionType {
     }
     
     private func fetchPromoList() async {
-        guard isPromoEnabled else {
-            promoList = []
-            invokeCommand?(.reloadData)
-            return
-        }
-        
         do {
             let userNotifications = try await notificationsUseCase.fetchNotifications()
             let filteredNotifications = filterEnabledNotifications(from: userNotifications)
@@ -136,7 +122,7 @@ enum NotificationAction: ActionType {
         case .onViewDidAppear:
             updateNotificationStates()
         case .didTapNotification(let notification):
-            guard isPromoEnabled, let urlLink = notification.redirectionURL else { return }
+            guard let urlLink = notification.redirectionURL else { return }
             invokeCommand?(.presentURLLink(urlLink))
         case .clearImageCache:
             imageLoader.clearCache()
