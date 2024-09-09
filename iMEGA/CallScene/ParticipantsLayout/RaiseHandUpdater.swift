@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASwiftUI
 
 /// implements the actual logic to compare changes before and after call raise hands state was changed
 /// and calls corresponding closures to:

@@ -1,21 +1,25 @@
 import Combine
+import UIKit
 
-final class SnackBarViewModel: ObservableObject {
+public final class SnackBarViewModel: ObservableObject {
 
-    @Published private(set) var snackBar: SnackBar
-    @Published var isShowSnackBar: Bool = true
+    @Published public private(set) var snackBar: SnackBar
+    @Published public var isShowSnackBar: Bool = true
     
     var displayDuration: Double = 4.0
     
+    public typealias WillDismissBlock = () -> Void
     private var displaySnackBarSubscription: AnyCancellable?
+    private let willDismiss: WillDismissBlock?
     
-    init(snackBar: SnackBar) {
+    public init(snackBar: SnackBar, willDismiss: WillDismissBlock?) {
         self.snackBar = snackBar
+        self.willDismiss = willDismiss
         
         configureSnackBar()
     }
     
-    func update(snackBar: SnackBar) {
+    public func update(snackBar: SnackBar) {
         self.snackBar = snackBar
         configureSnackBar()
     }
@@ -34,9 +38,8 @@ final class SnackBarViewModel: ObservableObject {
     
     private func dismissSnackBar() {
         // There is a case where we dimiss the modal screen faster then this dismiss method called by subscription, resulting a crash since we assert the `presenter` inside `dismissSnackbar()` function. Thus, nil checking is needed here.
-        if SnackBarRouter.shared.presenter != nil {
-            SnackBarRouter.shared.dismissSnackBar()
-        }
+        willDismiss?()
+        
         cancelDisplaySnackBarSubscription()
         isShowSnackBar = false
     }

@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 final class SnackBarRouter: NSObject {
@@ -18,10 +19,20 @@ final class SnackBarRouter: NSObject {
         let viewModel = SnackBarViewModel(snackBar: snackBar)
         let viewController = UIHostingController(rootView: SnackBarView(viewModel: viewModel))
         
-        presenter.presentSnackBar(viewController: viewController)
+        presenter.presentSnackBar(snackBarView: viewController.view)
     }
     
     func dismissSnackBar(immediate: Bool = false) {
         presenter?.dismissSnackBar(immediate: immediate)
+    }
+}
+
+extension SnackBarViewModel {
+    convenience init(snackBar: SnackBar, router: SnackBarRouter = .shared) {
+        self.init(snackBar: snackBar, willDismiss: {
+            if router.presenter != nil {
+                router.dismissSnackBar()
+            }
+        })
     }
 }

@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADomain
+import MEGASwiftUI
 import XCTest
 
 final class RaiseHandUpdaterTests: XCTestCase {

@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGASwiftUI
 import XCTest
 
 // here we compare only message and button action title, which is enough and
@@ -14,4 +15,3 @@ extension XCTestCase {
         XCTAssertEqual(lhs?.action, rhs?.action, file: file, line: line)
     }
 }
-

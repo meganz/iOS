@@ -5,6 +5,7 @@ import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
+import MEGASwiftUI
 
 extension CustomModalAlertViewController {
     enum CookieDialogType {

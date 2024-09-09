@@ -1,4 +1,4 @@
-@testable import MEGA
+import MEGASwiftUI
 import XCTest
 
 final class SnackBarTests: XCTestCase {
