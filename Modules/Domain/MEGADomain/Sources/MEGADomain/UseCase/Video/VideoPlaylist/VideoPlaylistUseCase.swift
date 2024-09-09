@@ -95,7 +95,7 @@ public struct VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     
     private func createFavouriteSystemPlyalist(videos: [NodeEntity]) -> VideoPlaylistEntity {
         VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: "",
             count: videos.count,
             type: .favourite,

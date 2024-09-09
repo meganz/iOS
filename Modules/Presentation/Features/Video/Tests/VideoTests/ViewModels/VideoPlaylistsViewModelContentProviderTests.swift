@@ -6,10 +6,10 @@ import XCTest
 final class VideoPlaylistsViewModelContentProviderTests: XCTestCase {
     
     func testLoadVideoPlaylists_returnsCorrectOrderPlaylists() async throws {
-        let systemVideoPlaylists = [ VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date()) ]
+        let systemVideoPlaylists = [ VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date()) ]
         let userVideoPlaylists = [
-            VideoPlaylistEntity(id: 2, name: "User playlist 1", count: 0, type: .user, creationTime: Date().addingTimeInterval(60), modificationTime: Date().addingTimeInterval(60)),
-            VideoPlaylistEntity(id: 3, name: "User playlist 2", count: 0, type: .user, creationTime: Date().addingTimeInterval(120), modificationTime: Date().addingTimeInterval(120))
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "User playlist 1", count: 0, type: .user, creationTime: Date().addingTimeInterval(60), modificationTime: Date().addingTimeInterval(60)),
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 3), name: "User playlist 2", count: 0, type: .user, creationTime: Date().addingTimeInterval(120), modificationTime: Date().addingTimeInterval(120))
         ]
         let videoPlaylistsUseCase = MockVideoPlaylistUseCase(
             systemVideoPlaylistsResult: systemVideoPlaylists,
@@ -24,8 +24,8 @@ final class VideoPlaylistsViewModelContentProviderTests: XCTestCase {
     
     func testLoadVideoPlaylists_withSearchText_returnsCorrectOrderedAndFilteredPlaylists() async throws {
         let playlists = [
-            VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date()),
-            VideoPlaylistEntity(id: 2, name: "Other Favorites", count: 0, type: .favourite, creationTime: Date().addingTimeInterval(60), modificationTime: Date().addingTimeInterval(60))
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date()),
+            VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 2), name: "Other Favorites", count: 0, type: .favourite, creationTime: Date().addingTimeInterval(60), modificationTime: Date().addingTimeInterval(60))
         ]
         let videoPlaylistsUseCase = MockVideoPlaylistUseCase(userVideoPlaylistsResult: playlists)
         let sut = sut(videoPlaylistsUseCase: videoPlaylistsUseCase)

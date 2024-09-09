@@ -23,7 +23,7 @@ struct Preview_VideoPlaylistUseCase: VideoPlaylistUseCaseProtocol {
     }
     
     func createVideoPlaylist(_ name: String?) async throws -> VideoPlaylistEntity {
-        VideoPlaylistEntity(id: 1, name: "Preview", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Preview", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
     }
     
     func updateVideoPlaylistName(_ newName: String, for videoPlaylistEntity: VideoPlaylistEntity) async throws { }
