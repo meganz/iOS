@@ -128,13 +128,13 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: false,
                                          startFirst: transferViewEntity.priority) { transferEntity in
-                transferViewEntity.state = transferEntity.state
+                transferViewEntity.setState(transferEntity.state)
             } update: { _ in } completion: { [weak self] result in
                 switch result {
                 case .success:
-                    transferViewEntity.state = .complete
+                    transferViewEntity.setState(.complete)
                 case .failure(let error):
-                    transferViewEntity.state = .failed
+                    transferViewEntity.setState(.failed)
                     self?.transferErrors.append(error)
                 }
                 self?.continueFolderTransfersIfNeeded()
@@ -154,18 +154,17 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
                                          isSourceTemporary: false,
                                          startFirst: transferViewEntity.priority,
                                          start: nil) { transferEntity in
-                transferViewEntity.stage = transferEntity.stage
+                transferViewEntity.setStage(transferEntity.stage)
             } completion: { [weak self] result in
                 switch result {
                 case .success:
-                    transferViewEntity.state = .complete
+                    transferViewEntity.setState(.complete)
                 case .failure(let error):
-                    transferViewEntity.state = .failed
+                    transferViewEntity.setState(.failed)
                     self?.transferErrors.append(error)
                 }
                 self?.checkIfAllTransfersComplete()
             }
         }
     }
-    
 }

@@ -1,7 +1,7 @@
 import Foundation
 import MEGASwift
 
-public protocol DownloadNodeUseCaseProtocol {
+public protocol DownloadNodeUseCaseProtocol: Sendable {
     func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?)
     func downloadChatFileToOffline(
         forNodeHandle handle: HandleEntity,
