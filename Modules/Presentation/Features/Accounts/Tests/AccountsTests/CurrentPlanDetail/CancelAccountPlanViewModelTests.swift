@@ -34,19 +34,6 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(router.dismissCancellationFlow_calledTimes, 1, "Expected dismissCancellationFlow to be called on router")
     }
     
-    @MainActor func testDidTapContinueCancellation_subscriptionPaymentMethodIsItunes_surveyFeatureFlagIsDisabled_shouldShowAppleManageSubscriptions() async {
-        let (sut, router) = makeSUT(
-            currentSubscription: AccountSubscriptionEntity(paymentMethodId: .itunes),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.subscriptionCancellationSurvey: false])
-        )
-        
-        sut.didTapContinueCancellation()
-        
-        XCTAssertEqual(router.showAppleManageSubscriptions_calledTimes, 1)
-        XCTAssertFalse(sut.showCancellationSurvey)
-        XCTAssertFalse(sut.showCancellationSteps)
-    }
-    
     func testDidTapContinueCancellation_subscriptionPaymentMethodIsNotItunes_shouldShowCancellationSteps() async {
         let paymentMethods = PaymentMethodEntity.allCases.filter { $0 != .itunes }
         let randomPaymentMethod = paymentMethods.randomElement() ?? .stripe
@@ -153,7 +140,6 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         currentPlanName: String = "",
         currentPlanStorageUsed: String = "",
         features: [FeatureDetails] = [],
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [.subscriptionCancellationSurvey: true]),
         tracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #file,
         line: UInt = #line
@@ -168,7 +154,6 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
             currentPlanStorageUsed: currentPlanStorageUsed,
             featureListHelper: MockFeatureListHelper(features: features), 
             achievementUseCase: MockAchievementUseCase(),
-            featureFlagProvider: featureFlagProvider,
             tracker: tracker,
             router: router
         )

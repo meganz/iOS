@@ -10,7 +10,6 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     let featureListHelper: FeatureListHelperProtocol
     let router: CancelAccountPlanRouting
     private let achievementUseCase: any AchievementUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let currentSubscription: AccountSubscriptionEntity
     @Published var showCancellationSurvey: Bool = false
     @Published var showCancellationSteps: Bool = false
@@ -25,7 +24,6 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         currentPlanStorageUsed: String,
         featureListHelper: FeatureListHelperProtocol,
         achievementUseCase: some AchievementUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking,
         router: CancelAccountPlanRouting
     ) {
@@ -34,13 +32,8 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         self.currentPlanStorageUsed = currentPlanStorageUsed
         self.achievementUseCase = achievementUseCase
         self.featureListHelper = featureListHelper
-        self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.router = router
-    }
-    
-    private var isCancellationSurveyEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .subscriptionCancellationSurvey)
     }
     
     var cancellationStepsSubscriptionType: SubscriptionType {
@@ -69,10 +62,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         tracker.trackAnalyticsEvent(with: CancelSubscriptionContinueCancellationButtonPressedEvent())
         
         if currentSubscription.paymentMethodId == .itunes {
-            guard isCancellationSurveyEnabled else {
-                router.showAppleManageSubscriptions()
-                return
-            }
+            // Show cancellation survey. This is only for Apple subscriptions.
             showCancellationSurvey = true
         } else {
             // Show cancellation step for either google or webclient subscriptions
