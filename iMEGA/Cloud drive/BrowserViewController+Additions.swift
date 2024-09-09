@@ -2,7 +2,9 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import MEGASwiftUI
 import MEGAUIKit
+import SwiftUI
 
 extension BrowserViewController {
     
@@ -167,5 +169,10 @@ extension BrowserViewController {
             parentNode = nil
             viewModel.updateParentNode(nil)
         }
+    }
+    
+    @objc func browserActionSelectVideoPlaceholderView() -> UIView {
+        let view = BrowserVideoPickerPlaceholderView()
+        return UIHostingController(rootView: view).view
     }
 }
