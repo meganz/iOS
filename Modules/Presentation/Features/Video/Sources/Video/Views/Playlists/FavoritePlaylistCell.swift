@@ -168,7 +168,7 @@ struct ThumbnailLayerView: View {
     
     func videoPlaylistEntity() -> VideoPlaylistEntity {
         VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: "Favorites",
             count: 15,
             type: .favourite,

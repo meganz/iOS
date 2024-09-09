@@ -21,7 +21,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     
     func testVideos_favoritePlaylistType_getVideos() async {
         let (sut, _, photoLibraryUseCase, _) = makeSUT()
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorite", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorite", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         
         _ = try? await sut.videos(in: videoPlaylist)
         
@@ -38,7 +38,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
                 NodeEntity(handle: 2, isFavourite: false, mediaType: .video)
             ])
         )
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorite", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorite", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         
         let videos = try await sut.videos(in: videoPlaylist)
         
@@ -46,7 +46,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     }
     
     func testVideos_userPlaylistType_getVideos() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "my custom video playlists", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "my custom video playlists", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, userVideoPlaylistRepository, _, fileSearchRepository) = makeSUT(
             videoPlaylistContentResult: [ setElementEntity(id: 1) ]
         )
@@ -65,7 +65,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     // MARK: - userVideoPlaylistVideos
     
     func userVideoPlaylistVideos_whenHasVideos_deliversVideos() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "my custom video playlists", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "my custom video playlists", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT(
             videoPlaylistContentResult: [ setElementEntity(id: 1) ],
             fileSearchRepositoryResult: [ NodeEntity(handle: 1, isFavourite: true, mediaType: .video) ]
@@ -79,7 +79,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     // MARK: - monitorVideoPlaylist - (favorite video playlist)
     
     func testMonitorVideoPlaylist_whenNoUpdatesOnFavoriteNodes_emitesValue() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT(
             nodeRepository: MockNodeRepository(nodeUpdates: EmptyAsyncSequence().eraseToAnyAsyncSequence())
         )
@@ -106,7 +106,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     // MARK: - monitorVideoPlaylistContent - (favorite video playlist)
     
     func testMonitorVideoPlaylist_whenNoUpdatesOnFavoriteNodes_doesNotEmitsValue() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Favorites", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT(
             nodeRepository: MockNodeRepository(nodeUpdates: EmptyAsyncSequence().eraseToAnyAsyncSequence())
         )
@@ -132,7 +132,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     
     func testMonitorUserVideoPlaylistContent_whenHasFavoriteImagePlaylistUpdates_doesNotEmitsUpdate() async {
         let videoPlaylist = VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: "Favorites",
             count: 0,
             type: .favourite,
@@ -174,7 +174,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     
     func testMonitorUserVideoPlaylistContent_whenHasFavoriteImagePlaylistUpdates_emitsUpdateOnlyForVideoNodeUpdates() async {
         let videoPlaylist = VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: "Favorites",
             count: 0,
             type: .favourite,
@@ -217,7 +217,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     
     func testMonitorUserVideoPlaylistContent_whenHasFavoriteImagePlaylistUpdates_emitsUpdate() async {
         let videoPlaylist = VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: "Favorites",
             count: 0,
             type: .favourite,
@@ -262,7 +262,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     
     func testMonitorUserVideoPlaylist_whenHasUserVideoPlaylistUpdates_emitsUpdate() async {
         let videoPlaylist = VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: "user",
             count: 0,
             type: .user,
@@ -327,7 +327,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     // MARK: - monitorVideoPlaylist - User Video Playlist Content
     
     func testMonitorUserVideoPlaylist_whenHasNoUserVideoPlaylistContentUpdates_doesNotEmitsUpdate() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT(
             setElementsUpdatedAsyncSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
         )
@@ -355,7 +355,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     // MARK: - monitorUserVideoPlaylistContent
     
     func testMonitorUserVideoPlaylistContent_whenHasUserVideoPlaylistContentUpdates_emitsUpdate() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let expectedResults = anyVideoPlaylistContents()
         let setElementUpdatesStream = AsyncStream { continuation in
             for expectedResult in expectedResults {
@@ -390,7 +390,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     // MARK: - monitorUserVideoPlaylistContent - folderSensitivityChanged
     
     func testMonitorUserVideoPlaylistContent_whenFolderSensitivtyHasChanged_emitsUpdate() async {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let expectedResults = anyVideoPlaylistContents()
         let (sut, _, _, _) = makeSUT(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(

@@ -91,8 +91,11 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
         
         let messagesCount = sdk.messages
             .filter {
-                if case .createSetElement = $0 { true }
-                else { false }
+                if case .createSetElement = $0 {
+                    true
+                } else {
+                    false
+                }
             }
             .count
         XCTAssertTrue(messagesCount != 0)
@@ -188,7 +191,6 @@ final class UserVideoPlaylistsRepositoryTests: XCTestCase {
     }
     
     private func userVideoPlaylist(id: HandleEntity) -> VideoPlaylistEntity {
-        VideoPlaylistEntity(id: id, name: "name: \(id)", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: id), name: "name: \(id)", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
     }
 }
-

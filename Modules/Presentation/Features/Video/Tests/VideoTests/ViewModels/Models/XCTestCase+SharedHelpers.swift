@@ -19,9 +19,9 @@ extension XCTestCase {
         videoPlaylist(id: 1, creationTime: .now.daysAgo(30, timeZone: timeZone)!, modificationDate: Date())
     }
     
-    private func videoPlaylist(id: HandleEntity, creationTime: Date, modificationDate: Date) -> VideoPlaylistEntity {
+    private func videoPlaylist(id: SetHandleEntity, creationTime: Date, modificationDate: Date) -> VideoPlaylistEntity {
         VideoPlaylistEntity(
-            id: id,
+            setIdentifier: SetIdentifier(handle: id),
             name: "name-\(id)",
             coverNode: nil,
             count: 0,

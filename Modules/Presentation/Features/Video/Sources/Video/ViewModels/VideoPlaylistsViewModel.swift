@@ -43,7 +43,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     @Published var shouldShowDeletePlaylistAlert = false
     @Published private(set) var viewState: ViewState = .partial
 
-    private var selectedVideoPlaylistEntity: VideoPlaylistEntity?
+    private(set) var selectedVideoPlaylistEntity: VideoPlaylistEntity?
     @Published var isSheetPresented = false
     
     private(set) var newlyCreatedVideoPlaylist: VideoPlaylistEntity?
@@ -303,7 +303,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     private func newlyRenamedVideoPlaylist(newName: String, oldVideoPlaylist: VideoPlaylistEntity) -> VideoPlaylistEntity {
         VideoPlaylistEntity(
-            id: oldVideoPlaylist.id,
+            setIdentifier: oldVideoPlaylist.setIdentifier,
             name: newName,
             coverNode: oldVideoPlaylist.coverNode,
             count: oldVideoPlaylist.count,

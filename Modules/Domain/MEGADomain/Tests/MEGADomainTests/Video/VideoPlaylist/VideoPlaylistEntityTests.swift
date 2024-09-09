@@ -49,7 +49,7 @@ final class VideoPlaylistEntityTests: XCTestCase {
         sharedLinkStatus: SharedLinkStatusEntity = .unavailable
     ) -> VideoPlaylistEntity {
         VideoPlaylistEntity(
-            id: 1,
+            setIdentifier: SetIdentifier(handle: 1),
             name: "any-name",
             count: 1,
             type: type,

@@ -70,7 +70,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     // MARK: - deleteVideos
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithEmptyIds_shouldNotExecuteRepository() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, userVideoPlaylistsRepository) = makeSUT()
         
         _ = try await sut.deleteVideos(in: videoPlaylist.id, videos: [])
@@ -80,7 +80,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithEmptyIds_shouldReturnZeroVideoPlaylistResultEntity() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _) = makeSUT()
         
         let result = try await sut.deleteVideos(in: videoPlaylist.id, videos: [])
@@ -90,7 +90,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_shouldNotExecuteDeleteVideos() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let videosToRemove = [ VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: nil) ]
         let (sut, userVideoPlaylistsRepository) = makeSUT()
         
@@ -101,7 +101,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_shouldReturnZeroVideoPlaylistResultEntity() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let videosToRemove = [ VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: nil) ]
         let (sut, _) = makeSUT()
         
@@ -112,7 +112,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithNoValidIds_executeDeleteVideoPlaylist() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let videosToRemove = [
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: 1),
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 2), videoPlaylistVideoId: 2)
@@ -130,7 +130,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     func testDeleteVideos_onVideoPlaylistVideoEntityWithValidVideoIds_shouldReturnVideoPlaylistResultEntityWithIdCount() async throws {
-        let videoPlaylist = VideoPlaylistEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Custom", coverNode: nil, count: 1, type: .user, creationTime: Date(), modificationTime: Date())
         let videosToRemove = [
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 1), videoPlaylistVideoId: 1),
             VideoPlaylistVideoEntity(video: NodeEntity(handle: 2), videoPlaylistVideoId: 2)
@@ -191,7 +191,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenCalled_updatesVideoPlaylist() async {
         let videoPlaylistNameToUpdate = "new-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, userVideoPlaylistRepository) = makeSUT()
         
         _ = try? await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
@@ -202,7 +202,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenRenameSystemVideoPlaylist_throwsError() async {
         let videoPlaylistNameToUpdate = "Old-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Old-name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.noChangeWasNeeded
         let (sut, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
@@ -211,7 +211,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenCalledWithSameName_throwsError() async {
         let videoPlaylistNameToUpdate = "Old-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.noChangeWasNeeded
         let (sut, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
@@ -220,7 +220,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenCalledWithSimilarNameButNotSame_updateVideoPlaylist() async {
         let videoPlaylistNameToUpdate = "old-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "Old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, userVideoPlaylistRepository) = makeSUT()
         
         _ = try? await sut.updateVideoPlaylistName(videoPlaylistNameToUpdate, for: videoPlaylistToUpdate)
@@ -231,7 +231,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     
     func testUpdateVideoPlaylistName_whenHasError_throwsError() async {
         let videoPlaylistNameToUpdate = "new-name"
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "old-name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let expectedError = VideoPlaylistErrorEntity.failedToUpdateVideoPlaylistName(name: videoPlaylistNameToUpdate)
         let (sut, _) = makeSUT(updateVideoPlaylistNameResult: .failure(expectedError))
         
@@ -241,7 +241,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     func testUpdateVideoPlaylistName_whenSuccess_updatesVideoPlaylistNameSuccessfully() async {
         let videoPlaylistNameToUpdate = "new-name"
         let anyDate = Date()
-        let videoPlaylistToUpdate = VideoPlaylistEntity(id: 1, name: "old-name", count: 0, type: .user, creationTime: anyDate, modificationTime: anyDate, sharedLinkStatus: .exported(false))
+        let videoPlaylistToUpdate = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "old-name", count: 0, type: .user, creationTime: anyDate, modificationTime: anyDate, sharedLinkStatus: .exported(false))
         let (sut, _) = makeSUT(updateVideoPlaylistNameResult: .success(()))
         
         await simulateUpdateVideoPlaylistNameCompletedSuccessfullyThenAssert(on: sut, videoPlaylistNameToUpdate: videoPlaylistNameToUpdate, videoPlaylistToUpdate: videoPlaylistToUpdate)
@@ -288,7 +288,7 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     }
     
     private func userVideoPlaylist(id: HandleEntity) -> VideoPlaylistEntity {
-        VideoPlaylistEntity(id: id, name: "name: \(id)", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
+        VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: id), name: "name: \(id)", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
     }
     
     private func simulateUpdateVideoPlaylistNameThenCompleteWithError(
