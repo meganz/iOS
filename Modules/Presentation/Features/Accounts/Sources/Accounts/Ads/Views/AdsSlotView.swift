@@ -20,16 +20,13 @@ public struct AdsSlotView<T: View>: View {
             
             if verticalSizeClass != .compact {
                 ZStack {
-                    isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : backgroundColor
+                    TokenColors.Background.page.swiftUI
                     
                     Button {
                         Task { await viewModel.didTapAdsContent() }
                     } label: {
                         Image("close")
-                            .background(
-                                isDesignTokenEnabled ? TokenColors.Background.surface3.swiftUI :
-                                Color(red: 0.916, green: 0.916, blue: 0.936)
-                            )
+                            .background(TokenColors.Background.surface3.swiftUI)
                     }
                     .frame(
                         idealWidth: 24,

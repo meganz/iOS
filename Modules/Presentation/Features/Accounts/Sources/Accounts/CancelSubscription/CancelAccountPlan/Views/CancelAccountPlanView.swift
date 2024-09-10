@@ -6,24 +6,12 @@ import SwiftUI
 struct CancelAccountPlanView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: CancelAccountPlanViewModel
-    
-    private var bodyBackgroundColor: Color {
-        colorScheme == .dark ? Color.black : Color.white
-    }
-    
-    private var navigationBarBackgroundColor: Color {
-        colorScheme == .dark ? Color(red: 0.157, green: 0.157, blue: 0.188) : Color(red: 0.969, green: 0.969, blue: 0.969)
-    }
-    
-    private var featureListHeaderBackgroundColor: Color {
-        colorScheme == .dark ? Color(red: 0.286, green: 0.290, blue: 0.302) : Color(red: 0.847, green: 0.851, blue: 0.859)
-    }
-    
+        
     var body: some View {
         VStack(spacing: 0) {
             navigationBar
                 .frame(height: 60)
-                .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : navigationBarBackgroundColor)
+                .background(TokenColors.Background.surface1.swiftUI)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 10) {
                     headerView()
@@ -36,7 +24,7 @@ struct CancelAccountPlanView: View {
             Spacer()
         }
         .ignoresSafeArea(edges: [.top, .bottom])
-        .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : .clear)
+        .background(TokenColors.Background.surface1.swiftUI)
         .task {
             await viewModel.setupFeatureList()
         }
@@ -63,7 +51,7 @@ struct CancelAccountPlanView: View {
                 } label: {
                     Text(Strings.Localizable.cancel)
                         .font(.body)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 }
             },
             backgroundColor: .clear
@@ -76,27 +64,27 @@ struct CancelAccountPlanView: View {
             Text(Strings.Localizable.Feature.title)
                 .font(.footnote)
                 .bold()
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .textCase(nil)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Text(Strings.Localizable.free)
                 .font(.footnote)
                 .bold()
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .textCase(nil)
                 .frame(maxWidth: .infinity)
            
             Text(viewModel.currentPlanName)
                 .font(.footnote)
                 .bold()
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .textCase(nil)
                 .frame(maxWidth: .infinity)
         }
         .padding(.horizontal, 8.0)
         .frame(height: 40)
-        .background(isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : featureListHeaderBackgroundColor)
+        .background(TokenColors.Background.surface2.swiftUI)
     }
     
     @ViewBuilder
@@ -109,7 +97,7 @@ struct CancelAccountPlanView: View {
                 Divider()
             }
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : bodyBackgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
         .cornerRadius(8.0)
     }
     
@@ -119,13 +107,13 @@ struct CancelAccountPlanView: View {
             Text(Strings.Localizable.Cancellation.Subscription.Header.title)
                 .font(.title3)
                 .bold()
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .textCase(nil)
                 .padding(.top, 10)
             
             Text(Strings.Localizable.Cancellation.Subscription.Header.message(viewModel.currentPlanStorageUsed))
                 .font(.subheadline)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .textCase(nil)
                 .multilineTextAlignment(.center)
                 .padding(.top, 5)
