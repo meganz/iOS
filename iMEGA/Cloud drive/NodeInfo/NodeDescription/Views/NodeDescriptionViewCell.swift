@@ -107,9 +107,13 @@ final class NodeDescriptionViewCell: UITableViewCell {
 extension NodeDescriptionViewCell: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         viewModel?.isTextViewFocused(true)
-        textView.textColor = textColor(isPlaceholderText: viewModel?.isPlaceholder == true)
+        textView.textColor = textColor(isPlaceholderText: false)
 
-        if viewModel?.isPlaceholder == true {
+        // Note: There are 2 cases where textViewDidBeginEditing is invoked: (1) when user proactive click on the textField
+        // and (2) when the textView is already active and then get interupted by a alertView (in our case the "Confirm close?" alert
+        // For (1), we need to clear the textView content, but for 2 wee need to maintain that content, thus we need to check for both
+        // `viewModel?.isPlaceholder == true && textView.text == viewModel?.placeholderText`
+        if viewModel?.isPlaceholder == true && textView.text == viewModel?.placeholderText {
             textView.text = nil
         }
     }
@@ -118,7 +122,7 @@ extension NodeDescriptionViewCell: UITextViewDelegate {
         viewModel?.isTextViewFocused(false)
         if textView.text?.isEmpty == true, viewModel?.isPlaceholder == true {
             textView.text = viewModel?.placeholderText
-            textView.textColor = textColor(isPlaceholderText: viewModel?.isPlaceholder == true)
+            textView.textColor = textColor(isPlaceholderText: true)
         }
     }
 
