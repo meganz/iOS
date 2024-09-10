@@ -40,8 +40,8 @@ final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
     
     private func configureViewsColor(trait: UITraitCollection) {
         contentView.backgroundColor = .clear
-        titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
-        subtitleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_subtitles(for: trait)
+        titleLabel.textColor = TokenColors.Text.primary
+        subtitleLabel.textColor = TokenColors.Text.primary
     }
     
     // MARK: - Internal functions
