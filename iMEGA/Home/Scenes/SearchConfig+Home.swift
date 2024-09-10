@@ -104,13 +104,7 @@ extension SearchConfig {
                 normalBackground: TokenColors.Button.secondary.swiftUI
             ),
             emptyViewAssetFactory: { chip, query in
-                let titleTextColor: (ColorScheme) -> Color = { colorScheme in
-                    guard isDesignTokenEnabled else {
-                        return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
-                    }
-
-                    return TokenColors.Icon.secondary.swiftUI
-                }
+                let titleTextColor = TokenColors.Icon.secondary.swiftUI
 
                 guard let chip else {
                     guard !query.isSearchActive else {
@@ -227,7 +221,7 @@ extension SearchConfig {
     }
 
     private static func searchEmptyState(
-        with titleTextColor: @escaping (ColorScheme) -> Color
+        with titleTextColor: Color
     ) -> SearchConfig.EmptyViewAssets {
         .init(
             image: Image(.searchEmptyState),

@@ -50,7 +50,7 @@ public struct LocationInfoMapTile<ID: Hashable>: View {
             icon
             Text(label)
                 .font(.caption)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : Color(UIColor.lightGray))
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }.frame(maxWidth: .infinity, alignment: .leading)
     }
     
@@ -61,9 +61,7 @@ public struct LocationInfoMapTile<ID: Hashable>: View {
             .cornerRadius(8, corners: .allCorners)
         Text(marker.locationDescription)
             .font(.caption)
-            .foregroundStyle(
-                isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary
-            )
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
     }
     
     @ViewBuilder

@@ -18,7 +18,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         let expectedEmptyAsset = SearchConfig.EmptyViewAssets(
             image: Image(.searchEmptyState),
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
-            titleTextColor: { _ in TokenColors.Icon.secondary.swiftUI }
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
         )
         XCTAssertEqual(emptyAsset, expectedEmptyAsset)
     }
@@ -122,8 +122,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         .init(
             tracker: tracker,
             nodeInsertionRouter: MockNodeInsertionRouter(),
-            nodeUseCase: nodeUseCase,
-            isDesignTokenEnabled: isDesignTokenEnabled
+            nodeUseCase: nodeUseCase
         )
     }
 
@@ -137,8 +136,8 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
             actions: [
                 .init(
                     title: Strings.Localizable.addFiles, 
-                    titleTextColor: { _ in TokenColors.Text.inverseAccent.swiftUI },
-                    backgroundColor: { _ in TokenColors.Support.success.swiftUI },
+                    titleTextColor: TokenColors.Text.inverseAccent.swiftUI,
+                    backgroundColor: TokenColors.Support.success.swiftUI,
                     menu: [
                         .init(title: Strings.Localizable.newTextFile, image: Image(.textfile), handler: {}),
                         .init(title: Strings.Localizable.newFolder, image: Image(.newFolder), handler: {}),
@@ -174,7 +173,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         let expectedEmptyAsset = SearchConfig.EmptyViewAssets(
             image: expectedImage,
             title: expectedTitle,
-            titleTextColor: { _ in TokenColors.Icon.secondary.swiftUI },
+            titleTextColor: TokenColors.Icon.secondary.swiftUI,
             actions: actions
         )
         XCTAssertEqual(emptyAsset, expectedEmptyAsset, file: file, line: line)

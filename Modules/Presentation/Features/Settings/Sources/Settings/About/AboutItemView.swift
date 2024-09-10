@@ -14,7 +14,7 @@ struct AboutItemView: View {
                 .font(.callout)
                 .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI: Color(UIColor.secondaryLabel))
         }
-        .designTokenSeparator(isDesignTokenEnabled)
-        .designTokenBackground(isDesignTokenEnabled)
+        .separator()
+        .background()
     }
 }

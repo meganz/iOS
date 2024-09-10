@@ -13,7 +13,6 @@ struct QASettingsView: View {
     }
     
     let viewModel: QASettingsViewModel
-    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         List {
@@ -54,6 +53,6 @@ struct QASettingsView: View {
         }
         .listStyle(.grouped)
         .padding(.top)
-        .designTokenBackground(isDesignTokenEnabled)
+        .background()
     }
 }

@@ -4,8 +4,6 @@ import MEGASwiftUI
 import SwiftUI
 
 struct SeeMoreParticipantsView: View {
-    @Environment(\.colorScheme) private var colorScheme
-
     private enum Constants {
         static let viewPadding: CGFloat = 10
         static let viewHeight: CGFloat = 44
@@ -24,7 +22,7 @@ struct SeeMoreParticipantsView: View {
         VStack(spacing: Constants.spacing) {
             HStack {
                 Image(systemName: disclosureIndicator)
-                    .foregroundColor(foregroundColor)
+                    .foregroundColor(TokenColors.Text.secondary.swiftUI)
                     .rotationEffect(.degrees(isExpanded ? Constants.rotationLeft : Constants.rotationRight))
                     .padding(.horizontal)
                 Text(isExpanded ? Strings.Localizable.Meetings.Info.Participants.seeLess : Strings.Localizable.Meetings.Info.Participants.seeMore)
@@ -34,20 +32,8 @@ struct SeeMoreParticipantsView: View {
             .padding(.trailing, Constants.viewPadding)
             .frame(height: Constants.viewHeight)
             .contentShape(Rectangle())
-            .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyBackgroundColor)
+            .background()
             Divider()
         }
-    }
-    
-    private var foregroundColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.secondary.swiftUI
-        } else {
-            Color(UIColor.gray8E8E93).opacity(Constants.disclosureOpacity)
-        }
-    }
-    
-    private var legacyBackgroundColor: Color {
-        colorScheme == .dark ? Color(UIColor.black1C1C1E) : Color(UIColor.whiteFFFFFF)
     }
 }

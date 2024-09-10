@@ -39,7 +39,7 @@ struct ImportAlbumView: View {
                 } else {
                     ContentUnavailableView {
                         Image(.noInternetEmptyState)
-                    } description: { _ in
+                    } description: {
                         Text(Strings.Localizable.noInternetConnection)
                             .font(.body)
                     }
@@ -77,7 +77,7 @@ struct ImportAlbumView: View {
             if viewModel.shouldShowEmptyAlbumView {
                 ContentUnavailableView {
                     Image(.allPhotosEmptyState)
-                } description: { _ in
+                } description: {
                     Text(Strings.Localizable.CameraUploads.Albums.Empty.title)
                         .font(.body)
                 }
@@ -111,7 +111,7 @@ struct ImportAlbumView: View {
                 .frame(maxHeight: 44)
         }, center: {
             navigationTitle
-        }, backgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.navigationBg.swiftUI)
+        }, backgroundColor: TokenColors.Background.surface1.swiftUI)
     }
     
     @ViewBuilder
@@ -163,11 +163,7 @@ struct ImportAlbumView: View {
     }
     
     private var toolbarButtonColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.primary.swiftUI
-        } else {
-            colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
-        }
+        TokenColors.Text.primary.swiftUI
     }
     
     private func dismissImportAlbumScreen() {
@@ -186,8 +182,7 @@ struct ImportAlbumView: View {
             shareLinkButton()
         }
         .frame(maxHeight: 64)
-        .background((isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.navigationBg.swiftUI)
-            .edgesIgnoringSafeArea(.bottom))
+        .background(TokenColors.Background.surface1.swiftUI.edgesIgnoringSafeArea(.bottom))
     }
     
     private func importAlbumToolbarButton() -> some View {
