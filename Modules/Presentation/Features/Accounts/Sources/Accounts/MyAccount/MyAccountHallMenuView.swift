@@ -13,10 +13,7 @@ public struct MyAccountHallMenuView: View {
     
     @Environment(\.colorScheme) var colorScheme
     private var separatorColor: Color {
-        guard isDesignTokenEnabled else {
-            return colorScheme == .dark ? Color(red: 38/255, green: 38/255, blue: 38/255, opacity: 1.0) : Color(red: 240/255, green: 240/255, blue: 240/255, opacity: 1.0)
-        }
-        return TokenColors.Border.strong.swiftUI
+        TokenColors.Border.strong.swiftUI
     }
     
     private var backgroundColor: Color {
@@ -31,9 +28,7 @@ public struct MyAccountHallMenuView: View {
             disclosureIndicatorView
         }
         .padding(.vertical, 20)
-        .background(
-            isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : backgroundColor
-        )
+        .background(TokenColors.Background.page.swiftUI)
         .separatorView(
             offset: 55,
             color: separatorColor
@@ -44,8 +39,8 @@ public struct MyAccountHallMenuView: View {
     private var menuIcon: some View {
         if let menuIcon = menuDetails.icon {
             Image(uiImage: menuIcon)
-                .renderingMode(isDesignTokenEnabled ? .template : .original)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : Color.primary)
+                .renderingMode(.template)
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                 .frame(width: 24, height: 24)
                 .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 10))
                 .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
@@ -55,9 +50,7 @@ public struct MyAccountHallMenuView: View {
     private var menuTitleView: some View {
         Text(menuDetails.sectionText ?? "")
             .font(.body)
-            .foregroundStyle(
-                isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label)
-            )
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
     }
     
     private var disclosureIndicatorView: some View {

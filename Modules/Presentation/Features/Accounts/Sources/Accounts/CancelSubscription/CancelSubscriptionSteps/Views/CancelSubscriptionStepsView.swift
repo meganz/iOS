@@ -8,28 +8,20 @@ struct CancelSubscriptionStepsView: View {
     @Environment(\.presentationMode) private var presentationMode
     @StateObject var viewModel: CancelSubscriptionStepsViewModel
     
-    private var bodyBackgroundColor: Color {
-        colorScheme == .dark ? Color.black : Color.white
-    }
-    
-    private var navigationBarBackgroundColor: Color {
-        colorScheme == .dark ? Color(red: 0.157, green: 0.157, blue: 0.188) : Color(red: 0.969, green: 0.969, blue: 0.969)
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             navigationBar
                 .frame(height: 60)
-                .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : navigationBarBackgroundColor)
+                .background(TokenColors.Background.surface1.swiftUI)
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text(viewModel.title)
                         .font(.title3)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     
                     Text(viewModel.message)
                         .font(.body)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
+                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     
                     ForEach(viewModel.sections, id: \.title) { section in
                         StepSectionView(
@@ -46,7 +38,7 @@ struct CancelSubscriptionStepsView: View {
             }
         }
         .ignoresSafeArea(edges: [.top, .bottom])
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : bodyBackgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
         .task {
             viewModel.setupStepList()
         }
@@ -66,7 +58,7 @@ struct CancelSubscriptionStepsView: View {
                 } label: {
                     Text(Strings.Localizable.cancel)
                         .font(.body)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 }
             },
             center: {

@@ -9,7 +9,7 @@ struct StepSectionView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(sectionTitle)
                 .font(.subheadline)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .padding(.top, 16)
             
             ForEach(Array(steps.enumerated()), id: \.offset) { _, step in
@@ -17,7 +17,7 @@ struct StepSectionView: View {
                     Text(step.attributedText)
                 }
                 .font(.subheadline)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             }
             .padding(.horizontal, 4)
         }
