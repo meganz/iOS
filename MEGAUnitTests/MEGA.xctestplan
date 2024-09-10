@@ -60,6 +60,11 @@
           "containerPath" : "container:Modules\/Repository\/ChatRepo",
           "identifier" : "ChatRepo",
           "name" : "ChatRepo"
+        },
+        {
+          "containerPath" : "container:Modules\/Domain\/MEGADomain",
+          "identifier" : "MEGADomain",
+          "name" : "MEGADomain"
         }
       ]
     },
