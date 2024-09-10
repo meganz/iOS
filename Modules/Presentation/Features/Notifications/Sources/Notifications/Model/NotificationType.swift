@@ -15,10 +15,10 @@ public enum NotificationType {
         }
     }
     
-    func textColor(isDesignTokenEnabled: Bool, isDarkMode: Bool) -> Color {
+    func textColor(isDarkMode: Bool) -> Color {
         switch self {
         case .limitedTypeOffer:
-            isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : isDarkMode ? Color(red: 0, green: 0.761, blue: 0.604) : Color(red: 0, green: 0.659, blue: 0.525)
+            TokenColors.Support.success.swiftUI
         case .none:
             Color.white
         }

@@ -18,11 +18,11 @@ struct NotificationItemContentView: View {
                     Text(viewModel.notification.title)
                         .font(.subheadline)
                         .bold()
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     
                     Text(viewModel.notification.description)
                         .font(.footnote)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI )
                     
                     if !viewModel.hasBannerImage {
                         footerText
@@ -69,7 +69,7 @@ struct NotificationItemContentView: View {
         if let footerText = viewModel.footerText() {
             Text(footerText)
                 .font(.caption)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : secondaryTextColor)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
     }
 }

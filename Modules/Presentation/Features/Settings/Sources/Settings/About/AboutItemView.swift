@@ -12,7 +12,7 @@ struct AboutItemView: View {
                 .font(.body)
             Text(subtitle)
                 .font(.callout)
-                .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI: Color(UIColor.secondaryLabel))
+                .foregroundColor(TokenColors.Text.secondary.swiftUI)
         }
         .separator()
         .background()
