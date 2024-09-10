@@ -29,6 +29,7 @@ public final class DeviceListViewModel: ObservableObject {
     private var sortedAvailableActions: [ContextAction.Category: [ContextAction]] {
         Dictionary(grouping: deviceCenterActions, by: \.type)
     }
+    private var networkMonitorTask: Task<Void, Never>?
     var isFilteredDevicesEmpty: Bool {
         filteredDevices.isEmpty
     }
@@ -86,7 +87,11 @@ public final class DeviceListViewModel: ObservableObject {
         setupDevicesUpdateSubscription()
         loadUserDevices()
         showLoadingPlaceholder()
-        updateInternetConnectionStatus()
+    }
+    
+    deinit {
+        networkMonitorTask?.cancel()
+        networkMonitorTask = nil
     }
     
     private func showLoadingPlaceholder() {
@@ -180,15 +185,18 @@ public final class DeviceListViewModel: ObservableObject {
         isLoadingPlaceholderVisible = shown
     }
     
+    @MainActor
     private func monitorNetworkChanges() {
-        networkMonitorUseCase.networkPathChangedPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasNetworkConnection in
-                self?.hasNetworkConnection = hasNetworkConnection
+        let connectionSequence = networkMonitorUseCase.connectionSequence
+        
+        networkMonitorTask = Task { [weak self] in
+            for await isConnected in connectionSequence {
+                self?.hasNetworkConnection = isConnected
             }
-            .store(in: &cancellable)
+        }
     }
     
+    @MainActor
     func updateInternetConnectionStatus() {
         hasNetworkConnection = networkMonitorUseCase.isConnected()
         monitorNetworkChanges()

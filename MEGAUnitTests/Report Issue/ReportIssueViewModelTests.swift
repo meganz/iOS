@@ -13,7 +13,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     
     @MainActor
     private func makeSUT(
-        connectionChangedStream: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        connectionSequence: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         connected: Bool = true,
         connectedViaWiFi: Bool = false,
         uploadFileResult: Result<Void, TransferErrorEntity>? = nil,
@@ -30,7 +30,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         let monitorUseCase = MockNetworkMonitorUseCase(
             connected: connected,
             connectedViaWiFi: connectedViaWiFi,
-            connectionChangedStream: connectionChangedStream
+            connectionSequence: connectionSequence
         )
         let uploadFileUseCase = MockUploadFileUseCase(
             uploadFileResult: uploadFileResult,
@@ -190,7 +190,7 @@ final class ReportIssueViewModelTests: XCTestCase {
             continuation.finish()
         }.eraseToAnyAsyncSequence()
         
-        let (sut, _) = makeSUT(connectionChangedStream: stream)
+        let (sut, _) = makeSUT(connectionSequence: stream)
         
         sut.$isConnected
             .dropFirst()
@@ -213,7 +213,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testDismissReport_called_dismissCalledOnce() async {
+    func testDismissReport_called_dismissCalledOnce() {
         let (sut, router) = makeSUT()
         
         sut.dismissReport()
@@ -455,7 +455,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testShowCancelUploadReportAlert_whenCalled_setsCorrectAlertTypeAndShowsAlert() async {
+    func testShowCancelUploadReportAlert_whenCalled_setsCorrectAlertTypeAndShowsAlert() {
         let (sut, _) = makeSUT()
         
         sut.showCancelUploadReportAlert()

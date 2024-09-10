@@ -36,7 +36,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let chatViewType: ChatViewType
-    private var cancellable: Set<AnyCancellable> = []
+    private var networkMonitorTask: Task<Void, Never>?
     
     lazy var contextMenuManager = ContextMenuManager(
         chatMenuDelegate: self,
@@ -189,6 +189,11 @@ final class ChatRoomsListViewModel: ObservableObject {
         configureTitle()
     }
     
+    deinit {
+        networkMonitorTask?.cancel()
+        networkMonitorTask = nil
+    }
+    
     var hasContacts: Bool {
         // we filter only visible to not show removed contacts
         accountUseCase
@@ -271,6 +276,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
+    @MainActor 
     func loadChatRoomsIfNeeded() {
         isViewOnScreen = true
         retryPendingConnectionsUseCase.retryPendingConnections()
@@ -801,13 +807,15 @@ final class ChatRoomsListViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+    @MainActor
     private func monitorNetworkChanges() {
-        networkMonitorUseCase.networkPathChangedPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isConnectedToNetwork in
-                self?.isConnectedToNetwork = isConnectedToNetwork
+        let connectionSequence = networkMonitorUseCase.connectionSequence
+        
+        networkMonitorTask = Task { [weak self] in
+            for await isConnected in connectionSequence {
+                self?.isConnectedToNetwork = isConnected
             }
-            .store(in: &cancellable)
+        }
     }
     
     private func monitorActiveCallChanges() {

@@ -232,7 +232,7 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     func monitorNetworkConnection() async {
-        for await isConnected in monitorUseCase.connectionChangedStream {
+        for await isConnected in monitorUseCase.connectionSequence {
             guard [AlbumPublicLinkStatus.loaded, .invalid].notContains(publicLinkStatus) else {
                 break
             }

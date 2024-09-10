@@ -36,8 +36,8 @@ public final class BackupListViewModel: ObservableObject {
     }
     private var backupsPreloaded = false
     private var searchCancellable: AnyCancellable?
-    private var cancellable: Set<AnyCancellable> = []
     private var backupNameChangeObserver: Any?
+    private var networkMonitorTask: Task<Void, Never>?
     
     private var sortTypeSelected: SortType = .ascending
     
@@ -113,6 +113,13 @@ public final class BackupListViewModel: ObservableObject {
                 observer
             )
         }
+        
+        cancelNetworkMonitorTask()
+    }
+    
+    private func cancelNetworkMonitorTask() {
+        networkMonitorTask?.cancel()
+        networkMonitorTask = nil
     }
     
     private func addObservers() {
@@ -170,12 +177,13 @@ public final class BackupListViewModel: ObservableObject {
     
     @MainActor
     private func monitorNetworkChanges() {
-        networkMonitorUseCase.networkPathChangedPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasNetworkConnection in
-                self?.hasNetworkConnection = hasNetworkConnection
+        let connectionSequence = networkMonitorUseCase.connectionSequence
+        
+        networkMonitorTask = Task { [weak self] in
+            for await isConnected in connectionSequence {
+                self?.hasNetworkConnection = isConnected
             }
-            .store(in: &cancellable)
+        }
     }
     
     @MainActor

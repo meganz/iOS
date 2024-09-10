@@ -96,7 +96,8 @@ final class MonitorCameraUploadUseCaseTests: XCTestCase {
         let networkMonitorUseCase = MockNetworkMonitorUseCase(
             connected: true,
             connectedViaWiFi: true,
-            connectionChangedStream: networkStream.eraseToAnyAsyncSequence())
+            connectionSequence: networkStream.eraseToAnyAsyncSequence()
+        )
         let cameraUploadRepository = MockCameraUploadsStatsRepository()
         let sut = makeSUT(
             cameraUploadRepository: cameraUploadRepository,

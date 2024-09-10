@@ -24,7 +24,7 @@ final class NoInternetViewModel: ObservableObject {
 
     @MainActor
     private func monitorNetworkChanges() async {
-        for await isConnected in networkMonitorUseCase.connectionChangedStream.removeDuplicates() {
+        for await isConnected in networkMonitorUseCase.connectionSequence.removeDuplicates() {
             networkConnectionStateChanged?(isConnected)
             self.isConnected = isConnected
         }

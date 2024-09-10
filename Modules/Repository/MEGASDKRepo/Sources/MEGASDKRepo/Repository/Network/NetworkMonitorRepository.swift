@@ -1,4 +1,3 @@
-@preconcurrency import Combine
 import Foundation
 import MEGADomain
 import MEGASwift
@@ -8,28 +7,17 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol, S
     public static var newRepo: NetworkMonitorRepository {
         NetworkMonitorRepository()
     }
-    
-    private let monitor: NWPathMonitor
-    private let queue: DispatchQueue
-    private let isConnectedPassThroughSubject = PassthroughSubject<Bool, Never>()
-    
-    public var connectionChangedStream: AnyAsyncSequence<Bool> {
-        isConnectedPassThroughSubject
-            .values
+    public var connectionSequence: AnyAsyncSequence<Bool> {
+        monitor
+            .networkPathStream
+            .map { $0.networkStatus == .satisfied }
             .eraseToAnyAsyncSequence()
     }
     
-    public var networkPathChangedPublisher: AnyPublisher<Bool, Never> {
-        isConnectedPassThroughSubject.eraseToAnyPublisher()
-    }
+    private let monitor: NetworkMonitor
     
-    public init(
-        monitor: NWPathMonitor = NWPathMonitor(),
-        queue: DispatchQueue = DispatchQueue(label: "NetworkMonitor")
-    ) {
+    public init(monitor: NetworkMonitor = NWPathMonitorWrapper()) {
         self.monitor = monitor
-        self.queue = queue
-        startMonitoring()
     }
     
     deinit {
@@ -37,22 +25,13 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol, S
     }
     
     public func isConnected() -> Bool {
-        monitor.currentPath.status == .satisfied
-    }
-    
-    private func startMonitoring() {
-        monitor.pathUpdateHandler = { [weak self] path in
-            guard let self = self else { return }
-            let isConnected = path.status == .satisfied
-            self.isConnectedPassThroughSubject.send(isConnected)
-        }
-        monitor.start(queue: queue)
+        monitor.currentPath.networkStatus == .satisfied
     }
     
     public func isConnectedViaWiFi() -> Bool {
-        guard let wifiInterface = monitor.currentPath.availableInterfaces.first(where: { $0.type == .wifi }) else {
+        guard let wifiInterface = monitor.currentPath.availableNetworkInterfaces.first(where: { $0.interfaceType == .wifi }) else {
             return false
         }
-        return monitor.currentPath.usesInterfaceType(wifiInterface.type)
+        return monitor.currentPath.usesNetworkInterfaceType(wifiInterface.interfaceType)
     }
 }

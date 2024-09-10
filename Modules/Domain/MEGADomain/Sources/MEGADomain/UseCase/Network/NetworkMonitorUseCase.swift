@@ -1,15 +1,11 @@
-import Combine
 import MEGASwift
 
 public protocol NetworkMonitorUseCaseProtocol {
-    /// Infinite `AnyAsyncSequence` returning results from network path monitoring
+    /// Infinite `AnyAsyncSequence` returning results from network path monitoring.
     ///
     /// The stream will not finish and the task will need to be cancelled.
-    /// - Returns: `AnyAsyncSequence<Bool>` whether the connection is satisfied.
-    var connectionChangedStream: AnyAsyncSequence<Bool> { get }
-    
-    /// Publisher that emits a boolean indicating the network connection status whenever it changes.
-    var networkPathChangedPublisher: AnyPublisher<Bool, Never> { get }
+    /// - Returns: `AnyAsyncSequence<Bool>` indicating whether the connection is satisfied.
+    var connectionSequence: AnyAsyncSequence<Bool> { get }
     
     /// Checks the current network connection status.
     ///
@@ -29,12 +25,8 @@ public protocol NetworkMonitorUseCaseProtocol {
 public struct NetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
     private let repo: any NetworkMonitorRepositoryProtocol
     
-    public var connectionChangedStream: AnyAsyncSequence<Bool> {
-        repo.connectionChangedStream
-    }
-    
-    public var networkPathChangedPublisher: AnyPublisher<Bool, Never> {
-        repo.networkPathChangedPublisher
+    public var connectionSequence: AnyAsyncSequence<Bool> {
+        repo.connectionSequence
     }
     
     public init(repo: some NetworkMonitorRepositoryProtocol) {

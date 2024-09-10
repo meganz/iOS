@@ -1,15 +1,10 @@
-import Combine
 import MEGASwift
 
 public protocol NetworkMonitorRepositoryProtocol: RepositoryProtocol, Sendable {
-    /// Infinite `AnyAsyncSequence` returning results from network path monitoring
+    /// Asynchronous stream returning network connection status changes.
     ///
-    /// The stream will finish when the repository instance is deallocated
-    /// - Returns: `AnyAsyncSequence<Bool>` whether the connection is satisfied
-    var connectionChangedStream: AnyAsyncSequence<Bool> { get }
-    
-    /// Publisher that emits a boolean indicating the network connection status whenever it changes.
-    var networkPathChangedPublisher: AnyPublisher<Bool, Never> { get }
+    /// The stream provides updates of type `Bool` indicating whether the network connection is satisfied.
+    var connectionSequence: AnyAsyncSequence<Bool> { get }
     
     /// Checks the current network connection status.
     ///
