@@ -53,18 +53,12 @@ private struct ProPlanView: View {
                 Text(title)
                     .font(.subheadline)
                     .bold()
-                    .foregroundStyle(
-                        isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(.label)
-                    )
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 Text(message)
                     .font(.subheadline)
                     .multilineTextAlignment(.leading)
-                    .foregroundStyle(
-                        isDesignTokenEnabled ? 
-                        TokenColors.Text.secondary.swiftUI :
-                            colorScheme == .dark ? Color(red: 181/255, green: 181/255, blue: 181/255) : Color(red: 132/255, green: 132/255, blue: 132/255)
-                    )
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             }
             
             Spacer()

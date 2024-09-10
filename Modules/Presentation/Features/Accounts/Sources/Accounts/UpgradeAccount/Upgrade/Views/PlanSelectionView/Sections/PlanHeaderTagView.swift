@@ -36,8 +36,8 @@ public struct PlanHeaderTagView: View {
     
     private var planTagTextColor: Color {
         switch planTag {
-        case .currentPlan: isDesignTokenEnabled ? TokenColors.Text.warning.swiftUI : .primary
-        case .recommended: isDesignTokenEnabled ? TokenColors.Text.info.swiftUI : .primary
+        case .currentPlan: TokenColors.Text.warning.swiftUI
+        case .recommended: TokenColors.Text.info.swiftUI
         case .none: .clear
         }
     }

@@ -10,7 +10,7 @@ struct FeatureRow: View {
                 .font(.footnote)
                 .bold()
                 .multilineTextAlignment(.leading)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(2.0)
 
@@ -23,7 +23,7 @@ struct FeatureRow: View {
                 Text(feature.freeText ?? "")
                     .font(.footnote)
                     .multilineTextAlignment(.center)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     .frame(maxWidth: .infinity)
                     .padding(2.0)
             }
@@ -37,7 +37,7 @@ struct FeatureRow: View {
                 Text(feature.proText ?? "")
                     .font(.footnote)
                     .multilineTextAlignment(.center)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI: .secondary)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     .frame(maxWidth: .infinity)
                     .padding(2.0)
             }

@@ -32,7 +32,6 @@ public struct AccountPlanView: View {
             .padding()
             .padding(.bottom, 5)
         }
-        .background(isDesignTokenEnabled ? Color.clear : config.onboardingViewAssets.backgroundColor) // This line should be removed when design token is permanently applied
         .overlay(
             roundedRectangle
                 .stroke(borderColor, lineWidth: viewModel.isSelected ? 3 : 1.5)

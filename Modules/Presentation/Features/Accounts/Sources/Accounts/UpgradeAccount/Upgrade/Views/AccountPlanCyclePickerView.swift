@@ -30,7 +30,7 @@ public struct AccountPlanCyclePickerView: View {
                 .bold()
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.success.swiftUI : Color.primary)
+                .foregroundStyle(TokenColors.Text.success.swiftUI)
                 .background(subMessageBackgroundColor)
                 .cornerRadius(10)
                 .padding(.bottom, 15)
