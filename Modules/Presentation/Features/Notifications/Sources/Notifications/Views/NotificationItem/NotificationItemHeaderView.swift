@@ -13,7 +13,6 @@ struct NotificationItemHeaderView: View {
             Text(type.displayName)
                 .foregroundStyle(
                     type.textColor(
-                        isDesignTokenEnabled: isDesignTokenEnabled,
                         isDarkMode: colorScheme == .dark
                     )
                 )
@@ -26,11 +25,9 @@ struct NotificationItemHeaderView: View {
                 TagView(
                     tagName: tag.displayName,
                     tagColor: tag.bgColor(
-                        isDesignTokenEnabled: isDesignTokenEnabled,
                         isDarkMode: colorScheme == .dark
                     ),
                     tagTextColor: tag.textColor(
-                        isDesignTokenEnabled: isDesignTokenEnabled,
                         isDarkMode: colorScheme == .dark
                     ),
                     cornerRadius: 4,

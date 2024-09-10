@@ -17,14 +17,14 @@ public struct TermsAndPoliciesView: View {
             NavigationStackView {
                 TermsAndPoliciesContentView(viewModel: viewModel)
                     .navigationBarTitleDisplayMode(.inline)
-                    .navigationBarColor(isDesignTokenEnabled ? TokenColors.Background.surface1 : UIColor.clear)
+                    .navigationBarColor(TokenColors.Background.surface1)
                     .toolbar {
                         ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                             Button {
                                 viewModel.dismiss()
                             } label: {
                                 Text(Strings.Localizable.close)
-                                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                                    .foregroundColor(TokenColors.Text.primary.swiftUI)
                             }
                         }
                     }

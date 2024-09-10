@@ -51,7 +51,7 @@ struct SearchResultRowView: View {
                         swipeAction
                             .image
                             .renderingMode(.template)
-                            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : .white)
+                            .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                     }
                     .tint(swipeAction.backgroundColor)
                 }
