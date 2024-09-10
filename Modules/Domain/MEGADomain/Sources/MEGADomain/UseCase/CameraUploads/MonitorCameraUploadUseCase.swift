@@ -45,7 +45,7 @@ public struct MonitorCameraUploadUseCase<S: CameraUploadsStatsRepositoryProtocol
             
             let monitorNetworkTask = Task {
                 for await stats in networkMonitorUseCase
-                    .connectionChangedStream
+                    .connectionSequence
                     .compactMap({ _ in try? await cameraUploadRepository.currentUploadStats() }) {
                     continuation.yield(stats)
                 }

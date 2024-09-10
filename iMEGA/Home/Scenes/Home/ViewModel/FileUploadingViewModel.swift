@@ -29,10 +29,11 @@ protocol HomeUploadingViewModelType {
 }
 
 final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingViewModelInputs {
-    private var cancellable: Set<AnyCancellable> = []
+    private var networkMonitorTask: Task<Void, Never>?
     
     // MARK: - HomeUploadingViewModelInputs
 
+    @MainActor
     func viewIsReady() {
         self.contextMenuManager = ContextMenuManager(
             uploadAddMenuDelegate: self,
@@ -40,13 +41,22 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
         )
         notifyUpdate?(self.outputs)
         
-        networkMonitorUseCase.networkPathChangedPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                self.notifyUpdate?(self.outputs)
+        startMonitoringNetworkChanges()
+    }
+
+    @MainActor
+    private func startMonitoringNetworkChanges() {
+        let connectionSequence = networkMonitorUseCase.connectionSequence
+        
+        networkMonitorTask = Task { [weak self] in
+            for await _ in connectionSequence {
+                self?.notifyNetworkChange()
             }
-            .store(in: &cancellable)
+        }
+    }
+    
+    private func notifyNetworkChange() {
+        notifyUpdate?(outputs)
     }
 
     func didTapUploadFromPhotoAlbum() {
@@ -170,6 +180,11 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
         self.createContextMenuUseCase = createContextMenuUseCase
         self.tracker = tracker
         self.router = router
+    }
+    
+    deinit {
+        networkMonitorTask?.cancel()
+        networkMonitorTask = nil
     }
 
     struct ViewState: HomeUploadingViewModelOutputs {
