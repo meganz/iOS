@@ -12,16 +12,12 @@ struct CancellationSurveyView: View {
     init(viewModel: @autoclosure @escaping () -> CancellationSurveyViewModel) {
          _viewModel = StateObject(wrappedValue: viewModel())
      }
-
-    private var navigationBarBackgroundColor: Color {
-        colorScheme == .dark ? Color(red: 0.157, green: 0.157, blue: 0.188) : Color(red: 0.969, green: 0.969, blue: 0.969)
-    }
     
     var body: some View {
         VStack(spacing: 0) {
             navigationBar
                 .frame(height: 60)
-                .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : navigationBarBackgroundColor)
+                .background(TokenColors.Background.surface1.swiftUI)
             
             ScrollViewReader { scrollProxy in
                 ScrollView(showsIndicators: false) {
@@ -58,7 +54,7 @@ struct CancellationSurveyView: View {
             }
         }
         .ignoresSafeArea(edges: [.top, .bottom])
-        .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : .clear)
+        .background(TokenColors.Background.surface1.swiftUI)
         .onAppear {
             viewModel.trackViewOnAppear()
             viewModel.setupRandomizedReasonList()
@@ -74,7 +70,7 @@ struct CancellationSurveyView: View {
                 } label: {
                     Text(Strings.Localizable.cancel)
                         .font(.body)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 }
             },
             backgroundColor: .clear
@@ -86,12 +82,12 @@ struct CancellationSurveyView: View {
             Text(Strings.Localizable.Accounts.CancelSubscriptionSurvey.Header.title)
                 .font(.title3)
                 .bold()
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .multilineTextAlignment(.center)
             
             Text(Strings.Localizable.Accounts.CancelSubscriptionSurvey.Header.subtitle)
                 .font(.subheadline)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .multilineTextAlignment(.center)
         }
     }
@@ -101,7 +97,7 @@ struct CancellationSurveyView: View {
         if viewModel.showNoReasonSelectedError {
             Text(Strings.Localizable.Accounts.CancelSubscriptionSurvey.Error.selectAReason)
                 .font(.footnote)
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .padding(15)
                 .frame(maxWidth: .infinity)
                 .background(TokenColors.Notifications.notificationError.swiftUI)
