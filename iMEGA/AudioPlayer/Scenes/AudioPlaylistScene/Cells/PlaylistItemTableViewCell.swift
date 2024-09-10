@@ -51,16 +51,11 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     }
     
     private func configureViewsColor(trait: UITraitCollection) {
-        if UIColor.isDesignTokenEnabled() {
-            titleLabel.textColor = TokenColors.Text.primary
-            artistLabel.textColor = TokenColors.Text.secondary
-            
-            contentView.backgroundColor = TokenColors.Background.page
-            contentView.superview?.backgroundColor = TokenColors.Background.page
-        } else {
-            titleLabel.textColor = UIColor.label
-            artistLabel.textColor = UIColor.mnz_subtitles(for: trait)
-        }
+        titleLabel.textColor = TokenColors.Text.primary
+        artistLabel.textColor = TokenColors.Text.secondary
+        
+        contentView.backgroundColor = TokenColors.Background.page
+        contentView.superview?.backgroundColor = TokenColors.Background.page
     }
     
     private func configureThumbnail(_ item: AudioPlayerItem?) {
