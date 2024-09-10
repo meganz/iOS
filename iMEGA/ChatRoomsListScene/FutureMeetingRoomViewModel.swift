@@ -267,13 +267,13 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     }
     
     private func chatHasMessages(_ chatRoom: ChatRoomEntity, _ hasMessages: Bool) {
-        cancelChatHasMessageSuscription()
+        cancelChatHasMessageSubscription()
         closeChat(chatRoom)
         chatHasMessages = hasMessages
         showCancelMeetingAlert = true
     }
     
-    private func cancelChatHasMessageSuscription() {
+    private func cancelChatHasMessageSubscription() {
         chatHasMessagesSubscription?.cancel()
         chatHasMessagesSubscription = nil
     }
