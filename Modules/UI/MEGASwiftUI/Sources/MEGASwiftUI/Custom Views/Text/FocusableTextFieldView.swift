@@ -44,14 +44,10 @@ public struct FocusableTextFieldView: View {
         
         @ViewBuilder
         var textField: some View {
-            if isDesignTokenEnabled {
-                TextField(
-                    "", text: $text, prompt: Text(placeholder).foregroundColor(TokenColors.Text.placeholder.swiftUI)
-                )
-                .foregroundStyle(TokenColors.Text.primary.swiftUI)
-            } else {
-                TextField(placeholder, text: $text)
-            }
+            TextField(
+                "", text: $text, prompt: Text(placeholder).foregroundColor(TokenColors.Text.placeholder.swiftUI)
+            )
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
         }
     }
 }

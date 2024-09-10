@@ -19,7 +19,6 @@ struct BackupListView: View {
 }
 
 struct BackupListContentView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: BackupListViewModel
     @State private var selectedBackupViewModel: DeviceCenterItemViewModel?
     
@@ -45,7 +44,7 @@ struct BackupListContentView: View {
                     }
                 }
                 .listStyle(.plain)
-                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                .background()
             }.toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     DeviceCenterMenu(
@@ -68,12 +67,12 @@ struct BackupListContentView: View {
                     image: Image("folderEmptyState"),
                     title: Strings.Localizable.Device.Center.Current.Device.Empty.State.message,
                     font: .body,
-                    titleTextColor: { _ in TokenColors.Text.primary.swiftUI },
+                    titleTextColor: TokenColors.Text.primary.swiftUI,
                     actions: [
                         ContentUnavailableViewModel.ButtonAction(
                             title: Strings.Localizable.enableCameraUploadsButton,
-                            titleTextColor: { _ in isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : Color.white },
-                            backgroundColor: { _ in isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : colorScheme == .dark ? Color(red: 0, green: 0.761, blue: 0.604) : Color(red: 0, green: 0.659, blue: 0.525) },
+                            titleTextColor: TokenColors.Text.inverseAccent.swiftUI,
+                            backgroundColor: TokenColors.Button.primary.swiftUI,
                             image: nil,
                             handler: viewModel.showCameraUploadsSettingsFlow
                         )
@@ -124,7 +123,7 @@ struct DeviceCenterMenu: View {
             if title.isEmpty {
                 Image(menuIconName)
                     .renderingMode(.template)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color(red: 0.733, green: 0.733, blue: 0.733))
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .scaledToFit()
                     .frame(width: 28, height: 28)
             } else {

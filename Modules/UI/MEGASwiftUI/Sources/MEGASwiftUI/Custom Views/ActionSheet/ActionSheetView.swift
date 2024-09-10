@@ -2,7 +2,6 @@ import MEGADesignToken
 import SwiftUI
 
 public struct ActionSheetContentView<HeaderView: View>: View {
-    @Environment(\.colorScheme) private var colorScheme
     var style: Style = .default
     var actionButtons: [ActionSheetButton]
     var headerView: HeaderView
@@ -12,20 +11,8 @@ public struct ActionSheetContentView<HeaderView: View>: View {
         case plainIgnoreHeaderIgnoreScrolling
     }
     
-    private var headerBackgroundColor: Color {
-        guard isDesignTokenEnabled else {
-            return colorScheme == .dark ? Color(red: 0.286, green: 0.290, blue: 0.302) : Color(red: 0.953, green: 0.957, blue: 0.957)
-        }
-        
-        return TokenColors.Background.surface2.swiftUI
-    }
-    
     private var bodyBackgroundColor: Color {
-        guard isDesignTokenEnabled else {
-            return colorScheme == .dark ? Color(red: 0.188, green: 0.196, blue: 0.2) : Color(red: 0.980, green: 0.980, blue: 0.980)
-        }
-        
-        return TokenColors.Background.surface1.swiftUI
+        TokenColors.Background.surface1.swiftUI
     }
 
     public init(
@@ -62,7 +49,7 @@ public struct ActionSheetContentView<HeaderView: View>: View {
                     
                     Divider()
                 }
-                .background(headerBackgroundColor)
+                .background(TokenColors.Background.surface2.swiftUI)
                 
                 ForEach(actionButtons, id: \.self) { button in
                     button
@@ -88,20 +75,11 @@ public struct ActionSheetContentView<HeaderView: View>: View {
 }
 
 public struct ActionSheetButton: View, Hashable {
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.presentationMode) var presentationMode
     var icon: String
     var title: String
     var subtitle: String?
     var action: () -> Void
-    
-    private var buttonBackgroundColor: Color {
-        guard isDesignTokenEnabled else {
-            return colorScheme == .dark ? Color(red: 0.188, green: 0.196, blue: 0.2) : Color(red: 0.980, green: 0.980, blue: 0.980)
-        }
-        
-        return TokenColors.Background.surface1.swiftUI
-    }
     
     public init(icon: String, title: String, subtitle: String? = nil, action: @escaping () -> Void) {
         self.icon = icon
@@ -129,13 +107,13 @@ public struct ActionSheetButton: View, Hashable {
                 
                 Text(title)
                     .font(.body)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 Spacer()
                 if let subtitle = subtitle {
                     Text(subtitle)
                         .font(.callout)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
+                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     
                     Image("standardDisclosureIndicator")
                         .padding([.trailing], 16)
@@ -151,6 +129,6 @@ public struct ActionSheetButton: View, Hashable {
             Divider()
                 .padding([.leading], 60)
         }
-        .background(buttonBackgroundColor)
+        .background(TokenColors.Background.surface1.swiftUI)
     }
 }

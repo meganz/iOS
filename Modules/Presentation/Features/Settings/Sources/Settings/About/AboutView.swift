@@ -17,8 +17,8 @@ struct AboutView: View {
                 LinkView(viewModel: viewModel)
             }
         }
-        .designTokenBackground(isDesignTokenEnabled)
-        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+        .background()
+        .foregroundColor(TokenColors.Text.primary.swiftUI)
         .listStyle(.grouped)
         .alert(isPresented: $viewModel.showApiEnvironmentChangedAlert) {
             Alert(title: Text("API URL changed"))
@@ -31,9 +31,9 @@ private struct LinkView: View {
     
     var body: some View {
         Link(Strings.Localizable.viewSourceCode, destination: viewModel.sourceCodeURL)
-            .designTokenSeparator(isDesignTokenEnabled)
+            .separator()
         Link(Strings.Localizable.acknowledgements, destination: viewModel.acknowledgementsURL)
-            .designTokenSeparator(isDesignTokenEnabled)
+            .separator()
     }
 }
 

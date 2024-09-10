@@ -30,7 +30,7 @@ struct ListViewContainer<Content>: View where Content: View {
             } else {
                 ContentUnavailableView(label: {
                     Image("noInternetEmptyState")
-                }, description: { _ in
+                }, description: {
                     Text(Strings.Localizable.noInternetConnection)
                 })
             }

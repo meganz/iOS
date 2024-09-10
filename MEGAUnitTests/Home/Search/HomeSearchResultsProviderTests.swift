@@ -848,22 +848,14 @@ class HomeSearchResultsProviderTests: XCTestCase {
     }
 
     private func makeEmptyAsset(with title: String) -> SearchConfig.EmptyViewAssets {
-        .init(image: Image(systemName: "person"), title: title, titleTextColor: { _ in .red })
+        .init(image: Image(systemName: "person"), title: title, titleTextColor: .red)
     }
 
     private func searchEmptyStateAsset() -> SearchConfig.EmptyViewAssets {
-        let titleTextColor: (ColorScheme) -> Color = { colorScheme in
-            guard UIColor.isDesignTokenEnabled() else {
-                return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
-            }
-
-            return TokenColors.Icon.secondary.swiftUI
-        }
-
         return .init(
             image: Image(.searchEmptyState),
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
-            titleTextColor: titleTextColor
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
         )
     }
 }

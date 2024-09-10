@@ -49,7 +49,7 @@ struct NodeBrowserView: View {
                     .environment(\.editMode, $viewModel.editMode)
             }
         }
-        .designTokenBackground(isDesignTokenEnabled, legacyColor: Color(UIColor.systemBackground))
+        .background()
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }

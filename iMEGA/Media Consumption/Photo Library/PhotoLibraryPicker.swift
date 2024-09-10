@@ -21,6 +21,6 @@ struct PhotoLibraryPicker: View {
             }
         }
         .pickerStyle(.segmented)
-        .blurBackground(isDesignTokenEnabled, color: UIColor.backgroundRegularPrimaryElevated.swiftUI)
+        .blurBackground()
     }
 }

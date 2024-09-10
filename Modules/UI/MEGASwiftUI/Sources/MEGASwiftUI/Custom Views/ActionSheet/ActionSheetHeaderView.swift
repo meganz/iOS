@@ -2,20 +2,11 @@ import MEGADesignToken
 import SwiftUI
 
 public struct ActionSheetHeaderView: View {
-    @Environment(\.colorScheme) private var colorScheme
     let iconName: String?
     let title: String
     let detailImageName: String?
     let subtitle: String
     let subtitleColor: UIColor
-    
-    private var titleColor: Color {
-        guard isDesignTokenEnabled else {
-            return colorScheme == .dark ? .white: .black
-        }
-        
-        return TokenColors.Text.primary.swiftUI
-    }
 
     public init(iconName: String? = nil, title: String, detailImageName: String? = nil, subtitle: String, subtitleColor: UIColor) {
         self.iconName = iconName
@@ -38,7 +29,7 @@ public struct ActionSheetHeaderView: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .lineLimit(1)
-                    .foregroundStyle(titleColor)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 HStack {
                     if let detailImageName, !detailImageName.isEmpty {
                         Image(detailImageName)

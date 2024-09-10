@@ -97,8 +97,7 @@ struct WaitingRoomParticipantsListView: View {
             text: $viewModel.searchText,
             isEditing: $viewModel.isSearchActive,
             placeholder: Strings.Localizable.search,
-            cancelTitle: Strings.Localizable.cancel,
-            isDesignTokenEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken))
+            cancelTitle: Strings.Localizable.cancel)
         .listRowSeparator(.hidden)
     }
 }

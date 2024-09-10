@@ -21,15 +21,10 @@ struct PhotoTimelineEmptyView: View {
                 } else {
                     Image(centerImageResource)
                 }
-            } description: { _ in
-                if isDesignTokenEnabled {
-                    Text(title)
-                        .font(.body)
-                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                } else {
-                    Text(title)
-                        .font(.body)
-                }
+            } description: {
+                Text(title)
+                    .font(.body)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
             }
             .frame(maxHeight: .infinity)
         }

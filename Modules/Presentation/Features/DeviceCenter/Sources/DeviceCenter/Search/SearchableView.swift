@@ -19,14 +19,13 @@ struct SearchableView<WrappedView: View>: View {
                 text: $searchText,
                 isEditing: $isEditing,
                 placeholder: searchAssets.placeHolder,
-                cancelTitle: searchAssets.cancelTitle,
-                isDesignTokenEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+                cancelTitle: searchAssets.cancelTitle
             )
             .padding(8)
             .background(colorScheme == .dark ? searchAssets.darkBGColor : searchAssets.lightBGColor)
             wrappedView
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+        .background()
     }
     
     public init(wrappedView: WrappedView, searchText: Binding<String>, isEditing: Binding<Bool>, isFilteredListEmpty: Bool, searchAssets: SearchAssets, emptyStateAssets: EmptyStateAssets) {

@@ -52,7 +52,7 @@ private struct TermsAndPoliciesContentView: View {
         .task {
             await viewModel.setupCookiePolicyURL()
         }
-        .designTokenBackground(isDesignTokenEnabled)
+        .background()
         .foregroundColor(.primary)
         .listStyle(.grouped)
         .navigationTitle(Strings.Localizable.Settings.Section.termsAndPolicies)
@@ -62,7 +62,7 @@ private struct TermsAndPoliciesContentView: View {
         Link(destination: url) {
             NavigationLink(title, destination: EmptyView())
         }
-        .designTokenListItemBackground(isDesignTokenEnabled)
-        .designTokenSeparator(isDesignTokenEnabled)
+        .listItemBackground()
+        .separator()
     }
 }

@@ -3,8 +3,6 @@ import MEGASwiftUI
 import SwiftUI
 
 struct MeetingInfoView: View {
-    @Environment(\.colorScheme) private var colorScheme
-    
     private enum Constants {
         static let spacing: CGFloat = 20
     }
@@ -54,7 +52,7 @@ struct MeetingInfoView: View {
                                     await viewModel.allowNonHostToAddParticipantsValueChanged(to: enabled)
                                 }
                             })
-                        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+                        .background()
                     }
                     
                     DisclosureView(
@@ -62,7 +60,7 @@ struct MeetingInfoView: View {
                         text: Strings.Localizable.Meetings.Info.sharedFiles) {
                             viewModel.sharedFilesViewTapped()
                         }
-                        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+                        .background()
                     
                     if viewModel.isModerator {
                         DisclosureView(
@@ -70,7 +68,7 @@ struct MeetingInfoView: View {
                             text: Strings.Localizable.Meetings.Info.manageMeetingHistory) {
                                 viewModel.manageChatHistoryViewTapped()
                             }
-                            .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+                            .background()
                         
                         KeyRotationView(
                             title: Strings.Localizable.Meetings.Info.KeyRotation.title,
@@ -89,7 +87,7 @@ struct MeetingInfoView: View {
                     
                     if case let description = viewModel.scheduledMeeting.description, !description.isEmpty {
                         MeetingDescriptionView(description: description)
-                            .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+                            .background()
                     }
                     
                     if viewModel.isUserInChat {
@@ -101,14 +99,6 @@ struct MeetingInfoView: View {
             }
         }
         .padding(.vertical)
-        .designTokenBackground(isDesignTokenEnabled, legacyColor: scrollLegacyBackground)
-    }
-    
-    var scrollLegacyBackground: Color {
-        colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color
-    }
-    
-    var legacyMeetingBackgroundColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
+        .background()
     }
 }

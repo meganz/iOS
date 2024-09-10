@@ -8,7 +8,7 @@ struct EmptySearchView: View {
     var body: some View {
         ContentUnavailableView {
             Image(uiImage: MEGAAssetsImageProvider.image(named: "search2") ?? UIImage())
-        } description: { _ in
+        } description: {
             Text(Strings.Localizable.Photos.SearchHistory.Empty.description)
                 .font(.footnote)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
