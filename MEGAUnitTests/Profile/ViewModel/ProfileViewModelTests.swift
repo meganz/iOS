@@ -262,7 +262,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
-    func testShouldShowCancelSubscriptionSection_whenNotStandardProAccountAndSuscription_shouldNotIncludeSubscriptionSection() {
+    func testShouldShowCancelSubscriptionSection_whenNotStandardProAccountAndSubscription_shouldNotIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(shouldBeShown: false)
     }
     
