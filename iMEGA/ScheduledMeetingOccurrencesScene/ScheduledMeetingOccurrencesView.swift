@@ -27,7 +27,9 @@ struct ScheduledMeetingOccurrencesView: View {
             }
             if viewModel.seeMoreOccurrencesVisible {
                 SeeMoreOccurrencesView {
-                    viewModel.seeMoreTapped()
+                    Task {
+                        await viewModel.seeMoreTapped()
+                    }
                 }
                 .listRowSeparator(.hidden)
             }

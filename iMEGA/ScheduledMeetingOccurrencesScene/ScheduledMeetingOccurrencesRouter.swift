@@ -8,8 +8,10 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
     private(set) var presenter: UINavigationController
     private let scheduledMeeting: ScheduledMeetingEntity
 
-    init(presenter: UINavigationController,
-         scheduledMeeting: ScheduledMeetingEntity) {
+    init(
+        presenter: UINavigationController,
+        scheduledMeeting: ScheduledMeetingEntity
+    ) {
         self.presenter = presenter
         self.scheduledMeeting = scheduledMeeting
     }
@@ -71,13 +73,10 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
     }
     
     func showSuccessMessageAndDismiss(_ message: String) {
-        DispatchQueue.main.async {
-            self.presenter.popViewController(animated: true)
-            SVProgressHUD.showSuccess(withStatus: message)
-        }
+        presenter.popViewController(animated: true)
+        SVProgressHUD.showSuccess(withStatus: message)
     }
     
-    @MainActor
     func edit(
         occurrence: ScheduledMeetingOccurrenceEntity
     ) -> AnyPublisher<ScheduledMeetingOccurrenceEntity, Never> {
