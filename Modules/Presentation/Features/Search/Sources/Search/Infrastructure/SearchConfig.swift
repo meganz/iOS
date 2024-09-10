@@ -109,16 +109,16 @@ public struct SearchConfig {
         /// ```
          public struct Action {
             public let title: String
-            public let titleTextColor: (ColorScheme) -> Color?
-            public let backgroundColor: (ColorScheme) -> Color
+            public let titleTextColor: Color?
+            public let backgroundColor: Color
             public let menu: [MenuOption]
             public typealias Handler = () -> Void
             public let handler: Handler?
 
             public init(
                 title: String,
-                titleTextColor: @escaping (ColorScheme) -> Color?,
-                backgroundColor: @escaping (ColorScheme) -> Color,
+                titleTextColor: Color?,
+                backgroundColor: Color,
                 menu: [MenuOption],
                 handler: Handler? = nil) {
                 self.title = title
@@ -131,13 +131,13 @@ public struct SearchConfig {
 
         public let image: Image
         public let title: String
-        public let titleTextColor: (ColorScheme) -> Color
+        public let titleTextColor: Color
         public let actions: [Action]
 
         public init(
             image: Image,
             title: String,
-            titleTextColor: @escaping (ColorScheme) -> Color,
+            titleTextColor: Color,
             actions: [Action] = []
         ) {
             self.image = image

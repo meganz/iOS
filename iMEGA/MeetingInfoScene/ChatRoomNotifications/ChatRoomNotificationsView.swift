@@ -21,11 +21,7 @@ struct ChatRoomNotificationsView: View {
         .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.Info.muteMeetingNotificationsFor), buttons: actionSheetButtons())
         }
-        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyBackground)
-    }
-    
-    private var legacyBackground: Color {
-        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
+        .background()
     }
     
     private func actionSheetButtons() -> [ActionSheet.Button] {

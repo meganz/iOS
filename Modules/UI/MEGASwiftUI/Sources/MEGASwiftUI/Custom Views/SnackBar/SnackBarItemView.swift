@@ -25,7 +25,6 @@ import SwiftUI
 // └───────────────────────────────────────────────────────────┘
 
 struct SnackBarItemView: View {
-    @Environment(\.colorScheme) private var colorScheme
     let snackBar: SnackBar
 
     private enum Constants {
@@ -36,9 +35,8 @@ struct SnackBarItemView: View {
     
     var body: some View {
         content
-            .background(snackBar.colors.background(isDesignTokenEnabled, colorScheme))
+            .background(snackBar.colors.background)
             .cornerRadius(Constants.cornerRadius)
-            .shadow(color: snackBar.colors.shadow(isDesignTokenEnabled, colorScheme), radius: 4, x: 0, y: 1) // This line should be removed when design token is permanently applied. SnackBar won't have a shadow on design token UI.
             .padding(Constants.padding)
     }
         
@@ -57,7 +55,7 @@ struct SnackBarItemView: View {
             HStack {
                 Text(snackBar.message)
                     .font(.footnote)
-                    .foregroundColor(snackBar.colors.titleForeground(isDesignTokenEnabled, colorScheme))
+                    .foregroundColor(snackBar.colors.titleForeground)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     .padding(snackBar.isActionable ? [.leading, .top] : [.leading, .top, .trailing, .bottom], Constants.padding)
@@ -77,7 +75,7 @@ struct SnackBarItemView: View {
         HStack(spacing: Constants.spacing) {
             Text(snackBar.message)
                 .font(.footnote)
-                .foregroundColor(snackBar.colors.titleForeground(isDesignTokenEnabled, colorScheme))
+                .foregroundColor(snackBar.colors.titleForeground)
                 .multilineTextAlignment(.leading)
                 .lineLimit(nil)
             Spacer()
@@ -95,7 +93,7 @@ struct SnackBarItemView: View {
             label: {
                 Text(action.title)
                     .font(.footnote).bold()
-                    .foregroundColor(snackBar.colors.buttonForeground(isDesignTokenEnabled, colorScheme))
+                    .foregroundColor(snackBar.colors.buttonForeground)
             })
     }
 }

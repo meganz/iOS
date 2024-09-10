@@ -7,20 +7,17 @@ public struct SearchBarView: View {
 
     var placeholder: String
     var cancelTitle: String
-    var isDesignTokenEnabled: Bool
     
     public init(
         text: Binding<String>,
         isEditing: Binding<Bool>,
         placeholder: String,
-        cancelTitle: String,
-        isDesignTokenEnabled: Bool
+        cancelTitle: String
     ) {
         self._text = text
         self._isEditing = isEditing
         self.placeholder = placeholder
         self.cancelTitle = cancelTitle
-        self.isDesignTokenEnabled = isDesignTokenEnabled
     }
     
     public var body: some View {
@@ -30,10 +27,10 @@ public struct SearchBarView: View {
                 .autocorrectionDisabled()
                 .padding(7)
                 .padding(.horizontal, 25)
-                .background(isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : Color(.systemGray6))
+                .background(TokenColors.Background.surface2.swiftUI)
                 .cornerRadius(8)
                 .overlay(
-                    SearchBarOverlayView(clearEnabled: !text.isEmpty, isDesignTokenEnabled: isDesignTokenEnabled) {
+                    SearchBarOverlayView(clearEnabled: !text.isEmpty) {
                         text = ""
                     }
                 )
@@ -42,7 +39,7 @@ public struct SearchBarView: View {
                 }
  
             if isEditing {
-                SearchBarCancelButton(cancelTitle: cancelTitle, isDesignTokenEnabled: isDesignTokenEnabled) {
+                SearchBarCancelButton(cancelTitle: cancelTitle) {
                     isEditing = false
                     text = ""
                     hideKeyboard()
@@ -53,20 +50,6 @@ public struct SearchBarView: View {
     
     @ViewBuilder
     private func textField() -> some View {
-        if isDesignTokenEnabled {
-            textFieldForDesignToken()
-        } else {
-            textFieldForLegacyColor()
-        }
-    }
-    
-    @ViewBuilder
-    private func textFieldForLegacyColor() -> some View {
-        TextField(placeholder, text: $text)
-    }
-    
-    @ViewBuilder
-    private func textFieldForDesignToken() -> some View {
         TextField("", text: $text, prompt: Text(placeholder).foregroundColor(TokenColors.Text.placeholder.swiftUI))
             .foregroundColor(TokenColors.Text.primary.swiftUI)
     }
@@ -74,13 +57,12 @@ public struct SearchBarView: View {
 
 private struct SearchBarOverlayView: View {
     var clearEnabled: Bool
-    var isDesignTokenEnabled: Bool
     var action: () -> Void
 
     public var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.placeholder.swiftUI  : .gray)
+                .foregroundColor(TokenColors.Text.placeholder.swiftUI)
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 8)
      
@@ -89,7 +71,7 @@ private struct SearchBarOverlayView: View {
                     action()
                 }, label: {
                     Image(systemName: "multiply.circle.fill")
-                        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.placeholder.swiftUI : .gray)
+                        .foregroundColor(TokenColors.Text.placeholder.swiftUI)
                         .padding(.trailing, 8)
                 })
                 .buttonStyle(BorderlessButtonStyle())
@@ -100,7 +82,6 @@ private struct SearchBarOverlayView: View {
 
 private struct SearchBarCancelButton: View {
     var cancelTitle: String
-    var isDesignTokenEnabled: Bool
     var action: () -> Void
 
     public var body: some View {
@@ -110,6 +91,6 @@ private struct SearchBarCancelButton: View {
             Text(cancelTitle)
         })
         .buttonStyle(BorderlessButtonStyle())
-        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.placeholder.swiftUI : .secondary)
+        .foregroundColor(TokenColors.Text.placeholder.swiftUI)
     }
 }

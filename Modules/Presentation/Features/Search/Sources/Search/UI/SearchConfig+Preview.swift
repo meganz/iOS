@@ -42,7 +42,7 @@ extension SearchConfig.EmptyViewAssets {
             .init(
                 image: Image(systemName: "magnifyingglass.circle.fill"),
                 title: "No results",
-                titleTextColor: { _ in TokenColors.Icon.secondary.swiftUI },
+                titleTextColor: TokenColors.Icon.secondary.swiftUI,
                 actions: []
             )
     }

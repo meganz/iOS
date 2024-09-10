@@ -61,7 +61,6 @@ public struct BorderedTextEditorView: View {
         case reachedMaxCharLimit, lessThanMinCharLimit, emptyField, none
     }
     
-    @Environment(\.colorScheme) private var colorScheme
     @State private var errorState: ErrorState = .none
     @Binding var textInput: String
     @Binding var isFocused: Bool
@@ -85,11 +84,7 @@ public struct BorderedTextEditorView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(borderColor, lineWidth: 2.0)
-                    .background(
-                        isDesignTokenEnabled ?
-                        TokenColors.Background.page.swiftUI :
-                            colorScheme == .dark ? Color(red: 19/255, green: 19/255, blue: 20/255) : .white
-                    )
+                    .background()
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 
                 HStack(spacing: 0) {
@@ -161,7 +156,7 @@ public struct BorderedTextEditorView: View {
                 Image(systemName: "xmark")
                     .resizable()
                     .frame(width: 10, height: 10)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : .primary)
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
             }
             .buttonStyle(PlainButtonStyle())
             .padding(.top, 10)

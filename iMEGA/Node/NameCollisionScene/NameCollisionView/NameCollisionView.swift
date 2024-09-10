@@ -4,8 +4,6 @@ import SwiftUI
 
 struct NameCollisionView: View {
     @ObservedObject var viewModel: NameCollisionViewModel
-
-    @Environment(\.colorScheme) private var colorScheme
     
     private enum Constants {
         static let verticalSpacing: CGFloat = 12
@@ -21,7 +19,7 @@ struct NameCollisionView: View {
                 Button(Strings.Localizable.cancel) {
                     viewModel.cancelResolveNameCollisions()
                 }
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .accentColor(Color.primary)
             }
             .padding()
@@ -46,7 +44,7 @@ struct NameCollisionView: View {
                 }
             }
         }
-        .designTokenBackground(isDesignTokenEnabled, legacyColor: colorScheme == .dark ? Color(MEGAAppColor.Black._1C1C1E.uiColor) : Color(MEGAAppColor.White._F7F7F7.uiColor))
+        .background()
         .onAppear {
             viewModel.onViewAppeared()
         }
