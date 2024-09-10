@@ -73,6 +73,7 @@ struct DeviceListContentView: View {
             Task {
                 let userDevices = await self.viewModel.fetchUserDevices()
                 self.viewModel.arrangeDevices(userDevices)
+                self.viewModel.updateInternetConnectionStatus()
             }
         }
         .throwingTask {

@@ -38,10 +38,10 @@ final class NoInternetViewModelTests: XCTestCase {
     }
 
     func testMonitorNetworkChanges_whenStatusChangesToFalse_shouldMatch() async {
-        let connectionChangedStream = makeConnectionMonitorStream(statuses: [false])
+        let connectionSequence = makeConnectionMonitorStream(statuses: [false]).eraseToAnyAsyncSequence()
         let expectation = expectation(description: "Wait for the connection state to update")
         let sut = NoInternetViewModel(
-            networkMonitorUseCase: MockNetworkMonitorUseCase(connectionChangedStream: connectionChangedStream),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connectionSequence: connectionSequence),
             networkConnectionStateChanged: { isConnected in
                 if !isConnected {
                     expectation.fulfill()
@@ -57,13 +57,13 @@ final class NoInternetViewModelTests: XCTestCase {
         task.cancel()
     }
 
-    private func makeConnectionMonitorStream(statuses: [Bool]) -> AnyAsyncSequence<Bool> {
+    private func makeConnectionMonitorStream(statuses: [Bool]) -> AsyncStream<Bool> {
         AsyncStream { continuation in
             statuses.forEach {
                 continuation.yield($0)
             }
             continuation.finish()
-        }.eraseToAnyAsyncSequence()
+        }
     }
 
 }

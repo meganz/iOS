@@ -198,7 +198,7 @@ final class ReportIssueViewModel: ObservableObject {
     }
     
     func monitorNetworkChanges() async {
-        for await isConnected in monitorUseCase.connectionChangedStream {
+        for await isConnected in monitorUseCase.connectionSequence {
             self.isConnected = isConnected
         }
     }

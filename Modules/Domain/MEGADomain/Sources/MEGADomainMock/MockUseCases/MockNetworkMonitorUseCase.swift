@@ -1,24 +1,19 @@
-import Combine
 import MEGADomain
 import MEGASwift
 
-public struct MockNetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
-    
+public struct MockNetworkMonitorUseCase: NetworkMonitorUseCaseProtocol, Sendable {
     private let connected: Bool
     private let connectedViaWiFi: Bool
-    public let connectionChangedStream: AnyAsyncSequence<Bool>
-    public let networkPathChangedPublisher: AnyPublisher<Bool, Never>
+    public let connectionSequence: AnyAsyncSequence<Bool>
 
     public init(
         connected: Bool = true,
         connectedViaWiFi: Bool = false,
-        connectionChangedStream: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        networkPathChangedPublisher: AnyPublisher<Bool, Never> = Just(true).eraseToAnyPublisher()
+        connectionSequence: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.connected = connected
         self.connectedViaWiFi = connectedViaWiFi
-        self.connectionChangedStream = connectionChangedStream
-        self.networkPathChangedPublisher = networkPathChangedPublisher
+        self.connectionSequence = connectionSequence
     }
     
     public func isConnected() -> Bool {

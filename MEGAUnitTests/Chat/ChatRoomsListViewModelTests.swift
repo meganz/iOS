@@ -23,8 +23,6 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         ChatListItemEntity(chatId: 14, title: "Meeting 2", meeting: true),
         ChatListItemEntity(chatId: 51, title: "Meeting 3", meeting: true)
     ]
-    
-    private var cancellables: Set<AnyCancellable> = []
 
     @MainActor
     func test_remoteChatStatusChange() {
@@ -52,23 +50,22 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAction_networkNotReachable() {
+    func testAction_networkNotReachable() async {
         let networkUseCase = MockNetworkMonitorUseCase(
             connected: false,
-            networkPathChangedPublisher: Just(false).eraseToAnyPublisher()
+            connectionSequence: AsyncStream { continuation in
+                continuation.yield(false)
+                continuation.finish()
+            }.eraseToAnyAsyncSequence()
         )
+        
         let viewModel = makeChatRoomsListViewModel(networkMonitorUseCase: networkUseCase)
         
-        let expectation = self.expectation(description: "Network is not reachable")
-        
-        networkUseCase.networkPathChangedPublisher
-            .sink { _ in
-                XCTAssert(viewModel.isConnectedToNetwork == networkUseCase.isConnected())
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-        
-        waitForExpectations(timeout: 1, handler: nil)
+        for await isConnected in networkUseCase.connectionSequence {
+            XCTAssertEqual(isConnected, networkUseCase.isConnected())
+            XCTAssertEqual(viewModel.isConnectedToNetwork, isConnected)
+            return
+        }
     }
     
     @MainActor
