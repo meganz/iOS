@@ -30,7 +30,7 @@ public struct RadioButton: View {
                 Text(text)
                     .font(textFont)
                     .multilineTextAlignment(.leading)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 Spacer()
             }
@@ -48,21 +48,17 @@ public struct RadioButton: View {
 private struct RadioButtonIcon: View {
     let isSelected: Bool
     let size: CGFloat = 20
-    
-    private var color: Color {
-        isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : .primary
-    }
 
     var body: some View {
         ZStack {
             Circle()
                 .stroke()
-                .foregroundStyle(color)
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                 .frame(width: size, height: size)
             
             if isSelected {
                 Circle()
-                    .fill(color)
+                    .fill(TokenColors.Icon.primary.swiftUI)
                     .frame(width: size * 0.5, height: size * 0.5)
             }
         }

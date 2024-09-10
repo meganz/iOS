@@ -3,7 +3,6 @@ import MEGASwiftUI
 import SwiftUI
 
 struct ItemView: View {
-    @Environment(\.colorScheme) private var colorScheme
     var name: String
     var size: String?
     var date: String?
@@ -29,18 +28,13 @@ struct ItemView: View {
                         .font(.caption)
                 }
             }
-            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Spacer()
         }
         .padding(10)
-        .designTokenBackground(isDesignTokenEnabled, legacyColor: colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor) : MEGAAppColor.White._FFFFFF.color)
+        .background()
         .overlay(RoundedRectangle(cornerRadius: 8)
-            .stroke(borderStrokeColor, lineWidth: 1)
+            .stroke(TokenColors.Border.strong.swiftUI, lineWidth: 1)
         )
-    }
-    
-    private var borderStrokeColor: Color {
-        isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI
-        : colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(0.2) : MEGAAppColor.Black._000000.color.opacity(0.1)
     }
 }

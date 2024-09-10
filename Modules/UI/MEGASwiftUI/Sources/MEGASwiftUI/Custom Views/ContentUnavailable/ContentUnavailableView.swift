@@ -5,13 +5,13 @@ public struct ContentUnavailableView<Label, Description, Actions>: View where La
     @Environment(\.colorScheme) var colorScheme
 
     var label: () -> Label
-    var description: (ColorScheme) -> Description
+    var description: () -> Description
     var actions: () -> Actions
     
     public init(
         @ViewBuilder label: @escaping () -> Label,
-        @ViewBuilder description: @escaping  (ColorScheme) -> Description = { _ in EmptyView() },
-        @ViewBuilder actions: @escaping  () -> Actions = { EmptyView() }
+        @ViewBuilder description: @escaping () -> Description = { EmptyView() },
+        @ViewBuilder actions: @escaping () -> Actions = { EmptyView() }
     ) {
         self.label = label
         self.description = description
@@ -38,7 +38,7 @@ public struct ContentUnavailableView<Label, Description, Actions>: View where La
                         .labelStyle(VerticalLabelStyle())
                     Spacer()
                         .frame(height: 10)
-                    description(colorScheme)
+                    description()
                     Spacer()
                     actions()
                     Spacer().frame(height: 27)
@@ -55,22 +55,22 @@ public struct ContentUnavailableView<Label, Description, Actions>: View where La
 
 public protocol Action {
     var title: String { get }
-    var backgroundColor: (ColorScheme) -> Color? { get }
+    var backgroundColor: Color? { get }
 }
 
 public struct ContentUnavailableViewModel {
     public struct ButtonAction: Action {
         public let id = UUID()
         public let title: String
-        public let titleTextColor: (ColorScheme) -> Color?
-        public let backgroundColor: (ColorScheme) -> Color?
+        public let titleTextColor: Color?
+        public let backgroundColor: Color?
         public let image: Image?
         public let handler: () -> Void
 
         public init(
             title: String,
-            titleTextColor: @escaping (ColorScheme) -> Color? = { _ in nil },
-            backgroundColor: @escaping (ColorScheme) -> Color? = { _ in nil },
+            titleTextColor: Color? = nil,
+            backgroundColor: Color? = nil,
             image: Image?,
             handler: @escaping () -> Void
         ) {
@@ -85,13 +85,13 @@ public struct ContentUnavailableViewModel {
     public struct MenuAction: Action {
         public let id = UUID()
         public let title: String
-        public let titleTextColor: (ColorScheme) -> Color?
-        public let backgroundColor: (ColorScheme) -> Color?
+        public let titleTextColor: Color?
+        public let backgroundColor: Color?
         public let actions: [ButtonAction]
         public init(
             title: String,
-            titleTextColor: @escaping (ColorScheme) -> Color? = { _ in nil },
-            backgroundColor: @escaping (ColorScheme) -> Color? = { _ in nil },
+            titleTextColor: Color? = nil,
+            backgroundColor: Color? = nil,
             actions: [ButtonAction]
         ) {
             self.title = title
@@ -104,14 +104,14 @@ public struct ContentUnavailableViewModel {
     public let image: Image
     public let title: String
     public let font: Font
-    public let titleTextColor: (ColorScheme) -> Color?
+    public let titleTextColor: Color?
     public let actions: [any Action]
 
     public init(
         image: Image,
         title: String,
         font: Font,
-        titleTextColor: @escaping (ColorScheme) -> Color?,
+        titleTextColor: Color?,
         actions: [any Action] = []
     ) {
         self.image = image
@@ -153,9 +153,9 @@ extension ContentUnavailableView where Label == Image, Description == Text, Acti
         self.label = {
             viewModel.image.resizable()
         }
-        self.description = { colorScheme in
+        self.description = {
             Text(viewModel.title)
-                .foregroundColor(viewModel.titleTextColor(colorScheme))
+                .foregroundColor(viewModel.titleTextColor)
                 .font(viewModel.font)
         }
         self.actions = {
@@ -176,7 +176,6 @@ struct VerticalLabelStyle: LabelStyle {
 }
 
 struct ButtonActionView: View {
-    @Environment(\.colorScheme) var colorScheme
     let action: ContentUnavailableViewModel.ButtonAction
 
     public var body: some View {
@@ -192,19 +191,18 @@ struct ButtonActionView: View {
             }
         }
         .frame(width: 288, height: 50)
-        .background(action.backgroundColor(colorScheme))
+        .background(action.backgroundColor)
         .cornerRadius(8)
     }
 
     private func text(for title: String) -> some View {
         Text(title)
             .fontWeight(.semibold)
-            .foregroundStyle(action.titleTextColor(colorScheme) ?? (isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : .white))
+            .foregroundStyle(action.titleTextColor ?? TokenColors.Text.onColor.swiftUI)
     }
 }
 
 struct MenuActionView: View {
-    @Environment(\.colorScheme) var colorScheme
     let action: ContentUnavailableViewModel.MenuAction
 
     public var body: some View {
@@ -214,10 +212,10 @@ struct MenuActionView: View {
             }
         } label: {
             Text(action.title)
-                .foregroundColor(action.titleTextColor(colorScheme) ?? .white)
+                .foregroundColor(action.titleTextColor ?? .white)
                 .fontWeight(.semibold)
                 .frame(width: 288, height: 50)
-                .background(action.backgroundColor(colorScheme))
+                .background(action.backgroundColor)
                 .cornerRadius(8)
         }
     }
@@ -226,7 +224,7 @@ struct MenuActionView: View {
 #Preview {
     ContentUnavailableView {
         Label("Label", systemImage: "42.circle")
-    } description: { _ in
+    } description: {
         Text("Try different search query")
     } actions: {
         EmptyView()

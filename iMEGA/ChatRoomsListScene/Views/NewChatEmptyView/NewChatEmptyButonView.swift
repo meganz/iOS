@@ -51,17 +51,11 @@ struct MenuCapableButton: View {
     private var text: some View {
         switch state.theme {
         case .dark:
-            PrimaryActionButtonViewText(
-                title: state.title,
-                isDesignTokenEnabled: isDesignTokenEnabled
-            )
+            PrimaryActionButtonViewText(title: state.title)
             .frame(maxWidth: maxWidth)
             .frame(height: height)
         case .light:
-            SecondaryActionButtonViewText(
-                title: state.title,
-                isDesignTokenEnabled: isDesignTokenEnabled
-            )
+            SecondaryActionButtonViewText(title: state.title)
             .frame(maxWidth: maxWidth)
             .frame(height: height)
         }

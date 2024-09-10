@@ -23,18 +23,17 @@ public struct SnackBar: Equatable {
     }
     
     public struct Colors {
-        typealias ColorProvider = (_ designTokenEnabled: Bool, _ scheme: ColorScheme) -> Color
-        var titleForeground: ColorProvider
-        var background: ColorProvider
-        var buttonForeground: ColorProvider
-        var shadow: ColorProvider
+        var titleForeground: Color
+        var background: Color
+        var buttonForeground: Color
+        var shadow: Color
         
         public static var `default`: Colors {
             Colors(
-                titleForeground: { _, _ in TokenColors.Text.inverse.swiftUI },
-                background: { _, _ in TokenColors.Components.toastBackground.swiftUI },
-                buttonForeground: { _, _ in TokenColors.Link.inverse.swiftUI },
-                shadow: { _, _ in .clear }
+                titleForeground: TokenColors.Text.inverse.swiftUI,
+                background: TokenColors.Components.toastBackground.swiftUI,
+                buttonForeground: TokenColors.Link.inverse.swiftUI,
+                shadow: .clear
             )
         }
         
@@ -42,9 +41,7 @@ public struct SnackBar: Equatable {
             let base = Colors.default
             return .init(
                 titleForeground: base.titleForeground,
-                background: { _, _ in
-                    return .white
-                },
+                background: .white,
                 buttonForeground: base.buttonForeground,
                 shadow: base.shadow
             )

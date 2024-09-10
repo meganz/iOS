@@ -3,7 +3,6 @@ import MEGASwiftUI
 import SwiftUI
 
 struct ChatRoomParticipantView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.layoutDirection) private var layoutDirection
 
     @ObservedObject var viewModel: ChatRoomParticipantViewModel
@@ -56,11 +55,7 @@ struct ChatRoomParticipantView: View {
         .actionSheet(isPresented: $viewModel.showPrivilegeOptions) {
             ActionSheet(title: Text(Strings.Localizable.permissions), buttons: privilegeOptionsSheetButtons())
         }
-        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyBackgroundColor)
-    }
-    
-    private var legacyBackgroundColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
+        .background()
     }
     
     private func privilegeOptionsSheetButtons() -> [ActionSheet.Button] {

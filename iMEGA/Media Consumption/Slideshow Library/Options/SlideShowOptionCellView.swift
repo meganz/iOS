@@ -5,22 +5,6 @@ struct SlideShowOptionCellView: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var cellModel: SlideShowOptionCellViewModel
     
-    private var backgroundColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Background.page.swiftUI
-        } else {
-            colorScheme == .dark ? MEGAAppColor.Black._2C2C2E.color : MEGAAppColor.White._FFFFFF.color
-        }
-    }
-    
-    private var textColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.secondary.swiftUI
-        } else {
-            colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color : MEGAAppColor.Gray._3C3C43.color.opacity(0.6)
-        }
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             if cellModel.type == .none {
@@ -33,7 +17,7 @@ struct SlideShowOptionCellView: View {
                         Text(cellModel.title)
                             .font(.body)
                     }
-                    .designTokenToggleBackground(isDesignTokenEnabled)
+                    .toggleBackground()
                     .opacity(cellModel.type == .toggle ? 1 : 0)
                     
                     HStack {
@@ -43,11 +27,11 @@ struct SlideShowOptionCellView: View {
                         HStack {
                             Text(cellModel.detail)
                                 .font(.subheadline)
-                            Image(uiImage: isDesignTokenEnabled ? UIImage.standardDisclosureIndicatorDesignToken: UIImage.standardDisclosureIndicator)
+                            Image(uiImage: UIImage.standardDisclosureIndicatorDesignToken)
                                 .scaledToFit()
                                 .frame(width: 12, height: 12)
                         }
-                        .foregroundStyle(textColor)
+                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     }
                     .opacity(cellModel.type == .detail ? 1 : 0)
                 }
@@ -56,6 +40,6 @@ struct SlideShowOptionCellView: View {
                 .padding(.vertical, 8)
             }
         }
-        .background(backgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
     }
 }

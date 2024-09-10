@@ -10,25 +10,16 @@ struct CloudDriveEmptyViewAssetFactory {
     private let tracker: any AnalyticsTracking
     private let nodeInsertionRouter: any NodeInsertionRouting
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let isDesignTokenEnabled: Bool
-    private let titleTextColor: (ColorScheme) -> Color
+    private let titleTextColor: Color
 
     init(
         tracker: some AnalyticsTracking,
         nodeInsertionRouter: some NodeInsertionRouting,
-        nodeUseCase: some NodeUseCaseProtocol,
-        isDesignTokenEnabled: Bool = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        nodeUseCase: some NodeUseCaseProtocol
     ) {
         self.tracker = tracker
         self.nodeUseCase = nodeUseCase
-        self.isDesignTokenEnabled = isDesignTokenEnabled
-        self.titleTextColor = { colorScheme in
-            guard isDesignTokenEnabled else {
-                return colorScheme == .light ? UIColor.black.swiftUI : UIColor.white.swiftUI
-            }
-
-            return TokenColors.Text.primary.swiftUI
-        }
+        self.titleTextColor = TokenColors.Text.primary.swiftUI
         self.nodeInsertionRouter = nodeInsertionRouter
     }
 
@@ -137,12 +128,8 @@ struct CloudDriveEmptyViewAssetFactory {
     private func addFilesAction(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.Action {
         .init(
             title: Strings.Localizable.addFiles,
-            titleTextColor: { _ in
-                isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : UIColor.white.swiftUI
-            },
-            backgroundColor: { _ in
-                isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : UIColor.turquoise.swiftUI
-            },
+            titleTextColor: TokenColors.Text.inverseAccent.swiftUI,
+            backgroundColor: TokenColors.Button.primary.swiftUI,
             menu: menu(for: nodeEntity)
         )
     }

@@ -59,7 +59,7 @@ struct ResourceInfoView: View {
             }
             .listStyle(.grouped)
         }
-        .designTokenBackground(isDesignTokenEnabled)
+        .background()
     }
     
     private var customNavigationBar: some View {

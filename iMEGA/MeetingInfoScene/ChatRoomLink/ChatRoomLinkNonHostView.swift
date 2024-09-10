@@ -3,8 +3,6 @@ import MEGASwiftUI
 import SwiftUI
 
 struct ChatRoomLinkNonHostView: View {
-    @Environment(\.colorScheme) private var colorScheme
-
     @StateObject var viewModel: ChatRoomLinkViewModel
 
     var body: some View {
@@ -14,7 +12,7 @@ struct ChatRoomLinkNonHostView: View {
                 text: Strings.Localizable.Meetings.Info.shareMeetingLink) {
                     viewModel.shareMeetingLinkTapped()
                 }
-                .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+                .background()
         }
         .alert(isPresented: $viewModel.showChatLinksMustHaveCustomTitleAlert) {
             Alert(title: Text(Strings.Localizable.chatLink),
@@ -24,13 +22,9 @@ struct ChatRoomLinkNonHostView: View {
         .actionSheet(isPresented: $viewModel.showShareMeetingLinkOptions) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.Info.ShareOptions.title), buttons: shareOptionsSheetButtons())
         }
-        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+        .background()
     }
-    
-    private var legacyMeetingBackgroundColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
-    }
-    
+
     private func shareOptionsSheetButtons() -> [ActionSheet.Button] {
         var buttons = viewModel.shareOptions().map { shareOption in
             ActionSheet.Button.default(Text(shareOption.localizedTitle)) {

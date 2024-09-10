@@ -93,10 +93,10 @@ struct ChatRoomsListView: View {
             text: $viewModel.searchText,
             isEditing: $viewModel.isSearchActive,
             placeholder: Strings.Localizable.search,
-            cancelTitle: Strings.Localizable.cancel,
-            isDesignTokenEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken))
+            cancelTitle: Strings.Localizable.cancel
+        )
         .listRowSeparator(.hidden)
-        .listRowBackground(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+        .listRowBackground(TokenColors.Background.page.swiftUI)
     }
     
     @ViewBuilder
@@ -114,13 +114,13 @@ struct ChatRoomsListView: View {
                                 .onTapGesture(perform: viewModel.contactsOnMegaViewState.action)
                                 .listRowInsets(EdgeInsets())
                                 .padding(10)
-                                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                                .background()
                         }
                         
                         ForEach(chatRooms) { chatRoom in
                             ChatRoomView(viewModel: chatRoom)
                                 .listRowInsets(EdgeInsets())
-                                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                                .background()
                         }
                     }
                 }
@@ -135,7 +135,7 @@ struct ChatRoomsListView: View {
                     }
                     , alignment: .center
                 )
-                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                .background()
                 .edgesIgnoringSafeArea([.top, .bottom])
             } else {
                 LoadingSpinner()
@@ -152,11 +152,11 @@ struct ChatRoomsListView: View {
                         ForEach(futureMeetings, id: \.title) { futureMeetingSection in
                             MeetingsListHeaderView(title: futureMeetingSection.title)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                                .listRowBackground(TokenColors.Background.page.swiftUI)
                             ForEach(futureMeetingSection.items) { futureMeeting in
                                 FutureMeetingRoomView(viewModel: futureMeeting)
                                     .listRowInsets(EdgeInsets())
-                                    .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                                    .background()
                                     .background(
                                         GeometryReader { geo in
                                             Color.clear
@@ -177,11 +177,11 @@ struct ChatRoomsListView: View {
                         
                         MeetingsListHeaderView(title: Strings.Localizable.Chat.Listing.SectionHeader.PastMeetings.title)
                             .listRowInsets(EdgeInsets())
-                            .listRowBackground(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                            .listRowBackground(TokenColors.Background.page.swiftUI)
                         ForEach(pastMeetings) { pastMeeting in
                             ChatRoomView(viewModel: pastMeeting)
                                 .listRowInsets(EdgeInsets())
-                                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                                .background()
                         }
                     }
                 }
@@ -194,7 +194,7 @@ struct ChatRoomsListView: View {
                     },
                     alignment: .center
                 )
-                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+                .background()
                 .scrollStatusMonitor($viewModel.isMeetingListScrolling)
             } else {
                 LoadingSpinner()
