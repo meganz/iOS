@@ -18,6 +18,9 @@ final class ScheduledMeetingOccurrencesViewController: UIViewController {
         super.viewDidLoad()
         configureSubview()
         updateTitle()
+        Task {
+            await viewModel.didLoadView()
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {

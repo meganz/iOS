@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
+@MainActor
 protocol ScheduledMeetingOccurrencesRouting {
     func showErrorMessage(_ message: String)
     func showSuccessMessage(_ message: String)
@@ -12,6 +13,7 @@ protocol ScheduledMeetingOccurrencesRouting {
     ) -> AnyPublisher<ScheduledMeetingOccurrenceEntity, Never>
 }
 
+@MainActor
 final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private let router: any ScheduledMeetingOccurrencesRouting
     private var scheduledMeeting: ScheduledMeetingEntity
@@ -23,7 +25,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private var maxOccurrencesLoaded = 0
     var occurrences: [ScheduledMeetingOccurrenceEntity] = []
     var selectedOccurrence: ScheduleMeetingOccurrence?
-
+    
     @Published var title: String
     @Published var subtitle: String?
     @Published var displayOccurrences: [ScheduleMeetingOccurrence] = []
@@ -37,6 +39,10 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     var chatHasMessagesSubscription: AnyCancellable?
     
     var chatHasMessages = false
+    
+    private var chatRoom: ChatRoomEntity? {
+        chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
+    }
     
     init(
         router: some ScheduledMeetingOccurrencesRouting,
@@ -54,22 +60,29 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         contextMenuOptions = constructContextMenuOptions()
         
         updateSubtitle()
-        fetchOccurrences()
         listenToOccurrencesUpdate()
     }
-
-    // MARK: - Public
-    func seeMoreTapped() {
-        fetchOccurrences()
+    
+    func didLoadView() async {
+        await fetchOccurrences()
     }
-
+    
+    // MARK: - Public
+    func seeMoreTapped() async {
+        await fetchOccurrences()
+    }
+    
     func cancelMeetingAlertData() -> CancelMeetingAlertDataModel {
         let hasMessagesDescriptionString = chatHasMessages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Last.WithMessages.description : Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Last.WithoutMessages.description
         return CancelMeetingAlertDataModel(
             title: occurrences.count != 1 ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.title(selectedOccurrence?.date ?? "") : Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Last.title,
             message: occurrences.count != 1 ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.description : hasMessagesDescriptionString,
             primaryButtonTitle: occurrences.count != 1 ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Option.confirm : Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withMessages,
-            primaryButtonAction: confirmCancelOccurrence,
+            primaryButtonAction: {
+                Task {
+                    await self.confirmCancelOccurrence()
+                }
+            },
             secondaryButtonTitle: Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.dontCancel)
     }
     
@@ -87,43 +100,39 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         }
     }
     
-    private func fetchOccurrences() {
-        Task {
-            do {
-                let occurrences = try await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(
-                    chatId: scheduledMeeting.chatId,
-                    since: lastOccurrenceDate
-                )
-                await manageFetchedOccurrences(occurrences)
-            } catch {
-                MEGALogError("Error fetching occurrences for scheduled meeting: \(scheduledMeeting.title)")
-            }
+    private func fetchOccurrences() async {
+        do {
+            let occurrences = try await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(
+                chatId: scheduledMeeting.chatId,
+                since: lastOccurrenceDate
+            )
+            await manageFetchedOccurrences(occurrences)
+        } catch {
+            MEGALogError("Error fetching occurrences for scheduled meeting: \(scheduledMeeting.title)")
         }
     }
     
-    private func refreshOccurrences() {
+    private func refreshOccurrences() async {
         lastOccurrenceDate = Date()
         occurrences = []
-        fetchOccurrences()
+        await fetchOccurrences()
     }
     
-    @MainActor
-    private func manageFetchedOccurrences(_ fetchedOccurrences: [ScheduledMeetingOccurrenceEntity]) {
+    private func manageFetchedOccurrences(_ fetchedOccurrences: [ScheduledMeetingOccurrenceEntity]) async {
         seeMoreOccurrencesVisible = fetchedOccurrences.count >= maxOccurrencesBatchCount
         lastOccurrenceDate = fetchedOccurrences.last?.startDate ?? Date()
-
+        
         let filteredOccurrences = fetchedOccurrences.filter { !$0.cancelled && !occurrences.contains($0) }
         occurrences.append(contentsOf: filteredOccurrences)
-
+        
         if occurrences.count >= maxOccurrencesLoaded {
             maxOccurrencesLoaded = occurrences.count
             populateOccurrences()
         } else {
-            fetchOccurrences()
+            await fetchOccurrences()
         }
     }
     
-    @MainActor
     private func populateOccurrences() {
         displayOccurrences = occurrences.map(scheduleMeetingOccurrence(from:))
     }
@@ -149,49 +158,53 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     }
     
     private func constructContextMenuOptions() -> [OccurrenceContextMenuOption] {
-        var options: [OccurrenceContextMenuOption] = []
         
-        if let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId),
-           chatRoom.ownPrivilege == .moderator {
-            options.append(
-                OccurrenceContextMenuOption(
-                    title: Strings.Localizable.edit,
-                    image: .edittext
-                ) { [weak self] occurrence in
-                    guard let self,
-                            let occurrenceIndex = displayOccurrences.firstIndex(of: occurrence) else {
-                        return
-                    }
-                    
-                    let occurrence = occurrences[occurrenceIndex]
-                    router
-                        .edit(occurrence: occurrence)
-                        .receive(on: DispatchQueue.main)
-                        .sink { [weak self] _ in
-                            guard let self else { return }
-                            refreshOccurrences()
-                        }
-                        .store(in: &subscriptions)
-                }
-            )
-            
-            options.append(
-                OccurrenceContextMenuOption(
-                    title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
-                    image: .rubbishBin
-                ) { [weak self] occurrence in
-                    guard let self else { return }
-                    cancelOccurrenceTapped(occurrence)
-                }
-            )
+        guard
+            let chatRoom,
+            chatRoom.ownPrivilege == .moderator
+        else {
+            return []
         }
         
-        return options
+        let edit = OccurrenceContextMenuOption(
+            title: Strings.Localizable.edit,
+            image: .edittext,
+            action: editOccurrence
+        )
+        
+        let cancelOccurrence = OccurrenceContextMenuOption(
+            title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
+            image: .rubbishBin,
+            action: cancelOccurrenceTapped
+        )
+        
+        return [
+            edit,
+            cancelOccurrence
+        ]
+    }
+    
+    private func editOccurrence(_ occurrence: ScheduleMeetingOccurrence) {
+            guard let occurrenceIndex = displayOccurrences.firstIndex(of: occurrence) else {
+                return
+            }
+            
+            let occurrence = occurrences[occurrenceIndex]
+            router
+                .edit(occurrence: occurrence)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    guard let self else { return }
+                    Task {
+                        await self.refreshOccurrences()
+                    }
+                }
+                .store(in: &subscriptions)
     }
     
     private func cancelOccurrenceTapped(_ occurrence: ScheduleMeetingOccurrence) {
         selectedOccurrence = occurrence
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
+        guard let chatRoom  else { return }
         subscribeToMessagesLoaded(in: chatRoom)
         checkIfChatHasMessages(for: chatRoom)
     }
@@ -222,13 +235,13 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     }
     
     private func chatHasMessages(_ chatRoom: ChatRoomEntity, _ hasMessages: Bool) {
-        cancelChatHasMessageSuscription()
+        cancelChatHasMessageSubscription()
         closeChat(chatRoom)
         chatHasMessages = hasMessages
         showCancelMeetingAlert = true
     }
     
-    private func cancelChatHasMessageSuscription() {
+    private func cancelChatHasMessageSubscription() {
         chatHasMessagesSubscription?.cancel()
         chatHasMessagesSubscription = nil
     }
@@ -237,81 +250,77 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         chatRoomUseCase.closeChatRoom(chatRoom)
     }
     
-    private func confirmCancelOccurrence() {
+    private func confirmCancelOccurrence() async {
         if occurrences.count == 1 {
-            cancelScheduledMeeting()
+            await cancelScheduledMeeting()
         } else {
-           cancelScheduledMeetingOccurrence()
+            await cancelScheduledMeetingOccurrence()
         }
     }
     
-    func cancelScheduledMeeting() {
-        Task {
-            do {
-                var scheduledMeeting = scheduledMeeting
-                scheduledMeeting.cancelled = true
-                self.scheduledMeeting = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting, updateChatTitle: false)
-                if !chatHasMessages {
-                   archiveChatRoom()
-                } else {
-                    router.showSuccessMessageAndDismiss(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withMessages)
-                }
-            } catch {
-                router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                MEGALogError("Failed to cancel meeting")
+    func cancelScheduledMeeting() async {
+        do {
+            var scheduledMeeting = scheduledMeeting
+            scheduledMeeting.cancelled = true
+            scheduledMeeting = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting, updateChatTitle: false)
+            if !chatHasMessages {
+                await archiveChatRoom()
+            } else {
+                router.showSuccessMessageAndDismiss(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withMessages)
             }
+        } catch {
+            router.showErrorMessage(Strings.Localizable.somethingWentWrong)
+            MEGALogError("Failed to cancel meeting")
         }
     }
     
-    private func archiveChatRoom() {
-        Task {
-            do {
-                guard let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else { return }
-                _ = try await chatRoomUseCase.archive(true, chatRoom: chatRoom)
-                router.showSuccessMessageAndDismiss(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withoutMessages)
-            } catch {
-                router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                MEGALogError("Failed to archive chat")
+    private func archiveChatRoom() async {
+        do {
+            guard let chatRoom else { return }
+            _ = try await chatRoomUseCase.archive(true, chatRoom: chatRoom)
+            router.showSuccessMessageAndDismiss(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withoutMessages)
+        } catch {
+            router.showErrorMessage(Strings.Localizable.somethingWentWrong)
+            MEGALogError("Failed to archive chat")
+        }
+    }
+    
+    func cancelScheduledMeetingOccurrence() async {
+        do {
+            guard let selectedOccurrence,
+                  let occurrenceIndex = displayOccurrences.firstIndex(of: selectedOccurrence) else {
+                return
             }
+            
+            var occurrence = occurrences[occurrenceIndex]
+            occurrence.cancelled = true
+            occurrence.overrides = UInt64(occurrence.startDate.timeIntervalSince1970)
+            scheduledMeeting = try await scheduledMeetingUseCase.updateOccurrence(occurrence, meeting: scheduledMeeting)
+            updateListWithDeletedIndex(occurrenceIndex)
+        } catch {
+            router.showErrorMessage(Strings.Localizable.somethingWentWrong)
+            MEGALogError("Failed to cancel meeting occurrence")
         }
     }
     
-    func cancelScheduledMeetingOccurrence() {
-        Task {
-            do {
-                guard let selectedOccurrence,
-                        let occurrenceIndex = displayOccurrences.firstIndex(of: selectedOccurrence) else {
-                    return
-                }
-                
-                var occurrence = occurrences[occurrenceIndex]
-                occurrence.cancelled = true
-                occurrence.overrides = UInt64(occurrence.startDate.timeIntervalSince1970)
-                scheduledMeeting = try await scheduledMeetingUseCase.updateOccurrence(occurrence, meeting: scheduledMeeting)
-                await updateListWithDeletedIndex(occurrenceIndex)
-            } catch {
-                router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                MEGALogError("Failed to cancel meeting occurrence")
-            }
-        }
-    }
-    
-    @MainActor private func updateListWithDeletedIndex(_ index: Int) {
+    private func updateListWithDeletedIndex(_ index: Int) {
         displayOccurrences.remove(at: index)
         occurrences.remove(at: index)
         maxOccurrencesLoaded -= 1
         router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.success(selectedOccurrence?.date ?? ""))
     }
-
+    
     private func listenToOccurrencesUpdate() {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
+        guard let chatRoom else { return }
         scheduledMeetingUseCase.occurrencesShouldBeReloadListener(forChatRoom: chatRoom)
             .sink { [weak self] shouldReload in
                 guard let self else {
                     return
                 }
                 if shouldReload {
-                    refreshOccurrences()
+                    Task {
+                        await self.refreshOccurrences()
+                    }
                 }
             }
             .store(in: &subscriptions)

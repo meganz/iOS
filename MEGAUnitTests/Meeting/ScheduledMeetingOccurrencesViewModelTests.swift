@@ -5,53 +5,78 @@ import MEGADomainMock
 import XCTest
 
 final class ScheduledMeetingOccurrencesViewModelTests: XCTestCase {
-    private let router = MockScheduledMeetingOccurrencesRouter()
-    private let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatId: 100))
-    private let scheduleMeetingOccurrence = ScheduleMeetingOccurrence(id: "1", date: "2023/6/12", title: "Meeting Title", time: "12:00")
-
-    func test_cancelEntityScheduledMeeting_meetingCancelledSuccess() {
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
-        let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
-        viewModel.cancelScheduledMeeting()
+    
+    @MainActor
+    struct Harness {
+        let router = MockScheduledMeetingOccurrencesRouter()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatId: 100))
+        let sut: ScheduledMeetingOccurrencesViewModel
+        let scheduledMeetingUseCase: MockScheduledMeetingUseCase
         
-        evaluate { self.router.showSuccessMessageAndDismiss_calledTimes == 1 }
-    }
-    
-    func test_cancelEntireScheduledMeeting_meetingCancelledError() {
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduleMeetingError: ScheduleMeetingErrorEntity.generic)
-        let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
-        viewModel.cancelScheduledMeeting()
-        evaluate { self.router.showErrorMessage_calledTimes == 1 }
-    }
-    
-    func test_cancelScheduledMeetingOccurrence_occurrenceCancelledSuccess() {
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
-        let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(chatId: 100), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
-        viewModel.selectedOccurrence = scheduleMeetingOccurrence
-        viewModel.displayOccurrences = [scheduleMeetingOccurrence]
-        viewModel.occurrences = [ScheduledMeetingOccurrenceEntity()]
-        viewModel.cancelScheduledMeetingOccurrence()
-        evaluate { self.router.showSuccessMessage_calledTimes == 1 }
-    }
-    
-    func test_cancelScheduledMeetingOccurrence_occurrenceCancelledError() {
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduleMeetingError: ScheduleMeetingErrorEntity.generic)
-        let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
-        viewModel.selectedOccurrence = scheduleMeetingOccurrence
-        viewModel.displayOccurrences = [scheduleMeetingOccurrence]
-        viewModel.occurrences = [ScheduledMeetingOccurrenceEntity()]
-        viewModel.cancelScheduledMeetingOccurrence()
-        evaluate {
-            self.router.showErrorMessage_calledTimes == 1
+        init(
+            meetingsList: [ScheduledMeetingEntity] = [],
+            meetingError: ScheduleMeetingErrorEntity? = nil
+        ) {
+            scheduledMeetingUseCase = MockScheduledMeetingUseCase(
+                scheduledMeetingsList: meetingsList,
+                scheduleMeetingError: meetingError
+            )
+            sut = ScheduledMeetingOccurrencesViewModel(
+                router: router,
+                scheduledMeeting: ScheduledMeetingEntity(),
+                scheduledMeetingUseCase: scheduledMeetingUseCase,
+                chatRoomUseCase: chatRoomUseCase,
+                chatRoomAvatarViewModel: nil
+            )
+        }
+        
+        func makeOccurrence() -> ScheduleMeetingOccurrence {
+            .init(
+                id: "1",
+                date: "2023/6/12",
+                title: "Meeting Title",
+                time: "12:00"
+            )
+        }
+        
+        func assignOccurence() {
+            let occurrence = makeOccurrence()
+            sut.selectedOccurrence = occurrence
+            sut.displayOccurrences = [occurrence]
+            sut.occurrences = [ScheduledMeetingOccurrenceEntity()]
         }
     }
+
+    @MainActor
+    func test_cancelEntityScheduledMeeting_meetingCancelledSuccess() async {
+        let harness = Harness(meetingsList: [ScheduledMeetingEntity()])
+        await harness.sut.cancelScheduledMeeting()
+        evaluate { harness.router.showSuccessMessageAndDismiss_calledTimes == 1 }
+    }
     
-    // MARK: - Private methods
+    @MainActor
+    func test_cancelEntireScheduledMeeting_meetingCancelledError() async {
+        let harness = Harness(meetingError: ScheduleMeetingErrorEntity.generic)
+        await harness.sut.cancelScheduledMeeting()
+        evaluate { harness.router.showErrorMessage_calledTimes == 1 }
+    }
     
-    private func evaluate(expression: @escaping () -> Bool) {
-        let predicate = NSPredicate { _, _ in expression() }
-        let expectation = expectation(for: predicate, evaluatedWith: nil)
-        wait(for: [expectation], timeout: 5)
+    @MainActor
+    func test_cancelScheduledMeetingOccurrence_occurrenceCancelledSuccess() async {
+        let harness = Harness(meetingsList: [ScheduledMeetingEntity()])
+        harness.assignOccurence()
+        await harness.sut.cancelScheduledMeetingOccurrence()
+        evaluate { harness.router.showSuccessMessage_calledTimes == 1 }
+    }
+    
+    @MainActor
+    func test_cancelScheduledMeetingOccurrence_occurrenceCancelledError() async {
+        let harness = Harness(meetingError: ScheduleMeetingErrorEntity.generic)
+        harness.assignOccurence()
+        await harness.sut.cancelScheduledMeetingOccurrence()
+        evaluate {
+            harness.router.showErrorMessage_calledTimes == 1
+        }
     }
 }
 
