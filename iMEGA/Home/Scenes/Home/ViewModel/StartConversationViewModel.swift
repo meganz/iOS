@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import MEGADomain
 import MEGAPresentation
@@ -12,7 +11,7 @@ enum StartConversationCommand: CommandType, Equatable {
 }
 
 final class StartConversationViewModel: ViewModelType {
-    private var cancellable: Set<AnyCancellable> = []
+    private var networkMonitorTask: Task<Void, Never>?
     
     var invokeCommand: ((StartConversationCommand) -> Void)?
 
@@ -22,14 +21,15 @@ final class StartConversationViewModel: ViewModelType {
         }
     }
     
+    @MainActor
     private func registerNetworkListener() {
-        networkMonitorUseCase.networkPathChangedPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasNetworkConnection in
-                guard let self else { return }
-                self.invokeCommand?(.networkAvailabilityUpdate(hasNetworkConnection))
+        let connectionSequence = networkMonitorUseCase.connectionSequence
+        
+        networkMonitorTask = Task { [weak self] in
+            for await isConnected in connectionSequence {
+                self?.invokeCommand?(.networkAvailabilityUpdate(isConnected))
             }
-            .store(in: &cancellable)
+        }
     }
     
     // MARK: - Properties
@@ -43,6 +43,11 @@ final class StartConversationViewModel: ViewModelType {
     ) {
         self.networkMonitorUseCase = networkMonitorUseCase
         self.router = router
+    }
+    
+    deinit {
+        networkMonitorTask?.cancel()
+        networkMonitorTask = nil
     }
 
     // MARK: - Action & Command

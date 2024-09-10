@@ -777,7 +777,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testMonitorNetworkConnection_onConnectionChanges_updatesCorrectly() async throws {
         var results = [false, true, false, true]
         let connectionStream = makeConnectionMonitorStream(statuses: results)
-        let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
+        let monitorUseCase = MockNetworkMonitorUseCase(connectionSequence: connectionStream)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            monitorUseCase: monitorUseCase)
         
@@ -794,7 +794,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testMonitorNetworkConnection_onAlbumLoaded_shouldNotUpdateConnection() async throws {
         let connectionStream = makeConnectionMonitorStream(statuses: [false, true, false])
-        let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
+        let monitorUseCase = MockNetworkMonitorUseCase(connectionSequence: connectionStream)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            monitorUseCase: monitorUseCase)
         
@@ -813,7 +813,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testMonitorNetworkConnection_onAlbumInvalidAlbum_shouldNotUpdateConnection() async throws {
         let connectionStream = makeConnectionMonitorStream(statuses: [false, true, false])
         let publicAlbumUseCase = MockPublicCollectionUseCase(publicAlbumResult: .failure(GenericErrorEntity()))
-        let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
+        let monitorUseCase = MockNetworkMonitorUseCase(connectionSequence: connectionStream)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicCollectionUseCase: publicAlbumUseCase,
                                            monitorUseCase: monitorUseCase)
