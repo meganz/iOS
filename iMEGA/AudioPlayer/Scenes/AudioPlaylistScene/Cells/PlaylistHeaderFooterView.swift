@@ -32,14 +32,8 @@ final class PlaylistHeaderFooterView: UITableViewHeaderFooterView {
     
     // MARK: - Private functions
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            typeLabel.textColor = TokenColors.Text.primary
-            contentView.backgroundColor = TokenColors.Background.page
-            separatorView.backgroundColor = TokenColors.Border.strong
-        } else {
-            typeLabel.textColor = UIColor.mnz_green00A886()
-            contentView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
-            separatorView.backgroundColor = UIColor.mnz_gray3C3C43().withAlphaComponent(0.29)
-        }
+        typeLabel.textColor = TokenColors.Text.primary
+        contentView.backgroundColor = TokenColors.Background.page
+        separatorView.backgroundColor = TokenColors.Border.strong
     }
 }
