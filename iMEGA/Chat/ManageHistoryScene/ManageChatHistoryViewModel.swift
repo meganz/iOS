@@ -149,19 +149,18 @@ final class ManageChatHistoryViewModel: ViewModelType {
             
             return
         } else {
-            manageChatHistoryUseCase.historyRetentionUseCase.setChatRetentionTime(for: chatId, period: historyRetentionValue) { [weak self] in
-                switch $0 {
-                case .success(let period):
-                    self?.historyRetentionValue = period
-                    self?.historyRetentionOption = self!.historyRetentionOptionSelected
+            Task { [weak self] in
+                guard let self else { return }
+                do {
+                    let period = try await manageChatHistoryUseCase.historyRetentionUseCase.setChatRetentionTime(for: chatId, period: historyRetentionValue)
+                    self.historyRetentionValue = period
+                    historyRetentionOption = historyRetentionOptionSelected
+                
+                    updateHistoryRetentionFooter()
                     
-                    self?.updateHistoryRetentionFooter()
-                    
-                    self?.invokeCommand?(.configHistoryRetentionSection(self!.historyRetentionOption, self!.historyRetentionValue))
-                    
-                    self?.historyRetentionOptionSelected = .disabled
-                    
-                case .failure: break
+                    invokeCommand?(.configHistoryRetentionSection(historyRetentionOption, self.historyRetentionValue))
+                    historyRetentionOptionSelected = .disabled
+                } catch { 
                     
                 }
             }
@@ -219,16 +218,17 @@ final class ManageChatHistoryViewModel: ViewModelType {
         switch action {
             
         case .historyRetentionValue:
-            manageChatHistoryUseCase.retentionValueUseCase.chatRetentionTime(for: chatId) { [weak self] in
-                switch $0 {
-                case .success(let currentHistoryRetentionValue):
-                    self?.historyRetentionValue = currentHistoryRetentionValue
-                    self?.historyRetentionOption = self!.historyRetentionOption(value: currentHistoryRetentionValue)
-                    self?.invokeCommand?(.configHistoryRetentionSection(self!.historyRetentionOption, currentHistoryRetentionValue))
+            Task { [weak self] in
+                guard let self else { return }
+                do {
+                    let currentHistoryRetentionValue = try await manageChatHistoryUseCase.retentionValueUseCase.chatRetentionTime(for: chatId)
+                    historyRetentionValue = currentHistoryRetentionValue
+                    historyRetentionOption = historyRetentionOption(value: currentHistoryRetentionValue)
+                    invokeCommand?(.configHistoryRetentionSection(historyRetentionOption, currentHistoryRetentionValue))
                     
-                    self?.updateHistoryRetentionFooter()
-                    
-                case .failure: break
+                    updateHistoryRetentionFooter()
+                } catch { 
+                    MEGALogError("Failed to get chat history retention value.")
                 }
             }
             
@@ -278,17 +278,16 @@ final class ManageChatHistoryViewModel: ViewModelType {
             self.invokeCommand?(Command.showClearChatHistoryAlert)
         
         case .clearChatHistoryConfirmed:
-            manageChatHistoryUseCase.clearChatHistoryUseCase.clearChatHistory(for: chatId) { [weak self] in
+            Task { [weak self] in
                 guard let self else { return }
-                switch $0 {
-                case .success:
-                    let message = self.isChatTypeMeeting
+                do {
+                    try await manageChatHistoryUseCase.clearChatHistoryUseCase.clearChatHistory(for: chatId)
+                    let message = isChatTypeMeeting
                         ? Strings.Localizable.Meetings.Info.ManageMeetingHistory.meetingHistoryHasBeenCleared
                         : Strings.Localizable.chatHistoryHasBeenCleared
-                    self.invokeCommand?(.showResult(.content(UIImage.clearChatHistory, message)))
-                    
-                case .failure:
-                    self.invokeCommand?(.showResult(.error(Strings.Localizable.AnErrorHasOccurred.theChatHistoryHasNotBeenSuccessfullyCleared)))
+                    invokeCommand?(.showResult(.content(.clearChatHistory, message)))
+                } catch { 
+                    invokeCommand?(.showResult(.error(Strings.Localizable.AnErrorHasOccurred.theChatHistoryHasNotBeenSuccessfullyCleared)))
                 }
             }
             
