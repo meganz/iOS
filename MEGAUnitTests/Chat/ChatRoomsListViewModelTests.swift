@@ -509,10 +509,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     @MainActor
     func test_EmptyChats_tapInvite_tracksEvent() throws {
         let mockTracker = MockTracker()
-        let viewModel = makeChatRoomsListViewModel(
-            tracker: mockTracker,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.chatEmptyStates: true])
-        )
+        let viewModel = makeChatRoomsListViewModel(tracker: mockTracker)
         let emptyState = try XCTUnwrap(viewModel.emptyViewState())
         let title = Strings.Localizable.Chat.Chats.EmptyState.V2.Button.Invite.title
         let button = try XCTUnwrap(emptyState.bottomButtonWith(title: title))
@@ -523,10 +520,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     @MainActor
     func test_EmptyChats_tapNewChat_tracksEvent() throws {
         let mockTracker = MockTracker()
-        let viewModel = makeChatRoomsListViewModel(
-            tracker: mockTracker,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.chatEmptyStates: true])
-        )
+        let viewModel = makeChatRoomsListViewModel(tracker: mockTracker)
         let emptyState = try XCTUnwrap(viewModel.emptyViewState())
         let title = Strings.Localizable.Chat.Chats.EmptyState.Button.title
         let button = try XCTUnwrap(emptyState.bottomButtonWith(title: title))
@@ -576,8 +570,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol = MockRetryPendingConnectionsUseCase(),
-        tracker: some AnalyticsTracking = DIContainer.tracker,
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) -> ChatRoomsListViewModel {
         let sut = ChatRoomsListViewModel(
             router: router,
@@ -594,7 +587,6 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
             tracker: tracker,
-            featureFlagProvider: featureFlagProvider,
             urlOpener: {_ in }
         )
         return sut
