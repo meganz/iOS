@@ -14,13 +14,9 @@ struct PhotoTimelineEmptyView: View {
             }
             
             ContentUnavailableView {
-                if isDesignTokenEnabled {
-                    Image(centerImageResource)
-                        .renderingMode(.template)
-                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                } else {
-                    Image(centerImageResource)
-                }
+                Image(centerImageResource)
+                    .renderingMode(.template)
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
             } description: {
                 Text(title)
                     .font(.body)

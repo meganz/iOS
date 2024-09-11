@@ -31,24 +31,24 @@ struct EnableCameraUploadsBannerButtonView: View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: Constants.contentHorizontalSpacing) {
                 Image(.enableCameraUploadsBannerIcon)
-                    .renderingMode(isDesignTokenEnabled ? .template : .original)
-                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : nil)
+                    .renderingMode(.template)
+                    .foregroundColor(TokenColors.Icon.secondary.swiftUI)
                 
                 VStack(alignment: .leading) {
                     Text(Strings.Localizable.CameraUploads.Banner.EnableState.title)
                         .font(.system(.footnote).bold())
-                        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                        .foregroundColor(TokenColors.Text.primary.swiftUI)
                     
                     Text(Strings.Localizable.CameraUploads.Banner.EnableState.description)
                         .font(.caption2)
                         .multilineTextAlignment(.leading)
-                        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
+                        .foregroundColor(TokenColors.Text.secondary.swiftUI)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Image(isDesignTokenEnabled ? .cuBannerChevronRevamp : .cuBannerChevron)
-                    .renderingMode(isDesignTokenEnabled ? .template : .original)
-                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : nil)
+                Image(.cuBannerChevronRevamp)
+                    .renderingMode(.template)
+                    .foregroundColor(TokenColors.Icon.secondary.swiftUI)
                     .frame(width: Constants.chevronFrameWidth,
                            height: Constants.chevronFrameHeight)
                 
@@ -57,9 +57,9 @@ struct EnableCameraUploadsBannerButtonView: View {
             .padding(.horizontal, Constants.contentHorizontalPadding)
             
             Divider()
-                .background(isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : bannerBorderColor)
+                .background(TokenColors.Border.strong.swiftUI)
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
+        .background(TokenColors.Background.page.swiftUI)
     }
     
     private var bannerBorderColor: Color {

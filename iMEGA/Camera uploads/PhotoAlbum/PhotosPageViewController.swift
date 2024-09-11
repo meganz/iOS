@@ -14,7 +14,7 @@ final class PhotosPageViewController: UIPageViewController {
         let scrollView = view.subviews.first(where: { $0 is UIScrollView }) as? UIScrollView
         scrollView?.delegate = self
         
-        let backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        let backgroundColor = TokenColors.Background.page 
         view.backgroundColor = backgroundColor
     }
 }
