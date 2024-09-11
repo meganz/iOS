@@ -2,7 +2,6 @@ import MEGAL10n
 import SwiftUI
 
 struct ChatRoomsEmptyViewStateFactory {
-    var newEmptyStates: Bool
     var designTokenEnabled: Bool
     
     struct ChatEmptyViewActions {
@@ -21,12 +20,8 @@ struct ChatRoomsEmptyViewStateFactory {
         )
     }
     
-    init(
-        newEmptyStates: Bool,
-        designTokenEnabled: Bool
-    ) {
-        self.newEmptyStates = newEmptyStates
-        self.designTokenEnabled = designTokenEnabled
+    init() {
+        self.designTokenEnabled = true
     }
     
     func searchEmptyViewState() -> ChatRoomsEmptyViewState {
@@ -58,7 +53,7 @@ struct ChatRoomsEmptyViewStateFactory {
         )
         // we do not show archived row in new chat empty screens
         let archived = TopRow(
-            show: hasArchivedChats && !newEmptyStates,
+            show: hasArchivedChats,
             state: archivedChats
         )
         // what we do here, is :
@@ -115,71 +110,10 @@ struct ChatRoomsEmptyViewStateFactory {
         actions: ChatEmptyViewActions,
         bottomButtonMenus: [MenuButtonModel.Menu]
     ) -> ChatRoomsEmptyViewState {
-        if newEmptyStates {
-            newEmptyChatRoomsViewState(
-                hasArchivedChats: hasArchivedChats,
-                chatViewMode: chatViewMode,
-                hasContacts: hasContacts,
-                contactsOnMega: contactsOnMega,
-                archivedChats: archivedChats,
-                actions: actions
-            )
-        } else {
-            legacyEmptyChatRoomsViewState(
-                hasArchivedChats: hasArchivedChats,
-                chatViewMode: chatViewMode,
-                contactsOnMega: contactsOnMega,
-                archivedChats: archivedChats,
-                bottomButtonAction: actions.newChat,
-                bottomButtonMenus: bottomButtonMenus
-            )
-        }
-    }
-    
-    private func legacyEmptyChatRoomsViewState(
-        hasArchivedChats: Bool,
-        chatViewMode: ChatViewMode,
-        contactsOnMega: ChatRoomsTopRowViewState,
-        archivedChats: ChatRoomsTopRowViewState,
-        bottomButtonAction: @escaping () -> Void,
-        bottomButtonMenus: [MenuButtonModel.Menu]
-    ) -> ChatRoomsEmptyViewState {
-        
-        let isChatViewMode = chatViewMode == .chats
-        
-        func center() -> ChatRoomsEmptyCenterViewState {
-            .init(
-                image: isChatViewMode  ? .chatEmptyState : .meetingEmptyState,
-                title: isChatViewMode ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
-                description: isChatViewMode ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description
-            )
-        }
-        
-        let interaction: () -> MenuButtonModel.Interaction = {
-            if isChatViewMode {
-                .action(bottomButtonAction)
-            } else {
-                .menu(bottomButtonMenus)
-            }
-        }
-        
-        let bottomButtons = [
-            MenuButtonModel(
-                title: isChatViewMode ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title,
-                interaction: interaction(),
-                isDesignTokenEnabled: designTokenEnabled
-            )
-        ]
-        
-        return .init(
-            topRows: topRows(
-                hasArchivedChats: hasArchivedChats,
-                showInviteRow: isChatViewMode,
-                contactsOnMega: contactsOnMega,
-                archivedChats: archivedChats
-            ),
-            center: center(),
-            bottomButtons: bottomButtons
+        newEmptyChatRoomsViewState(
+            chatViewMode: chatViewMode,
+            hasContacts: hasContacts,
+            actions: actions
         )
     }
     
@@ -272,20 +206,12 @@ struct ChatRoomsEmptyViewStateFactory {
     }
     
     private func newEmptyChatRoomsViewState(
-        hasArchivedChats: Bool,
         chatViewMode: ChatViewMode,
         hasContacts: Bool,
-        contactsOnMega: ChatRoomsTopRowViewState,
-        archivedChats: ChatRoomsTopRowViewState,
         actions: ChatEmptyViewActions
     ) -> ChatRoomsEmptyViewState {
         .init(
-            topRows: topRows(
-                hasArchivedChats: hasArchivedChats,
-                showInviteRow: false,
-                contactsOnMega: contactsOnMega,
-                archivedChats: archivedChats
-            ),
+            topRows: [],
             center: center(
                 chatViewMode: chatViewMode,
                 actions: actions
@@ -325,10 +251,8 @@ struct ChatRoomsEmptyViewStateFactory {
 
 #Preview("Offline") {
     ChatRoomsEmptyView(
-        emptyViewState: ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: false,
-            designTokenEnabled: true
-        ).noNetworkEmptyViewState(
+        emptyViewState: ChatRoomsEmptyViewStateFactory()
+            .noNetworkEmptyViewState(
             hasArchivedChats: true,
             chatViewMode: .chats,
             contactsOnMega: .contactsOnMega(
@@ -345,10 +269,8 @@ struct ChatRoomsEmptyViewStateFactory {
 
 #Preview("EmptyChats-NonDt") {
     ChatRoomsEmptyView(
-        emptyViewState: ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: false,
-            designTokenEnabled: false
-        ).emptyChatRoomsViewState(
+        emptyViewState: ChatRoomsEmptyViewStateFactory()
+            .emptyChatRoomsViewState(
             hasArchivedChats: true,
             hasContacts: false,
             chatViewMode: .chats,
@@ -368,10 +290,8 @@ struct ChatRoomsEmptyViewStateFactory {
 
 #Preview("EmptyChats-DT") {
     ChatRoomsEmptyView(
-        emptyViewState: ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: false,
-            designTokenEnabled: true
-        ).emptyChatRoomsViewState(
+        emptyViewState: ChatRoomsEmptyViewStateFactory()
+            .emptyChatRoomsViewState(
             hasArchivedChats: true,
             hasContacts: false,
             chatViewMode: .chats,
@@ -391,10 +311,8 @@ struct ChatRoomsEmptyViewStateFactory {
 
 #Preview("EmptyMeetings-NonDT") {
     ChatRoomsEmptyView(
-        emptyViewState: ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: false,
-            designTokenEnabled: false
-        ).emptyChatRoomsViewState(
+        emptyViewState: ChatRoomsEmptyViewStateFactory()
+            .emptyChatRoomsViewState(
             hasArchivedChats: true,
             hasContacts: false,
             chatViewMode: .meetings,
@@ -414,10 +332,8 @@ struct ChatRoomsEmptyViewStateFactory {
 
 #Preview("EmptyMeetings-DT") {
     ChatRoomsEmptyView(
-        emptyViewState: ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: false,
-            designTokenEnabled: true
-        ).emptyChatRoomsViewState(
+        emptyViewState: ChatRoomsEmptyViewStateFactory()
+            .emptyChatRoomsViewState(
             hasArchivedChats: true,
             hasContacts: false,
             chatViewMode: .meetings,
@@ -437,10 +353,8 @@ struct ChatRoomsEmptyViewStateFactory {
 
 #Preview("NewEmptyChats-DT") {
     NewChatRoomsEmptyView(
-        state: ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: true,
-            designTokenEnabled: true
-        ).emptyChatRoomsViewState(
+        state: ChatRoomsEmptyViewStateFactory()
+            .emptyChatRoomsViewState(
             hasArchivedChats: true,
             hasContacts: false,
             chatViewMode: .chats,
@@ -460,18 +374,12 @@ struct ChatRoomsEmptyViewStateFactory {
 
 #Preview("EmptySearch-NonDT") {
     ChatRoomsEmptyView(
-        emptyViewState: ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: false,
-            designTokenEnabled: false
-        ).searchEmptyViewState()
+        emptyViewState: ChatRoomsEmptyViewStateFactory().searchEmptyViewState()
     )
 }
 
 #Preview("EmptySearch-DT") {
     ChatRoomsEmptyView(
-        emptyViewState: ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: false,
-            designTokenEnabled: true
-        ).searchEmptyViewState()
+        emptyViewState: ChatRoomsEmptyViewStateFactory().searchEmptyViewState()
     )
 }

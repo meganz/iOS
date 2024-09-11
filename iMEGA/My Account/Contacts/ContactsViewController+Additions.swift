@@ -58,7 +58,7 @@ extension ContactsViewController {
             navigationItem.preferredSearchBarPlacement = .stacked
         }
     }
-
+    
     @objc
     func setupWarningHeader() {
         // reuse hostingViewUIView for warnings about
@@ -80,15 +80,15 @@ extension ContactsViewController {
         if hostingViewUIView == nil {
             hostingViewUIView = UIHostingController(rootView: WarningBannerView(viewModel: .init(warningType: .contactsNotVerified))).view
         }
-
+        
         guard let hostingViewUIView else { return }
-
+        
         hostingViewUIView.backgroundColor = MEGAAppColor.Yellow._FED429.uiColor
-
+        
         contactsNotVerifiedView.isHidden = true
         contactsNotVerifiedView.addSubview(hostingViewUIView)
         hostingViewUIView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             hostingViewUIView.topAnchor.constraint(equalTo: contactsNotVerifiedView.topAnchor),
             hostingViewUIView.leadingAnchor.constraint(equalTo: contactsNotVerifiedView.leadingAnchor),
@@ -101,10 +101,6 @@ extension ContactsViewController {
         self.inviteContactTouchUp(inside: nil)
     }
     
-    private var newChatEmptyStatesEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .chatEmptyStates)
-    }
-    
     // in new chat empty screens [MEET-4054] we are hiding the tool bar
     // and simplifying UI when users have no contacts
     @objc
@@ -115,7 +111,7 @@ extension ContactsViewController {
     
     @objc
     var newEmptyChatScreenMode: Bool {
-        newChatEmptyStatesEnabled && contactsMode == .chatStartConversation
+        contactsMode == .chatStartConversation
     }
     
     @objc
@@ -129,14 +125,12 @@ extension ContactsViewController {
     }
     
     func createNewEmptyView() -> UIView? {
-        let state = ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: true,
-            designTokenEnabled: UIColor.isDesignTokenEnabled()
-        ).newChatContactsEmptyScreen(
-            goToInvite: { [weak self] in
-                self?.goToInvite()
-            }
-        )
+        let state = ChatRoomsEmptyViewStateFactory()
+            .newChatContactsEmptyScreen(
+                goToInvite: { [weak self] in
+                    self?.goToInvite()
+                }
+            )
         let view = NewChatRoomsEmptyView(
             state: state,
             topPadding: 55.0
@@ -176,7 +170,7 @@ extension ContactsViewController {
         viewModel.dismissedBannerWarning = true
         handleContactsNotVerifiedHeaderVisibility()
     }
-
+    
     @objc
     func handleContactsNotVerifiedHeaderVisibility() {
         let showUnverifiedBanner = viewModel.shouldShowUnverifiedContactsBanner(
@@ -184,14 +178,14 @@ extension ContactsViewController {
             selectedUsersArray: selectedUsersArray,
             visibleUsersArray: visibleUsersArray
         )
-
+        
         let showParticipantLimitBanner = viewModel.shouldShowBannerWarning(
             selectedUsersCount: selectedUsersArray?.count ?? 0
         )
         let showTopBanner = showUnverifiedBanner || showParticipantLimitBanner
         contactsNotVerifiedView.isHidden = !showTopBanner
     }
-
+    
     @objc
     func createViewModel() {
         self.viewModel = ContactsViewModel(
@@ -203,7 +197,7 @@ extension ContactsViewController {
                 nodeRepository: NodeRepository.newRepo)
         )
     }
-
+    
     @objc
     func extractEmails(_ contacts: [CNContact]) -> [NSString] {
         let emails = contacts.extractEmails()

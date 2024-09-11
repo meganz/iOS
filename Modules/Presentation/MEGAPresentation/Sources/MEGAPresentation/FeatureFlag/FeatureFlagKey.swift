@@ -9,7 +9,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case recentlyWatchedVideos = "Recently Watched Videos"
     case nodeDescription = "Node Description"
     case photosBrowser = "New Photos Browser"
-    case chatEmptyStates = "Chat Empty States"
     case visualMediaSearch = "Search Albums and Photos"
     case addVideosToVideoPlaylist = "Add videos to video playlist"
     case fullStorageOverQuotaBanner = "Full Storage Over Quota banner"
