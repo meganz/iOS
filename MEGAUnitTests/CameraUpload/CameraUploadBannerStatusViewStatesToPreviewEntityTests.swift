@@ -112,24 +112,7 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        addTeardownBlock {
-            CameraUploadBannerStatusViewStates._isDesignTokenEnabled = nil
-        }
-
-        // Legacy Colors
-        CameraUploadBannerStatusViewStates._isDesignTokenEnabled = false
-        performPreviewComparisonTest(
-            status: status,
-            textColor: legacyTextColor,
-            backgroundColor: legacyBackgroundColor,
-            bottomBorderColor: (UIColor.gray3C3C43.swiftUI.opacity(0.65), UIColor.gray545458.swiftUI.opacity(0.3)),
-            expectedTitle: expectedTitle,
-            expectedSubheading: expectedSubheading,
-            file: file, line: line
-        )
-
         // Semantic Colors
-        CameraUploadBannerStatusViewStates._isDesignTokenEnabled = true
         performPreviewComparisonTest(
             status: status,
             textColor: (designTokenTextColor, designTokenTextColor),

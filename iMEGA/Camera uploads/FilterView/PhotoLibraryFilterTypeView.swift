@@ -13,19 +13,11 @@ struct PhotoLibraryFilterTypeView: View {
     }
     
     private var foreground: Color {
-        if isDesignTokenEnabled {
-            selected ? TokenColors.Text.inverseAccent.swiftUI : TokenColors.Text.primary.swiftUI
-        } else {
-            selected ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Photos.filterNormalTextForeground.color
-        }
+        selected ? TokenColors.Text.inverseAccent.swiftUI : TokenColors.Text.primary.swiftUI
     }
     
     private var background: Color {
-        if isDesignTokenEnabled {
-            selected ? TokenColors.Components.selectionControl.swiftUI : TokenColors.Button.secondary.swiftUI
-        } else {
-            selected ? MEGAAppColor.Photos.filterTypeSelectionBackground.color : MEGAAppColor.Photos.filterTypeNormalBackground.color
-        }
+        selected ? TokenColors.Components.selectionControl.swiftUI : TokenColors.Button.secondary.swiftUI
     }
     
     var body: some View {

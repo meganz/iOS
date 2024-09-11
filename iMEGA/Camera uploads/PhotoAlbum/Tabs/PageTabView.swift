@@ -8,39 +8,11 @@ struct PageTabView: View {
     @ObservedObject private var viewModel: PagerTabViewModel
     @Environment(\.colorScheme) var colorScheme
     
-    private var textForgroundRedColor: Color {
-        isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : MEGAAppColor.Red._F7363D.color
-    }
-    
-    private var bottomIndicatorColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Button.brand.swiftUI
-        } else {
-            colorScheme == .dark ? MEGAAppColor.Red._F30C14.color : MEGAAppColor.Red._F7363D.color
-        }
-    }
-    
     private var tabForgroundColor: Color {
-        if isDesignTokenEnabled {
-            if !viewModel.isEditing {
-                return tabTextColor
-            } else {
-                return TokenColors.Text.primary.swiftUI
-            }
+        if !viewModel.isEditing {
+            return TokenColors.Text.primary.swiftUI
         } else {
-            if !viewModel.isEditing {
-                return tabTextColor
-            } else {
-                return MEGAAppColor.Gray._515151.color
-            }
-        }
-    }
-    
-    private var tabTextColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.primary.swiftUI
-        } else {
-            colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
+            return TokenColors.Text.primary.swiftUI
         }
     }
     
@@ -61,7 +33,7 @@ struct PageTabView: View {
                         Text(viewModel.timeLineTitle)
                             .font(Font.system(.subheadline, design: .default).weight(.medium))
                             .frame(maxWidth: proxy.size.width, alignment: .center)
-                            .foregroundColor(viewModel.selectedTab == .timeline ? textForgroundRedColor : tabForgroundColor)
+                            .foregroundColor(viewModel.selectedTab == .timeline ? TokenColors.Button.brand.swiftUI : tabForgroundColor)
                     }
                     
                     Button {
@@ -74,15 +46,15 @@ struct PageTabView: View {
                         Text(viewModel.albumsTitle)
                             .font(Font.system(.subheadline, design: .default).weight(.medium))
                             .frame(maxWidth: proxy.size.width, alignment: .center)
-                            .foregroundColor(viewModel.selectedTab == .album ? textForgroundRedColor : tabForgroundColor)
+                            .foregroundColor(viewModel.selectedTab == .album ? TokenColors.Button.brand.swiftUI : tabForgroundColor)
                     }
                 }
                 .padding(.vertical, 10)
             }
             .frame(height: 40)
-            .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.photosPageTabForeground)
+            .background(TokenColors.Background.surface1.swiftUI)
             .overlay(
-                BottomIndicator(width: proxy.size.width, height: 1, offset: viewModel.tabOffset, color: bottomIndicatorColor),
+                BottomIndicator(width: proxy.size.width, height: 1, offset: viewModel.tabOffset, color: TokenColors.Button.brand.swiftUI),
                 alignment: .bottom
             )
         }

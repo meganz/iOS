@@ -39,9 +39,7 @@ extension PhotosViewController {
             image: UIImage(resource: viewModel.isFilterActive ? .moreActionActiveNavigationBar : .moreNavigationBar),
             menu: menu)
         
-        if UIColor.isDesignTokenEnabled() {
-            button.tintColor = TokenColors.Icon.primary
-        }
+        button.tintColor = TokenColors.Icon.primary
         
         return button
     }
