@@ -15,19 +15,6 @@ extension CameraUploadBannerStatusViewStates {
     }
 }
 
-extension CameraUploadBannerStatusViewStates {
-    // This is so that we can inject the design token value in unit tests
-    static var _isDesignTokenEnabled: Bool?
-
-    static var isDesignTokenEnabled: Bool {
-        if let overriddenIsDesignTokenEnabled = _isDesignTokenEnabled {
-            return overriddenIsDesignTokenEnabled
-        } else {
-            return UIColor.isDesignTokenEnabled()
-        }
-    }
-}
-
 extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresenterProtocol {
     var title: String {
         switch self {
@@ -48,7 +35,7 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
         case .uploadCompleted:
             return .init(Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.subHeading)
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
-            .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
+                .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
             return reason.subheading
         }
     }
@@ -56,11 +43,7 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
     func textColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .uploadInProgress, .uploadCompleted:
-            if Self.isDesignTokenEnabled {
-                return TokenColors.Text.primary.swiftUI
-            }
-
-            return Color.primary
+            return TokenColors.Text.primary.swiftUI
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
                 .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
             return reason.textColor(for: scheme)
@@ -70,11 +53,7 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
     func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .uploadInProgress, .uploadCompleted:
-            if Self.isDesignTokenEnabled {
-                return TokenColors.Background.page.swiftUI
-            }
-
-            return scheme == .dark ? UIColor.gray1D1D1D.swiftUI : UIColor.whiteFFFFFF.swiftUI
+            return TokenColors.Background.page.swiftUI
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
                 .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
             return reason.backgroundColor(for: scheme)
@@ -105,34 +84,18 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
     func textColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
-            if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
-                return TokenColors.Text.primary.swiftUI
-            }
-
-            return .primary
+            return TokenColors.Text.primary.swiftUI
         case .photoLibraryLimitedAccess:
-            if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
-                return TokenColors.Text.primary.swiftUI
-            }
-
-            return scheme == .dark ? UIColor.yellowFFD60A.swiftUI : UIColor.yellow9D8319.swiftUI
+            return TokenColors.Text.primary.swiftUI
         }
     }
     
     func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
-            if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
-                return TokenColors.Background.page.swiftUI
-            }
-
-            return scheme == .dark ? UIColor.gray1D1D1D.swiftUI : UIColor.whiteFFFFFF.swiftUI
+            return TokenColors.Background.page.swiftUI
         case .photoLibraryLimitedAccess:
-            if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
-                return TokenColors.Notifications.notificationWarning.swiftUI
-            }
-
-            return UIColor.yellowFED42926.swiftUI
+            return TokenColors.Notifications.notificationWarning.swiftUI
         }
     }
 }
@@ -155,18 +118,10 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
     }
     
     func textColor(for scheme: ColorScheme) -> Color {
-        if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
-            return TokenColors.Text.primary.swiftUI
-        }
-
-        return .primary
+        TokenColors.Text.primary.swiftUI
     }
     
     func backgroundColor(for scheme: ColorScheme) -> Color {
-        if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
-            return TokenColors.Background.page.swiftUI
-        }
-
-        return scheme == .dark ? UIColor.gray1D1D1D.swiftUI : UIColor.whiteFFFFFF.swiftUI
+        TokenColors.Background.page.swiftUI
     }
 }

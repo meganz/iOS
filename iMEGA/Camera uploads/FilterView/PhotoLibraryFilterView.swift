@@ -15,11 +15,7 @@ struct PhotoLibraryFilterView: View {
         } label: {
             Text(viewModel.cancelTitle)
                 .font(Font.system(size: 17, weight: .regular, design: Font.Design.default))
-                .foregroundStyle(
-                    isDesignTokenEnabled 
-                    ? TokenColors.Text.primary.swiftUI
-                    : MEGAAppColor.Photos.filterNormalTextForeground.color
-                )
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
         }
     }
     
@@ -42,27 +38,21 @@ struct PhotoLibraryFilterView: View {
         } label: {
             Text(viewModel.doneTitle)
                 .font(Font.system(size: 17, weight: .semibold, design: Font.Design.default))
-                .foregroundStyle(
-                    isDesignTokenEnabled 
-                    ? TokenColors.Text.primary.swiftUI
-                    : MEGAAppColor.Photos.filterNormalTextForeground.color
-                )
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
         }
     }
     
     @ViewBuilder
     private var navigationBar: some View {
         ZStack(alignment: .top) {
-            Group {
-                isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.clear
-            }
-            .ignoresSafeArea()
+            Group { TokenColors.Background.surface1.swiftUI }
+                .ignoresSafeArea()
             
             NavigationBarView(
                 leading: { btnCancel },
                 trailing: { btnDone },
                 center: { NavigationTitleView(title: viewModel.filterTitle) },
-                backgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.clear
+                backgroundColor: TokenColors.Background.surface1.swiftUI
             )
             .padding(.top, 16)
         }
@@ -73,7 +63,7 @@ struct PhotoLibraryFilterView: View {
         if viewModel.shouldShowMediaTypeFilter {
             VStack {
                 PhotoLibraryFilterViewHeadline(viewModel.chooseTypeTitle)
-                    .padding(.top, isDesignTokenEnabled ? 35 : 16)
+                    .padding(.top, 35)
                 ForEach(viewModel.filterTypeMatrixRepresentation(forScreenWidth: geo.size.width, fontSize: 15, horizontalPadding: 15), id: \.self) { row in
                     HStack {
                         ForEach(row, id: \.self) { type in
@@ -94,16 +84,12 @@ struct PhotoLibraryFilterView: View {
                 ForEach(PhotosFilterLocation.allCases, id: \.self) { location in
                     if location != PhotosFilterLocation.allCases.first {
                         Divider()
-                          .background(isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : nil)
+                            .background(TokenColors.Border.strong.swiftUI)
                     }
                     PhotoLibraryFilterLocationView(location: location, filterViewModel: viewModel)
                 }
             }
-            .background(
-                isDesignTokenEnabled
-                ? TokenColors.Background.surface1.swiftUI
-                : MEGAAppColor.Photos.filterLocationItemBackground.color
-            )
+            .background(TokenColors.Background.surface1.swiftUI)
             .cornerRadius(8)
         }
     }
@@ -111,26 +97,12 @@ struct PhotoLibraryFilterView: View {
     var rememberPreferenceView: some View {
         HStack {
             Toggle(Strings.Localizable.CameraUploads.Timeline.Filter.rememberPreferences, isOn: $viewModel.selectedSavePreferences)
-                .toggleStyle(
-                    SwitchToggleStyle(
-                        tint: isDesignTokenEnabled
-                        ? TokenColors.Support.success.swiftUI
-                        : MEGAAppColor.Photos.filterTypeSelectionBackground.color
-                    )
-                )
+                .toggleStyle(SwitchToggleStyle(tint: TokenColors.Support.success.swiftUI))
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .foregroundStyle(
-            isDesignTokenEnabled
-            ? TokenColors.Text.primary.swiftUI
-            : MEGAAppColor.Photos.filterLocationItemForeground.color
-        )
-        .background(
-            isDesignTokenEnabled
-            ? TokenColors.Background.surface1.swiftUI
-            : MEGAAppColor.Photos.filterLocationItemBackground.color
-        )
+        .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        .background(TokenColors.Background.surface1.swiftUI)
         .cornerRadius(8)
     }
     
@@ -154,11 +126,7 @@ struct PhotoLibraryFilterView: View {
                 Spacer()
             }
         }
-        .background(
-            isDesignTokenEnabled
-            ? TokenColors.Background.page.swiftUI
-            : MEGAAppColor.Photos.filterBackground.color
-        )
+        .background(TokenColors.Background.page.swiftUI)
         .ignoresSafeArea(edges: [.top, .bottom])
         .onAppear {
             viewModel.setSelectedFiltersToAppliedFiltersIfRequired()
@@ -178,13 +146,11 @@ private struct PhotoLibraryFilterViewHeadline: View {
         HStack {
             Text(title)
                 .font(Font.system(size: 22, weight: .bold, design: Font.Design.default))
-                .foregroundStyle(
-                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Photos.filterTextForeground.color
-                )
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .minimumScaleFactor(0.5)
             Spacer()
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear)
+        .background(TokenColors.Background.page.swiftUI)
     }
 }
 
