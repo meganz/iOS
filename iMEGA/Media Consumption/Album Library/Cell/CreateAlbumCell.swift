@@ -10,15 +10,11 @@ struct CreateAlbumCell: View {
     @State private var orientation = UIDevice.current.orientation
     
     private var plusIconColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Icon.primary.swiftUI
-        } else {
-            colorScheme == .light ? MEGAAppColor.Gray._515151.color : MEGAAppColor.White._FCFCFC.color
-        }
+        TokenColors.Icon.primary.swiftUI
     }
     
     private var backgroundColor: Color {
-        isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : MEGAAppColor.Gray._EBEBEB.color
+        TokenColors.Background.surface2.swiftUI
     }
     
     var body: some View {
@@ -43,14 +39,14 @@ struct CreateAlbumCell: View {
                     .lineLimit(1)
                     .truncationMode(.middle)
                     .font(.caption)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 Text(" ")
                     .font(.footnote)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : Color.secondary)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             }
         }
         .onOrientationChanged { orientation = $0 }
-        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear)
+        .foregroundStyle(TokenColors.Background.page.swiftUI)
     }
     
     private var iconSize: CGFloat {

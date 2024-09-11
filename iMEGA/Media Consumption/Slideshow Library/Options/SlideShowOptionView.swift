@@ -9,11 +9,7 @@ struct SlideShowOptionView: View {
     var dismissal: () -> Void
     
     private var navBarButtonTintColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.primary.swiftUI
-        } else {
-            colorScheme == .dark ? .grayD1D1D1 : .gray515151
-        }
+        TokenColors.Text.primary.swiftUI
     }
     
     var body: some View {
@@ -21,7 +17,7 @@ struct SlideShowOptionView: View {
             backgroundColor
             VStack(spacing: 0) {
                 navigationBar
-                    .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : backgroundColor)
+                    .background(TokenColors.Background.surface1.swiftUI)
                 listView()
             }
         }
@@ -47,7 +43,7 @@ struct SlideShowOptionView: View {
     
     var navigationBar: some View {
         Text(viewModel.navigationTitle)
-            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
             .font(.body.bold())
             .frame(maxWidth: .infinity, minHeight: 60.0)
             .overlay(
@@ -71,7 +67,7 @@ struct SlideShowOptionView: View {
                 }
             }
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : backgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
     }
     
     @ViewBuilder func detailView() -> some View {

@@ -15,27 +15,15 @@ struct PhotoLibraryZoomControl: View {
     }
     
     private var zoomInButtonForegroundColor: Color {
-        if isDesignTokenEnabled {
-            zoomState.canZoom(.in) ? (colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI) : UIColor.gray8E8E93.swiftUI
-        } else {
-            zoomState.canZoom(.in) ? MEGAAppColor.Photos.zoomButtonForeground.color : MEGAAppColor.Gray._8E8E93.color
-        }
+        zoomState.canZoom(.in) ? (colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI) : UIColor.gray8E8E93.swiftUI
     }
     
     private var zoomOutButtonForegroundColor: Color {
-        if isDesignTokenEnabled {
-            zoomState.canZoom(.out) ? (colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI): UIColor.gray8E8E93.swiftUI
-        } else {
-            zoomState.canZoom(.out) ? MEGAAppColor.Photos.zoomButtonForeground.color : MEGAAppColor.Gray._8E8E93.color
-        }
+        zoomState.canZoom(.out) ? (colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI): UIColor.gray8E8E93.swiftUI
     }
     
     private var zoomControlBackgroundColor: Color {
-        if isDesignTokenEnabled {
-            colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI
-        } else {
-            .clear
-        }
+        colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI
     }
     
     // MARK: - Private
@@ -60,14 +48,9 @@ struct PhotoLibraryZoomControl: View {
         Button {
             zoomState.zoom(.in)
         } label: {
-            if isDesignTokenEnabled {
-                Image(systemName: "plus")
-                    .imageScale(.large)
-                    .foregroundColor(zoomState.canZoom(.in) ? TokenColors.Icon.primary.swiftUI : TokenColors.Icon.disabled.swiftUI)
-            } else {
-                Image(systemName: "plus")
-                    .imageScale(.large)
-            }
+            Image(systemName: "plus")
+                .imageScale(.large)
+                .foregroundColor(zoomState.canZoom(.in) ? TokenColors.Icon.primary.swiftUI : TokenColors.Icon.disabled.swiftUI)
         }
         .foregroundColor(zoomInButtonForegroundColor)
         .disabled(!zoomState.canZoom(.in))
@@ -78,14 +61,9 @@ struct PhotoLibraryZoomControl: View {
         Button {
             zoomState.zoom(.out)
         } label: {
-            if isDesignTokenEnabled {
-                Image(systemName: "minus")
-                    .imageScale(.large)
-                    .foregroundColor(zoomState.canZoom(.out) ? TokenColors.Icon.primary.swiftUI : TokenColors.Icon.disabled.swiftUI)
-            } else {
-                Image(systemName: "minus")
-                    .imageScale(.large)
-            }
+            Image(systemName: "minus")
+                .imageScale(.large)
+                .foregroundColor(zoomState.canZoom(.out) ? TokenColors.Icon.primary.swiftUI : TokenColors.Icon.disabled.swiftUI)
         }
         .foregroundColor(zoomOutButtonForegroundColor)
         .disabled(!zoomState.canZoom(.out))

@@ -18,13 +18,12 @@ struct AlbumCoverPickerPhotoCell: View {
             viewModel.onPhotoSelect()
         }
         .task { await viewModel.startLoadingThumbnail() }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
     }
     
     @ViewBuilder
     private func image() -> some View {
         PhotoCellImage(container: viewModel.thumbnailContainer)
-            .overlay(Color.black000000.opacity(isDesignTokenEnabled && viewModel.isSelected ? 0.2 : 0.0))
+            .overlay(Color.black000000.opacity(viewModel.isSelected ? 0.2 : 0.0))
     }
 }
 
