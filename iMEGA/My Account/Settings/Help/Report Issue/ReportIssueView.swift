@@ -12,7 +12,7 @@ struct ReportIssueView: View {
                 navigationBar
                 
                 if !viewModel.isConnected {
-                    WarningView(viewModel: WarningViewModel(warningType: .noInternetConnection))
+                    WarningBannerView(viewModel: WarningBannerViewModel(warningType: .noInternetConnection))
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 
