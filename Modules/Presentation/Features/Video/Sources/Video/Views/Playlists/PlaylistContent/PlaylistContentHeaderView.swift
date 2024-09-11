@@ -23,7 +23,7 @@ struct PlaylistContentHeaderView: View {
                     
                     secondaryInformationView
                 }
-             
+                
                 if previewEntity.shouldShowAddButton {
                     addButton
                 }
@@ -107,25 +107,16 @@ struct PlaylistContentHeaderView: View {
     
     @ViewBuilder
     private var addButton: some View {
-        if isDesignTokenEnabled {
-            PillView(
-                viewModel: .init(
-                    title: Strings.Localizable.Videos.Tab.Playlist.Content.Header.Button.Title.add,
-                    icon: .leading(Image(uiImage: videoConfig.playlistContentAssets.headerView.image.addButtonImage.withRenderingMode(.alwaysTemplate))),
-                    foreground: TokenColors.Text.accent.swiftUI,
-                    background: TokenColors.Button.secondary.swiftUI,
-                    shape: .capsule
-                )
-            )
-            .onTapGesture { onTapAddButton() }
-        } else {
-            IconButton(
-                image: Image(uiImage: videoConfig.playlistContentAssets.headerView.image.addButtonImage),
+        PillView(
+            viewModel: .init(
                 title: Strings.Localizable.Videos.Tab.Playlist.Content.Header.Button.Title.add,
-                tintColor: videoConfig.playlistContentAssets.headerView.color.buttonTintColor,
-                action: { onTapAddButton() }
+                icon: .leading(Image(uiImage: videoConfig.playlistContentAssets.headerView.image.addButtonImage.withRenderingMode(.alwaysTemplate))),
+                foreground: TokenColors.Text.accent.swiftUI,
+                background: TokenColors.Button.secondary.swiftUI,
+                shape: .capsule
             )
-        }
+        )
+        .onTapGesture { onTapAddButton() }
     }
 }
 

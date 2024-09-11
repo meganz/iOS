@@ -20,7 +20,7 @@ struct SingleSelectionBottomSheetView: View {
             
             List(options, id: \.self) { title in
                 rowCell(title: title)
-                    .listRowSeparatorTint(isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : nil)
+                    .listRowSeparatorTint(TokenColors.Border.strong.swiftUI)
                     .listRowBackground(videoConfig.colorAssets.bottomSheetCellSelectedBackgroundColor)
                     .frame(height: 50)
                     .onTapGesture {
