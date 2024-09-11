@@ -14,7 +14,7 @@ struct PhotoCellContent: View {
         ZStack(alignment: .bottomTrailing) {
             image()
             /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
-                .overlay(Color.black000000.opacity(isDesignTokenEnabled && viewModel.isSelected ? 0.2 : 0.0))
+                .overlay(Color.black000000.opacity(viewModel.isSelected ? 0.2 : 0.0))
             
             checkMarkView
                 .offset(x: -5, y: -5)
@@ -35,17 +35,10 @@ struct PhotoCellContent: View {
     }
     
     private var checkMarkView: some View {
-        if isDesignTokenEnabled {
-            CheckMarkView(
-                markedSelected: viewModel.isSelected,
-                foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
-            )
-        } else {
-            CheckMarkView(
-                markedSelected: viewModel.isSelected,
-                foregroundColor: viewModel.isSelected ? MEGAAppColor.Green._34C759.color : MEGAAppColor.Photos.photoSelectionBorder.color
-            )
-        }
+        CheckMarkView(
+            markedSelected: viewModel.isSelected,
+            foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
+        )
     }
     
     @ViewBuilder

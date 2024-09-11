@@ -20,9 +20,7 @@ extension AlbumContentViewController {
               let menu = contextMenuManager?.contextMenu(with: contextMenuConfig) else { return nil }
         
         let button = UIBarButtonItem(image: UIImage.moreNavigationBar, menu: menu)
-        if UIColor.isDesignTokenEnabled() {
-            button.tintColor = TokenColors.Text.primary
-        }
+        button.tintColor = TokenColors.Text.primary
         return button
     }
     
@@ -48,10 +46,8 @@ extension AlbumContentViewController {
                 return
             }
             
-            if UIColor.isDesignTokenEnabled() {
-                for button in rightBarButtonItems {
-                    button.tintColor = TokenColors.Text.primary
-                }
+            for button in rightBarButtonItems {
+                button.tintColor = TokenColors.Text.primary
             }
             
             navigationItem.rightBarButtonItems = rightBarButtonItems
@@ -59,9 +55,6 @@ extension AlbumContentViewController {
     }
     
     func getBarButtonNormalForegroundColor() -> UIColor {
-        guard UIColor.isDesignTokenEnabled() else {
-            return traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
-        }
         return TokenColors.Text.primary
     }
 }

@@ -8,11 +8,7 @@ struct SlideShowOptionDetailView: View {
     @Binding var isShowing: Bool
     
     private var navBarButtonTintColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.primary.swiftUI
-        } else {
-            colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
-        }
+        TokenColors.Text.primary.swiftUI
     }
     
     var body: some View {
@@ -20,7 +16,7 @@ struct SlideShowOptionDetailView: View {
             backgroundColor
             VStack(spacing: 0) {
                 navigationBar
-                    .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : backgroundColor)
+                    .background(TokenColors.Background.surface1.swiftUI)
                 listView()
             }
         }
@@ -41,7 +37,7 @@ struct SlideShowOptionDetailView: View {
     var navigationBar: some View {
         Text(viewModel.title)
             .font(.body.bold())
-            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
             .frame(maxWidth: .infinity, minHeight: 60.0)
             .overlay(
                 HStack {
@@ -68,7 +64,7 @@ struct SlideShowOptionDetailView: View {
                 Divider()
             }
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : backgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
     }
     
     private var backgroundColor: Color {

@@ -66,9 +66,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
         
         viewModel.dispatch(.onViewReady)
         
-        if UIColor.isDesignTokenEnabled() {
-            view.backgroundColor = TokenColors.Background.page
-        }
+        view.backgroundColor = TokenColors.Background.page
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -171,11 +169,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
                 target: self,
                 action: #selector(selectAllButtonPressed(_:))
             )
-            
-            if UIColor.isDesignTokenEnabled() {
-                selectAllItemsBarButtonItem.tintColor = TokenColors.Text.primary
-            }
-            
+            selectAllItemsBarButtonItem.tintColor = TokenColors.Text.primary
             navigationItem.leftBarButtonItem = selectAllItemsBarButtonItem
         } else {
             leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: getBarButtonNormalForegroundColor()], for: .normal)
