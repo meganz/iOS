@@ -1,5 +1,5 @@
-public protocol ClearChatHistoryUseCaseProtocol {
-    func clearChatHistory(for chatId: ChatIdEntity, completion: @escaping (Result<Void, ManageChatHistoryErrorEntity>) -> Void)
+public protocol ClearChatHistoryUseCaseProtocol: Sendable {
+    func clearChatHistory(for chatId: ChatIdEntity) async throws
 }
 
 public struct ClearChatHistoryUseCase<T: ManageChatHistoryRepositoryProtocol>: ClearChatHistoryUseCaseProtocol {
@@ -9,7 +9,7 @@ public struct ClearChatHistoryUseCase<T: ManageChatHistoryRepositoryProtocol>: C
         self.repository = repository
     }
     
-    public func clearChatHistory(for chatId: ChatIdEntity, completion: @escaping (Result<Void, ManageChatHistoryErrorEntity>) -> Void) {
-        repository.clearChatHistory(for: chatId, completion: completion)
+    public func clearChatHistory(for chatId: ChatIdEntity) async throws {
+        try await repository.clearChatHistory(for: chatId)
     }
 }
