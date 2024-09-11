@@ -13,16 +13,30 @@ public struct MockManageChatHistoryRepository: ManageChatHistoryRepositoryProtoc
         self.clearChatHistory = clearChatHistory
     }
     
-    public func chatRetentionTime(for chatId: ChatIdEntity, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
-        completion(chatRetentionTime)
+    public func chatRetentionTime(for chatId: ChatIdEntity) async throws -> UInt {
+        switch chatRetentionTime {
+        case .success(let successValue):
+            successValue
+        case .failure(let error):
+            throw error
+        }
     }
     
-    public func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
-        completion(setChatRetentionTime)
+    public func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt) async throws -> UInt {
+        switch setChatRetentionTime {
+        case .success(let successValue):
+            successValue
+        case .failure(let error):
+            throw error
+        }
     }
     
-    public func clearChatHistory(for chatId: ChatIdEntity, completion: @escaping (Result<Void, ManageChatHistoryErrorEntity>) -> Void) {
-        completion(clearChatHistory)
+    public func clearChatHistory(for chatId: ChatIdEntity) async throws {
+        switch clearChatHistory {
+        case .success(let successValue):
+            successValue
+        case .failure(let error):
+            throw error
+        }
     }
-    
 }

@@ -1,6 +1,6 @@
-public protocol HistoryRetentionUseCaseProtocol {
-    func chatRetentionTime(for chatId: ChatIdEntity, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void)
-    func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void)
+public protocol HistoryRetentionUseCaseProtocol: Sendable {
+    func chatRetentionTime(for chatId: ChatIdEntity) async throws -> UInt
+    func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt) async throws -> UInt
 }
 
 public struct HistoryRetentionUseCase<T: ManageChatHistoryRepositoryProtocol>: HistoryRetentionUseCaseProtocol {
@@ -10,11 +10,11 @@ public struct HistoryRetentionUseCase<T: ManageChatHistoryRepositoryProtocol>: H
         self.repository = repository
     }
     
-    public func chatRetentionTime(for chatId: ChatIdEntity, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
-        repository.chatRetentionTime(for: chatId, completion: completion)
+    public func chatRetentionTime(for chatId: ChatIdEntity) async throws -> UInt {
+        try await repository.chatRetentionTime(for: chatId)
     }
     
-    public func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
-        repository.setChatRetentionTime(for: chatId, period: period, completion: completion)
+    public func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt) async throws -> UInt {
+        try await repository.setChatRetentionTime(for: chatId, period: period)
     }
 }
