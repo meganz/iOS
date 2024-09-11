@@ -11,7 +11,7 @@ struct PhotoLibraryContentView: View {
     
     var body: some View {
         content()
-            .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
+            .background(TokenColors.Background.page.swiftUI)
             .overlay(placeholder)
             .environment(\.editMode, $editMode)
             .onReceive(viewModel.selection.$editMode) {

@@ -37,14 +37,14 @@ struct AlbumCoverPickerView: View {
             }
         })
         .edgesIgnoringSafeArea(.vertical)
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
+        .background(TokenColors.Background.page.swiftUI)
     }
     
     @ViewBuilder
     var navigationBar: some View {
         ZStack(alignment: .top) {
             Group {
-                isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.clear
+                TokenColors.Background.surface1.swiftUI
             }
             .ignoresSafeArea()
             
@@ -73,7 +73,7 @@ struct AlbumCoverPickerView: View {
                 },
                 leadingWidth: 75,
                 trailingWidth: 75,
-                backgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.clear
+                backgroundColor: TokenColors.Background.surface1.swiftUI
             )
             .padding(.top, 16)
         }
@@ -81,11 +81,7 @@ struct AlbumCoverPickerView: View {
     }
     
     private var textColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.primary.swiftUI
-        } else {
-            colorScheme == .dark ? UIColor.grayD1D1D1.swiftUI : UIColor.gray515151.swiftUI
-        }
+        TokenColors.Text.primary.swiftUI
     }
     
     private func dismiss() {

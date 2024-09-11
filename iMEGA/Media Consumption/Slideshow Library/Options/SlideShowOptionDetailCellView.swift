@@ -7,11 +7,7 @@ struct SlideShowOptionDetailCellView: View {
     @ObservedObject var viewModel: SlideShowOptionDetailCellViewModel
     
     private var backgroundColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Background.page.swiftUI
-        } else {
-            colorScheme == .dark ? MEGAAppColor.Black._2C2C2E.color : MEGAAppColor.White._FFFFFF.color
-        }
+        TokenColors.Background.page.swiftUI
     }
     
     var body: some View {
@@ -30,7 +26,7 @@ struct SlideShowOptionDetailCellView: View {
                 Spacer()
                 Image(uiImage: UIImage.turquoiseCheckmark)
                     .renderingMode(.template)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : .primary)
+                    .foregroundStyle(TokenColors.Support.success.swiftUI)
                     .scaledToFit()
                     .opacity(viewModel.isSelected ? 1 : 0)
             }

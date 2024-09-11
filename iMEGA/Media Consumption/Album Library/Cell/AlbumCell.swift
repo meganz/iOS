@@ -12,16 +12,14 @@ struct AlbumCell: View {
             ZStack(alignment: viewModel.isLoading ? .center : .bottomTrailing) {
                 PhotoCellImage(
                     container: viewModel.thumbnailContainer,
-                    bgColor: isDesignTokenEnabled
-                    ? TokenColors.Background.surface2.swiftUI
-                    : MEGAAppColor.Gray._EBEBEB.color
+                    bgColor: TokenColors.Background.surface2.swiftUI
                 )
                 /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
-                .overlay(Color.black000000.opacity(isDesignTokenEnabled && viewModel.isSelected ? 0.2 : 0.0))
+                .overlay(Color.black000000.opacity(viewModel.isSelected ? 0.2 : 0.0))
                 .cornerRadius(6)
                 
                 GeometryReader { geo in
-                    LinearGradient(colors: [isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Black._000000.color, .clear], startPoint: .top, endPoint: .bottom)
+                    LinearGradient(colors: [TokenColors.Text.primary.swiftUI, .clear], startPoint: .top, endPoint: .bottom)
                         .frame(height: geo.size.height / 2)
                         .cornerRadius(5, corners: [.topLeft, .topRight])
                         .opacity(viewModel.isLinkShared ? 0.4 : 0.0)
@@ -48,11 +46,11 @@ struct AlbumCell: View {
                     .lineLimit(1)
                     .truncationMode(.middle)
                     .font(.caption)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 Text("\(viewModel.numberOfNodes)")
                     .font(.footnote)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : Color.secondary)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             }
         }
         .opacity(viewModel.opacity)
@@ -73,17 +71,10 @@ struct AlbumCell: View {
     }
     
     private var checkMarkView: some View {
-        if isDesignTokenEnabled {
-            CheckMarkView(
-                markedSelected: viewModel.isSelected,
-                foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
-            )
-        } else {
-            CheckMarkView(
-                markedSelected: viewModel.isSelected,
-                foregroundColor: viewModel.isSelected ? MEGAAppColor.Green._34C759.color : MEGAAppColor.Photos.photoSelectionBorder.color
-            )
-        }
+        CheckMarkView(
+            markedSelected: viewModel.isSelected,
+            foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
+        )
     }
 }
 
