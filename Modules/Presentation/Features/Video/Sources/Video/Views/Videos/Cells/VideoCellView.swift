@@ -123,17 +123,10 @@ struct VideoCellViewContent: View {
     }
     
     private var checkMarkView: some View {
-        if isDesignTokenEnabled {
-            CheckMarkView(
-                markedSelected: isSelected.wrappedValue,
-                foregroundColor: isSelected.wrappedValue ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI
-            )
-        } else {
-            CheckMarkView(
-                markedSelected: isSelected.wrappedValue,
-                foregroundColor: isSelected.wrappedValue ? .green : .secondary
-            )
-        }
+        CheckMarkView(
+            markedSelected: isSelected.wrappedValue,
+            foregroundColor: isSelected.wrappedValue ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI
+        )
     }
 }
 
