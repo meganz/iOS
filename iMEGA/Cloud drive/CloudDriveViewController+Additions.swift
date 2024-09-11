@@ -372,7 +372,7 @@ extension CloudDriveViewController {
             warningBannerView.isHidden = true
         } else {
             if isFromUnverifiedContactSharedFolder {
-                warningViewModel = WarningViewModel(
+                warningViewModel = WarningBannerViewModel(
                     warningType: .contactNotVerifiedSharedFolder(
                         parentNode?.name ?? ""
                     )
@@ -388,7 +388,7 @@ extension CloudDriveViewController {
             warningBannerView.isHidden = true
             return
         }
-        let hostingController = UIHostingController(rootView: WarningView(viewModel: warningViewModel))
+        let hostingController = UIHostingController(rootView: WarningBannerView(viewModel: warningViewModel))
         
         warningBannerView.isHidden = false
 

@@ -29,7 +29,7 @@ class NodeBrowserViewModel: ObservableObject {
     // on the view mode state and the injected instance.
     // Making actual property private removes logic of checking this from the view, allows to cover this by tests with high confidence
     private let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
-    let warningViewModel: WarningViewModel?
+    let warningViewModel: WarningBannerViewModel?
     var mediaContentDelegate: MediaContentDelegateHandler?
     private let upgradeEncouragementViewModel: UpgradeEncouragementViewModel?
     private let adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?
@@ -92,7 +92,7 @@ class NodeBrowserViewModel: ObservableObject {
         viewMode: ViewModePreferenceEntity,
         searchResultsViewModel: SearchResultsViewModel,
         mediaDiscoveryViewModel: MediaDiscoveryContentViewModel?,
-        warningViewModel: WarningViewModel?,
+        warningViewModel: WarningBannerViewModel?,
         upgradeEncouragementViewModel: UpgradeEncouragementViewModel?,
         adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?,
         config: NodeBrowserConfig,

@@ -1,3 +1,0 @@
-protocol WarningViewRouting {
-    func goToSettings()
-}

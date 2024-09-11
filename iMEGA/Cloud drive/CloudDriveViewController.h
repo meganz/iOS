@@ -5,7 +5,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 
-@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager, CloudDriveViewModel, WarningViewModel, DefaultNodeAccessoryActionDelegate;
+@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager, CloudDriveViewModel, WarningBannerViewModel, DefaultNodeAccessoryActionDelegate;
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) BOOL isEditingModeBeingDisabled;
 @property (assign, nonatomic) BOOL wasSelectingFavoriteUnfavoriteNodeActionOption;
 
-@property (strong, nonatomic, nullable) WarningViewModel *warningViewModel;
+@property (strong, nonatomic, nullable) WarningBannerViewModel *warningViewModel;
 
 @property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
 

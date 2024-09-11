@@ -12,5 +12,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case chatEmptyStates = "Chat Empty States"
     case visualMediaSearch = "Search Albums and Photos"
     case addVideosToVideoPlaylist = "Add videos to video playlist"
+    case fullStorageOverQuotaBanner = "Full Storage Over Quota banner"
     case reorderVideosInVideoPlaylistContent = "Reorder videos in video playlist content"
 }
