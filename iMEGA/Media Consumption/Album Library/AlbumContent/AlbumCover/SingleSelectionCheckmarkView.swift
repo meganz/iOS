@@ -5,11 +5,7 @@ struct SingleSelectionCheckmarkView: View {
     let markedSelected: Bool
     
     private var foregroundStyle: Color {
-        if isDesignTokenEnabled {
-            markedSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
-        } else {
-            markedSelected ? UIColor.green34C759.swiftUI : UIColor.photosPhotoSeletionBorder.swiftUI
-        }
+        markedSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
     }
     
     private var backgroundView: some View {

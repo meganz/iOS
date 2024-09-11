@@ -9,9 +9,7 @@ struct SharedLinkView: View {
             .aspectRatio(contentMode: .fill)
             .frame(width: 15, height: 15)
             .foregroundStyle(
-                isDesignTokenEnabled
-                ? TokenColors.Icon.onColor.swiftUI
-                : MEGAAppColor.White._FFFFFF.color
+                TokenColors.Icon.onColor.swiftUI
             )
     }
 }
