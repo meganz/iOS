@@ -242,7 +242,61 @@ final class DeviceListViewModelTests: XCTestCase {
         XCTAssertEqual(foundIconName7, expectedIconName7)
     }
     
-    private func setUpSubscriptionAndAwaitExpectation(viewModel: DeviceListViewModel, completion: @escaping ([DeviceCenterItemViewModel]) -> Void) async throws -> Set<AnyCancellable> {
+    func testHasNetworkConnection_whenConnected_shouldReturnTrue() async throws {
+        let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(connected: true)
+        let viewModel = makeSUT(
+            networkMonitorUseCase: mockNetworkMonitorUseCase
+        )
+        
+        await viewModel.updateInternetConnectionStatus()
+        
+        XCTAssertTrue(viewModel.hasNetworkConnection)
+    }
+    
+    func testHasNetworkConnection_whenDisconnected_shouldReturnFalse() async throws {
+        let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(connected: false)
+        let viewModel = makeSUT(
+            networkMonitorUseCase: mockNetworkMonitorUseCase
+        )
+        
+        await viewModel.updateInternetConnectionStatus()
+        
+        XCTAssertFalse(viewModel.hasNetworkConnection)
+    }
+
+    func testHasNetworkConnection_whenConnectionChanges_shouldUpdateDynamically() async throws {
+        let expectation = XCTestExpectation(description: "Connection status should change dynamically")
+        let connectionSequence = AsyncStream<Bool> { continuation in
+            continuation.yield(false)
+            continuation.yield(true)
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        
+        let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(connected: false, connectionSequence: connectionSequence)
+        let viewModel = makeSUT(networkMonitorUseCase: mockNetworkMonitorUseCase)
+        
+        await viewModel.updateInternetConnectionStatus()
+        
+        XCTAssertFalse(viewModel.hasNetworkConnection)
+        
+        Task {
+            while !viewModel.hasNetworkConnection {
+                await Task.yield()
+            }
+            expectation.fulfill()
+        }
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertTrue(viewModel.hasNetworkConnection)
+    }
+    
+    // MARK: - Helpers
+    
+    private func setUpSubscriptionAndAwaitExpectation(
+        viewModel: DeviceListViewModel,
+        completion: @escaping ([DeviceCenterItemViewModel]) -> Void
+    ) async throws -> Set<AnyCancellable> {
         let expectation = XCTestExpectation(description: "Wait for otherDevices update")
         var cancellables = Set<AnyCancellable>()
 
@@ -300,6 +354,25 @@ final class DeviceListViewModelTests: XCTestCase {
         [.upToDate, .offline, .blocked, .outOfQuota, .error, .disabled, .paused, .updating, .scanning, .initialising, .backupStopped, .noCameraUploads]
     }
     
+    private let defaultDeviceListAssets = DeviceListAssets(title: "", currentDeviceTitle: "", otherDevicesTitle: "", deviceDefaultName: "")
+    private let defaultEmptyStateAssets = EmptyStateAssets(image: "", title: "")
+    private let defaultSearchAssets = SearchAssets(placeHolder: "", cancelTitle: "", lightBGColor: .gray, darkBGColor: .black)
+    private let defaultActions = [
+        ContextAction(type: .cameraUploads),
+        ContextAction(type: .info),
+        ContextAction(type: .rename),
+        ContextAction(type: .sort)
+    ]
+    private let defaultIconNames: [BackupDeviceTypeEntity: String] = [
+        .android: "android",
+        .iphone: "iphone",
+        .linux: "pcLinux",
+        .mac: "pcMac",
+        .win: "pcWindows",
+        .defaultMobile: "mobile",
+        .defaultPc: "pc"
+    ]
+    
     private func makeSUTForSearch(
         searchText: String? = nil
     ) async -> (
@@ -315,7 +388,7 @@ final class DeviceListViewModelTests: XCTestCase {
         let userDevices = await viewModel.fetchUserDevices()
         await viewModel.arrangeDevices(userDevices)
         
-        var cancellables = Set<AnyCancellable>()
+        var cancellable = Set<AnyCancellable>()
         var expectationDescription = "Filtered devices should update"
         
         if let searchText = searchText {
@@ -331,76 +404,38 @@ final class DeviceListViewModelTests: XCTestCase {
                     expectation.fulfill()
                 }
             }
-            .store(in: &cancellables)
+            .store(in: &cancellable)
         
-        return (viewModel, expectation, cancellables)
+        return (viewModel, expectation, cancellable)
     }
     
     private func makeSUT(
-        devices: [DeviceEntity],
-        currentDeviceId: String,
+        devices: [DeviceEntity] = [],
+        currentDeviceId: String = "",
         updateInterval: UInt64 = 1,
+        networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
         file: StaticString = #file,
         line: UInt = #line
     ) -> DeviceListViewModel {
-        
         let backupStatusEntities = backupStatusEntities()
-        
         let sut = DeviceListViewModel(
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             refreshDevicesPublisher: PassthroughSubject<Void, Never>(),
             updateInterval: updateInterval,
             router: MockDeviceListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),
-            deviceCenterUseCase:
-                MockDeviceCenterUseCase(
-                    devices: devices,
-                    currentDeviceId: currentDeviceId
-                ),
-            nodeUseCase: MockNodeDataUseCase(),
-            networkMonitorUseCase: MockNetworkMonitorUseCase(),
-            deviceListAssets:
-                DeviceListAssets(
-                    title: "",
-                    currentDeviceTitle: "",
-                    otherDevicesTitle: "",
-                    deviceDefaultName: ""
-                ),
-            emptyStateAssets:
-                EmptyStateAssets(
-                    image: "",
-                    title: ""
-                ),
-            searchAssets: SearchAssets(
-                placeHolder: "",
-                cancelTitle: "",
-                lightBGColor: .gray,
-                darkBGColor: .black
+            deviceCenterUseCase: MockDeviceCenterUseCase(
+                devices: devices,
+                currentDeviceId: currentDeviceId
             ),
+            nodeUseCase: MockNodeDataUseCase(),
+            networkMonitorUseCase: networkMonitorUseCase,
+            deviceListAssets: defaultDeviceListAssets,
+            emptyStateAssets: defaultEmptyStateAssets,
+            searchAssets: defaultSearchAssets,
             backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
-            deviceCenterActions: [
-                ContextAction(
-                    type: .cameraUploads
-                ),
-                ContextAction(
-                    type: .info
-                ),
-                ContextAction(
-                    type: .rename
-                ),
-                ContextAction(
-                    type: .sort
-                )
-            ],
-            deviceIconNames: [
-                .android: "android",
-                .iphone: "iphone",
-                .linux: "pcLinux",
-                .mac: "pcMac",
-                .win: "pcWindows",
-                .defaultMobile: "mobile",
-                .defaultPc: "pc"
-            ]
+            deviceCenterActions: defaultActions,
+            deviceIconNames: defaultIconNames
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)
